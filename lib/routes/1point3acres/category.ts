@@ -1,6 +1,6 @@
-import { Route } from '@/types';
-import cache from '@/utils/cache';
-import { rootUrl, apiRootUrl, types, ProcessThreads } from './utils';
+import type { Route } from '@/types';
+
+import { apiRootUrl, ProcessThreads, rootUrl, types } from './utils';
 
 export const route: Route = {
     path: '/category/:id?/:type?/:order?',
@@ -24,16 +24,16 @@ export const route: Route = {
     maintainers: ['nczitzk'],
     handler,
     description: `::: tip
-  更多标签可以在 [标签列表](https://instant.1point3acres.com/tags) 中找到。
+更多标签可以在 [标签列表](https://instant.1point3acres.com/tags) 中找到。
 :::
 
-  分类
+分类
 
 | 热门帖子 | 最新帖子 |
 | -------- | -------- |
 | hot      | new      |
 
-  排序方式
+排序方式
 
 | 最新回复 | 最新发布 |
 | -------- | -------- |
@@ -52,6 +52,6 @@ async function handler(ctx) {
     return {
         title: `一亩三分地 - ${id}${types[type]}`,
         link: currentUrl,
-        item: await ProcessThreads(cache.tryGet, apiUrl, order),
+        item: await ProcessThreads(apiUrl, order),
     };
 }

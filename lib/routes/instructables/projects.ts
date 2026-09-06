@@ -1,6 +1,7 @@
-import { Route } from '@/types';
-import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
+
+import type { Route } from '@/types';
+import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
@@ -33,7 +34,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { category = 'all' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 50;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 50;
 
     const siteDomain = 'instructables.com';
 
@@ -77,7 +78,7 @@ async function handler(ctx) {
         title: 'Instructables Projects', // 项目的标题
         link: `https://${siteDomain}/projects`, // 指向项目的链接
         description: 'Instructables Projects', // 描述项目
-        language: 'en', // 频道语言
+        language: 'en' as const, // 频道语言
         item: data.hits.map((item) => ({
             title: item.document.title,
             link: `https://${siteDomain}/${item.document.urlString}`,

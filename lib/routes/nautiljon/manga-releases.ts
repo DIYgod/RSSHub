@@ -1,6 +1,7 @@
 import { load } from 'cheerio';
+
 import { config } from '@/config';
-import { Route } from '@/types';
+import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
@@ -49,18 +50,18 @@ async function handler() {
         .toArray()
         .filter((item) => isVolumeReleased($(item).find('td').first().text()));
     const items = list.map((item) => {
-        item = $(item);
-        const releaseDate = item.find('td').first().text();
+        const $item = $(item);
+        const releaseDate = $item.find('td').first().text();
 
-        const a = item.find('td.p_titre').find('a.sim').first();
-        const img = item.find('td:nth-child(2) a').first();
+        const a = $item.find('td.p_titre').find('a.sim').first();
+        const img = $item.find('td:nth-child(2) a').first();
 
         return {
             title: a.text(),
             link: `${host}${a.attr('href')}`,
             pubDate: parseDate(releaseDate, 'DD/MM/YYYY'),
             image: `${host}${img.attr('im')}`,
-            category: item.find('td.p_titre div.fl').first().text(),
+            category: $item.find('td.p_titre div.fl').first().text(),
         };
     });
 

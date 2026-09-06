@@ -1,8 +1,9 @@
-import { Route } from '@/types';
-import cache from '@/utils/cache';
-import got from '@/utils/got';
 import { load } from 'cheerio';
 import iconv from 'iconv-lite';
+
+import type { DataItem, Route } from '@/types';
+import cache from '@/utils/cache';
+import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
@@ -36,16 +37,13 @@ async function handler() {
     const requestUrl = `${baseUrl}/html/news/xueyuan/`;
     const { data: response } = await got(requestUrl, {
         responseType: 'buffer',
-        https: {
-            rejectUnauthorized: false,
-        },
     });
     const $ = load(gbk2utf8(response));
     const list = $('.style_2 .Simple_title')
         .toArray()
-        .map((item) => {
-            item = $(item);
-            const a = item.find('a').first();
+        .map((item): DataItem => {
+            const $item = $(item);
+            const a = $item.find('a').first();
             return {
                 title: a.text(),
                 link: `${baseUrl}${a.attr('href')}`,
@@ -54,16 +52,13 @@ async function handler() {
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const { data: response } = await got(item.link, {
                     responseType: 'buffer',
-                    https: {
-                        rejectUnauthorized: false,
-                    },
                 });
                 const $ = load(gbk2utf8(response));
                 item.description = $('.artmainl .articlemain').first().html();
-                item.pubDate = timezone(parseDate($('.artmainl .info').text().split('|')[2].split('：')[1].trim()), +8);
+                item.pubDate = timezone(parseDate($('.artmainl .info').text().split('|', 3)[2].split('：', 2)[1].trim()), 8);
                 return item;
             })
         )

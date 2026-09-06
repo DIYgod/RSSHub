@@ -1,9 +1,10 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
-import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/:id?',
@@ -22,11 +23,11 @@ export const route: Route = {
     maintainers: ['jialinghui', 'Misaka13514'],
     handler,
     description: `::: tip
-  例如：消息速递的网址为 \`https://www.shmeea.edu.cn/page/08000/index.html\`，则页面 ID 为 \`08000\`。
+例如：消息速递的网址为 \`https://www.shmeea.edu.cn/page/08000/index.html\`，则页面 ID 为 \`08000\`。
 :::
 
 ::: warning
-  暂不支持大类分类和[院内动态](https://www.shmeea.edu.cn/page/19000/index.html)
+暂不支持大类分类和[院内动态](https://www.shmeea.edu.cn/page/19000/index.html)
 :::`,
 };
 
@@ -42,12 +43,12 @@ async function handler(ctx) {
 
     const list = $('#main .pageList li')
         .toArray()
-        .map((item) => {
-            item = $(item);
+        .map((item): DataItem & { link: string } => {
+            const $item = $(item);
             return {
-                title: item.find('a').attr('title') || item.find('a').text(),
-                link: new URL(item.find('a').attr('href'), baseURL).href,
-                pubDate: parseDate(item.find('.listTime').text().trim(), 'YYYY-MM-DD'),
+                title: $item.find('a').attr('title') || $item.find('a').text(),
+                link: new URL($item.find('a').attr('href')!, baseURL).href,
+                pubDate: parseDate($item.find('.listTime').text(), 'YYYY-MM-DD'),
             };
         });
 
@@ -62,10 +63,10 @@ async function handler(ctx) {
                 const $ = load(result.data);
 
                 const description = $('#ivs_content').html();
-                const pbTimeText = $('#ivs_title .PBtime').text().trim();
+                const pbTimeText = $('#ivs_title .PBtime').text();
 
                 item.description = description;
-                item.pubDate = pbTimeText ? timezone(parseDate(pbTimeText, 'YYYY-MM-DD HH:mm:ss'), +8) : item.pubDate;
+                item.pubDate = pbTimeText ? timezone(parseDate(pbTimeText, 'YYYY-MM-DD HH:mm:ss'), 8) : item.pubDate;
 
                 return item;
             })

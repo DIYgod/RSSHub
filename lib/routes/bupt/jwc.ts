@@ -1,10 +1,11 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+import type { Context } from 'hono';
+
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
-import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
-import type { Context } from 'hono';
+import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/jwc/:type',
@@ -12,8 +13,6 @@ export const route: Route = {
     example: '/bupt/jwc/tzgg',
     parameters: {
         type: {
-            type: 'string',
-            optional: false,
             description: '信息类型，可选值：tzgg（通知公告），xwzx（新闻资讯）',
         },
     },
@@ -69,7 +68,7 @@ async function handler(ctx: Context) {
 
     const list = $('.txt-elise')
         .toArray()
-        .map((item) => {
+        .map((item): (DataItem & { link: string }) | null => {
             const $item = $(item);
             const $link = $item.find('a');
             // Skip elements without links or with empty href
@@ -81,7 +80,7 @@ async function handler(ctx: Context) {
                 link: rootUrl + '/' + $link.attr('href'),
             };
         })
-        .filter(Boolean);
+        .filter((item) => item !== null);
 
     const items = await Promise.all(
         list.map((item) =>
@@ -97,8 +96,8 @@ async function handler(ctx: Context) {
                 const newsContent = content('.v_news_content');
 
                 // 移除不必要的标签，比如 <p> 和 <span> 中无用的内容
-                newsContent.find('p, span, strong').each(function () {
-                    const element = content(this);
+                newsContent.find('p, span, strong').each((_, el) => {
+                    const element = content(el);
                     const text = element.text().trim();
 
                     // 删除没有有用文本的元素，防止空元素被保留
@@ -115,7 +114,7 @@ async function handler(ctx: Context) {
 
                 // 提取并格式化发布时间
                 item.description = cleanedDescription;
-                item.pubDate = timezone(parseDate(content('.info').text().replace('发布时间：', '').trim()), +8);
+                item.pubDate = timezone(parseDate(content('.info').text().replace('发布时间：', '').trim()), 8);
 
                 return item;
             })

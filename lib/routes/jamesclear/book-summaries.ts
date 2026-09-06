@@ -1,5 +1,7 @@
-import { Data, Route, ViewType } from '@/types';
-import { rootUrl, fetchContent, processItem } from './utils';
+import type { Data, Route } from '@/types';
+import { ViewType } from '@/types';
+
+import { fetchContent, processItem, rootUrl } from './utils';
 
 export const route: Route = {
     path: '/book-summaries',

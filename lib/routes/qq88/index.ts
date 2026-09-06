@@ -1,7 +1,8 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
@@ -41,19 +42,19 @@ async function handler(ctx) {
     const list = $('.entry-title a')
         .slice(0, 15)
         .toArray()
-        .map((item) => {
-            item = $(item);
+        .map((item): DataItem => {
+            const $item = $(item);
 
             return {
-                title: item.text(),
-                link: item.attr('href'),
-                pubDate: parseDate(item.parent().next().find('.mh-meta-date').eq(-1).text().split('：')[1]),
+                title: $item.text(),
+                link: $item.attr('href'),
+                pubDate: parseDate($item.parent().next().find('.mh-meta-date').eq(-1).text().split('：', 2)[1]),
             };
         });
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const detailResponse = await got({
                     method: 'get',
                     url: item.link,
@@ -66,8 +67,8 @@ async function handler(ctx) {
                 item.enclosure_url = links.eq(-1).attr('href');
                 item.description = `<video controls><source src="${item.enclosure_url}"></video><br>`;
 
-                links.each(function () {
-                    item.description += `<li><a href="${content(this).attr('href')}">${content(this).text()}</a></li>`;
+                links.each((_, el) => {
+                    item.description += `<li><a href="${content(el).attr('href')}">${content(el).text()}</a></li>`;
                 });
 
                 return item;

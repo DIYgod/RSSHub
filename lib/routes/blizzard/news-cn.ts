@@ -1,5 +1,6 @@
-import { Route } from '@/types';
 import { load } from 'cheerio';
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -19,17 +20,23 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['ow.blizzard.cn', 'wow.blizzard.cn', 'hs.blizzard.cn'],
+            source: ['ow.blizzard.cn'],
+            target: '/news-cn/',
+        },
+        {
+            source: ['wow.blizzard.cn'],
+            target: '/news-cn/',
+        },
+        {
+            source: ['hs.blizzard.cn'],
             target: '/news-cn/',
         },
     ],
     name: '暴雪游戏国服新闻',
     maintainers: ['zhangpeng2k'],
-    description: `
-| 守望先锋 | 炉石传说 | 魔兽世界 |
-|----------|----------|---------|
-| ow       | hs       | wow     |
-`,
+    description: `| 守望先锋 | 炉石传说 | 魔兽世界 |
+| -------- | -------- | -------- |
+| ow       | hs       | wow      |`,
     handler,
 };
 
@@ -45,39 +52,39 @@ const parsers = {
         $('.list-data-container .list-item-container')
             .toArray()
             .map((item) => {
-                item = $(item);
+                const $item = $(item);
                 return {
-                    title: item.find('.content-title').text(),
-                    link: item.find('.fill-link').attr('href'),
-                    description: item.find('.content-intro').text(),
-                    pubDate: parseDate(item.find('.content-date').text()),
-                    image: item.find('.item-pic').attr('src'),
+                    title: $item.find('.content-title').text(),
+                    link: $item.find('.fill-link').attr('href'),
+                    description: $item.find('.content-intro').text(),
+                    pubDate: parseDate($item.find('.content-date').text()),
+                    image: $item.find('.item-pic').attr('src'),
                 };
             }),
     hs: ($) =>
         $('.article-container>a')
             .toArray()
             .map((item) => {
-                item = $(item);
+                const $item = $(item);
                 return {
-                    title: item.find('.title').text(),
-                    link: item.attr('href'),
-                    description: item.find('.desc').text(),
-                    pubDate: parseDate(item.find('.date').attr('data-time')),
-                    image: item.find('.article-img img').attr('src'),
+                    title: $item.find('.title').text(),
+                    link: $item.attr('href'),
+                    description: $item.find('.desc').text(),
+                    pubDate: parseDate($item.find('.date').attr('data-time')),
+                    image: $item.find('.article-img img').attr('src'),
                 };
             }),
     wow: ($) =>
         $('.Pane-list>a')
             .toArray()
             .map((item) => {
-                item = $(item);
+                const $item = $(item);
                 return {
-                    title: item.find('.list-title').text(),
-                    link: item.attr('href'),
-                    description: item.find('.list-desc').text(),
-                    pubDate: parseDate(item.find('.list-time').attr('data-time')),
-                    image: item.find('.img-box img').attr('src'),
+                    title: $item.find('.list-title').text(),
+                    link: $item.attr('href'),
+                    description: $item.find('.list-desc').text(),
+                    pubDate: parseDate($item.find('.list-time').attr('data-time')),
+                    image: $item.find('.img-box img').attr('src'),
                 };
             }),
 };
@@ -90,7 +97,7 @@ const detailParsers = {
 };
 
 function getList(category, $) {
-    return parsers[category] ? parsers[category]($) : [];
+    return Object.hasOwn(parsers, category) ? parsers[category]($) : [];
 }
 
 async function fetchDetail(item, category) {
@@ -106,7 +113,7 @@ async function fetchDetail(item, category) {
 
 async function handler(ctx) {
     const category = ctx.req.param('category') || 'ow';
-    if (!categoryNames[category]) {
+    if (!Object.hasOwn(categoryNames, category)) {
         throw new Error('Invalid category');
     }
 

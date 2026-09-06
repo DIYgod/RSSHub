@@ -1,10 +1,12 @@
-import { DataItem, Route, Data } from '@/types';
-import cache from '@/utils/cache';
-import { joinUrl } from './utils';
-import { parseDate } from '@/utils/parse-date';
 import { load } from 'cheerio';
+
+import type { Data, DataItem, Route } from '@/types';
+import cache from '@/utils/cache';
 import got from '@/utils/got';
+import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
+
+import { joinUrl } from './utils';
 
 export const route: Route = {
     path: '/bgw/:code',
@@ -47,32 +49,33 @@ async function handler(ctx): Promise<Data> {
         .toArray()
         .map((elem) => ({
             title: $(elem.children[0]).text(),
-            pubDate: timezone(parseDate($(elem.children[1]).text()), +8),
+            pubDate: timezone(parseDate($(elem.children[1]).text()), 8),
             link: joinUrl('https://www.swpu.edu.cn', $(elem).attr('href')), // 实际获得连接 "../info/1312/17891.htm"
         }));
 
     // 请求全文
-    const out: DataItem[] = await Promise.all(
-        items.map(
-            async (item: DataItem) =>
-                (await cache.tryGet(item.link!, async () => {
-                    const resp = await got.get(item.link);
-                    const $ = load(resp.data);
-                    if ($('title').text().startsWith('系统提示')) {
-                        item.author = '系统';
-                        item.description = '无权访问';
-                    } else {
-                        item.author = '办公网';
-                        item.description = $('.v_news_content').html()!;
-                        for (const elem of $('.v_news_content p')) {
-                            if ($(elem).css('text-align') === 'right') {
-                                item.author = $(elem).text();
-                                break;
-                            }
+    const out = await Promise.all(
+        items.map((item) =>
+            cache.tryGet(item.link!, async () => {
+                const resp = await got.get(item.link);
+                const $ = load(resp.data);
+                if ($('title').text().startsWith('系统提示')) {
+                    item.author = '系统';
+                    item.description = '无权访问';
+                } else {
+                    item.author = '办公网';
+                    item.description = $('.v_news_content').html()!;
+                    for (const elem of $('.v_news_content p')) {
+                        if ($(elem).css('text-align') !== 'right') {
+                            continue;
                         }
+
+                        item.author = $(elem).text();
+                        break;
                     }
-                    return item;
-                })) as DataItem
+                }
+                return item;
+            })
         )
     );
 

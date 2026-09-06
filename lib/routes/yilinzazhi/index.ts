@@ -1,7 +1,9 @@
-import { Data, DataItem, Route, ViewType } from '@/types';
+import { load } from 'cheerio';
+
+import type { Data, DataItem, Route } from '@/types';
+import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 
 export const route: Route = {
     path: '/',
@@ -41,16 +43,16 @@ async function handler(): Promise<Data> {
             };
         });
 
-    const items = (await Promise.all(
+    const items = await Promise.all(
         contents.map((content) =>
-            cache.tryGet(content.link!, async () => {
+            cache.tryGet<DataItem>(content.link!, async () => {
                 const childRes = await got(content.link);
                 const $$ = load(childRes.data);
                 content.description = $$('.maglistbox').html()!;
                 return content;
             })
         )
-    )) as DataItem[];
+    );
     return {
         title: '意林杂志网',
         link: baseUrl,

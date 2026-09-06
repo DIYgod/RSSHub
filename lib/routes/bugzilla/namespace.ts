@@ -6,7 +6,7 @@ export const namespace: Namespace = {
     description: 'Bugzilla instances hosted by organizations.',
     zh: {
         name: 'Bugzilla',
-        description: '各组织自建的Bugzilla实例。',
+        description: '各组织自建的 Bugzilla 实例。',
     },
     lang: 'en',
 };

@@ -1,5 +1,6 @@
-import { Data, Route } from '@/types';
+import type { Data, Route } from '@/types';
 import got from '@/utils/got';
+
 import { mapPostToItem } from './utils';
 
 export const route: Route = {
@@ -26,7 +27,7 @@ export const route: Route = {
     url: 'thewirehindi.com/',
 };
 
-async function handler() {
+async function handler(): Promise<Data> {
     const apiUrl = 'https://thewirehindi.com/wp-json/wp/v2/posts?_embed';
     const { data } = await got(apiUrl);
 
@@ -39,5 +40,5 @@ async function handler() {
         description: 'Latest news from The Wire Hindi',
         logo: 'https://thewirehindi.com/wp-content/uploads/2023/05/cropped-The-wire-32x32.jpeg',
         language: 'hi',
-    } as Data;
+    };
 }

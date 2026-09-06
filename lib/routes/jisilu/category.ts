@@ -1,12 +1,13 @@
-import { type CheerioAPI, load } from 'cheerio';
-import { type Context } from 'hono';
+import type { CheerioAPI } from 'cheerio';
+import { load } from 'cheerio';
+import type { Context } from 'hono';
 
-import { type DataItem, type Route, type Data, ViewType } from '@/types';
-
+import InvalidParameterError from '@/errors/types/invalid-parameter';
+import type { Data, DataItem, Language, Route } from '@/types';
+import { ViewType } from '@/types';
 import ofetch from '@/utils/ofetch';
 
-import { rootUrl, processItems } from './util';
-import InvalidParameterError from '@/errors/types/invalid-parameter';
+import { processItems, rootUrl } from './util';
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { id } = ctx.req.param();
@@ -15,7 +16,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
         throw new InvalidParameterError('请填入合法的分类 id，参见广场 https://www.jisilu.cn/explore/');
     }
 
-    const limit: number = Number.parseInt(ctx.req.query('limit') ?? '30', 10);
+    const limit = Number(ctx.req.query('limit') ?? '30');
 
     const targetUrl: string = new URL(`/category/${id}`, rootUrl).href;
 
@@ -27,7 +28,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
     $('div.pagination').remove();
 
-    const author = $('meta[name="keywords"]').prop('content').split(/,/)[0];
+    const author = $('meta[name="keywords"]').prop('content').split(/,/, 1)[0];
     const feedImage = $('div.aw-logo img').prop('src');
 
     return {
@@ -42,7 +43,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
         allowEmpty: true,
         image: feedImage,
         author,
-        language,
+        language: language as Language,
         id: targetUrl,
     };
 };
@@ -58,13 +59,12 @@ export const route: Route = {
         id: '分类 id，可在对应分类页 URL 中找到',
     },
     description: `::: tip
-若订阅 [债券/可转债](https://www.jisilu.cn/category/4)，网址为 \`https://www.jisilu.cn/category/4\`，请截取 \`https://www.jisilu.cn/category/\` 到末尾的部分 \`4\` 作为 \`id\` 参数填入，此时目标路由为 [\`/jisilu/category/4\`](https://rsshub.app/jisilu/category/4)。
+若订阅 [债券 / 可转债](https://www.jisilu.cn/category/4)，网址为 \`https://www.jisilu.cn/category/4\`，请截取 \`https://www.jisilu.cn/category/\` 到末尾的部分 \`4\` 作为 \`id\` 参数填入，此时目标路由为 [\`/jisilu/category/4\`](https://rsshub.app/jisilu/category/4)。
 :::
 
-| 新股 | 债券/可转债 | 套利 | 其他 | 基金 | 股票 |
-| ---- | ----------- | ---- | ---- | ---- | ---- |
-| 3    | 4           | 5    | 6    | 7    | 8    |
-`,
+| 新股 | 债券 / 可转债 | 套利 | 其他 | 基金 | 股票 |
+| ---- | ------------- | ---- | ---- | ---- | ---- |
+| 3    | 4             | 5    | 6    | 7    | 8    |`,
     categories: ['finance'],
     features: {
         requireConfig: false,

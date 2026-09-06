@@ -1,10 +1,12 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+import { CookieJar } from 'tough-cookie';
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
+
 import { card2Html } from './utils';
-import { CookieJar } from 'tough-cookie';
 
 const APP_DATA_REGEX = /window\.appData = JSON\.parse\(decodeURIComponent\("(.+?)"\)\);/;
 const baseUrl = 'https://www.yuque.com';
@@ -44,7 +46,7 @@ async function handler(ctx) {
         cookieJar,
     });
     const $ = load(bookHtml);
-    const appData = JSON.parse(decodeURIComponent($('script').text().match(APP_DATA_REGEX)[1]));
+    const appData = JSON.parse(decodeURIComponent($('script').text().match(APP_DATA_REGEX)![1]));
 
     const bookId = appData.book.id;
 
@@ -85,19 +87,19 @@ async function handler(ctx) {
                 $('[data-lake-id]').removeAttr('data-lake-id');
                 $('[id]').removeAttr('id');
                 $('p').each((_, elem) => {
-                    elem = $(elem);
-                    if (elem.children().length === 1 && elem.children().is('br')) {
-                        elem.remove();
+                    const $elem = $(elem);
+                    if ($elem.children().length === 1 && $elem.children().is('br')) {
+                        $elem.remove();
                     }
-                    if (elem.children().length === 2 && elem.children().eq(0).is('span') && elem.children().eq(0).text().length === 1 && elem.children().eq(1).is('br')) {
-                        elem.remove();
+                    if ($elem.children().length === 2 && $elem.children().eq(0).is('span') && $elem.children().eq(0).text().length === 1 && $elem.children().eq(1).is('br')) {
+                        $elem.remove();
                     }
                 });
                 // obtain real video src
                 for await (const v of $('video').toArray()) {
                     const $v = $(v);
                     const src = $v.attr('src');
-                    if (src.startsWith('inputs')) {
+                    if (src!.startsWith('inputs')) {
                         const { data } = await got(`${baseUrl}/api/video`, {
                             searchParams: {
                                 video_id: src,

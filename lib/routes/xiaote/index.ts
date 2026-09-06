@@ -1,4 +1,4 @@
-import { Route } from '@/types';
+import type { Route } from '@/types';
 import got from '@/utils/got'; // 自订的 got
 import { parseDate } from '@/utils/parse-date';
 
@@ -29,21 +29,23 @@ export const route: Route = {
 async function handler() {
     const { data } = await got.post('https://lcen.xiaote.net//api/graphql/', {
         json: {
-            query: `query($startCursor: Int) {
-                communities(startCursor: $startCursor) {
-                    edges {
-                        node {
-                            objectId
-                            content
-                            createdAt
-                            imageUrls
-                            user{
-                                nickname
+            query: /* GraphQL */ `
+                query ($startCursor: Int) {
+                    communities(startCursor: $startCursor) {
+                        edges {
+                            node {
+                                objectId
+                                content
+                                createdAt
+                                imageUrls
+                                user {
+                                    nickname
+                                }
                             }
+                        }
                     }
                 }
-              }
-            }`,
+            `,
         },
     });
 

@@ -1,10 +1,11 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import { config } from '@/config';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
-import { config } from '@/config';
 
 const host = 'https://www.sehuatang.net/';
 
@@ -40,6 +41,12 @@ const forumIdMaps = {
 
 export const route: Route = {
     path: ['/bt/:subforumid?', '/picture/:subforumid', '/:subforumid?/:type?', '/:subforumid?', ''],
+    categories: ['multimedia'],
+    example: '/sehuatang/36/368',
+    parameters: {
+        subforumid: '版块 id 或板块名称（见下表）, 为空默认高清中文字幕',
+        type: '类型 id, 可在分区类型过滤后的 URL 中找到',
+    },
     name: 'Forum',
     maintainers: ['qiwihui', 'junfengP', 'nczitzk'],
     handler,
@@ -52,7 +59,7 @@ export const route: Route = {
 | -------- | ------------ | ------------ | ------------ | -------- | ------- | -------- | -------- | -------- | -------- | -------- |
 | gcyc     | yzwmyc       | yzymyc       | gqzwzm       | sjxz     | vr      | srym     | omwm     | hgzb     | dmyc     | zhtl     |
 
-  **色花图片**
+**色花图片**
 
 | 原创自拍 | 转贴自拍 | 华人街拍 | 亚洲性爱 | 欧美性爱 | 卡通动漫 | 套图下载 |
 | -------- | -------- | -------- | -------- | -------- | -------- | -------- |
@@ -68,7 +75,7 @@ const getSafeId = () =>
             const safeId = $('script:contains("safeid")')
                 .text()
                 .match(/safeid\s*=\s*'(.+)';/)?.[1];
-            return safeId;
+            return safeId ?? '';
         },
         config.cache.routeExpire,
         false
@@ -76,7 +83,7 @@ const getSafeId = () =>
 
 async function handler(ctx) {
     const subformName = ctx.req.param('subforumid') ?? 'gqzwzm';
-    const subformId = subformName in forumIdMaps ? forumIdMaps[subformName] : subformName;
+    const subformId = Object.hasOwn(forumIdMaps, subformName) ? forumIdMaps[subformName] : subformName;
     const type = ctx.req.param('type');
     const typefilter = type ? `&filter=typeid&typeid=${type}` : '';
     const link = `${host}forum.php?mod=forumdisplay&orderby=dateline&fid=${subformId}${typefilter}`;
@@ -92,21 +99,21 @@ async function handler(ctx) {
     const list = $('#threadlisttableid tbody[id^=normalthread]')
         .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 25)
         .toArray()
-        .map((item) => {
-            item = $(item);
-            const hasCategory = item.find('th em a').length;
+        .map((item): DataItem => {
+            const $item = $(item);
+            const hasCategory = $item.find('th em a').length;
             return {
-                title: `${hasCategory ? `[${item.find('th em a').text()}]` : ''} ${item.find('a.xst').text()}`,
-                link: host + item.find('a.xst').attr('href'),
-                pubDate: parseDate(item.find('td.by').find('em span span').attr('title')),
-                author: item.find('td.by cite a').first().text(),
+                title: `${hasCategory ? `[${$item.find('th em a').text()}]` : ''} ${$item.find('a.xst').text()}`,
+                link: host + $item.find('a.xst').attr('href'),
+                pubDate: parseDate($item.find('td.by').find('em span span').attr('title')!),
+                author: $item.find('td.by cite a').first().text(),
             };
         });
 
     const out = await Promise.all(
         list.map((info) =>
-            cache.tryGet(info.link, async () => {
-                const response = await ofetch(info.link, {
+            cache.tryGet(info.link!, async () => {
+                const response = await ofetch(info.link!, {
                     headers,
                 });
 
@@ -136,7 +143,7 @@ async function handler(ctx) {
                 $('em[onclick]').remove();
 
                 info.description = (postMessage.html() || '抓取原帖失败').replaceAll('ignore_js_op', 'div');
-                info.pubDate = timezone(parseDate($('.authi em span').attr('title')), 8);
+                info.pubDate = timezone(parseDate($('.authi em span').attr('title')!), 8);
 
                 const magnet = postMessage.find('div.blockcode li').first().text();
                 const isMag = magnet.startsWith('magnet');
@@ -144,7 +151,7 @@ async function handler(ctx) {
 
                 const hasEnclosureUrl = isMag || torrent !== undefined;
                 if (hasEnclosureUrl) {
-                    const enclosureUrl = isMag ? magnet : new URL(torrent, host).href;
+                    const enclosureUrl = isMag ? magnet : new URL(torrent!, host).href;
                     info.enclosure_url = enclosureUrl;
                     info.enclosure_type = isMag ? 'application/x-bittorrent' : 'application/octet-stream';
                 }

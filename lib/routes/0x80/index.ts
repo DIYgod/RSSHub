@@ -1,8 +1,8 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
 
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
@@ -18,7 +18,6 @@ export const route: Route = {
 function extractDateFromURL(url: string) {
     const regex = /\d{4}-\d{2}-\d{2}/;
     const match = url.match(regex);
-
     return match ? match[0] : null;
 }
 
@@ -38,11 +37,11 @@ async function handler() {
 
     const list = alist
         .toArray()
-        .map((item) => {
-            item = $(item);
+        .map((item): DataItem & { link: string } => {
+            const $item = $(item);
 
-            const link = item.attr('href') || '';
-            const title = item.text() || '';
+            const link = $item.attr('href') || '';
+            const title = $item.text();
             const pubDate = extractDateFromURL(link);
 
             return {

@@ -1,9 +1,11 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { load } from 'cheerio';
-const url = 'https://www.usenix.org';
 import { parseDate } from '@/utils/parse-date';
+
+const url = 'https://www.usenix.org';
 
 const seasons = ['spring', 'summer', 'fall', 'winter'];
 
@@ -20,7 +22,7 @@ export const route: Route = {
     maintainers: ['ZeddYu'],
     handler,
     url: 'usenix.org/conferences/all',
-    description: `Return results from 2020`,
+    description: 'Return results from 2020',
 };
 
 async function handler() {
@@ -39,18 +41,18 @@ async function handler() {
     );
 
     const list = responses
-        .filter((r) => r.status === 'fulfilled' && r.value)
+        .filter((r): r is PromiseFulfilledResult<any> => r.status === 'fulfilled' && r.value)
         .flatMap((response) => {
             const $ = load(response.value);
-            const pubDate = parseDate($('meta[property=article:modified_time]').attr('content'));
+            const pubDate = parseDate($('meta[property=article:modified_time]').attr('content')!);
             return $('article.node-paper')
                 .toArray()
-                .map((item) => {
-                    item = $(item);
+                .map((item): DataItem => {
+                    const $item = $(item);
                     return {
-                        title: item.find('h2.node-title > a').text().trim(),
-                        link: `${url}${item.find('h2.node-title > a').attr('href')}`,
-                        author: item.find('div.field.field-name-field-paper-people-text.field-type-text-long.field-label-hidden p').text().trim(),
+                        title: $item.find('h2.node-title > a').text().trim(),
+                        link: `${url}${$item.find('h2.node-title > a').attr('href')}`,
+                        author: $item.find('div.field.field-name-field-paper-people-text.field-type-text-long.field-label-hidden p').text(),
                         pubDate,
                     };
                 });
@@ -58,8 +60,8 @@ async function handler() {
 
     const items = await Promise.allSettled(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
-                const response = await ofetch(item.link);
+            cache.tryGet(item.link!, async () => {
+                const response = await ofetch(item.link!);
                 const $ = load(response);
                 item.description = $('.content').html();
 
@@ -73,6 +75,6 @@ async function handler() {
         link: url,
         description: 'USENIX Security Symposium Accpeted Papers',
         allowEmpty: true,
-        item: items.filter((r) => r.status === 'fulfilled').map((r) => (r as PromiseFulfilledResult<any>).value),
+        item: items.filter((r): r is PromiseFulfilledResult<DataItem> => r.status === 'fulfilled').map((r) => r.value),
     };
 }

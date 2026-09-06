@@ -1,11 +1,12 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import InvalidParameterError from '@/errors/types/invalid-parameter';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
-import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 import { isValidHost } from '@/utils/valid-host';
-import InvalidParameterError from '@/errors/types/invalid-parameter';
 
 export const route: Route = {
     path: '/news/:city',
@@ -36,9 +37,9 @@ export const route: Route = {
 | 广州   | gz   |
 | 深圳   | sz   |
 
-  更多城市请参见 [这里](http://www.bendibao.com/city.htm)
+更多城市请参见 [这里](http://www.bendibao.com/city.htm)
 
-  > **香港特别行政区** 和 **澳门特别行政区** 的本地宝城市页面不更新资讯。`,
+> **香港特别行政区** 和 **澳门特别行政区** 的本地宝城市页面不更新资讯。`,
 };
 
 async function handler(ctx) {
@@ -58,18 +59,18 @@ async function handler(ctx) {
     const title =
         $('title')
             .text()
-            .replace(/-爱上本地宝，生活会更好/, '') + `焦点资讯`;
+            .replace(/-爱上本地宝，生活会更好/, '') + '焦点资讯';
 
     let items = $('ul.focus-news li')
         .toArray()
-        .map((item) => {
-            item = $(item).find('a');
+        .map((item): DataItem => {
+            const $item = $(item).find('a');
 
-            const link = item.attr('href');
+            const link = $item.attr('href');
 
             return {
-                title: item.text(),
-                link: link.indexOf('http') === 0 ? link : `${rootUrl}${link}`,
+                title: $item.text(),
+                link: link!.startsWith('http') ? link : `${rootUrl}${link}`,
             };
         });
 
@@ -90,21 +91,21 @@ async function handler(ctx) {
 
         items = $('#listNewsTimeLy div.info')
             .toArray()
-            .map((item) => {
-                item = $(item).find('a');
+            .map((item): DataItem => {
+                const $item = $(item).find('a');
 
-                const link = item.attr('href');
+                const link = $item.attr('href');
 
                 return {
-                    title: item.text(),
-                    link: link.indexOf('http') === 0 ? link : `${rootUrl}${link}`,
+                    title: $item.text(),
+                    link: link!.startsWith('http') ? link : `${rootUrl}${link}`,
                 };
             });
     }
 
-    items = await Promise.all(
+    items = (await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 try {
                     const detailResponse = await got({
                         method: 'get',
@@ -127,7 +128,7 @@ async function handler(ctx) {
                                 .text()
                                 .replace(/发布时间：/, '') ?? content('span.public_time').text()
                         ),
-                        +8
+                        8
                     );
 
                     return item;
@@ -136,7 +137,7 @@ async function handler(ctx) {
                 }
             })
         )
-    );
+    )) as typeof items;
 
     return {
         title,

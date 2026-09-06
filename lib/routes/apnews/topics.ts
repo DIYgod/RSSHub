@@ -1,13 +1,16 @@
-import { routePath } from 'hono/route';
-import { Route, ViewType } from '@/types';
-import got from '@/utils/got';
 import { load } from 'cheerio';
-import { fetchArticle, removeDuplicateByKey } from './utils';
 import pMap from 'p-map';
+
+import type { DataItem, Language, Route } from '@/types';
+import { ViewType } from '@/types';
+import got from '@/utils/got';
+
+import { fetchArticle, removeDuplicateByKey } from './utils';
+
 const HOME_PAGE = 'https://apnews.com';
 
 export const route: Route = {
-    path: ['/topics/:topic?', '/nav/:nav{.*}?'],
+    path: ['/topics/:topic?', '/nav/:nav{.+}?'],
     categories: ['traditional-media'],
     example: '/apnews/topics/apf-topnews',
     view: ViewType.Articles,
@@ -38,7 +41,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { topic = 'trending-news', nav = '' } = ctx.req.param();
-    const useNav = routePath(ctx) === '/apnews/nav/:nav{.*}?';
+    const useNav = ctx.req.routePath === '/apnews/nav/:nav{.+}?';
     const url = useNav ? `${HOME_PAGE}/${nav}` : `${HOME_PAGE}/hub/${topic}`;
     const response = await got(url);
     const $ = load(response.data);
@@ -50,7 +53,7 @@ async function handler(ctx) {
             title: $(e).find('span.PagePromoContentIcons-text').text(),
             link: $(e).find('a').attr('href'),
         }))
-        .filter((e) => typeof e.link === 'string');
+        .filter((e) => e.link !== undefined);
 
     const items = ctx.req.query('fulltext') === 'true' ? await pMap(list, (item) => fetchArticle(item), { concurrency: 10 }) : list;
 
@@ -58,7 +61,7 @@ async function handler(ctx) {
         title: $('title').text(),
         description: $("meta[property='og:description']").text(),
         link: url,
-        item: removeDuplicateByKey(items, 'link'),
-        language: $('html').attr('lang'),
+        item: removeDuplicateByKey(items, 'link') as DataItem[],
+        language: $('html').attr('lang') as Language,
     };
 }

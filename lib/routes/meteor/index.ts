@@ -1,7 +1,7 @@
-import { Route } from '@/types';
-import cache from '@/utils/cache';
-import got from '@/utils/got';
+import type { Route } from '@/types';
+import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+
 import { baseUrl, getBoards, renderDesc } from './utils';
 
 export const route: Route = {
@@ -25,15 +25,16 @@ export const route: Route = {
 async function handler(ctx) {
     let { board = 'all' } = ctx.req.param();
 
-    const boards = await getBoards(cache.tryGet);
+    const boards = await getBoards();
     let boardInfo;
     if (board !== 'all') {
         boardInfo = boards.find((b) => b.id === board || b.alias === board);
         board = boardInfo.id;
     }
 
-    const { data: response } = await got.post(`${baseUrl}/article/get_new_articles`, {
-        json: {
+    const response = await ofetch(`${baseUrl}/article/get_new_articles`, {
+        method: 'POST',
+        body: {
             boardId: board,
             isCollege: false,
             page: 0,
@@ -43,22 +44,19 @@ async function handler(ctx) {
 
     const result = JSON.parse(decodeURIComponent(response.result));
 
-    const items = await Promise.all(
-        result.map((item) =>
-            cache.tryGet(`meteor:${item.id}`, () => ({
-                title: item.title,
-                description: renderDesc(item.content),
-                link: `${baseUrl}/article/${item.shortId}`,
-                author: item.authorAlias,
-                pubDate: parseDate(item.createdAt),
-            }))
-        )
-    );
+    const items = result.map((item) => ({
+        title: item.title,
+        description: renderDesc(item.content),
+        link: `${baseUrl}/article/${item.shortId}`,
+        author: item.authorAlias,
+        pubDate: parseDate(item.createdAt),
+        category: item.tagNameList,
+    }));
 
     return {
         title: `${board === 'all' ? '全部看板' : boardInfo.title} | Meteor 學生社群`,
         description: board === 'all' ? null : boardInfo.feedDescription,
-        image: board === 'all' ? null : boardInfo.imgUrl === 'not_set' ? null : boardInfo.imgUrl,
+        image: board === 'all' || boardInfo.imgUrl === 'not_set' ? null : boardInfo.imgUrl,
         link: `${board === 'all' ? `${baseUrl}/board/all` : boardInfo.link}/new`,
         item: items,
     };

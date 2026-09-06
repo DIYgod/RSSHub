@@ -1,9 +1,11 @@
-import { Route, ViewType } from '@/types';
-import got from '@/utils/got';
 import { load } from 'cheerio';
-import timezone from '@/utils/timezone';
-import { parseDate } from '@/utils/parse-date';
+
 import InvalidParameterError from '@/errors/types/invalid-parameter';
+import type { Language, Route } from '@/types';
+import { ViewType } from '@/types';
+import got from '@/utils/got';
+import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 const categories = {
     news: 0,
@@ -39,13 +41,13 @@ export const route: Route = {
     handler,
     url: 'finviz.com/news.ashx',
     description: `| News | Blogs |
-| ---- | ---- |
+| ---- | ----- |
 | news | blogs |`,
 };
 
 async function handler(ctx) {
     const { category = 'News' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 200;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 200;
 
     if (!Object.hasOwn(categories, category.toLowerCase())) {
         throw new InvalidParameterError(`No category '${category}'.`);
@@ -64,15 +66,15 @@ async function handler(ctx) {
         .slice(0, limit)
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
-            const a = item.find('a.nn-tab-link');
+            const a = $item.find('a.nn-tab-link');
 
             const descriptionMatches = a
                 .parent()
                 .prop('data-boxover')
                 ?.match(/<td class='news_tooltip-tab'>(.*?)<\/td>/);
-            const authorMatches = item
+            const authorMatches = $item
                 .find('use')
                 .first()
                 .prop('href')
@@ -83,7 +85,7 @@ async function handler(ctx) {
                 link: a.prop('href'),
                 description: descriptionMatches ? descriptionMatches[1] : undefined,
                 author: authorMatches ? authorMatches[1].replaceAll('-', ' ') : 'finviz',
-                pubDate: timezone(parseDate(item.find('td.news_date-cell').text(), ['HH:mmA', 'MMM-DD']), -4),
+                pubDate: timezone(parseDate($item.find('td.news_date-cell').text(), ['HH:mmA', 'MMM-DD']), -4),
             };
         })
         .filter((item) => item.title);
@@ -95,8 +97,8 @@ async function handler(ctx) {
         title: `finviz - ${category}`,
         link: currentUrl,
         description: $('meta[name="description"]').prop('content'),
-        language: 'en-US',
-        image: new URL($('a.logo svg use').first().prop('href'), rootUrl).href,
+        language: 'en-us' as const satisfies Language,
+        image: new URL($('a.logo svg use').first().prop('href')!, rootUrl).href,
         icon,
         logo: icon,
         subtitle: $('title').text(),

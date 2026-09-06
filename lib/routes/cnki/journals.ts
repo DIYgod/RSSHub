@@ -1,11 +1,13 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
-import { parseDate } from '@/utils/parse-date';
-import { ProcessItem } from './utils';
-import parser from '@/utils/rss-parser';
 import logger from '@/utils/logger';
+import { parseDate } from '@/utils/parse-date';
+import parser from '@/utils/rss-parser';
+
+import { ProcessItem } from './utils';
 
 const rootUrl = 'https://navi.cnki.net';
 
@@ -43,15 +45,15 @@ async function handler(ctx) {
 
         if (feed.items && feed.items.length !== 0) {
             const items = feed.items.map((item) => ({
-                title: item.title,
+                title: item.title!,
                 description: item.content,
-                pubDate: parseDate(item.pubDate),
+                pubDate: parseDate(item.pubDate!),
                 link: item.link,
                 author: item.author,
             }));
 
             return {
-                title: feed.title,
+                title: feed.title!,
                 link: feed.link,
                 description: feed.description,
                 item: items,
@@ -62,16 +64,15 @@ async function handler(ctx) {
     }
 
     const journalUrl = `${rootUrl}/knavi/journals/${name}/detail`;
-    const title = await got.get(journalUrl).then((res) => load(res.data)('head > title').text());
+    const titleRes = await got.get(journalUrl);
+    const title = load(titleRes.data)('head > title').text();
 
     const yearListUrl = `${rootUrl}/knavi/journals/${name}/yearList?pIdx=0`;
 
-    const { code, date } = await got.get(yearListUrl).then((res) => {
-        const $ = load(res.data);
-        const code = $('.yearissuepage').find('dl').first().find('dd').find('a').first().attr('value');
-        const date = parseDate($('.yearissuepage').find('dl').first().find('dd').find('a').first().attr('id').replace('yq', ''), 'YYYYMM');
-        return { code, date };
-    });
+    const yearListRes = await got.get(yearListUrl);
+    const $yearList = load(yearListRes.data);
+    const code = $yearList('.yearissuepage').find('dl').first().find('dd').find('a').first().attr('value');
+    const date = parseDate($yearList('.yearissuepage').find('dl').first().find('dd').find('a').first().attr('id')!.replace('yq', ''), 'YYYYMM');
 
     const yearIssueUrl = `${rootUrl}/knavi/journals/${name}/papers?yearIssue=${code}&pageIdx=0&pcode=CJFD,CCJD`;
     const response = await got.post(yearIssueUrl);

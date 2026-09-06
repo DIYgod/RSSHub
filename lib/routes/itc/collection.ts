@@ -1,6 +1,7 @@
-import { DataItem, Route } from '@/types';
-import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
+
+import type { DataItem, Route } from '@/types';
+import ofetch from '@/utils/ofetch';
 
 /**
  * OpenGithub - Github开源项目精选
@@ -40,17 +41,11 @@ async function handler(ctx) {
 
     const colType = ctx.req.param('colType');
 
-    const result = {
-        title: RESULT_DESC_MAP[colType] ?? 'NULL',
-        link: url,
-        description: RESULT_DESC_MAP[colType] ?? 'NULL',
-        item: [] as DataItem[],
-    };
     const response = await ofetch(`${url}/github/collection/list?colType=${colType}`);
     const $ = load(response);
 
-    result.item = [...$('.tab-pane > .row > .card')].map((item) => {
-        const date = $(item).find('.d-flex.mt-3.ms-sm-auto').text()?.split(':')?.[1];
+    const items = [...$('.tab-pane > .row > .card')].map((item): DataItem => {
+        const date = $(item).find('.d-flex.mt-3.ms-sm-auto').text()?.split(':', 2)?.[1];
         const dataObject = date ? new Date(date) : undefined;
 
         return {
@@ -62,5 +57,10 @@ async function handler(ctx) {
         };
     });
 
-    return result;
+    return {
+        title: RESULT_DESC_MAP[colType] ?? 'NULL',
+        link: url,
+        description: RESULT_DESC_MAP[colType] ?? 'NULL',
+        item: items,
+    };
 }

@@ -1,19 +1,15 @@
-import { type Data, type DataItem, type Route, ViewType } from '@/types';
-import ofetch from '@/utils/ofetch';
-import type { Context } from 'hono';
-import { parseDate } from '@/utils/parse-date';
 import { load } from 'cheerio';
+import type { Context } from 'hono';
+
 import InvalidParameterError from '@/errors/types/invalid-parameter';
+import type { Data, DataItem, Route } from '@/types';
+import { ViewType } from '@/types';
+import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/parse-date';
+
 import type { RawRecord } from './types';
 
-const categories: Record<
-    string,
-    {
-        label: string;
-        scene: number;
-        view: number;
-    }
-> = {
+const categories = {
     today: {
         label: "Today's News",
         scene: 12,
@@ -56,18 +52,18 @@ export const route: Route = {
     categories: ['programming'],
     path: '/news/:category?',
     example: '/cybersecurityventures/news',
-    radar: Object.keys(categories).map((key) => ({
+    radar: Object.entries(categories).map(([key, value]) => ({
         source: [`cybersecurityventures.com/${key}`],
         target: `/news/${key}`,
-        title: categories[key].label,
+        title: value.label,
     })),
     parameters: {
         category: {
             description: 'news category',
             default: 'today',
-            options: Object.keys(categories).map((key) => ({
+            options: Object.entries(categories).map(([key, value]) => ({
                 value: key,
-                label: categories[key].label,
+                label: value.label,
             })),
         },
     },
@@ -85,11 +81,11 @@ async function handler(ctx: Context): Promise<Data> {
     const category = ctx.req.param('category') ?? 'today';
     const limit = ctx.req.query('limit') ?? 20;
 
-    if (!(category in categories)) {
+    if (!Object.hasOwn(categories, category)) {
         throw new InvalidParameterError('Invalid category');
     }
 
-    const { scene, view, label } = categories[category];
+    const { scene, view, label } = categories[category as keyof typeof categories];
 
     const data = await ofetch<{
         records: RawRecord[];
@@ -103,7 +99,7 @@ async function handler(ctx: Context): Promise<Data> {
     return {
         title: `${label} - Cybercrime Magazine`,
         link: `${rootUrl}/${category}`,
-        item: data.records.map((item) => {
+        item: data.records.map((item): DataItem => {
             const $ = load(item.field_3, null, false);
             const link = $('a').attr('href');
             const source = item.field_4;
@@ -115,7 +111,7 @@ async function handler(ctx: Context): Promise<Data> {
                 pubDate: parseDate(item.field_2.iso_timestamp),
                 link,
                 guid: `cybersecurityventures:${item.id}`,
-            } as DataItem;
+            };
         }),
     };
 }

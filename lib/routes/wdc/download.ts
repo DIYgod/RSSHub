@@ -1,6 +1,7 @@
-import { Route } from '@/types';
-import got from '@/utils/got';
 import { load } from 'cheerio';
+
+import type { Route } from '@/types';
+import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
@@ -17,7 +18,7 @@ export const route: Route = {
         supportScihub: false,
     },
     name: 'Download',
-    maintainers: [],
+    maintainers: ['nczitzk'],
     handler,
 };
 
@@ -43,7 +44,7 @@ async function handler(ctx) {
             enclosure_url: $('#WD_hlDownloadFWSelected').attr('href'),
             pubDate: parseDate($('#WD_lblReleaseDateSelected').text(), 'D/M/YYYY'),
             description: $('.toggleInner')
-                .html()
+                .html()!
                 .replace(/style="color:White;"/, ''),
         },
     ];

@@ -1,6 +1,8 @@
-import { DataItem, Route } from '@/types';
-import got from '@/utils/got';
 import { load } from 'cheerio';
+
+import type { DataItem, Route } from '@/types';
+import got from '@/utils/got';
+
 const url = 'https://censorbib.nymity.ch/';
 
 export const route: Route = {
@@ -27,9 +29,9 @@ async function handler() {
         .map((item): DataItem => {
             const c = $(item);
             const id = c.attr('id')!;
-            const title = c.find('span.paper').text().trim();
-            const author = c.find('span.author').text().trim();
-            const other = c.find('span.other').text().trim();
+            const title = c.find('span.paper').text();
+            const author = c.find('span.author').text();
+            const other = c.find('span.other').text();
             const download = c.find("img.icon[title='Download paper']").parent().attr('href');
             const downloadBibTex = c.find("img.icon[title='Download BibTeX']").parent().attr('href');
             const linkToPaper = c.find("img.icon[title='Link to paper']").parent().attr('href');

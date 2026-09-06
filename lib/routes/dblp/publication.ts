@@ -1,4 +1,4 @@
-import { Route } from '@/types';
+import type { Route } from '@/types';
 // 导入所需模组
 import ofetch from '@/utils/ofetch';
 // import { parseDate } from '@/utils/parse-date';
@@ -32,9 +32,7 @@ async function handler(ctx) {
 
     // 发送 HTTP GET 请求到 API 并解构返回的数据对象
     const {
-        result: {
-            hits: { hit: data },
-        },
+        result: { hits },
     } = await ofetch('https://dblp.org/search/publ/api', {
         query: {
             q: field,
@@ -45,6 +43,7 @@ async function handler(ctx) {
             'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
         },
     });
+    const { hit: data } = hits;
 
     // console.log(data);
 

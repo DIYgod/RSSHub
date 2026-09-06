@@ -1,7 +1,8 @@
-import { DataItem, Route } from '@/types';
-import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
+
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
+import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
@@ -27,7 +28,7 @@ export const route: Route = {
     maintainers: ['hualiong'],
     url: 'www.kelownacapnews.com',
     description: `\`type\` is as follows:
-  
+
 | News type     | Value         | News type    | Value        |
 | ------------- | ------------- | ------------ | ------------ |
 | News          | news          | Sports       | sports       |
@@ -87,7 +88,7 @@ export const route: Route = {
         return {
             title: `${$('.body-title').text()} - Kelowna Capital News`,
             link: `${baseURL}/${type}`,
-            item: items as DataItem[],
+            item: items,
         };
     },
 };

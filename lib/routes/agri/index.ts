@@ -1,16 +1,16 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
 
+import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
-import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
-import { art } from '@/utils/render';
-import path from 'node:path';
+import timezone from '@/utils/timezone';
+
+import { renderDescription } from './templates/description';
 
 export const handler = async (ctx) => {
     const { category = 'zx/zxfb/' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 10;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 10;
 
     const rootUrl = 'http://www.agri.cn';
     const currentUrl = new URL(category.endsWith('/') ? category : `${category}/`, rootUrl).href;
@@ -19,20 +19,20 @@ export const handler = async (ctx) => {
 
     const $ = load(response);
 
-    const language = $('html').prop('lang');
+    const language = $('html').prop('lang') as Language;
 
     let items = $('div.list_li_con, div.nxw_video_com')
         .slice(0, limit)
         .toArray()
-        .map((item) => {
-            item = $(item);
+        .map((item): DataItem => {
+            const $item = $(item);
 
-            const a = item.find('a').first();
+            const a = $item.find('a').first();
 
             const title = a.text();
-            const image = item.find('img').first().prop('src') ? new URL(item.find('img').first().prop('src'), rootUrl).href : undefined;
-            const description = art(path.join(__dirname, 'templates/description.art'), {
-                intro: item.find('p.con_text').text() || undefined,
+            const image = $item.find('img').first().prop('src') ? new URL($item.find('img').first().prop('src')!, rootUrl).href : undefined;
+            const description = renderDescription({
+                intro: $item.find('p.con_text').text() || undefined,
                 images: image
                     ? [
                           {
@@ -46,11 +46,11 @@ export const handler = async (ctx) => {
             return {
                 title,
                 description,
-                pubDate: parseDate(item.find('span.con_date_span').text() || `${item.find('div.com_time_p2').text().trim()}${item.find('div.com_time_p1').text()}`, ['YYYY-MM-DD', 'YYYY.MM.DD']),
-                link: new URL(a.prop('href'), currentUrl).href,
+                pubDate: parseDate($item.find('span.con_date_span').text() || `${$item.find('div.com_time_p2').text().trim()}${$item.find('div.com_time_p1').text()}`, ['YYYY-MM-DD', 'YYYY.MM.DD']),
+                link: new URL(a.prop('href')!, currentUrl).href,
                 content: {
                     html: description,
-                    text: item.find('p.con_text').text() || undefined,
+                    text: $item.find('p.con_text').text() || undefined,
                 },
                 image,
                 banner: image,
@@ -60,19 +60,19 @@ export const handler = async (ctx) => {
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const { data: detailResponse } = await got(item.link);
 
                 const $$ = load(detailResponse);
 
                 const title = $$('div.detailCon_info_tit').text().trim();
-                const description = art(path.join(__dirname, 'templates/description.art'), {
-                    description: $$('div.content_body_box').html(),
+                const description = renderDescription({
+                    description: $$('div.content_body_box').html() || undefined,
                 });
 
                 item.title = title;
                 item.description = description;
-                item.pubDate = timezone(parseDate($$('meta[name="publishdate"]').prop('content')), +8);
+                item.pubDate = timezone(parseDate($$('meta[name="publishdate"]').prop('content')), 8);
                 item.author = $$('meta[name="author"]').prop('content') || $$('meta[name="source"]').prop('content');
                 item.content = {
                     html: description,
@@ -89,7 +89,7 @@ export const handler = async (ctx) => {
         )
     );
 
-    const image = new URL($('div.logo img').prop('src'), rootUrl).href;
+    const image = new URL($('div.logo img').prop('src')!, rootUrl).href;
 
     return {
         title: $('title').text(),
@@ -110,7 +110,7 @@ export const route: Route = {
     example: '/agri/zx/zxfb',
     parameters: { category: '分类，默认为 `zx/zxfb`，即最新发布，可在对应分类页 URL 中找到' },
     description: `::: tip
-  若订阅 [最新发布](http://www.agri.cn/zx/zxfb/)，网址为 \`http://www.agri.cn/zx/zxfb/\`。截取 \`https://www.agri.cn/\` 到末尾的部分 \`zx/zxfb\` 作为参数填入，此时路由为 [\`/agri/zx/zxfb\`](https://rsshub.app/agri/zx/zxfb)。
+若订阅 [最新发布](http://www.agri.cn/zx/zxfb/)，网址为 \`http://www.agri.cn/zx/zxfb/\`。截取 \`https://www.agri.cn/\` 到末尾的部分 \`zx/zxfb\` 作为参数填入，此时路由为 [\`/agri/zx/zxfb\`](https://rsshub.app/agri/zx/zxfb)。
 :::
 
 #### [机构](http://www.agri.cn/jg/)
@@ -164,8 +164,7 @@ export const route: Route = {
 | [地方农业](http://www.agri.cn/video/dfny/beijing/) | [video/dfny/beijing](https://rsshub.app/agri/video/dfny/beijing) |
 | [气象农业](http://www.agri.cn/video/qxny/)         | [video/qxny](https://rsshub.app/agri/video/qxny)                 |
 | [讲座培训](http://www.agri.cn/video/jzpx/)         | [video/jzpx](https://rsshub.app/agri/video/jzpx)                 |
-| [文化生活](http://www.agri.cn/video/whsh/)         | [video/whsh](https://rsshub.app/agri/video/whsh)                 |
-  `,
+| [文化生活](http://www.agri.cn/video/whsh/)         | [video/whsh](https://rsshub.app/agri/video/whsh)                 |`,
     categories: ['new-media'],
 
     features: {

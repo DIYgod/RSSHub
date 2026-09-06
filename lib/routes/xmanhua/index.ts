@@ -1,6 +1,7 @@
-import { Route } from '@/types';
-import got from '@/utils/got';
 import { load } from 'cheerio';
+
+import type { Route } from '@/types';
+import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
@@ -34,23 +35,23 @@ async function handler(ctx) {
     const response = await got({
         method: 'get',
         url,
-        headers: {
-            Referer: host,
-        },
     });
 
     const data = response.data;
     const $ = load(data);
     const list = $('div #chapterlistload').find('.detail-list-form-item');
     // 作者
-    const autherName = $('body > div.detail-info-1 > div > div > p.detail-info-tip > span:nth-child(1)').text().split('：')[1];
+    const autherName = $('body > div.detail-info-1 > div > div > p.detail-info-tip > span:nth-child(1)').text().split('：', 2)[1];
     // 检查漫画是否已经完结
-    const finished_text = $('div.detail-list-form-title').clone().children().remove().end().text();
+    const finished_text = $('div.detail-list-form-title')
+        .contents()
+        .filter((_, node) => node.type === 'text')
+        .text();
     let finished = false;
-    let newOneDate = finished_text.split(',')[1];
+    let newOneDate: string | Date = finished_text.split(',', 2)[1];
     if (newOneDate.includes('月') && newOneDate.includes('號')) {
-        const month = Number.parseInt(newOneDate.split('月')[0]);
-        const date = Number.parseInt(newOneDate.split('月')[1].split('號')[0]);
+        const month = Number.parseInt(newOneDate.split('月', 1)[0]);
+        const date = Number.parseInt(newOneDate.split('月', 2)[1].split('號', 1)[0]);
         const year = new Date().getFullYear();
         newOneDate = new Date(year, month - 1, date + 1);
     } else {
@@ -63,9 +64,9 @@ async function handler(ctx) {
     // 最新一话的地址
     const updatedOne = $('div.detail-list-form-title span.s a').attr('href');
     const items = list.toArray().map((item) => {
-        item = $(item);
-        const itemTitle = item.text();
-        const itemUrl = item.attr('href');
+        const $item = $(item);
+        const itemTitle = $item.text();
+        const itemUrl = $item.attr('href');
         const itemDate = itemUrl === updatedOne ? parseDate(newOneDate) : '';
         return {
             title: itemTitle,

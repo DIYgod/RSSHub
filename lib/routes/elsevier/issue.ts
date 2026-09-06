@@ -1,24 +1,30 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+import { CookieJar } from 'tough-cookie';
 
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
-import path from 'node:path';
-import { art } from '@/utils/render';
 
-import { CookieJar } from 'tough-cookie';
+import { renderDescription } from './templates/description';
+
 const cookieJar = new CookieJar();
 
 export const route: Route = {
-    path: ['/:journal/vol/:issue', '/:journal/:issue'],
+    path: '/:journal/:issue',
+    categories: ['journal'],
+    example: '/elsevier/signal-processing/192',
+    parameters: {
+        journal: 'Journal Name, the part of the URL after `/journal/`',
+        issue: 'Release Number, the number in the URL after `/vol/` (If both Volume and Issue exist, must use the `Volume-Issue` form, e.g., `/elsevier/aace-clinical-case-reports/7-6`)',
+    },
     radar: [
         {
-            source: ['www.sciencedirect.com/journal/:journal/*'],
-            target: '/:journal',
+            source: ['www.sciencedirect.com/journal/:journal/vol/:issue'],
+            target: '/:journal/:issue',
         },
     ],
-    name: 'Unknown',
-    maintainers: [],
+    name: 'Special Issue',
+    maintainers: ['Derekmini', 'sunwolf-swb'],
     handler,
 };
 
@@ -35,7 +41,7 @@ async function handler(ctx) {
     const jrnlName = $('.anchor.js-title-link').text();
     const list = $('.js-article')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem & { id?: string; authors: string; issue: string; abstract?: string } => {
             const title = $(item).find('.js-article-title').text();
             const authors = $(item).find('.js-article__item__authors').text();
             const link = $(item).find('.article-content-title').attr('href');
@@ -49,20 +55,17 @@ async function handler(ctx) {
             };
         });
 
-    const renderDesc = (item) =>
-        art(path.join(__dirname, 'templates/description.art'), {
-            item,
-        });
+    const renderDesc = (item) => renderDescription(item);
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const response2 = await got(`${host}/science/article/pii/${item.id}`, {
                     cookieJar,
                 });
 
                 const $2 = load(response2.data);
                 $2('.section-title').remove();
-                item.doi = $2('.doi').attr('href').replace('https://doi.org/', '');
+                item.doi = $2('.doi').attr('href')!.replace('https://doi.org/', '');
                 item.abstract = $2('.abstract.author').text();
                 item.description = renderDesc(item);
                 return item;

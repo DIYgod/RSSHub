@@ -1,6 +1,7 @@
-import { Route } from '@/types';
-import got from '@/utils/got';
 import { load } from 'cheerio';
+
+import type { Route } from '@/types';
+import got from '@/utils/got';
 
 const baseUrl = 'https://jw.qust.edu.cn/';
 
@@ -40,7 +41,7 @@ async function handler() {
             const linkElement = $(element);
             const itemTitle = linkElement.text().trim();
             const path = linkElement.attr('href');
-            const itemUrl = path.startsWith('http') ? path : `${baseUrl}${path}`;
+            const itemUrl = path!.startsWith('http') ? path : `${baseUrl}${path}`;
             return {
                 title: itemTitle,
                 link: itemUrl,

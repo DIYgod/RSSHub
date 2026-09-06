@@ -1,8 +1,8 @@
+import { config } from '@/config';
+import ConfigNotFoundError from '@/errors/types/config-not-found';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-import { config } from '@/config';
-import ConfigNotFoundError from '@/errors/types/config-not-found';
 
 const allowSiteList = ['mastodon.social', 'pawoo.net', 'fosstodon.org', config.mastodon.apiHost].filter(Boolean);
 
@@ -40,8 +40,8 @@ const parseStatuses = (data) =>
         const accountRepostedBy = item.reblog ? item.account : null;
         item = item.reblog ?? item;
 
-        const content = item.content ? item.content.replaceAll(/<span.*?>|<\/span.*?>/gm, '') : '';
-        const contentRemovedHtml = content.replaceAll(/<(?:.|\n)*?>/gm, '\n');
+        const content = item.content ? item.content.replaceAll(/<span.*?>|<\/span.*?>/g, '') : '';
+        const contentRemovedHtml = content.replaceAll(/<(?:.|\n)*?>/g, '\n');
 
         const author = `${item.account.display_name} (@${item.account.acct})`;
         const link = item.url;

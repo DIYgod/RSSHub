@@ -1,14 +1,14 @@
-import { Route } from '@/types';
-
 import { load } from 'cheerio';
-import { parseDate } from '@/utils/parse-date';
+
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
-    path: '/:path{.*}',
+    path: '/:path{.+}?',
     categories: ['new-media'],
-    example: '/gis/c/security-challenges/',
+    example: '/gisreportsonline/gis/c/security-challenges/',
     parameters: { path: '包含"Reports"页面下的路径' },
     name: '报告',
     maintainers: ['dzx-dzx'],
@@ -22,19 +22,23 @@ export const route: Route = {
 
 async function handler(ctx) {
     const rootUrl = 'https://www.gisreportsonline.com';
-    const currentUrl = `${rootUrl}/${ctx.req.param('path')}`;
+    const currentUrl = `${rootUrl}/${ctx.req.param('path') ?? ''}`;
     const response = await ofetch(currentUrl);
 
     const $ = load(response);
 
     const list = $('article h3 a')
         .toArray()
-        .map((e) => ({ link: $(e).attr('href'), title: $(e).text() }));
+        .map((e): DataItem => ({
+            link: $(e).attr('href'),
+            title: $(e).text(),
+        }));
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
-                const content = load(await ofetch(item.link));
+            cache.tryGet(item.link!, async () => {
+                const html = await ofetch(item.link!);
+                const content = load(html);
                 const ldjson = JSON.parse(content('script.rank-math-schema-pro').text())['@graph'].find((e) => e['@type'] === 'NewsArticle');
 
                 item.pubDate = parseDate(ldjson.datePublished);

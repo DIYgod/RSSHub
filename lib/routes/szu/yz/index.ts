@@ -1,7 +1,9 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
+
 import util from './utils';
 
 const map = new Map([
@@ -66,7 +68,7 @@ async function handler(ctx) {
     const result = await util.ProcessFeed(list, cache, struct[type]);
 
     return {
-        title: map.get(type).title,
+        title: map.get(type)!.title,
         link: url,
         description: name,
         item: result,

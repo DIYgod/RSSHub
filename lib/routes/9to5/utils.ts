@@ -6,7 +6,7 @@ const ProcessFeed = (data) => {
 
     const cover = $('meta[property="og:image"]');
     if (cover.length > 0) {
-        $(`<img src=${cover[0].attribs.content}>`).insertBefore(content[0].firstChild);
+        $(`<img src=${cover[0].attribs.content}>`).insertBefore(content[0].firstChild!);
     }
 
     // remove useless DOMs
@@ -20,11 +20,12 @@ const ProcessFeed = (data) => {
     content.find('div.ad-disclaimer-container').remove();
 
     content.find('div').each((i, e) => {
-        if ($(e)[0].attribs.class) {
-            const classes = $(e)[0].attribs.class;
-            if (/\w{10}\s\w{10}/g.test(classes)) {
-                $(e).remove();
-            }
+        if (!$(e)[0].attribs.class) {
+            return;
+        }
+        const classes = $(e)[0].attribs.class;
+        if (/\w{10}\s\w{10}/.test(classes)) {
+            $(e).remove();
         }
     });
 

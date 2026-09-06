@@ -1,7 +1,8 @@
-import { Route } from '@/types';
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseList, parseItem } from './utils';
+
+import { parseItem, parseList } from './utils';
 
 export const route: Route = {
     path: '/tag/:tag',
@@ -31,7 +32,7 @@ async function handler(ctx) {
     const tag = ctx.req.param('tag');
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 25;
 
-    const { data: response } = await got(`https://www.4gamers.com.tw/site/api/news/by-tag`, {
+    const { data: response } = await got('https://www.4gamers.com.tw/site/api/news/by-tag', {
         searchParams: {
             tag,
             pageSize: limit,

@@ -1,7 +1,7 @@
-import { Route } from '@/types';
-import ofetch from '@/utils/ofetch';
 import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
+import type { Route } from '@/types';
+import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
@@ -31,7 +31,7 @@ export const route: Route = {
     maintainers: ['hillerliao'],
     handler,
     description: `::: warning
-  用户自选动态需要登录后的 Cookie 值，所以只能自建，详情见部署页面的配置模块。
+用户自选动态需要登录后的 Cookie 值，所以只能自建，详情见部署页面的配置模块。
 :::`,
 };
 

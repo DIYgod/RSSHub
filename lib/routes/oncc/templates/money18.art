@@ -1,6 +1,0 @@
-{{ if images }}
-{{ each images image }}
-<img src="{{ image }}">
-{{ /each }}
-{{ /if }}
-{{@ description }}

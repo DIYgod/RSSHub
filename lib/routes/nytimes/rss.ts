@@ -1,8 +1,10 @@
-import { Route, ViewType } from '@/types';
-import cache from '@/utils/cache';
-import parser from '@/utils/rss-parser';
 import { load } from 'cheerio';
+
+import type { Data, Route } from '@/types';
+import { ViewType } from '@/types';
+import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
+import parser from '@/utils/rss-parser';
 
 export const route: Route = {
     path: '/rss/:cat?',
@@ -32,7 +34,7 @@ export const route: Route = {
     maintainers: ['HenryQW', 'pseudoyu', 'dzx-dzx'],
     handler,
     url: 'nytimes.com/',
-    description: `Enhance the official EN RSS feed`,
+    description: 'Enhance the official EN RSS feed',
 };
 
 async function handler(ctx) {
@@ -44,8 +46,8 @@ async function handler(ctx) {
         ...rss,
         item: await Promise.all(
             rss.items.map((e) =>
-                cache.tryGet(e.link, async () => {
-                    const res = await ofetch(e.link, { headers: { 'User-Agent': 'Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)' }, referrer: 'https://www.google.com/' });
+                cache.tryGet(e.link!, async () => {
+                    const res = await ofetch(e.link!, { headers: { 'User-Agent': 'Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)' } });
 
                     const $ = load(res);
 
@@ -57,5 +59,5 @@ async function handler(ctx) {
                 })
             )
         ),
-    };
+    } as Data;
 }

@@ -1,7 +1,8 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 
 const rootUrl = 'https://www.hellobtc.com';
 
@@ -45,7 +46,7 @@ export const route: Route = {
     name: '科普',
     maintainers: ['Fatpandac'],
     handler,
-    description: `| latest | bitcoin | ethereum | defi | inter\_blockchain | mining | safety | satoshi\_nakomoto | public\_blockchain |
+    description: `| latest | bitcoin | ethereum | defi | inter\\_blockchain | mining | safety | satoshi\\_nakomoto | public\\_blockchain |
 | ------ | ------- | -------- | ---- | ----------------- | ------ | ------ | ----------------- | ------------------ |
 | 最新   | 比特币  | 以太坊   | DeFi | 跨链              | 挖矿   | 安全   | 中本聪            | 公链               |`,
 };
@@ -59,19 +60,19 @@ async function handler(ctx) {
     const list = $(channelSelector[channel])
         .find('div.new_item')
         .toArray()
-        .map((item) => ({
+        .map((item): DataItem => ({
             title: $(item).find('a').text(),
             link: $(item).find('a').attr('href'),
         }));
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const detailResponse = await got(item.link);
                 const content = load(detailResponse.data);
 
                 item.description = content('#js_content')
-                    .html()
+                    .html()!
                     .replaceAll(/(<img.*?)data-src(.*?>)/g, '$1src$2');
 
                 return item;

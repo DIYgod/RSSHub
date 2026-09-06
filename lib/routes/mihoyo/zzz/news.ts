@@ -1,4 +1,4 @@
-import { Route } from '@/types';
+import type { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
@@ -95,7 +95,7 @@ async function handler(ctx) {
         title: item.sTitle,
         description: item.sContent,
         link: `${categories[location].link}/${item.iInfoId}`,
-        pubDate: timezone(parseDate(item.dtStartTime), +8), // 使用 timezone 工具指定时区 (+8是北京时间)
+        pubDate: timezone(parseDate(item.dtStartTime), 8), // 使用 timezone 工具指定时区 (+8是北京时间)
         category: item.sCategoryName,
     }));
 

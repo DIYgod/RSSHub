@@ -1,8 +1,10 @@
+import { load } from 'cheerio';
+
 import { config } from '@/config';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import timezone from '@/utils/timezone';
-import { load } from 'cheerio';
+
 import { baseUrl } from '.';
 
 export async function fetchArticles(data) {
@@ -12,7 +14,7 @@ export async function fetchArticles(data) {
 
             return cache.tryGet(link, async () => {
                 const cookie = config.infzm.cookie;
-                const response = await got.get<string>({
+                const response = await got.get({
                     method: 'get',
                     url: link,
                     headers: {
@@ -23,8 +25,8 @@ export async function fetchArticles(data) {
                 const $ = load(response.data);
                 return {
                     title: subject,
-                    description: $('div.nfzm-content__content').html() ?? '',
-                    pubDate: timezone(publish_time, +8).toUTCString(),
+                    description: $('div.nfzm-content__content').html(),
+                    pubDate: timezone(publish_time, 8).toUTCString(),
                     link,
                     author,
                 };

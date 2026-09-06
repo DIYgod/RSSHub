@@ -1,5 +1,6 @@
-import got from '@/utils/got'; // get web content
 import { load } from 'cheerio'; // html parser
+
+import got from '@/utils/got'; // get web content
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
@@ -16,8 +17,11 @@ export default async function get_article(url) {
     const data = response.data;
     const $ = load(data);
 
-    const date_raw = $('div.talk_time').clone().children().remove().end().text();
-    const date_str_zh = date_raw.replaceAll(/^[^`]*发表于(.*分)[^`]*$/g, '$1'); // use [^`] to match \n
+    const date_raw = $('div.talk_time')
+        .contents()
+        .filter((_, node) => node.type === 'text')
+        .text();
+    const date_str_zh = date_raw.replaceAll(/^[^`]*发表于(?=(.*分))\1[^`]*$/g, '$1'); // use [^`] to match \n
     const date_str = date_str_zh
         .replaceAll(/[年月]/g, '-')
         .replaceAll('时', ':')
@@ -31,16 +35,15 @@ export default async function get_article(url) {
     $('div.ct_tittle').remove();
     $('div.talk_time').remove();
     const description = $('div.block_m')
-        .html()
-        .replaceAll(/(href.*?)<u>(.*?)<\/u>/g, `$1$2`)
-        .replaceAll('href="/', 'href="' + domain + '/')
+        .html()!
+        .replaceAll(/(href.*?)<u>(.*?)<\/u>/g, '$1$2')
         // Preserve the not extremely disturbing donation ad
         // to support the site.
-        .replaceAll(/(<img.*liiLIZF8Uh6yM.*?>)/g, `<br><br>$1`);
+        .replaceAll(/(<img.*liiLIZF8Uh6yM.*?>)/g, '<br><br>$1');
 
     const item = {
         title,
-        pubDate: timezone(parseDate(date_str), +8),
+        pubDate: timezone(parseDate(date_str), 8),
         author,
         link: url,
         description,

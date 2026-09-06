@@ -1,10 +1,11 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
 
+import type { Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import * as cheerio from 'cheerio';
-import { Item } from './types';
 import { parseDate } from '@/utils/parse-date';
+
+import type { Item } from './types';
 
 export const route: Route = {
     path: '/tag/:tag',
@@ -22,11 +23,11 @@ export const route: Route = {
 
 async function handler(ctx) {
     const baseUrl = 'https://www.wired.com';
-    const { tag } = ctx.req.param() as { tag: string };
+    const tag = ctx.req.param('tag');
     const link = `${baseUrl}/tag/${tag}/`;
 
     const response = await ofetch(link);
-    const $ = cheerio.load(response);
+    const $ = load(response);
     const preloadedState = JSON.parse(
         $('script:contains("window.__PRELOADED_STATE__")')
             .text()
@@ -46,7 +47,7 @@ async function handler(ctx) {
         list.map((item) =>
             cache.tryGet(item.link, async () => {
                 const response = await ofetch(item.link);
-                const $ = cheerio.load(response);
+                const $ = load(response);
                 const preloadedState = JSON.parse(
                     $('script:contains("window.__PRELOADED_STATE__")')
                         .text()
@@ -56,7 +57,7 @@ async function handler(ctx) {
                 const headerLeadAsset = $('div[data-testid*="ContentHeaderLeadAsset"]');
                 headerLeadAsset.find('button').remove();
                 // false postive: 'some' does not exist on type 'Cheerio<Element>'
-                // eslint-disable-next-line unicorn/prefer-array-some
+                // oxlint-disable-next-line unicorn/prefer-array-some
                 if (headerLeadAsset.find('video')) {
                     headerLeadAsset.find('video').attr('src', $('link[rel="preload"][as="video"]').attr('href'));
                     headerLeadAsset.find('video').attr('controls', '');
@@ -91,7 +92,7 @@ async function handler(ctx) {
         description: preloadedState.transformed['head.description'],
         link,
         image: `${baseUrl}${preloadedState.transformed.logo.sources.sm.url}`,
-        language: 'en',
+        language: 'en' as const satisfies Language,
         item: items,
     };
 }

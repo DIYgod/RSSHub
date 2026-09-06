@@ -1,6 +1,7 @@
-import { DataItem, Route } from '@/types';
-import got from '@/utils/got';
 import { load } from 'cheerio';
+
+import type { DataItem, Route } from '@/types';
+import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
@@ -33,17 +34,15 @@ export const route: Route = {
         return {
             title: 'League of Legends Patch Notes',
             link: url,
-            item: list.map(
-                (item): DataItem => ({
-                    title: item.title,
-                    description: item.description.body,
-                    pubDate: parseDate(item.publishedAt),
-                    link: item.action.payload.url,
-                    guid: item.analytics.contentId,
-                    image: item.media.url,
-                    itunes_item_image: item.media.url,
-                })
-            ),
+            item: list.map((item): DataItem => ({
+                title: item.title,
+                description: item.description.body,
+                pubDate: parseDate(item.publishedAt),
+                link: item.action.payload.url,
+                guid: item.analytics.contentId,
+                image: item.media.url,
+                itunes_item_image: item.media.url,
+            })),
         };
     },
 };

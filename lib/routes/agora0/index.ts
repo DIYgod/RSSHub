@@ -1,7 +1,8 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
@@ -27,8 +28,8 @@ export const route: Route = {
     maintainers: ['nczitzk'],
     handler,
     description: `| muitinⒾ | aidemnⒾ | srettaⓂ | qⓅ | sucoⓋ |
-| ------- | ------- | -------- | -- | ----- |
-| initium | inmedia | matters  | pq | vocus |`,
+| ------- | ------- | ------- | -- | ----- |
+| initium | inmedia | matters | pq | vocus |`,
 };
 
 async function handler(ctx) {
@@ -47,18 +48,18 @@ async function handler(ctx) {
     let items = $('.card span:not(.comments) a')
         .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 50)
         .toArray()
-        .map((item) => {
-            item = $(item);
+        .map((item): DataItem => {
+            const $item = $(item);
 
             return {
-                title: item.text(),
-                link: item.attr('href'),
+                title: $item.text(),
+                link: $item.attr('href'),
             };
         });
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const detailResponse = await got({
                     method: 'get',
                     url: item.link,
@@ -67,7 +68,7 @@ async function handler(ctx) {
                 const content = load(detailResponse.data);
 
                 item.author = content('meta[name="author"]').attr('content');
-                item.pubDate = parseDate(content('meta[property="article:published_time"]').attr('content'));
+                item.pubDate = parseDate(content('meta[property="article:published_time"]').attr('content')!);
                 item.description = content('.post-content').html();
 
                 return item;

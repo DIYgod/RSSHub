@@ -1,7 +1,8 @@
-import { Route } from '@/types';
-import got from '@/utils/got';
-import { parseList, parseItem } from './utils';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
+import type { Route } from '@/types';
+import got from '@/utils/got';
+
+import { parseItem, parseList } from './utils';
 
 const channelMap = {
     calendar: 'pac',
@@ -32,7 +33,7 @@ export const route: Route = {
 async function handler(ctx) {
     const channel = channelMap[ctx.req.param('channel')] ?? ctx.req.param('channel');
 
-    const { data: response } = await got(`https://www.guokr.com/apis/minisite/article.json`, {
+    const { data: response } = await got('https://www.guokr.com/apis/minisite/article.json', {
         searchParams: {
             retrieve_type: 'by_wx',
             channel_key: channel,

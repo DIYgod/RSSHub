@@ -1,8 +1,9 @@
+import { load } from 'cheerio';
+
 import { config } from '@/config';
-import { DataItem, Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
-import { load } from 'cheerio';
 
 // test url http://localhost:1200/asianfanfics/text-search/milklove
 
@@ -21,7 +22,7 @@ export const route: Route = {
             target: '/text-search/:keyword',
         },
     ],
-    description: '匹配asianfanfics搜索关键词',
+    description: '匹配 asianfanfics 搜索关键词',
     handler,
 };
 

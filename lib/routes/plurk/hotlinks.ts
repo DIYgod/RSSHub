@@ -1,6 +1,6 @@
-import { Route } from '@/types';
-import cache from '@/utils/cache';
+import type { Route } from '@/types';
 import got from '@/utils/got';
+
 import { baseUrl, getPlurk } from './utils';
 
 export const route: Route = {
@@ -35,10 +35,10 @@ async function handler(ctx) {
         },
     });
 
-    const items = await Promise.all(apiResponse.map((item) => getPlurk(item.link_url.startsWith('https://www.plurk.com/p/') ? item.link_url : `plurk:${item.link_url}`, item, null, cache.tryGet)));
+    const items = await Promise.all(apiResponse.map((item) => getPlurk(item.link_url.startsWith('https://www.plurk.com/p/') ? item.link_url : `plurk:${item.link_url}`, item, null)));
 
     return {
-        title: `Hot Links - Plurk`,
+        title: 'Hot Links - Plurk',
         image: 'https://s.plurk.com/2c1574c02566f3b06e91.png',
         link: `${baseUrl}/hotlinks`,
         item: items,

@@ -1,37 +1,36 @@
-import { type Data, type DataItem, type Route, ViewType } from '@/types';
+import type { Cheerio, CheerioAPI } from 'cheerio';
+import { load } from 'cheerio';
+import type { Element } from 'domhandler';
+import type { Context } from 'hono';
 
-import { art } from '@/utils/render';
+import type { Data, DataItem, Language, Route } from '@/types';
+import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
-import { type CheerioAPI, type Cheerio, load } from 'cheerio';
-import type { Element } from 'domhandler';
-import { type Context } from 'hono';
-import path from 'node:path';
+import { renderDescription } from './templates/description';
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { lang = 'en' } = ctx.req.param();
-    const limit: number = Number.parseInt(ctx.req.query('limit') ?? '30', 10);
+    const limit = Number(ctx.req.query('limit') ?? '30');
 
-    const baseUrl: string = 'https://www.deepl.com';
+    const baseUrl = 'https://www.deepl.com';
     const targetUrl: string = new URL(`${lang}/blog`, baseUrl).href;
 
     const response = await ofetch(targetUrl);
     const $: CheerioAPI = load(response);
-    const language = $('html').attr('lang') ?? lang;
+    const language = ($('html').attr('lang') ?? lang) as Language;
 
-    let items: DataItem[] = [];
-
-    items = $('h4, h6')
+    let items: DataItem[] = $('h4, h6')
         .slice(0, limit)
         .toArray()
-        .map((el): Element => {
+        .map((el) => {
             const $el: Cheerio<Element> = $(el).parent().parent();
 
             const title: string = $el.find('h4, h6').text();
             const image: string | undefined = $el.find('img').attr('src');
-            const description: string | undefined = art(path.join(__dirname, 'templates/description.art'), {
+            const description: string | undefined = renderDescription({
                 images: image
                     ? [
                           {
@@ -78,14 +77,14 @@ export const handler = async (ctx: Context): Promise<Data> => {
             }
 
             return cache.tryGet(item.link, async (): Promise<DataItem> => {
-                const detailResponse = await ofetch(item.link);
+                const detailResponse = await ofetch(item.link!);
                 const $$: CheerioAPI = load(detailResponse);
 
                 const title: string = $$('h1[data-contentful-field-id="title"]').text();
                 const description: string | undefined =
                     item.description +
-                    art(path.join(__dirname, 'templates/description.art'), {
-                        description: $$('div.my-redesign-3').html(),
+                    renderDescription({
+                        description: $$('div.my-redesign-3').html() ?? undefined,
                     });
                 const pubDateStr: string | undefined = $$('time').first().attr('datetime');
                 const authorsArr: string[] = $$('span[data-contentful-field-id="author"] span').last().text().split(/,\s/);
@@ -224,9 +223,8 @@ export const route: Route = {
             options: languageOptions,
         },
     },
-    description: `:::tip
+    description: `::: tip
 To subscribe to [Blog](https://www.deepl.com/en/blog), where the source URL is \`https://www.deepl.com/en/blog\`, extract the certain parts from this URL to be used as parameters, resulting in the route as [\`/deepl/blog/en\`](https://rsshub.app/deepl/blog/en).
-
 :::
 
 <details>
@@ -254,8 +252,7 @@ To subscribe to [Blog](https://www.deepl.com/en/blog), where the source URL is \
 | [Українська](https://www.deepl.com/uk/blog)            | [uk](https://rsshub.app/deepl/blog/uk)       |
 | [العربية](https://www.deepl.com/ar/blog)               | [ar](https://rsshub.app/deepl/blog/ar)       |
 
-</details>
-`,
+</details>`,
     categories: ['new-media'],
     features: {
         requireConfig: false,
@@ -386,7 +383,7 @@ To subscribe to [Blog](https://www.deepl.com/en/blog), where the source URL is \
                 options: languageOptions,
             },
         },
-        description: `:::tip
+        description: `::: tip
 若订阅 [博客](https://www.deepl.com/zh/blog)，网址为 \`https://www.deepl.com/zh/blog\`，请截取 \`https://www.deepl.com/\` 到末尾 \`/blog\` 的部分 \`zh\` 作为 \`lang\` 参数填入，此时目标路由为 [\`/deepl/blog/zh\`](https://rsshub.app/deepl/blog/zh)。
 
 :::
@@ -416,7 +413,6 @@ To subscribe to [Blog](https://www.deepl.com/en/blog), where the source URL is \
 | [Українська](https://www.deepl.com/uk/blog)            | [uk](https://rsshub.app/deepl/blog/uk)       |
 | [العربية](https://www.deepl.com/ar/blog)               | [ar](https://rsshub.app/deepl/blog/ar)       |
 
-</details>
-`,
+</details>`,
     },
 };

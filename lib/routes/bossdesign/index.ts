@@ -1,4 +1,4 @@
-import { Route } from '@/types';
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -21,12 +21,12 @@ export const route: Route = {
     handler,
     description: `| Boss 笔记 | 电脑日志        | 素材资源         | 设计师神器      | 设计教程        | 设计资讯            |
 | --------- | --------------- | ---------------- | --------------- | --------------- | ------------------- |
-| note      | computer-skills | design-resources | design-software | design-tutorial | design\_information |`,
+| note      | computer-skills | design-resources | design-software | design-tutorial | design\\_information |`,
 };
 
 async function handler(ctx) {
     const category = ctx.req.param('category');
-    const limit = Number.parseInt(ctx.req.query('limit'), 10) || undefined;
+    const limit = Number(ctx.req.query('limit')) || undefined;
     const baseUrl = 'https://www.bossdesign.cn';
 
     const currentCategory = await cache.tryGet(`bossdesign:categories:${category}`, async () => {

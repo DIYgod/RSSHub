@@ -1,11 +1,11 @@
-import { Route } from '@/types';
-
-import got from '@/utils/got';
 import { load } from 'cheerio';
+
+import type { Language, Route } from '@/types';
+import got from '@/utils/got';
 
 export const handler = async (ctx) => {
     const { category = 'stf/seisakunitsuite/bunya/houkokusuunosuii' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 30;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 30;
 
     const rootUrl = 'https://www.mhlw.go.jp';
     const currentUrl = new URL(category.endsWith('.html') ? category : `${category}.html`, rootUrl).href;
@@ -14,16 +14,16 @@ export const handler = async (ctx) => {
 
     const $ = load(response);
 
-    const language = $('html').prop('lang');
+    const language = $('html').prop('lang') as Language;
 
     const items = $('a[data-icon="pdf"]')
         .slice(0, limit)
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
-            const title = item.find('font').text() || item.text();
-            const link = new URL(item.prop('href'), rootUrl).href;
+            const title = $item.find('font').text() || $item.text();
+            const link = new URL($item.prop('href')!, rootUrl).href;
 
             return {
                 title,
@@ -35,7 +35,7 @@ export const handler = async (ctx) => {
             };
         });
 
-    const image = new URL($('div.m-headerLogo img').first().prop('src'), rootUrl).href;
+    const image = new URL($('div.m-headerLogo img').first().prop('src')!, rootUrl).href;
 
     return {
         title: $('title').text(),
@@ -58,11 +58,10 @@ export const route: Route = {
     example: '/go/mhlw/pdf/stf/seisakunitsuite/bunya/houkokusuunosuii',
     parameters: { category: 'Category, `stf/seisakunitsuite/bunya/houkokusuunosuii` as 新型コロナウイルス感染症の定点当たり報告数の推移 by default' },
     description: `::: tip
-  Subscribing to this route will give you access to all PDF files on this page.
+Subscribing to this route will give you access to all PDF files on this page.
 
-  If you subscribe to [新型コロナウイルス感染症の定点当たり報告数の推移](https://www.mhlw.go.jp/stf/seisakunitsuite/bunya/houkokusuunosuii.html)，where the URL is \`https://www.mhlw.go.jp/stf/seisakunitsuite/bunya/houkokusuunosuii.html\`, extract the part \`https://www.mhlw.go.jp/\` to the end, which is \`.html\`, and use it as the parameter to fill in. Therefore, the route will be [\`/go/mhlw/stf/seisakunitsuite/bunya/houkokusuunosuii\`](https://rsshub.app/go/mhlw/stf/seisakunitsuite/bunya/houkokusuunosuii).
-:::
-  `,
+If you subscribe to [新型コロナウイルス感染症の定点当たり報告数の推移](https://www.mhlw.go.jp/stf/seisakunitsuite/bunya/houkokusuunosuii.html)，where the URL is \`https://www.mhlw.go.jp/stf/seisakunitsuite/bunya/houkokusuunosuii.html\`, extract the part \`https://www.mhlw.go.jp/\` to the end, which is \`.html\`, and use it as the parameter to fill in. Therefore, the route will be [\`/go/mhlw/stf/seisakunitsuite/bunya/houkokusuunosuii\`](https://rsshub.app/go/mhlw/stf/seisakunitsuite/bunya/houkokusuunosuii).
+:::`,
     categories: ['government'],
 
     features: {

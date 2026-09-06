@@ -1,11 +1,15 @@
-import { config } from '@/config';
-import { load, type CheerioAPI } from 'cheerio';
-import logger from '@/utils/logger';
-import { type MiddlewareHandler } from 'hono';
-import { Data } from '@/types';
+import type { CheerioAPI } from 'cheerio';
+import { load } from 'cheerio';
+import type { MiddlewareHandler } from 'hono';
 
-const templateRegex = /\${([^{}]+)}/g;
-const allowedUrlProperties = new Set(['hash', 'host', 'hostname', 'href', 'origin', 'password', 'pathname', 'port', 'protocol', 'search', 'searchParams', 'username']);
+import { config } from '@/config';
+import type { Data } from '@/types';
+import logger from '@/utils/logger';
+
+const templateRegex = /\$\{([^{}]+)\}/g;
+const urlProperties = ['hash', 'host', 'hostname', 'href', 'origin', 'password', 'pathname', 'port', 'protocol', 'search', 'searchParams', 'username'] as const;
+type UrlProperty = (typeof urlProperties)[number];
+const allowedUrlProperties = new Set<string>(urlProperties);
 
 // match path or sub-path
 const matchPath = (path: string, paths: string[]) => {
@@ -24,15 +28,16 @@ const filterPath = (path: string) => {
     return !(include && !matchPath(path, include)) && !(exclude && matchPath(path, exclude));
 };
 
-const interpolate = (str: string, obj: Record<string, any>) =>
-    str.replaceAll(templateRegex, (_, prop) => {
+const interpolate = (str: string, url: URL) =>
+    str.replaceAll(templateRegex, (_, prop: string) => {
         let needEncode = false;
         if (prop.endsWith('_ue')) {
             // url encode
             prop = prop.slice(0, -3);
             needEncode = true;
         }
-        return needEncode ? encodeURIComponent(obj[prop]) : obj[prop];
+        const value = String(url[prop as UrlProperty]);
+        return needEncode ? encodeURIComponent(value) : value;
     });
 const parseUrl = (str: string) => {
     let url;
@@ -57,13 +62,13 @@ const replaceUrl = (template?: string, url?: string) => {
 };
 
 const replaceUrls = ($: CheerioAPI, selector: string, template: string, attribute = 'src') => {
-    $(selector).each(function () {
-        const oldSrc = $(this).attr(attribute);
+    $(selector).each((_, el) => {
+        const oldSrc = $(el).attr(attribute);
         if (oldSrc) {
             const url = parseUrl(oldSrc);
             if (url && url.protocol !== 'data:') {
                 // Cheerio will do the right thing to prohibit XSS.
-                $(this).attr(attribute, interpolate(template, url));
+                $(el).attr(attribute, interpolate(template, url));
             }
         }
     });
@@ -148,7 +153,7 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
                 if (item.enclosure_url && item.enclosure_type) {
                     if (item.enclosure_type.startsWith('image/')) {
                         item.enclosure_url = replaceUrl(imageHotlinkTemplate, item.enclosure_url);
-                    } else if (/^(video|audio)\//.test(item.enclosure_type)) {
+                    } else if (/^(?:video|audio)\//.test(item.enclosure_type)) {
                         item.enclosure_url = replaceUrl(multimediaHotlinkTemplate, item.enclosure_url);
                     }
                 }

@@ -1,11 +1,12 @@
 import { load } from 'cheerio';
-import ofetch from '@/utils/ofetch';
 import iconv from 'iconv-lite';
+
+import ofetch from '@/utils/ofetch';
 import { parseDate as _parseDate } from '@/utils/parse-date';
 import _timezone from '@/utils/timezone';
 
 function transElemText($, prop) {
-    const regex = /\$\((.*)\)/g;
+    const regex = /\$\(.*\)/;
     let result = prop;
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const parseDate = _parseDate;
@@ -24,7 +25,7 @@ function replaceParams(data, prop, $) {
     let group = regex.exec(prop);
     while (group) {
         // FIXME Multi vars
-        result = result.replace(group[0], transElemText($, data.params[group[1]]));
+        result = result.replace(group[0], () => transElemText($, data.params[group![1]]));
         group = regex.exec(prop);
     }
     return result;
@@ -42,7 +43,7 @@ function getProp(data, prop, $) {
     return replaceParams(data, result, $);
 }
 
-async function buildData(data) {
+export default async function buildData(data) {
     const response = await ofetch.raw(data.url);
     const contentType = response.headers.get('content-type') || '';
     // 若没有指定编码，则默认utf-8
@@ -52,8 +53,7 @@ async function buildData(data) {
             charset = (attr.split('=').pop() || 'utf-8').toLowerCase();
         }
     }
-    // @ts-expect-error custom property
-    const responseData = charset === 'utf-8' ? response._data : iconv.decode(await ofetch(data.url, { responseType: 'buffer' }), charset);
+    const responseData = charset === 'utf-8' ? response._data : iconv.decode(Buffer.from(await ofetch(data.url, { responseType: 'arrayBuffer' })), charset);
     const $ = load(responseData);
     const $item = $(data.item.item);
     // 这里应该是可以通过参数注入一些代码的，不过应该无伤大雅
@@ -75,5 +75,4 @@ async function buildData(data) {
     };
 }
 
-export default buildData;
-export { transElemText, replaceParams, getProp };
+export { getProp, replaceParams, transElemText };

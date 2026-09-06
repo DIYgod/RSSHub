@@ -1,31 +1,32 @@
-import { Route } from '@/types';
-import got from '@/utils/got';
-import getToken from '../_access';
-import cache from '@/utils/cache';
 import { config } from '@/config';
+import type { Route } from '@/types';
+import cache from '@/utils/cache';
+import got from '@/utils/got';
+
+import getToken from '../_access';
 import { getMangaChapters, getMangaMetaByIds } from '../_feed';
 
 type FollowType = 'reading' | 'plan-to-read' | 'completed' | 'on-hold' | 're-reading' | 'dropped';
 type StatusType = 'reading' | 'plan_to_read' | 'completed' | 'on_hold' | 're_reading' | 'dropped';
 type LabelType = 'Reading' | 'Plan to Read' | 'Completed' | 'On Hold' | 'Re-reading' | 'Dropped';
 
-const statusMap: Record<FollowType, StatusType> = {
+const statusMap = {
     reading: 'reading',
     'plan-to-read': 'plan_to_read',
     completed: 'completed',
     'on-hold': 'on_hold',
     're-reading': 're_reading',
     dropped: 'dropped',
-};
+} satisfies Record<FollowType, StatusType>;
 
-const labelMap: Record<FollowType, LabelType> = {
+const labelMap = {
     reading: 'Reading',
     'plan-to-read': 'Plan to Read',
     completed: 'Completed',
     'on-hold': 'On Hold',
     're-reading': 'Re-reading',
     dropped: 'Dropped',
-};
+} satisfies Record<FollowType, LabelType>;
 
 export const route: Route = {
     path: '/user/follow/:type?',
@@ -84,6 +85,7 @@ It's recommended to use the \`/mangadex/mdlist/:listId?\` route instead for bett
                 optional: true,
             },
         ],
+        nsfw: true,
     },
     handler,
 };
@@ -97,7 +99,7 @@ async function handler(ctx) {
 
     const accessToken = await getToken();
 
-    const statuses = (await cache.tryGet(
+    const statuses = await cache.tryGet<Record<string, string>>(
         `mangadex:user-follow-${followType}`,
         async () => {
             const response = await got.get(userFollowUrl, {
@@ -116,7 +118,7 @@ async function handler(ctx) {
         },
         config.cache.routeExpire,
         false
-    )) as Record<string, string>;
+    );
 
     const mangaIds = filterByValue(statuses, statusMap[followType]);
 

@@ -1,37 +1,39 @@
-import { type Data, type DataItem, type Route, ViewType } from '@/types';
+import type { Cheerio, CheerioAPI } from 'cheerio';
+import { load } from 'cheerio';
+import type { Element } from 'domhandler';
+import type { Context } from 'hono';
 
+import type { Data, DataItem, Language, Route } from '@/types';
+import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
-import { type CheerioAPI, type Cheerio, load } from 'cheerio';
-import type { Element } from 'domhandler';
-import { type Context } from 'hono';
-
 export const handler = async (ctx: Context): Promise<Data> => {
-    const limit: number = Number.parseInt(ctx.req.query('limit') ?? '30', 10);
+    const limit = Number(ctx.req.query('limit') ?? '30');
 
-    const baseUrl: string = 'http://mysql.taobao.org';
+    const baseUrl = 'http://mysql.taobao.org';
     const targetUrl: string = new URL('monthly/', baseUrl).href;
 
     const response = await ofetch(targetUrl);
     const $: CheerioAPI = load(response);
-    const language = $('html').attr('lang') ?? 'zh';
+    const language = ($('html').attr('lang') ?? 'zh') as Language;
 
-    let items: DataItem[] = [];
     let count = 0;
 
-    items = await Promise.all(
+    const monthlyItems = await Promise.all(
         $('h3 a.main')
             .toArray()
-            .map(async (monthlyEl): Promise<Element[] | undefined> => {
+            .map(async (monthlyEl): Promise<DataItem[] | undefined> => {
                 const $monthlyEl: Cheerio<Element> = $(monthlyEl);
 
-                const monthlyUrl: string | undefined = $monthlyEl.attr('href') ? new URL($monthlyEl.attr('href') as string, baseUrl).href : undefined;
+                const href = $monthlyEl.attr('href');
 
-                if (!monthlyUrl) {
+                if (!href) {
                     return undefined;
                 }
+
+                const monthlyUrl: string = new URL(href, baseUrl).href;
 
                 const monthlyResponse = await ofetch(monthlyUrl);
 
@@ -39,7 +41,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
                 return $$('h3 a.main')
                     .toArray()
-                    .map((el): Element => {
+                    .map((el) => {
                         if (count < limit) {
                             const $$el: Cheerio<Element> = $$(el);
 
@@ -58,15 +60,15 @@ export const handler = async (ctx: Context): Promise<Data> => {
                             count++;
                             return processedItem;
                         }
-                        return undefined;
+                        return;
                     })
-                    .filter(Boolean);
+                    .filter((processedItem) => processedItem !== undefined);
             })
     );
 
-    items = await Promise.all(
-        items
-            .filter(Boolean)
+    const items: DataItem[] = await Promise.all(
+        monthlyItems
+            .filter((monthlyItem) => monthlyItem !== undefined)
             .flat()
             .slice(0, limit)
             .map((item) => {
@@ -75,12 +77,12 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 }
 
                 return cache.tryGet(item.link, async (): Promise<DataItem> => {
-                    const detailResponse = await ofetch(item.link);
+                    const detailResponse = await ofetch(item.link!);
                     const $$: CheerioAPI = load(detailResponse);
 
                     const title: string = $$('h2').first().text()?.trim() || item.title;
-                    const description: string | undefined = $$('div.content').html() ?? undefined;
-                    const pubDateStr: string | undefined = item.link.split(/monthly\//).pop();
+                    const description = $$('div.content').html();
+                    const pubDateStr: string | undefined = item.link!.split(/monthly\//).pop();
                     const authorEls: Element[] = $$('div.block p').toArray();
                     const authors: DataItem['author'] = authorEls.map((authorEl) => {
                         const $$authorEl: Cheerio<Element> = $$(authorEl);

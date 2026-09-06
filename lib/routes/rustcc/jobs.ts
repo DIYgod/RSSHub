@@ -1,6 +1,7 @@
-import { Route } from '@/types';
-import got from '@/utils/got';
 import { load } from 'cheerio';
+
+import type { Route } from '@/types';
+import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
@@ -35,9 +36,6 @@ async function handler() {
 
     const response = await got({
         url: jobs_url,
-        headers: {
-            Referer: base_url,
-        },
     });
 
     const $ = load(response.data);
@@ -46,7 +44,7 @@ async function handler() {
     return {
         title: 'Rust语言中文社区 | 招聘',
         link: jobs_url,
-        description: `获取Rust语言中文社区的最新招聘`,
+        description: '获取Rust语言中文社区的最新招聘',
         item: await Promise.all(list.map((item) => getFeedItem(item))),
     };
 }
@@ -59,6 +57,6 @@ function getFeedItem(item) {
         title: title.text(),
         link: `${base_url}${title.attr('href')}`,
         description: $('.info .tags').text(),
-        pubDate: timezone(parseDate($('.info .timestamp').text(), 'YYYY-MM-DD hh:mm'), +8),
+        pubDate: timezone(parseDate($('.info .timestamp').text(), 'YYYY-MM-DD hh:mm'), 8),
     };
 }

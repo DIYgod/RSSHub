@@ -1,8 +1,7 @@
-import { Route } from '@/types';
-import cache from '@/utils/cache';
+import type { Route } from '@/types';
 import got from '@/utils/got';
 
-import { rootUrl, processItems, fetchData } from './util';
+import { apiArticleRootUrl, buildHuxiuRouteTitlePrefix, fetchApiRouteData, processItems, rootUrl } from './util';
 
 export const route: Route = {
     path: '/tag/:id',
@@ -12,33 +11,54 @@ export const route: Route = {
     features: {
         requireConfig: false,
         requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: true,
+        antiCrawler: true,
+        supportBT: false,
         supportPodcast: true,
         supportScihub: false,
     },
     name: '标签',
-    maintainers: ['xyqfer', 'HenryQW', 'nczitzk'],
+    maintainers: ['xyqfer', 'HenryQW', 'nczitzk', 'TimoYoung'],
     handler,
-    description: `更多标签请参见 [标签](https://www.huxiu.com/tags)`,
+    description: '更多标签请参见 [标签](https://www.huxiu.com/tags)',
 };
 
 async function handler(ctx) {
     const id = ctx.req.param('id');
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 10;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 10;
 
-    const apiUrl = new URL('v2_action/tag_article_list', rootUrl).href;
-    const currentUrl = new URL(`tags/${id}.html`, rootUrl).href;
-
+    const apiUrl = new URL('/v3/tag/articleList', apiArticleRootUrl).href;
+    const currentUrl = new URL(`tag/${id}.html`, rootUrl).href;
     const { data: response } = await got.post(apiUrl, {
         form: {
+            platform: 'www',
             tag_id: id,
         },
     });
 
-    const items = await processItems(response.data, limit, cache.tryGet);
+    const items = await processItems(response.data.datalist, limit);
 
-    const data = await fetchData(currentUrl);
+    const data = await fetchApiRouteData<{
+        tag_name: string;
+        summary?: string;
+        pic_path?: string;
+        share_info?: {
+            share_img?: string;
+            share_desc?: string;
+        };
+    }>({
+        currentUrl,
+        apiUrl: new URL('v3/tag/detail', apiArticleRootUrl).href,
+        form: {
+            platform: 'www',
+            tag_id: id,
+        },
+        mapData: (data) => ({
+            title: data.tag_name,
+            description: data.summary ?? data.share_info?.share_desc,
+            image: data.pic_path ?? data.share_info?.share_img,
+            titlePrefix: buildHuxiuRouteTitlePrefix(route.name),
+        }),
+    });
 
     return {
         item: items,

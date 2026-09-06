@@ -1,13 +1,12 @@
-import { Route } from '@/types';
-
-import cache from '@/utils/cache';
-import got from '@/utils/got';
 import { load } from 'cheerio';
-import { parseDate } from '@/utils/parse-date';
-import { art } from '@/utils/render';
-import path from 'node:path';
 
-import { rootUrl, getSearchParams } from './utils';
+import type { Route } from '@/types';
+import cache from '@/utils/cache';
+import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/parse-date';
+
+import { renderDepthDescription } from './templates/depth';
+import { getSearchParams, rootUrl } from './utils';
 
 export const route: Route = {
     path: '/hot',
@@ -38,35 +37,29 @@ async function handler(ctx) {
 
     const apiUrl = `${rootUrl}/v2/article/hot/list`;
 
-    const response = await got({
-        method: 'get',
-        url: apiUrl,
-        searchParams: getSearchParams(),
+    const response = await ofetch(apiUrl, {
+        query: getSearchParams(),
     });
 
-    let items = response.data.data.slice(0, limit).map((item) => ({
+    let items = response.data.slice(0, limit).map((item) => ({
         title: item.title || item.brief,
         link: `${rootUrl}/detail/${item.id}`,
-        pubDate: parseDate(item.ctime * 1000),
+        pubDate: parseDate(item.ctime, 'X'),
+        author: item.author,
     }));
 
     items = await Promise.all(
         items.map((item) =>
             cache.tryGet(item.link, async () => {
-                const detailResponse = await got({
-                    method: 'get',
-                    url: item.link,
-                });
+                const detailResponse = await ofetch(item.link);
 
-                const content = load(detailResponse.data);
+                const content = load(detailResponse);
 
                 const nextData = JSON.parse(content('script#__NEXT_DATA__').text());
-                const articleDetail = nextData.props.initialState.detail.articleDetail;
+                const articleDetail = nextData.props.pageProps.articleDetail;
 
                 item.author = articleDetail.author?.name ?? item.author ?? '';
-                item.description = art(path.join(__dirname, 'templates/depth.art'), {
-                    articleDetail,
-                });
+                item.description = renderDepthDescription(articleDetail);
 
                 return item;
             })

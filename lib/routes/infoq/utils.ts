@@ -22,10 +22,11 @@ const ProcessFeed = async (list, cache) => {
                 const author = data.author ? data.author.map((p) => p.nickname).join(',') : data.no_author;
                 const category = [...e.topic.map((t) => t.name), ...e.label.map((l) => l.name)];
                 const content = data.content_url ? (await got(data.content_url)).body : data.content;
+                const description = addCoverToDescription(parseContent(content), data.article_cover);
 
                 return {
                     title: data.article_title,
-                    description: parseContent(content),
+                    description,
                     pubDate: parseDate(e.publish_time, 'x'),
                     category,
                     author,
@@ -54,17 +55,15 @@ const parseToSimpleTexts = (content) =>
                     const level = i.attrs.level;
                     const text = parseToSimpleText(i.content);
                     return `<h${level}>${text}</h${level}>`;
-                } else {
-                    return '';
                 }
+                return '';
             },
             blockquote: () => {
                 if (i.content) {
                     const text = parseToSimpleText(i.content);
                     return `<blockquote>${text}</blockquote>`;
-                } else {
-                    return '';
                 }
+                return '';
             },
             image: () => {
                 const img = i.attrs.src;
@@ -75,9 +74,8 @@ const parseToSimpleTexts = (content) =>
                     const lang = i.attrs.lang;
                     const code = parseToSimpleText(i.content);
                     return `<code lang="${lang}">${code}</code>`;
-                } else {
-                    return '';
                 }
+                return '';
             },
             link: () => {
                 const href = i.attrs.href;
@@ -86,7 +84,7 @@ const parseToSimpleTexts = (content) =>
             },
         };
 
-        if (i.type in funcMaps) {
+        if (Object.hasOwn(funcMaps, i.type)) {
             return funcMaps[i.type]();
         }
 
@@ -97,8 +95,12 @@ const parseToSimpleTexts = (content) =>
         return parseToSimpleText(i.content);
     });
 
+function addCoverToDescription(content, cover) {
+    return `<p><img src="${cover}"></p>${content}`;
+}
+
 function parseContent(content) {
-    const isRichContent = content.startsWith(`{"`);
+    const isRichContent = content.startsWith('{"');
     if (!isRichContent) {
         return content;
     }

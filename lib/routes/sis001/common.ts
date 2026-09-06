@@ -1,11 +1,12 @@
-import got from '@/utils/got';
 import { load } from 'cheerio';
+import CryptoJS from 'crypto-js';
+
+import { config } from '@/config';
+import type { DataItem } from '@/types';
+import cache from '@/utils/cache';
+import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
-import { DataItem } from '@/types';
-import CryptoJS from 'crypto-js';
-import cache from '@/utils/cache';
-import { config } from '@/config';
 
 function getCookie(url: string): Promise<string> {
     return cache.tryGet(
@@ -30,7 +31,7 @@ function getCookie(url: string): Promise<string> {
             const iv = CryptoJS.enc.Hex.parse(matches[1]);
             const encrypted = CryptoJS.enc.Hex.parse(matches[2]);
 
-            const decrypted = CryptoJS.AES.decrypt({ ciphertext: encrypted }, key, { iv, padding: CryptoJS.pad.NoPadding });
+            const decrypted = CryptoJS.AES.decrypt(CryptoJS.lib.CipherParams.create({ ciphertext: encrypted }), key, { iv, padding: CryptoJS.pad.NoPadding });
 
             return 'CeRaHigh1=' + decrypted.toString(CryptoJS.enc.Hex);
         },
@@ -52,7 +53,7 @@ async function getThread(cookie: string, item: DataItem) {
             $('.postinfo')
                 .eq(0)
                 .text()
-                .match(/发表于 (.*)\s*只看该作者/)[1],
+                .match(/发表于 (.*)(?:[\n\r\u{2028}\u{2029}]\s*)?只看该作者/u)![1],
             'YYYY-M-D HH:mm'
         ),
         8
@@ -63,8 +64,8 @@ async function getThread(cookie: string, item: DataItem) {
             .eq(0)
             .html()
             ?.replaceAll('\n', '')
-            .replaceAll(/\u3000{2}.+?(((?:<br>){2})|(&nbsp;))/g, (str) => `<p>${str.replaceAll('<br>', '')}</p>`)
-            .replaceAll(/<p>\u3000{6,}(.+?)<\/p>/g, '<center><p style="text-align:center;">$1</p></center>')
+            .replaceAll(/\u{3000}{2}.+?(((?:<br>){2})|(&nbsp;))/gu, (str) => `<p>${str.replaceAll('<br>', '')}</p>`)
+            .replaceAll(/<p>\u{3000}{6,}([^\u{3000}\n\r\u{2028}\u{2029}].*?|\u{3000})<\/p>/gu, '<center><p style="text-align:center;">$1</p></center>')
             .replaceAll('&nbsp;', '')
             .replace(/<br><br> +<br><br>/, '') + ($('.defaultpost .postattachlist').html() ?? '');
     return item;

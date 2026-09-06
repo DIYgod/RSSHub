@@ -1,9 +1,11 @@
-import { Route, ViewType } from '@/types';
+import { load } from 'cheerio';
+
+import type { DataItem, Route } from '@/types';
+import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
-import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/ci-en/:id/article',
@@ -18,6 +20,7 @@ export const route: Route = {
         supportBT: false,
         supportPodcast: false,
         supportScihub: false,
+        nsfw: true,
     },
     radar: [
         {
@@ -46,18 +49,18 @@ async function handler(ctx) {
     let items = $('.c-postedArticle-info a')
         .slice(0, limit)
         .toArray()
-        .map((item) => {
-            item = $(item);
+        .map((item): DataItem => {
+            const $item = $(item);
 
             return {
-                title: item.text(),
-                link: item.attr('href'),
+                title: $item.text(),
+                link: $item.attr('href'),
             };
         });
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const detailResponse = await got({
                     method: 'get',
                     url: item.link,
@@ -67,15 +70,15 @@ async function handler(ctx) {
 
                 content('.article-title').remove();
 
-                content('.file-player-image').each(function () {
-                    content(this).replaceWith(`<img src="${content(this).attr('data-actual')}">`);
+                content('.file-player-image').each((_, el) => {
+                    content(el).replaceWith(`<img src="${content(el).attr('data-actual')}">`);
                 });
 
                 item.description = content('article').html();
-                item.pubDate = timezone(parseDate(content('.e-date').first().text()), +9);
+                item.pubDate = timezone(parseDate(content('.e-date').first().text()), 9);
                 item.category = content('.c-hashTagList-item')
                     .toArray()
-                    .map((t) => content(t).text().split('#').pop().trim());
+                    .map((t) => content(t).text().split('#').pop()!.trim());
 
                 return item;
             })

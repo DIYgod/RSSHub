@@ -1,5 +1,6 @@
 import cache from '@/utils/cache';
 import got from '@/utils/got';
+
 const wwwid_key = 'kuaidi100-wwwid';
 const csrf_key = 'kuaidi100-csrf';
 const globacsrftoken_key = 'kuaidi100-globacsrftoken';
@@ -30,29 +31,40 @@ async function getCookie() {
         const set_cookie = indexResponse.headers['set-cookie'];
         if (set_cookie) {
             for (const e of set_cookie) {
-                // eslint-disable-next-line unicorn/prefer-switch
-                if (e.indexOf('WWWID') === 0) {
-                    wwwid = e.split(';')[0];
-                } else if (e.indexOf('csrftoken') === 0) {
-                    csrf = e.split(';')[0];
-                } else if (e.indexOf('globacsrftoken') === 0) {
-                    globacsrftoken = e.split(';')[0];
-                } else if (e.includes('dasddocTitle')) {
-                    dasddocTitl = e.split(';')[0];
-                } else if (e.includes('dasddocReferrer')) {
-                    dasddocReferrer = e.split(';')[0];
-                } else if (e.includes('dasddocHref')) {
-                    dasddocHref = e.split(';')[0];
+                switch (0) {
+                    case e.indexOf('WWWID'):
+                        wwwid = e.split(';', 1)[0];
+
+                        break;
+
+                    case e.indexOf('csrftoken'):
+                        csrf = e.split(';', 1)[0];
+
+                        break;
+
+                    case e.indexOf('globacsrftoken'):
+                        globacsrftoken = e.split(';', 1)[0];
+
+                        break;
+
+                    default:
+                        if (e.includes('dasddocTitle')) {
+                            dasddocTitl = e.split(';', 1)[0];
+                        } else if (e.includes('dasddocReferrer')) {
+                            dasddocReferrer = e.split(';', 1)[0];
+                        } else if (e.includes('dasddocHref')) {
+                            dasddocHref = e.split(';', 1)[0];
+                        }
                 }
             }
         }
 
-        cache.set(wwwid_key, wwwid, 600);
-        cache.set(csrf_key, csrf, 600);
-        cache.set(globacsrftoken_key, globacsrftoken, 600);
-        cache.set(dasddocTitl_key, dasddocTitl, 600);
-        cache.set(dasddocReferrer_key, dasddocReferrer, 600);
-        cache.set(dasddocHref_key, dasddocHref, 600);
+        cache.set(wwwid_key, wwwid ?? '', 600);
+        cache.set(csrf_key, csrf ?? '', 600);
+        cache.set(globacsrftoken_key, globacsrftoken ?? '', 600);
+        cache.set(dasddocTitl_key, dasddocTitl ?? '', 600);
+        cache.set(dasddocReferrer_key, dasddocReferrer ?? '', 600);
+        cache.set(dasddocHref_key, dasddocHref ?? '', 600);
         // We have acquired new cookie. It may due to cache timeout.
         // Force update counter and don't wait it finished.
         shouldUpdateCookie(true);
@@ -89,7 +101,7 @@ async function getCookie() {
 */
 function getCompanyList() {
     // Using date as cache key and it will automatically expired by 1d
-    const key = `kuaidi100-company-name-${new Date().toISOString().split('T')[0]}`;
+    const key = `kuaidi100-company-name-${new Date().toISOString().split('T', 1)[0]}`;
     return cache.tryGet(key, async () => {
         const cookie = await getCookie();
         const wwwid = cookie.wwwid;
@@ -118,25 +130,25 @@ function getCompanyList() {
 
 function shouldUpdateCookie(forcedUpdate = false) {
     if (forcedUpdate) {
-        cache.set(query_count, 0);
+        cache.set(query_count, '');
     } else {
-        const count = cache.get(query_count);
+        const count = cache.get(query_count) as string | null;
         if (count) {
-            if (count > max_query_count) {
-                cache.set(query_count, 0);
+            if (Number(count) > max_query_count) {
+                cache.set(query_count, '');
                 clearCookie();
             } else {
                 cache.set(query_count, count + 1);
             }
         } else {
-            cache.set(query_count, 1);
+            cache.set(query_count, '1');
         }
     }
 }
 
 function clearCookie() {
-    cache.set(wwwid_key, null);
-    cache.set(csrf_key, null);
+    cache.set(wwwid_key, '');
+    cache.set(csrf_key, '');
 }
 
 export default {
@@ -151,28 +163,27 @@ export default {
                     message: '顺丰查询需要手机号后四位！',
                     company,
                 };
-            } else if (company.checkReg) {
+            }
+            if (company.checkReg) {
                 return {
                     status: true,
                     regex: new RegExp(company.checkReg).test(id),
                     company,
                 };
-            } else {
-                return {
-                    status: true,
-                    regex: undefined,
-                    company,
-                };
             }
-        } else {
             return {
-                status: false,
-                message: '快递公司编号不受支持！',
-                company: {
-                    name: '未知',
-                },
+                status: true,
+                regex: undefined,
+                company,
             };
         }
+        return {
+            status: false,
+            message: '快递公司编号不受支持！',
+            company: {
+                name: '未知',
+            },
+        };
     },
 
     /*
@@ -207,9 +218,9 @@ export default {
 
     getQuery: async (number, id, phone) => {
         const query_key = `kuaidi100-query-${number}-${id}`;
-        let query = await cache.get(query_key);
+        let query: any = await cache.get(query_key);
         // 组装日期与单号 日期为提前两个月
-        const timestamp = Number.parseInt(Date.now() / 1000);
+        const timestamp = Number.parseInt(String(Date.now() / 1000));
         const lastTowMonth = Date.now() - 60 * 60 * 24 * 60 * 1000;
         const dateString = new Date(lastTowMonth).toLocaleDateString('ZH').split('/').join('');
         const queryMeta = encodeURIComponent(
@@ -229,7 +240,6 @@ export default {
                 headers: {
                     Referer: 'https://www.kuaidi100.com/',
                     'Accept-Language': 'zh-CN,zh;q=0.9,en;q=0.8,ja;q=0.7',
-                    'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36',
                     Cookie: `${cookie.globacsrftoken}; ${cookie.csrf}; ${cookie.wwwid}; ${cookie.dasddocHref}; ${cookie.dasddocReferrer}; ${
                         cookie.dasddocTitl
                     }; addcom=${number}; addnu=${id}; snt_query_meta=${queryMeta}; sortStatus=0; Hm_lpvt_22ea01af58ba2be0fec7c11b25e88e6c=${timestamp}; Hm_lvt_22ea01af58ba2be0fec7c11b25e88e6c=${timestamp - 1642}`,
@@ -242,15 +252,16 @@ export default {
                     // 查无结果 appears when cookie is invaild, force update cookie.
                     clearCookie();
                     throw new Error('暂时无法获取快递信息，请稍后重试...');
-                } else if (query.ischeck === '0') {
+                }
+                if (query.ischeck === '0') {
                     // Not yet complete, don't cache for now.
                     // To avoid frquent link test when add source, add 180s cache
-                    cache.set(query_key, query, 180);
+                    cache.set(query_key, query ?? '', 180);
                 } else {
-                    cache.set(query_key, query); // Finished, cache id
+                    cache.set(query_key, query ?? ''); // Finished, cache id
                 }
             } else {
-                cache.set(query_key, query); // Error, cache as well
+                cache.set(query_key, query ?? ''); // Error, cache as well
                 throw new Error(`[${query.status}]信息有误，请重新检查后订阅：${query.message}`);
             }
         }

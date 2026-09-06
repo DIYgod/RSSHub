@@ -1,9 +1,0 @@
-<img src="{{ cover }}">
-<h1>{{ title }}</h1>
-<p>游戏TID：{{ tid }}</p>
-<p>类型：{{ category }}</p>
-<p>语言：{{ language }}</p>
-<p>更新日期：{{ pubDate }}</p>
-<p>系统要求：{{ system }}</p>
-<p>{{ score }}</p>
-<p>游戏版本：{{ version }}</p>

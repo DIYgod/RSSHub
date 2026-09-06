@@ -1,8 +1,11 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
+import { finishArticleItem } from '@/utils/wechat-mp';
 
 const host = 'https://jwc.njupt.edu.cn';
 
@@ -38,76 +41,39 @@ async function handler(ctx) {
     const response = await got({
         method: 'get',
         url: link,
-        headers: {
-            Referer: host,
-        },
     });
     const $ = load(response.data);
 
-    const urlList = $('.content')
-        .find('a')
-        .slice(0, 10)
+    const list = $('.news_list li')
         .toArray()
-        .map((e) => $(e).attr('href'));
+        .map((item): DataItem => {
+            const $item = $(item);
 
-    const titleList = $('.content')
-        .find('a')
-        .slice(0, 10)
-        .toArray()
-        .map((e) => $(e).attr('title'));
+            return {
+                title: $item.find('.news_title').text(),
+                link: new URL($item.find('a').attr('href')!, host).href,
+                pubDate: timezone(parseDate($item.find('.news_meta').text()), 8),
+            };
+        });
 
-    const dateList = $('.content tr')
-        .find('div')
-        .slice(0, 10)
-        .toArray()
-        .map((e) => $(e).text().replace('发布时间：', ''));
-
-    const out = await Promise.all(
-        urlList.map((itemUrl, index) => {
-            itemUrl = new URL(itemUrl, host).href;
-            if (itemUrl.includes('.htm')) {
-                return cache.tryGet(itemUrl, async () => {
-                    const response = await got.get(itemUrl);
-                    if (response.redirectUrls.length !== 0) {
-                        const single = {
-                            title: titleList[index],
-                            link: itemUrl,
-                            description: '该通知无法直接预览, 请点击原文链接↑查看',
-                            pubDate: parseDate(dateList[index]),
-                        };
-                        return single;
-                    }
-                    const $ = load(response.data);
-                    const single = {
-                        title: $('.Article_Title').text(),
-                        link: itemUrl,
-                        description: $('.wp_articlecontent')
-                            .html()
-                            .replaceAll('src="/', `src="${new URL('.', host).href}`)
-                            .replaceAll('href="/', `href="${new URL('.', host).href}`)
-                            .trim(),
-                        pubDate: parseDate($('.Article_PublishDate').text().replace('发布时间：', '')),
-                    };
-                    return single;
-                });
-            } else {
-                const single = {
-                    title: titleList[index],
-                    link: itemUrl,
-                    description: '该通知为文件，请点击原文链接↑下载',
-                    pubDate: parseDate(dateList[index]),
-                };
-                return single;
+    const items = await Promise.all(
+        list.map((item) => {
+            if (new URL(item.link!).host === 'mp.weixin.qq.com') {
+                return finishArticleItem({ ...item, guid: item.link });
             }
+
+            return cache.tryGet(item.link!, async () => {
+                const detailResponse = await got(item.link);
+                const $ = load(detailResponse.data);
+                item.description = $('.wp_articlecontent').html() ?? '该通知无法直接预览，请点击原文链接查看';
+                return item;
+            });
         })
     );
-    let info = '通知公告';
-    if (type === 'news') {
-        info = '教务快讯';
-    }
+
     return {
-        title: '南京邮电大学 -- ' + info,
+        title: `南京邮电大学 -- ${type === 'news' ? '教务快讯' : '通知公告'}`,
         link,
-        item: out,
+        item: items,
     };
 }

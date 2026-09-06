@@ -1,7 +1,8 @@
-import { Route } from '@/types';
-import { parseDate } from '@/utils/parse-date';
-import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
+
+import type { Route } from '@/types';
+import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: 'search/:keyword',
@@ -37,7 +38,7 @@ async function handler(ctx) {
         .toArray()
         .map((el) => {
             const $el = $(el);
-            const title = $el.find('.entry-title a').text().trim();
+            const title = $el.find('.entry-title a').text();
             return {
                 title,
                 link: $el.find('.entry-title a').attr('href'),

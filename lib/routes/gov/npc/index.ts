@@ -1,12 +1,13 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
 export const route: Route = {
-    path: '/npc/:caty',
+    path: '/:caty',
     categories: ['government'],
     example: '/gov/npc/c183',
     parameters: { caty: '分类名，支持形如 `http://www.npc.gov.cn/npc/c2/*/` 的网站，传入 npc 之后的参数' },
@@ -42,7 +43,7 @@ async function handler(ctx) {
     // 获取每条的链接
     const links = $('.clist a')
         .toArray()
-        .map((item) => new URL($(item).attr('href'), baseurl).href);
+        .map((item) => new URL($(item).attr('href')!, baseurl).href);
     // 获取标题、日期、内容
     const items = await Promise.all(
         links.map((link) =>
@@ -53,14 +54,14 @@ async function handler(ctx) {
                 const title = $('title').text().replace('_中国人大网', '');
                 const time = $('script:contains("fbrq")')
                     .text()
-                    .match(/fbrq = "(.*?)"/)[1];
+                    .match(/fbrq = "(.*?)"/)![1];
                 const description = $('#Zoom').html();
 
                 return {
                     title,
                     link,
                     description,
-                    pubDate: timezone(parseDate(time, 'YYYY年MM月DD日 HH:mm'), +8),
+                    pubDate: timezone(parseDate(time, 'YYYY年MM月DD日 HH:mm'), 8),
                 };
             })
         )

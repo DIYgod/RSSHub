@@ -1,7 +1,8 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
@@ -40,18 +41,18 @@ async function handler() {
 
     const list = $('.elementor-heading-title a')
         .toArray()
-        .map((item) => {
-            item = $(item);
+        .map((item): DataItem => {
+            const $item = $(item);
 
             return {
-                title: item.text(),
-                link: item.attr('href'),
+                title: $item.text(),
+                link: $item.attr('href'),
             };
         });
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const detailResponse = await got({
                     method: 'get',
                     url: item.link,
@@ -62,12 +63,12 @@ async function handler() {
                 content('.wp-block-spacer').remove();
                 content('.elementor-widget-container p').eq(0).remove();
 
-                content('img').each(function () {
-                    content(this).attr('src', content(this).attr('data-lazy-src'));
+                content('img').each((_, el) => {
+                    content(el).attr('src', content(el).attr('data-lazy-src'));
                 });
 
                 item.description = content('.elementor-widget-theme-post-content').html();
-                item.pubDate = parseDate(content('meta[property="article:modified_time"]').attr('content'));
+                item.pubDate = parseDate(content('meta[property="article:modified_time"]').attr('content')!);
 
                 return item;
             })

@@ -1,20 +1,28 @@
-import { Route } from '@/types';
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-import { ProcessForm, ProcessFeed } from './utils';
+
+import { ProcessFeed, ProcessForm } from './utils';
 
 export const route: Route = {
     path: '/user/:id?',
+    categories: ['game'],
+    example: '/lfsyd/user/55547',
+    parameters: { id: '用户 id' },
+    description: `可以在用户主页的 URL 中找到
+
+Example：\`https://www.iyingdi.com/tz/people/55547\` ，id 是 \`55547\``,
     radar: [
         {
             source: ['www.iyingdi.com/tz/people/:id', 'www.iyingdi.com/tz/people/:id/*'],
             target: '/user/:id',
         },
     ],
-    name: 'Unknown',
+    name: '用户的帖子',
     maintainers: ['auto-bot-ty'],
     handler,
+    url: 'www.iyingdi.com/',
 };
 
 async function handler(ctx) {

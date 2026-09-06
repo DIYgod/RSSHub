@@ -1,6 +1,7 @@
-import { Route } from '@/types';
-import got from '@/utils/got';
 import { load } from 'cheerio';
+
+import type { Route } from '@/types';
+import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
@@ -41,19 +42,20 @@ async function handler() {
     const items = $('.blog-content h4')
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
-            const title = item.text();
+            const title = $item.text();
 
             let description = '';
-            item.nextUntil('h4').each(function () {
-                description += $(this).html();
+            $item.nextUntil('h4').each((_, el) => {
+                description += $(el).html();
             });
             if (description === '') {
-                item.parent()
+                $item
+                    .parent()
                     .nextUntil('h4')
-                    .each(function () {
-                        description += $(this).html();
+                    .each((_, el) => {
+                        description += $(el).html();
                     });
             }
 
@@ -61,7 +63,7 @@ async function handler() {
                 title,
                 link: currentUrl,
                 description,
-                pubDate: parseDate(title.match(/\((.*)\)/)[1], ['D MMMM YYYY', 'D MMM YYYY']),
+                pubDate: parseDate(title.match(/\((.*)\)/)![1], ['D MMMM YYYY', 'D MMM YYYY']),
                 guid: title,
             };
         });

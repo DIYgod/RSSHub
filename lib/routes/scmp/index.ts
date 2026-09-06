@@ -1,8 +1,10 @@
-import { Route } from '@/types';
-import cache from '@/utils/cache';
 import { load } from 'cheerio';
+
+import type { Language, Route } from '@/types';
+import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+
 import { parseItem } from './utils';
 
 export const route: Route = {
@@ -54,13 +56,13 @@ async function handler(ctx) {
         .toArray()
         .map((elem) => {
             const item = $(elem);
-            const enclosure = item.find('enclosure').first();
+            const enclosure = item.find('enclosure');
             const mediaContent = item.find(String.raw`media\:content`).toArray()[0];
             const thumbnail = item.find(String.raw`media\:thumbnail`).toArray()[0];
             return {
                 title: item.find('title').text(),
                 description: item.find('description').text(),
-                link: item.find('link').text().split('?utm_source')[0],
+                link: item.find('link').text().split('?utm_source', 1)[0],
                 author: item.find('author').text(),
                 pubDate: parseDate(item.find('pubDate').text()),
                 enclosure_url: enclosure?.attr('url'),
@@ -84,7 +86,7 @@ async function handler(ctx) {
         link: $('channel > link').text(),
         description: $('channel > description').text(),
         item: items,
-        language: 'en-hk',
+        language: 'en-hk' as Language,
         icon: 'https://assets.i-scmp.com/static/img/icons/scmp-icon-256x256.png',
         logo: 'https://customerservice.scmp.com/img/logo_scmp@2x.png',
         image: $('channel > image > url').text(),

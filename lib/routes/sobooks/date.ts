@@ -1,5 +1,6 @@
-import { Route } from '@/types';
-import utils from './utils';
+import type { Route } from '@/types';
+
+import { utils } from './utils';
 
 export const route: Route = {
     path: '/date/:date?',

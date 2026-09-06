@@ -1,7 +1,9 @@
-import { Route, ViewType } from '@/types';
-import utils from './utils';
-import api from './api';
+import type { Route } from '@/types';
+import { ViewType } from '@/types';
 import logger from '@/utils/logger';
+
+import api from './api';
+import utils from './utils';
 
 export const route: Route = {
     path: '/user/:id/:routeParams?',
@@ -14,19 +16,19 @@ export const route: Route = {
     },
     features: {
         requireConfig: [
-            {
-                name: 'TWITTER_USERNAME',
-                description: 'Please see above for details.',
-            },
-            {
-                name: 'TWITTER_PASSWORD',
-                description: 'Please see above for details.',
-            },
-            {
-                name: 'TWITTER_AUTHENTICATION_SECRET',
-                description: 'TOTP 2FA secret, please see above for details.',
-                optional: true,
-            },
+            // {
+            //     name: 'TWITTER_USERNAME',
+            //     description: 'Please see above for details.',
+            // },
+            // {
+            //     name: 'TWITTER_PASSWORD',
+            //     description: 'Please see above for details.',
+            // },
+            // {
+            //     name: 'TWITTER_AUTHENTICATION_SECRET',
+            //     description: 'TOTP 2FA secret, please see above for details.',
+            //     optional: true,
+            // },
             {
                 name: 'TWITTER_AUTH_TOKEN',
                 description: 'Please see above for details.',
@@ -35,6 +37,14 @@ export const route: Route = {
                 name: 'TWITTER_THIRD_PARTY_API',
                 description: 'Use third-party API to query twitter data',
                 optional: true,
+            },
+            {
+                name: 'TWITTER_CONSUMER_KEY',
+                description: 'Please see above for details.',
+            },
+            {
+                name: 'TWITTER_CONSUMER_SECRET',
+                description: 'Please see above for details.',
             },
         ],
         requirePuppeteer: false,

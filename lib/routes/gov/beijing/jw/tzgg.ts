@@ -1,12 +1,13 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
-import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 export const route: Route = {
-    path: '/beijing/jw/tzgg',
+    path: '/jw/tzgg',
     categories: ['government'],
     example: '/gov/beijing/jw/tzgg',
     parameters: {},
@@ -42,21 +43,21 @@ async function handler() {
 
     let items = $('.col-md a')
         .toArray()
-        .map((item) => {
-            item = $(item);
+        .map((item): DataItem => {
+            const $item = $(item);
 
-            const link = item.attr('href');
+            const link = $item.attr('href');
 
             return {
-                title: item.text(),
-                link: link.startsWith('http') ? link : `${rootUrl}${link.replace(/^\./, '/tzgg')}`,
-                pubDate: parseDate(item.parent().find('span').text()),
+                title: $item.text(),
+                link: link!.startsWith('http') ? link : `${rootUrl}${link!.replace(/^\./, '/tzgg')}`,
+                pubDate: parseDate($item.parent().find('span').text()),
             };
         });
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const detailResponse = await got({
                     method: 'get',
                     url: item.link,
@@ -67,7 +68,7 @@ async function handler() {
                 const pubDate = content('meta[name="PubDate"]').attr('content');
 
                 item.author = content('meta[name="ContentSource"]').attr('content');
-                item.pubDate = pubDate ? timezone(parseDate(content('meta[name="PubDate"]').attr('content')), +8) : item.pubDate;
+                item.pubDate = pubDate ? timezone(parseDate(content('meta[name="PubDate"]').attr('content')!), 8) : item.pubDate;
                 item.description = content('.TRS_UEDITOR').html();
 
                 return item;

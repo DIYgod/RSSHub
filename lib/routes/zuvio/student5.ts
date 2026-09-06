@@ -1,9 +1,10 @@
-import { Route } from '@/types';
+import type { Data, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
-import { token, apiUrl, rootUrl, renderDesc, getBoards } from './utils';
+
+import { apiUrl, getBoards, renderDesc, rootUrl, token } from './utils';
 
 export const route: Route = {
     path: '/student5/:board?',
@@ -23,9 +24,9 @@ export const route: Route = {
     handler,
 };
 
-async function handler(ctx) {
+async function handler(ctx): Promise<Data> {
     const { board = '' } = ctx.req.param();
-    const title = board ? (await getBoards(cache.tryGet)).find((i) => i.boardId === board).title : '全部';
+    const title = board ? (await getBoards()).find((i) => i.boardId === board).title : '全部';
 
     const { data } = await got(`${apiUrl}/article`, {
         searchParams: {
@@ -42,7 +43,7 @@ async function handler(ctx) {
     const items = data.articles.map((item) => ({
         title: item.title,
         description: item.abstract,
-        pubDate: timezone(parseDate(item.created_at), +8),
+        pubDate: timezone(parseDate(item.created_at), 8),
         link: `${rootUrl}/article/${item.id}`,
         api: `${apiUrl}/article/${item.id}`,
         author: `${item.university} ${item.user_name}`,
@@ -73,6 +74,6 @@ async function handler(ctx) {
         image: 'https://s3.hicloud.net.tw/zuvio.public/public/system/images/irs_v4/chicken/shared/webshare.png',
         link: `${rootUrl}/articles`,
         item: items,
-        language: 'zh-Hant',
+        language: 'zh-Hant' as Language,
     };
 }

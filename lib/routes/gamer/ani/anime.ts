@@ -1,4 +1,5 @@
-import { Route, ViewType } from '@/types';
+import type { Route } from '@/types';
+import { ViewType } from '@/types';
 import got from '@/utils/got';
 
 export const route: Route = {
@@ -40,7 +41,7 @@ async function handler(ctx) {
     }
 
     const anime = response.data.anime;
-    const title = anime.title.replaceAll(/\[\d+?]$/g, '').trim();
+    const title = anime.title.replaceAll(/\[\d+\]$/g, '').trim();
 
     const items = anime.volumes[0]
         .map((item) => ({

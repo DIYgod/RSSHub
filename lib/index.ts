@@ -1,11 +1,13 @@
-import { serve } from '@hono/node-server';
-import logger from '@/utils/logger';
-import { getLocalhostAddress } from '@/utils/common-utils';
-import { config } from '@/config';
-import app from '@/app';
-import os from 'node:os';
 import cluster from 'node:cluster';
+import os from 'node:os';
 import process from 'node:process';
+
+import { serve } from '@hono/node-server';
+
+import app from '@/app';
+import { config } from '@/config';
+import { getLocalhostAddress } from '@/utils/common-utils';
+import logger from '@/utils/logger';
 
 const port = config.connect.port;
 const hostIPList = getLocalhostAddress();
@@ -32,7 +34,7 @@ if (config.enableCluster) {
         logger.info(`Worker ${process.pid} is running`);
         serve({
             fetch: app.fetch,
-            hostname: config.listenInaddrAny ? '::' : '127.0.0.1',
+            hostname: config.listenInaddrAny ? (config.disableIPv6 ? '0.0.0.0' : '::') : '127.0.0.1',
             port,
             serverOptions: {
                 maxHeaderSize: 1024 * 32,
@@ -50,7 +52,7 @@ if (config.enableCluster) {
 
     server = serve({
         fetch: app.fetch,
-        hostname: config.listenInaddrAny ? '::' : '127.0.0.1',
+        hostname: config.listenInaddrAny ? (config.disableIPv6 ? '0.0.0.0' : '::') : '127.0.0.1',
         port,
         serverOptions: {
             maxHeaderSize: 1024 * 32,

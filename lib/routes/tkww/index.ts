@@ -1,8 +1,8 @@
-import { Route } from '@/types';
-import cache from '@/utils/cache';
-import got from '@/utils/got';
 import { config } from '@/config';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
+import type { Route } from '@/types';
+import cache from '@/utils/cache';
+import got from '@/utils/got';
 
 export const route: Route = {
     path: '/:column{.+}?',
@@ -27,8 +27,7 @@ export const route: Route = {
         },
     ],
     handler,
-    description: `
-::: tip
+    description: `::: tip
 欄目可用\`名稱\`或對應網頁的\`path\`，
 如 \`https://www.tkww.hk/hong_kong\` 的欄目可以填\`香港\`或是\`hong_kong\`
 而 \`https://www.tkww.hk/china/shanghai\` 的欄目則需填\`china/shanghai\`
@@ -36,13 +35,13 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const column = ctx.req.param('column') ?? 'home';
+    const column: string = ctx.req.param('column') ?? 'home';
 
     const columns = await cache.tryGet('https://www.tkww.hk/columns.json', async () => await got('https://www.tkww.hk/columns.json'), config.cache.routeExpire, false);
 
     let metadata;
     let scope = columns.data.data;
-    for (const segment of column.split('/').filter((item) => typeof item === 'string')) {
+    for (const segment of column.split('/')) {
         metadata = scope.find((item) => item.name === segment || item.dirname === segment);
         scope = metadata?.children ?? [];
     }

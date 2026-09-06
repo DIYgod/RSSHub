@@ -1,7 +1,8 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
@@ -36,20 +37,20 @@ async function handler() {
     const list = $('div article')
         .toArray()
         .slice(0, -1) // last one is a dummy
-        .map((item) => {
-            item = $(item);
-            const meta = item.find('h5').first().text();
+        .map((item): DataItem => {
+            const $item = $(item);
+            const meta = $item.find('h5').first().text();
             return {
-                title: item.find('h3').text(),
-                link: item.find('h3 a').attr('href'),
-                author: meta.split('|')[0].trim(),
-                pubDate: parseDate(meta.split('|')[1].trim()),
+                title: $item.find('h3').text(),
+                link: $item.find('h3 a').attr('href'),
+                author: meta.split('|', 1)[0].trim(),
+                pubDate: parseDate(meta.split('|', 2)[1].trim()),
             };
         });
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const response = await got(item.link);
                 const $ = load(response.data);
                 $('h1').remove();

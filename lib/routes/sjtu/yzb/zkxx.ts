@@ -1,9 +1,10 @@
-import { Route } from '@/types';
-import cache from '@/utils/cache';
 import { load } from 'cheerio';
+
+import type { DataItem, Route } from '@/types';
+import cache from '@/utils/cache';
+import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import { fetchArticle } from '@/utils/wechat-mp';
-import ofetch from '@/utils/ofetch';
 
 const baseTitle = '上海交通大学研究生招生网招考信息';
 const baseUrl = 'https://yzb.sjtu.edu.cn/index/zkxx/';
@@ -38,10 +39,14 @@ async function handler(ctx) {
 
     const list = $('li[id^="line"] a')
         .toArray()
-        .map((elem) => ({
+        .map((elem): DataItem & { link: string } => ({
             link: new URL(elem.attribs.href, pageUrl).href,
             title: $(elem).text(),
-            pubDate: parseDate($(elem.next?.next).text().trim()),
+            pubDate: parseDate(
+                $(elem.next?.next ?? undefined)
+                    .text()
+                    .trim()
+            ),
         }));
 
     const items = await Promise.all(
@@ -49,26 +54,27 @@ async function handler(ctx) {
             cache.tryGet(item.link, async () => {
                 if (new URL(item.link).hostname === 'mp.weixin.qq.com') {
                     return await fetchArticle(item.link);
-                } else if (new URL(item.link).hostname === 'www.shmeea.edu.cn') {
+                }
+                if (new URL(item.link).hostname === 'www.shmeea.edu.cn') {
                     const detailResponse = await ofetch(item.link.replace('http://', 'https://'));
                     const content = load(detailResponse);
                     item.description = content('.Article_content').html();
                     return item;
-                } else if (new URL(item.link).hostname === 'yzb.sjtu.edu.cn') {
+                }
+                if (new URL(item.link).hostname === 'yzb.sjtu.edu.cn') {
                     const detailResponse = await ofetch(item.link);
                     const content = load(detailResponse);
                     item.description = content('[id^=vsb_content]').html();
                     return item;
-                } else {
-                    return item;
                 }
+                return item;
             })
         )
     );
 
     return {
         link: pageUrl,
-        title: `${baseTitle} -- ${$('title').text().split('-')[0]}`,
+        title: `${baseTitle} -- ${$('title').text().split('-', 1)[0]}`,
         item: items,
     };
 }

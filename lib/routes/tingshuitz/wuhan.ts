@@ -1,18 +1,26 @@
-import { Route } from '@/types';
+import type { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+
 const baseUrl = 'https://www.whwater.com';
 
 export const route: Route = {
     path: '/wuhan/:channelId?',
+    categories: ['forecast'],
+    example: '/tingshuitz/wuhan',
+    parameters: { channelId: '分类，见下表，默认为 68' },
+    description: `| channelId | 分类       |
+| --------- | ---------- |
+| 68        | 计划性停水 |
+| 69        | 突发性停水 |`,
     radar: [
         {
             source: ['whwater.com/IWater.shtml', 'whwater.com/'],
             target: '/wuhan',
         },
     ],
-    name: 'Unknown',
-    maintainers: [],
+    name: '武汉市',
+    maintainers: ['MoonBegonia'],
     handler,
     url: 'whwater.com/IWater.shtml',
 };

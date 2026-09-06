@@ -1,11 +1,12 @@
-import { Route } from '@/types';
-import got from '@/utils/got';
 import { load } from 'cheerio';
-import timezone from '@/utils/timezone';
+
+import type { Route } from '@/types';
+import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 export const route: Route = {
-    path: '/jinan/healthcommission/medical_exam_notice',
+    path: '/healthcommission/medical_exam_notice',
     categories: ['government'],
     example: '/gov/jinan/healthcommission/medical_exam_notice',
     parameters: {},
@@ -52,16 +53,16 @@ async function handler() {
         link: `${baseUrl}/col/col14418/index.html`,
         item: list.toArray().map((item) => {
             // 获取每个item对应的html字符串
-            item = $(item).text();
+            const $item = $(item).text();
 
             // 解析上一步中的html
-            const html = load(item);
+            const html = load($item);
 
             const title = html('td[width="620"] a').attr('title');
             const link = html('td[width="620"] a').attr('href');
-            const date = timezone(parseDate(html('td[width="100"]').text()), +8);
+            const date = timezone(parseDate(html('td[width="100"]').text()), 8);
             return {
-                title,
+                title: title!,
                 description: title,
                 pubDate: date,
                 link,

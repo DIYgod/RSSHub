@@ -1,6 +1,6 @@
-import { Route } from '@/types';
-import { parseDate } from '@/utils/parse-date';
+import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/profile/:handle',
@@ -41,7 +41,7 @@ async function handler(ctx) {
             variables: {
                 handle,
             },
-            query: `
+            query: /* GraphQL */ `
                 query getProfile($id: ID, $handle: String) {
                     profile(id: $id, handle: $handle) {
                         status
@@ -85,7 +85,6 @@ async function handler(ctx) {
                         }
                     }
                 }
-
             `,
         },
     });

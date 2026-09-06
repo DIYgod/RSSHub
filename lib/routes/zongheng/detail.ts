@@ -1,6 +1,7 @@
-import { DataItem, Route } from '@/types';
-import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
+
+import type { DataItem, Route } from '@/types';
+import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
@@ -23,7 +24,7 @@ export const route: Route = {
         },
     ],
     name: '章节更新',
-    maintainers: ['TonyRL'],
+    maintainers: ['georeth', 'TonyRL'],
     handler,
     url: 'www.zongheng.com',
 };
@@ -68,7 +69,7 @@ async function handler(ctx) {
 
     return {
         title: `${$('.book-info--title span').text()}（${author}）- 纵横中文网`,
-        description: `${$('.book-info--nums').text().trim()} ${description}`,
+        description: `${$('.book-info--nums').text()} ${description}`,
         link,
         allowEmpty: true,
         image: $('.book-info--coverImage-img').attr('src'),

@@ -1,0 +1,127 @@
+import { load } from 'cheerio';
+
+import type { Data, DataItem, Route } from '@/types';
+import cache from '@/utils/cache';
+import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
+
+export const route: Route = {
+    path: '/topic/:topic?',
+    categories: ['new-media'],
+    example: '/ctinews/topic/KDdek5vgXx',
+    parameters: {
+        topic: '話題 ID，可在 URL 中獲取，留空為 `KDdek5vgXx`',
+    },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: [
+        {
+            source: ['ctinews.com/news/topics/:topic', 'ctinews.com'],
+        },
+    ],
+    name: '話題',
+    maintainers: ['TonyRL'],
+    handler,
+    url: 'ctinews.com',
+};
+
+async function handler(ctx): Promise<Data> {
+    const { topic = 'KDdek5vgXx' } = ctx.req.param();
+    const baseUrl = 'https://www.ctinews.com';
+    const link = `${baseUrl}/news/topics/${topic}`;
+
+    const response = await ofetch(link);
+    const $ = load(response);
+
+    const list = [
+        ...$('.hero-news__layer .news-link')
+            .toArray()
+            .map((item) => {
+                const $item = $(item);
+                const href = $item.attr('href');
+                return {
+                    title: $item.attr('title')!,
+                    link: href?.startsWith('http') ? href : baseUrl + href,
+                };
+            }),
+        ...$('.second-section .news-link')
+            .toArray()
+            .map((item) => {
+                const $item = $(item);
+                const href = $item.attr('href');
+                return {
+                    title: $item.attr('title')!,
+                    link: href?.startsWith('http') ? href : baseUrl + href,
+                };
+            }),
+        ...$('.news-section .news-link.absolute')
+            .toArray()
+            .map((item) => {
+                const $item = $(item);
+                const href = $item.attr('href');
+                return {
+                    title: $item.attr('title')?.replace('點擊觀看', '') as string,
+                    link: href?.startsWith('http') ? href : baseUrl + href,
+                };
+            }),
+    ];
+
+    const seen = new Set<string>();
+    const dedupedList: Array<DataItem & { link: string }> = [];
+    for (const item of list) {
+        const link = item.link || '';
+        if (seen.has(link)) {
+            continue;
+        }
+        seen.add(link);
+        dedupedList.push(item);
+    }
+
+    const items = await Promise.all(
+        dedupedList.map((item) =>
+            cache.tryGet(item.link, async () => {
+                const response = await ofetch(item.link);
+                const $ = load(response);
+                if (item.link?.includes('/videos/')) {
+                    const ldJson = JSON.parse($('script[type="application/ld+json"]:contains("VideoObject")').text());
+                    const videoId = ldJson.embedUrl.match(/embed\/([\w-]+)/)?.[1];
+
+                    item.description =
+                        `<iframe id="ytplayer" type="text/html" width="640" height="360" src="https://www.youtube-nocookie.com/embed/${videoId}" frameborder="0" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe><br>` +
+                        ldJson.description.replaceAll('\n', '<br>');
+                    item.pubDate = timezone(parseDate(ldJson.uploadDate), 8);
+                    item.image = ldJson.thumbnailUrl[0];
+
+                    return item;
+                }
+
+                const ldJson = JSON.parse($('script[type="application/ld+json"]:contains("NewsArticle")').text());
+                const description = $('.rendered-content');
+                description.find('.show-in-md, .article-promote-items, [data-ad-part]').remove();
+
+                item.description = description.html();
+                item.pubDate = parseDate(ldJson.datePublished);
+                item.category = [...new Set([ldJson.articleSection, ...ldJson.keywords])];
+                item.author = ldJson.author?.name ?? ldJson.publisher?.name;
+
+                return item;
+            })
+        )
+    );
+
+    return {
+        title: $('title').text(),
+        description: $('meta[name="description"]').attr('content'),
+        link,
+        image: `${baseUrl}/favicon.ico`,
+        language: 'zh-TW',
+        item: items,
+    };
+}

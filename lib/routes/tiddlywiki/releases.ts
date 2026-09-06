@@ -1,8 +1,8 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
 
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
@@ -40,9 +40,9 @@ async function handler() {
     const versionList = alist
         .toArray()
         .map((item) => {
-            item = $(item);
-            const text = item.find('title').text();
-            const date = item.find('updated').text();
+            const $item = $(item);
+            const text = $item.find('title').text();
+            const date = $item.find('updated').text();
             // 使用正则提取 v5.3.6 格式
             const version = text.match(/v\d+\.\d+\.\d+/)?.[0];
             return {
@@ -54,7 +54,7 @@ async function handler() {
 
     const items = await Promise.all(
         versionList.map((item) => {
-            const _version = item.version.slice(1);
+            const _version = item.version!.slice(1);
             const url = `https://tiddlywiki.com/static/Release%2520${_version}.html`;
             return cache.tryGet(url, async () => {
                 const response = await got({
@@ -67,7 +67,7 @@ async function handler() {
                 const description = $('.tc-tiddler-body').html();
 
                 return {
-                    title: item.version,
+                    title: item.version!,
                     link: url,
                     pubDate: item.pubDate,
                     description,

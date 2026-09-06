@@ -1,9 +1,11 @@
-import { Route, ViewType } from '@/types';
 import { config } from '@/config';
+import type { Language, Route } from '@/types';
+import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
-import { Podcast, PodcastInfo } from './types';
+
+import type { Podcast, PodcastInfo } from './types';
 
 const handler = async (ctx) => {
     const { id } = ctx.req.param();
@@ -11,19 +13,19 @@ const handler = async (ctx) => {
     const apiEndpoint = 'https://api.soundon.fm/v2/client';
     const apiToken = 'KilpEMLQeNzxmNBL55u5';
 
-    const podcastInfo = (await cache.tryGet(`soundon:${id}`, async () => {
-        const response = await ofetch(`${apiEndpoint}/podcasts/${id}`, {
+    const podcastInfo = await cache.tryGet(`soundon:${id}`, async () => {
+        const response = await ofetch<{ data: { data: PodcastInfo } }>(`${apiEndpoint}/podcasts/${id}`, {
             headers: {
                 'api-token': apiToken,
             },
         });
         return response.data.data;
-    })) as PodcastInfo;
+    });
 
-    const episodes = (await cache.tryGet(
+    const episodes = await cache.tryGet(
         `soundon:${id}:episodes`,
         async () => {
-            const response = await ofetch(`${apiEndpoint}/podcasts/${id}/episodes`, {
+            const response = await ofetch<{ data: Podcast[] }>(`${apiEndpoint}/podcasts/${id}/episodes`, {
                 headers: {
                     'api-token': apiToken,
                 },
@@ -32,7 +34,7 @@ const handler = async (ctx) => {
         },
         config.cache.routeExpire,
         false
-    )) as Podcast[];
+    );
 
     const items = episodes.map(({ data: item }) => ({
         title: item.title,
@@ -54,7 +56,7 @@ const handler = async (ctx) => {
         itunes_category: podcastInfo.itunesCategories.join(', '),
         itunes_explicit: podcastInfo.explicit,
         image: podcastInfo.cover,
-        language: podcastInfo.language,
+        language: podcastInfo.language as Language,
         link: podcastInfo.url,
         item: items,
     };

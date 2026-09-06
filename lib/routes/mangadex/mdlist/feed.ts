@@ -1,14 +1,29 @@
-import { Route } from '@/types';
-import got from '@/utils/got';
-import getToken from '../_access';
-import cache from '@/utils/cache';
 import { config } from '@/config';
+import type { Route } from '@/types';
+import cache from '@/utils/cache';
+import got from '@/utils/got';
+
+import getToken from '../_access';
 import constants from '../_constants';
-import { getFilteredLanguages } from '../_profile';
 import { getMangaMetaByIds } from '../_feed';
+import { getFilteredLanguages } from '../_profile';
 import { toQueryString } from '../_utils';
 
 const DEFAULT_LIMIT = 25;
+
+/**
+ * @see https://api.mangadex.org/docs/redoc.html#tag/CustomList/operation/get-list-id-feed
+ */
+interface Chapter {
+    id: string;
+    attributes: {
+        volume: string | null;
+        chapter: string | null;
+        title: string | null;
+        publishAt: string;
+    };
+    relationships: Array<{ id: string; type: string }>;
+}
 
 export const route: Route = {
     name: 'MDList Feed',
@@ -59,6 +74,7 @@ export const route: Route = {
                 optional: true,
             },
         ],
+        nsfw: true,
     },
     handler,
 };
@@ -71,9 +87,10 @@ async function handler(ctx) {
 
     const accessToken = isPrivate ? await getToken() : undefined;
 
-    const languagesQuery = new Set([...(typeof lang === 'string' ? [lang] : lang || []), ...(await getFilteredLanguages())].filter(Boolean));
+    const filteredLanguages = await getFilteredLanguages();
+    const languagesQuery = new Set([...(lang ? [lang] : []), ...filteredLanguages].filter(Boolean));
 
-    const { listName, listAuthor } = (await cache.tryGet(
+    const { listName, listAuthor } = await cache.tryGet<{ listName: string; listAuthor: string | undefined }>(
         `mangadex:mdlist-info-${id}`,
         async () => {
             const response = await got.get(
@@ -82,7 +99,7 @@ async function handler(ctx) {
                 })}`,
                 {
                     headers: {
-                        Authorization: String(isPrivate ? `Bearer ${accessToken}` : ''),
+                        Authorization: isPrivate ? `Bearer ${accessToken}` : '',
                         'User-Agent': config.trueUA,
                     },
                 }
@@ -99,9 +116,9 @@ async function handler(ctx) {
             return { listName, listAuthor };
         },
         config.cache.contentExpire
-    )) as Record<string, any>;
+    );
 
-    const feed = (await cache.tryGet(
+    const feed = await cache.tryGet<Chapter[]>(
         `mangadex:mdlist-feed-${id}`,
         async () => {
             const response = await got.get(
@@ -114,7 +131,7 @@ async function handler(ctx) {
                 })}`,
                 {
                     headers: {
-                        Authorization: String(isPrivate ? `Bearer ${accessToken}` : ''),
+                        Authorization: isPrivate ? `Bearer ${accessToken}` : '',
                         'User-Agent': config.trueUA,
                     },
                 }
@@ -129,9 +146,9 @@ async function handler(ctx) {
         },
         config.cache.routeExpire,
         false
-    )) as Record<string, any>[];
+    );
 
-    const mangaIds = feed.map((chapter) => chapter?.relationships.find((relationship) => relationship.type === 'manga')?.id);
+    const mangaIds = feed.map((chapter) => chapter.relationships.find((relationship) => relationship.type === 'manga')?.id).filter((mangaId) => mangaId !== undefined);
 
     const mangaMetas = await getMangaMetaByIds(mangaIds);
 
@@ -141,7 +158,7 @@ async function handler(ctx) {
         description: 'The latest updates of all the manga in a sepcific list',
         item: feed.map((chapter) => {
             const mangaId = chapter.relationships.find((relationship) => relationship.type === 'manga')?.id;
-            const mangaMeta = mangaMetas.get(mangaId);
+            const mangaMeta = mangaId === undefined ? undefined : mangaMetas.get(mangaId);
             const chapterTitile = [chapter.attributes.volume ? `Vol. ${chapter.attributes.volume}` : null, chapter.attributes.chapter ? `Ch. ${chapter.attributes.chapter}` : null, chapter.attributes.title].filter(Boolean).join(' ');
 
             return {

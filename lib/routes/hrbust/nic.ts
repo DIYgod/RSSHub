@@ -1,9 +1,11 @@
-import { Route, ViewType } from '@/types';
+import { load } from 'cheerio';
+
+import type { DataItem, Route } from '@/types';
+import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
-import { load } from 'cheerio';
 
 export const route: Route = {
     path: '/nic/:category?',
@@ -14,7 +16,7 @@ export const route: Route = {
     example: '/hrbust/nic',
     parameters: { category: '栏目标识，默认为 3988（新闻动态）' },
     description: `| 服务指南 | 常见问题 | 新闻动态 | 通知公告 | 国家政策法规 | 学校规章制度 | 部门规章制度 | 宣传教育 | 安全法规 |
-|----------|----------|----------|----------|--------------|--------------|--------------|----------|----------|
+| -------- | -------- | -------- | -------- | ------------ | ------------ | ------------ | -------- | -------- |
 | 3982     | 3983     | 3988     | 3989     | 3990         | 3991         | 3992         | 3993     | 3994     |`,
     categories: ['university'],
     features: {
@@ -50,13 +52,13 @@ async function handler(ctx) {
 
     const list = $('ul.news_list.list2 li')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem & { link: string } => {
             const element = $(item);
             const title = element.find('a').text().trim();
-            const link = new URL(element.find('a').attr('href'), rootUrl).href;
+            const link = new URL(element.find('a').attr('href')!, rootUrl).href;
 
             const pubDateText = element.find('span.news_meta').text().trim();
-            const pubDate = pubDateText ? timezone(parseDate(pubDateText), +8) : null;
+            const pubDate = pubDateText ? timezone(parseDate(pubDateText), 8) : null;
             return {
                 title,
                 pubDate,
@@ -80,7 +82,7 @@ async function handler(ctx) {
                 const body = $('div.wp_articlecontent');
                 body.find('[style]').removeAttr('style');
                 body.find('font').contents().unwrap();
-                body.html(body.html()?.replaceAll('&nbsp;', ''));
+                body.html(body.html()?.replaceAll('&nbsp;', '') ?? '');
                 body.find('[align]').removeAttr('align');
                 item.description = body.html();
                 return item;
@@ -91,7 +93,7 @@ async function handler(ctx) {
     return {
         title: `${bigTitle} - 哈尔滨理工大学网络信息中心`,
         link: columnUrl,
-        language: 'zh-CN',
+        language: 'zh-CN' as const,
         item: items,
     };
 }

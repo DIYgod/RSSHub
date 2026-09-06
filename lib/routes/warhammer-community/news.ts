@@ -1,9 +1,9 @@
-import { Route } from '@/types';
-import cache from '@/utils/cache';
+import { load } from 'cheerio';
 
+import type { Route } from '@/types';
+import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
-import { load } from 'cheerio';
 
 export const route: Route = {
     path: '/news',
@@ -22,7 +22,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const baseUrl = 'https://www.warhammer-community.com';
-    const limit = Number.parseInt(ctx.req.query('limit') || '16', 10);
+    const limit = Number(ctx.req.query('limit') || '16');
 
     const response = await ofetch(`${baseUrl}/api/search/news/`, {
         method: 'POST',

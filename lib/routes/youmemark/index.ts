@@ -1,7 +1,8 @@
-import { Route, Data } from '@/types';
+import { load } from 'cheerio';
+
+import type { Data, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
-import { load } from 'cheerio';
 
 export const route: Route = {
     path: '/:userid',
@@ -27,7 +28,7 @@ export const route: Route = {
     ],
     description: `Get user's public bookmarks from YouMeMark
 ::: tip
-  Add \`?limit=<number>\` to the end of the route to limit the number of items. Default is 10.
+Add \`?limit=<number>\` to the end of the route to limit the number of items. Default is 10.
 :::`,
 };
 
@@ -35,11 +36,7 @@ async function handler(ctx): Promise<Data> {
     const userid = ctx.req.param('userid');
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 10;
 
-    const response = await ofetch(`https://youmemark.com/user/${userid}`, {
-        headers: {
-            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-        },
-    });
+    const response = await ofetch(`https://youmemark.com/user/${userid}`);
 
     const $ = load(response);
 
@@ -84,5 +81,5 @@ async function handler(ctx): Promise<Data> {
         image: avatar,
         item: items.slice(0, limit),
         language: 'en',
-    } as Data;
+    };
 }

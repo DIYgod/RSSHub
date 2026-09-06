@@ -1,10 +1,11 @@
-import { Route } from '@/types';
-import got from '@/utils/got';
-import cache from './cache';
 import { config } from '@/config';
-import utils from './utils';
-import { parseDate } from '@/utils/parse-date';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
+import type { Route } from '@/types';
+import got from '@/utils/got';
+import { parseDate } from '@/utils/parse-date';
+
+import cache from './cache';
+import utils from './utils';
 
 export const route: Route = {
     path: '/watchlater/:uid/:embed?',
@@ -32,7 +33,7 @@ export const route: Route = {
     maintainers: ['JimenezLi'],
     handler,
     description: `::: warning
-  用户稍后再看需要 b 站登录后的 Cookie 值，所以只能自建，详情见部署页面的配置模块。
+用户稍后再看需要 b 站登录后的 Cookie 值，所以只能自建，详情见部署页面的配置模块。
 :::`,
 };
 
@@ -48,7 +49,7 @@ async function handler(ctx) {
 
     const response = await got({
         method: 'get',
-        url: `https://api.bilibili.com/x/v2/history/toview`,
+        url: 'https://api.bilibili.com/x/v2/history/toview',
         headers: {
             Referer: `https://space.bilibili.com/${uid}/`,
             Cookie: cookie,

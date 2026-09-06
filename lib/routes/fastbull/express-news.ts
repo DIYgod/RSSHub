@@ -1,6 +1,8 @@
-import { Route, ViewType } from '@/types';
-import got from '@/utils/got';
 import { load } from 'cheerio';
+
+import type { Route } from '@/types';
+import { ViewType } from '@/types';
+import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
@@ -42,12 +44,12 @@ async function handler() {
     const items = $('.news-list')
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
             return {
-                title: item.find('.title_name').text(),
-                pubDate: parseDate(Number.parseInt(item.attr('data-date'))),
-                link: `${rootUrl}${item.find('.title_name').attr('href')}`,
+                title: $item.find('.title_name').text(),
+                pubDate: parseDate(Number.parseInt($item.attr('data-date')!)),
+                link: `${rootUrl}${$item.find('.title_name').attr('href')}`,
             };
         });
 

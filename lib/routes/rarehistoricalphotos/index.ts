@@ -1,4 +1,4 @@
-import { Route } from '@/types';
+import type { Language, Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
@@ -6,13 +6,15 @@ const baseUrl = 'https://rarehistoricalphotos.com';
 
 export const route: Route = {
     path: '/',
+    categories: ['picture'],
+    example: '/rarehistoricalphotos',
     radar: [
         {
             source: ['rarehistoricalphotos.com/'],
             target: '',
         },
     ],
-    name: 'Unknown',
+    name: 'Home',
     maintainers: ['TonyRL'],
     handler,
     url: 'rarehistoricalphotos.com/',
@@ -37,7 +39,7 @@ async function handler(ctx) {
         description: 'And the story behind them...',
         link: baseUrl,
         image: 'https://rarehistoricalphotos.com/wp-content/uploads/2022/04/cropped-rarehistoricalphotos-32x32.png',
-        language: 'en-US',
+        language: 'en-us' as const satisfies Language,
         item: items,
     };
 }

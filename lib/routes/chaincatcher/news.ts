@@ -1,6 +1,7 @@
-import { Route } from '@/types';
-import got from '@/utils/got';
 import { load } from 'cheerio';
+
+import type { Route } from '@/types';
+import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
@@ -44,14 +45,14 @@ async function handler() {
     const items = $('.block')
         .toArray()
         .map((item) => {
-            item = $(item);
-            item.find('.tips').remove();
-            const act = !!item.find('.act-title').text();
+            const $item = $(item);
+            $item.find('.tips').remove();
+            const act = !!$item.find('.act-title').text();
             return {
-                title: `${act ? '[重] ' : ''}${item.find('.title').text()}`,
-                description: item.find('.summary').text(),
-                link: `${rootUrl}${item.find('a').first().attr('href')}`,
-                pubDate: timezone(parseDate(item.find('.time').text(), 'YYYY-MM-DD HH:mm:ss'), 8),
+                title: `${act ? '[重] ' : ''}${$item.find('.title').text()}`,
+                description: $item.find('.summary').text(),
+                link: `${rootUrl}${$item.find('a').first().attr('href')}`,
+                pubDate: timezone(parseDate($item.find('.time').text(), 'YYYY-MM-DD HH:mm:ss'), 8),
             };
         });
 

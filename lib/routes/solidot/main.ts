@@ -1,15 +1,16 @@
-import { Route, ViewType } from '@/types';
+import { load } from 'cheerio'; // html parser
+
+import InvalidParameterError from '@/errors/types/invalid-parameter';
+import type { Route } from '@/types';
+import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 // Warning: The author still knows nothing about javascript!
-
 // params:
 // type: subject type
-
 import got from '@/utils/got'; // get web content
-import { load } from 'cheerio'; // html parser
-import get_article from './_article';
 import { isValidHost } from '@/utils/valid-host';
-import InvalidParameterError from '@/errors/types/invalid-parameter';
+
+import get_article from './_article';
 
 export const route: Route = {
     path: '/:type?',
@@ -70,13 +71,10 @@ async function handler(ctx) {
 
     // get urls
     const a = $('div.block_m').find('div.bg_htit > h2 > a');
-    const urls = [];
-    for (const element of a) {
-        urls.push($(element).attr('href'));
-    }
+    const urls = Array.from(a, (element) => $(element).attr('href'));
 
     // get articles
-    const msg_list = await Promise.all(urls.map((u) => cache.tryGet(u, () => get_article(u))));
+    const msg_list = await Promise.all(urls.map((u) => cache.tryGet(u!, () => get_article(u))));
 
     // feed the data
     return {

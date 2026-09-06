@@ -1,14 +1,14 @@
-import { type Context } from 'hono';
+import type { Context } from 'hono';
 
-import { type DataItem, type Route, type Data, ViewType } from '@/types';
-
+import type { Data, DataItem, Route } from '@/types';
+import { ViewType } from '@/types';
 import ofetch from '@/utils/ofetch';
 
-import { author, language, rootUrl, processItems } from './util';
+import { author, language, processItems, rootUrl } from './util';
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { keywords } = ctx.req.param();
-    const limit: number = Number.parseInt(ctx.req.query('limit') ?? '30', 10);
+    const limit = Number(ctx.req.query('limit') ?? '30');
 
     const targetUrl: string = new URL(`search-result/?s=${keywords}`, rootUrl).href;
     const apiUrl: string = new URL('api/articles/searchkeywords', rootUrl).href;
@@ -46,8 +46,7 @@ export const route: Route = {
     },
     description: `::: tip
 若订阅 [关键词：NPC](https://n.ifun.cool/search-result/?s=NPC)，网址为 \`https://n.ifun.cool/search-result/?s=NPC\`，请截取 \`s\` 的值 \`NPC\` 作为 \`keywords\` 参数填入，此时目标路由为 [\`/ifun/n/search/NPC\`](https://rsshub.app/ifun/n/search/NPC)。
-:::
-    `,
+:::`,
     categories: ['new-media'],
     features: {
         requireConfig: false,

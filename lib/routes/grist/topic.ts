@@ -1,4 +1,5 @@
-import { Route } from '@/types';
+import type { Data, Route } from '@/types';
+
 import { getData, getList } from './utils';
 
 export const route: Route = {
@@ -70,7 +71,7 @@ export const route: Route = {
 | Video                    | video              |`,
 };
 
-async function handler(ctx) {
+async function handler(ctx): Promise<Data> {
     const baseUrl = 'https://grist.org';
     const searchRoute = '/wp-json/wp/v2/categories?slug=';
     const articleRoute = '/wp-json/wp/v2/posts?categories=';

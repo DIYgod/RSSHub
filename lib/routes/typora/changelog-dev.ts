@@ -1,6 +1,7 @@
-import { Route } from '@/types';
-import got from '@/utils/got';
 import { load } from 'cheerio';
+
+import type { Route } from '@/types';
+import got from '@/utils/got';
 
 export const route: Route = {
     path: '/changelog/dev',
@@ -36,11 +37,11 @@ async function handler() {
     const items = $('h2')
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
             return {
-                title: item.text(),
-                link: `${currentUrl}#${item.text()}`,
-                description: item
+                title: $item.text(),
+                link: `${currentUrl}#${$item.text()}`,
+                description: $item
                     .nextUntil('h2')
                     .toArray()
                     .map((item) => $(item).html())
@@ -49,7 +50,7 @@ async function handler() {
         });
 
     return {
-        title: `Typora Changelog - Dev`,
+        title: 'Typora Changelog - Dev',
         link: currentUrl,
         description: 'Typora Changelog',
         item: items,

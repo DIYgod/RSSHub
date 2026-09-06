@@ -1,7 +1,8 @@
-import { Route } from '@/types';
+import { load } from 'cheerio'; // cheerio@1.0.0
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio'; // cheerio@1.0.0
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
@@ -34,8 +35,8 @@ export const route: Route = {
     handler,
     url: 'www.shu.edu.cn/',
     description: `| 文化信息 | 学术报告 |
-| -------- | --------- |
-| whxx     | xsbg      |`,
+| -------- | -------- |
+| whxx     | xsbg     |`,
 };
 
 async function handler(ctx) {
@@ -68,7 +69,7 @@ async function handler(ctx) {
             return {
                 title: item.find('p.bt').text().trim(), // 获取标题
                 link: rawLink ? new URL(rawLink, rootUrl).href : rootUrl, // 生成完整链接
-                pubDate: timezone(parseDate(`${dateParts[1]}-${dateParts[0]}`, 'MM-DD'), +8), // 拼接并解析日期
+                pubDate: timezone(parseDate(`${dateParts[1]}-${dateParts[0]}`, 'MM-DD'), 8), // 拼接并解析日期
                 description: item.find('div.zy').text().trim(), // 提取简要描述
             };
         });

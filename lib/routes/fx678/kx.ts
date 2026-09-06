@@ -1,6 +1,8 @@
-import { Route, ViewType } from '@/types';
-import cache from '@/utils/cache';
 import { load } from 'cheerio';
+
+import type { Route } from '@/types';
+import { ViewType } from '@/types';
+import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
@@ -43,17 +45,17 @@ async function handler() {
 
     const out = await Promise.all(
         list.map((itemUrl) =>
-            cache.tryGet(itemUrl, async () => {
+            cache.tryGet(itemUrl!, async () => {
                 const res = await got.get(itemUrl);
                 const $ = load(res.data);
 
-                const contentPart = $('.article-main .content').html().trim();
-                const forewordPart = $('.article-main .foreword').html().trim();
+                const contentPart = $('.article-main .content').html()!.trim();
+                const forewordPart = $('.article-main .foreword').html()!.trim();
                 const datetimeString = $('.article-cont .details i').text().trim();
-                const articlePubDate = timezone(parseDate(datetimeString, 'YYYY-MM-DD HH:mm:ss'), +8);
+                const articlePubDate = timezone(parseDate(datetimeString, 'YYYY-MM-DD HH:mm:ss'), 8);
 
                 const item = {
-                    title: $('.article-main .foreword').text().trim().split('——').pop(),
+                    title: $('.article-main .foreword').text().trim().split('——').pop()!,
                     link: itemUrl,
                     description: contentPart.length > 1 ? contentPart : forewordPart,
                     pubDate: articlePubDate,

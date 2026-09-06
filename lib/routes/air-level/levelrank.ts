@@ -1,9 +1,10 @@
-import { Route } from '@/types';
-import ofetch from '@/utils/ofetch'; // 统一使用的请求库
 import { load } from 'cheerio'; // 类似 jQuery 的 API HTML 解析器
 
+import type { Route } from '@/types';
+import ofetch from '@/utils/ofetch'; // 统一使用的请求库
+
 export const route: Route = {
-    path: ['/rank/:status?'],
+    path: '/rank/:status?',
     radar: [
         {
             source: ['m.air-level.com/rank/:status', 'm.air-level.com/rank'],
@@ -36,9 +37,7 @@ async function handler(ctx) {
         if (status === 'best') {
             title = titleBest;
             table = `<table border="1 solid black">${tableBest}</table>`;
-        }
-
-        if (status === 'worsest') {
+        } else if (status === 'worsest') {
             title = titleWorst;
             table = `<table border="1 solid black">${tableWorst}</table>`;
         }

@@ -1,36 +1,37 @@
-import { type Data, type DataItem, type Route, ViewType } from '@/types';
+import type { Cheerio, CheerioAPI } from 'cheerio';
+import { load } from 'cheerio';
+import type { Element } from 'domhandler';
+import type { Context } from 'hono';
 
+import type { Data, DataItem, Language, Route } from '@/types';
+import { ViewType } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
-import { type CheerioAPI, type Cheerio, load } from 'cheerio';
-import type { Element } from 'domhandler';
-import { type Context } from 'hono';
-
 export const handler = async (ctx: Context): Promise<Data> => {
-    const limit: number = Number.parseInt(ctx.req.query('limit') ?? '100', 10);
+    const limit = Number(ctx.req.query('limit') ?? '100');
 
-    const baseUrl: string = 'https://windsurf.com';
+    const baseUrl = 'https://windsurf.com';
     const targetUrl: string = new URL('changelog', baseUrl).href;
 
     const response = await ofetch(targetUrl);
     const $: CheerioAPI = load(response);
-    const language = $('html').attr('lang') ?? 'en';
+    const language = ($('html').attr('lang') ?? 'en') as Language;
 
-    const title: string = $('title').first().text();
+    const title: string = $('title').text();
     const author: string | undefined = title.split(/\|/).pop()?.trim();
 
     const items: DataItem[] = $('div[aria-label="changelog-layout"]')
         .slice(0, limit)
         .toArray()
-        .map((el): Element => {
+        .map((el) => {
             const $el: Cheerio<Element> = $(el).parent();
 
             const version: string | undefined = $el.find('header div').first().text()?.trim();
             const h1: string | undefined = $el.find('article h1').text()?.trim();
 
             const title: string = [version, h1].filter(Boolean).join(' ');
-            const description: string | undefined = $el.find('article div').first()?.html() ?? undefined;
+            const description = $el.find('article div').first()?.html();
             const pubDateStr: string | undefined = $el.find('header div').last().text()?.trim();
             const guid: string = version ? `windsurf-${version}` : '';
             const image: string | undefined = $el.find('article img').attr('src');

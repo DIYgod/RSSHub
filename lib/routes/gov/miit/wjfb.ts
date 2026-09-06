@@ -1,13 +1,14 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
 const rootUrl = 'https://www.miit.gov.cn';
 
 export const route: Route = {
-    path: '/miit/wjfb/:ministry',
+    path: '/wjfb/:ministry',
     categories: ['government'],
     example: '/gov/miit/wjfb/ghs',
     parameters: { ministry: '部门缩写，可以在对应 URL 中获取' },
@@ -34,18 +35,18 @@ async function handler(ctx) {
     const url = `${rootUrl}/jgsj/${ministry}/wjfb/index.html`;
 
     const cookieResponse = await got(url);
-    const cookie = cookieResponse.headers['set-cookie'][0].split(';')[0];
+    const cookie = cookieResponse.headers['set-cookie'][0].split(';', 1)[0];
     const indexContent = load(cookieResponse.data);
     const title = indexContent('div.dqwz > a:nth-child(4)').text();
     const dataRequestUrl = indexContent('div.lmy_main_rb > script:nth-child(2)')
         .toArray()
         .map((item) => ({
             url: `${rootUrl}${indexContent(item).attr('url')}`,
-            queryData: JSON.parse(indexContent(item).attr('querydata').replaceAll('"', '|').replaceAll("'", '"').replaceAll('|', '"')),
+            queryData: JSON.parse(indexContent(item).attr('querydata')!.replaceAll('"', '|').replaceAll(/['|]/g, '"')),
         }))[0];
 
-    const dataUrl = `${dataRequestUrl.url}?${Object.keys(dataRequestUrl.queryData)
-        .map((key) => `${key}=${dataRequestUrl.queryData[key]}`)
+    const dataUrl = `${dataRequestUrl.url}?${Object.entries(dataRequestUrl.queryData)
+        .map(([key, value]) => `${key}=${value}`)
         .join('&')}`;
     const response = await got({
         method: 'get',
@@ -57,9 +58,9 @@ async function handler(ctx) {
     const $ = load(response.data.data.html);
     const list = $('ul > li')
         .toArray()
-        .map((item) => ({
+        .map((item): DataItem & { link: string } => ({
             title: $(item).find('a').text(),
-            link: new URL($(item).find('a').attr('href'), rootUrl).href,
+            link: new URL($(item).find('a').attr('href')!, rootUrl).href,
             pubDate: parseDate($(item).find('span').text(), 'YYYY-MM-DD'),
         }));
 
@@ -69,9 +70,7 @@ async function handler(ctx) {
                 const detailResponse = await got(item.link);
                 const content = load(detailResponse.data);
 
-                item.description = content('#con_con')
-                    .html()
-                    .replaceAll(/(<iframe.*?src=")(.*?)(".*?>)/g, '$1' + rootUrl + '$2' + '$3');
+                item.description = content('#con_con').html();
 
                 return item;
             })

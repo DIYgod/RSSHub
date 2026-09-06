@@ -1,6 +1,6 @@
-import { Route } from '@/types';
-import cache from '@/utils/cache';
+import type { Route } from '@/types';
 import got from '@/utils/got';
+
 import { baseUrl, getPlurk } from './utils';
 
 export const route: Route = {
@@ -38,7 +38,7 @@ async function handler(ctx) {
     delete apiResponse.pids;
     delete apiResponse.count;
 
-    const items = await Promise.all(Object.values(apiResponse).map((item) => getPlurk(`plurk:${item.plurk_id}`, item, 'ಠ_ಠ', cache.tryGet)));
+    const items = await Promise.all(Object.values<{ plurk_id: number }>(apiResponse).map((item) => getPlurk(`plurk:${item.plurk_id}`, item, 'ಠ_ಠ')));
 
     return {
         title: 'Anonymous - Plurk',

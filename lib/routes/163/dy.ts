@@ -1,8 +1,8 @@
-import { Route } from '@/types';
-import cache from '@/utils/cache';
+import type { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
+
 import { parseDyArticle } from './utils';
 
 export const route: Route = {
@@ -21,9 +21,9 @@ export const route: Route = {
     name: '更新',
     maintainers: ['HendricksZheng'],
     handler,
-    description: `1.  在[网易号搜索页面](https://dy.163.com/v2/media/tosearch.html) 搜索想要订阅的网易号。
-  2.  打开网易号的任意文章。
-  3.  查看源代码，搜索 \`data-wemediaid\`，查看紧随其后的引号内的属性值（类似 \`W1966190042455428950\`）即为网易号 ID。`,
+    description: `1. 在[网易号搜索页面](https://dy.163.com/v2/media/tosearch.html) 搜索想要订阅的网易号。
+2. 打开网易号的任意文章。
+3. 查看源代码，搜索 \`data-wemediaid\`，查看紧随其后的引号内的属性值（类似 \`W1966190042455428950\`）即为网易号 ID。`,
 };
 
 async function handler(ctx) {
@@ -39,7 +39,7 @@ async function handler(ctx) {
         imgsrc: e.imgsrc,
     }));
 
-    const items = await Promise.all(list.map((e) => parseDyArticle(e, cache.tryGet)));
+    const items = await Promise.all(list.map((e) => parseDyArticle(e)));
 
     return {
         title: `网易号 - ${list[0].author}`,

@@ -1,4 +1,4 @@
-import { Route } from '@/types';
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 
@@ -104,8 +104,9 @@ async function handler(ctx) {
         url: 'https://api.hummingbird.businessreview.global/api/toc/get_articles',
     });
 
+    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 10;
     const items = await Promise.all(
-        response.data.articles.new.slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 10).map(async (item) => ({
+        response.data.articles.new.slice(0, limit).map(async (item) => ({
             title: parseTitle(item.body.title, [main_language]),
             description: await getArticleDetail(item.article_id, language),
             category: parseTitle(item.body.fly_title, [main_language]),

@@ -1,30 +1,29 @@
-import { type Data, type DataItem, type Route, ViewType } from '@/types';
+import type { Cheerio, CheerioAPI } from 'cheerio';
+import { load } from 'cheerio';
+import type { Element } from 'domhandler';
+import type { Context } from 'hono';
 
+import type { Data, DataItem, Route } from '@/types';
+import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
-import { type CheerioAPI, type Cheerio, load } from 'cheerio';
-import type { Element } from 'domhandler';
-import { type Context } from 'hono';
-
 export const handler = async (ctx: Context): Promise<Data> => {
     const { category = 'Industry/Comment' } = ctx.req.param();
-    const limit: number = Number.parseInt(ctx.req.query('limit') ?? '15', 10);
+    const limit = Number(ctx.req.query('limit') ?? '15');
 
-    const baseUrl: string = 'https://www.chinaratings.com.cn';
+    const baseUrl = 'https://www.chinaratings.com.cn';
     const targetUrl: string = new URL(`CreditResearch/${category.endsWith('/') ? category : `${category}/`}`, baseUrl).href;
 
     const response = await ofetch(targetUrl);
     const $: CheerioAPI = load(response);
     const language = 'zh-CN';
 
-    let items: DataItem[] = [];
-
-    items = $('div.contRight ul.list li')
+    let items: DataItem[] = $('div.contRight ul.list li')
         .slice(0, limit)
         .toArray()
-        .map((el): Element => {
+        .map((el) => {
             const $el: Cheerio<Element> = $(el);
             const $aEl: Cheerio<Element> = $el.find('a');
 
@@ -52,15 +51,15 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 }
 
                 return cache.tryGet(item.link, async (): Promise<DataItem> => {
-                    const detailResponse = await ofetch(item.link);
+                    const detailResponse = await ofetch(item.link!);
                     const $$: CheerioAPI = load(detailResponse);
 
                     const title: string = $$('div.newshead h2, div.title h3').text();
-                    const description: string = $$('div.news div.content').html() ?? '';
+                    const description = $$('div.news div.content').html();
 
                     const metaStr: string = $$('div.newshead p span, div.title p span').text();
                     const pubDateStr: string | undefined = metaStr?.match(/(\d{4}-\d{2}-\d{2})/)?.[1];
-                    const authors: DataItem['author'] = metaStr?.match(/来源：(.*?)/)?.[1];
+                    const authors: DataItem['author'] = metaStr?.match(/来源：(.*)/)?.[1];
                     const upDatedStr: string | undefined = pubDateStr;
 
                     let processedItem: DataItem = {
@@ -98,13 +97,14 @@ export const handler = async (ctx: Context): Promise<Data> => {
     ).filter((_): _ is DataItem => true);
 
     const title: string = $('title').text();
+    const logoHref = $('a.logo_c').attr('href');
 
     return {
         title,
         link: targetUrl,
         item: items,
         allowEmpty: true,
-        image: $('a.logo_c').attr('href') ? new URL($('a.logo_c').attr('href') as string, targetUrl).href : undefined,
+        image: logoHref ? new URL(logoHref, targetUrl).href : undefined,
         author: title.split(/-/).pop(),
         language,
         id: targetUrl,
@@ -121,10 +121,9 @@ export const route: Route = {
     parameters: {
         category: '分类，默认为 `Industry/Comment`，即行业评论，可在对应分类页 URL 中找到',
     },
-    description: `:::tip
+    description: `::: tip
 若订阅 [行业评论](https://www.chinaratings.com.cn/CreditResearch/Industry/Comment/)，网址为 \`https://www.chinaratings.com.cn/CreditResearch/Industry/Comment/\`，请截取 \`https://www.chinaratings.com.cn/CreditResearch/\` 到末尾 \`/\` 的部分 \`Industry/Comment\` 作为 \`category\` 参数填入，此时目标路由为 [\`/chinaratings/CreditResearch/Industry/Comment\`](https://rsshub.app/chinaratings/CreditResearch/Industry/Comment)。
-:::
-`,
+:::`,
     categories: ['finance'],
     features: {
         requireConfig: false,

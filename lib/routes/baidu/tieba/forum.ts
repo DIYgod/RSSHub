@@ -1,84 +1,56 @@
-import { Route } from '@/types';
+import type { Context } from 'hono';
 
-import { load } from 'cheerio';
-import got from '@/utils/got';
+import type { Route } from '@/types';
 import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
-import { art } from '@/utils/render';
-import path from 'node:path';
+
+import { renderContent, tiebaClientRequest } from './common';
 
 export const route: Route = {
-    path: ['/tieba/forum/good/:kw/:cid?/:sortBy?', '/tieba/forum/:kw/:sortBy?'],
+    path: '/tieba/forum/:kw/:sortBy?',
     categories: ['bbs'],
-    example: '/baidu/tieba/forum/good/女图',
-    parameters: { kw: '吧名', cid: '精品分类，默认为 `0`（全部分类），如果不传 `cid` 则获取全部分类', sortBy: '排序方式：`created`, `replied`。默认为 `created`' },
+    example: '/baidu/tieba/forum/孙笑川',
+    parameters: { kw: '吧名', sortBy: '排序方式：`created`, `replied`。默认为 `created`' },
     features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
+        requireConfig: [
+            {
+                name: 'BAIDU_COOKIE',
+                optional: true,
+                description: '百度 cookie 值，用于需要登录的贴吧页面',
+            },
+        ],
+        antiCrawler: true,
     },
-    name: '精品帖子',
-    maintainers: ['u3u'],
+    name: '帖子列表',
+    maintainers: ['u3u', 'FlanChanXwO'],
     handler,
 };
 
-async function handler(ctx) {
-    // sortBy: created, replied
-    const { kw, cid = '0', sortBy = 'created' } = ctx.req.param();
+function handler(ctx: Context) {
+    const { kw, sortBy } = ctx.req.param();
+    return getForumFeed(kw, { sortBy });
+}
 
-    // PC端：https://tieba.baidu.com/f?kw=${encodeURIComponent(kw)}
-    // 移动端接口：https://tieba.baidu.com/mo/q/m?kw=${encodeURIComponent(kw)}&lp=5024&forum_recommend=1&lm=0&cid=0&has_url_param=1&pn=0&is_ajax=1
-    const params = { kw: encodeURIComponent(kw) };
-    ctx.req.path.includes('good') && (params.tab = 'good');
-    cid && (params.cid = cid);
-    const { data } = await got(`https://tieba.baidu.com/f`, {
-        headers: {
-            Referer: 'https://tieba.baidu.com/',
-        },
-        searchParams: params,
+export const getForumFeed = async (kw: string, { cid = '0', sortBy = 'created', isGood = false } = {}) => {
+    const data = await tiebaClientRequest('/c/f/frs/page', {
+        kw,
+        rn: '30',
+        pn: '1',
+        ...(isGood && { is_good: '1' }),
+        ...(cid !== '0' && { cid }),
+        ...(sortBy === 'replied' && { sort_type: '1' }),
     });
 
-    const threadListHTML = load(data)('code[id="pagelet_html_frs-list/pagelet/thread_list"]')
-        .contents()
-        .filter((e) => e.nodeType === '8');
-
-    const $ = load(threadListHTML.prevObject[0].data);
-    const list = $('#thread_list > .j_thread_list[data-field]')
-        .toArray()
-        .map((element) => {
-            const item = $(element);
-            const { id, author_name } = item.data('field');
-            const time = sortBy === 'created' ? item.find('.is_show_create_time').text().trim() : item.find('.threadlist_reply_date').text().trim();
-            const title = item.find('a.j_th_tit').text().trim();
-            const details = item.find('.threadlist_abs').text().trim();
-            const medias = item
-                .find('.threadlist_media img')
-                .toArray()
-                .map((element) => {
-                    const item = $(element);
-                    return `<img src="${item.attr('bpic')}">`;
-                })
-                .join('');
-
-            return {
-                title,
-                description: art(path.join(__dirname, '../templates/forum.art'), {
-                    details,
-                    medias,
-                    author_name,
-                }),
-                pubDate: timezone(parseDate(time, ['HH:mm', 'M-D', 'YYYY-MM'], true), +8),
-                link: `https://tieba.baidu.com/p/${id}`,
-            };
-        });
+    const authorMap = new Map<number, string>(data.user_list.map((user) => [Number(user.id), user.name_show || user.name]));
 
     return {
         title: `${kw}吧`,
-        description: load(data)('meta[name="description"]').attr('content'),
         link: `https://tieba.baidu.com/f?kw=${encodeURIComponent(kw)}`,
-        item: list,
+        item: data.thread_list.map((thread) => ({
+            title: thread.title,
+            link: `https://tieba.baidu.com/p/${thread.id}`,
+            pubDate: parseDate(thread.create_time, 'X'),
+            author: authorMap.get(Number(thread.author_id)),
+            description: renderContent(thread.first_post_content || thread.abstract),
+        })),
     };
-}
+};

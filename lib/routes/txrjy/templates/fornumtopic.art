@@ -1,6 +1,0 @@
-<h4>{{ author }}</h4>
-{{@ content }}
-{{ if pattl }}
-{{@ pattl }}
-{{ /if }}
-<hr>

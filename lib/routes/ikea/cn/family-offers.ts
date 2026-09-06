@@ -1,5 +1,6 @@
-import { Route } from '@/types';
+import type { Route } from '@/types';
 import got from '@/utils/got';
+
 import { generateProductItem } from './utils';
 
 const familyPriceProductsRequest = ({ pageIndex = 1 }) =>
@@ -58,8 +59,8 @@ export const route: Route = {
 };
 
 async function handler() {
-    const familyPriceProductIds = [];
-    const productRequests = [];
+    const familyPriceProductIds: string[][] = [];
+    const productRequests: Array<Promise<any>> = [];
 
     const familyPriceProductsLoadMore = async ({ pageIndex }) => {
         const response = await familyPriceProductsRequest({ pageIndex });

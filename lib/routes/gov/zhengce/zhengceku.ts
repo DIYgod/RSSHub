@@ -1,8 +1,8 @@
-import { Route } from '@/types';
+import type { Route } from '@/types';
 import buildData from '@/utils/common-config';
 
 export const route: Route = {
-    path: '/zhengce/zhengceku/:department',
+    path: '/zhengceku/:department',
     categories: ['government'],
     example: '/gov/zhengce/zhengceku/bmwj',
     parameters: { department: '库名' },
@@ -14,7 +14,7 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    name: '国务院政策文件库',
+    name: '政策文件库',
     maintainers: ['zxx-457'],
     handler,
 };
@@ -26,7 +26,7 @@ async function handler(ctx) {
     return await buildData({
         link,
         url: link,
-        title: `%title%`,
+        title: '%title%',
         description: '政府文件库, 当页的所有列表',
         params: {
             title: `$('.channel_tab > .noline > a').text().trim() + ' - 政府文件库'`,

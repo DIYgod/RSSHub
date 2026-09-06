@@ -1,13 +1,17 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/international/:subpath{.+}',
-    name: 'Unknown',
-    maintainers: [],
+    categories: ['university'],
+    example: '/xjtu/international/hzjl',
+    parameters: { subpath: '栏目路径，支持多级，不包括末尾的`.htm`' },
+    name: '国际处通知',
+    maintainers: ['guitaoliu'],
     handler,
 };
 
@@ -15,20 +19,20 @@ async function handler(ctx) {
     const subpath = ctx.req.param('subpath');
     const base = 'http://international.xjtu.edu.cn';
 
-    const url = `${base}/${subpath.split('.')[0]}.htm`;
+    const url = `${base}/${subpath.split('.', 1)[0]}.htm`;
     const resp = await got(url);
 
     const $ = load(resp.data);
     const name = $('div.pageTitle').text();
     const list = $('.news-list-a > .c')
         .toArray()
-        .map((item) => {
-            item = $(item);
-            const title = item.find('a').attr('title');
-            const pubDate = parseDate(item.find('p.list-time').text());
-            const link = new URL(item.find('a').attr('href'), base).href;
+        .map((item): DataItem => {
+            const $item = $(item);
+            const title = $item.find('a').attr('title');
+            const pubDate = parseDate($item.find('p.list-time').text());
+            const link = new URL($item.find('a').attr('href')!, base).href;
             return {
-                title,
+                title: title!,
                 pubDate,
                 link,
             };
@@ -36,8 +40,8 @@ async function handler(ctx) {
 
     const item = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
-                if (new URL(item.link).pathname.startsWith === '/content.jsp') {
+            cache.tryGet(item.link!, async () => {
+                if (new URL(item.link!).pathname.startsWith('/content.jsp')) {
                     return item;
                 }
                 const resp = await got(item.link);

@@ -1,10 +1,12 @@
-import { Route } from '@/types';
-import cache from '@/utils/cache';
-import utils from './utils';
-import { parseDate } from '@/utils/parse-date';
-import got from '@/utils/got';
 import { load } from 'cheerio';
-import puppeteer from '@/utils/puppeteer';
+
+import type { Route } from '@/types';
+import cache from '@/utils/cache';
+import got from '@/utils/got';
+import { parseDate } from '@/utils/parse-date';
+import playwright from '@/utils/playwright';
+
+import utils from './utils';
 
 export const route: Route = {
     path: '/news/:type/:lang?',
@@ -29,22 +31,29 @@ export const route: Route = {
 | all | case           | Persuasion                               | AnnualReport   | PCANews        |`,
 };
 
+interface CcacArticle {
+    name: string;
+    url: string;
+    time: string;
+    tags: Array<{ name: string }>;
+}
+
 async function handler(ctx) {
-    const browser = await puppeteer();
+    const context = await playwright();
     const lang = ctx.req.param('lang') ?? 'sc';
     const type = utils.TYPE[ctx.req.param('type')];
 
     const BASE = utils.langBase(lang);
-    const page = await browser.newPage();
-    await page.setRequestInterception(true);
-    page.on('request', (request) => {
-        request.resourceType() === 'document' || request.resourceType() === 'script' ? request.continue() : request.abort();
+    const page = await context.newPage();
+    await page.route('**/*', (route) => {
+        const request = route.request();
+        request.resourceType() === 'document' || request.resourceType() === 'script' ? route.continue() : route.abort();
     });
     await page.goto(BASE, {
         waitUntil: 'domcontentloaded',
     });
-    const articles = await page.evaluate(() => window.articles);
-    await browser.close();
+    const articles = await page.evaluate(() => (window as Window & { articles?: CcacArticle[] }).articles);
+    await context.close();
 
     const list = utils
         .typeFilter(articles, type)

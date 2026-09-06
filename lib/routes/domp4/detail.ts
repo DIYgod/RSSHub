@@ -1,17 +1,18 @@
-import { Route } from '@/types';
 import { load } from 'cheerio';
+
+import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 
-import { decodeCipherText, composeMagnetUrl, getUrlType, ensureDomain } from './utils';
+import { composeMagnetUrl, decodeCipherText, ensureDomain, getUrlType } from './utils';
 
 // 兼容没有 script 标签的情况，直接解析 dom
 function getDomList($, detailUrl) {
     const list = $('.down-list li')
         .toArray()
         .map((item) => {
-            item = $(item);
-            const title = item.find('a').attr('title');
-            const downurl = item.find('a').attr('href');
+            const $item = $(item);
+            const title = $item.find('a').attr('title');
+            const downurl = $item.find('a').attr('href');
             const urlType = getUrlType(downurl);
             const enclosureUrl = urlType === 'magnet' ? composeMagnetUrl(downurl) : downurl;
             return {
@@ -29,7 +30,7 @@ function getDomList($, detailUrl) {
 export function getItemList($, detailUrl, second) {
     const encoded = $('.article script[type]')
         .text()
-        .match(/return p}\('(.*)',(\d+),(\d+),'(.*)'.split\(/);
+        .match(/return p\}\('(.*)',(\d+),(\d+),'(.*)'.split\(/);
     // 若 script 标签没有内容，直接解析 dom
     if (!encoded) {
         return getDomList($, detailUrl);
@@ -44,7 +45,7 @@ export function getItemList($, detailUrl, second) {
     const { downurls } = second && data.Data.length > 1 ? data.Data[1] : data.Data[0];
 
     return downurls.map((item) => {
-        const [title, downurl] = item.split('$');
+        const [title, downurl] = item.split('$', 2);
         const urlType = getUrlType(downurl);
         // only magnet need compose trackers
         const enclosureUrl = urlType === 'magnet' ? composeMagnetUrl(downurl) : downurl;
@@ -96,7 +97,7 @@ export const route: Route = {
 
 新增 \`second\` 参数，用于选择下载地址二（地址二不可用或者不填都默认地址一），用法: \`/domp4/detail/LBTANI22222I?second=1\`。
 
-域名频繁更换，目前使用 www.xlmp4.com
+域名频繁更换，目前使用 [www.xlmp4.com](http://www.xlmp4.com)
 :::`,
 };
 

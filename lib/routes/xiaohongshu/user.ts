@@ -1,10 +1,14 @@
-import { Route, ViewType } from '@/types';
-import cache from '@/utils/cache';
 import querystring from 'node:querystring';
-import { getUser, renderNotesFulltext, getUserWithCookie } from './util';
-import InvalidParameterError from '@/errors/types/invalid-parameter';
+
 import { config } from '@/config';
+import InvalidParameterError from '@/errors/types/invalid-parameter';
+import type { Route } from '@/types';
+import { ViewType } from '@/types';
+import cache from '@/utils/cache';
 import { fallback, queryToBoolean } from '@/utils/readable-social';
+
+import { getUser, getUserWithCookie, renderNotesFulltext } from './util';
+
 export const route: Route = {
     path: '/user/:user_id/:category/:routeParams?',
     name: '用户笔记/收藏',
@@ -77,9 +81,8 @@ async function handler(ctx) {
             // Fallback to normal logic if cookie method fails
             return await getUserFeeds(url, category);
         }
-    } else {
-        return await getUserFeeds(url, category);
     }
+    return await getUserFeeds(url, category);
 }
 
 async function getUserFeeds(url: string, category: string) {
@@ -95,14 +98,17 @@ async function getUserFeeds(url: string, category: string) {
 
     const renderNote = (notes) =>
         notes.flatMap((n) =>
-            n.map(({ id, noteCard }) => ({
-                title: noteCard.displayTitle,
-                link: new URL(noteCard.noteId || id, url).toString(),
-                guid: new URL(noteCard.noteId || id, url).toString() || noteCard.displayTitle,
-                description: `<img src ="${noteCard.cover.infoList.pop().url}"><br>${noteCard.displayTitle}`,
-                author: noteCard.user.nickname,
-                upvotes: noteCard.interactInfo.likedCount,
-            }))
+            n.map(({ noteCard }) => {
+                const coverUrl = noteCard.cover.infoList.pop().url;
+                return {
+                    title: noteCard.displayTitle,
+                    link: coverUrl,
+                    guid: noteCard.displayTitle,
+                    description: `<img src="${coverUrl}" width="${noteCard.cover.width}" height="${noteCard.cover.height}"><br>${noteCard.displayTitle}`,
+                    author: noteCard.user.nickname,
+                    upvotes: noteCard.interactInfo.likedCount,
+                };
+            })
         );
     const renderCollect = (collect) => {
         if (!collect) {

@@ -1,4 +1,4 @@
-import { Route } from '@/types';
+import type { Route } from '@/types';
 import got from '@/utils/got';
 
 export const route: Route = {
@@ -20,7 +20,7 @@ export const route: Route = {
         },
     ],
     name: 'New Releases',
-    maintainers: ['EthanWng97'],
+    maintainers: ['IvanWng97'],
     handler,
     url: 'bellroy.com/collection/new-releases',
 };

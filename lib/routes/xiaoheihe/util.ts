@@ -27,7 +27,7 @@ function c3(v) {
 }
 
 function convertByte(v) {
-    return v & 0x80 ? 0xFF & ((v << 1) ^ 0x1B) : v << 1;
+    return v & 0x80 ? 0xff & ((v << 1) ^ 0x1b) : v << 1;
 }
 
 /**
@@ -71,5 +71,5 @@ export const calculate = (url, timestamp = 0, nonce = '') => {
     const query = `hkey=${key}${suffix}&_time=${timestamp}&nonce=${nonce}`;
     const urlObj = new URL(url);
     urlObj.search += urlObj.search ? '&' + query : query;
-    return urlObj.toString();
+    return urlObj.href;
 };

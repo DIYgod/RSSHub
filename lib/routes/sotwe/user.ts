@@ -1,11 +1,12 @@
-import { Route, ViewType } from '@/types';
-
-import { parseDate } from '@/utils/parse-date';
 import sanitizeHtml from 'sanitize-html';
-import puppeteer from '@/utils/puppeteer';
-import logger from '@/utils/logger';
-import cache from '@/utils/cache';
+
 import { config } from '@/config';
+import type { Route } from '@/types';
+import { ViewType } from '@/types';
+import cache from '@/utils/cache';
+import logger from '@/utils/logger';
+import { parseDate } from '@/utils/parse-date';
+import playwright from '@/utils/playwright';
 
 export const route: Route = {
     path: '/user/:id',
@@ -41,7 +42,7 @@ const renderMedia = (mediaEntities) =>
                 case 'photo':
                     return `<img src="${e.mediaURL}">`;
                 case 'video': {
-                    const video = e.videoInfo.variants.filter((v) => v.type === 'video/mp4').sort((a, b) => b.bitrate - a.bitrate)[0];
+                    const video = e.videoInfo.variants.filter((v) => v.type === 'video/mp4').toSorted((a, b) => b.bitrate - a.bitrate)[0];
                     return `<video controls preload="metadata" poster="${e.mediaURL}"><source src="${video.url}" type="video/mp4"></video>`;
                 }
                 default:
@@ -60,11 +61,11 @@ async function handler(ctx) {
     const data = await cache.tryGet(
         `sotwe:user:${id}`,
         async () => {
-            const browser = await puppeteer();
-            const page = await browser.newPage();
-            await page.setRequestInterception(true);
-            page.on('request', (request) => {
-                ['document', 'script', 'xhr', 'fetch'].includes(request.resourceType()) ? request.continue() : request.abort();
+            const context = await playwright();
+            const page = await context.newPage();
+            await page.route('**/*', (route) => {
+                const request = route.request();
+                ['document', 'script', 'xhr', 'fetch'].includes(request.resourceType()) ? route.continue() : route.abort();
             });
             const apiUrl = `${baseUrl}/api/v3/user/${id}/`;
             logger.http(`Requesting ${apiUrl}`);
@@ -73,7 +74,7 @@ async function handler(ctx) {
             });
             const response = await page.evaluate(() => document.documentElement.textContent);
             await page.close();
-            await browser.close();
+            await context.close();
 
             return JSON.parse(response || '{}');
         },
@@ -82,7 +83,7 @@ async function handler(ctx) {
     );
 
     const items = data.data.map((item) => ({
-        title: sanitizeHtml(item.text.split('\n')[0], { allowedTags: [], allowedAttributes: {} }),
+        title: sanitizeHtml(item.text.split('\n', 1)[0], { allowedTags: [], allowedAttributes: {} }),
         description: renderDescription(item),
         link: `https://x.com/${id}/status/${item.id}`,
         pubDate: parseDate(item.createdAt, 'x'),

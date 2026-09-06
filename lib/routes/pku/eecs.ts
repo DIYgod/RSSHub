@@ -1,64 +1,61 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-import { eecsMap } from './utils';
+const eecsMap = new Map([
+    [0, 'tzgg.htm'],
+    [1, 'tzgg/xytz.htm'],
+    [2, 'tzgg/rstz.htm'],
+    [6, 'tzgg/jwtz.htm'],
+    [8, 'tzgg/xgtz.htm'],
+    [3, 'tzgg/ghtz.htm'],
+    [4, 'tzgg/yytz.htm'],
+]);
 
 export const route: Route = {
     path: '/eecs/:type?',
-    name: 'Unknown',
+    name: '信科公告通知',
+    example: '/pku/eecs/0',
     maintainers: ['Ir1d'],
     handler,
+    description: `| 全部 | 学院通知 | 人事通知 | 教务通知 | 学工通知 | 工会通知 | 院友通知 |
+| ---- | -------- | -------- | -------- | -------- | -------- | -------- |
+| 0    | 1        | 2        | 6        | 8        | 3        | 4        |`,
 };
 
 async function handler(ctx) {
     const host = 'https://eecs.pku.edu.cn';
 
-    let type = ctx.params && Number.parseInt(ctx.req.param('type'));
-    if (type === undefined) {
-        type = 0;
-    }
+    const type = Number.parseInt(ctx.req.param('type')) || 0;
+    const listUrl = host + '/' + (eecsMap.get(type) ?? eecsMap.get(0));
 
-    const response = await got(host + '/xygk1/ggtz/' + eecsMap.get(type));
+    const response = await got(listUrl);
 
     const $ = load(response.data);
-    let items = $('.hvr-shutter-out-vertical')
+    let items = $('ul.list-text > li > a')
         .toArray()
-        .map((item) => {
-            item = $(item);
+        .map((item): DataItem => {
+            const $item = $(item);
             return {
-                title: item.attr('title'),
-                link: new URL(item.attr('href'), host).href,
-                pubDate: parseDate(item.find('em').text()),
+                title: $item.find('.tit').text(),
+                link: new URL($item.attr('href')!, listUrl).href,
+                pubDate: parseDate($item.find('.date .mon').text() + '-' + $item.find('.date .day').text()),
             };
         });
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const detail = await got(item.link);
-                const content = load(detail.data);
+                const $ = load(detail.data);
 
-                content('input').remove();
-                content('h1').remove();
-                content('.con_xq').remove();
+                const content = $('.Section1');
+                content.find('[style]').removeAttr('style');
 
-                content('form[name=_newscontent_fromname] img').each((_, i) => {
-                    i = $(i);
-                    if (i.attr('src').startsWith('/')) {
-                        i.attr('src', new URL(i.attr('src'), host).href);
-                    }
-                });
-                content('form[name=_newscontent_fromname] ul li a').each((_, a) => {
-                    a = $(a);
-                    if (a.attr('href').startsWith('/')) {
-                        a.attr('href', new URL(a.attr('href'), host).href);
-                    }
-                });
-
-                item.description = content('form[name=_newscontent_fromname]').html();
+                item.description = content.html();
                 return item;
             })
         )
@@ -66,7 +63,7 @@ async function handler(ctx) {
 
     return {
         title: $('title').text(),
-        link: host + '/xygk1/ggtz/' + eecsMap.get(type),
+        link: listUrl,
         description: '北大信科 公告通知',
         item: items,
     };

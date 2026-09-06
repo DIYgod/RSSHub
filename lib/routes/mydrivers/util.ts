@@ -1,8 +1,10 @@
-import got from '@/utils/got';
 import { load } from 'cheerio';
-import timezone from '@/utils/timezone';
-import { parseDate } from '@/utils/parse-date';
+
+import type { Language } from '@/types';
 import cache from '@/utils/cache';
+import got from '@/utils/got';
+import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 const domain = 'mydrivers.com';
 const rootUrl = `https://m.${domain}`;
@@ -24,7 +26,7 @@ const categories = {
  */
 const convertToQueryString = (path) => {
     const parts = path.split('/');
-    const queryStringParams = [];
+    const queryStringParams: string[] = [];
 
     for (let i = 0; i < parts.length; i += 2) {
         const key = parts[i];
@@ -43,13 +45,13 @@ const convertToQueryString = (path) => {
  * @param {number|undefined} [range] - The index value of the range (optional).
  * @returns {Promise<Object>} - A promise that resolves to an object containing the retrieved information.
  */
-const getInfo = (url, range) =>
+const getInfo = (url, range?) =>
     cache.tryGet(url, async () => {
         const { data: response } = await got(url);
 
         const $ = load(response);
 
-        const icon = new URL($('link[rel="apple-touch-icon-precomposed"]').prop('href'), rootUrl).href;
+        const icon = new URL($('link[rel="apple-touch-icon-precomposed"]').prop('href')!, rootUrl).href;
         const image = `https:${$('div.logo a img').prop('src')}`;
         const ranges = $('div.hottime a')
             .toArray()
@@ -59,7 +61,7 @@ const getInfo = (url, range) =>
             title: `${title} - ${range !== undefined && ranges ? ranges[range] : $(`a[data-id="${url.split(/=/).pop()}"]`).text() || $('#newsEventSwitch a.cur').text()}`,
             link: url,
             description: $('meta[name="description"]').prop('content'),
-            language: 'zh-cn',
+            language: 'zh-CN' as const satisfies Language,
             image,
             icon,
             logo: icon,
@@ -73,7 +75,6 @@ const getInfo = (url, range) =>
  * Process items asynchronously.
  *
  * @param {Array<Object>} items - The array of items to process.
- * @param {function} tryGet - The tryGet function that handles the retrieval process.
  * @returns {Promise<Array<Object>>} Returns a Promise that resolves to an array of processed items.
  */
 const processItems = async (items) =>
@@ -100,14 +101,14 @@ const processItems = async (items) =>
                         .map((c) => content(c).contents().last().text().trim()),
                 ].filter(Boolean);
                 item.guid = `${domain}#${item.guid}`;
-                item.pubDate = item.pubDate ?? timezone(parseDate(content('li.writer').next().text().trim(), 'YYYY年MM月DD日 HH:mm'), +8);
-                item.upvotes = voteResponse.NewsSupport ? Number.parseInt(voteResponse.NewsSupport, 10) : 0;
-                item.downvotes = voteResponse.NewsOppose ? Number.parseInt(voteResponse.NewsOppose, 10) : 0;
-                item.comments = content('#tpinglun').text() ? Number.parseInt(content('#tpinglun').text(), 10) : 0;
+                item.pubDate ??= timezone(parseDate(content('li.writer').next().text().trim(), 'YYYY年MM月DD日 HH:mm'), 8);
+                item.upvotes = voteResponse.NewsSupport ? Number(voteResponse.NewsSupport) : 0;
+                item.downvotes = voteResponse.NewsOppose ? Number(voteResponse.NewsOppose) : 0;
+                item.comments = content('#tpinglun').text() ? Number(content('#tpinglun').text()) : 0;
 
                 return item;
             })
         )
     );
 
-export { rootUrl, rootRSSUrl, title, categories, convertToQueryString, getInfo, processItems };
+export { categories, convertToQueryString, getInfo, processItems, rootRSSUrl, rootUrl, title };

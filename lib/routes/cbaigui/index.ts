@@ -1,33 +1,40 @@
-import { Route } from '@/types';
-
-import { getSubPath } from '@/utils/common-utils';
-import got from '@/utils/got';
 import { load } from 'cheerio';
-import { parseDate } from '@/utils/parse-date';
-import { art } from '@/utils/render';
-import path from 'node:path';
 
-import { rootUrl, apiSlug, GetFilterId } from './utils';
+import type { Route } from '@/types';
+import got from '@/utils/got';
+import { parseDate } from '@/utils/parse-date';
+
+import { renderFigure } from './templates/figure';
+import { apiSlug, GetFilterId, rootUrl } from './utils';
 
 export const route: Route = {
-    path: '*',
-    name: 'Unknown',
-    maintainers: [],
+    path: '/:path{.+}?',
+    categories: ['new-media'],
+    example: '/cbaigui',
+    parameters: { path: '路径，默认为首页' },
+    name: '通用',
+    maintainers: ['nczitzk'],
+    description: `若订阅 [标签：妖](https://www.cbaigui.com/post-tag/妖)，网址为 \`https://www.cbaigui.com/post-tag/妖\`。截取 \`https://www.cbaigui.com\` 到末尾的部分 \`/post-tag/妖\` 作为参数，此时路由为 [\`/cbaigui/post-tag/妖\`](https://rsshub.app/cbaigui/post-tag/妖)。
+
+若订阅 [分类：埃及](https://www.cbaigui.com/post-category/世界/非洲/埃及)，网址为 \`https://www.cbaigui.com/post-category/世界/非洲/埃及\`。截取 \`https://www.cbaigui.com\` 到末尾的部分 \`/post-category/世界/非洲/埃及\` 作为参数，此时路由为 [\`/cbaigui/post-category/世界/非洲/埃及\`](https://rsshub.app/cbaigui/post-category/世界/非洲/埃及)。
+
+若订阅 [词条：白泽图](https://www.cbaigui.com/post-category/词条/白泽图)，网址为 \`https://www.cbaigui.com/post-category/词条/白泽图\`。截取 \`https://www.cbaigui.com\` 到末尾的部分 \`/post-category/词条/白泽图\` 作为参数，此时路由为 [\`/cbaigui/post-category/词条/白泽图\`](https://rsshub.app/cbaigui/post-category/词条/白泽图)。`,
     handler,
 };
 
 async function handler(ctx) {
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 50;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 50;
 
     let filterName;
 
-    const currentUrl = new URL(getSubPath(ctx).replace(/^\/cbaigui/, ''), rootUrl).href;
+    const path = ctx.req.param('path') ?? '';
+    const currentUrl = new URL(`/${path}`, rootUrl).href;
     let apiUrl = new URL(`${apiSlug}/posts?_embed=true&per_page=${limit}`, rootUrl).href;
 
-    const filterMatches = getSubPath(ctx).match(/^\/post-(tag|category)\/(.*)$/);
+    const filterMatches = path.match(/^post-(tag|category)\/(.*)$/);
 
     if (filterMatches) {
-        filterName = decodeURI(filterMatches[2].split('/').pop());
+        filterName = filterMatches[2].split('/').pop();
         const filterType = filterMatches[1] === 'tag' ? 'tags' : 'categories';
         const filterId = await GetFilterId(filterType, filterName);
 
@@ -45,14 +52,14 @@ async function handler(ctx) {
 
         // To handle lazy-loaded images from external sites.
 
-        content('figure').each(function () {
-            const image = content(this).find('img');
+        content('figure').each((_, el) => {
+            const image = content(el).find('img');
             const src = image.prop('data-actualsrc') ?? image.prop('data-original');
             const width = image.prop('data-rawwidth');
             const height = image.prop('data-rawheight');
 
-            content(this).replaceWith(
-                art(path.join(__dirname, 'templates/figure.art'), {
+            content(el).replaceWith(
+                renderFigure({
                     src,
                     width,
                     height,
@@ -62,14 +69,14 @@ async function handler(ctx) {
 
         // To remove watermarks on images.
 
-        content('p img').each(function () {
-            const image = content(this);
-            const src = image.prop('src').split('!')[0];
+        content('p img').each((_, el) => {
+            const image = content(el);
+            const src = image.prop('src')!.split('!', 1)[0];
             const width = image.prop('width');
             const height = image.prop('height');
 
-            content(this).replaceWith(
-                art(path.join(__dirname, 'templates/figure.art'), {
+            content(el).replaceWith(
+                renderFigure({
                     src,
                     width,
                     height,
@@ -100,7 +107,7 @@ async function handler(ctx) {
         title: `纪妖${filterName ? ` - ${filterName}` : ''}`,
         link: currentUrl,
         description: $('meta[name="description"]').prop('content'),
-        language: 'zh-cn',
+        language: 'zh-CN' as const,
         image: $('meta[name="msapplication-TileImage"]').prop('content'),
         icon,
         logo: icon,

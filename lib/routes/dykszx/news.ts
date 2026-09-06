@@ -1,24 +1,25 @@
-import { Route } from '@/types';
 import { load } from 'cheerio';
+
+import type { Route } from '@/types';
+import cache from '@/utils/cache';
+import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
-import got from '@/utils/got';
-import cache from '@/utils/cache';
 
-const HOST = 'https://www.dykszx.com';
+const HOST = 'https://www.dykszx.cn';
 
 const getContent = async (href) => {
     const newsPage = `${HOST}${href}`;
     const response = await got.get(newsPage);
     const $ = load(response.data);
     const newsTime =
-        $('body > div:nth-child(3) > div.page.w > div.shuxing.w')
+        $('.shuxing')
             .text()
             .trim()
             .match(/时间：(.*?)点击/g)?.[0] || '';
     // 移除二维码
     $('.sjlook').remove();
-    const content = $('#show-body').html() || '';
+    const content = $('#show-body').html();
     return { newsTime, content, newsPage };
 };
 
@@ -46,7 +47,7 @@ async function handler(ctx) {
                     title: item.children[0].children[0].data,
                     description: newsContent.content,
                     link: newsContent.newsPage,
-                    pubDate: timezone(parseDate(newsContent.newsTime, '时间：YYYY-MM-DD HH:mm:ss'), +8),
+                    pubDate: timezone(parseDate(newsContent.newsTime, '时间：YYYY-MM-DD HH:mm:ss'), 8),
                 };
             });
         })
@@ -74,15 +75,15 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['www.dykszx.com/'],
+            source: ['www.dykszx.cn/'],
             target: '/news/all',
         },
     ],
     name: '考试新闻发布',
     maintainers: ['zytomorrow'],
     handler,
-    url: 'www.dykszx.com',
-    description: `| 新闻中心 | 公务员考试 | 事业单位 | （职）业资格、职称考试 | 其他 |
-| :------: | :------: | :------: |:------: |:------: |
-|   all   |   gwy   |  sydw | zyzc  | other |`,
+    url: 'www.dykszx.cn',
+    description: `| 新闻中心 | 公务员考试 | 事业单位 | （职）业资格、职称考试 |  其他 |
+| :------: | :--------: | :------: | :--------------------: | :---: |
+|    all   |     gwy    |   sydw   |          zyzc          | other |`,
 };

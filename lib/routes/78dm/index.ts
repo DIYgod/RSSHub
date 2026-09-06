@@ -1,16 +1,16 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
 
+import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
-import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
-import { art } from '@/utils/render';
-import path from 'node:path';
+import timezone from '@/utils/timezone';
+
+import { renderDescription } from './templates/description';
 
 export const handler = async (ctx) => {
     const { category = 'news' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 10;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 10;
 
     const rootUrl = 'https://www.78dm.net';
     const currentUrl = new URL(category.includes('/') ? `${category}.html` : category, rootUrl).href;
@@ -19,20 +19,20 @@ export const handler = async (ctx) => {
 
     const $ = load(response);
 
-    const language = $('html').prop('lang');
+    const language = $('html').prop('lang') as Language;
 
     let items = $('section.box-content div.card a.card-title')
         .slice(0, limit)
         .toArray()
-        .map((item) => {
-            item = $(item).parent();
+        .map((item): DataItem => {
+            const $item = $(item).parent();
 
-            const title = item.find('a.card-title').text();
+            const title = $item.find('a.card-title').text();
 
-            const src = item.find('a.card-image img').prop('data-src');
+            const src = $item.find('a.card-image img').prop('data-src');
             const image = src?.startsWith('//') ? `https:${src}` : src;
 
-            const description = art(path.join(__dirname, 'templates/description.art'), {
+            const description = renderDescription({
                 images: image
                     ? [
                           {
@@ -42,22 +42,22 @@ export const handler = async (ctx) => {
                       ]
                     : undefined,
             });
-            const pubDate = item.find('div.card-info span.item').last().text();
+            const pubDate = $item.find('div.card-info span.item').last().text();
 
-            const href = item.find('a.card-title').prop('href');
+            const href = $item.find('a.card-title').prop('href');
 
             return {
                 title,
                 description,
-                pubDate: pubDate && /\d{4}(?:\.\d{2}){2}\s\d{2}:\d{2}/.test(pubDate) ? timezone(parseDate(pubDate, 'YYYY.MM.DD HH:mm'), +8) : undefined,
+                pubDate: pubDate && /\d{4}(?:\.\d{2}){2}\s\d{2}:\d{2}/.test(pubDate) ? timezone(parseDate(pubDate, 'YYYY.MM.DD HH:mm'), 8) : undefined,
                 link: href?.startsWith('//') ? `https:${href}` : href,
                 category: [
                     ...new Set([
-                        ...item
+                        ...$item
                             .find('span.tag-title')
                             .toArray()
                             .map((c) => $(c).text()),
-                        item.find('div.card-info span.item').first().text(),
+                        $item.find('div.card-info span.item').first().text(),
                     ]),
                 ].filter(Boolean),
                 image,
@@ -68,7 +68,7 @@ export const handler = async (ctx) => {
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const { data: detailResponse } = await got(item.link);
 
                 const $$ = load(detailResponse);
@@ -76,18 +76,18 @@ export const handler = async (ctx) => {
                 $$('i.p-status').remove();
 
                 $$('div.image-text-content p img.lazy').each((_, el) => {
-                    el = $$(el);
+                    const $el = $$(el);
 
-                    const src = el.prop('data-src');
+                    const src = $el.prop('data-src');
                     const image = src?.startsWith('//') ? `https:${src}` : src;
 
-                    el.parent().replaceWith(
-                        art(path.join(__dirname, 'templates/description.art'), {
+                    $el.parent().replaceWith(
+                        renderDescription({
                             images: image
                                 ? [
                                       {
                                           src: image,
-                                          alt: el.prop('title') ?? '',
+                                          alt: $el.prop('title') ?? '',
                                       },
                                   ]
                                 : undefined,
@@ -98,13 +98,13 @@ export const handler = async (ctx) => {
                 const title = $$('h2.title').text();
                 const description =
                     item.description +
-                    art(path.join(__dirname, 'templates/description.art'), {
-                        description: $$('div.image-text-content').first().html(),
+                    renderDescription({
+                        description: $$('div.image-text-content').first().html() || undefined,
                     });
 
                 item.title = title;
                 item.description = description;
-                item.pubDate = timezone(parseDate($$('p.push-time').text().split(/：/).pop()), +8);
+                item.pubDate = timezone(parseDate($$('p.push-time').text().split(/：/).pop()!), 8);
                 item.author = $$('a.push-username').contents().first().text();
                 item.content = {
                     html: description,
@@ -118,7 +118,7 @@ export const handler = async (ctx) => {
     );
 
     const title = $('title').text();
-    const image = new URL($('a.logo img').prop('src'), rootUrl).href;
+    const image = new URL($('a.logo img').prop('src')!, rootUrl).href;
 
     return {
         title: `${title} | ${$('div.actived').text()}`,
@@ -141,9 +141,9 @@ export const route: Route = {
     example: '/78dm/news',
     parameters: { category: '分类，默认为 `news`，即新品速递，可在对应分类页 URL 中找到' },
     description: `::: tip
-  若订阅 [新品速递](https://www.78dm.net/news)，网址为 \`https://www.78dm.net/news\`。截取 \`https://www.78dm.net/\` 到末尾的部分 \`news\` 作为参数填入，此时路由为 [\`/78dm/news\`](https://rsshub.app/78dm/news)。
+若订阅 [新品速递](https://www.78dm.net/news)，网址为 \`https://www.78dm.net/news\`。截取 \`https://www.78dm.net/\` 到末尾的部分 \`news\` 作为参数填入，此时路由为 [\`/78dm/news\`](https://rsshub.app/78dm/news)。
 
-  若订阅 [精彩评测 - 变形金刚](https://www.78dm.net/eval_list/109/0/0/1.html)，网址为 \`https://www.78dm.net/eval_list/109/0/0/1.html\`。截取 \`https://www.78dm.net/\` 到末尾 \`.html\` 的部分 \`eval_list/109/0/0/1\` 作为参数填入，此时路由为 [\`/78dm/eval_list/109/0/0/1\`](https://rsshub.app/78dm/eval_list/109/0/0/1)。
+若订阅 [精彩评测 - 变形金刚](https://www.78dm.net/eval_list/109/0/0/1.html)，网址为 \`https://www.78dm.net/eval_list/109/0/0/1.html\`。截取 \`https://www.78dm.net/\` 到末尾 \`.html\` 的部分 \`eval_list/109/0/0/1\` 作为参数填入，此时路由为 [\`/78dm/eval_list/109/0/0/1\`](https://rsshub.app/78dm/eval_list/109/0/0/1)。
 :::
 
 <details>
@@ -174,44 +174,44 @@ export const route: Route = {
 
 #### [精彩评测](https://www.78dm.net/eval_list)
 
-| 分类                                                      | ID                                                                 |
-| --------------------------------------------------------- | ------------------------------------------------------------------ |
-| [全部](https://www.78dm.net/eval_list/0/0/0/1.html)       | [eval_list/0/0/0/1](https://rsshub.app/78dm/eval_list/0/0/0/1)     |
-| [变形金刚](https://www.78dm.net/eval_list/109/0/0/1.html) | [eval_list/109/0/0/1](https://rsshub.app/78dm/eval_list/109/0/0/1) |
-| [高达](https://www.78dm.net/eval_list/110/0/0/1.html)     | [eval_list/110/0/0/1](https://rsshub.app/78dm/eval_list/110/0/0/1) |
-| [圣斗士](https://www.78dm.net/eval_list/111/0/0/1.html)   | [eval_list/111/0/0/1](https://rsshub.app/78dm/eval_list/111/0/0/1) |
-| [海贼王](https://www.78dm.net/eval_list/112/0/0/1.html)   | [eval_list/112/0/0/1](https://rsshub.app/78dm/eval_list/112/0/0/1) |
-| [PVC 手办](https://www.78dm.net/eval_list/115/0/0/1.html) | [eval_list/115/0/0/1](https://rsshub.app/78dm/eval_list/115/0/0/1) |
-| [拼装模型](https://www.78dm.net/eval_list/113/0/0/1.html) | [eval_list/113/0/0/1](https://rsshub.app/78dm/eval_list/113/0/0/1) |
-| [机甲成品](https://www.78dm.net/eval_list/114/0/0/1.html) | [eval_list/114/0/0/1](https://rsshub.app/78dm/eval_list/114/0/0/1) |
-| [特摄](https://www.78dm.net/eval_list/116/0/0/1.html)     | [eval_list/116/0/0/1](https://rsshub.app/78dm/eval_list/116/0/0/1) |
-| [美系](https://www.78dm.net/eval_list/117/0/0/1.html)     | [eval_list/117/0/0/1](https://rsshub.app/78dm/eval_list/117/0/0/1) |
-| [GK](https://www.78dm.net/eval_list/118/0/0/1.html)       | [eval_list/118/0/0/1](https://rsshub.app/78dm/eval_list/118/0/0/1) |
-| [综合](https://www.78dm.net/eval_list/120/0/0/1.html)     | [eval_list/120/0/0/1](https://rsshub.app/78dm/eval_list/120/0/0/1) |
+| 分类                                                      | ID                                                                  |
+| --------------------------------------------------------- | ------------------------------------------------------------------- |
+| [全部](https://www.78dm.net/eval_list/0/0/0/1.html)       | [eval\\_list/0/0/0/1](https://rsshub.app/78dm/eval_list/0/0/0/1)     |
+| [变形金刚](https://www.78dm.net/eval_list/109/0/0/1.html) | [eval\\_list/109/0/0/1](https://rsshub.app/78dm/eval_list/109/0/0/1) |
+| [高达](https://www.78dm.net/eval_list/110/0/0/1.html)     | [eval\\_list/110/0/0/1](https://rsshub.app/78dm/eval_list/110/0/0/1) |
+| [圣斗士](https://www.78dm.net/eval_list/111/0/0/1.html)   | [eval\\_list/111/0/0/1](https://rsshub.app/78dm/eval_list/111/0/0/1) |
+| [海贼王](https://www.78dm.net/eval_list/112/0/0/1.html)   | [eval\\_list/112/0/0/1](https://rsshub.app/78dm/eval_list/112/0/0/1) |
+| [PVC 手办](https://www.78dm.net/eval_list/115/0/0/1.html) | [eval\\_list/115/0/0/1](https://rsshub.app/78dm/eval_list/115/0/0/1) |
+| [拼装模型](https://www.78dm.net/eval_list/113/0/0/1.html) | [eval\\_list/113/0/0/1](https://rsshub.app/78dm/eval_list/113/0/0/1) |
+| [机甲成品](https://www.78dm.net/eval_list/114/0/0/1.html) | [eval\\_list/114/0/0/1](https://rsshub.app/78dm/eval_list/114/0/0/1) |
+| [特摄](https://www.78dm.net/eval_list/116/0/0/1.html)     | [eval\\_list/116/0/0/1](https://rsshub.app/78dm/eval_list/116/0/0/1) |
+| [美系](https://www.78dm.net/eval_list/117/0/0/1.html)     | [eval\\_list/117/0/0/1](https://rsshub.app/78dm/eval_list/117/0/0/1) |
+| [GK](https://www.78dm.net/eval_list/118/0/0/1.html)       | [eval\\_list/118/0/0/1](https://rsshub.app/78dm/eval_list/118/0/0/1) |
+| [综合](https://www.78dm.net/eval_list/120/0/0/1.html)     | [eval\\_list/120/0/0/1](https://rsshub.app/78dm/eval_list/120/0/0/1) |
 
 #### [好贴推荐](https://www.78dm.net/ht_list)
 
-| 分类                                                    | ID                                                             |
-| ------------------------------------------------------- | -------------------------------------------------------------- |
-| [全部](https://www.78dm.net/ht_list/0/0/0/1.html)       | [ht_list/0/0/0/1](https://rsshub.app/78dm/ht_list/0/0/0/1)     |
-| [变形金刚](https://www.78dm.net/ht_list/95/0/0/1.html)  | [ht_list/95/0/0/1](https://rsshub.app/78dm/ht_list/95/0/0/1)   |
-| [高达](https://www.78dm.net/ht_list/96/0/0/1.html)      | [ht_list/96/0/0/1](https://rsshub.app/78dm/ht_list/96/0/0/1)   |
-| [圣斗士](https://www.78dm.net/ht_list/98/0/0/1.html)    | [ht_list/98/0/0/1](https://rsshub.app/78dm/ht_list/98/0/0/1)   |
-| [海贼王](https://www.78dm.net/ht_list/99/0/0/1.html)    | [ht_list/99/0/0/1](https://rsshub.app/78dm/ht_list/99/0/0/1)   |
-| [PVC 手办](https://www.78dm.net/ht_list/100/0/0/1.html) | [ht_list/100/0/0/1](https://rsshub.app/78dm/ht_list/100/0/0/1) |
-| [拼装模型](https://www.78dm.net/ht_list/101/0/0/1.html) | [ht_list/101/0/0/1](https://rsshub.app/78dm/ht_list/101/0/0/1) |
-| [机甲成品](https://www.78dm.net/ht_list/102/0/0/1.html) | [ht_list/102/0/0/1](https://rsshub.app/78dm/ht_list/102/0/0/1) |
-| [特摄](https://www.78dm.net/ht_list/103/0/0/1.html)     | [ht_list/103/0/0/1](https://rsshub.app/78dm/ht_list/103/0/0/1) |
-| [美系](https://www.78dm.net/ht_list/104/0/0/1.html)     | [ht_list/104/0/0/1](https://rsshub.app/78dm/ht_list/104/0/0/1) |
-| [GK](https://www.78dm.net/ht_list/105/0/0/1.html)       | [ht_list/105/0/0/1](https://rsshub.app/78dm/ht_list/105/0/0/1) |
-| [综合](https://www.78dm.net/ht_list/107/0/0/1.html)     | [ht_list/107/0/0/1](https://rsshub.app/78dm/ht_list/107/0/0/1) |
-| [装甲战车](https://www.78dm.net/ht_list/131/0/0/1.html) | [ht_list/131/0/0/1](https://rsshub.app/78dm/ht_list/131/0/0/1) |
-| [舰船模型](https://www.78dm.net/ht_list/132/0/0/1.html) | [ht_list/132/0/0/1](https://rsshub.app/78dm/ht_list/132/0/0/1) |
-| [飞机模型](https://www.78dm.net/ht_list/133/0/0/1.html) | [ht_list/133/0/0/1](https://rsshub.app/78dm/ht_list/133/0/0/1) |
-| [民用模型](https://www.78dm.net/ht_list/134/0/0/1.html) | [ht_list/134/0/0/1](https://rsshub.app/78dm/ht_list/134/0/0/1) |
-| [兵人模型](https://www.78dm.net/ht_list/135/0/0/1.html) | [ht_list/135/0/0/1](https://rsshub.app/78dm/ht_list/135/0/0/1) |
-</details>
-  `,
+| 分类                                                    | ID                                                              |
+| ------------------------------------------------------- | --------------------------------------------------------------- |
+| [全部](https://www.78dm.net/ht_list/0/0/0/1.html)       | [ht\\_list/0/0/0/1](https://rsshub.app/78dm/ht_list/0/0/0/1)     |
+| [变形金刚](https://www.78dm.net/ht_list/95/0/0/1.html)  | [ht\\_list/95/0/0/1](https://rsshub.app/78dm/ht_list/95/0/0/1)   |
+| [高达](https://www.78dm.net/ht_list/96/0/0/1.html)      | [ht\\_list/96/0/0/1](https://rsshub.app/78dm/ht_list/96/0/0/1)   |
+| [圣斗士](https://www.78dm.net/ht_list/98/0/0/1.html)    | [ht\\_list/98/0/0/1](https://rsshub.app/78dm/ht_list/98/0/0/1)   |
+| [海贼王](https://www.78dm.net/ht_list/99/0/0/1.html)    | [ht\\_list/99/0/0/1](https://rsshub.app/78dm/ht_list/99/0/0/1)   |
+| [PVC 手办](https://www.78dm.net/ht_list/100/0/0/1.html) | [ht\\_list/100/0/0/1](https://rsshub.app/78dm/ht_list/100/0/0/1) |
+| [拼装模型](https://www.78dm.net/ht_list/101/0/0/1.html) | [ht\\_list/101/0/0/1](https://rsshub.app/78dm/ht_list/101/0/0/1) |
+| [机甲成品](https://www.78dm.net/ht_list/102/0/0/1.html) | [ht\\_list/102/0/0/1](https://rsshub.app/78dm/ht_list/102/0/0/1) |
+| [特摄](https://www.78dm.net/ht_list/103/0/0/1.html)     | [ht\\_list/103/0/0/1](https://rsshub.app/78dm/ht_list/103/0/0/1) |
+| [美系](https://www.78dm.net/ht_list/104/0/0/1.html)     | [ht\\_list/104/0/0/1](https://rsshub.app/78dm/ht_list/104/0/0/1) |
+| [GK](https://www.78dm.net/ht_list/105/0/0/1.html)       | [ht\\_list/105/0/0/1](https://rsshub.app/78dm/ht_list/105/0/0/1) |
+| [综合](https://www.78dm.net/ht_list/107/0/0/1.html)     | [ht\\_list/107/0/0/1](https://rsshub.app/78dm/ht_list/107/0/0/1) |
+| [装甲战车](https://www.78dm.net/ht_list/131/0/0/1.html) | [ht\\_list/131/0/0/1](https://rsshub.app/78dm/ht_list/131/0/0/1) |
+| [舰船模型](https://www.78dm.net/ht_list/132/0/0/1.html) | [ht\\_list/132/0/0/1](https://rsshub.app/78dm/ht_list/132/0/0/1) |
+| [飞机模型](https://www.78dm.net/ht_list/133/0/0/1.html) | [ht\\_list/133/0/0/1](https://rsshub.app/78dm/ht_list/133/0/0/1) |
+| [民用模型](https://www.78dm.net/ht_list/134/0/0/1.html) | [ht\\_list/134/0/0/1](https://rsshub.app/78dm/ht_list/134/0/0/1) |
+| [兵人模型](https://www.78dm.net/ht_list/135/0/0/1.html) | [ht\\_list/135/0/0/1](https://rsshub.app/78dm/ht_list/135/0/0/1) |
+
+</details>`,
     categories: ['new-media'],
 
     features: {

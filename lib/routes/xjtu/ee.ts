@@ -1,7 +1,8 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
@@ -41,14 +42,14 @@ async function handler(ctx) {
 
     const list = $("div[class='list_right fr'] ul li")
         .toArray()
-        .map((item) => {
-            item = $(item);
-            const a = item.find('a');
-            const date = parseDate(item.find('span').text());
+        .map((item): DataItem => {
+            const $item = $(item);
+            const a = $item.find('a');
+            const date = parseDate($item.find('span').text());
             return {
                 title: a.text(),
-                link: new URL(a.attr('href'), baseUrl).href,
-                pubDate: timezone(date, +8),
+                link: new URL(a.attr('href')!, baseUrl).href,
+                pubDate: timezone(date, 8),
             };
         });
 
@@ -57,7 +58,7 @@ async function handler(ctx) {
         link: baseUrl,
         item: await Promise.all(
             list.map((item) =>
-                cache.tryGet(item.link, async () => {
+                cache.tryGet(item.link!, async () => {
                     const res = await got(item.link);
                     const content = load(res.data);
                     item.title = content('tr td[class^=titlestyle]').text();

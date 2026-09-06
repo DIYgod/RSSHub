@@ -1,4 +1,4 @@
-import { Route } from '@/types';
+import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch'; // 统一使用的请求库
 import { parseDate } from '@/utils/parse-date';
 
@@ -21,7 +21,6 @@ async function handler() {
         headers: {
             'content-type': 'application/json',
             origin: 'https://www.thoughtworks.com',
-            referer: 'https://www.thoughtworks.com/',
         },
     });
 

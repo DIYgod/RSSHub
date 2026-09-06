@@ -1,12 +1,12 @@
-import { Route } from '@/types';
-
-import got from '@/utils/got';
-import queryString from 'query-string';
 import { load } from 'cheerio';
-import { parseDate } from '@/utils/parse-date';
+import queryString from 'query-string';
+
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
-import { art } from '@/utils/render';
-import path from 'node:path';
+import got from '@/utils/got';
+import { parseDate } from '@/utils/parse-date';
+
+import { renderDescription } from './templates/description';
 
 export const route: Route = {
     path: '/mmda/tags/:tags?',
@@ -21,6 +21,7 @@ export const route: Route = {
         supportBT: false,
         supportPodcast: false,
         supportScihub: false,
+        nsfw: true,
     },
     radar: [
         {
@@ -32,10 +33,10 @@ export const route: Route = {
     handler,
     description: `For example:
 
-  -   默认查询 (什么 tag 都不加)：\`/booru/mmda/tags\`
-  -   默认查询单个 tag：\`/booru/mmda/tags/full_body\`
-  -   默认查询多个 tag：\`/booru/mmda/tags/full_body%20blue_eyes\`
-  -   默认查询根据作者查询：\`/booru/mmda/tags/user:xxxx\``,
+- 默认查询 (什么 tag 都不加)：\`/booru/mmda/tags\`
+- 默认查询单个 tag：\`/booru/mmda/tags/full_body\`
+- 默认查询多个 tag：\`/booru/mmda/tags/full_body%20blue_eyes\`
+- 默认查询根据作者查询：\`/booru/mmda/tags/user:xxxx\``,
 };
 
 async function handler(ctx) {
@@ -60,11 +61,11 @@ async function handler(ctx) {
     const $ = load(response);
     const list = $('#post-list > div.content > div > div:nth-child(3) span')
         .toArray()
-        .map((item) => {
-            item = $(item);
-            const a = item.find('a').first();
+        .map((item): DataItem => {
+            const $item = $(item);
+            const a = $item.find('a').first();
 
-            const scriptStr = item.find('script[type="text/javascript"]').first().text();
+            const scriptStr = $item.find('script[type="text/javascript"]').first().text();
             const user = scriptStr.match(/user':'(.*?)'/)?.[1] ?? '';
 
             const title = a.find('img').first().attr('title') ?? '';
@@ -75,7 +76,7 @@ async function handler(ctx) {
                 link: `${baseUrl}/${a.attr('href')}`,
                 image: imageSrc,
                 author: user,
-                description: art(path.join(__dirname, 'templates/description.art'), {
+                description: renderDescription({
                     title,
                     image: imageSrc,
                     by: user,
@@ -85,7 +86,7 @@ async function handler(ctx) {
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const { data: response } = await got(item.link);
                 const $ = load(response);
 
@@ -94,10 +95,10 @@ async function handler(ctx) {
                 statisticsTages.find('li, br, strong').remove();
                 const statisticsStr = statisticsTages.text();
 
-                const regex = /(?<key>[^\s:]+)\s*:\s*(?<value>.+)/gm;
-                const result = {};
+                const regex = /(?<key>[^\s:]+)\s*:\s*(?<value>.+)/g;
+                const result: Record<string, string | undefined> = {};
                 for (const match of statisticsStr.matchAll(regex)) {
-                    const { key, value } = match.groups ?? ({} as { key: string; value: string });
+                    const { key, value } = match.groups!;
                     result[key.trim().toLocaleLowerCase()] = value.trim();
                 }
 
@@ -109,10 +110,10 @@ async function handler(ctx) {
                     item.pubDate = parseDate(result.posted);
                 }
 
-                item.description = art(path.join(__dirname, 'templates/description.art'), {
+                item.description = renderDescription({
                     title: item.title,
                     image: bigImage ?? item.image,
-                    posted: item.pubDate ?? '',
+                    posted: (item.pubDate ?? '') as string,
                     by: result.by,
                     source: result.source,
                     rating: result.rating,

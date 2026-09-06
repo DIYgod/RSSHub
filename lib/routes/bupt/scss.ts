@@ -1,9 +1,10 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
-import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/scss/tzgg',
@@ -44,14 +45,14 @@ async function handler() {
     const $ = load(response.data);
     const list = $(selector)
         .toArray()
-        .map((item) => {
+        .map((item): (DataItem & { link: string; pubDateRaw: string }) | null => {
             const $item = $(item);
             const $link = $item.find('a');
             if ($link.length === 0 || !$link.attr('href')) {
                 return null;
             }
 
-            const link = new URL($link.attr('href'), rootUrl).href;
+            const link = new URL($link.attr('href')!, rootUrl).href;
             const rawDate = $item.find('span').text().replace('发布时间：', '').trim();
 
             return {
@@ -60,7 +61,7 @@ async function handler() {
                 pubDateRaw: rawDate,
             };
         })
-        .filter(Boolean);
+        .filter((item) => item !== null);
 
     const items = await Promise.all(
         list.map((item) =>
@@ -72,8 +73,8 @@ async function handler() {
                 const content = load(detailResponse.data);
                 const newsContent = content('.v_news_content');
 
-                newsContent.find('p, span, strong').each(function () {
-                    const element = content(this);
+                newsContent.find('p, span, strong').each((_, el) => {
+                    const element = content(el);
                     const text = element.text().trim();
                     if (text === '') {
                         element.remove();
@@ -83,7 +84,7 @@ async function handler() {
                 });
 
                 item.description = newsContent.text();
-                item.pubDate = timezone(parseDate(item.pubDateRaw), +8);
+                item.pubDate = timezone(parseDate(item.pubDateRaw), 8);
 
                 return item;
             })
@@ -93,6 +94,6 @@ async function handler() {
     return {
         title: `北京邮电大学网络空间安全学院 - ${pageTitle}`,
         link: currentUrl,
-        item: items as Data['item'],
+        item: items,
     };
 }

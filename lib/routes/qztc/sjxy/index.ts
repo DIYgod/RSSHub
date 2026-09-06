@@ -1,8 +1,9 @@
-import { Data, Route } from '@/types';
-import cache from '@/utils/cache';
-import { parseDate } from '@/utils/parse-date';
 import { load } from 'cheerio';
+
+import type { Data, Route } from '@/types';
+import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
 const rootUrl = 'https://www.qztc.edu.cn/sjxy/';
@@ -31,8 +32,8 @@ export const route: Route = {
             target: '/sjxy/:type',
         },
     ],
-    description: `| 板块 | 参数 |
-| ------- | ------- |
+    description: `| 板块     | 参数 |
+| -------- | ---- |
 | 学院概况 | 1938 |
 | 学院动态 | 1939 |
 | 学科建设 | 1940 |
@@ -43,8 +44,7 @@ export const route: Route = {
 | 团学工作 | 1945 |
 | 资料下载 | 1947 |
 | 采购信息 | 1948 |
-| 信息公开 | xxgk |
-`,
+| 信息公开 | xxgk |`,
     // | 学院简介 | 1949 |
     // | 学院领导 | 1950 |
     // | 组织机构 | 1951 |
@@ -70,7 +70,7 @@ async function handler(ctx) {
                 } else if (!link.startsWith('http')) {
                     link = rootUrl.slice(0, -1) + link;
                 }
-                const pubDate = timezone(parseDate(cheerioItem.find('.news_meta').text()), +8);
+                const pubDate = timezone(parseDate(cheerioItem.find('.news_meta').text()), 8);
 
                 return {
                     title,
@@ -101,7 +101,7 @@ async function handler(ctx) {
                     } else {
                         const response = await ofetch(item.link);
                         const $ = load(response);
-                        newItem.description = $('.wp_articlecontent').html() || '';
+                        newItem.description = $('.wp_articlecontent').html() ?? '';
                     }
                 } else {
                     // 涉及到其他站点，不方便做统一的 html 解析，直接返回链接
@@ -116,5 +116,5 @@ async function handler(ctx) {
         title: $('head > title').text() + ' - 泉州师范学院-数学与计算机科学学院 软件学院',
         link: rootUrl + type + '/list.htm',
         item: items,
-    } as Data;
+    } satisfies Data;
 }

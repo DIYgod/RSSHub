@@ -1,6 +1,8 @@
-import { Route, ViewType } from '@/types';
-import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
+
+import type { Route } from '@/types';
+import { ViewType } from '@/types';
+import ofetch from '@/utils/ofetch';
 
 export const route: Route = {
     path: '/',
@@ -40,7 +42,7 @@ async function handler() {
         });
 
     return {
-        title: `Engineering Blogs`,
+        title: 'Engineering Blogs',
         link: 'https://infos.imhcg.cn/',
         item: items,
     };

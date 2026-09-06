@@ -1,4 +1,5 @@
-import type { Data, Route } from '@/types';
+import type { Route } from '@/types';
+
 import { CategoryParam, CommonDataProperties, CommonRouteProperties, getPostItems, TabMap, TabParam, TimeRangeParam } from './common';
 
 export const route: Route = {
@@ -30,7 +31,7 @@ export const route: Route = {
     example: '/voronoiapp/popular/most-popular/MONTH',
     handler: async (ctx) => {
         const { tab = 'most-popular', time_range = 'MONTH', category = '' } = ctx.req.param();
-        if (!TabMap[tab.toLowerCase()]) {
+        if (!Object.hasOwn(TabMap, tab.toLowerCase())) {
             throw new Error(`Invalid tab: ${tab}`);
         }
         const items = await getPostItems({
@@ -44,6 +45,6 @@ export const route: Route = {
             title: `Voronoi ${TabParam.options.find((option) => option.value === tab.toLowerCase())?.label} Posts in ${TimeRangeParam.options.find((option) => option.value === time_range.toUpperCase())?.label}${category ? ` - ${category}` : ''}`,
             link: `https://www.voronoiapp.com/posts/${tab}`,
             item: items,
-        } as Data;
+        };
     },
 };

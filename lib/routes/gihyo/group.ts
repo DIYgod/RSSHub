@@ -1,6 +1,7 @@
-import { Route } from '@/types';
-import got from '@/utils/got';
 import { load } from 'cheerio';
+
+import type { Language, Route } from '@/types';
+import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
@@ -23,7 +24,7 @@ export const route: Route = {
         },
     ],
     name: 'Series',
-    maintainers: ['masakichi'],
+    maintainers: ['yuanji-dev'],
     handler,
 };
 
@@ -40,7 +41,7 @@ async function handler(ctx) {
     const title = $('head title').text();
     const link = url;
     const description = $('head meta[name=description]').attr('content');
-    const language = 'ja';
+    const language: Language = 'ja';
 
     const item = articles.toArray().map((article) => {
         const _subtitle = $('p.m-listitem__title span.subtitle', article).text();
@@ -50,7 +51,7 @@ async function handler(ctx) {
             .text();
         const title = `${_subtitle} ${_title}`;
         const author = $('p.m-listitem__author', article).text();
-        const pubDate = timezone(parseDate($('span.date', article).text(), 'YYYY-MM-DD'), +9);
+        const pubDate = timezone(parseDate($('span.date', article).text(), 'YYYY-MM-DD'), 9);
         const link = `${baseUrl}${$('a', article).attr('href')}`.replace(/\?summary$/, '');
         return {
             title,

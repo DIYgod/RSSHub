@@ -1,7 +1,8 @@
 import { IgApiClient } from 'instagram-private-api';
-import logger from '@/utils/logger';
+
 import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
+import logger from '@/utils/logger';
 
 const ig = new IgApiClient();
 
@@ -22,7 +23,7 @@ async function login(ig, cache) {
         //     logger.info('Instagram preLoginFlow fail: ' + error);
         // }
         await ig.account.login(username, password);
-        process.nextTick(() => ig.simulate.postLoginFlow());
+        queueMicrotask(() => ig.simulate.postLoginFlow());
         logger.debug('Instagram login success.');
     }
     // Post request hook

@@ -1,9 +1,10 @@
-import { Route } from '@/types';
-import got from '@/utils/got';
 import { load } from 'cheerio';
+
+import type { DataItem, Route } from '@/types';
+import cache from '@/utils/cache';
+import got from '@/utils/got';
 import logger from '@/utils/logger';
 import { parseDate } from '@/utils/parse-date';
-import cache from '@/utils/cache';
 
 export const route: Route = {
     path: '/archives',
@@ -31,10 +32,10 @@ async function handler() {
 
     let items = $('.postIndexItem')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
             const title = $item.find('.title a').text().trim();
-            const link = new URL($item.find('.title a').attr('href'), currentUrl).href;
+            const link = new URL($item.find('.title a').attr('href')!, currentUrl).href;
             const dateStr = $item.find('.date').text().trim();
             const pubDate = parseDate(dateStr);
 
@@ -47,7 +48,7 @@ async function handler() {
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 try {
                     const detailResponse = await got(item.link);
                     const $detail = load(detailResponse.data);

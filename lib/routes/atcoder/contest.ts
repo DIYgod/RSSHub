@@ -1,7 +1,8 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
@@ -22,11 +23,11 @@ export const route: Route = {
     handler,
     description: `Rated Range
 
-| ABC Class (Rated for \~1999) | ARC Class (Rated for \~2799) | AGC Class (Rated for \~9999) |
+| ABC Class (Rated for \\~1999) | ARC Class (Rated for \\~2799) | AGC Class (Rated for \\~9999) |
 | ---------------------------- | ---------------------------- | ---------------------------- |
 | 1                            | 2                            | 3                            |
 
-  Category
+Category
 
 | All | AtCoder Typical Contest | PAST Archive | Unofficial(unrated) |
 | --- | ----------------------- | ------------ | ------------------- |
@@ -67,18 +68,18 @@ async function handler(ctx) {
         .find('tr')
         .slice(1, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 20)
         .toArray()
-        .map((item) => {
-            item = $(item).find('td a').eq(1);
+        .map((item): DataItem => {
+            const $item = $(item).find('td a').eq(1);
 
             return {
-                title: item.text(),
-                link: `${rootUrl}${item.attr('href')}?lang=${language}`,
+                title: $item.text(),
+                link: `${rootUrl}${$item.attr('href')}?lang=${language}`,
             };
         });
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const detailResponse = await got({
                     method: 'get',
                     url: item.link,

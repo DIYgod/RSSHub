@@ -1,27 +1,49 @@
 name: 'Close stale issues and PRs'
 
 on:
-  schedule:
-    - cron: '31 23 * * *'
+    schedule:
+        - cron: '31 23 * * *'
+    workflow_dispatch:
 
 permissions:
-  issues: write
-  pull-requests: write
+    issues: write
+    pull-requests: write
 
 jobs:
-  stale:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/stale@5bef64f19d7facfb25b37b414482c7164d639639 # v9.1.0
-        with:
-          # Don't stale issues
-          days-before-issue-stale: -1
-          days-before-pr-stale: 23
-          days-before-close: 7
-          stale-pr-message: >
-            This PR is stale because it has been opened for more than 3 weeks with no activity. Comment or this will be closed in 7 days.
-          close-issue-message: 'This issue was closed because it has been stalled for 7 days with no activity.'
-          close-pr-message: 'This PR was closed because it has been stalled for 7 days with no activity.'
-          exempt-issue-labels: 'dependencies,wait for upstream'
-          exempt-pr-labels: 'dependencies,wait for upstream'
-          any-of-issue-labels: 'more data required'
+    stale:
+        runs-on: ubuntu-slim
+        steps:
+            - uses: actions/stale@4391f3da665fdf50b6810c1a66712fb9ba21aa93 # v11.0.0
+              with:
+                  # Don't stale issues
+                  days-before-issue-stale: -1
+                  days-before-pr-stale: 23
+                  days-before-close: 7
+                  stale-pr-message: >
+                      This PR is stale because it has been opened for more than 3 weeks with no activity. Comment or this will be closed in 7 days.
+                  close-issue-message: 'This issue was closed because it has been stalled for 7 days with no activity.'
+                  close-pr-message: 'This PR was closed because it has been stalled for 30 days with no activity.'
+                  exempt-issue-labels: 'wait for upstream'
+                  exempt-pr-labels: 'wait for upstream'
+                  any-of-issue-labels: 'more data required'
+
+            - name: Close Broken PRs
+              uses: actions/stale@4391f3da665fdf50b6810c1a66712fb9ba21aa93 # v11.0.0
+              with:
+                  days-before-issue-stale: -1
+                  days-before-issue-close: -1
+                  days-before-pr-stale: 1
+                  days-before-pr-close: 0
+                  only-pr-labels: 'auto: DO NOT merge'
+                  stale-pr-label: 'Stale'
+                  remove-pr-stale-when-updated: true
+                  close-pr-message: >
+                      This PR is being auto-closed because it has a broken Docker build without any fixes. Push a fix and reopen when ready.
+    lock:
+        runs-on: ubuntu-slim
+        steps:
+            - uses: dessant/lock-threads@89ae32b08ed1a541efecbab17912962a5e38981c # v6.0.2
+              with:
+                  github-token: ${{ github.token }}
+                  process-only: 'prs'
+                  pr-inactive-days: '30'

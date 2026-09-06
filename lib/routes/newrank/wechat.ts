@@ -1,10 +1,12 @@
-import { Route } from '@/types';
-import got from '@/utils/got';
-import { finishArticleItem } from '@/utils/wechat-mp';
 import { load } from 'cheerio';
-import utils from './utils';
+
 import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
+import type { Route } from '@/types';
+import got from '@/utils/got';
+import { finishArticleItem } from '@/utils/wechat-mp';
+
+import utils from './utils';
 
 export const route: Route = {
     path: '/wechat/:wxid',
@@ -46,7 +48,7 @@ async function handler(ctx) {
     const summary$ = load(summaryHTML);
     const mainsrc = summary$('script')
         .toArray()
-        .find((item) => (item.attribs.src || '').startsWith('/new/static/js/main.')).attribs.src;
+        .find((item) => (item.attribs.src || '').startsWith('/new/static/js/main.'))!.attribs.src;
     const { data: mainScript } = await got({
         method: 'get',
         url: `https://www.newrank.cn${mainsrc}`,

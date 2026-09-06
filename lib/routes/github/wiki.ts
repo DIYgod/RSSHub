@@ -1,6 +1,7 @@
-import { Route } from '@/types';
-import got from '@/utils/got';
 import { load } from 'cheerio';
+
+import type { Route } from '@/types';
+import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
 const baseUrl = 'https://github.com';
@@ -48,12 +49,12 @@ async function handler(ctx) {
     const items = $('.js-wiki-history-revision')
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
             return {
-                title: item.find('.h5').text(),
-                author: item.find('.mt-1 a').text(),
-                pubDate: parseDate(item.find('relative-time').attr('datetime')),
-                link: `${baseUrl}${item.find('.text-mono a').attr('href')}`,
+                title: $item.find('.h5').text(),
+                author: $item.find('.mt-1 a').text(),
+                pubDate: parseDate($item.find('relative-time').attr('datetime')!),
+                link: `${baseUrl}${$item.find('.text-mono a').attr('href')}`,
             };
         });
 

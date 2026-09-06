@@ -1,6 +1,7 @@
-import { Route } from '@/types';
-import got from '@/utils/got';
 import { load } from 'cheerio';
+
+import type { Route } from '@/types';
+import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
@@ -33,7 +34,7 @@ async function handler(ctx) {
         data.toArray().map((e) => {
             let date = $(e).find('td').first().text().trim();
             if (date.includes('-')) {
-                dateRow = date.split(' ')[0];
+                dateRow = date.split(' ', 1)[0];
             } else {
                 date = `${dateRow} ${date}`;
             }

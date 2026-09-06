@@ -1,9 +1,11 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
+
 import { unzip } from './utils';
 
 export const route: Route = {
@@ -38,28 +40,30 @@ async function handler() {
 
     const list = $('.infoList')
         .toArray()
-        .map((item) => {
-            item = $(item);
+        .map((item): DataItem => {
+            const $item = $(item);
             return {
-                title: item.find('a').text(),
-                link: `${baseUrl}${item.find('a').attr('href')}`,
-                pubDate: timezone(parseDate(item.find('.span4').text()), 8),
+                title: $item.find('a').text(),
+                link: `${baseUrl}${$item.find('a').attr('href')}`,
+                pubDate: timezone(parseDate($item.find('.span4').text()), 8),
             };
         });
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const { data: response } = await got(item.link);
                 let $ = load(response);
 
                 const zipped = $('script[type="text/javascript"]')
                     .text()
-                    .match(/Base64\.decode\(unzip\("(.*)"\)\./)[1];
+                    .match(/Base64\.decode\(unzip\("(.*)"\)\./)![1];
                 const { slice1, slice2 } = $('script[type="text/javascript"]')
                     .text()
-                    .match(/"\)\.substr\((?<slice1>\d+)\)\)\.substr\((?<slice2>\d+)\)\);/).groups;
-                const unzipped = Buffer.from(unzip(zipped).slice(slice1), 'base64').toString().slice(slice2);
+                    .match(/"\)\.substr\((?<slice1>\d+)\)\)\.substr\((?<slice2>\d+)\)\);/)!.groups!;
+                const unzipped = Buffer.from(unzip(zipped).slice(Number(slice1)), 'base64')
+                    .toString()
+                    .slice(Number(slice2));
 
                 $ = load(unzipped, null, false);
                 item.description = $.html();

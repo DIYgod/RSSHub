@@ -1,8 +1,9 @@
-import { Data, DataItem, Route } from '@/types';
-import got from '@/utils/got';
 import { load } from 'cheerio';
-import { parseDate } from '@/utils/parse-date';
+
+import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
+import got from '@/utils/got';
+import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/guides',
@@ -28,7 +29,7 @@ export const route: Route = {
     url: 'dev.to',
 };
 
-async function handler() {
+async function handler(): Promise<Data> {
     const baseUrl = 'https://dev.to';
     const response = await got(baseUrl);
     const $ = load(response.data);
@@ -47,7 +48,7 @@ async function handler() {
     // Fetch content for each guide
     const items = await Promise.all(
         guideLinks.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link, async (): Promise<DataItem> => {
                 const articleResponse = await got(item.link);
                 const $article = load(articleResponse.data);
 
@@ -55,7 +56,7 @@ async function handler() {
                 const coverImage = $article('.crayons-article__cover img').attr('src');
 
                 // Extract article content
-                const content = $article('.crayons-article__body').html() || '';
+                const content = $article('.crayons-article__body').html();
 
                 // Extract author info
                 const authorName = $article('.crayons-article__header__meta .fw-bold').first().text().trim();
@@ -63,12 +64,12 @@ async function handler() {
                 const authorAvatar = $article('.crayons-article__header__meta .radius-full').attr('src');
                 // Extract publication date
                 const dateElement = $article('time[datetime]').first();
-                const dateString = dateElement.attr('datetime') || undefined;
+                const dateString = dateElement.attr('datetime');
                 const pubDate = dateString ? parseDate(dateString) : undefined;
                 // Extract tags
                 const tags = $article('.spec__tags .crayons-tag')
                     .toArray()
-                    .map((tag) => $(tag).text().trim().replace('#', ''));
+                    .map((tag) => $(tag).text().replace('#', ''));
 
                 return {
                     title: item.title,
@@ -84,7 +85,7 @@ async function handler() {
                             avatar: authorAvatar,
                         },
                     ],
-                } as DataItem;
+                };
             })
         )
     );
@@ -96,5 +97,5 @@ async function handler() {
         language: 'en-us',
         item: items,
         icon: 'https://media2.dev.to/dynamic/image/width=32,height=,fit=scale-down,gravity=auto,format=auto/https%3A%2F%2Fdev-to-uploads.s3.amazonaws.com%2Fuploads%2Farticles%2F8j7kvp660rqzt99zui8e.png',
-    } as Data;
+    };
 }

@@ -12,18 +12,18 @@ function replaceCharAt(str: string, index: number, replacement: string) {
     return index < 0 || index >= str.length ? str : str.slice(0, index) + replacement + str.slice(index + 1);
 }
 
-export function sign(payload: Map<string, any>) {
-    const map = new Map();
+export function sign(payload: Map<string, number | string>) {
+    const map = new Map<string, string>();
     const lowerCaseKeys: string[] = [];
 
-    for (const [key, value] of payload.entries()) {
+    for (const [key, value] of payload) {
         const lowerCaseKey = key.toLowerCase();
         lowerCaseKeys.push(lowerCaseKey);
-        map.set(lowerCaseKey, typeof value === 'string' ? value.toLowerCase() : value);
+        map.set(lowerCaseKey, String(value).toLowerCase());
     }
 
     const sortedString = lowerCaseKeys
-        .sort()
+        .toSorted((a, b) => a.localeCompare(b))
         .map((key) => key + '=' + map.get(key))
         .join('');
     const linkedString = link('--'.slice(0, 1), '#CEAIWER', '892F', 'KB97', 'JKB6', 'HJ7OC7C8', 'GJZG');

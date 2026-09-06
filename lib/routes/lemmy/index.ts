@@ -1,12 +1,14 @@
-import { Route } from '@/types';
+import MarkdownIt from 'markdown-it';
+
+import { config } from '@/config';
+import ConfigNotFoundError from '@/errors/types/config-not-found';
+import InvalidParameterError from '@/errors/types/invalid-parameter';
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-import MarkdownIt from 'markdown-it';
+
 const md = MarkdownIt({ html: true });
-import { config } from '@/config';
-import InvalidParameterError from '@/errors/types/invalid-parameter';
-import ConfigNotFoundError from '@/errors/types/config-not-found';
 
 export const route: Route = {
     path: '/:community/:sort?',
@@ -65,7 +67,7 @@ async function handler(ctx) {
     if (communitySlices.length !== 2) {
         throw new InvalidParameterError(`Invalid community: ${community}`);
     }
-    const instance = community.split('@')[1];
+    const instance = community.split('@', 2)[1];
     const allowedDomain = ['lemmy.world', 'lemm.ee', 'lemmy.ml', 'sh.itjust.works', 'feddit.de', 'hexbear.net', 'beehaw.org', 'lemmynsfw.com', 'lemmy.ca', 'programming.dev'];
     if (!config.feature.allow_user_supply_unsafe_domain && !allowedDomain.includes(new URL(`http://${instance}/`).hostname)) {
         throw new ConfigNotFoundError(`This RSS is disabled unless 'ALLOW_USER_SUPPLY_UNSAFE_DOMAIN' is set to 'true'.`);
@@ -92,11 +94,16 @@ async function handler(ctx) {
         const post = e.post;
         const creator = e.creator;
         const counts = e.counts;
-        const item = {};
-        item.title = post.name;
-        item.author = creator.name;
-        item.pubDate = parseDate(post.published);
-        item.link = post.ap_id;
+        const item = {
+            title: post.name,
+            author: creator.name,
+            pubDate: parseDate(post.published),
+            link: post.ap_id,
+            description: '',
+            comments: 0,
+            upvotes: 0,
+            downvotes: 0,
+        };
         const url = post.url;
         const urlContent = url ? `<p><a href="${url}">${url}</a></p>` : '';
         const body = post.body ? md.render(post.body) : '';

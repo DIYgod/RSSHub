@@ -1,8 +1,9 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 // Get the lastest blog posts of https://konghq.com/
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
 const BASE_URL = 'https://konghq.com';
@@ -71,7 +72,7 @@ async function handler() {
     );
 
     return {
-        title: `Kong Inc(konghq.com) blog posts`,
+        title: 'Kong Inc(konghq.com) blog posts',
         link: BLOG_POSTS_URL,
         item: items,
     };

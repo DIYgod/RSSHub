@@ -1,11 +1,13 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import { config } from '@/config';
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
-import { header } from './utils';
-import { generateData } from './pin/utils';
 import { parseDate } from '@/utils/parse-date';
-import { config } from '@/config';
+
+import { generateData } from './pin/utils';
+import { header } from './utils';
 
 export const route: Route = {
     path: '/collection/:id/:getAll?',
@@ -55,24 +57,30 @@ async function handler(ctx) {
     if (getAll) {
         const totals = response.data.paging.totals;
 
-        const offsetList = [...Array.from({ length: Math.round(totals / 20) }).keys()].map((item) => item * 20).slice(1);
-        const otherList = await Promise.all(
-            offsetList.map((offset) =>
-                cache.tryGet(`https://www.zhihu.com/api/v4/collections/${id}/items?offset=${offset}&limit=20`, async () => {
-                    const response = await got({
-                        method: 'get',
-                        url: `https://www.zhihu.com/api/v4/collections/${id}/items?offset=${offset}&limit=20`,
-                        headers: {
-                            ...header,
-                            cookie: config.zhihu.cookies,
-                            Referer: `https://www.zhihu.com/collection/${id}`,
-                        },
-                    });
+        const offsetList = Array.from({ length: Math.round(totals / 20) })
+            .keys()
+            .toArray()
+            .map((item) => item * 20)
+            .slice(1);
+        const otherList = (
+            await Promise.all(
+                offsetList.map((offset) =>
+                    cache.tryGet(`https://www.zhihu.com/api/v4/collections/${id}/items?offset=${offset}&limit=20`, async () => {
+                        const response = await got({
+                            method: 'get',
+                            url: `https://www.zhihu.com/api/v4/collections/${id}/items?offset=${offset}&limit=20`,
+                            headers: {
+                                ...header,
+                                cookie: config.zhihu.cookies,
+                                Referer: `https://www.zhihu.com/collection/${id}`,
+                            },
+                        });
 
-                    return response.data.data;
-                })
+                        return response.data.data;
+                    })
+                )
             )
-        ).then((item) => item.flat());
+        ).flat();
         list.push(...otherList);
     }
 

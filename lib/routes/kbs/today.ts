@@ -1,9 +1,10 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
-import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/today/:language?',
@@ -48,22 +49,22 @@ async function handler(ctx) {
 
     const list = $('.comp_text_1x article')
         .toArray()
-        .map((item) => {
-            item = $(item);
+        .map((item): DataItem => {
+            const $item = $(item);
 
-            const a = item.find('h2 a');
+            const a = $item.find('h2 a');
 
             return {
                 title: a.text(),
-                category: item.find('.cate').text(),
-                link: `${rootUrl}/service${a.attr('href').replace('./', '/')}`,
-                pubDate: timezone(parseDate(item.find('.date').text()), +9),
+                category: $item.find('.cate').text(),
+                link: `${rootUrl}/service${a.attr('href')!.replace('./', '/')}`,
+                pubDate: timezone(parseDate($item.find('.date').text()), 9),
             };
         });
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const detailResponse = await got({
                     method: 'get',
                     url: item.link,
@@ -79,7 +80,7 @@ async function handler(ctx) {
     );
 
     return {
-        title: `Latest News | KBS WORLD`,
+        title: 'Latest News | KBS WORLD',
         link: currentUrl,
         item: items,
     };

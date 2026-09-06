@@ -1,8 +1,9 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-import { load } from 'cheerio';
 
 export const route: Route = {
     path: '/:type?',
@@ -43,11 +44,12 @@ async function handler(ctx) {
     const $ = load(response.data);
     const list = $('div.InCont_r_d_cont > li')
         .toArray()
-        .map((item) => {
-            item = $(item);
+        .map((item): DataItem & { link: string } => {
+            const $item = $(item);
             return {
-                link: new URL(item.find('a').attr('href'), baseUrl).href,
-                pubDate: parseDate(item.find('span.cont_d').text(), 'YYYY-MM-DD'),
+                link: new URL($item.find('a').attr('href')!, baseUrl).href,
+                pubDate: parseDate($item.find('span.cont_d').text(), 'YYYY-MM-DD'),
+                title: '',
             };
         });
 
@@ -60,7 +62,7 @@ async function handler(ctx) {
                 });
                 const content = load(response.data);
                 item.title = content('div.r_d_cont_title > h3').text();
-                item.description = content('div.r_d_cont').html().trim().replaceAll('\n', '');
+                item.description = content('div.r_d_cont').html()!.trim().replaceAll('\n', '');
                 return item;
             })
         )

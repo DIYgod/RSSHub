@@ -1,9 +1,11 @@
-import { Route, DataItem } from '@/types';
-import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
+import { FetchError } from 'ofetch';
+
+import type { DataItem, Route } from '@/types';
+import logger from '@/utils/logger';
+import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import { finishArticleItem } from '@/utils/wechat-mp';
-import logger from '@/utils/logger';
 
 const host = 'https://weixin.sogou.com';
 const hardcodedCookie = 'SNUID=78725B470A0EF2C3F97AA5EB0BBF95C1; ABTEST=0|1680917938|v1; SUID=8F7B1C682B83A20A000000006430C5B2; PHPSESSID=le2lak0vghad5c98ijd3t51ls4; IPLOC=USUS5';
@@ -29,7 +31,6 @@ async function fetchAndParsePage(wechatId: string): Promise<SogouItemInternal[]>
                 page: '1',
             },
             headers: {
-                Referer: host,
                 Cookie: hardcodedCookie,
             },
         });
@@ -73,15 +74,15 @@ async function fetchAndParsePage(wechatId: string): Promise<SogouItemInternal[]>
             if (location) {
                 if (!location.startsWith('http')) {
                     try {
-                        location = new URL(location, sogouLink).toString();
+                        location = new URL(location, sogouLink).href;
                     } catch (error) {
                         logger.warn(`Invalid redirect location "${location}" for title "${title}" (wechatId: ${wechatId}): ${error instanceof Error ? error.message : String(error)}`);
                         location = null;
                     }
                 }
 
-                if (typeof location === 'string' && location) {
-                    if (location.startsWith('http://mp.weixin.qq.com') || location.startsWith('https://mp.weixin.qq.com')) {
+                if (location) {
+                    if (location.startsWith('http://mp.weixin.qq.com/') || location.startsWith('https://mp.weixin.qq.com/')) {
                         realLink = location;
                     } else {
                         try {
@@ -94,7 +95,7 @@ async function fetchAndParsePage(wechatId: string): Promise<SogouItemInternal[]>
                                 ignoreResponseError: true,
                             });
                             const intermediateLocation = intermediateResponse.headers?.get('location');
-                            if (intermediateLocation && (intermediateLocation.startsWith('http://mp.weixin.qq.com') || intermediateLocation.startsWith('https://mp.weixin.qq.com'))) {
+                            if (intermediateLocation && (intermediateLocation.startsWith('http://mp.weixin.qq.com/') || intermediateLocation.startsWith('https://mp.weixin.qq.com/'))) {
                                 realLink = intermediateLocation;
                             } else {
                                 // logger.warn(`Could not resolve final WeChat link for title "${title}" (wechatId: ${wechatId}) after intermediate redirect`);
@@ -109,14 +110,14 @@ async function fetchAndParsePage(wechatId: string): Promise<SogouItemInternal[]>
             }
         } catch (error: unknown) {
             const errorMsg = error instanceof Error ? error.message : String(error);
-            if (typeof error === 'object' && error !== null && 'response' in error && typeof error.response === 'object' && error.response !== null && 'status' in error.response) {
+            if (error instanceof FetchError && error.response) {
                 logger.debug(`Redirect request failed for "${title}" (wechatId: ${wechatId}) with status ${error.response.status}: ${errorMsg}`);
             } else {
                 logger.debug(`Redirect request failed for "${title}" (wechatId: ${wechatId}): ${errorMsg}`);
             }
         }
 
-        const isWeChatLink = realLink.startsWith('http://mp.weixin.qq.com') || realLink.startsWith('https://mp.weixin.qq.com');
+        const isWeChatLink = realLink.startsWith('http://mp.weixin.qq.com/') || realLink.startsWith('https://mp.weixin.qq.com/');
         const author = $li.find('span.all-time-y2').text().trim();
 
         return {
@@ -129,7 +130,7 @@ async function fetchAndParsePage(wechatId: string): Promise<SogouItemInternal[]>
             _internal: {
                 isWeChatLink,
             },
-        } as SogouItemInternal;
+        };
     });
 
     return (await Promise.all(pageItemsPromises)).filter((item): item is SogouItemInternal => item !== null);
@@ -149,7 +150,7 @@ export const route: Route = {
         supportScihub: false,
     },
     name: '公众号（搜狗来源）',
-    maintainers: ['EthanWng97', 'pseudoyu'],
+    maintainers: ['IvanWng97', 'pseudoyu'],
     handler,
 };
 
@@ -161,7 +162,7 @@ async function handler(ctx) {
     const firstPageFirstItem = allItems[0];
     const accountTitle = firstPageFirstItem?.author || wechatId;
 
-    const finalItemsPromises = allItems.map(async (item: SogouItemInternal): Promise<DataItem | null> => {
+    const finalItemsPromises = allItems.map(async (item: SogouItemInternal): Promise<DataItem> => {
         let resultItem: DataItem | SogouItemInternal = item;
         if (item._internal.isWeChatLink) {
             try {
@@ -171,23 +172,19 @@ async function handler(ctx) {
             }
         }
 
-        if (resultItem && typeof resultItem === 'object') {
-            const finalItem: DataItem = {
-                title: resultItem.title,
-                link: resultItem.link,
-                description: resultItem.description,
-                author: resultItem.author,
-                pubDate: resultItem.pubDate,
-                guid: resultItem.guid,
-                ...(resultItem.content && { content: resultItem.content }),
-            };
-            return finalItem;
-        }
-        logger.debug(`Unexpected null or non-object item during final processing for link: ${item?.link}`);
-        return null;
+        const finalItem: DataItem = {
+            title: resultItem.title,
+            link: resultItem.link,
+            description: resultItem.description,
+            author: resultItem.author,
+            pubDate: resultItem.pubDate,
+            guid: resultItem.guid,
+            ...(resultItem.content && { content: resultItem.content }),
+        };
+        return finalItem;
     });
 
-    const finalItems: DataItem[] = (await Promise.all(finalItemsPromises)).filter((item): item is DataItem => item !== null);
+    const finalItems = await Promise.all(finalItemsPromises);
 
     return {
         title: `${accountTitle} 的微信公众号`,

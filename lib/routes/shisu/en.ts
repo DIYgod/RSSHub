@@ -1,7 +1,8 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
 const url = 'http://en.shisu.edu.cn';
@@ -30,12 +31,12 @@ async function process(baseUrl: string, section: any) {
     const $ = load(r);
     const itemsoup = $('.tab-con:nth-child(1) ul li')
         .toArray()
-        .map((i0) => {
+        .map((i0): DataItem & { link: string } => {
             const i = $(i0);
             const img = i.find('img').attr('src');
             const link = `${baseUrl}${i.find('h3>a').attr('href')}`;
             return {
-                title: i.find('h3>a').text().trim(),
+                title: i.find('h3>a').text(),
                 link,
                 pubDate: parseDate(i.find('p.time').text()),
                 itunes_item_image: `${baseUrl}${img}`,
@@ -48,8 +49,8 @@ async function process(baseUrl: string, section: any) {
                 const $ = load(r);
                 j.description = $('.details-con')
                     .html()!
-                    .replaceAll(/<o:p>[\S\s]*?<\/o:p>/g, '')
-                    .replaceAll(/(<p[^>]*>&nbsp;<\/p>\s*)+/gm, '<p>&nbsp;</p>');
+                    .replaceAll(/<o:p>[\s\S]*?<\/o:p>/g, '')
+                    .replaceAll(/(<p[^>]*>&nbsp;<\/p>\s*)+/g, '<p>&nbsp;</p>');
                 return j;
             })
         )

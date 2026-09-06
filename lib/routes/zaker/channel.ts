@@ -1,8 +1,10 @@
-import { Route } from '@/types';
-import cache from '@/utils/cache';
-import * as cheerio from 'cheerio';
-import { baseUrl, fetchItem, getSafeLineCookieWithData, parseList } from './utils';
+import { load } from 'cheerio';
 import pMap from 'p-map';
+
+import type { Route } from '@/types';
+import cache from '@/utils/cache';
+
+import { baseUrl, fetchItem, getSafeLineCookieWithData, parseList } from './utils';
 
 export const route: Route = {
     path: '/channel/:id?',
@@ -27,7 +29,7 @@ async function handler(ctx) {
 
     const { cookie, data } = await getSafeLineCookieWithData(link);
 
-    const $ = cheerio.load(data);
+    const $ = load(data);
     const feedTitle = $('head title').text();
     const list = parseList($);
 

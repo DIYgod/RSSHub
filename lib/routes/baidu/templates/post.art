@@ -1,4 +1,0 @@
-<p>{{@ pubContent }}</p><br>
-作者：{{ author }}<br>
-楼层：{{ num }}<br>
-{{ from }}

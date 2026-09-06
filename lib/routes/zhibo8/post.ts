@@ -1,6 +1,7 @@
-import { Route } from '@/types';
-import got from '@/utils/got';
 import { load } from 'cheerio';
+
+import type { Route } from '@/types';
+import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
@@ -33,19 +34,19 @@ async function handler(ctx) {
     const list = $('.topic-content .topic-table');
 
     const out = list.toArray().map((item) => {
-        item = $(item);
-        const author = item.find('.topic-left > div > a').text();
-        const floor = item.find('p.topic-foot span:nth-child(2)').text();
-        const description = item.find('.detail_ent').html().replaceAll('src="', 'src="https:');
+        const $item = $(item);
+        const author = $item.find('.topic-left > div > a').text();
+        const floor = $item.find('p.topic-foot span:nth-child(2)').text();
+        const description = $item.find('.detail_ent').html()!.replaceAll('src="', 'src="https:');
         const pubDate = timezone(
             parseDate(
-                item
+                $item
                     .find('p.topic-foot')
                     .text()
-                    .match(/\d{4}-\d{2}-\d{2} \d{2}:\d{2}/)[0],
+                    .match(/\d{4}-\d{2}-\d{2} \d{2}:\d{2}/)![0],
                 'YYYY-MM-DD HH:mm'
             ),
-            +8
+            8
         );
 
         const single = {

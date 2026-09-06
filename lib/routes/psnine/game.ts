@@ -1,13 +1,13 @@
-import type { Route } from '@/types';
+import { load } from 'cheerio';
 
+import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import * as cheerio from 'cheerio';
 
 const handler = async () => {
     const url = 'https://www.psnine.com/psngame';
     const response = await ofetch(url);
 
-    const $ = cheerio.load(response);
+    const $ = load(response);
 
     const out = $('table tr')
         .toArray()

@@ -1,10 +1,11 @@
-import { Route } from '@/types';
-import cache from '@/utils/cache';
 import { load } from 'cheerio';
-import ofetch from '@/utils/ofetch';
+
+import type { DataItem, Route } from '@/types';
+import cache from '@/utils/cache';
 import logger from '@/utils/logger';
-import timezone from '@/utils/timezone';
+import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/topic/:id',
@@ -24,6 +25,12 @@ export const route: Route = {
     handler,
 };
 
+interface TopicDoc {
+    title?: DataItem['title'];
+    createdByName?: string;
+    tags?: string[];
+}
+
 async function handler(ctx) {
     const baseUrl = 'https://www.modb.pro';
     const topicId = ctx.req.param('id');
@@ -35,7 +42,7 @@ async function handler(ctx) {
         },
     });
     const list = response.list.map((item) => {
-        let doc = {};
+        let doc: TopicDoc = {};
         let baseLink = {};
         switch (item.type) {
             case 0:
@@ -53,7 +60,7 @@ async function handler(ctx) {
         return {
             title: doc.title,
             link: `${baseLink}/${item.rid}`,
-            pubDate: timezone(parseDate(item.createdTime), +8),
+            pubDate: timezone(parseDate(item.createdTime), 8),
             author: doc.createdByName,
             category: doc.tags,
         };

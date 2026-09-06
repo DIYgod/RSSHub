@@ -1,7 +1,8 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
 const arr = {
@@ -45,18 +46,18 @@ async function handler(ctx) {
 
     const list = $('div#articleList-body div.item.clearfix')
         .toArray()
-        .map((item) => {
-            item = $(item);
-            const a = item.find('a');
-            const date = parseDate(item.find('div.item-date').text());
+        .map((item): DataItem & { link: string; pubDate: Date } => {
+            const $item = $(item);
+            const a = $item.find('a');
+            const date = parseDate($item.find('div.item-date').text());
             return {
                 title: a.text(),
-                link: new URL(a.attr('href'), baseUrl).href,
+                link: new URL(a.attr('href')!, baseUrl).href,
                 pubDate: date,
             };
         });
 
-    const sorted = list.sort((a, b) => b.pubDate.getTime() - a.pubDate.getTime()).slice(0, 10);
+    const sorted = list.toSorted((a, b) => b.pubDate.getTime() - a.pubDate.getTime()).slice(0, 10);
 
     return {
         title: `北京大学学生就业指导服务中心 - ${feed_title}`,
@@ -68,7 +69,7 @@ async function handler(ctx) {
                     const detail = load(detailPage.data);
                     const script = detail('div#content-div script').html();
                     if (script !== null) {
-                        const content_route = script.match(/\$\("#content-div"\).load\("(\S+)"\)/)[1];
+                        const content_route = script.match(/\$\("#content-div"\).load\("(\S+)"\)/)![1];
                         const content = await got(new URL(content_route, baseUrl).href);
                         item.description = content.data;
                     }

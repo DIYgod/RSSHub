@@ -1,10 +1,11 @@
-import { Route } from '@/types';
-import cache from '@/utils/cache';
-import parser from '@/utils/rss-parser';
-import got from '@/utils/got';
 import { load } from 'cheerio';
-import { fixArticleContent } from '@/utils/wechat-mp';
+
+import type { Route } from '@/types';
+import cache from '@/utils/cache';
+import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import parser from '@/utils/rss-parser';
+import { fixArticleContent } from '@/utils/wechat-mp';
 
 // any UA containing "RSS" can pass the check
 // mark the UA as a desktop UA with "(X11; Linux x86_64)"
@@ -36,21 +37,18 @@ export const route: Route = {
 async function handler(ctx) {
     const id = ctx.req.param('id');
 
-    const feed = await parser.parseString(
-        await got
-            .get(`https://posts.careerengine.us/author/${id}/rss`, {
-                headers: {
-                    'User-Agent': UA,
-                },
-            })
-            .then((_) => _.data)
-    );
+    const response = await got.get(`https://posts.careerengine.us/author/${id}/rss`, {
+        headers: {
+            'User-Agent': UA,
+        },
+    });
+    const feed = await parser.parseString(response.data);
 
     const items = await Promise.all(
         feed.items.splice(0, 10).map((item) => {
             // generally speaking, changing `item.link` of an existing route could potentially break `item.guid`
             // but since the route has been down for at least 8 months, it's probably safe
-            item.link = item.link.replace(/^http:\/\//, 'https://');
+            item.link = item.link!.replace(/^http:\/\//, 'https://');
             return cache.tryGet(item.link, async () => {
                 const response = await got.get(item.link, {
                     headers: {
@@ -62,7 +60,7 @@ async function handler(ctx) {
 
                 const description = fixArticleContent($('.post'));
 
-                let pubDate = item.pubDate;
+                let pubDate: string | Date | undefined = item.pubDate;
                 if (!pubDate || pubDate === 'Invalid Date') {
                     // sometimes the pubDate is not available in the official feed
                     const postDate = $('.post-date')
@@ -76,7 +74,7 @@ async function handler(ctx) {
                 }
 
                 return {
-                    title: item.title,
+                    title: item.title!,
                     description,
                     pubDate,
                     link: item.link,

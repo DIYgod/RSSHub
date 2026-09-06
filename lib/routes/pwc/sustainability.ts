@@ -1,6 +1,6 @@
-import { Route } from '@/types';
-import { parseDate } from '@/utils/parse-date';
+import type { Language, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/parse-date';
 
 interface PlayerOptions {
     link: string;
@@ -53,10 +53,10 @@ export const route: Route = {
 
 async function handler() {
     const baseUrl = 'https://www.strategyand.pwc.com/at/en/functions/sustainability-strategy/publications.html';
-    const feedLang = 'en';
+    const feedLang: Language = 'en';
     const feedDescription = 'Sustainability Publications from PwC Strategy&';
 
-    const response = await ofetch(
+    const response = await ofetch<{ elements: string }>(
         'https://www.strategyand.pwc.com/content/pwc/03/en/functions/sustainability-strategy/publications/jcr:content/root/container/content-free-container/section_545483788/collection_v2.filter-dynamic.html',
         {
             query: {
@@ -66,7 +66,7 @@ async function handler() {
             },
         }
     );
-    const elements = JSON.parse(response.elements) as Element[];
+    const elements: Element[] = JSON.parse(response.elements);
 
     const items = elements.map((item) => ({
         title: item.title,

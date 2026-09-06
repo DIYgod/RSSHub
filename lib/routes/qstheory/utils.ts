@@ -1,12 +1,13 @@
+import { load } from 'cheerio';
+
 import ofetch from '@/utils/ofetch';
-import * as cheerio from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
 export const baseUrl = 'http://www.qstheory.cn';
 
 export const getItem = async (item) => {
     const response = await ofetch(item.link);
-    const $ = cheerio.load(response);
+    const $ = load(response);
 
     $('.fs-text, .fs-pinglun, .hidden-xs').remove();
 

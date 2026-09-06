@@ -1,8 +1,9 @@
-import { Route } from '@/types';
-import cache from '@/utils/cache';
 import { load } from 'cheerio';
+
+import type { Route } from '@/types';
+import cache from '@/utils/cache';
+import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
-import { ofetch } from 'ofetch';
 
 const rootURL = 'https://sports.swjtu.edu.cn';
 const pageURL = `${rootURL}/xwzx.htm`;
@@ -43,7 +44,7 @@ const getItem = (item, cache) => {
             $('div.info span:nth-of-type(3)')
                 .text()
                 .slice(3)
-                .match(/\d{4}(-|\/|.)\d{1,2}\1\d{1,2}/)?.[0]
+                .match(/\d{4}(.)\d{1,2}\1\d{1,2}/)![0]
         );
         const description = $('div.detail-wrap').html();
         return {

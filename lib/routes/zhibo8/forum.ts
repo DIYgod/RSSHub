@@ -1,7 +1,8 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
@@ -35,13 +36,13 @@ async function handler(ctx) {
 
     const out = await Promise.all(
         list.toArray().map((item) => {
-            item = $(item);
-            const a = item.find('td:nth-child(1) > a:nth-child(2)');
+            const $item = $(item);
+            const a = $item.find('td:nth-child(1) > a:nth-child(2)');
             const link = 'https://bbs.zhibo8.cc' + a.attr('href');
             return cache.tryGet(link, async () => {
                 const title = a.text();
-                const author = item.find('td:nth-child(2) cite a').text();
-                const date = item.find('td:nth-child(2) em').text();
+                const author = $item.find('td:nth-child(2) cite a').text();
+                const date = $item.find('td:nth-child(2) em').text();
 
                 const response = await got(link);
                 const $ = load(response.data);
@@ -52,7 +53,7 @@ async function handler(ctx) {
                     description,
                     author,
                     link,
-                    pubDate: timezone(parseDate(date, 'YYYY-MM-DD HH:mm'), +8),
+                    pubDate: timezone(parseDate(date, 'YYYY-MM-DD HH:mm'), 8),
                 };
             });
         })

@@ -1,13 +1,14 @@
-import { Route } from '@/types';
-import got from '@/utils/got';
 import { load } from 'cheerio';
+
+import type { Route } from '@/types';
+import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
 const rootURL = 'http://rsj.taiyuan.gov.cn/';
 
 export const route: Route = {
-    path: '/taiyuan/rsj/:caty/:page?',
+    path: '/rsj/:caty/:page?',
     categories: ['government'],
     example: '/gov/taiyuan/rsj/gggs',
     parameters: { caty: '信息类别', page: '页码' },
@@ -24,7 +25,7 @@ export const route: Route = {
             source: ['rsj.taiyuan.gov.cn/*'],
         },
     ],
-    name: '太原市人力资源和社会保障局政府公开信息',
+    name: '人力资源和社会保障局政府公开信息',
     maintainers: ['2PoL'],
     handler,
     url: 'rsj.taiyuan.gov.cn/*',
@@ -47,7 +48,7 @@ async function handler(ctx) {
         throw new Error(response.statusMessage);
     }
 
-    const $ = load(response.data, { decodeEntities: false });
+    const $ = load(response.data);
     const title = $('.tit').find('a:eq(2)').text();
     const list = $('.RightSide_con ul li')
         .toArray()
@@ -55,9 +56,9 @@ async function handler(ctx) {
             const link = $(item).find('a');
             const date = $(item).find('span.fr');
             return {
-                title: link.attr('title'),
+                title: link.attr('title')!,
                 link: link.attr('href'),
-                pubDate: timezone(parseDate(date.text(), 'YYYY-MM-DD'), +8),
+                pubDate: timezone(parseDate(date.text(), 'YYYY-MM-DD'), 8),
             };
         });
 

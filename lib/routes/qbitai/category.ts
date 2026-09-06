@@ -1,9 +1,10 @@
-import { Route } from '@/types';
-import parser from '@/utils/rss-parser';
-import ofetch from '@/utils/ofetch';
-import cache from '@/utils/cache';
 import { load } from 'cheerio';
+
+import type { Route } from '@/types';
+import cache from '@/utils/cache';
+import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import parser from '@/utils/rss-parser';
 
 export const route: Route = {
     path: '/category/:category',
@@ -37,8 +38,8 @@ async function handler(ctx) {
 
     const feed = await parser.parseURL(url);
     const entries = feed.items.map((item) => ({
-        title: item.title,
-        pubDate: parseDate(item.pubDate),
+        title: item.title!,
+        pubDate: parseDate(item.pubDate!),
         link: item.link,
         author: '量子位',
         category: item.categories,
@@ -47,9 +48,9 @@ async function handler(ctx) {
 
     const resolvedEntries = await Promise.all(
         entries.map((entry) =>
-            cache.tryGet(entry.link, async () => {
+            cache.tryGet(entry.link!, async () => {
                 try {
-                    const response = await ofetch(entry.link);
+                    const response = await ofetch(entry.link!);
                     const $ = load(response);
                     entry.description = $('.article').html() || 'No content found';
                 } catch {

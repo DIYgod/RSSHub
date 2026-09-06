@@ -1,16 +1,32 @@
-import { Route } from '@/types';
+import { load } from 'cheerio'; // 可以使用类似 jQuery 的 API HTML 解析器
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 // 导入必要的模组
 import got from '@/utils/got'; // 自订的 got
-import { load } from 'cheerio'; // 可以使用类似 jQuery 的 API HTML 解析器
 import { parseDate } from '@/utils/parse-date';
+
 import { getPageItemAndDate } from './utils/index';
 
 export const route: Route = {
     path: '/cxzx/:types?',
-    name: 'Unknown',
+    categories: ['university'],
+    example: '/jsu/cxzx/xkjs',
+    parameters: { types: '通知分类 默认为`xkjs`' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '创新中心',
     maintainers: ['wenjia03'],
     handler,
+    description: `| 通知公告 | 学科竞赛公告 | 创新项目公告 | 竞赛新闻 | 竞赛通知 |
+| -------- | ------------ | ------------ | -------- | -------- |
+| tzgg     | xkjs         | cxtz         | jsxw     | jstz     |`,
 };
 
 async function handler(ctx) {
@@ -50,10 +66,10 @@ async function handler(ctx) {
 
     const out = await Promise.all(
         list.map((item) => {
-            item = $(item);
-            const link = new URL(item.find('td:nth-child(2) > a').attr('href'), baseUrl).href;
+            const $item = $(item);
+            const link = new URL($item.find('td:nth-child(2) > a').attr('href')!, baseUrl).href;
             return cache.tryGet(link, async () => {
-                const title = item.find('td:nth-child(2) > a').text() || '无标题';
+                const title = $item.find('td:nth-child(2) > a').text() || '无标题';
 
                 const category = urls[types].title;
                 const description = await getPageItemAndDate(

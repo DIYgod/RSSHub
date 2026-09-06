@@ -1,12 +1,14 @@
-import { Route } from '@/types';
-import cache from '@/utils/cache';
-import { config } from '@/config';
-import got from '@/utils/got';
 import { load } from 'cheerio';
-import timezone from '@/utils/timezone';
+import type { ParsedQuery } from 'query-string';
+import queryString from 'query-string';
+
+import { config } from '@/config';
+import type { DataItem, Language, Route } from '@/types';
+import cache from '@/utils/cache';
+import got from '@/utils/got';
 import { parseDate, parseRelativeDate } from '@/utils/parse-date';
 import parser from '@/utils/rss-parser';
-import queryString from 'query-string';
+import timezone from '@/utils/timezone';
 
 const threadIdRegex = /(\d+)-\d+-\d+/;
 const header = {
@@ -24,7 +26,7 @@ export const route: Route = {
             {
                 name: 'KEYLOL_COOKIE',
                 optional: true,
-                description: `配置后可抓取具有阅读权限的帖子內容`,
+                description: '配置后可抓取具有阅读权限的帖子內容',
             },
         ],
         requirePuppeteer: false,
@@ -42,13 +44,13 @@ export const route: Route = {
     maintainers: ['nczitzk', 'kennyfong19931'],
     handler,
     description: `::: tip
-  若订阅 [热点聚焦](https://keylol.com/f161-1)，网址为 \`https://keylol.com/f161-1\`。截取 \`https://keylol.com/\` 到末尾的部分 \`f161-1\` 作为参数，此时路由为 [\`/keylol/f161-1\`](https://rsshub.app/keylol/f161-1)。
-  若订阅子分类 [试玩免费 - 热点聚焦](https://keylol.com/forum.php?mod=forumdisplay&fid=161&filter=typeid&typeid=459)，网址为 \`https://keylol.com/forum.php?mod=forumdisplay&fid=161&filter=typeid&typeid=459\`。提取\`fid\`及\`typeid\` 作为参数，此时路由为 [\`/keylol/fid=161&typeid=459\`](https://rsshub.app/keylol/fid=161&typeid=459)。注意不要包括\`filter\`，会调用[全局的内容过滤](https://docs.rsshub.app/guide/parameters#filtering)。
+若订阅 [热点聚焦](https://keylol.com/f161-1)，网址为 \`https://keylol.com/f161-1\`。截取 \`https://keylol.com/\` 到末尾的部分 \`f161-1\` 作为参数，此时路由为 [\`/keylol/f161-1\`](https://rsshub.app/keylol/f161-1)。
+若订阅子分类 [试玩免费 - 热点聚焦](https://keylol.com/forum.php?mod=forumdisplay\\&fid=161\\&filter=typeid\\&typeid=459)，网址为 \`https://keylol.com/forum.php?mod=forumdisplay&fid=161&filter=typeid&typeid=459\`。提取\`fid\`及\`typeid\` 作为参数，此时路由为 [\`/keylol/fid=161&typeid=459\`](https://rsshub.app/keylol/fid=161\\&typeid=459)。注意不要包括\`filter\`，会调用[全局的内容过滤](https://docs.rsshub.app/guide/parameters#filtering)。
 :::`,
 };
 
 async function handler(ctx) {
-    let queryParams = {};
+    let queryParams: ParsedQuery = {};
     const path = ctx.req.param('path');
     if (/^f\d+-\d+/.test(path)) {
         queryParams.fid = path.match(/^f(\d+)-\d+/)[1];
@@ -64,14 +66,14 @@ async function handler(ctx) {
     try {
         const feed = await parser.parseURL(`https://keylol.com/forum.php?mod=rss&fid=${queryParams.fid}&auth=0`);
         authorNameMap = feed.items.map((item) => ({
-            threadId: item.link.match(threadIdRegex)[1],
+            threadId: item.link!.match(threadIdRegex)![1],
             author: item.author,
         }));
     } catch {
         authorNameMap = [];
     }
 
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 30;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 30;
 
     const rootUrl = 'https://keylol.com';
     const currentUrl = queryString.stringifyUrl({ url: `${rootUrl}/forum.php`, query: queryParams });
@@ -87,21 +89,21 @@ async function handler(ctx) {
     let items = $('tbody[id^="normalthread_"]')
         .slice(0, limit)
         .toArray()
-        .map((item) => {
-            item = $(item);
+        .map((item): DataItem => {
+            const $item = $(item);
 
             return {
-                title: item.find('a.xst').text(),
-                link: new URL(item.find(' a.xst').prop('href').split('&extra=')[0], rootUrl).href,
-                author: item.find('td.by-author cite').text(),
-                pubDate: parseRelativeDate(item.find('td.by-author em').text().replaceAll(' 发表', '')),
+                title: $item.find('a.xst').text(),
+                link: new URL($item.find(' a.xst').prop('href')!.split('&extra=', 1)[0], rootUrl).href,
+                author: $item.find('td.by-author cite').text(),
+                pubDate: parseRelativeDate($item.find('td.by-author em').text().replaceAll(' 发表', '')),
             };
         });
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
-                const threadId = threadIdRegex.test(item.link) ? item.link.match(threadIdRegex)[1] : queryString.parseUrl(item.link).query.tid;
+            cache.tryGet(item.link!, async () => {
+                const threadId = threadIdRegex.test(item.link!) ? item.link!.match(threadIdRegex)![1] : queryString.parseUrl(item.link!).query.tid;
                 const { data: detailResponse } = await got({
                     method: 'get',
                     url: item.link,
@@ -116,7 +118,7 @@ async function handler(ctx) {
                     // post with page
                     const postId = content('div.t_fsz > script')
                         .text()
-                        .match(/show_threadindex\((\d+),/)[1];
+                        .match(/show_threadindex\((\d+),/)![1];
                     descriptionList = await Promise.all(
                         indexDiv.find('a').map((i, a) => {
                             const pageTitle = $(a).text();
@@ -146,11 +148,11 @@ async function handler(ctx) {
                     .toArray()
                     .map((c) => content(c).text());
 
-                const pubDateEm = content('img.authicn').first().next();
+                const pubDateEm = content('img.authicn').next();
                 const pubDateText = pubDateEm.find('span').prop('title') ?? pubDateEm.text();
                 const pubDateMatches = pubDateText.match(/(\d{4}(?:-\d{1,2}){2} (?:\d{2}:){2}\d{2})/) ?? undefined;
                 if (pubDateMatches) {
-                    item.pubDate = timezone(parseDate(pubDateMatches[1], 'YYYY-M-D HH:mm:ss'), +8);
+                    item.pubDate = timezone(parseDate(pubDateMatches[1], 'YYYY-M-D HH:mm:ss'), 8);
                 }
 
                 const updatedMatches =
@@ -158,10 +160,10 @@ async function handler(ctx) {
                         .text()
                         .match(/(\d{4}(?:-\d{1,2}){2} (?:\d{2}:){2}\d{2})/) ?? undefined;
                 if (updatedMatches) {
-                    item.updated = timezone(parseDate(updatedMatches[1], 'YYYY-M-D HH:mm:ss'), +8);
+                    item.updated = timezone(parseDate(updatedMatches[1], 'YYYY-M-D HH:mm:ss'), 8);
                 }
 
-                item.comments = content('div.subforum_right_title_left_down').text() ? Number.parseInt(content('div.subforum_right_title_left_down').text(), 10) : 0;
+                item.comments = content('div.subforum_right_title_left_down').text() ? Number(content('div.subforum_right_title_left_down').text()) : 0;
 
                 return item;
             })
@@ -175,7 +177,7 @@ async function handler(ctx) {
         title: $('title').text(),
         link: currentUrl,
         description: $('meta[name="description"]').prop('content'),
-        language: 'zh-cn',
+        language: 'zh-CN' as Language,
         icon,
         logo: icon,
         subtitle: $('meta[name="application-name"]').prop('content'),
@@ -189,11 +191,11 @@ function getDescription($) {
 
     // handle lazyload image
     descriptionEl.find('img').each((_, img) => {
-        img = $(img);
-        if (img.attr('src')?.endsWith('none.gif') && img.attr('file')) {
-            img.attr('src', img.attr('file'));
-            img.removeAttr('file');
-            img.removeAttr('zoomfile');
+        const $img = $(img);
+        if ($img.attr('src')?.endsWith('none.gif') && $img.attr('file')) {
+            $img.attr('src', $img.attr('file'));
+            $img.removeAttr('file');
+            $img.removeAttr('zoomfile');
         }
     });
 

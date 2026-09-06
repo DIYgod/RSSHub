@@ -1,15 +1,23 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
+
 const xmut = 'https://yjs.xmut.edu.cn';
 
 export const route: Route = {
     path: '/jwc/yjjw/:category?',
-    name: 'Unknown',
-    maintainers: [],
+    categories: ['university'],
+    example: '/xmut/jwc/yjjw/tzgg',
+    parameters: { category: '分类如下表' },
+    name: '研究生处',
+    maintainers: ['icecliffs'],
     handler,
+    description: `| 通知公告 | 新闻动态 | 学术研究 | 工作简讯 |
+| :------: | :------: | :------: | :------: |
+|   tzgg   |   xwdt   |   xstj   |   yjsjw  |`,
 };
 
 async function handler(ctx) {
@@ -19,30 +27,24 @@ async function handler(ctx) {
         headers: {
             referer: xmut,
         },
-        https: {
-            rejectUnauthorized: false,
-        },
     });
     const $ = load(res.data);
     const items = $('.mainWrap .main_con .main_conR ul li')
         .toArray()
-        .map((item) => {
-            item = $(item);
+        .map((item): DataItem => {
+            const $item = $(item);
             return {
-                title: item.find('em').text(),
-                link: `${xmut}/` + item.find('a').attr('href'),
-                pubDate: parseDate(item.find('span').text()),
+                title: $item.find('em').text(),
+                link: `${xmut}/` + $item.find('a').attr('href'),
+                pubDate: parseDate($item.find('span').text()),
             };
         });
     const itemPromises = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const detailResponse = await got(item.link, {
                     headers: {
                         referer: xmut,
-                    },
-                    https: {
-                        rejectUnauthorized: false,
                     },
                 });
                 const $item = load(detailResponse.data);

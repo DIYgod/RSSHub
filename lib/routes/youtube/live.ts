@@ -1,11 +1,13 @@
-import { Route } from '@/types';
-import cache from '@/utils/cache';
-import utils from './utils';
-import { config } from '@/config';
-import { parseDate } from '@/utils/parse-date';
-import got from '@/utils/got';
 import { load } from 'cheerio';
+
+import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
+import type { Route } from '@/types';
+import cache from '@/utils/cache';
+import got from '@/utils/got';
+import { parseDate } from '@/utils/parse-date';
+
+import { formatDescription, getChannelWithUsername, getLive, getThumbnail, renderYoutube } from './utils';
 
 export const route: Route = {
     path: '/live/:username/:embed?',
@@ -16,7 +18,8 @@ export const route: Route = {
         requireConfig: [
             {
                 name: 'YOUTUBE_KEY',
-                description: ' YouTube API Key, support multiple keys, split them with `,`, [API Key application](https://console.developers.google.com/)',
+                description:
+                    'YouTube API Key (enable YouTube Data API v3), support multiple keys, split them with `,`, [API Key application](https://console.developers.google.com/), [YouTube Data API v3](https://console.cloud.google.com/apis/library/youtube.googleapis.com)',
             },
         ],
         requirePuppeteer: false,
@@ -47,12 +50,12 @@ async function handler(ctx) {
     channelName = $('meta[itemprop="name"]').attr('content');
 
     if (!channelId) {
-        const channelInfo = (await utils.getChannelWithUsername(username, 'snippet', cache)).data.items[0];
+        const channelInfo = (await getChannelWithUsername(username, 'snippet', cache)).data.items[0];
         channelId = channelInfo.id;
         channelName = channelInfo.snippet.title;
     }
 
-    const data = (await utils.getLive(channelId, cache)).data.items;
+    const data = (await getLive(channelId, cache)).data.items;
 
     return {
         title: `${channelName || username}'s Live Status`,
@@ -61,10 +64,10 @@ async function handler(ctx) {
         item: data.map((item) => {
             const snippet = item.snippet;
             const liveVideoId = item.id.videoId;
-            const img = utils.getThumbnail(snippet.thumbnails);
+            const img = getThumbnail(snippet.thumbnails);
             return {
                 title: snippet.title,
-                description: utils.renderDescription(embed, liveVideoId, img, utils.formatDescription(snippet.description)),
+                description: renderYoutube(embed, liveVideoId, img, formatDescription(snippet.description)),
                 pubDate: parseDate(snippet.publishedAt),
                 guid: liveVideoId,
                 link: `https://www.youtube.com/watch?v=${liveVideoId}`,

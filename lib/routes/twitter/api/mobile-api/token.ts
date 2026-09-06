@@ -1,38 +1,39 @@
-import { config } from '@/config';
-import login from './login';
+// import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
 
-let tokenIndex = 0;
+// import login from './login';
 
-async function getToken() {
-    let token;
-    if (config.twitter.username && config.twitter.password) {
-        const index = tokenIndex++ % config.twitter.username.length;
-        const username = config.twitter.username[index];
-        const password = config.twitter.password[index];
-        const authenticationSecret = config.twitter.authenticationSecret?.[index];
-        const phoneOrEmail = config.twitter.phoneOrEmail?.[index];
-        if (username && password) {
-            const authentication = await login({
-                username,
-                password,
-                authenticationSecret,
-                phoneOrEmail,
-            });
-            if (!authentication) {
-                throw new ConfigNotFoundError(`Invalid twitter configs: ${username}`);
-            }
-            token = {
-                key: authentication.oauth_token,
-                secret: authentication.oauth_token_secret,
-                cacheKey: `twitter:authentication:${username}`,
-            };
-        }
-    } else {
-        throw new ConfigNotFoundError('Invalid twitter configs');
-    }
+// let tokenIndex = 0;
 
-    return token;
+async function getToken(): Promise<{ key: string; secret: string; cacheKey: string }> {
+    // let token;
+    // if (config.twitter.username && config.twitter.password) {
+    //     const index = tokenIndex++ % config.twitter.username.length;
+    //     const username = config.twitter.username[index];
+    //     const password = config.twitter.password[index];
+    //     const authenticationSecret = config.twitter.authenticationSecret?.[index];
+    //     const phoneOrEmail = config.twitter.phoneOrEmail?.[index];
+    //     if (username && password) {
+    //         const authentication = await login({
+    //             username,
+    //             password,
+    //             authenticationSecret,
+    //             phoneOrEmail,
+    //         });
+    //         if (!authentication) {
+    //             throw new ConfigNotFoundError(`Invalid twitter configs: ${username}`);
+    //         }
+    //         token = {
+    //             key: authentication.oauth_token,
+    //             secret: authentication.oauth_token_secret,
+    //             cacheKey: `twitter:authentication:${username}`,
+    //         };
+    //     }
+    // } else {
+    //     throw new ConfigNotFoundError('Invalid twitter configs');
+    // }
+    // return token;
+    return await Promise.reject(new ConfigNotFoundError('Invalid twitter configs'));
 }
 
 export { getToken };

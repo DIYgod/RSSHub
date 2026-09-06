@@ -1,6 +1,8 @@
-import { Route, ViewType } from '@/types';
-import got from '@/utils/got';
 import queryString from 'query-string';
+
+import type { Route } from '@/types';
+import { ViewType } from '@/types';
+import got from '@/utils/got';
 
 export const route: Route = {
     path: [
@@ -28,14 +30,17 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['konachan.com/post', 'konachan.net/post'],
+            source: ['konachan.com/post'],
+        },
+        {
+            source: ['konachan.net/post'],
         },
     ],
     name: 'Popular Recent Posts',
     maintainers: ['magic-akari', 'NekoAria', 'sineeeee'],
-    description: `| 最近 24 小时    | 最近一周     | 最近一月    | 最近一年     |
-| ------- | -------- | ------- | -------- |
-| 1d | 1w | 1m | 1y |`,
+    description: `| 最近 24 小时 | 最近一周 | 最近一月 | 最近一年 |
+| ------------ | -------- | -------- | -------- |
+| 1d           | 1w       | 1m       | 1y       |`,
     handler,
     features: {
         nsfw: true,
@@ -63,7 +68,7 @@ async function handler(ctx) {
         '1y': 'Last year',
     };
 
-    const mime: Record<string, string> = {
+    const mime = {
         jpg: 'jpeg',
         png: 'png',
     };
@@ -81,13 +86,12 @@ async function handler(ctx) {
             author: post.author,
             pubDate: new Date(post.created_at * 1e3).toUTCString(),
             description: (() => {
-                const result: string[] = [];
-                result.push(
+                const result: string[] = [
                     `<img src="${post.sample_url}" />`,
                     `<p>Rating: ${post.rating}</p><p>Score: ${post.score}</p>`,
                     ...(post.source ? [`<a href="${post.source}">Source</a>`] : []),
-                    ...(post.parent_id ? [`<a href="${baseUrl}/post/show/${post.parent_id}">Parent</a>`] : [])
-                );
+                    ...(post.parent_id ? [`<a href="${baseUrl}/post/show/${post.parent_id}">Parent</a>`] : []),
+                ];
                 return result.join('');
             })(),
             media: {

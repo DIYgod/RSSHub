@@ -1,8 +1,8 @@
-import { Route } from '@/types';
-
-import ofetch from '@/utils/ofetch';
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
-import { baseUrl, getItem, headers, parseList } from './utils';
+import playwright from '@/utils/playwright';
+
+import { baseUrl, getItem, parseList, playwrightFetch } from './utils';
 
 export const route: Route = {
     path: '/categories/:category',
@@ -18,18 +18,23 @@ export const route: Route = {
     maintainers: ['TonyRL'],
     url: 'javtrailers.com/categories',
     handler,
+    features: {
+        nsfw: true,
+        requirePuppeteer: true,
+    },
 };
 
 async function handler(ctx) {
     const { category } = ctx.req.param();
 
-    const response = await ofetch(`${baseUrl}/api/categories/${category}?page=0`, {
-        headers,
-    });
+    const context = await playwright();
+    const response = await playwrightFetch(`${baseUrl}/api/categories/${category}?page=0`, context);
 
     const list = parseList(response.videos);
 
-    const items = await Promise.all(list.map((item) => cache.tryGet(item.link, () => getItem(item))));
+    const items = await Promise.all(list.map((item) => cache.tryGet(item.link, () => getItem(item, context))));
+
+    await context.close();
 
     return {
         title: `Watch ${response.category.name} Jav Online | Japanese Adult Video - JavTrailers.com`,

@@ -1,14 +1,16 @@
-import { type NotFoundHandler, type ErrorHandler } from 'hono';
+import Honeybadger from '@honeybadger-io/js';
+import type { ErrorHandler, NotFoundHandler } from 'hono';
 import { routePath } from 'hono/route';
-import { getDebugInfo, setDebugInfo } from '@/utils/debug-info';
+
 import { config } from '@/config';
-import * as Sentry from '@sentry/node';
+import { getDebugInfo, setDebugInfo } from '@/utils/debug-info';
 import logger from '@/utils/logger';
+import { requestMetric } from '@/utils/otel';
 import Error from '@/views/error';
 
 import NotFoundError from './types/not-found';
 
-import { requestMetric } from '@/utils/otel';
+const Sentry = config.sentry.dsn ? await import('@sentry/node') : undefined;
 
 export const errorHandler: ErrorHandler = (error, ctx) => {
     const requestPath = ctx.req.path;
@@ -25,26 +27,34 @@ export const errorHandler: ErrorHandler = (error, ctx) => {
     }
     debug.error++;
 
-    if (!debug.errorPaths[requestPath]) {
+    const errorPathCount = debug.errorPaths[requestPath];
+    if (!errorPathCount) {
         debug.errorPaths[requestPath] = 0;
     }
     debug.errorPaths[requestPath]++;
 
-    if (!debug.errorRoutes[matchedRoute] && hasMatchedRoute) {
+    const errorRouteCount = debug.errorRoutes[matchedRoute];
+    if (!errorRouteCount && hasMatchedRoute) {
         debug.errorRoutes[matchedRoute] = 0;
     }
     hasMatchedRoute && debug.errorRoutes[matchedRoute]++;
     setDebugInfo(debug);
 
-    if (config.sentry.dsn) {
+    if (config.honeybadger.apiKey) {
+        Honeybadger.notify(error, {
+            context: { name: requestPath.split('/', 2)[1] },
+        });
+    }
+
+    if (Sentry) {
         Sentry.withScope((scope) => {
-            scope.setTag('name', requestPath.split('/')[1]);
+            scope.setTag('name', requestPath.split('/', 2)[1]);
             Sentry.captureException(error);
         });
     }
 
-    let errorMessage = (process.env.NODE_ENV || process.env.VERCEL_ENV) === 'production' ? error.message : error.stack || error.message;
-    switch (error.constructor.name) {
+    let errorMessage = (process.env.NODE_ENV || process.env.VERCEL_ENV) === 'production' || !error.stack ? `${error.name}: ${error.message}` : error.stack;
+    switch (error.name) {
         case 'HTTPError':
         case 'RequestError':
         case 'FetchError':
@@ -65,9 +75,7 @@ export const errorHandler: ErrorHandler = (error, ctx) => {
             ctx.status(503);
             break;
     }
-    const message = `${error.name}: ${errorMessage}`;
-
-    logger.error(`Error in ${requestPath}: ${message}`);
+    logger.error(`Error in ${requestPath}: ${errorMessage}`);
     requestMetric.error({ path: matchedRoute, method: ctx.req.method, status: ctx.res.status });
 
     return config.isPackage || ctx.req.query('format') === 'json'
@@ -76,7 +84,7 @@ export const errorHandler: ErrorHandler = (error, ctx) => {
                   message: error.message ?? error,
               },
           })
-        : ctx.html(<Error requestPath={requestPath} message={message} errorRoute={hasMatchedRoute ? matchedRoute : requestPath} nodeVersion={process.version} />);
+        : ctx.html(<Error requestPath={requestPath} message={errorMessage} errorRoute={hasMatchedRoute ? matchedRoute : requestPath} nodeVersion={process.version} />);
 };
 
 export const notFoundHandler: NotFoundHandler = (ctx) => errorHandler(new NotFoundError(), ctx);

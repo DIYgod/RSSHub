@@ -1,4 +1,6 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 /*
  * @Author: nightmare-mio wanglongwei2009@qq.com
@@ -7,7 +9,6 @@ import cache from '@/utils/cache';
  * @Description:
  */
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
@@ -42,21 +43,21 @@ async function handler(ctx) {
     const list = $('#posts-table>tbody>tr')
         .toArray()
         .slice(1)
-        .map((item) => {
-            item = $(item);
-            const a = item.find('a').first();
+        .map((item): DataItem => {
+            const $item = $(item);
+            const a = $item.find('a').first();
             return {
-                title: a.attr('title'),
+                title: a.attr('title')!,
                 link: a.attr('href'),
-                pubDate: parseDate(item.find('.time').text()),
-                author: item.find('a').eq(1).text(),
+                pubDate: parseDate($item.find('.time').text()),
+                author: $item.find('a').eq(1).text(),
             };
         });
     const title = $('#content>h1').text();
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const { data: response } = await got(item.link);
                 const $ = load(response);
                 // 评论

@@ -1,12 +1,13 @@
-import { Route } from '@/types';
-import cache from '@/utils/cache';
-import got from '@/utils/got';
 import { load } from 'cheerio';
-import { parseDate } from '@/utils/parse-date';
 import pMap from 'p-map';
 
+import type { DataItem, Language, Route } from '@/types';
+import cache from '@/utils/cache';
+import got from '@/utils/got';
+import { parseDate } from '@/utils/parse-date';
+
 export const route: Route = {
-    path: '/nrta/dsj/:category?',
+    path: '/dsj/:category?',
     categories: ['government'],
     example: '/gov/nrta/dsj',
     parameters: { category: '分类，见下表，默认为备案公示' },
@@ -28,7 +29,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { category = 'note' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 15;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 15;
 
     const rootUrl = 'https://dsj.nrta.gov.cn';
     const currentUrl = new URL(`tims/site/views/applications.shanty?appName=${category}`, rootUrl).href;
@@ -40,14 +41,14 @@ async function handler(ctx) {
     const items = $('img[src="/site/styles/default/images/icon_arrow_r.gif"]')
         .slice(0, limit)
         .toArray()
-        .map((item) => {
-            item = $(item).next();
+        .map((item): DataItem & { link: string } => {
+            const $item = $(item).next();
 
-            const pubDateMatches = item.text().match(/(\d+年\d+月)/);
+            const pubDateMatches = $item.text().match(/(\d+年\d+月)/);
 
             return {
-                title: item.text(),
-                link: new URL(item.prop('href'), rootUrl).href,
+                title: $item.text(),
+                link: new URL($item.prop('href')!, rootUrl).href,
                 pubDate: pubDateMatches ? parseDate(pubDateMatches[1], ['YYYY年MM月', 'YYYY年M月']) : undefined,
             };
         });
@@ -74,7 +75,7 @@ async function handler(ctx) {
         title: `${$('title').text()}-${$('div.headbottom_menu_selected').text()}`,
         link: currentUrl,
         description: $('td').last().text(),
-        language: 'zh-cn',
+        language: 'zh-CN' as const satisfies Language,
         image: $('img').first().prop('src'),
         author: '国家广播电影电视总局电视剧管理司',
     };

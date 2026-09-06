@@ -1,17 +1,24 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import InvalidParameterError from '@/errors/types/invalid-parameter';
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import { isValidHost } from '@/utils/valid-host';
-import InvalidParameterError from '@/errors/types/invalid-parameter';
 
-function getKeysRecursive(dic, key, attr, array) {
+interface ChannelNode {
+    children?: Record<string, ChannelNode>;
+    domain_name: string;
+    node: string;
+}
+
+function getKeysRecursive(dic: Record<string, ChannelNode>, attr: 'domain_name' | 'node', array: string[]) {
     for (const v of Object.values(dic)) {
-        if (v[key] === undefined) {
+        if (v.children === undefined) {
             array.push(v[attr]);
         } else {
-            getKeysRecursive(v[key], key, attr, array);
+            getKeysRecursive(v.children, attr, array);
         }
     }
     return array;
@@ -57,9 +64,9 @@ async function handler(ctx) {
         url: `${host}/api/channel_pc`,
     });
 
-    const name = getKeysRecursive(resp.data.children, 'children', 'domain_name', [])[0];
+    const name = getKeysRecursive(resp.data.children, 'domain_name', [])[0];
 
-    const nodes = getKeysRecursive(resp.data.children, 'children', 'node', [])
+    const nodes = getKeysRecursive(resp.data.children, 'node', [])
         .map((x) => `"${x}"`)
         .join(',');
     const req = await got({
@@ -86,7 +93,7 @@ async function handler(ctx) {
                 item.description = content('textarea.article-content').text();
                 item.author = content('span', '.source').text();
                 item.pubDate = parseDate(Number.parseInt(content('textarea.article-time').text()));
-                item.category = content('meta[name="keywords"]').attr('content').split(',');
+                item.category = content('meta[name="keywords"]').attr('content')!.split(',');
 
                 return item;
             })
@@ -97,7 +104,7 @@ async function handler(ctx) {
         title: `${name} - 环球网`,
         link: host,
         description: '环球网',
-        language: 'zh-cn',
+        language: 'zh-CN' as const,
         item: items,
     };
 }

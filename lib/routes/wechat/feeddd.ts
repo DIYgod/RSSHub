@@ -14,7 +14,8 @@ const handler = async (ctx) => {
     try {
         response = await got(apiUrl);
     } catch (error) {
-        if ((error.name === 'HTTPError' || error.name === 'FetchError') && error.response.statusCode === 404) {
+        const { name, response: errorResponse } = error as { name: string; response: { statusCode: number } };
+        if ((name === 'HTTPError' || name === 'FetchError') && errorResponse.statusCode === 404) {
             throw new InvalidParameterError('该公众号不存在，有关如何获取公众号 id，详见 https://docs.rsshub.app/routes/new-media#wei-xin-gong-zhong-hao-feeddd-lai-yuan');
         }
         throw error;
@@ -40,4 +41,5 @@ const handler = async (ctx) => {
     ctx.set('json', ret);
     return ret;
 };
+// TODO: missing route export
 export default handler;

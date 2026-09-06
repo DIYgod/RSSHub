@@ -1,6 +1,4 @@
-import { art } from '@/utils/render';
-
-import path from 'node:path';
+import { renderDescription } from './templates/description';
 
 interface Style {
     [key: string]: string;
@@ -45,30 +43,30 @@ interface Content {
     entityMap: { [key: string]: Entity };
 }
 
-const imageBaseUrl: string = 'https://image.gcores.com';
+const imageBaseUrl = 'https://image.gcores.com';
 
-const STYLES: Readonly<Record<string, Style>> = {
-    BOLD: { fontWeight: 'bold' },
-    CODE: { fontFamily: 'monospace', wordWrap: 'break-word' },
-    ITALIC: { fontStyle: 'italic' },
-    STRIKETHROUGH: { textDecoration: 'line-through' },
-    UNDERLINE: { textDecoration: 'underline' },
-};
+const STYLES = new Map<string, Style>([
+    ['BOLD', { fontWeight: 'bold' }],
+    ['CODE', { fontFamily: 'monospace', wordWrap: 'break-word' }],
+    ['ITALIC', { fontStyle: 'italic' }],
+    ['STRIKETHROUGH', { textDecoration: 'line-through' }],
+    ['UNDERLINE', { textDecoration: 'underline' }],
+]);
 
-const BLOCK_TYPES: Readonly<Record<string, BlockType>> = {
-    'header-one': { element: 'h1' },
-    'header-two': { element: 'h2' },
-    'header-three': { element: 'h3' },
-    'header-four': { element: 'h4' },
-    'header-five': { element: 'h5' },
-    'header-six': { element: 'h6' },
-    'unordered-list-item': { element: 'li', parentElement: 'ul' },
-    'ordered-list-item': { element: 'li', parentElement: 'ol' },
-    blockquote: { element: 'blockquote' },
-    atomic: { element: undefined },
-    'code-block': { element: 'pre' },
-    unstyled: { element: 'p' },
-};
+const BLOCK_TYPES = new Map<string, BlockType>([
+    ['header-one', { element: 'h1' }],
+    ['header-two', { element: 'h2' }],
+    ['header-three', { element: 'h3' }],
+    ['header-four', { element: 'h4' }],
+    ['header-five', { element: 'h5' }],
+    ['header-six', { element: 'h6' }],
+    ['unordered-list-item', { element: 'li', parentElement: 'ul' }],
+    ['ordered-list-item', { element: 'li', parentElement: 'ol' }],
+    ['blockquote', { element: 'blockquote' }],
+    ['atomic', { element: undefined }],
+    ['code-block', { element: 'pre' }],
+    ['unstyled', { element: 'p' }],
+]);
 
 /**
  * Creates a styled HTML fragment for a given text and style object.
@@ -94,7 +92,7 @@ const createEntityElement = (entity: Entity, text: string): string => {
         case 'EMBED':
             return entity.data.content.startsWith('http') ? `<a href="${entity.data.content}" target="_blank">${entity.data.content}</a>` : entity.data.content;
         case 'IMAGE':
-            return art(path.join(__dirname, 'templates/description.art'), {
+            return renderDescription({
                 images: entity.data.path
                     ? [
                           {
@@ -110,7 +108,7 @@ const createEntityElement = (entity: Entity, text: string): string => {
             if (!entity.data.images || !Array.isArray(entity.data.images)) {
                 return '';
             }
-            return art(path.join(__dirname, 'templates/description.art'), {
+            return renderDescription({
                 images: entity.data.images.map((image: any) => ({
                     src: new URL(image.path, imageBaseUrl).href,
                     alt: image.caption ?? entity.data.caption,
@@ -134,7 +132,7 @@ const createEntityElement = (entity: Entity, text: string): string => {
  * @returns HTML string representing the block.
  */
 const parseBlock = (block: Block, entityMap: Readonly<Record<string, Entity>>): string => {
-    const blockType = BLOCK_TYPES[block.type];
+    const blockType = BLOCK_TYPES.get(block.type);
     if (!blockType) {
         return '';
     }
@@ -147,15 +145,14 @@ const parseBlock = (block: Block, entityMap: Readonly<Record<string, Entity>>): 
         length: number;
         styles: Style[];
         entity: Entity | null;
-    }> = [];
-
-    for (const range of inlineStyleRanges) {
-        combinedRanges.push({
+    }> = Array.from(inlineStyleRanges, (range) => {
+        const style = STYLES.get(range.style);
+        return {
             ...range,
-            styles: [STYLES[range.style]],
+            styles: style ? [style] : [],
             entity: null,
-        });
-    }
+        };
+    });
 
     for (const range of entityRanges) {
         combinedRanges.push({
@@ -169,7 +166,7 @@ const parseBlock = (block: Block, entityMap: Readonly<Record<string, Entity>>): 
 
     // Group ranges by offset and length
     const groupedRangesMap = new Map<string, { offset: number; length: number; styles: Style[]; entities: Entity[] }>();
-    const groupedRanges: { offset: number; length: number; styles: Style[]; entities: Entity[] }[] = [];
+    const groupedRanges: Array<{ offset: number; length: number; styles: Style[]; entities: Entity[] }> = [];
 
     for (const range of combinedRanges) {
         const rangeKey = `${range.offset}-${range.length}`;
@@ -198,9 +195,9 @@ const parseBlock = (block: Block, entityMap: Readonly<Record<string, Entity>>): 
     let lastOffset = 0;
 
     for (const range of groupedRanges) {
-        resultParts.push(text.substring(lastOffset, range.offset));
+        resultParts.push(text.slice(lastOffset, range.offset));
 
-        let styledText = text.substring(range.offset, range.offset + range.length);
+        let styledText = text.slice(range.offset, range.offset + range.length);
 
         if (range.styles.length > 0) {
             const combinedStyle: Style = {};
@@ -244,7 +241,7 @@ const parseContent = (content: Content): string => {
     let parentContent: string[] = [];
 
     for (const block of blocks) {
-        const blockType = BLOCK_TYPES[block.type];
+        const blockType = BLOCK_TYPES.get(block.type);
         if (!blockType) {
             continue;
         }

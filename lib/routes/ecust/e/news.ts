@@ -1,8 +1,8 @@
-import { Route } from '@/types';
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 const baseUrl = 'https://e.ecust.edu.cn';
 
@@ -45,7 +45,7 @@ async function handler() {
     const list = response.data.datas.datas.map((item) => ({
         title: item['1'].value,
         link: item.url.startsWith('http') ? item.url : `${baseUrl}/engine2/d/${item.id}/${item.engineInstanceId}/0`,
-        pubDate: timezone(parseDate(item['6'].value), +8),
+        pubDate: timezone(parseDate(item['6'].value), 8),
     }));
 
     const items = await Promise.all(

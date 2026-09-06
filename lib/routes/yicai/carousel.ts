@@ -1,8 +1,9 @@
-import { Route } from '@/types';
-import cache from '@/utils/cache';
-import { rootUrl, fetchFullArticles } from './utils';
-import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
+
+import type { Route } from '@/types';
+import ofetch from '@/utils/ofetch';
+
+import { fetchFullArticles, rootUrl } from './utils';
 
 export const route: Route = {
     path: '/carousel',
@@ -35,8 +36,7 @@ async function handler() {
         fetchFullArticles(
             $('#breaknews a')
                 .toArray()
-                .map((e) => ({ link: new URL($(e).attr('href'), rootUrl).href, title: $(e).text() })),
-            cache.tryGet
+                .map((e) => ({ link: new URL($(e).attr('href')!, rootUrl).href, title: $(e).text() }))
         )
     );
 

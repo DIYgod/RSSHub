@@ -1,9 +1,16 @@
-import { Route } from '@/types';
-import got from '@/utils/got';
 import { load } from 'cheerio';
+
+import type { Route } from '@/types';
+import got from '@/utils/got';
 
 export const route: Route = {
     path: '/839studio/:id',
+    categories: ['traditional-media'],
+    example: '/thepaper/839studio/2',
+    parameters: { id: '分类 id，默认订阅全部分类' },
+    description: `| 视频 | 交互 | 信息图 | 数据故事 |
+| ---- | ---- | ------ | -------- |
+| 2    | 4    | 3      | 453      |`,
     radar: [
         {
             source: ['thepaper.cn/'],
@@ -39,11 +46,11 @@ async function handler(ctx) {
         link,
         description: desc,
         item: list.toArray().map((item) => {
-            item = $(item);
+            const $item = $(item);
             return {
-                title: item.find('.archive_up a').first().text(),
-                description: `描述：${item.find('.imgdown p').text()}`,
-                link: item.find('.archive_up a').attr('href'),
+                title: $item.find('.archive_up a').text(),
+                description: `描述：${$item.find('.imgdown p').text()}`,
+                link: $item.find('.archive_up a').attr('href'),
             };
         }),
     };

@@ -1,6 +1,7 @@
-import { Route } from '@/types';
-import got from '@/utils/got';
 import { load } from 'cheerio';
+
+import type { Route } from '@/types';
+import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
@@ -26,9 +27,6 @@ async function handler() {
 
     const response = await got({
         url: newsUrl,
-        headers: {
-            Referer: baseUrl,
-        },
     });
 
     const $ = load(response.data);
@@ -37,7 +35,7 @@ async function handler() {
     return {
         title: 'Rust语言中文社区 | 新闻/聚合',
         link: newsUrl,
-        description: `获取Rust语言中文社区的新闻/聚合`,
+        description: '获取Rust语言中文社区的新闻/聚合',
         item: list.map((item) => getFeedItem(item)),
     };
 }
@@ -50,6 +48,6 @@ function getFeedItem(item) {
         title: title.text(),
         link: `${baseUrl}${title.attr('href')}`,
         description: $('.info .tags').text(),
-        pubDate: timezone(parseDate($('.info .timestamp').text(), 'YYYY-MM-DD hh:mm'), +8),
+        pubDate: timezone(parseDate($('.info .timestamp').text(), 'YYYY-MM-DD hh:mm'), 8),
     };
 }

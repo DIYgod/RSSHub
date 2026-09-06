@@ -1,6 +1,7 @@
-import { Route } from '@/types';
-import cache from '@/utils/cache';
 import { load } from 'cheerio';
+
+import type { DataItem, Route } from '@/types';
+import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
@@ -18,7 +19,7 @@ export const route: Route = {
         supportScihub: false,
     },
     name: 'Channel',
-    maintainers: [],
+    maintainers: ['mikkkee'],
     handler,
     description: `| Trading | Infrastructure | Tech and Data | Regulation |
 | ------- | -------------- | ------------- | ---------- |
@@ -34,13 +35,13 @@ async function handler(ctx) {
     const title = `FX-Markets ${pageTitle}`;
 
     const items = $('div#listings').children();
-    const articles = items.toArray().map((el) => {
+    const articles = items.toArray().map((el): DataItem => {
         const $el = $(el);
         const $titleEl = $el.find('h5 > a');
         const articleURL = `https://www.fx-markets.com${$titleEl.attr('href')}`;
         const articleTitle = $titleEl.attr('title');
         return {
-            title: articleTitle,
+            title: articleTitle!,
             link: articleURL,
             pubDate: parseDate($el.find('time').text()),
         };
@@ -48,18 +49,18 @@ async function handler(ctx) {
 
     const result = await Promise.all(
         articles.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const res = await got(item.link);
                 const doc = load(res.data);
                 // This script holds publish datetime info {"datePublished": "2022-05-12T08:45:04+01:00"}
-                const dateScript = doc('script[type="application/ld+json"]').toArray()[0].children[0].data;
+                const dateScript = doc('script[type="application/ld+json"]').first().text();
                 const re = /"datePublished": "(?<dateTimePub>.*)"/;
-                const dateStr = re.exec(dateScript).groups.dateTimePub;
+                const dateStr = re.exec(dateScript)!.groups!.dateTimePub;
                 const pubDateTime = parseDate(dateStr, 'YYYY-MM-DDTHH:mm:ssZ');
                 // Exclude hidden print message
                 item.description = doc('div.article-page-body-content:not(.print-access-info)').html();
                 return {
-                    title: item.title,
+                    title: item.title!,
                     link: item.link,
                     description: item.description,
                     // if we fail to get accurate publish date time, show date only from article link on index page.

@@ -1,7 +1,8 @@
-import { Route } from '@/types';
-import { parseDate } from '@/utils/parse-date';
-import got from '@/utils/got';
 import { load } from 'cheerio';
+
+import type { Route } from '@/types';
+import got from '@/utils/got';
+import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/',
@@ -33,7 +34,7 @@ async function handler() {
             const dateraw = element.find('time').text();
 
             return {
-                title,
+                title: title!,
                 description,
                 link,
                 pubDate: parseDate(dateraw, 'YYYY-MM-DD'),

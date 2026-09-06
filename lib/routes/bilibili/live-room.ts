@@ -1,9 +1,11 @@
-import { DataItem, Route } from '@/types';
-import ofetch from '@/utils/ofetch';
-import cache from './cache';
 import { decodeHTML } from 'entities';
+
+import type { DataItem, Route } from '@/types';
+import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
+
+import cache from './cache';
 
 export const route: Route = {
     path: '/live/room/:roomID',
@@ -32,7 +34,7 @@ async function handler(ctx) {
     let roomID = ctx.req.param('roomID');
 
     // 短号查询长号
-    if (Number.parseInt(roomID, 10) < 10000) {
+    if (Number(roomID) < 10000) {
         roomID = await cache.getLiveIDFromShortID(roomID);
     }
     const info = await cache.getUserInfoFromLiveID(roomID);

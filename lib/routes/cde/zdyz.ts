@@ -1,8 +1,10 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
+
 import utils from './utils';
 
 const baseUrl = 'https://www.cde.org.cn';
@@ -66,7 +68,7 @@ async function handler(ctx) {
         form: zdyzMap.zdyz[category].form,
         headers: {
             referer: zdyzMap.zdyz[category].url,
-            cookie: await utils.getCookie(ctx),
+            cookie: await utils.getCookie(),
         },
     });
 
@@ -82,11 +84,11 @@ async function handler(ctx) {
                 const response = await got(item.link, {
                     headers: {
                         referer: zdyzMap.zdyz[category].url,
-                        cookie: await utils.getCookie(ctx),
+                        cookie: await utils.getCookie(),
                     },
                 });
                 const $ = load(response.data);
-                item.description = $('.new_detail_content').html() + $('.relatedNews').html();
+                item.description = $('.new_detail_content').html()! + $('.relatedNews').html()!;
                 return item;
             })
         )

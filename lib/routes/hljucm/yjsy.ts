@@ -1,9 +1,10 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
-import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/yjsy/:category?',
@@ -38,12 +39,12 @@ async function handler(ctx) {
 
     const list = $('.postlist a')
         .toArray()
-        .map((item) => {
-            item = $(item);
+        .map((item): DataItem & { link: string } => {
+            const $item = $(item);
 
             return {
-                title: item.attr('title'),
-                link: new URL(item.attr('href'), currentUrl).href,
+                title: $item.attr('title')!,
+                link: new URL($item.attr('href')!, currentUrl).href,
             };
         });
 
@@ -55,7 +56,7 @@ async function handler(ctx) {
                 const content = load(detailResponse.data);
 
                 item.description = content('#vsb_newscontent').html();
-                item.pubDate = timezone(parseDate(content('.timestyle56043').text()), +8);
+                item.pubDate = timezone(parseDate(content('.timestyle56043').text()), 8);
 
                 const files = detailResponse.data.match(/<span>附件【<a href="(.*)"><span>(.*)<\/span><\/a>】<\/span>/g);
 

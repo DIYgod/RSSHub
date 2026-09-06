@@ -1,4 +1,5 @@
-import { describe, expect, it, vi, afterEach } from 'vitest';
+import { afterEach, describe, expect, it, vi } from 'vitest';
+
 import md5 from '@/utils/md5';
 
 process.env.NODE_NAME = 'mock';
@@ -14,7 +15,7 @@ afterEach(() => {
 });
 
 describe('access-control', () => {
-    it(`access key`, async () => {
+    it('access key', async () => {
         const key = '1L0veRSSHub';
         const code = md5('/test/2' + key);
         process.env.ACCESS_KEY = key;

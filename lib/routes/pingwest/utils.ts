@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+
 import got from '@/utils/got';
 import { parseDate, parseRelativeDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
@@ -15,7 +16,7 @@ const statusListParser = ($) => {
             const imgsStr = mainNode
                 .find('img')
                 .toArray()
-                .map((ele) => `<img src="${ele.attribs.src.split('?x-')[0]}">`)
+                .map((ele) => `<img src="${ele.attribs.src.split('?x-', 1)[0]}">`)
                 .join('<br>');
             const link = mainNode.find('.content a').first().attr('href');
             const content = mainNode
@@ -24,7 +25,7 @@ const statusListParser = ($) => {
                 .replace(/展开全文$/, '');
             return {
                 title: content,
-                link: link.startsWith('http') ? link : `https:${link}`,
+                link: link!.startsWith('http') ? link : `https:${link}`,
                 description: [content, imgsStr].filter((s) => !!s).join('<br>'),
                 pubDate: new Date(timestamp * 1000).toUTCString(),
             };
@@ -52,7 +53,7 @@ const articleListParser = async ($, needFullText, cache) => {
                 const title = titleNode.find('a').text();
                 const prefixUrl = titleNode.find('a').attr('href');
                 const link = modifiedLink(prefixUrl);
-                const imgUrl = $item('.news-img img')?.attr('src')?.split('?x-')[0];
+                const imgUrl = $item('.news-img img')?.attr('src')?.split('?x-', 1)[0];
                 const author = authorNode.children().first().text();
                 const timestamp = authorNode.find('.time').text();
                 const date = /小时前/.test(timestamp) ? parseRelativeDate(timestamp) : parseDate(timestamp, ['YYYY M D', 'M D']);
@@ -79,7 +80,7 @@ const getFullArticle = (link, cache) =>
         const $ = load(data);
         $('img').each((_, ele) => {
             if (ele.attribs.src.includes('?x-')) {
-                ele.attribs.src = ele.attribs.src.split('?x-')[0];
+                ele.attribs.src = ele.attribs.src.split('?x-', 1)[0];
             }
         });
         const description = $('section .article-style').html();

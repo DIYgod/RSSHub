@@ -1,7 +1,8 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
 const baseTitle = 'NUIST ESE（南信大环科院）';
@@ -36,19 +37,19 @@ async function handler(ctx) {
     const $ = load(response.data);
     const list = $('#ctl00_ctl00_mainbody_rightbody_listcontent_NewsList .gridline')
         .toArray()
-        .map((item) => {
-            item = $(item);
+        .map((item): DataItem => {
+            const $item = $(item);
             return {
-                title: item.find('a').eq(1).text(),
-                link: new URL(item.find('a').eq(1).attr('href'), baseUrl).href,
-                category: item.find('a').eq(0).text(),
-                pubDate: parseDate($(item).find('.gridlinedate').text(), 'YYYY年MM月DD日'),
+                title: $item.find('a').eq(1).text(),
+                link: new URL($item.find('a').eq(1).attr('href')!, baseUrl).href,
+                category: $item.find('a').eq(0).text(),
+                pubDate: parseDate($($item).find('.gridlinedate').text(), 'YYYY年MM月DD日'),
             };
         });
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const response = await got(item.link);
                 const $ = load(response.data);
 

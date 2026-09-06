@@ -1,10 +1,13 @@
-import { Route, DataItem } from '@/types';
+import type { Cheerio } from 'cheerio';
+import { load } from 'cheerio';
+import type { Element } from 'domhandler';
+import type { Context } from 'hono';
+
+import type { DataItem, Route } from '@/types';
+import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { load, Cheerio, AnyNode } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
-import { Context } from 'hono';
-import cache from '@/utils/cache';
 
 interface Post extends DataItem {
     external: boolean;
@@ -101,8 +104,8 @@ function checkExternal(link: string): boolean {
  * @param element
  * @returns A list of RSS meta node.
  */
-function parseListLinkDateItem(element: Cheerio<AnyNode>, currentUrl: string) {
-    const linkElement = element.find('a').first();
+function parseListLinkDateItem(element: Cheerio<Element>, currentUrl: string) {
+    const linkElement = element.find('a');
     const title = linkElement.text();
     const href = linkElement.attr('href');
     if (href === undefined) {
@@ -110,11 +113,11 @@ function parseListLinkDateItem(element: Cheerio<AnyNode>, currentUrl: string) {
     }
     const external = checkExternal(href);
     const link = external ? href : new URL(href, currentUrl).href;
-    const pubDate = element.find('div.date1').first().text();
+    const pubDate = element.find('div.date1').text();
     return {
         title,
         link,
-        pubDate: timezone(parseDate(pubDate, 'YYYY-MM-DD'), +8),
+        pubDate: timezone(parseDate(pubDate, 'YYYY-MM-DD'), 8),
         description: title,
         external,
     };
@@ -129,8 +132,8 @@ async function getDetail(item: Post): Promise<DataItem | any> {
               } else {
                   const response = await ofetch(link);
                   const $ = load(response);
-                  const title = $('div.content div.content_title h1').first().text();
-                  const content = $('div.content div.v_news_content').first().html();
+                  const title = $('div.content div.content_title h1').text();
+                  const content = $('div.content div.v_news_content').html();
                   item.title = title;
                   item.description = content || '';
               }
@@ -142,32 +145,32 @@ async function getDetail(item: Post): Promise<DataItem | any> {
 /**
  * Process index type.
  */
-async function handleIndex(): Promise<Array<Post>> {
+async function handleIndex(): Promise<Post[]> {
     const url = `${baseUrl}/index.htm`;
     const response = await ofetch(url);
     const $ = load(response);
     // 学院新闻
-    const xyxwList: Array<Post> = $('div.main1 > div.newspaper:nth-child(1) > div.newspaper_list > ul > li')
+    const xyxwList: Post[] = $('div.main1 > div.newspaper:nth-child(1) > div.newspaper_list > ul > li')
         .toArray()
         .map((item) => parseListLinkDateItem($(item), baseUrl));
     // 通知公告
-    const tzggList: Array<Post> = $('div.main1 > div.newspaper:nth-child(2) > div.newspaper_list > ul > li')
+    const tzggList: Post[] = $('div.main1 > div.newspaper:nth-child(2) > div.newspaper_list > ul > li')
         .toArray()
         .map((item) => parseListLinkDateItem($(item), baseUrl));
     // 学术动态
-    const xsdtList: Array<Post> = $('div.main3 div.inner > div.newspaper:nth-child(1) > ul.newspaper_list2 > li:nth-child(1) > ul > li')
+    const xsdtList: Post[] = $('div.main3 div.inner > div.newspaper:nth-child(1) > ul.newspaper_list2 > li:nth-child(1) > ul > li')
         .toArray()
         .map((item) => parseListLinkDateItem($(item), baseUrl));
     // 学术进展
-    const xsjzList: Array<Post> = $('div.main3 div.inner > div.newspaper:nth-child(1) > ul.newspaper_list2 > li:nth-child(2) > ul > li')
+    const xsjzList: Post[] = $('div.main3 div.inner > div.newspaper:nth-child(1) > ul.newspaper_list2 > li:nth-child(2) > ul > li')
         .toArray()
         .map((item) => parseListLinkDateItem($(item), baseUrl));
     // 教学动态
-    const jxdtList: Array<Post> = $('div.main3 div.inner > div.newspaper:nth-child(2) > div.newspaper_list2 > ul > li')
+    const jxdtList: Post[] = $('div.main3 div.inner > div.newspaper:nth-child(2) > div.newspaper_list2 > ul > li')
         .toArray()
         .map((item) => parseListLinkDateItem($(item), baseUrl));
     // 学工动态
-    const xgdtList: Array<Post> = $('div.main3 div.inner > div.newspaper:nth-child(3) > div.newspaper_list2 > ul > li')
+    const xgdtList: Post[] = $('div.main3 div.inner > div.newspaper:nth-child(3) > div.newspaper_list2 > ul > li')
         .toArray()
         .map((item) => parseListLinkDateItem($(item), baseUrl));
     // 组合所有新闻
@@ -181,19 +184,19 @@ async function handleIndex(): Promise<Array<Post>> {
  * @param type Level 1 type
  * @param sub Level 2 type
  */
-async function handlePostList(type: string, sub: string): Promise<Array<DataItem>> {
+async function handlePostList(type: string, sub: string): Promise<DataItem[]> {
     let urlList: Array<{ url: string; base: string }> = [];
     const category = categoryMap[type];
     if (sub === 'all') {
         const subMap = category.sub;
-        urlList = Object.keys(subMap).map((key) => {
-            const subType = subMap[key];
+        urlList = Object.values<{ path: string }>(subMap).map((value) => {
+            const subtype = value;
             return {
-                url: `${baseUrl}/${category.path}/${subType.path}.htm`,
+                url: `${baseUrl}/${category.path}/${subtype.path}.htm`,
                 base: `${baseUrl}/${category.path}`,
             };
         });
-    } else if (sub in category.sub) {
+    } else if (Object.hasOwn(category.sub, sub)) {
         urlList.push({
             url: `${baseUrl}/${category.path}/${category.sub[sub].path}.htm`,
             base: `${baseUrl}/${category.path}`,
@@ -230,9 +233,7 @@ export const route: Route = {
     ],
     name: '武汉大学遥感信息工程学院',
     maintainers: ['HPDell'],
-    description: `
-
-|  分类名  | \`type\` 值 |  子类名  | \`sub\` 值 |
+    description: `|  分类名  | \`type\` 值 |  子类名  | \`sub\` 值 |
 | :------: | :-------- | :------: | :------- |
 |   首页   | \`index\`   |          |          |
 | 学院新闻 | \`xyxw\`    |   全部   | \`all\`    |
@@ -249,11 +250,10 @@ export const route: Route = {
 |          |           | 学院通知 | \`xytz\`   |
 |          |           | 教学动态 | \`jxdt\`   |
 |          |           | 学术动态 | \`xsdt\`   |
-|          |           | 人才引进 | \`rcyj\`   |
-`,
+|          |           | 人才引进 | \`rcyj\`   |`,
     handler: async (ctx: Context) => {
         const { type = 'index', sub = 'all' } = ctx.req.param();
-        let itemList: Array<DataItem> = [];
+        let itemList: DataItem[];
         switch (type) {
             case 'index':
                 itemList = await handleIndex();

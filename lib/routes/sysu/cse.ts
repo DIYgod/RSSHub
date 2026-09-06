@@ -1,6 +1,7 @@
-import { Route } from '@/types';
-import got from '@/utils/got';
 import { load } from 'cheerio';
+
+import type { Data, Route } from '@/types';
+import got from '@/utils/got';
 
 export const route: Route = {
     path: '/cse',
@@ -21,18 +22,34 @@ export const route: Route = {
         },
     ],
     name: '数据科学与计算机学院动态',
-    maintainers: [],
+    maintainers: ['MegrezZhu', 'Neutrino3316', 'nczitzk'],
     handler,
     url: 'cse.sysu.edu.cn/',
 };
 
-async function handler() {
+function getDetail(item, description_header) {
+    return {
+        title: description_header + ': ' + item.attribs.title,
+        description: description_header + ': ' + item.attribs.title,
+        link: item.attribs.href,
+        category: description_header,
+    };
+}
+
+function compareLink(a, b) {
+    let a_str = a.link;
+    a_str = a_str.slice(-4, a_str.length - 4 + 4);
+    const a_int = Number.parseInt(a_str);
+    let b_str = b.link;
+    b_str = b_str.slice(-4, b_str.length - 4 + 4);
+    const b_int = Number.parseInt(b_str);
+    return b_int - a_int;
+}
+
+async function handler(): Promise<Data> {
     const response = await got({
         method: 'get',
         url: 'http://cse.sysu.edu.cn/',
-        headers: {
-            Referer: `http://cse.sysu.edu.cn/`,
-        },
     });
     const $ = load(response.data);
 
@@ -88,16 +105,7 @@ async function handler() {
         },
     ];
 
-    function getDetail(item, description_header) {
-        return {
-            title: description_header + ': ' + item.attribs.title,
-            description: description_header + ': ' + item.attribs.title,
-            link: item.attribs.href,
-            category: description_header,
-        };
-    }
-
-    const item_data = [];
+    const item_data: any[] = [];
     for (const element of block_index) {
         const block_news = $('#block-views-homepage-block-' + element.index + '> div > div.view-content > div > ul > li > a');
         for (const block_new of block_news) {
@@ -105,24 +113,15 @@ async function handler() {
         }
     }
 
-    function compareLink(a, b) {
-        let a_str = a.link;
-        a_str = a_str.slice(-4, a_str.length - 4 + 4);
-        const a_int = Number.parseInt(a_str);
-        let b_str = b.link;
-        b_str = b_str.slice(-4, b_str.length - 4 + 4);
-        const b_int = Number.parseInt(b_str);
-        return b_int - a_int;
-    }
     // 使得新的通知排在前面，假设通知的发布和链接地址是相关的，而且链接地址都是"/content/4961"这样，只有四位数的。
     item_data.sort(compareLink);
     // console.log(item_data);
 
     return {
-        title: `中山大学 - 数据科学与计算机学院`,
-        link: `http://cse.sysu.edu.cn`,
-        description: `中山大学 - 数据科学与计算机学院`,
-        language: `zh-cn`,
+        title: '中山大学 - 数据科学与计算机学院',
+        link: 'http://cse.sysu.edu.cn',
+        description: '中山大学 - 数据科学与计算机学院',
+        language: 'zh-CN',
         item: item_data,
     };
 }

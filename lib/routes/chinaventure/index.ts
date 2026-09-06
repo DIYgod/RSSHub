@@ -1,7 +1,8 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
@@ -56,17 +57,19 @@ async function handler(ctx) {
         url: currentUrl,
     });
     const $ = load(response.data);
+    const limit = ctx.req.query('limit');
     const list = $('a', '.common_newslist_pc')
-        .filter((element) => $(element).attr('href'))
+        .filter((_, element) => !!$(element).attr('href'))
         .toArray()
-        .map((item) => ({
+        .map((item): DataItem => ({
             link: rootUrl + $(item).attr('href'),
+            title: '',
         }))
-        .slice(0, ctx.req.query('limit') ? Math.min(Number.parseInt(ctx.req.query('limit')), 20) : 20);
+        .slice(0, limit ? Number.parseInt(limit) : 20);
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const detailResponse = await got({
                     method: 'get',
                     url: item.link,
@@ -75,7 +78,7 @@ async function handler(ctx) {
                 item.title = content('h1.maintitle_pc').text();
                 item.description = content('div.article_slice_pc').html();
                 item.author = content('div.source_author').text();
-                item.pubDate = timezone(parseDate(content('div.releaseTime').text()), +8);
+                item.pubDate = timezone(parseDate(content('div.releaseTime').text()), 8);
                 return item;
             })
         )
@@ -85,7 +88,7 @@ async function handler(ctx) {
         title: `${nodes[id] ?? '推荐'}-投中网`,
         link: currentUrl,
         description: '投中网是国内领先的创新经济信息服务平台，拥有立体化媒体矩阵，十多年行业深耕，为创新经济领域核心人群提供深入、独到的智识和洞见，在私募股权投资行业和创新商业领域均拥有权威影响力。',
-        language: 'zh-cn',
+        language: 'zh-CN' as const satisfies Language,
         item: items,
     };
 }

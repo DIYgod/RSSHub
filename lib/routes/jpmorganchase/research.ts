@@ -1,7 +1,8 @@
-import { Data, DataItem, Route } from '@/types';
-import ofetch from '@/utils/ofetch';
-import cache from '@/utils/cache';
 import { load } from 'cheerio';
+
+import type { Data, DataItem, Route } from '@/types';
+import cache from '@/utils/cache';
+import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
 const base = 'https://www.jpmorganchase.com';
@@ -51,16 +52,20 @@ type IndexEntry = {
     image: string;
 };
 
+type IndexResponse = {
+    meta: PartitionMeta;
+    items: IndexEntry[];
+};
+
 async function fetchIndexEntires(): Promise<IndexEntry[]> {
-    const response = await ofetch(indexUrl);
+    const response = await ofetch<IndexResponse>(indexUrl);
     if (!('meta' in response)) {
         return [];
     }
 
-    const meta = response.meta as PartitionMeta;
-    const maxItemCount = Number(meta['partition-size']);
+    const maxItemCount = Number(response.meta['partition-size']);
 
-    return (response.items as IndexEntry[]).slice(0, maxItemCount);
+    return response.items.slice(0, maxItemCount);
 }
 
 function fetchDataItem(entry: IndexEntry): Promise<DataItem> {
@@ -68,10 +73,10 @@ function fetchDataItem(entry: IndexEntry): Promise<DataItem> {
 
     return cache.tryGet(url, async () => {
         let authors: string[] = [];
-        let description: string = '';
+        let description = '';
         let category: string[] = [];
         let articleDate: string = entry.date;
-        const pageContent: string = await ofetch(url);
+        const pageContent = await ofetch<string>(url);
 
         if (pageContent.length > 0) {
             const $ = load(pageContent);
@@ -81,7 +86,7 @@ function fetchDataItem(entry: IndexEntry): Promise<DataItem> {
                 .toArray()
                 .map((el) => $(el).text().trim());
             articleDate = $('.date').text().trim() || entry.date;
-            description = $('.root').children('div').children('div:eq(1)').html() || '';
+            description = $('.root').children('div').children('div:eq(1)').html() ?? '';
         }
 
         return {
@@ -92,7 +97,7 @@ function fetchDataItem(entry: IndexEntry): Promise<DataItem> {
             link: url,
             pubDate: parseDate(articleDate),
         } satisfies DataItem;
-    }) as Promise<DataItem>;
+    });
 }
 
 async function handler(): Promise<Data> {

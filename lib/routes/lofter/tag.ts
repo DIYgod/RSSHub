@@ -1,10 +1,11 @@
-import { Route } from '@/types';
-import got from '@/utils/got';
-import { config } from '@/config';
 import { load } from 'cheerio';
-import { parseDate } from '@/utils/parse-date';
 import { JSDOM } from 'jsdom';
+
+import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
+import type { Route } from '@/types';
+import got from '@/utils/got';
+import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/tag/:name?/:type?',
@@ -32,7 +33,7 @@ export const route: Route = {
     maintainers: ['hoilc', 'nczitzk', 'LucunJi'],
     handler,
     description: `::: warning
-  搜索标签下的最新内容需要 Lofter 登录后的 Cookie 值，所以只能自建，详情见部署页面的配置模块。
+搜索标签下的最新内容需要 Lofter 登录后的 Cookie 值，所以只能自建，详情见部署页面的配置模块。
 :::
 
 | new  | date | week | month | total |
@@ -59,7 +60,7 @@ async function handler(ctx) {
         method: 'post',
         url: apiUrl,
         body: new URLSearchParams({
-            callCount: 1,
+            callCount: '1',
             scriptSessionId: '${scriptSessionId}187',
             httpSessionId: '',
             'c0-scriptName': 'TagBean',
@@ -74,7 +75,7 @@ async function handler(ctx) {
             'c0-param6': `number:${pageSize}`,
             'c0-param7': `number:${startingIndex}`,
             'c0-param8': 'number:0',
-            batchId: 493053,
+            batchId: '493053',
         }),
         headers: {
             Referer: `https://www.lofter.com/tag/${encodeURI(name)}`,
@@ -116,7 +117,9 @@ async function handler(ctx) {
         }
 
         const images = post.photoLinks
-            ? JSON.parse(post.photoLinks).reduce((accumulator, currentValue) => accumulator + `<img src="${currentValue.orign}"/>`, '') // small | middle | orign
+            ? JSON.parse(post.photoLinks)
+                  .map((currentValue) => `<img src="${currentValue.orign}"/>`) // small | middle | orign
+                  .join('')
             : '';
 
         const digest = load(post.digest);

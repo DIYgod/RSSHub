@@ -1,14 +1,19 @@
-import { Route } from '@/types';
+import { FetchError } from 'ofetch';
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import utils from './utils';
 import { parseDate } from '@/utils/parse-date';
+
+import { processFeedType2 } from './utils';
 
 export const route: Route = {
     path: '/special/:id',
-    categories: ['new-media'],
+    categories: ['sport'],
     example: '/dongqiudi/special/41',
-    parameters: { id: '专题 id, 可自行通过 https://www.dongqiudi.com/special/+数字匹配' },
+    parameters: {
+        id: '专题 id, 可自行通过 https://www.dongqiudi.com/special/+数字匹配',
+    },
     radar: [
         {
             source: ['www.dongqiudi.com/special/:id'],
@@ -29,17 +34,21 @@ async function handler(ctx) {
     const list = response.data.map((item) => ({
         title: item.title,
         link: `https://www.dongqiudi.com/articles/${item.aid}.html`,
-        mobileLink: `https://m.dongqiudi.com/article/${item.aid}.html`,
         pubDate: parseDate(item.show_time, 'X'),
     }));
 
     const out = await Promise.all(
         list.map((item) =>
             cache.tryGet(item.link, async () => {
-                const { data: response } = await got(item.mobileLink);
-
-                utils.ProcessFeedType3(item, response);
-
+                try {
+                    const { data: response } = await got(item.link);
+                    processFeedType2(item, response);
+                } catch (error) {
+                    if (!(error instanceof FetchError) || error.statusCode !== 404) {
+                        throw error;
+                    }
+                    // Keep the list item when the article page is gone or temporarily unavailable.
+                }
                 return item;
             })
         )

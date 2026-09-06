@@ -1,8 +1,9 @@
-import { Route, Data, DataItem } from '@/types';
-import ofetch from '@/utils/ofetch';
-import cache from '@/utils/cache';
-import { baseUrl, processWork, processCreator } from './utils';
 import { config } from '@/config';
+import type { Data, Route } from '@/types';
+import cache from '@/utils/cache';
+import ofetch from '@/utils/ofetch';
+
+import { baseUrl, processCreator, processWork } from './utils';
 
 const categoryMap = {
     // Works categories
@@ -33,6 +34,7 @@ export const route: Route = {
         supportBT: false,
         supportPodcast: false,
         supportScihub: false,
+        nsfw: true,
     },
     name: 'Skeb',
     maintainers: ['SnowAgar25'],
@@ -94,7 +96,7 @@ export const route: Route = {
 async function handler(ctx): Promise<Data> {
     const category = ctx.req.param('category') || 'new_art_works';
 
-    if (!(category in categoryMap)) {
+    if (!Object.hasOwn(categoryMap, category)) {
         throw new Error('Invalid category');
     }
 
@@ -110,22 +112,23 @@ async function handler(ctx): Promise<Data> {
         false
     );
 
-    if (!apiData || typeof apiData !== 'object') {
+    if (!apiData) {
         throw new Error('Invalid data received from API');
     }
 
     const items = await cache.tryGet(category, async () => {
-        if (!(category in apiData) || !Array.isArray(apiData[category])) {
+        if (!Object.hasOwn(apiData, category) || !Array.isArray(apiData[category])) {
             return [];
         }
 
         const processItem = workCategories.has(category) ? processWork : processCreator;
-        return (await Promise.all(apiData[category].map(async (item) => await processItem(item)).filter(Boolean))) as DataItem[];
+        const processed = await Promise.all(apiData[category].map(async (item) => await processItem(item)));
+        return processed.filter((item) => item !== null);
     });
 
     return {
         title: `Skeb - ${categoryMap[category]}`,
         link: `${baseUrl}/#${category}`,
-        item: items as DataItem[],
+        item: items,
     };
 }

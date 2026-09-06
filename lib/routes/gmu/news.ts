@@ -1,9 +1,10 @@
-import got from '@/utils/got';
 import { load } from 'cheerio';
-import { parseDate } from '@/utils/parse-date';
 import type { Context } from 'hono';
+
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
+import got from '@/utils/got';
+import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/news/:type?',
@@ -54,7 +55,7 @@ export const route: Route = {
 };
 
 export async function handler(ctx: Context) {
-    const type = (ctx.req.param?.('type') as string) || 'gyyw';
+    const type = ctx.req.param?.('type') || 'gyyw';
     const newsType = {
         gyyw: { title: '赣医要闻', url: '/xwzx/gyyw.htm' },
         ybdt: { title: '院部动态', url: '/xwzx/ybdt.htm' },
@@ -65,11 +66,7 @@ export async function handler(ctx: Context) {
     const baseUrl = 'https://gmu.cn';
     const link = `${baseUrl}${newsType.url}`;
 
-    const response = await got(link, {
-        https: {
-            rejectUnauthorized: false,
-        },
-    });
+    const response = await got(link);
 
     const $ = load(response.data);
     const list = $('.list ul li');
@@ -96,11 +93,7 @@ export async function handler(ctx: Context) {
             // Use cache.tryGet to cache the article content
             return await cache.tryGet(`gmu:news:${fullLink}`, async () => {
                 try {
-                    const contentResponse = await got(fullLink, {
-                        https: {
-                            rejectUnauthorized: false,
-                        },
-                    });
+                    const contentResponse = await got(fullLink);
                     const content = load(contentResponse.data);
 
                     // 获取新闻内容

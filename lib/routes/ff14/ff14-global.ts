@@ -1,11 +1,10 @@
-import { Route } from '@/types';
-
+import InvalidParameterError from '@/errors/types/invalid-parameter';
+import type { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-import { art } from '@/utils/render';
-import path from 'node:path';
 import { isValidHost } from '@/utils/valid-host';
-import InvalidParameterError from '@/errors/types/invalid-parameter';
+
+import { renderDescription } from './templates/description';
 
 export const route: Route = {
     path: ['/global/:lang/:type?', '/ff14_global/:lang/:type?'],
@@ -29,11 +28,20 @@ export const route: Route = {
 | ------------ | ------ | ------ | ------- | ----- |
 | na           | eu     | fr     | de      | jp    |
 
-  Category
+Category
 
 | all | topics | notices | maintenance | updates | status | developers |
 | --- | ------ | ------- | ----------- | ------- | ------ | ---------- |`,
 };
+
+interface LodestoneNewsItem {
+    id: string;
+    url: string;
+    title: string;
+    time: string;
+    description?: string;
+    image?: string;
+}
 
 async function handler(ctx) {
     const lang = ctx.req.param('lang');
@@ -48,12 +56,10 @@ async function handler(ctx) {
         url: `https://lodestonenews.com/news/${type}?locale=${lang}`,
     });
 
-    let data;
+    let data: LodestoneNewsItem[];
     if (type === 'all') {
-        data = [];
-        for (const arr of Object.values(response.data)) {
-            data = [...data, ...arr];
-        }
+        const groups: Record<string, LodestoneNewsItem[]> = response.data;
+        data = Object.values(groups).flat();
     } else {
         data = response.data;
     }
@@ -64,7 +70,7 @@ async function handler(ctx) {
         item: data.map(({ id, url, title, time, description, image }) => ({
             title,
             link: url,
-            description: art(path.join(__dirname, 'templates/description.art'), {
+            description: renderDescription({
                 image,
                 description,
             }),

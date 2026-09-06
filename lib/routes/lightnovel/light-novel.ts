@@ -1,19 +1,26 @@
-import { Route } from '@/types';
-import cache from '@/utils/cache';
-import { parseDate } from '@/utils/parse-date';
-import got from '@/utils/got';
 import { load } from 'cheerio';
+
 import { config } from '@/config';
+import type { Route } from '@/types';
+import cache from '@/utils/cache';
+import got from '@/utils/got';
+import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/:keywords/:security_key?',
+    categories: ['anime'],
+    example: '/lightnovel/歡迎來到實力至上主義的教室/3cfc2dc63f3575ee42e12823188ad1b5:1709125:0',
+    parameters: {
+        keywords: '关键字，可以模糊匹配，但最好精确匹配',
+        security_key: 'cookie,由于文章有防爬，所以必须携带cookie请求。route中的cookie优先级高于环境变量cookie，取token中的security_key值',
+    },
     radar: [
         {
             source: ['lightNovel.us/'],
             target: '/:keywords/:security_key',
         },
     ],
-    name: 'Unknown',
+    name: '文章更新阅读',
     maintainers: ['nightmare-mio'],
     handler,
     url: 'lightNovel.us/',

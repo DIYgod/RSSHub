@@ -1,8 +1,10 @@
-import { Route } from '@/types';
-import puppeteer from '@/utils/puppeteer';
 import { load } from 'cheerio';
-import { parseCompanyName, parseCompanyPosts, BASE_URL } from './utils';
+
+import type { Route } from '@/types';
 import logger from '@/utils/logger';
+import playwright from '@/utils/playwright';
+
+import { BASE_URL, parseCompanyName, parseCompanyPosts } from './utils';
 
 export const route: Route = {
     path: '/company/:company_id/posts',
@@ -12,7 +14,7 @@ export const route: Route = {
     description: "Get company's LinkedIn posts by company ID",
     features: {
         requireConfig: false,
-        requirePuppeteer: false,
+        requirePuppeteer: true,
         antiCrawler: false,
         supportRadar: false,
         supportBT: false,
@@ -25,12 +27,11 @@ export const route: Route = {
         const company_id = ctx.req.param('company_id');
 
         // Puppeteer setup
-        const browser = await puppeteer();
-        const page = await browser.newPage();
-        await page.setRequestInterception(true);
-
-        page.on('request', (request) => {
-            request.resourceType() === 'document' ? request.continue() : request.abort();
+        const context = await playwright();
+        const page = await context.newPage();
+        await page.route('**/*', (route) => {
+            const request = route.request();
+            request.resourceType() === 'document' ? route.continue() : route.abort();
         });
 
         const url = new URL(`${BASE_URL}/company/${company_id}`);
@@ -47,7 +48,7 @@ export const route: Route = {
         const companyName = parseCompanyName($);
         const posts = parseCompanyPosts($);
 
-        await browser.close();
+        await context.close();
 
         return {
             title: `LinkedIn - ${companyName}'s Posts`,

@@ -1,8 +1,10 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
+
 const host = 'https://www.zju.edu.cn/';
 export const route: Route = {
     path: '/list/:type',
@@ -24,7 +26,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const type = ctx.req.param('type') ?? 'xs';
-    const link = host + type + `/list.htm`;
+    const link = host + type + '/list.htm';
     const response = await got({
         method: 'get',
         url: link,
@@ -41,11 +43,11 @@ async function handler(ctx) {
         .toArray()
         .map((element) => {
             const info = {
-                title: $(element).find('a').attr('title'),
+                title: $(element).find('a').attr('title')!,
                 link: sortUrl($(element).find('a').attr('href')),
                 date: $(element)
                     .text()
-                    .match(/\d{4}-\d{2}-\d{2}/)[0],
+                    .match(/\d{4}-\d{2}-\d{2}/)![0],
             };
             return info;
         });
@@ -66,7 +68,7 @@ async function handler(ctx) {
                 const $ = load(response.data);
                 const description = $('.right_content').html();
                 return {
-                    title,
+                    title: title!,
                     link: itemUrl,
                     description,
                     pubDate: parseDate(date),
@@ -75,7 +77,7 @@ async function handler(ctx) {
         })
     );
     return {
-        title: `浙江大学` + $('ul.submenu .selected').text(),
+        title: '浙江大学' + $('ul.submenu .selected').text(),
         link,
         item: out,
     };

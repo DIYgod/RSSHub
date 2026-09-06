@@ -1,6 +1,7 @@
-import { Route } from '@/types';
-import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
+
+import type { Route } from '@/types';
+import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
@@ -26,10 +27,10 @@ async function handler() {
     const items = $('a.group.border-b.py-10')
         .toArray()
         .map((item) => ({
-            title: $(item).children('h2').first().text(),
+            title: $(item).children('h2').text(),
             link: baseUrl + $(item).attr('href'),
-            pubDate: parseDate($(item).children('h3').first().text()),
-            description: $(item).children('p').first().text(),
+            pubDate: parseDate($(item).children('h3').text()),
+            description: $(item).children('p').text(),
         }));
     return {
         title: 'ollama blog',

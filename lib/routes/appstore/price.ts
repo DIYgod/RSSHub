@@ -1,6 +1,8 @@
-import { Route } from '@/types';
-import got from '@/utils/got';
 import currency from 'currency-symbol-map';
+
+import type { Route } from '@/types';
+import got from '@/utils/got';
+
 export const route: Route = {
     path: '/price/:country/:type/:id',
     categories: ['program-update'],
@@ -57,7 +59,7 @@ async function handler(ctx) {
         result = res.data.results.macapps;
     }
 
-    const item = [];
+    const item: any[] = [];
 
     const title = `${country === 'cn' ? '限免提醒' : 'Price watcher'}: ${result.title} for ${type === 'macapps' ? 'macOS' : 'iOS'}`;
 

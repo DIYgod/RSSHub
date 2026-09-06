@@ -1,7 +1,8 @@
-import { Route } from '@/types';
-import got from '@/utils/got';
 import { load } from 'cheerio';
 import dayjs from 'dayjs';
+
+import type { Route } from '@/types';
+import got from '@/utils/got';
 import { finishArticleItem } from '@/utils/wechat-mp';
 
 export const route: Route = {
@@ -20,7 +21,8 @@ export const route: Route = {
     name: '公众号文章话题 Tag',
     maintainers: ['MisteryMonster'],
     handler,
-    description: `一些公众号（如看理想）会在微信文章里添加 Tag ，点入 Tag 的链接如 \`https://mp.weixin.qq.com/mp/appmsgalbum?__biz=MzA3MDM3NjE5NQ==&action=getalbum&album_id=1375870284640911361\`，其中\`biz\` 为 \`MzA3MDM3NjE5NQ==\`，\`aid\` 为 \`1375870284640911361\`。`,
+    description:
+        '一些公众号（如看理想）会在微信文章里添加 Tag ，点入 Tag 的链接如 `https://mp.weixin.qq.com/mp/appmsgalbum?__biz=MzA3MDM3NjE5NQ==&action=getalbum&album_id=1375870284640911361`，其中`biz` 为 `MzA3MDM3NjE5NQ==`，`aid` 为 `1375870284640911361`。',
 };
 
 async function handler(ctx) {
@@ -33,10 +35,10 @@ async function handler(ctx) {
     });
     const $ = load(HTMLresponse.data);
     const list = $('li').toArray();
-    const mptitle = $('.album__author-name').text() + `|` + $('.album__label-title').text();
+    const mptitle = $('.album__author-name').text() + '|' + $('.album__label-title').text();
     const articledata = await Promise.all(
         list.map((item) => {
-            const link = $(item).attr('data-link').replace('http://', 'https://');
+            const link = $(item).attr('data-link')!.replace('http://', 'https://');
             const title = $(item).attr('data-title');
             const single = {
                 title,
@@ -55,7 +57,7 @@ async function handler(ctx) {
             link: articledata[index].link,
             guid: articledata[index].guid,
             author: articledata[index].author,
-            pubDate: dayjs.unix($(item).find('.js_article_create_time').text()).format(),
+            pubDate: dayjs.unix(Number($(item).find('.js_article_create_time').text())).format(),
         })),
     };
 }

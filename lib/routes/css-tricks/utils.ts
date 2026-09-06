@@ -1,6 +1,7 @@
 import { load } from 'cheerio';
+
+import type { DataItem } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { DataItem } from '@/types';
 import { parseDate } from '@/utils/parse-date';
 
 export const rootUrl = 'https://css-tricks.com';
@@ -25,7 +26,7 @@ export async function extractMiniCards(cardselector: string, titleSelector: stri
 }
 
 function extractCardsInfo(cards) {
-    return cards.map((card) => {
+    return cards.map((card): Card => {
         const $ = load(card);
         const id = $(card).attr('id');
         const thumbnail = $(card).find('div.article-thumbnail-wrap > a >img').attr('src');
@@ -33,27 +34,27 @@ function extractCardsInfo(cards) {
         const title = article.find('h2 > a').text();
         const link = article.find('h2 > a').attr('href');
         return {
-            id,
+            id: id!,
             title,
-            link,
-            thumbnail,
-        } as Card;
+            link: link!,
+            thumbnail: thumbnail!,
+        };
     });
 }
 
 function extractMiniCardsInfo(cards) {
-    return cards.map((card) => {
+    return cards.map((card): Card => {
         const $ = load(card);
         const id = $(card).attr('id')?.replace('mini-', '');
         const thumbnail = '';
         const title = $('h3.mini-card-title').find('a:not(.aal_anchor)').text();
         const link = $('h3.mini-card-title').find('a:not(.aal_anchor)').attr('href');
         return {
-            id,
+            id: id!,
             title,
-            link,
+            link: link!,
             thumbnail,
-        } as Card;
+        };
     });
 }
 
@@ -66,7 +67,7 @@ export async function processWithWp(cards, mini: boolean = false, type: string =
     return ids.map((id) => extractPostDetails(idMappedPost[id]));
 }
 
-function extractPostDetails(data) {
+function extractPostDetails(data): DataItem {
     const title = data.title.rendered;
     const link = data.link;
     const content = data.content.rendered;
@@ -99,5 +100,5 @@ function extractPostDetails(data) {
             text: summary,
         },
         category: tags,
-    } as DataItem;
+    };
 }

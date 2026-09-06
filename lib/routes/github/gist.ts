@@ -1,6 +1,6 @@
-import { Route } from '@/types';
-import got from '@/utils/got';
 import { config } from '@/config';
+import type { Route } from '@/types';
+import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
@@ -29,10 +29,15 @@ export const route: Route = {
 async function handler(ctx) {
     const gistId = ctx.req.param('gistId');
 
-    const headers = { Accept: 'application/vnd.github.v3+json' };
-    if (config.github && config.github.access_token) {
-        headers.Authorization = `Bearer ${config.github.access_token}`;
-    }
+    const headers =
+        config.github && config.github.access_token
+            ? {
+                  Accept: 'application/vnd.github.v3+json',
+                  Authorization: `Bearer ${config.github.access_token}`,
+              }
+            : {
+                  Accept: 'application/vnd.github.v3+json',
+              };
 
     const host = 'https://gist.github.com';
     const apiUrl = `https://api.github.com/gists/${gistId}`;
@@ -50,7 +55,7 @@ async function handler(ctx) {
 
     return {
         allowEmpty: true,
-        title: `${response.owner.login} / ${Object.values(response.files)[0].filename}`,
+        title: `${response.owner.login} / ${Object.values<any>(response.files)[0].filename}`,
         description: response.description,
         image: response.owner.avatar_url,
         link: `${response.html_url}/revisions`,

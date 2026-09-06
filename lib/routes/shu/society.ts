@@ -1,12 +1,13 @@
-import { Route } from '@/types';
-import got from '@/utils/got';
 import { load } from 'cheerio';
+
+import type { Route } from '@/types';
+import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/journals/society/current',
     categories: ['journal'],
-    example: '/journals/society/current',
+    example: '/shu/journals/society/current',
     features: {
         requireConfig: false,
         requirePuppeteer: false,

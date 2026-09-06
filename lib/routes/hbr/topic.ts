@@ -1,7 +1,8 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
@@ -41,7 +42,7 @@ export const route: Route = {
 | Popular | From the Store | For You |
 
 ::: tip
-  Click here to view [All Topics](https://hbr.org/topics)
+Click here to view [All Topics](https://hbr.org/topics)
 :::`,
 };
 
@@ -59,26 +60,26 @@ async function handler(ctx) {
     const list = $(`stream-content[data-stream-name="${type}"]`)
         .find('.stream-item')
         .toArray()
-        .map((item) => {
-            item = $(item);
+        .map((item): DataItem => {
+            const $item = $(item);
 
             return {
-                title: item.attr('data-title'),
-                author: item.attr('data-authors'),
-                category: item.attr('data-topic'),
-                link: `${rootUrl}${item.attr('data-url')}`,
+                title: $item.attr('data-title')!,
+                author: $item.attr('data-authors'),
+                category: $item.attr('data-topic'),
+                link: `${rootUrl}${$item.attr('data-url')}`,
             };
         });
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
-                const detailResponse = await ofetch(item.link);
+            cache.tryGet(item.link!, async () => {
+                const detailResponse = await ofetch(item.link!);
 
                 const content = load(detailResponse);
 
                 item.description = content('.article-body, article[itemprop="description"]').html();
-                item.pubDate = parseDate(content('meta[property="article:published_time"]').attr('content'));
+                item.pubDate = parseDate(content('meta[property="article:published_time"]').attr('content')!);
 
                 return item;
             })

@@ -1,6 +1,7 @@
+import { load } from 'cheerio';
+
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 
 export const route: Route = {
     path: '/search/:params',
@@ -26,7 +27,7 @@ async function handler(ctx) {
     return {
         title: 'Steam search result',
         description: `Query: ${query.toString()}`,
-        link: /g_strUnfilteredURL\s=\s'(.*)'/.exec(html)[1],
+        link: /g_strUnfilteredURL\s=\s'(.*)'/.exec(html)![1],
         item: $('#search_result_container a')
             .toArray()
             .map((a) => {
@@ -37,7 +38,7 @@ async function handler(ctx) {
 
                 let desc = '';
                 if (isBundle) {
-                    const bundle = JSON.parse($el.attr('data-ds-bundle-data'));
+                    const bundle = JSON.parse($el.attr('data-ds-bundle-data')!);
                     desc += 'Bundle\n';
                     if (bundle.m_bRestrictGifting) {
                         desc += 'Restrict gifting\n';
@@ -45,11 +46,11 @@ async function handler(ctx) {
                     desc += `Items count: ${bundle.m_rgItems.length}\n`;
                 }
                 if (isDiscounted) {
-                    desc += `Discount: ${$el.find('.discount_pct').text().trim()}\n`;
-                    desc += `Original price: ${$el.find('.discount_original_price').text().trim()}\n`;
-                    desc += `Discounted price: ${$el.find('.discount_final_price').text().trim()}\n`;
+                    desc += `Discount: ${$el.find('.discount_pct').text()}\n`;
+                    desc += `Original price: ${$el.find('.discount_original_price').text()}\n`;
+                    desc += `Discounted price: ${$el.find('.discount_final_price').text()}\n`;
                 } else {
-                    desc += `Price: ${$el.find('.discount_final_price').text().trim()}\n`;
+                    desc += `Price: ${$el.find('.discount_final_price').text()}\n`;
                 }
                 if (hasReview) {
                     desc += $el.find('.search_review_summary').attr('data-tooltip-html');
@@ -60,7 +61,7 @@ async function handler(ctx) {
                     description: desc.replaceAll('\n', '<br>'),
                     media: {
                         thumbnail: {
-                            url: $el.find('.search_capsule img').attr('src'),
+                            url: $el.find('.search_capsule img').attr('src')!,
                         },
                     },
                 };

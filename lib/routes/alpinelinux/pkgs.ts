@@ -1,10 +1,11 @@
-import { Data, Route } from '@/types';
 import { load } from 'cheerio';
+import type { Context } from 'hono';
+
+import { config } from '@/config';
+import type { Data, Route } from '@/types';
 import cache from '@/utils/cache';
-import { Context } from 'hono';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-import { config } from '@/config';
 
 export const route: Route = {
     name: 'Packages',
@@ -13,7 +14,7 @@ export const route: Route = {
     path: '/pkgs/:name/:routeParams?',
     parameters: { name: 'Packages name', routeParams: 'Filters of packages type. E.g. branch=edge&repo=main&arch=armv7&maintainer=Jakub%20Jirutka' },
     example: '/alpinelinux/pkgs/nodejs',
-    description: `Alpine Linux packages update`,
+    description: 'Alpine Linux packages update',
     handler,
     radar: [
         {
@@ -74,7 +75,7 @@ async function handler(ctx: Context): Promise<Data> {
     query.append('name', name);
     const link = `https://pkgs.alpinelinux.org/packages?${query.toString()}`;
     const key = `alpinelinux:packages:${query.toString()}`;
-    const rowData = (await cache.tryGet(
+    const rowData = await cache.tryGet(
         key,
         async () => {
             const response = await got({
@@ -85,7 +86,7 @@ async function handler(ctx: Context): Promise<Data> {
         },
         config.cache.routeExpire,
         false
-    )) as RowData[];
+    );
 
     const items = rowData.map((e) => ({
         title: `${e.package}@${e.version}/${e.architecture}`,

@@ -1,7 +1,8 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
@@ -37,7 +38,7 @@ async function handler(ctx) {
 
     const lists = $('.mainside_news ul li')
         .toArray()
-        .map((el) => ({
+        .map((el): DataItem & { link: string } => ({
             title: $('a', el).text().trim(),
             link: `${host}${$('a', el).attr('href')}`,
             pubDate: timezone(parseDate($('span[class=date]', el).text()), 8),
@@ -48,7 +49,7 @@ async function handler(ctx) {
             cache.tryGet(item.link, async () => {
                 const response = await got.get(item.link);
                 const $ = load(response.data);
-                item.description = $('div.edittext').html().trim();
+                item.description = $('div.edittext').html()!.trim();
                 item.pubDate = timezone(parseDate($('.item').first().text().replace('发布时间：', '')), 8);
                 return item;
             })

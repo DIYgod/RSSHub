@@ -1,9 +1,9 @@
-import { parseDate } from '@/utils/parse-date';
-import { DataItem } from '@/types';
 import { config } from '@/config';
+import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
-import logger from '@/utils/logger';
 import got from '@/utils/got';
+import logger from '@/utils/logger';
+import { parseDate } from '@/utils/parse-date';
 
 const getAccessToken: () => Promise<string | null> = async () => {
     let accessToken: string | null = await cache.get('tumblr:accessToken', false);
@@ -31,9 +31,7 @@ const generateAuthHeaders: () => Promise<{ Authorization?: string }> = async () 
     };
 };
 
-const generateAuthParams: () => { apiKey?: string } = () => ({
-    apiKey: config.tumblr.clientId,
-});
+const generateAuthParams: () => string = () => config.tumblr.clientId!;
 
 const processPost: (post: any) => DataItem = (post) => {
     let description = '';
@@ -42,11 +40,20 @@ const processPost: (post: any) => DataItem = (post) => {
         case 'text':
             description = post.body;
             break;
-        case 'photo':
-            for (const photo of post.photos ?? []) {
+        case 'answer':
+            description += post.asking_url === null ? `<p>${post.asking_name} asks:</p>` : `<p><a href="${post.asking_url}">${post.asking_name}</a> asks:</p>`;
+            description += post.question;
+            description += '<hr>';
+            description += `<p><a href="${post.blog.url}">${post.blog_name}</a> answers:</p>`;
+            description += post.answer;
+            break;
+        case 'photo': {
+            const photos = post.photos ?? [];
+            for (const photo of photos) {
                 description += `<img src="${photo.original_size.url}"/><br/>`;
             }
             break;
+        }
         case 'link':
             description = post.url;
             break;
@@ -58,6 +65,7 @@ const processPost: (post: any) => DataItem = (post) => {
     }
 
     return {
+        author: post.blog_name,
         id: post.id_string,
         title: post.summary ?? `New post from ${post.blog_name}`,
         link: post.post_url,
@@ -101,7 +109,7 @@ if (config.tumblr && config.tumblr.clientId && config.tumblr.clientSecret && con
         // We may be able to restore the new token if the app is restarted. This will avoid reusing the old token and have a failing request.
         // Keep it for a year (not clear how long the refresh token lasts).
         const cacheEntry = { startToken: config.tumblr.refreshToken, currentToken: newRefreshToken };
-        await cache.set(`tumblr:refreshToken`, JSON.stringify(cacheEntry), 31_536_000);
+        await cache.set('tumblr:refreshToken', JSON.stringify(cacheEntry), 31_536_000);
 
         return accessToken;
     };

@@ -1,20 +1,32 @@
-import { Route } from '@/types';
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-import { ProcessForm, ProcessFeed } from './utils';
+
+import { ProcessFeed, ProcessForm } from './utils';
 
 export const route: Route = {
     path: '/tag/:tagId?',
+    categories: ['game'],
+    example: '/lfsyd/tag/17',
+    parameters: { tagId: '订阅分区类型' },
+    description: `| 炉石传说 | 万智牌 | 游戏王 | 昆特牌 | 影之诗 | 符文之地传奇 | 阴阳师百闻牌 |
+| :------: | :----: | :----: | :----: | :----: | :----------: | :----------: |
+|    17    |   18   |   16   |   19   |   20   |      329     |      221     |
+
+| 英雄联盟 | 电子游戏 | 桌面游戏 | 卡牌游戏 | 玩家杂谈 | 二次元 |
+| :------: | :------: | :------: | :------: | :------: | :----: |
+|    112   |    389   |    24    |    102   |    23    |   117  |`,
     radar: [
         {
             source: ['mob.iyingdi.com/fine/:tagId'],
             target: '/tag/:tagId',
         },
     ],
-    name: 'Unknown',
+    name: '分区',
     maintainers: ['auto-bot-ty'],
     handler,
+    url: 'www.iyingdi.com/',
 };
 
 async function handler(ctx) {

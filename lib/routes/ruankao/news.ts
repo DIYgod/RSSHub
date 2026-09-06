@@ -1,8 +1,10 @@
+import { load } from 'cheerio';
+
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-import { load } from 'cheerio';
+
 const BASE_URL = 'https://www.ruankao.org.cn/index/work.html';
 
 const removeFontPresetting = (html: string = ''): string => {
@@ -32,7 +34,7 @@ const handler: Route['handler'] = async () => {
 
     // Map through each list item to extract details
     const contentLinkList = listItems.toArray().map((element) => {
-        const date = $(element).find('label.time').text().trim().slice(1, -1);
+        const date = $(element).find('label.time').text().slice(1, -1);
         const title = $(element).find('a').attr('title')!;
         const link = $(element).find('a').attr('href')!;
 
@@ -99,7 +101,7 @@ export const route: Route = {
         {
             title: '计算机职业技术资格考试（软考）动态',
             source: ['www.ruankao.org.cn/index/work', 'www.ruankao.org.cn'],
-            target: `/news`,
+            target: '/news',
         },
     ],
     example: '/ruankao/news',

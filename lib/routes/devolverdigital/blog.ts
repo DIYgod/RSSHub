@@ -1,5 +1,6 @@
-import { DataItem, Route } from '@/types';
 import { load } from 'cheerio';
+
+import type { DataItem, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 
 export const route: Route = {
@@ -31,7 +32,7 @@ async function handler() {
 
     return {
         title: 'DevolverDigital Blog',
-        language: 'en-us',
+        language: 'en-us' as const,
         link: 'https://www.devolverdigital.com/blog',
         item: items,
     };
@@ -85,7 +86,7 @@ function parsePostImages($, content) {
             const src = $img.attr('src') || '';
             if (src.startsWith('/_next/image')) {
                 const srcSet = $img.attr('srcset') || '';
-                const actualSrc = srcSet.split(',').pop()?.split(' ')[0] || src;
+                const actualSrc = srcSet.split(',').pop()?.split(' ', 1)[0] || src;
                 $img.attr('src', actualSrc);
             }
             $img.removeAttr('loading').removeAttr('decoding').removeAttr('data-nimg').removeAttr('style').removeAttr('sizes').removeAttr('srcset').removeAttr('referrerpolicy');

@@ -1,9 +1,11 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+import MarkdownIt from 'markdown-it';
+
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
-import MarkdownIt from 'markdown-it';
+
 const md = MarkdownIt({
     html: true,
     breaks: true,
@@ -45,32 +47,34 @@ async function handler() {
         .toArray()
         .filter((e) => $(e).find('h4.media-heading i').length === 0)
         .map((item) => {
-            const info = {
+            const info: DataItem = {
                 title: $(item).find('h4.media-heading').text().trim(),
                 author: $(item).find('.text-500').text(),
-                link: new URL($(item).attr('href'), host).href,
-                pubDate: $(item).find('p.pull-right.media-date strong').text().trim(),
+                link: new URL($(item).attr('href')!, host).href,
+                pubDate: parseDate($(item).find('p.pull-right.media-date strong').text().trim()),
             };
             return info;
         });
 
     const out = await Promise.all(
         list.map((info) =>
-            cache.tryGet(info.link, async () => {
-                const titleSlug = info.link.split('/')[4];
+            cache.tryGet(info.link!, async () => {
+                const titleSlug = info.link!.split('/', 5)[4];
 
                 const questionContent = await ofetch(gqlEndpoint, {
                     method: 'POST',
                     body: {
                         operationName: 'questionContent',
                         variables: { titleSlug },
-                        query: `query questionContent($titleSlug: String!) {
+                        query: /* GraphQL */ `
+                            query questionContent($titleSlug: String!) {
                                 question(titleSlug: $titleSlug) {
                                     content
                                     mysqlSchemas
                                     dataSchemas
                                 }
-                            }`,
+                            }
+                        `,
                     },
                 });
 
@@ -79,20 +83,21 @@ async function handler() {
                     body: {
                         operationName: 'officialSolution',
                         variables: { titleSlug },
-                        query: `query officialSolution($titleSlug: String!) {
+                        query: /* GraphQL */ `
+                            query officialSolution($titleSlug: String!) {
                                 question(titleSlug: $titleSlug) {
                                     solution {
                                         content
                                     }
                                 }
-                            }`,
+                            }
+                        `,
                     },
                 });
 
                 const solution = md.render(officialSolution.data.question.solution.content);
 
                 info.description = (questionContent.data.question.content?.trim() ?? '') + solution;
-                info.pubDate = parseDate(info.pubDate);
 
                 return info;
             })

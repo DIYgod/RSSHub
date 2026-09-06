@@ -1,9 +1,11 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { Route } from '@/types';
+import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
-import { load } from 'cheerio';
-import { rootUrl, buildApiUrl } from './util';
-import cache from '@/utils/cache';
+
+import { buildApiUrl, rootUrl } from './util';
 
 export const route: Route = {
     path: '/daily',
@@ -12,7 +14,7 @@ export const route: Route = {
     maintainers: ['3tuuu'],
     handler: async (ctx) => {
         // 每页数量限制
-        const limit = Number.parseInt(ctx.req.query('limit') ?? '30', 10);
+        const limit = Number(ctx.req.query('limit') ?? '30');
         // 用项目中已有的获取页面方法，获取页面以及 Token
         const currentUrl = new URL('discover', rootUrl).href;
         const currentHtml = await ofetch(currentUrl);
@@ -59,7 +61,7 @@ export const route: Route = {
         return {
             title: 'AI日报',
             description: '每天三分钟关注AI行业趋势',
-            language: 'zh-cn',
+            language: 'zh-CN',
             link: 'https://www.aibase.com/zh/daily',
             item: items,
             allowEmpty: true,

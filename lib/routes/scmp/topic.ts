@@ -1,8 +1,10 @@
-import { Route } from '@/types';
-import cache from '@/utils/cache';
 import { load } from 'cheerio';
+
+import type { Language, Route } from '@/types';
+import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+
 import { parseItem } from './utils';
 
 export const route: Route = {
@@ -30,7 +32,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const topic = ctx.req.param('topic');
-    const limit = Number.parseInt(ctx.req.query('limit'), 10) || 30;
+    const limit = Number(ctx.req.query('limit')) || 30;
     const pageUrl = `https://www.scmp.com/topics/${topic}`;
     const { data: pageResponse } = await got(pageUrl);
     const $ = load(pageResponse);
@@ -83,7 +85,7 @@ async function handler(ctx) {
         link: pageUrl,
         description: topicData.description.text,
         item: items,
-        language: 'en-hk',
+        language: 'en-hk' as Language,
         icon: 'https://assets.i-scmp.com/static/img/icons/scmp-icon-256x256.png',
         logo: 'https://customerservice.scmp.com/img/logo_scmp@2x.png',
         image: 'https://assets-v2.i-scmp.com/production/_next/static/media/default-image.d1be8967.png',

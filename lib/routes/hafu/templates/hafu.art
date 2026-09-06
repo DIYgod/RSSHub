@@ -1,3 +1,0 @@
-{{ if articleBody }}
-    {{@ articleBody }}
-{{ /if }}

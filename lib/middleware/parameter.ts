@@ -1,17 +1,18 @@
-import * as entities from 'entities';
-import { load, type CheerioAPI } from 'cheerio';
+import type { CheerioAPI } from 'cheerio';
+import { load } from 'cheerio';
 import type { Element } from 'domhandler';
-import { simplecc } from 'simplecc-wasm';
-import ofetch from '@/utils/ofetch';
-import { config } from '@/config';
-import { RE2JS } from 're2js';
-import markdownit from 'markdown-it';
+import * as entities from 'entities';
+import type { MiddlewareHandler } from 'hono';
 import { convert } from 'html-to-text';
+import markdownit from 'markdown-it';
+import { RE2JS } from 're2js';
 import sanitizeHtml from 'sanitize-html';
-import { MiddlewareHandler } from 'hono';
+import { simplecc } from 'simplecc-wasm';
+
+import { config } from '@/config';
+import type { Data, DataItem } from '@/types';
 import cache from '@/utils/cache';
-import Parser from '@postlight/parser';
-import { Data, DataItem } from '@/types';
+import ofetch from '@/utils/ofetch';
 
 const md = markdownit({
     html: true,
@@ -54,10 +55,10 @@ const getAiCompletion = async (prompt: string, text: string) => {
     return response.choices[0].message.content;
 };
 
-const getAuthorString = (item) => {
+const getAuthorString = (item: DataItem) => {
     let author = '';
     if (item.author) {
-        author = typeof item.author === 'string' ? item.author : item.author.map((i) => i.name).join(' ');
+        author = Array.isArray(item.author) ? item.author.map((i) => i.name).join(' ') : item.author;
     }
     return author;
 };
@@ -65,26 +66,27 @@ const getAuthorString = (item) => {
 const middleware: MiddlewareHandler = async (ctx, next) => {
     await next();
 
-    const data = ctx.get('data') as Data;
+    const data: Data = ctx.get('data');
     if (data) {
         if ((!data.item || data.item.length === 0) && !data.allowEmpty) {
             throw new Error('this route is empty, please check the original site or <a href="https://github.com/DIYgod/RSSHub/issues/new/choose">create an issue</a>');
         }
 
         // fix allowEmpty
-        data.item = data.item || [];
+        data.item ||= [];
 
         // decode HTML entities
-        data.title && (data.title = entities.decodeXML(data.title + ''));
-        data.description && (data.description = entities.decodeXML(data.description + ''));
+        data.title &&= entities.decodeXML(data.title + '');
+        data.description &&= entities.decodeXML(data.description + '');
 
         // sort items
         if (ctx.req.query('sorted') !== 'false') {
-            data.item = data.item.sort((a: DataItem, b: DataItem) => +new Date(b.pubDate || 0) - +new Date(a.pubDate || 0));
+            data.item = data.item.toSorted((a: DataItem, b: DataItem) => +new Date(b.pubDate || 0) - +new Date(a.pubDate || 0));
         }
 
         const handleItem = (item: DataItem) => {
-            item.title && (item.title = entities.decodeXML(item.title + ''));
+            item.title &&= entities.decodeXML(item.title + '');
+            item.description ||= item.content?.html;
 
             // handle pubDate
             if (item.pubDate) {
@@ -95,7 +97,7 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
             if (item.link) {
                 let baseUrl = data.link;
                 if (baseUrl && !/^https?:\/\//.test(baseUrl)) {
-                    baseUrl = /^\/\//.test(baseUrl) ? 'http:' + baseUrl : 'http://' + baseUrl;
+                    baseUrl = baseUrl.startsWith('//') ? 'http:' + baseUrl : 'http://' + baseUrl;
                 }
 
                 item.link = new URL(item.link, baseUrl).href;
@@ -107,7 +109,7 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
                 let baseUrl = item.link || data.link;
 
                 if (baseUrl && !/^https?:\/\//.test(baseUrl)) {
-                    baseUrl = /^\/\//.test(baseUrl) ? 'http:' + baseUrl : 'http://' + baseUrl;
+                    baseUrl = baseUrl.startsWith('//') ? 'http:' + baseUrl : 'http://' + baseUrl;
                 }
 
                 $('script').remove();
@@ -152,7 +154,9 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
                     resolveRelativeLink($, elem, 'poster', baseUrl);
                 });
                 $('img, iframe').each((_, elem) => {
-                    $(elem).attr('referrerpolicy', 'no-referrer');
+                    if (!$(elem).attr('referrerpolicy')) {
+                        $(elem).attr('referrerpolicy', 'no-referrer');
+                    }
                 });
 
                 item.description = $('body').html() + '' + (config.suffix || '');
@@ -169,7 +173,7 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
             if (item.category) {
                 // convert single string to array, and filter only string type category
                 Array.isArray(item.category) || (item.category = [item.category]);
-                item.category = item.category.filter((e) => typeof e === 'string');
+                item.category = item.category.filter((e) => String(e) === e);
             }
             return item;
         };
@@ -198,7 +202,7 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
                 const title = item.title || '';
                 const description = item.description || title;
                 const author = getAuthorString(item);
-                const category = item.category || [];
+                const category = Array.isArray(item.category) ? item.category : [];
                 const isFilter =
                     regex instanceof RE2JS
                         ? regex.matcher(title).find() || regex.matcher(description).find() || regex.matcher(author).find() || category.some((c) => regex.matcher(c).find())
@@ -214,7 +218,7 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
                 const title = item.title || '';
                 const description = item.description || title;
                 const author = getAuthorString(item);
-                const category = item.category || [];
+                const category = Array.isArray(item.category) ? item.category : [];
                 let isFilter = true;
 
                 if (ctx.req.query('filter_title')) {
@@ -223,15 +227,15 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
                 }
                 if (ctx.req.query('filter_description')) {
                     const descriptionRegex = makeRegex(ctx.req.query('filter_description')!);
-                    isFilter = isFilter && (descriptionRegex instanceof RE2JS ? descriptionRegex.matcher(description).find() : !!descriptionRegex.test(description));
+                    isFilter &&= descriptionRegex instanceof RE2JS ? descriptionRegex.matcher(description).find() : !!descriptionRegex.test(description);
                 }
                 if (ctx.req.query('filter_author')) {
                     const authorRegex = makeRegex(ctx.req.query('filter_author')!);
-                    isFilter = isFilter && (authorRegex instanceof RE2JS ? authorRegex.matcher(author).find() : !!authorRegex.test(author));
+                    isFilter &&= authorRegex instanceof RE2JS ? authorRegex.matcher(author).find() : !!authorRegex.test(author);
                 }
                 if (ctx.req.query('filter_category')) {
                     const categoryRegex = makeRegex(ctx.req.query('filter_category')!);
-                    isFilter = isFilter && category.some((c) => (categoryRegex instanceof RE2JS ? categoryRegex.matcher(c).find() : c.match(categoryRegex)));
+                    isFilter &&= category.some((c) => (categoryRegex instanceof RE2JS ? categoryRegex.matcher(c).find() : c.match(categoryRegex)));
                 }
 
                 return isFilter;
@@ -243,7 +247,7 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
                 const title = item.title;
                 const description = item.description || title;
                 const author = getAuthorString(item);
-                const category = item.category || [];
+                const category = Array.isArray(item.category) ? item.category : [];
                 let isFilter = true;
 
                 if (ctx.req.query('filterout') || ctx.req.query('filterout_title')) {
@@ -252,15 +256,15 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
                 }
                 if (ctx.req.query('filterout') || ctx.req.query('filterout_description')) {
                     const descriptionRegex = makeRegex(ctx.req.query('filterout_description') || ctx.req.query('filterout')!);
-                    isFilter = isFilter && (descriptionRegex instanceof RE2JS ? !descriptionRegex.matcher(description).find() : !descriptionRegex.test(description));
+                    isFilter &&= descriptionRegex instanceof RE2JS ? !descriptionRegex.matcher(description).find() : !descriptionRegex.test(description);
                 }
                 if (ctx.req.query('filterout_author')) {
                     const authorRegex = makeRegex(ctx.req.query('filterout_author')!);
-                    isFilter = isFilter && (authorRegex instanceof RE2JS ? !authorRegex.matcher(author).find() : !authorRegex.test(author));
+                    isFilter &&= authorRegex instanceof RE2JS ? !authorRegex.matcher(author).find() : !authorRegex.test(author);
                 }
                 if (ctx.req.query('filterout_category')) {
                     const categoryRegex = makeRegex(ctx.req.query('filterout_category')!);
-                    isFilter = isFilter && !category.some((c) => (categoryRegex instanceof RE2JS ? categoryRegex.matcher(c).find() : c.match(categoryRegex)));
+                    isFilter &&= category.every((c) => !(categoryRegex instanceof RE2JS ? categoryRegex.matcher(c).find() : c.match(categoryRegex)));
                 }
 
                 return isFilter;
@@ -292,9 +296,8 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
                     const encodedlink = encodeURIComponent(item.link);
                     item.link = `https://t.me/iv?url=${encodedlink}&rhash=${ctx.req.query('tgiv')}`;
                     return item;
-                } else {
-                    return item;
                 }
+                return item;
             });
         }
 
@@ -306,6 +309,7 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
                     if (link) {
                         // if parser failed, return default description and not report error
                         try {
+                            const { default: Parser } = await import('@jocmp/mercury-parser');
                             const res = await ofetch(link);
                             const $ = load(res);
                             const result = await Parser.parse(link, {
@@ -403,14 +407,15 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
             if (num.test(ctx.req.query('brief')!)) {
                 const brief: number = Number.parseInt(ctx.req.query('brief')!);
                 for (const item of data.item) {
-                    let text;
-                    if (item.description) {
-                        text = sanitizeHtml(item.description, { allowedTags: [], allowedAttributes: {} });
-                        item.description = text.length > brief ? `<p>${text.slice(0, brief)}…</p>` : `<p>${text}</p>`;
+                    if (!item.description) {
+                        continue;
                     }
+
+                    const text = sanitizeHtml(item.description, { allowedTags: [], allowedAttributes: {} });
+                    item.description = text.length > brief ? `<p>${text.slice(0, brief)}…</p>` : `<p>${text}</p>`;
                 }
             } else {
-                throw new Error(`Invalid parameter brief. Please check the doc https://docs.rsshub.app/guide/parameters#shu-chu-jian-xun`);
+                throw new Error('Invalid parameter brief. Please check the doc https://docs.rsshub.app/guide/parameters#shu-chu-jian-xun');
             }
         }
         // some parameters are processed in `anti-hotlink.js`

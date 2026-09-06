@@ -1,6 +1,7 @@
-import { Route } from '@/types';
-import got from '@/utils/got';
 import queryString from 'query-string';
+
+import type { Route } from '@/types';
+import got from '@/utils/got';
 
 export const route: Route = {
     path: '/firmware/:device/:type?/:region?',
@@ -9,7 +10,7 @@ export const route: Route = {
     parameters: { device: 'the device `codename` eg. `aries` for Mi 2S', type: 'type', region: 'Region, default to `cn`' },
     name: 'New firmware',
     maintainers: ['Indexyz'],
-    description: `  | stable  | development |
+    description: `| stable  | development |
 | ------- | ----------- |
 | release | dev         |
 

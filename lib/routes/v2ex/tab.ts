@@ -1,7 +1,9 @@
-import { Route, ViewType } from '@/types';
+import { load } from 'cheerio';
+
+import type { Route } from '@/types';
+import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 
 export const route: Route = {
     path: '/tab/:tabid',
@@ -36,7 +38,7 @@ async function handler(ctx) {
     const links = $('span.item_title > a')
         .toArray()
         .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 10)
-        .map((link) => `${host}${$(link).attr('href').replace(/#.*$/, '')}`);
+        .map((link) => `${host}${$(link).attr('href')!.replace(/#.*$/, '')}`);
 
     const items = await Promise.all(
         links.map((link) =>

@@ -1,6 +1,7 @@
-import { Route } from '@/types';
-import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
+
+import type { Route } from '@/types';
+import ofetch from '@/utils/ofetch';
 
 import { ensureDomain } from './utils';
 
@@ -8,10 +9,10 @@ function getItemList($, type) {
     const list = $(`#${type} .list-group-item`)
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
             return {
-                title: item.find('a').text(),
-                link: `https://www.xlmp4.com${item.find('a').attr('href')}`,
+                title: $item.find('a').text(),
+                link: `https://www.xlmp4.com${$item.find('a').attr('href')}`,
             };
         });
     return list;

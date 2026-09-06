@@ -1,10 +1,12 @@
-import { Route } from '@/types';
-import cache from '@/utils/cache';
 import { load } from 'cheerio';
-import { parseDate } from '@/utils/parse-date';
-import { baseUrl } from './utils';
+
 import { config } from '@/config';
-import puppeteer from '@/utils/puppeteer';
+import type { Route } from '@/types';
+import cache from '@/utils/cache';
+import { parseDate } from '@/utils/parse-date';
+import playwright from '@/utils/playwright';
+
+import { baseUrl } from './utils';
 
 export const route: Route = {
     path: '/blogs/:name?',
@@ -38,12 +40,11 @@ async function handler(ctx) {
     const response = await cache.tryGet(
         link,
         async () => {
-            const browser = await puppeteer();
-            const page = await browser.newPage();
-            await page.setRequestInterception(true);
-
-            page.on('request', (request) => {
-                request.resourceType() === 'document' ? request.continue() : request.abort();
+            const context = await playwright();
+            const page = await context.newPage();
+            await page.route('**/*', (route) => {
+                const request = route.request();
+                request.resourceType() === 'document' ? route.continue() : route.abort();
             });
 
             await page.goto(link, {
@@ -53,7 +54,7 @@ async function handler(ctx) {
             const response = await page.content();
 
             await page.close();
-            await browser.close();
+            await context.close();
             return response;
         },
         config.cache.routeExpire,
@@ -64,16 +65,16 @@ async function handler(ctx) {
     const items = $('item')
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
             return {
-                title: item.find('title').text().trim(),
-                link: item.find('link').text().trim(),
-                author: item
+                title: $item.find('title').text().trim(),
+                link: $item.find('link').text().trim(),
+                author: $item
                     .find(String.raw`dc\:creator`)
                     .text()
                     .trim(),
-                pubDate: parseDate(item.find('pubDate').text().trim()),
-                description: item
+                pubDate: parseDate($item.find('pubDate').text().trim()),
+                description: $item
                     .find(String.raw`content\:encoded`)
                     .text()
                     .trim(),
@@ -83,14 +84,14 @@ async function handler(ctx) {
     // The RSS feed is implemented by a keyword search on the science.org end
     // so the description field of the feed looks like this:
     const name_re = /Keyword search result for Blog Series: (?<blog_name>[^-]+) --/;
-    const { blog_name = 'Unknown Title' } = $('channel > description').text().match(name_re).groups;
+    const { blog_name = 'Unknown Title' } = $('channel > description').text().match(name_re)!.groups!;
 
     return {
         title: `Science Blogs: ${blog_name}`,
         description: `A Science.org blog called ${blog_name}`,
         image: `${baseUrl}/apple-touch-icon.png`,
         link: `${baseUrl}/blogs/${name}`,
-        language: 'en-US',
+        language: 'en-us' as const,
         item: items,
     };
 }

@@ -1,4 +1,4 @@
-import { Route } from '@/types';
+import type { Route } from '@/types';
 import got from '@/utils/got';
 
 export const route: Route = {
@@ -29,7 +29,7 @@ async function handler(ctx) {
     const handle = ctx.req.param('handle');
 
     const profile = (
-        await got(`https://api-v2.lens.dev/`, {
+        await got('https://api-v2.lens.dev/', {
             method: 'POST',
             json: {
                 operationName: 'Profile',
@@ -44,7 +44,7 @@ async function handler(ctx) {
     ).data.data.profile;
 
     const publications = (
-        await got(`https://api-v2.lens.dev/`, {
+        await got('https://api-v2.lens.dev/', {
             method: 'POST',
             json: {
                 operationName: 'Publications',

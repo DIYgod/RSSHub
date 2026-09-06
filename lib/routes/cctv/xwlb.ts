@@ -1,11 +1,13 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+import dayjs from 'dayjs';
+import customParseFormat from 'dayjs/plugin/customParseFormat.js';
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
-import { load } from 'cheerio';
-import dayjs from 'dayjs';
-import customParseFormat from 'dayjs/plugin/customParseFormat.js';
+
 dayjs.extend(customParseFormat);
 
 export const route: Route = {
@@ -42,7 +44,7 @@ export const route: Route = {
     maintainers: ['zengxs'],
     handler,
     url: 'tv.cctv.com/lm/xwlb',
-    description: `新闻联播内容摘要。`,
+    description: '新闻联播内容摘要。',
 };
 
 async function handler(ctx) {
@@ -70,19 +72,19 @@ const getXWLB = async () => {
             const item = {
                 title: `新闻联播 ${newsDate.format('YYYY/MM/DD')}`,
                 link: url,
-                pubDate: timezone(parseDate(newsDate.format()), +8),
+                pubDate: timezone(parseDate(newsDate.format()), 8),
                 description: await cache.tryGet(url, async () => {
                     const res = await got(url);
                     const content = load(res.data);
-                    const list: string[] = [];
-                    content('body li').map((i, elem) => {
-                        const e = content(elem);
-                        const href = e.find('a').attr('href');
-                        const title = e.find('a').attr('title');
-                        const dur = e.find('span').text();
-                        list.push(`<a href="${href}">${title} ⏱${dur}</a>`);
-                        return i;
-                    });
+                    const list = content('body li')
+                        .toArray()
+                        .map((elem) => {
+                            const e = content(elem);
+                            const href = e.find('a').attr('href');
+                            const title = e.find('a').attr('title');
+                            const dur = e.find('span').text();
+                            return `<a href="${href}">${title} ⏱${dur}</a>`;
+                        });
                     return list.join('<br/>\n');
                 }),
             };

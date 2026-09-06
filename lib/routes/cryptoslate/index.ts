@@ -1,8 +1,9 @@
-import { Route, Data } from '@/types';
-import { parseDate } from '@/utils/parse-date';
-import logger from '@/utils/logger';
-import parser from '@/utils/rss-parser';
 import { load } from 'cheerio';
+
+import type { Data, DataItem, Language, Route } from '@/types';
+import logger from '@/utils/logger';
+import { parseDate } from '@/utils/parse-date';
+import parser from '@/utils/rss-parser';
 
 export const route: Route = {
     path: '/',
@@ -38,14 +39,14 @@ async function handler(ctx): Promise<Data> {
     const items = feed.items
         .filter((item) => !item.link?.includes('/feed') && !item.link?.includes('#respond'))
         .slice(0, limit)
-        .map((item) => {
+        .map((item): DataItem | Record<string, never> => {
             if (!item.link) {
                 return {};
             }
 
             try {
                 // Clean URL by removing query parameters
-                const cleanUrl = item.link.split('?')[0];
+                const cleanUrl = item.link.split('?', 1)[0];
 
                 return {
                     title: item.title || 'Untitled',
@@ -64,16 +65,16 @@ async function handler(ctx): Promise<Data> {
         });
 
     // Filter out empty items
-    const filteredItems = items.filter((item) => item && Object.keys(item).length > 0);
+    const filteredItems = items.filter((item): item is DataItem => item && Object.keys(item).length > 0);
 
     return {
         title: feed.title || 'CryptoSlate',
         link: feed.link || 'https://cryptoslate.com',
         description: feed.description || 'Latest news from CryptoSlate',
         item: filteredItems,
-        language: feed.language || 'en',
+        language: (feed.language || 'en') as Language,
         image: feed.image?.url,
-    } as Data;
+    };
 }
 
 function extractFullTextFromRSS(entry: any): string | null {

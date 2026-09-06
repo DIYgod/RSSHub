@@ -1,7 +1,9 @@
-import { Route } from '@/types';
-import got from '@/utils/got';
 import { load } from 'cheerio';
-import { notesUrl, extractNotes } from '../utils';
+
+import type { Language, Route } from '@/types';
+import got from '@/utils/got';
+
+import { extractNotes, notesUrl } from '../utils';
 
 export const route: Route = {
     path: '/notes/:lang?/user/:uid',
@@ -33,7 +35,7 @@ async function handler(ctx) {
     return {
         title: $('head title').text(),
         link,
-        language: $('html').attr('lang'),
+        language: $('html').attr('lang') as Language,
         item: items,
     };
 }

@@ -1,7 +1,8 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
@@ -17,7 +18,7 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    maintainers: ['1200522928'],
+    maintainers: ['korokor0', '1200522928'],
     radar: [
         {
             source: ['jwb.dgut.edu.cn/tzgg/'],
@@ -25,9 +26,9 @@ export const route: Route = {
         },
     ],
     name: '教务部通知公告',
-    description: `| 教学动态 | 教务通知 | 教研通知 | 实践通知 | 产业学院 |  通识教育  |"杨振宁"班|招生信息 |采购公告 |
-| ------- | -------  | ---------| --------| --------| ----------|---------|------- |--------|
-| jxdt    | jwtz     | jytz     |   sjtz  |   cyxy  |   tsjy    | yznb    |  zsxx  | cggg   |`,
+    description: `| 教学动态 | 教务通知 | 教研通知 | 实践通知 | 产业学院 | 通识教育 | "杨振宁" 班 | 招生信息 | 采购公告 |
+| -------- | -------- | -------- | -------- | -------- | -------- | ----------- | -------- | -------- |
+| jxdt     | jwtz     | jytz     | sjtz     | cyxy     | tsjy     | yznb        | zsxx     | cggg     |`,
     handler,
 };
 
@@ -44,8 +45,8 @@ async function handler(ctx) {
             const $li = $(item);
             const $a = $li.find('a.con');
             return {
-                title: $a.find('.tit').text().trim(),
-                pubDate: parseDate(`${$a.find('.year').text().trim()}-${$a.find('.day').text().trim()}`),
+                title: $a.find('.tit').text(),
+                pubDate: parseDate(`${$a.find('.year').text()}-${$a.find('.day').text()}`),
                 link: `${baseurl}${$a.attr('href')}`,
             };
         });
@@ -58,7 +59,7 @@ async function handler(ctx) {
 
                 return {
                     ...item,
-                    description: $('div.v_news_content').first().html() || undefined,
+                    description: $('div.v_news_content').html(),
                 };
             })
         )

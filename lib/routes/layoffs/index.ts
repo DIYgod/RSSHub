@@ -1,13 +1,14 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
 const ROW_COUNT = 100;
 
 const WEBSITE_URL = 'https://layoffs.fyi';
-const ENTRY_URL = 'https://airtable.com/embed/shrqYt5kSqMzHV9R5/tbl8c8kanuNB6bPYr';
+const ENTRY_URL = 'https://airtable.com/embed/app1PaujS9zxVGUZ4/shroKsHx3SdYYOzeh/tblleV7Pnb6AcPCYL';
 const AIRTABLE_HOST = 'https://airtable.com';
 
 /**
@@ -30,23 +31,27 @@ const getMappings = function (obj) {
     const mapping = new Map();
     const reverseMapping = new Map();
     for (const key in obj) {
-        if ('name' in obj[key] && 'id' in obj[key]) {
-            reverseMapping.set(obj[key].name, obj[key].id);
-            mapping.set(obj[key].id, obj[key].name);
+        if (!('name' in obj[key] && 'id' in obj[key])) {
+            continue;
         }
+
+        reverseMapping.set(obj[key].name, obj[key].id);
+        mapping.set(obj[key].id, obj[key].name);
     }
     return [mapping, reverseMapping];
 };
 
 export const route: Route = {
     path: '/',
+    categories: ['other'],
+    example: '/layoffs',
     radar: [
         {
             source: ['layoffs.fyi/'],
             target: '',
         },
     ],
-    name: 'Unknown',
+    name: 'Layoff Data Tracker',
     maintainers: ['BrandNewLifeJackie26'],
     handler,
     url: 'layoffs.fyi/',
@@ -94,7 +99,7 @@ async function handler() {
             AIRTABLE_HOST +
             $('script')
                 .text()
-                .match(/urlWithParams: "(.*?)"/)[1]
+                .match(/urlWithParams: "(.*?)"/)![1]
                 .replaceAll(String.raw`\u002F`, '/');
 
         // Cache it again

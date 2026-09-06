@@ -273,6 +273,11 @@ interface App {
     stat_key: string;
     include_app_product_type_complete: boolean;
     is_console_game: boolean;
+    developers?: Developer[];
+}
+
+interface Developer {
+    name: string;
 }
 
 interface Price {

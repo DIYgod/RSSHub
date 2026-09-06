@@ -1,6 +1,7 @@
-import { Route } from '@/types';
-import got from '@/utils/got';
 import { load } from 'cheerio';
+
+import type { Route } from '@/types';
+import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
 const rootUrl = 'https://www.hinatazaka46.com';
@@ -19,7 +20,7 @@ export const route: Route = {
         supportScihub: false,
     },
     name: 'Hinatazaka46 Blog 日向坂 46 博客',
-    maintainers: [],
+    maintainers: ['yj-qin', 'AkashiGakki'],
     handler,
     description: `Member ID
 

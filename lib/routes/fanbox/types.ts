@@ -10,12 +10,12 @@ export interface UserInfoResponse {
         hasAdultContent: boolean;
         coverImageUrl: string;
         profileLinks: string[];
-        profileItems: {
+        profileItems: Array<{
             id: string;
             type: string;
             serviceProvider: string;
             videoId: string;
-        }[];
+        }>;
         isFollowed: boolean;
         isSupported: boolean;
         isStopped: boolean;
@@ -25,11 +25,15 @@ export interface UserInfoResponse {
 }
 
 export interface PostListResponse {
-    body: PostItem[];
+    body: {
+        posts: PostItem[];
+    };
 }
 
 export interface PostDetailResponse {
-    body: PostDetail;
+    body: {
+        post: PostDetail;
+    };
 }
 
 export interface PostItem {
@@ -60,7 +64,7 @@ export interface PostItem {
 interface BasicPost {
     commentCount: number;
     commentList: {
-        items: {
+        items: Array<{
             body: string;
             createdDatetime: string;
             id: string;
@@ -68,7 +72,7 @@ interface BasicPost {
             isOwn: boolean;
             likeCount: number;
             parentCommentId: string;
-            replies: {
+            replies: Array<{
                 body: string;
                 createdDatetime: string;
                 id: string;
@@ -77,14 +81,14 @@ interface BasicPost {
                 likeCount: number;
                 parentCommentId: string;
                 rootCommentId: string;
-            }[];
+            }>;
             rootCommentId: string;
             user: {
                 iconUrl: string;
                 name: string;
                 userId: string;
             };
-        }[];
+        }>;
     };
     coverImageUrl: string | null;
     creatorId: string;
@@ -112,7 +116,11 @@ export interface ArticlePost extends BasicPost {
     body: {
         blocks: Block[];
         embedMap: {
-            [key: string]: unknown;
+            [key: string]: {
+                id: string;
+                serviceProvider: string;
+                contentId: string;
+            };
         };
         fileMap: {
             [key: string]: {
@@ -152,13 +160,13 @@ export interface ArticlePost extends BasicPost {
 export interface FilePost extends BasicPost {
     type: 'file';
     body: {
-        files: {
+        files: Array<{
             extension: string;
             id: string;
             name: string;
             size: number;
             url: string;
-        }[];
+        }>;
         text: string;
     };
 }
@@ -177,14 +185,14 @@ export interface VideoPost extends BasicPost {
 export interface ImagePost extends BasicPost {
     type: 'image';
     body: {
-        images: {
+        images: Array<{
             id: string;
             originalUrl: string;
             thumbnailUrl: string;
             width: number;
             height: number;
             extension: string;
-        }[];
+        }>;
         text: string;
     };
 }
@@ -199,11 +207,11 @@ export interface TextPost extends BasicPost {
 interface TextBlock {
     type: 'p';
     text: string;
-    styles?: {
+    styles?: Array<{
         length: number;
         offset: number;
         type: 'bold';
-    }[];
+    }>;
 }
 
 interface HeaderBlock {

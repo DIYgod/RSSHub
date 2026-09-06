@@ -1,8 +1,9 @@
-import { Route } from '@/types';
-import got from '@/utils/got';
 import { load } from 'cheerio';
-import { parseDate } from '@/utils/parse-date';
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
+import got from '@/utils/got';
+import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/yjs',
@@ -47,12 +48,12 @@ async function handler() {
         .map((item) => {
             const title = $(item).find('a').attr('title');
             const linkRaw = $(item).find('a').attr('href');
-            const link = linkRaw.startsWith('http') ? linkRaw : new URL(linkRaw, `${baseUrl}/zsxw`).toString();
+            const link = linkRaw!.startsWith('http') ? linkRaw : new URL(linkRaw!, `${baseUrl}/zsxw`).href;
             const pubDate = $(item).find('span').text();
             return { title, link, pubDate: parseDate(pubDate, 'YYYY-MM-DD') };
         });
 
-    const itemsWithContent = await Promise.all(items.map((item) => cache.tryGet(item.link, () => getNoticeContent(item))));
+    const itemsWithContent = await Promise.all(items.map((item) => cache.tryGet(item.link!, () => getNoticeContent(item))));
 
     return {
         title: '同济大学研究生招生网',

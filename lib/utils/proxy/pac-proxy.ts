@@ -1,4 +1,4 @@
-import { type Config } from '@/config';
+import type { Config } from '@/config';
 import logger from '@/utils/logger';
 
 const possibleProtocol = ['http', 'https', 'ftp', 'file', 'data'];
@@ -14,7 +14,7 @@ const pacProxy = (pacUri: Config['pacUri'], pacScript: Config['pacScript'], prox
             logger.error('Invalid PAC_SCRIPT, use PAC_URI instead');
         }
     }
-    if (pacUri && typeof pacUri === 'string') {
+    if (pacUri) {
         try {
             pacUrlHandler = new URL(pacUri);
         } catch (error: any) {
@@ -49,7 +49,7 @@ const pacProxy = (pacUri: Config['pacUri'], pacScript: Config['pacScript'], prox
             logger.warn('PAC_URI contains username and/or password, ignoring PROXY_AUTH');
             proxyObj.auth = undefined;
         } else if (['http:', 'https:'].includes(pacUrlHandler.protocol)) {
-            logger.info('PROXY_AUTH is set and will be used for requests from Node.js. However, requests from puppeteer will not use it');
+            logger.info('PROXY_AUTH is set and will be used for requests from Node.js. However, requests from Playwright will not use it');
             promptProxyUri = true;
         } else {
             logger.warn(`PROXY_AUTH is only supported by HTTP(S) proxies, but got ${pacUrlHandler.protocol}, ignoring`);

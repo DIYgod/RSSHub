@@ -1,8 +1,10 @@
-import { Route } from '@/types';
-import got from '@/utils/got';
-import { load } from 'cheerio';
+import type { Context } from 'hono';
+
+import type { Route } from '@/types';
+import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+
+import { renderContent, tiebaClientRequest } from './common';
 
 export const route: Route = {
     path: '/tieba/user/:uid',
@@ -10,44 +12,48 @@ export const route: Route = {
     example: '/baidu/tieba/user/斗鱼游戏君',
     parameters: { uid: '用户 ID' },
     features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
+        requireConfig: [
+            {
+                name: 'BAIDU_COOKIE',
+                optional: true,
+                description: '百度 cookie 值，用于需要登录的贴吧页面',
+            },
+        ],
+        antiCrawler: true,
     },
     name: '用户帖子',
-    maintainers: ['igxlin', 'nczitzk'],
+    maintainers: ['igxlin', 'nczitzk', 'FlanChanXwO'],
     handler,
-    description: `用户 ID 可以通过打开用户的主页后查看地址栏的 \`un\` 字段来获取。`,
+    description: '用户 ID 可以通过打开用户的主页后查看地址栏的 `un` 字段来获取。',
 };
 
-async function handler(ctx) {
-    const uid = ctx.req.param('uid');
-    const response = await got(`https://tieba.baidu.com/home/main?un=${uid}`);
+async function handler(ctx: Context) {
+    const { uid } = ctx.req.param();
+    const link = `https://tieba.baidu.com/home/main?un=${encodeURIComponent(uid)}`;
 
-    const data = response.data;
+    const userJson = await ofetch(`https://tieba.baidu.com/i/sys/user_json?un=${encodeURIComponent(uid)}&ie=utf-8`);
+    if (!userJson) {
+        throw new Error(`Tieba user ${uid} not found`);
+    }
+    const userId = JSON.parse(userJson).id;
 
-    const $ = load(data);
-    const name = $('span.userinfo_username').text();
-    const list = $('div.n_right.clearfix');
-    let imgurl;
+    const data = await tiebaClientRequest('/c/u/feed/userpost', {
+        uid: String(userId),
+        pn: '1',
+        rn: '20',
+        is_thread: '1',
+        need_content: '1',
+    });
 
     return {
-        title: `${name} 的贴吧`,
-        link: `https://tieba.baidu.com/home/main?un=${uid}`,
-        item:
-            list &&
-            list.toArray().map((item) => {
-                item = $(item).find('.n_contain');
-                imgurl = item.find('ul.n_media.clearfix img').attr('original');
-                return {
-                    title: item.find('div.thread_name a').attr('title'),
-                    pubDate: timezone(parseDate(item.parent().find('div .n_post_time').text(), ['YYYY-MM-DD', 'HH:mm']), +8),
-                    description: `${item.find('div.n_txt').text()}<br><img src="${imgurl}">`,
-                    link: item.find('div.thread_name a').attr('href'),
-                };
-            }),
+        title: `${uid} 的贴吧`,
+        link,
+        item: data.post_list.map((post) => ({
+            title: post.title,
+            description: renderContent(post.first_post_content || post.abstract),
+            author: post.name_show,
+            pubDate: parseDate(post.create_time, 'X'),
+            link: `https://tieba.baidu.com/p/${post.thread_id}`,
+        })),
     };
 }

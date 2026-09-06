@@ -1,12 +1,12 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
 
+import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
-import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
-import { art } from '@/utils/render';
-import path from 'node:path';
+import timezone from '@/utils/timezone';
+
+import { renderDescription } from './templates/description';
 
 export const route: Route = {
     path: '/:language/news/:category?',
@@ -42,7 +42,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { language, category = '' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 10;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 10;
 
     const rootUrl = 'https://dn.com';
     const currentUrl = new URL(`/${language}/news/${category}`, rootUrl).href;
@@ -54,28 +54,28 @@ async function handler(ctx) {
     let items = $('a.list-item')
         .slice(0, limit)
         .toArray()
-        .map((item) => {
-            item = $(item);
+        .map((item): DataItem & { link: string; category: string[] } => {
+            const $item = $(item);
 
-            const image = item.find('div.img img');
+            const image = $item.find('div.img img');
 
             return {
-                title: item.find('h2.ellipse2').text(),
-                link: new URL(item.prop('href'), rootUrl).href,
-                description: art(path.join(__dirname, 'templates/description.art'), {
+                title: $item.find('h2.ellipse2').text(),
+                link: new URL($item.prop('href')!, rootUrl).href,
+                description: renderDescription({
                     image: image
                         ? {
-                              src: image.prop('src'),
+                              src: image.prop('src')!,
                               alt: image.prop('alt'),
                           }
                         : undefined,
-                    abstracts: item.find('p.abstract').html(),
+                    abstracts: $item.find('p.abstract').html() ?? undefined,
                 }),
-                category: item
+                category: $item
                     .find('span.cat')
                     .toArray()
                     .map((c) => $(c).text()),
-                pubDate: timezone(parseDate(item.find('span.time').text()), +8),
+                pubDate: timezone(parseDate($item.find('span.time').text()), 8),
             };
         });
 
@@ -87,9 +87,9 @@ async function handler(ctx) {
                 const content = load(detailResponse);
 
                 item.title = content('h1.tit').text();
-                item.description = art(path.join(__dirname, 'templates/description.art'), {
-                    abstracts: content('div.abstract').html(),
-                    description: content('div.detail').html(),
+                item.description = renderDescription({
+                    abstracts: content('div.abstract').html() ?? undefined,
+                    description: content('div.detail').html() ?? undefined,
                 });
                 item.author = content('span.author')
                     .text()
@@ -100,7 +100,7 @@ async function handler(ctx) {
                         .toArray()
                         .map((c) => content(c).text()),
                 ];
-                item.pubDate = timezone(parseDate(content('span.date').text()), +8);
+                item.pubDate = timezone(parseDate(content('span.date').text()), 8);
 
                 return item;
             })
@@ -115,8 +115,8 @@ async function handler(ctx) {
         title: `${title} - ${$('div.group a.active').text()}`,
         link: currentUrl,
         description: $('meta[name="description"]').prop('content'),
-        language: $('html').prop('lang'),
-        image: new URL($('a.logo img').prop('src'), rootUrl).href,
+        language: $('html').prop('lang') as Language,
+        image: new URL($('a.logo img').prop('src')!, rootUrl).href,
         icon,
         logo: icon,
         subtitle: $('title').text(),

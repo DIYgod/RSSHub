@@ -1,10 +1,11 @@
-import { Route } from '@/types';
-import cache from '@/utils/cache';
-import got from '@/utils/got';
 import { load } from 'cheerio';
 import iconv from 'iconv-lite';
-import timezone from '@/utils/timezone';
+
+import type { DataItem, Route } from '@/types';
+import cache from '@/utils/cache';
+import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/:category?',
@@ -29,7 +30,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { category = 'xxkd' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 30;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 30;
 
     const rootUrl = 'http://www.auto-stats.org.cn';
     const currentUrl = new URL(`${category}.asp`, rootUrl).href;
@@ -43,22 +44,22 @@ async function handler(ctx) {
     let items = $('a.dnews font')
         .slice(0, limit)
         .toArray()
-        .map((item) => {
-            item = $(item);
+        .map((item): DataItem => {
+            const $item = $(item);
 
-            const title = item.text();
+            const title = $item.text();
             const pubDate = title.match(/(\d{4}(?:\/\d{1,2}){2}\s\d{1,2}(?::\d{2}){2})/)?.[1] ?? undefined;
 
             return {
-                title: title.replace(/●/, '').split(/（\d+/)[0],
-                link: new URL(item.parent().prop('href'), rootUrl).href,
-                pubDate: timezone(parseDate(pubDate, 'YYYY/M/D H:mm:ss'), +8),
+                title: title.replace(/●/, '').split(/（\d+/, 1)[0],
+                link: new URL($item.parent().prop('href')!, rootUrl).href,
+                pubDate: timezone(parseDate(pubDate!, 'YYYY/M/D H:mm:ss'), 8),
             };
         });
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const { data: detailResponse } = await got(item.link, {
                     responseType: 'buffer',
                 });
@@ -72,7 +73,10 @@ async function handler(ctx) {
         )
     );
 
-    const subtitle = $('title').text().split(/——/).pop();
+    const subtitle = $('title')
+        .text()
+        .split(/——/)
+        .pop();
     const image = new URL('images/logo.jpg', rootUrl).href;
 
     return {
@@ -80,7 +84,7 @@ async function handler(ctx) {
         title: $('title').text(),
         link: currentUrl,
         description: subtitle,
-        language: 'zh',
+        language: 'zh' as const,
         image,
         subtitle,
         allowEmpty: true,

@@ -1,7 +1,8 @@
-import cache from '@/utils/cache';
-import md5 from '@/utils/md5';
-import got from '@/utils/got';
 import { config } from '@/config';
+import cache from '@/utils/cache';
+import got from '@/utils/got';
+import md5 from '@/utils/md5';
+
 const newrank_cookie_token = 'newrank_cookie_token';
 const query_count = 'newrank_cookie_count';
 const max_query_count = 30;
@@ -17,7 +18,7 @@ const random_nonce = (count) => {
     while (i-- > min) {
         index = Math.floor((i + 1) * Math.random());
         temp = shuffled[index];
-        str = str + temp;
+        str += temp;
     }
     return str;
 };
@@ -43,7 +44,7 @@ const decrypt_douyin_detail_xyz = (nonce) => {
 };
 
 const flatten = (arr) => {
-    const result = [];
+    const result: any[] = [];
     for (const val of arr) {
         if (Array.isArray(val)) {
             result.push(...flatten(val));
@@ -56,24 +57,24 @@ const flatten = (arr) => {
 
 function shouldUpdateCookie(forcedUpdate = false) {
     if (forcedUpdate) {
-        cache.set(query_count, 0);
+        cache.set(query_count, '');
     } else {
         const count = cache.get(query_count);
         if (count) {
-            if (count > max_query_count) {
-                cache.set(query_count, 0);
+            if (Number(count) > max_query_count) {
+                cache.set(query_count, '');
                 clearCookie();
             } else {
-                cache.set(query_count, count + 1);
+                cache.set(query_count, `${count}1`);
             }
         } else {
-            cache.set(query_count, 1);
+            cache.set(query_count, '1');
         }
     }
 }
 
 function clearCookie() {
-    cache.set(newrank_cookie_token, null);
+    cache.set(newrank_cookie_token, '');
 }
 
 // 加了验证码失效了
@@ -81,8 +82,9 @@ async function getCookie() {
     // Check if this key should be replace? every 30 times should be fine.
     shouldUpdateCookie();
     let token = await cache.get(newrank_cookie_token);
-    const username = String(config.newrank.username);
-    const password = md5(md5(String(config.newrank.password)) + 'daddy');
+    const newrankConfig = config.newrank as { username?: string; password?: string };
+    const username = String(newrankConfig.username);
+    const password = md5(md5(String(newrankConfig.password)) + 'daddy');
     const nonce = random_nonce(9);
     const xyz = decrypt_login_xyz(username, password, nonce);
     if (!token) {
@@ -101,11 +103,11 @@ async function getCookie() {
         if (set_cookie) {
             for (const e of set_cookie) {
                 if (e.indexOf('token') === 0) {
-                    token = e.split(';')[0];
+                    token = e.split(';', 1)[0];
                 }
             }
         }
-        cache.set(newrank_cookie_token, token, 600);
+        cache.set(newrank_cookie_token, token ?? '', 600);
         // We have acquired new cookie. It may due to cache timeout.
         // Force update counter and don't wait it finished.
         shouldUpdateCookie(true);

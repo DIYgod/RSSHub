@@ -1,20 +1,20 @@
 import logger from '@/utils/logger';
 
-export async function crawler(item: any, browser: any): Promise<string> {
+export async function crawler(item: any, context: any): Promise<string> {
     try {
         let response = '';
-        const page = await browser.newPage();
-        await page.setRequestInterception(true);
-        page.on('request', (request) => {
+        const page = await context.newPage();
+        await page.route('**/*', (route) => {
+            const request = route.request();
             const resourceType = request.resourceType();
             if (['document', 'script', 'stylesheet', 'xhr'].includes(resourceType)) {
-                request.continue();
+                route.continue();
             } else {
-                request.abort();
+                route.abort();
             }
         });
         await page.goto(item.link, {
-            waitUntil: 'networkidle0',
+            waitUntil: 'networkidle',
             timeout: 29000,
         });
         const selector = '.item-left .item .title .button';
@@ -28,7 +28,7 @@ export async function crawler(item: any, browser: any): Promise<string> {
     }
 }
 
-export function analyzer(box: any): object {
+export function analyzer(box: any) {
     return {
         serviceInfo: {
             serviceTarget: box.find('.row:nth(1)>div:nth(1)').find('.inner').children().first().attr('content'),

@@ -1,7 +1,8 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import { finishArticleItem } from '@/utils/wechat-mp';
 
@@ -46,9 +47,9 @@ export const route: Route = {
     name: '学生在线（青岛）',
     maintainers: ['kukeya'],
     handler,
-    description: `| 学团通知-研究生 | 学团通知-本科生 | 学团通知-团学 | 学团通知-心理 | 学团要闻
-| -------- | -------- |-------- |-------- |-------- |
-| xttz-yjs   | xttz-bks  |  xttz-tx  | xttz-xl  | xtyw  |`,
+    description: `| 学团通知 - 研究生 | 学团通知 - 本科生 | 学团通知 - 团学 | 学团通知 - 心理 | 学团要闻 |
+| ----------------- | ----------------- | --------------- | --------------- | -------- |
+| xttz-yjs          | xttz-bks          | xttz-tx         | xttz-xl         | xtyw     |`,
 };
 
 async function handler(ctx) {
@@ -61,21 +62,21 @@ async function handler(ctx) {
 
     let item = $('.list_box li')
         .toArray()
-        .map((e) => {
-            e = $(e);
-            const a = e.find('a');
-            const link = a.attr('href').startsWith('tz_content') || a.attr('href').startsWith('content') ? host + a.attr('href') : a.attr('href');
+        .map((e): DataItem => {
+            const $e = $(e);
+            const a = $e.find('a');
+            const link = a.attr('href')!.startsWith('tz_content') || a.attr('href')!.startsWith('content') ? host + a.attr('href') : a.attr('href');
             return {
                 title: a.text().trim(),
                 link,
-                pubDate: parseDate(e.find('span').text().trim(), 'YYYY-MM-DD'),
+                pubDate: parseDate($e.find('span').text().trim(), 'YYYY-MM-DD'),
             };
         });
 
     item = await Promise.all(
         item.map((item) =>
-            cache.tryGet(item.link, async () => {
-                const hostname = new URL(item.link).hostname;
+            cache.tryGet(item.link!, async () => {
+                const hostname = new URL(item.link!).hostname;
                 if (hostname === 'mp.weixin.qq.com') {
                     return finishArticleItem(item);
                 }

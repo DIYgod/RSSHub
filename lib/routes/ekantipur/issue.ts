@@ -1,8 +1,9 @@
-import { Route } from '@/types';
+import { load } from 'cheerio'; // an HTML parser with a jQuery-like API
+
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 // Require necessary modules
 import got from '@/utils/got'; // a customised got
-import { load } from 'cheerio'; // an HTML parser with a jQuery-like API
 
 export const route: Route = {
     path: '/:channel?',
@@ -28,9 +29,9 @@ export const route: Route = {
     handler,
     description: `Channels:
 
-| समाचार | अर्थ / वाणिज्य | विचार     | खेलकुद   | उपत्यका     | मनोरञ्जन         | फोटोफिचर          | फिचर     | विश्व    | ब्लग   |
-| ---- | -------- | ------- | ------ | -------- | ------------- | -------------- | ------- | ----- | ---- |
-| news | business | opinion | sports | national | entertainment | photo\_feature | feature | world | blog |`,
+| समाचार | अर्थ / वाणिज्य | विचार     | खेलकुद   | उपत्यका    | मनोरञ्जन        | फोटोफिचर          | फिचर     | विश्व   | ब्लग  |
+| ---- | ---------- | ------- | ------ | -------- | ------------- | -------------- | ------- | ----- | ---- |
+| news | business   | opinion | sports | national | entertainment | photo\\_feature | feature | world | blog |`,
 };
 
 async function handler(ctx) {
@@ -50,14 +51,14 @@ async function handler(ctx) {
         // We use the `toArray()` method to retrieve all the DOM elements selected as an array.
         .toArray()
         // We use the `map()` method to traverse the array and parse the data we need from each element.
-        .map((item) => {
-            item = $(item);
-            const a = item.find('a').first();
+        .map((item): DataItem & { link: string } => {
+            const $item = $(item);
+            const a = $item.find('a').first();
             return {
                 title: a.text(),
                 // We need an absolute URL for `link`, but `a.attr('href')` returns a relative URL.
                 link: `${baseUrl}${a.attr('href')}`,
-                author: item.find('div.author').text(),
+                author: $item.find('div.author').text(),
                 category: channel,
             };
         });

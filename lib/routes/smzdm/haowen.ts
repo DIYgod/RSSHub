@@ -1,12 +1,14 @@
-import { DataItem, Route } from '@/types';
+import { load } from 'cheerio';
+
+import { config } from '@/config';
+import ConfigNotFoundError from '@/errors/types/config-not-found';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
+
 import { getHeaders } from './utils';
-import ConfigNotFoundError from '@/errors/types/config-not-found';
-import { config } from '@/config';
 
 export const route: Route = {
     path: '/haowen/:day?',
@@ -82,7 +84,7 @@ async function handler(ctx) {
                 const outItem: DataItem = {
                     title: item.title,
                     link: item.link,
-                    description: content.html() || '',
+                    description: content.html(),
                     pubDate: releaseDate ? timezone(parseDate(releaseDate), 8) : item.pubDate,
                     author: $('meta[property="og:author"]').attr('content') || '',
                 };

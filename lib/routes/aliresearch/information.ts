@@ -1,8 +1,8 @@
-import { Route } from '@/types';
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/information/:type?',
@@ -52,7 +52,7 @@ async function handler(ctx) {
     let items = response.data.data.slice(0, limit).map((item) => ({
         title: item.articleCode,
         author: item.author,
-        pubDate: timezone(parseDate(item.gmtCreated), +8),
+        pubDate: timezone(parseDate(item.gmtCreated), 8),
         link: `${rootUrl}/ch/information/informationdetails?articleCode=${item.articleCode}`,
     }));
 

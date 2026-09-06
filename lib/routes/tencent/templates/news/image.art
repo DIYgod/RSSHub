@@ -1,4 +1,0 @@
-{{ if attribute?.startsWith('IMG') && originAttribute[attribute] }}
-    {{ set image = originAttribute[attribute] }}
-    <img src="{{ image.imgurl0 }}" style="{{ image.style }}" >
-{{ /if }}

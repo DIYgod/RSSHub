@@ -1,6 +1,8 @@
-import { Route, ViewType } from '@/types';
-import { getDataByUsername as getDataByUsernameYoutubei } from './api/youtubei';
+import type { Route } from '@/types';
+import { ViewType } from '@/types';
+
 import { getDataByUsername as getDataByUsernameGoogle } from './api/google';
+import { getDataByUsername as getDataByUsernameYoutubei } from './api/youtubei';
 import { callApi } from './utils';
 
 export const route: Route = {
@@ -12,11 +14,13 @@ export const route: Route = {
         username: 'YouTuber handle with @',
         routeParams: 'Extra parameters, see the table below',
     },
-    description: `:::tip Parameter
-| Name       | Description                                                                         | Default |
-| ---------- | ----------------------------------------------------------------------------------- | ------- |
-| embed      | Whether to embed the video, fill in any value to disable embedding                  | embed   |
+    description: `::: tip Parameter
+
+| Name         | Description                                                                        | Default |
+| ------------ | ---------------------------------------------------------------------------------- | ------- |
+| embed        | Whether to embed the video, fill in any value to disable embedding                 | embed   |
 | filterShorts | Whether to filter out shorts from the feed, fill in any falsy value to show shorts | true    |
+
 :::`,
     features: {
         requireConfig: [
@@ -55,12 +59,14 @@ async function handler(ctx) {
 
     // Get filterShorts parameter (default to true if not specified)
     const filterShortsStr = params.get('filterShorts');
-    const filterShorts = filterShortsStr === null || filterShortsStr === '' || filterShortsStr === 'true';
+    const filterShorts = [null, '', 'true'].includes(filterShortsStr);
+
+    const isJsonFeed = ctx.req.query('format') === 'json';
 
     const data = await callApi({
         googleApi: getDataByUsernameGoogle,
         youtubeiApi: getDataByUsernameYoutubei,
-        params: { username, embed, filterShorts },
+        params: { username, embed, filterShorts, isJsonFeed },
     });
 
     return data;

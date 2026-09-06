@@ -1,0 +1,100 @@
+import { renderToString } from 'hono/jsx/dom/server';
+
+import InvalidParameterError from '@/errors/types/invalid-parameter';
+import type { Route } from '@/types';
+import { parseDate } from '@/utils/parse-date';
+
+import { getData } from './utils';
+
+export const route: Route = {
+    path: '/news/coronavirus/data/:province?/:city?',
+    categories: ['other'],
+    example: '/tencent/news/coronavirus/data/湖北/武汉',
+    parameters: {
+        province: '省/直辖市名，缺省则返回国内数据',
+        city: '城市名，缺省则返回全省数据。直辖市请使用区/县名。',
+    },
+    name: '新型冠状病毒肺炎疫情实时追踪 - 省市疫情数据',
+    maintainers: ['CaoMeiYouRen'],
+    handler,
+};
+
+interface AreaNode {
+    name: string;
+    today?: { confirm?: number };
+    total?: { nowConfirm?: number; confirm?: number; dead?: number; mtime?: string };
+    children?: AreaNode[];
+}
+
+async function handler(ctx) {
+    const province = ctx.req.param('province') || '';
+    const city = ctx.req.param('city') || '';
+
+    const link = 'https://news.qq.com/zt2020/page/feiyan.htm#/';
+    const item: any[] = [];
+
+    const diseaseh5Shelf = (await getData(['diseaseh5Shelf']))?.data?.diseaseh5Shelf || {};
+    const { lastUpdateTime, areaTree } = diseaseh5Shelf;
+    const nationalData = areaTree?.[0];
+    const provinceList = nationalData?.children;
+
+    let coronavirusData: AreaNode | undefined;
+    let placeName: string;
+
+    if (!province || province === '中国' || province === '全国') {
+        // 没有传参则取全国
+        coronavirusData = nationalData;
+        placeName = '中国';
+    } else {
+        // 分省份获取
+        coronavirusData = provinceList?.find((e) => e.name === province);
+        placeName = province;
+        if (city) {
+            // 继续获取 区县 数据
+            coronavirusData = coronavirusData?.children?.find((e) => e.name === city);
+            if (coronavirusData) {
+                placeName = `${province}-${city}`;
+            }
+        }
+    }
+    if (!coronavirusData) {
+        throw new InvalidParameterError(`未找到 ${placeName} 的疫情数据，请检查输入的省市名称是否正确`);
+    }
+    const todayConfirm = coronavirusData.today?.confirm;
+    const totalNowConfirm = coronavirusData.total?.nowConfirm;
+    const totalConfirm = coronavirusData.total?.confirm;
+    const totalDead = coronavirusData.total?.dead;
+    const pubDate = parseDate(coronavirusData.total?.mtime || lastUpdateTime);
+
+    const title = `${placeName} - 腾讯新闻 - 新型冠状病毒肺炎疫情实时追踪`;
+
+    const info = {
+        title: `${placeName} - 疫情数据`,
+        description: renderToString(
+            <>
+                <p>新增确诊：</p>
+                <p>{`+${todayConfirm}`}</p>
+                <br />
+                <p>现有确诊：</p>
+                <p>{totalNowConfirm}</p>
+                <br />
+                <p>累计确诊：</p>
+                <p>{totalConfirm}</p>
+                <br />
+                <p>累计死亡：</p>
+                <p>{totalDead}</p>
+                <br />
+            </>
+        ),
+        pubDate,
+        guid: `${link}${placeName}?pubDate=${pubDate.toISOString()}`,
+    };
+
+    item.push(info);
+
+    return {
+        title,
+        link,
+        item,
+    };
+}

@@ -1,7 +1,8 @@
-import { Route, Data, DataItem } from '@/types';
+import { load } from 'cheerio';
+
+import type { Data, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
-import { load } from 'cheerio';
 
 export const route: Route = {
     path: '/news/:category?',
@@ -40,11 +41,10 @@ export const route: Route = {
             target: '/news/:category',
         },
     ],
-    description: `
-::: warning TIP
-[総合新着記事](https://news.toranoana.jp)→\`/toranoana/news\`  
-[女性向け](https://news.toranoana.jp/joshi)→\`/toranoana/news/joshi\`  
-[イラスト展](https://news.toranoana.jp/exhibitions)→\`/toranoana/news/exhibition\`  
+    description: `::: warning TIP
+[総合新着記事](https://news.toranoana.jp)→\`/toranoana/news\`\\
+[女性向け](https://news.toranoana.jp/joshi)→\`/toranoana/news/joshi\`\\
+[イラスト展](https://news.toranoana.jp/exhibitions)→\`/toranoana/news/exhibition\`\\
 [\`https://news.toranoana.jp/category/media\`](https://news.toranoana.jp/category/media)→\`/toranoana/news/media\`
 :::`,
 };
@@ -60,7 +60,7 @@ async function handler(ctx): Promise<Data> {
         }
     } else {
         // exclude category-joshi to get result of general
-        apiUrl += `?categories_exclude=1598`;
+        apiUrl += '?categories_exclude=1598';
     }
 
     const posts = await ofetch(apiUrl, {
@@ -78,7 +78,7 @@ async function handler(ctx): Promise<Data> {
         const $ = load(post.content.rendered);
 
         // remove unnecessary title
-        $('h1').first().remove();
+        $('h1').remove();
         $('h2').first().remove();
 
         let thumbnail = '';
@@ -104,7 +104,7 @@ async function handler(ctx): Promise<Data> {
         title: category ? `とらのあな総合インフォメーション - ${category}` : 'とらのあな総合インフォメーション',
         link: category ? `https://news.toranoana.jp/category/${category}` : 'https://news.toranoana.jp/',
         description: 'とらのあなの最新情報をお届け！同人誌、書籍、コミック、店舗フェア、イラスト展、とらのあな限定版、キャンペーンなど…スペシャルでお得な情報をいち早くチェック！',
-        item: items.filter(Boolean) as DataItem[],
+        item: items.filter(Boolean),
         language: 'ja',
     };
 }

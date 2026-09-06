@@ -1,7 +1,7 @@
-import cache from '@/utils/cache';
-import got from '@/utils/got';
 import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
+import cache from '@/utils/cache';
+import got from '@/utils/got';
 
 const getUserFullInfo = (ctx, uid) => {
     if (!uid && !config.mihoyo.cookie) {
@@ -12,7 +12,7 @@ const getUserFullInfo = (ctx, uid) => {
     return cache.tryGet(key, async () => {
         const query = new URLSearchParams({
             uid,
-            gids: 2,
+            gids: '2',
         }).toString();
         const url = `https://bbs-api.miyoushe.com/user/wapi/getUserFullInfo?${query}`;
         const response = await got({

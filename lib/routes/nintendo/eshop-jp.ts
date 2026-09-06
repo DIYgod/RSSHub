@@ -1,19 +1,20 @@
-import { Route } from '@/types';
-
+import type { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-import { art } from '@/utils/render';
-import path from 'node:path';
+
+import { renderEshopJpDescription } from './templates/eshop-jp';
 
 export const route: Route = {
     path: '/eshop/jp',
+    categories: ['game'],
+    example: '/nintendo/eshop/jp',
     radar: [
         {
             source: ['nintendo.co.jp/software/switch/index.html', 'nintendo.co.jp/'],
         },
     ],
-    name: 'Unknown',
-    maintainers: [],
+    name: 'eShop New Game Releases (JP)',
+    maintainers: ['HFO4'],
     handler,
     url: 'nintendo.co.jp/software/switch/index.html',
 };
@@ -39,9 +40,7 @@ async function handler(ctx) {
         description: 'Nintendo eShop（日服）新上架的游戏',
         item: data.map((item) => ({
             title: item.title,
-            description: art(path.join(__dirname, 'templates/eshop_jp.art'), {
-                item,
-            }),
+            description: renderEshopJpDescription(item),
             link: `https://ec.nintendo.com/JP/ja/titles/${item.id}`,
             pubDate: parseDate(item.pdate),
         })),

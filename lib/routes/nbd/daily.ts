@@ -1,4 +1,5 @@
-import { Route } from '@/types';
+import type { Route } from '@/types';
+
 export const route: Route = {
     path: '/daily',
     categories: ['finance'],
@@ -24,5 +25,5 @@ export const route: Route = {
 };
 
 function handler(ctx) {
-    ctx.set('redirect', '/nbd/332');
+    return ctx.set('redirect', '/nbd/332');
 }

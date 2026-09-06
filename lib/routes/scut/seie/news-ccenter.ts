@@ -1,7 +1,8 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
@@ -38,19 +39,19 @@ async function handler() {
     const $ = load(response.data);
 
     const list = $('.news_ul li');
-    const articleList = list.toArray().map((item) => {
-        item = $(item);
-        const titleElement = item.find('.news_title a');
+    const articleList = list.toArray().map((item): DataItem => {
+        const $item = $(item);
+        const titleElement = $item.find('.news_title a');
         return {
-            title: titleElement.attr('title'),
+            title: titleElement.attr('title')!,
             link: titleElement.attr('href'),
-            pubDate: parseDate(item.find('.news_meta').text(), 'YYYY-MM-DD'),
+            pubDate: parseDate($item.find('.news_meta').text(), 'YYYY-MM-DD'),
         };
     });
 
     const items = await Promise.all(
         articleList.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const detailResponse = await got(`${rootUrl}${item.link}`);
                 const content = load(detailResponse.data);
 
@@ -67,7 +68,7 @@ async function handler() {
                 });
 
                 const contentHTML = content('.wp_articlecontent').html();
-                item.description = contentHTML.replaceAll(/^(<br>)+|(<br>)+$/g, '').trim();
+                item.description = contentHTML!.replaceAll(/^(<br>)+|(<br>)+$/g, '').trim();
                 return item;
             })
         )

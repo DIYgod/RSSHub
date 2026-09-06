@@ -1,4 +1,6 @@
-import { Category, MixiClient, Persona, type Post } from 'mixi2';
+import type { Persona, Post } from 'mixi2';
+import { Category, MixiClient } from 'mixi2';
+
 import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
 import ofetch from '@/utils/ofetch';
@@ -19,7 +21,8 @@ export function getClient() {
 export function parsePost(post: Post) {
     let description = post.text ? `<p>${post.text}</p>` : '';
 
-    for (const media of post.medias ?? []) {
+    const medias = post.medias ?? [];
+    for (const media of medias) {
         if (media.category === Category.CATEGORY_POST_IMAGE) {
             description += `<img src="${media.postImage?.largeImageUrl ?? media.postImage?.smallImageUrl}"${media.description ? `alt="${media.description}"` : ''} />`;
         } else if (media.category === Category.CATEGORY_POST_VIDEO) {

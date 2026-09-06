@@ -1,6 +1,7 @@
-import { Route } from '@/types';
-import got from '@/utils/got';
 import { load } from 'cheerio';
+
+import type { Route } from '@/types';
+import got from '@/utils/got';
 
 export const route: Route = {
     path: '/yjs',
@@ -39,10 +40,10 @@ async function handler() {
         item:
             list &&
             list.toArray().map((item) => {
-                item = $(item);
+                const $item = $(item);
                 return {
-                    title: item.text(),
-                    link: item.attr('href'),
+                    title: $item.text(),
+                    link: $item.attr('href'),
                 };
             }),
     };

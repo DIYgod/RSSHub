@@ -1,8 +1,9 @@
-import { parseDate } from '@/utils/parse-date';
-import got from '@/utils/got';
+import CryptoJS from 'crypto-js';
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
-import CryptoJS from 'crypto-js/crypto-js';
-import { Route } from '@/types';
+import got from '@/utils/got';
+import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/hqsz',

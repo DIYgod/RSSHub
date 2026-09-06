@@ -1,7 +1,8 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
 const host = 'https://gs.sass.org.cn';
@@ -41,17 +42,19 @@ async function handler(ctx) {
     const list = $('.column-news-list .cols_list .cols');
     const items = await Promise.all(
         list.map((i, item) => {
-            const [titleLink, time] = item.children;
-            const itemDate = $(time).text();
-            const { href: path, title: itemTitle } = titleLink.children[0].attribs;
+            const $children = $(item).children();
+            const itemDate = $children.eq(1).text();
+            const $titleLink = $children.eq(0).children().first();
+            const path = $titleLink.attr('href')!;
+            const itemTitle = $titleLink.attr('title')!;
 
             const itemUrl = path.startsWith('http') ? path : host + path;
             return cache.tryGet(itemUrl, async () => {
-                let description = '';
+                let description: string;
                 if (itemUrl) {
                     const result = await got(itemUrl);
                     const $ = load(result.data);
-                    description = $('.read .wp_articlecontent').length ? $('.read .wp_articlecontent').html().trim() : itemTitle;
+                    description = $('.read .wp_articlecontent').length ? $('.read .wp_articlecontent').html()! : itemTitle;
                 } else {
                     description = itemTitle;
                 }

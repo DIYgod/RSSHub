@@ -1,11 +1,11 @@
-import { Route } from '@/types';
-import cache from '@/utils/cache';
-import { getToken } from './token';
-import getIllustFollows from './api/get-illust-follows';
 import { config } from '@/config';
-import pixivUtils from './utils';
-import { parseDate } from '@/utils/parse-date';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
+import type { Route } from '@/types';
+import { parseDate } from '@/utils/parse-date';
+
+import getIllustFollows from './api/get-illust-follows';
+import { getToken } from './token';
+import pixivUtils from './utils';
 
 export const route: Route = {
     path: '/user/illustfollows',
@@ -24,6 +24,7 @@ export const route: Route = {
         supportBT: false,
         supportPodcast: false,
         supportScihub: false,
+        nsfw: true,
     },
     radar: [
         {
@@ -35,7 +36,7 @@ export const route: Route = {
     handler,
     url: 'www.pixiv.net/bookmark_new_illust.php',
     description: `::: warning
-  Only for self-hosted
+Only for self-hosted
 :::`,
 };
 
@@ -44,7 +45,7 @@ async function handler() {
         throw new ConfigNotFoundError('pixiv RSS is disabled due to the lack of <a href="https://docs.rsshub.app/deploy/config#route-specific-configurations">relevant config</a>');
     }
 
-    const token = await getToken(cache.tryGet);
+    const token = await getToken();
     if (!token) {
         throw new ConfigNotFoundError('pixiv not login');
     }
@@ -52,9 +53,9 @@ async function handler() {
     const response = await getIllustFollows(token);
     const illusts = response.data.illusts;
     return {
-        title: `Pixiv关注的新作品`,
+        title: 'Pixiv关注的新作品',
         link: 'https://www.pixiv.net/bookmark_new_illust.php',
-        description: `Pixiv关注的画师们的最新作品`,
+        description: 'Pixiv关注的画师们的最新作品',
         item: illusts.map((illust) => {
             const images = pixivUtils.getImgs(illust);
             return {

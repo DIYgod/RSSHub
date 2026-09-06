@@ -1,9 +1,8 @@
-import { Route } from '@/types';
-
+import type { Language, Route } from '@/types';
 import { parseDate } from '@/utils/parse-date';
-import { art } from '@/utils/render';
-import path from 'node:path';
 import parser from '@/utils/rss-parser';
+
+import { renderDescription } from './templates/description';
 
 const pdfUrlGenerators = {
     arxiv: (id: string) => `https://arxiv.org/pdf/${id}.pdf`,
@@ -11,17 +10,17 @@ const pdfUrlGenerators = {
 
 export const handler = async (ctx) => {
     const { keyword = 'query/Detection' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 150;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 150;
 
     const rootUrl = 'https://papers.cool';
     const currentUrl = new URL(`arxiv/search?highlight=1&query=${keyword}&sort=0`, rootUrl).href;
     const feedUrl = new URL(`arxiv/search/feed?query=${keyword}`, rootUrl).href;
 
-    const site = keyword.split(/\//)[0];
+    const site = keyword.split(/\//, 1)[0];
     const apiKimiUrl = new URL(`${site}/kimi?paper=`, rootUrl).href;
     const feed = await parser.parseURL(feedUrl);
 
-    const language = 'en';
+    const language: Language = 'en';
 
     const items = feed.items.slice(0, limit).map((item) => {
         const title = item.title;
@@ -32,16 +31,14 @@ export const handler = async (ctx) => {
         const pdfUrl = Object.hasOwn(pdfUrlGenerators, site) ? pdfUrlGenerators[site](id) : undefined;
 
         const authorString = item.author;
-        const description = art(path.join(__dirname, 'templates/description.art'), {
+        const description = renderDescription({
             pdfUrl,
-            siteUrl: item.link,
             kimiUrl,
-            authorString,
             summary: item.summary,
         });
 
         return {
-            title,
+            title: title!,
             description,
             pubDate: parseDate(item.pubDate ?? ''),
             link: item.link,
@@ -62,7 +59,7 @@ export const handler = async (ctx) => {
     });
 
     return {
-        title: feed.title,
+        title: feed.title!,
         description: feed.description,
         link: currentUrl,
         item: items,
@@ -81,14 +78,13 @@ export const route: Route = {
     example: '/papers/query/Detection',
     parameters: { keyword: 'Keyword to search for papers, e.g., Detection, Segmentation, etc.' },
     description: `::: tip
-  If you subscibe to [arXiv Paper queryed by Detection](https://papers.cool/arxiv/search?highlight=1&query=Detection), where the URL is \`https://papers.cool/arxiv/search?highlight=1&query=Detection\`, extract the part \`https://papers.cool/\` to the end, and use it as the parameter to fill in. Therefore, the route will be [\`/papers/query/Detection\`](https://rsshub.app/papers/query/Detection).
+If you subscibe to [arXiv Paper queryed by Detection](https://papers.cool/arxiv/search?highlight=1\\&query=Detection), where the URL is \`https://papers.cool/arxiv/search?highlight=1&query=Detection\`, extract the part \`https://papers.cool/\` to the end, and use it as the parameter to fill in. Therefore, the route will be [\`/papers/query/Detection\`](https://rsshub.app/papers/query/Detection).
 :::
 
-| Category                                              | id                  |
-| ----------------------------------------------------- | ------------------- |
-| arXiv Paper queryed by Detection                      | query/Detection     |
-| arXiv Paper queryed by Segmentation                   | query/Segmentation  |
-  `,
+| Category                            | id                 |
+| ----------------------------------- | ------------------ |
+| arXiv Paper queryed by Detection    | query/Detection    |
+| arXiv Paper queryed by Segmentation | query/Segmentation |`,
     categories: ['journal'],
 
     features: {

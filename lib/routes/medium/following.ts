@@ -1,9 +1,9 @@
-import { Route } from '@/types';
 import { config } from '@/config';
-
-import parseArticle from './parse-article.js';
-import { getFollowingFeedQuery } from './graphql.js';
 import ConfigNotFoundError from '@/errors/types/config-not-found.js';
+import type { Route } from '@/types';
+
+import { getFollowingFeedQuery } from './graphql.js';
+import parseArticle from './parse-article.js';
 
 export const route: Route = {
     path: '/following/:user',
@@ -27,7 +27,7 @@ export const route: Route = {
     maintainers: ['ImSingee'],
     handler,
     description: `::: warning
-  Personalized recommendations require the cookie value after logging in, so only self-hosting is supported. See the configuration module on the deployment page for details.
+Personalized recommendations require the cookie value after logging in, so only self-hosting is supported. See the configuration module on the deployment page for details.
 :::`,
 };
 

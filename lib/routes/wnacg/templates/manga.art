@@ -1,9 +1,0 @@
-{{ if description }}
-    {{@ description }}
-{{ /if }}
-<br>
-{{ if imgList }}
-    {{ each imgList img }}
-        <img src="https:{{ img.url }}" alt="{{ img.caption }}">
-    {{ /each }}
-{{ /if }}

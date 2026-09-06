@@ -1,5 +1,5 @@
-import { unified } from 'unified';
 import remarkParse from 'remark-parse';
+import { unified } from 'unified';
 
 // @TODO maybe we could use label or some other better ways to distinguish bug/feature issues
 const matchTitle = ['路由地址', 'Routes'];
@@ -11,15 +11,21 @@ const deprecatedRoute = 'route: deprecated';
 const route = 'route';
 
 // DnD (do-not-disturb) usernames, add yours here to avoid being notified
+// oxlint-disable-next-line unicorn/no-useless-collection-argument
 const dndUsernames = new Set([]);
 
+/**
+ * @param {string} body
+ * @param {typeof import('@actions/core')} core
+ * @returns {Promise<string[] | null>}
+ */
 async function parseBodyRoutes(body, core) {
     const ast = await unified().use(remarkParse).parse(body);
 
     // Is this a bug report?
     const title = ast.children[0].children[0].value.trim();
     core.debug(`title: ${title}`);
-    if (!matchTitle.some((ele) => ele.localeCompare(title) === 0)) {
+    if (matchTitle.every((ele) => ele.localeCompare(title) !== 0)) {
         return null;
     }
 
@@ -42,6 +48,11 @@ async function parseBodyRoutes(body, core) {
     throw new Error('unable to parse the issue body: route does not exist');
 }
 
+/**
+ * @param {string[]} routes
+ * @param {typeof import('@actions/core')} core
+ * @returns {Promise<(string[] | undefined)[]>}
+ */
 async function getMaintainersByRoutes(routes, core) {
     const response = await fetch(maintainerURL);
     const maintainers = await response.json();
@@ -56,6 +67,10 @@ async function getMaintainersByRoutes(routes, core) {
     });
 }
 
+/**
+ * @param {{ github: ReturnType<typeof import('@actions/github').getOctokit>, context: typeof import('@actions/github').context, core: typeof import('@actions/core') }} githubScript
+ * @returns {Promise<void>}
+ */
 export default async function callMaintainer({ github, context, core }) {
     const body = context.payload.issue.body;
     const issueFacts = {
@@ -64,32 +79,39 @@ export default async function callMaintainer({ github, context, core }) {
         repo: context.repo.repo,
     };
 
-    const addLabels = (labels) =>
-        github.rest.issues
-            .addLabels({
+    /** @param {string[]} labels */
+    const addLabels = async (labels) => {
+        try {
+            await github.rest.issues.addLabels({
                 ...issueFacts,
                 labels,
-            })
-            .catch((error) => {
-                core.warning(error);
             });
-    const updateIssueState = (state) =>
-        github.rest.issues
-            .update({
+        } catch (error) {
+            core.warning(error);
+        }
+    };
+    /** @param {'open' | 'closed'} state */
+    const updateIssueState = async (state) => {
+        try {
+            await github.rest.issues.update({
                 ...issueFacts,
                 state,
-            })
-            .catch((error) => {
-                core.warning(error);
             });
+        } catch (error) {
+            core.warning(error);
+        }
+    };
 
-    if (context.payload.issue.state === 'closed') {
+    if (context.payload.issue.state === 'closed' && context.payload.issue.state_reason !== 'not_planned') {
         await updateIssueState('open');
     }
 
-    const routes = await parseBodyRoutes(body, core).catch((error) => {
+    let routes;
+    try {
+        routes = await parseBodyRoutes(body, core);
+    } catch (error) {
         core.warning(error);
-    });
+    }
 
     if (routes === null) {
         return; // Not a bug report, or NOROUTE
@@ -124,7 +146,7 @@ export default async function callMaintainer({ github, context, core }) {
         if (main.length > 0) {
             const pingStr = main
                 .map((e) => {
-                    if (e in dndUsernames) {
+                    if (dndUsernames.has(e)) {
                         return `\`@${e}\``; // Wrap in an inline code block to make sure no mention will be sent
                     }
                     return `@${e}`;
@@ -154,22 +176,27 @@ export default async function callMaintainer({ github, context, core }) {
     // Write labels (status, affected route count)
     await addLabels(labels);
 
-    // Reply to the issue and notify the maintainers (if any)
-    await github.rest.issues
-        .createComment({
-            ...issueFacts,
-            body: `${comments}
-
-
+    const commentBody = `${comments}
 > To maintainers: if you are not willing to be disturbed, list your username in \`scripts/workflow/test-issue/call-maintainer.js\`. In this way, your username will be wrapped in an inline code block when tagged so you will not be notified.
 
 If all routes can not be found, the issue will be closed automatically. Please use \`NOROUTE\` for a route-irrelevant issue or leave a comment if it is a mistake.
 如果所有路由都无法匹配，issue 将会被自动关闭。如果 issue 和路由无关，请使用 \`NOROUTE\` 关键词，或者留下评论。我们会重新审核。
-`,
-        })
-        .catch((error) => {
-            core.warning(error);
-        });
+`;
+
+    // Reply to the issue and notify the maintainers (if any), reusing the existing comment if the issue was edited
+    try {
+        const existing = await github.paginate(github.rest.issues.listComments, issueFacts);
+        const comment = existing.find((c) => c.user.type === 'Bot' && c.body.startsWith('##### Searching for maintainers:'));
+        if (comment) {
+            if (comment.body !== commentBody) {
+                await github.rest.issues.updateComment({ ...issueFacts, comment_id: comment.id, body: commentBody });
+            }
+        } else {
+            await github.rest.issues.createComment({ ...issueFacts, body: commentBody });
+        }
+    } catch (error) {
+        core.warning(error);
+    }
 
     if (failedCount && emptyCount === 0 && successCount === 0) {
         await updateIssueState('closed');

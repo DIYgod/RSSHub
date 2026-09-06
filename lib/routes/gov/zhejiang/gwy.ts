@@ -1,11 +1,12 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
-    path: '/zhejiang/gwy/:category?/:column?',
+    path: '/gwy/:category?/:column?',
     categories: ['government'],
     example: '/gov/zhejiang/gwy/1',
     parameters: { category: '分类，见下表，默认为全部', column: '地市专栏，见下表，默认为全部' },
@@ -20,7 +21,7 @@ export const route: Route = {
     radar: [
         {
             source: ['zjks.gov.cn/zjgwy/website/init.htm', 'zjks.gov.cn/zjgwy/website/queryDetail.htm', 'zjks.gov.cn/zjgwy/website/queryMore.htm'],
-            target: '/zhejiang/gwy',
+            target: '/gwy',
         },
     ],
     name: '通知',
@@ -54,7 +55,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { category, column } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 50;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 50;
 
     const rootUrl = 'http://gwy.zjks.gov.cn';
     const currentUrl = new URL(`zjgwy/website/${category ? 'queryMore' : 'init'}.htm`, rootUrl).href;
@@ -73,24 +74,24 @@ async function handler(ctx) {
     let items = $('a[onclick^="queryDetail"]')
         .slice(0, limit)
         .toArray()
-        .map((item) => {
-            item = $(item);
+        .map((item): DataItem & { tzid?: string } => {
+            const $item = $(item);
 
-            const matches = item.prop('onclick').match(/queryDetail\('?(\d+)'?, '?(\d+)'?\);/);
+            const matches = $item.prop('onclick').match(/queryDetail\('?(\d+)'?, '?(\d+)'?\);/);
 
             return {
-                title: item.text(),
+                title: $item.text(),
                 link: detailUrl,
-                category: matches[1],
-                guid: `zjks-${matches[1]}-${matches[2]}`,
-                pubDate: parseDate(item.parent().next().text()),
-                tzid: matches[2],
+                category: matches![1],
+                guid: `zjks-${matches![1]}-${matches![2]}`,
+                pubDate: parseDate($item.parent().next().text()),
+                tzid: matches![2],
             };
         });
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.guid, async () => {
+            cache.tryGet(item.guid!, async () => {
                 const { data: detailResponse } = await got.post(detailUrl, {
                     form: {
                         mkxh: item.category,

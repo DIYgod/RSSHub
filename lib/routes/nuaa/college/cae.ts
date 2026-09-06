@@ -1,9 +1,12 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
+
 import getCookie from '../utils/pypasswaf';
+
 const host = 'https://cae.nuaa.edu.cn/';
 
 const map = new Map([
@@ -20,15 +23,21 @@ const map = new Map([
 
 export const route: Route = {
     path: '/cae/:type/:getDescription?',
-    name: 'Unknown',
+    categories: ['university'],
+    example: '/nuaa/cae/zhxw',
+    parameters: { type: '分类名，见下表', getDescription: '是否获取全文' },
+    name: '自动化学院',
     maintainers: ['Xm798'],
     handler,
+    description: `| 综合新闻 | 党委行政 | 人事 / 合作 | 研究生培养 | 本科生培养 | 学生工作 | 通知公告 | 学术信息 | 答辩公告 |
+| -------- | -------- | ----------- | ---------- | ---------- | -------- | -------- | -------- | -------- |
+| zhxw     | dwxz     | rshz        | yjs        | bks        | xsgz     | tzgg     | xsxx     | dbgg     |`,
 };
 
 async function handler(ctx) {
     const type = ctx.req.param('type');
-    const suffix = map.get(type).suffix;
-    const getDescription = Boolean(ctx.req.param('getDescription')) || false;
+    const suffix = map.get(type)!.suffix;
+    const getDescription = Boolean(ctx.req.param('getDescription'));
     const link = new URL(suffix, host).href;
     const cookie = await getCookie(host);
     const gotConfig = {
@@ -55,7 +64,7 @@ async function handler(ctx) {
         list.map(async (info) => {
             const title = info.title || 'tzgg';
             const date = info.date;
-            const itemUrl = new URL(info.link, host).href;
+            const itemUrl = new URL(info.link!, host).href;
             let description = title + '<br><a href="' + itemUrl + '" target="_blank">查看原文</a>';
 
             if (getDescription) {
@@ -67,6 +76,7 @@ async function handler(ctx) {
                         const $ = load(response.data);
                         return $('.wp_articlecontent').html() + '<br><hr /><a href="' + itemUrl + '" target="_blank">查看原文</a>';
                     }
+                    return '';
                 });
             }
 
@@ -80,7 +90,7 @@ async function handler(ctx) {
     );
 
     return {
-        title: map.get(type).title,
+        title: map.get(type)!.title,
         link,
         description: '南京航空航天大学自动化学院RSS',
         item: out,

@@ -1,4 +1,5 @@
-import { Route } from '@/types';
+import type { Route } from '@/types';
+
 import utils from './utils';
 
 export const route: Route = {
@@ -19,6 +20,7 @@ export const route: Route = {
         supportBT: false,
         supportPodcast: false,
         supportScihub: false,
+        nsfw: true,
     },
     radar: [
         {
@@ -36,7 +38,7 @@ export const route: Route = {
 | ---- | ---- | -------- | -------- | ----- | ----- | -------- | ------ | ---- | -------- | ----- | ------- |
 |      | none | playable | single   | actor | maker | director | series | code | download | cnsub | preview |
 
-  排序
+排序
 
 | 按相关度排序 | 按发布时间排序 |
 | ------------ | -------------- |

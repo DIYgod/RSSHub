@@ -1,6 +1,0 @@
-{{ if heading }}
-  <h2>{{ heading }}</h2>
-{{ /if }}
-{{ if articleContent }}
-  {{@ articleContent }}
-{{ /if }}

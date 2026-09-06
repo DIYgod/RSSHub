@@ -1,8 +1,9 @@
-import cache from '@/utils/cache';
-import { parseDate } from '@/utils/parse-date';
-import got from '@/utils/got';
 import { load } from 'cheerio';
+
 import { config } from '@/config';
+import cache from '@/utils/cache';
+import got from '@/utils/got';
+import { parseDate } from '@/utils/parse-date';
 
 const videoAPI = 'https://api.ruguoapp.com/1.0/mediaMeta/play?type=ORIGINAL_POST';
 const topicDataHanding = (data, ctx) =>
@@ -101,7 +102,7 @@ const topicDataHanding = (data, ctx) =>
         if (item.pictures) {
             for (const pic of item.pictures) {
                 if (pic.format === 'gif') {
-                    description += `<img src="${pic.picUrl.split('?imageMogr2/')[0]}">`;
+                    description += `<img src="${pic.picUrl.split('?imageMogr2/', 1)[0]}">`;
                 } else {
                     // jpeg, bmp, png, gif, webp
                     // https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types
@@ -116,7 +117,7 @@ const topicDataHanding = (data, ctx) =>
                     //     default:
                     //         break;
                     // }
-                    const imgUrl = /\.[\da-z]+?\?imageMogr2/.test(pic.picUrl) ? pic.picUrl.split('?imageMogr2/')[0] : pic.picUrl.replace(/thumbnail\/.+/, '');
+                    const imgUrl = /\.[\da-z]+\?imageMogr2/.test(pic.picUrl) ? pic.picUrl.split('?imageMogr2/', 1)[0] : pic.picUrl.replace(/thumbnail\/.+/, '');
                     description += `<br><img src="${imgUrl}">`;
                     // description += `<br><picture><source srcset="${
                     //     pic.picUrl.split('/thumbnail/')[0]
@@ -153,7 +154,7 @@ const constructTopicEntry = async (ctx, url) => {
             const html = resp.data;
             const $ = load(html);
             const raw = $('[type = "application/json"]').html();
-            const data = JSON.parse(raw).props.pageProps;
+            const data = JSON.parse(raw ?? '').props.pageProps;
             data.posts = await Promise.all(
                 data.posts.map(async (item) => {
                     if (!item.video) {
@@ -170,8 +171,8 @@ const constructTopicEntry = async (ctx, url) => {
 
             return data;
         },
-        false,
-        config.cache.routeExpire
+        config.cache.routeExpire,
+        false
     );
 
     if (data.length === 0) {
@@ -193,4 +194,4 @@ const constructTopicEntry = async (ctx, url) => {
     return data;
 };
 
-export { topicDataHanding, constructTopicEntry };
+export { constructTopicEntry, topicDataHanding };

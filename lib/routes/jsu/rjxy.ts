@@ -1,9 +1,11 @@
-import { Route } from '@/types';
+import { load } from 'cheerio'; // 可以使用类似 jQuery 的 API HTML 解析器
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 // 导入必要的模组
 import got from '@/utils/got'; // 自订的 got
-import { load } from 'cheerio'; // 可以使用类似 jQuery 的 API HTML 解析器
 import { parseDate } from '@/utils/parse-date';
+
 import { getPageItemAndDate } from './utils';
 
 export const route: Route = {
@@ -36,11 +38,11 @@ async function handler() {
     const list = $('body > div.list-box > div > ul > li').toArray();
     const out = await Promise.all(
         list.map((item) => {
-            item = $(item);
-            const link = new URL(item.find('a').attr('href'), baseUrl).href;
+            const $item = $(item);
+            const link = new URL($item.find('a').attr('href')!, baseUrl).href;
             return cache.tryGet(link, async () => {
                 const category = '通知公告';
-                const description = await getPageItemAndDate('#vsb_content', link, 'body > form > div > h1', 'body > form > div > div.label', (date) => date.split('  点击：')[0]);
+                const description = await getPageItemAndDate('#vsb_content', link, 'body > form > div > h1', 'body > form > div > div.label', (date) => date.split('  点击：', 1)[0]);
                 const pubDate = parseDate(description.date, 'YYYY年MM月DD日 HH:mm');
                 return {
                     title: description.title,

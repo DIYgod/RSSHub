@@ -1,16 +1,19 @@
-import { Route } from '@/types';
+import type { Route } from '@/types';
 import got from '@/utils/got'; // 自订的 got
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/',
+    categories: ['other'],
+    example: '/v2rayshare',
     radar: [
         {
             source: ['v2rayshare.com/'],
             target: '',
         },
     ],
-    name: 'Unknown',
+    name: '免费节点',
+    description: '获取来自 V2rayShare 的免费节点，可以通过链接复制或下载',
     maintainers: ['77taibai'],
     handler,
     url: 'v2rayshare.com/',

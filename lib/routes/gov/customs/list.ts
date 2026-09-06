@@ -1,14 +1,16 @@
-import { Route } from '@/types';
-import cache from '@/utils/cache';
 import { load } from 'cheerio';
-import { host, puppeteerGet } from './utils';
+
 import { config } from '@/config';
+import type { Route } from '@/types';
+import cache from '@/utils/cache';
 import { parseDate } from '@/utils/parse-date';
+import playwright from '@/utils/playwright';
 import timezone from '@/utils/timezone';
-import puppeteer from '@/utils/puppeteer';
+
+import { host, playwrightGet } from './utils';
 
 export const route: Route = {
-    path: '/customs/list/:gchannel?',
+    path: '/list/:gchannel?',
     categories: ['government'],
     example: '/gov/customs/list/paimai',
     parameters: { gchannel: '支持 `paimai`, `fagui` 及 `latest` 3 个频道，默认为 `paimai`' },
@@ -23,7 +25,7 @@ export const route: Route = {
     radar: [
         {
             source: ['www.customs.gov.cn/'],
-            target: '/customs/list',
+            target: '/list',
         },
     ],
     name: '拍卖信息 / 海关法规 / 最新文件',
@@ -37,7 +39,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { gchannel = 'paimai' } = ctx.req.param();
-    let channelName = '';
+    let channelName: string;
     let link = '';
 
     switch (gchannel) {
@@ -59,21 +61,21 @@ async function handler(ctx) {
             break;
     }
 
-    const browser = await puppeteer();
+    const context = await playwright();
 
     const list = await cache.tryGet(
         link,
         async () => {
-            const response = await puppeteerGet(link, browser);
+            const response = await playwrightGet(link, context);
             const $ = load(response);
             const list = $('[class^="conList_ul"] li')
                 .toArray()
                 .map((item) => {
-                    item = $(item);
+                    const $item = $(item);
                     return {
-                        title: item.find('a').attr('title'),
-                        link: new URL(item.find('a').attr('href'), host).href,
-                        date: parseDate(item.find('span').text()),
+                        title: $item.find('a').attr('title')!,
+                        link: new URL($item.find('a').attr('href')!, host).href,
+                        date: parseDate($item.find('span').text()),
                     };
                 });
             return list;
@@ -88,7 +90,7 @@ async function handler(ctx) {
                 if (info.link.endsWith('.pdf') || info.link.endsWith('.doc')) {
                     return info;
                 }
-                const response = await puppeteerGet(info.link, browser);
+                const response = await playwrightGet(info.link, context);
                 const $ = load(response);
                 let date;
 
@@ -99,7 +101,7 @@ async function handler(ctx) {
                 const description = $('.easysite-news-peruse').html();
 
                 return {
-                    title: info.title,
+                    title: info.title!,
                     link: info.link,
                     description,
                     pubDate: date || info.date,
@@ -108,12 +110,12 @@ async function handler(ctx) {
         )
     );
 
-    await browser.close();
+    await context.close();
 
     return {
         title: `中国海关-${channelName}`,
         link,
-        language: 'zh-CN',
+        language: 'zh-CN' as const,
         item: out,
     };
 }

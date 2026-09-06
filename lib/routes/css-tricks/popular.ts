@@ -1,5 +1,8 @@
-import { Data, Route, ViewType } from '@/types';
+import type { Data, Route } from '@/types';
+import { ViewType } from '@/types';
+
 import { extractMiniCards, processWithWp, rootUrl } from './utils';
+
 export const route: Route = {
     path: '/popular',
     view: ViewType.Articles,
@@ -24,7 +27,7 @@ export const route: Route = {
     handler,
 };
 
-async function handler() {
+async function handler(): Promise<Data> {
     const { cards: popularCards } = await extractMiniCards('div.popular-articles > div.mini-card-grid article.mini-card.module.module-article');
     const items = await processWithWp(popularCards, true);
     return {
@@ -35,5 +38,5 @@ async function handler() {
         language: 'en',
         logo: `${rootUrl}/favicon.ico`,
         icon: `${rootUrl}/favicon.ico`,
-    } as Data;
+    };
 }

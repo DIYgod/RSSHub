@@ -1,6 +1,7 @@
-import { Route } from '@/types';
-import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
+
+import type { Data, Route } from '@/types';
+import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
@@ -28,7 +29,7 @@ export const route: Route = {
     url: 'sw.kovidgoyal.net/kitty/changelog/',
 };
 
-async function handler() {
+async function handler(): Promise<Data> {
     const url = 'https://sw.kovidgoyal.net/kitty/changelog/';
     const response = await ofetch(url);
     const $ = load(response);
@@ -43,7 +44,7 @@ async function handler() {
             const $section = $(section);
 
             // Extract version and date from h3 title
-            const titleText = $section.find('h3').first().text().trim();
+            const titleText = $section.find('h3').text();
             const versionMatch = titleText.match(/^([\d.]+)\s*\[([^\]]+)\]/);
 
             if (!versionMatch) {
@@ -71,7 +72,7 @@ async function handler() {
                 guid: `kitty-${version}`,
             };
         })
-        .filter(Boolean);
+        .filter((item) => item !== null);
 
     return {
         title: 'Kitty Changelog',

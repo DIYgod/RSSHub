@@ -1,4 +1,4 @@
-import { Route } from '@/types';
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -10,10 +10,6 @@ const typeMap = {
     2: '规则变更',
 };
 
-/**
- *
- * @param ctx {import('koa').Context}
- */
 export const route: Route = {
     path: '/notice/:type?',
     categories: ['programming'],
@@ -32,9 +28,9 @@ export const route: Route = {
     handler,
     description: `| 类型     | type |
 | -------- | ---- |
-| 全部      | 0    |
-| 其他      | 1    |
-| 规则变更   | 2    |`,
+| 全部     | 0    |
+| 其他     | 1    |
+| 规则变更 | 2    |`,
 };
 
 async function handler(ctx) {
@@ -48,7 +44,7 @@ async function handler(ctx) {
         documentId: item.documentId,
         source: `https://open.dangdang.com/op-api/developer-platform/document/info/get?document_id=${item.documentId}`,
         link: `https://open.dangdang.com/home/notice/message/1/${item.documentId}`,
-        pubDate: timezone(parseDate(item.modifyTime), +8),
+        pubDate: timezone(parseDate(item.modifyTime), 8),
     }));
 
     const result = await Promise.all(
@@ -63,7 +59,7 @@ async function handler(ctx) {
 
     return {
         title: `当当开放平台 - ${typeMap[type] || typeMap[0]}`,
-        link: `https://open.dangdang.com/home/notice/message/1`,
+        link: 'https://open.dangdang.com/home/notice/message/1',
         item: result,
     };
 }

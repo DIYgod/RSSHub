@@ -1,6 +1,7 @@
-import { Route } from '@/types';
-import got from '@/utils/got';
 import { load } from 'cheerio';
+
+import type { Route } from '@/types';
+import got from '@/utils/got';
 
 export const route: Route = {
     path: '/ia/yjs',
@@ -39,11 +40,11 @@ async function handler() {
         item:
             list &&
             list.toArray().map((item) => {
-                item = $(item);
+                const $item = $(item);
                 return {
-                    title: item.find('li a').text(),
-                    description: item.find('li a').text(),
-                    link: item.find('li a').attr('href'),
+                    title: $item.find('li a').text(),
+                    description: $item.find('li a').text(),
+                    link: $item.find('li a').attr('href'),
                 };
             }),
     };

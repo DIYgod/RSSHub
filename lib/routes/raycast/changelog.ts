@@ -1,11 +1,12 @@
-import type { Route, DataItem } from '@/types';
-import ofetch from '@/utils/ofetch';
-import cache from '@/utils/cache';
 import { load } from 'cheerio';
+
+import type { DataItem, Route } from '@/types';
+import cache from '@/utils/cache';
+import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
 const handler: Route['handler'] = async () => {
-    const item = (await cache.tryGet('raycast:changelog', async () => {
+    const item = await cache.tryGet('raycast:changelog', async () => {
         const data = await ofetch('https://www.raycast.com/changelog');
 
         const $ = load(data);
@@ -16,8 +17,8 @@ const handler: Route['handler'] = async () => {
                 const $ = load(item);
 
                 const version = $('span[id]').attr('id');
-                const html = $('div.markdown').html() ?? '';
-                const date = $('span[class^=ChangelogEntry_changelogDate]').text().trim();
+                const html = $('div.markdown').html();
+                const date = $('span[class^=ChangelogEntry_changelogDate]').text();
 
                 return {
                     title: `Version ${version}`,
@@ -26,12 +27,12 @@ const handler: Route['handler'] = async () => {
                     pubDate: parseDate(date),
                 };
             });
-    })) as DataItem[];
+    });
 
     return {
         title: 'Raycast Changelog',
         link: 'https://www.raycast.com/changelog',
-        language: 'en-US',
+        language: 'en-us',
         item,
     };
 };

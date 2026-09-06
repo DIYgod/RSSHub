@@ -1,5 +1,7 @@
-import { Route } from '@/types';
 import dayjs from 'dayjs';
+
+import type { Route } from '@/types';
+
 import { constructTopicEntry } from './utils';
 
 export const route: Route = {
@@ -18,6 +20,11 @@ export const route: Route = {
     radar: [
         {
             source: ['web.okjike.com/topic/:id'],
+            target: '/topic/text/:id',
+        },
+        {
+            source: ['m.okjike.com/topics/:id'],
+            target: '/topic/text/:id',
         },
     ],
     name: '圈子 - 纯文字',

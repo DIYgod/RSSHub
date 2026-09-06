@@ -1,9 +1,11 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
+
+import { loadArticle } from './article';
 import { SUB_NAME_PREFIX, SUB_URL } from './const';
-import loadArticle from './article';
 
 export const route: Route = {
     path: '/tag/:tag',
@@ -17,6 +19,7 @@ export const route: Route = {
         supportBT: false,
         supportPodcast: false,
         supportScihub: false,
+        nsfw: true,
     },
     radar: [
         {
@@ -46,7 +49,7 @@ async function handler(ctx) {
             itemRaw.map((e) => {
                 const item = $(e);
                 const link = item.find('h5.post-title a').attr('href');
-                return cache.tryGet(link, () => loadArticle(link));
+                return cache.tryGet(link!, () => loadArticle(link));
             })
         ),
     };

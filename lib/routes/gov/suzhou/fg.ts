@@ -1,23 +1,36 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
-import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 export const route: Route = {
-    path: '/suzhou/fg/:category{.+}?',
-    name: 'Unknown',
-    maintainers: [],
+    path: '/fg/:category{.+}?',
+    name: '发展和改革委员会',
+    example: '/gov/suzhou/fg/szfgw/ggl/nav_list',
+    parameters: { category: '分类，见下表，默认为通知公告' },
+    radar: [
+        {
+            source: ['fg.suzhou.gov.cn/*category'],
+            target: '/fg/:category',
+        },
+    ],
+    maintainers: ['nczitzk'],
     handler,
+    description: `| 通知公告            | 发改要闻             |
+| ------------------- | -------------------- |
+| szfgw/ggl/nav\\_list | szfgw/gzdt/nav\\_list |`,
 };
 
 async function handler(ctx) {
     const { category = 'szfgw/ggl/nav_list' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 30;
+    const categoryPath = category.replace(/\.shtml$/, '');
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 30;
 
     const rootUrl = 'https://fg.suzhou.gov.cn';
-    const currentUrl = new URL(`${category}.shtml`, rootUrl).href;
+    const currentUrl = new URL(`${categoryPath}.shtml`, rootUrl).href;
 
     const { data: response } = await got(currentUrl);
 
@@ -26,20 +39,20 @@ async function handler(ctx) {
     let items = $('h4 a[title]')
         .slice(0, limit)
         .toArray()
-        .map((item) => {
-            item = $(item);
+        .map((item): DataItem => {
+            const $item = $(item);
 
             return {
-                title: item.prop('title') || item.text(),
-                link: new URL(item.prop('href'), rootUrl).href,
-                author: item.find('.author').text(),
-                pubDate: parseDate(item.parent().find('span.time').text().trim()),
+                title: $item.prop('title') || $item.text(),
+                link: new URL($item.prop('href')!, rootUrl).href,
+                author: $item.find('.author').text(),
+                pubDate: parseDate($item.parent().find('span.time').text().trim()),
             };
         });
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const { data: detailResponse } = await got(item.link);
 
                 const content = load(detailResponse);
@@ -47,7 +60,7 @@ async function handler(ctx) {
                 item.title = content('ucaptitle').text().trim();
                 item.description = content('ucapcontent').html();
                 item.author = content('span.ly b').text().trim();
-                item.pubDate = timezone(parseDate(content('meta[name="PubDate"]').prop('content')), +8);
+                item.pubDate = timezone(parseDate(content('meta[name="PubDate"]').prop('content')), 8);
 
                 return item;
             })
@@ -56,14 +69,16 @@ async function handler(ctx) {
 
     const author = $('meta[name="SiteName"]').prop('content');
     const subtitle = $('meta[name="ColumnName"]').prop('content');
-    const image = new URL($('div.logo img').prop('src'), rootUrl).href;
+    const image = new URL($('div.logo img').prop('src')!, rootUrl).href;
+
+    const language = $('html').prop('lang') as Language;
 
     return {
         item: items,
         title: `${author} - ${subtitle}`,
         link: currentUrl,
         description: $('meta[name="ColumnDescription"]').prop('content'),
-        language: $('html').prop('lang'),
+        language,
         image,
         subtitle,
         author,

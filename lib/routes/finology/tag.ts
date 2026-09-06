@@ -1,6 +1,8 @@
-import { Route } from '@/types';
-import { commonHandler } from './category';
 import type { Context } from 'hono';
+
+import type { Route } from '@/types';
+
+import { commonHandler } from './category';
 
 export const route: Route = {
     path: '/tag/:topic',
@@ -16,7 +18,8 @@ export const route: Route = {
     maintainers: ['Rjnishant530'],
     handler,
     url: 'insider.finology.in/tag',
-    description: `:::note Topic
+    description: `::: info Topic
+
 | Topic                    | Link                     |
 | ------------------------ | ------------------------ |
 | Investment Decisions     | investment-decisions     |
@@ -47,6 +50,7 @@ export const route: Route = {
 | World News               | world-news               |
 | Technology               | technology               |
 | Regulatory Bodies        | regulatory-bodies        |
+
 :::`,
 };
 
@@ -55,7 +59,7 @@ async function handler(ctx: Context) {
     const extra = {
         description: (topic: string) => `Everything that Insider has to offer about ${topic} for you to read and learn.`,
         date: true,
-        selector: `div.card`,
+        selector: 'div.card',
     };
     return await commonHandler('https://insider.finology.in', `/tag/${topic}`, extra);
 }

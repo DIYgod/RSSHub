@@ -1,5 +1,7 @@
-import { Route } from '@/types';
-import { Context } from 'hono';
+import type { Context } from 'hono';
+
+import type { Route } from '@/types';
+
 import { fetchFeed } from './utils';
 
 export const handler = (ctx: Context) => {

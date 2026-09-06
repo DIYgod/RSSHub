@@ -1,8 +1,10 @@
-import { Route } from '@/types';
-import cache from '@/utils/cache';
 import { load } from 'cheerio';
+
+import type { Route } from '@/types';
+import cache from '@/utils/cache';
 import { parseDate } from '@/utils/parse-date';
-import { baseUrl, puppeteerGet } from './utils';
+
+import { baseUrl, playwrightGet } from './utils';
 
 export const route: Route = {
     path: '/hot/:category?',
@@ -27,8 +29,8 @@ async function handler(ctx) {
 
     const url = `${baseUrl}/hot/list/category-${category}`;
 
-    // use Puppeteer due to the obstacle by cloudflare challenge
-    const html = await puppeteerGet(url, cache);
+    // use Playwright due to the obstacle by cloudflare challenge
+    const html = await playwrightGet(url, cache);
 
     const $ = load(html);
     const list = $('div.aw-item');
@@ -37,7 +39,7 @@ async function handler(ctx) {
         title: '品葱 - 精选',
         link: `${baseUrl}/hot/${category === '0' ? '' : `category-${category}`}`,
         item: list.toArray().map((item) => ({
-            title: $(item).find('h2 a').text().trim(),
+            title: $(item).find('h2 a').text(),
             description: $(item).find('div.markitup-box').html(),
             link: baseUrl + $(item).find('div.mod-head h2 a').attr('href'),
             pubDate: parseDate($(item).find('div.mod-footer .aw-small-text').text()),

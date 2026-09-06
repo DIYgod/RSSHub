@@ -1,16 +1,16 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
 
+import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
-import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
-import { art } from '@/utils/render';
-import path from 'node:path';
+import timezone from '@/utils/timezone';
+
+import { renderDescription } from './templates/description';
 
 export const handler = async (ctx) => {
     const { id = '0' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 20;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 20;
 
     const rootUrl = 'https://fashionnetwork.cn';
     const currentUrl = new URL(`lists/${id}`, rootUrl).href;
@@ -19,20 +19,20 @@ export const handler = async (ctx) => {
 
     const $ = load(response);
 
-    const language = $('html').prop('lang');
+    const language = $('html').prop('lang') as Language;
 
     let items = $('div.home__item')
         .slice(0, limit)
         .toArray()
-        .map((item) => {
-            item = $(item);
+        .map((item): DataItem => {
+            const $item = $(item);
 
-            const title = item.find('h2.family-title').text();
+            const title = $item.find('h2.family-title').text();
 
-            const src = item.find('img.item__img').first().prop('src') ?? undefined;
+            const src = $item.find('img.item__img').prop('src') ?? undefined;
             const image = src ? new URL(src, rootUrl).href : undefined;
 
-            const description = art(path.join(__dirname, 'templates/description.art'), {
+            const description = renderDescription({
                 images: image
                     ? [
                           {
@@ -46,7 +46,7 @@ export const handler = async (ctx) => {
             return {
                 title,
                 description,
-                link: new URL(item.find('h2.family-title a').prop('href'), rootUrl).href,
+                link: new URL($item.find('h2.family-title a').prop('href')!, rootUrl).href,
                 image,
                 banner: image,
                 language,
@@ -58,21 +58,20 @@ export const handler = async (ctx) => {
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const { data: detailResponse } = await got(item.link);
 
                 const $$ = load(detailResponse);
 
                 const title = $$('h1.newsTitle').text();
-                const description = art(path.join(__dirname, 'templates/description.art'), {
-                    description: $$('div.article-content').html(),
+                const description = renderDescription({
+                    description: $$('div.article-content').html() ?? undefined,
                 });
 
                 item.title = title;
                 item.description = description;
-                item.pubDate = timezone(parseDate($$('span.time-ago').first().text().trim()), +8);
+                item.pubDate = timezone(parseDate($$('span.time-ago').first().text().trim()), 8);
                 item.category = $$('div.newsTags')
-                    .first()
                     .find('div.news-tag')
                     .toArray()
                     .map((c) => $$(c).text());
@@ -88,8 +87,8 @@ export const handler = async (ctx) => {
         )
     );
 
-    const label = $(`label[for="news_categs_${id}"]`).text()?.split(/\(/)?.[0]?.trim() ?? '';
-    const image = new URL($('div.header__fnw-logo img').prop('src'), rootUrl).href;
+    const label = $(`label[for="news_categs_${id}"]`).text()?.split(/\(/, 1)?.[0]?.trim() ?? '';
+    const image = new URL($('div.header__fnw-logo img').prop('src')!, rootUrl).href;
 
     return {
         title: `${label}${$('title').text()}`,
@@ -112,7 +111,7 @@ export const route: Route = {
     example: '/fashionnetwork/cn/lists/0',
     parameters: { category: '分类，默认为 0，可在对应分类页 URL 中找到' },
     description: `::: tip
-  若订阅 [独家新闻](https://fashionnetwork.cn)，网址为 \`https://fashionnetwork.cn/lists/13.html\`。截取 \`https://fashionnetwork.cn/\` 到末尾 \`.html\` 的部分 \`13\` 作为参数填入，此时路由为 [\`/fashionnetwork/cn/lists/13\`](https://rsshub.app/fashionnetwork/cn/lists/13)。
+若订阅 [独家新闻](https://fashionnetwork.cn)，网址为 \`https://fashionnetwork.cn/lists/13.html\`。截取 \`https://fashionnetwork.cn/\` 到末尾 \`.html\` 的部分 \`13\` 作为参数填入，此时路由为 [\`/fashionnetwork/cn/lists/13\`](https://rsshub.app/fashionnetwork/cn/lists/13)。
 :::
 
 | 分类                                           | ID                                                  |
@@ -124,8 +123,7 @@ export const route: Route = {
 | [产业](https://fashionnetwork.cn/lists/5)      | [5](https://rsshub.app/fashionnetwork/cn/lists/5)   |
 | [创新研究](https://fashionnetwork.cn/lists/6)  | [6](https://rsshub.app/fashionnetwork/cn/lists/6)   |
 | [人事变动](https://fashionnetwork.cn/lists/12) | [12](https://rsshub.app/fashionnetwork/cn/lists/12) |
-| [新闻资讯](https://fashionnetwork.cn/lists/11) | [11](https://rsshub.app/fashionnetwork/cn/lists/11) |
-  `,
+| [新闻资讯](https://fashionnetwork.cn/lists/11) | [11](https://rsshub.app/fashionnetwork/cn/lists/11) |`,
     categories: ['new-media'],
 
     features: {

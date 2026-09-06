@@ -1,5 +1,6 @@
 import InvalidParameterError from '@/errors/types/invalid-parameter';
-import { Route, ViewType } from '@/types';
+import type { Route } from '@/types';
+import { ViewType } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
@@ -51,7 +52,7 @@ export const route: Route = {
 async function handler(ctx) {
     const login = ctx.req.param('login');
     const filter = ctx.req.param('filter')?.toLowerCase() || 'all';
-    if (!FILTER_NODE_TYPE_MAP[filter]) {
+    if (!Object.hasOwn(FILTER_NODE_TYPE_MAP, filter)) {
         throw new InvalidParameterError(`Unsupported filter type "${filter}", please choose from { ${Object.keys(FILTER_NODE_TYPE_MAP).join(', ')} }`);
     }
 
@@ -82,7 +83,7 @@ async function handler(ctx) {
     const channelVideoShelvesQueryData = response.data[0].data;
 
     if (!channelVideoShelvesQueryData.user.id) {
-        throw new InvalidParameterError(`Username does not exist`);
+        throw new InvalidParameterError('Username does not exist');
     }
 
     const displayName = channelVideoShelvesQueryData.user.displayName;

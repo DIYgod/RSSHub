@@ -1,32 +1,37 @@
+import { load } from 'cheerio';
+
 import NotFoundError from '@/errors/types/not-found';
-import { DataItem, Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-import { load } from 'cheerio';
+
 import { processEmbedPDF } from '../lib/embed-resource';
 
 const WEBSITE_LOGO = 'https://www.nwnu.edu.cn/_upload/tpl/02/d9/729/template729/favicon.ico';
 const BASE_URL = 'https://jwc.nwnu.edu.cn/';
 
-const COLUMNS: Record<string, { title: string; description: string }> = {
-    tzgg: {
-        title: '通知公告',
-        description: '西北师范大学教务处通知公告',
-    },
-    jwkx: {
-        title: '教务快讯',
-        description: '西北师范大学教务快讯',
-    },
-};
+const COLUMNS = new Map(
+    Object.entries({
+        tzgg: {
+            title: '通知公告',
+            description: '西北师范大学教务处通知公告',
+        },
+        jwkx: {
+            title: '教务快讯',
+            description: '西北师范大学教务快讯',
+        },
+    })
+);
 
 const handler: Route['handler'] = async (ctx) => {
-    const columnParam = ctx.req.param('column');
-    if (COLUMNS[columnParam] === undefined) {
+    const columnParam = ctx.req.param('column')!;
+    const column = COLUMNS.get(columnParam);
+    if (column === undefined) {
         throw new NotFoundError(`The column ${columnParam} does not exist`);
     }
-    const columnTitle = COLUMNS[columnParam].title;
-    const columnDescription = COLUMNS[columnParam].description;
+    const columnTitle = column.title;
+    const columnDescription = column.description;
     const columnPageUrl = `https://jwc.nwnu.edu.cn/${columnParam}/list.htm`;
 
     // Fetch the list page
@@ -55,9 +60,9 @@ const handler: Route['handler'] = async (ctx) => {
         description: columnDescription,
         link: columnPageUrl,
         image: WEBSITE_LOGO,
-        item: (await Promise.all(
+        item: await Promise.all(
             itemLinks.map((item) =>
-                cache.tryGet(item.link, async () => {
+                cache.tryGet(item.link, async (): Promise<DataItem> => {
                     const CONTENT_SELECTOR = 'div.wp_articlecontent';
                     const { data: contentResponse } = await got(item.link);
                     const contentPage = load(contentResponse);
@@ -71,13 +76,16 @@ const handler: Route['handler'] = async (ctx) => {
                         guid: item.link,
                         id: item.link,
                         image: WEBSITE_LOGO,
-                        content,
+                        content: {
+                            html: content,
+                            text: content,
+                        },
                         updated: item.date,
                         language: 'zh-CN',
                     };
                 })
             )
-        )) as DataItem[],
+        ),
         allowEmpty: true,
         language: 'zh-CN',
         feedLink: `https://rsshub.app/nwnu/department/academic-affairs/${columnParam}`,
@@ -100,15 +108,14 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    example: '/department/academic-affairs/tzgg',
+    example: '/nwnu/department/academic-affairs/tzgg',
     radar: [
         {
             source: ['jwc.nwnu.edu.cn/:column/list.htm'],
             target: '/department/academic-affairs/:column',
         },
     ],
-    description: `
-| column | 标题     | 描述                     |
+    description: `| column | 标题     | 描述                     |
 | ------ | -------- | ------------------------ |
 | tzgg   | 通知公告 | 西北师范大学教务通知公告 |
 | jwkx   | 教务快讯 | 西北师范大学教务快讯     |`,

@@ -1,7 +1,8 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
 const host = 'https://www.sc.sdu.edu.cn/';
@@ -38,21 +39,21 @@ async function handler(ctx) {
 
     let item = $('.newlist01 li')
         .toArray()
-        .map((e) => {
-            e = $(e);
-            const a = e.find('a');
+        .map((e): DataItem => {
+            const $e = $(e);
+            const a = $e.find('a');
             let link = a.attr('href');
-            link = new URL(link, host).href;
+            link = new URL(link!, host).href;
             return {
                 title: a.text().trim(),
                 link,
-                pubDate: parseDate(e.find('.date').text().trim()),
+                pubDate: parseDate($e.find('.date').text().trim()),
             };
         });
 
     item = await Promise.all(
         item.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 try {
                     const response = await got(item.link);
                     const $ = load(response.data);
@@ -62,7 +63,7 @@ async function handler(ctx) {
                         $('.pr')
                             .text()
                             .trim()
-                            .match(/作者：(.*)/)[1] || '山东大学软件学院';
+                            .match(/作者：(.*)/)![1] || '山东大学软件学院';
                     $('h3, .pr').remove();
                     item.description = $('.content').html();
 

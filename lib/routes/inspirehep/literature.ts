@@ -1,7 +1,7 @@
-import { Route } from '@/types';
+import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { LiteratureResponse } from './types';
 
+import type { LiteratureResponse } from './types';
 import { baseUrl, parseLiterature } from './utils';
 
 export const route: Route = {

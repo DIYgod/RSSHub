@@ -1,7 +1,7 @@
-import { Route } from '@/types';
+import type { Route } from '@/types';
+import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch'; // 统一使用的请求库
 import { parseDate } from '@/utils/parse-date';
-import cache from '@/utils/cache';
 
 const PAGE = 1;
 const PAGE_SIZE = 20;
@@ -20,7 +20,7 @@ export const route: Route = {
     maintainers: ['lyling'],
     handler: async (ctx) => {
         const categoryId = ctx.req.param('categoryId') ?? 0;
-        const link = `https://cloud.tencent.com/developer/api/home/article-list`;
+        const link = 'https://cloud.tencent.com/developer/api/home/article-list';
         const response = await ofetch(link, {
             method: 'POST',
             headers: {

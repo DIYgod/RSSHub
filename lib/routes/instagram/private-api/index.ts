@@ -1,13 +1,15 @@
-import { Route, ViewType } from '@/types';
-import cache from '@/utils/cache';
-import { ig, login } from './utils';
-import logger from '@/utils/logger';
 import { config } from '@/config';
-import { renderItems } from '../common-utils';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
+import type { Route } from '@/types';
+import { ViewType } from '@/types';
+import cache from '@/utils/cache';
+import logger from '@/utils/logger';
+
+import { renderItems } from '../common-utils';
+import { ig, login } from './utils';
 
 // loadContent pulls the desired user/tag/etc
-async function loadContent(category, nameOrId, tryGet) {
+async function loadContent(category, nameOrId) {
     let feedTitle, feedLink, feedDescription, feedLogo;
     let itemsRaw;
 
@@ -16,11 +18,18 @@ async function loadContent(category, nameOrId, tryGet) {
             let userInfo, username, id;
             if (Number.isNaN(nameOrId)) {
                 username = nameOrId;
-                id = await tryGet(`instagram:getIdByUsername:${username}`, () => ig.user.getIdByUsername(username), 31_536_000); // 1 year since it will never change
-                userInfo = await tryGet(`instagram:userInfo:${id}`, () => ig.user.info(id));
+                id = await cache.tryGet(
+                    `instagram:getIdByUsername:${username}`,
+                    async () => {
+                        const numericId = await ig.user.getIdByUsername(username);
+                        return String(numericId);
+                    },
+                    31_536_000
+                ); // 1 year since it will never change
+                userInfo = await cache.tryGet(`instagram:userInfo:${id}`, () => ig.user.info(id));
             } else {
                 id = nameOrId;
-                userInfo = await tryGet(`instagram:userInfo:${id}`, () => ig.user.info(id));
+                userInfo = await cache.tryGet(`instagram:userInfo:${id}`, () => ig.user.info(id));
                 username = userInfo.username;
             }
 
@@ -31,7 +40,7 @@ async function loadContent(category, nameOrId, tryGet) {
             feedTitle = `${fullName} (@${username}) - Instagram`;
             feedLink = `https://www.instagram.com/${username}`;
 
-            itemsRaw = await tryGet(`instagram:feed:${id}`, () => ig.feed.user(id).items(), config.cache.routeExpire, false);
+            itemsRaw = await cache.tryGet(`instagram:feed:${id}`, () => ig.feed.user(id).items(), config.cache.routeExpire, false);
             break;
         }
         case 'tags': {
@@ -40,7 +49,7 @@ async function loadContent(category, nameOrId, tryGet) {
             feedTitle = `#${tag} - Instagram`;
             feedLink = `https://www.instagram.com/explore/tags/${tag}`;
 
-            itemsRaw = await tryGet(`instagram:tags:${tag}`, () => ig.feed.tags(tag, 'recent').items(), config.cache.routeExpire, false);
+            itemsRaw = await cache.tryGet(`instagram:tags:${tag}`, () => ig.feed.tags(tag, 'recent').items(), config.cache.routeExpire, false);
             break;
         }
         default:
@@ -127,7 +136,7 @@ async function handler(ctx) {
 
     let data;
     try {
-        data = await loadContent(category, key, cache.tryGet);
+        data = await loadContent(category, key);
     } catch (error) {
         logger.error(`Instagram error: ${error}`);
         throw error;

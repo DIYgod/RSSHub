@@ -1,9 +1,10 @@
+import { load } from 'cheerio';
+import iconv from 'iconv-lite';
+
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import iconv from 'iconv-lite';
-import { load } from 'cheerio';
-import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 export async function loadDetailPage(link) {
     const response = await got.get(link, {
@@ -41,7 +42,7 @@ export async function processItems(ctx, baseURL, exclude) {
         list.map((item) => {
             const link = $(item).find('a');
             const href = link.attr('href');
-            const pubDate = timezone(parseDate($(item).find('span').text().replaceAll(/[[\]]/g, ''), 'MM-DD'), +8);
+            const pubDate = timezone(parseDate($(item).find('span').text().replaceAll(/[[\]]/g, ''), 'MM-DD'), 8);
             const text = link.text();
 
             if (href === undefined) {

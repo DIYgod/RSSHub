@@ -1,6 +1,8 @@
-import { Route, ViewType } from '@/types';
-import parser from '@/utils/rss-parser';
 import { load } from 'cheerio';
+
+import type { Route } from '@/types';
+import { ViewType } from '@/types';
+import parser from '@/utils/rss-parser';
 
 export const route: Route = {
     path: '/rss/:user/:tag',
@@ -17,7 +19,7 @@ export const route: Route = {
         supportScihub: false,
     },
     name: 'RSS',
-    maintainers: ['EthanWng97'],
+    maintainers: ['IvanWng97'],
     handler,
 };
 
@@ -27,17 +29,17 @@ async function handler(ctx) {
     const rootUrl = 'https://www.inoreader.com/stream';
     const rssUrl = `${rootUrl}/user/${user}/tag/${tag}`;
     const feed = await parser.parseURL(rssUrl);
-    feed.items = feed.items.map((item) => {
-        if (item && item.enclosure && item.enclosure.type.includes('audio')) {
+    const items = feed.items.map((item) => {
+        if (item && item.enclosure && item.enclosure.type!.includes('audio')) {
             // output podcast rss
             // get first image in content
             let firstImgSrc = '';
             if (item.content !== null) {
-                const $ = load(item.content);
-                firstImgSrc = $('img').first().attr('src');
+                const $ = load(item.content!);
+                firstImgSrc = $('img').first().attr('src')!;
             }
             return {
-                title: item.title,
+                title: item.title!,
                 pubDate: item.pubDate,
                 link: item.link,
                 description: item.content,
@@ -57,11 +59,11 @@ async function handler(ctx) {
         };
     });
     return {
-        title: feed.title,
+        title: feed.title!,
         itunes_author: 'Inoreader',
         image: 'https://www.inoreader.com/brand/img/ino_app_icon.png',
         link: feed.link,
         description: feed.description,
-        item: feed.items,
+        item: items,
     };
 }

@@ -1,11 +1,12 @@
-import { Data, DataItem, Route } from '@/types';
+import { load } from 'cheerio';
+import type { Context } from 'hono';
+
+import InvalidParameterError from '@/errors/types/invalid-parameter';
+import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
-import InvalidParameterError from '@/errors/types/invalid-parameter';
-import type { Context } from 'hono';
 
 const baseUrl = 'https://www.jwc.uestc.edu.cn/';
 const detailUrl = 'https://www.jwc.uestc.edu.cn/info/';
@@ -59,7 +60,7 @@ export const route: Route = {
 
 async function handler(ctx: Context): Promise<Data> {
     const type = ctx.req.param('type') || 'important';
-    if (type in typeUrlMap === false) {
+    if (!Object.hasOwn(typeUrlMap, type)) {
         throw new InvalidParameterError('type not supported');
     }
     const typeName = typeNameMap[type];
@@ -74,7 +75,7 @@ async function handler(ctx: Context): Promise<Data> {
         const newsTitle = element.find('a').attr('title') ?? '';
         const newsLink = detailUrl + element.find('a').attr('newsid');
 
-        const newsDetail = await cache.tryGet(newsLink, async () => {
+        const newsDetail = await cache.tryGet(newsLink, async (): Promise<DataItem> => {
             const newsContent = await ofetch(newsLink);
             const content = load(newsContent);
 
@@ -84,7 +85,7 @@ async function handler(ctx: Context): Promise<Data> {
             return {
                 title: newsTitle,
                 link: newsLink,
-                pubDate: match ? timezone(parseDate(match[1]), +8) : null,
+                pubDate: match ? timezone(parseDate(match[1]), 8) : null,
                 description: content('div.NewText').html(),
             };
         });
@@ -98,6 +99,6 @@ async function handler(ctx: Context): Promise<Data> {
         title: `教务处通知（${typeName}）`,
         link: baseUrl,
         description: `电子科技大学教务处通知（${typeName}）`,
-        item: out as DataItem[],
+        item: out,
     };
 }

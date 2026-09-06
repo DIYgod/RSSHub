@@ -1,10 +1,11 @@
-import { DataItem, Route } from '@/types';
-import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
+
+import { Language } from '@/routes/kurogames/wutheringwaves/constants';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
+import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
-import { Language } from '@/routes/kurogames/wutheringwaves/constants';
 
 const $get = async (url: string, encoding = 'gb2312') => new TextDecoder(encoding).decode(await ofetch(url, { responseType: 'arrayBuffer' }));
 const $trim = (str: string) => {
@@ -35,11 +36,9 @@ export const route: Route = {
     ],
     name: '教务处',
     maintainers: ['hualiong'],
-    description: `
-::: tip
+    description: `::: tip
 抓取全文返回会导致更长的响应时间，可以尝试使用 \`/sicau/jiaowu/jxtz\` 路径，这将只返回标题，然后再在应用内抓取全文内容。
-:::
-`,
+:::`,
     url: 'jiaowu.sicau.edu.cn/',
     handler: async (ctx) => {
         const baseUrl = 'https://jiaowu.sicau.edu.cn/web/web/web';
@@ -50,24 +49,25 @@ export const route: Route = {
 
         let items = $('tbody > .text-c:nth-child(-n+10)')
             .toArray()
-            .map((item) => {
+            .map((item): DataItem => {
                 const children = $(item).children();
                 const a = children.eq(2).find('a');
                 return {
                     category: [children.eq(1).text()],
                     link: `${baseUrl}/${a.attr('href')!}`,
                     title: a.children().first().text(),
-                    pubDate: timezone(parseDate(children.eq(3).text(), 'YYYY-M-D'), +8),
+                    pubDate: timezone(parseDate(children.eq(3).text(), 'YYYY-M-D'), 8),
                     author: children.eq(4).text(),
                     description: '请在应用内抓取全文内容',
-                } as DataItem;
+                };
             });
 
         if (detail) {
             items = await Promise.all(
                 items.map((item) =>
                     cache.tryGet(item.link!, async () => {
-                        const $ = load(await $get(item.link!));
+                        const html = await $get(item.link!);
+                        const $ = load(html);
                         item.description = $trim($('.text1[width="95%"] b').html()!);
                         return item;
                     })

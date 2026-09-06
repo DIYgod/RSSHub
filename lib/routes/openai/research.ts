@@ -1,6 +1,8 @@
-import { Route } from '@/types';
-import got from '@/utils/got';
-import { getApiUrl, parseArticle } from './common';
+import type { Context } from 'hono';
+
+import type { Route } from '@/types';
+
+import { BASE_URL, fetchArticles } from './common';
 
 export const route: Route = {
     path: '/research',
@@ -16,36 +18,17 @@ export const route: Route = {
         supportScihub: false,
     },
     name: 'Research',
-    maintainers: ['yuguorui'],
+    maintainers: ['yuguorui', 'chesha1'],
     handler,
 };
 
-async function handler(ctx) {
-    const apiUrl = new URL('/api/v1/research-publications', await getApiUrl());
-    const researchRootUrl = 'https://openai.com/research';
-
-    // Construct API query
-    apiUrl.searchParams.append('sort', '-publicationDate,-createdAt');
-    apiUrl.searchParams.append('include', 'media');
-
-    const resp = await got({
-        method: 'get',
-        url: apiUrl,
-    });
-    const obj = resp.data;
-
-    const items = await Promise.all(
-        obj.data.map((item) => {
-            const attributes = item.attributes;
-            return parseArticle(ctx, researchRootUrl, attributes);
-        })
-    );
-
-    const title = 'OpenAI Research';
+async function handler(ctx: Context) {
+    const limit = Number.parseInt(ctx.req.query('limit') || '10');
+    const link = new URL('/research/index', BASE_URL).href;
 
     return {
-        title,
-        link: researchRootUrl,
-        item: items,
+        title: 'OpenAI Research',
+        link,
+        item: await fetchArticles(limit, 'Research'),
     };
 }

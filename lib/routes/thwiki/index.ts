@@ -1,6 +1,7 @@
-import { Route } from '@/types';
-import got from '@/utils/got';
 import dayjs from 'dayjs';
+
+import type { Route } from '@/types';
+import got from '@/utils/got';
 
 export const route: Route = {
     path: '/calendar/:before?/:after?',
@@ -44,7 +45,7 @@ async function handler(ctx) {
 
     return {
         title: 'Touhou events calendar (THBWiki)',
-        link: `https://calendar.thwiki.cc/`,
+        link: 'https://calendar.thwiki.cc/',
         description: 'A Touhou related events calendar api from THBWiki',
         item: data.map((item) => ({
             title: item.title,

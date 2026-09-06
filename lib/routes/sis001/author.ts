@@ -1,9 +1,11 @@
-import { Route } from '@/types';
-import cache from '@/utils/cache';
-import got from '@/utils/got';
-import { config } from '@/config';
 import { load } from 'cheerio';
 import type { Context } from 'hono';
+
+import { config } from '@/config';
+import type { DataItem, Route } from '@/types';
+import cache from '@/utils/cache';
+import got from '@/utils/got';
+
 import { getCookie, getThread } from './common';
 
 export const route: Route = {
@@ -18,6 +20,7 @@ export const route: Route = {
         supportBT: false,
         supportPodcast: false,
         supportScihub: false,
+        nsfw: true,
     },
     name: '作者',
     maintainers: ['keocheung'],
@@ -34,18 +37,18 @@ async function handler(ctx: Context) {
 
     const username = $('div.bg div.title').text().replace('的个人空间', '');
 
-    let items = $('div.center_subject ul li a[href^=thread]')
+    let items: DataItem[] = $('div.center_subject ul li a[href^=thread]')
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
             return {
-                title: item.text(),
-                link: `${config.sis001.baseUrl}/forum/${item.attr('href')}`,
+                title: $item.text(),
+                link: `${config.sis001.baseUrl}/forum/${$item.attr('href')}`,
                 author: username,
             };
         });
 
-    items = await Promise.all(items.map((item) => cache.tryGet(item.link, async () => await getThread(cookie, item))));
+    items = await Promise.all(items.map((item) => cache.tryGet(item.link!, async () => await getThread(cookie, item))));
 
     return {
         title: `${username}的主题`,

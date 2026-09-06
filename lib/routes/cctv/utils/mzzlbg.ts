@@ -2,7 +2,7 @@ import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
-const getMzzlbg = async () => {
+export const getMzzlbg = async () => {
     const url = 'https://api.cntv.cn/video/videolistById?serviceId=cbox&vsid=C10354&em=01&p=1&n=50';
 
     const response = await got({
@@ -19,7 +19,7 @@ const getMzzlbg = async () => {
                 title: video.t,
                 description: video.desc,
                 link: video.url,
-                pubDate: timezone(parseDate(video.ptime), +8),
+                pubDate: timezone(parseDate(video.ptime), 8),
             };
             const { data: videoDetail } = await got({
                 method: 'get',
@@ -39,4 +39,3 @@ const getMzzlbg = async () => {
         item: resultItem,
     };
 };
-export default getMzzlbg;

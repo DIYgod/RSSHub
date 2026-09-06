@@ -1,4 +1,5 @@
-import { Route } from '@/types';
+import type { Route } from '@/types';
+
 import { getMangaDetails } from './_feed';
 
 export const route: Route = {
@@ -13,6 +14,9 @@ export const route: Route = {
     maintainers: ['vzz64', 'chrisis58'],
     example: '/mangadex/manga/f98660a1-d2e2-461c-960d-7bd13df8b76d/en',
     handler,
+    features: {
+        nsfw: true,
+    },
 };
 
 async function handler(ctx) {

@@ -1,8 +1,9 @@
-import { DataItem, Route } from '@/types';
-import { parseDate } from '@/utils/parse-date';
-import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
+
+import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
+import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/rate-plans',
@@ -19,7 +20,7 @@ export const route: Route = {
     url: 'www.taiwanmobile.com/cs/public/servAnn/queryList.htm?type=1',
 };
 
-async function handler() {
+async function handler(): Promise<Data> {
     const baseUrl = 'https://www.taiwanmobile.com';
     const listUrl = `${baseUrl}/cs/public/servAnn/queryList.htm?type=1`;
     const response = await ofetch(listUrl);
@@ -44,7 +45,7 @@ async function handler() {
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link, async (): Promise<DataItem> => {
                 const detailResponse = await ofetch(item.link);
                 const content = load(detailResponse);
 
@@ -59,6 +60,6 @@ async function handler() {
     return {
         title: '台灣大哥大 - 資費公告',
         link: listUrl,
-        item: items as DataItem[],
+        item: items,
     };
 }

@@ -1,6 +1,7 @@
-import { Route } from '@/types';
-import got from '@/utils/got'; // 自订的 got
 import { load } from 'cheerio'; // 可以使用类似 jQuery 的 API HTML 解析器
+
+import type { Route } from '@/types';
+import got from '@/utils/got'; // 自订的 got
 
 export const route: Route = {
     path: '/jwc',
@@ -34,12 +35,12 @@ async function handler() {
 
             const linkEl = el.find('a');
             const YMDiv = el.find('.tm p');
-            const YMStr = YMDiv.text().trim();
+            const YMStr = YMDiv.text();
             const DDiv = el.find('.tm span');
-            const DStr = DDiv.text().trim();
+            const DStr = DDiv.text();
 
             const titleDiv = el.find('.s3-info p');
-            const title = titleDiv.text().trim();
+            const title = titleDiv.text();
 
             const link = `${baseUrl}/${linkEl.attr('href')}`;
 

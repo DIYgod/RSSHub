@@ -1,8 +1,10 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
+
 const baseUrl = 'https://bgm.tv';
 
 export const route: Route = {
@@ -39,7 +41,7 @@ async function handler(ctx) {
         $('.topic_list .topic')
             .toArray()
             .map((elem) => {
-                const link = new URL($('.subject a', elem).attr('href'), baseUrl).href;
+                const link = new URL($('.subject a', elem).attr('href')!, baseUrl).href;
                 return cache.tryGet(link, async () => {
                     const html = await ofetch(link);
                     const $ = load(html);
@@ -47,7 +49,7 @@ async function handler(ctx) {
                     const summary = 'Reply: ' + $('.posts', elem).text();
                     return {
                         link,
-                        title: $('.subject a', elem).attr('title'),
+                        title: $('.subject a', elem).attr('title')!,
                         pubDate: parseDate($('.lastpost .time', elem).text()),
                         description: fullText ? summary + '<br><br>' + fullText : summary,
                         author: $('.author a', elem).text(),

@@ -1,7 +1,8 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
@@ -29,7 +30,7 @@ export const route: Route = {
 async function handler() {
     const baseUrl = 'https://newswav.com';
 
-    const response = await ofetch(`https://feed-api.newswav.com/api/web/feeds/latest`, {
+    const response = await ofetch('https://feed-api.newswav.com/api/web/feeds/latest', {
         query: {
             languages: 'en,ms,zh',
         },
@@ -58,7 +59,8 @@ async function handler() {
                     item.description = `<video controls preload="metadata" poster="${video.thumbnailUrl}"><source src="${video.videoUrl}" type="${video.mimeType}"></video><br>${video.content}`;
 
                     return item;
-                } else if (response.contentType === 'podcast') {
+                }
+                if (response.contentType === 'podcast') {
                     const podcast = response.meta.podcast;
                     item.description = `<audio controls"><source src="${podcast.url}" type="audio/mpeg"></audio><br>${podcast.content}`;
                     item.enclosure_type = 'audio/mpeg';

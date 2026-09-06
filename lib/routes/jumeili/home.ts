@@ -1,8 +1,9 @@
+import { load } from 'cheerio';
+
 import { config } from '@/config';
-import { Route } from '@/types';
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { load } from 'cheerio';
 
 export const route: Route = {
     path: '/home/:column?',
@@ -23,14 +24,18 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['www.jumeili.cn/', 'jumeili.cn/'],
+            source: ['www.jumeili.cn/'],
+            target: '/home/:column?',
+        },
+        {
+            source: ['jumeili.cn/'],
             target: '/home/:column?',
         },
     ],
     name: '首页资讯',
     maintainers: ['kjasn'],
     handler,
-    description: `:::Warning
+    description: `::: Warning
 未登录用户无法获取完整文章内容，只能看到预览内容。想要获取完整文章内容，需要设置\`JUMEILI_COOKIE\`环境变量。
 :::`,
 };
@@ -42,20 +47,16 @@ async function handler(ctx) {
     const link = `${baseUrl}/ws/AjaxService.ashx?act=index_article&page=1&pageSize=20&column=${column}`;
 
     const cookie = config.jumeili.cookie;
-    const response = await ofetch(link, {
+    const response = await ofetch<string>(link, {
         headers: {
-            referer: baseUrl,
             'user-agent': config.trueUA,
             accept: 'application/json, text/javascript, */*; q=0.01',
-            cookie,
+            cookie: cookie!,
         },
     });
 
-    // parse 两次
-    let data = JSON.parse(response);
-    if (data && typeof data === 'string') {
-        data = JSON.parse(data);
-    }
+    const body = response.trimStart().startsWith('"') ? JSON.parse(response) : response;
+    const data = JSON.parse(body);
 
     let items = data.items.map((item) => ({
         title: item.title,
@@ -72,7 +73,6 @@ async function handler(ctx) {
                 cache.tryGet(item.link, async () => {
                     const article = await ofetch(item.link, {
                         headers: {
-                            referer: baseUrl,
                             'user-agent': config.trueUA,
                             accept: 'application/json, text/javascript, */*; q=0.01',
                             cookie,

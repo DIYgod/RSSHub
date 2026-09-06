@@ -1,9 +1,11 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
+
 const rootUrl = 'https://www.thecover.cn';
 
 const nodes = {
@@ -45,7 +47,7 @@ export const route: Route = {
 | 3892 | 3560 | 3909 | 3686 | 11     | 3902  | 3889 | 3689 | 1    | 4002     | 12   | 46   | 4    | 21   | 17     |`,
 };
 
-async function handler(ctx) {
+async function handler(ctx): Promise<Data> {
     const id = ctx.req.param('id') ?? '3892';
     const targetUrl = rootUrl + `/channel_${id}`;
     const resp = await got({
@@ -55,13 +57,14 @@ async function handler(ctx) {
     const $ = load(resp.data);
     const list = $('a.link-to-article')
         .toArray()
-        .filter((item) => $(item).attr('href').startsWith('/'))
-        .map((item) => ({
+        .filter((item) => $(item).attr('href')!.startsWith('/'))
+        .map((item): DataItem => ({
             link: rootUrl + $(item).attr('href'),
+            title: '',
         }));
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const detailResponse = await got({
                     method: 'get',
                     url: item.link,
@@ -71,7 +74,7 @@ async function handler(ctx) {
                 item.description = content('section.article-content').html();
                 const info = content('span', '.props-of-title');
                 item.author = info.eq(0).text();
-                item.pubDate = timezone(parseDate(info.eq(1).text(), 'YYYY-MM-DD HH:mm'), +8);
+                item.pubDate = timezone(parseDate(info.eq(1).text(), 'YYYY-MM-DD HH:mm'), 8);
                 return item;
             })
         )
@@ -80,8 +83,9 @@ async function handler(ctx) {
     return {
         title: `${nodes[id]}-封面新闻`,
         link: targetUrl,
-        description: `封面新闻作为华西都市报深度融合转型和打造新型主流媒体的载体，牢固确立移动优先战略，创新移动新闻产品，打造移动传播矩阵，封面新闻的传播力、引导力、影响力和公信力不断得到各方肯定。封面新闻突破千万的用户下载量，呈现出以四川为主阵地的全国分布态势，用户年龄构成以20-35岁为主，“亿万年轻人的生活方式”的定位初步得到体现。`,
-        language: 'zh-cn',
+        description:
+            '封面新闻作为华西都市报深度融合转型和打造新型主流媒体的载体，牢固确立移动优先战略，创新移动新闻产品，打造移动传播矩阵，封面新闻的传播力、引导力、影响力和公信力不断得到各方肯定。封面新闻突破千万的用户下载量，呈现出以四川为主阵地的全国分布态势，用户年龄构成以20-35岁为主，“亿万年轻人的生活方式”的定位初步得到体现。',
+        language: 'zh-CN',
         item: items,
     };
 }

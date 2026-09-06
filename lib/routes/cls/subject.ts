@@ -1,30 +1,29 @@
-import { Route } from '@/types';
-
-import cache from '@/utils/cache';
-import got from '@/utils/got';
 import { load } from 'cheerio';
-import { parseDate } from '@/utils/parse-date';
-import { art } from '@/utils/render';
-import path from 'node:path';
 
-import { rootUrl, getSearchParams } from './utils';
+import type { Route } from '@/types';
+import cache from '@/utils/cache';
+import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/parse-date';
+
+import { renderDescription } from './templates/description';
+import { getSearchParams, rootUrl } from './utils';
 
 export const handler = async (ctx) => {
     const { id = '1103' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 20;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 20;
 
     const currentUrl = new URL(`subject/${id}`, rootUrl).href;
     const apiUrl = new URL(`api/subject/${id}/article`, rootUrl).href;
 
-    const { data: response } = await got(apiUrl, {
-        searchParams: getSearchParams({
+    const response = await ofetch(apiUrl, {
+        query: getSearchParams({
             Subject_Id: id,
         }),
     });
 
     let items = response.data.slice(0, limit).map((item) => {
         const title = item.article_title;
-        const description = art(path.join(__dirname, 'templates/description.art'), {
+        const description = renderDescription({
             intro: item.article_brief,
         });
         const guid = `cls-${item.article_id}`;
@@ -51,19 +50,19 @@ export const handler = async (ctx) => {
     items = await Promise.all(
         items.map((item) =>
             cache.tryGet(item.link, async () => {
-                const { data: detailResponse } = await got(item.link);
+                const detailResponse = await ofetch(item.link);
 
                 const $$ = load(detailResponse);
 
-                const data = JSON.parse($$('script#__NEXT_DATA__').text())?.props?.initialState?.detail?.articleDetail ?? undefined;
+                const data = JSON.parse($$('script#__NEXT_DATA__').text())?.props?.pageProps?.articleDetail ?? undefined;
 
                 if (!data) {
                     return item;
                 }
 
                 const title = data.title;
-                const description = art(path.join(__dirname, 'templates/description.art'), {
-                    images: data.images.map((i) => ({
+                const description = renderDescription({
+                    images: data.images?.map((i) => ({
                         src: i,
                         alt: title,
                     })),
@@ -76,7 +75,7 @@ export const handler = async (ctx) => {
                 item.title = title;
                 item.description = description;
                 item.pubDate = parseDate(data.ctime, 'X');
-                item.category = [...new Set(data.subject?.flatMap((s) => [s.name, ...(s.subjectCategory?.flatMap((c) => [c.columnName || [], c.name || []]) ?? [])]) ?? [])].filter(Boolean);
+                item.category = [...new Set(data.subject?.flatMap((s) => [s.name, ...(s.subjectCategory?.flatMap((c) => [c.columnName || [], c.name || []]) ?? [])]))].filter(Boolean);
                 item.author = data.author?.name ?? item.author;
                 item.guid = guid;
                 item.id = guid;
@@ -95,11 +94,11 @@ export const handler = async (ctx) => {
         )
     );
 
-    const { data: currentResponse } = await got(currentUrl);
+    const currentResponse = await ofetch(currentUrl);
 
     const $ = load(currentResponse);
 
-    const data = JSON.parse($('script#__NEXT_DATA__').text())?.props?.initialProps?.pageProps?.subjectDetail ?? undefined;
+    const data = JSON.parse($('script#__NEXT_DATA__').text())?.props?.pageProps?.data ?? undefined;
 
     const author = '财联社';
     const image = data?.img ?? undefined;
@@ -124,9 +123,8 @@ export const route: Route = {
     example: '/cls/subject/1103',
     parameters: { category: '分类，默认为 1103，即A股盘面直播，可在对应话题页 URL 中找到' },
     description: `::: tip
-  若订阅 [有声早报](https://www.cls.cn/subject/1151)，网址为 \`https://www.cls.cn/subject/1151\`。截取 \`https://www.cls.cn/subject/\` 到末尾的部分 \`1151\` 作为参数填入，此时路由为 [\`/cls/subject/1151\`](https://rsshub.app/cls/subject/1151)。
-:::
-    `,
+若订阅 [有声早报](https://www.cls.cn/subject/1151)，网址为 \`https://www.cls.cn/subject/1151\`。截取 \`https://www.cls.cn/subject/\` 到末尾的部分 \`1151\` 作为参数填入，此时路由为 [\`/cls/subject/1151\`](https://rsshub.app/cls/subject/1151)。
+:::`,
     categories: ['finance'],
 
     features: {

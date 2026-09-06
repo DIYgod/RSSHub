@@ -1,6 +1,7 @@
-import { Route } from '@/types';
-import cache from './cache';
+import type { Route } from '@/types';
 import { parseDate } from '@/utils/parse-date';
+
+import cache from './cache';
 
 export const route: Route = {
     path: '/kg/reply/:playId',
@@ -15,7 +16,7 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    name: '用户作品评论动态',
+    name: '全民K歌 - 用户作品评论动态',
     maintainers: ['zhangxiang012'],
     handler,
 };

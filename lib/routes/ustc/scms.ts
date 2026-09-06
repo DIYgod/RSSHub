@@ -1,7 +1,8 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 // import InvalidParameterError from '@/errors/types/invalid-parameter';
@@ -38,9 +39,9 @@ export const route: Route = {
     maintainers: ['boxie123'],
     handler,
     url: 'scms.ustc.edu.cn/',
-    description: `| 院内新闻 | 通知公告 | 科研动态 | 学术活动 | 其他 |
-| -------- | -------- | -------- | -------- | -------- |
-| ynxw     | tzgg     | kydt     | xshd     | 自定义id  |`,
+    description: `| 院内新闻 | 通知公告 | 科研动态 | 学术活动 | 其他      |
+| -------- | -------- | -------- | -------- | --------- |
+| ynxw     | tzgg     | kydt     | xshd     | 自定义 id |`,
 };
 
 async function handler(ctx) {
@@ -59,11 +60,11 @@ async function handler(ctx) {
 
     let items = $('#wp_news_w6 > .wp_article_list > .list_item')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const elem = $(item);
-            const title = elem.find('.Article_Title > a').attr('title').trim();
+            const title = elem.find('.Article_Title > a').attr('title')!.trim();
             let link = elem.find('.Article_Title > a').attr('href');
-            link = link.startsWith('/') ? host + link : link;
+            link = link!.startsWith('/') ? host + link : link;
             // Assume that the articles are published at 12:00 UTC+8
             const pubDate = timezone(parseDate(elem.find('.Article_PublishDate').text(), 'YYYY-MM-DD'), -4);
             return {
@@ -75,11 +76,10 @@ async function handler(ctx) {
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
-                let desc = '';
+            cache.tryGet(item.link!, async () => {
                 try {
                     const response = await got(item.link);
-                    desc = load(response.data)('div.wp_articlecontent').html();
+                    const desc = load(response.data)('div.wp_articlecontent').html();
                     item.description = desc;
                 } catch {
                     // Intranet only contents

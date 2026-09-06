@@ -1,6 +1,7 @@
-import { Route } from '@/types';
-import got from '@/utils/got';
 import { load } from 'cheerio';
+
+import type { Route } from '@/types';
+import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
@@ -41,12 +42,12 @@ async function handler(ctx) {
         description: $('meta[name="Description"]').attr('content'),
         link: `https://guangfu.bjx.com.cn/${type}/`,
         item: list.toArray().map((item) => {
-            item = $(item);
+            const $item = $(item);
             return {
-                title: item.find('a').attr('title'),
-                description: item.html(),
-                link: item.find('a').attr('href'),
-                pubDate: parseDate(item.find('span').text()),
+                title: $item.find('a').attr('title')!,
+                description: $item.html(),
+                link: $item.find('a').attr('href'),
+                pubDate: parseDate($item.find('span').text()),
             };
         }),
     };

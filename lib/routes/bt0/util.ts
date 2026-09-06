@@ -1,5 +1,7 @@
 import { CookieJar } from 'tough-cookie';
+
 import got from '@/utils/got';
+
 const cookieJar = new CookieJar();
 
 async function doGot(num, host, link) {
@@ -9,15 +11,18 @@ async function doGot(num, host, link) {
     const response = await got.get(link, {
         cookieJar,
     });
-    const data = response.data;
-    if (typeof data === 'string') {
+    const body: string = response.body;
+    let data;
+    try {
+        data = JSON.parse(body);
+    } catch {
         const regex = /document\.cookie\s*=\s*"([^"]*)"/;
-        const match = data.match(regex);
+        const match = body.match(regex);
         if (!match) {
             throw new Error('api error');
         }
         cookieJar.setCookieSync(match[1], host);
-        return doGot(++num, host, link);
+        return doGot(num + 1, host, link);
     }
     return data;
 }
@@ -31,7 +36,7 @@ const genSize = (sizeStr) => {
         return 0;
     }
 
-    const value = Number.parseFloat(match[1]);
+    const value = Number(match[1]);
     const unit = match[3].toUpperCase();
 
     let bytes;

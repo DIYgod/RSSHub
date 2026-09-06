@@ -1,6 +1,7 @@
 import { load } from 'cheerio';
-import { parseDate } from '@/utils/parse-date';
+
 import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/parse-date';
 
 export const renderHTML = (node) => {
     if (!node) {
@@ -12,32 +13,35 @@ export const renderHTML = (node) => {
 
     switch (node.type) {
         case 'a':
-            return `<a ${Object.keys(node.attribs)
-                .map((key) => `${key}="${node.attribs[key]}"`)
+            return `<a ${Object.entries(node.attribs)
+                .map(([key, value]) => `${key}="${value}"`)
                 .join(' ')}>${renderHTML(node.children)}</a>`;
         case 'div':
             return `<div ${
                 node.attribs
-                    ? Object.keys(node.attribs)
-                          .map((key) => `${key}="${node.attribs[key]}"`)
+                    ? Object.entries(node.attribs)
+                          .map(([key, value]) => `${key}="${value}"`)
                           .join(' ')
                     : ''
             }>${renderHTML(node.children)}</div>`;
         case 'blockquote-quote':
             return `<blockquote>${renderHTML(node.children)}</blockquote>`;
         case 'iframe':
-            return `<iframe ${Object.keys(node.attribs)
-                .map((key) => `${key}="${node.attribs[key]}"`)
+            return `<iframe ${Object.entries(node.attribs)
+                .map(([key, value]) => `${key}="${value}"`)
                 .join(' ')}></iframe>`;
         case 'leading':
         case 'img':
             return `<figure><img ${
                 node.attribs
-                    ? Object.keys(node.attribs)
-                          .map((key) => `${key}="${node.attribs[key]}"`)
+                    ? Object.entries(node.attribs)
+                          .map(([key, value]) => `${key}="${value}"`)
                           .join(' ')
-                    : `url="${node.url}"` // for leading
-            }><figcaption>${node.attribs?.title ?? node.title}</figcaption></figure>`;
+                    : `url="${node.url}"`
+            }><figcaption>${
+                // for leading
+                node.attribs?.title ?? node.title
+            }</figcaption></figure>`;
         case 'em':
         case 'h3':
         case 'li':
@@ -77,7 +81,7 @@ export const parseItem = async (item) => {
     item.summary = renderHTML(article.summary.json);
     item.description = renderHTML(article.subHeadline.json) + renderHTML(article.images.find((i) => i.type === 'leading')) + renderHTML(article.body.json);
     item.updated = parseDate(article.updatedDate, 'x');
-    item.category = [...new Set([...article.topics.map((t) => t.name), ...article.sections.flatMap((t) => t.value.map((v) => v.name)), ...article.keywords.map((k) => k?.split(', '))])];
+    item.category = [...new Set([...article.topics.map((t) => t.name), ...(article.sectionsV2?.flatMap((t) => t.value.map((v) => v.name)) ?? []), ...article.keywords.map((k) => k?.split(', '))])];
 
     // N.B. gallery in article is not rendered
     // e.g., { type: 'div', attribs: { class: 'scmp-photo-gallery', 'data-gallery-nid': '3239409' }}

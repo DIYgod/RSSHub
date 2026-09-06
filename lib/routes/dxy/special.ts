@@ -1,10 +1,11 @@
-import { Route } from '@/types';
+import { config } from '@/config';
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
-import { phoneBaseUrl, webBaseUrl, generateNonce, sign, getPost } from './utils';
-import { config } from '@/config';
-import { RecommendListData, SpecialBoardDetail } from './types';
+
+import type { RecommendListData, SpecialBoardDetail } from './types';
+import { generateNonce, getPost, phoneBaseUrl, sign, webBaseUrl } from './utils';
 
 export const route: Route = {
     path: '/bbs/special/:specialId',
@@ -28,7 +29,7 @@ async function handler(ctx) {
     const specialId = ctx.req.param('specialId');
     const { limit = '10' } = ctx.req.query();
 
-    const specialDetail = (await cache.tryGet(`dxy:special:detail:${specialId}`, async () => {
+    const specialDetail = await cache.tryGet(`dxy:special:detail:${specialId}`, async () => {
         const detailParams = {
             specialId,
             requestType: 'h5',
@@ -36,7 +37,7 @@ async function handler(ctx) {
             noncestr: generateNonce(8, 'number'),
         };
 
-        const detail = await ofetch(`${phoneBaseUrl}/newh5/bbs/special/detail`, {
+        const detail = await ofetch<{ code: string; message: string; data: SpecialBoardDetail }>(`${phoneBaseUrl}/newh5/bbs/special/detail`, {
             query: {
                 ...detailParams,
                 sign: sign(detailParams),
@@ -46,9 +47,9 @@ async function handler(ctx) {
             throw new Error(detail.message);
         }
         return detail.data;
-    })) as SpecialBoardDetail;
+    });
 
-    const recommendList = (await cache.tryGet(
+    const recommendList = await cache.tryGet(
         `dxy:special:recommend-list-v3:${specialId}`,
         async () => {
             const listParams = {
@@ -60,7 +61,7 @@ async function handler(ctx) {
                 noncestr: generateNonce(8, 'number'),
             };
 
-            const recommendList = await ofetch(`${phoneBaseUrl}/newh5/bbs/special/post/recommend-list-v3`, {
+            const recommendList = await ofetch<{ code: string; message: string; data: RecommendListData }>(`${phoneBaseUrl}/newh5/bbs/special/post/recommend-list-v3`, {
                 query: {
                     ...listParams,
                     sign: sign(listParams),
@@ -73,7 +74,7 @@ async function handler(ctx) {
         },
         config.cache.routeExpire,
         false
-    )) as RecommendListData;
+    );
 
     const list = recommendList.result.map((item) => {
         const { postInfo, dataTime, entityId } = item;
@@ -88,7 +89,7 @@ async function handler(ctx) {
         };
     });
 
-    const items = await Promise.all(list.map((item) => getPost(item, cache.tryGet)));
+    const items = await Promise.all(list.map((item) => getPost(item)));
 
     return {
         title: specialDetail.name,

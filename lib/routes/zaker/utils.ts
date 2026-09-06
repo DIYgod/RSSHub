@@ -1,13 +1,13 @@
-import { DataItem } from '@/types';
-
+import type { CheerioAPI } from 'cheerio';
+import { load } from 'cheerio';
 import CryptoJS from 'crypto-js';
-import cache from '@/utils/cache';
-import ofetch from '@/utils/ofetch';
+
 import { config } from '@/config';
+import type { DataItem } from '@/types';
+import cache from '@/utils/cache';
 import logger from '@/utils/logger';
-import * as cheerio from 'cheerio';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import ofetch from '@/utils/ofetch';
+import { parseRelativeDate } from '@/utils/parse-date';
 
 const hints = ['globalThis', 'headless', 'languages', 'permHook', 'vendor', 'webDriverValue', 'webdriver'];
 export const baseUrl = 'https://www.myzaker.com';
@@ -52,7 +52,13 @@ export const getSafeLineCookieWithData = async (link): Promise<{ cookie: string;
     const cacheAge = 3600;
     const cacheIn = await cache.get(cacheKey, false);
     if (cacheIn) {
-        return JSON.parse(cacheIn);
+        const cookie = JSON.parse(cacheIn);
+        const data = await ofetch<string>(link, {
+            headers: {
+                Cookie: cookie,
+            },
+        });
+        return { cookie, data };
     }
     const apiBaseUrl = 'https://challenge.rivers.chaitin.cn/captcha/api';
 
@@ -60,8 +66,8 @@ export const getSafeLineCookieWithData = async (link): Promise<{ cookie: string;
     const session = headerResponse.headers
         .getSetCookie()
         .find((e) => e.startsWith('sl-session'))
-        ?.split(';')[0]
-        .split('sl-session=')[1];
+        ?.split(';', 1)[0]
+        .split('sl-session=', 2)[1];
     const onceId = headerResponse._data.match(/once_id:\s*"(.*?)",/)?.[1];
     logger.debug(`getSafeLineCookie: sl-session=${session}, onceId=${onceId}`);
     if (!/window\.captcha/.test(headerResponse._data)) {
@@ -69,7 +75,7 @@ export const getSafeLineCookieWithData = async (link): Promise<{ cookie: string;
         return {
             cookie: headerResponse.headers
                 .getSetCookie()
-                .map((c) => c.split(';')[0])
+                .map((c) => c.split(';', 1)[0])
                 .join('; '),
             data: headerResponse._data,
         };
@@ -84,7 +90,7 @@ export const getSafeLineCookieWithData = async (link): Promise<{ cookie: string;
         query: {
             once_id: onceId,
             v: '1.0.0',
-            hints: hints.sort(() => Math.random() - 0.5).join(','),
+            hints: hints.toSorted(() => Math.random() - 0.5).join(','),
         },
     });
 
@@ -121,7 +127,7 @@ export const getSafeLineCookieWithData = async (link): Promise<{ cookie: string;
         return {
             cookie: headerResponse.headers
                 .getSetCookie()
-                .map((c) => c.split(';')[0])
+                .map((c) => c.split(';', 1)[0])
                 .join('; '),
             data: headerResponse._data,
         };
@@ -135,7 +141,7 @@ export const getSafeLineCookieWithData = async (link): Promise<{ cookie: string;
 
     const cookie = response.headers
         .getSetCookie()
-        .map((c) => c.split(';')[0])
+        .map((c) => c.split(';', 1)[0])
         .join('; ');
     logger.debug(`getSafeLineCookie: ${cookie}`);
 
@@ -146,11 +152,11 @@ export const getSafeLineCookieWithData = async (link): Promise<{ cookie: string;
     };
 };
 
-export const parseList = ($: cheerio.CheerioAPI) => {
+export const parseList = ($: CheerioAPI): DataItem[] => {
     const winPageData = JSON.parse(
         $('script:contains("window.WinPageData")')
             .text()
-            .match(/window\.WinPageData\s*=\s*({.*})/)?.[1] ?? '{}'
+            .match(/window\.WinPageData\s*=\s*(\{.*\})/)?.[1] ?? '{}'
     );
 
     return winPageData.data.article.map((item) => ({
@@ -158,20 +164,20 @@ export const parseList = ($: cheerio.CheerioAPI) => {
         description: item.desc,
         link: 'https:' + item.url,
         author: item.author_name,
-        pubDate: timezone(parseDate(item.date, 'MM月DD日'), +8),
+        pubDate: parseRelativeDate(item.date, 'MM月DD日'),
         category: item.tag.map((t) => t.tag),
         image: item.thumbnail_mpic,
-    })) as DataItem[];
+    }));
 };
 
 export const fetchItem = async (item: DataItem, cookie: string) => {
     const response = await ofetch(item.link!, {
         headers: {
-            Cookie: cookie as string,
+            Cookie: cookie,
         },
     });
 
-    const $ = cheerio.load(response);
+    const $ = load(response);
 
     const content = $('div.article_content div');
     content.find('img').each((_, img) => {

@@ -1,7 +1,8 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
@@ -23,11 +24,9 @@ export const route: Route = {
     name: 'News',
     maintainers: ['quiniapiezoelectricity'],
     handler,
-    description: `
-::: tip
-For example, the category for the page https://www.koreaherald.com/Business and https://www.koreaherald.com/Business/Market would be \`/Business\` and \`/Business/Market\` respectively. 
-:::
-`,
+    description: `::: tip
+For example, the category for the page <https://www.koreaherald.com/Business> and <https://www.koreaherald.com/Business/Market> would be \`/Business\` and \`/Business/Market\` respectively.
+:::`,
     radar: [
         {
             source: ['www.koreaherald.com/:category'],
@@ -45,7 +44,7 @@ async function handler(ctx) {
     const title = $('ul.gnb').find('[class="on"]').length > 0 ? $('ul.gnb').find('[class="on"]').text() : $('div.nav_area > a.category').text();
     const list = $('article.recent_news > ul.news_list > li')
         .toArray()
-        .map((item) => new URL($(item).find('a').attr('href'), baseUrl).href);
+        .map((item) => new URL($(item).find('a').attr('href')!, baseUrl).href);
     const items = await Promise.all(
         list.map((url) =>
             cache.tryGet(url, async () => {
@@ -55,7 +54,7 @@ async function handler(ctx) {
                 return {
                     title: metadata.headline,
                     link: url,
-                    pubDate: timezone(parseDate(metadata.datePublished), +9),
+                    pubDate: timezone(parseDate(metadata.datePublished), 9),
                     author: metadata.author.name,
                     description: $('article.article-body').html(),
                 };

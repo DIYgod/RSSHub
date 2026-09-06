@@ -1,13 +1,15 @@
-import { Route } from '@/types';
-import cache from '@/utils/cache';
-import got from '@/utils/got';
 import { load } from 'cheerio';
 import iconv from 'iconv-lite';
+
+import type { Route } from '@/types';
+import cache from '@/utils/cache';
+import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+
 const baseUrl = 'http://wlwz.changsha.gov.cn';
 
 export const route: Route = {
-    path: '/hunan/changsha/major-email',
+    path: '/changsha/major-email',
     categories: ['government'],
     example: '/gov/hunan/changsha/major-email',
     parameters: {},
@@ -24,14 +26,11 @@ export const route: Route = {
             source: ['wlwz.changsha.gov.cn/webapp/cs2020/email/*'],
         },
     ],
-    name: '长沙市人民政府',
+    name: '长沙市人民政府 市长信箱',
     maintainers: ['shansing'],
     handler,
     url: 'wlwz.changsha.gov.cn/webapp/cs2020/email/*',
-    description: `#### 市长信箱 {#hu-nan-sheng-ren-min-zheng-fu-chang-sha-shi-ren-min-zheng-fu-shi-zhang-xin-xiang}
-
-
-可能仅限中国大陆服务器访问，以实际情况为准。`,
+    description: '可能仅限中国大陆服务器访问，以实际情况为准。',
 };
 
 async function handler() {
@@ -44,12 +43,12 @@ async function handler() {
         .slice(1)
         .toArray()
         .map((tr) => {
-            tr = $(tr);
+            const $tr = $(tr);
 
             return {
-                title: tr.find('td[title]').attr('title'),
-                link: baseUrl + tr.find('td[title] > a').attr('href'),
-                author: tr.find('td:last').text(),
+                title: $tr.find('td[title]').attr('title')!,
+                link: baseUrl + $tr.find('td[title] > a').attr('href'),
+                author: $tr.find('td:last').text(),
             };
         });
 
@@ -63,8 +62,8 @@ async function handler() {
                 const $ = load(postPage.data);
 
                 const data = {
-                    title: item.title,
-                    description: $('.letter-details').html().trim(),
+                    title: item.title!,
+                    description: $('.letter-details').html()!.trim(),
                     pubDate: parseDate($('.letter-details div:first table tr:nth-child(2) > .td_label2').text() + ' +0800', 'YYYY-MM-DD HH:mm:ss ZZ'),
                     link: item.link,
                     author: item.author,

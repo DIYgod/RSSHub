@@ -1,10 +1,11 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import InvalidParameterError from '@/errors/types/invalid-parameter';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
-import InvalidParameterError from '@/errors/types/invalid-parameter';
 
 const map = new Map([
     ['tzgg', { title: '中国科学技术大学电子工程与信息科学系 - 通知公告', id: '2702' }],
@@ -54,12 +55,12 @@ async function handler(ctx) {
     const list = $('div[portletmode=simpleList]')
         .find('article')
         .toArray()
-        .map((item) => {
-            item = $(item);
-            const title = item.find('h4 > a').eq(1).attr('title').trim();
-            let link = item.find('h4 > a').attr('href');
-            link = link.startsWith('/') ? host + link : link;
-            const pubDate = timezone(parseDate(item.find('.post-date > time').text().replace('发布时间：', ''), 'YYYY-MM-DD'), +8);
+        .map((item): DataItem => {
+            const $item = $(item);
+            const title = $item.find('h4 > a').eq(1).attr('title')!.trim();
+            let link = $item.find('h4 > a').attr('href');
+            link = link!.startsWith('/') ? host + link : link;
+            const pubDate = timezone(parseDate($item.find('.post-date > time').text().replace('发布时间：', ''), 'YYYY-MM-DD'), 8);
             return {
                 title,
                 pubDate,
@@ -69,11 +70,10 @@ async function handler(ctx) {
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
-                let desc = '';
+            cache.tryGet(item.link!, async () => {
                 try {
                     const response = await got(item.link);
-                    desc = load(response.data)('div.wp_articlecontent').html();
+                    const desc = load(response.data)('div.wp_articlecontent').html();
                     item.description = desc;
                 } catch {
                     // intranet only contents

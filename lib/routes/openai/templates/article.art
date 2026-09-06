@@ -1,2 +1,0 @@
-<img src="{{ imageSrc }}" alt="{{ imageAlt }}"/>
-{{@ content }}

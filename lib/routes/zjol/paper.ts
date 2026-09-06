@@ -1,9 +1,10 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import InvalidParameterError from '@/errors/types/invalid-parameter';
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
-import InvalidParameterError from '@/errors/types/invalid-parameter';
 
 export const route: Route = {
     path: '/paper/:id?',
@@ -57,7 +58,7 @@ async function handler(ctx) {
 
     const $ = load(response.data);
 
-    let items = $(query)
+    let items: any[] = $(query)
         .toArray()
         .map((a) => `${currentUrl}/${$(a).attr('href')}`);
 
@@ -84,7 +85,7 @@ async function handler(ctx) {
 
     items = await Promise.all(
         items
-            .filter((a) => (id === 'jnyb' ? /\?div=1$/.test(a) : true))
+            .filter((a) => (id === 'jnyb' ? a.endsWith('?div=1') : true))
             .slice(0, limit)
             .map((link) =>
                 cache.tryGet(link, async () => {
@@ -102,7 +103,7 @@ async function handler(ctx) {
                     return {
                         title,
                         pubDate,
-                        link: link.split('?')[0],
+                        link: link.split('?', 1)[0],
                         description: content('.main-article-content').html(),
                     };
                 })

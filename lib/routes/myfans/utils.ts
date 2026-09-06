@@ -1,7 +1,8 @@
-import ofetch from '@/utils/ofetch';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import cache from '@/utils/cache';
-import { Post, UserProfile } from './types';
+import ofetch from '@/utils/ofetch';
+
+import type { Post, UserProfile } from './types';
 
 const apiBaseUrl = 'https://api.myfans.jp';
 export const baseUrl = 'https://myfans.jp';
@@ -24,10 +25,10 @@ export const showByUsername = (username: string) =>
         }
 
         return accountInfo;
-    }) as Promise<UserProfile>;
+    });
 
 export const getPostByAccountId = async (accountId) => {
-    const post = await ofetch(`${apiBaseUrl}/api/v2/users/${accountId}/posts`, {
+    const post = await ofetch<{ data: Post[] }>(`${apiBaseUrl}/api/v2/users/${accountId}/posts`, {
         headers,
         query: {
             sort_key: 'publish_start_at',
@@ -35,5 +36,5 @@ export const getPostByAccountId = async (accountId) => {
         },
     });
 
-    return post.data as Promise<Post[]>;
+    return post.data;
 };

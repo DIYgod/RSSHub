@@ -1,6 +1,7 @@
-import { Route } from '@/types';
-import got from '@/utils/got';
 import { load } from 'cheerio';
+
+import type { Route } from '@/types';
+import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
 /* 研究生招生网通知公告*/
@@ -40,12 +41,12 @@ async function handler() {
 
     const content = $('.news_list li');
     const items = content.toArray().map((elem) => {
-        elem = $(elem);
-        const a = elem.find('a');
+        const $elem = $(elem);
+        const a = $elem.find('a');
         return {
-            link: new URL(a.attr('href'), host).href,
-            title: a.attr('title'),
-            pubDate: parseDate(elem.find('.news_meta').text(), 'YYYY-MM-DD'),
+            link: new URL(a.attr('href')!, host).href,
+            title: a.attr('title')!,
+            pubDate: parseDate($elem.find('.news_meta').text(), 'YYYY-MM-DD'),
         };
     });
 

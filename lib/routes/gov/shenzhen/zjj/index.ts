@@ -1,9 +1,10 @@
-import { Route } from '@/types';
-import got from '@/utils/got';
 import { load } from 'cheerio';
+
+import InvalidParameterError from '@/errors/types/invalid-parameter';
+import type { Route } from '@/types';
+import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
-import InvalidParameterError from '@/errors/types/invalid-parameter';
 
 const config = {
     tzgg: {
@@ -13,7 +14,7 @@ const config = {
 };
 
 export const route: Route = {
-    path: '/shenzhen/zjj/xxgk/:caty',
+    path: '/zjj/xxgk/:caty',
     categories: ['government'],
     example: '/gov/shenzhen/zjj/xxgk/tzgg',
     parameters: { caty: '信息类别' },
@@ -30,7 +31,7 @@ export const route: Route = {
             source: ['zjj.sz.gov.cn/xxgk/:caty'],
         },
     ],
-    name: '深圳市住房和建设局',
+    name: '住房和建设局',
     maintainers: ['lonn'],
     handler,
     description: `| 通知公告 |
@@ -55,13 +56,13 @@ async function handler(ctx) {
         .toArray()
         // 使用“map()”方法遍历数组，并从每个元素中解析需要的数据。
         .map((item) => {
-            item = $(item);
-            const a = item.find('a').first();
+            const $item = $(item);
+            const a = $item.find('a');
             return {
                 title: a.text(),
                 // `link` 需要一个绝对 URL，但 `a.attr('href')` 返回一个相对 URL。
                 link: a.attr('href'),
-                pubDate: timezone(parseDate(item.find('span').first().text(), 'YY-MM-DD'), 0),
+                pubDate: timezone(parseDate($item.find('span').text(), 'YY-MM-DD'), 0),
             };
         });
 

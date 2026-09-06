@@ -1,10 +1,11 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
-import { finishArticleItem } from '@/utils/wechat-mp';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
+import { finishArticleItem } from '@/utils/wechat-mp';
 
 const oaa_base_url = 'http://oaa.tju.edu.cn/';
 const repo_url = 'https://github.com/DIYgod/RSSHub/issues';
@@ -16,11 +17,11 @@ const pageType = (href) => {
     const url = new URL(href);
     if (url.hostname === 'mp.weixin.qq.com') {
         return 'wechat-mp';
-    } else if (url.hostname === 'oaa.tju.edu.cn') {
-        return 'tju-oaa';
-    } else {
-        return 'unknown';
     }
+    if (url.hostname === 'oaa.tju.edu.cn') {
+        return 'tju-oaa';
+    }
+    return 'unknown';
 };
 
 export const route: Route = {
@@ -61,7 +62,7 @@ async function handler(ctx) {
             subtitle = '新闻动态';
             path = 'xwdt.htm';
     }
-    let response = null;
+    let response: any = null;
     try {
         response = await got(oaa_base_url + path, {
             headers: {
@@ -86,50 +87,48 @@ async function handler(ctx) {
                 },
             ],
         };
-    } else {
-        const $ = load(response.data);
-        const list = $('.notice_l > ul > li > dl > dt')
-            .toArray()
-            .map((item) => {
-                const href = $('a', item).attr('href');
-                const type = pageType(href);
-                return {
-                    title: $('h2', item).text(),
-                    link: type === 'in-site' ? oaa_base_url + href : href,
-                    pubDate: timezone(parseDate($('.fl_01_r_time', item).text(), 'DDYYYY-MM'), +8),
-                    type,
-                };
-            });
-
-        const items = await Promise.all(
-            list.map((item) => {
-                switch (item.type) {
-                    case 'wechat-mp':
-                        return finishArticleItem(item);
-                    case 'tju-oaa':
-                    case 'in-site':
-                        return cache.tryGet(item.link, async () => {
-                            let detailResponse = null;
-                            try {
-                                detailResponse = await got(item.link, { https: { rejectUnauthorized: false } });
-                                const content = load(detailResponse.data);
-                                item.description = content('.v_news_content').html();
-                            } catch {
-                                // ignore error handler
-                            }
-                            return item;
-                        });
-                    default:
-                        return item;
-                }
-            })
-        );
-
-        return {
-            title: '天津大学教务处 - ' + subtitle,
-            link: oaa_base_url + path,
-            description: null,
-            item: items,
-        };
     }
+    const $ = load(response.data);
+    const list = $('.notice_l > ul > li > dl > dt')
+        .toArray()
+        .map((item): DataItem & { type: string } => {
+            const href = $('a', item).attr('href');
+            const type = pageType(href);
+            return {
+                title: $('h2', item).text(),
+                link: type === 'in-site' ? oaa_base_url + href : href,
+                pubDate: timezone(parseDate($('.fl_01_r_time', item).text(), 'DDYYYY-MM'), 8),
+                type,
+            };
+        });
+
+    const items = await Promise.all(
+        list.map((item) => {
+            switch (item.type) {
+                case 'wechat-mp':
+                    return finishArticleItem(item);
+                case 'tju-oaa':
+                case 'in-site':
+                    return cache.tryGet(item.link!, async () => {
+                        try {
+                            const detailResponse = await got(item.link);
+                            const content = load(detailResponse.data);
+                            item.description = content('.v_news_content').html();
+                        } catch {
+                            // ignore error handler
+                        }
+                        return item;
+                    });
+                default:
+                    return item;
+            }
+        })
+    );
+
+    return {
+        title: '天津大学教务处 - ' + subtitle,
+        link: oaa_base_url + path,
+        description: null,
+        item: items,
+    };
 }

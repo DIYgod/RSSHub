@@ -1,8 +1,10 @@
-import { Route } from '@/types';
-import got from '@/utils/got';
 import { load } from 'cheerio';
-import { parseDate } from '@/utils/parse-date';
 import MarkdownIt from 'markdown-it';
+
+import type { Route } from '@/types';
+import got from '@/utils/got';
+import { parseDate } from '@/utils/parse-date';
+
 const md = MarkdownIt({
     html: true,
 });
@@ -47,20 +49,20 @@ async function handler() {
     const items = $('h2')
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
-            const title = item.text();
+            const title = $item.text();
 
             let description = '';
-            item.nextUntil('h2').each(function () {
-                description += $(this).html();
+            $item.nextUntil('h2').each((_, el) => {
+                description += $(el).html();
             });
 
             return {
                 title,
                 description,
                 link: `${logUrl}#${title.replaceAll(/\s+/g, '-').replaceAll('.', '')}`,
-                pubDate: parseDate(title.match(/- (\d{4}-\d{2}-\d{2})/)[1]),
+                pubDate: parseDate(title.match(/- (\d{4}-\d{2}-\d{2})/)![1]),
             };
         });
 

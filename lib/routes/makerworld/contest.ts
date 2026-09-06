@@ -1,8 +1,7 @@
-import { Route } from '@/types';
-import ofetch from '@/utils/ofetch';
-import { baseUrl, getNextBuildId } from './utils';
+import type { Route } from '@/types';
 import { parseDate } from '@/utils/parse-date';
-import { config } from '@/config';
+
+import { baseUrl, fetchJson, getNextBuildId } from './utils';
 
 export const route: Route = {
     path: '/contests',
@@ -20,11 +19,7 @@ export const route: Route = {
 
 async function handler() {
     const nextBuildId = await getNextBuildId();
-    const response = await ofetch(`${baseUrl}/_next/data/${nextBuildId}/en/contests.json`, {
-        headers: {
-            'User-Agent': config.trueUA,
-        },
-    });
+    const response = await fetchJson(`${baseUrl}/_next/data/${nextBuildId}/en/contests.json`);
     const { listConst, previewList } = response.pageProps;
 
     const items = [

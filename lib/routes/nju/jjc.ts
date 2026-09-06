@@ -1,6 +1,7 @@
-import { Route } from '@/types';
-import got from '@/utils/got';
 import { load } from 'cheerio';
+
+import type { Route } from '@/types';
+import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
@@ -45,12 +46,12 @@ async function handler() {
 
             // only read first page
             return list.map((index, item) => {
-                item = $(item);
+                const $item = $(item);
                 return {
-                    title: item.find('a').attr('title'),
-                    description: item.find('a').attr('title'),
-                    link: 'https://jjc.nju.edu.cn' + item.find('a').attr('href'),
-                    pubDate: timezone(parseDate(item.find('td').last().text(), 'YYYY-MM-DD'), +8),
+                    title: $item.find('a').attr('title')!,
+                    description: $item.find('a').attr('title'),
+                    link: 'https://jjc.nju.edu.cn' + $item.find('a').attr('href'),
+                    pubDate: timezone(parseDate($item.find('td').last().text(), 'YYYY-MM-DD'), 8),
                     category: category_dict[c],
                 };
             });
@@ -58,7 +59,7 @@ async function handler() {
     );
 
     return {
-        title: `南京大学基建处`,
+        title: '南京大学基建处',
         link: 'https://jjc.nju.edu.cn/main.htm',
         item: [...items[0], ...items[1], ...items[2]],
     };

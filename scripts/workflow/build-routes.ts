@@ -1,24 +1,30 @@
-import { namespaces } from '../../lib/registry';
-import { RadarItem } from '../../lib/types';
-import { parse } from 'tldts';
 import fs from 'node:fs';
 import path from 'node:path';
+
+import { parse } from 'tldts';
 import toSource from 'tosource';
 
+import type { RadarItem } from '../../lib/types';
 import { getCurrentPath } from '../../lib/utils/helpers';
+import { findOrphanFiles } from './check-orphan-files';
+
 const __dirname = getCurrentPath(import.meta.url);
 
-const foloAnalysis = await (
-    await fetch('https://api.follow.is/discover/rsshub-analytics', {
-        headers: {
-            'user-agent': 'RSSHub',
-        },
-    })
-).json();
-const foloAnalysisResult = foloAnalysis.data as Record<string, { subscriptionCount: number; topFeeds: any[] }>;
-const foloAnalysisTop100 = Object.entries(foloAnalysisResult)
-    .sort((a, b) => b[1].subscriptionCount - a[1].subscriptionCount)
-    .slice(0, 150);
+const orphanFiles = await findOrphanFiles();
+if (orphanFiles.length) {
+    throw new Error(`Orphan files found it:\n${orphanFiles.join('\n')}`);
+}
+
+// Check if building for Worker environment
+const isWorkerBuild = process.env.WORKER_BUILD === 'true';
+
+// Ignore Redis and remote config in route generation to avoid side effects.
+process.env.REDIS_URL = '';
+process.env.CACHE_TYPE = '';
+process.env.REMOTE_CONFIG = '';
+
+const { ensureAllLoaded, namespaces } = await import('../../lib/registry');
+await ensureAllLoaded();
 
 const maintainers: Record<string, string[]> = {};
 const radar: {
@@ -28,26 +34,33 @@ const radar: {
     };
 } = {};
 
-for (const namespace in namespaces) {
-    let defaultCategory = namespaces[namespace].categories?.[0];
+// Generate route paths type
+const allRoutePaths = new Set<string>();
+
+// Use all namespaces for both regular and Worker builds
+const namespacesToProcess = namespaces;
+
+for (const namespace in namespacesToProcess) {
+    const namespaceData = namespacesToProcess[namespace];
+    let defaultCategory = namespaceData.categories?.[0];
     if (!defaultCategory) {
-        for (const path in namespaces[namespace].routes) {
-            if (namespaces[namespace].routes[path].categories) {
-                defaultCategory = namespaces[namespace].routes[path].categories[0];
-                break;
+        for (const path in namespaceData.routes) {
+            if (!namespaceData.routes[path].categories) {
+                continue;
             }
+
+            defaultCategory = namespaceData.routes[path].categories[0];
+            break;
         }
     }
     if (!defaultCategory) {
         defaultCategory = 'other';
     }
-    for (const path in namespaces[namespace].routes) {
+    for (const path in namespaceData.routes) {
         const realPath = `/${namespace}${path}`;
-        const data = namespaces[namespace].routes[path];
-        const categories = data.categories || namespaces[namespace].categories || [defaultCategory];
-        if (foloAnalysisTop100.some(([path]) => path === realPath)) {
-            categories.push('popular');
-        }
+        allRoutePaths.add(realPath);
+        const data = namespaceData.routes[path];
+        const categories = data.categories || namespaceData.categories || [defaultCategory];
         // maintainers
         if (data.maintainers) {
             maintainers[realPath] = data.maintainers;
@@ -59,12 +72,12 @@ for (const namespace in namespaces) {
                 const subdomain = parsedDomain.subdomain || '.';
                 const domain = parsedDomain.domain;
                 if (domain) {
-                    if (!radar[domain]) {
+                    if (!Object.hasOwn(radar, domain)) {
                         radar[domain] = {
-                            _name: namespaces[namespace].name,
+                            _name: namespaceData.name,
                         };
                     }
-                    if (!radar[domain][subdomain]) {
+                    if (!Object.hasOwn(radar[domain], subdomain)) {
                         radar[domain][subdomain] = [];
                     }
                     radar[domain][subdomain].push({
@@ -81,14 +94,35 @@ for (const namespace in namespaces) {
         }
         data.module = `() => import('@/routes/${namespace}/${data.location}')`;
     }
-    for (const path in namespaces[namespace].apiRoutes) {
-        const data = namespaces[namespace].apiRoutes[path];
+    for (const path in namespaceData.apiRoutes) {
+        const data = namespaceData.apiRoutes[path];
         data.module = `() => import('@/routes/${namespace}/${data.location}')`;
     }
 }
 
-fs.writeFileSync(path.join(__dirname, '../../assets/build/radar-rules.json'), JSON.stringify(radar, null, 2));
-fs.writeFileSync(path.join(__dirname, '../../assets/build/radar-rules.js'), `(${toSource(radar)})`);
-fs.writeFileSync(path.join(__dirname, '../../assets/build/maintainers.json'), JSON.stringify(maintainers, null, 2));
-fs.writeFileSync(path.join(__dirname, '../../assets/build/routes.json'), JSON.stringify(namespaces, null, 2));
-fs.writeFileSync(path.join(__dirname, '../../assets/build/routes.js'), `export default ${JSON.stringify(namespaces, null, 2)}`.replaceAll(/"module": "(.*)"\n/g, `"module": $1\n`));
+// Remove duplicates and sort
+const uniquePaths = [...allRoutePaths].toSorted((a, b) => a.localeCompare(b));
+
+const routePathsType = `// This file is auto-generated by scripts/workflow/build-routes.ts
+// Do not edit manually
+
+export type RoutePath =
+${uniquePaths.map((path) => `  | \`${path}\``).join('\n')};
+`;
+
+// Ensure output directory exists
+const buildDir = path.join(__dirname, '../../assets/build');
+fs.mkdirSync(buildDir, { recursive: true });
+
+// For Worker build, only output routes-worker.js with filtered namespaces
+// For regular build, output all files
+if (isWorkerBuild) {
+    fs.writeFileSync(path.join(__dirname, '../../assets/build/routes-worker.js'), `export default ${JSON.stringify(namespacesToProcess, null, 2)}`.replaceAll(/"module": "(.*)"\n/g, '"module": $1\n'));
+} else {
+    fs.writeFileSync(path.join(__dirname, '../../assets/build/radar-rules.json'), JSON.stringify(radar, null, 2));
+    fs.writeFileSync(path.join(__dirname, '../../assets/build/radar-rules.js'), `(${toSource(radar)})`);
+    fs.writeFileSync(path.join(__dirname, '../../assets/build/maintainers.json'), JSON.stringify(maintainers, null, 2));
+    fs.writeFileSync(path.join(__dirname, '../../assets/build/routes.json'), JSON.stringify(namespaces, null, 2));
+    fs.writeFileSync(path.join(__dirname, '../../assets/build/routes.js'), `export default ${JSON.stringify(namespaces, null, 2)}`.replaceAll(/"module": "(.*)"\n/g, '"module": $1\n'));
+    fs.writeFileSync(path.join(__dirname, '../../assets/build/route-paths.ts'), routePathsType);
+}

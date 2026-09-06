@@ -1,12 +1,15 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
 
-import cache from '@/utils/cache';
 import { config } from '@/config';
+import { solveWafChallenge } from '@/routes/juejin/utils';
+import type { Route } from '@/types';
+import cache from '@/utils/cache';
+import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
-import { art } from '@/utils/render';
-import path from 'node:path';
 import { queryToBoolean } from '@/utils/readable-social';
-import puppeteer from '@/utils/puppeteer';
+
+import { renderUserEmbed } from './templates/user';
+import type { EmbedUser, EmbedVideo, Profile } from './types';
 
 const baseUrl = 'https://www.tiktok.com';
 
@@ -17,15 +20,15 @@ export const route: Route = {
     parameters: { user: 'User ID, including @', iframe: 'Use the official iframe to embed the video, which allows you to view the video if the default option does not work. Default to `false`' },
     features: {
         requireConfig: false,
-        requirePuppeteer: true,
-        antiCrawler: false,
+        requirePuppeteer: false,
+        antiCrawler: true,
         supportBT: false,
         supportPodcast: false,
         supportScihub: false,
     },
     radar: [
         {
-            source: ['tiktok.com/:user'],
+            source: ['www.tiktok.com/:user'],
             target: '/user/:user',
         },
     ],
@@ -37,52 +40,65 @@ export const route: Route = {
 async function handler(ctx) {
     const { user, iframe } = ctx.req.param();
     const useIframe = queryToBoolean(iframe);
+    const handle = user.startsWith('@') ? user : `@${user}`;
+    const path = `/embed/${handle}`;
 
-    const data = await cache.tryGet(
-        `tiktok:user:${user}`,
+    const profile: Profile = await cache.tryGet(
+        `tiktok:user:${handle}`,
         async () => {
-            const browser = await puppeteer();
-            const page = await browser.newPage();
-            await page.setRequestInterception(true);
-            page.on('request', (request) => {
-                request.resourceType() === 'document' || request.resourceType() === 'script' ? request.continue() : request.abort();
-            });
-            await page.goto(`${baseUrl}/${user}`, {
-                waitUntil: 'networkidle0',
-            });
-            const SIGI_STATE = await page.evaluate(() => window.SIGI_STATE);
-            await browser.close();
+            let response = await ofetch(baseUrl + path);
+            let $ = load(response);
 
-            const lang = SIGI_STATE.AppContext.lang;
-            const SharingMetaState = SIGI_STATE.SharingMetaState;
-            const ItemModule = SIGI_STATE.ItemModule;
+            if ($('p#wci').hasClass('_wafchallengeid')) {
+                const cookie = solveWafChallenge($('p#cs').attr('class')!);
+                response = await ofetch(baseUrl + path, {
+                    headers: {
+                        cookie: `_wafchallengeid=${cookie};`,
+                    },
+                });
+                $ = load(response);
+            }
 
-            return { lang, SharingMetaState, ItemModule };
+            const state = JSON.parse($('script#__FRONTITY_CONNECT_STATE__').text());
+            const { userInfo, videoList }: { userInfo: EmbedUser; videoList: EmbedVideo[] } = state.source.data[path];
+
+            return {
+                nickname: userInfo.nickname,
+                uniqueId: userInfo.uniqueId,
+                signature: userInfo.signature,
+                avatar: userInfo.avatarThumbUrl,
+                videos: videoList.map((video) => ({
+                    id: video.id,
+                    desc: video.desc,
+                    cover: video.coverUrl,
+                    playAddr: video.playAddr,
+                    authorUniqueId: video.authorUniqueId,
+                    createTime: Number(BigInt(video.id) >> 32n),
+                })),
+            };
         },
         config.cache.routeExpire,
         false
     );
 
-    const items = Object.values(data.ItemModule).map((item) => ({
-        title: item.desc,
-        description: art(path.join(__dirname, 'templates/user.art'), {
-            poster: item.video.cover,
-            source: item.video.playAddr,
+    const items = profile.videos.map((video) => ({
+        title: video.desc,
+        description: renderUserEmbed({
+            poster: video.cover,
+            source: video.playAddr,
             useIframe,
-            id: item.id,
+            id: video.id,
         }),
-        author: item.nickname,
-        pubDate: parseDate(item.createTime, 'X'),
-        link: `${baseUrl}/@${item.author}/video/${item.id}`,
-        category: item.textExtra.map((t) => `#${t.hashtagName}`),
+        author: profile.nickname,
+        pubDate: parseDate(video.createTime, 'X'),
+        link: `${baseUrl}/@${video.authorUniqueId}/video/${video.id}`,
     }));
 
     return {
-        title: data.SharingMetaState.value['og:title'],
-        description: data.SharingMetaState.value['og:description'],
-        image: data.SharingMetaState.value['og:image'],
-        link: `${baseUrl}/${user}`,
+        title: `${profile.nickname} (@${profile.uniqueId}) | TikTok`,
+        description: profile.signature,
+        image: profile.avatar,
+        link: `${baseUrl}/@${profile.uniqueId}`,
         item: items,
-        language: data.lang,
     };
 }

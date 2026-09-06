@@ -1,9 +1,11 @@
-import type { Data, Route } from '@/types';
-import type { Context } from 'hono';
-import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
-import { getDataItem } from './utils';
+import type { Context } from 'hono';
 import pMap from 'p-map';
+
+import type { Data, Route } from '@/types';
+import ofetch from '@/utils/ofetch';
+
+import { getDataItem } from './utils';
 
 export const route: Route = {
     path: '/:category/:subCategory?',
@@ -39,15 +41,13 @@ async function handler(ctx: Context): Promise<Data> {
 
     const $ = load(res);
 
-    const selectorMap: {
-        [key: string]: string;
-    } = {
-        podcasts: '.episode-content__title a',
-        blog: '.card-series__content-link',
-        'books-reports': '.card-article__link',
-    };
+    const selectorMap = new Map([
+        ['podcasts', '.episode-content__title a'],
+        ['blog', '.card-series__content-link'],
+        ['books-reports', '.card-article__link'],
+    ]);
 
-    const listSelector = selectorMap[category] ?? '.card-article-large__link';
+    const listSelector = selectorMap.get(category) ?? '.card-article-large__link';
 
     const items = await pMap($(listSelector).toArray(), (item) => getDataItem($(item).attr('href')!), { concurrency: 5 });
 

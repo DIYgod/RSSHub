@@ -1,12 +1,12 @@
-import { Route } from '@/types';
-import cache from '@/utils/cache';
-import { getToken } from './token';
+import { config } from '@/config';
+import ConfigNotFoundError from '@/errors/types/config-not-found';
+import type { Route } from '@/types';
+import { parseDate } from '@/utils/parse-date';
+
 import getBookmarks from './api/get-bookmarks';
 import getUserDetail from './api/get-user-detail';
-import { config } from '@/config';
+import { getToken } from './token';
 import pixivUtils from './utils';
-import { parseDate } from '@/utils/parse-date';
-import ConfigNotFoundError from '@/errors/types/config-not-found';
 
 export const route: Route = {
     path: '/user/bookmarks/:id',
@@ -20,6 +20,7 @@ export const route: Route = {
         supportBT: false,
         supportPodcast: false,
         supportScihub: false,
+        nsfw: true,
     },
     radar: [
         {
@@ -38,7 +39,7 @@ async function handler(ctx) {
 
     const id = ctx.req.param('id');
 
-    const token = await getToken(cache.tryGet);
+    const token = await getToken();
     if (!token) {
         throw new ConfigNotFoundError('pixiv not login');
     }

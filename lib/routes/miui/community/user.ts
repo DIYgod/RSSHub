@@ -1,4 +1,4 @@
-import { Route, Data } from '@/types';
+import type { Data, Route } from '@/types';
 import got from '@/utils/got';
 
 export const route: Route = {
@@ -61,9 +61,8 @@ async function handler(ctx): Promise<Data> {
             link: userLink,
             description: `${authorName} 的发帖`,
             item: items,
-            language: 'zh-cn',
+            language: 'zh-CN',
         };
-    } else {
-        throw new Error(data.message);
     }
+    throw new Error(data.message);
 }

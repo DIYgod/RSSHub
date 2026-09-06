@@ -1,8 +1,8 @@
-import { Route } from '@/types';
+import { type CheerioOptions, load } from 'cheerio';
+
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
-import { URL } from 'node:url';
 import { parseDate } from '@/utils/parse-date';
 
 /* 新闻列表
@@ -35,24 +35,30 @@ async function loadContent(link) {
     // 请求文章页面
     const newsResp = await got.get(link);
     // 加载文章内容
-    const $ = load(newsResp.data, { decodeEntities: false });
+    const $ = load(newsResp.data, { decodeEntities: false } as CheerioOptions);
     // 图片相对链接处理
     $('img').attr('src', (n, v) => new URL(v, baseUrl).href);
     // 视频相对链接处理，替换原有播放方法 showVsbVideo
-    $('.vsbcontent_video').each(function () {
-        const u1 = $(this).find('script').attr('vurl');
-        videoUrl = new URL(u1, baseUrl).href;
-        return $(this)
+    $('.vsbcontent_video').each((_, el) => {
+        const u1 = $(el).find('script').attr('vurl');
+        videoUrl = new URL(u1!, baseUrl).href;
+        $(el)
             .html('<video width="100%" src="' + videoUrl + '"></video>')
             .html();
     });
     // 返回解析的结果
-    return $('div[id^=vsb_content]').html();
+    return $('div[id^=vsb_content]').html() ?? '';
 }
 
 export const route: Route = {
     path: '/news/:type?',
-    name: 'Unknown',
+    categories: ['university'],
+    example: '/wzu/news/0',
+    parameters: { type: '分类，见下表 默认为`0`' },
+    description: `| 温大新闻 | 媒体温大 | 学术温大 | 通知公告 | 招标信息 | 学术公告 |
+| :------: | :------: | :------: | :------: | :------: | :------: |
+|     0    |     1    |     2    |     3    |     4    |     5    |`,
+    name: '新闻',
     maintainers: ['Chandler-Lu'],
     handler,
 };
@@ -72,18 +78,20 @@ async function handler(ctx) {
     return {
         title: newsTitle,
         link: newsLink,
-        description: '温州大学' + ' - ' + newsTitle,
-        item: list.toArray().map(async (item) => {
-            const $ = load(item);
-            const $a1 = $('li>a');
-            const $originUrl = $a1.attr('href');
-            const $itemUrl = new URL($originUrl, baseUrl).href;
-            return {
-                title: $a1.attr('title'),
-                description: await cache.tryGet($itemUrl, () => loadContent($itemUrl)),
-                pubDate: parseDate($('li>samp').text(), 'YYYY-MM-DD'),
-                link: $itemUrl,
-            };
-        }),
+        description: `温州大学 - ${newsTitle}`,
+        item: await Promise.all(
+            list.toArray().map(async (item): Promise<DataItem> => {
+                const $ = load(item);
+                const $a1 = $('li>a');
+                const $originUrl = $a1.attr('href');
+                const $itemUrl = new URL($originUrl!, baseUrl).href;
+                return {
+                    title: $a1.attr('title') ?? '',
+                    description: await cache.tryGet($itemUrl, () => loadContent($itemUrl)),
+                    pubDate: parseDate($('li>samp').text(), 'YYYY-MM-DD'),
+                    link: $itemUrl,
+                };
+            })
+        ),
     };
 }

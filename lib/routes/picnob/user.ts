@@ -1,11 +1,11 @@
-import { Route, ViewType } from '@/types';
-
-import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
-import { parseRelativeDate } from '@/utils/parse-date';
-import { puppeteerGet } from './utils';
-import sanitizeHtml from 'sanitize-html';
+
+import type { Route } from '@/types';
+import { ViewType } from '@/types';
 import cache from '@/utils/cache';
+import logger from '@/utils/logger';
+import { parseRelativeDate } from '@/utils/parse-date';
+import playwright from '@/utils/playwright';
 
 export const route: Route = {
     path: '/user/:id/:type?',
@@ -18,101 +18,124 @@ export const route: Route = {
     features: {
         requireConfig: false,
         requirePuppeteer: true,
-        antiCrawler: true,
+        antiCrawler: false,
         supportBT: false,
         supportPodcast: false,
         supportScihub: false,
     },
     radar: [
         {
-            source: ['www.pixnoy.com/profile/:id'],
+            source: ['www.picnob.com/profile/:id'],
             target: '/user/:id',
         },
         {
-            source: ['www.pixnoy.com/profile/:id/tagged'],
+            source: ['www.picnob.com/profile/:id/tagged'],
             target: '/user/:id/tagged',
         },
     ],
     name: 'User Profile - Picnob',
-    maintainers: ['TonyRL', 'micheal-death', 'AiraNadih', 'DIYgod'],
+    maintainers: ['TonyRL', 'micheal-death', 'AiraNadih', 'DIYgod', 'hyoban', 'Rongronggg9'],
     handler,
     view: ViewType.Pictures,
 };
 
 async function handler(ctx) {
-    // NOTE: 'picnob' is still available, but all requests to 'picnob' will be redirected to 'pixnoy' eventually
-    const baseUrl = 'https://www.pixnoy.com';
+    const baseUrl = 'https://www.picnob.com';
     const id = ctx.req.param('id');
     const type = ctx.req.param('type') ?? 'profile';
     const profileUrl = `${baseUrl}/profile/${id}/${type === 'tagged' ? 'tagged/' : ''}`;
 
-    // TODO: can't bypass cloudflare 403 error without puppeteer
-    let html;
-    let usePuppeteer = false;
-    try {
-        const data = await ofetch(profileUrl);
-        html = data;
-    } catch {
-        html = await puppeteerGet(profileUrl);
-        usePuppeteer = true;
-    }
+    const context = await playwright();
+
+    const page = await context.newPage();
+    await page.route('**/*', (route) => {
+        const request = route.request();
+        request.resourceType() === 'document' ? route.continue() : route.abort();
+    });
+
+    await page.goto(profileUrl, {
+        waitUntil: 'domcontentloaded',
+    });
+    logger.http(`Requesting ${profileUrl}`);
+    const html = await page.content();
     const $ = load(html);
 
     const list = $('.post_box')
         .toArray()
         .map((item) => {
             const $item = $(item);
-            const sum = $item.find('.sum').text();
             const coverLink = $item.find('.cover_link').attr('href');
-            const shortcode = coverLink?.split('/')?.[2];
+            const image = $item.find('.cover .cover_link img');
+            const alt = image.attr('alt') || '';
+            const downloadUrl = new URL($item.find('.downbtn').attr('href')!, baseUrl);
+            downloadUrl.searchParams.delete('dl');
+            const fullImage = new URL(image.attr('data-src')!);
+            fullImage.searchParams.set('o', Buffer.from(downloadUrl.href).toString('base64'));
+            const sum = $item.find('.sum');
+            const title = sum.text().split('\n', 1)[0] || alt;
+            const content = sum.html()?.replaceAll('\n', '<br>') || alt;
+            const isVideo = $item.find('.corner .icon_video, .corner .icon_tv').length;
 
             return {
-                title: sanitizeHtml(sum.split('\n')[0], { allowedTags: [], allowedAttributes: {} }),
-                description: `<img src="${$item.find('.preview_w img').attr('data-src')}" /><br />${sum.replaceAll('\n', '<br>')}`,
+                title,
+                description: `<img src="${isVideo ? image.attr('data-src') : fullImage.href}"><br>${content}`,
                 link: `${baseUrl}${coverLink}`,
-                guid: shortcode,
+                guid: coverLink?.split('/', 3)?.[2],
                 pubDate: parseRelativeDate($item.find('.time .txt').text()),
+                slideOrVideo: $item.find('.corner').length,
             };
         });
 
-    const newDescription = await Promise.all(
+    const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(`picnob:user:${id}:${item.guid}`, async () => {
-                try {
-                    const html = usePuppeteer
-                        ? await puppeteerGet(item.link)
-                        : await ofetch(item.link, {
-                              headers: {
-                                  'user-agent': 'PostmanRuntime/7.44.0',
-                              },
-                          });
+            cache.tryGet(item.link, async () => {
+                let media = '';
+
+                if (item.slideOrVideo) {
+                    const page = await context.newPage();
+                    await page.route('**/*', (route) => {
+                        const request = route.request();
+                        request.resourceType() === 'document' ? route.continue() : route.abort();
+                    });
+
+                    await page.goto(item.link, {
+                        waitUntil: 'domcontentloaded',
+                    });
+                    logger.http(`Requesting ${item.link}`);
+                    const html = await page.content();
                     const $ = load(html);
-                    if ($('.video_img').length > 0) {
-                        return `<video src="${$('.video_img a').attr('href')}" poster="${$('.video_img img').attr('data-src')}"></video><br />${$('.sum_full').text()}`;
-                    } else {
-                        let description = '';
-                        for (const slide of $('.swiper-slide').toArray()) {
-                            const $slide = $(slide);
-                            description += `<img src="${$slide.find('.pic img').attr('data-src')}" /><br />`;
-                        }
-                        description += $('.sum_full').text();
-                        return description;
-                    }
-                } catch {
-                    return '';
+
+                    media = $('.slide-item').length
+                        ? $('.slide-item div:first-of-type')
+                              .toArray()
+                              .map((item) => {
+                                  const $item = $(item);
+                                  if ($item.hasClass('video')) {
+                                      return $item.find('video').prop('outerHTML');
+                                  }
+                                  // $item.hasClass('pic')
+                                  $item.find('img').attr('src', $item.find('img').attr('data-src'));
+                                  $item.find('img').removeAttr('data-src');
+                                  return $item.html() || '';
+                              })
+                              .join('')
+                        : $('.view video').prop('outerHTML') || '';
+
+                    item.description = `${media}<br>${item.description}`;
                 }
+
+                return item;
             })
         )
     );
+
+    await context.close();
 
     return {
         title: `${$('h1.fullname').text()} (@${id}) ${type === 'tagged' ? 'tagged' : 'public'} posts - Picnob`,
         description: $('.info .sum').text(),
         link: profileUrl,
         image: $('.ava .pic img').attr('src'),
-        item: list.map((item, index) => ({
-            ...item,
-            description: newDescription[index] || item.description,
-        })),
+        item: items,
     };
 }

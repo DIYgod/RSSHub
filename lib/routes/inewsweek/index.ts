@@ -1,10 +1,11 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+import iconv from 'iconv-lite';
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
-import iconv from 'iconv-lite';
 
 const rootUrl = 'http://news.inewsweek.cn';
 
@@ -47,8 +48,8 @@ async function handler(ctx) {
         $('div.grid-item')
             .toArray()
             .map((item) => {
-                item = $(item);
-                const href = item.find('a').attr('href');
+                const $item = $(item);
+                const href = $item.find('a').attr('href');
                 const articleLink = `${rootUrl}${href}`;
                 return cache.tryGet(articleLink, async () => {
                     const response = await got(articleLink, {
@@ -60,13 +61,13 @@ async function handler(ctx) {
                     const time = timezone(
                         parseDate(
                             $('div.editor')
-                                .html()
-                                .split(/(\s\s+)/)[2]
+                                .html()!
+                                .split(/(\s{2,})/, 3)[2]
                         ),
-                        +8
+                        8
                     );
                     return {
-                        title: item.find('p').text(),
+                        title: $item.find('p').text(),
                         description: fullText,
                         link: articleLink,
                         pubDate: time,

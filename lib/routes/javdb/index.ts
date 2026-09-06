@@ -1,4 +1,5 @@
-import { Route } from '@/types';
+import type { Route } from '@/types';
+
 import utils from './utils';
 
 export const route: Route = {
@@ -20,17 +21,21 @@ export const route: Route = {
 | -------- | ---------- | ------- |
 | censored | uncensored | western |
 
-  排序
+排序
 
 | 发布日期排序 | 磁鏈更新排序 |
 | ------------ | ------------ |
 | 1            | 2            |
 
-  过滤
+过滤
 
 | 全部 | 可下载 | 含字幕 | 含短評 |
 | ---- | ------ | ------ | ------ |
 | 0    | 1      | 2      | 3      |`,
+    features: {
+        nsfw: true,
+        requirePuppeteer: true,
+    },
 };
 
 async function handler(ctx) {

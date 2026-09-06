@@ -1,6 +1,7 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
-import * as cheerio from 'cheerio';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
@@ -34,7 +35,7 @@ async function handler() {
     const url = `${homepage}/f/article/articleList?pageNo=1&pageSize=15&createTimeSort=DESC`;
     const response = await got(url);
 
-    const $ = cheerio.load(response.data);
+    const $ = load(response.data);
     const articles = $('.aw-item').toArray();
 
     const items = await Promise.all(
@@ -45,12 +46,12 @@ async function handler() {
 
             return cache.tryGet(link, async () => {
                 const result = await got(link);
-                const $ = cheerio.load(result.data);
+                const $ = load(result.data);
                 return {
                     title,
                     author: $('.user_name').text(),
                     pubDate: timezone(parseDate($('.link_postdate').text().replaceAll(/\s+/g, ' ')), 8),
-                    description: $('#article_content').html() + ($('.attachment').length ? $('.attachment').html() : ''),
+                    description: $('#article_content').html()! + ($('.attachment').length ? $('.attachment').html() : '')!,
                     link,
                     category: $('.category .category_r span').first().text(),
                 };

@@ -1,10 +1,11 @@
-import { Route } from '@/types';
+import type { Route } from '@/types';
+
 import { handler } from './common';
 
 export const route: Route = {
     name: 'News',
     maintainers: ['Rjnishant530'],
-    path: ['/:category'],
+    path: '/:category',
     example: '/dnaindia/headlines',
     parameters: {
         category: 'Find it in the URL, or tables below',

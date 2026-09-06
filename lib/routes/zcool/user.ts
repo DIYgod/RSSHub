@@ -1,11 +1,14 @@
-import { Route, ViewType } from '@/types';
+import { load } from 'cheerio';
+
+import InvalidParameterError from '@/errors/types/invalid-parameter';
+import type { Route } from '@/types';
+import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
-import { extractArticle, extractWork } from './utils';
 import { isValidHost } from '@/utils/valid-host';
-import InvalidParameterError from '@/errors/types/invalid-parameter';
+
+import { extractArticle, extractWork } from './utils';
 
 export const route: Route = {
     path: '/user/:uid',
@@ -28,11 +31,11 @@ export const route: Route = {
         },
     ],
     name: '用户作品',
-    description: `  例如:
+    description: `例如:
 
-    站酷的个人主页 \`https://baiyong.zcool.com.cn\` 对应 rss 路径 \`/zcool/user/baiyong\`
+站酷的个人主页 \`https://baiyong.zcool.com.cn\` 对应 rss 路径 \`/zcool/user/baiyong\`
 
-    站酷的个人主页 \`https://www.zcool.com.cn/u/568339\` 对应 rss 路径 \`/zcool/user/568339\``,
+站酷的个人主页 \`https://www.zcool.com.cn/u/568339\` 对应 rss 路径 \`/zcool/user/568339\``,
     maintainers: ['junbaor'],
     handler,
 };
@@ -78,7 +81,7 @@ async function handler(ctx) {
     return {
         title: data.props.pageProps.seo.title,
         description: data.props.pageProps.seo.description,
-        image: data.props.pageProps.userInfo.avatar.includes('?x-oss-process') ? data.props.pageProps.userInfo.avatar.split('?')[0] : data.props.pageProps.userInfo.avatar,
+        image: data.props.pageProps.userInfo.avatar.includes('?x-oss-process') ? data.props.pageProps.userInfo.avatar.split('?', 1)[0] : data.props.pageProps.userInfo.avatar,
         link: pageUrl,
         item: items,
     };

@@ -1,6 +1,8 @@
-import { ViewType, type Data, type DataItem, type Route } from '@/types';
-import { parseDate } from '@/utils/parse-date';
+import type { Data, DataItem, Route } from '@/types';
+import { ViewType } from '@/types';
 import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/parse-date';
+
 import type { Post } from './types';
 
 export async function getPostItems(params: {
@@ -17,16 +19,14 @@ export async function getPostItems(params: {
 }): Promise<DataItem[]> {
     const baseUrl = 'https://9oyi4rk426.execute-api.ca-central-1.amazonaws.com/production/post';
     const url = new URL(baseUrl);
-    const finalSearchParams = Object.assign(
-        {
-            limit: 20,
-            offset: 0,
-        },
-        params
-    );
+    const finalSearchParams = {
+        limit: 20,
+        offset: 0,
+        ...params,
+    };
     if (finalSearchParams.time_range !== undefined) {
         finalSearchParams.time_range = finalSearchParams.time_range.toUpperCase();
-        if (!TimeRangeParam.options.some((option) => option.value === finalSearchParams.time_range)) {
+        if (TimeRangeParam.options.every((option) => option.value !== finalSearchParams.time_range)) {
             throw new Error(`Invalid time range: ${finalSearchParams.time_range}`);
         }
         // The Voronoi API doesn't support "ALL"
@@ -52,7 +52,7 @@ export async function getPostItems(params: {
             url.searchParams.set(key, finalSearchParams[key]);
         }
     }
-    const data = await ofetch<Post[]>(url.toString());
+    const data = await ofetch<Post[]>(url.href);
     const items: DataItem[] = data.map((post) => ({
         title: post.headline,
         link: `https://www.voronoiapp.com/${post.category.split(' ').join('-').toLowerCase()}/${post.link}`,

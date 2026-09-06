@@ -1,10 +1,11 @@
-import { Route } from '@/types';
-import cache from '@/utils/cache';
-import got from '@/utils/got';
 import { load } from 'cheerio';
 import iconv from 'iconv-lite';
-import timezone from '@/utils/timezone';
+
+import type { DataItem, Route } from '@/types';
+import cache from '@/utils/cache';
+import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/user/:id',
@@ -55,18 +56,18 @@ async function handler(ctx) {
         .slice(-limit)
         .toArray()
         .toReversed()
-        .map((item) => {
-            item = $(item);
+        .map((item): DataItem => {
+            const $item = $(item);
 
             return {
-                title: item.find('title').text(),
-                link: item.find('guid').text(),
+                title: $item.find('title').text(),
+                link: $item.find('guid').text(),
             };
         });
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const detailResponse = await got({
                     method: 'get',
                     url: item.link,
@@ -77,7 +78,7 @@ async function handler(ctx) {
 
                 item.author = content('.xs2').text();
                 item.description = content('#blog_article').html();
-                item.pubDate = timezone(parseDate(content('.xg1').eq(5).text()), +8);
+                item.pubDate = timezone(parseDate(content('.xg1').eq(5).text()), 8);
 
                 return item;
             })

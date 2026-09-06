@@ -1,5 +1,6 @@
-import { LiteratureResponse } from './types';
 import { parseDate } from '@/utils/parse-date';
+
+import type { LiteratureResponse } from './types';
 
 export const baseUrl = 'https://inspirehep.net';
 

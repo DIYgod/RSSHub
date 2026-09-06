@@ -1,5 +1,7 @@
-import { Route, ViewType } from '@/types';
 import { load } from 'cheerio';
+
+import type { Route } from '@/types';
+import { ViewType } from '@/types';
 import ofetch from '@/utils/ofetch'; // 统一使用的请求库
 
 export const route: Route = {
@@ -26,10 +28,10 @@ export const route: Route = {
             .find('.group')
             .toArray()
             .map((item) => {
-                item = $(item);
-                const title = item.find('a').first().text();
-                const link = item.find('a').first().attr('href');
-                const description = item.find('p').first().text();
+                const $item = $(item);
+                const title = $item.find('a').first().text();
+                const link = $item.find('a').first().attr('href');
+                const description = $item.find('p').first().text();
                 return {
                     title,
                     link: `https://podwise.ai${link}`,

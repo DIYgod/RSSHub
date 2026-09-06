@@ -1,6 +1,8 @@
-import { Route, ViewType } from '@/types';
-import cache from '@/utils/cache';
 import { load } from 'cheerio';
+
+import type { DataItem, Route } from '@/types';
+import { ViewType } from '@/types';
+import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
@@ -40,20 +42,20 @@ async function handler(ctx) {
 
     const list = $('td[align=left] b')
         .toArray()
-        .map((e) => {
-            e = $(e);
+        .map((e): DataItem => {
+            const $e = $(e);
             return {
-                title: e.find('a').attr('title'),
-                link: `${baseUrl}${e.find('a').attr('href')}`,
-                pubDate: timezone(parseDate(e.find('span').text().replace('：', ''), 'YYYY-MM-DD'), 8),
+                title: $e.find('a').attr('title')!,
+                link: `${baseUrl}${$e.find('a').attr('href')}`,
+                pubDate: timezone(parseDate($e.find('span').text().replace('：', ''), 'YYYY-MM-DD'), 8),
             };
         })
-        .sort((a, b) => b.pubDate - a.pubDate)
-        .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 10);
+        .toSorted((a, b) => Number(b.pubDate) - Number(a.pubDate))
+        .slice(0, ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 10);
 
     const items = await Promise.all(
         list.map((e) =>
-            cache.tryGet(e.link, async () => {
+            cache.tryGet(e.link!, async () => {
                 const { data } = await got.get(e.link);
                 const $ = load(data);
 

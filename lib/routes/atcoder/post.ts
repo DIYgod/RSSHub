@@ -1,8 +1,9 @@
-import { Route } from '@/types';
-import got from '@/utils/got';
 import { load } from 'cheerio';
-import timezone from '@/utils/timezone';
+
+import type { Route } from '@/types';
+import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/post/:language?/:keyword?',
@@ -39,13 +40,13 @@ async function handler(ctx) {
     const items = $('.panel')
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
             return {
-                title: item.find('.panel-title').text(),
-                description: item.find('.panel-body').html(),
-                link: `${rootUrl}${item.find('.panel-title a').attr('href')}`,
-                pubDate: timezone(parseDate(item.find('.timeago').attr('datetime')), +9),
+                title: $item.find('.panel-title').text(),
+                description: $item.find('.panel-body').html(),
+                link: `${rootUrl}${$item.find('.panel-title a').attr('href')}`,
+                pubDate: timezone(parseDate($item.find('.timeago').attr('datetime')!), 9),
             };
         });
 

@@ -1,6 +1,7 @@
-import { Route } from '@/types';
-import got from '@/utils/got';
 import { load } from 'cheerio';
+
+import type { Route } from '@/types';
+import got from '@/utils/got';
 
 export const route: Route = {
     path: '/recent-releases',
@@ -47,7 +48,7 @@ async function handler() {
         const formattedDescription = `<h2>${episode}</h2><br/><img src='${img}' alt='${title}'>`;
 
         const structuredData = {
-            title,
+            title: title!,
             description: formattedDescription,
             link,
         };

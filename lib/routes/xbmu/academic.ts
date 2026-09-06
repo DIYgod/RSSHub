@@ -1,8 +1,9 @@
-import { DataItem, Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-import { load } from 'cheerio';
 
 const BASE_URL = 'https://www.xbmu.edu.cn/xwzx/xsxx.htm';
 
@@ -19,7 +20,7 @@ const handler: Route['handler'] = async () => {
         // Map through each list item to extract details
         const academicLinkList = await Promise.all(
             listItems.toArray().map((element) => {
-                const rawDate = $(element).find('span').text().trim();
+                const rawDate = $(element).find('span').text();
                 const [day, yearMonth] = rawDate.split('/').map((s) => s.trim());
                 const formattedDate = parseDate(`${yearMonth}-${day}`).toUTCString();
 
@@ -58,18 +59,18 @@ const handler: Route['handler'] = async () => {
                             image: 'http://210.26.0.114:9090/mdxg/img/weex/default_img.jpg',
                             content,
                             updated: item.date,
-                            language: 'zh-cn',
+                            language: 'zh-CN',
                         };
                     })
                 )
             )) as DataItem[],
             allowEmpty: true,
-            language: 'zh-cn',
+            language: 'zh-CN',
             feedLink: 'https://rsshub.app/xbmu/academic',
             id: 'https://rsshub.app/xbmu/academic',
         };
     } catch (error) {
-        throw new Error(`Error fetching academic information: ${error}`);
+        throw new Error(`Error fetching academic information: ${error}`, { cause: error });
     }
 };
 

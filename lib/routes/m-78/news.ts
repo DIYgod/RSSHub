@@ -1,10 +1,13 @@
-import { type Data, type Route, ViewType } from '@/types';
-import ofetch from '@/utils/ofetch';
-import type { Context } from 'hono';
-import type { Post } from './types';
-import { parseDate } from '@/utils/parse-date';
 import { load } from 'cheerio';
+import type { Context } from 'hono';
+
 import InvalidParameterError from '@/errors/types/invalid-parameter';
+import type { Data, Route } from '@/types';
+import { ViewType } from '@/types';
+import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/parse-date';
+
+import type { Post } from './types';
 
 export const route: Route = {
     name: 'ニュース',
@@ -82,7 +85,7 @@ async function handler(ctx: Context): Promise<Data> {
     const cateAPIUrl = `${rootUrl}/wp-json/wp/v2/categories`;
     const postsAPIUrl = `${rootUrl}/wp-json/wp/v2/posts`;
     const category = ctx.req.param('category') ?? 'news';
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')!, 10) : 20;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')!) : 20;
 
     const categories = await ofetch(`${cateAPIUrl}?slug=${category}`);
     if (categories.length === 0) {

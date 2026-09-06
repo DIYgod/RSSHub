@@ -1,11 +1,13 @@
-import { MiddlewareHandler } from 'hono';
+import type { MiddlewareHandler } from 'hono';
 import { routePath } from 'hono/route';
+
 import { getDebugInfo, setDebugInfo } from '@/utils/debug-info';
 
 const middleware: MiddlewareHandler = async (ctx, next) => {
     {
         const debug = getDebugInfo();
-        if (!debug.paths[ctx.req.path]) {
+        const pathCount = debug.paths[ctx.req.path];
+        if (!pathCount) {
             debug.paths[ctx.req.path] = 0;
         }
         debug.paths[ctx.req.path]++;
@@ -20,7 +22,8 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
         const debug = getDebugInfo();
         const rPath = routePath(ctx);
         const hasMatchedRoute = rPath !== '/*';
-        if (!debug.routes[rPath] && hasMatchedRoute) {
+        const routeCount = debug.routes[rPath];
+        if (!routeCount && hasMatchedRoute) {
             debug.routes[rPath] = 0;
         }
         hasMatchedRoute && debug.routes[rPath]++;

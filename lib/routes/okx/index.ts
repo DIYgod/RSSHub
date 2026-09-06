@@ -1,9 +1,10 @@
-import { DataItem, Route } from '@/types';
-import cache from '@/utils/cache';
-import { Context } from 'hono';
-import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
+import type { Context } from 'hono';
+
+import type { Route } from '@/types';
+import cache from '@/utils/cache';
 import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
 
 export const route: Route = {
     path: '/:section?',
@@ -93,7 +94,7 @@ async function handler(ctx: Context) {
     const $ = load(data);
 
     const ssrData = JSON.parse($('script[data-id="__app_data_for_ssr__"]').text());
-    const itemsTemp: { title: string; link: string; pubDate: Date }[] =
+    const itemsTemp: Array<{ title: string; link: string; pubDate: Date }> =
         ssrData?.appContext?.initialProps?.sectionData?.articleList?.items?.map((item: { title: string; slug: string; publishTime: string }) => ({
             title: item.title,
             link: `${baseUrl}/zh-hans/help/${item.slug}`,
@@ -103,10 +104,9 @@ async function handler(ctx: Context) {
     const items = await Promise.all(
         itemsTemp.map((item) =>
             cache.tryGet(item.link, async () => {
-                const content = await got(item.link).then((response) => {
-                    const $ = load(response.data);
-                    return $('div[class^="index_richTextContent"]').html();
-                });
+                const response = await got(item.link);
+                const $ = load(response.data);
+                const content = $('div[class^="index_richTextContent"]').html();
 
                 return {
                     ...item,
@@ -119,7 +119,7 @@ async function handler(ctx: Context) {
     return {
         title: ssrData?.appContext?.serverSideProps?.sectionOutline?.title || 'Unknown',
         link: `${baseUrl}/zh-hans/help/section/announcements-${section}`,
-        item: items as DataItem[],
+        item: items,
         allowEmpty: true,
     };
 }

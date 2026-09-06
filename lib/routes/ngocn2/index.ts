@@ -1,7 +1,8 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
@@ -46,19 +47,19 @@ async function handler(ctx) {
 
     const list = $('.articleroll__article a')
         .toArray()
-        .map((item) => {
-            item = $(item);
+        .map((item): DataItem => {
+            const $item = $(item);
 
             return {
-                title: item.find('.title').text(),
-                link: `${rootUrl}${item.attr('href')}`,
-                pubDate: parseDate(item.find('.meta').text()),
+                title: $item.find('.title').text(),
+                link: `${rootUrl}${$item.attr('href')}`,
+                pubDate: parseDate($item.find('.meta').text()),
             };
         });
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const detailResponse = await got({
                     method: 'get',
                     url: item.link,
@@ -66,8 +67,8 @@ async function handler(ctx) {
 
                 const content = load(detailResponse.data);
 
-                content('.gatsby-resp-image-link').each(function () {
-                    content(this).html(`<img src="${content(this).find('img').attr('src')}">`);
+                content('.gatsby-resp-image-link').each((_, el) => {
+                    content(el).html(`<img src="${content(el).find('img').attr('src')}">`);
                 });
 
                 item.description = content('.article__content').html();

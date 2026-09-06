@@ -1,10 +1,12 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import InvalidParameterError from '@/errors/types/invalid-parameter';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
-import InvalidParameterError from '@/errors/types/invalid-parameter';
+
 const rootUrl = 'http://www.sz.gov.cn/cn/xxgk/zfxxgj/';
 
 const config = {
@@ -27,7 +29,7 @@ const config = {
 };
 
 export const route: Route = {
-    path: '/shenzhen/xxgk/zfxxgj/:caty',
+    path: '/xxgk/zfxxgj/:caty',
     categories: ['government'],
     example: '/gov/shenzhen/xxgk/zfxxgj/tzgg',
     parameters: { caty: '信息类别' },
@@ -39,7 +41,7 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    name: '深圳市人民政府',
+    name: '政府信息公开',
     maintainers: ['laoxua'],
     handler,
     description: `| 通知公告 | 政府采购 | 资金信息 | 重大项目 |
@@ -58,22 +60,22 @@ async function handler(ctx) {
     const $ = load(response.data);
     const list = $('div.zx_ml_list ul li span.tit')
         .toArray()
-        .map((item) => {
-            item = $(item).find('a');
+        .map((item): DataItem => {
+            const $item = $(item).find('a');
             return {
-                title: item.text(),
-                link: item.attr('href'),
+                title: $item.text(),
+                link: $item.attr('href'),
             };
         });
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const detailResponse = await got(item.link);
                 const content = load(detailResponse.data);
                 item.description = content('div.news_cont_d_wrap').html();
                 if (content('div.fjdown').html() !== null) {
-                    item.description += content('div.fjdown').html();
+                    item.description! += content('div.fjdown').html()!;
                 }
                 item.pubDate = timezone(
                     parseDate(

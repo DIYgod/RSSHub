@@ -1,6 +1,6 @@
-import { Route } from '@/types';
-import cache from '@/utils/cache';
+import type { Route } from '@/types';
 import got from '@/utils/got';
+
 import { baseUrl, fetchFriends, getPlurk } from './utils';
 
 export const route: Route = {
@@ -39,7 +39,7 @@ async function handler(ctx) {
     const userIds = apiResponse.map((item) => item.user_id);
     const names = await fetchFriends(userIds);
 
-    const items = await Promise.all(apiResponse.map((item) => getPlurk(`plurk:${item.plurk_id}`, item, names[item.user_id].display_name, cache.tryGet)));
+    const items = await Promise.all(apiResponse.map((item) => getPlurk(`plurk:${item.plurk_id}`, item, names[item.user_id].display_name)));
 
     return {
         title: 'Plurk News - Plurk',

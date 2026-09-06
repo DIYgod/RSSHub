@@ -1,8 +1,9 @@
-import { Route } from '@/types';
+import type { Route } from '@/types';
 import got from '@/utils/got';
-import auth from './auth';
-import { processImage } from '../utils';
 import { parseDate } from '@/utils/parse-date';
+
+import { processImage } from '../utils';
+import auth from './auth';
 
 export const route: Route = {
     path: '/xhu/question/:questionId/:sortBy?',

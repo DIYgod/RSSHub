@@ -1,7 +1,8 @@
-import { Route, ViewType } from '@/types';
+import { config } from '@/config';
+import type { Route } from '@/types';
+import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { config } from '@/config';
 import { parseDate } from '@/utils/parse-date';
 
 const X_UA = 'NGA_skull/6.0.5(iPhone10,3;iOS 12.0.1)';
@@ -34,11 +35,11 @@ async function handler(ctx) {
     }
     const formatContent = (content) =>
         content
-            .replaceAll(/\[img](.+?)\[\/img]/g, (match, p1) => {
+            .replaceAll(/\[img\](.+?)\[\/img\]/g, (match, p1) => {
                 const src = p1.replaceAll(/\?.*/g, '');
                 return `<img src="${src}" />`;
             })
-            .replaceAll(/\[url](.+?)\[\/url]/g, `<a href="$1">$1</a>`);
+            .replaceAll(/\[url\](.+?)\[\/url\]/g, '<a href="$1">$1</a>');
     const homePage = await got.post('https://ngabbs.com/app_api.php?__lib=subject&__act=list', {
         headers: {
             'X-User-Agent': X_UA,

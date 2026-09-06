@@ -1,9 +1,11 @@
-import { Route, ViewType } from '@/types';
-import { parseDate } from '@/utils/parse-date';
-import got from '@/utils/got';
 import { load } from 'cheerio';
-import { art } from '@/utils/render';
-import path from 'node:path';
+
+import type { Route } from '@/types';
+import { ViewType } from '@/types';
+import got from '@/utils/got';
+import { parseDate } from '@/utils/parse-date';
+
+import { renderDescription } from './templates/description';
 
 export const route: Route = {
     path: '/news/:language',
@@ -26,13 +28,11 @@ export const route: Route = {
         },
     ],
     name: 'News',
-    description: `
-| language | Description |
-| ---   | ---   |
-| tw | 臺灣正體 |
-| en | English |
-| jp | 日本語 |
-    `,
+    description: `| language | Description |
+| -------- | ----------- |
+| tw       | 臺灣正體    |
+| en       | English     |
+| jp       | 日本語      |`,
     maintainers: ['Cedaric'],
     handler,
 };
@@ -57,7 +57,7 @@ async function handler(ctx) {
             const itemdate = $$('a.news_card div.date').html() || '';
             const pubDate = convertHtmlDateToStandardFormat(itemdate.toString());
 
-            const description = art(path.join(__dirname, 'templates/description.art'), {
+            const description = renderDescription({
                 images: image
                     ? [
                           {
@@ -98,22 +98,22 @@ function convertHtmlDateToStandardFormat(htmlContent: string): Date | undefined 
         const year = match[2];
         const monthAbbreviation = match[3];
 
-        const monthMapping: { [key: string]: string } = {
-            Jan: '01',
-            Feb: '02',
-            Mar: '03',
-            Apr: '04',
-            May: '05',
-            Jun: '06',
-            Jul: '07',
-            Aug: '08',
-            Sep: '09',
-            Oct: '10',
-            Nov: '11',
-            Dec: '12',
-        };
+        const monthMapping = new Map([
+            ['Jan', '01'],
+            ['Feb', '02'],
+            ['Mar', '03'],
+            ['Apr', '04'],
+            ['May', '05'],
+            ['Jun', '06'],
+            ['Jul', '07'],
+            ['Aug', '08'],
+            ['Sep', '09'],
+            ['Oct', '10'],
+            ['Nov', '11'],
+            ['Dec', '12'],
+        ]);
 
-        const month = monthMapping[monthAbbreviation] || '';
+        const month = monthMapping.get(monthAbbreviation) ?? '';
 
         return parseDate(`20${year}-${month}-${day}`);
     }

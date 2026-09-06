@@ -1,7 +1,8 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 
 export const route: Route = {
     path: '/jiaowc/tzgg/:category?',
@@ -63,7 +64,7 @@ async function handler(ctx) {
                 const description = article$('.v_news_content').html();
 
                 return {
-                    title,
+                    title: title!,
                     link,
                     description,
                     pubDate: new Date(date).toUTCString(),

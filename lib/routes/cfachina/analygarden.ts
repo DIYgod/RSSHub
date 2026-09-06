@@ -1,6 +1,7 @@
-import { Route } from '@/types';
-import got from '@/utils/got';
 import { load } from 'cheerio';
+
+import type { Route } from '@/types';
+import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
@@ -37,13 +38,13 @@ async function handler(ctx) {
         pageUrl = `${baseUrl}/servicesupport/analygarden/`;
 
     if (program !== '分析师园地') {
-        pageUrl = `${pageUrl}${program}/`;
+        pageUrl += `${program}/`;
 
         const response = await got(pageUrl);
         const $ = load(response.data);
         program = $('script:contains("Paging")')
             .text()
-            .match(/var name = '(.+)';/)[1];
+            .match(/var name = '(.+)';/)![1];
         pageData = {
             category: $('.crumb a')
                 .toArray()
@@ -58,7 +59,7 @@ async function handler(ctx) {
         },
         searchParams: {
             pageNo: 1,
-            pageSize: ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 20,
+            pageSize: ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 20,
             keyword: '',
             startTime: '',
             endTime: '',
@@ -73,7 +74,7 @@ async function handler(ctx) {
             title: item.docTitle,
             author: item.docAuthor,
             link,
-            pubDate: timezone(parseDate(item.operTime), +8),
+            pubDate: timezone(parseDate(item.operTime), 8),
             enclosure_url: link,
             enclosure_type: `application/${link.split('.').pop()}`,
         };

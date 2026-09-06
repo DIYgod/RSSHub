@@ -1,7 +1,8 @@
-import { Route } from '@/types';
-import { getConfig } from './utils';
+import type { Data, Route } from '@/types';
 import got from '@/utils/got';
 import RSSParser from '@/utils/rss-parser';
+
+import { getConfig } from './utils';
 
 export const route: Route = {
     path: '/:configId/official/:path{.+}',
@@ -15,7 +16,7 @@ export const route: Route = {
         requireConfig: [
             {
                 name: 'DISCOURSE_CONFIG_*',
-                description: `Configure the Discourse environment variables referring to [https://docs.rsshub.app/deploy/config#discourse](https://docs.rsshub.app/deploy/config#discourse).`,
+                description: 'Configure the Discourse environment variables referring to [https://docs.rsshub.app/deploy/config#discourse](https://docs.rsshub.app/deploy/config#discourse).',
             },
         ],
         requirePuppeteer: false,
@@ -30,7 +31,8 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const { link, key } = getConfig(ctx);
+    const discourseConfig: unknown = getConfig(ctx);
+    const { link, key } = discourseConfig as { link: string; key: string };
     const path = ctx.req.param('path');
 
     const url = `${link}/${path}.rss`;
@@ -51,5 +53,5 @@ async function handler(ctx) {
         ...e,
     }));
 
-    return { item: feed.items, ...feed };
+    return { item: feed.items, ...feed } as Data;
 }

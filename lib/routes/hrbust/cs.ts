@@ -1,9 +1,11 @@
-import { Route, ViewType } from '@/types';
+import { load } from 'cheerio';
+
+import type { DataItem, Route } from '@/types';
+import { ViewType } from '@/types';
 import cache from '@/utils/cache';
+import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
-import { load } from 'cheerio';
-import { ofetch } from 'ofetch';
 
 export const route: Route = {
     path: '/cs/:category?',
@@ -14,7 +16,7 @@ export const route: Route = {
     example: '/hrbust/cs',
     parameters: { category: '栏目标识，默认为 3709（学院要闻）' },
     description: `| 通知公告 | 学院要闻 | 常用下载 | 博士后流动站 | 学生指导 | 科研动态 | 科技成果 | 党建理论 | 党建学习 | 党建活动 | 党建风采 | 团学组织 | 学生党建 | 学生活动 | 心理健康 | 青春榜样 | 就业工作 | 校友风采 | 校庆专栏 | 专业介绍 | 本科生培养方案 | 硕士生培养方案 | 能力作风建设 | 博士生培养方案 | 省级实验教学示范中心 | 喜迎二十大系列活动 | 学习贯彻省十三次党代会精神 |
-|----------|----------|----------|--------------|----------|----------|----------|----------|----------|----------|----------|----------|----------|----------|----------|----------|----------|----------|----------|----------|----------------|----------------|--------------|----------------|----------------------|--------------------|----------------------------|
+| -------- | -------- | -------- | ------------ | -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------------- | -------------- | ------------ | -------------- | -------------------- | ------------------ | -------------------------- |
 | 3708     | 3709     | 3710     | 3725         | 3729     | 3732     | 3733     | 3740     | 3741     | 3742     | 3743     | 3744     | 3745     | 3746     | 3747     | 3748     | 3751     | 3752     | 3753     | 3755     | 3756           | 3759           | nlzfjs       | pyfa           | sjsyjxsfzx           | srxxgcddesdjs      | xxgcssscddhjs              |`,
     categories: ['university'],
     features: {
@@ -49,11 +51,11 @@ async function handler(ctx) {
 
     const list = $('div.col_news_con li.news')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem & { link: string } => {
             const element = $(item);
-            const link = new URL(element.find('a').attr('href'), rootUrl).href;
-            const pubDateText = element.find('span.news_meta').text().trim();
-            const pubDate = pubDateText ? timezone(parseDate(pubDateText), +8) : null;
+            const link = new URL(element.find('a').attr('href')!, rootUrl).href;
+            const pubDateText = element.find('span.news_meta').text();
+            const pubDate = pubDateText ? timezone(parseDate(pubDateText), 8) : null;
             return {
                 title: element.find('a').text().trim(),
                 pubDate,
@@ -75,7 +77,7 @@ async function handler(ctx) {
 
                 content.find('[style]').removeAttr('style');
                 content.find('font').contents().unwrap();
-                content.html(content.html()?.replaceAll('&nbsp;', ''));
+                content.html(content.html()?.replaceAll('&nbsp;', '') ?? '');
                 content.find('[align]').removeAttr('align');
 
                 const author = $('span.arti_publisher').text().replace('发布者：', '').trim();
@@ -94,7 +96,7 @@ async function handler(ctx) {
     return {
         title: `${bigTitle} - 哈尔滨理工大学计算机学院`,
         link: columnUrl,
-        language: 'zh-CN',
+        language: 'zh-CN' as const,
         item: items,
     };
 }

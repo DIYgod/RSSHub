@@ -1,9 +1,10 @@
-import { Route } from '@/types';
-import got from '@/utils/got';
 import { load } from 'cheerio';
+
+import type { Route } from '@/types';
+import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-import { art } from '@/utils/render';
-import path from 'node:path';
+
+import { renderDescription } from './templates/description';
 
 const host = 'https://techcrunch.com';
 export const route: Route = {
@@ -16,9 +17,9 @@ export const route: Route = {
     name: 'Category',
     maintainers: ['MilliumOrion'],
     handler,
-    description: `Use the category ID to retrieve a list of articles, category ID.  
-From the page source of \`https://techcrunch.com/category/***\`, locate the \`{category_id}\`  
-Example:  
+    description: `Use the category ID to retrieve a list of articles, category ID.\\
+From the page source of \`https://techcrunch.com/category/***\`, locate the \`{category_id}\`\\
+Example:\\
 \`html\` -> \`head\` -> \`<link rel="alternate" title="JSON" type="application/json" href="https://techcrunch.com/wp-json/wp/v2/categories/{category_id}">\``,
 };
 
@@ -30,7 +31,7 @@ async function handler(ctx) {
         const $ = load(item.content.rendered, null, false);
         return {
             title: item.title.rendered,
-            description: art(path.join(__dirname, 'templates/description.art'), {
+            description: renderDescription({
                 head,
                 rendered: $.html(),
             }),

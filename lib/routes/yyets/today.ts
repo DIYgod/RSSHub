@@ -1,6 +1,8 @@
-import { Route, ViewType } from '@/types';
-import got from '@/utils/got';
 import { load } from 'cheerio';
+
+import type { Route } from '@/types';
+import { ViewType } from '@/types';
+import got from '@/utils/got';
 
 export const route: Route = {
     path: '/today',
@@ -48,11 +50,11 @@ async function handler() {
         title: '人人影视-今日播出',
         link: 'https://yysub.net',
         item: list.toArray().map((item) => {
-            item = $(item);
+            const $item = $(item);
             return {
-                title: item.find('a').first().text(),
-                link: item.find('a').attr('href'),
-                guid: item.find('a').first().text(),
+                title: $item.find('a').first().text(),
+                link: $item.find('a').attr('href'),
+                guid: $item.find('a').first().text(),
             };
         }),
     };

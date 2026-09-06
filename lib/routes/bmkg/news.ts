@@ -1,7 +1,8 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 
 export const route: Route = {
     path: '/news',
@@ -27,16 +28,16 @@ export const route: Route = {
     url: 'bmkg.go.id/',
 };
 
-async function handler() {
+async function handler(): Promise<Data> {
     const url = 'https://www.bmkg.go.id';
     const response = await got(url);
     const $ = load(response.data);
     const list = $('div .ms-slide')
         .toArray()
-        .map((item) => {
-            item = $(item);
-            const a = item.find('a');
-            const img = item.find('img');
+        .map((item): DataItem => {
+            const $item = $(item);
+            const a = $item.find('a');
+            const img = $item.find('img');
 
             return {
                 title: a.text(),
@@ -47,7 +48,7 @@ async function handler() {
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const response = await got(item.link);
                 const $ = load(response.data);
                 const p = $('div .blog-grid').find('p');

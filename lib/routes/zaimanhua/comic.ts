@@ -1,24 +1,59 @@
-import { Route } from '@/types';
-import ofetch from '@/utils/ofetch';
-import { config } from '@/config';
-import { parseDate } from '@/utils/parse-date';
-import { art } from '@/utils/render';
-import path from 'node:path';
-import cache from '@/utils/cache';
 import pMap from 'p-map';
+
+import { config } from '@/config';
+import type { Route } from '@/types';
+import cache from '@/utils/cache';
+import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/parse-date';
+
+import { renderComic } from './template/comic';
+
+interface Chapter {
+    chapter_id: number;
+    chapter_title: string;
+    updatetime: number;
+}
+
+interface ComicDetailResponse {
+    data: {
+        comicInfo: {
+            title: string;
+            comicPy: string;
+            chapterList: Array<{
+                title: string;
+                data: Chapter[];
+            }>;
+        };
+    };
+}
+
+interface ChapterDetailResponse {
+    data: {
+        chapterInfo: {
+            page_url?: string[];
+        };
+    };
+}
 
 export const route: Route = {
     path: '/comic/:id',
     categories: ['anime'],
     parameters: { id: '漫画ID' },
-    example: '/zaimanhua/comic/14488',
+    example: '/zaimanhua/comic/57069',
     features: {
-        requireConfig: false,
+        requireConfig: [
+            {
+                name: 'ZAIMANHUA_TOKEN',
+                optional: true,
+                description: '用户登录后，可以从浏览器开发者工具 Network 面板中的请求信息中获取 token，使用请求中的 `Authorization` 的值，完整设置为 `Bearer <token>`，或直接设置 token 并由路由自动补齐 `Bearer ` 前缀。',
+            },
+        ],
         requirePuppeteer: false,
         antiCrawler: false,
         supportBT: false,
         supportPodcast: false,
         supportScihub: false,
+        nsfw: true,
     },
     radar: [
         {
@@ -28,6 +63,10 @@ export const route: Route = {
     ],
     name: '漫画更新',
     maintainers: ['kjasn'],
+    description: `::: Warning
+未登录用户无法获取到所有漫画，需要设置\`ZAIMANHUA_TOKEN\`环境变量以使用 API 授权访问。
+且由于源网站本身的限制，建议尽量在部署于中国大陆网络内的 RSSHub 节点中使用本路由。若在海外网络环境中使用，即使设置了\`ZAIMANHUA_TOKEN\`环境变量，也可能无法获取全部漫画。
+:::`,
     handler,
 };
 
@@ -36,12 +75,16 @@ async function handler(ctx) {
     const id = ctx.req.param('id');
     const currentComicUrl = `${baseUrl}/api/v1/comic2/comic/detail?id=${id}`;
 
-    const response = await ofetch(currentComicUrl, {
-        headers: {
-            'user-agent': config.trueUA,
-            referer: baseUrl,
-        },
-    });
+    const headers: HeadersInit = {
+        'user-agent': config.trueUA,
+    };
+
+    const token = config.zaimanhua.token;
+    if (token) {
+        headers.Authorization = token.startsWith('Bearer ') ? token : `Bearer ${token}`;
+    }
+
+    const response = await ofetch<ComicDetailResponse>(currentComicUrl, { headers });
 
     const comicInfo = response.data.comicInfo;
     const status = comicInfo.chapterList[0].title; // 更新状态
@@ -56,17 +99,10 @@ async function handler(ctx) {
 
             return await cache.tryGet(chapterUrl, async () => {
                 // 获取章节内容
-                const chapterResponse = await ofetch(chapterUrl, {
-                    headers: {
-                        'user-agent': config.trueUA,
-                        referer: baseUrl,
-                    },
-                });
+                const chapterResponse = await ofetch<ChapterDetailResponse>(chapterUrl, { headers });
 
                 const chapterData = chapterResponse.data;
-                const description = art(path.join(__dirname, 'template/comic.art'), {
-                    contents: chapterData.chapterInfo.page_url || [],
-                });
+                const description = renderComic(chapterData.chapterInfo.page_url || []);
 
                 return {
                     title: `[${status}] | ${comicTitle} - ${item.chapter_title}`,

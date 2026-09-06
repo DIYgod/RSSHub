@@ -1,11 +1,11 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
 
+import type { Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
-import { art } from '@/utils/render';
-import path from 'node:path';
+
+import { renderDescription } from './templates/description';
 
 const categories = {
     zhengce: '政策',
@@ -34,7 +34,7 @@ export const route: Route = {
         supportScihub: false,
     },
     name: '分类',
-    maintainers: ['nczitzk'],
+    maintainers: ['nczitzk', 'pseudoyu'],
     handler,
     description: `| 政策    | 行情         | DeFi | 矿业  | 以太坊 2.0 |
 | ------- | ------------ | ---- | ----- | ---------- |
@@ -47,10 +47,10 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { category = 'zhengce' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 50;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 50;
 
-    const rootUrl = 'https://www.jinse.cn';
-    const rootApiUrl = 'https://api.jinse.cn';
+    const rootUrl = 'https://www.jinse.com.cn';
+    const rootApiUrl = 'https://api.jinse.com.cn';
     const apiUrl = new URL('v6/www/information/list', rootApiUrl).href;
     const currentUrl = rootUrl;
 
@@ -65,7 +65,7 @@ async function handler(ctx) {
     let items = response.list.slice(0, limit).map((item) => ({
         title: item.title,
         link: item.extra.topic_url,
-        description: art(path.join(__dirname, 'templates/description.art'), {
+        description: renderDescription({
             images:
                 item.extra.thumbnails_pics.length > 0
                     ? item.extra.thumbnails_pics.map((p) => ({
@@ -93,8 +93,8 @@ async function handler(ctx) {
 
                 const content = load(detailResponse);
 
-                item.description += art(path.join(__dirname, 'templates/description.art'), {
-                    description: content('section.js-article-content').html() || content('div.js-article').html(),
+                item.description += renderDescription({
+                    description: (content('section.js-article-content').html() || content('div.js-article').html()) ?? undefined,
                 });
                 item.category = content('section.js-article-tag_state_1 a span')
                     .toArray()
@@ -111,14 +111,14 @@ async function handler(ctx) {
 
     const author = $('meta[name="author"]').prop('content');
     const image = $('a.js-logoBox img').prop('src');
-    const icon = new URL($('link[rel="favicon"]').prop('href'), rootUrl).href;
+    const icon = new URL($('link[rel="favicon"]').prop('href')!, rootUrl).href;
 
     return {
         item: items,
         title: `${author} - ${Object.hasOwn(categories, category) ? categories[category] : category}`,
         link: currentUrl,
         description: $('meta[name="description"]').prop('content'),
-        language: $('html').prop('lang'),
+        language: $('html').prop('lang') as Language,
         image,
         icon,
         logo: icon,

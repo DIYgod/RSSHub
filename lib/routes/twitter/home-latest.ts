@@ -1,6 +1,7 @@
-import { Route } from '@/types';
-import utils from './utils';
+import type { Route } from '@/types';
+
 import api from './api';
+import utils from './utils';
 
 export const route: Route = {
     path: '/home_latest/:routeParams?',
@@ -8,14 +9,14 @@ export const route: Route = {
     example: '/twitter/home_latest',
     features: {
         requireConfig: [
-            {
-                name: 'TWITTER_USERNAME',
-                description: 'Please see above for details.',
-            },
-            {
-                name: 'TWITTER_PASSWORD',
-                description: 'Please see above for details.',
-            },
+            // {
+            //     name: 'TWITTER_USERNAME',
+            //     description: 'Please see above for details.',
+            // },
+            // {
+            //     name: 'TWITTER_PASSWORD',
+            //     description: 'Please see above for details.',
+            // },
             {
                 name: 'TWITTER_AUTH_TOKEN',
                 description: 'Please see above for details.',
@@ -53,8 +54,8 @@ async function handler(ctx) {
     }
 
     return {
-        title: `Twitter following timeline`,
-        link: `https://x.com/home`,
+        title: 'Twitter following timeline',
+        link: 'https://x.com/home',
         // description: userInfo?.description,
         item: utils.ProcessFeed(ctx, {
             data,

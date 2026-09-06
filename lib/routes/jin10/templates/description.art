@@ -1,2 +1,0 @@
-{{ if content }}{{@ content }}{{ /if }}
-{{ if pic }}<br><img src="{{ pic }}">{{ /if }}

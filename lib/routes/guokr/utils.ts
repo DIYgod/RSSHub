@@ -1,7 +1,8 @@
-import { parseDate } from '@/utils/parse-date';
+import { load } from 'cheerio';
+
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import * as cheerio from 'cheerio';
+import { parseDate } from '@/utils/parse-date';
 
 export const parseList = (result) =>
     result.map((item) => ({
@@ -18,7 +19,7 @@ export const parseList = (result) =>
 export const parseItem = (item) =>
     cache.tryGet(item.link, async () => {
         const { data: res } = await got(`https://apis.guokr.com/minisite/article/${item.id}.json`);
-        const $ = cheerio.load(res.result.content);
+        const $ = load(res.result.content);
 
         $('#meta_content').remove();
         $('div').each((_, elem) => {

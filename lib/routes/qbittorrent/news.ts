@@ -1,9 +1,10 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import { config } from '@/config';
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
-import { config } from '@/config';
 
 export const route: Route = {
     path: '/news',
@@ -51,18 +52,19 @@ async function handler(ctx) {
     const item = $('.stretcher')
         .find('h3')
         .toArray()
+        // oxlint-disable-next-line array-callback-return
         .map((item) => {
-            item = $(item);
-            const pubDate = item
+            let $item = $(item);
+            const pubDate = $item
                 .text()
-                .split(' - ')[0]
+                .split(' - ', 1)[0]
                 .replace(/\w{3,6}day/, '');
-            const title = item.text().split(' - ')[1];
+            const title = $item.text().split(' - ', 2)[1];
             let description = '';
             // nextUntil() does not work here
-            while (item.next().length && item.next().get(0).tagName !== 'h3') {
-                item = item.next();
-                description += item.html();
+            while ($item.next().length && $item.next().get(0)!.tagName !== 'h3') {
+                $item = $item.next();
+                description += $item.html();
             }
             return {
                 title,

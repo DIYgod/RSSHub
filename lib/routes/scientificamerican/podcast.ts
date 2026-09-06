@@ -1,36 +1,34 @@
-import path from 'node:path';
+import type { CheerioAPI } from 'cheerio';
+import { load } from 'cheerio';
+import type { Context } from 'hono';
 
-import { type CheerioAPI, load } from 'cheerio';
-import { type Context } from 'hono';
-
-import { type DataItem, type Route, type Data, ViewType } from '@/types';
-
-import { art } from '@/utils/render';
+import type { Data, DataItem, Language, Route } from '@/types';
+import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
+import { renderDescription } from './templates/description';
+
 export const handler = async (ctx: Context): Promise<Data> => {
     const { id } = ctx.req.param();
-    const limit: number = Number.parseInt(ctx.req.query('limit') ?? '12', 10);
+    const limit = Number(ctx.req.query('limit') ?? '12');
 
-    const baseUrl: string = 'https://www.scientificamerican.com';
+    const baseUrl = 'https://www.scientificamerican.com';
     const targetUrl: string = new URL(`podcast${id ? `/${id}` : 's'}/`, baseUrl).href;
 
     const response = await ofetch(targetUrl);
     const $: CheerioAPI = load(response);
-    const language: string = $('html').attr('lang') ?? 'en';
+    const language = ($('html').attr('lang') ?? 'en') as Language;
     const data: string | undefined = response.match(/window\.__DATA__=JSON\.parse\(`(.*?)`\)/)?.[1];
-    const parsedData = data ? JSON.parse(data.replaceAll('\\\\', '\\')) : undefined;
+    const parsedData = data ? JSON.parse(data.replaceAll(String.raw`\\`, '\\')) : undefined;
 
-    let items: DataItem[] = [];
-
-    items = parsedData
+    let items: DataItem[] = parsedData
         ? parsedData.initialData.props.results.slice(0, limit).map((item): DataItem => {
               const title: string = item.title;
               const image: string | undefined = item.image_url;
-              const description: string = art(path.join(__dirname, 'templates/description.art'), {
+              const description: string = renderDescription({
                   images: image
                       ? [
                             {
@@ -51,13 +49,13 @@ export const handler = async (ctx: Context): Promise<Data> => {
                   url: author.url ? new URL(author.url, baseUrl).href : undefined,
                   avatar: author.picture_file,
               }));
-              const guid: string = `-${item.id}`;
+              const guid = `-${item.id}`;
               const updated: number | string = item.release_date ?? pubDate;
 
               let processedItem: DataItem = {
                   title,
                   description,
-                  pubDate: pubDate ? timezone(parseDate(pubDate), +8) : undefined,
+                  pubDate: pubDate ? timezone(parseDate(pubDate), 8) : undefined,
                   link: linkUrl ? new URL(linkUrl, baseUrl).href : undefined,
                   category: categories,
                   author: authors,
@@ -70,14 +68,14 @@ export const handler = async (ctx: Context): Promise<Data> => {
                   },
                   image,
                   banner: image,
-                  updated: updated ? timezone(parseDate(updated), +8) : undefined,
+                  updated: updated ? timezone(parseDate(updated), 8) : undefined,
                   language,
               };
 
               const enclosureUrl: string | undefined = item.media_url;
 
               if (enclosureUrl) {
-                  const enclosureType: string = `audio/${enclosureUrl.replace(/\?.*$/, '').split(/\./).pop()}`;
+                  const enclosureType = `audio/${enclosureUrl.replace(/\?.*$/, '').split(/\./).pop()}`;
 
                   processedItem = {
                       ...processedItem,
@@ -100,10 +98,10 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 }
 
                 return cache.tryGet(item.link, async (): Promise<DataItem> => {
-                    const detailResponse = await ofetch(item.link);
+                    const detailResponse = await ofetch(item.link!);
 
                     const detailData: string | undefined = detailResponse.match(/window\.__DATA__=JSON\.parse\(`(.*?)`\)/)?.[1];
-                    const parsedDetailData = detailData ? JSON.parse(detailData.replaceAll('\\\\', '\\')) : undefined;
+                    const parsedDetailData = detailData ? JSON.parse(detailData.replaceAll(String.raw`\\`, '\\')) : undefined;
 
                     if (!parsedDetailData) {
                         return item;
@@ -113,7 +111,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
                     const title: string = articleData.title;
                     const image: string | undefined = articleData.image_url;
-                    const description: string = art(path.join(__dirname, 'templates/description.art'), {
+                    const description: string = renderDescription({
                         images: image
                             ? [
                                   {
@@ -134,13 +132,13 @@ export const handler = async (ctx: Context): Promise<Data> => {
                         url: author.url ? new URL(author.url, baseUrl).href : undefined,
                         avatar: author.picture_file,
                     }));
-                    const guid: string = `scientificamerican-${articleData.id}`;
+                    const guid = `scientificamerican-${articleData.id}`;
                     const updated: number | string = articleData.updated_at_date_time ?? pubDate;
 
                     let processedItem: DataItem = {
                         title,
                         description,
-                        pubDate: pubDate ? timezone(parseDate(pubDate), +8) : undefined,
+                        pubDate: pubDate ? timezone(parseDate(pubDate), 8) : undefined,
                         category: categories,
                         author: authors,
                         doi: articleData.article_doi,
@@ -152,14 +150,14 @@ export const handler = async (ctx: Context): Promise<Data> => {
                         },
                         image,
                         banner: image,
-                        updated: updated ? timezone(parseDate(updated), +8) : undefined,
+                        updated: updated ? timezone(parseDate(updated), 8) : undefined,
                         language,
                     };
 
                     const enclosureUrl: string | undefined = articleData.media_url;
 
                     if (enclosureUrl) {
-                        const enclosureType: string = `audio/${enclosureUrl.replace(/\?.*$/, '').split(/\./).pop()}`;
+                        const enclosureType = `audio/${enclosureUrl.replace(/\?.*$/, '').split(/\./).pop()}`;
 
                         processedItem = {
                             ...processedItem,
@@ -205,14 +203,13 @@ export const route: Route = {
     parameters: {
         id: 'ID, see below',
     },
-    description: `:::tip
+    description: `::: tip
 If you subscribe to [Science Quickly](https://www.scientificamerican.com/podcast/science-quickly/)，where the URL is \`https://www.scientificamerican.com/podcast/science-quickly/\`, extract the part \`https://www.scientificamerican.com/podcast/\` to the end, which is \`science-quickly\`, and use it as the parameter to fill in. Therefore, the route will be [\`/scientificamerican/podcast/science-quickly\`](https://rsshub.app/scientificamerican/podcast/science-quickly).
 :::
 
 | All | Science Quickly | Uncertain    |
 | --- | --------------- | ------------ |
-|     | science-quickly | science-talk |
-`,
+|     | science-quickly | science-talk |`,
     categories: ['new-media'],
     features: {
         requireConfig: false,
@@ -255,13 +252,12 @@ If you subscribe to [Science Quickly](https://www.scientificamerican.com/podcast
         parameters: {
             id: 'ID，见下表',
         },
-        description: `:::tip
+        description: `::: tip
 若订阅 [Science Quickly](https://www.scientificamerican.com/podcast/science-quickly/)，网址为 \`https://www.scientificamerican.com/podcast/science-quickly/\`，请截取 \`https://www.scientificamerican.com/podcast/\` 到末尾 \`/\` 的部分 \`science-quickly\` 作为 \`id\` 参数填入，此时目标路由为 [\`/scientificamerican/podcast/science-quickly\`](https://rsshub.app/scientificamerican/podcast/science-quickly)。
 :::
 
 | 全部 | Science Quickly | Uncertain    |
 | ---- | --------------- | ------------ |
-|      | science-quickly | science-talk |
-`,
+|      | science-quickly | science-talk |`,
     },
 };

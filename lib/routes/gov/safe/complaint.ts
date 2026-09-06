@@ -1,8 +1,9 @@
-import { Route } from '@/types';
+import type { Route } from '@/types';
+
 import { processZxfkItems } from './util';
 
 export const route: Route = {
-    path: '/safe/complaint/:site?',
+    path: '/complaint/:site?',
     categories: ['government'],
     example: '/gov/safe/complaint/beijing',
     parameters: { site: '站点，见上表，默认为 beijing' },
@@ -21,7 +22,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { site = 'beijing' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 5;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 5;
 
     return await processZxfkItems(site, 'tsjy', limit);
 }

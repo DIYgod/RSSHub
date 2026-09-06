@@ -1,13 +1,13 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
 
+import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
 export const handler = async (ctx) => {
     const { category = 'index/tzgg' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 20;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 20;
 
     const rootUrl = 'https://www.hubu.edu.cn';
     const currentUrl = new URL(`${category}.htm`, rootUrl).href;
@@ -16,18 +16,18 @@ export const handler = async (ctx) => {
 
     const $ = load(response);
 
-    const language = $('html').prop('lang');
+    const language = $('html').prop('lang') as Language;
 
     let items = $('div.list ul li')
         .slice(0, limit)
         .toArray()
-        .map((item) => {
-            item = $(item);
+        .map((item): DataItem & { link: string } => {
+            const $item = $(item);
 
             return {
-                title: item.find('a').text(),
-                pubDate: parseDate(item.find('span').text()),
-                link: new URL(item.find('a').prop('href'), rootUrl).href,
+                title: $item.find('a').text(),
+                pubDate: parseDate($item.find('span').text()),
+                link: new URL($item.find('a').prop('href')!, rootUrl).href,
                 language,
             };
         });
@@ -40,7 +40,7 @@ export const handler = async (ctx) => {
 
                     const $$ = load(detailResponse);
 
-                    const title = $$('div.con-tit h4').text();
+                    const title = $$('div.dtl-tit h4').text();
 
                     if (!title) {
                         return item;
@@ -68,7 +68,7 @@ export const handler = async (ctx) => {
     );
 
     const title = $('title').text();
-    const image = new URL($('div.logo a img').prop('src'), rootUrl).href;
+    const image = new URL($('div.logo a img').prop('src')!, rootUrl).href;
 
     return {
         title,
@@ -86,18 +86,17 @@ export const route: Route = {
     path: '/www/:category{.+}?',
     name: '主页',
     url: 'hubu.edu.cn',
-    maintainers: ['nczitzk'],
+    maintainers: ['cijiugechu', 'nczitzk'],
     handler,
     example: '/hubu/www/index/tzgg',
     parameters: { category: '分类，可在对应分类页 URL 中找到，默认为[通知公告](https://www.hubu.edu.cn/index/tzgg.htm)' },
     description: `::: tip
-  若订阅 [通知公告](https://www.hubu.edu.cn/index/tzgg.htm)，网址为 \`https://www.hubu.edu.cn/index/tzgg.htm\`。截取 \`https://www.hubu.edu.cn/\` 到末尾 \`.htm\` 的部分 \`index/tzgg\` 作为参数填入，此时路由为 [\`/hubu/www/index/tzgg\`](https://rsshub.app/hubu/www/index/tzgg)。
+若订阅 [通知公告](https://www.hubu.edu.cn/index/tzgg.htm)，网址为 \`https://www.hubu.edu.cn/index/tzgg.htm\`。截取 \`https://www.hubu.edu.cn/\` 到末尾 \`.htm\` 的部分 \`index/tzgg\` 作为参数填入，此时路由为 [\`/hubu/www/index/tzgg\`](https://rsshub.app/hubu/www/index/tzgg)。
 :::
 
-| 通知公告   | 学术预告   |
-| ---------- | ---------- |
-| index/tzgg | index/xsyg |
-  `,
+| 通知公告   | 学术预告   | 综合新闻   | 湖大要闻   | 媒体湖大   |
+| ---------- | ---------- | ---------- | ---------- | ---------- |
+| index/tzgg | index/xsyg | index/zhxw | index/hdyw | index/mthd |`,
     categories: ['university'],
 
     features: {
@@ -119,6 +118,21 @@ export const route: Route = {
             title: '学术预告',
             source: ['hubu.edu.cn/index/xsyg.htm'],
             target: '/www/index/xsyg',
+        },
+        {
+            title: '综合新闻',
+            source: ['hubu.edu.cn/index/zhxw.htm'],
+            target: '/www/index/zhxw',
+        },
+        {
+            title: '湖大要闻',
+            source: ['hubu.edu.cn/index/hdyw.htm'],
+            target: '/www/index/hdyw',
+        },
+        {
+            title: '媒体湖大',
+            source: ['hubu.edu.cn/index/mthd.htm'],
+            target: '/www/index/mthd',
         },
     ],
 };

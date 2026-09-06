@@ -1,9 +1,10 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
-import * as cheerio from 'cheerio';
 
 export const route: Route = {
     path: '/weatheralarm/:province?',
@@ -32,7 +33,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { province = '' } = ctx.req.param();
-    const alarmInfoURL = `http://www.nmc.cn/rest/findAlarm`;
+    const alarmInfoURL = 'http://www.nmc.cn/rest/findAlarm';
     const { data: response } = await got(alarmInfoURL, {
         searchParams: {
             pageNo: 1,
@@ -52,7 +53,7 @@ async function handler(ctx) {
         list.map((item) =>
             cache.tryGet(item.link, async () => {
                 const { data: response } = await got(item.link);
-                const $ = cheerio.load(response);
+                const $ = load(response);
 
                 item.description =
                     $('#icon').html() +

@@ -1,6 +1,8 @@
-import { Route } from '@/types';
-import { config } from '@/config';
 import Parser from 'rss-parser';
+
+import { config } from '@/config';
+import type { Route } from '@/types';
+
 import { processItems } from './utils';
 
 export const route: Route = {
@@ -21,10 +23,8 @@ export const route: Route = {
     name: 'RSS',
     maintainers: ['quiniapiezoelectricity'],
     handler,
-    description: `
-For a full list of RSS Feed Channels in English, please refer to [DW RSS Feeds](https://corporate.dw.com/en/rss-feeds/a-68693346).
-RSS Feed Channels in other languages are also available, for example: \`rss-chi-all\` renders the RSS feed in Chinese and \`rss-de-all\` for the RSS Feed in German
-`,
+    description: `For a full list of RSS Feed Channels in English, please refer to [DW RSS Feeds](https://corporate.dw.com/en/rss-feeds/a-68693346).
+RSS Feed Channels in other languages are also available, for example: \`rss-chi-all\` renders the RSS feed in Chinese and \`rss-de-all\` for the RSS Feed in German`,
 };
 
 async function handler(ctx) {
@@ -41,11 +41,11 @@ async function handler(ctx) {
 
     const feed = await parser.parseURL(`https://rss.dw.com/rdf/${category}`);
     const items = await processItems(
-        feed.items.map((item) => {
+        feed.items.map((item: any) => {
             item.id = item['dwsyn:contentID'];
             item.pubDate = item.isoDate;
             item.description = item.content;
-            const link = new URL(item.link);
+            const link = new URL(item.link!);
             link.search = '';
             item.link = link.href;
             item.type = link.pathname.slice(link.pathname.lastIndexOf('/') + 1).startsWith('live-') ? 'liveblog' : 'article'; // dw rss feed only includes liveblogs and articles
@@ -54,7 +54,7 @@ async function handler(ctx) {
     );
 
     return {
-        title: feed.title,
+        title: feed.title!,
         link: feed.link,
         description: feed.description,
         item: items,

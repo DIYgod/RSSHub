@@ -82,6 +82,7 @@ interface Post {
     id: number;
     rootId: number;
     createTime: number;
+    lastEditTime?: number;
     simpleBody: string;
     subject: string;
     body: string;
@@ -111,7 +112,7 @@ interface Post {
     postPerm: PostPerm;
     showStatus: boolean;
     postUser: PostUser;
-    hintInfos: false[];
+    hintInfos: Array<false>;
     isDisableRepost: boolean;
     tagInfos: TagInfo[];
     isVoteActivityPost: boolean;
@@ -140,7 +141,7 @@ interface SpecialAdmin {
     enterpriseStatus: boolean;
     identificationTitle: string;
     blueVip: boolean;
-    talentBoard: false[];
+    talentBoard: Array<false>;
     userTitle: UserTitle;
     enterpriseName: string;
 }
@@ -169,7 +170,7 @@ export interface SpecialBoardDetail {
     pushStatus: boolean;
     specialAdmins: SpecialAdmin[];
     isContribute: boolean;
-    post: false[];
+    post: Array<false>;
     isOpenPostEntrance: boolean;
 }
 
@@ -182,7 +183,6 @@ interface RecommendPost {
     postInfo: Post;
     feedType: number;
     source: string;
-    pointMap: Record<string, unknown>;
     globalId: string;
 }
 

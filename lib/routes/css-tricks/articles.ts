@@ -1,7 +1,11 @@
-import { Data, Route, ViewType } from '@/types';
 import { load } from 'cheerio';
+
+import type { Data, Route } from '@/types';
+import { ViewType } from '@/types';
 import ofetch from '@/utils/ofetch';
+
 import { processWithWp } from './utils';
+
 export const route: Route = {
     path: '/articles',
     view: ViewType.Articles,
@@ -26,7 +30,7 @@ export const route: Route = {
     handler,
 };
 
-async function handler() {
+async function handler(): Promise<Data> {
     // const category = ctx.req.param('category') ?? '';
     // const subCategory = ctx.req.param('subCategory') ?? '';
 
@@ -44,5 +48,5 @@ async function handler() {
         language: 'en',
         logo: `${rootUrl}/favicon.ico`,
         icon: `${rootUrl}/favicon.ico`,
-    } as Data;
+    };
 }

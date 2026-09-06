@@ -1,6 +1,7 @@
-import { Route } from '@/types';
-import got from '@/utils/got';
 import { load } from 'cheerio';
+
+import type { Route } from '@/types';
+import got from '@/utils/got';
 import { parseRelativeDate } from '@/utils/parse-date';
 
 const host = 'https://guangdiu.com';
@@ -40,7 +41,7 @@ async function handler(ctx) {
         }));
 
     return {
-        title: `逛丢 - 九块九`,
+        title: '逛丢 - 九块九',
         link: url,
         item: items,
     };

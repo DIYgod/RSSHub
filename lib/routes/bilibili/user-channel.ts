@@ -1,7 +1,8 @@
-import { Route } from '@/types';
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+
 import cacheIn from './cache';
 import utils from './utils';
 
@@ -50,7 +51,7 @@ async function handler(ctx) {
     if (!channelInfo) {
         return notFoundData;
     }
-    const [userName, face] = await cacheIn.getUsernameAndFaceFromUID(uid);
+    const [username, face] = await cacheIn.getUsernameAndFaceFromUID(uid);
     const host = `https://api.bilibili.com/x/series/archives?mid=${uid}&series_id=${sid}&only_normal=true&sort=desc&pn=1&ps=${limit}`;
 
     const response = await got(host, {
@@ -65,18 +66,18 @@ async function handler(ctx) {
     }
 
     return {
-        title: `${userName} 的 bilibili 频道 ${channelInfo.meta.name}`,
+        title: `${username} 的 bilibili 频道 ${channelInfo.meta.name}`,
         link,
-        description: `${userName} 的 bilibili 频道`,
-        image: face,
-        logo: face,
-        icon: face,
+        description: `${username} 的 bilibili 频道`,
+        image: face ?? undefined,
+        logo: face ?? undefined,
+        icon: face ?? undefined,
         item: data.archives.map((item) => ({
             title: item.title,
             description: utils.renderUGCDescription(embed, item.pic, '', item.aid, undefined, item.bvid),
             pubDate: parseDate(item.pubdate, 'X'),
             link: item.pubdate > utils.bvidTime && item.bvid ? `https://www.bilibili.com/video/${item.bvid}` : `https://www.bilibili.com/video/av${item.aid}`,
-            author: userName,
+            author: username,
         })),
     };
 }

@@ -1,7 +1,8 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-import { load } from 'cheerio';
 
 export const route: Route = {
     path: '/hanlab/blog',
@@ -41,8 +42,8 @@ async function handler() {
             const titleEl = el.find('h3.text-title');
             const title = titleEl.text().trim();
             const link = new URL(el.attr('href') ?? '', rootUrl).href;
-            const description = el.find('p.text-tldr').html() ?? undefined;
-            const dateText = el.find('div.text-date').text().trim();
+            const description = el.find('p.text-tldr').html();
+            const dateText = el.find('div.text-date').text();
             const pubDate = parseDate(dateText);
 
             return {

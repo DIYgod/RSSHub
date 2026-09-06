@@ -1,20 +1,27 @@
-import { Route } from '@/types';
-import { getSubPath } from '@/utils/common-utils';
-import got from '@/utils/got';
 import { load } from 'cheerio';
-import timezone from '@/utils/timezone';
+
+import type { Route } from '@/types';
+import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 export const route: Route = {
-    path: '*',
-    name: 'Unknown',
-    maintainers: [],
+    path: '/:path{.+}?',
+    categories: ['new-media'],
+    example: '/bad',
+    parameters: { path: '路径，默认为首页热门' },
+    description: `若订阅 [每日热点 - 最新](https://bad.news/tag/每日热点/sort-new)，网址为 \`https://bad.news/tag/每日热点/sort-new\`。截取 \`https://bad.news\` 到末尾的部分 \`/tag/每日热点/sort-new\` 作为参数，此时路由为 [\`/bad/tag/每日热点/sort-new\`](https://rsshub.app/bad/tag/每日热点/sort-new)。
+
+若订阅子分类 [大陆资讯 - 热门](https://bad.news/tag/大陆资讯/sort-hot)，网址为 \`https://bad.news/tag/大陆资讯/sort-hot\`。截取 \`https://bad.news\` 到末尾的部分 \`/tag/大陆资讯/sort-hot\` 作为参数，路由为 [\`/bad/tag/大陆资讯/sort-hot\`](https://rsshub.app/bad/tag/大陆资讯/sort-hot)。`,
+    name: '通用',
+    maintainers: ['nczitzk'],
     handler,
 };
 
 async function handler(ctx) {
     const rootUrl = 'https://bad.news';
-    const currentUrl = `${rootUrl}${getSubPath(ctx) === '/' ? '' : getSubPath(ctx)}`;
+    const path = ctx.req.param('path');
+    const currentUrl = path ? `${rootUrl}/${path}` : rootUrl;
 
     const response = await got({
         method: 'get',
@@ -28,31 +35,31 @@ async function handler(ctx) {
     const items = $('.entry')
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
-            const a = item.find('a.title');
+            const a = $item.find('a.title');
 
-            item.find('img').each(function () {
-                $(this).attr('src', $(this).attr('data-echo'));
-                $(this).removeClass('lazy');
-                $(this).removeAttr('data-echo');
-                $(this).removeAttr('id');
+            $item.find('img').each((_, el) => {
+                $(el).attr('src', $(el).attr('data-echo'));
+                $(el).removeClass('lazy');
+                $(el).removeAttr('data-echo');
+                $(el).removeAttr('id');
             });
 
-            item.find('video').each(function () {
-                $(this).attr('poster', $(this).attr('data-echo'));
-                $(this).removeAttr('data-echo');
-                $(this).removeAttr('onerror');
-                $(this).removeAttr('id');
+            $item.find('video').each((_, el) => {
+                $(el).attr('poster', $(el).attr('data-echo'));
+                $(el).removeAttr('data-echo');
+                $(el).removeAttr('onerror');
+                $(el).removeAttr('id');
             });
 
             return {
                 title: a.text(),
                 link: a.attr('href'),
-                description: item.find('.coverdiv').html(),
-                author: item.find('.author').text().trim(),
-                pubDate: timezone(parseDate(item.find('time').attr('datetime')), +8),
-                category: item
+                description: $item.find('.coverdiv').html(),
+                author: $item.find('.author').text().trim(),
+                pubDate: timezone(parseDate($item.find('time').attr('datetime')!), 8),
+                category: $item
                     .find('.label')
                     .toArray()
                     .map((l) => $(l).text().trim()),

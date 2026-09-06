@@ -1,6 +1,7 @@
-import { Route } from '@/types';
-import got from '@/utils/got';
 import { load } from 'cheerio';
+
+import type { Route } from '@/types';
+import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
@@ -29,11 +30,7 @@ export const route: Route = {
 
 async function handler() {
     const link = 'https://yjsy.gzhu.edu.cn/zsxx/zsdt/zsdt.htm';
-    const response = await got(link, {
-        https: {
-            rejectUnauthorized: false,
-        },
-    });
+    const response = await got(link);
     const $ = load(response.data);
     const list = $('.picnews_cont li');
 
@@ -44,11 +41,11 @@ async function handler() {
         item:
             list &&
             list.toArray().map((item) => {
-                item = $(item);
-                const a = item.find('span a');
+                const $item = $(item);
+                const a = $item.find('span a');
                 return {
-                    title: a.attr('title'),
-                    link: new URL(a.attr('href'), link).href,
+                    title: a.attr('title')!,
+                    link: new URL(a.attr('href')!, link).href,
                     pubDate: parseDate(a.text(), 'YYYY-MM-DD'),
                 };
             }),

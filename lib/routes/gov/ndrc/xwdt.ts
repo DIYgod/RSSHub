@@ -1,12 +1,13 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
 export const route: Route = {
-    path: '/ndrc/xwdt/:category{.+}?',
+    path: '/xwdt/:category{.+}?',
     name: '新闻动态',
     example: '/gov/ndrc/xwdt',
     parameters: { category: '分类，见下表，默认为新闻发布' },
@@ -31,7 +32,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const category = ctx.req.param('category') || 'xwfb';
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 25;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 25;
 
     const rootUrl = 'https://www.ndrc.gov.cn';
     const currentUrl = category.includes('dt') ? `${rootUrl}/xwdt/dt/${category}` : `${rootUrl}/xwdt/${category}`;
@@ -44,23 +45,23 @@ async function handler(ctx) {
     const list = $('.u-list li a')
         .slice(0, limit)
         .toArray()
-        .map((item) => {
-            item = $(item);
-            let link = item.attr('href');
-            if (link.indexOf('../../..') === 0) {
-                link = `${rootUrl}${link.replace('../../..', '')}`;
-            } else if (link.indexOf('.') === 0) {
-                link = `${currentUrl}${link.replace('.', '')}`;
+        .map((item): DataItem => {
+            const $item = $(item);
+            let link = $item.attr('href');
+            if (link!.startsWith('../../..')) {
+                link = `${rootUrl}${link!.replace('../../..', '')}`;
+            } else if (link!.startsWith('.')) {
+                link = `${currentUrl}${link!.replace('.', '')}`;
             }
             return {
-                title: item.text(),
+                title: $item.text(),
                 link,
             };
         });
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const detailResponse = await got({
                     method: 'get',
                     url: item.link,

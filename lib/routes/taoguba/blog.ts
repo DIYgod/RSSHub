@@ -1,7 +1,9 @@
-import { Route } from '@/types';
-import got from '@/utils/got';
 import { load } from 'cheerio';
-import { rootUrl, renderPostDetail } from './util';
+
+import type { Route } from '@/types';
+import got from '@/utils/got';
+
+import { renderPostDetail, rootUrl } from './util';
 
 export const route: Route = {
     path: '/blog/:id',
@@ -43,9 +45,9 @@ async function handler(ctx) {
         .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 50)
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
-            const a = item.find('a').first();
+            const a = $item.find('a').first();
 
             return {
                 title: a.text().trim(),

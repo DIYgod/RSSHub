@@ -1,10 +1,10 @@
-import { Route, Data, DataItem } from '@/types';
+import { load } from 'cheerio';
+import type { Context } from 'hono';
 
+import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
-import { Context } from 'hono';
 
 export const route: Route = {
     path: '/news/:category',
@@ -45,7 +45,7 @@ async function handler(ctx: Context): Promise<Data> {
                 const detail = await got(link);
                 const $ = load(detail.body);
                 $('.inline-gptAd, .figure_image_sizer').remove();
-                const articleHTML = $('div.article-body').html() || '';
+                const articleHTML = $('div.article-body').html();
 
                 return {
                     title,

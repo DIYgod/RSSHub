@@ -1,6 +1,8 @@
-import { Route, ViewType } from '@/types';
-import got from '@/utils/got';
 import { load } from 'cheerio';
+
+import type { Route } from '@/types';
+import { ViewType } from '@/types';
+import got from '@/utils/got';
 
 const categoryList = {
     'combined-print-and-e-book-nonfiction': 'Combined Print & E-Book Nonfiction',
@@ -24,9 +26,9 @@ export const route: Route = {
     parameters: {
         category: {
             description: 'Category, can be found on the [official page](https://www.nytimes.com/books/best-sellers/)',
-            options: Object.keys(categoryList).map((key) => ({
+            options: Object.entries(categoryList).map(([key, value]) => ({
                 value: key,
-                label: categoryList[key],
+                label: value,
             })),
             default: 'combined-print-and-e-book-nonfiction',
         },
@@ -56,9 +58,9 @@ async function handler(ctx) {
 
     const url = `https://www.nytimes.com/books/best-sellers/${category}`;
 
-    let items = [];
+    let items: any[] = [];
     let dataTitle = '';
-    if (categoryList[category]) {
+    if (Object.hasOwn(categoryList, category)) {
         const response = await got({
             method: 'get',
             url,

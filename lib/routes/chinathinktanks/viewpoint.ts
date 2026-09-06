@@ -1,10 +1,11 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+import { CookieJar } from 'tough-cookie';
+
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate, parseRelativeDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
-import { CookieJar } from 'tough-cookie';
 
 const cookieJar = new CookieJar();
 const baseUrl = 'https://www.chinathinktanks.org.cn';
@@ -84,19 +85,20 @@ async function handler(ctx) {
 
     let items = $('.main-content-left-list-item')
         .toArray()
-        .map((e) => {
-            e = $(e);
+        .map((e): DataItem => {
+            const $e = $(e);
+            const pubDateText = $e.find('.author-time').text();
             return {
-                title: e.find('.title span').text(),
-                link: baseUrl + e.attr('href'),
-                author: e.find('.author-by span').text(),
-                pubDate: e.find('.author-time').text(),
+                title: $e.find('.title span').text(),
+                link: baseUrl + $e.attr('href'),
+                author: $e.find('.author-by span').text(),
+                pubDate: pubDateText.includes('-') ? timezone(parseDate(pubDateText, 'YYYY-MM-DD'), 8) : parseRelativeDate(pubDateText),
             };
         });
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const response = await got({
                     url: item.link,
                     cookieJar,
@@ -104,7 +106,6 @@ async function handler(ctx) {
                 const $ = load(response.data);
                 const content = $('#art');
                 item.description = content.html();
-                item.pubDate = item.pubDate.includes('-') ? timezone(parseDate(item.pubDate, 'YYYY-MM-DD'), +8) : parseRelativeDate(item.pubDate);
 
                 return item;
             })
@@ -112,7 +113,7 @@ async function handler(ctx) {
     );
 
     return {
-        title: `中国智库网 —— ${$('title').text().split('_中国智库网')[0]}`,
+        title: `中国智库网 —— ${$('title').text().split('_中国智库网', 1)[0]}`,
         link,
         item: items,
     };

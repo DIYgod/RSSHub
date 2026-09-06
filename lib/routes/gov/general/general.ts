@@ -1,5 +1,7 @@
-import { getSubPath } from '@/utils/common-utils';
+import { load } from 'cheerio';
+
 import cache from '@/utils/cache';
+import { getSubPath } from '@/utils/common-utils';
 // 来人拯救一下啊( >﹏<。)
 // 待做功能：
 // 1. 传入和处理
@@ -10,7 +12,6 @@ import cache from '@/utils/cache';
 //         [] 示例1: http://www.dianbai.gov.cn/ywdt/dbyw/content/post_1091433.html
 // 4. 处理网站功能
 //        [] hdjlpt 互动交流
-
 // 使用方法
 // import { gdgov } from '../general/general';
 //
@@ -36,13 +37,12 @@ import cache from '@/utils/cache';
 //     };
 //     await gdgov(info, ctx);
 // };
-
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
-import { art } from '@/utils/render';
 import { finishArticleItem } from '@/utils/wechat-mp';
+
+import { renderZcjdpt } from './templates/zcjdpt';
 
 const gdgov = async (info, ctx) => {
     const path = getSubPath(ctx)
@@ -104,9 +104,9 @@ const gdgov = async (info, ctx) => {
     pathname = pathname === '' ? defaultPath : pathname.endsWith('/') ? pathname : pathname + '/';
     const currentUrl = `${rootUrl}/${pathname}`;
 
-    let $ = '';
-    let name = '';
-    let list = '';
+    let $ = load('');
+    let name: string;
+    let list: any;
     // 判断是否处于特殊目录
     if (pathname.startsWith('gkmlpt')) {
         title_element = undefined;
@@ -137,7 +137,7 @@ const gdgov = async (info, ctx) => {
             case 'element':
                 name_element = name_element.split(',').filter((item) => item !== '');
                 for (let index = 0; index < name_element.length; index++) {
-                    name_element[index] = $(name_element[index].trim()).text().match(name_match)[1];
+                    name_element[index] = $(name_element[index].trim()).text().match(name_match)![1];
                 }
                 name = name_element.join(name_join);
                 break;
@@ -149,12 +149,12 @@ const gdgov = async (info, ctx) => {
     }
 
     const lists = list.map((i, item) => {
-        let link = '';
+        let link: string;
 
         if (pathname.startsWith('gkmlpt')) {
             link = i.url;
         } else {
-            link = $(item).attr('href');
+            link = $(item).attr('href')!;
             // 判断获取到的链接是否完整，不完整则补全。
             if (!link.startsWith('http')) {
                 link.startsWith('/') ? (link = `${rootUrl}${link}`) : (link = `${rootUrl}/${link}`);
@@ -177,53 +177,50 @@ const gdgov = async (info, ctx) => {
                     const zcjdlink = 'https://zcjd.cloud.gd.gov.cn/api/home/article' + idlink.search;
                     const response = await got(zcjdlink);
                     const data = response.data.data;
-                    for (let index = 0; index < data.jie_du_items.length; index++) {
-                        data.jie_du_items[index].jd_content = data.jie_du_items[index].jd_content.replaceAll(/((\n {4})|(\n))/g, '</p><p style="font-size: 16px;line-height: 32px;text-indent: 2em;">');
+                    for (const item of data.jie_du_items) {
+                        item.jd_content = item.jd_content.replaceAll(/((\n {4})|(\n))/g, '</p><p style="font-size: 16px;line-height: 32px;text-indent: 2em;">');
                     }
 
                     return {
                         link,
                         title: data.art_title,
-                        description: art(path.join(__dirname, 'templates/zcjdpt.art'), data),
-                        pubDate: timezone(parseDate(data.pub_time), +8),
-                        author: /(本|本网|本站)/.test(data.pub_unite) ? authorisme : data.pub_unite,
-                    };
-                });
-            } else if (idlink.host === 'mp.weixin.qq.com') {
-                return finishArticleItem({ link });
-            } else {
-                return cache.tryGet(link, async () => {
-                    // 获取网页
-                    const { data: res } = await got(link);
-                    const content = load(res);
-
-                    // 获取来源
-                    let author = '';
-                    author = author_element === undefined ? content('meta[name="ContentSource"]').attr('content') : content(author_element).text().trim().match(author_match)[1].trim().replaceAll(/(-*$)/g, '');
-
-                    // 获取发布时间
-                    let pubDate = '';
-                    pubDate = pubDate_element === undefined ? content('meta[name="PubDate"]').attr('content') : content(pubDate_element).text().trim().match(pubDate_match)[1].trim().replaceAll(/(-*$)/g, '');
-
-                    // 获取标题
-                    let title = '';
-                    title = title_element === undefined ? content('meta[name="ArticleTitle"]').attr('content') : content(title_element).text().trim().match(title_match)[1];
-                    // 获取正文
-                    const description_content = description_element.split(',').filter((item) => item !== '');
-                    for (let index = 0; index < description_content.length; index++) {
-                        description_content[index] = content(description_content[index].trim()).html();
-                    }
-                    const description = description_content.join('');
-
-                    return {
-                        link,
-                        title,
-                        description,
-                        pubDate: timezone(parseDate(pubDate, pubDate_format), +8),
-                        author: /本|本网|本站/.test(author) ? authorisme : author,
+                        description: renderZcjdpt(data),
+                        pubDate: timezone(parseDate(data.pub_time), 8),
+                        author: /本/.test(data.pub_unite) ? authorisme : data.pub_unite,
                     };
                 });
             }
+            if (idlink.host === 'mp.weixin.qq.com') {
+                return finishArticleItem({ link });
+            }
+            return cache.tryGet(link, async () => {
+                // 获取网页
+                const { data: res } = await got(link);
+                const content = load(res);
+
+                // 获取来源
+                const author = author_element === undefined ? content('meta[name="ContentSource"]').attr('content') : content(author_element).text().trim().match(author_match)![1].trim().replaceAll(/(-*$)/g, '');
+
+                // 获取发布时间
+                const pubDate = pubDate_element === undefined ? content('meta[name="PubDate"]').attr('content') : content(pubDate_element).text().trim().match(pubDate_match)![1].trim().replaceAll(/(-*$)/g, '');
+
+                // 获取标题
+                const title = title_element === undefined ? content('meta[name="ArticleTitle"]').attr('content') : content(title_element).text().trim().match(title_match)![1];
+                // 获取正文
+                const description_content = description_element.split(',').filter((item) => item !== '');
+                for (let index = 0; index < description_content.length; index++) {
+                    description_content[index] = content(description_content[index].trim()).html();
+                }
+                const description = description_content.join('');
+
+                return {
+                    link,
+                    title: title!,
+                    description,
+                    pubDate: timezone(parseDate(pubDate!, pubDate_format), 8),
+                    author: /本/.test(author!) ? authorisme : author,
+                };
+            });
         })
     );
 

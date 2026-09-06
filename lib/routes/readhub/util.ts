@@ -1,35 +1,24 @@
+import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-import { art } from '@/utils/render';
-import path from 'node:path';
-import dayjs from 'dayjs';
+
+import { renderDescription } from './templates/description';
 
 const domain = 'readhub.cn';
 const rootUrl = `https://${domain}`;
 const apiRootUrl = `https://api.${domain}`;
 const apiTopicUrl = new URL('topic/list', apiRootUrl).href;
 
-const formatDate = (date, format) => dayjs(date).format(format);
-const toTopicUrl = (id) => new URL(`topic/${id}`, rootUrl).href;
-
-art.defaults.imports = {
-    ...art.defaults.imports,
-
-    formatDate,
-    toTopicUrl,
-};
-
 /**
  * Process items asynchronously.
  *
  * @param {Array<Object>} items - The array of items to process.
- * @param {function} tryGet - The tryGet function that handles the retrieval process.
  * @returns {Promise<Array<Object>>} Returns a Promise that resolves to an array of processed items.
  */
-const processItems = async (items, tryGet) =>
+const processItems = async (items) =>
     await Promise.all(
         items.map((item) =>
-            tryGet(item.link, async () => {
+            cache.tryGet(item.link, async () => {
                 try {
                     if (!item.link.startsWith(rootUrl)) {
                         throw new Error(`"${item.link}" is an external URL`);
@@ -37,14 +26,15 @@ const processItems = async (items, tryGet) =>
 
                     const { data: detailResponse } = await got(item.link);
 
-                    const data = JSON.parse(detailResponse.match(/{\\"topic\\":(.*?)}]\\n"]\)<\/script>/)[1].replaceAll(String.raw`\"`, '"'));
+                    const data = JSON.parse(detailResponse.match(/\{\\"topic\\":(.*?)\}\]\\n"\]\)<\/script>/)[1].replaceAll(String.raw`\"`, '"'));
 
                     item.title = data.title;
                     item.link = data.url ?? new URL(`topic/${data.uid}`, rootUrl).href;
-                    item.description = art(path.join(__dirname, 'templates/description.art'), {
+                    item.description = renderDescription({
                         description: data.summary,
                         news: data.newsAggList,
                         timeline: data.timeline,
+                        rootUrl,
                     });
                     item.author = data.siteNameDisplay;
                     item.category = [...(data.entityList.map((c) => c.name) ?? []), ...(data.tagList.map((c) => c.name) ?? [])];
@@ -59,6 +49,4 @@ const processItems = async (items, tryGet) =>
         )
     );
 
-export { rootUrl, apiRootUrl, apiTopicUrl, processItems };
-
-export { art } from '@/utils/render';
+export { apiRootUrl, apiTopicUrl, processItems, rootUrl };

@@ -1,7 +1,8 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
@@ -46,9 +47,9 @@ async function handler() {
 
                 const response = await got(item.link);
                 const $ = load(response.data);
-                const description = $('div[class^="NewsArticle_newsArticleContentContainerWrapper"]').html() || '';
+                const description = $('div[class^="NewsArticle_newsArticleContentContainerWrapper"]').html();
 
-                const author = $('div[class^="NewsArticleDetails_newsArticleDetailsByline"]').text() || '';
+                const author = $('div[class^="NewsArticleDetails_newsArticleDetailsByline"]').text();
                 return {
                     title,
                     pubDate,

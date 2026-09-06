@@ -1,4 +1,0 @@
-{{ if mainPic }}
-{{@ mainPic }}<br><br>
-{{ /if }}
-{{@ articleBody }}

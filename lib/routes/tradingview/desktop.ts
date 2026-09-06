@@ -1,8 +1,9 @@
-import { Route } from '@/types';
-import got from '@/utils/got';
 import { load } from 'cheerio';
-import timezone from '@/utils/timezone';
+
+import type { Language, Route } from '@/types';
+import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/desktop',
@@ -29,7 +30,7 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 50;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 50;
 
     const rootUrl = 'https://www.tradingview.com';
     const currentUrl = new URL('/support/solutions/43000673888-tradingview-desktop-releases-and-release-notes/', rootUrl).href;
@@ -39,10 +40,10 @@ async function handler(ctx) {
     const $ = load(response);
 
     $('h4[data-identifyelement]').each((_, el) => {
-        el = $(el);
+        const $el = $(el);
 
-        if (el.text().trim() === '') {
-            el.remove();
+        if ($el.text().trim() === '') {
+            $el.remove();
         }
     });
 
@@ -50,10 +51,10 @@ async function handler(ctx) {
         .toArray()
         .slice(0, limit)
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
-            const title = item.text();
-            const description = $.html(item.nextUntil('h4'));
+            const title = $item.text();
+            const description = $.html($item.nextUntil('h4'));
             const content = load(description);
 
             return {
@@ -64,20 +65,22 @@ async function handler(ctx) {
                     .toArray()
                     .map((c) => $(c).text()),
                 guid: `tradingview-desktop#${title.split(/versions?\s/).pop()}`,
-                pubDate: timezone(parseDate(title.split(/\./)[0], 'MMMM D, YYYY'), +8),
+                pubDate: timezone(parseDate(title.split(/\./, 1)[0], 'MMMM D, YYYY'), 8),
             };
         });
 
     const title = $('title').text();
     const titleSplits = title.split(/—/);
-    const icon = new URL($('link[rel="icon"]').prop('href'), rootUrl).href;
+    const icon = new URL($('link[rel="icon"]').prop('href')!, rootUrl).href;
+
+    const language = $('html').prop('lang') as Language;
 
     return {
         item: items,
         title,
         link: currentUrl,
         description: titleSplits[0],
-        language: $('html').prop('lang'),
+        language,
         icon,
         logo: icon,
         subtitle: titleSplits[0],

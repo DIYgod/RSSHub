@@ -1,6 +1,8 @@
-import got from '@/utils/got';
 import { load } from 'cheerio';
-import { CookieJar, Cookie } from 'tough-cookie';
+import { Cookie, CookieJar } from 'tough-cookie';
+
+import got from '@/utils/got';
+
 const cookieJar = new CookieJar();
 const cookie = Cookie.fromJSON({
     key: 'playno1',
@@ -9,7 +11,7 @@ const cookie = Cookie.fromJSON({
     path: '/',
 });
 (async () => {
-    await cookieJar.setCookie(cookie, 'http://www.playno1.com/');
+    await cookieJar.setCookie(cookie!, 'http://www.playno1.com/');
 })();
 
 const processArticle = (items, cache) =>

@@ -1,7 +1,7 @@
-import { Route } from '@/types';
-import cache from '@/utils/cache';
+import type { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+
 import { parseArticle } from '../../utils';
 
 export const route: Route = {
@@ -57,7 +57,7 @@ async function handler(ctx) {
         author: item.media,
     }));
 
-    const items = await Promise.all(list.map((item) => parseArticle(item, cache.tryGet)));
+    const items = await Promise.all(list.map((item) => parseArticle(item)));
 
     return {
         title: '美股|美股行情|美股新闻 - 新浪财经',

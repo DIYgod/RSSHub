@@ -1,5 +1,6 @@
-import { Route } from '@/types';
+import type { Route } from '@/types';
 import buildData from '@/utils/common-config';
+
 const baseUrl = 'https://www.xunhupay.com';
 
 export const route: Route = {
@@ -31,8 +32,8 @@ async function handler() {
     return await buildData({
         link,
         url: link,
-        title: `%title%`,
-        description: `%description%`,
+        title: '%title%',
+        description: '%description%',
         params: {
             title: '博客',
             description: '虎皮椒-博客',

@@ -1,4 +1,4 @@
-import { Route } from '@/types';
+import type { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
@@ -36,12 +36,12 @@ export const route: Route = {
 | 9    | 最近一年 5.0 级以上地震信息 |
 | 0    | 最近一年 6.0 级以上地震信息 |
 
-  可通过全局过滤参数订阅您感兴趣的地区.`,
+可通过全局过滤参数订阅您感兴趣的地区.`,
 };
 
 async function handler(ctx) {
     let type = Number(ctx.req.param('type'));
-    type = type ?? 1;
+    type ??= 1;
     const baseUrl = 'http://www.ceic.ac.cn';
     const api = `${baseUrl}/ajax/speedsearch?num=${type}`;
     const mappings = {
@@ -77,7 +77,7 @@ async function handler(ctx) {
 
     const response = await got(api);
     const data = response.data.replace(/,"page":"(.*?)","num":/, ',"num":');
-    let json = JSON.parse(data.substring(1, data.length - 1)).shuju;
+    let json = JSON.parse(data.slice(1, -1)).shuju;
     if (json.length > 20) {
         json = json.slice(0, 20);
     }
@@ -87,7 +87,7 @@ async function handler(ctx) {
         link: `${baseUrl}/speedsearch`,
         allowEmpty: true,
         item: json.map((entity) => {
-            const contentBuilder = [];
+            const contentBuilder: string[] = [];
             const { NEW_DID, LOCATION_C, M, O_TIME } = entity;
             for (const mappingsKey in mappings) {
                 contentBuilder.push(`${mappings[mappingsKey]} ${entity[mappingsKey]}`);
@@ -96,7 +96,7 @@ async function handler(ctx) {
             return {
                 title: `${LOCATION_C}发生${M}级地震`,
                 link: `${baseUrl}/${NEW_DID}.html`,
-                pubDate: timezone(parseDate(O_TIME, 'YYYY-MM-DD HH:mm:ss'), +8),
+                pubDate: timezone(parseDate(O_TIME, 'YYYY-MM-DD HH:mm:ss'), 8),
                 description: contentBuilder.join('<br>'),
                 guid: NEW_DID,
             };

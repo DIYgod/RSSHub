@@ -1,12 +1,13 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
 export const route: Route = {
-    path: '/zhengce/wenjian/:pcodeJiguan?',
+    path: '/wenjian/:pcodeJiguan?',
     categories: ['government'],
     example: '/gov/zhengce/wenjian',
     parameters: { pcodeJiguan: '文种分类。国令、国发、国函、国发明电、国办发、国办函、国办发明电、其他' },
@@ -21,7 +22,7 @@ export const route: Route = {
     radar: [
         {
             source: ['www.gov.cn/'],
-            target: '/zhengce/wenjian',
+            target: '/wenjian',
         },
     ],
     name: '最新文件',
@@ -46,18 +47,18 @@ async function handler(ctx) {
     const list = $('body > div.dataBox > table > tbody > tr')
         .slice(1)
         .toArray()
-        .map((elem) => {
-            elem = $(elem);
+        .map((elem): DataItem => {
+            const $elem = $(elem);
             return {
-                title: elem.find('td:nth-child(2) > a').text(),
-                link: elem.find('td:nth-child(2) > a').attr('href'),
-                pubDate: timezone(parseDate(elem.find('td:nth-child(5)').text()), 8),
+                title: $elem.find('td:nth-child(2) > a').text(),
+                link: $elem.find('td:nth-child(2) > a').attr('href'),
+                pubDate: timezone(parseDate($elem.find('td:nth-child(5)').text()), 8),
             };
         });
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const contentData = await got(item.link);
                 const $ = load(contentData.data);
                 item.description = $('#UCAP-CONTENT').html();

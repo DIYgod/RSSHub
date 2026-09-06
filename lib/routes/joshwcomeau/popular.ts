@@ -1,4 +1,5 @@
-import { Data, Route } from '@/types';
+import type { Data, Route } from '@/types';
+
 import { getRelativeUrlList, processList, rootUrl } from './utils';
 
 export const route: Route = {
@@ -24,7 +25,7 @@ export const route: Route = {
     handler,
 };
 
-async function handler() {
+async function handler(): Promise<Data> {
     const { urls } = await getRelativeUrlList(rootUrl, 'section > ol > li > a');
     const items = await processList(urls);
     return {
@@ -34,5 +35,5 @@ async function handler() {
         item: items,
         icon: `${rootUrl}/favicon.png`,
         logo: `${rootUrl}/favicon.png`,
-    } as Data;
+    };
 }

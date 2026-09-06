@@ -1,7 +1,8 @@
-import { Route } from '@/types';
-import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
+import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
@@ -66,7 +67,7 @@ async function handler(ctx) {
                 // <article class="blog-content null">
                 //   ..multiple <div>/<a>/<img>/<p>..
                 // </article>
-                const content = $('article.blog-content').html() || '';
+                const content = $('article.blog-content').html();
 
                 // <div class="mt-4 flex flex-col items-center justify-center gap-1 sm:flex-row sm:gap-4">
                 //   <div>
@@ -87,7 +88,7 @@ async function handler(ctx) {
                     try {
                         const date = new Date(dateText);
                         if (!Number.isNaN(date.getTime())) {
-                            pubDate = parseDate(date.toISOString().split('T')[0]);
+                            pubDate = parseDate(date.toISOString().split('T', 1)[0]);
                         }
                     } catch {
                         // Ignore parsing errors

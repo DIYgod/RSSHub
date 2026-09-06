@@ -1,7 +1,8 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
 const baseTitle = '南信大学生工作处';
@@ -38,21 +39,20 @@ async function handler() {
     const $ = load(response.data);
     const list = $('.wp_article_list .list_item')
         .toArray()
-        .map((item) => {
-            item = $(item);
+        .map((item): DataItem => {
+            const $item = $(item);
             return {
-                title: item.find('a').attr('title'),
-                link: new URL(item.find('a').attr('href'), baseUrl).href,
-                pubDate: parseDate(item.find('.Article_PublishDate').text(), 'YYYY-MM-DD'),
+                title: $item.find('a').attr('title')!,
+                link: new URL($item.find('a').attr('href')!, baseUrl).href,
+                pubDate: parseDate($item.find('.Article_PublishDate').text(), 'YYYY-MM-DD'),
             };
         });
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
-                let response;
+            cache.tryGet(item.link!, async () => {
                 try {
-                    response = await got(item.link);
+                    const response = await got(item.link);
                     const $ = load(response.data);
 
                     const articleInfo = $('.arti_metas');

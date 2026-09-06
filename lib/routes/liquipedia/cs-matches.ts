@@ -1,6 +1,7 @@
-import { Route } from '@/types';
-import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
+
+import type { Route } from '@/types';
+import ofetch from '@/utils/ofetch';
 
 export const route: Route = {
     path: '/counterstrike/matches/:team',
@@ -16,6 +17,8 @@ export const route: Route = {
     handler,
 };
 
+type ColumnMap = { date?: number; tournament?: number; score?: number; opponent?: number };
+
 async function handler(ctx) {
     const team = ctx.req.param('team');
 
@@ -27,7 +30,7 @@ async function handler(ctx) {
     const $ = load(response);
     const table = $('table').first();
     const header = table.find('th');
-    const columnMap: { date?: number; tournament?: number; score?: number; opponent?: number } = {};
+    const columnMap: ColumnMap = {};
     header.each((index, element) => {
         const text = $(element).text().trim().toLowerCase();
         if (text.includes('date')) {

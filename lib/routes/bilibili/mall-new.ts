@@ -1,5 +1,7 @@
-import { Route } from '@/types';
+import type { Route } from '@/types';
 import got from '@/utils/got';
+
+const resolveImageUrl = (imageUrl: string) => (imageUrl.startsWith('//') ? `https:${imageUrl}` : imageUrl);
 
 export const route: Route = {
     path: '/mall/new/:category?',
@@ -34,7 +36,7 @@ async function handler(ctx) {
     });
 
     const days = response.data.data.vo.days;
-    const items = [];
+    const items: any[] = [];
     for (const day of days) {
         items.push(...day.presaleItems);
     }
@@ -46,7 +48,7 @@ async function handler(ctx) {
         link: 'https://mall.bilibili.com/newdate.html?noTitleBar=1&page=new&from=new_product&loadingShow=1',
         item: items.map((item) => ({
             title: item.name,
-            description: `${item.name}<br>${item.priceDesc ? `${item.pricePrefix}${item.priceSymbol}${item.priceDesc[0]}` : ''}<br><img src="https:${item.img}"><br><a href="${item.itemUrl}">APP 内打开</a>`,
+            description: `${item.name}<br>${item.priceDesc ? `${item.pricePrefix}${item.priceSymbol}${item.priceDesc[0]}` : ''}<br><img src="${resolveImageUrl(item.img)}"><br><a href="${item.itemUrl}">APP 内打开</a>`,
             link: item.itemUrlForH5,
         })),
     };

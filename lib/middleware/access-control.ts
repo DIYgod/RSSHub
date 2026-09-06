@@ -1,7 +1,8 @@
 import type { MiddlewareHandler } from 'hono';
+
 import { config } from '@/config';
-import md5 from '@/utils/md5';
 import RejectError from '@/errors/types/reject';
+import md5 from '@/utils/md5';
 
 const reject = (requestPath) => {
     throw new RejectError(`Authentication failed. Access denied.\n${requestPath}`);
@@ -12,7 +13,7 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
     const accessKey = ctx.req.query('key');
     const accessCode = ctx.req.query('code');
 
-    if (requestPath === '/' || requestPath === '/robots.txt' || requestPath === '/favicon.ico' || requestPath === '/logo.png') {
+    if (['/', '/robots.txt', '/favicon.ico', '/logo.png'].includes(requestPath)) {
         await next();
     } else {
         if (config.accessKey && !(config.accessKey === accessKey || accessCode === md5(requestPath + config.accessKey))) {

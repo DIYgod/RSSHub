@@ -1,7 +1,8 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
 const rootUrl = 'http://www.ulapia.com';
@@ -27,7 +28,7 @@ export const route: Route = {
         },
     ],
     name: '最新研报',
-    maintainers: [],
+    maintainers: ['Fatpandac'],
     handler,
     url: 'www.ulapia.com/',
 };
@@ -47,8 +48,8 @@ async function handler() {
                         title: `${$(item).find('strong').text()}  ${$(item).find('h5.mb-1').text()}`,
                         author: $(item).find('div.col.p-8.d-flex.px-3.py-3.flex-column.position-static > div:nth-child(4) > span:nth-child(2)').text(),
                         link: $(item).find('h5.mb-1 > a').attr('href'),
-                        description: `<img src="${$(item).find('img').attr('src').split('!')[0]}">`,
-                        pubDate: parseDate($(item).find('div.mb-0.text-muted').last().text().split(':')[1], 'YYYY-MM-DD'),
+                        description: `<img src="${$(item).find('img').attr('src')!.split('!', 1)[0]}">`,
+                        pubDate: parseDate($(item).find('div.mb-0.text-muted').last().text().split(':', 2)[1], 'YYYY-MM-DD'),
                     }));
 
                 return items;

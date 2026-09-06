@@ -1,5 +1,7 @@
-import { Route } from '@/types';
+import type { Route } from '@/types';
+
 import util from './utils';
+
 const baseUrl = 'https://grad.nua.edu.cn';
 
 export const route: Route = {

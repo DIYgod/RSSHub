@@ -1,9 +1,11 @@
-import { Route } from '@/types';
+import { load } from 'cheerio'; // 可以使用类似 jQuery 的 API HTML 解析器
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 // 导入必要的模组
 import got from '@/utils/got'; // 自订的 got
-import { load } from 'cheerio'; // 可以使用类似 jQuery 的 API HTML 解析器
 import { parseDate } from '@/utils/parse-date';
+
 import { getPageItemAndDate } from './utils';
 
 export const route: Route = {
@@ -36,8 +38,8 @@ async function handler() {
     const list = $('div.art_list').toArray();
     const out = await Promise.all(
         list.map((item) => {
-            item = $(item);
-            const link = new URL(item.find('a').attr('href'), baseUrl).href;
+            const $item = $(item);
+            const link = new URL($item.find('a').attr('href')!, baseUrl).href;
             return cache.tryGet(link, async () => {
                 const description = await getPageItemAndDate('#right_con > form > div.articleInfo', link, '#right_con > form > div.articleTitle', '#right_con > form > div.articleAuthor > span:nth-child(1)');
                 const pubDate = parseDate(description.date, 'YYYY年MM月DD日 HH:mm');

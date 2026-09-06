@@ -1,9 +1,10 @@
-import { Route } from '@/types';
-import cache from '@/utils/cache';
 import { load } from 'cheerio';
+
+import type { DataItem, Route } from '@/types';
+import cache from '@/utils/cache';
+import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
-import ofetch from '@/utils/ofetch';
 
 export const route: Route = {
     path: '/seiee/:path/:catID?/:searchCatCode?',
@@ -58,19 +59,19 @@ async function handler(ctx) {
 
     const list = $(catID ? 'li' : '.u10 li')
         .toArray()
-        .map((item) => {
-            item = $(item);
+        .map((item): DataItem => {
+            const $item = $(item);
 
             return {
-                title: item.find('.name').text().trim(),
-                link: item.find('a').attr('href'),
+                title: $item.find('.name').text().trim(),
+                link: $item.find('a').attr('href'),
             };
         });
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
-                const detailResponse = await ofetch(item.link);
+            cache.tryGet(item.link!, async () => {
+                const detailResponse = await ofetch(item.link!);
                 const content = load(detailResponse);
 
                 item.description = content('.nr').html();
@@ -79,9 +80,9 @@ async function handler(ctx) {
                         content('.jj')
                             .text()
                             .trim()
-                            .match(/日期：([\d-]+) /)[1]
+                            .match(/日期：([\d-]+) /)![1]
                     ),
-                    +8
+                    8
                 );
 
                 return item;
@@ -89,8 +90,9 @@ async function handler(ctx) {
         )
     );
 
+    const fallbackHtml = await ofetch(currentUrl);
     return {
-        title: $('title').text() || load(await ofetch(currentUrl))('title').text(),
+        title: $('title').text() || load(fallbackHtml)('title').text(),
         link: currentUrl,
         item: items,
     };

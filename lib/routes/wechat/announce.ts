@@ -1,6 +1,7 @@
-import { Route } from '@/types';
-import got from '@/utils/got';
 import { load } from 'cheerio';
+
+import type { Route } from '@/types';
+import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
@@ -34,10 +35,10 @@ async function handler() {
     });
 
     const $ = load(htmlString);
-    const announceList = [];
+    const announceList: any[] = [];
 
-    $('.mp_news_list > .mp_news_item').each(function () {
-        const $item = $(this);
+    $('.mp_news_list > .mp_news_item').each((_, el) => {
+        const $item = $(el);
         const $link = $item.find('a');
         const time = $item.find('.read_more').text();
         const title = $item.find('strong').text();

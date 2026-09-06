@@ -1,11 +1,18 @@
+import path from 'node:path';
+
+import { load } from 'cheerio';
+
+import { config } from '@/config';
+import type { DataItem } from '@/types';
 import got from '@/utils/got';
 import logger from '@/utils/logger';
 import timezone from '@/utils/timezone';
-import { load } from 'cheerio';
-import path from 'node:path';
-import { config } from '@/config';
 
-const headers = {};
+interface RequestHeaders {
+    cookie?: string;
+}
+
+const headers: RequestHeaders = {};
 const has_cookie = config.ehentai.ipb_member_id && config.ehentai.ipb_pass_hash && config.ehentai.sk;
 const from_ex = has_cookie && config.ehentai.igneous;
 if (has_cookie) {
@@ -19,7 +26,7 @@ if (has_cookie) {
 }
 
 if (config.ehentai.star) {
-    headers.cookie += `;star=${config.ehentai.star}`;
+    headers.cookie = `${headers.cookie};star=${config.ehentai.star}`;
 }
 
 function ehgot(url) {
@@ -29,8 +36,8 @@ function ehgot(url) {
 function ehgot_thumb(cache, thumb_url) {
     return cache.tryGet(thumb_url, async () => {
         try {
-            const buffer = await got({ method: 'get', url: thumb_url, headers });
-            const data = new Buffer.from(buffer.rawBody).toString('base64');
+            const buffer = await got({ method: 'get', responseType: 'buffer', url: thumb_url, headers });
+            const data = buffer.body.toString('base64');
             const ext = path.extname(thumb_url).slice(1);
             return `data:image/${ext};base64,${data}`;
         } catch (error) {
@@ -40,7 +47,7 @@ function ehgot_thumb(cache, thumb_url) {
     });
 }
 
-async function parsePage(cache, data, get_bittorrent = false, embed_thumb = false) {
+async function parsePage(cache, data, get_bittorrent: string | boolean = false, embed_thumb: string | boolean = false) {
     const $ = load(data);
     // "m" for Minimal
     // "p" for Minimal+
@@ -72,7 +79,7 @@ async function parsePage(cache, data, get_bittorrent = false, embed_thumb = fals
 
     async function parseElement(cache, element) {
         const el = $(element);
-        const title = el.find('div.glink').html();
+        const title = el.find('.glink').html();
         const rawDate = el.find('div[id^="posted_"]').text();
         const pubDate = rawDate ? timezone(rawDate, 0) : rawDate;
         let el_a;
@@ -102,7 +109,12 @@ async function parsePage(cache, data, get_bittorrent = false, embed_thumb = fals
         }
         const description = `<img src='${thumbnail}' alt='thumbnail'>`;
         if (title && link) {
-            const item = { title, description, pubDate, link };
+            const item: DataItem & { bittorrent_page_url?: string } = {
+                title,
+                description,
+                pubDate,
+                link,
+            };
             if (get_bittorrent) {
                 const el_down = el.find('div.gldown');
                 const bittorrent_page_url = el_down.find('a').attr('href');
@@ -128,13 +140,13 @@ async function parsePage(cache, data, get_bittorrent = false, embed_thumb = fals
         }
     }
 
-    const item_Promises = [];
+    const item_Promises: Array<Promise<any>> = [];
     galleries.children().each((index, element) => {
         item_Promises.push(parseElement(cache, element));
     });
     const items_with_null = await Promise.all(item_Promises);
 
-    const items = [];
+    const items: any[] = [];
     for (const item of items_with_null) {
         if (item) {
             items.push(item);
@@ -159,7 +171,7 @@ function getBittorrent(cache, bittorrent_page_url) {
                     const match = onclick.match(/'(.*?)'/);
                     if (match) {
                         bittorrent_url = match[1];
-                        const match_p = bittorrent_url.match(/torrent\?p=(.*?)$/);
+                        const match_p = bittorrent_url.match(/torrent\?p=(.*)$/);
                         if (match_p) {
                             p = match_p[1];
                         }
@@ -176,35 +188,36 @@ function getBittorrent(cache, bittorrent_page_url) {
 function updateBittorrent_url(cache, items) {
     // 下种子文件需要动态密码，密码每几次请求就更新一次
     for (const item of items) {
-        if (item.enclosure_url) {
-            item.enclosure_url = item.enclosure_url.replace(/torrent\?p=.*$/, `torrent?p=${p}`);
-            cache.set(item.bittorrent_page_url, item.enclosure_url);
+        if (!item.enclosure_url) {
+            continue;
         }
+
+        item.enclosure_url = item.enclosure_url.replace(/torrent\?p=.*$/, () => `torrent?p=${p}`);
+        cache.set(item.bittorrent_page_url, item.enclosure_url);
     }
     return items;
 }
 
-async function gatherItemsByPage(cache, url, get_bittorrent = false, embed_thumb = false) {
+async function gatherItemsByPage(cache, url, get_bittorrent: string | boolean = false, embed_thumb: string | boolean = false) {
     const response = await ehgot(url);
     const items = await parsePage(cache, response.data, get_bittorrent, embed_thumb);
     return updateBittorrent_url(cache, items);
 }
 
-async function getFavoritesItems(cache, favcat, inline_set, page, get_bittorrent = false, embed_thumb = false) {
-    const response = await ehgot(`favorites.php?favcat=${favcat}&inline_set=${inline_set}`);
+async function getFavoritesItems(cache, favcat, inline_set, page, get_bittorrent: string | boolean = false, embed_thumb: string | boolean = false) {
     if (page) {
         return gatherItemsByPage(cache, `favorites.php?favcat=${favcat}&next=${page}`, get_bittorrent, embed_thumb);
-    } else {
-        const items = await parsePage(cache, response.data, get_bittorrent, embed_thumb);
-        return updateBittorrent_url(cache, items);
     }
+    const response = await ehgot(`favorites.php?favcat=${favcat}&inline_set=${inline_set}`);
+    const items = await parsePage(cache, response.data, get_bittorrent, embed_thumb);
+    return updateBittorrent_url(cache, items);
 }
 
-function getSearchItems(cache, params, page, get_bittorrent = false, embed_thumb = false) {
+function getSearchItems(cache, params, page, get_bittorrent: string | boolean = false, embed_thumb: string | boolean = false) {
     return page ? gatherItemsByPage(cache, `?${params}&next=${page}`, get_bittorrent, embed_thumb) : gatherItemsByPage(cache, `?${params}`, get_bittorrent, embed_thumb);
 }
 
-function getTagItems(cache, tag, page, get_bittorrent = false, embed_thumb = false) {
+function getTagItems(cache, tag, page, get_bittorrent: string | boolean = false, embed_thumb: string | boolean = false) {
     return page ? gatherItemsByPage(cache, `tag/${tag}?next=${page}`, get_bittorrent, embed_thumb) : gatherItemsByPage(cache, `tag/${tag}`, get_bittorrent, embed_thumb);
 }
 

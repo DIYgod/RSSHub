@@ -1,9 +1,11 @@
-import got from '@/utils/got';
 import { load } from 'cheerio';
-import timezone from '@/utils/timezone';
+
+import cache from '@/utils/cache';
+import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-import { art } from '@/utils/render';
-import path from 'node:path';
+import timezone from '@/utils/timezone';
+
+import { renderDescription } from './templates/description';
 
 const domain = 'whu.edu.cn';
 
@@ -46,13 +48,14 @@ const getItemDetail = async (item, rootUrl) => {
 
         // Missing the `src` properties for the images.
         // The `src` property should be replaced with the value of `orisrc` to show the image.
-        // Replace images in the content with custom art template.
-        content('p.vsbcontent_img').each(function () {
-            const image = content(this).find('img');
-            content(this).replaceWith(
-                art(path.join(__dirname, 'templates/description.art'), {
+        // Replace images in the content with custom JSX template.
+        content('p.vsbcontent_img').each((_, el) => {
+            const image = content(el).find('img');
+            const imageSrc = new URL(image.prop('orisrc'), rootUrl).href;
+            content(el).replaceWith(
+                renderDescription({
                     image: {
-                        src: new URL(image.prop('orisrc'), rootUrl).href,
+                        src: imageSrc,
                         width: image.prop('width'),
                     },
                 })
@@ -61,13 +64,14 @@ const getItemDetail = async (item, rootUrl) => {
 
         // Missing the `src` properties for the videos.
         // The `src` property should be replaced with the value of `vurl` to play the video.
-        // Replace videos in the content with custom art template.
-        content('script[name="_videourl"]').each(function () {
-            const video = content(this);
+        // Replace videos in the content with custom JSX template.
+        content('script[name="_videourl"]').each((_, el) => {
+            const video = content(el);
+            const videoSrc = new URL(video.prop('vurl').split('?', 1)[0], rootUrl).href;
             video.replaceWith(
-                art(path.join(__dirname, 'templates/description.art'), {
+                renderDescription({
                     video: {
-                        src: new URL(video.prop('vurl').split('?')[0], rootUrl).href,
+                        src: videoSrc,
                         width: content(video).prop('vwidth'),
                         height: content(video).prop('vheight'),
                     },
@@ -85,11 +89,11 @@ const getItemDetail = async (item, rootUrl) => {
         const attachments = content('form[name="_newscontent_fromname"] ul li')
             .toArray()
             .map((attachment) => {
-                attachment = content(attachment).find('a');
+                const $attachment = content(attachment).find('a');
 
                 return {
-                    title: attachment.text(),
-                    link: new URL(attachment.prop('href'), rootUrl).href,
+                    title: $attachment.text(),
+                    link: new URL($attachment.prop('href')!, rootUrl).href,
                 };
             });
 
@@ -97,14 +101,14 @@ const getItemDetail = async (item, rootUrl) => {
         const meta = processMeta(detailResponse);
 
         item.title = getMeta(meta, 'ArticleTitle') ?? item.title;
-        item.description = art(path.join(__dirname, 'templates/description.art'), {
-            description,
+        item.description = renderDescription({
+            description: description ?? undefined,
             attachments,
         });
         item.author = getMeta(meta, 'ContentSource');
         item.category = getMeta(meta, 'Keywords')?.split(' ').filter(Boolean) ?? [];
         item.guid = getMeta(meta, 'Url') ?? item.link;
-        item.pubDate = getMeta(meta, 'PubDate') ? timezone(parseDate(getMeta(meta, 'PubDate')), +8) : item.pubDate;
+        item.pubDate = getMeta(meta, 'PubDate') ? timezone(parseDate(getMeta(meta, 'PubDate')), 8) : item.pubDate;
 
         // Set enclosure information if attachments exist.
         if (attachments.length > 0) {
@@ -122,19 +126,18 @@ const getItemDetail = async (item, rootUrl) => {
  * Process items asynchronously.
  *
  * @param {Array<Object>} items - The array of items to process.
- * @param {Function} tryGet     - The function to attempt to get the content of a URL.
  * @param {string} rootUrl      - The root URL.
  * @returns {Array<Promise<Object>>} An array of promises that resolve to the processed items.
  */
-const processItems = async (items, tryGet, rootUrl) =>
+const processItems = async (items, rootUrl) =>
     await Promise.all(
         items.map((item) => {
             if (!item.link.includes(domain)) {
                 return item;
             }
 
-            return tryGet(item.link, async () => await getItemDetail(item, rootUrl));
+            return cache.tryGet(item.link, async () => await getItemDetail(item, rootUrl));
         })
     );
 
-export { domain, processMeta, getMeta, processItems };
+export { domain, getMeta, processItems, processMeta };

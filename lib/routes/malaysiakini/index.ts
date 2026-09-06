@@ -1,9 +1,10 @@
-import { Route } from '@/types';
+import { FetchError } from 'ofetch';
+
+import { config } from '@/config';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import parser from '@/utils/rss-parser';
-import { config } from '@/config';
-import { FetchError } from 'ofetch';
 
 export const route: Route = {
     path: '/:lang/:category?',
@@ -40,16 +41,15 @@ export const route: Route = {
     name: 'News',
     maintainers: ['quiniapiezoelectricity'],
     handler,
-    description: `
-| Language | English | Bahasa Malaysia | 华文     |
-| -------- | ------ | ------- | ------ | 
-| \`:lang\`  | \`en\`    | \`my\`   | \`zh\`    |
+    description: `| Language | English | Bahasa Malaysia | 华文 |
+| -------- | ------- | --------------- | ---- |
+| \`:lang\`  | \`en\`    | \`my\`            | \`zh\` |
 
-| Category               | \`:category\` |
-| ---------------------- | ------------- |
-| News                   | \`news\`      |
-| Columns                | \`columns\`   |
-| From Our Readers       | \`letters\`   |`,
+| Category         | \`:category\` |
+| ---------------- | ----------- |
+| News             | \`news\`      |
+| Columns          | \`columns\`   |
+| From Our Readers | \`letters\`   |`,
     radar: [
         {
             source: ['malaysiakini.com/'],
@@ -129,7 +129,7 @@ async function handler(ctx) {
 
     const items = await Promise.all(
         feed.items.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const response = await got(`https://www.malaysiakini.com/api/content/${item.guid}`);
                 if (response.data.stories.content) {
                     item.description = response.data.stories.content;
@@ -161,19 +161,17 @@ async function handler(ctx) {
                 if (response.data.stories.author) {
                     item.author = response.data.stories.author;
                 }
-                if (response.data.stories.tags) {
-                    item.category = response.data.stories.tags;
-                }
+                item.category = response.data.stories.tags;
                 return item;
             })
         )
     );
 
     return {
-        title: feed.title,
+        title: feed.title!,
         link: feed.link,
         description: feed.description,
         language: lang,
-        item: items,
+        item: items as DataItem[],
     };
 }

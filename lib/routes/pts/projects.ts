@@ -1,10 +1,10 @@
-import { Route } from '@/types';
-
-import got from '@/utils/got';
 import { load } from 'cheerio';
+
+import type { Route } from '@/types';
+import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-import { art } from '@/utils/render';
-import path from 'node:path';
+
+import { renderDescription } from './templates/description';
 
 export const route: Route = {
     path: '/projects',
@@ -44,16 +44,16 @@ async function handler() {
     const items = $('h3 a')
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
-            const projectDiv = item.parent().parent();
+            const projectDiv = $item.parent().parent();
             const description = projectDiv.find('p').text();
 
             return {
-                title: item.text(),
-                link: item.attr('href'),
+                title: $item.text(),
+                link: $item.attr('href'),
                 pubDate: parseDate(projectDiv.find('time').text()),
-                description: art(path.join(__dirname, 'templates/description.art'), {
+                description: renderDescription({
                     image: projectDiv.parent().find('.cover-fit')?.attr('src') ?? projectDiv.parent().parent().find('.cover-fit').attr('src'),
                     description: description ? `<p>${description}</p>` : '',
                 }),

@@ -1,10 +1,12 @@
-import { Route } from '@/types';
-import cache from '@/utils/cache';
-import got from '@/utils/got';
-import utils from './utils';
 import MarkdownIt from 'markdown-it';
 
-async function getUserName(uid) {
+import type { Route } from '@/types';
+import cache from '@/utils/cache';
+import got from '@/utils/got';
+
+import utils from './utils';
+
+async function getUsername(uid) {
     // 获取用户信息
     const response = await got({
         method: 'get',
@@ -42,7 +44,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const uid = ctx.req.param('uid');
-    const userName = await getUserName(uid);
+    const username = await getUsername(uid);
     // 发起 HTTP GET 请求
     const response = await got({
         method: 'get',
@@ -75,11 +77,11 @@ async function handler(ctx) {
 
     return {
         // 源标题
-        title: `${userName} 发布的课程`,
+        title: `${username} 发布的课程`,
         // 源链接
         link: `https://www.lanqiao.cn/users/${uid}`,
         // 源说明
-        description: `${userName} 发布的课程`,
+        description: `${username} 发布的课程`,
         // 遍历此前获取的数据
         item: items,
     };

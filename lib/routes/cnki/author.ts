@@ -1,8 +1,10 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
+
 import { ProcessItem } from './utils';
 
 export const route: Route = {
@@ -21,7 +23,7 @@ export const route: Route = {
     },
     example: '/cnki/author/丁晓东/中国人民大学',
     description: `::: tip
-    可能仅限中国大陆服务器访问，以实际情况为准。
+可能仅限中国大陆服务器访问，以实际情况为准。
 :::`,
     handler,
 };
@@ -134,15 +136,13 @@ async function handler(ctx) {
             };
         });
 
-    const items = await Promise.all(list.map((item) => cache.tryGet(item.link, () => ProcessItem(item))));
+    const items = await Promise.all(list.map((item) => cache.tryGet<DataItem>(item.link, () => ProcessItem(item))));
 
-    const processedItems = items
-        .filter((item): item is Record<string, any> => item !== null && typeof item === 'object')
-        .map((item) => ({
-            title: item.title || '',
-            link: item.link,
-            pubDate: item.pubDate,
-        }));
+    const processedItems = items.map((item) => ({
+        title: item.title || '',
+        link: item.link,
+        pubDate: item.pubDate,
+    }));
 
     return {
         title: `知网 ${name} ${company}`,

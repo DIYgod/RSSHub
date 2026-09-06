@@ -1,7 +1,8 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
@@ -49,7 +50,7 @@ async function handler(ctx) {
                         title: $('.page-header').text(),
                         author: $('.author a').text(),
                         description: $('article').eq(0).html(),
-                        pubDate: timezone(parseDate($('.created').text(), 'YYYY-MM-DD'), +8),
+                        pubDate: timezone(parseDate($('.created').text(), 'YYYY-MM-DD'), 8),
                         category: name,
                         link,
                     };

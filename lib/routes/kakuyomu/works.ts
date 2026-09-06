@@ -1,10 +1,12 @@
-import type { Data, DataItem, Route } from '@/types';
 import { load } from 'cheerio';
 import type { Context } from 'hono';
-import ofetch from '@/utils/ofetch';
+
+import type { Data, Route } from '@/types';
 import cache from '@/utils/cache';
-import type { NextDataEpisode } from './types';
+import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+
+import type { NextDataEpisode } from './types';
 
 export const route: Route = {
     name: '投稿',
@@ -31,30 +33,29 @@ async function handler(ctx: Context): Promise<Data> {
     const id = ctx.req.param('id');
     const url = `https://kakuyomu.jp/works/${id}`;
     const limit = Number.parseInt(ctx.req.query('limit') || '10');
-    const $ = load(await ofetch(url));
+    const html = await ofetch(url);
+    const $ = load(html);
 
     const nextData = JSON.parse($('#__NEXT_DATA__').text());
 
     const {
-        props: {
-            pageProps: { __APOLLO_STATE__ },
-        },
+        props: { pageProps },
     } = nextData;
+    const { __APOLLO_STATE__ } = pageProps;
 
-    const {
-        [`Work:${id}`]: { title, catchphrase },
-    } = __APOLLO_STATE__;
+    const { title, catchphrase } = __APOLLO_STATE__[`Work:${id}`];
 
-    const values = Object.values(__APOLLO_STATE__);
-    const episodes = values.filter((value) => value.__typename === 'Episode') as NextDataEpisode[];
-    const items = (await Promise.all(
+    const values = Object.values<{ __typename: string }>(__APOLLO_STATE__);
+    const episodes = values.filter((value): value is NextDataEpisode => value.__typename === 'Episode');
+    const items = await Promise.all(
         episodes
-            .sort((a, b) => b.publishedAt.localeCompare(a.publishedAt))
+            .toSorted((a, b) => b.publishedAt.localeCompare(a.publishedAt))
             .slice(0, limit)
             .map((item) => {
                 const episodeUrl = `https://kakuyomu.jp/works/${id}/episodes/${item.id}`;
                 return cache.tryGet(episodeUrl, async () => {
-                    const $ = load(await ofetch(episodeUrl));
+                    const html = await ofetch(episodeUrl);
+                    const $ = load(html);
                     const description = $('.widget-episodeBody').html();
                     return {
                         title: item.title,
@@ -65,7 +66,7 @@ async function handler(ctx: Context): Promise<Data> {
                     };
                 });
             })
-    )) as DataItem[];
+    );
 
     return {
         title,

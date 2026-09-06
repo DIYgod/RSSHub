@@ -1,9 +1,10 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
-import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/:id?/:name?',
@@ -25,7 +26,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { id = '1', name = '重要通知' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 30;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 30;
 
     const rootUrl = 'http://www.acpaa.cn';
     const currentUrl = new URL(`article/taglist.jhtml?tagIds=${id}&tagname=${name}`, rootUrl).href;
@@ -37,19 +38,19 @@ async function handler(ctx) {
     let items = $('div.text01 ul li a[title]')
         .slice(0, limit)
         .toArray()
-        .map((item) => {
-            item = $(item);
+        .map((item): DataItem => {
+            const $item = $(item);
 
             return {
-                title: item.prop('title'),
-                link: new URL(item.prop('href'), rootUrl).href,
-                pubDate: timezone(parseDate(item.find('span[title]').prop('title')), +8),
+                title: $item.prop('title')!,
+                link: new URL($item.prop('href')!, rootUrl).href,
+                pubDate: timezone(parseDate($item.find('span[title]').prop('title')), 8),
             };
         });
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const { data: detailResponse } = await got(item.link);
 
                 const content = load(detailResponse);
@@ -70,7 +71,7 @@ async function handler(ctx) {
         title: `${author} - ${subtitle}`,
         link: currentUrl,
         description: $('meta[property="og:description"]').prop('content'),
-        language: 'zh',
+        language: 'zh' as const,
         subtitle,
         author,
     };

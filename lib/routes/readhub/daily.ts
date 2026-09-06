@@ -1,9 +1,9 @@
-import { Route } from '@/types';
-import cache from '@/utils/cache';
-import got from '@/utils/got';
 import { load } from 'cheerio';
 
-import { rootUrl, apiRootUrl, processItems } from './util';
+import type { Language, Route } from '@/types';
+import got from '@/utils/got';
+
+import { apiRootUrl, processItems, rootUrl } from './util';
 
 export const route: Route = {
     path: '/daily',
@@ -30,7 +30,7 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 11;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 11;
 
     const currentUrl = new URL('daily', apiRootUrl).href;
     const infoUrl = new URL('daily', rootUrl).href;
@@ -46,7 +46,7 @@ async function handler(ctx) {
         guid: item.uid,
     }));
 
-    items = await processItems(items, cache.tryGet);
+    items = await processItems(items);
 
     const { data: currentHTMLResponse } = await got(infoUrl);
     const $ = load(currentHTMLResponse);
@@ -54,14 +54,14 @@ async function handler(ctx) {
     const author = $('meta[name="application-name"]').prop('content');
     const subtitle = $('meta[property="og:title"]').prop('content');
     const image = 'https://readhub.cn/icons/icon-192x192.png';
-    const icon = new URL($('link[rel="apple-touch-icon"]').prop('href'), rootUrl);
+    const icon = new URL($('link[rel="apple-touch-icon"]').prop('href')!, rootUrl).href;
 
     return {
         item: items,
         title: `${author} - ${route.name}`,
         link: currentUrl,
         description: $('meta[name="description"]').prop('content'),
-        language: 'zh',
+        language: 'zh' as const satisfies Language,
         image,
         icon,
         logo: icon,

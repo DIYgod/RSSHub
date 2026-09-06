@@ -1,4 +1,4 @@
-import { Route } from '@/types';
+import type { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
@@ -43,7 +43,7 @@ async function handler(ctx) {
         link: 'https://www.nowcoder.com/school/schedule',
         description: '名企校招日程',
         item: data.map((item) => {
-            let desc = `<tr><td><img src="${item.logo}" referrerpolicy="no-referrer""></td></tr>`;
+            let desc = `<tr><td><img src="${item.logo}"></td></tr>`;
             for (const each of item.schedules) {
                 desc += `<tr><td>${each.content}</td><td>${each.time}</td></tr>`;
             }

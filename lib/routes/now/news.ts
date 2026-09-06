@@ -1,7 +1,8 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
 const mainCategories = {
@@ -43,9 +44,9 @@ export const route: Route = {
     handler,
     url: 'news.now.com/',
     description: `::: tip
-  **编号** 仅对事件追蹤、評論節目、新聞專題三个分类起作用，例子如下：
+**编号** 仅对事件追蹤、評論節目、新聞專題三个分类起作用，例子如下：
 
-  对于 [事件追蹤](https://news.now.com/home/tracker) 中的 [塔利班奪權](https://news.now.com/home/tracker/detail?catCode=123\&topicId=1056) 话题，其网址为 \`https://news.now.com/home/tracker/detail?catCode=123&topicId=1056\`，其中 \`topicId\` 为 1056，则对应路由为 [\`/now/news/tracker/1056\`](https://rsshub.app/now/news/tracker/1056)
+对于 [事件追蹤](https://news.now.com/home/tracker) 中的 [塔利班奪權](https://news.now.com/home/tracker/detail?catCode=123\\&topicId=1056) 话题，其网址为 \`https://news.now.com/home/tracker/detail?catCode=123&topicId=1056\`，其中 \`topicId\` 为 1056，则对应路由为 [\`/now/news/tracker/1056\`](https://rsshub.app/now/news/tracker/1056)
 :::
 
 | 首頁 | 港聞  | 兩岸國際      | 娛樂          |
@@ -63,7 +64,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { category = '', id = '' } = ctx.req.param();
-    const limit = Number.parseInt(ctx.req.query('limit') || '20', 10);
+    const limit = Number(ctx.req.query('limit') || '20');
     const hasTopicId = id && Object.hasOwn(categories, category);
 
     const rootUrl = 'https://news.now.com';
@@ -82,7 +83,7 @@ async function handler(ctx) {
     }
 
     const response = await ofetch(apiUrl);
-    const isApi = typeof response === 'object' && Array.isArray(response);
+    const isApi = Array.isArray(response);
     const $ = load(response);
 
     let list;
@@ -100,7 +101,7 @@ async function handler(ctx) {
                           link: `https://news.now.com/home/${category}/player?newsId=${item.newsId}`,
                           pubDate: parseDate(item.publishDate, 'x'),
                           category: [...item.sportTypes.map((t) => t.sportTypeNameChi), ...item.players.map((p) => p.playerFullNameChi), ...item.teams.map((t) => t.teamCodeChi)],
-                          image: item.newsPhotos?.filter((p) => p.sizeType === '3')?.[0]?.imageUrl,
+                          image: item.newsPhotos?.find((p) => p.sizeType === '3')?.imageUrl,
                           newsId: item.newsId,
                       };
                   })
@@ -121,11 +122,11 @@ async function handler(ctx) {
             .toArray()
             .slice(0, limit)
             .map((item) => {
-                item = $(item);
+                const $item = $(item);
 
                 return {
-                    title: item.text(),
-                    link: `${rootUrl}${item.parent().parent().attr('href')}`,
+                    title: $item.text(),
+                    link: `${rootUrl}${$item.parent().parent().attr('href')}`,
                 };
             });
     }

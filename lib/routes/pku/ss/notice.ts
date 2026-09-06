@@ -1,17 +1,28 @@
-import { Route } from '@/types';
-import cache from '@/utils/cache';
-import { baseUrl, getSingleRecord, getArticle } from './common';
+import type { Route } from '@/types';
+
+import { baseUrl, getArticle, getSingleRecord } from './common';
 
 const host = `${baseUrl}/newscenter/notice/`;
 
 export const route: Route = {
     path: '/ss/notice',
+    categories: ['university'],
+    example: '/pku/ss/notice',
+    parameters: {},
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: true,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
     radar: [
         {
             source: ['ss.pku.edu.cn/index.php/newscenter/notice', 'ss.pku.edu.cn/'],
         },
     ],
-    name: 'Unknown',
+    name: '软件与微电子学院 - 通知公告',
     maintainers: ['legr4ndk'],
     handler,
     url: 'ss.pku.edu.cn/index.php/newscenter/notice',
@@ -19,7 +30,7 @@ export const route: Route = {
 
 async function handler() {
     const items = await getSingleRecord(host);
-    const out = await Promise.all(items.map((item) => getArticle(item, cache.tryGet)));
+    const out = await Promise.all(items.map((item) => getArticle(item)));
 
     return {
         title: '北大软微-通知公告',

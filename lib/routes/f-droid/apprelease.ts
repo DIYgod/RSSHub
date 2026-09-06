@@ -1,6 +1,7 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { Route } from '@/types';
 import got from '@/utils/got';
-import * as cheerio from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
@@ -29,7 +30,7 @@ export const route: Route = {
 async function handler(ctx) {
     const { app } = ctx.req.param();
     const { data: response } = await got(`https://f-droid.org/en/packages/${app}/`);
-    const $ = cheerio.load(response);
+    const $ = load(response);
 
     const appName = $('.package-title').find('h3').text().trim();
 
@@ -40,9 +41,9 @@ async function handler(ctx) {
             const a = $item.find('.package-version-header a');
             const version = a.eq(0).attr('name');
             return {
-                title: version,
+                title: version!,
                 guid: a.eq(1).attr('name'),
-                pubDate: parseDate($item.find('.package-version-header').text().split('Added on ')[1]),
+                pubDate: parseDate($item.find('.package-version-header').text().split('Added on ', 2)[1]),
                 description: [$item.find('.package-version-download').html(), $item.find('.package-version-requirement').html(), $item.find('.package-version-source').html()].join('<br>'),
                 link: `https://f-droid.org/en/packages/${app}/#${version}`,
             };

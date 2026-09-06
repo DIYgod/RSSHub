@@ -23,8 +23,8 @@ async function fetchActivityList(
         tag: string;
     }>
 ) {
-    params.pageNo = params.pageNo || '1';
-    params.pageSize = params.pageSize || '30';
+    params.pageNo ||= '1';
+    params.pageSize ||= '30';
     const accessToken = await getAccessToken();
     const resp = await post('/web/activity/list', accessToken, params);
     return resp.result.result.map((item) => formatActivity(item));
@@ -52,8 +52,8 @@ async function fetchPerformerList(
         styleId: string;
     }>
 ) {
-    params.pageNo = params.pageNo || '1';
-    params.pageSize = params.pageSize || '30';
+    params.pageNo ||= '1';
+    params.pageSize ||= '30';
     const accessToken = await getAccessToken();
     const resp = await post('/web/performer/list', accessToken, params);
     return resp.result.result.map((item) => ({
@@ -97,8 +97,8 @@ async function fetchSiteList(
         searchKeyword: string;
     }>
 ) {
-    params.pageNo = params.pageNo || '1';
-    params.pageSize = params.pageSize || '30';
+    params.pageNo ||= '1';
+    params.pageSize ||= '30';
     const accessToken = await getAccessToken();
     const resp = await post('/web/site/list', accessToken, params);
     return resp.result.result.map((item) => ({
@@ -127,8 +127,8 @@ async function fetchBrandList(
         searchKeyword: string;
     }>
 ) {
-    params.pageNo = params.pageNo || '1';
-    params.pageSize = params.pageSize || '30';
+    params.pageNo ||= '1';
+    params.pageSize ||= '30';
     const accessToken = await getAccessToken();
     const resp = await post('/web/brand/list', accessToken, params);
     return resp.result.result.map((item) => ({
@@ -138,7 +138,13 @@ async function fetchBrandList(
     }));
 }
 
-async function fetchParams() {
+interface City {
+    cityCode: string;
+    cityName: string;
+    styles: Array<{ key: string; showName: string }>;
+}
+
+async function fetchParams(): Promise<{ result: City[] }> {
     const accessToken = await getAccessToken();
     return post('/web/activity/list/params', accessToken);
 }
@@ -159,7 +165,7 @@ async function fetchCityList(keyword = '') {
 // so we need to fetch all city items and then extract styles from them
 async function fetchStyleList(keyword = '') {
     const resp = await fetchParams();
-    let styles = resp.result.flatMap((item) => item.styles) as Array<{ key: string; showName: string }>;
+    let styles = resp.result.flatMap((item) => item.styles);
     styles = uniqBy(styles, 'key');
     styles = sortBy(styles, 'key');
     return styles
@@ -183,4 +189,4 @@ async function fetchDictionary(cityCode: string, showStyle: string) {
     };
 }
 
-export { fetchActivityList, fetchCityList, fetchStyleList, fetchPerformerList, fetchPerformerInfo, fetchSiteList, fetchSiteInfo, fetchBrandList, fetchBrandInfo, fetchDictionary };
+export { fetchActivityList, fetchBrandInfo, fetchBrandList, fetchCityList, fetchDictionary, fetchPerformerInfo, fetchPerformerList, fetchSiteInfo, fetchSiteList, fetchStyleList };

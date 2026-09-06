@@ -1,6 +1,7 @@
-import { Route, DataItem } from '@/types';
-import cache from '@/utils/cache';
 import { load } from 'cheerio';
+
+import type { DataItem, Route } from '@/types';
+import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 
 const typeMap = {
@@ -22,15 +23,15 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    description: `| 协会动态 | 通知公告 |行业动态 |
+    description: `| 协会动态 | 通知公告     | 行业动态 |
 | -------- | ------------ | -------- |
-| dynamic | announcement | industry |`,
+| dynamic  | announcement | industry |`,
 
     name: '新闻资讯',
     maintainers: ['HChenZi'],
     handler: async (ctx) => {
         const baseUrl = 'http://www.sara.org.cn';
-        const type = ctx.req.param('type');
+        const type = ctx.req.param('type')!;
 
         const url = `${baseUrl}/news/${type}.htm`;
         const response = await ofetch(url);
@@ -41,10 +42,10 @@ export const route: Route = {
                 const a = $(item).find('a').first();
                 return {
                     link: `${baseUrl}${a.attr('href')}`,
-                    title: a.attr('title'),
+                    title: a.attr('title')!,
                 };
             });
-        const items = (await Promise.all(list.map((elem) => getFeedItem(elem)))) as DataItem[];
+        const items = await Promise.all(list.map((elem) => getFeedItem(elem)));
         return {
             title: typeMap[type],
             link: url,
@@ -53,13 +54,13 @@ export const route: Route = {
     },
 };
 
-async function getFeedItem(item) {
-    return await cache.tryGet(item.link, async () => {
+async function getFeedItem(item: { link: string; title: string }): Promise<DataItem> {
+    return await cache.tryGet<DataItem>(item.link, async () => {
         const response = await ofetch(item.link);
         const $ = load(response);
         return {
             description: $('.text').html(),
-            language: 'zh-cn',
+            language: 'zh-CN',
             ...item,
         };
     });

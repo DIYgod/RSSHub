@@ -1,7 +1,8 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 
 const gixBaseURL = 'https://gixnetwork.org';
 
@@ -49,6 +50,8 @@ async function handler(ctx) {
             feedTitle += 'In The News';
             listSelector += 'div.news-wrapper > section.news-list > article';
             break;
+        default:
+            throw new Error(`Unknown category: ${category}`);
     }
 
     const response = await got(newsURL);
@@ -59,21 +62,22 @@ async function handler(ctx) {
 
     const list = $(listSelector)
         .toArray()
-        .map((item) => {
-            item = $(item);
-            const content = item.find('header').find('h2').find('a');
-            const time = item.find('header').find('span.h4').text();
+        .map((item): DataItem & { time: string } => {
+            const $item = $(item);
+            const content = $item.find('header').find('h2').find('a');
+            const time = $item.find('header').find('span.h4').text();
 
             return {
                 // title: content.text(),
                 time,
                 link: content.attr('href'),
+                title: '',
             };
         });
 
     const itemContent = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const descriptionResponse = await got(item.link);
 
                 const content = load(descriptionResponse.data);

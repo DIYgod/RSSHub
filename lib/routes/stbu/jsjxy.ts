@@ -1,8 +1,9 @@
-import { Route } from '@/types';
-import cache from '@/utils/cache';
-import got from '@/utils/got';
 import { load } from 'cheerio';
 import iconv from 'iconv-lite';
+
+import type { DataItem, Route } from '@/types';
+import cache from '@/utils/cache';
+import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
@@ -41,16 +42,13 @@ async function handler() {
     const baseUrl = 'https://jsjxy.stbu.edu.cn/news/';
     const { data: response } = await got(baseUrl, {
         responseType: 'buffer',
-        https: {
-            rejectUnauthorized: false,
-        },
     });
     const $ = load(gbk2utf8(response));
     const list = $('.content dl h4')
         .toArray()
-        .map((item) => {
-            item = $(item);
-            const a = item.find('a').first();
+        .map((item): DataItem => {
+            const $item = $(item);
+            const a = $item.find('a').first();
             return {
                 title: a.text(),
                 link: a.attr('href'),
@@ -59,16 +57,13 @@ async function handler() {
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const { data: response } = await got(item.link, {
                     responseType: 'buffer',
-                    https: {
-                        rejectUnauthorized: false,
-                    },
                 });
                 const $ = load(gbk2utf8(response));
-                item.description = $('.content14').first().html().trim();
-                item.pubDate = timezone(parseDate($('.article .source').text().split('日期：')[1].replace('\n', '').trim()), +8);
+                item.description = $('.content14').first().html()!.trim();
+                item.pubDate = timezone(parseDate($('.article .source').text().split('日期：', 2)[1].replace('\n', '').trim()), 8);
                 return item;
             })
         )

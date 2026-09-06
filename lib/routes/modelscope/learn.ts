@@ -1,5 +1,4 @@
-import { Route } from '@/types';
-
+import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
@@ -29,27 +28,24 @@ export const route: Route = {
 
 const uselessKey = new Set(['data-type', 'ind', 'jc', 'list', 'metadata', 'newcode', 'spacing', 'subtype', 'sz', 'szunit', 'uuid']);
 
-function render(item) {
-    if (typeof item === 'string') {
+type ContentNode = string | [tag: string, attributes?: Record<string, string>, ...children: ContentNode[]];
+
+function render(item: ContentNode): string {
+    if (!Array.isArray(item)) {
         return item;
     }
 
-    if (Array.isArray(item)) {
-        const tag = item[0];
-        const attributes = item[1] || {};
-        const children = item.slice(2);
+    const [tag, rawAttributes, ...children] = item;
+    const attributes = rawAttributes || {};
 
-        const attrs = Object.keys(attributes)
-            .filter((key) => !uselessKey.has(key))
-            .map((key) => `${key}="${attributes[key]}"`)
-            .join(' ');
+    const attrs = Object.keys(attributes)
+        .filter((key) => !uselessKey.has(key))
+        .map((key) => `${key}="${attributes[key]}"`)
+        .join(' ');
 
-        const child = children.map((element) => render(element)).join('');
+    const child = children.map((element) => render(element)).join('');
 
-        return `<${tag} ${attrs}>${child}</${tag}>`;
-    }
-
-    return '';
+    return `<${tag} ${attrs}>${child}</${tag}>`;
 }
 
 async function handler(ctx) {

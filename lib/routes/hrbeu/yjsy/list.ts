@@ -1,8 +1,10 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
+
 const rootUrl = 'http://yjsy.hrbeu.edu.cn';
 
 export const route: Route = {
@@ -34,11 +36,7 @@ export const route: Route = {
 async function handler(ctx) {
     const id = ctx.req.param('id');
 
-    const response = await got(`${rootUrl}/${id}/list.htm`, {
-        headers: {
-            Referer: rootUrl,
-        },
-    });
+    const response = await got(`${rootUrl}/${id}/list.htm`);
 
     const $ = load(response.data);
 
@@ -50,13 +48,13 @@ async function handler(ctx) {
 
     const list = $('li.list_item')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             let link = $(item).find('a').attr('href');
-            if (link.includes('page.htm')) {
+            if (link!.includes('page.htm')) {
                 link = `${rootUrl}${link}`;
             }
             return {
-                title: $(item).find('a').attr('title'),
+                title: $(item).find('a').attr('title')!,
                 pubDate: parseDate($(item).find('span.Article_PublishDate').text()),
                 link,
             };
@@ -64,8 +62,8 @@ async function handler(ctx) {
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
-                if (item.link.includes('page.htm')) {
+            cache.tryGet(item.link!, async () => {
+                if (item.link!.includes('page.htm')) {
                     const detailResponse = await got(item.link);
                     const content = load(detailResponse.data);
                     item.description = content('div.wp_articlecontent').html();

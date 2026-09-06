@@ -1,7 +1,8 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
@@ -43,19 +44,19 @@ async function handler(ctx) {
 
     const list = $('.col_news_list .news_list li')
         .toArray()
-        .map((e) => {
-            e = $(e);
-            const a = e.find('a');
+        .map((e): DataItem => {
+            const $e = $(e);
+            const a = $e.find('a');
             return {
-                title: a.attr('title'),
-                link: new URL(a.attr('href'), host).href,
-                pubDate: parseDate(e.find('span.news_meta').text(), 'YYYY-MM-DD'),
+                title: a.attr('title')!,
+                link: new URL(a.attr('href')!, host).href,
+                pubDate: parseDate($e.find('span.news_meta').text(), 'YYYY-MM-DD'),
             };
         });
 
     const out = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const response = await got(item.link);
                 const $ = load(response.data);
                 item.author = '中国海洋大学信息科学与工程学院';

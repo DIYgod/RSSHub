@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import { toTitleCase, collapseWhitespace, convertDateToISO8601, getLocalhostAddress } from '@/utils/common-utils';
+
+import { collapseWhitespace, convertDateToISO8601, getLocalhostAddress, getSubPath, toTitleCase } from '@/utils/common-utils';
 
 describe('common-utils', () => {
     it('toTitleCase', () => {
@@ -37,5 +38,10 @@ describe('common-utils', () => {
 
     it('getLocalhostAddress', () => {
         expect(getLocalhostAddress()).toBeInstanceOf(Array);
+    });
+
+    it('getSubPath', () => {
+        expect(getSubPath({ req: { path: '/test/abc' } })).toBe('/abc');
+        expect(getSubPath({ req: { path: '/test' } })).toBe('/');
     });
 });

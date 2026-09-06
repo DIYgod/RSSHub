@@ -1,7 +1,8 @@
-import { Route } from '@/types';
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
+
 import { getBoard } from './util';
 
 export const route: Route = {
@@ -34,13 +35,13 @@ async function handler(ctx) {
     const albumInfo = main.albumInfo;
     const title = albumInfo.name;
     const description = albumInfo.desc;
-    const image = albumInfo.user.images.split('?imageView2')[0];
+    const image = albumInfo.user.images.split('?imageView2', 1)[0];
 
     const list = main.notesDetail;
     const resultItem = list.map((item) => ({
         title: item.title,
         link: `https://www.xiaohongshu.com/discovery/item/${item.id}`,
-        description: `<img src ="${item.cover.url.split('?imageView2')[0]}"><br>${item.title}`,
+        description: `<img src ="${item.cover.url.split('?imageView2', 1)[0]}"><br>${item.title}`,
         author: item.user.nickname,
         pubDate: timezone(parseDate(item.time), 8),
     }));

@@ -1,8 +1,11 @@
-import { ViewType, type Data, type Route } from '@/types';
 import type { Context } from 'hono';
-import ofetch from '@/utils/ofetch';
-import type { FeedSubscription, FollowResponse, InboxSubscription, ListSubscription, Profile, Subscription } from './types';
 import { parse } from 'tldts';
+
+import type { Data, Route } from '@/types';
+import { ViewType } from '@/types';
+import ofetch from '@/utils/ofetch';
+
+import type { FeedSubscription, FollowResponse, InboxSubscription, ListSubscription, Profile, Subscription } from './types';
 
 export const route: Route = {
     name: 'User subscriptions',
@@ -36,12 +39,12 @@ async function handler(ctx: Context): Promise<Data> {
     const handleOrId = ctx.req.param('uid');
     const host = 'https://api.follow.is';
 
-    const handle = isBizId(handleOrId || '') ? handleOrId : handleOrId.startsWith('@') ? handleOrId.slice(1) : handleOrId;
+    const handle = isBizId(handleOrId || '') ? handleOrId : handleOrId!.startsWith('@') ? handleOrId!.slice(1) : handleOrId;
 
-    const searchParams = new URLSearchParams({ handle });
+    const searchParams = new URLSearchParams({ handle: handle! });
 
     if (isBizId(handle || '')) {
-        searchParams.append('id', handle);
+        searchParams.append('id', handle!);
     }
 
     const profile = await ofetch<FollowResponse<Profile>>(`${host}/profiles?${searchParams.toString()}`);
@@ -49,29 +52,31 @@ async function handler(ctx: Context): Promise<Data> {
 
     return {
         title: `${profile.data.name}'s subscriptions`,
-        item: (<Exclude<Subscription, InboxSubscription>[]>subscriptions.data.filter((i) => !isInbox(i) && !(isFeed(i) && !!i.feeds.errorAt))).map((subscription) => {
-            if (isList(subscription)) {
+        item: subscriptions.data
+            .filter((i): i is Exclude<Subscription, InboxSubscription> => !isInbox(i) && (!isFeed(i) || !i.feeds.errorAt))
+            .map((subscription) => {
+                if (isList(subscription)) {
+                    return {
+                        title: subscription.lists.title,
+                        description: subscription.lists.description,
+                        link: `https://app.follow.is/list/${subscription.listId}`,
+                        image: subscription.lists.image,
+                    };
+                }
                 return {
-                    title: subscription.lists.title,
-                    description: subscription.lists.description,
-                    link: `https://app.follow.is/list/${subscription.listId}`,
-                    image: subscription.lists.image,
+                    title: subscription.feeds.title,
+                    description: subscription.feeds.description,
+                    link: `https://app.follow.is/feed/${subscription.feedId}`,
+                    image: getUrlIcon(subscription.feeds.siteUrl).src,
+                    category: subscription.category ? [subscription.category] : undefined,
                 };
-            }
-            return {
-                title: subscription.feeds.title,
-                description: subscription.feeds.description,
-                link: `https://app.follow.is/feed/${subscription.feedId}`,
-                image: getUrlIcon(subscription.feeds.siteUrl).src,
-                category: subscription.category ? [subscription.category] : undefined,
-            };
-        }),
+            }),
         link: `https://app.follow.is/share/users/${handleOrId}`,
         image: profile.data.image,
     };
 }
 
-const getUrlIcon = (url: string, fallback?: boolean | undefined) => {
+const getUrlIcon = (url: string, fallback?: boolean) => {
     let src: string;
     let fallbackUrl = '';
 

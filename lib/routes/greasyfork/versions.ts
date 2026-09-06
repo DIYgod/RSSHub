@@ -1,6 +1,7 @@
-import { Route } from '@/types';
-import got from '@/utils/got';
 import { load } from 'cheerio';
+
+import type { Route } from '@/types';
+import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
@@ -39,13 +40,13 @@ async function handler(ctx) {
         item: $('.history_versions li')
             .toArray()
             .map((item) => {
-                item = $(item);
-                const versionNumberLink = item.find('.version-number a');
+                const $item = $(item);
+                const versionNumberLink = $item.find('.version-number a');
 
                 return {
                     title: versionNumberLink.text(),
-                    description: item.find('.version-changelog').text().trim(),
-                    pubDate: parseDate(item.find('gf-relative-time').attr('datetime')),
+                    description: $item.find('.version-changelog').text().trim(),
+                    pubDate: parseDate($item.find('gf-relative-time').attr('datetime')!),
                     link: versionNumberLink.attr('href'),
                 };
             }),

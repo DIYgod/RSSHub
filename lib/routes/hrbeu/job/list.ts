@@ -1,9 +1,11 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import { finishArticleItem } from '@/utils/wechat-mp';
+
 const rootUrl = 'http://job.hrbeu.edu.cn';
 
 const idMap = {
@@ -51,13 +53,13 @@ async function handler(ctx) {
 
     const list = $('li.list_item.i1')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             let link = $(item).find('a').attr('href');
-            if (link.includes('HrbeuJY')) {
+            if (link!.includes('HrbeuJY')) {
                 link = `${rootUrl}${link}`;
             }
             return {
-                title: $(item).find('a').attr('title'),
+                title: $(item).find('a').attr('title')!,
                 pubDate: parseDate($(item).find('.Article_PublishDate').text()),
                 link,
             };
@@ -65,12 +67,12 @@ async function handler(ctx) {
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
-                if (item.link.includes('HrbeuJY')) {
+            cache.tryGet(item.link!, async () => {
+                if (item.link!.includes('HrbeuJY')) {
                     const detailResponse = await got(item.link);
                     const content = load(detailResponse.data);
                     item.description = content('.article').html();
-                } else if (new URL(item.link).hostname === 'mp.weixin.qq.com') {
+                } else if (new URL(item.link!).hostname === 'mp.weixin.qq.com') {
                     await finishArticleItem(item);
                 } else {
                     item.description = '本文需跳转，请点击标题后阅读';

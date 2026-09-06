@@ -1,8 +1,10 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
+
 const rootUrl = 'http://sec.hrbeu.edu.cn';
 
 export const route: Route = {
@@ -27,31 +29,30 @@ export const route: Route = {
     maintainers: ['Chi-hong22'],
     handler,
     description: `| 学院要闻 | 学术活动 | 通知公告 | 学科方向 |
-| :------: | :------: |:------: | :------: |
-|   xyyw   |   xshd   |  229   |   xkfx   |`,
+| :------: | :------: | :------: | :------: |
+|   xyyw   |   xshd   |    229   |   xkfx   |`,
 };
 
 async function handler(ctx) {
     const id = ctx.req.param('id');
-    const response = await got(`${rootUrl}/${id}/list.htm`, {
-        headers: {
-            Referer: rootUrl,
-        },
-    });
+    const response = await got(`${rootUrl}/${id}/list.htm`);
 
     const $ = load(response.data);
 
-    const bigTitle = $('div [class=lanmuInnerMiddleBigClass_right]').find('div [portletmode=simpleColumnAttri]').text().replaceAll(/[\s·]/g, '').trim();
+    const bigTitle = $('div [class=lanmuInnerMiddleBigClass_right]')
+        .find('div [portletmode=simpleColumnAttri]')
+        .text()
+        .replaceAll(/[\s·]/g, '');
 
     const list = $('li.list_item')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             let link = $(item).find('a').attr('href');
             if (link && link.includes('page.htm')) {
                 link = `${rootUrl}${link}`;
             }
             return {
-                title: $(item).find('a').attr('title'),
+                title: $(item).find('a').attr('title')!,
                 pubDate: parseDate($(item).find('span.Article_PublishDate').text()),
                 link,
             };
@@ -59,8 +60,8 @@ async function handler(ctx) {
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
-                if (item.link.includes('page.htm')) {
+            cache.tryGet(item.link!, async () => {
+                if (item.link!.includes('page.htm')) {
                     const detailResponse = await got(item.link);
                     const content = load(detailResponse.data);
                     item.description = content('div.wp_articlecontent').html();

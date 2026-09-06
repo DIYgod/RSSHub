@@ -1,7 +1,8 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
@@ -28,7 +29,7 @@ export const route: Route = {
     description: `The URL of the journal [Annual Review of Analytical Chemistry](https://www.annualreviews.org/journal/anchem) is \`https://www.annualreviews.org/journal/anchem\`, where \`anchem\` is the id of the journal, so the route for this journal is \`/annualreviews/anchem\`.
 
 ::: tip
-  More jounals can be found in [Browse Journals](https://www.annualreviews.org/action/showPublications).
+More jounals can be found in [Browse Journals](https://www.annualreviews.org/action/showPublications).
 :::`,
 };
 
@@ -36,7 +37,7 @@ async function handler(ctx) {
     const id = ctx.req.param('id');
 
     const rootUrl = 'https://www.annualreviews.org';
-    const apiRootUrl = `https://api.crossref.org`;
+    const apiRootUrl = 'https://api.crossref.org';
     const feedUrl = `${rootUrl}/r/${id}_rss`;
     const currentUrl = `${rootUrl}/toc/${id}/current`;
 
@@ -50,18 +51,18 @@ async function handler(ctx) {
     let items = $('entry')
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
-            const doi = item.find('id').text().split('doi=').pop();
+            const doi = $item.find('id').text().split('doi=').pop();
 
             return {
                 doi,
                 guid: doi,
-                title: item.find('title').text(),
-                link: item.find('link').attr('href').split('?')[0],
-                description: item.find('content').text(),
-                pubDate: parseDate(item.find('published').text()),
-                author: item
+                title: $item.find('title').text(),
+                link: $item.find('link').attr('href')!.split('?', 1)[0],
+                description: $item.find('content').text(),
+                pubDate: parseDate($item.find('published').text()),
+                author: $item
                     .find('author name')
                     .toArray()
                     .map((a) => $(a).text())
@@ -71,7 +72,7 @@ async function handler(ctx) {
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.guid, async () => {
+            cache.tryGet(item.guid!, async () => {
                 const apiUrl = `${apiRootUrl}/works/${item.doi}`;
 
                 const detailResponse = await got({
@@ -94,6 +95,6 @@ async function handler(ctx) {
         description: $('subtitle').first().text(),
         link: currentUrl,
         item: items,
-        language: $('html').attr('lang'),
+        language: $('html').attr('lang') as Language,
     };
 }

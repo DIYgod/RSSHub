@@ -1,0 +1,135 @@
+import { renderToString } from 'hono/jsx/dom/server';
+
+import { config } from '@/config';
+import NotFoundError from '@/errors/types/not-found';
+import RejectError from '@/errors/types/reject';
+import type { Route } from '@/types';
+import cache from '@/utils/cache';
+import { generateHeaders, PRESETS } from '@/utils/header-generator';
+import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/parse-date';
+
+import { generate_a_bogus } from './a-bogus';
+import type { Feed, UserInfoCell32, UserInfoCell49 } from './types';
+
+const renderVideo = (url, poster) =>
+    renderToString(
+        <video controls preload="metadata" poster={poster}>
+            <source src={url} type="video/mp4" />
+        </video>
+    );
+
+export const route: Route = {
+    path: '/user/token/:token',
+    categories: ['new-media'],
+    example: '/toutiao/user/token/MS4wLjABAAAApOspM7AnWqplD9FIBGnhJRfUjFT_msD1KZMfNPBZa-c',
+    parameters: { token: '用户 token，可在用户主页 URL 找到' },
+    features: {
+        antiCrawler: true,
+    },
+    radar: [
+        {
+            source: ['www.toutiao.com/c/user/token/:token'],
+        },
+    ],
+    name: '头条主页',
+    maintainers: ['TonyRL'],
+    handler,
+};
+
+async function handler(ctx) {
+    const { token } = ctx.req.param();
+
+    const feed = await cache.tryGet(
+        `toutiao:user:${token}`,
+        async () => {
+            const query = `category=profile_all&token=${token}&max_behot_time=0&entrance_gid&aid=24&app_name=toutiao_web`;
+
+            const headers = generateHeaders(PRESETS.MODERN_WINDOWS_CHROME);
+            const userAgent = headers['user-agent'];
+
+            const data = await ofetch<{ data: Feed[] }>(`https://www.toutiao.com/api/pc/list/feed?${query}&a_bogus=${generate_a_bogus(query, userAgent)}`, {
+                headerGeneratorOptions: PRESETS.MODERN_WINDOWS_CHROME,
+            });
+
+            return data.data;
+        },
+        config.cache.routeExpire,
+        false
+    );
+
+    if (!feed) {
+        throw new RejectError('无法获取用户信息');
+    }
+    if (feed.length === 0) {
+        throw new NotFoundError('暂未发表作品');
+    }
+
+    const items = feed.map((item) => {
+        switch (item.cell_type) {
+            case 0:
+            case 49: {
+                const video = item.video.play_addr_list.toSorted((a, b) => b.bitrate - a.bitrate)[0];
+                const user = item.user as UserInfoCell49 | undefined;
+                return {
+                    title: item.title,
+                    description: renderVideo(item.video.play_addr_list.toSorted((a, b) => b.bitrate - a.bitrate)[0].play_url_list[0], item.video.origin_cover.url_list[0]),
+                    link: `https://www.toutiao.com/video/${item.id}/`,
+                    pubDate: parseDate(item.publish_time, 'X'),
+                    author: user?.info.name ?? item.source,
+                    enclosure_url: video?.play_url_list[0],
+                    enclosure_type: video?.play_url_list[0] ? 'video/mp4' : undefined,
+                    user: {
+                        name: user?.info.name,
+                        avatar: user?.info.avatar_url,
+                        description: user?.info.desc,
+                    },
+                };
+            }
+
+            // text w/o title
+            case 32: {
+                const enclosure = item.large_image_list?.pop();
+                const user = item.user as UserInfoCell32 | undefined;
+                return {
+                    title: item.content?.split('\n', 1)[0],
+                    description: item.rich_content,
+                    link: `https://www.toutiao.com/w/${item.id}/`,
+                    pubDate: parseDate(item.publish_time, 'X'),
+                    author: user?.name,
+                    enclosure_url: enclosure?.url,
+                    enclosure_type: enclosure?.url ? `image/${new URL(enclosure.url).pathname.split('.').pop()}` : undefined,
+                    user: {
+                        name: user?.name,
+                        avatar: user?.avatar_url,
+                        description: user?.desc,
+                    },
+                };
+            }
+
+            // text w/ title
+            case 60:
+            default:
+                return {
+                    title: item.title,
+                    description: item.abstract,
+                    link: `https://www.toutiao.com/article/${item.id}/`,
+                    pubDate: parseDate(item.publish_time, 'X'),
+                    author: item.user_info?.name,
+                    user: {
+                        name: item.user_info?.name,
+                        avatar: item.user_info?.avatar_url,
+                        description: item.user_info?.description,
+                    },
+                };
+        }
+    });
+
+    return {
+        title: `${items[0].user.name}的头条主页 - 今日头条(www.toutiao.com)`,
+        description: items[0].user.description,
+        link: `https://www.toutiao.com/c/user/token/${token}/`,
+        image: items[0].user.avatar,
+        item: items,
+    };
+}

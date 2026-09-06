@@ -1,8 +1,9 @@
-import { Route } from '@/types';
+import querystring from 'node:querystring';
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import * as url from 'node:url';
-import querystring from 'node:querystring';
+import timezone from '@/utils/timezone';
 
 const baseUrl = 'http://jw.scut.edu.cn';
 const refererUrl = baseUrl + '/dist/';
@@ -14,13 +15,6 @@ const articleApiUrl = baseUrl + '/zhinan/jw/api/v2/getArticleInfo.do';
 const getArticleUrlById = (id) => `${baseUrl}/zhinan/cms/article/view.do?type=posts&id=${id}`;
 const getArticleMobileUrlById = (id) => `${baseUrl}/dist/#/detail/index?id=${id}&type=news`;
 
-const convertTimezoneToCST = (date) => {
-    const timeZone = 8;
-    const serverOffset = date.getTimezoneOffset() / 60;
-
-    return new Date(date.getTime() - 60 * 60 * 1000 * (timeZone + serverOffset));
-};
-
 const generateArticlePubDate = (createDateStr) => {
     const date = new Date(createDateStr);
     date.setHours(8);
@@ -28,12 +22,12 @@ const generateArticlePubDate = (createDateStr) => {
     date.setSeconds(0);
     date.setMilliseconds(0);
 
-    return convertTimezoneToCST(date);
+    return timezone(date, 8);
 };
 
 const isRedirectPage = (data) => !!data.link;
 
-const resolveRelativeUrl = (html) => html.replaceAll('src="/', `src="${url.resolve(baseUrl, '.')}`).replaceAll('href="/', `href="${url.resolve(baseUrl, '.')}`);
+const resolveRelativeUrl = (html) => html.replaceAll('src="/', () => `src="${new URL('.', baseUrl).href}`).replaceAll('href="/', () => `href="${new URL('.', baseUrl).href}`);
 
 const apiSuccessAssert = (data) => {
     if (!data.success) {
@@ -106,7 +100,7 @@ async function handler() {
             const articleData = articleApiResponse.data.data;
             articleData.id = articleMeta.id;
 
-            let articleFullText = null;
+            let articleFullText: string | null = null;
             if (!isRedirectPage(articleData)) {
                 articleFullText = generateArticleFullText(articleData);
             }

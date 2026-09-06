@@ -1,9 +1,10 @@
-import { Route, Data } from '@/types';
+import { load } from 'cheerio';
+
+import type { Data, Route } from '@/types';
 import cache from '@/utils/cache';
+import logger from '@/utils/logger';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
-import { load } from 'cheerio';
-import logger from '@/utils/logger';
 
 export const route: Route = {
     path: '/category/:category',
@@ -100,7 +101,7 @@ async function handler(ctx): Promise<Data> {
             item: items,
             description: `Latest articles from TheBlock in the ${category} category`,
             language: 'en',
-        } as Data;
+        };
     } catch (error: any) {
         logger.error(`Error in TheBlock handler: ${error.message}`);
         throw error;

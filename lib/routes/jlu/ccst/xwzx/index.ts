@@ -1,6 +1,7 @@
-import { Route } from '@/types';
-import got from '@/utils/got'; // Custom got instance
 import { load } from 'cheerio'; // HTML parser with jQuery-like API
+
+import type { Route } from '@/types';
+import got from '@/utils/got'; // Custom got instance
 
 export const route: Route = {
     path: '/ccst/xwzx/:category',
@@ -26,7 +27,7 @@ async function handler(ctx: any) {
 
     const list = $('.section.container .main .list3 ul li');
 
-    const titles: { [key: string]: string } = {
+    const titles = {
         gsl: '公示栏',
         xstd: '学生天地',
         xytz: '学院通知',
@@ -46,7 +47,7 @@ async function handler(ctx: any) {
 
             const linkEl = el.find('a');
             const dateEl = el.find('.date');
-            const dateStr = dateEl.text().trim();
+            const dateStr = dateEl.text();
             const title = linkEl.text().trim();
             const rawLink = linkEl.attr('href')!.replaceAll('..', ''); // Replace all occurrences of '..'
             const link = `${baseUrl}${encodeURI(rawLink)}`; // Encode the URL properly

@@ -1,6 +1,6 @@
-import { Route } from '@/types';
-import cache from '@/utils/cache';
+import type { Language, Route } from '@/types';
 import got from '@/utils/got';
+
 import { apiBase, baseUrl, getUserInfo, renderLive } from './utils';
 
 export const route: Route = {
@@ -29,7 +29,7 @@ export const route: Route = {
 async function handler(ctx) {
     const id = ctx.req.param('id');
 
-    const userInfo = await getUserInfo(id, cache.tryGet);
+    const userInfo = await getUserInfo(id);
     const { data: liveData } = await got(`${apiBase}/users/${id}/livestreams/`);
 
     const casts = liveData.results.map((item) => renderLive(item));
@@ -46,7 +46,7 @@ async function handler(ctx) {
         image: userInfo.avatar_url,
         icon: userInfo.avatar_url,
         logo: userInfo.avatar_url,
-        language: 'ja',
+        language: 'ja' as const satisfies Language,
         author: userInfo.name,
         itunes_author: userInfo.name,
         item: casts,

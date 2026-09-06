@@ -1,7 +1,8 @@
+import { load } from 'cheerio';
+
 import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
@@ -35,27 +36,25 @@ async function handler(/* ctx*/): Promise<Data> {
 
     const list: DataItem[] = $('.article  ')
         .toArray()
-        .map(
-            (ele): DataItem => ({
-                title: $('h2 > a', ele).text(),
-                link: $('h2 > a', ele).attr('href'),
-                pubDate: parseDate($('div.by-line > time', ele).attr('datetime')!),
-                author: $('div.by-line > a', ele).text(),
-            })
-        );
+        .map((ele): DataItem => ({
+            title: $('h2 > a', ele).text(),
+            link: $('h2 > a', ele).attr('href'),
+            pubDate: parseDate($('div.by-line > time', ele).attr('datetime')!),
+            author: $('div.by-line > a', ele).text(),
+        }));
 
     const items: DataItem[] = await Promise.all(
         list.map((item: DataItem) =>
-            cache.tryGet(item.link!, async () => {
+            cache.tryGet(item.link!, async (): Promise<DataItem> => {
                 const detailResponse = await got.get(item.link);
                 const content = load(detailResponse.data);
                 item.category = content('.div.topics > a')
                     .toArray()
                     .map((ele) => content(ele).text());
-                item.description = content('.post-body').toString();
+                item.description = content('.post-body').html();
                 return item;
             })
-        ) as Promise<DataItem>[]
+        )
     );
 
     return {

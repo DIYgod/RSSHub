@@ -1,8 +1,10 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
+
 const baseUrl = 'http://www.vom.mn';
 
 export const route: Route = {
@@ -42,10 +44,11 @@ async function handler(ctx) {
         ...new Set(
             $('#bigNewsSlide .item, #news_3 .item')
                 .toArray()
-                .map((item) => {
-                    item = $(item);
+                .map((item): DataItem => {
+                    const $item = $(item);
                     return {
-                        link: item.find('a').eq(0).attr('href'),
+                        link: $item.find('a').eq(0).attr('href'),
+                        title: '',
                     };
                 })
         ),
@@ -53,7 +56,7 @@ async function handler(ctx) {
 
     await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const { data: response } = await got(item.link);
                 const $ = load(response);
 
@@ -72,7 +75,7 @@ async function handler(ctx) {
     );
 
     return {
-        title: $('meta[name=description]').attr('content'),
+        title: $('meta[name=description]').attr('content')!,
         image: 'http://www.vom.mn/dist/images/vom-logo.png',
         item: items,
     };

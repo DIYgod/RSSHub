@@ -1,8 +1,10 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
+
 const baseTitle = 'NUIST CS（南信大计软院）';
 const baseUrl = 'https://scs.nuist.edu.cn';
 
@@ -44,25 +46,25 @@ async function handler(ctx) {
         .eq(0)
         .find('li')
         .toArray()
-        .map((item) => {
-            item = $(item);
+        .map((item): DataItem => {
+            const $item = $(item);
             return {
-                title: item.find('a').attr('title'),
-                link: new URL(item.find('a').attr('href'), baseUrl).href,
-                pubDate: parseDate(item.find('.newsDate').text()),
+                title: $item.find('a').attr('title')!,
+                link: new URL($item.find('a').attr('href')!, baseUrl).href,
+                pubDate: parseDate($item.find('.newsDate').text()),
             };
         });
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const response = await got(item.link);
                 const $ = load(response.data);
 
                 const authorMatch = $('.newsTitleAddDate')
                     .text()
                     .match(/发布者：(.*)发布时间/);
-                item.author = authorMatch ? authorMatch[1].trim() : null;
+                item.author = authorMatch ? authorMatch[1].trim() : undefined;
                 item.description = $('.newsContent').html();
                 return item;
             })

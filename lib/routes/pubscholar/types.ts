@@ -5,10 +5,10 @@ interface Link {
 }
 
 interface Content {
-    date: string;
+    date?: string;
     attachments: any[];
-    keywords: string[];
-    year: number;
+    keywords?: string[];
+    year?: number | string;
     source: string;
     title: string;
     type: string;
@@ -17,21 +17,23 @@ interface Content {
     school: any[];
     first_page: string;
     local_links: any[];
-    links: Link[];
+    links?: Link[];
     id: string;
     graduation_institution: any[];
     cn_type: string;
     article_type: string;
     issue: string;
     abstracts: string;
-    author: string[];
+    author?: string[];
+    inventors?: string[];
+    issue_date?: string;
     last_page: string;
     degree: string;
     tutor: any[];
     semantic_entities: object;
     volume: string;
     source_list: string[];
-    is_free: boolean;
+    is_free?: boolean;
 }
 
 export interface Resource {

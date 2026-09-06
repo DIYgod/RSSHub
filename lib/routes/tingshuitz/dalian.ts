@@ -1,6 +1,7 @@
-import { Route } from '@/types';
-import got from '@/utils/got';
 import { load } from 'cheerio';
+
+import type { Route } from '@/types';
+import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
@@ -36,12 +37,12 @@ async function handler() {
     const items = $('recordset record')
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
             return {
-                title: item.find('a').text().trim(),
-                description: `大连市停水通知：${item.find('a').text().trim()}`,
-                pubDate: parseDate(item.find('span').text(), 'YYYY-MM-DD'),
-                link: item.find('a').attr('href'),
+                title: $item.find('a').text().trim(),
+                description: `大连市停水通知：${$item.find('a').text().trim()}`,
+                pubDate: parseDate($item.find('span').text(), 'YYYY-MM-DD'),
+                link: $item.find('a').attr('href'),
             };
         });
 

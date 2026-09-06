@@ -1,7 +1,8 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
@@ -79,7 +80,7 @@ async function handler(ctx) {
                     link: url,
                     pubDate: parseDate(metadata.datePublished),
                     author: metadata.author.name,
-                    description: cover.html() + content.html(),
+                    description: cover.html()! + content.html()!,
                     category: metadata.keywords ? [metadata.articleSection, ...metadata.keywords.split(',')] : [metadata.articleSection],
                 };
             })
@@ -88,7 +89,7 @@ async function handler(ctx) {
     return {
         title: '東森新聞|即時',
         link: category ? `https://news.ebc.net.tw/realtime/${category}` : 'https://news.ebc.net.tw/realtime',
-        language: 'zh-TW',
+        language: 'zh-TW' as const satisfies Language,
         item: items,
     };
 }

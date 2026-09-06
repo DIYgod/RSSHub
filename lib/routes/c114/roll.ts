@@ -1,18 +1,18 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+import iconv from 'iconv-lite';
 
+import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
-import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
-import iconv from 'iconv-lite';
+import timezone from '@/utils/timezone';
 
 export const handler = async (ctx) => {
     const { original = 'false' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 15;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 15;
 
     const rootUrl = 'https://www.c114.com.cn';
-    const currentUrl = new URL(`news/roll.asp${original === 'true' ? `?o=true` : ''}`, rootUrl).href;
+    const currentUrl = new URL(`news/roll.asp${original === 'true' ? '?o=true' : ''}`, rootUrl).href;
 
     const { data: response } = await got(currentUrl, {
         responseType: 'buffer',
@@ -20,26 +20,26 @@ export const handler = async (ctx) => {
 
     const $ = load(iconv.decode(response, 'gbk'));
 
-    const language = $('html').prop('lang');
+    const language = $('html').prop('lang') as Language;
 
     let items = $('div.new_list_c')
         .slice(0, limit)
         .toArray()
-        .map((item) => {
-            item = $(item);
+        .map((item): DataItem => {
+            const $item = $(item);
 
             return {
-                title: item.find('h6 a').text(),
-                pubDate: timezone(parseDate(item.find('div.new_list_time').text(), ['HH:mm', 'M/D']), +8),
-                link: new URL(item.find('h6 a').prop('href'), rootUrl).href,
-                author: item.find('div.new_list_author').text().trim(),
+                title: $item.find('h6 a').text(),
+                pubDate: timezone(parseDate($item.find('div.new_list_time').text(), ['HH:mm', 'M/D']), 8),
+                link: new URL($item.find('h6 a').prop('href')!, rootUrl).href,
+                author: $item.find('div.new_list_author').text().trim(),
                 language,
             };
         });
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const { data: detailResponse } = await got(item.link, {
                     responseType: 'buffer',
                 });
@@ -51,7 +51,7 @@ export const handler = async (ctx) => {
 
                 item.title = title;
                 item.description = description;
-                item.pubDate = timezone(parseDate($$('div.r_time').text(), 'YYYY/M/D HH:mm'), +8);
+                item.pubDate = timezone(parseDate($$('div.r_time').text(), 'YYYY/M/D HH:mm'), 8);
                 item.author = $$('div.author').first().text().trim();
                 item.content = {
                     html: description,
@@ -64,7 +64,7 @@ export const handler = async (ctx) => {
         )
     );
 
-    const image = new URL($('div.top2-1 a img').prop('src'), rootUrl).href;
+    const image = new URL($('div.top2-1 a img').prop('src')!, rootUrl).href;
 
     return {
         title: $('title').text(),
@@ -102,8 +102,7 @@ export const route: Route = {
         {
             source: ['c114.com.cn/news/roll.asp'],
             target: (_, url) => {
-                url = new URL(url);
-                const original = url.searchParams.get('o');
+                const original = new URL(url).searchParams.get('o');
 
                 return `/roll${original ? `/${original}` : ''}`;
             },

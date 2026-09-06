@@ -1,6 +1,7 @@
-import { Route } from '@/types';
-import got from '@/utils/got';
 import { load } from 'cheerio';
+
+import type { Route } from '@/types';
+import got from '@/utils/got';
 
 export const route: Route = {
     path: '/commercialpress/latest',
@@ -62,7 +63,7 @@ async function handler() {
                 title: $item.find('.title > a').text(),
                 link: $item.find('.title > a').attr('href'),
                 description: `<img src="${$item.find('.post img').attr('src')}" /><br>${$item.find('.abstract').html()}`,
-                pubDate: new Date($item.find('.time > span').attr('title')).toUTCString(),
+                pubDate: new Date($item.find('.time > span').attr('title')!).toUTCString(),
             };
         });
 

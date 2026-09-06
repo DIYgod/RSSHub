@@ -1,4 +1,4 @@
-import { Route } from '@/types';
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -9,9 +9,11 @@ const titles = {
     bonds: '债市',
     commodities: '商品',
     forex: '外汇',
+    finance: '金融',
     enterprise: '公司',
     'asset-manage': '资管',
     tmt: '科技',
+    ai: '硬AI',
     estate: '地产',
     car: '汽车',
     medicine: '医药',
@@ -29,19 +31,21 @@ export const route: Route = {
     name: '资讯',
     maintainers: ['nczitzk'],
     handler,
-    description: `| id           | 分类 |
-| ------------ | ---- |
-| global       | 最新 |
-| shares       | 股市 |
-| bonds        | 债市 |
-| commodities  | 商品 |
-| forex        | 外汇 |
-| enterprise   | 公司 |
-| asset-manage | 资管 |
-| tmt          | 科技 |
-| estate       | 地产 |
-| car          | 汽车 |
-| medicine     | 医药 |`,
+    description: `| id           | 分类  |
+| ------------ | ----- |
+| global       | 最新  |
+| shares       | 股市  |
+| bonds        | 债市  |
+| commodities  | 商品  |
+| forex        | 外汇  |
+| finance      | 金融  |
+| enterprise   | 公司  |
+| asset-manage | 资管  |
+| tmt          | 科技  |
+| ai           | 硬 AI |
+| estate       | 地产  |
+| car          | 汽车  |
+| medicine     | 医药  |`,
 };
 
 async function handler(ctx) {
@@ -50,7 +54,7 @@ async function handler(ctx) {
     const rootUrl = 'https://wallstreetcn.com';
     const apiRootUrl = 'https://api-one.wallstcn.com';
     const currentUrl = `${rootUrl}/news/${category}`;
-    const apiUrl = `${apiRootUrl}/apiv1/content/information-flow?channel=${category}-channel&accept=article&limit=${ctx.req.query('limit') ?? 25}`;
+    const apiUrl = `${apiRootUrl}/apiv1/content/information-flow?channel=${category}&accept=article&limit=${ctx.req.query('limit') ?? 25}`;
 
     const response = await got({
         method: 'get',

@@ -1,7 +1,9 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+import sanitizeHtml from 'sanitize-html';
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
 const titles = {
@@ -39,15 +41,29 @@ const titles = {
 
 export const route: Route = {
     path: '/chp/:category?/:language?',
+    categories: ['government'],
+    example: '/hongkong/chp',
+    parameters: { category: 'Category, see below, Important Topics by default', language: 'Language, see below, zh_tw by default' },
     radar: [
         {
             source: ['dh.gov.hk/'],
         },
     ],
-    name: 'Unknown',
+    name: 'Category',
     maintainers: ['nczitzk'],
     handler,
     url: 'dh.gov.hk/',
+    description: `Category
+
+| Important Topics | Press Releases     | Response Level | Periodicals & Publications | Health Notice |
+| ---------------- | ------------------ | -------------- | -------------------------- | ------------- |
+| important\\_ft    | press\\_data\\_index | ResponseLevel  | publication                | HealthAlert   |
+
+Language
+
+| English | 中文简体 | 中文繁體 |
+| ------- | -------- | -------- |
+| en      | zh\\_cn   | zh\\_tw   |`,
 };
 
 async function handler(ctx) {
@@ -69,8 +85,8 @@ async function handler(ctx) {
         url: apiUrl,
     });
 
-    const list = JSON.parse(response.data.match(/"data":(\[{.*}])}/)[1]).map((item) => {
-        let link = '';
+    const list = JSON.parse(response.data.match(/"data":(\[\{.*\}\])\}/)[1]).map((item) => {
+        let link: string;
 
         if (item.UrlPath_en) {
             link = item[`UrlPath_${language}`].includes('http') ? item[`UrlPath_${language}`] : `${rootUrl}${item[`UrlPath_${language}`]}`;
@@ -84,7 +100,7 @@ async function handler(ctx) {
             link,
             pubDate: parseDate(item.PublishDate),
             description: item[`Content_${language}`] ?? '',
-            title: item[`Title_${language}`]?.replace(/<.*>/, '') ?? '',
+            title: sanitizeHtml(item[`Title_${language}`] ?? '', { allowedTags: [], allowedAttributes: {} }),
         };
     });
 
@@ -99,7 +115,7 @@ async function handler(ctx) {
 
                     const content = load(detailResponse.data);
 
-                    content('#btmNav, script').remove();
+                    content('#btmNav').remove();
                     content('.contHeader, .title_display_date').remove();
                     content('.printBtn, .bookmarkBtn, .qrBtn, .qr-content').remove();
 

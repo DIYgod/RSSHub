@@ -1,10 +1,12 @@
-import { Route } from '@/types';
+import type { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/',
-    name: 'Unknown',
+    categories: ['bbs'],
+    example: '/sec-in',
+    name: '最新文章',
     maintainers: ['p7e4'],
     handler,
 };

@@ -13,6 +13,7 @@ You can change the language of each route to the languages listed below.
 | English | 日本语 | 한국의 | 中文             |
 | ------- | ------ | ------ | ---------------- |
 | en      | ja     | ko     | (leave it empty) |
+
 :::
 
 ::: tip

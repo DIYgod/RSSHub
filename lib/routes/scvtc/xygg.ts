@@ -1,7 +1,8 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
@@ -34,19 +35,19 @@ async function handler() {
     const $ = load(response.data);
     const list = $('div.text-list ul li')
         .toArray()
-        .map((item) => {
-            item = $(item);
-            const a = item.find('a[title]');
+        .map((item): DataItem => {
+            const $item = $(item);
+            const a = $item.find('a[title]');
             return {
-                title: a.attr('title'),
-                link: new URL(a.attr('href'), currentUrl).href,
-                pubDate: parseDate(item.find('span').text().trim()),
+                title: a.attr('title')!,
+                link: new URL(a.attr('href')!, currentUrl).href,
+                pubDate: parseDate($item.find('span').text().trim()),
             };
         });
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const detailResponse = await got(item.link);
                 const content = load(detailResponse.data);
 

@@ -1,7 +1,8 @@
-import { Route } from '@/types';
-import got from '@/utils/got';
 import { load } from 'cheerio';
 import iconv from 'iconv-lite';
+
+import type { Route } from '@/types';
+import got from '@/utils/got';
 
 export const route: Route = {
     path: '/chapter/:id',
@@ -23,7 +24,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const id = ctx.req.param('id');
-    const index = Number.parseInt(id / 1000);
+    const index = Number.parseInt(String(id / 1000));
 
     const response = await got({
         method: 'get',
@@ -37,12 +38,12 @@ async function handler(ctx) {
 
     const name = $('#title').text();
 
-    const chapter_item = [];
+    const chapter_item: any[] = [];
 
-    $('.ccss>a').each(function () {
+    $('.ccss>a').each((_, el) => {
         chapter_item.push({
-            title: $(this).text(),
-            link: `https://www.wenku8.net/novel/${index}/${id}/` + $(this).attr('href'),
+            title: $(el).text(),
+            link: `https://www.wenku8.net/novel/${index}/${id}/` + $(el).attr('href'),
         });
     });
 

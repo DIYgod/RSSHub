@@ -1,23 +1,25 @@
-import { Route, ViewType } from '@/types';
+import { load } from 'cheerio';
+
+import type { DataItem, Route } from '@/types';
+import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
-    path: '/:section?/:type?/:user?',
+    path: '/:section?/:type?/:value?',
     categories: ['programming'],
     view: ViewType.Articles,
     example: '/hackernews/threads/comments_list/dang',
     parameters: {
         section: {
-            description: 'Content section, default to `index`',
+            description: 'Content section, default to `index`. Common sections: `index`, `newest`, `ask`, `show`, `jobs`, `over`, `threads`, `submitted`. Any valid HN section (e.g. `best`, `front`, `active`) is also accepted',
         },
         type: {
-            description: 'Link type, default to `sources`',
+            description: 'Content format, default to `sources`. `sources` links to original articles, `comments` fetches full comment threads, `comments_list` shows parent story with single comment',
         },
-        user: {
-            description: 'Set user, only valid in `threads` and `submitted` sections',
+        value: {
+            description: 'For `threads`/`submitted` sections, set user ID. For `over` section, set minimum points threshold (default 100). For other sections, appended as `?id=<value>` (e.g. `value=dang` → `?id=dang`)',
         },
     },
     features: {
@@ -33,23 +35,37 @@ export const route: Route = {
             source: ['news.ycombinator.com/:section', 'news.ycombinator.com/'],
         },
     ],
-    name: 'User',
+    name: 'Stories',
     maintainers: ['nczitzk', 'xie-dongping'],
     handler,
-    description: `Subscribe to the content of a specific user`,
+    description: `Subscribe to Hacker News content by section, user, or minimum points
+
+Examples:
+
+| HN100              | User submitted                       | User threads                       | Comments list                            |
+| ------------------ | ------------------------------------ | ---------------------------------- | ---------------------------------------- |
+| \`/hackernews/over\` | \`/hackernews/submitted/sources/dang\` | \`/hackernews/threads/sources/dang\` | \`/hackernews/threads/comments_list/dang\` |`,
+};
+
+type Story = Omit<DataItem, 'comments' | 'upvotes'> & {
+    comments: string | number;
+    upvotes: string | number;
+    origin?: string;
+    onStory: string;
+    currentComment: string;
 };
 
 async function handler(ctx) {
     const section = ctx.req.param('section') ?? 'index';
     const type = ctx.req.param('type') ?? 'sources';
-    const user = ctx.req.param('user') ?? '';
+    const value = ctx.req.param('value') ?? '';
 
     const rootUrl = 'https://news.ycombinator.com';
     const sectionUrl = section === 'index' ? '' : `/${section}`;
-    let optUrl = user === '' ? '' : '?id=' + user;
+    let optUrl = value === '' ? '' : '?id=' + value;
 
     if (section === 'over') {
-        optUrl = user === '' ? '?points=100' : '?points=' + user;
+        optUrl = value === '' ? '?points=100' : '?points=' + value;
     }
 
     const currentUrl = `${rootUrl}${sectionUrl}${optUrl}`;
@@ -61,26 +77,28 @@ async function handler(ctx) {
         .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 30)
         .toArray()
         .map((thing) => {
-            thing = $(thing);
+            const $thing = $(thing);
 
-            const item = {};
+            const item: Story = {
+                guid: $thing.attr('id'),
+                title: $thing.find('.titleline').children('a').text(),
+                category: $thing.find('.sitestr').text(),
+                author: $thing.next().find('.hnuser').text(),
+                pubDate: parseDate(($thing.find('.age').attr('title') ?? $thing.next().find('.age').attr('title'))!),
 
-            item.guid = thing.attr('id');
-            item.title = thing.find('.titleline').children('a').text();
-            item.category = thing.find('.sitestr').text();
-            item.author = thing.next().find('.hnuser').text();
-            item.pubDate = parseDate(thing.find('.age').attr('title') ?? thing.next().find('.age').attr('title'));
+                link: '',
+                origin: $thing.find('.titleline').children('a').attr('href'),
+                onStory: $thing.find('.onstory').text().slice(2),
+
+                comments: $thing.next().find('a').last().text().split(' comment', 1)[0],
+                upvotes: $thing.next().find('.score').text().split(' point', 1)[0],
+
+                currentComment: $thing.find('.comment').text(),
+                description: '',
+            };
 
             item.link = `${rootUrl}/item?id=${item.guid}`;
-            item.origin = thing.find('.titleline').children('a').attr('href');
-            item.onStory = thing.find('.onstory').text().slice(2);
-
-            item.comments = thing.next().find('a').last().text().split(' comment')[0];
-            item.upvotes = thing.next().find('.score').text().split(' point')[0];
-
-            item.currentComment = thing.find('.comment').text();
             item.guid = type === 'sources' ? item.guid : `${item.guid}${item.comments === 'discuss' ? '' : `-${item.comments}`}`;
-
             item.description = `<a href="${item.link}">Comments on Hacker News</a> | <a href="${item.origin}">Source</a>`;
 
             return item;
@@ -88,7 +106,7 @@ async function handler(ctx) {
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.guid, async () => {
+            cache.tryGet(item.guid!, async () => {
                 if (item.comments !== 'discuss' && type === 'comments') {
                     const detailResponse = await got({
                         method: 'get',
@@ -101,27 +119,23 @@ async function handler(ctx) {
 
                     item.description = '';
 
-                    content('.comtr').each(function () {
-                        const author = content(this).find('.hnuser');
-                        const comment = content(this).find('.commtext');
+                    content('.comtr').each((_, el) => {
+                        const author = content(el).find('.hnuser');
+                        const comment = content(el).find('.commtext');
 
                         item.description +=
                             `<div><div><small><a href="${rootUrl}/${author.attr('href')}">${author.text()}</a></small>` +
-                            `&nbsp&nbsp<small><a href="${rootUrl}/item?id=${content(this).attr('id')}">` +
-                            `${content(this).find('.age').attr('title')}</a></small></div>`;
+                            `&nbsp&nbsp<small><a href="${rootUrl}/item?id=${content(el).attr('id')}">` +
+                            `${content(el).find('.age').attr('title')}</a></small></div>`;
 
-                        const commentText = comment.clone();
+                        const leading = content(`<p>${comment.contents().not('p').text()}</p>`);
+                        const paragraphs = comment
+                            .find('p')
+                            .toArray()
+                            .map((p) => `<p>${content(p).html()}</p>`)
+                            .join('');
 
-                        commentText.find('p').remove();
-                        commentText.html(`<p>${commentText.text()}</p>`);
-                        commentText.append(
-                            comment
-                                .find('p')
-                                .toArray()
-                                .map((p) => `<p>${content(p).html()}</p>`)
-                        );
-
-                        item.description += `<div>${commentText.html()}</div></div>`;
+                        item.description += `<div>${content.html(leading)}${paragraphs}</div></div>`;
                     });
                 } else if (item.comments !== 'discuss' && type === 'comments_list') {
                     item.title = item.onStory;
@@ -132,7 +146,7 @@ async function handler(ctx) {
                     item.comments = 0;
                 }
 
-                item.link = type === 'sources' ? item.origin : item.link;
+                item.link = (type === 'sources' ? item.origin : item.link)!;
 
                 delete item.origin;
 
@@ -144,6 +158,6 @@ async function handler(ctx) {
     return {
         title: $('title').text(),
         link: currentUrl,
-        item: items,
+        item: items as DataItem[],
     };
 }

@@ -1,5 +1,7 @@
-import cache from '@/utils/cache';
 import { load } from 'cheerio';
+
+import type { DataItem } from '@/types';
+import cache from '@/utils/cache';
 import { parseDate } from '@/utils/parse-date';
 
 const ProcessImage = ($, e) => {
@@ -14,17 +16,17 @@ const ProcessImage = ($, e) => {
     return cover;
 };
 
-const PuppeterGetter = async (ctx, browser, link) => {
+const PuppeterGetter = async (ctx, context, link) => {
     const result = await cache.tryGet(`nyt: ${link}`, async () => {
-        const page = await browser.newPage();
-        await page.setRequestInterception(true);
-        page.on('request', (request) => {
-            request.resourceType() === 'document' ? request.continue() : request.abort();
+        const page = await context.newPage();
+        await page.route('**/*', (route) => {
+            const request = route.request();
+            request.resourceType() === 'document' ? route.continue() : route.abort();
         });
         await page.goto(link, {
             waitUntil: 'domcontentloaded',
         });
-        const response = await page.evaluate(() => document.querySelector('body').innerHTML);
+        const response = await page.evaluate(() => document.querySelector('body')!.getHTML());
         return response;
     });
     return result;
@@ -34,7 +36,7 @@ const ProcessFeed = (data, hasEnVersion = false) => {
     const $ = load(data);
 
     let content;
-    const result = {};
+    const result: Pick<DataItem, 'description' | 'title' | 'author' | 'pubDate'> = { title: '' };
 
     // 处理 www.nytimes.com
     if (hasEnVersion) {

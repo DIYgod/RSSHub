@@ -1,8 +1,9 @@
-import { Route, DataItem } from '@/types';
-import got from '@/utils/got';
 import { load } from 'cheerio';
-import { parseDate } from '@/utils/parse-date';
+
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
+import got from '@/utils/got';
+import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/blog',
@@ -29,14 +30,14 @@ async function handler() {
 
     let items = $('tr[data-index]')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem | null => {
             const $item = $(item);
             const $link = $item.find('td a').last();
             const $date = $item.find('.listing-date');
 
             const href = $link.attr('href');
-            const title = $link.text().trim();
-            const dateStr = $date.text().trim();
+            const title = $link.text();
+            const dateStr = $date.text();
 
             if (!href || !title || !dateStr) {
                 return null;
@@ -49,22 +50,22 @@ async function handler() {
                 title,
                 link,
                 pubDate,
-            } as DataItem;
+            };
         })
         .filter((item): item is DataItem => item !== null);
 
     items = (
         await Promise.all(
             items.map((item) =>
-                cache.tryGet(item.link as string, async () => {
+                cache.tryGet(item.link!, async (): Promise<DataItem> => {
                     try {
                         const detailResponse = await got(item.link);
                         const $detail = load(detailResponse.data);
 
                         return {
                             ...item,
-                            description: $detail('.content').html() || '',
-                        } as DataItem;
+                            description: $detail('.content').html(),
+                        };
                     } catch {
                         return item;
                     }

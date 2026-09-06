@@ -1,8 +1,10 @@
-import { Route } from '@/types';
-import got from '@/utils/got';
-import * as cheerio from 'cheerio';
-import timezone from '@/utils/timezone';
+import { load } from 'cheerio';
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
+import got from '@/utils/got';
+import timezone from '@/utils/timezone';
+
 export const route: Route = {
     path: '/pjsekai/news',
     categories: ['game'],
@@ -29,12 +31,12 @@ export const route: Route = {
 
 async function handler() {
     // 从仓库 Sekai-World/sekai-master-db-diff 获取最新公告
-    const response = await got.get(`https://cdn.jsdelivr.net/gh/Sekai-World/sekai-master-db-diff@master/userInformations.json`);
+    const response = await got.get('https://cdn.jsdelivr.net/gh/Sekai-World/sekai-master-db-diff@master/userInformations.json');
     const posts = response.data || [];
     const list = await Promise.all(
         posts.map(async (post) => {
-            let link = '';
-            let description = '';
+            let link: string;
+            let description: string;
             const guid = post.displayOrder.toString() + post.id.toString(); // 双ID
             if (post.path.startsWith('information/')) {
                 // information 公告
@@ -43,7 +45,7 @@ async function handler() {
                 try {
                     description = await cache.tryGet(guid, async () => {
                         const result = await got.get(`https://production-web.sekai.colorfulpalette.org/html/${path}.html`);
-                        const $ = cheerio.load(result.data);
+                        const $ = load(result.data);
                         return $.html();
                     });
                 } catch {
@@ -58,7 +60,7 @@ async function handler() {
             const item = {
                 title: post.title,
                 link,
-                pubDate: timezone(new Date(post.startAt), +8), // +8时区
+                pubDate: timezone(new Date(post.startAt), 8), // +8时区
                 description,
                 category: post.informationTag, // event,gacha,music,bug,information
                 guid,

@@ -1,5 +1,8 @@
-import { Data, Route, ViewType } from '@/types';
+import type { Data, Route } from '@/types';
+import { ViewType } from '@/types';
+
 import { extractMiniCards, processWithWp, rootUrl } from './utils';
+
 export const route: Route = {
     path: '/collections/:type',
     view: ViewType.Articles,
@@ -40,7 +43,7 @@ const WPTYPE = {
     '4': 'chapters',
 };
 
-async function handler(ctx) {
+async function handler(ctx): Promise<Data> {
     const paramType = ctx.req.param('type');
     const type = paramType === '1' ? '2' : paramType;
     const baseSelector = `body > div.page-wrap > section.post-sliders > div:nth-child(${type})`;
@@ -58,5 +61,5 @@ async function handler(ctx) {
         language: 'en',
         logo: `${rootUrl}/favicon.ico`,
         icon: `${rootUrl}/favicon.ico`,
-    } as Data;
+    };
 }

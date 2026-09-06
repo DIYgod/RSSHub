@@ -1,8 +1,10 @@
-import { Route } from '@/types';
+import MarkdownIt from 'markdown-it';
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
-import MarkdownIt from 'markdown-it';
+
 const md = MarkdownIt({
     html: true,
     linkify: true,
@@ -35,14 +37,14 @@ export const route: Route = {
 };
 
 async function handler() {
-    const data = await ofetch(`${baseUrl}/page-data/news/page-data.json`);
+    const data = await ofetch<{ result: { pageContext: { postsData: { articles: { edges: Array<{ node: { slug: string } }> } } } } }>(`${baseUrl}/page-data/news/page-data.json`);
 
     const articleMeta = data.result.pageContext.postsData.articles.edges;
     // { 0: node: { id, locale, slug, title, excerpt, image, published_at, article_category}}
 
     const items = await Promise.all(
-        Object.keys(articleMeta).map((id) => {
-            const content = articleMeta[id].node;
+        articleMeta.map((edge) => {
+            const content = edge.node;
             const slug = content.slug;
             const dataUrl = `${baseUrl}/page-data/news/${slug}/page-data.json`;
 

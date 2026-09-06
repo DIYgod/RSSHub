@@ -1,7 +1,8 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
 const homeUrl = 'https://bio.pku.edu.cn/homes/Index/news/21/21.html';
@@ -39,18 +40,18 @@ async function handler() {
 
     const list = $('div.normal_list>ul a')
         .toArray()
-        .map((item) => {
-            item = $(item);
+        .map((item): DataItem => {
+            const $item = $(item);
             return {
-                title: $(item).find('p').text().trim(),
-                pubDate: parseDate($(item).find('span.date').text()),
-                link: baseUrl + $(item).attr('href'),
+                title: $($item).find('p').text().trim(),
+                pubDate: parseDate($($item).find('span.date').text()),
+                link: baseUrl + $($item).attr('href'),
             };
         });
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const { data: response } = await got(item.link);
                 const $ = load(response);
 

@@ -1,4 +1,5 @@
-import { Route } from '@/types';
+import type { Route } from '@/types';
+
 import { handler } from './common';
 
 export const route: Route = {
@@ -9,9 +10,12 @@ export const route: Route = {
     radar: [
         {
             source: ['wnacg.com/*'],
-            target: (_, url) => `/wnacg/category/${new URL(url).pathname.match(/albums-index-cate-(\d+)\.html$/)[1]}`,
+            target: (_, url) => `/wnacg/category/${new URL(url).pathname.match(/albums-index-cate-(\d+)\.html$/)![1]}`,
         },
     ],
     handler,
     url: 'wnacg.com/albums.html',
+    features: {
+        nsfw: true,
+    },
 };

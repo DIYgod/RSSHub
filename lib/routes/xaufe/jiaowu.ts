@@ -1,8 +1,9 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-import { load } from 'cheerio';
 
 // Yep http is bad, but I had no choice :(
 const rootMeta = {
@@ -54,11 +55,14 @@ async function handler(ctx) {
     const data = $('.main_conRCb ul li')
         .slice(0, 16)
         .toArray()
-        .map((item) => {
-            item = $(item);
-            const pubDate = item.children('span').text();
-            const title = item.find('a em').text();
-            const link = item.children('a').attr('href').replaceAll('../', rootMeta.url);
+        .map((item): DataItem => {
+            const $item = $(item);
+            const pubDate = $item.children('span').text();
+            const title = $item.find('a em').text();
+            const link = $item
+                .children('a')
+                .attr('href')!
+                .replaceAll('../', () => rootMeta.url);
             return {
                 pubDate: parseDate(pubDate),
                 title,
@@ -70,19 +74,16 @@ async function handler(ctx) {
         title: `${category.title}-${rootMeta.title}`,
         link: rootMeta.url + category.url,
         description: `${category.title}-${rootMeta.title}`,
-        language: 'zh_CN',
+        language: 'zh-CN' as const satisfies Language,
         item: await Promise.all(
             data.map((item) =>
-                cache.tryGet(item.link, async () => {
-                    const $ = load(
-                        (
-                            await got({
-                                method: 'get',
-                                url: item.link,
-                            })
-                        ).body
-                    );
-                    item.author = /作者：(\S*)\s{4}/g.exec($('p', '.main_contit').text())[1];
+                cache.tryGet(item.link!, async () => {
+                    const response = await got({
+                        method: 'get',
+                        url: item.link,
+                    });
+                    const $ = load(response.body);
+                    item.author = /作者：(\S*)\s{4}/.exec($('p', '.main_contit').text())![1];
                     item.description = $('#vsb_content').html();
                     return item;
                 })

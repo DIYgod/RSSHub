@@ -1,12 +1,10 @@
-import { Route } from '@/types';
-
-import cache from '@/utils/cache';
+import type { Route } from '@/types';
 import got from '@/utils/got';
-import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
-import { art } from '@/utils/render';
+import timezone from '@/utils/timezone';
+
+import { renderDescription } from '../templates/description';
 import { parseArticle } from './utils';
-import path from 'node:path';
 
 export const route: Route = {
     path: '/nfapp/reporter/:reporter',
@@ -24,7 +22,7 @@ export const route: Route = {
     name: '南方 +（按作者）',
     maintainers: ['TimWu007'],
     handler,
-    description: `作者的 UUID 只可通过 \`static.nfapp.southcn.com\` 下的文章页面获取。点击文章下方的作者介绍，进入该作者的个人主页，即可从 url 中获取。`,
+    description: '作者的 UUID 只可通过 `static.nfapp.southcn.com` 下的文章页面获取。点击文章下方的作者介绍，进入该作者的个人主页，即可从 url 中获取。',
 };
 
 async function handler(ctx) {
@@ -35,17 +33,17 @@ async function handler(ctx) {
 
     const list = response.data.reportInfo.articleInfo.map((item) => ({
         title: '【' + item.releaseColName + '】' + item.title,
-        description: art(path.join(__dirname, '../templates/description.art'), {
+        description: renderDescription({
             thumb: item.picMiddle,
             description: item.attAbstract,
         }),
-        pubDate: timezone(parseDate(item.publishtime), +8),
+        pubDate: timezone(parseDate(item.publishtime), 8),
         link: `http://pc.nfapp.southcn.com/${item.colID}/${item.fileId}.html`,
         articleId: item.fileId,
         shareUrl: item.shareUrl,
     }));
 
-    const items = await Promise.all(list.map((item) => parseArticle(item, cache.tryGet)));
+    const items = await Promise.all(list.map((item) => parseArticle(item)));
 
     return {
         title: `南方+ - ${response.data.reportInfo.reporterName}`,

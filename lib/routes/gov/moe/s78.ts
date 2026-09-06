@@ -1,12 +1,13 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
 export const route: Route = {
-    path: '/moe/s78/:column',
+    path: '/s78/:column',
     categories: ['government'],
     example: '/gov/moe/s78/A13',
     parameters: { column: '司局 ID，可在 URL 找到' },
@@ -38,12 +39,12 @@ async function handler(ctx) {
 
     const list = $('#list li')
         .toArray()
-        .map((item) => {
-            item = $(item);
+        .map((item): DataItem & { link: string } => {
+            const $item = $(item);
             return {
-                title: item.find('a').attr('title'),
-                link: new URL(item.find('a').attr('href'), link).href,
-                pubDate: timezone(parseDate(item.find('span').text(), 'YYYY-MM-DD'), +8),
+                title: $item.find('a').attr('title')!,
+                link: new URL($item.find('a').attr('href')!, link).href,
+                pubDate: timezone(parseDate($item.find('span').text(), 'YYYY-MM-DD'), 8),
             };
         });
 

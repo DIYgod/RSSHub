@@ -1,6 +1,8 @@
-import { Route, ViewType } from '@/types';
-import got from '@/utils/got';
 import { load } from 'cheerio';
+
+import type { Route } from '@/types';
+import { ViewType } from '@/types';
+import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
@@ -20,6 +22,10 @@ export const route: Route = {
     radar: [
         {
             source: ['web.okjike.com/u/:uid'],
+            target: '/user/:uid',
+        },
+        {
+            source: ['m.okjike.com/users/:uid'],
             target: '/user/:uid',
         },
     ],
@@ -42,7 +48,7 @@ async function handler(ctx) {
     const html = response.data;
     const $ = load(html);
     const raw = $('[type = "application/json"]').html();
-    const data = JSON.parse(raw).props.pageProps;
+    const data = JSON.parse(raw ?? '').props.pageProps;
 
     const getLink = (id, type) => {
         switch (type) {
@@ -83,7 +89,7 @@ async function handler(ctx) {
             let shortenTitle = '一条动态';
             if (content) {
                 shortenTitle = content.replaceAll(/(<br>)+/g, ' ');
-                content = `${content}<br><br>`;
+                content += '<br><br>';
             }
 
             let repostContent;
@@ -98,7 +104,7 @@ async function handler(ctx) {
                 }
 
                 repostContent = `<div class="rsshub-quote">转发 ${screenNameTemplate}: ${item.target.content}${repostImgTemplate}</div>`.replaceAll(/\r\n|\n|\r/g, '<br>');
-                content = `${content}${repostContent}`;
+                content += repostContent;
             }
             // 部分功能未知
             /* else if (item.type === 'ANSWER') {
@@ -133,7 +139,7 @@ async function handler(ctx) {
 
             const single = {
                 title: `${typeMap[item.type]}了: ${shortenTitle}`,
-                description: `${content}${linkTemplate}${imgTemplate}`.replace(/(<br>|\s)+$/, ''),
+                description: `${content}${linkTemplate}${imgTemplate}`.replace(/(?:<br>|\s)+$/, ''),
                 pubDate: parseDate(item.createdAt),
                 link: getLink(item.id, item.type),
                 _extra: repostContent && {
@@ -161,13 +167,11 @@ async function handler(ctx) {
 
                 single.title = `一觉醒来世界发生了什么 ${$$('title').text()}`;
 
-                single.description = '';
-                $$('div.container')
+                single.description = $$('div.container')
                     .find('li.item')
-                    // eslint-disable-next-line array-callback-return
-                    .map((i, j) => {
-                        single.description += `<a href="${$$(j).find('a').attr('href')}">${$$(j).find('a').text()}</a><br>`;
-                    });
+                    .toArray()
+                    .map((j) => `<a href="${$$(j).find('a').attr('href')}">${$$(j).find('a').text()}</a><br>`)
+                    .join('');
             }
 
             return single;

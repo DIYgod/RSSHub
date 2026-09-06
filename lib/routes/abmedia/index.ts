@@ -1,4 +1,4 @@
-import { Route } from '@/types';
+import type { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
@@ -24,7 +24,7 @@ export const route: Route = {
         },
     ],
     name: '首页最新新闻',
-    maintainers: [],
+    maintainers: ['Fatpandac'],
     handler,
     url: 'www.abmedia.io/',
 };

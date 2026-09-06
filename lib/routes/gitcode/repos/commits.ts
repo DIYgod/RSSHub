@@ -1,7 +1,8 @@
-import { Route } from '@/types';
+import MarkdownIt from 'markdown-it';
+
+import type { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-import MarkdownIt from 'markdown-it';
 
 const md = MarkdownIt({
     html: true,
@@ -36,7 +37,7 @@ async function handler(ctx) {
     // API路径
     const apiUrl = `https://web-api.gitcode.com/api/v2/projects/${encodeURIComponent(`${owner}/${repo}`)}/repository/commits`;
 
-    const searchParams: Record<string, any> = {
+    const searchParams = {
         per_page: ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 100,
         ref_name: branch,
     };

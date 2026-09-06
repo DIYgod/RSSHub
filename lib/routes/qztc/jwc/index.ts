@@ -1,8 +1,9 @@
-import { Data, Route } from '@/types';
-import cache from '@/utils/cache';
-import { parseDate } from '@/utils/parse-date';
 import { load } from 'cheerio';
+
+import type { Data, Route } from '@/types';
+import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
 const rootUrl = 'https://www.qztc.edu.cn/jwc/';
@@ -31,10 +32,10 @@ export const route: Route = {
             target: '/jwc/:type',
         },
     ],
-    description: `| 板块 | 参数 |
-| ------- | ------- |
+    description: `| 板块     | 参数 |
+| -------- | ---- |
 | 教务动态 | jwdt |
-| 首 页 | 1020 |
+| 首 页    | 1020 |
 | 岗位介绍 | 1021 |
 | 管理文件 | 1022 |
 | 教学教改 | 1023 |
@@ -43,8 +44,7 @@ export const route: Route = {
 | 下载中心 | 1026 |
 | 对外交流 | 1027 |
 | 政策文件 | 1028 |
-| 会议纪要 | 1029 |
-`,
+| 会议纪要 | 1029 |`,
     // | 学院简介 | 1949 |
     // | 学院领导 | 1950 |
     // | 组织机构 | 1951 |
@@ -70,7 +70,7 @@ async function handler(ctx) {
                 } else if (!link.startsWith('http')) {
                     link = rootUrl.slice(0, -1) + link;
                 }
-                const pubDate = timezone(parseDate(cheerioItem.find('.news_meta').text()), +8);
+                const pubDate = timezone(parseDate(cheerioItem.find('.news_meta').text()), 8);
 
                 return {
                     title,
@@ -116,5 +116,5 @@ async function handler(ctx) {
         title: $('head > title').text() + ' - 泉州师范学院-教务处',
         link: rootUrl + type + '/list.htm',
         item: items,
-    } as Data;
+    } satisfies Data;
 }

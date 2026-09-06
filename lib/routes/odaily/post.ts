@@ -1,9 +1,11 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
-import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
+
 import { rootUrl } from './utils';
 
 const titles = {
@@ -57,7 +59,7 @@ async function handler(ctx) {
             type: item.entity_type,
             description: `<p>${item.summary}</p>`,
             link: `${rootUrl}/${item.entity_type}/${item.entity_id}`,
-            pubDate: timezone(parseDate(item.published_at), +8),
+            pubDate: timezone(parseDate(item.published_at), 8),
         }))
         .filter((item) => item.type !== 'newsflash');
 
@@ -66,12 +68,12 @@ async function handler(ctx) {
             cache.tryGet(item.link, async () => {
                 const detailResponse = await got(item.link);
 
-                const ssr = JSON.parse(`{${detailResponse.data.match(/window\.__INITIAL_STATE__ = {(.*)}/)[1]}}`);
+                const ssr = JSON.parse(`{${detailResponse.data.match(/window\.__INITIAL_STATE__ = \{(.*)\}/)[1]}}`);
 
                 const content = load(ssr.post.detail.content, null, false);
                 content('img').each((_, img) => {
-                    img.attribs.src = img.attribs.src.split('?x-oss-process')[0];
-                    img.attribs.src = img.attribs.src.split('!heading')[0];
+                    img.attribs.src = img.attribs.src.split('?x-oss-process', 1)[0];
+                    img.attribs.src = img.attribs.src.split('!heading', 1)[0];
                 });
 
                 item.description = content.html();

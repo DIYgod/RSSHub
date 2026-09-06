@@ -1,9 +1,9 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
 
+import { config } from '@/config';
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { load } from 'cheerio';
-import { config } from '@/config';
 
 export const route: Route = {
     path: '/search/:keyword/:language?',
@@ -30,7 +30,7 @@ async function handler(ctx) {
     });
     const tempUrl = new URL('https://www.google.com/search');
     tempUrl.search = searchParams.toString();
-    const url = tempUrl.toString();
+    const url = tempUrl.href;
     const key = `google:search:${language}:${url}`;
     const items = await cache.tryGet(
         key,

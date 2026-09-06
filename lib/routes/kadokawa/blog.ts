@@ -1,14 +1,14 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
 
+import type { Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
-import { art } from '@/utils/render';
-import path from 'node:path';
+
+import { renderDescription } from './templates/description';
 
 export const handler = async (ctx) => {
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 10;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 10;
 
     const rootUrl = 'https://www.kadokawa.com.tw';
     const currentUrl = new URL('blog/posts', rootUrl).href;
@@ -17,17 +17,17 @@ export const handler = async (ctx) => {
 
     const $ = load(response);
 
-    const language = $('html').prop('lang');
+    const language = $('html').prop('lang') as Language;
 
     let items = $('div.List-item')
         .slice(0, limit)
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
-            const image = item.find('div.List-item-excerpt img').prop('src')?.split(/\?/)[0] ?? undefined;
-            const title = item.find('h2.List-item-title').text();
-            const description = art(path.join(__dirname, 'templates/description.art'), {
+            const image = $item.find('div.List-item-excerpt img').prop('data-src')?.split(/\?/, 1)[0] ?? undefined;
+            const title = $item.find('h2.List-item-title').text();
+            const description = renderDescription({
                 images: image
                     ? [
                           {
@@ -36,24 +36,21 @@ export const handler = async (ctx) => {
                           },
                       ]
                     : undefined,
-                intro: item.find('div.List-item-preview').text(),
+                intro: $item.find('div.List-item-preview').text(),
             });
 
             return {
                 title,
                 description,
-                pubDate: parseDate(item.find('span.primary-border-color-after').text()),
-                link: new URL(item.find('a').prop('href'), rootUrl).href,
+                pubDate: parseDate($item.find('span.primary-border-color-after').text()),
+                link: new URL($item.find('a').prop('href')!, rootUrl).href,
                 content: {
                     html: description,
-                    text: item.find('div.List-item-preview').text(),
+                    text: $item.find('div.List-item-preview').text(),
                 },
                 image,
                 banner: image,
                 language,
-                enclosure_url: image,
-                enclosure_type: image ? `image/${image.split(/\./).pop()}` : undefined,
-                enclosure_title: title,
             };
         });
 
@@ -64,11 +61,16 @@ export const handler = async (ctx) => {
 
                 const $$ = load(detailResponse);
 
-                const title = $$('h1.Post-title').text().trim();
-                const description = art(path.join(__dirname, 'templates/description.art'), {
-                    description: $$('div.Post-content').html(),
+                $$('div.Post-content img[data-src]').each((_, img) => {
+                    $$(img).prop('src', $$(img).prop('data-src').split(/\?/, 1)[0]);
+                    $$(img).removeAttr('data-src');
                 });
-                const image = $$('meta[property="og:image"]').prop('content')?.split(/\?/)[0] ?? undefined;
+
+                const title = $$('h1.Post-title').text().trim();
+                const description = renderDescription({
+                    description: $$('div.Post-content').html() ?? undefined,
+                });
+                const image = $$('meta[property="og:image"]').prop('content')?.split(/\?/, 1)[0] ?? undefined;
 
                 item.title = title;
                 item.description = description;
@@ -80,9 +82,6 @@ export const handler = async (ctx) => {
                 item.image = image;
                 item.banner = image;
                 item.language = language;
-                item.enclosure_url = image;
-                item.enclosure_type = image ? `image/${image.split(/\./).pop()}` : undefined;
-                item.enclosure_title = title;
 
                 return item;
             })

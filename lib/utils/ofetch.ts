@@ -1,33 +1,41 @@
+import type { HeaderGeneratorOptions } from 'header-generator';
+import { register } from 'node-network-devtools';
 import { createFetch } from 'ofetch';
+
 import { config } from '@/config';
 import logger from '@/utils/logger';
-import { register } from 'node-network-devtools';
+
+declare module 'ofetch' {
+    interface FetchOptions {
+        headerGeneratorOptions?: Partial<HeaderGeneratorOptions>;
+    }
+}
 
 config.enableRemoteDebugging && process.env.NODE_ENV === 'dev' && register();
 
-const rofetch = createFetch().create({
+const rofetch = createFetch({ fetch: (input: Parameters<typeof fetch>[0], init?: Parameters<typeof fetch>[1]) => fetch(input, init) }).create({
     retryStatusCodes: [400, 408, 409, 425, 429, 500, 502, 503, 504],
     retry: config.requestRetry,
     retryDelay: 1000,
     // timeout: config.requestTimeout,
     onResponseError({ request, response, options }) {
-        if (options.retry) {
-            logger.warn(`Request ${request} with error ${response.status} remaining retry attempts: ${options.retry}`);
-            if (!options.headers) {
-                options.headers = {};
-            }
-            if (options.headers instanceof Headers) {
-                options.headers.set('x-prefer-proxy', '1');
-            } else {
-                options.headers['x-prefer-proxy'] = '1';
-            }
+        if (!options.retry) {
+            return;
         }
+
+        logger.warn(`Request ${request} with error ${response.status} remaining retry attempts: ${options.retry}`);
+        if (!(options.headers instanceof Headers)) {
+            options.headers = new Headers(options.headers || {});
+        }
+        options.headers.set('x-prefer-proxy', '1');
     },
     onRequestError({ request, error }) {
-        logger.error(`Request ${request} fail: ${error}`);
-    },
-    headers: {
-        'user-agent': config.ua,
+        logger.error(`Request ${request} fail: ${error.cause} ${error}`);
+        for (let cause: unknown = error.cause; cause instanceof Error; cause = cause.cause) {
+            if (cause.message) {
+                error.message += ` (${cause.message})`;
+            }
+        }
     },
     onResponse({ request, response }) {
         if (response.redirected) {

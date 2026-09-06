@@ -1,7 +1,8 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
@@ -21,8 +22,8 @@ export const route: Route = {
     handler,
     url: 'xinwen.byau.edu.cn',
     description: `| 学校要闻 | 校园动态 |
-| ---- | ----------- |
-| 3674 | 3676 |`,
+| -------- | -------- |
+| 3674     | 3676     |`,
 };
 
 async function handler(ctx) {
@@ -36,24 +37,24 @@ async function handler(ctx) {
 
     const list = $('.news')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $$ = load(item);
 
             const originalItemUrl = $$('a').attr('href');
             // 因为学校要闻的头两个像是固定了跳转专栏页面的，不能相同处理
-            const startsWithHttp = originalItemUrl.startsWith('http');
-            const itemUrl = startsWithHttp ? originalItemUrl : new URL(originalItemUrl, baseUrl).href;
+            const startsWithHttp = originalItemUrl!.startsWith('http');
+            const itemUrl = startsWithHttp ? originalItemUrl : new URL(originalItemUrl!, baseUrl).href;
 
             return {
                 title: $$('a').text(),
                 link: itemUrl,
-                pubDate: timezone(parseDate($$('.news_meta').text()), +8),
+                pubDate: timezone(parseDate($$('.news_meta').text()), 8),
             };
         });
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const response = await got(item.link);
                 const $ = load(response.data);
 

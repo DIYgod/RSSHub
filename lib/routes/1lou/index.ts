@@ -1,16 +1,17 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+import type { Context } from 'hono';
 
+import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
-import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 const rootUrl = 'https://www.1lou.me';
 
-export const handler = async (ctx) => {
+export const handler = async (ctx: Context) => {
     const { params } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 50;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 50;
 
     const queryString = Object.entries(ctx.req.query())
         .map(([key, value]) => `${encodeURIComponent(key)}=${encodeURIComponent(value)}`)
@@ -22,28 +23,28 @@ export const handler = async (ctx) => {
 
     const $ = load(response);
 
-    const language = $('html').prop('lang');
+    const language = $('html').prop('lang') as Language;
 
     let items = $('li.media.thread.tap:not(li.hidden-sm)')
         .slice(0, limit)
         .toArray()
-        .map((item) => {
-            item = $(item);
+        .map((item): DataItem & { link: string } => {
+            const $item = $(item);
 
-            const subjectEl = item.find('div.subject').children('a').first();
+            const subjectEl = $item.find('div.subject').children('a').first();
 
             return {
                 title: subjectEl.text(),
-                pubDate: timezone(parseDate(item.find('span.date').text()), +8),
-                link: new URL(subjectEl.prop('href'), rootUrl).href,
+                pubDate: timezone(parseDate($item.find('span.date').text()), 8),
+                link: new URL(subjectEl.prop('href')!, rootUrl).href,
                 category: [
-                    item.find('a.text-secondary').text().replaceAll('[]', ''),
-                    ...item
+                    $item.find('a.text-secondary').text().replaceAll('[]', ''),
+                    ...$item
                         .find('a.badge')
                         .toArray()
                         .map((c) => $(c).text()),
                 ].filter(Boolean),
-                author: item.find('a.username').text(),
+                author: $item.find('a.username').text(),
                 language,
             };
         });
@@ -59,11 +60,11 @@ export const handler = async (ctx) => {
 
                 if (title) {
                     const description = $$('div.message.break-all').html();
-                    const image = new URL($$('img').first().prop('src'), rootUrl).href;
+                    const image = new URL($$('img').first().prop('src')!, rootUrl).href;
 
                     item.title = title;
                     item.description = description;
-                    item.pubDate = timezone(parseDate($$('span.date').text()), +8);
+                    item.pubDate = timezone(parseDate($$('span.date').text()), 8);
                     item.category = $$('a.badge')
                         .toArray()
                         .map((c) => $$(c).text());
@@ -80,7 +81,7 @@ export const handler = async (ctx) => {
                     if (torrents.length > 0) {
                         const torrent = torrents.first();
 
-                        item.enclosure_url = new URL(torrent.prop('href'), rootUrl).href;
+                        item.enclosure_url = new URL(torrent.prop('href')!, rootUrl).href;
                         item.enclosure_type = 'application/x-bittorrent';
                         item.enclosure_title = torrent.text();
                     }
@@ -92,10 +93,10 @@ export const handler = async (ctx) => {
     );
 
     const author = 'BT 之家 1LOU 站';
-    const image = new URL($('img.logo-2').prop('src'), rootUrl).href;
+    const image = new URL($('img.logo-2').prop('src')!, rootUrl).href;
 
     return {
-        title: `${$('title').text().split(/-/)[0]} - ${author}`,
+        title: `${$('title').text().split(/-/, 1)[0]} - ${author}`,
         description: $('meta[name="description"]').prop('content'),
         link: currentUrl,
         item: items,
@@ -115,13 +116,13 @@ export const route: Route = {
     example: '/1lou/forum-2-1',
     parameters: { params: '路径参数，可以在对应页面的 URL 中找到' },
     description: `::: tip
-  \`1lou.me/\` 后的内容填入 params 参数，以下是几个例子：
+\`1lou.me/\` 后的内容填入 params 参数，以下是几个例子：
 
-  若订阅 [大陆电视剧](https://www.1lou.me/forum-2-1.htm?tagids=0_97_0_0)，网址为 \`https://www.1lou.me/forum-2-1.htm?tagids=0_97_0_0\`。截取 \`https://www.1lou.me/\` 到末尾 \`.htm\` 的部分 \`forum-2-1\` 作为参数，并补充 \`tagids\`，此时路由为 [\`/1lou/forum-2-1?tagids=0_97_0_0\`](https://rsshub.app/1lou/forum-2-1?tagids=0_97_0_0)。
-  
-  若订阅 [最新发帖电视剧](https://www.1lou.me/forum-2-1.htm?orderby=tid&digest=0)，网址为 \`https://www.1lou.me/forum-2-1.htm?orderby=tid&digest=0\`。截取 \`https://www.1lou.me/\` 到末尾 \`.htm\` 的部分 \`forum-2-1\` 作为参数，并补充 \`orderby\`，此时路由为 [\`/1lou/forum-2-1?orderby=tid\`](https://rsshub.app/1lou/forum-2-1?orderby=tid)。
-  
-  若订阅 [搜素繁花主题贴](https://www.1lou.me/search-_E7_B9_81_E8_8A_B1-1.htm)，网址为 \`https://www.1lou.me/search-_E7_B9_81_E8_8A_B1-1.htm\`。截取 \`https://www.1lou.me/\` 到末尾 \`.htm\` 的部分 \`search-_E7_B9_81_E8_8A_B1-1\` 作为参数，此时路由为 [\`/1lou/search-_E7_B9_81_E8_8A_B1-1\`](https://rsshub.app/1lou/search-_E7_B9_81_E8_8A_B1-1)。
+若订阅 [大陆电视剧](https://www.1lou.me/forum-2-1.htm?tagids=0_97_0_0)，网址为 \`https://www.1lou.me/forum-2-1.htm?tagids=0_97_0_0\`。截取 \`https://www.1lou.me/\` 到末尾 \`.htm\` 的部分 \`forum-2-1\` 作为参数，并补充 \`tagids\`，此时路由为 [\`/1lou/forum-2-1?tagids=0_97_0_0\`](https://rsshub.app/1lou/forum-2-1?tagids=0_97_0_0)。
+
+若订阅 [最新发帖电视剧](https://www.1lou.me/forum-2-1.htm?orderby=tid\\&digest=0)，网址为 \`https://www.1lou.me/forum-2-1.htm?orderby=tid&digest=0\`。截取 \`https://www.1lou.me/\` 到末尾 \`.htm\` 的部分 \`forum-2-1\` 作为参数，并补充 \`orderby\`，此时路由为 [\`/1lou/forum-2-1?orderby=tid\`](https://rsshub.app/1lou/forum-2-1?orderby=tid)。
+
+若订阅 [搜素繁花主题贴](https://www.1lou.me/search-_E7_B9_81_E8_8A_B1-1.htm)，网址为 \`https://www.1lou.me/search-_E7_B9_81_E8_8A_B1-1.htm\`。截取 \`https://www.1lou.me/\` 到末尾 \`.htm\` 的部分 \`search-_E7_B9_81_E8_8A_B1-1\` 作为参数，此时路由为 [\`/1lou/search-_E7_B9_81_E8_8A_B1-1\`](https://rsshub.app/1lou/search-_E7_B9_81_E8_8A_B1-1)。
 :::`,
     categories: ['multimedia'],
 
@@ -138,9 +139,9 @@ export const route: Route = {
         {
             source: ['1lou.me/:params'],
             target: (_, url) => {
-                url = new URL(url);
+                const parsedUrl = new URL(url);
 
-                return `/1lou${url.href.replace(rootUrl, '')}`;
+                return `/1lou${parsedUrl.href.replace(rootUrl, '')}`;
             },
         },
     ],

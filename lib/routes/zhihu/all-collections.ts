@@ -1,9 +1,12 @@
-import { Route, ViewType, Collection, CollectionItem } from '@/types';
-import got from '@/utils/got';
-import { header } from './utils';
-import { parseDate } from '@/utils/parse-date';
-import cache from '@/utils/cache';
 import { config } from '@/config';
+import type { Route } from '@/types';
+import { ViewType } from '@/types';
+import cache from '@/utils/cache';
+import got from '@/utils/got';
+import { parseDate } from '@/utils/parse-date';
+
+import type { Collection, CollectionItem } from './types';
+import { header } from './utils';
 
 export const route: Route = {
     path: '/people/allCollections/:id',
@@ -61,7 +64,7 @@ async function handler(ctx) {
             const {
                 data: items,
                 paging: { totals },
-            } = firstPageResponse.data;
+            }: { data: CollectionItem[]; paging: { totals: number } } = firstPageResponse.data;
 
             if (totals > 20) {
                 const offsetList = Array.from({ length: Math.ceil(totals / 20) - 1 }, (_, index) => (index + 1) * 20);
@@ -92,12 +95,11 @@ async function handler(ctx) {
         })
     );
 
-    const items = allCollectionItems.flatMap(
-        (collection) =>
-            collection.items.map((item) => ({
-                ...item,
-                collectionTitle: collection.collectionTitle,
-            })) as CollectionItem[]
+    const items = allCollectionItems.flatMap((collection) =>
+        collection.items.map((item) => ({
+            ...item,
+            collectionTitle: collection.collectionTitle,
+        }))
     );
 
     return {
@@ -107,11 +109,11 @@ async function handler(ctx) {
             const content = item.content;
 
             return {
-                title: content.type === 'article' || content.type === 'zvideo' ? content.title : content.question.title,
+                title: (content.type === 'article' || content.type === 'zvideo' ? content.title : content.question!.title)!,
                 link: content.url,
-                description: content.type === 'zvideo' ? `<img src=${content.video.url}/>` : content.content,
-                pubDate: parseDate((content.type === 'article' ? content.updated : content.updated_time) * 1000),
-                category: [item.collectionTitle],
+                description: content.type === 'zvideo' ? `<img src=${content.video!.url}/>` : content.content,
+                pubDate: parseDate((content.type === 'article' ? content.updated : content.updated_time)! * 1000),
+                category: [item.collectionTitle!],
             };
         }),
     };

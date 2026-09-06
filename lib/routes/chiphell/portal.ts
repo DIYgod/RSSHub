@@ -1,9 +1,9 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
 import type { Context } from 'hono';
 
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import * as cheerio from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
@@ -12,11 +12,11 @@ const handler = async (ctx: Context) => {
     const url = `https://www.chiphell.com/portal.php?mod=list&catid=${catId}`;
 
     const response = await ofetch(url);
-    const $ = cheerio.load(response);
+    const $ = load(response);
 
     const list = $('dl.cl')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
             const a = $item.find('a.xi2');
 
@@ -24,15 +24,15 @@ const handler = async (ctx: Context) => {
                 title: a.text(),
                 link: `https://www.chiphell.com/${a.attr('href')}`,
                 category: [$item.find('dd label').text()],
-                pubDate: timezone(parseDate($item.find('span.xg1').text()), +8),
+                pubDate: timezone(parseDate($item.find('span.xg1').text()), 8),
             };
         });
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
-                const response = await ofetch(item.link);
-                const $ = cheerio.load(response);
+            cache.tryGet(item.link!, async () => {
+                const response = await ofetch(item.link!);
+                const $ = load(response);
 
                 $('#article_content div br').parent().remove();
                 let description = $('#article_content').html();
@@ -46,7 +46,7 @@ const handler = async (ctx: Context) => {
                         })
                         .slice(0, -1);
                     const responses = await Promise.all(urls.map((url) => ofetch(url)));
-                    const $pages = responses.map((item) => cheerio.load(item));
+                    const $pages = responses.map((item) => load(item));
                     const contents = $pages.map(($item) => {
                         $item('#article_content div br').parent().remove();
                         return $item('#article_content').html();

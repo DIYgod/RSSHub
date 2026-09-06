@@ -1,4 +1,4 @@
-import { Route } from '@/types';
+import type { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
@@ -21,7 +21,6 @@ async function handler() {
         responseType: 'json',
         headers: {
             Accept: 'application/json, text/javascript, */*; q=0.01',
-            Referer: 'https://www.iheima.com/',
             'X-Requested-With': 'XMLHttpRequest',
         },
     });

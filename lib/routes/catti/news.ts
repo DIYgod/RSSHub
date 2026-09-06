@@ -1,15 +1,16 @@
-import { DataItem, Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-import { load } from 'cheerio';
 
 type NewsCategory = {
     title: string;
     description: string;
 };
 
-const NEWS_TYPES: Record<string, NewsCategory> = {
+const NEWS_TYPES = {
     ggl: {
         title: '通知公告',
         description: 'CATTI 考试通知和公告',
@@ -22,10 +23,10 @@ const NEWS_TYPES: Record<string, NewsCategory> = {
         title: '最新政策',
         description: 'CATTI 考试最新政策',
     },
-};
+} satisfies Record<string, NewsCategory>;
 
 const handler: Route['handler'] = async (ctx) => {
-    const category = ctx.req.param('category');
+    const category = ctx.req.param('category')!;
 
     const BASE_URL = `https://www.catticenter.com/${category}`;
 
@@ -74,13 +75,13 @@ const handler: Route['handler'] = async (ctx) => {
                         image: 'https://www.catticenter.com/img/applogo.png',
                         content,
                         updated: item.date,
-                        language: 'zh-cn',
+                        language: 'zh-CN',
                     };
                 })
             )
         )) as DataItem[],
         allowEmpty: true,
-        language: 'zh-cn',
+        language: 'zh-CN',
         feedLink: 'https://rsshub.app/ruankao/news',
         id: 'https://rsshub.app/ruankao/news',
     };
@@ -90,13 +91,11 @@ export const route: Route = {
     path: '/news/:category',
     name: 'CATTI 考试消息',
     maintainers: ['PrinOrange'],
-    description: `
-| Category  | 标题       | 描述                |
-|-----------|------------|--------------------|
-| ggl       | 通知公告   | CATTI 考试通知和公告 |
-| ywdt      | 要闻动态   | CATTI 考试要闻动态   |
-| zxzc      | 最新政策   | CATTI 考试最新政策   |
-`,
+    description: `| Category | 标题     | 描述                 |
+| -------- | -------- | -------------------- |
+| ggl      | 通知公告 | CATTI 考试通知和公告 |
+| ywdt     | 要闻动态 | CATTI 考试要闻动态   |
+| zxzc     | 最新政策 | CATTI 考试最新政策   |`,
     handler,
     categories: ['study'],
     parameters: {

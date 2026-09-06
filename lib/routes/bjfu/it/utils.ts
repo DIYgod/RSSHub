@@ -1,6 +1,7 @@
-import got from '@/utils/got';
 import { load } from 'cheerio';
 import iconv from 'iconv-lite';
+
+import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
@@ -25,7 +26,7 @@ async function loadContent(link) {
     }
 
     // 提取内容
-    const description = ($('.template-body').length ? $('.template-body').html() : '') + ($('.template-tail').length ? $('.template-tail').html() : '');
+    const description = ($('.template-body').length ? $('.template-body').html() : '')! + ($('.template-tail').length ? $('.template-tail').html() : '')!;
 
     // 返回解析的结果
     return { description };
@@ -40,16 +41,16 @@ const ProcessFeed = (base, list, caches) =>
 
             const $title = $('a');
             // 还原相对链接为绝对链接
-            const itemUrl = new URL($title.attr('href'), base).href; // 感谢@hoilc指导
+            const itemUrl = new URL($title.attr('href')!, base).href; // 感谢@hoilc指导
 
             // 解析日期
             const pubDate = timezone(
                 parseDate(
                     $('span')
                         .text()
-                        .match(/\d{4}-\d{2}-\d{2}/)
+                        .match(/\d{4}-\d{2}-\d{2}/)?.[0] ?? ''
                 ),
-                +8
+                8
             );
 
             // 使用tryGet方法从缓存获取内容。

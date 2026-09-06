@@ -1,10 +1,12 @@
-import got from '@/utils/got';
 import { load } from 'cheerio';
-import timezone from '@/utils/timezone';
-import { parseDate } from '@/utils/parse-date';
 
-const parseArticle = (item, tryGet) =>
-    tryGet(item.link, async () => {
+import cache from '@/utils/cache';
+import got from '@/utils/got';
+import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
+
+const parseArticle = (item) =>
+    cache.tryGet(item.link, async () => {
         const detailResponse = await got({
             method: 'get',
             url: item.link,
@@ -18,10 +20,10 @@ const parseArticle = (item, tryGet) =>
             content('.taglist, .J_ndlogo, .zan-shang, .sourcelist-box, #shareContain, .buyCopyright, .article-info, .icon, .special').remove();
             item.description +=
                 content('.post-cont')
-                    .html()
-                    .replaceAll(/data:image\S*=="\s*\n*\s*original="/g, '') ?? '';
+                    .html()!
+                    .replaceAll(/data:image\S*=="\s*original="/g, '') ?? '';
             if (!item.pubDate) {
-                item.pubDate = timezone(parseDate(content('.introduce').text().split()), +8);
+                item.pubDate = timezone(parseDate(content('.introduce').text()), 8);
             }
         }
         // oeeee news page:

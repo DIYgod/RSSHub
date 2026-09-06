@@ -1,9 +1,11 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+import MarkdownIt from 'markdown-it';
+
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
-import MarkdownIt from 'markdown-it';
+
 const md = MarkdownIt({
     linkify: true,
 });
@@ -40,24 +42,24 @@ async function handler(ctx) {
 
     let items = $('.xzl-topic-item')
         .toArray()
-        .map((item) => {
-            item = $(item);
-            item.find('.topic-has-suggested-item').remove();
+        .map((item): DataItem => {
+            const $item = $(item);
+            $item.find('.topic-has-suggested-item').remove();
             return {
-                title: item.find('h3').text().trim(),
-                link: new URL(item.find('.topic-body-link').attr('href'), baseUrl).href,
-                author: item.find('.topic-header .xzl-author-lockup').text().trim(),
-                pubDate: parseDate(item.find('.topic-header .timeago').attr('title')),
+                title: $item.find('h3').text().trim(),
+                link: new URL($item.find('.topic-body-link').attr('href')!, baseUrl).href,
+                author: $item.find('.topic-header .xzl-author-lockup').text().trim(),
+                pubDate: parseDate($item.find('.topic-header .timeago').attr('title')!),
             };
         });
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const detailResponse = await got(item.link);
                 const $ = load(detailResponse.data);
 
-                item.description = md.render($('.hidden_markdown_body').attr('data-summary'));
+                item.description = md.render($('.hidden_markdown_body').attr('data-summary')!);
                 if ($('.topic-tags')) {
                     item.category = $('.topic-tags label')
                         .toArray()

@@ -1,6 +1,7 @@
-import { Route } from '@/types';
-import got from '@/utils/got';
 import { load } from 'cheerio';
+
+import type { Route } from '@/types';
+import got from '@/utils/got';
 
 export const route: Route = {
     path: '/versions',
@@ -37,16 +38,20 @@ async function handler() {
         title: 'Zotero - Version History',
         link: url,
         item: list.toArray().map((item) => {
-            item = $(item);
-            let date = $(item)
+            const $item = $(item);
+            const dateMatch = $($item)
                 .text()
                 .match(/\((.*)\)/);
-            date = Array.isArray(date) ? date[1] : null;
+            const date = Array.isArray(dateMatch) ? dateMatch[1] : null;
             return {
-                title: item.text().trim(),
-                description: $('<div/>').append(item.nextUntil('h2').clone()).html(),
+                title: $item.text(),
+                description: $item
+                    .nextUntil('h2')
+                    .toArray()
+                    .map((element) => $.html(element))
+                    .join(''),
                 pubDate: date,
-                link: url + '#' + item.attr('id'),
+                link: url + '#' + $item.attr('id'),
             };
         }),
     };

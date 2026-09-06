@@ -1,7 +1,8 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
@@ -41,17 +42,17 @@ async function handler(ctx) {
     const list = $('.shadow-long-blk')
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
-            const info = item
+            const info = $item
                 .find('.item-info li')
                 .toArray()
                 .map((item) => $(item).text().trim());
             return {
-                title: item.find('h2').text().trim(),
-                description: item.find('p').text().trim(),
-                link: `${rootUrl}${item.attr('href')}`,
-                pubDate: parseDate(info.shift(), 'YYYY-MM-DD'),
+                title: $item.find('h2').text().trim(),
+                description: $item.find('p').text().trim(),
+                link: `${rootUrl}${$item.attr('href')}`,
+                pubDate: parseDate(info.shift()!, 'YYYY-MM-DD'),
                 category: info,
             };
         });
@@ -64,14 +65,14 @@ async function handler(ctx) {
 
                 const header = $('.article-img-blk');
                 header.find('img').each((_, ele) => {
-                    ele = $(ele);
-                    if (ele.attr('src') && ele.attr('srcset')) {
-                        ele.removeAttr('srcset');
-                        ele.attr('src', ele.attr('src').replace(/\/\d+c\d+\//, '/0p0/'));
+                    const $ele = $(ele);
+                    if ($ele.attr('src') && $ele.attr('srcset')) {
+                        $ele.removeAttr('srcset');
+                        $ele.attr('src', $ele.attr('src')!.replace(/\/\d+c\d+\//, '/0p0/'));
                     }
                 });
 
-                item.description = header.html() + $('article .ckec').html();
+                item.description = header.html()! + $('article .ckec').html()!;
 
                 return item;
             })

@@ -1,65 +1,52 @@
-import cache from '@/utils/cache';
 import { load } from 'cheerio';
+
+import type { DataItem } from '@/types';
+import cache from '@/utils/cache';
+import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
-import ofetch from '@/utils/ofetch'; // 使用默认导出的方式导入ofetch
 
-async function getNoticeList(ctx, url, host, titleSelector, dateSelector, contentSelector, listSelector) {
-    const response = await ofetch(url).catch(() => null);
-    if (!response) {
-        return [];
-    }
-    const $ = load(response);
-
-    const list = $(listSelector)
-        .toArray()
-        .map((item) => {
-            item = $(item);
-            return {
-                title: item.find(titleSelector).attr('title'),
-                link: host + item.find(titleSelector).attr('href'),
-                pubDate: timezone(parseDate(item.find(dateSelector).text(), 'YYYY-MM-DD'), +8),
-            };
-        });
-
-    const out = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link, async () => {
-                const response = await ofetch(item.link).catch(() => null);
-                if (!response || (response.status >= 300 && response.status < 400)) {
-                    return {
-                        ...item,
-                        description: '该通知无法直接预览，请点击原文链接↑查看',
-                    };
-                }
-                const $ = load(response);
-
-                if ($('.wp_error_msg').length > 0) {
-                    item.description = '您当前ip并非校内地址，该信息仅允许校内地址访问';
-                } else if ($('.wp_pdf_player').length > 0) {
-                    item.description = '该通知无法直接预览，请点击原文链接↑查看';
-                } else {
-                    const contentHtml = $(contentSelector.content).html();
-                    const $content = load(contentHtml);
-                    $content('a').each(function () {
-                        const a = $(this);
-                        const href = a.attr('href');
-                        if (href && !href.startsWith('http')) {
-                            a.attr('href', new URL(href, host).href);
-                        }
-                    });
-                    item.description = $content.html();
-                    item.title = $(contentSelector.title).text();
-                    const dateText = $(contentSelector.date).text().replace('编辑：', '').replace('发布日期：', '').replace('发布时间：', '');
-                    item.pubDate = timezone(parseDate(dateText, 'YYYY-MM-DD'), +8);
-                }
-
-                return item;
-            })
-        )
-    );
-
-    return out;
+interface NoticeItem extends DataItem {
+    link: string;
 }
 
-export { getNoticeList };
+// Date formats vary across the site: 2026-07-01, 2026/07/01 or 2026年07月01日 14:53, often prefixed with a label such as "发布时间："
+export function parsePubDate(text?: string): Date | undefined {
+    const match = text?.match(/(\d{4})[-/.年]\s*(\d{1,2})[-/.月]\s*(\d{1,2})/);
+    if (!match) {
+        return undefined;
+    }
+    const [, year, month, day] = match;
+    const time = text?.match(/(\d{1,2}:\d{2}(?::\d{2})?)/)?.[1];
+    return timezone(parseDate(`${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}${time ? ` ${time}` : ''}`), 8);
+}
+
+async function fetchArticle(item: NoticeItem): Promise<DataItem> {
+    const response = await ofetch(item.link);
+    const $ = load(response);
+
+    const $content = $('.wp_articlecontent');
+
+    $content.find('.wp_pdf_player').each((_, el) => {
+        const $player = $(el);
+        const pdfSrc = $player.attr('pdfsrc');
+        if (pdfSrc) {
+            $player.replaceWith(`<p><a href="${pdfSrc}">附件下载</a></p>`);
+        } else {
+            $player.remove();
+        }
+    });
+    const title = $('.arti_title').text();
+    const pubDate = parsePubDate($('.arti_update').text());
+
+    return {
+        ...item,
+        title: title || item.title,
+        pubDate: pubDate ?? item.pubDate,
+        description: $content.html() ?? item.description,
+    };
+}
+
+export function resolveArticles(list: NoticeItem[]): Promise<DataItem[]> {
+    return Promise.all(list.map((item) => cache.tryGet(item.link, () => fetchArticle(item))));
+}

@@ -1,36 +1,42 @@
-import ofetch from '@/utils/ofetch';
-import cache from '@/utils/cache';
-import { parseDate } from '@/utils/parse-date';
+import type { CookieJar } from 'tough-cookie';
+
 import { config } from '@/config';
-import { art } from '@/utils/render';
-import path from 'node:path';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
+import cache from '@/utils/cache';
+import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/parse-date';
+
+import { renderImages } from '../templates/images';
+import { renderVideo } from '../templates/video';
 
 const baseUrl = 'https://www.instagram.com';
 const COOKIE_URL = baseUrl;
 
-const getCSRFTokenFromJar = async (cookieJar) => {
+const getCSRFTokenFromJar = async (cookieJar: CookieJar) => {
     const cookieString = await cookieJar.getCookieString(COOKIE_URL);
     return cookieString.match(/csrftoken=([^;]+)/)?.[1];
 };
 
-const getHeaders = async (cookieJar) => ({
-    'sec-fetch-dest': 'empty',
-    'sec-fetch-mode': 'cors',
-    'sec-fetch-site': 'same-origin',
-    'x-asbd-id': 359341,
-    'x-csrftoken': await getCSRFTokenFromJar(cookieJar),
-    'x-ig-app-id': 936_619_743_392_459,
-    'x-ig-www-claim': '0',
-});
+const getHeaders = async (cookieJar: CookieJar) => {
+    const csrfToken = (await getCSRFTokenFromJar(cookieJar)) as string;
+    return {
+        'sec-fetch-dest': 'empty',
+        'sec-fetch-mode': 'cors',
+        'sec-fetch-site': 'same-origin',
+        'x-asbd-id': '359341',
+        'x-csrftoken': csrfToken,
+        'x-ig-app-id': '936619743392459',
+        'x-ig-www-claim': '0',
+    };
+};
 
-const checkLogin = async (cookieJar) => {
+const checkLogin = async (cookieJar: CookieJar) => {
     const response = await ofetch(`${baseUrl}/api/v1/web/fxcal/ig_sso_users/`, {
         // cookieJar,
         headers: {
             'content-type': 'application/x-www-form-urlencoded',
-            cookie: (await cookieJar.getCookieString(COOKIE_URL)) as string,
-            ...((await getHeaders(cookieJar)) as unknown as Record<string, string>),
+            cookie: await cookieJar.getCookieString(COOKIE_URL),
+            ...(await getHeaders(cookieJar)),
             // 'X-IG-WWW-Claim': '0',
         },
         method: 'POST',
@@ -42,22 +48,22 @@ const checkLogin = async (cookieJar) => {
     //     cache.set('instagram:wwwClaimV2', wwwClaimV2);
     // }
 
-    return Boolean(response.status === 'ok');
+    return response.status === 'ok';
 };
 
-const getUserInfo = async (username, cookieJar) => {
+const getUserInfo = async (username, cookieJar: CookieJar) => {
     let webProfileInfo;
     let id = await cache.get(`instagram:getIdByUsername:${username}`);
     let userInfoCache = await cache.get(`instagram:userInfo:${id}`);
-    userInfoCache = userInfoCache && typeof userInfoCache === 'string' ? JSON.parse(userInfoCache) : userInfoCache;
+    userInfoCache = userInfoCache ? JSON.parse(userInfoCache) : userInfoCache;
 
     if (!userInfoCache) {
         try {
             const response = await ofetch.raw(`${baseUrl}/api/v1/users/web_profile_info/`, {
                 // cookieJar,
                 headers: {
-                    cookie: (await cookieJar.getCookieString(COOKIE_URL)) as string,
-                    ...((await getHeaders(cookieJar)) as unknown as Record<string, string>),
+                    cookie: await cookieJar.getCookieString(COOKIE_URL),
+                    ...(await getHeaders(cookieJar)),
                     // 'X-IG-WWW-Claim': (await cache.get('instagram:wwwClaimV2')) ?? undefined,
                 },
                 query: {
@@ -71,10 +77,10 @@ const getUserInfo = async (username, cookieJar) => {
             webProfileInfo = response._data.data.user;
             id = webProfileInfo.id;
 
-            await cache.set(`instagram:getIdByUsername:${username}`, id, 31_536_000); // 1 year since it will never change
+            await cache.set(`instagram:getIdByUsername:${username}`, id ?? '', 31_536_000); // 1 year since it will never change
             await cache.set(`instagram:userInfo:${id}`, webProfileInfo);
         } catch (error) {
-            if (error.message.includes("Cookie not in this host's domain")) {
+            if (error instanceof Error && error.message.includes("Cookie not in this host's domain")) {
                 throw new ConfigNotFoundError('Invalid cookie');
             }
             throw error;
@@ -84,15 +90,15 @@ const getUserInfo = async (username, cookieJar) => {
     return userInfoCache || webProfileInfo;
 };
 
-const getUserFeedItems = (id, username, cookieJar) =>
+const getUserFeedItems = (id, username, cookieJar: CookieJar) =>
     cache.tryGet(
         `instagram:feed:${id}`,
         async () => {
             const response = await ofetch.raw(`${baseUrl}/api/v1/feed/user/${username}/username/`, {
                 // cookieJar,
                 headers: {
-                    cookie: (await cookieJar.getCookieString(COOKIE_URL)) as string,
-                    ...((await getHeaders(cookieJar)) as unknown as Record<string, string>),
+                    cookie: await cookieJar.getCookieString(COOKIE_URL),
+                    ...(await getHeaders(cookieJar)),
                     // 401 Unauthorized if cookie does not match with IP
                     // 'X-IG-WWW-Claim': await cache.get('instagram:wwwClaimV2'),
                 },
@@ -111,15 +117,15 @@ const getUserFeedItems = (id, username, cookieJar) =>
         false
     );
 
-const getTagsFeed = (tag, cookieJar) =>
+const getTagsFeed = (tag, cookieJar: CookieJar) =>
     cache.tryGet(
         `instagram:tags:${tag}`,
         async () => {
             const response = await ofetch(`${baseUrl}/api/v1/tags/web_info/`, {
                 // cookieJar, cookieJar is behaving weirdly here, so we use cookie header instead
                 headers: {
-                    cookie: (await cookieJar.getCookieString(COOKIE_URL)) as string,
-                    ...((await getHeaders(cookieJar)) as unknown as Record<string, string>),
+                    cookie: await cookieJar.getCookieString(COOKIE_URL),
+                    ...(await getHeaders(cookieJar)),
                 },
                 query: {
                     tag_name: tag,
@@ -133,8 +139,8 @@ const getTagsFeed = (tag, cookieJar) =>
     );
 
 const renderGuestItems = (items) => {
-    const renderVideo = (node, summary) =>
-        art(path.join(__dirname, '../templates/video.art'), {
+    const renderVideoItem = (node, summary) =>
+        renderVideo({
             summary,
             image: node.display_url,
             video: {
@@ -143,8 +149,8 @@ const renderGuestItems = (items) => {
                 width: node.dimensions.width,
             },
         });
-    const renderImages = (node, summary) =>
-        art(path.join(__dirname, '../templates/images.art'), {
+    const renderImagesItem = (node, summary) =>
+        renderImages({
             summary,
             images: [{ url: node.display_url, height: node.dimensions.height, width: node.dimensions.width }],
         });
@@ -153,7 +159,7 @@ const renderGuestItems = (items) => {
         const type = node.__typename;
         const summary = node.edge_media_to_caption.edges[0]?.node.text ?? '';
 
-        let description = '';
+        let description: string;
         switch (type) {
             // carousel, can include GraphVideo and GraphImage
             case 'GraphSidecar':
@@ -163,28 +169,28 @@ const renderGuestItems = (items) => {
                               const _type = node.__typename;
                               switch (_type) {
                                   case 'GraphVideo':
-                                      return renderVideo(node, i === 0 ? summary : '');
+                                      return renderVideoItem(node, i === 0 ? summary : '');
                                   case 'GraphImage':
-                                      return renderImages(node, i === 0 ? summary : '');
+                                      return renderImagesItem(node, i === 0 ? summary : '');
                                   default:
                                       throw new Error(`Instagram: Unhandled carousel type: ${_type}`);
                               }
                           })
                           .join('')
-                    : renderImages(node, summary);
+                    : renderImagesItem(node, summary);
                 break;
             case 'GraphVideo':
-                description = renderVideo(node, summary);
+                description = renderVideoItem(node, summary);
                 break;
             case 'GraphImage':
-                description = renderImages(node, summary);
+                description = renderImagesItem(node, summary);
                 break;
             default:
                 throw new Error(`Instagram: Unhandled feed type: ${type}`);
         }
 
         return {
-            title: summary.split('\n')[0],
+            title: summary.split('\n', 1)[0],
             id: node.id,
             pubDate: parseDate(node.taken_at_timestamp, 'X'),
             author: node.owner.username,
@@ -195,4 +201,4 @@ const renderGuestItems = (items) => {
     });
 };
 
-export { baseUrl, COOKIE_URL, checkLogin, getUserInfo, getUserFeedItems, getTagsFeed, renderGuestItems };
+export { baseUrl, checkLogin, COOKIE_URL, getTagsFeed, getUserFeedItems, getUserInfo, renderGuestItems };

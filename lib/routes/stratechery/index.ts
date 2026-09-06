@@ -1,9 +1,11 @@
-import { Route } from '@/types';
+import type { Route } from '@/types';
 import buildData from '@/utils/common-config';
 
 export const route: Route = {
     path: '/',
-    name: 'Unknown',
+    categories: ['blog'],
+    example: '/stratechery',
+    name: 'Blog',
     maintainers: ['chazeon'],
     handler,
 };

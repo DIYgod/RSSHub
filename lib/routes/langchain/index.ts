@@ -1,7 +1,8 @@
-import { Route, DataItem } from '@/types';
-import got from '@/utils/got';
 import { load } from 'cheerio';
+
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
+import got from '@/utils/got';
 
 export const route: Route = {
     path: '/blog',
@@ -19,6 +20,8 @@ export const route: Route = {
     description: 'LangChain Blog Posts',
 };
 
+type BlogItem = DataItem & { link: string };
+
 async function handler() {
     const rootUrl = 'https://blog.langchain.dev';
     const currentUrl = rootUrl;
@@ -29,7 +32,7 @@ async function handler() {
     const items = await Promise.all(
         $('.posts-feed .post-card')
             .toArray()
-            .map((item) => {
+            .map((item): BlogItem | null => {
                 const $item = $(item);
                 const $link = $item.find('.post-card__content-link').first();
 
@@ -47,18 +50,18 @@ async function handler() {
                     title,
                     description: excerpt,
                     link,
-                } as DataItem;
+                };
             })
-            .filter((item): item is DataItem => item !== null)
+            .filter((item): item is BlogItem => item !== null)
             .map((item) =>
-                cache.tryGet(item.link as string, async () => {
+                cache.tryGet(item.link, async () => {
                     try {
                         const detailResponse = await got(item.link);
                         const $detail = load(detailResponse.data);
 
                         item.description = $detail('.article-content').html() || item.description;
 
-                        return item as DataItem;
+                        return item;
                     } catch {
                         return item;
                     }
@@ -69,6 +72,6 @@ async function handler() {
     return {
         title: 'LangChain Blog',
         link: rootUrl,
-        item: items.filter((item): item is DataItem => item !== null),
+        item: items.filter((item): item is BlogItem => item !== null),
     };
 }

@@ -1,40 +1,50 @@
-import { Route } from '@/types';
 import { load } from 'cheerio';
+
+import type { DataItem, Route } from '@/types';
 import { parseDate } from '@/utils/parse-date';
-import puppeteer from '@/utils/puppeteer';
+import playwright from '@/utils/playwright';
 
 export const route: Route = {
     path: '/',
+    categories: ['other'],
+    example: '/uraaka-joshi',
     radar: [
         {
             source: ['uraaka-joshi.com/'],
             target: '',
         },
     ],
-    name: 'Unknown',
+    name: 'Homepage',
     maintainers: ['SettingDust', 'Halcao'],
     handler,
     url: 'uraaka-joshi.com/',
+    features: {
+        nsfw: true,
+    },
 };
 
 async function handler() {
-    const link = `https://www.uraaka-joshi.com/`;
-    const title = `裏垢女子まとめ`;
+    const link = 'https://www.uraaka-joshi.com/';
+    const title = '裏垢女子まとめ';
 
-    const browser = await puppeteer();
+    const context = await playwright();
 
-    const page = await browser.newPage();
-    await page.setRequestInterception(true);
-    page.on('request', (request) => {
-        request.resourceType() === 'document' || request.resourceType() === 'script' || request.resourceType() === 'fetch' ? request.continue() : request.abort();
+    const page = await context.newPage();
+    await page.route('**/*', (route) => {
+        const request = route.request();
+        request.resourceType() === 'document' || request.resourceType() === 'script' || request.resourceType() === 'fetch' ? route.continue() : route.abort();
     });
     page.on('requestfinished', async (request) => {
-        if (request.url() === link && request.response().status() === 403) {
+        if (request.url() !== link) {
+            return;
+        }
+        const response = await request.response();
+        if (response?.status() === 403) {
             await page.close();
         }
     });
 
-    let html = '';
+    let html: string;
     try {
         await page.goto(link, {
             waitUntil: 'domcontentloaded',
@@ -45,11 +55,11 @@ async function handler() {
         await page.waitForSelector('#main-block .grid-cell');
 
         const bodyHandle = await page.$('body');
-        html = await page.evaluate((body) => body.innerHTML, bodyHandle);
+        html = await page.evaluate((body) => body!.getHTML(), bodyHandle);
     } catch {
         throw new Error('Access denied (403)');
     }
-    await browser.close();
+    await context.close();
 
     const $ = load(html);
     const list = $('.grid-cell');
@@ -57,24 +67,24 @@ async function handler() {
     return {
         title,
         link,
-        item: list.toArray().map((item) => {
-            item = $(item);
+        item: list.toArray().map((item): DataItem => {
+            const $item = $(item);
 
             // remove event and styles
-            item.find('*').removeAttr('onclick');
-            item.find('*').removeAttr('onerror');
-            item.find('*').removeAttr('style');
+            $item.find('*').removeAttr('onclick');
+            $item.find('*').removeAttr('onerror');
+            $item.find('*').removeAttr('style');
 
             // format account style
-            const account = item.find('.account-group-link-row');
+            const account = $item.find('.account-group-link-row');
             account.html(account.text());
 
             // extract video tag from its player
-            item.find('.plyr--video').each((_, player) => {
-                player = $(player);
+            $item.find('.plyr--video').each((_, player) => {
+                const $player = $(player);
 
-                const video = player.find('video');
-                player.replaceWith(video);
+                const video = $player.find('video');
+                $player.replaceWith(video);
                 const poster = video.attr('data-poster');
                 video.attr('poster', 'https:' + poster);
 
@@ -84,17 +94,17 @@ async function handler() {
             });
 
             // correct src of img tags
-            item.find('img').each((_, image) => {
+            $item.find('img').each((_, image) => {
                 const src = $(image).attr('data-src');
                 $(image).attr('src', 'https:' + src);
             });
 
             return {
-                title: item.find('.account-group').text() + ` - ${title}`,
-                description: item.html(),
-                link: item.find('.account-group-link-row').attr('href'),
-                pubDate: parseDate(item.find('.profile-char').attr('datetime')),
-                guid: item.find('a.tap-image').attr('data-tweet-id') || item.find('video[class^="js-player-"]').attr('data-tweet-id') || parseDate(item.find('.profile-char').attr('datetime')).getTime(),
+                title: $item.find('.account-group').text() + ` - ${title}`,
+                description: $item.html(),
+                link: $item.find('.account-group-link-row').attr('href'),
+                pubDate: parseDate($item.find('.profile-char').attr('datetime')!),
+                guid: $item.find('a.tap-image').attr('data-tweet-id') || $item.find('video[class^="js-player-"]').attr('data-tweet-id') || parseDate($item.find('.profile-char').attr('datetime')!).getTime().toString(),
             };
         }),
     };

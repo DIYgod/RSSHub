@@ -1,6 +1,9 @@
-import { Route } from '@/types';
+import type { Context } from 'hono';
+
+import type { Data, Route } from '@/types';
 import { parseDate } from '@/utils/parse-date';
-import { getAccountByUsername, getTimelineByAccountId, parseDescription, baseUrl } from './utils';
+
+import { baseUrl, getAccountByUsername, getTimelineByAccountId, parseDescription } from './utils';
 
 export const route: Route = {
     path: '/user/:username',
@@ -14,6 +17,7 @@ export const route: Route = {
         supportBT: false,
         supportPodcast: false,
         supportScihub: false,
+        nsfw: true,
     },
     radar: [
         {
@@ -25,14 +29,14 @@ export const route: Route = {
     handler,
 };
 
-async function handler(ctx) {
+async function handler(ctx: Context): Promise<Data> {
     const username = ctx.req.param('username');
 
     const account = await getAccountByUsername(username);
     const timeline = await getTimelineByAccountId(account.id);
 
     const items = timeline.posts.map((post) => ({
-        title: post.content.split('\n')[0],
+        title: post.content.split('\n', 1)[0],
         description: parseDescription(post, timeline),
         pubDate: parseDate(post.createdAt, 'X'),
         link: `${baseUrl}/post/${post.id}`,

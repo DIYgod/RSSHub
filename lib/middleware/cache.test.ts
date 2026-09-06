@@ -1,5 +1,7 @@
-import { describe, expect, it, vi, afterEach } from 'vitest';
+import { Context } from 'hono';
 import Parser from 'rss-parser';
+import { afterEach, describe, expect, it, vi } from 'vitest';
+
 import wait from '@/utils/wait';
 
 process.env.CACHE_EXPIRE = '1';
@@ -144,8 +146,8 @@ describe('cache', () => {
         process.env.REDIS_URL = 'redis://wrongpath:6379';
         await noCacheTestFunc();
         const cache = (await import('@/utils/cache')).default;
-        await cache.clients.redisClient!.quit();
-    });
+        cache.clients.redisClient?.disconnect();
+    }, 20000);
 
     it('no cache', async () => {
         process.env.CACHE_TYPE = 'NO';
@@ -185,5 +187,26 @@ describe('cache', () => {
         const response = await app.request('/test/cache');
         const parsed = await parser.parseString(await response.text());
         expect(parsed.ttl).toEqual('10');
+    });
+});
+
+describe('cache middleware error handling', () => {
+    it('clears control key when downstream throws', async () => {
+        process.env.CACHE_TYPE = 'memory';
+        const cache = (await import('@/utils/cache')).default;
+        const setSpy = vi.spyOn(cache.globalCache, 'set');
+
+        const { default: cacheMiddleware } = await import('@/middleware/cache');
+
+        const ctx = new Context(new Request('http://localhost/test'), { env: {}, path: '/test' });
+
+        await expect(
+            cacheMiddleware(ctx, () => {
+                throw new Error('boom');
+            })
+        ).rejects.toThrow('boom');
+
+        expect(setSpy.mock.calls.some(([key, value]) => key.startsWith('rsshub:path-requested:') && value === '0')).toBe(true);
+        setSpy.mockRestore();
     });
 });

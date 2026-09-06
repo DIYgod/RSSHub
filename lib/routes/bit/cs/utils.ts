@@ -1,5 +1,6 @@
-import got from '@/utils/got';
 import { load } from 'cheerio';
+
+import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
@@ -31,7 +32,7 @@ const ProcessFeed = (list, caches) => {
 
             const $title = $('a');
             // 还原相对链接为绝对链接
-            const itemUrl = new URL($title.attr('href'), host).href;
+            const itemUrl = new URL($title.attr('href')!, host).href;
 
             // 列表上提取到的信息
             const single = {

@@ -1,8 +1,9 @@
-import { DataItem, Route } from '@/types';
+import { load } from 'cheerio';
+
+import { config } from '@/config';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
-import { config } from '@/config';
 
 export const route: Route = {
     path: '/:category?',
@@ -14,7 +15,7 @@ export const route: Route = {
             {
                 name: 'MOX_COOKIE',
                 optional: true,
-                description: `注册用户登录后的 Cookie, 可以从浏览器开发者工具Network面板中的mox页面请求获取，Cookie内容形如VOLSKEY=xxxxxx; VLIBSID=xxxxxx; VOLSESS=xxxxxx`,
+                description: '注册用户登录后的 Cookie, 可以从浏览器开发者工具Network面板中的mox页面请求获取，Cookie内容形如VOLSKEY=xxxxxx; VLIBSID=xxxxxx; VOLSESS=xxxxxx',
             },
         ],
         antiCrawler: true,
@@ -28,13 +29,13 @@ export const route: Route = {
     maintainers: ['nczitzk'],
     handler,
     description: `::: tip
-  在首页将分类参数选择确定后跳转到的分类页面 URL 中，\`/l/\` 后的字段即为分类参数。
+在首页将分类参数选择确定后跳转到的分类页面 URL 中，\`/l/\` 后的字段即为分类参数。
 
-  如 [科幻 + 日語 + 日本 + 長篇 + 完結 + 最近更新](https://mox.moe/l/CAT%2A科幻,日本,完結,lastupdate,jpn,l,BL) 的 URL 为 [https://mox.moe/l/CAT%2A 科幻，日本，完結，lastupdate,jpn,l,BL](https://mox.moe/l/CAT%2A科幻,日本,完結,lastupdate,jpn,l,BL)，此时 \`/l/\` 后的字段为 \`CAT%2A科幻,日本,完結,lastupdate,jpn,l,BL\`。最终获得路由为 [\`/mox/CAT%2A科幻,日本,完結,lastupdate,jpn,l,BL\`](https://rsshub.app/mox/CAT%2A科幻,日本,完結,lastupdate,jpn,l,BL)
+如 [科幻 + 日語 + 日本 + 長篇 + 完結 + 最近更新](https://mox.moe/l/CAT%2A科幻,日本,完結,lastupdate,jpn,l,BL) 的 URL 为 [https://mox.moe/l/CAT%2A 科幻，日本，完結，lastupdate,jpn,l,BL](https://mox.moe/l/CAT%2A科幻,日本,完結,lastupdate,jpn,l,BL)，此时 \`/l/\` 后的字段为 \`CAT%2A科幻,日本,完結,lastupdate,jpn,l,BL\`。最终获得路由为 [\`/mox/CAT%2A科幻,日本,完結,lastupdate,jpn,l,BL\`](https://rsshub.app/mox/CAT%2A科幻,日本,完結,lastupdate,jpn,l,BL)
 :::
 
 ::: warning
-  由于 mox.moe 对非登录用户屏蔽了部分漫画详情内容的获取，且极易触发反爬机制，导致访问ip被重定向至google.com，因此在未配置\`MOX_COOKIE\`参数的情况下路由只会返回漫画标题和封面，不会对详情内容进行抓取。
+由于 mox.moe 对非登录用户屏蔽了部分漫画详情内容的获取，且极易触发反爬机制，导致访问 ip 被重定向至 google.com，因此在未配置\`MOX_COOKIE\`参数的情况下路由只会返回漫画标题和封面，不会对详情内容进行抓取。
 :::`,
 };
 
@@ -79,32 +80,31 @@ async function handler(ctx) {
 
     if (cookie) {
         items = await Promise.all(
-            items.map(
-                (item) =>
-                    cache.tryGet(item.guid!, async () => {
-                        const detailResponse = await got({
-                            method: 'get',
-                            url: item.link,
-                            headers: {
-                                cookie,
-                            },
-                        });
+            items.map((item) =>
+                cache.tryGet(item.guid!, async () => {
+                    const detailResponse = await got({
+                        method: 'get',
+                        url: item.link,
+                        headers: {
+                            cookie,
+                        },
+                    });
 
-                        const content = load(detailResponse.data);
+                    const content = load(detailResponse.data);
 
-                        item.author = content('.author .text_bglight font a')
-                            .toArray()
-                            .map((i) => $(i).text())
-                            .filter(Boolean)
-                            .join('、');
+                    item.author = content('.author .text_bglight font a')
+                        .toArray()
+                        .map((i) => $(i).text())
+                        .filter(Boolean)
+                        .join('、');
 
-                        const infoBlock = content('.author .text_bglight').toArray();
+                    const infoBlock = content('.author .text_bglight').toArray();
 
-                        const desc = detailResponse.data?.match(/document\.getElementById\("div_desc_content"\)\.innerHTML = "(.*?)";/s)?.[1] ?? '';
-                        item.description = `<img src="${content('.img_book').attr('src')}"><br>${infoBlock.map((i) => $(i).html()).join('<br>')}<br>${desc}`;
+                    const desc = detailResponse.data?.match(/document\.getElementById\("div_desc_content"\)\.innerHTML = "(.*?)";/s)?.[1] ?? '';
+                    item.description = `<img src="${content('.img_book').attr('src')}"><br>${infoBlock.map((i) => $(i).html()).join('<br>')}<br>${desc}`;
 
-                        return item;
-                    }) as unknown as DataItem
+                    return item;
+                })
             )
         );
     }

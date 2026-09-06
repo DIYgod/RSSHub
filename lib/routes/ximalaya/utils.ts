@@ -1,4 +1,5 @@
-import crypto from 'node:crypto';
+import { createCipheriv, randomBytes } from 'node:crypto';
+import { crc32 } from 'node:zlib';
 /*
 const getParams = (ep) => {
     const a1 = 'xkt3a41psizxrh9l';
@@ -123,10 +124,80 @@ const getUrl = (r) => {
 */
 
 const getRandom16 = (len) =>
-    crypto
-        .randomBytes(Math.ceil(len / 2))
+    randomBytes(Math.ceil(len / 2))
         .toString('hex')
         .slice(0, len);
+
+const base62 = (num) => {
+    const chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    let out = '';
+    do {
+        out = chars[num % 62] + out;
+        num = Math.floor(num / 62);
+    } while (num > 0);
+    return out.padStart(8, '0');
+};
+
+/*
+const generateRandomString = (payload, code) => {
+    // 8 random hex chars
+    const a = 'xxxxxxxx'.replaceAll('x', () => Math.trunc(16 * Math.random()).toString(16));
+    // 4 random base36 chars
+    const b = Math.random().toString(36).substring(2, 6);
+    // Date.now() in base62, left-padded to 8
+    const c = base62(Date.now());
+
+    // 5 flag bits -> one base32 char
+    let bits = '00000';
+    if (payload.csl === true) {
+        bits = setCharAt(bits, 4, '1');
+    }
+    if (payload.ets !== null && payload.ets !== '') {
+        bits = setCharAt(bits, 3, '1');
+    }
+    if (payload.rid && payload.rid.dev !== null && payload.rid.dev !== 0) {
+        bits = setCharAt(bits, 1, '1');
+    }
+    const flags = parseInt(bits, 2).toString(32);
+
+    const head = '' + a + b + c + flags + code;
+    const plain = head + crc32(head).toString(16).padStart(8, '0');
+
+    let out;
+    try {
+        out = base64url(aesEncrypt(plain, 'y3hbnr8d4s2ztjbca1wgxk6mqktf9pxr'));
+    } catch {
+        out = '';
+    }
+    return out + '_2';
+};
+
+const setCharAt = (str, i, ch) => str.substring(0, i) + ch + str.substring(i + 1);
+
+const aesEncrypt = (plaintext, keyStr) => {
+    const key = CryptoJS.lib.WordArray.create(utf8Bytes(keyStr).slice(0, 16));
+    const enc = CryptoJS.AES.encrypt(CryptoJS.enc.Utf8.parse(plaintext), key, {
+        iv: key,
+        mode: CryptoJS.mode.CBC,
+        padding: CryptoJS.pad.Pkcs7,
+    });
+    return hexToUint8Array(enc.ciphertext.toString()); // hex string -> bytes
+};
+
+const base64url = (bytes) =>
+    btoa(String.fromCharCode(...new Uint8Array(bytes)))
+        .replaceAll('+', '-')
+        .replaceAll('/', '_')
+        .replace(/=+$/, '');
+*/
+
+const getXmSign = () => {
+    const head = `${getRandom16(8)}${getRandom16(4)}${base62(Date.now())}0202`;
+    const key = Buffer.from('y3hbnr8d4s2ztjbca1wgxk6mqktf9pxr').subarray(0, 16);
+    const cipher = createCipheriv('aes-128-cbc', key, key);
+    const sid = Buffer.concat([cipher.update(head + crc32(head).toString(16).padStart(8, '0'), 'utf8'), cipher.final()]).toString('base64url');
+    return `&&${sid}_2`;
+};
 
 const decryptUrl = (encryptedUrl) => {
     const o = [
@@ -165,4 +236,4 @@ const decryptUrl = (encryptedUrl) => {
     }
     return Buffer.from(decryptedData).toString('utf8');
 };
-export { /* getUrl, */ getRandom16, decryptUrl };
+export { /* getUrl, */ decryptUrl, getRandom16, getXmSign };

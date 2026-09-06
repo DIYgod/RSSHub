@@ -1,7 +1,8 @@
-import { Route } from '@/types';
-import cache from '@/utils/cache';
-import { getSimple, getDetails, getTorrents } from './util';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
+import type { Route } from '@/types';
+import cache from '@/utils/cache';
+
+import { getDetails, getSimple, getTorrents } from './util';
 
 const supportedKeys = new Set(['parody', 'character', 'tag', 'artist', 'group', 'language', 'category']);
 
@@ -14,6 +15,7 @@ export const route: Route = {
         mode: 'mode, `simple` to only show cover, `detail` to show all pages, `torrent` to include Magnet URI, need login, refer to [Route-specific Configurations](https://docs.rsshub.app/deploy/config#route-specific-configurations), default to `simple`',
     },
     features: {
+        requirePuppeteer: false,
         antiCrawler: true,
         supportBT: true,
         nsfw: true,
@@ -25,7 +27,7 @@ export const route: Route = {
         },
     ],
     name: 'Filter',
-    maintainers: ['MegrezZhu', 'hoilc'],
+    maintainers: ['MegrezZhu', 'hoilc', 'pseudoyu'],
     handler,
 };
 

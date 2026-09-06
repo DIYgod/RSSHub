@@ -1,46 +1,54 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/',
+    categories: ['study'],
+    example: '/50forum',
     radar: [
         {
-            source: ['50forum.org.cn/home/article/index/category/zhuanjia.html', '50forum.org.cn/'],
+            source: ['www.50forum.org.cn/portal/list/index.html?id=6'],
+            target: '',
+        },
+        {
+            source: ['50forum.org.cn/'],
             target: '',
         },
     ],
-    name: 'Unknown',
+    name: '专家文章',
     maintainers: ['sddiky'],
     handler,
-    url: '50forum.org.cn/home/article/index/category/zhuanjia.html',
+    url: 'https://www.50forum.org.cn/portal/list/index.html?id=6',
 };
 
 async function handler() {
-    const rootUrl = 'http://www.50forum.org.cn';
+    const rootUrl = 'https://www.50forum.org.cn';
     const response = await got({
         method: 'get',
-        url: `${rootUrl}/home/article/index/category/zhuanjia.html`,
+        url: `${rootUrl}/portal/list/index.html?id=6`,
     });
     const data = response.data;
     if (!data) {
-        return;
+        return null;
     }
     const $ = load(data);
     let out = $('div.container div.list_list.mtop10 ul li')
         .find('a')
         .toArray()
-        .map((item) => {
-            item = $(item);
-            const link = rootUrl + item.attr('href');
-            const reg = /^(.+)\[(.*)](.+)$/;
-            const keyword = reg.exec(item.text().trim());
+        .map((item): DataItem & { link: string } => {
+            const $item = $(item);
+            const link = rootUrl + $item.attr('href');
+            const reg = /^(.+) - (.*) - (.+)$/;
+            const keyword = reg.exec($item.text().trim());
             return {
-                title: keyword[1],
-                author: keyword[2],
+                title: keyword![1],
+                author: keyword![2],
+                pubDate: timezone(parseDate(keyword![3], 'YYYY-MM-DD'), 8),
                 link,
             };
         });
@@ -53,14 +61,13 @@ async function handler() {
                 const $ = load(result.data);
 
                 item.description = $('div.list_content').html();
-                item.pubDate = timezone(parseDate($('span#publish_time').text(), 'YYYY-MM-DD HH:mm'), +8);
                 return item;
             })
         )
     );
     return {
-        title: `中国经济50人论坛专家文章`,
-        link: 'http://www.50forum.org.cn/home/article/index/category/zhuanjia.html',
+        title: '中国经济50人论坛专家文章',
+        link: 'https://www.50forum.org.cn/portal/list/index.html?id=6',
         description: '中国经济50人论坛专家文章',
         item: out,
     };

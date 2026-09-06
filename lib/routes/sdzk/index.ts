@@ -1,7 +1,8 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
@@ -21,9 +22,9 @@ export const route: Route = {
     maintainers: ['nczitzk'],
     handler,
     description: `::: tip
-  若订阅 [信息与政策](https://www.sdzk.cn/NewsList.aspx?BCID=1)，网址为 \`https://www.sdzk.cn/NewsList.aspx?BCID=1\`。截取 \`BCID=1\` 作为参数，此时路由为 [\`/sdzk/1\`](https://rsshub.app/sdzk/1)。
+若订阅 [信息与政策](https://www.sdzk.cn/NewsList.aspx?BCID=1)，网址为 \`https://www.sdzk.cn/NewsList.aspx?BCID=1\`。截取 \`BCID=1\` 作为参数，此时路由为 [\`/sdzk/1\`](https://rsshub.app/sdzk/1)。
 
-  若订阅 [通知公告](https://www.sdzk.cn/NewsList.aspx?BCID=1\&CID=16)，网址为 \`https://www.sdzk.cn/NewsList.aspx?BCID=1&CID=16\`。截取 \`BCID=1\` 与 \`CID=16\` 作为参数，此时路由为 [\`/sdzk/1/16\`](https://rsshub.app/sdzk/1/16)。
+若订阅 [通知公告](https://www.sdzk.cn/NewsList.aspx?BCID=1\\&CID=16)，网址为 \`https://www.sdzk.cn/NewsList.aspx?BCID=1&CID=16\`。截取 \`BCID=1\` 与 \`CID=16\` 作为参数，此时路由为 [\`/sdzk/1/16\`](https://rsshub.app/sdzk/1/16)。
 :::`,
 };
 
@@ -43,18 +44,18 @@ async function handler(ctx) {
 
     let items = $('a[title]')
         .toArray()
-        .map((item) => {
-            item = $(item);
+        .map((item): DataItem => {
+            const $item = $(item);
 
             return {
-                title: item.text(),
-                link: new URL(item.attr('href'), rootUrl).href,
+                title: $item.text(),
+                link: new URL($item.attr('href')!, rootUrl).href,
             };
         });
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const detailResponse = await got({
                     method: 'get',
                     url: item.link,
@@ -65,7 +66,7 @@ async function handler(ctx) {
                 const info = content('div.laylist-r em').text();
 
                 item.description = content('.txt').html();
-                item.pubDate = parseDate(info.split('发布时间：').pop());
+                item.pubDate = parseDate(info.split('发布时间：').pop()!);
 
                 return item;
             })

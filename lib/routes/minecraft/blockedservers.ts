@@ -1,4 +1,4 @@
-import { Route } from '@/types';
+import type { Route } from '@/types';
 import got from '@/utils/got';
 
 export const route: Route = {
@@ -23,21 +23,23 @@ export const route: Route = {
     maintainers: ['xtexChooser'],
     handler,
     url: 'minecraft.net/',
-    description: `Java 版中被 Mojang 通过 sessionserver 阻止的服务器域名的 SHA-1 散列`,
+    description: 'Java 版中被 Mojang 通过 sessionserver 阻止的服务器域名的 SHA-1 散列',
     zh: {
         name: 'Java版被阻止的服务器域名散列',
     },
 };
 
 async function handler() {
-    const response: any = await got({
+    const response = await got({
         method: 'get',
         url: 'https://sessionserver.mojang.com/blockedservers',
     });
 
-    const data = (response.data.toString() as string).split('\n').filter((str) => str !== '');
+    const data = String(response.data)
+        .split('\n')
+        .filter((str) => str !== '');
 
-    const title = `Minecraft Java版被阻止的服务器域名散列`;
+    const title = 'Minecraft Java版被阻止的服务器域名散列';
 
     return {
         title,

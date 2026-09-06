@@ -1,6 +1,7 @@
-import { Route, ViewType } from '@/types';
-import { parseDate } from '@/utils/parse-date';
+import type { Route } from '@/types';
+import { ViewType } from '@/types';
 import got from '@/utils/got';
+import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/ratings/:language?',
@@ -27,17 +28,15 @@ export const route: Route = {
         },
     ],
     name: 'Ratings',
-    description: `
-| language | Description |
-| ---   | ---   |
-| zh | 中文 |
-| en | English |
-| es | Español |
-| pt | Português |
-| jp | 日本語 |
-| ru | Русский |
-| ar | العربية |
-    `,
+    description: `| language | Description |
+| -------- | ----------- |
+| zh       | 中文        |
+| en       | English     |
+| es       | Español     |
+| pt       | Português   |
+| jp       | 日本語      |
+| ru       | Русский     |
+| ar       | العربية     |`,
     maintainers: ['Cedaric'],
     handler,
 };

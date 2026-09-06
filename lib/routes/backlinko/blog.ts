@@ -1,7 +1,8 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
@@ -39,7 +40,7 @@ async function handler() {
         props: { pageProps },
     } = nextData;
 
-    const posts = [...pageProps.posts.nodes, ...pageProps.backlinkoLockedPosts.nodes].map((post) => ({
+    const posts = [...pageProps.posts.nodes, ...pageProps.backlinkoLockedPosts.nodes].map((post): DataItem & { apiUrl: string } => ({
         title: post.title,
         link: `${baseUrl}/${post.slug}`,
         pubDate: parseDate(post.modified),
@@ -49,7 +50,7 @@ async function handler() {
 
     const items = await Promise.all(
         posts.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const { data } = await got(item.apiUrl);
                 const post = data.pageProps.post || data.pageProps.lockedPost;
 
@@ -64,7 +65,7 @@ async function handler() {
         title: pageProps.page.seo.title,
         description: pageProps.page.seo.metaDesc,
         link,
-        language: 'en',
+        language: 'en' as const,
         item: items,
     };
 }

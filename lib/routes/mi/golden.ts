@@ -1,4 +1,4 @@
-import { Route } from '@/types';
+import type { Route } from '@/types';
 import got from '@/utils/got';
 
 export const route: Route = {
@@ -18,13 +18,13 @@ async function handler() {
     });
 
     const list = response.data.listApp.map((item) => ({
-        title: `第${item.subjectGroup.split('期')[0].replace('第', '')}期 ${item.displayName} [${item.level1CategoryName} - ${item.level2CategoryName}]`,
+        title: `第${item.subjectGroup.split('期', 1)[0].replace('第', '')}期 ${item.displayName} [${item.level1CategoryName} - ${item.level2CategoryName}]`,
         link: `http://app.mi.com/details?id=${item.packageName}`,
         description: item.briefShow,
     }));
 
     return {
-        title: `金米奖 - 小米应用商店`,
+        title: '金米奖 - 小米应用商店',
         link,
         item: list,
         description: response.data.description,

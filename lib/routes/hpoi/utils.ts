@@ -1,5 +1,6 @@
-import got from '@/utils/got';
 import { load } from 'cheerio';
+
+import got from '@/utils/got';
 
 const host = 'https://www.hpoi.net';
 
@@ -23,24 +24,18 @@ const MAPs = {
 };
 
 const ProcessFeed = async (type, id, order) => {
-    let link = MAPs[type].url.replace(/{id}/, id).replace(/{order}/, order || 'add');
+    let link = MAPs[type].url.replace(/\{id\}/, () => id).replace(/\{order\}/, () => order || 'add');
     let response = await got({
         method: 'get',
         url: link,
-        headers: {
-            Referer: host,
-        },
     });
     let $ = load(response.data);
 
     if (type === 'work') {
-        const overviewLink = MAPs.overview.url.replace(/{id}/, id);
+        const overviewLink = MAPs.overview.url.replace(/\{id\}/, () => id);
         const overviewResponse = await got({
             method: 'get',
             url: overviewLink,
-            headers: {
-                Referer: host,
-            },
         });
         const $overview = load(overviewResponse.data);
 
@@ -52,9 +47,6 @@ const ProcessFeed = async (type, id, order) => {
                 response = await got({
                     method: 'get',
                     url: link,
-                    headers: {
-                        Referer: host,
-                    },
                 });
                 $ = load(response.data);
             }
@@ -67,11 +59,11 @@ const ProcessFeed = async (type, id, order) => {
         item: $('.hpoi-glyphicons-list li')
             .toArray()
             .map((_item) => {
-                _item = $(_item);
+                const $_item = $(_item);
                 return {
-                    title: _item.find('.hpoi-detail-grid-title a').text(),
-                    link: host + '/' + _item.find('a').attr('href'),
-                    description: `<img src="${_item.find('img').attr('src').replace('/s/', '/n/')}">${_item.find('.hpoi-detail-grid-info').html().replaceAll('span>', 'p>')}`,
+                    title: $_item.find('.hpoi-detail-grid-title a').text(),
+                    link: host + '/' + $_item.find('a').attr('href'),
+                    description: `<img src="${$_item.find('img').attr('src')!.replace('/s/', '/n/')}">${$_item.find('.hpoi-detail-grid-info').html()!.replaceAll('span>', 'p>')}`,
                 };
             }),
     };

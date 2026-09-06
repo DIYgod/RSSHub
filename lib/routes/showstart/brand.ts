@@ -1,7 +1,9 @@
-import { Data, Route } from '@/types';
-import { TITLE, HOST } from './const';
-import { fetchBrandInfo } from './service';
 import type { Context } from 'hono';
+
+import type { Data, Route } from '@/types';
+
+import { HOST, TITLE } from './const';
+import { fetchBrandInfo } from './service';
 
 export const route: Route = {
     path: '/brand/:id',
@@ -25,14 +27,14 @@ export const route: Route = {
     maintainers: ['lchtao26'],
     handler,
     description: `::: tip
-厂牌 ID 查询: \`/showstart/search/brand/:keyword\`，如: [https://rsshub.app/showstart/search/brand/声场](https://rsshub.app/showstart/search/brand/声场)
+厂牌 ID 查询: \`/showstart/search/brand/:keyword\`，如: [https://rsshub.app/showstart/search/brand/ 声场](https://rsshub.app/showstart/search/brand/声场)
 :::`,
 };
 
 async function handler(ctx: Context): Promise<Data> {
     const id = ctx.req.param('id');
     const brand = await fetchBrandInfo({
-        brandId: id,
+        brandId: id!,
     });
     return {
         title: `${TITLE} - ${brand.name}`,

@@ -1,9 +1,11 @@
-import { Route } from '@/types';
-import got from '@/utils/got';
-import cache from './cache';
-import cacheGeneral from '@/utils/cache';
 import { load } from 'cheerio';
+
+import type { Route } from '@/types';
+import cacheGeneral from '@/utils/cache';
+import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+
+import cache from './cache';
 
 export const route: Route = {
     path: '/user/article/:uid',
@@ -47,7 +49,7 @@ async function handler(ctx) {
     const item = await Promise.all(
         data.items.map(async (item) => {
             const link = 'https:' + item.jump_url;
-            const data = await cacheGeneral.tryGet(
+            const data = await cacheGeneral.tryGet<string>(
                 link,
                 async () =>
                     (
@@ -62,7 +64,7 @@ async function handler(ctx) {
                     ).data
             );
 
-            const $ = load(data as string);
+            const $ = load(data);
             const description = $('.opus-module-content').html();
             const pubDate = $('.opus-module-author__pub__text').text().replace('编辑于 ', '');
 

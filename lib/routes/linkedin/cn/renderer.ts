@@ -1,3 +1,4 @@
+/* oxlint-disable unicorn/prefer-code-point */
 const text_tag = {
     LINE_BREAK: 0,
     INLINE_CODE: 1,
@@ -14,6 +15,11 @@ const text_tag = {
 };
 
 class TreeNode {
+    attr: any;
+    start: number;
+    end: number;
+    children: any[];
+    text?: string;
     constructor(attr) {
         this.attr = attr;
         this.start = attr.start;
@@ -22,6 +28,9 @@ class TreeNode {
     }
 }
 class Ucs2Text {
+    string: string | null;
+    codePoints: number[];
+    length: number;
     constructor(text) {
         if (Array.isArray(text)) {
             this.string = null;
@@ -29,7 +38,7 @@ class Ucs2Text {
         } else {
             this.string = text;
             const k = text.length;
-            const d = [];
+            const d: any[] = [];
 
             let l,
                 e,
@@ -54,7 +63,7 @@ class Ucs2Text {
         this.length = this.codePoints.length;
     }
     substring(start, end) {
-        let _len = this.length,
+        let _len: any = this.length,
             _start = start,
             _end = end;
         if (_end === 0) {
@@ -67,7 +76,8 @@ class Ucs2Text {
         }
         return new Ucs2Text(_start === _end ? '' : this.codePoints.slice(_start, _end));
     }
-    slice(a, b) {
+    slice(a, b?) {
+        // oxlint-disable-next-line unicorn/prefer-string-slice
         return this.substring(a, b).toString();
     }
     toString() {
@@ -88,7 +98,7 @@ const renderSingle = (node) => {
         case 'BOLD':
             return `<b>${node.text}</b>`;
         case 'LINE_BREAK':
-            return `<br>`;
+            return '<br>';
         case 'LIST_ITEM':
             return `<li>${node.text}</li>`;
         case 'LIST':
@@ -122,11 +132,11 @@ const parseAttr = (description) => {
             e = d.start + d.length;
         return f === e ? text_tag[b.detailData.style] - text_tag[d.detailData.style] : f - e;
     });
-    const n = [];
+    const n: TreeNode[] = [];
     for (const q of attrs) {
         const p = new TreeNode(q);
         const w = q.start;
-        while (0 < n.length && n.at(-1).attr.start >= w) {
+        while (0 < n.length && n.at(-1)!.attr.start >= w) {
             p.children.push(n.pop());
         }
         p.children.reverse();
@@ -141,7 +151,7 @@ const parseAttr = (description) => {
             node.text = m.slice(node.start, node.end);
             return renderSingle(node);
         }
-        const res = [];
+        const res: any[] = [];
         let s = node.start;
         for (const child of node.children) {
             if (s < child.start) {
@@ -158,7 +168,7 @@ const parseAttr = (description) => {
         return renderSingle(node);
     };
 
-    const q = [];
+    const q: any[] = [];
     let p = 0;
     for (const e of n) {
         // BFS render

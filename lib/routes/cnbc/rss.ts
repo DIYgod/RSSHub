@@ -1,7 +1,8 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import parser from '@/utils/rss-parser';
 
 export const route: Route = {
@@ -28,7 +29,7 @@ export const route: Route = {
     handler,
     description: `Provides a better reading experience (full articles) over the official ones.
 
-  Support all channels, refer to [CNBC RSS feeds](https://www.cnbc.com/rss-feeds/).`,
+Support all channels, refer to [CNBC RSS feeds](https://www.cnbc.com/rss-feeds/).`,
 };
 
 async function handler(ctx) {
@@ -39,7 +40,7 @@ async function handler(ctx) {
         feed.items
             .filter((i) => i.link && !i.link.startsWith('https://www.cnbc.com/select/'))
             .map((item) =>
-                cache.tryGet(item.link, async () => {
+                cache.tryGet(item.link!, async () => {
                     const { data: response } = await got(item.link);
                     const $ = load(response);
 
@@ -74,10 +75,10 @@ async function handler(ctx) {
     );
 
     return {
-        title: feed.title,
+        title: feed.title!,
         link: feed.link,
         description: feed.description,
-        item: items,
+        item: items as DataItem[],
         language: feed.language,
     };
 }

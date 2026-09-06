@@ -18,9 +18,9 @@ interface Plan {
     subscribersCount: number;
     planPosts: {
         totalCount: number;
-        nodes: {
+        nodes: Array<{
             post: PlanPost;
-        }[];
+        }>;
     };
 }
 
@@ -82,9 +82,9 @@ export interface PostReelNode {
     creator: CreatorFragment;
     comments: Comments;
     planPosts: {
-        nodes: {
+        nodes: Array<{
             plan: Plan;
-        }[];
+        }>;
     };
     favoritesCount: number;
     contentData: {

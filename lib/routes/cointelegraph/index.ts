@@ -1,9 +1,10 @@
-import { Route, Data, DataItem } from '@/types';
+import { load } from 'cheerio';
+
+import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
+import logger from '@/utils/logger';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
-import { load } from 'cheerio';
-import logger from '@/utils/logger';
 import parser from '@/utils/rss-parser';
 
 export const route: Route = {
@@ -40,10 +41,10 @@ async function handler(): Promise<Data> {
             .filter((item) => item.link && /\/news|\/explained|\/innovation-circle/.test(item.link))
             .map((item) => ({
                 ...item,
-                link: item.link?.split('?')[0],
+                link: item.link?.split('?', 1)[0],
             }))
             .map((item) =>
-                cache.tryGet(item.link!, async () => {
+                cache.tryGet(item.link!, async (): Promise<DataItem> => {
                     const link = item.link!;
 
                     // Extract full text
@@ -60,9 +61,9 @@ async function handler(): Promise<Data> {
                         pubDate: item.pubDate ? parseDate(item.pubDate) : undefined,
                         link,
                         author: item.creator || 'CoinTelegraph',
-                        category: item.categories?.map((c) => c.trim()) || [],
+                        category: item.categories || [],
                         image: item.enclosure?.url,
-                    } as DataItem;
+                    };
                 })
             )
     );

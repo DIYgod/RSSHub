@@ -1,6 +1,7 @@
-import { Route } from '@/types';
-import got from '@/utils/got';
 import { load } from 'cheerio';
+
+import type { Route } from '@/types';
+import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
@@ -46,9 +47,9 @@ async function handler() {
         item:
             list &&
             list.toArray().map((item) => {
-                item = $(item);
-                const itemPubdate = item.find('li > span').text();
-                const a = item.find('li > a');
+                const $item = $(item);
+                const itemPubdate = $item.find('li > span').text();
+                const a = $item.find('li > a');
                 return {
                     pubDate: parseDate(itemPubdate, 'YYYY-MM-DD'),
                     title: a.text(),

@@ -1,12 +1,13 @@
-import { Route } from '@/types';
 import { load } from 'cheerio';
+
+import type { Route } from '@/types';
 import got from '@/utils/got';
+import md5 from '@/utils/md5';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
-import md5 from '@/utils/md5';
 
 export const route: Route = {
-    path: '/csrc/auditstatus/:apply_id',
+    path: '/auditstatus/:apply_id',
     categories: ['government'],
     example: '/gov/csrc/auditstatus/9ce91cf2d750ee62de27fbbcb05fa483',
     parameters: { apply_id: '事项类别id，`https://neris.csrc.gov.cn/alappl/home/xkDetail` 列表中各地址的 appMatrCde 参数' },
@@ -37,9 +38,9 @@ async function handler(ctx) {
     const out = $('tr[height="50"]')
         .toArray()
         .map((item) => {
-            item = $(item);
-            const itemTitle = item.find('li.templateTip').text();
-            const audit_status_td = item.find('td[style="font-weight:100 ;color: black ;position: relative;left:20px"]');
+            const $item = $(item);
+            const itemTitle = $item.find('li.templateTip').text();
+            const audit_status_td = $item.find('td[style="font-weight:100 ;color: black ;position: relative;left:20px"]');
             const audit_status = audit_status_td.eq(-1).text();
             const title = '【' + audit_status + '】' + itemTitle;
             const audit_date = audit_status_td.eq(-1).next('td').text();

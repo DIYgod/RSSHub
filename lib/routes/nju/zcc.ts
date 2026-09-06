@@ -1,7 +1,9 @@
-import { Route } from '@/types';
-import got from '@/utils/got';
 import { load } from 'cheerio';
+
+import type { Route } from '@/types';
+import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+
 export const route: Route = {
     path: '/zcc',
     categories: ['university'],
@@ -33,16 +35,15 @@ async function handler() {
 
     const items = await Promise.all(
         Object.keys(category_dict).map(async () => {
-            const response = await got(`https://zcc.nju.edu.cn/sy/tzzhxx/index.html`);
+            const response = await got('https://zcc.nju.edu.cn/sy/tzzhxx/index.html');
 
             const data = response.data;
             const $ = load(data);
-            let script = $('ul.clearfix').find('script');
-            script = script['1'].children[0].data;
+            const script = $('ul.clearfix').find('script').eq(1).text();
 
             const start = script.indexOf('[');
             const end = script.lastIndexOf(']');
-            const t = JSON.parse(script.substring(start, end + 1));
+            const t = JSON.parse(script.slice(start, end + 1));
 
             // only read first page
             return t[0].infolist.map((item) => ({

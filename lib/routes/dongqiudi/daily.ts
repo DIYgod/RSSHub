@@ -1,7 +1,8 @@
-import { Route } from '@/types';
+import type { Route } from '@/types';
+
 export const route: Route = {
     path: '/daily',
-    categories: ['new-media'],
+    categories: ['sport'],
     example: '/dongqiudi/daily',
     radar: [
         {
@@ -18,5 +19,5 @@ export const route: Route = {
 };
 
 function handler(ctx) {
-    ctx.set('redirect', '/dongqiudi/special/48');
+    return ctx.set('redirect', '/dongqiudi/special/48');
 }

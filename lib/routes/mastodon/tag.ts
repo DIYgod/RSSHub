@@ -1,10 +1,12 @@
-import { Route, ViewType, Data } from '@/types';
+import type { Context } from 'hono';
 
-import got from '@/utils/got';
-import { Context } from 'hono';
-import utils from './utils';
 import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
+import type { Data, Route } from '@/types';
+import { ViewType } from '@/types';
+import got from '@/utils/got';
+
+import utils from './utils';
 
 export const route: Route = {
     path: '/tag/:site/:hashtag/:only_media?',

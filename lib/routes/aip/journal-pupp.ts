@@ -1,27 +1,29 @@
-import cache from '@/utils/cache';
 import { load } from 'cheerio';
-import { puppeteerGet, renderDesc } from './utils';
+
 import { config } from '@/config';
-import { isValidHost } from '@/utils/valid-host';
-import puppeteer from '@/utils/puppeteer';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
+import cache from '@/utils/cache';
+import playwright from '@/utils/playwright';
+import { isValidHost } from '@/utils/valid-host';
+
+import { playwrightGet, renderDesc } from './utils';
 
 const handler = async (ctx) => {
     const pub = ctx.req.param('pub');
     const jrn = ctx.req.param('jrn');
-    const host = `https://pubs.aip.org`;
+    const host = 'https://pubs.aip.org';
     const jrnlUrl = `${host}/${pub}/${jrn}/issue`;
     if (!isValidHost(pub)) {
         throw new InvalidParameterError('Invalid pub');
     }
 
-    // use Puppeteer due to the obstacle by cloudflare challenge
-    const browser = await puppeteer();
+    // use Playwright due to the obstacle by cloudflare challenge
+    const context = await playwright();
 
     const { jrnlName, list } = await cache.tryGet(
         jrnlUrl,
         async () => {
-            const response = await puppeteerGet(jrnlUrl, browser);
+            const response = await playwrightGet(jrnlUrl, context);
             const $ = load(response);
             const jrnlName = $('.header-journal-title').text();
             const list = $('.card')
@@ -32,7 +34,7 @@ const handler = async (ctx) => {
                     const authors = $(item).find('.entryAuthor.all').text();
                     const img = $(item).find('img').attr('src');
                     const link = $(item).find('.ref.nowrap').attr('href');
-                    const doi = link.replace('/doi/full/', '');
+                    const doi = link!.replace('/doi/full/', '');
                     const description = renderDesc(title, authors, doi, img);
                     return {
                         title,
@@ -50,7 +52,7 @@ const handler = async (ctx) => {
         false
     );
 
-    await browser.close();
+    await context.close();
 
     return {
         title: jrnlName,
@@ -59,4 +61,5 @@ const handler = async (ctx) => {
         allowEmpty: true,
     };
 };
+// TODO: missing route export
 export default handler;

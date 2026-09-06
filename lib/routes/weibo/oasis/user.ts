@@ -1,5 +1,6 @@
-import { Route } from '@/types';
+import type { Route } from '@/types';
 import buildData from '@/utils/common-config';
+
 import weiboUtils from '../utils';
 
 export const route: Route = {
@@ -37,8 +38,8 @@ async function handler(ctx) {
             description: `$('.desc').text().trim()`,
             item: {
                 item: '.container .status-item',
-                title: `$('.status-item-title').clone().children().remove().end().text()`,
-                description: `$('.status-item-title').clone().children().remove().end().text() + '<br>' + $('.status-img').html()`,
+                title: `$('.status-item-title').contents().filter((_, node) => node.type === 'text').text()`,
+                description: `$('.status-item-title').contents().filter((_, node) => node.type === 'text').text() + '<br>' + $('.status-img').html()`,
                 link: `'https://oasis.weibo.cn/v1/h5/share?sid=' + $('.status-item-title').parent().data('id')`,
             },
         })

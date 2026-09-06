@@ -1,7 +1,8 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
@@ -26,7 +27,7 @@ async function handler() {
 
     const list = $('.hot-news.visible-lg')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const elem = $(item);
             const title = elem.find('h4 a').text().trim();
             const link = elem.find('h4 a').attr('href');
@@ -51,7 +52,7 @@ async function handler() {
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const detailResponse = await got({
                     method: 'get',
                     url: item.link,

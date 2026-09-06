@@ -1,13 +1,13 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
 
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
 export const handler = async (ctx) => {
     const { id = '9' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 20;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 20;
 
     const domain = 'www.cisia.org';
     const rootUrl = `http://${domain}`;
@@ -20,22 +20,22 @@ export const handler = async (ctx) => {
     let items = $('ul.list_first li')
         .slice(0, limit)
         .toArray()
-        .map((item) => {
-            item = $(item);
+        .map((item): DataItem => {
+            const $item = $(item);
 
-            const a = item.find('a');
+            const a = $item.find('a');
 
             return {
                 title: a.text(),
-                pubDate: parseDate(item.find('span.time').text()),
-                link: new URL(a.prop('href'), rootUrl).href,
+                pubDate: parseDate($item.find('span.time').text()),
+                link: new URL(a.prop('href')!, rootUrl).href,
             };
         });
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
-                if (!/^https?:\/\/www\.cisia\.org(\/[^\s]*)?$/.test(item.link)) {
+            cache.tryGet(item.link!, async () => {
+                if (!/^https?:\/\/www\.cisia\.org(?:\/\S*)?$/.test(item.link!)) {
                     return item;
                 }
 
@@ -63,7 +63,7 @@ export const handler = async (ctx) => {
         )
     );
 
-    const image = new URL($('div.logo img').prop('src'), rootUrl).href;
+    const image = new URL($('div.logo img').prop('src')!, rootUrl).href;
 
     return {
         title: $('title').text(),
@@ -85,7 +85,7 @@ export const route: Route = {
     example: '/cisia/9',
     parameters: { id: '栏目 id，默认为 `9`，即协会动态，可在对应分类页 URL 中找到' },
     description: `::: tip
-  若订阅 [市场信息](http://www.cisia.org/site/term/12.html)，网址为 \`http://www.cisia.org/site/term/12.html\`。截取 \`https://www.cisia.org/site/term/\` 到末尾 \`.html\` 的部分 \`12\` 作为参数填入，此时路由为 [\`/cisia/12\`](https://rsshub.app/cisia/12)。
+若订阅 [市场信息](http://www.cisia.org/site/term/12.html)，网址为 \`http://www.cisia.org/site/term/12.html\`。截取 \`https://www.cisia.org/site/term/\` 到末尾 \`.html\` 的部分 \`12\` 作为参数填入，此时路由为 [\`/cisia/12\`](https://rsshub.app/cisia/12)。
 :::
 
 <details>
@@ -133,8 +133,7 @@ export const route: Route = {
 | -------------------------------------------------- | -------------------------------------------------- |
 | [35](https://rsshub.app/cisia/35)                  | [68](https://rsshub.app/cisia/68)                  |
 
-</details>
-    `,
+</details>`,
     categories: ['government'],
 
     features: {

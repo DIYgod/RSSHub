@@ -1,10 +1,12 @@
-import { Route, DataItem } from '@/types';
-import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
-import cache from '@/utils/cache';
-import { getHeaders } from './utils';
-import ConfigNotFoundError from '@/errors/types/config-not-found';
+
 import { config } from '@/config';
+import ConfigNotFoundError from '@/errors/types/config-not-found';
+import type { Data, DataItem, Route } from '@/types';
+import cache from '@/utils/cache';
+import ofetch from '@/utils/ofetch';
+
+import { getHeaders } from './utils';
 
 export const route: Route = {
     path: '/product/:id',
@@ -35,7 +37,7 @@ export const route: Route = {
     handler,
 };
 
-async function handler(ctx) {
+async function handler(ctx): Promise<Data> {
     if (!config.smzdm.cookie) {
         throw new ConfigNotFoundError('什么值得买排行榜 is disabled due to the lack of SMZDM_COOKIE');
     }
@@ -68,8 +70,8 @@ async function handler(ctx) {
     // get detail info from each item
     const out = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
-                const response = await ofetch(item.link, {
+            cache.tryGet(item.link!, async (): Promise<any> => {
+                const response = await ofetch(item.link!, {
                     headers: getHeaders(),
                 });
                 const $ = load(response);
@@ -77,16 +79,15 @@ async function handler(ctx) {
                 // filter outdated articles
                 if ($('span.old').length > 0) {
                     return null;
-                } else {
-                    const pubDate = $('meta[name="weibo:webpage:create_at"]').attr('content');
-                    item.pubDate = pubDate;
-
-                    if (item.description === '阅读全文') {
-                        item.description = $('p[itemprop="description"]').first().html() as string;
-                    }
-
-                    return item;
                 }
+                const pubDate = $('meta[name="weibo:webpage:create_at"]').attr('content');
+                item.pubDate = pubDate;
+
+                if (item.description === '阅读全文') {
+                    item.description = $('p[itemprop="description"]').first().html() ?? undefined;
+                }
+
+                return item;
             })
         )
     );

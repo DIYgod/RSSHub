@@ -1,8 +1,10 @@
-import { DataItem, Route, ViewType } from '@/types';
-import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
-import { parseDate } from '@/utils/parse-date';
+
+import type { Route } from '@/types';
+import { ViewType } from '@/types';
 import cache from '@/utils/cache';
+import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/podcast/:id',
@@ -86,7 +88,7 @@ async function handler(ctx) {
                 const response = await ofetch(episodeLink);
                 const episodeItem = response.pageProps.episode;
                 item.description = episodeItem.shownotes || episodeItem.description || episodeItem.title || '';
-                return item as DataItem;
+                return item;
             })
         )
     );

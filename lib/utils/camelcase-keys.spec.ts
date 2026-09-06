@@ -59,7 +59,7 @@ describe('test camelcase keys', () => {
     });
 
     it('case 4: nullable value', () => {
-        let value = null as any;
+        let value: number | null | undefined = null;
         expect(camelcaseKeys(value)).toBe(value);
 
         value = undefined;
@@ -76,7 +76,7 @@ describe('test camelcase keys', () => {
             },
             null,
             undefined,
-            +0,
+            0,
             -0,
             Infinity,
             {
@@ -90,7 +90,7 @@ describe('test camelcase keys', () => {
             },
             null,
             undefined,
-            +0,
+            0,
             -0,
             Infinity,
             {

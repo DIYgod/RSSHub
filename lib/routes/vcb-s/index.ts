@@ -1,22 +1,23 @@
-import { Route } from '@/types';
-
+import type { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-import { art } from '@/utils/render';
-import path from 'node:path';
+
+import { renderDescription } from './templates/post';
 
 const rootUrl = 'https://vcb-s.com';
 const postsAPIUrl = `${rootUrl}/wp-json/wp/v2/posts`;
 
 export const route: Route = {
     path: '/',
+    categories: ['anime'],
+    example: '/vcb-s',
     radar: [
         {
             source: ['vcb-s.com/'],
             target: '',
         },
     ],
-    name: 'Unknown',
+    name: '最新文章',
     maintainers: ['cxfksword'],
     handler,
     url: 'vcb-s.com/',
@@ -27,14 +28,11 @@ async function handler(ctx) {
     const url = `${postsAPIUrl}?per_page=${limit}&_embed`;
 
     const response = await got.get(url);
-    if (typeof response.data === 'string') {
-        response.data = JSON.parse(response.body.trim());
-    }
-    const data = response.data;
+    const data = JSON.parse(response.body.trim());
 
     const items = data.map((item) => {
-        const description = art(path.join(__dirname, 'templates/post.art'), {
-            post: item.content.rendered.replaceAll(/<pre class="js-medie-info-detail.*?>(.*?)<\/pre>/gs, '<pre><code>$1</code></pre>').replaceAll(/<div.+?dw-box-download.+?>(.*?)<\/div>/gs, '<pre>$1</pre>'),
+        const description = renderDescription({
+            post: item.content.rendered.replaceAll(/<pre class="js-medie-info-detail[^>]*>(.*?)<\/pre>/gs, '<pre><code>$1</code></pre>').replaceAll(/<div.+?dw-box-download[^>]+>(.*?)<\/div>/gs, '<pre>$1</pre>'),
             medias: item._embedded['wp:featuredmedia'],
         });
 

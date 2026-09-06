@@ -1,7 +1,8 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
@@ -29,7 +30,7 @@ export const route: Route = {
     url: 'kuwaitlocal.com/news/latest',
 };
 
-async function handler(ctx) {
+async function handler(ctx): Promise<Data> {
     const baseUrl = 'https://kuwaitlocal.com';
     const { category = 'latest' } = ctx.req.param();
     const url = `${baseUrl}/news/${category === 'latest' ? category : `categories/${category}`}`;
@@ -38,17 +39,17 @@ async function handler(ctx) {
     const $ = load(response);
     const list = $('a.ggrid')
         .toArray()
-        .map((item) => {
-            item = $(item);
+        .map((item): DataItem => {
+            const $item = $(item);
             return {
-                title: item.find('.txt').text().trim(),
-                link: item.attr('href'),
+                title: $item.find('.txt').text().trim(),
+                link: $item.attr('href'),
             };
         });
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const { data: response } = await got(item.link);
                 const $ = load(response);
 
@@ -58,7 +59,7 @@ async function handler(ctx) {
                     .map((item) => $(item).text().trim());
                 $('[id^=div-gpt-ad]').remove();
                 $('.tags_sec2, .tags_sec, .comment').remove();
-                item.description = $('.single_news_img').html() + $('#news_description').html();
+                item.description = $('.single_news_img').html()! + $('#news_description').html()!;
 
                 return item;
             })
@@ -67,7 +68,7 @@ async function handler(ctx) {
 
     return {
         title: $('head title').text().trim(),
-        description: $('head meta[name="description"]').attr('content').trim(),
+        description: $('head meta[name="description"]').attr('content')!.trim(),
         link: url,
         item: items,
         language: 'en',

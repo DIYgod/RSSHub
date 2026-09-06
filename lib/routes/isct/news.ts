@@ -1,7 +1,8 @@
-import { Route } from '@/types';
+import { decode } from 'entities';
+
+import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
-import { decode } from 'entities';
 
 interface MediaItem {
     ID: string;
@@ -67,7 +68,7 @@ export const route: Route = {
             // 如果有的话，文章作者
             // author: item.user.login,
             // 如果有的话，文章分类
-            category: item.MEDIA_TYPES ? [tagIdNameMapping[Number.parseInt(item.MEDIA_TYPES.replaceAll('"', ''), 10)]] : [],
+            category: item.MEDIA_TYPES ? [tagIdNameMapping[Number(item.MEDIA_TYPES.replaceAll('"', ''))]] : [],
         }));
         return {
             // 源标题

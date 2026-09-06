@@ -1,7 +1,8 @@
-import { DataItem, Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
 const base = 'http://www.sis.zju.edu.cn/sischinese/';
@@ -86,9 +87,7 @@ async function enrichNewsItemWithDetails(item: DataItem, refererUrl: string): Pr
 
             // Extract and set the full article content as description
             const description = $('.wp_articlecontent').html();
-            if (description) {
-                item.description = description;
-            }
+            item.description = description;
 
             // Extract and clean the author information
             let author = $('.arti_metas').find('.arti_publisher').text();
@@ -122,9 +121,8 @@ export const route: Route = {
     },
     name: '外国语学院',
     description: `| 重要公告 | 最新通知 | 教育教学 | 科学研究 | 新闻动态 | 联系我们 | 党政管理 | 组织人事 | 科学研究 | 本科教育 | 研究生教育 | 学生思政 | 校友联络 | 对外交流 |
-| -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- |
-| 0        | 1        | 2        | 3        | 4        | 5        | 6        | 7            | 8            | 9       | 10       | 11       | 12       | 13       |
-`,
+| -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- | ---------- | -------- | -------- | -------- |
+| 0        | 1        | 2        | 3        | 4        | 5        | 6        | 7        | 8        | 9        | 10         | 11       | 12       | 13       |`,
     maintainers: ['Alex222222222222'],
     handler: handleSisRequest,
     url: 'www.sis.zju.edu.cn',
@@ -135,13 +133,13 @@ export const route: Route = {
  * @param ctx - The request context containing route parameters
  * @returns Promise with RSS feed data including title, link, and news items
  */
-async function handleSisRequest(ctx: { req: { param: (arg0: string) => string } }) {
+async function handleSisRequest(ctx) {
     const requestedType = Number.parseInt(ctx.req.param('type'));
     const categoryInfo = categoryMap.get(requestedType);
 
     // Validate the requested category type
     if (!categoryInfo) {
-        const validTypes = [...categoryMap.keys()].join(', ');
+        const validTypes = categoryMap.keys().toArray().join(', ');
         throw new Error(`Invalid type: ${requestedType}. Valid types are: ${validTypes}`);
     }
 

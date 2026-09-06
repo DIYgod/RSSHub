@@ -1,6 +1,7 @@
-import { Route } from '@/types';
-import got from '@/utils/got';
 import { load } from 'cheerio';
+
+import type { Route } from '@/types';
+import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
@@ -37,7 +38,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const type = Number.parseInt(ctx.req.param('type'));
-    const tag = map.get(type).tag;
+    const tag = map.get(type)!.tag;
     const url = `${host}${tag}/list.htm`;
     const res = await got(url);
 
@@ -45,17 +46,17 @@ async function handler(ctx) {
     const list = $('#wp_news_w09').find('.list-item');
 
     const items = list.toArray().map((item) => {
-        item = $(item);
+        const $item = $(item);
         return {
-            title: item.find('h3').attr('title'),
-            pubDate: timezone(parseDate(item.find('.date').text().trim(), 'YY-MM-DD'), +8),
-            link: `http://www.grs.zju.edu.cn${item.find('a').eq(-1).attr('href')}`,
-            description: item.find('p').text(),
+            title: $item.find('h3').attr('title')!,
+            pubDate: timezone(parseDate($item.find('.date').text().trim(), 'YY-MM-DD'), 8),
+            link: `http://www.grs.zju.edu.cn${$item.find('a').eq(-1).attr('href')}`,
+            description: $item.find('p').text(),
         };
     });
 
     return {
-        title: map.get(type).title,
+        title: map.get(type)!.title,
         link: `${host}${tag}/list.htm`,
         item: items,
     };

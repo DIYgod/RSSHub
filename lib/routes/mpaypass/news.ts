@@ -1,7 +1,8 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { Data, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
@@ -29,7 +30,7 @@ export const route: Route = {
     url: 'mpaypass.com.cn/',
 };
 
-async function handler() {
+async function handler(): Promise<Data> {
     const link = 'http://m.mpaypass.com.cn';
     const listData = await got(link);
     const $list = load(listData.data);
@@ -47,7 +48,7 @@ async function handler() {
                     const title = $a.text();
                     const date = $el.find('.Newslist-time span').text();
 
-                    return cache.tryGet(href, async () => {
+                    return cache.tryGet(href!, async () => {
                         const contentData = await got.get(href);
                         const $content = load(contentData.data);
                         const description = $content('.newslist-body').html();
@@ -56,7 +57,7 @@ async function handler() {
                             title,
                             description,
                             link: href,
-                            pubDate: timezone(parseDate(date), +8),
+                            pubDate: timezone(parseDate(date), 8),
                         };
                     });
                 })

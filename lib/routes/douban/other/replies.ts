@@ -1,7 +1,8 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 
 export const route: Route = {
     path: '/replies/:uid',
@@ -32,14 +33,14 @@ async function handler(ctx) {
     const list = $('div.recent-replies-mod ul.comment-list li')
         .toArray()
         .map((item) => {
-            item = $(item);
-            const p = item.find('p');
+            const $item = $(item);
+            const p = $item.find('p');
             const match = p
                 .find('a')
-                .attr('href')
+                .attr('href')!
                 .match(/%2Fnote%2F(.*?)%2F%23(.*?)&type=note/);
-            const nid = match[1];
-            const cid = match[2];
+            const nid = match![1];
+            const cid = match![2];
             p.remove();
             return {
                 link: `https://www.douban.com/note/${nid}/#${cid}`,
@@ -48,16 +49,17 @@ async function handler(ctx) {
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link, (async () => {
                 const detailResponse = await got({
                     method: 'get',
                     url: item.link,
                 });
 
-                const comments = JSON.parse(detailResponse.data.match(/'comments':(.*)}],/)[1] + '}]');
+                const comments = JSON.parse(detailResponse.data.match(/'comments':(.*)\}\],/)[1] + '}]');
 
-                for (const c of comments) {
-                    if (c.id === item.link.split('#')[1]) {
+                while (comments.length > 0) {
+                    const c = comments.shift();
+                    if (c.id === item.link.split('#', 2)[1]) {
                         return {
                             link: item.link,
                             title: `${c.author.name} 于 ${c.create_time} 的回应`,
@@ -65,11 +67,12 @@ async function handler(ctx) {
                             description: c.text,
                             author: c.author.name,
                         };
-                    } else if (c.replies.length > 0) {
+                    }
+                    if (c.replies.length > 0) {
                         comments.push(...c.replies);
                     }
                 }
-            })
+            }) as () => Promise<DataItem>)
         )
     );
 

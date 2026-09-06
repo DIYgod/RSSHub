@@ -1,9 +1,10 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
-import { finishArticleItem } from '@/utils/wechat-mp';
 import { parseDate } from '@/utils/parse-date';
+import { finishArticleItem } from '@/utils/wechat-mp';
 
 const baseUrl = 'https://nsd.pku.edu.cn/sylm/gd/';
 
@@ -14,11 +15,11 @@ const pageType = (href) => {
     const url = new URL(href);
     if (url.hostname === 'mp.weixin.qq.com') {
         return 'wechat-mp';
-    } else if (url.hostname === 'news.pku.edu.cn') {
-        return 'pku-news';
-    } else {
-        return 'unknown';
     }
+    if (url.hostname === 'news.pku.edu.cn') {
+        return 'pku-news';
+    }
+    return 'unknown';
 };
 
 export const route: Route = {
@@ -46,12 +47,12 @@ export const route: Route = {
 };
 
 async function handler() {
-    const response = await got({ url: baseUrl, https: { rejectUnauthorized: false } });
+    const response = await got(baseUrl);
 
     const $ = load(response.data);
     const list = $('div.maincontent > ul > li')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem & { type: string } => {
             const href = $(item).find('a').attr('href');
             const type = pageType(href);
             return {
@@ -68,15 +69,15 @@ async function handler() {
                 case 'wechat-mp':
                     return finishArticleItem(item);
                 case 'pku-news':
-                    return cache.tryGet(item.link, async () => {
-                        const detailResponse = await got({ url: item.link, https: { rejectUnauthorized: false } });
+                    return cache.tryGet(item.link!, async () => {
+                        const detailResponse = await got(item.link);
                         const content = load(detailResponse.data);
                         item.description = content('div.pageArticle > div.col.lf').html();
                         return item;
                     });
                 case 'in-site':
-                    return cache.tryGet(item.link, async () => {
-                        const detailResponse = await got({ url: item.link, https: { rejectUnauthorized: false } });
+                    return cache.tryGet(item.link!, async () => {
+                        const detailResponse = await got(item.link);
                         const content = load(detailResponse.data);
                         item.description = content('div.article').html();
                         return item;

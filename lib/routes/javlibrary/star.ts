@@ -1,6 +1,6 @@
-import { Route } from '@/types';
-import cache from '@/utils/cache';
-import { defaultMode, defaultLanguage, rootUrl, ProcessItems } from './utils';
+import type { Route } from '@/types';
+
+import { defaultLanguage, defaultMode, ProcessItems, rootUrl } from './utils';
 
 export const route: Route = {
     path: '/star/:id/:language?/:mode?',
@@ -24,9 +24,9 @@ export const route: Route = {
 | 1                              | 2                    |
 
 ::: tip
-  See [Ranking](https://www.javlibrary.com/en/star_mostfav.php) to view stars by ranks.
+See [Ranking](https://www.javlibrary.com/en/star_mostfav.php) to view stars by ranks.
 
-  See [Directory](https://www.javlibrary.com/en/star_list.php) to view all stars.
+See [Directory](https://www.javlibrary.com/en/star_list.php) to view all stars.
 :::`,
 };
 
@@ -36,5 +36,5 @@ async function handler(ctx) {
     const language = ctx.req.param('language') ?? defaultLanguage;
     const currentUrl = `${rootUrl}/${language}/vl_star.php?list&s=${id}&mode=${mode}`;
 
-    return await ProcessItems(language, currentUrl, cache.tryGet);
+    return await ProcessItems(language, currentUrl);
 }

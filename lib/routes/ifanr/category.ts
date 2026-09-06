@@ -1,4 +1,4 @@
-import { Route } from '@/types';
+import type { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
@@ -35,7 +35,7 @@ export const route: Route = {
     name: '分类',
     maintainers: ['donghongfei'],
     handler,
-    description: `支持分类：早报、评测、糖纸众测、产品`,
+    description: '支持分类：早报、评测、糖纸众测、产品',
 };
 
 async function handler(ctx) {

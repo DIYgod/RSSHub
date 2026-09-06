@@ -1,6 +1,7 @@
-import { Route } from '@/types';
-import got from '@/utils/got';
 import { load } from 'cheerio';
+
+import type { Route } from '@/types';
+import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
@@ -25,13 +26,13 @@ async function handler() {
     const items = $('div.recent-post-item')
         .toArray()
         .map((item) => {
-            item = $(item);
-            const a = item.find('a.article-title').first();
-            const timeElement = item.find('time').first();
+            const $item = $(item);
+            const a = $item.find('a.article-title');
+            const timeElement = $item.find('time');
             return {
-                title: a.attr('title'),
+                title: a.attr('title')!,
                 link: `https://daoxuan.cc${a.attr('href')}`,
-                pubDate: parseDate(timeElement.attr('datetime')),
+                pubDate: parseDate(timeElement.attr('datetime')!),
                 description: a.attr('title'),
             };
         });

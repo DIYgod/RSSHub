@@ -1,6 +1,8 @@
-import { Route } from '@/types';
-import got from '@/utils/got';
 import { load } from 'cheerio';
+import type { Text } from 'domhandler';
+
+import type { Route } from '@/types';
+import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
@@ -26,8 +28,8 @@ function getNews(data) {
         .toArray()
         .map((elem) => ({
             link: baseUrl + elem.attribs.href,
-            title: elem.children[0].data,
-            pubDate: timezone(parseDate(elem.attribs.href.split('/')[3].split('.')[0].slice(0, 14), 'YYYYMMDDHHmmss'), 8),
+            title: (elem.children[0] as Text).data,
+            pubDate: timezone(parseDate(elem.attribs.href.split('/', 4)[3].split('.', 1)[0].slice(0, 14), 'YYYYMMDDHHmmss'), 8),
         }));
 }
 
@@ -58,11 +60,7 @@ async function handler(ctx) {
         type = 'all';
     }
 
-    const responseData = {
-        title: '北京科技大学天津学院新闻动态',
-        link: baseUrl,
-        item: null,
-    };
+    let item;
 
     if (type === 'all') {
         const all = await Promise.all(
@@ -72,12 +70,15 @@ async function handler(ctx) {
                 return news;
             })
         );
-        responseData.item = all.flat();
+        item = all.flat();
     } else {
         const response = await got(baseUrl + maps[type]);
-        const news = getNews(response.data);
-        responseData.item = news;
+        item = getNews(response.data);
     }
 
-    return responseData;
+    return {
+        title: '北京科技大学天津学院新闻动态',
+        link: baseUrl,
+        item,
+    };
 }

@@ -1,6 +1,7 @@
-import { Route } from '@/types';
+import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseModule, parseFloorItem } from './utils';
+
+import { parseFloorItem, parseModule } from './utils';
 
 export const route: Route = {
     path: '/latest',

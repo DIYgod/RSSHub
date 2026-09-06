@@ -1,13 +1,14 @@
-import { Route } from '@/types';
-import got from '@/utils/got';
 import { load } from 'cheerio';
+
+import type { Route } from '@/types';
+import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
 const rootURL = 'http://www.zzb.sz.gov.cn/';
 
 export const route: Route = {
-    path: '/shenzhen/zzb/:caty/:page?',
+    path: '/zzb/:caty/:page?',
     categories: ['government'],
     example: '/gov/shenzhen/zzb/tzgg',
     parameters: { caty: '信息类别', page: '页码' },

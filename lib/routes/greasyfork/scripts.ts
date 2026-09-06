@@ -1,6 +1,7 @@
-import { Route } from '@/types';
-import got from '@/utils/got';
 import { load } from 'cheerio';
+
+import type { Route } from '@/types';
+import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
@@ -27,7 +28,7 @@ export const route: Route = {
     description: `| Sort            | Description    |
 | --------------- | -------------- |
 | today           | Daily installs |
-| total\_installs | Total installs |
+| total\\_installs | Total installs |
 | ratings         | Ratings        |
 | created         | Created date   |
 | updated         | Updated date   |
@@ -53,19 +54,19 @@ async function handler(ctx) {
     const list = $('.script-list').find('article');
 
     return {
-        title: $('title').first().text(),
+        title: $('title').text(),
         link: currentUrl,
         description: $('meta[name=description]').attr('content'),
         item: list?.toArray().map((item) => {
-            item = $(item);
-            const h2 = item.find('h2');
+            const $item = $(item);
+            const h2 = $item.find('h2');
             return {
                 title: h2.find('a').text(),
                 description: h2.find('.description').text(),
-                link: new URL(h2.find('a').attr('href'), 'https://greasyfork.org').href,
-                pubDate: parseDate(item.find('.script-list-created-date relative-time').attr('datetime')),
-                updated: parseDate(item.find('.script-list-updated-date relative-time').attr('datetime')),
-                author: item
+                link: new URL(h2.find('a').attr('href')!, 'https://greasyfork.org').href,
+                pubDate: parseDate($item.find('.script-list-created-date relative-time').attr('datetime')!),
+                updated: parseDate($item.find('.script-list-updated-date relative-time').attr('datetime')!),
+                author: $item
                     .find('.script-list-author a')
                     .toArray()
                     .map((a) => $(a).text())

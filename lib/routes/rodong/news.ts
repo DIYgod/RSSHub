@@ -1,7 +1,8 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
 const host = 'http://www.rodong.rep.kp';
@@ -42,19 +43,19 @@ async function handler(ctx) {
     const $ = load(response);
     const list = $('.date_news_list .row')
         .toArray()
-        .map((item) => {
-            item = $(item);
+        .map((item): DataItem => {
+            const $item = $(item);
             return {
-                title: item.find('.media-body').text(),
-                link: `${host}/${language}/${item.find('.media-body a').attr('href')}`,
-                author: item.find('.col-sm-3').text(),
-                pubDate: parseDate(item.find('.news_date').text(), 'YYYY.M.D.'),
+                title: $item.find('.media-body').text(),
+                link: `${host}/${language}/${$item.find('.media-body a').attr('href')}`,
+                author: $item.find('.col-sm-3').text(),
+                pubDate: parseDate($item.find('.news_date').text(), 'YYYY.M.D.'),
             };
         });
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const { data: response } = await got(item.link);
                 const $ = load(response);
 

@@ -1,7 +1,8 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 
 const host = 'https://ipsw.me/';
 
@@ -20,7 +21,7 @@ export const route: Route = {
 
 function replaceurl(e) {
     e = e.replace("';", '');
-    e = e.replace("window.location = '/", host);
+    e = e.replace("window.location = '/", () => host);
     return e;
 }
 
@@ -44,9 +45,6 @@ async function handler(ctx) {
     const response = await got({
         method: 'get',
         url: link,
-        headers: {
-            Referer: host,
-        },
     });
     const $ = load(response.data);
     const list = pname.includes(',')
@@ -78,14 +76,11 @@ async function handler(ctx) {
                 const response = await got({
                     method: 'get',
                     url: itemUrl,
-                    headers: {
-                        Referer: host,
-                    },
                 });
                 const $ = load(response.data);
                 const description = $('div.selector__wizard').html();
                 let removeString;
-                removeString = pname.includes(',') ? $('div.table-responsive table tr').first().find('td').text().trim() : $('tr.firmware').first().find('td').eq(2).text().trim();
+                removeString = pname.includes(',') ? $('div.table-responsive table tr').first().find('td').text().trim() : $('tr.firmware').first().find('td').eq(2).text();
                 // 处理发布日期,以表格第一行的日期为最新的发布日期
                 removeString = removeString.replace('th', '').replace('nd', '').replace('st', '').replace('rd', '');
                 const rdate = removeString.replaceAll(' ', ',');

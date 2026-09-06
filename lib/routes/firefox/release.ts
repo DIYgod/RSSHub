@@ -1,6 +1,7 @@
-import { Route } from '@/types';
-import got from '@/utils/got';
 import { load } from 'cheerio';
+
+import type { Route } from '@/types';
+import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
 const platformSlugs = {
@@ -13,8 +14,14 @@ const platformSlugs = {
 
 export const route: Route = {
     path: '/release/:platform?',
-    name: 'Unknown',
-    maintainers: [],
+    categories: ['program-update'],
+    example: '/firefox/release/desktop',
+    parameters: { platform: 'the platform' },
+    description: `| Desktop | Android | Beta | Nightly | iOS |
+| ------- | ------- | ---- | ------- | --- |
+| desktop | android | beta | nightly | ios |`,
+    name: 'New Release',
+    maintainers: ['fengkx'],
     handler,
 };
 

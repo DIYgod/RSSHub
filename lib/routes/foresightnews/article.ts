@@ -1,5 +1,6 @@
-import { Route } from '@/types';
-import { rootUrl, apiRootUrl, processItems, icon, image } from './util';
+import type { Language, Route } from '@/types';
+
+import { apiRootUrl, icon, image, processItems, rootUrl } from './util';
 
 export const route: Route = {
     path: '/article',
@@ -8,7 +9,7 @@ export const route: Route = {
     parameters: {},
     features: {
         requireConfig: false,
-        requirePuppeteer: false,
+        requirePuppeteer: true,
         antiCrawler: false,
         supportBT: false,
         supportPodcast: false,
@@ -26,7 +27,7 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 50;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 50;
 
     const apiUrl = new URL('v1/articles', apiRootUrl).href;
 
@@ -37,7 +38,7 @@ async function handler(ctx) {
         title: 'Foresight News - 文章',
         link: rootUrl,
         description: '文章 - Foresight News',
-        language: 'zh-cn',
+        language: 'zh-CN' as const satisfies Language,
         image,
         icon,
         logo: icon,

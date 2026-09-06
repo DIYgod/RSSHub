@@ -1,8 +1,9 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-import { load } from 'cheerio';
 
 export const route: Route = {
     path: '/author/:author',
@@ -35,7 +36,7 @@ async function handler(ctx) {
             return cache.tryGet(itemUrl, async () => {
                 const result = await got(itemUrl);
                 const $ = load(result.data);
-                const description = $('.article-body').html().trim();
+                const description = $('.article-body').html()!.trim();
                 return {
                     title: item.title,
                     link: itemUrl,

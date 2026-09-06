@@ -1,7 +1,8 @@
-import { Route } from '@/types';
 import { load } from 'cheerio';
-import { parseDate } from '@/utils/parse-date';
+
+import type { Data, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/changelog',
@@ -27,7 +28,7 @@ export const route: Route = {
     url: 'desktop.webcatalog.io/en/changelog',
 };
 
-async function handler() {
+async function handler(): Promise<Data> {
     const url = 'https://desktop.webcatalog.io/en/changelog';
     const response = await ofetch(url);
     const $ = load(response);

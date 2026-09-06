@@ -1,6 +1,7 @@
-import { Route } from '@/types';
-import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
+
+import type { Route } from '@/types';
+import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
@@ -19,7 +20,7 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const limit = Number.parseInt(ctx.req.query('limit') || 12, 10);
+    const limit = Number(ctx.req.query('limit') || 12);
     const link = 'https://ai.meta.com/blog/';
 
     const res = await ofetch(link, {
@@ -60,8 +61,10 @@ async function handler(ctx) {
     for (const obj of serverJs.define) {
         const key = obj[0];
         const value = obj[2];
-        server[key as keyof ServerData] = value;
+        server[key] = value;
     }
+
+    const spinT = String(server.SiteData.__spin_t || Date.now());
 
     const data = await ofetch('https://ai.meta.com/api/graphql/', {
         method: 'POST',
@@ -92,7 +95,7 @@ async function handler(ctx) {
             // jazoest: '',
             __spin_r: String(server.SiteData.__spin_r || ''),
             __spin_b: String(server.SiteData.__spin_b || 'trunk'),
-            __spin_t: String(server.SiteData.__spin_t || Date.now()),
+            __spin_t: spinT,
             fb_api_caller_class: 'RelayModern',
             fb_api_req_friendly_name: 'MetaAIBlogRecentPostSearchQuery',
             variables: JSON.stringify({ input: { query: '', from: 0, limit, tags: [], excludeObjectIDs: ['27568536916124137'] } }),

@@ -1,8 +1,9 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
 
-import ofetch from '@/utils/ofetch';
-import * as cheerio from 'cheerio';
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
+import ofetch from '@/utils/ofetch';
+
 import { baseUrl as rootUrl, getItem } from './utils';
 
 const config = {
@@ -85,8 +86,7 @@ export const route: Route = {
     name: '分类',
     maintainers: ['nczitzk'],
     handler,
-    description: `
-| 头条    | 网评 | 视频 | 原创   | 经济    | 政治     | 文化    | 社会    | 党建 | 科教    | 生态    | 国防    | 国际          | 图书  | 学习笔记 | 理论文选 |
+    description: `| 头条    | 网评 | 视频 | 原创   | 经济    | 政治     | 文化    | 社会    | 党建 | 科教    | 生态    | 国防    | 国际          | 图书  | 学习笔记 | 理论文选 |
 | ------- | ---- | ---- | ------ | ------- | -------- | ------- | ------- | ---- | ------- | ------- | ------- | ------------- | ----- | -------- | -------- |
 | toutiao | qswp | qssp | qslgxd | economy | politics | culture | society | cpc  | science | zoology | defense | international | books | xxbj     | llwx     |`,
 };
@@ -98,7 +98,7 @@ async function handler(ctx) {
     const currentUrl = config[category].url;
     const response = await ofetch(currentUrl);
 
-    const $ = cheerio.load(response);
+    const $ = load(response);
 
     const list = $('.list-style1 ul li a, .text h2 a, .no-pic ul li a')
         .slice(0, limit)
@@ -107,7 +107,7 @@ async function handler(ctx) {
             const $item = $(item);
             return {
                 title: $item.text(),
-                link: $item.attr('href')!,
+                link: new URL($item.attr('href')!, rootUrl).href,
             };
         });
 

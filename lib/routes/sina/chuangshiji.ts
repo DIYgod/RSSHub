@@ -1,6 +1,6 @@
-import { Route } from '@/types';
-import cache from '@/utils/cache';
-import { getRollNewsList, parseRollNewsList, parseArticle } from './utils';
+import type { Route } from '@/types';
+
+import { getRollNewsList, parseArticle, parseRollNewsList } from './utils';
 
 export const route: Route = {
     path: '/csj',
@@ -33,7 +33,7 @@ async function handler(ctx) {
     const response = await getRollNewsList(pageid, lid, limit);
     const list = parseRollNewsList(response.data.result.data);
 
-    const out = await Promise.all(list.map((item) => parseArticle(item, cache.tryGet)));
+    const out = await Promise.all(list.map((item) => parseArticle(item)));
 
     return {
         title: '新浪专栏-创事记',

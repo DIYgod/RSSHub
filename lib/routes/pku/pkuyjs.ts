@@ -1,6 +1,7 @@
-import { Route } from '@/types';
-import got from '@/utils/got';
 import { load } from 'cheerio';
+
+import type { Route } from '@/types';
+import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
@@ -38,12 +39,12 @@ async function handler() {
         link,
         description: '北京大学研究生院通知公告',
         item: list.toArray().map((item) => {
-            item = $(item);
+            const $item = $(item);
             return {
-                title: item.find('li a').text(),
-                description: item.find('li a').text(),
-                link: item.find('li a').attr('href'),
-                pubDate: parseDate(item.find('.zsxxCont_list_time').text()),
+                title: $item.find('li a').text(),
+                description: $item.find('li a').text(),
+                link: $item.find('li a').attr('href'),
+                pubDate: parseDate($item.find('.zsxxCont_list_time').text()),
             };
         }),
     };

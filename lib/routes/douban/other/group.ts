@@ -1,7 +1,9 @@
-import { Route, ViewType } from '@/types';
+import { load } from 'cheerio';
+
+import type { DataItem, Route } from '@/types';
+import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 
 export const route: Route = {
     path: '/group/:groupid/:type?',
@@ -64,12 +66,12 @@ async function handler(ctx) {
     const items = await Promise.all(
         list.map((item) => {
             const $1 = $(item);
-            const result = {
-                title: $1.find('.title a').attr('title'),
+            const result: DataItem = {
+                title: $1.find('.title a').attr('title')!,
                 author: $1.find('a').eq(1).text(),
                 link: $1.find('.title a').attr('href'),
             };
-            return cache.tryGet(result.link, async () => {
+            return cache.tryGet(result.link!, async () => {
                 try {
                     const detailResponse = await got({
                         method: 'get',

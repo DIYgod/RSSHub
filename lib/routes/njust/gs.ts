@@ -1,7 +1,9 @@
-import { Route } from '@/types';
 import { load } from 'cheerio';
+
+import type { Route } from '@/types';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
+
 import { getContent } from './utils';
 
 const host = 'https://gs.njust.edu.cn';
@@ -30,7 +32,7 @@ export const route: Route = {
     handler,
     description: `| 首页通知公告 | 首页新闻动态 | 最新通知 | 招生信息 | 培养信息 | 学术活动 |
 | ------------ | ------------ | -------- | -------- | -------- | -------- |
-| sytzgg\_4568 | sytzgg       | 14686    | 14687    | 14688    | xshdggl  |`,
+| sytzgg\\_4568 | sytzgg       | 14686    | 14687    | 14688    | xshdggl  |`,
 };
 
 async function handler(ctx) {
@@ -47,15 +49,15 @@ async function handler(ctx) {
         list.map(async (index, item) => {
             const url = $(item).find('a').attr('href');
             let desc = '';
-            if (url.startsWith('/')) {
+            if (url!.startsWith('/')) {
                 const data = await getContent(host + url);
-                desc = load(data)('.wp_articlecontent').html();
+                desc = load(data)('.wp_articlecontent').html() ?? '';
             }
 
             return {
-                title: $(item).find('a').attr('title').trim(),
+                title: $(item).find('a').attr('title')!.trim(),
                 description: desc,
-                pubDate: timezone(parseDate($(item).find('span').text(), 'YYYY-MM-DD'), +8),
+                pubDate: timezone(parseDate($(item).find('span').text(), 'YYYY-MM-DD'), 8),
                 link: url,
             };
         })

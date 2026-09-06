@@ -1,27 +1,27 @@
-import path from 'node:path';
-
-import { type CheerioAPI, type Cheerio, load } from 'cheerio';
+import type { Cheerio, CheerioAPI } from 'cheerio';
+import { load } from 'cheerio';
 import type { Element } from 'domhandler';
-import { type Context } from 'hono';
+import type { Context } from 'hono';
 
-import { type DataItem, type Route, type Data, ViewType } from '@/types';
-
-import { art } from '@/utils/render';
+import type { Data, DataItem, Language, Route } from '@/types';
+import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
+import { renderDescription } from './templates/description';
+
 export const handler = async (ctx: Context): Promise<Data> => {
     const { category = 'new' } = ctx.req.param();
-    const limit: number = Number.parseInt(ctx.req.query('limit') ?? '30', 10);
+    const limit = Number(ctx.req.query('limit') ?? '30');
 
-    const rootUrl: string = 'https://www.ali213.net';
+    const rootUrl = 'https://www.ali213.net';
     const targetUrl: string = new URL(`news/${category.endsWith('/') ? category : `${category}/`}`, rootUrl).href;
 
     const response = await ofetch(targetUrl);
     const $: CheerioAPI = load(response);
-    const language: string = $('html').prop('lang') ?? 'zh-CN';
+    const language = ($('html').prop('lang') ?? 'zh-CN') as Language;
 
     let items: DataItem[] = $('div.n_lone')
         .slice(0, limit)
@@ -40,7 +40,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
             const intro: string = $item.find('div.lone_f_r_t').text();
 
-            const description: string = art(path.join(__dirname, 'templates/description.art'), {
+            const description: string = renderDescription({
                 images: imageEl
                     ? [
                           {
@@ -73,13 +73,13 @@ export const handler = async (ctx: Context): Promise<Data> => {
     items = (
         await Promise.all(
             items.map((item) => {
-                if (!item.link && typeof item.link !== 'string') {
+                if (item.link === undefined) {
                     return item;
                 }
 
                 return cache.tryGet(item.link, async (): Promise<DataItem> => {
                     try {
-                        const detailResponse = await ofetch(item.link);
+                        const detailResponse = await ofetch(item.link!);
                         const $$: CheerioAPI = load(detailResponse);
 
                         const title: string = $$('h1.newstit').text();
@@ -92,7 +92,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                             mediaContent.each((_, el) => {
                                 const $$el: Cheerio<Element> = $$(el);
 
-                                const pEl: Cheerio<Element> = $$el.closest('p');
+                                const pEl = $$el.closest('p');
 
                                 const mediaUrl: string | undefined = $$el.prop('src');
                                 const mediaType: string | undefined = mediaUrl?.split(/\./).pop();
@@ -101,7 +101,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                                     media[mediaType] = { url: mediaUrl };
 
                                     pEl.replaceWith(
-                                        art(path.join(__dirname, 'templates/description.art'), {
+                                        renderDescription({
                                             images: [
                                                 {
                                                     src: mediaUrl,
@@ -113,7 +113,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                             });
                         }
 
-                        const description: string = art(path.join(__dirname, 'templates/description.art'), {
+                        const description: string = renderDescription({
                             description: $$('div#Content').html() ?? '',
                         });
 
@@ -134,7 +134,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                             ...item,
                             title,
                             description,
-                            pubDate: timezone(parseDate($$('div.newstag_l').text().split(/\s/)[0]), +8),
+                            pubDate: timezone(parseDate($$('div.newstag_l').text().split(/\s/, 1)[0]), 8),
                             content: {
                                 html: description,
                                 text: $$('div#Content').html() ?? '',
@@ -196,8 +196,7 @@ export const route: Route = {
 | 科技     | tech    |
 | 电竞     | esports |
 | 娱乐     | amuse   |
-| 手游     | mobile  |
-`,
+| 手游     | mobile  |`,
     categories: ['game'],
     features: {
         requireConfig: false,

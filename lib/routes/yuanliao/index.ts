@@ -1,22 +1,23 @@
-import { type Data, type DataItem, type Route, ViewType } from '@/types';
+import type { CheerioAPI } from 'cheerio';
+import { load } from 'cheerio';
+import type { Context } from 'hono';
 
+import type { Data, DataItem, Language, Route } from '@/types';
+import { ViewType } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
-import { type CheerioAPI, load } from 'cheerio';
-import { type Context } from 'hono';
-
 export const handler = async (ctx: Context): Promise<Data> => {
     const { tag } = ctx.req.param();
-    const limit: number = Number.parseInt(ctx.req.query('limit') ?? '30', 10);
+    const limit = Number(ctx.req.query('limit') ?? '30');
 
-    const baseUrl: string = 'https://yuanliao.info';
+    const baseUrl = 'https://yuanliao.info';
     const apiUrl: string = new URL('api/discussions', baseUrl).href;
     const targetUrl: string = new URL(tag ? `t/${tag}` : '', baseUrl).href;
 
     const targetResponse = await ofetch(targetUrl);
     const $: CheerioAPI = load(targetResponse);
-    const language = $('html').attr('lang') ?? 'zh';
+    const language = ($('html').attr('lang') ?? 'zh') as Language;
 
     const response = await ofetch(apiUrl, {
         query: {
@@ -40,10 +41,10 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
         const firstPostData = relationships?.firstPost?.data;
 
-        const description: string | undefined = firstPostData?.type && firstPostData?.id ? includedMap.get(`${firstPostData.type}-${firstPostData.id}`)?.attributes?.contentHtml : undefined;
+        const description: string | undefined = firstPostData?.type && firstPostData.id ? includedMap.get(`${firstPostData.type}-${firstPostData.id}`)?.attributes?.contentHtml : undefined;
         const pubDate: number | string = attributes.createdAt;
         const linkUrl: string | undefined = item.id ? `d/${item.id}` : undefined;
-        const categories: string[] = [...new Set(relationships?.tags?.data?.map((tag) => `${tag.type}-${tag.id}`)?.map((key) => includedMap.get(key)?.attributes?.name))].filter(Boolean);
+        const categories: string[] = [...new Set<string>(relationships?.tags?.data?.map((tag) => `${tag.type}-${tag.id}`)?.map((key) => includedMap.get(key)?.attributes?.name))].filter(Boolean);
 
         const userData = relationships?.user?.data;
         const userAttributes = userData && userData.type && userData.id ? includedMap.get(`${userData.type}-${userData.id}`)?.attributes : undefined;
@@ -57,7 +58,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                   },
               ]
             : undefined;
-        const guid: string = `yuanliao-${item.id}`;
+        const guid = `yuanliao-${item.id}`;
         const updated: number | string = attributes.lastPostedAt ?? pubDate;
 
         const processedItem: DataItem = {
@@ -139,7 +140,7 @@ export const route: Route = {
             ],
         },
     },
-    description: `:::tip
+    description: `::: tip
 订阅 [问题反馈](https://yuanliao.info/t/bug-report)，其源网址为 \`https://yuanliao.info/t/bug-report\`，请参考该 URL 指定部分构成参数，此时路由为 [\`/yuanliao/bug-report\`](https://rsshub.app/yuanliao/bug-report)。
 :::
 
@@ -152,8 +153,7 @@ export const route: Route = {
 | [意见建议](https://yuanliao.info/t/suggestions)  | [suggestions](https://rsshub.app/yuanliao/suggestions)   |
 | [插件发布](https://yuanliao.info/t/plugins)      | [plugins](https://rsshub.app/yuanliao/plugins)           |
 | [插件需求](https://yuanliao.info/t/plugin-needs) | [plugin-needs](https://rsshub.app/yuanliao/plugin-needs) |
-| [开发者](https://yuanliao.info/t/developers)     | [developers](https://rsshub.app/yuanliao/developers)     |
-`,
+| [开发者](https://yuanliao.info/t/developers)     | [developers](https://rsshub.app/yuanliao/developers)     |`,
     categories: ['bbs'],
     features: {
         requireConfig: false,

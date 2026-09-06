@@ -1,4 +1,4 @@
-import { Route } from '@/types';
+import type { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
@@ -31,19 +31,15 @@ async function handler() {
         data: { data: categories },
     } = await got('https://shortcuts.sspai.com/api/v1/user/workflow/all/get');
 
-    const items = [];
-
-    for (const category of categories) {
-        for (const shortcut of category.data || []) {
-            items.push({
-                title: shortcut.name,
-                description: `作者：<a href="${shortcut.author_url || '#'}">${shortcut.author_id}</a><br/>${decodeURIComponent((shortcut.description || '').replaceAll('+', '%20'))}`,
-                pubDate: parseDate(shortcut.utime * 1000),
-                guid: shortcut.id,
-                link: shortcut.url,
-            });
-        }
-    }
+    const items = categories.flatMap((category) =>
+        (category.data || []).map((shortcut) => ({
+            title: shortcut.name,
+            description: `作者：<a href="${shortcut.author_url || '#'}">${shortcut.author_id}</a><br/>${decodeURIComponent((shortcut.description || '').replaceAll('+', '%20'))}`,
+            pubDate: parseDate(shortcut.utime * 1000),
+            guid: shortcut.id,
+            link: shortcut.url,
+        }))
+    );
 
     return {
         title: 'Shortcuts Gallery - 少数派',

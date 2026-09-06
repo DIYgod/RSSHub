@@ -1,6 +1,7 @@
-import { Route } from '@/types';
-import got from '@/utils/got';
 import { load } from 'cheerio';
+
+import type { Route } from '@/types';
+import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
@@ -35,7 +36,7 @@ async function handler() {
 
     const items = await Promise.all(
         Object.keys(category_dict).map(async (c) => {
-            const response = await got(`https://dafls.nju.edu.cn/13167/list.htm`);
+            const response = await got('https://dafls.nju.edu.cn/13167/list.htm');
 
             const data = response.data;
             const $ = load(data);
@@ -43,11 +44,11 @@ async function handler() {
 
             // only read first page
             return list.map((index, item) => {
-                item = $(item);
+                const $item = $(item);
                 return {
-                    title: item.find('a').last().text(),
-                    link: 'https://dafls.nju.edu.cn' + item.find('a').attr('href'),
-                    pubDate: timezone(parseDate(item.find('span').last().text(), 'YYYY-MM-DD'), +8),
+                    title: $item.find('a').last().text(),
+                    link: 'https://dafls.nju.edu.cn' + $item.find('a').attr('href'),
+                    pubDate: timezone(parseDate($item.find('span').last().text(), 'YYYY-MM-DD'), 8),
                     category: c,
                 };
             });

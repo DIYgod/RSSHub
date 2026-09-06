@@ -1,7 +1,8 @@
-import type { Route, DataItem } from '@/types';
+import { load } from 'cheerio';
+
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { load } from 'cheerio';
 
 export const route: Route = {
     name: 'PAIR - AI Exploreables',
@@ -29,7 +30,7 @@ export const route: Route = {
                     const title = $(el).find('h3').text();
                     const image = $(el).find('img').attr('src');
                     const link = baseUrl + $(el).find('a').attr('href');
-                    return (await cache.tryGet(link, async () => {
+                    return await cache.tryGet(link, async (): Promise<DataItem> => {
                         const response = await ofetch(link);
                         const $item = load(response);
                         let description = $item('body').html();
@@ -42,7 +43,7 @@ export const route: Route = {
                             description,
                             image,
                         };
-                    })) as DataItem;
+                    });
                 })
         );
         return {

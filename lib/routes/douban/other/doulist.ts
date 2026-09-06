@@ -1,6 +1,7 @@
-import { Route } from '@/types';
-import got from '@/utils/got';
 import { load } from 'cheerio';
+
+import type { Route } from '@/types';
+import got from '@/utils/got';
 
 export const route: Route = {
     path: '/doulist/:id',
@@ -51,7 +52,7 @@ async function handler(ctx) {
                 description = $(item).find('span.status-recommend-text').text().trim();
             }
 
-            if (type === '来自：豆瓣电影' || type === '来自：豆瓣' || type === '来自：豆瓣读书' || type === '来自：豆瓣音乐') {
+            if (['来自：豆瓣电影', '来自：豆瓣', '来自：豆瓣读书', '来自：豆瓣音乐'].includes(type)) {
                 title = $(item).find('div.bd.doulist-subject div.title a').text().trim();
                 link = $(item).find('div.bd.doulist-subject div.title a').attr('href');
 
@@ -70,7 +71,7 @@ async function handler(ctx) {
                 title,
                 link,
                 description,
-                pubDate: new Date(date).toUTCString(),
+                pubDate: new Date(date!).toUTCString(),
             };
             return single;
         });

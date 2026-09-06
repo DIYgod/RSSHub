@@ -1,9 +1,10 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
-import { load } from 'cheerio';
 
 const baseUrl = 'https://cs.whu.edu.cn';
 
@@ -62,18 +63,18 @@ async function handler(ctx) {
 
     const list = $('div.study ul li')
         .toArray()
-        .map((item) => {
-            item = $(item);
+        .map((item): DataItem & { link: string } => {
+            const $item = $(item);
             return {
-                title: item.find('a p').text().trim(),
-                pubDate: parseDate(item.find('span').text()),
-                link: new URL(item.find('a').attr('href'), link).href,
+                title: $item.find('a p').text().trim(),
+                pubDate: parseDate($item.find('span').text()),
+                link: new URL($item.find('a').attr('href')!, link).href,
             };
         });
 
-    let items = await Promise.all(
+    const results = (await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link, async (): Promise<any> => {
                 let response;
                 try {
                     // 实测发现有些链接无法访问
@@ -91,26 +92,26 @@ async function handler(ctx) {
                 const content = $('.content');
 
                 content.find('img').each((_, e) => {
-                    e = $(e);
-                    if (e.attr('orisrc')) {
-                        const newUrl = new URL(e.attr('orisrc'), 'https://cs.whu.edu.cn');
-                        e.attr('src', newUrl.href);
-                        e.removeAttr('orisrc');
-                        e.removeAttr('vurl');
+                    const $e = $(e);
+                    if ($e.attr('orisrc')) {
+                        const newUrl = new URL($e.attr('orisrc')!, 'https://cs.whu.edu.cn');
+                        $e.attr('src', newUrl.href);
+                        $e.removeAttr('orisrc');
+                        $e.removeAttr('vurl');
                     }
                 });
 
                 item.description = content.html();
-                item.pubDate = $('meta[name="PubDate"]').length ? timezone(parseDate($('meta[name="PubDate"]').attr('content')), +8) : item.pubDate;
+                item.pubDate = $('meta[name="PubDate"]').length ? timezone(parseDate($('meta[name="PubDate"]').attr('content')!), 8) : item.pubDate;
 
                 return item;
             })
         )
-    );
-    items = items.filter((item) => item !== null);
+    )) as Array<DataItem | null>;
+    const items = results.filter((item) => item !== null);
 
     return {
-        title: $('title').first().text(),
+        title: $('title').text(),
         link,
         item: items,
     };

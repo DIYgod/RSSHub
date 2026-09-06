@@ -1,6 +1,8 @@
-import type { Route } from '@/types';
 import type { Context } from 'hono';
-import { getArticleList, parseArticleList, getArticle, mdTableBuilder } from './utils';
+
+import type { Route } from '@/types';
+
+import { getArticle, getArticleList, mdTableBuilder, parseArticleList } from './utils';
 
 const idNameMap = new Map([
     ['all', { title: '热点图文', suffix: 'ent', nodeId: '20107' }],
@@ -27,14 +29,14 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: Object.entries(idNameMap).map(([type, { title, suffix }]) => ({
+    radar: Array.from(idNameMap, ([type, { title, suffix }]) => ({
         title,
         source: [`www.gamersky.com/${suffix}`],
         target: `/ent/${type}`,
     })),
     name: '娱乐',
     maintainers: ['LogicJake'],
-    description: mdTableBuilder(Object.entries(idNameMap).map(([type, { title, nodeId }]) => ({ type, name: title, nodeId }))),
+    description: mdTableBuilder(Array.from(idNameMap, ([type, { title, nodeId }]) => ({ type, name: title, nodeId }))),
     handler,
 };
 

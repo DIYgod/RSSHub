@@ -1,8 +1,10 @@
-import { Route } from '@/types';
-import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
-import { parseDate } from '@/utils/parse-date';
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
+import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/parse-date';
+import { getPlaywrightPage } from '@/utils/playwright';
 import timezone from '@/utils/timezone';
 
 const host = 'https://yjsy.cjlu.edu.cn/';
@@ -12,17 +14,32 @@ const titleMap = new Map([
     ['jstz', '中量大研究生院 —— 教师通知'],
 ]);
 
+const allowedResourceTypes = new Set(['document', 'script']);
+
 export const route: Route = {
     path: '/yjsy/:cate',
     categories: ['university'],
     example: '/cjlu/yjsy/yjstz',
     parameters: {
-        cate: '订阅的类型，支持 yjstz（研究生通知）和 jstz（教师通知）',
+        cate: {
+            description: '订阅的类型，支持 yjstz（研究生通知）和 jstz（教师通知）',
+            default: 'yjstz',
+            options: [
+                {
+                    label: '教师通知',
+                    value: 'jstz',
+                },
+                {
+                    label: '研究生通知',
+                    value: 'yjstz',
+                },
+            ],
+        },
     },
     features: {
         requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
+        requirePuppeteer: true,
+        antiCrawler: true,
         supportRadar: true,
         supportBT: false,
         supportPodcast: false,
@@ -44,23 +61,37 @@ export const route: Route = {
     maintainers: ['chrisis58'],
     handler,
     description: `| 研究生通知 | 教师通知 |
-| -------- | -------- |
-| yjstz    | jstz     |`,
+| ---------- | -------- |
+| yjstz      | jstz     |`,
 };
 
 async function handler(ctx) {
     const cate = ctx.req.param('cate');
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 10;
+    const url = `${host}index/${cate}.htm`;
 
-    const response = await ofetch(`${cate}.htm`, {
-        baseURL: `${host}/index/`,
-        responseType: 'text',
+    const { page, destroy } = await getPlaywrightPage(url, {
+        onBeforeLoad: async (page) => {
+            await page.route('**/*', (route) => {
+                const request = route.request();
+                allowedResourceTypes.has(request.resourceType()) ? route.continue() : route.abort();
+            });
+        },
+        gotoConfig: { waitUntil: 'networkidle' },
     });
+
+    const cookies = await page.context().cookies();
+    const cookieString = cookies.map((c) => `${c.name}=${c.value}`).join('; ');
+
+    const response = await page.content();
+    await destroy();
 
     const $ = load(response);
 
     const list = $('div.grid685.right div.body ul')
         .find('li')
         .toArray()
+        .slice(0, limit)
         .map((element) => {
             const item = $(element);
 
@@ -71,8 +102,8 @@ async function handler(ctx) {
             const route = href.startsWith('../') ? href.replace(/^\.\.\//, '') : href;
 
             return {
-                title: a.attr('title') ?? titleMap.get(cate),
-                pubDate: timezone(parseDate(timeStr, 'YYYY/MM/DD'), +8),
+                title: a.attr('title') ?? titleMap.get(cate) ?? '中量大研究生院通知',
+                pubDate: timezone(parseDate(timeStr, 'YYYY/MM/DD'), 8),
                 link: `${host}${route}`,
                 description: '',
             };
@@ -87,6 +118,10 @@ async function handler(ctx) {
 
                 const res = await ofetch(item.link, {
                     responseType: 'text',
+                    headers: {
+                        Cookie: cookieString,
+                        Referer: url,
+                    },
                 });
                 const $ = load(res);
 
@@ -100,7 +135,7 @@ async function handler(ctx) {
     );
 
     return {
-        title: titleMap.get(cate),
+        title: titleMap.get(cate)!,
         link: `https://yjsy.cjlu.edu.cn/index/${cate}.htm`,
         item: items,
     };

@@ -1,8 +1,9 @@
-import { Route } from '@/types';
-import { parseDate } from '@/utils/parse-date';
-import got from '@/utils/got';
-import cache from '@/utils/cache';
 import { load } from 'cheerio';
+
+import type { Data, DataItem, Route } from '@/types';
+import cache from '@/utils/cache';
+import got from '@/utils/got';
+import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/news/:server?',
@@ -37,12 +38,12 @@ export const route: Route = {
     url: 'priconne-redive.jp/news',
     description: `服务器
 
-| 国服  | 台服  | 日服  |
+| 国服  | 台服  | 日服 |
 | ----- | ----- | ---- |
 | zh-cn | zh-tw | jp   |`,
 };
 
-async function handler(ctx) {
+async function handler(ctx): Promise<Data | null> {
     const { server = 'jp' } = ctx.req.param();
 
     switch (server) {
@@ -50,7 +51,7 @@ async function handler(ctx) {
             const parseContent = (htmlString) => {
                 const $ = load(htmlString);
                 $('.contents-body h3').remove();
-                const time = $('.meta-info .time').text().trim();
+                const time = $('.meta-info .time').text();
                 $('.meta-info').remove();
                 const content = $('.contents-body');
 
@@ -70,11 +71,11 @@ async function handler(ctx) {
 
             const out = await Promise.all(
                 list.map((index, item) => {
-                    item = $(item);
-                    const link = item.find('a').first().attr('href');
-                    return cache.tryGet(link, async () => {
-                        const rssitem = {
-                            title: item.find('h4').text(),
+                    const $item = $(item);
+                    const link = $item.find('a').attr('href');
+                    return cache.tryGet(link!, async () => {
+                        const rssitem: DataItem = {
+                            title: $item.find('h4').text(),
                             link,
                         };
 
@@ -124,7 +125,7 @@ async function handler(ctx) {
                     const link = `http://www.princessconnect.so-net.tw${title.attr('href')}`;
 
                     return cache.tryGet(link, async () => {
-                        const rssitem = {
+                        const rssitem: DataItem = {
                             title: title.text().trim(),
                             link,
                         };
@@ -157,7 +158,7 @@ async function handler(ctx) {
                     const link = `https://game.bilibili.com/pcr/news.html#detail=${item.id}`;
 
                     return cache.tryGet(link, async () => {
-                        const rssitem = {
+                        const rssitem: DataItem = {
                             title: item.title,
                             link,
                             pubDate: parseDate(item.ctime),
@@ -176,6 +177,6 @@ async function handler(ctx) {
             };
         }
         default:
-        // Do nothing
+            return null;
     }
 }

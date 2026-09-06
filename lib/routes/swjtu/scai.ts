@@ -1,8 +1,9 @@
-import { Route } from '@/types';
-import cache from '@/utils/cache';
 import { load } from 'cheerio';
-import { parseDate } from '@/utils/parse-date';
+
+import type { Route } from '@/types';
+import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/parse-date';
 
 const rootURL = 'https://scai.swjtu.edu.cn';
 
@@ -25,13 +26,11 @@ export const route: Route = {
         },
     ],
     name: '计算机与人工智能学院',
-    description: `
-| 分区              | 参数         |
-| ----------------- | ----------- |
-| 本科生教育         | bks         |
-| 研究生教育         | yjs         |
-| 学生工作           | xsgz        |
-`,
+    description: `| 分区       | 参数 |
+| ---------- | ---- |
+| 本科生教育 | bks  |
+| 研究生教育 | yjs  |
+| 学生工作   | xsgz |`,
     maintainers: ['AzureG03', 'SuperJeason'],
     handler,
 };
@@ -68,16 +67,16 @@ const getItem = (item, cache) => {
         // 'date' may be undefined. and 'parseDate' will return current time.
         // 转其他院的通知，获取不到具体时间，先从列表页获取具体信息
         if (dateText) {
-            const dateMatch = dateText.match(/\d{4}(-|\/|.)\d{1,2}\1\d{1,2}/);
+            const dateMatch = dateText.match(/\d{4}(.)\d{1,2}\1\d{1,2}/);
             if (!dateMatch || !dateMatch[0]) {
                 return null;
             }
             pubDate = parseDate(dateMatch[0]);
         } else {
             const dateItem = item.find('.calendar'); // 注意 .calendar 是 class
-            const day = dateItem.find('.day').text().trim(); // "31" （文本需 trim 去空格）
-            const ymd = dateItem.find('.date').text().trim(); // "2025/03"
-            const [year, month] = ymd.split('/'); // ["2025", "03"]
+            const day = dateItem.find('.day').text(); // "31"
+            const ymd = dateItem.find('.date').text(); // "2025/03"
+            const [year, month] = ymd.split('/', 2); // ["2025", "03"]
             const dateText = `${year}-${month}-${day.padStart(2, '0')}`;
             pubDate = new Date(dateText);
         }

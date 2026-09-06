@@ -1,9 +1,10 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
-import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/news',
@@ -43,23 +44,23 @@ async function handler() {
     const list = $('#wp_news_w9')
         .find('li')
         .toArray()
-        .map((item) => {
-            item = $(item);
-            const date = item.find('.column-news-date').text();
+        .map((item): DataItem => {
+            const $item = $(item);
+            const date = $item.find('.column-news-date').text();
 
             // 置顶链接自带http前缀，其他不带，需要手动判断
-            const a = item.find('a').attr('href');
-            const link = a.slice(0, 4) === 'http' ? a : rootUrl + a;
+            const a = $item.find('a').attr('href');
+            const link = a!.startsWith('http') ? a : rootUrl + a;
             return {
-                title: item.find('a').attr('title'),
+                title: $item.find('a').attr('title')!,
                 link,
-                pubDate: timezone(parseDate(date), +8),
+                pubDate: timezone(parseDate(date), 8),
             };
         });
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const detailResponse = await got({
                     method: 'get',
                     url: item.link,

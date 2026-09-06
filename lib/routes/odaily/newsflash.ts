@@ -1,7 +1,8 @@
-import { Route } from '@/types';
+import type { Route } from '@/types';
 import got from '@/utils/got';
-import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
+
 import { rootUrl } from './utils';
 
 export const route: Route = {
@@ -39,7 +40,7 @@ async function handler(ctx) {
     const items = response.data.data.items.map((item) => ({
         title: item.title,
         link: item.news_url,
-        pubDate: timezone(parseDate(item.published_at), +8),
+        pubDate: timezone(parseDate(item.published_at), 8),
         description: `<p>${item.description}</p>`,
     }));
 

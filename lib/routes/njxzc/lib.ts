@@ -1,8 +1,11 @@
-import { Route } from '@/types';
-import { getNoticeList } from './utils';
+import { load } from 'cheerio';
 
-const url = 'https://lib.njxzc.edu.cn/pxyhd/list.htm';
-const host = 'https://lib.njxzc.edu.cn';
+import type { Route } from '@/types';
+import ofetch from '@/utils/ofetch';
+
+import { parsePubDate, resolveArticles } from './utils';
+
+const pageUrl = 'https://lib.njxzc.edu.cn/pxyhd/list.htm';
 
 export const route: Route = {
     path: '/libtzgg',
@@ -12,7 +15,7 @@ export const route: Route = {
     features: {
         requireConfig: false,
         requirePuppeteer: false,
-        antiCrawler: true,
+        antiCrawler: false,
         supportBT: false,
         supportPodcast: false,
         supportScihub: false,
@@ -28,24 +31,31 @@ export const route: Route = {
     url: 'lib.njxzc.edu.cn/pxyhd/list.htm',
 };
 
-async function handler(ctx) {
-    const out = await getNoticeList(
-        ctx,
-        url,
-        host,
-        'a',
-        '.news_meta',
-        {
-            title: '.arti_title',
-            content: '.wp_articlecontent',
-            date: '.arti_update',
-        },
-        '.news'
-    );
+async function handler() {
+    const response = await ofetch(pageUrl);
+    const $ = load(response);
+
+    const list = $('a.btt-2')
+        .toArray()
+        .map((el) => {
+            const $link = $(el);
+            const href = $link.attr('href');
+            if (!href) {
+                return null;
+            }
+            const day = $link.find('.tm-1').text();
+            const yearMonth = $link.find('.tm-2').text();
+            return {
+                title: $link.find('.btt-4').text().trim(),
+                link: new URL(href, pageUrl).href,
+                pubDate: parsePubDate(`${yearMonth}-${day}`),
+            };
+        })
+        .filter((item) => item !== null);
 
     return {
         title: '南京晓庄学院 -- 图书馆通知公告',
-        link: url,
-        item: out,
+        link: pageUrl,
+        item: await resolveArticles(list),
     };
 }

@@ -1,7 +1,8 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
@@ -55,7 +56,7 @@ async function handler(ctx) {
 
     const out = await Promise.all(
         list.map((info) =>
-            cache.tryGet(info.link, async () => {
+            cache.tryGet(info.link!, async () => {
                 const response = await got(info.link);
                 const $ = load(response.data);
                 const newsbody = $('div.newsbody').html();
@@ -63,7 +64,7 @@ async function handler(ctx) {
                 return {
                     title: info.title,
                     link: info.link,
-                    pubDate: timezone(parseDate(info.time), +8),
+                    pubDate: timezone(parseDate(info.time), 8),
                     description: newsbody,
                     category: info.category,
                 };

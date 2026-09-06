@@ -1,9 +1,11 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import * as cheerio from 'cheerio';
-import { getUserInfoFromUID } from './utils';
 import { parseDate } from '@/utils/parse-date';
+
+import { getUserInfoFromUID } from './utils';
 
 export const route: Route = {
     path: '/user/article/:uid',
@@ -57,7 +59,7 @@ async function handler(ctx) {
         posts.map((item) =>
             cache.tryGet(item.link, async () => {
                 const response = await ofetch(item.link);
-                const $ = cheerio.load(response);
+                const $ = load(response);
                 item.description = $('div#rendered-preview').html();
 
                 return item;

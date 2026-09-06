@@ -1,17 +1,17 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
 
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
-import { art } from '@/utils/render';
-import path from 'node:path';
+
+import { renderDescription } from './templates/description';
 
 export const handler = async (ctx) => {
     const { language = 'zh' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 30;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 30;
 
-    const rootUrl = `https://${language === 'zh' ? 'www' : language.replaceAll(/[^\dA-Za-z-]/g, '')}.zhonglun.com`;
+    const rootUrl = `https://${language === 'zh' ? 'www' : language.replaceAll(/[^\dA-Z-]/gi, '')}.zhonglun.com`;
     const currentUrl = new URL('research/articles', rootUrl).href;
 
     const { data: response } = await got(currentUrl);
@@ -21,25 +21,25 @@ export const handler = async (ctx) => {
     let items = $('div#dataList > dl > dd, div#dataList > ul > li')
         .slice(0, limit)
         .toArray()
-        .map((item) => {
-            item = $(item);
+        .map((item): DataItem => {
+            const $item = $(item);
 
-            const description = art(path.join(__dirname, 'templates/description.art'), {
-                intro: item.find('p').text(),
+            const description = renderDescription({
+                intro: $item.find('p').text(),
             });
 
             return {
-                title: item.find('h3 > a').text(),
+                title: $item.find('h3 > a').text(),
                 description,
-                pubDate: parseDate(item.find('span').text()),
-                link: item.find('h3 > a').prop('href'),
+                pubDate: parseDate($item.find('span').text()),
+                link: $item.find('h3 > a').prop('href'),
                 language,
             };
         });
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const { data: detailResponse } = await got(item.link);
 
                 const $$ = load(detailResponse);
@@ -47,10 +47,10 @@ export const handler = async (ctx) => {
                 const title = $$('div.news_dtitle h2').text();
                 const description =
                     item.description +
-                    art(path.join(__dirname, 'templates/description.art'), {
-                        description: $$('div.edit_con_original').html(),
+                    renderDescription({
+                        description: $$('div.edit_con_original').html() ?? undefined,
                     });
-                const image = $$('img.raw-image').first().prop('src');
+                const image = $$('img.raw-image').prop('src');
 
                 item.title = title;
                 item.description = description;
@@ -69,7 +69,7 @@ export const handler = async (ctx) => {
         )
     );
 
-    const image = new URL($('header.header h1 a img').prop('src'), rootUrl).href;
+    const image = new URL($('header.header h1 a img').prop('src')!, rootUrl).href;
 
     return {
         title: `${$('title').text()} - ${$('div.siteban_text').text()}`,
@@ -84,18 +84,16 @@ export const handler = async (ctx) => {
 };
 
 export const route: Route = {
-    path: '/research/article/:language{[a-zA-Z0-9-]+}?',
+    path: '/research/article/:language?',
     name: '中伦研究专业文章',
     url: 'zhonglun.com',
-    maintainers: ['nczitzk'],
+    maintainers: ['snipersteve', 'nczitzk'],
     handler,
     example: '/zhonglun/research/article/zh',
     parameters: { category: '语言，默认为 zh，即简体中文，可在对应分类页 URL 中找到' },
-    description: `
-| ENG | 简体中文 | 日本語 | 한국어 |
+    description: `| ENG | 简体中文 | 日本語 | 한국어 |
 | --- | -------- | ------ | ------ |
-| en  | zh       | ja     | kr     |
-    `,
+| en  | zh       | ja     | kr     |`,
     categories: ['new-media'],
 
     features: {

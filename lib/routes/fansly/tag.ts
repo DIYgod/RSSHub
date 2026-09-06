@@ -1,6 +1,9 @@
-import { Route } from '@/types';
+import type { Context } from 'hono';
+
+import type { Data, Route } from '@/types';
 import { parseDate } from '@/utils/parse-date';
-import { getTagId, getTagSuggestion, findAccountById, parseDescription, baseUrl, icon } from './utils';
+
+import { baseUrl, findAccountById, getTagId, getTagSuggestion, icon, parseDescription } from './utils';
 
 export const route: Route = {
     path: '/tag/:tag',
@@ -26,7 +29,7 @@ export const route: Route = {
     handler,
 };
 
-async function handler(ctx) {
+async function handler(ctx: Context): Promise<Data> {
     const tag = ctx.req.param('tag');
 
     const tagId = await getTagId(tag);
@@ -35,7 +38,7 @@ async function handler(ctx) {
     const items = suggestion.aggregationData?.posts.map((post) => {
         const account = findAccountById(post.accountId, suggestion.aggregationData.accounts);
         return {
-            title: post.content.split('\n')[0],
+            title: post.content.split('\n', 1)[0],
             description: parseDescription(post, suggestion.aggregationData),
             pubDate: parseDate(post.createdAt, 'X'),
             link: `${baseUrl}/post/${post.id}`,

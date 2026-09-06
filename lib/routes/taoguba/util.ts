@@ -1,8 +1,9 @@
+import { load } from 'cheerio';
+
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
-import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 const rootUrl = 'https://www.tgb.cn';
 
@@ -17,11 +18,13 @@ const renderPostDetail = async (item) =>
 
         content('#videoImg').remove();
         content('img').each((_, img) => {
-            if (img.attribs.src2) {
-                img.attribs.src = img.attribs.src2;
-                delete img.attribs.src2;
-                delete img.attribs['data-original'];
+            if (!img.attribs.src2) {
+                return;
             }
+
+            img.attribs.src = img.attribs.src2;
+            delete img.attribs.src2;
+            delete img.attribs['data-original'];
         });
 
         item.description = content('#first').html();
@@ -33,9 +36,9 @@ const renderPostDetail = async (item) =>
             parseDate(
                 content('.article-data > span:nth-child(2)')
                     .text()
-                    .match(/\d{4}-\d{2}-\d{2} \d{2}:\d{2}/)[0]
+                    .match(/\d{4}-\d{2}-\d{2} \d{2}:\d{2}/)![0]
             ),
-            +8
+            8
         );
 
         item.category = content('.classify')
@@ -45,4 +48,4 @@ const renderPostDetail = async (item) =>
         return item;
     });
 
-export { rootUrl, renderPostDetail };
+export { renderPostDetail, rootUrl };

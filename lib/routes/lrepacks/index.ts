@@ -1,15 +1,15 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
 
+import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
-import { art } from '@/utils/render';
-import path from 'node:path';
+
+import { renderDescription } from './templates/description';
 
 export const handler = async (ctx) => {
     const { category = '' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 12;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 12;
 
     const rootUrl = 'https://lrepacks.net';
     const currentUrl = new URL(category, rootUrl).href;
@@ -18,24 +18,24 @@ export const handler = async (ctx) => {
 
     const $ = load(response);
 
-    const language = $('html').prop('lang');
+    const language = $('html').prop('lang') as Language;
 
     let items = $('#main article')
         .slice(0, limit)
         .toArray()
-        .map((item) => {
-            item = $(item);
+        .map((item): DataItem => {
+            const $item = $(item);
 
-            const title = item.find('h3.entry-title').text();
-            const description = art(path.join(__dirname, 'templates/description.art'), {
-                intro: item.find('div.entry-content').text(),
+            const title = $item.find('h3.entry-title').text();
+            const description = renderDescription({
+                intro: $item.find('div.entry-content').text(),
             });
 
             return {
                 title,
                 description,
-                link: item.find('h3.entry-title a').prop('href'),
-                category: item
+                link: $item.find('h3.entry-title a').prop('href'),
+                category: $item
                     .find('span.cat-links')
                     .toArray()
                     .map((c) => $(c).text()),
@@ -45,7 +45,7 @@ export const handler = async (ctx) => {
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const { data: detailResponse } = await got(item.link);
 
                 const $$ = load(detailResponse);
@@ -53,14 +53,14 @@ export const handler = async (ctx) => {
                 const data = JSON.parse($$('script[type="application/ld+json"]').first().text())['@graph']?.[0] ?? undefined;
 
                 $$('div.entry-content a.highslide[href]').each((_, el) => {
-                    el = $$(el);
+                    const $el = $$(el);
 
-                    el.parent().replaceWith(
-                        art(path.join(__dirname, 'templates/description.art'), {
+                    $el.parent().replaceWith(
+                        renderDescription({
                             images: [
                                 {
-                                    src: el.prop('href'),
-                                    alt: el.prop('title'),
+                                    src: $el.prop('href'),
+                                    alt: $el.prop('title'),
                                 },
                             ],
                         })
@@ -70,8 +70,8 @@ export const handler = async (ctx) => {
                 const title = $$('h2.entry-title').text();
                 const description =
                     item.description +
-                    art(path.join(__dirname, 'templates/description.art'), {
-                        description: $$('div.entry-content').html(),
+                    renderDescription({
+                        description: $$('div.entry-content').html() ?? undefined,
                     });
                 const image = $$('meta[property="og:image"]').prop('content');
 
@@ -93,7 +93,7 @@ export const handler = async (ctx) => {
         )
     );
 
-    const image = new URL($('div.logo img').prop('src'), rootUrl).href;
+    const image = new URL($('div.logo img').prop('src')!, rootUrl).href;
 
     return {
         title: $('title').text(),
@@ -116,7 +116,7 @@ export const route: Route = {
     example: '/lrepacks',
     parameters: { category: 'Category, Homepage by default' },
     description: `::: tip
-  If you subscribe to [Системные программы](https://lrepacks.net/repaki-sistemnyh-programm/)，where the URL is \`https://lrepacks.net/repaki-sistemnyh-programm/\`, extract the part \`https://lrepacks.net/\` to the end, which is \`repaki-sistemnyh-programm\`, and use it as the parameter to fill in. Therefore, the route will be [\`/lrepacks/repaki-sistemnyh-programm\`](https://rsshub.app/lrepacks/repaki-sistemnyh-programm).
+If you subscribe to [Системные программы](https://lrepacks.net/repaki-sistemnyh-programm/)，where the URL is \`https://lrepacks.net/repaki-sistemnyh-programm/\`, extract the part \`https://lrepacks.net/\` to the end, which is \`repaki-sistemnyh-programm\`, and use it as the parameter to fill in. Therefore, the route will be [\`/lrepacks/repaki-sistemnyh-programm\`](https://rsshub.app/lrepacks/repaki-sistemnyh-programm).
 
 | Category                                                                        | ID                                                                                           |
 | ------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
@@ -129,6 +129,7 @@ export const route: Route = {
 | [Разные программы](https://lrepacks.net/repaki-raznyh-programm/)                | [repaki-raznyh-programm](https://rsshub.app/lrepacks/repaki-raznyh-programm)                 |
 | [Системные библиотеки](https://lrepacks.net/sistemnye-biblioteki/)              | [sistemnye-biblioteki](https://rsshub.app/lrepacks/sistemnye-biblioteki)                     |
 | [Важная информация](https://lrepacks.net/informaciya/)                          | [informaciya](https://rsshub.app/lrepacks/informaciya)                                       |
+
 :::`,
     categories: ['program-update'],
 

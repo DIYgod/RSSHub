@@ -1,25 +1,45 @@
-import { Route } from '@/types';
-
-import cache from '@/utils/cache';
-import got from '@/utils/got';
 import { load } from 'cheerio';
+
+import type { DataItem, Route } from '@/types';
+import cache from '@/utils/cache';
+import { getSubPath } from '@/utils/common-utils';
+import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-import { art } from '@/utils/render';
-import path from 'node:path';
+
+import { renderDescription } from './templates/description';
 
 export const route: Route = {
-    path: '/:category{.+}?',
-    name: 'Unknown',
-    maintainers: [],
+    path: '/news/:id?',
+    categories: ['new-media'],
+    example: '/logclub/news',
+    parameters: { id: '资讯 id，见下表，可在对应资讯页 URL 中找到，默认为全部' },
+    radar: [
+        {
+            source: ['logclub.com/news'],
+            target: '/news',
+        },
+        {
+            source: ['logclub.com/news/:id'],
+            target: '/news/:id',
+        },
+    ],
+    name: '资讯',
+    maintainers: ['nczitzk'],
     handler,
+    description: `| 供应链 | 快递 | 快运 / 运输 | 仓储 / 地产 | 物流综合 | 国际与跨境物流 | 科技创新 |
+| ------ | ---- | ----------- | ----------- | -------- | -------------- | -------- |
+| 10-16  | 11   | 30          | 9           | 32       | 114            | 107      |
+
+| 绿色供应链 | 低碳物流 | 碳中和碳达峰 |
+| ---------- | -------- | ------------ |
+| 213        | 214      | 215          |`,
 };
 
-async function handler(ctx) {
-    const { category = 'news' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 11;
+export async function handler(ctx) {
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 11;
 
     const rootUrl = 'https://www.logclub.com';
-    const currentUrl = new URL(category, rootUrl).href;
+    const currentUrl = new URL(getSubPath(ctx), rootUrl).href;
 
     const { data: response } = await got(currentUrl);
 
@@ -28,21 +48,21 @@ async function handler(ctx) {
     let items = $('li.layui-row, li.layui-timeline-item')
         .slice(0, limit)
         .toArray()
-        .map((item) => {
-            item = $(item);
+        .map((item): DataItem => {
+            const $item = $(item);
 
-            const a = item.find('div.newslist-txt h3 a, a.article_title').first();
-            const image = item.find('img.img-hover').prop('src')?.split(/\?/)[0] ?? undefined;
+            const a = $item.find('div.newslist-txt h3 a, a.article_title').first();
+            const image = $item.find('img.img-hover').prop('src')?.split(/\?/, 1)[0] ?? undefined;
 
             return {
                 title: a.text(),
-                link: new URL(a.prop('href'), rootUrl).href,
-                description: art(path.join(__dirname, 'templates/description.art'), {
+                link: new URL(a.prop('href')!, rootUrl).href,
+                description: renderDescription({
                     image: {
                         src: image,
                         alt: a.text(),
                     },
-                    intro: item.find('p.newslist-intro, div.newslist-info-intro').text(),
+                    intro: $item.find('p.newslist-intro, div.newslist-info-intro').text(),
                 }),
                 itunes_item_image: image,
             };
@@ -50,22 +70,22 @@ async function handler(ctx) {
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const { data: detailResponse } = await got(item.link);
 
                 const content = load(detailResponse);
 
                 content('a.dl_file').each((_, el) => {
-                    el = content(el);
-                    el.parent().remove();
+                    const $el = content(el);
+                    $el.parent().remove();
                 });
                 content('img').each((_, el) => {
-                    el = content(el);
-                    el.replaceWith(
-                        art(path.join(__dirname, 'templates/description.art'), {
+                    const $el = content(el);
+                    $el.replaceWith(
+                        renderDescription({
                             image: {
-                                src: el.prop('src')?.split(/\?/)[0] ?? undefined,
-                                alt: el.prop('title'),
+                                src: $el.prop('src')?.split(/\?/, 1)[0] ?? undefined,
+                                alt: $el.prop('title'),
                             },
                         })
                     );
@@ -78,13 +98,13 @@ async function handler(ctx) {
                     item.enclosure_type = `video/${item.enclosure_url.split(/\./).pop()}`;
                 }
 
-                item.description += art(path.join(__dirname, 'templates/description.art'), {
+                item.description += renderDescription({
                     video: {
                         poster: item.itunes_item_image,
                         src: item.enclosure_url,
                         type: item.enclosure_type,
                     },
-                    description: content('div.article-cont').html(),
+                    description: content('div.article-cont').html() ?? undefined,
                 });
                 item.author = content('div.article-info-r a')
                     .toArray()
@@ -111,7 +131,7 @@ async function handler(ctx) {
                               )
                                   .text()
                                   .split(/：/)
-                                  .pop()
+                                  .pop()!
                                   .trim()
                           )
                         : parseDate(content('span.aritlceIn-time').text().trim());
@@ -121,17 +141,17 @@ async function handler(ctx) {
         )
     );
 
-    const icon = new URL($('link[rel="shortcut icon"]').prop('href'), rootUrl).href;
+    const icon = new URL($('link[rel="shortcut icon"]').prop('href')!, rootUrl).href;
     const subtitle = $('meta[name="keywords"]').prop('content');
-    const author = subtitle.split(/,/)[0];
+    const author = subtitle.split(/,/, 1)[0];
 
     return {
         item: items,
-        title: $('title').text().split(/-/)[0].trim(),
+        title: $('title').text().split(/-/, 1)[0].trim(),
         link: currentUrl,
         description: $('meta[name="description"]').prop('content'),
-        language: 'zh',
-        image: new URL($('div.logo_img img').prop('src'), rootUrl).href,
+        language: 'zh' as const,
+        image: new URL($('div.logo_img img').prop('src')!, rootUrl).href,
         icon,
         logo: icon,
         subtitle: subtitle.replaceAll(',', ''),

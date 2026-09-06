@@ -1,7 +1,8 @@
-import { Route } from '@/types';
-import * as cheerio from 'cheerio';
-import ofetch from '@/utils/ofetch';
+import { load } from 'cheerio';
+
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
+import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
@@ -107,14 +108,14 @@ interface VoiceInfo {
 async function handler(ctx) {
     const { pphId } = ctx.req.param();
 
-    const mobileBuildId = (await cache.tryGet('thepaper:m:buildId', async () => {
+    const mobileBuildId = await cache.tryGet<string>('thepaper:m:buildId', async () => {
         const response = await ofetch('https://m.thepaper.cn');
-        const $ = cheerio.load(response);
+        const $ = load(response);
         const nextData = JSON.parse($('script#__NEXT_DATA__').text());
         return nextData.buildId;
-    })) as string;
+    });
 
-    const userInfo = (await cache.tryGet(`thepaper:user:${pphId}`, async () => {
+    const userInfo = await cache.tryGet<AuthorInfo>(`thepaper:user:${pphId}`, async () => {
         const response = await ofetch(`https://api.thepaper.cn/userservice/user/homePage/${pphId}`, {
             headers: {
                 'Client-Type': '2',
@@ -123,7 +124,7 @@ async function handler(ctx) {
             },
         });
         return response.userInfo;
-    })) as AuthorInfo;
+    });
 
     const response = await ofetch<PPHContentResponse>('https://api.thepaper.cn/contentapi/cont/pph/user', {
         method: 'POST',
@@ -137,7 +138,7 @@ async function handler(ctx) {
         },
     });
 
-    const list = response.data.list.map((item) => ({
+    const list = response.data.list.map((item): DataItem & { contId: string } => ({
         title: item.name,
         link: `https://www.thepaper.cn/newsDetail_forward_${item.contId}`,
         pubDate: parseDate(item.pubTimeLong),
@@ -148,7 +149,7 @@ async function handler(ctx) {
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const response = await ofetch(`https://m.thepaper.cn/_next/data/${mobileBuildId}/detail/${item.contId}.json`, {
                     query: {
                         id: item.contId,

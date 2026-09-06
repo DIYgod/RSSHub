@@ -1,4 +1,4 @@
-import { Route } from '@/types';
+import type { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
@@ -56,7 +56,7 @@ async function handler(ctx) {
     const single = {
         title,
         description,
-        pubDate: timezone(parseDate(end_date), +8),
+        pubDate: timezone(parseDate(end_date), 8),
         link: appUrl,
     };
 

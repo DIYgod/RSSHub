@@ -1,6 +1,7 @@
-import { Route } from '@/types';
-import got from '@/utils/got';
 import { load } from 'cheerio';
+
+import type { Route } from '@/types';
+import got from '@/utils/got';
 
 const root_url = 'https://www.hpoi.net';
 
@@ -58,11 +59,11 @@ async function handler(ctx) {
     const list = $('.collect-hobby-list-small')
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
             return {
-                title: titleMap[caty] + ': ' + item.find('.name').text(),
-                link: 'https://www.hpoi.net/' + item.find('.name').attr('href'),
-                description: `<img src="${item.find('img').attr('src').replace('/s/', '/n/')}"><br>${item.find('.pay').text()}<br>${item.find('.score').text()}`,
+                title: titleMap[caty] + ': ' + $item.find('.name').text(),
+                link: 'https://www.hpoi.net/' + $item.find('.name').attr('href'),
+                description: `<img src="${$item.find('img').attr('src')!.replace('/s/', '/n/')}"><br>${$item.find('.pay').text()}<br>${$item.find('.score').text()}`,
             };
         });
 

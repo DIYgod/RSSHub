@@ -1,14 +1,14 @@
-import { Route } from '@/types';
-import cache from '@/utils/cache';
-import { parseDate } from '@/utils/parse-date';
-import { art } from '@/utils/render';
 import { config } from '@/config';
-import { fallback, queryToBoolean } from '@/utils/readable-social';
-import { templates, resolveUrl, proxyVideo, getOriginAvatar } from './utils';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
-import puppeteer from '@/utils/puppeteer';
+import type { Route } from '@/types';
+import cache from '@/utils/cache';
 import logger from '@/utils/logger';
-import { PostData } from './types';
+import { parseDate } from '@/utils/parse-date';
+import playwright from '@/utils/playwright';
+import { fallback, queryToBoolean } from '@/utils/readable-social';
+
+import type { PostData } from './types';
+import { getOriginAvatar, proxyVideo, resolveUrl, templates } from './utils';
 
 export const route: Route = {
     path: '/user/:uid/:routeParams?',
@@ -46,16 +46,15 @@ async function handler(ctx) {
 
     const pageUrl = `https://www.douyin.com/user/${uid}`;
 
-    const pageData = (await cache.tryGet(
+    const pageData = await cache.tryGet(
         `douyin:user:${uid}`,
         async () => {
-            let postData;
-            const browser = await puppeteer();
-            const page = await browser.newPage();
-            await page.setRequestInterception(true);
-
-            page.on('request', (request) => {
-                request.resourceType() === 'document' || request.resourceType() === 'script' || request.resourceType() === 'xhr' ? request.continue() : request.abort();
+            let postData: PostData | undefined;
+            const context = await playwright();
+            const page = await context.newPage();
+            await page.route('**/*', (route) => {
+                const request = route.request();
+                request.resourceType() === 'document' || request.resourceType() === 'script' || request.resourceType() === 'xhr' ? route.continue() : route.abort();
             });
             page.on('response', async (response) => {
                 const request = response.request();
@@ -66,10 +65,10 @@ async function handler(ctx) {
 
             logger.http(`Requesting ${pageUrl}`);
             await page.goto(pageUrl, {
-                waitUntil: 'networkidle2',
+                waitUntil: 'networkidle',
             });
 
-            await browser.close();
+            await context.close();
 
             if (!postData) {
                 throw new Error('Empty post data. The request may be filtered by WAF.');
@@ -79,7 +78,7 @@ async function handler(ctx) {
         },
         config.cache.routeExpire,
         false
-    )) as PostData;
+    );
 
     if (!pageData.aweme_list?.length) {
         throw new Error('Empty post data. The request may be filtered by WAF.');
@@ -96,25 +95,24 @@ async function handler(ctx) {
             videoList = videoList.map((item) => proxyVideo(item, relay));
         }
         let duration = post.video?.duration;
-        duration = duration && duration / 1000;
+        duration &&= duration / 1000;
         let img;
         // if (!embed) {
         //     img = post.video && post.video.dynamicCover; // dynamic cover (webp)
         // }
-        img =
-            img ||
+        img ||=
             post.video?.cover?.url_list.at(-1) || // HD
             post.video?.origin_cover?.url_list.at(-1); // LD
-        img = img && resolveUrl(img);
+        img &&= resolveUrl(img);
 
         // render description
         const desc = post.desc?.replaceAll('\n', '<br>');
-        let media = art(embed && videoList ? templates.embed : templates.cover, { img, videoList, duration });
-        media = embed && videoList && iframe ? art(templates.iframe, { content: media }) : media; // warp in iframe
-        const description = art(templates.desc, { desc, media });
+        let media = (embed && videoList ? templates.embed : templates.cover)({ img, videoList, duration });
+        media = embed && videoList && iframe ? templates.iframe({ content: media }) : media; // warp in iframe
+        const description = templates.desc({ desc, media });
 
         return {
-            title: post.desc.split('\n')[0],
+            title: post.desc.split('\n', 1)[0],
             description,
             link: `https://www.douyin.com/video/${post.aweme_id}`,
             pubDate: parseDate(post.create_time * 1000),

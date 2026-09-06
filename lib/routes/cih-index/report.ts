@@ -1,6 +1,7 @@
-import { Route } from '@/types';
-import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
+
+import type { Route } from '@/types';
+import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
@@ -39,7 +40,7 @@ async function handler(ctx) {
     const initialState = JSON.parse(
         $('script:contains("window.__INITIAL_STATE__")')
             .text()
-            .match(/window\.__INITIAL_STATE__\s*=\s*({.*?});/)?.[1] || '{}'
+            .match(/window\.__INITIAL_STATE__\s*=\s*(\{.*?\});/)?.[1] || '{}'
     );
     const { dataResult, indNavLists, secondNameFilter, tagList, param } = initialState.data;
 
@@ -52,7 +53,7 @@ async function handler(ctx) {
         return {
             title: info.reportTitle,
             link: `${baseUrl}/report/detail/${info.reportId}.html`,
-            pubDate: timezone(parseDate(info.addTime), +8),
+            pubDate: timezone(parseDate(info.addTime), 8),
             category: [...new Set([...info.reportClassTagDtoList.map((t) => t.tag), ...(info.keywordList || [])])],
             description: `${info.context}<br>${images}`,
             image: `${info.coverFigureUrl}/200`,

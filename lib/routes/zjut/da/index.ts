@@ -1,9 +1,10 @@
-import { Route } from '@/types';
-import got from '@/utils/got';
-import cache from '@/utils/cache';
-import { parseDate } from '@/utils/parse-date';
 import { load } from 'cheerio';
 import iconv from 'iconv-lite';
+
+import type { Data, Route } from '@/types';
+import cache from '@/utils/cache';
+import got from '@/utils/got';
+import { parseDate } from '@/utils/parse-date';
 
 const rootUrl = 'http://www.design.zjut.edu.cn/';
 const host = 'http://www.design.zjut.edu.cn/BigClass.jsp?';
@@ -35,11 +36,11 @@ export const route: Route = {
     url: 'www.design.zjut.edu.cn',
     handler,
     description: `| 学院新闻 | 公告通知 | 科研申报 | 科研成果 | 文件与资源 | 学术交流 |
-| -------- | -------- | -------- | -------- | -------- | -------- |
-| 1        | 2        | 3        | 4        | 5        | 6        |`,
+| -------- | -------- | -------- | -------- | ---------- | -------- |
+| 1        | 2        | 3        | 4        | 5          | 6        |`,
 };
 
-async function handler(ctx) {
+async function handler(ctx): Promise<Data> {
     const type = Number.parseInt(ctx.req.param('type'));
     const id = map.get(type)?.id;
     const listResponse = await got(`${host}${id}`, {
@@ -51,10 +52,10 @@ async function handler(ctx) {
     const list = $("td[class='newstd'] .news2")
         .toArray()
         .map((item) => {
-            item = $(item);
-            const title = item.find('a').text();
+            const $item = $(item);
+            const title = $item.find('a').text();
 
-            let link = item.find('a').attr('href');
+            let link = $item.find('a').attr('href');
             if (!link) {
                 return null;
             }
@@ -62,7 +63,7 @@ async function handler(ctx) {
                 link = rootUrl + link;
             }
 
-            const date = item.next().text().replace('[', '').replace(']', '');
+            const date = $item.next().text().replace('[', '').replace(']', '');
 
             return {
                 title,
@@ -74,18 +75,18 @@ async function handler(ctx) {
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
-                const itemsResponse = await got(item.link);
+            cache.tryGet(item!.link, async () => {
+                const itemsResponse = await got(item!.link);
                 const $ = load(itemsResponse.data);
-                item.description = $('div[style="line-height:27px;"]').html();
+                item!.description = $('div[style="line-height:27px;"]').html() ?? '';
 
-                return item;
+                return item!;
             })
         )
     );
 
     return {
-        title: map.get(type)?.title,
+        title: map.get(type)!.title,
         link: `${host}${id}`,
         item: items,
     };

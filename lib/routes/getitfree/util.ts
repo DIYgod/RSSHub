@@ -1,5 +1,7 @@
-import got from '@/utils/got';
 import { load } from 'cheerio';
+
+import type { Language } from '@/types';
+import got from '@/utils/got';
 
 const rootUrl = 'https://getitfree.cn';
 const apiSlug = 'wp-json/wp/v2';
@@ -47,7 +49,7 @@ const bakeFilterSearchParams = (filterPairs, pairKey, isApi = false) => {
         const key = keys[0];
         const pairs = filterPairs[key];
 
-        const originalFilters = Object.assign({}, filterPairs);
+        const originalFilters = { ...filterPairs };
         delete originalFilters[key];
 
         filterSearchParams.append(getFilterKeyForSearchParams(key, isApi), pairs.map((pair) => (Object.hasOwn(pair, pairKey) ? pair[pairKey] : pair)).join(','));
@@ -87,7 +89,7 @@ const bakeFiltersWithPair = async (filters) => {
         const filter = await getFilterByKeyAndKeyword(key, keyword);
 
         return [
-            ...(filter?.id && filter?.slug
+            ...(filter?.id && filter.slug
                 ? [
                       {
                           id: filter.id,
@@ -120,7 +122,7 @@ const bakeFiltersWithPair = async (filters) => {
         const key = keys[0];
         const keywords = filters[key];
 
-        const originalFilters = Object.assign({}, filters);
+        const originalFilters = { ...filters };
         delete originalFilters[key];
 
         return bakeFilters(originalFilters, {
@@ -183,19 +185,19 @@ const fetchData = async (url) => {
 
     const $ = load(response);
 
-    const title = $('title').text().split(/\|/)[0];
+    const title = $('title').text().split(/\|/, 1)[0];
     const image = new URL('wp-content/uploads/site_logo.png', rootUrl).href;
-    const icon = new URL($('link[rel="shortcut icon"]').prop('href'), rootUrl).href;
+    const icon = new URL($('link[rel="shortcut icon"]').prop('href')!, rootUrl).href;
 
     return {
         title,
         link: url,
         description: $('meta[name="description"]').prop('content'),
-        language: $('html').prop('lang'),
+        language: $('html').prop('lang') as Language,
         image,
         icon,
         logo: icon,
-        subtitle: title.split(/【/)[0],
+        subtitle: title.split(/【/, 1)[0],
         author: $('h1.logo a').prop('title'),
         allowEmpty: true,
     };
@@ -246,7 +248,7 @@ const getFilterKeyForSearchParams = (key, isApi = false) => {
  *                   e.g. `name1,name2`.
  */
 const getFilterNameForTitle = (filterPairs) =>
-    Object.values(filterPairs)
+    Object.values<any>(filterPairs)
         .flat()
         .map((pair) => pair?.name ?? pair?.slug ?? pair)
         .filter(Boolean)
@@ -291,7 +293,7 @@ const parseFilterStr = (filterStr) => {
      *                             e.g. `category` or `tag`.
      * @returns {Object} The parsed filters object.
      */
-    const parseStr = (filterStr, filters = {}, filterKey) => {
+    const parseStr = (filterStr, filters = {}, filterKey?) => {
         if (!filterStr) {
             return filters;
         }
@@ -312,4 +314,4 @@ const parseFilterStr = (filterStr) => {
     return parseStr(filterStr, {});
 };
 
-export { apiSlug, rootUrl, bakeFilterSearchParams, bakeFiltersWithPair, bakeUrl, fetchData, getFilterNameForTitle, getFilterParamsForUrl, parseFilterStr };
+export { apiSlug, bakeFilterSearchParams, bakeFiltersWithPair, bakeUrl, fetchData, getFilterNameForTitle, getFilterParamsForUrl, parseFilterStr, rootUrl };

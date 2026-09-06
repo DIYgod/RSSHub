@@ -1,11 +1,28 @@
-import { Route } from '@/types';
+import type { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+
 import { renderHTML } from './utils';
 
 export const route: Route = {
-    path: ['/', '/news'],
-    name: 'Unknown',
+    path: '/news',
+    categories: ['programming'],
+    example: '/gocn/news',
+    parameters: {},
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: [
+        {
+            source: ['gocn.vip/'],
+        },
+    ],
+    name: '最新动态',
     maintainers: ['AtlanCI', 'CcccFz'],
     handler,
     url: 'gocn.vip/',
@@ -32,9 +49,9 @@ async function handler() {
     }));
 
     return {
-        title: `GoCN社区-最新动态`,
+        title: 'GoCN社区-最新动态',
         link: base_url,
-        description: `获取GoCN站点最新动态`,
+        description: '获取GoCN站点最新动态',
         item: items,
     };
 }

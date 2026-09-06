@@ -1,30 +1,42 @@
-import { Route, ViewType } from '@/types';
-import { rootUrl, parseNewsList, parseArticle } from './utils';
 import pMap from 'p-map';
+
+import type { Route } from '@/types';
+import { ViewType } from '@/types';
+import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/parse-date';
+import rssParser from '@/utils/rss-parser';
+
+import { parseArticle, rootUrl } from './utils';
+
 const siteTitleMapping = {
     '/': 'News',
-    bpol: 'Politics',
-    bbiz: 'Business',
+    politics: 'Politics',
+    business: 'Business',
     markets: 'Markets',
     technology: 'Technology',
-    green: 'Green',
     wealth: 'Wealth',
-    pursuits: 'Pursuits',
     bview: 'Opinion',
-    equality: 'Equality',
     businessweek: 'Businessweek',
-    citylab: 'CityLab',
+    economics: 'Economics',
+    industries: 'Industries',
+    crypto: 'Crypto',
+};
+
+// Bloomberg removed the per-site news sitemaps; map legacy site IDs to the equivalent RSS feeds
+const legacySiteMapping = {
+    bpol: 'politics',
+    bbiz: 'business',
 };
 
 export const route: Route = {
     path: '/:site?',
     categories: ['finance'],
     view: ViewType.Articles,
-    example: '/bloomberg/bbiz',
+    example: '/bloomberg/business',
     parameters: {
         site: {
             description: 'Site ID, can be found below',
-            options: Object.keys(siteTitleMapping).map((key) => ({ value: key, label: siteTitleMapping[key] })),
+            options: Object.entries(siteTitleMapping).map(([key, value]) => ({ value: key, label: value })),
         },
     },
     features: {
@@ -37,34 +49,40 @@ export const route: Route = {
     },
     name: 'Bloomberg Site',
     maintainers: ['bigfei'],
-    description: `
-| Site ID      | Title        |
+    description: `| Site ID      | Title        |
 | ------------ | ------------ |
 | /            | News         |
-| bpol         | Politics     |
-| bbiz         | Business     |
+| politics     | Politics     |
+| business     | Business     |
 | markets      | Markets      |
 | technology   | Technology   |
-| green        | Green        |
 | wealth       | Wealth       |
-| pursuits     | Pursuits     |
 | bview        | Opinion      |
-| equality     | Equality     |
 | businessweek | Businessweek |
-| citylab      | CityLab      |
-  `,
+| economics    | Economics    |
+| industries   | Industries   |
+| crypto       | Crypto       |
+
+Legacy site IDs \`bpol\` and \`bbiz\` still work as aliases of \`politics\` and \`business\`.`,
     handler,
 };
 
 async function handler(ctx) {
     const site = ctx.req.param('site');
-    const currentUrl = site ? `${rootUrl}/${site}/sitemap_news.xml` : `${rootUrl}/sitemap_news.xml`;
+    const mappedSite = site ? (legacySiteMapping[site] ?? site) : undefined;
+    const currentUrl = mappedSite ? `${rootUrl}/${mappedSite}/news.rss` : `${rootUrl}/news.rss`;
 
-    const list = await parseNewsList(currentUrl, ctx);
+    const feed = await rssParser.parseString(await ofetch(currentUrl));
+    const list = feed.items.slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 50).map((item) => ({
+        title: item.title,
+        link: item.link,
+        pubDate: item.pubDate ? parseDate(item.pubDate) : undefined,
+        description: item.content,
+    }));
     const items = await pMap(list, (item) => parseArticle(item), { concurrency: 1 });
     return {
-        title: `Bloomberg - ${siteTitleMapping[site ?? '/']}`,
-        link: currentUrl,
+        title: `Bloomberg - ${siteTitleMapping[mappedSite ?? '/'] ?? feed.title}`,
+        link: feed.link ?? currentUrl,
         item: items,
     };
 }

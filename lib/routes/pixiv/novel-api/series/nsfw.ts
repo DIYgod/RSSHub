@@ -1,13 +1,14 @@
-import got from '../../pixiv-got';
-import { maskHeader } from '../../constants';
-import { getNSFWNovelContent } from '../content/nsfw';
-import pixivUtils from '../../utils';
-import { AppNovelSeries, SeriesDetail, SeriesFeed } from './types';
-import ConfigNotFoundError from '@/errors/types/config-not-found';
-import { getToken } from '../../token';
-import { config } from '@/config';
-import cache from '@/utils/cache';
 import queryString from 'query-string';
+
+import { config } from '@/config';
+import ConfigNotFoundError from '@/errors/types/config-not-found';
+
+import { maskHeader } from '../../constants';
+import got from '../../pixiv-got';
+import { getToken } from '../../token';
+import pixivUtils from '../../utils';
+import { getNSFWNovelContent } from '../content/nsfw';
+import type { AppNovelSeries, SeriesDetail, SeriesFeed } from './types';
 
 const baseUrl = 'https://www.pixiv.net';
 
@@ -22,7 +23,7 @@ async function getNovelSeries(seriesId: string, offset: number, token: string): 
             last_order: offset,
         }),
     });
-    return rsp.data as AppNovelSeries;
+    return rsp.data;
 }
 
 export async function getNSFWSeriesNovels(seriesId: string, limit: number = 10): Promise<SeriesFeed> {
@@ -34,7 +35,7 @@ export async function getNSFWSeriesNovels(seriesId: string, limit: number = 10):
         throw new ConfigNotFoundError('This user is an R18 creator, PIXIV_REFRESHTOKEN is required.\npixiv RSS is disabled due to the lack of relevant config.\n該用戶爲 R18 創作者，需要 PIXIV_REFRESHTOKEN。');
     }
 
-    const token = await getToken(cache.tryGet);
+    const token = await getToken();
     if (!token) {
         throw new ConfigNotFoundError('pixiv not login');
     }
@@ -45,7 +46,7 @@ export async function getNSFWSeriesNovels(seriesId: string, limit: number = 10):
             Authorization: 'Bearer ' + token,
         },
     });
-    const seriesData = seriesResponse.data as SeriesDetail;
+    const seriesData: SeriesDetail = seriesResponse.data;
 
     let offset = seriesData.body.total - limit;
     if (offset < 0) {

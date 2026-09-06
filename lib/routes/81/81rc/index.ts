@@ -1,14 +1,14 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
 
+import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
-import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 export const handler = async (ctx) => {
     const { category = 'sy/gzdt_210283' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 30;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 30;
 
     const rootUrl = 'https://81rc.81.cn';
     const currentUrl = new URL(category?.endsWith('/') ? `${category}/` : category, rootUrl).href;
@@ -17,25 +17,25 @@ export const handler = async (ctx) => {
 
     const $ = load(response);
 
-    const language = $('html').prop('lang');
+    const language = $('html').prop('lang') as Language;
 
     let items = $('div.left-news ul li')
         .slice(0, limit)
         .toArray()
-        .map((item) => {
-            item = $(item);
+        .map((item): DataItem => {
+            const $item = $(item);
 
             return {
-                title: item.find('a').text(),
-                pubDate: timezone(parseDate(item.find('span').text()), +8),
-                link: item.find('a').prop('href'),
+                title: $item.find('a').text(),
+                pubDate: timezone(parseDate($item.find('span').text()), 8),
+                link: $item.find('a').prop('href'),
                 language,
             };
         });
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const { data: detailResponse } = await got(item.link);
 
                 const $$ = load(detailResponse);
@@ -44,7 +44,7 @@ export const handler = async (ctx) => {
 
                 item.title = $$('h2').text();
                 item.description = description;
-                item.pubDate = timezone(parseDate($$('div.time span').last().text()), +8);
+                item.pubDate = timezone(parseDate($$('div.time span').last().text()), 8);
                 item.author = $$('div.time span').first().text();
                 item.content = {
                     html: description,
@@ -81,9 +81,8 @@ export const route: Route = {
     example: '/81/81rc/sy/gzdt_210283',
     parameters: { category: '分类，默认为 `sy/gzdt_210283`，即工作动态，可在对应分类页 URL 中找到' },
     description: `::: tip
-  若订阅 [工作动态](https://81rc.81.cn/sy/gzdt_210283)，网址为 \`https://81rc.81.cn/sy/gzdt_210283\`。截取 \`https://81rc.81.cn/\` 到末尾的部分 \`sy/gzdt_210283\` 作为参数填入，此时路由为 [\`/81/81rc/sy/gzdt_210283\`](https://rsshub.app/81/81rc/sy/gzdt_210283)。
-:::
-  `,
+若订阅 [工作动态](https://81rc.81.cn/sy/gzdt_210283)，网址为 \`https://81rc.81.cn/sy/gzdt_210283\`。截取 \`https://81rc.81.cn/\` 到末尾的部分 \`sy/gzdt_210283\` 作为参数填入，此时路由为 [\`/81/81rc/sy/gzdt_210283\`](https://rsshub.app/81/81rc/sy/gzdt_210283)。
+:::`,
     categories: ['government'],
 
     features: {

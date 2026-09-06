@@ -1,5 +1,6 @@
-import { Route, Data, DataItem } from '@/types';
 import { load } from 'cheerio';
+
+import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 
@@ -25,7 +26,7 @@ export const route: Route = {
         },
     ],
     name: NAME,
-    maintainers: ['sicheng1806'],
+    maintainers: ['fengkx', 'sicheng1806'],
     handler,
 };
 
@@ -36,7 +37,7 @@ async function handler(): Promise<Data> {
         ...$('#carousel-one div.item')
             .toArray()
             .map((item) => {
-                const a = $(item).find('.fp-one-cita a').first();
+                const a = $(item).find('.fp-one-cita a');
                 return {
                     title: a.text(),
                     link: a.attr('href'),
@@ -71,10 +72,10 @@ async function handler(): Promise<Data> {
     // 添加全文
     items = await Promise.all(
         items.map((item: DataItem) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const rsp = await got(item.link);
                 const content = load(rsp.body);
-                item.description = content('.tab-content').html() || '';
+                item.description = content('.tab-content').html();
                 return item;
             })
         )

@@ -1,8 +1,9 @@
-import { Route } from '@/types';
-import got from '@/utils/got';
-import utils from './utils';
-import { parseDate } from '@/utils/parse-date';
 import { config } from '@/config';
+import type { Route } from '@/types';
+import got from '@/utils/got';
+import { parseDate } from '@/utils/parse-date';
+
+import utils from './utils';
 
 export const route: Route = {
     path: '/fav/:uid/:fid/:embed?',
@@ -39,13 +40,13 @@ async function handler(ctx) {
         throw new Error(message ?? code);
     }
 
-    const userName = data.info.upper.name;
+    const username = data.info.upper.name;
     const favName = data.info.title;
 
     return {
-        title: `${userName} 的 bilibili 收藏夹 ${favName}`,
+        title: `${username} 的 bilibili 收藏夹 ${favName}`,
         link: `https://space.bilibili.com/${uid}/#/favlist?fid=${fid}`,
-        description: `${userName} 的 bilibili 收藏夹 ${favName}`,
+        description: `${username} 的 bilibili 收藏夹 ${favName}`,
 
         item:
             data.medias &&

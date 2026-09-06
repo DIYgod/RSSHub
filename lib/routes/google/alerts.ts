@@ -1,6 +1,7 @@
-import { Route } from '@/types';
-import got from '@/utils/got';
 import { load } from 'cheerio';
+
+import type { Route } from '@/types';
+import got from '@/utils/got';
 
 export const route: Route = {
     path: '/alerts/:keyword',
@@ -34,13 +35,13 @@ async function handler(ctx) {
     const items = $('li.result')
         .toArray()
         .map((item) => {
-            item = $(item);
-            const title = item.find('.result_title a');
+            const $item = $(item);
+            const title = $item.find('.result_title a');
             return {
                 title: title.text(),
-                link: new URL(title.attr('href')).searchParams.get('url'),
-                author: item.find('.result_source').text(),
-                description: item.find('.snippet').html(),
+                link: new URL(title.attr('href')!).searchParams.get('url') ?? undefined,
+                author: $item.find('.result_source').text(),
+                description: $item.find('.snippet').html(),
             };
         });
 

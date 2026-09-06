@@ -1,12 +1,13 @@
-import { type Data, type Route, ViewType } from '@/types';
+import type { Context } from 'hono';
 
-import { type Context } from 'hono';
+import type { Data, Route } from '@/types';
+import { ViewType } from '@/types';
 
 import { baseUrl, processItems } from './util';
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { id } = ctx.req.param();
-    const limit: number = Number.parseInt(ctx.req.query('limit') ?? '30', 10);
+    const limit = Number(ctx.req.query('limit') ?? '30');
 
     const targetUrl: string = new URL(`topics/${id ?? 'home'}`, baseUrl).href;
     const apiUrl: string = new URL(`gapi/v1/${id ? `topics/${id}/recommend` : 'talk-original-recommendations'}`, baseUrl).href;
@@ -32,10 +33,9 @@ export const route: Route = {
             description: '小组 ID，默认为空，即全部，可在对应小组页 URL 中找到',
         },
     },
-    description: `:::tip
+    description: `::: tip
 若订阅 [我的年度总结](https://www.gcores.com/topics/581)，网址为 \`https://www.gcores.com/topics/581\`，请截取 \`https://www.gcores.com/topics/\` 到末尾的部分 \`581\` 作为 \`id\` 参数填入，此时目标路由为 [\`/gcores/topics/581/recommend\`](https://rsshub.app/gcores/topics/581/recommend)。
-:::
-`,
+:::`,
     categories: ['game'],
     features: {
         requireConfig: false,

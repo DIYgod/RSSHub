@@ -1,22 +1,22 @@
-import { type Data, type DataItem } from '@/types';
+import type { CheerioAPI } from 'cheerio';
+import { load } from 'cheerio';
 
-import { art } from '@/utils/render';
+import type { Data, DataItem, Language } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
-import { type CheerioAPI, load } from 'cheerio';
-import path from 'node:path';
+import { renderDescription } from './templates/description';
 
-const baseUrl: string = 'https://www.tmtpost.com';
-const apiBaseUrl: string = 'https://api.tmtpost.com';
+const baseUrl = 'https://www.tmtpost.com';
+const apiBaseUrl = 'https://api.tmtpost.com';
 const postApiUrl: string = new URL('v1/posts/', apiBaseUrl).href;
 
 const headers = {
     'app-version': 'web1.0',
 };
 
-const processItems = async (limit: number, query: Record<string, any>, apiUrl: string, targetUrl: string): Promise<Data> => {
+const processItems = async (limit: number, query: Record<string, string>, apiUrl: string, targetUrl: string): Promise<Data> => {
     const response = await ofetch(apiUrl, {
         query: {
             limit,
@@ -27,13 +27,11 @@ const processItems = async (limit: number, query: Record<string, any>, apiUrl: s
 
     const targetResponse = await ofetch(targetUrl);
     const $: CheerioAPI = load(targetResponse);
-    const language = $('html').attr('lang') ?? 'zh-CN';
+    const language = ($('html').attr('lang') ?? 'zh-CN') as Language;
 
-    let items: DataItem[] = [];
-
-    items = response.data.slice(0, limit).map((item): DataItem => {
+    let items: DataItem[] = response.data.slice(0, limit).map((item): DataItem => {
         const title: string = item.title;
-        const description: string = art(path.join(__dirname, 'templates/description.art'), {
+        const description: string = renderDescription({
             intro: item.summary,
         });
         const pubDate: number | string = item.time_published;
@@ -85,7 +83,7 @@ const processItems = async (limit: number, query: Record<string, any>, apiUrl: s
                     }
 
                     const title: string = data.title;
-                    const description: string = art(path.join(__dirname, 'templates/description.art'), {
+                    const description: string = renderDescription({
                         intro: data.summary,
                         description: data.main,
                     });
@@ -93,11 +91,9 @@ const processItems = async (limit: number, query: Record<string, any>, apiUrl: s
                     const linkUrl: string | undefined = data.share_link;
                     const categories: string[] = [
                         ...new Set(
-                            (
-                                [...(data.categories ?? []), ...(data.stock_list ?? []), ...(data.big_plate ?? []), ...(data.concept_plate ?? []), ...(data.plate ?? []), ...(data.plate_list ?? []), ...(data.tags ?? [])].map(
-                                    (c) => c.title ?? c.name ?? c.tag
-                                ) as string[]
-                            ).filter(Boolean)
+                            [...(data.categories ?? []), ...(data.stock_list ?? []), ...(data.big_plate ?? []), ...(data.concept_plate ?? []), ...(data.plate ?? []), ...(data.plate_list ?? []), ...(data.tags ?? [])]
+                                .map((c) => c.title ?? c.name ?? c.tag)
+                                .filter(Boolean)
                         ),
                     ];
                     const authors: DataItem['author'] = data.authors?.map((author) => ({
@@ -105,7 +101,7 @@ const processItems = async (limit: number, query: Record<string, any>, apiUrl: s
                         url: new URL(`user/${author.guid}`, baseUrl).href,
                         avatar: author.avatar,
                     }));
-                    const guid: string = `tmtpost-${data.post_guid}`;
+                    const guid = `tmtpost-${data.post_guid}`;
                     const image: string | undefined = data.images?.[0]?.url;
                     const updated: number | string = data.time_updated;
 
@@ -131,7 +127,7 @@ const processItems = async (limit: number, query: Record<string, any>, apiUrl: s
                     const enclosureUrl: string | undefined = data.audio;
 
                     if (enclosureUrl) {
-                        const enclosureType: string = `audio/${enclosureUrl.split(/\./).pop()}`;
+                        const enclosureType = `audio/${enclosureUrl.split(/\./).pop()}`;
                         const itunesDuration: string | number | undefined = data.duration;
 
                         processedItem = {
@@ -156,9 +152,9 @@ const processItems = async (limit: number, query: Record<string, any>, apiUrl: s
                                 continue;
                             }
 
-                            const medium: string = 'image';
+                            const medium = 'image';
                             const count: number = Object.values(medias).filter((m) => m.medium === medium).length + 1;
-                            const key: string = `${medium}${count}`;
+                            const key = `${medium}${count}`;
 
                             medias[key] = {
                                 url,
@@ -201,4 +197,4 @@ const processItems = async (limit: number, query: Record<string, any>, apiUrl: s
     };
 };
 
-export { baseUrl, apiBaseUrl, processItems };
+export { apiBaseUrl, baseUrl, processItems };

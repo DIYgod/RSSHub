@@ -1,7 +1,8 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
 const rootUrl = 'https://www.pconline.com.cn';
@@ -136,8 +137,10 @@ export const route: Route = {
     maintainers: ['CH563'],
     handler,
     description: `::: tip
-| 全部 | 科技 | 财经 | 生活 | 公司 | 人物 |
-| --- | --- | --- | --- | --- | --- |
-| all | tech | finance | life | company | character |
+
+| 全部 | 科技 | 财经    | 生活 | 公司    | 人物      |
+| ---- | ---- | ------- | ---- | ------- | --------- |
+| all  | tech | finance | life | company | character |
+
 :::`,
 };

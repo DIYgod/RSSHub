@@ -1,9 +1,10 @@
-import { Route } from '@/types';
+import { config } from '@/config';
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-import { webBaseUrl, generateNonce, sign, getPost } from '../utils';
-import { config } from '@/config';
+
+import { generateNonce, getPost, sign, webBaseUrl } from '../utils';
 
 export const route: Route = {
     path: '/bbs/profile/thread/:userId',
@@ -95,7 +96,7 @@ async function handler(ctx) {
         };
     });
 
-    const items = await Promise.all(list.map((item) => getPost(item, cache.tryGet)));
+    const items = await Promise.all(list.map((item) => getPost(item)));
 
     return {
         title: `${userInfo.nickname} 的个人主页 - 丁香园论坛 - 专业医生社区，医学、药学、生命科学、科研学术交流`,

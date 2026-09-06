@@ -1,7 +1,8 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import { finishArticleItem } from '@/utils/wechat-mp';
 
@@ -24,7 +25,7 @@ export const route: Route = {
         },
     ],
     name: '水声工程学院',
-    maintainers: [],
+    maintainers: ['Derekmini'],
     handler,
     description: `| 新闻动态 | 通知公告 | 科学研究 / 科研动态 |
 | :------: | :------: | :-----------------: |
@@ -36,20 +37,16 @@ async function handler(ctx) {
     const host = 'http://uae.hrbeu.edu.cn';
     const url = `${host}/${id}.htm`;
 
-    const response = await got(url, {
-        headers: {
-            Referer: host,
-        },
-    });
+    const response = await got(url);
 
     const $ = load(response.data);
     const title = $('h2').text();
     const items = $('li.wow.fadeInUp')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const title = $(item).find('a').attr('title');
             let link = $(item).find('a').attr('href');
-            if (!link.startsWith('http')) {
+            if (!link!.startsWith('http')) {
                 link = `${host}/${link}`;
             }
             const pubDate = parseDate(
@@ -59,7 +56,7 @@ async function handler(ctx) {
                     .replaceAll(/(.*)\/(.*)/g, '$2-$1')
             );
             return {
-                title,
+                title: title!,
                 pubDate,
                 link,
             };
@@ -67,16 +64,16 @@ async function handler(ctx) {
 
     const item = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
-                if (new URL(item.link).hostname === 'uae.hrbeu.edu.cn') {
+            cache.tryGet(item.link!, async () => {
+                if (new URL(item.link!).hostname === 'uae.hrbeu.edu.cn') {
                     const resp = await got(item.link);
                     const $1 = load(resp.data);
                     item.description = $1('div.art-body').html();
-                } else if (new URL(item.link).hostname === 'news.hrbeu.edu.cn') {
+                } else if (new URL(item.link!).hostname === 'news.hrbeu.edu.cn') {
                     const resp = await got(item.link);
                     const $1 = load(resp.data);
                     item.description = $1('div#print').html();
-                } else if (new URL(item.link).hostname === 'mp.weixin.qq.com') {
+                } else if (new URL(item.link!).hostname === 'mp.weixin.qq.com') {
                     await finishArticleItem(item);
                 } else {
                     item.description = '本文需跳转，请点击标题后阅读';

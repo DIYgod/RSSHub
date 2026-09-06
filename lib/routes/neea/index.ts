@@ -1,7 +1,8 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
@@ -33,7 +34,7 @@ async function handler(ctx) {
     const data = response.data;
 
     const $ = load(data);
-    const list = $(`#ReportIDname > a`).parent().parent().toArray();
+    const list = $('#ReportIDname > a').parent().parent().toArray();
 
     const process = await Promise.all(
         list.map(async (item) => {
@@ -45,10 +46,10 @@ async function handler(ctx) {
                 title: $(ReportIDname).text(),
                 link: itemUrl,
                 guid: itemUrl,
-                pubDate: timezone(parseDate(time), +8),
+                pubDate: timezone(parseDate(time), 8),
             };
-            const other = await loadContent(String(itemUrl));
-            return Object.assign({}, single, other);
+            const other = await loadContent(itemUrl);
+            return { ...single, ...other };
         })
     );
     return {
@@ -117,18 +118,25 @@ export const route: Route = {
     path: '/local/:type',
     name: '国内考试动态',
     url: 'www.neea.edu.cn',
-    maintainers: ['SunShinenny'],
+    maintainers: ['sunshinenny'],
     example: '/neea/local/cet',
     parameters: { type: '考试项目，见下表' },
     categories: ['study'],
     features: {
         supportRadar: true,
     },
-    radar: Object.entries(typeDic).map(([type, value]) => ({
-        title: `${value.title}动态`,
-        source: [`${type}.neea.edu.cn`, `${type}.neea.cn`],
-        target: `/local/${type}`,
-    })),
+    radar: Object.entries(typeDic).flatMap(([type, value]) => [
+        {
+            title: `${value.title}动态`,
+            source: [`${type}.neea.edu.cn`],
+            target: `/local/${type}`,
+        },
+        {
+            title: `${value.title}动态`,
+            source: [`${type}.neea.cn`],
+            target: `/local/${type}`,
+        },
+    ]),
     handler,
     description: `|              | 考试项目                      | type     |
 | ------------ | ----------------------------- | -------- |

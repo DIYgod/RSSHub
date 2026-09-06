@@ -1,8 +1,9 @@
 import { load } from 'cheerio';
+
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
-import type { Route, DataItem } from '@/types';
 
 const types = {
     jinqigengxin: '近期更新',
@@ -23,7 +24,7 @@ const types = {
 export const route: Route = {
     path: '/novel/:type',
     name: '小说列表',
-    url: 'zxcs.info',
+    url: 'zxcs.click',
     maintainers: ['liaochuan'],
     example: '/zxcs/novel/jinqigengxin',
     parameters: { type: '小说类型, 可在对应类型页 URL 中找到' },
@@ -41,7 +42,7 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['zxcs.info/:type'],
+            source: ['zxcs.click/:type'],
             target: '/novel/:type',
         },
     ],
@@ -51,7 +52,7 @@ export const route: Route = {
 async function handler(ctx) {
     const { type } = ctx.req.param();
 
-    const baseUrl = `https://www.zxcs.info`;
+    const baseUrl = 'https://www.zxcs.click';
     const link = `${baseUrl}/${type}`;
     const response = await ofetch(link);
     const $ = load(response);
@@ -79,7 +80,7 @@ async function handler(ctx) {
                 const $ = load(response);
                 const links = String(item.link).split('/');
                 item.category = [types[String(links.at(-2))]];
-                item.description = String($('.intro').first().html());
+                item.description = String($('.intro').html());
                 item.image = baseUrl + String($('.book-cover img').attr('src'));
                 item.author = $('.author').text();
                 return item;

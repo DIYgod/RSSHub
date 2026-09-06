@@ -1,12 +1,12 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
 
+import type { Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
-import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
-import { art } from '@/utils/render';
-import path from 'node:path';
+import timezone from '@/utils/timezone';
+
+import { renderDescription } from './templates/description';
 
 export const route: Route = {
     path: ['/xhsxw', '/whxw'],
@@ -33,7 +33,7 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 100;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 100;
 
     const rootUrl = 'http://www.news.cn';
     const currentUrl = new URL('xhsxw.htm', rootUrl).href;
@@ -55,7 +55,7 @@ async function handler(ctx) {
     let items = response.slice(0, limit).map((item) => ({
         title: item.title,
         link: new URL(item.publishUrl, rootUrl).href,
-        description: art(path.join(__dirname, 'templates/description.art'), {
+        description: renderDescription({
             images:
                 item.shareImages?.map((i) => ({
                     src: i.imageUrl,
@@ -66,7 +66,7 @@ async function handler(ctx) {
         author: item.author,
         category: item.keywords.split(/-|,/),
         guid: `news-${item.contentId}`,
-        pubDate: timezone(parseDate(item.publishTime), +8),
+        pubDate: timezone(parseDate(item.publishTime), 8),
     }));
 
     items = await Promise.all(
@@ -77,8 +77,8 @@ async function handler(ctx) {
 
                     const content = load(detailResponse);
 
-                    item.description += art(path.join(__dirname, 'templates/description.art'), {
-                        description: content('#detailContent').html(),
+                    item.description += renderDescription({
+                        description: content('#detailContent').html() ?? undefined,
                     });
                 } catch {
                     // no-empty
@@ -97,8 +97,8 @@ async function handler(ctx) {
         item: items,
         title,
         link: currentUrl,
-        description: title.split(/_/)[0],
-        language: 'zh',
+        description: title.split(/_/, 1)[0],
+        language: 'zh' as const satisfies Language,
         image,
         icon,
         logo: icon,

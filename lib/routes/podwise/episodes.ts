@@ -1,11 +1,13 @@
-import { Route } from '@/types';
 import { load } from 'cheerio';
-import ofetch from '@/utils/ofetch'; // 统一使用的请求库
-import cache from '@/utils/cache';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
 import dayjs from 'dayjs';
 import duration from 'dayjs/plugin/duration.js';
+
+import type { DataItem, Route } from '@/types';
+import cache from '@/utils/cache';
+import ofetch from '@/utils/ofetch'; // 统一使用的请求库
+import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
+
 dayjs.extend(duration);
 
 export const route: Route = {
@@ -33,26 +35,27 @@ export const route: Route = {
         const list = content
             .find('.group')
             .toArray()
-            .map((item) => {
-                item = $(item);
-                const link = item.find('a').first().attr('href');
-                const description = item.find('p').first().text();
-                const pubDate = item.find('a').next().children('span').text();
+            .map((item): DataItem => {
+                const $item = $(item);
+                const link = $item.find('a').first().attr('href');
+                const description = $item.find('p').first().text();
+                const pubDate = $item.find('a').next().children('span').text();
 
                 return {
                     link: `https://podwise.ai${link}`,
                     description,
                     pubDate: timezone(parseDate(pubDate, 'DD MMM YYYY', 'en'), 8),
+                    title: '',
                 };
             });
 
         const items = await Promise.all(
             list.map((item) =>
-                cache.tryGet(item.link, async () => {
-                    const response = await ofetch(item.link);
+                cache.tryGet(item.link!, async () => {
+                    const response = await ofetch(item.link!);
                     const $ = load(response);
 
-                    item.description = $('summary').first().html();
+                    item.description = $('summary').first().html() ?? '';
 
                     // duration
                     const $cover = $('img[alt="Podcast cover"]').eq(1);

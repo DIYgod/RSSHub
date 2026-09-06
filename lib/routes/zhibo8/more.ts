@@ -1,9 +1,10 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
-import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 const categories = {
     nba: 'NBA',
@@ -32,8 +33,7 @@ export const route: Route = {
         },
     ],
     name: '滚动新闻',
-    description: `
-| NBA | 足球  | 电竞     | 综合   |
+    description: `| NBA | 足球  | 电竞     | 综合   |
 | --- | ----- | -------- | ------ |
 | nba | zuqiu | dianjing | zonghe |`,
     maintainers: ['nczitzk'],
@@ -45,10 +45,9 @@ async function handler(ctx) {
 
     const rootUrl = 'https://news.zhibo8.cc';
 
-    let list,
-        apiUrl = '',
-        currentUrl = '',
-        response;
+    let list;
+    let currentUrl: string;
+    let response;
 
     if (category === 'nba' || category === 'zuqiu') {
         currentUrl = `${rootUrl}/${category}/more.htm`;
@@ -61,26 +60,26 @@ async function handler(ctx) {
             .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 100)
             .toArray()
             .map((item) => {
-                item = $(item);
-                const a = item.find('a');
+                const $item = $(item);
+                const a = $item.find('a');
 
                 return {
                     title: a.text(),
                     link: `https:${a.attr('href')}`,
-                    pubDate: timezone(parseDate(item.find('span.postTime').text()), +8),
-                    category: item.attr('data-label').split(',').filter(Boolean),
+                    pubDate: timezone(parseDate($item.find('span.postTime').text()), 8),
+                    category: $item.attr('data-label')!.split(',').filter(Boolean),
                 };
             });
     } else {
         currentUrl = `${rootUrl}/${category}`;
-        apiUrl = `https://api.qiumibao.com/application/app/index.php?_url=/news/${category}List`;
+        const apiUrl = `https://api.qiumibao.com/application/app/index.php?_url=/news/${category}List`;
 
         response = await got(apiUrl);
 
         list = response.data.data.list.map((item) => ({
             title: item.title,
             link: `https:${item.url}`,
-            pubDate: timezone(parseDate(item.createtime), +8),
+            pubDate: timezone(parseDate(item.createtime), 8),
         }));
     }
 

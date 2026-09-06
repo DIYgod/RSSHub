@@ -1,4 +1,5 @@
-import { Route } from '@/types';
+import type { Route } from '@/types';
+
 import utils from './utils';
 
 export const route: Route = {
@@ -19,6 +20,7 @@ export const route: Route = {
         supportBT: false,
         supportPodcast: false,
         supportScihub: false,
+        nsfw: true,
     },
     radar: [
         {
@@ -36,7 +38,7 @@ export const route: Route = {
 | -------- | ---------- | ------- |
 | censored | uncensored | western |
 
-  时间
+时间
 
 | 日榜  | 週榜   | 月榜    |
 | ----- | ------ | ------- |

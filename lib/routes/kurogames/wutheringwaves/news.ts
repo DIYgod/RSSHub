@@ -1,10 +1,13 @@
-import { DataItem, Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
+import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
-import * as cheerio from 'cheerio';
-import ofetch from '@/utils/ofetch';
-import { Article, Language, Parameter, SUPPORTED_LANGUAGES } from './constants';
+
+import type { Article } from './constants';
+import { Language, Parameter, SUPPORTED_LANGUAGES } from './constants';
 import { fetchArticles, getArticleContentLink, getArticleLink, getHandlerLanguage, isValidLanguage, parseInteger } from './utils';
 
 export const route: Route = {
@@ -58,7 +61,7 @@ Language codes for the \`${Parameter.Language}\` parameter:
                 const contentUrl = getArticleContentLink(language, article.articleId);
                 const item: DataItem = {
                     title: article.articleTitle,
-                    pubDate: timezone(parseDate(article.createTime), +8),
+                    pubDate: timezone(parseDate(article.createTime), 8),
                     link: getArticleLink(language, article.articleId),
                 };
 
@@ -67,12 +70,12 @@ Language codes for the \`${Parameter.Language}\` parameter:
                     // Article content may not always be available, e.g: https://wutheringwaves.kurogames.com/zh-tw/main/news/detail/2596
                     const articleContent = articleDetails.articleContent ?? '';
 
-                    const $ = cheerio.load(articleContent);
+                    const $ = load(articleContent);
 
                     item.description = $.html() ?? article.articleDesc ?? '';
 
                     return item;
-                }) as Promise<DataItem>;
+                });
             })
         );
 

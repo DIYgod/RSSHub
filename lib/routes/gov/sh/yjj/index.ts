@@ -1,23 +1,38 @@
-import { Route } from '@/types';
-import { getSubPath } from '@/utils/common-utils';
+import { load } from 'cheerio';
+
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
-import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 export const route: Route = {
-    path: ['/sh/yjj/*', '/shanghai/yjj/*'],
-    name: 'Unknown',
-    maintainers: [],
+    path: '/yjj/:path{.+}?',
+    name: '药品监督管理局',
+    example: '/gov/sh/yjj/zh',
+    parameters: { path: '路径参数' },
+    radar: [
+        {
+            source: ['yjj.sh.gov.cn/*path/index.html', 'yjj.sh.gov.cn/*path'],
+            target: '/yjj/:path',
+        },
+    ],
+    maintainers: ['nczitzk'],
     handler,
+    description: `::: tip
+
+路径处填写对应页面 URL 中 \`https://yjj.sh.gov.cn/\` 与 \`/index.html\` 之间的字段，下面是一个例子。
+
+若订阅 [最新信息公开 > 综合](https://yjj.sh.gov.cn/zh/index.html) 则将对应页面 URL <https://yjj.sh.gov.cn/zh/index.html> 中 \`https://yjj.sh.gov.cn/\` 和 \`/index.html\` 之间的字段 \`zh\` 作为路径填入。此时路由为 [\`/gov/sh/yjj/zh\`](https://rsshub.app/gov/sh/yjj/zh)
+
+:::`,
 };
 
 async function handler(ctx) {
-    const params = getSubPath(ctx) === '/sh/yjj' ? '/sh/yjj/zx-ylqx' : getSubPath(ctx);
+    const { path = 'zx-ylqx' } = ctx.req.param();
 
     const rootUrl = 'https://yjj.sh.gov.cn';
-    const currentUrl = `${rootUrl}${params.replace(/^\/sh\/yjj/, '')}/index.html`;
+    const currentUrl = `${rootUrl}/${path}/index.html`;
 
     const response = await got({
         method: 'get',
@@ -28,21 +43,21 @@ async function handler(ctx) {
 
     let items = $('.pageList li a')
         .toArray()
-        .map((item) => {
-            item = $(item);
+        .map((item): DataItem => {
+            const $item = $(item);
 
-            const link = item.attr('href');
+            const link = $item.attr('href');
 
             return {
-                title: item.text(),
-                pubDate: parseDate(item.next().text()),
-                link: link.startsWith('http') ? link : `${rootUrl}${link}`,
+                title: $item.text(),
+                pubDate: parseDate($item.next().text()),
+                link: link!.startsWith('http') ? link : `${rootUrl}${link}`,
             };
         });
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 try {
                     const detailResponse = await got({
                         method: 'get',
@@ -54,7 +69,7 @@ async function handler(ctx) {
                     const pubDate = content('meta[name="pubdate"]').attr('content') || content('meta[name="PubDate"]').attr('content');
 
                     item.description = content('#ivs_content').html();
-                    item.pubDate = timezone(parseDate(pubDate, ['YYYY-MM-DD HH:mm:ss', 'YYYY-MM-DD HH:mm']), +8);
+                    item.pubDate = timezone(parseDate(pubDate!, ['YYYY-MM-DD HH:mm:ss', 'YYYY-MM-DD HH:mm']), 8);
                 } catch {
                     // no-empty
                 }

@@ -1,7 +1,9 @@
-import { Route } from '@/types';
 import { load } from 'cheerio';
+
+import type { Route } from '@/types';
 import got from '@/utils/got';
-import { baseUrl, cookieJar, getArticleList, getArticle } from './utils';
+
+import { baseUrl, cookieJar, getArticle, getArticleList } from './utils';
 
 export const route: Route = {
     path: '/highlight/:journal?',
@@ -23,10 +25,10 @@ export const route: Route = {
         },
     ],
     name: 'Research Highlight',
-    maintainers: [],
+    maintainers: ['y9c', 'TonyRL'],
     handler,
     description: `::: warning
-  Only some journals are supported.
+Only some journals are supported.
 :::`,
 };
 

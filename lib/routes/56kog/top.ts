@@ -1,6 +1,6 @@
-import { Route } from '@/types';
-import cache from '@/utils/cache';
-import { rootUrl, fetchItems } from './util';
+import type { Route } from '@/types';
+
+import { fetchItems, rootUrl } from './util';
 
 export const route: Route = {
     path: '/top/:category?',
@@ -25,9 +25,9 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { category = 'weekvisit' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 30;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 30;
 
-    const currentUrl = new URL(`top/${category.split(/_/)[0]}_1.html`, rootUrl).href;
+    const currentUrl = new URL(`top/${category.split(/_/, 1)[0]}_1.html`, rootUrl).href;
 
-    return await fetchItems(limit, currentUrl, cache.tryGet);
+    return await fetchItems(limit, currentUrl);
 }

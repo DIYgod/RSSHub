@@ -1,7 +1,8 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
@@ -25,7 +26,7 @@ export const route: Route = {
     name: '党委学生工作部',
     maintainers: ['Fatpandac'],
     handler,
-    description: `\`https://dwxgb.bnu.edu.cn/xwzx/tzgg/index.html\` 则对应为 \`/bnu/dwxgb/xwzx/tzgg`,
+    description: '`https://dwxgb.bnu.edu.cn/xwzx/tzgg/index.html` 则对应为 \\`/bnu/dwxgb/xwzx/tzgg',
 };
 
 async function handler(ctx) {
@@ -34,24 +35,15 @@ async function handler(ctx) {
     const rootUrl = 'https://dwxgb.bnu.edu.cn';
     const currentUrl = `${rootUrl}/${category}/${type}/index.html`;
 
-    let response;
-    try {
-        response = await got(currentUrl);
-    } catch {
-        try {
-            response = await got(`${rootUrl}/${category}/${type}/index.htm`);
-        } catch {
-            return;
-        }
-    }
+    const response = await got(currentUrl);
 
     const $ = load(response.data);
 
     const list = $('ul.container.list > li')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const link = $(item).find('a').attr('href');
-            const absoluteLink = new URL(link, currentUrl).href;
+            const absoluteLink = new URL(link!, currentUrl).href;
             return {
                 title: $(item).find('a').text().trim(),
                 pubDate: parseDate($(item).find('span').text()),
@@ -61,7 +53,7 @@ async function handler(ctx) {
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const detailResponse = await got(item.link);
                 const content = load(detailResponse.data);
                 item.description = content('div.article.typo').html();

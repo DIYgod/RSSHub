@@ -1,4 +1,5 @@
-import { Data, Route } from '@/types';
+import type { Data, Route } from '@/types';
+
 import { getRelativeUrlList, processList, rootUrl } from './utils';
 
 export const route: Route = {
@@ -41,7 +42,7 @@ export const route: Route = {
     handler,
 };
 
-async function handler(ctx) {
+async function handler(ctx): Promise<Data> {
     const category: string = ctx.req.param('category') || '';
     const currentUrl = category ? `${rootUrl}/${category}` : rootUrl;
     const selector = category ? 'div > article > a:first-child' : 'article[data-include-enter-animation="false"] > a:first-child';
@@ -55,5 +56,5 @@ async function handler(ctx) {
         item: items,
         icon: `${rootUrl}/favicon.png`,
         logo: `${rootUrl}/favicon.png`,
-    } as Data;
+    };
 }

@@ -1,6 +1,7 @@
-import { Route } from '@/types';
-import got from '@/utils/got';
 import { load } from 'cheerio';
+
+import type { Route } from '@/types';
+import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
@@ -41,7 +42,7 @@ async function handler() {
         const link = $titleDiv.find('a').eq(0).attr('href');
         const author = $(el).find('div[class="post-author"]').text().trim();
         const postDate = $(el).find('time').text().trim();
-        const pubDate = timezone(parseDate(postDate, 'MM-DD'), +8);
+        const pubDate = timezone(parseDate(postDate, 'MM-DD'), 8);
         const description = `${author}: ${title}`;
         return {
             title: description,

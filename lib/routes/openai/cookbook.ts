@@ -1,6 +1,7 @@
-import { Route } from '@/types';
-import cache from '@/utils/cache';
 import { load } from 'cheerio';
+
+import type { DataItem, Route } from '@/types';
+import cache from '@/utils/cache';
 import logger from '@/utils/logger';
 import ofetch from '@/utils/ofetch';
 
@@ -8,7 +9,7 @@ export const route: Route = {
     path: '/cookbook',
     categories: ['programming'],
     description:
-        'OpenAI Cookbook 提供了大量使用 OpenAI API 的实用指南和示例代码,涵盖了从基础到高级的各种主题,包括 GPT 模型、嵌入、函数调用、微调等。这里汇集了最新的 API 功能介绍和流行的应用案例,是开发者学习和应用 OpenAI 技术的宝贵资源。',
+        'OpenAI Cookbook 提供了大量使用 OpenAI API 的实用指南和示例代码，涵盖了从基础到高级的各种主题，包括 GPT 模型、嵌入、函数调用、微调等。这里汇集了最新的 API 功能介绍和流行的应用案例，是开发者学习和应用 OpenAI 技术的宝贵资源。',
     maintainers: ['liyaozhong'],
     radar: [
         {
@@ -31,7 +32,7 @@ async function handler() {
 
         let items = $('[class="min-h-[90vh] mt-4"] .grid a')
             .toArray()
-            .map((element) => {
+            .map((element): DataItem => {
                 const $element = $(element);
                 const $title = $element.find('div.font-semibold.text-sm.text-primary.line-clamp-1.overflow-ellipsis');
                 const $date = $element.find(String.raw`span.text-xs.text-muted-foreground.md\:w-24.text-end`);
@@ -50,9 +51,9 @@ async function handler() {
         items = (
             await Promise.all(
                 items.map((item) =>
-                    cache.tryGet(item.link, async () => {
+                    cache.tryGet(item.link!, async () => {
                         try {
-                            const detailResponse = await ofetch(item.link);
+                            const detailResponse = await ofetch(item.link!);
                             const $ = load(detailResponse);
 
                             item.description = $(String.raw`article.prose.prose-sm.sm\:prose-base.max-w-none.dark\:prose-invert`).html();

@@ -6,7 +6,7 @@ const parseFilterStr = (filterStr) => {
     const filterPairs = filterStr.split('&'); // Split by '&'
 
     for (const pair of filterPairs) {
-        const [key, value] = pair.split('='); // Split by '='
+        const [key, value] = pair.split('=', 2); // Split by '='
         filters[key] = value;
     }
 

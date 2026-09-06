@@ -1,4 +1,5 @@
-import { Route } from '@/types';
+import type { Route } from '@/types';
+
 import { handler } from './common';
 
 export const route: Route = {
@@ -13,4 +14,7 @@ export const route: Route = {
     ],
     handler,
     url: 'wnacg.com/albums.html',
+    features: {
+        nsfw: true,
+    },
 };

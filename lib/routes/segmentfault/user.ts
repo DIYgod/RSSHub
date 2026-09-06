@@ -1,7 +1,7 @@
-import { Route } from '@/types';
-import cache from '@/utils/cache';
+import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { host, acw_sc__v2, parseList, parseItems } from './utils';
+
+import { acw_sc__v2, host, parseItems, parseList } from './utils';
 
 export const route: Route = {
     path: '/user/:name',
@@ -36,9 +36,9 @@ async function handler(ctx) {
     const list = parseList(data);
     const { author } = list[0];
 
-    const acwScV2Cookie = await acw_sc__v2(list[0].link, cache.tryGet);
+    const acwScV2Cookie = await acw_sc__v2(list[0].link);
 
-    const items = await Promise.all(list.map((item) => parseItems(acwScV2Cookie, item, cache.tryGet)));
+    const items = await Promise.all(list.map((item) => parseItems(acwScV2Cookie, item)));
 
     return {
         title: `segmentfault - ${author}`,

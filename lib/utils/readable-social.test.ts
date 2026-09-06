@@ -1,5 +1,6 @@
 import { describe, expect, test } from 'vitest';
-import { fallback, queryToBoolean, queryToInteger, queryToFloat } from './readable-social';
+
+import { fallback, queryToBoolean, queryToFloat, queryToInteger } from './readable-social';
 
 describe('fallback', () => {
     test('应该返回第一个存在的参数', () => {
@@ -10,7 +11,7 @@ describe('fallback', () => {
 
     test('应该返回默认值', () => {
         expect(fallback(undefined, null, 'default')).toBe('default');
-        expect(fallback(null, undefined, 3.14)).toBe(3.14);
+        expect(fallback(null, undefined, Math.PI)).toBe(Math.PI);
     });
 });
 
@@ -24,6 +25,12 @@ describe('queryToBoolean', () => {
         expect(queryToBoolean('0')).toBe(false);
         expect(queryToBoolean('false')).toBe(false);
     });
+
+    test('should handle undefined and array inputs', () => {
+        expect(queryToBoolean(undefined)).toBeUndefined();
+        expect(queryToBoolean([])).toBeUndefined();
+        expect(queryToBoolean(['false', 'true'])).toBe(false);
+    });
 });
 
 describe('queryToInteger', () => {
@@ -35,6 +42,11 @@ describe('queryToInteger', () => {
     test('should handle invalid inputs', () => {
         expect(queryToInteger(null)).toBeNull();
         expect(queryToInteger('abc')).toBeNaN();
+    });
+
+    test('should handle array inputs', () => {
+        expect(queryToInteger([])).toBeUndefined();
+        expect(queryToInteger(['7'])).toBe(7);
     });
 });
 
@@ -52,7 +64,11 @@ describe('queryToFloat', () => {
     });
 
     test('should process array input', () => {
-        expect(queryToFloat(['3.14'])).toBe(3.14);
+        expect(queryToFloat([String(Math.PI)])).toBe(Math.PI);
+    });
+
+    test('should handle empty array', () => {
+        expect(queryToFloat([])).toBeUndefined();
     });
 
     test('should convert numeric string', () => {
@@ -60,6 +76,6 @@ describe('queryToFloat', () => {
     });
 
     test('should handle edge cases', () => {
-        expect(queryToFloat('3.1415926')).toBeCloseTo(3.141_592_6);
+        expect(queryToFloat(String(Math.PI))).toBeCloseTo(Math.PI);
     });
 });

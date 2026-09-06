@@ -1,10 +1,11 @@
+import crypto from 'node:crypto';
+
+import { config } from '@/config';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
-import crypto from 'node:crypto';
 import ofetch from '@/utils/ofetch';
-import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
-import { config } from '@/config';
+import timezone from '@/utils/timezone';
 
 const qingtingId = config.qingting.id ?? '';
 
@@ -31,7 +32,7 @@ export const route: Route = {
     name: '播客',
     maintainers: ['RookieZoe', 'huyyi', 'pseudoyu'],
     handler,
-    description: `获取的播放 URL 有效期只有 1 天，需要开启播客 APP 的自动下载功能。`,
+    description: '获取的播放 URL 有效期只有 1 天，需要开启播客 APP 的自动下载功能。',
 };
 
 function getMediaUrl(channelId: string, mediaId: string) {
@@ -73,28 +74,24 @@ async function handler(ctx) {
 
     const resultItems = await Promise.all(
         programs.map(async (item) => {
-            const data = (await cache.tryGet(`qingting:podcast:${channelId}:${item.id}`, async () => {
+            const data = await cache.tryGet(`qingting:podcast:${channelId}:${item.id}`, async (): Promise<DataItem> => {
                 const link = `https://www.qingting.fm/channels/${channelId}/programs/${item.id}/`;
 
-                const detailRes = await ofetch(link, {
-                    headers: {
-                        Referer: 'https://www.qingting.fm/',
-                    },
-                });
+                const detailRes = await ofetch(link);
 
-                const detail = JSON.parse(detailRes.match(/},"program":(.*?),"plist":/)[1]);
+                const detail = JSON.parse(detailRes.match(/\},"program":(.*?),"plist":/)[1]);
 
                 const rssItem = {
                     title: item.title,
                     link,
                     itunes_item_image: item.cover,
                     itunes_duration: item.duration,
-                    pubDate: timezone(parseDate(item.update_time), +8),
+                    pubDate: timezone(parseDate(item.update_time), 8),
                     description: detail.richtext,
                 };
 
                 return rssItem;
-            })) as DataItem;
+            });
 
             if (!isCharged || isPaid || item.isfree) {
                 data.enclosure_url = getMediaUrl(channelId, item.id);

@@ -1,4 +1,4 @@
-import { DataItem } from '@/types';
+import type { DataItem } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
@@ -13,8 +13,10 @@ const getData = (url) =>
         },
     });
 
-const getList = (data) =>
-    data.map((value) => {
+type NewsItem = DataItem & { link: string; securityID?: number };
+
+const getList = (data): NewsItem[] =>
+    data.map((value): NewsItem => {
         const { ID, Description: title, Date: createdOn, NewsitemSecurities, NewsitemSectors, NewsitemIndustries } = value;
         const securityID = NewsitemSecurities?.[0]?.SecurityID;
         const securitySlug = NewsitemSecurities?.[0]?.SecuritySlug;
@@ -29,7 +31,7 @@ const getList = (data) =>
             guid: NewsitemSecurities?.length === 0 ? ID : `${baseUrl}${securitySlug}/${securityID}`,
             pubDate: parseDate(createdOn),
             category: [...industries, ...sectors],
-        } as DataItem;
+        };
     });
 
 export { getData, getList };

@@ -1,9 +1,10 @@
-import { Route } from '@/types';
+import type { Route } from '@/types';
+
 import { handler } from './common';
 
 export const route: Route = {
     name: '主题',
-    path: ['/topics/:id'],
+    path: '/topics/:id',
     example: '/cnbeta/topics/453',
     maintainers: ['cczhong11', 'nczitzk'],
     parameters: {

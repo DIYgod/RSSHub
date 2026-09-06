@@ -1,15 +1,21 @@
-import { Route } from '@/types';
-import cache from '@/utils/cache';
-import { defaultMode, defaultLanguage, rootUrl, ProcessItems } from './utils';
+import type { Route } from '@/types';
+
+import { defaultLanguage, defaultMode, ProcessItems, rootUrl } from './utils';
 
 export const route: Route = {
     path: ['/videos/mostwanted/:language?/:mode?', '/mostwanted/:language?/:mode?'],
-    name: 'Unknown',
-    maintainers: [],
+    categories: ['multimedia'],
+    example: '/javlibrary/mostwanted/en',
+    parameters: { language: 'Language, see below, Japanese by default, as `ja`', mode: 'Mode, see below, Last Month by default, as `1`' },
+    name: 'Most Wanted Videos',
+    maintainers: ['nczitzk'],
     handler,
     description: `| Last Month | All Time |
 | ---------- | -------- |
 | 1          | 2        |`,
+    features: {
+        nsfw: true,
+    },
 };
 
 async function handler(ctx) {
@@ -17,5 +23,5 @@ async function handler(ctx) {
     const language = ctx.req.param('language') ?? defaultLanguage;
     const currentUrl = `${rootUrl}/${language}/vl_mostwanted.php?list&mode=${mode}`;
 
-    return await ProcessItems(language, currentUrl, cache.tryGet);
+    return await ProcessItems(language, currentUrl);
 }

@@ -1,6 +1,6 @@
+import type { DataItem } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
-import { DataItem } from '@/types';
 
 export const rootUrl = 'https://jamesclear.com';
 export const apiUrl = `${rootUrl}/wp-json/wp/v2`;

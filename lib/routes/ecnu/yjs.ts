@@ -1,7 +1,8 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
@@ -34,11 +35,11 @@ async function handler() {
     const $ = load(response.data);
     const list = $('.subList li')
         .toArray()
-        .map((item) => {
-            item = $(item);
+        .map((item): DataItem & { link: string } => {
+            const $item = $(item);
             return {
-                title: item.find('li a').text(),
-                link: item.find('li a').attr('href').replace('http:', 'https:'),
+                title: $item.find('li a').text(),
+                link: $item.find('li a').attr('href')!.replace('http:', 'https:'),
             };
         });
 

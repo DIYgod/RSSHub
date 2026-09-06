@@ -1,7 +1,7 @@
-import { Route } from '@/types';
-import cache from '@/utils/cache';
+import type { Route } from '@/types';
 import got from '@/utils/got';
-import { rootUrl, apiRootUrl, ProcessItems } from './utils';
+
+import { apiRootUrl, ProcessItems, rootUrl } from './utils';
 
 export const route: Route = {
     path: '/hot',
@@ -36,7 +36,7 @@ async function handler(ctx) {
         url: apiUrl,
     });
 
-    const items = await ProcessItems(response.data.items, ctx.req.query('limit'), cache.tryGet);
+    const items = await ProcessItems(response.data.items, ctx.req.query('limit'));
 
     return {
         title: '熱門新聞、全城熱話及社會時事 | 香港01',

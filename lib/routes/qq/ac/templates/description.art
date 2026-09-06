@@ -1,9 +1,0 @@
-{{ if image !== '' }}
-<img src="{{ image }}">
-{{ /if }}
-{{ if description !== '' }}
-<p>{{ description }}</p>
-{{ /if }}
-{{ each chapters chapter }}
-<div><img src="{{ chapter.image }}"/><a href="{{ chapter.link }}">{{ chapter.title }}</a></div>
-{{/each}}

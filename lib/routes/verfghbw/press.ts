@@ -1,13 +1,17 @@
-import { Route } from '@/types';
-import got from '@/utils/got';
 import { load } from 'cheerio';
+
+import type { Route } from '@/types';
+import cache from '@/utils/cache';
+import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
+const rootUrl = 'https://verfgh.baden-wuerttemberg.de';
+const listUrl = `${rootUrl}/presse-und-service/pressemitteilungen/`;
+
 export const route: Route = {
-    path: '/press/:keyword?',
+    path: '/press',
     categories: ['government'],
     example: '/verfghbw/press',
-    parameters: { keyword: 'Keyword' },
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -18,67 +22,50 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['verfgh.baden-wuerttemberg.de/de/presse-und-service/pressemitteilungen/'],
+            source: ['verfgh.baden-wuerttemberg.de/presse-und-service/pressemitteilungen/'],
             target: '/press',
         },
     ],
     name: 'Press releases',
     maintainers: ['quinn-dev'],
     handler,
-    url: 'verfgh.baden-wuerttemberg.de/de/presse-und-service/pressemitteilungen/',
+    url: 'verfgh.baden-wuerttemberg.de/presse-und-service/pressemitteilungen/',
 };
 
-async function handler(ctx) {
-    const keyword = ctx.req.param('keyword');
-    const rootUrl = 'https://verfgh.baden-wuerttemberg.de';
+async function handler() {
+    const response = await got(listUrl);
+    const $ = load(response.data);
 
-    let request = {
-        url: `${rootUrl}/de/presse-und-service/pressemitteilungen/`,
-        headers: {
-            Referer: `${rootUrl}/de/presse-und-service/pressemitteilungen/`,
-        },
-    };
-
-    request = keyword
-        ? {
-              method: 'post',
-              form: {
-                  'tx_bwlistheader_list[search][keywords]': keyword,
-              },
-              ...request,
-          }
-        : {
-              method: 'get',
-              ...request,
-          };
-
-    const response = await got(request);
-
-    const data = response.data;
-    const $ = load(data);
-
-    const list = $('.pressListItem')
+    const list = $('.news-singel')
         .toArray()
         .map((item) => {
-            item = $(item);
-
-            const title = item.find('.pressListItemTeaser > h3').text().trim();
-            const link = rootUrl + '/' + item.find('.link-download').attr('href');
-            item.find('.pressListItemTeaser > h3').replaceWith((_, e) => `<p>${$(e).html()}</p>`);
-            item.find('a').each((_, e) => $(e).attr('href', rootUrl + '/' + $(e).attr('href')));
+            const $item = $(item);
 
             return {
-                title,
-                link,
-                description: item.find('.pressListItemTeaser').html(),
-                pubDate: parseDate(item.find('.pressListItemDate > span').text(), 'DD.MM.YYYY'),
+                title: $item.find('.news-header').text(),
+                link: new URL($item.attr('href')!, rootUrl).href,
             };
         });
 
+    const items = await Promise.all(
+        list.map((item) =>
+            cache.tryGet(item.link, async () => {
+                const detail = await got(item.link);
+                const $$ = load(detail.data);
+
+                return {
+                    ...item,
+                    description: $$('.news-text-wrap').html(),
+                    pubDate: parseDate($$('.news-single time').attr('datetime')!),
+                };
+            })
+        )
+    );
+
     return {
         title: 'Verfassungsgerichtshof Baden-Württemberg - Pressemitteilungen',
-        link: request.url,
+        link: listUrl,
         description: 'Pressemitteilungen des Verfassungsgerichtshof für das Land Baden-Württemberg',
-        item: list,
+        item: items,
     };
 }

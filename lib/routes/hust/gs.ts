@@ -1,13 +1,13 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
 
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
 export const handler = async (ctx) => {
     const { category = 'xwdt' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 16;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 16;
 
     const rootUrl = 'https://gs.hust.edu.cn';
     const currentUrl = new URL(`${category}.htm`, rootUrl).href;
@@ -19,22 +19,22 @@ export const handler = async (ctx) => {
     let items = $('div.btlist ul li')
         .slice(0, limit)
         .toArray()
-        .map((item) => {
-            item = $(item);
+        .map((item): DataItem => {
+            const $item = $(item);
 
-            const a = item.find('a');
+            const a = $item.find('a');
             const link = a.prop('href');
 
             return {
                 title: a.text(),
-                pubDate: parseDate(item.find('span.time').text()),
-                link: link.startsWith('http') ? link : new URL(link, rootUrl).href,
+                pubDate: parseDate($item.find('span.time').text()),
+                link: link!.startsWith('http') ? link : new URL(link!, rootUrl).href,
             };
         });
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 try {
                     const { data: detailResponse } = await got(item.link);
 
@@ -57,8 +57,8 @@ export const handler = async (ctx) => {
         )
     );
 
-    const title = $('meta[name="keywords"]').prop('content')?.replace(/,/g, ' - ') ?? $('title').text();
-    const image = new URL($('div.logo img').prop('src'), rootUrl).href;
+    const title = $('meta[name="keywords"]').prop('content')?.replaceAll(',', ' - ') ?? $('title').text();
+    const image = new URL($('div.logo img').prop('src')!, rootUrl).href;
 
     return {
         title,
@@ -79,7 +79,7 @@ export const route: Route = {
     example: '/hust/gs/xwdt',
     parameters: { category: '分类，默认为新闻动态，即 `xwdt`，可在对应分类页 URL 中找到' },
     description: `::: tip
-  若订阅 [新闻动态](https://gs.hust.edu.cn/xwdt.htm)，网址为 \`https://gs.hust.edu.cn/xwdt.htm\`。截取 \`https://gs.hust.edu.cn/\` 到末尾 \`.htm\` 的部分 \`xwdt\` 作为参数填入，此时路由为 [\`/hust/gs/xwdt\`](https://rsshub.app/hust/gs/xwdt)。
+若订阅 [新闻动态](https://gs.hust.edu.cn/xwdt.htm)，网址为 \`https://gs.hust.edu.cn/xwdt.htm\`。截取 \`https://gs.hust.edu.cn/\` 到末尾 \`.htm\` 的部分 \`xwdt\` 作为参数填入，此时路由为 [\`/hust/gs/xwdt\`](https://rsshub.app/hust/gs/xwdt)。
 :::
 
 | [新闻动态](https://gs.hust.edu.cn/xwdt.htm) | [研究生服务专区](https://gs.hust.edu.cn/yjsfwzq.htm) | [综合管理](https://gs.hust.edu.cn/gzzd/zhgl.htm)  |
@@ -126,8 +126,7 @@ export const route: Route = {
 
 | [学位点建设](https://gs.hust.edu.cn/xwgz/xwdjs.htm) | [学位授予](https://gs.hust.edu.cn/xwgz/xwsy.htm)  | [导师队伍](https://gs.hust.edu.cn/xwgz/dsdw.htm)  |
 | --------------------------------------------------- | ------------------------------------------------- | ------------------------------------------------- |
-| [xwgz/xwdjs](https://rsshub.app/hust/gs/xwgz/xwdjs) | [xwgz/xwsy](https://rsshub.app/hust/gs/xwgz/xwsy) | [xwgz/dsdw](https://rsshub.app/hust/gs/xwgz/dsdw) |
-  `,
+| [xwgz/xwdjs](https://rsshub.app/hust/gs/xwgz/xwdjs) | [xwgz/xwsy](https://rsshub.app/hust/gs/xwgz/xwsy) | [xwgz/dsdw](https://rsshub.app/hust/gs/xwgz/dsdw) |`,
     categories: ['university'],
 
     features: {

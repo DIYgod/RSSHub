@@ -1,7 +1,9 @@
-import { Data, Route } from '@/types';
-import { baseUrl, extractNews } from './utils';
-import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
+
+import type { Data, Route } from '@/types';
+import ofetch from '@/utils/ofetch';
+
+import { baseUrl, extractNews } from './utils';
 
 export const route: Route = {
     path: '/weeklyFocus',
@@ -26,7 +28,7 @@ export const route: Route = {
 };
 
 async function handler(ctx): Promise<Data> {
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 1;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 1;
     const response = await ofetch(`${baseUrl}/current-affairs/weekly-focus/archive`);
     const $ = load(response);
     const cards = $('div.weekly-focus-single-card').slice(0, limit).toArray();
@@ -49,8 +51,8 @@ async function handler(ctx): Promise<Data> {
         language: 'en',
         item: itemsPromise.map((item) => (item.status === 'fulfilled' ? item.value : { title: 'Error Parse News' })),
         image: `${baseUrl}/current-affairs/images/weekly-focus-logo.svg`,
-        icon: `https://cdn.visionias.in/new-system-assets/images/home_page/home/vision-logo-footer.png`,
-        logo: `https://cdn.visionias.in/new-system-assets/images/home_page/home/vision-logo-footer.png`,
+        icon: 'https://cdn.visionias.in/new-system-assets/images/home_page/home/vision-logo-footer.png',
+        logo: 'https://cdn.visionias.in/new-system-assets/images/home_page/home/vision-logo-footer.png',
         allowEmpty: true,
     };
 }

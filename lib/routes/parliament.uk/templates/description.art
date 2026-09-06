@@ -1,7 +1,0 @@
-{{ if intro }}
-  <blockquote>{{ intro }}</blockquote>
-{{ /if }}
-
-{{ if description }}
-  <p>{{ description }}<p>
-{{ /if }}

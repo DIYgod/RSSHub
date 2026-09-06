@@ -1,10 +1,12 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
-import routes from './routes';
-import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
+
+import routes from './routes';
 
 export const route: Route = {
     path: '/:type?/:category?/:subCategory?',
@@ -24,11 +26,11 @@ export const route: Route = {
     handler,
     description: `以下是几个例子：
 
-  [**化工**](https://chem.oilchem.net) \`https://chem.oilchem.net\` 中，类别 id 为 \`chem\`，分类 id 为空，子分类 id 为空，对应路由即为 [\`/oilchem/chem\`](https://rsshub.app/oilchem/list/140/18263)
+[**化工**](https://chem.oilchem.net) \`https://chem.oilchem.net\` 中，类别 id 为 \`chem\`，分类 id 为空，子分类 id 为空，对应路由即为 [\`/oilchem/chem\`](https://rsshub.app/oilchem/list/140/18263)
 
-  [**甲醇**](https://chem.oilchem.net/chemical/methanol.shtml) 的相关资讯有两个页面入口：其一 \`https://chem.oilchem.net/chemical/methanol.shtml\` 中，类别 id 为 \`chem\`，分类 id 为 \`chemical\`，子分类 id 为 \`methanol\`，对应路由即为 [\`/oilchem/chem/chemical/methanol\`](https://rsshub.app/oilchem/chem/chemical/methanol) 或其二 \`https://list.oilchem.net/140\` 中，类别 id 为 \`list\`，分类 id 为 \`140\`，子分类 id 为空，对应路由即为 [\`/oilchem/list/140\`](https://rsshub.app/oilchem/list/140)；
+[**甲醇**](https://chem.oilchem.net/chemical/methanol.shtml) 的相关资讯有两个页面入口：其一 \`https://chem.oilchem.net/chemical/methanol.shtml\` 中，类别 id 为 \`chem\`，分类 id 为 \`chemical\`，子分类 id 为 \`methanol\`，对应路由即为 [\`/oilchem/chem/chemical/methanol\`](https://rsshub.app/oilchem/chem/chemical/methanol) 或其二 \`https://list.oilchem.net/140\` 中，类别 id 为 \`list\`，分类 id 为 \`140\`，子分类 id 为空，对应路由即为 [\`/oilchem/list/140\`](https://rsshub.app/oilchem/list/140)；
 
-  [**甲醇热点聚焦**](https://list.oilchem.net/140/18263) \`https://list.oilchem.net/140/18263\` 中，类别 id 为 \`list\`，分类 id 为 \`140\`，子分类 id 为 \`18263\`，对应路由即为 [\`/oilchem/list/140/18263\`](https://rsshub.app/oilchem/list/140/18263)`,
+[**甲醇热点聚焦**](https://list.oilchem.net/140/18263) \`https://list.oilchem.net/140/18263\` 中，类别 id 为 \`list\`，分类 id 为 \`140\`，子分类 id 为 \`18263\`，对应路由即为 [\`/oilchem/list/140/18263\`](https://rsshub.app/oilchem/list/140/18263)`,
 };
 
 async function handler(ctx) {
@@ -50,18 +52,18 @@ async function handler(ctx) {
 
     const list = $('.list ul ul li a')
         .toArray()
-        .map((item) => {
-            item = $(item);
+        .map((item): DataItem => {
+            const $item = $(item);
 
             return {
-                title: item.text(),
-                link: item.attr('href'),
+                title: $item.text(),
+                link: $item.attr('href'),
             };
         });
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const detailResponse = await got({
                     method: 'get',
                     url: item.link,
@@ -74,10 +76,10 @@ async function handler(ctx) {
                         content('.xq-head')
                             .find('span')
                             .text()
-                            .match(/发布时间：\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}/)[0],
+                            .match(/发布时间：\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}/)![0],
                         'YYYY-MM-DD HH:mm'
                     ),
-                    +8
+                    8
                 );
 
                 return item;

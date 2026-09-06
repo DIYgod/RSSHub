@@ -1,6 +1,7 @@
-import { Route } from '@/types';
-import got from '@/utils/got';
 import { load } from 'cheerio';
+
+import type { Route } from '@/types';
+import got from '@/utils/got';
 
 export const route: Route = {
     path: '/:store',
@@ -43,13 +44,13 @@ async function handler(ctx) {
     const items = $('div[data-content-name]')
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
             return {
-                title: item.attr('data-content-name'),
-                author: item.attr('data-content-merchant'),
-                description: `<p>${item.find('.mb-3').text()}</p>`,
-                link: `${rootUrl}/login?redirect=/redirect/alink/${item.attr('data-content-id')}`,
+                title: $item.attr('data-content-name')!,
+                author: $item.attr('data-content-merchant'),
+                description: `<p>${$item.find('.mb-3').text()}</p>`,
+                link: `${rootUrl}/login?redirect=/redirect/alink/${$item.attr('data-content-id')}`,
             };
         });
 

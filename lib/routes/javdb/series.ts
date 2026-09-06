@@ -1,4 +1,5 @@
-import { Route } from '@/types';
+import type { Route } from '@/types';
+
 import utils from './utils';
 
 export const route: Route = {
@@ -19,6 +20,7 @@ export const route: Route = {
         supportBT: false,
         supportPodcast: false,
         supportScihub: false,
+        nsfw: true,
     },
     radar: [
         {
@@ -34,7 +36,7 @@ export const route: Route = {
 | ---- | -------- | -------- | -------- | ----- | ------- |
 |      | playable | single   | download | cnsub | preview |
 
-  所有系列编号参见 [系列庫](https://javdb.com/series)`,
+所有系列编号参见 [系列庫](https://javdb.com/series)`,
 };
 
 async function handler(ctx) {

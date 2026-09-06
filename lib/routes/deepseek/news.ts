@@ -1,7 +1,10 @@
-import { Route, Data, DataItem } from '@/types';
-import ofetch from '@/utils/ofetch';
-import * as cheerio from 'cheerio';
+import type { CheerioAPI } from 'cheerio';
+import { load } from 'cheerio';
+import type { Element } from 'domhandler';
+
+import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
+import ofetch from '@/utils/ofetch';
 
 const ROOT_URL = 'https://api-docs.deepseek.com/zh-cn';
 
@@ -12,11 +15,11 @@ const ARTICLE_TITLE_SELECTOR = ARTICLE_CONTENT_SELECTOR + ' > h1';
 // 获取消息列表 / get article list
 const fetchPageContent = async (url: string) => {
     const response = await ofetch(url);
-    return cheerio.load(response);
+    return load(response);
 };
 
 // 提取正文内容 / extract article content
-const extractArticleInfo = ($article: cheerio.Root, pageURL: string) => {
+const extractArticleInfo = ($article: CheerioAPI, pageURL: string) => {
     const contentElement = $article(ARTICLE_CONTENT_SELECTOR);
     const title = $article(ARTICLE_TITLE_SELECTOR).text();
     $article(ARTICLE_TITLE_SELECTOR).remove(); // 移除标题，避免重复 / remove title to avoid duplication
@@ -30,7 +33,7 @@ const parseDateString = (dateString: string) => {
 };
 
 // 创建消息 / create article
-const createDataItem = (item: cheerio.Element, $: cheerio.Root): Promise<DataItem> => {
+const createDataItem = (item: Element, $: CheerioAPI): Promise<DataItem> => {
     const $item = $(item);
     const link = $item.find('a').attr('href');
     const dateString = $item.find('a').text().split(' ').at(-1);
@@ -39,7 +42,7 @@ const createDataItem = (item: cheerio.Element, $: cheerio.Root): Promise<DataIte
     return cache.tryGet(pageURL, async () => {
         const $article = await fetchPageContent(pageURL);
         const { title, content } = extractArticleInfo($article, pageURL);
-        const pubDate = parseDateString(dateString);
+        const pubDate = parseDateString(dateString!);
 
         return {
             title,

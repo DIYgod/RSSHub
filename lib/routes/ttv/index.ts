@@ -1,10 +1,10 @@
-import { Route } from '@/types';
-
-import got from '@/utils/got';
-import timezone from '@/utils/timezone';
 import { load } from 'cheerio';
-import { parseDate } from '@/utils/parse-date';
+
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
+import got from '@/utils/got';
+import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/:category?',
@@ -36,17 +36,18 @@ async function handler(ctx) {
     let items = $('div.news-list li')
         .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 30)
         .toArray()
-        .map((item) => {
-            item = $(item);
+        .map((item): DataItem => {
+            const $item = $(item);
 
             return {
-                link: $(item).find('a').attr('href'),
+                link: $($item).find('a').attr('href'),
+                title: '',
             };
         });
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const detailResponse = await got({
                     method: 'get',
                     url: item.link,
@@ -55,14 +56,14 @@ async function handler(ctx) {
                 const content = load(detailResponse.data);
 
                 item.title = content('title').text();
-                item.pubDate = timezone(parseDate(content('meta[property="article:published_time"]').attr('content')), +8);
+                item.pubDate = timezone(parseDate(content('meta[property="article:published_time"]').attr('content')!), 8);
                 item.category = content('div.article-body ul.tag')
                     .find('a')
                     .toArray()
                     .map((t) => content(t).text());
                 const section = content("meta[property='article:section']").attr('content');
-                if (!item.category.includes(section)) {
-                    item.category.push(section);
+                if (!item.category.includes(section!)) {
+                    item.category.push(section!);
                 }
                 item.description = content('#newscontent').html();
                 return item;

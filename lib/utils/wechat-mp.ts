@@ -25,12 +25,14 @@
  * For more details of these functions, please refer to the jsDoc in the source code.
  */
 
-import ofetch from '@/utils/ofetch';
-import { type Cheerio, type CheerioAPI, load } from 'cheerio';
+import type { Cheerio, CheerioAPI } from 'cheerio';
+import { load } from 'cheerio';
 import type { Element } from 'domhandler';
-import { parseDate } from '@/utils/parse-date';
+
 import cache from '@/utils/cache';
 import logger from '@/utils/logger';
+import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/parse-date';
 
 class WeChatMpError extends Error {
     constructor(message: string) {
@@ -66,7 +68,7 @@ const toggleWerror = (() => {
 const replaceReturnNewline = (() => {
     const returnRegExp = /\r|\\(r|x0d)/g;
     const newlineRegExp = /\n|\\(n|x0a)/g;
-    return (text: string, replaceReturnWith = '', replaceNewlineWith = '<br>') => text.replaceAll(returnRegExp, replaceReturnWith).replaceAll(newlineRegExp, replaceNewlineWith);
+    return (text: string, replaceReturnWith = '', replaceNewlineWith = '<br>') => text.replaceAll(returnRegExp, () => replaceReturnWith).replaceAll(newlineRegExp, () => replaceNewlineWith);
 })();
 const fixUrl = (() => {
     const ampRegExp = /(&|\\x26)amp;/g;
@@ -90,15 +92,15 @@ class LoopReturn extends Error {
     }
 }
 
-const forEachScript = ($: CheerioAPI | string, callback: (script) => void, defaultReturn: any = null, selector = 'script[nonce][type="text/javascript"]') => {
-    const scripts = typeof $ === 'string' ? [$] : $(selector).toArray();
-    for (const script of scripts) {
+const forEachScript = ($: CheerioAPI, callback: (script) => void, defaultReturn: any = null, selector = 'script[nonce][type="text/javascript"]') => {
+    for (const script of $(selector).toArray()) {
         try {
             callback(script);
         } catch (error) {
             if (error instanceof LoopReturn) {
                 return error.to_return;
-            } else if (error instanceof LoopContinue) {
+            }
+            if (error instanceof LoopContinue) {
                 continue;
             }
             throw error;
@@ -128,7 +130,7 @@ const showTypeMap = {
 const showTypeMapReverse = Object.fromEntries(Object.entries(showTypeMap).map(([k, v]) => [v, k]));
 
 class ExtractMetadata {
-    private static genAssignmentRegExp = (varName: string, valuePattern: string, assignPattern: string) => new RegExp(`\\b${varName}\\s*${assignPattern}\\s*(?<quote>["'])(?<value>${valuePattern})\\k<quote>`, 'mg');
+    private static genAssignmentRegExp = (varName: string, valuePattern: string, assignPattern: string) => new RegExp(String.raw`\b${varName}\s*${assignPattern}\s*(?<quote>["'])(?<value>${valuePattern})\k<quote>`, 'gm');
 
     private static genExtractFunc = (
         varName: string,
@@ -148,7 +150,7 @@ class ExtractMetadata {
         return (str: string) => {
             const values: string[] = [];
             for (const match of str.matchAll(regExp)) {
-                const value = <string>match.groups?.value;
+                const value = match.groups!.value;
                 if (!multiple) {
                     return value;
                 }
@@ -162,49 +164,75 @@ class ExtractMetadata {
     };
 
     private static doExtract = (metadataToBeExtracted: Record<string, (str: string) => string | string[] | null | undefined>, scriptText: string) => {
-        const metadataExtracted: Record<string, string | string[]> = {};
+        const metadataExtracted: Record<string, string | string[] | null | undefined> = {};
         for (const [key, extractFunc] of Object.entries(metadataToBeExtracted)) {
-            metadataExtracted[key] = <string>extractFunc(scriptText);
+            metadataExtracted[key] = extractFunc(scriptText);
         }
         metadataExtracted._extractedFrom = scriptText;
         return metadataExtracted;
     };
 
     private static commonMetadataToBeExtracted = {
-        showType: this.genExtractFunc('item_show_type', { valuePattern: String.raw`\d+` }),
+        showType: this.genExtractFunc('item_show_type', { valuePattern: String.raw`\d+`, allowNotFound: true }),
         realShowType: this.genExtractFunc('real_item_show_type', { valuePattern: String.raw`\d+` }),
         createTime: this.genExtractFunc('ct', { valuePattern: String.raw`\d+`, allowNotFound: true }),
         sourceUrl: this.genExtractFunc('msg_source_url', { valuePattern: `https?://[^'"]*`, allowNotFound: true }),
     };
 
-    static common = ($: CheerioAPI) =>
-        forEachScript(
+    private static showTypeMetadataToBeExtracted = {
+        showType: this.genExtractFunc('item_show_type', { valuePattern: String.raw`\d+` }),
+    };
+
+    static common = ($: CheerioAPI) => {
+        const metadataExtracted = forEachScript(
             $,
             (script) => {
                 const scriptText = $(script).text();
-                const metadataExtracted = <Record<string, string>> this.doExtract(this.commonMetadataToBeExtracted, scriptText);
-                const showType = showTypeMapReverse[metadataExtracted.showType];
-                const realShowType = showTypeMapReverse[metadataExtracted.realShowType];
-                metadataExtracted.sourceUrl = metadataExtracted.sourceUrl && fixUrl(metadataExtracted.sourceUrl);
-                if (showType) {
-                    metadataExtracted.showType = showType;
-                } else {
-                    warn('showType not found', `item_show_type=${metadataExtracted.showType}`);
-                }
-                if (realShowType) {
-                    metadataExtracted.realShowType = realShowType;
-                } else {
-                    warn('realShowType not found', `real_item_show_type=${metadataExtracted.realShowType}`);
-                }
-                if (metadataExtracted.showType !== metadataExtracted.realShowType) {
-                    // never seen this happen, waiting for examples
-                    warn('showType mismatch', `item_show_type=${metadataExtracted.showType}, real_item_show_type=${metadataExtracted.realShowType}`);
-                }
+                const metadataExtracted = this.doExtract(this.commonMetadataToBeExtracted, scriptText);
                 throw new LoopReturn(metadataExtracted);
             },
             {},
             'script[nonce][type="text/javascript"]:contains("real_item_show_type")'
         );
+
+        // APP_MSG_PAGE has its item_show_type in a separate script
+        if (!metadataExtracted.showType) {
+            const showTypeExtracted = forEachScript(
+                $,
+                (script) => {
+                    const scriptText = $(script).text();
+                    const metadataExtracted = this.doExtract(this.showTypeMetadataToBeExtracted, scriptText);
+                    throw new LoopReturn(metadataExtracted);
+                },
+                {},
+                'script[nonce][type="text/javascript"]:contains("item_show_type")'
+            );
+            if (showTypeExtracted.showType) {
+                metadataExtracted.showType = showTypeExtracted.showType;
+            }
+        }
+
+        const showType = showTypeMapReverse[metadataExtracted.showType];
+        const realShowType = showTypeMapReverse[metadataExtracted.realShowType];
+        if (metadataExtracted.sourceUrl) {
+            metadataExtracted.sourceUrl = fixUrl(metadataExtracted.sourceUrl);
+        }
+        if (showType) {
+            metadataExtracted.showType = showType;
+        } else {
+            warn('showType not found', `item_show_type=${metadataExtracted.showType}`);
+        }
+        if (realShowType) {
+            metadataExtracted.realShowType = realShowType;
+        } else {
+            warn('realShowType not found', `real_item_show_type=${metadataExtracted.realShowType}`);
+        }
+        if (metadataExtracted.showType !== metadataExtracted.realShowType) {
+            // never seen this happen, waiting for examples
+            warn('showType mismatch', `item_show_type=${metadataExtracted.showType}, real_item_show_type=${metadataExtracted.realShowType}`);
+        }
+        return metadataExtracted;
+    };
 
     private static audioMetadataToBeExtracted = {
         voiceId: this.genExtractFunc('voiceid', { assignPattern: ':' }),
@@ -217,7 +245,7 @@ class ExtractMetadata {
             $,
             (script) => {
                 const scriptText = $(script).text();
-                const metadataExtracted = <Record<string, string>> this.doExtract(this.audioMetadataToBeExtracted, scriptText);
+                const metadataExtracted = this.doExtract(this.audioMetadataToBeExtracted, scriptText);
                 throw new LoopReturn(metadataExtracted);
             },
             {},
@@ -233,7 +261,7 @@ class ExtractMetadata {
             $,
             (script) => {
                 const scriptText = $(script).text();
-                const metadataExtracted = <Record<string, string[]>> this.doExtract(this.imgMetadataToBeExtracted, scriptText);
+                const metadataExtracted = this.doExtract(this.imgMetadataToBeExtracted, scriptText);
                 if (Array.isArray(metadataExtracted.imgUrls)) {
                     metadataExtracted.imgUrls = metadataExtracted.imgUrls.map((url) => fixUrl(url));
                 }
@@ -317,13 +345,8 @@ const genVideoSrc = (videoId: string) => {
  * @param {boolean} skipImg - Whether to skip fixing images.
  * @return {string} - The fixed html, a string.
  */
-const fixArticleContent = (html?: string | Cheerio<Element>, skipImg = false) => {
-    let htmlResult = '';
-    if (typeof html === 'string') {
-        htmlResult = html;
-    } else if (html?.html) {
-        htmlResult = html.html() || '';
-    }
+const fixArticleContent = (html?: string | Cheerio<Element>, skipImg = false): string => {
+    const htmlResult = (typeof html === 'string' ? html : html?.html()) || '';
     if (!htmlResult) {
         return '';
     }
@@ -351,10 +374,14 @@ const fixArticleContent = (html?: string | Cheerio<Element>, skipImg = false) =>
     // fix iframe: https://mp.weixin.qq.com/s/FnjcMXZ1xdS-d6n-pUUyyw
     $('iframe.video_iframe[data-src]').each((_, iframe) => {
         const $iframe = $(iframe);
-        const dataSrc = <string>$iframe.attr('data-src');
+        const dataSrc = $iframe.attr('data-src');
+        if (!dataSrc) {
+            return;
+        }
         const srcUrlObj = new URL(dataSrc);
-        if (srcUrlObj.host === 'v.qq.com' && srcUrlObj.searchParams.has('vid')) {
-            const newSrc = genVideoSrc(<string>srcUrlObj.searchParams.get('vid'));
+        const vid = srcUrlObj.searchParams.get('vid');
+        if (srcUrlObj.host === 'v.qq.com' && vid !== null) {
+            const newSrc = genVideoSrc(vid);
             $iframe.attr('src', newSrc);
             $iframe.removeAttr('data-src');
             const width = $iframe.attr('data-w');
@@ -362,7 +389,7 @@ const fixArticleContent = (html?: string | Cheerio<Element>, skipImg = false) =>
             if (width && ratio) {
                 const width_ = Math.min(Number.parseInt(width), 677);
                 $iframe.attr('width', width_.toString());
-                $iframe.attr('height', (width_ / Number.parseFloat(ratio)).toString());
+                $iframe.attr('height', (width_ / Number(ratio)).toString());
             }
         } // else {} FIXME: https://mp.weixin.qq.com/s?__biz=Mzg5Mjk3MzE4OQ==&mid=2247549515&idx=2&sn=a608fca597f0589c1aebd6d0b82ff6e9
     });
@@ -443,8 +470,20 @@ const normalizeUrl = (url: string, bypassHostCheck = false) => {
     return urlObj.href;
 };
 
+type WeChatMpPage = {
+    title: string;
+    author: string;
+    description: string;
+    summary: string;
+    pubDate?: Date;
+    mpName?: string;
+    enclosure_url?: string;
+    itunes_duration?: string | number;
+    enclosure_type?: string;
+};
+
 class PageParsers {
-    private static common = ($: CheerioAPI, commonMetadata: Record<string, string>) => {
+    private static common = ($: CheerioAPI, commonMetadata: Record<string, string>): WeChatMpPage => {
         const title = replaceReturnNewline($('meta[property="og:title"]').attr('content') || '', '', ' ');
         const author = replaceReturnNewline($('meta[name=author]').attr('content') || '', '', ' ');
         const pubDate = commonMetadata.createTime ? parseDate(Number.parseInt(commonMetadata.createTime) * 1000) : undefined;
@@ -454,17 +493,7 @@ class PageParsers {
         const description = summary;
         summary = summary.replaceAll('<br>', ' ') === title ? '' : summary;
 
-        return { title, author, description, summary, pubDate, mpName } as {
-            title: string;
-            author: string;
-            description: string;
-            summary: string;
-            pubDate?: Date;
-            mpName?: string;
-            enclosure_url?: string;
-            itunes_duration?: string | number;
-            enclosure_type?: string;
-        };
+        return { title, author, description, summary, pubDate, mpName };
     };
     private static appMsg = async ($: CheerioAPI, commonMetadata: Record<string, string>) => {
         const page = PageParsers.common($, commonMetadata);
@@ -511,7 +540,7 @@ class PageParsers {
     static dispatch = async (html: string, url: string) => {
         const $ = load(html);
         const commonMetadata = ExtractMetadata.common($);
-        let page: Record<string, any>;
+        let page: WeChatMpPage;
         let pageText: string, pageTextShort: string;
         switch (commonMetadata.showType) {
             case 'APP_MSG_PAGE':
@@ -535,13 +564,12 @@ class PageParsers {
                     pageTextShort += '...';
                 }
                 if (pageText.includes('已被发布者删除')) {
-                    errorNoMention('deleted by author', pageTextShort, url);
-                } else if (new URL(url).pathname.includes('captcha') || pageText.includes('环境异常')) {
-                    errorNoMention('request blocked by WAF', pageTextShort, url);
-                } else {
-                    error('unknown page, probably due to WAF', pageTextShort, url);
+                    return errorNoMention('deleted by author', pageTextShort, url);
                 }
-                return {}; // just to make TypeScript happy, actually UNREACHABLE
+                if (new URL(url).pathname.includes('captcha') || pageText.includes('环境异常')) {
+                    return errorNoMention('request blocked by WAF', pageTextShort, url);
+                }
+                return error('unknown page, probably due to WAF', pageTextShort, url);
             default:
                 warn('new showType, trying fallback method', `showType=${commonMetadata.showType}`, url);
                 page = PageParsers.fallback($, commonMetadata);
@@ -565,15 +593,17 @@ class PageParsers {
 }
 
 const redirectHelper = async (url: string, maxRedirects: number = 5) => {
-    maxRedirects--;
-    const raw = await ofetch.raw(url);
+    const raw = await ofetch.raw(url, {
+        redirect: 'manual',
+    });
     if ([301, 302, 303, 307, 308].includes(raw.status)) {
-        if (!raw.headers.has('location')) {
+        const location = raw.headers.get('location');
+        if (!location) {
             error('redirect without location', url);
-        } else if (maxRedirects <= 0) {
+        } else if (maxRedirects <= 1) {
             error('too many redirects', url);
         }
-        return await redirectHelper(<string>raw.headers.get('location'), maxRedirects);
+        return await redirectHelper(new URL(location!, url).href, maxRedirects - 1);
     }
     return raw;
 };
@@ -593,18 +623,7 @@ const fetchArticle = (url: string, bypassHostCheck: boolean = false) => {
         // pass the redirected URL to dispatcher for better error logging
         const page = await PageParsers.dispatch(raw._data, raw.url);
         return { ...page, link: url };
-    }) as Promise<{
-        title: string;
-        author: string;
-        description: string;
-        summary: string;
-        pubDate?: Date;
-        mpName?: string;
-        link: string;
-        enclosure_type?: string;
-        enclosure_url?: string;
-        itunes_duration?: string | number;
-    }>;
+    });
 };
 
 /**
@@ -624,25 +643,23 @@ const fetchArticle = (url: string, bypassHostCheck: boolean = false) => {
  * @return {Promise<object>} - The incoming `item` object, with the article and its metadata filled in.
  */
 const finishArticleItem = async (item, setMpNameAsAuthor = false, skipLink = false) => {
-    if (item.link) {
-        const fetchedItem = await fetchArticle(item.link);
-        for (const key in fetchedItem) {
-            switch (key) {
-                case 'author':
-                    item.author = setMpNameAsAuthor
-                        ? fetchedItem.mpName || item.author // the Official Account itself. if your route return articles from different accounts, you may want to use this
-                        : fetchedItem.author || item.author; // the real author of the article. if your route return articles from a certain account, use this
-                    break;
-                case 'link':
-                    item.link = skipLink ? item.link : fetchedItem.link || item.link;
-                    break;
-                default:
-                    item[key] = item[key] || fetchedItem[key];
-            }
+    const fetchedItem = await fetchArticle(item.link);
+    for (const key in fetchedItem) {
+        switch (key) {
+            case 'author':
+                item.author = setMpNameAsAuthor
+                    ? fetchedItem.mpName || item.author // the Official Account itself. if your route return articles from different accounts, you may want to use this
+                    : fetchedItem.author || item.author; // the real author of the article. if your route return articles from a certain account, use this
+                break;
+            case 'link':
+                item.link = skipLink ? item.link : fetchedItem.link || item.link;
+                break;
+            default:
+                item[key] ||= fetchedItem[key];
         }
     }
     return item;
 };
 
 const exportedForTestingOnly = { toggleWerror, ExtractMetadata, showTypeMapReverse };
-export { exportedForTestingOnly, WeChatMpError, fixArticleContent, fetchArticle, finishArticleItem, normalizeUrl };
+export { exportedForTestingOnly, fetchArticle, finishArticleItem, fixArticleContent, normalizeUrl, WeChatMpError };

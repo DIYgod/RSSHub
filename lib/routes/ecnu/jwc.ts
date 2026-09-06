@@ -1,7 +1,8 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
@@ -30,9 +31,9 @@ export const route: Route = {
         const $ = load(response.data);
         const links = $('.col_news_con ul.news_list > li')
             .toArray()
-            .map((el) => ({
+            .map((el): DataItem & { link: string } => ({
                 pubDate: timezone(parseDate($(el).find('.news_date').text()), 8),
-                link: new URL($(el).find('a').attr('href'), baseUrl).toString(),
+                link: new URL($(el).find('a').attr('href')!, baseUrl).href,
                 title: $(el).find('a').text(),
             }));
         const items = await Promise.all(
@@ -40,24 +41,23 @@ export const route: Route = {
                 cache.tryGet(item.link, async () => {
                     if (type(item.link) === 'htm') {
                         try {
-                            const { data } = await got(item.link, {
-                                https: {
-                                    rejectUnauthorized: false,
-                                },
-                            });
+                            const { data } = await got(item.link);
                             const $ = load(data);
-                            item.description = $('div.article')?.html()?.replaceAll('src="/', `src="${baseUrl}/`)?.replaceAll('href="/', `href="${baseUrl}/`)?.trim();
+                            item.description = $('div.article')
+                                ?.html()
+                                ?.replaceAll('src="/', () => `src="${baseUrl}/`)
+                                ?.replaceAll('href="/', () => `href="${baseUrl}/`)
+                                ?.trim();
                             return item;
                         } catch {
                             // intranet
                             item.description = '请进行统一身份认证之后再访问';
                             return item;
                         }
-                    } else {
-                        // file to download
-                        item.description = '点击认证后访问内容';
-                        return item;
                     }
+                    // file to download
+                    item.description = '点击认证后访问内容';
+                    return item;
                 })
             )
         );

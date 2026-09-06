@@ -1,57 +1,90 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+import type { Context } from 'hono';
 
+import type { Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
-import { art } from '@/utils/render';
-import path from 'node:path';
 
-export const handler = async (ctx) => {
+import { renderDescription } from './templates/description';
+
+const parseFlightData = (buf: Buffer) => {
+    const rows = new Map<string, string>();
+    let i = 0;
+    while (i < buf.length) {
+        const colon = buf.indexOf(0x3a, i);
+        const id = buf.toString('utf8', i, colon);
+        let end, value;
+        if (buf[colon + 1] === 0x54) {
+            const comma = buf.indexOf(0x2c, colon);
+            const length = Number.parseInt(buf.toString('utf8', colon + 2, comma), 16);
+            value = buf.toString('utf8', comma + 1, comma + 1 + length);
+            end = comma + 1 + length;
+        } else {
+            end = buf.indexOf(0x0a, colon);
+            value = buf.toString('utf8', colon + 1, end);
+        }
+        rows.set(id, value);
+        i = end + 1;
+    }
+    return rows;
+};
+
+async function handler(ctx: Context) {
     const { tag } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 1;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 16;
 
     const rootUrl = 'https://www.deeplearning.ai';
-    const currentUrl = new URL(`the-batch${tag ? `/tag/${tag.replace(/^tag\//, '').replace(/\/$/, '')}` : ''}/`, rootUrl).href;
+    const currentUrl = new URL(`the-batch${tag ? `/tag/${tag.replace(/^tag\//, '').replace(/\/$/, '')}` : ''}`, rootUrl).href;
 
     const response = await ofetch(currentUrl);
 
     const $ = load(response);
 
-    const language = $('html').prop('lang');
+    const language = $('html').prop('lang') as Language;
 
-    const data = JSON.parse($('script#__NEXT_DATA__').text());
+    const flight = $('script:contains("self.__next_f")')
+        .toArray()
+        .map((script) =>
+            $(script)
+                .text()
+                .match(/^self\.__next_f\.push\(\[1,(".*")\]\)$/s)
+        )
+        .filter(Boolean)
+        .map((m) => JSON.parse(m![1]) as string)
+        .join('');
 
-    const nextBuildId = data.buildId;
-    const posts = data.props?.pageProps?.posts ?? [];
+    const cardsRow = flight.split('\n').find((row) => row.includes('"cards":['));
+    if (!cardsRow) {
+        throw new Error('No cards found in flight payload');
+    }
+    const { cards } = JSON.parse(cardsRow.replace(/^[0-9a-f]+:/, ''))[3];
 
-    let items = posts.slice(0, limit).map((item) => {
-        const title = item.title;
-        const description = art(path.join(__dirname, 'templates/description.art'), {
-            images: item.feature_image
+    let items = cards.slice(0, limit).map((card) => {
+        const title = card.title;
+        const description = renderDescription({
+            images: card.image?.src
                 ? [
                       {
-                          src: item.feature_image,
-                          alt: item.feature_image_alt,
+                          src: card.image.src,
+                          alt: card.image.alt,
                       },
                   ]
                 : undefined,
-            intro: item.excerpt ?? item.custom_excerpt,
+            intro: card.excerpt,
         });
-        const image = item.feature_image;
-        const guid = `the-batch-${item.slug}`;
+        const image = card.image?.src;
+        const guid = `the-batch-${card.href.split('/').pop()}`;
 
         return {
             title,
             description,
-            pubDate: parseDate(item.published_at),
-            link: new URL(`_next/data/${nextBuildId}/the-batch/${item.slug}.json`, rootUrl).href,
-            category: item.tags.map((t) => t.name),
+            link: new URL(card.href, rootUrl).href,
             guid,
             id: guid,
             content: {
                 html: description,
-                text: item.excerpt ?? item.custom_excerpt,
+                text: card.excerpt,
             },
             image,
             banner: image,
@@ -62,66 +95,73 @@ export const handler = async (ctx) => {
     items = await Promise.all(
         items.map((item) =>
             cache.tryGet(item.link, async () => {
-                const detailResponse = await ofetch(item.link);
-
-                const post = detailResponse.pageProps?.post ?? undefined;
-
-                if (!post) {
-                    return item;
-                }
-
-                const $$ = load(post.html);
-
-                $$('a').each((_, ele) => {
-                    if (ele.attribs.href?.includes('utm_campaign')) {
-                        const url = new URL(ele.attribs.href);
-                        url.searchParams.delete('utm_campaign');
-                        url.searchParams.delete('utm_source');
-                        url.searchParams.delete('utm_medium');
-                        url.searchParams.delete('_hsenc');
-                        ele.attribs.href = url.href;
-                    }
+                const detailResponse = await ofetch(item.link, {
+                    headers: { rsc: '1' },
+                    responseType: 'arrayBuffer',
                 });
 
-                const title = post.title;
-                const description = art(path.join(__dirname, 'templates/description.art'), {
-                    images: post.feature_image
+                const rows = parseFlightData(Buffer.from(detailResponse));
+
+                const bodyId = rows
+                    .values()
+                    .find((row) => row.includes('"prose'))
+                    ?.match(/"__html":"\$(\w+)"/)?.[1];
+                if (!bodyId || !rows.has(bodyId)) {
+                    throw new Error('No article body found in flight payload');
+                }
+                const $$ = load(rows.get(bodyId)!);
+
+                $$('#elevenlabs-audionative-widget').remove();
+
+                $$('a').each((_, ele) => {
+                    if (!ele.attribs.href?.includes('utm_campaign')) {
+                        return;
+                    }
+                    const url = new URL(ele.attribs.href);
+                    url.searchParams.delete('utm_campaign');
+                    url.searchParams.delete('utm_source');
+                    url.searchParams.delete('utm_medium');
+                    url.searchParams.delete('_hsenc');
+                    ele.attribs.href = url.href;
+                });
+
+                const metaProps = JSON.parse(rows.values().find((row) => row.includes('"og:title"'))!)
+                    .filter((element) => element[1] === 'meta')
+                    .map((element) => element[3] as Record<string, string>);
+                const meta = (property: string) => metaProps.find((props) => props.property === property)?.content;
+
+                const title = meta('og:title')!;
+                const intro = meta('og:description');
+                const image = meta('og:image');
+                const description = renderDescription({
+                    images: image
                         ? [
                               {
-                                  src: post.feature_image,
-                                  alt: post.feature_image_alt,
+                                  src: image,
+                                  alt: title,
                               },
                           ]
                         : undefined,
-                    intro: post.excerpt ?? post.custom_excerpt,
+                    intro,
                     description: $$.html(),
                 });
-                const guid = `the-batch-${post.slug}`;
-                const image = post.feature_image;
-
                 item.title = title;
                 item.description = description;
-                item.pubDate = parseDate(post.published_at);
-                item.link = new URL(`the-batch/${post.slug}`, rootUrl).href;
-                item.category = post.tags.map((t) => t.name);
-                item.author = post.authors.map((a) => a.name).join('/');
-                item.guid = guid;
-                item.id = guid;
+                item.pubDate = parseDate(meta('article:published_time')!);
+                item.category = metaProps.filter((props) => props.property === 'article:tag').map((props) => props.content);
+                item.author = meta('article:author');
                 item.content = {
                     html: description,
-                    text: post.excerpt ?? post.custom_excerpt,
+                    text: intro,
                 };
                 item.image = image;
                 item.banner = image;
-                item.updated = parseDate(post.updated_at);
-                item.language = language;
+                item.updated = parseDate(meta('article:modified_time')!);
 
                 return item;
             })
         )
     );
-
-    const image = new URL($('meta[property="og:image"]').prop('content'), rootUrl).href;
 
     return {
         title: $('title').text(),
@@ -129,11 +169,11 @@ export const handler = async (ctx) => {
         link: currentUrl,
         item: items,
         allowEmpty: true,
-        image,
+        image: `${rootUrl}/favicon.ico`,
         author: $('meta[property="og:site_name"]').prop('content'),
         language,
     };
-};
+}
 
 export const route: Route = {
     path: '/the-batch/:tag{.+}?',
@@ -144,7 +184,7 @@ export const route: Route = {
     example: '/deeplearning/the-batch',
     parameters: { tag: 'Tag, Weekly Issues by default' },
     description: `::: tip
-  If you subscribe to [Data Points](https://www.deeplearning.ai/the-batch/tag/data-points/)，where the URL is \`https://www.deeplearning.ai/the-batch/tag/data-points/\`, extract the part \`https://www.deeplearning.ai/the-batch/tag\` to the end, which is \`data-points\`, and use it as the parameter to fill in. Therefore, the route will be [\`/deeplearning/the-batch/data-points\`](https://rsshub.app/deeplearning/the-batch/data-points).
+If you subscribe to [Data Points](https://www.deeplearning.ai/the-batch/tag/data-points/)，where the URL is \`https://www.deeplearning.ai/the-batch/tag/data-points/\`, extract the part \`https://www.deeplearning.ai/the-batch/tag\` to the end, which is \`data-points\`, and use it as the parameter to fill in. Therefore, the route will be [\`/deeplearning/the-batch/data-points\`](https://rsshub.app/deeplearning/the-batch/data-points).
 
 :::
 
@@ -173,8 +213,7 @@ export const route: Route = {
 | [DeepLearning.AI News](https://www.deeplearning.ai/the-batch/tag/deeplearning-ai-news/) | [deeplearning-ai-news](https://rsshub.app/deeplearning/the-batch/deeplearning-ai-news) |
 | [AI Careers](https://www.deeplearning.ai/the-batch/tag/ai-careers/)                     | [ai-careers](https://rsshub.app/deeplearning/the-batch/ai-careers)                     |
 | [Just For Fun](https://www.deeplearning.ai/the-batch/tag/just-for-fun/)                 | [just-for-fun](https://rsshub.app/deeplearning/the-batch/just-for-fun)                 |
-| [Learning & Education](https://www.deeplearning.ai/the-batch/tag/learning-education/)   | [learning-education](https://rsshub.app/deeplearning/the-batch/learning-education)     |
-    `,
+| [Learning & Education](https://www.deeplearning.ai/the-batch/tag/learning-education/)   | [learning-education](https://rsshub.app/deeplearning/the-batch/learning-education)     |`,
     categories: ['programming'],
 
     features: {

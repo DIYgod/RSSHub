@@ -1,5 +1,4 @@
-import { Route } from '@/types';
-
+import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 
 export const route: Route = {
@@ -11,33 +10,35 @@ export const route: Route = {
     handler,
 };
 
+interface HacsRepository {
+    manifest: {
+        name: string;
+    };
+    manifest_name: string;
+    description: string;
+    full_name: string;
+    domain: string;
+    stargazers_count: number;
+    topics?: string[];
+    last_updated: string;
+    last_fetched: number;
+}
+
 async function handler() {
     const sections = ['appdaemon', 'critical', 'integration', 'theme', 'python_script', 'plugin'];
     const dataList = (
         await Promise.all(
             sections.map(async (section) => {
                 const url = `https://data-v2.hacs.xyz/${section}/data.json`;
-                const response = await ofetch(url);
+                const response = await ofetch<Record<string, HacsRepository>>(url);
                 return Object.values(response);
             })
         )
-    ).flat() as {
-        manifest: {
-            name: string;
-        };
-        manifest_name: string;
-        description: string;
-        full_name: string;
-        domain: string;
-        stargazers_count: number;
-        topics?: string[];
-        last_updated: string;
-        last_fetched: number;
-    }[];
+    ).flat();
 
     return {
         title: 'HACS Repositories',
-        link: `https://www.hacs.xyz/`,
+        link: 'https://www.hacs.xyz/',
         item: dataList.map((item) => ({
             title: item.manifest_name || item.manifest?.name || item.full_name,
             description: `${item.domain ? `<img src="https://brands.home-assistant.io/_/${item.domain}/icon.png" />` : ''}<br>${item.description}<br><br>Last updated: ${item.last_updated}<br>Stars: ${item.stargazers_count}<br>Topics: ${item.topics?.join(', ')}`,

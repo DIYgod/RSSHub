@@ -1,6 +1,7 @@
-import { Route } from '@/types';
-import got from '@/utils/got';
 import { load } from 'cheerio';
+
+import type { Route } from '@/types';
+import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
 async function getArticles() {
@@ -17,10 +18,10 @@ async function getArticles() {
             const $description = $item.find('p');
 
             return {
-                title: $title.text().trim(),
+                title: $title.text(),
                 link: $title.attr('href'),
-                description: $description.text().trim(),
-                pubDate: parseDate($date.attr('title')),
+                description: $description.text(),
+                pubDate: parseDate($date.attr('title')!),
                 guid: $title.attr('href'),
             };
         });

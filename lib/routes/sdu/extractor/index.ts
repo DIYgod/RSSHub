@@ -1,7 +1,7 @@
-import news from './wh/news';
-import view from './view';
-import sdrj from './sdrj';
-import jwc from './wh/jwc';
+import { sdrj } from './sdrj';
+import { view } from './view';
+import { jwc } from './wh/jwc';
+import { news } from './wh/news';
 
 const index = (link) => {
     if (link.startsWith('https://xinwen.wh.sdu.edu.cn/')) {
@@ -16,6 +16,7 @@ const index = (link) => {
     if (link.startsWith('https://jwc.wh.sdu.edu.cn/')) {
         return jwc(link);
     }
-    return {};
+    return Promise.resolve({});
 };
+// TODO: missing route export
 export default index;

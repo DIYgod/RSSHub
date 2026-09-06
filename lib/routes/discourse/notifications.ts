@@ -1,8 +1,9 @@
-import { Route } from '@/types';
-import cache from '@/utils/cache';
-import { getConfig } from './utils';
-import ofetch from '@/utils/ofetch';
 import { config } from '@/config';
+import type { Route } from '@/types';
+import cache from '@/utils/cache';
+import ofetch from '@/utils/ofetch';
+
+import { getConfig } from './utils';
 
 export const route: Route = {
     path: '/:configId/notifications/:fulltext?',
@@ -23,7 +24,7 @@ export const route: Route = {
         supportScihub: false,
     },
     name: 'Notifications',
-    maintainers: [],
+    maintainers: ['dzx-dzx'],
     handler,
     description: `::: warning
 If you opt to enable \`fulltext\` feature, consider adding \`limit\` parameter to your query to avoid sending too many request.
@@ -31,7 +32,8 @@ If you opt to enable \`fulltext\` feature, consider adding \`limit\` parameter t
 };
 
 async function handler(ctx) {
-    const { link, key } = getConfig(ctx);
+    const discourseConfig: unknown = getConfig(ctx);
+    const { link, key } = discourseConfig as { link: string; key: string };
 
     const response = await ofetch(`${link}/notifications.json`, { headers: { 'User-Api-Key': key } });
     let items = response.notifications.slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 10).map((e) => ({
@@ -52,9 +54,8 @@ async function handler(ctx) {
                         const { cooked } = await ofetch(post_link, { headers: { 'User-Api-Key': key } });
                         return { ...e, description: cooked };
                     });
-                } else {
-                    return e;
                 }
+                return e;
             })
         );
     }

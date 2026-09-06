@@ -1,4 +1,4 @@
-import { Route } from '@/types';
+import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 
 export const route: Route = {
@@ -19,6 +19,7 @@ export const route: Route = {
         supportBT: false,
         supportPodcast: false,
         supportScihub: false,
+        nsfw: true,
     },
     radar: [
         {
@@ -74,7 +75,7 @@ async function handler(ctx) {
     return {
         title: 'Fur Affinity | Home',
         link: 'https://www.furaffinity.net/',
-        description: `Fur Affinity Index`,
+        description: 'Fur Affinity Index',
         item: items,
     };
 }

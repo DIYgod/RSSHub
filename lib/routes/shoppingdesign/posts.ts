@@ -1,9 +1,10 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+import pMap from 'p-map';
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
-import pMap from 'p-map';
 
 export const route: Route = {
     path: '/posts',
@@ -37,14 +38,14 @@ async function handler() {
     const items = await pMap(
         $('article-item').toArray(),
         (item) => {
-            item = $(item);
-            const link = item.attr('url');
-            return cache.tryGet(link, async () => {
+            const $item = $(item);
+            const link = $item.attr('url');
+            return cache.tryGet(link!, async () => {
                 const response = await got(`${link}?sn_f=1`);
                 const $ = load(response.data);
                 const article = $('.left article .htmlview');
-                article.find('d-image').each(function () {
-                    $(this).replaceWith(`<img src="${$(this).attr('lg')}">`);
+                article.find('d-image').each((_, el) => {
+                    $(el).replaceWith(`<img src="${$(el).attr('lg')}">`);
                 });
 
                 return {
@@ -52,7 +53,7 @@ async function handler() {
                     author: $('meta[name="my:author"]').attr('content'),
                     description: article.html(),
                     category: $('meta[name="my:category"]').attr('content'),
-                    pubDate: parseDate($('meta[name="my:publish"]').attr('content')),
+                    pubDate: parseDate($('meta[name="my:publish"]').attr('content')!),
                     link,
                 };
             });
@@ -62,7 +63,7 @@ async function handler() {
     );
 
     return {
-        title: $('meta[property="og:title"]').attr('content'),
+        title: $('meta[property="og:title"]').attr('content')!,
         link: currentUrl,
         description: $('meta[property="og:description"]').attr('content'),
         item: items,

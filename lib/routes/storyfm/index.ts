@@ -1,6 +1,7 @@
-import { Route } from '@/types';
-import got from '@/utils/got';
 import { load } from 'cheerio';
+
+import type { Route } from '@/types';
+import got from '@/utils/got';
 
 export const route: Route = {
     path: '/index',
@@ -37,7 +38,7 @@ async function handler() {
             const $item = load(ele);
             const img = $item('.isotope-img-container img').attr('src');
             const infoNode = $item('.isotope-index-text').first();
-            const title = infoNode.find('.soundbyte-podcast-progression-title');
+            const title = infoNode.find('.soundbyte-podcast-progression-title').text();
             const link = infoNode.find('a.soundbyte-podcast-play-progression').attr('href');
             const time = infoNode.find('.fa-clock-o').text();
             const date = infoNode.find('.soundbyte-podcast-date-progression').text();
@@ -47,7 +48,7 @@ async function handler() {
                 .map((value) => {
                     if (value.includes('月')) {
                         const enMongth = cnMonth.findIndex((cnMonthStr) => value.includes(cnMonthStr));
-                        value = enMongth + 1;
+                        value = String(enMongth + 1);
                     }
                     return value;
                 });

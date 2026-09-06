@@ -1,14 +1,16 @@
-import { Route } from '@/types';
-import cache from '@/utils/cache';
-import got from '@/utils/got';
 import { load } from 'cheerio';
+
+import type { Language, Route } from '@/types';
+import cache from '@/utils/cache';
+import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
-import { baseUrl, headers, fixImages, parseReviews } from './utils';
+
+import { baseUrl, fixImages, headers, parseReviews } from './utils';
 
 export const route: Route = {
     path: '/review/:keyword?',
     categories: ['new-media'],
-    example: '/techpowerup/review/4090',
+    example: '/techpowerup/review/amd',
     parameters: { keyword: 'Search Keyword' },
     features: {
         requireConfig: false,
@@ -20,15 +22,17 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['techpowerup.com/'],
+            source: ['techpowerup.com/review/search', 'techpowerup.com/review'],
             target: '',
         },
     ],
     name: 'Reviews',
     maintainers: ['TonyRL'],
     handler,
-    url: 'techpowerup.com/',
+    url: 'www.techpowerup.com/review/',
 };
+
+const language: Language = 'en';
 
 async function handler(ctx) {
     const keyword = ctx.req.param('keyword');
@@ -36,10 +40,10 @@ async function handler(ctx) {
     const url = new URL(`${baseUrl}/review/${keyword ? 'search/' : ''}`);
     if (keyword) {
         url.searchParams.set('q', keyword);
-        url.searchParams.set('_', Date.now());
+        url.searchParams.set('_', Date.now().toString());
     }
 
-    const { data: response } = await got(url, {
+    const response = await ofetch(url.href, {
         headers,
     });
 
@@ -48,31 +52,29 @@ async function handler(ctx) {
     const list = $('.reviewlist-bit')
         .toArray()
         .map((item) => {
-            item = $(item);
-            const a = item.find('.title a');
+            const $item = $(item);
+            const a = $item.find('.title a');
             return {
                 title: a.text(),
                 link: baseUrl + a.attr('href'),
-                pubDate: parseDate(item.find('.date time').attr('datetime')), // 2023-05-21T16:05:14+00:00
-                author: item
+                pubDate: parseDate($item.find('.date time').attr('datetime')!), // 2023-05-21T16:05:14+00:00
+                author: $item
                     .find('.author')
                     .contents()
                     .filter((_, c) => c.type === 'text')
-                    .text()
-                    .trim(),
-                category: item
+                    .text(),
+                category: $item
                     .find('.category')
                     .contents()
                     .filter((_, c) => c.type === 'text')
-                    .text()
-                    .trim(),
+                    .text(),
             };
         });
 
     const items = await Promise.all(
         list.map((item) =>
             cache.tryGet(item.link, async () => {
-                const { data: response } = await got(item.link, {
+                const response = await ofetch(item.link, {
                     headers,
                 });
                 const $ = load(response);
@@ -89,7 +91,7 @@ async function handler(ctx) {
     return {
         title: 'Reviews | TechPowerUp',
         link: url.href,
-        language: 'en',
+        language,
         image: 'https://tpucdn.com/apple-touch-icon-v1684568903519.png',
         item: items,
     };

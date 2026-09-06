@@ -1,10 +1,10 @@
-import { Route, DataItem } from '@/types';
-
-import cache from '@/utils/cache';
 import { load } from 'cheerio';
-import { parseDate } from '@/utils/parse-date';
+import type { Context } from 'hono';
+
+import type { DataItem, Route } from '@/types';
+import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { Context } from 'hono';
+import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/blog',
@@ -42,7 +42,7 @@ export const fetchArticles = async (limit: number): Promise<DataItem[]> => {
             .map<Promise<DataItem>>((element) => {
                 const id = $(element).find('guid').text();
 
-                return cache.tryGet(`railway:blogs:${id}`, async () => {
+                return cache.tryGet(`railway:blogs:${id}`, async (): Promise<DataItem> => {
                     const title = $(element).find('title').text();
                     const pubDate = $(element).find('pubDate').text();
                     const link = $(element).find('link').text();
@@ -55,8 +55,8 @@ export const fetchArticles = async (limit: number): Promise<DataItem[]> => {
                         link,
                         pubDate: parseDate(pubDate),
                         description: content,
-                    } as DataItem;
-                }) as Promise<DataItem>;
+                    };
+                });
             })
     );
 };
@@ -68,6 +68,6 @@ export const fetchArticleDetails = async (url: string) => {
     const $article = $('article > section ');
 
     return {
-        content: $article.html() ?? undefined,
+        content: $article.html(),
     };
 };

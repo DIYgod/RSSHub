@@ -1,6 +1,7 @@
-import { type Data, type Route, ViewType } from '@/types';
+import type { Context } from 'hono';
 
-import { type Context } from 'hono';
+import type { Data, Route } from '@/types';
+import { ViewType } from '@/types';
 
 import { baseUrl, processItems } from './util';
 
@@ -8,7 +9,7 @@ let viewType: ViewType = ViewType.Articles;
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { id, tab } = ctx.req.param();
-    const limit: number = Number.parseInt(ctx.req.query('limit') ?? '30', 10);
+    const limit = Number(ctx.req.query('limit') ?? '30');
 
     const targetUrl: string = new URL(`categories/${id}${tab ? `?tab=${tab}` : ''}`, baseUrl).href;
     const apiUrl: string = new URL(`gapi/v1/categories/${id}/${tab ?? 'originals'}`, baseUrl).href;
@@ -67,14 +68,13 @@ export const route: Route = {
             ],
         },
     },
-    description: `:::tip
+    description: `::: tip
 若订阅 [文章 - 文章](https://www.gcores.com/categories/1?tab=articles)，网址为 \`https://www.gcores.com/categories/1?tab=articles\`，请截取 \`https://www.gcores.com/categories/\` 到末尾的部分 \`1\` 作为 \`id\` 参数填入，截取 \`articles\` 作为 \`tab\` 参数填入，此时目标路由为 [\`/gcores/categories/1/articles\`](https://rsshub.app/gcores/categories/1/articles)。
 :::
 
 | 全部 | 播客   | 文章     | 资讯 | 视频   |
 | ---- | ------ | -------- | ---- | ------ |
-|      | radios | articles | news | videos |
-`,
+|      | radios | articles | news | videos |`,
     categories: ['game'],
     features: {
         requireConfig: false,

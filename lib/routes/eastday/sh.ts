@@ -1,7 +1,8 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import logger from '@/utils/logger';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
@@ -35,7 +36,7 @@ async function handler() {
 
     const response = await got({
         method: 'get',
-        url: `https://apin.eastday.com/apiplus/special/specialnewslistbyurl?specialUrl=1632798465040016&skipCount=0&limitCount=20`,
+        url: 'https://apin.eastday.com/apiplus/special/specialnewslistbyurl?specialUrl=1632798465040016&skipCount=0&limitCount=20',
     });
 
     const result = await Promise.all(
@@ -44,7 +45,7 @@ async function handler() {
             const entity = {
                 title: item.title,
                 description: item.abstracts,
-                pubDate: timezone(parseDate(item.time), +8),
+                pubDate: timezone(parseDate(item.time), 8),
                 link,
             };
 
@@ -57,7 +58,7 @@ async function handler() {
                     });
                     // 解析html内容
                     const $ = load(article.body);
-                    return $('.article_wrapper .mainLayer .content').html() || $('.contentBox .article .detail').html();
+                    return $('.article_wrapper .mainLayer .content').html() || $('.contentBox .article .detail').html() || '';
                 });
             } catch (error) {
                 logger.error(error);
@@ -68,7 +69,7 @@ async function handler() {
     );
 
     return {
-        title: `东方网-上海`,
+        title: '东方网-上海',
         link: `${domain}/wap/sh.html`,
         item: result,
     };

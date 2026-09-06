@@ -1,15 +1,27 @@
-import { Route } from '@/types';
-import cache from '@/utils/cache';
-import parser from '@/utils/rss-parser';
-import got from '@/utils/got';
 import { load } from 'cheerio';
 
+import type { DataItem, Route } from '@/types';
+import cache from '@/utils/cache';
+import got from '@/utils/got';
+import parser from '@/utils/rss-parser';
+
 const getArticleDetail = (link) =>
-    cache.tryGet(link, async () => {
+    cache.tryGet(link, async (): Promise<any> => {
         const response = await got(link);
         const $ = load(response.data);
 
-        const categories = $('.slug').text().trim();
+        // Prefer tags to slug
+        let categories = $('.tag')
+            .toArray()
+            .map((el) => $(el).text());
+
+        if (categories.length < 1) {
+            const slug = $('.slug a').contents().first().text();
+
+            if (slug) {
+                categories = [slug];
+            }
+        }
 
         // ignore item until audio is available
         if ($('.audio-availability-message').length > 0) {
@@ -23,9 +35,9 @@ const getArticleDetail = (link) =>
             $(x).replaceWith(audio_tag);
         }
 
-        // primaryaudio is not in `.storytext`, prepend to it
-        const primaryaudio = $('#primaryaudio');
-        const audio = primaryaudio.length > 0 ? $('#primaryaudio').html() : '';
+        // Prepend audio to the article if available
+        const primaryaudio = $('#headlineaudio');
+        const audio = primaryaudio.length > 0 ? $('#headlineaudio').html() + '<br>' : '';
 
         // replace video
         const regex = /\?storyId=(\d+)&amp;mediaId=(\d+)/;
@@ -39,6 +51,10 @@ const getArticleDetail = (link) =>
                 nprVideo.replaceWith(video_tag);
             }
         }
+
+        // Removes related articles and sponsor messages
+        $('div.bucketwrap.internallink.insettwocolumn.inset2col').remove();
+        $('aside.ad-wrap').remove();
 
         // remove duplicate caption and images
         $('.enlarge_measure').remove();
@@ -75,7 +91,7 @@ export const route: Route = {
     name: 'News',
     maintainers: ['bennyyip'],
     handler,
-    description: `Provide full article RSS for CBC topics.`,
+    description: 'Provide full article RSS for CBC topics.',
 };
 
 async function handler(ctx) {
@@ -96,13 +112,13 @@ async function handler(ctx) {
                 };
             })
         )
-    ).filter(Boolean);
+    ).filter((item) => item !== null);
 
     return {
-        title: feed.title,
+        title: feed.title!,
         link: feed.link,
         description: feed.description,
         icon: 'https://media.npr.org/images/podcasts/primary/npr_generic_image_300.jpg?s=200',
-        item: items,
+        item: items as DataItem[],
     };
 }

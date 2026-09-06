@@ -1,6 +1,7 @@
-import type { Data, DataItem, Route } from '@/types';
-import type { ContentsResponse } from './types';
+import type { Data, Route } from '@/types';
 import got from '@/utils/got';
+
+import type { ContentsResponse } from './types';
 import { fetchArticles } from './utils';
 
 export const route: Route = {
@@ -29,13 +30,14 @@ export const baseUrl = 'https://www.infzm.com/contents';
 async function handler(ctx): Promise<Data> {
     const id = ctx.req.param('id');
     const link = `${baseUrl}?term_id=${id}`;
-    const { data } = await got<ContentsResponse>({
+    const response = await got({
         method: 'get',
         url: `${baseUrl}?term_id=${id}&page=1&format=json`,
         headers: {
             Referer: link,
         },
     });
+    const data = response.data as ContentsResponse;
 
     const resultItem = await fetchArticles(data.data.contents);
 
@@ -43,6 +45,6 @@ async function handler(ctx): Promise<Data> {
         title: `南方周末-${data.data.current_term.title}`,
         link,
         image: 'https://www.infzm.com/favicon.ico',
-        item: resultItem as DataItem[],
+        item: resultItem,
     };
 }

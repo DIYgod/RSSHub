@@ -1,11 +1,12 @@
+import { load } from 'cheerio';
+import dayjs from 'dayjs';
+
 import { getSubPath } from '@/utils/common-utils';
 import got from '@/utils/got';
-import { load } from 'cheerio';
-import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
-import { art } from '@/utils/render';
-import dayjs from 'dayjs';
-import path from 'node:path';
+import timezone from '@/utils/timezone';
+
+import { renderDescription } from './templates/description';
 
 const rootUrl = 'https://www.dlsite.com';
 
@@ -15,12 +16,10 @@ const defaultFilters = {
     per_page: 100,
 };
 
-const formatDate = (date, format) => dayjs(date).format(format);
-
 const addFilters = (url, filters) => {
     const keys = Object.keys(filters);
     const filterStr = keys.map((k) => `/${k}/${filters[k]}`).join('');
-    const newUrl = url.replaceAll(new RegExp(`(/${keys.join(String.raw`/\w+|/`)}/\\w+)`, 'g'), '');
+    const newUrl = url.replaceAll(new RegExp(String.raw`(/${keys.join(String.raw`/\w+|/`)}/\w+)`, 'g'), '');
     return `${newUrl}${/=/.test(newUrl) ? '' : '/='}${filterStr}`;
 };
 
@@ -44,8 +43,6 @@ const getDetails = async (works) => {
 };
 
 const ProcessItems = async (ctx) => {
-    art.defaults.imports.formatDate = formatDate;
-
     const subPath = getSubPath(ctx) === '/' ? '/home/new' : getSubPath(ctx);
 
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 100;
@@ -69,32 +66,32 @@ const ProcessItems = async (ctx) => {
                 (item) =>
                     $(item)
                         .find('a')
-                        .attr('href')
-                        .match(/_id\/(.*?)\.html/)[1]
+                        .attr('href')!
+                        .match(/_id\/(.*?)\.html/)![1]
             )
             .join(',')
     );
 
     const items = works.toArray().map((item) => {
-        item = $(item).parentsUntil('tbody, ul');
+        const $item = $(item).parentsUntil('tbody, ul');
 
-        const a = item.find('.work_name a');
+        const a = $item.find('.work_name a');
 
         const title = a.text();
         const link = a.attr('href');
-        const guid = link.match(/_id\/(.*?)\.html/)[1];
+        const guid = link!.match(/_id\/(.*?)\.html/)![1];
 
-        const description = item.find('.work_text').text();
-        const authors = item
+        const description = $item.find('.work_text').text();
+        const authors = $item
             .find('.maker_name a')
             .toArray()
             .map((a) => ({
                 name: $(a).text(),
                 link: $(a).attr('href'),
             }));
-        let images = item.find('div[data-samples]').length === 0 ? [] : JSON.parse(item.find('div[data-samples]').attr('data-samples').replaceAll("'", '"')).map((s) => s.thumb);
+        let images = $item.find('div[data-samples]').length === 0 ? [] : JSON.parse($item.find('div[data-samples]').attr('data-samples')!.replaceAll("'", '"')).map((s) => s.thumb);
 
-        const workCategories = item
+        const workCategories = $item
             .find('.work_category')
             .find('a')
             .toArray()
@@ -103,7 +100,7 @@ const ProcessItems = async (ctx) => {
                 link: $(i).attr('href'),
             }));
 
-        const workGenres = item
+        const workGenres = $item
             .find('.work_genre')
             .find('span[title]')
             .toArray()
@@ -111,7 +108,7 @@ const ProcessItems = async (ctx) => {
                 text: $(i).text(),
             }));
 
-        const searchTags = item
+        const searchTags = $item
             .find('.search_tag')
             .find('a')
             .toArray()
@@ -120,7 +117,7 @@ const ProcessItems = async (ctx) => {
                 link: $(i).attr('href'),
             }));
 
-        const nameTags = item
+        const nameTags = $item
             .find('.icon_wrap')
             .find('span[title]')
             .toArray()
@@ -130,24 +127,19 @@ const ProcessItems = async (ctx) => {
 
         const detail = details[guid];
 
-        const pubDate = timezone(parseDate(detail.regist_date), +9);
+        const pubDate = timezone(parseDate(detail.regist_date), 9);
         const discountRate = detail.discount_rate;
-        const discountEndDate = detail.discount_end_date ? timezone(parseDate(detail.discount_end_date, 'MM/DD HH:mm'), +9) : undefined;
+        const discountEndDate = detail.discount_end_date ? timezone(parseDate(detail.discount_end_date, 'MM/DD HH:mm'), 9) : undefined;
         images = images.length === 0 ? [detail.work_image] : images;
 
         return {
-            title: `${
-                discountRate
-                    ? `${discountRate}% OFF
-                        ${` ${discountEndDate ? `${dayjs(discountEndDate).format('YYYY-MM-DD HH:mm')} まで` : ''}`}`
-                    : ' '
-            }${title}`,
+            title: `${discountRate ? `${discountRate}% OFF ${discountEndDate ? `${dayjs(discountEndDate).format('YYYY-MM-DD HH:mm')} まで` : ''}` : ' '}${title}`,
             link,
             pubDate,
             author: authors.map((a) => a.name).join(' / '),
             category: [...workCategories.map((i) => i.text), ...workGenres.map((i) => i.text), ...searchTags.map((i) => i.text), ...nameTags.map((i) => i.text)],
             guid: `dlsite-${guid}`,
-            description: art(path.join(__dirname, 'templates/description.art'), {
+            description: renderDescription({
                 detail,
                 images,
                 authors,
@@ -156,7 +148,6 @@ const ProcessItems = async (ctx) => {
                 updatedDate,
                 pubDate,
                 workCategories,
-                workGenres,
                 searchTags,
                 description,
             }),

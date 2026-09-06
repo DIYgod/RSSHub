@@ -1,6 +1,6 @@
-import { Route } from '@/types';
-import cache from '@/utils/cache';
-import { baseUrl, getSingleRecord, getArticle } from './common';
+import type { Route } from '@/types';
+
+import { baseUrl, getArticle, getSingleRecord } from './common';
 
 const host = `${baseUrl}/admission/admnotice/`;
 
@@ -30,7 +30,7 @@ export const route: Route = {
 
 async function handler() {
     const items = await getSingleRecord(host);
-    const out = await Promise.all(items.map((item) => getArticle(item, cache.tryGet)));
+    const out = await Promise.all(items.map((item) => getArticle(item)));
 
     return {
         title: '北大软微-招生通知',

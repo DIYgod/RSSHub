@@ -1,6 +1,0 @@
-<div>
-    {{@ item.subTitle}}
-    {{@ item.article}}
-
-</div>
-

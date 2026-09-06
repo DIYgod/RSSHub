@@ -12,7 +12,7 @@ const siteIcon = 'https://o.qoo-img.com/statics.qoo-app.com/cdn/img/QooApp_512.v
 const fixImg = ($) => {
     $('img').each((_, img) => {
         if (img.attribs['data-orig-file']) {
-            img.attribs.src = img.attribs['data-orig-file'].replace('i0.wp.com/', '').split('?')[0];
+            img.attribs.src = img.attribs['data-orig-file'].replace('i0.wp.com/', '').split('?', 1)[0];
             delete img.attribs['data-orig-file'];
             delete img.attribs['data-orig-size'];
             delete img.attribs['data-image-meta'];
@@ -21,28 +21,27 @@ const fixImg = ($) => {
             delete img.attribs['data-medium-file'];
             delete img.attribs['data-large-file'];
         }
-        img.attribs.src = img.attribs.src.replace('i0.wp.com/', '').split('?')[0];
+        img.attribs.src = img.attribs.src.replace('i0.wp.com/', '').split('?', 1)[0];
         delete img.attribs.srcset;
     });
 };
 
-const extractNotes = ($) => {
+const extractNotes = ($) =>
     $('.qoo-note-wrap')
         .toArray()
         .map((item) => {
-            item = $(item);
-            const title = item.find('.qoo-note-view .content-title').text();
-            const author = item.find('cite.name').text();
-            const pubDate = timezone(parseDate(item.find('time').text(), 'YYYY-MM-DD HH:mm'), 8);
-            item.find('cite.name, time, footer').remove();
+            const $item = $(item);
+            const title = $item.find('.qoo-note-view .content-title').text();
+            const author = $item.find('cite.name').text();
+            const pubDate = timezone(parseDate($item.find('time').text(), 'YYYY-MM-DD HH:mm'), 8);
+            $item.find('cite.name, time, footer').remove();
             return {
                 title,
-                description: item.find('.qoo-note-view').html(),
-                link: item.find('a.link-wrap').attr('href'),
+                description: $item.find('.qoo-note-view').html(),
+                link: $item.find('a.link-wrap').attr('href'),
                 pubDate,
                 author,
             };
         });
-};
 
-export { appsUrl, newsUrl, notesUrl, ssoUrl, userUrl, siteIcon, fixImg, extractNotes };
+export { appsUrl, extractNotes, fixImg, newsUrl, notesUrl, siteIcon, ssoUrl, userUrl };

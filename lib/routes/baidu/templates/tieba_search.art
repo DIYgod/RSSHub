@@ -1,1 +1,0 @@
-<p>{{ details }}</p><p>{{@ medias }}</p><p>贴吧：{{ tieba }}<br/>作者：{{ author }}</p>

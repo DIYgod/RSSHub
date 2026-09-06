@@ -1,7 +1,8 @@
-import { Route } from '@/types';
-import got from '@/utils/got';
-import iconv from 'iconv-lite';
 import { load } from 'cheerio';
+import iconv from 'iconv-lite';
+
+import type { Route } from '@/types';
+import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
@@ -16,6 +17,7 @@ export const route: Route = {
         supportBT: false,
         supportPodcast: false,
         supportScihub: false,
+        nsfw: true,
     },
     radar: [
         {
@@ -29,7 +31,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const id = ctx.req.param('id');
-    const baseUrl = `https://www.laimanhua8.com`;
+    const baseUrl = 'https://www.laimanhua8.com';
     const link = `${baseUrl}/kanmanhua/${id}/`;
 
     const { data: response } = await got(link, {
@@ -46,11 +48,11 @@ async function handler(ctx) {
     const items = $('.plist a')
         .toArray()
         .map((item, index) => {
-            item = $(item);
+            const $item = $(item);
             return {
-                title: item.attr('title'),
-                link: `${baseUrl}${item.attr('href')}`,
-                pubDate: index === 0 ? parseDate($('head meta[property="og:novel:update_time"]').attr('content')) : null,
+                title: $item.attr('title')!,
+                link: `${baseUrl}${$item.attr('href')}`,
+                pubDate: index === 0 ? parseDate($('head meta[property="og:novel:update_time"]').attr('content')!) : null,
                 author: $('head meta[property="og:novel:author"]').attr('content'),
             };
         });

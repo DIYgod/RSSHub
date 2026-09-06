@@ -1,10 +1,11 @@
-import { Route, ViewType } from '@/types';
-
-import got from '@/utils/got';
 import { load } from 'cheerio';
+
+import type { Language, Route } from '@/types';
+import { ViewType } from '@/types';
+import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-import { art } from '@/utils/render';
-import path from 'node:path';
+
+import { renderDescription } from './templates/description';
 
 const categories = {
     0: '全部',
@@ -36,7 +37,7 @@ export const route: Route = {
         supportScihub: false,
     },
     name: '快讯',
-    maintainers: ['nczitzk'],
+    maintainers: ['nczitzk', 'pseudoyu'],
     handler,
     description: `| 全部 | 精选 | 政策 | 数据 | NFT | 项目 |
 | ---- | ---- | ---- | ---- | --- | ---- |
@@ -45,10 +46,10 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { category = '0' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 100;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 100;
 
-    const rootUrl = 'https://jinse.cn';
-    const rootApiUrl = 'https://api.jinse.cn';
+    const rootUrl = 'https://jinse.com.cn';
+    const rootApiUrl = 'https://api.jinse.com.cn';
     const apiUrl = new URL('noah/v2/lives', rootApiUrl).href;
     const currentUrl = new URL('lives', rootUrl).href;
 
@@ -63,35 +64,34 @@ async function handler(ctx) {
         },
     });
 
-    const items =
-        response.list
-            .flatMap((l) => l.lives)
-            .slice(0, limit)
-            .map((item) => ({
-                title: item.content_prefix,
-                link: new URL(`lives/${item.id}.html`, rootUrl).href,
-                description: art(path.join(__dirname, 'templates/description.art'), {
-                    images:
-                        item.images?.map((i) => ({
-                            src: i.url.replace(/_[^\W_]+(\.\w+)$/, '_true$1'),
-                            width: i.width,
-                            height: i.height,
-                        })) ?? [],
-                    description: item.content,
-                    original: item.link
-                        ? {
-                              link: item.link,
-                              name: item.link_name,
-                          }
-                        : undefined,
-                }),
-                author: item.show_source_name,
-                guid: `jinse-lives-${item.id}`,
-                pubDate: parseDate(item.created_at, 'X'),
-                upvotes: item.up_counts ?? 0,
-                downvotes: item.down_counts ?? 0,
-                comments: item.comment_count ?? 0,
-            })) ?? [];
+    const items = response.list
+        .flatMap((l) => l.lives)
+        .slice(0, limit)
+        .map((item) => ({
+            title: item.content_prefix,
+            link: new URL(`lives/${item.id}.html`, rootUrl).href,
+            description: renderDescription({
+                images:
+                    item.images?.map((i) => ({
+                        src: i.url.replace(/_[^\W_]+(\.\w+)$/, '_true$1'),
+                        width: i.width,
+                        height: i.height,
+                    })) ?? [],
+                description: item.content,
+                original: item.link
+                    ? {
+                          link: item.link,
+                          name: item.link_name,
+                      }
+                    : undefined,
+            }),
+            author: item.show_source_name,
+            guid: `jinse-lives-${item.id}`,
+            pubDate: parseDate(item.created_at, 'X'),
+            upvotes: item.up_counts ?? 0,
+            downvotes: item.down_counts ?? 0,
+            comments: item.comment_count ?? 0,
+        }));
 
     const { data: currentResponse } = await got(currentUrl);
 
@@ -99,14 +99,14 @@ async function handler(ctx) {
 
     const author = $('meta[name="author"]').prop('content');
     const image = $('a.js-logoBox img').prop('src');
-    const icon = new URL($('link[rel="favicon"]').prop('href'), rootUrl).href;
+    const icon = new URL($('link[rel="favicon"]').prop('href')!, rootUrl).href;
 
     return {
         item: items,
         title: `${author} - ${Object.hasOwn(categories, category) ? categories[category] : category}`,
         link: currentUrl,
         description: $('meta[name="description"]').prop('content'),
-        language: $('html').prop('lang'),
+        language: $('html').prop('lang') as Language,
         image,
         icon,
         logo: icon,

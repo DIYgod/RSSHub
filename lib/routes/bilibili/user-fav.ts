@@ -1,8 +1,9 @@
-import { Route } from '@/types';
+import { config } from '@/config';
+import type { Route } from '@/types';
 import got from '@/utils/got';
+
 import cache from './cache';
 import utils from './utils';
-import { config } from '@/config';
 
 export const route: Route = {
     path: '/user/fav/:uid/:embed?',

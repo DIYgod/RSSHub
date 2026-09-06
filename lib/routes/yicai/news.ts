@@ -1,8 +1,7 @@
-import { Route } from '@/types';
-import cache from '@/utils/cache';
+import type { Route } from '@/types';
 import got from '@/utils/got';
 
-import { rootUrl, ProcessItems } from './utils';
+import { ProcessItems, rootUrl } from './utils';
 
 export const route: Route = {
     path: '/news/:id?',
@@ -42,7 +41,7 @@ export const route: Route = {
 | books                    | 阅读周刊   |
 | loushi                   | 地产       |
 | automobile               | 汽车       |
-| china\_financial\_herald | 对话陆家嘴 |
+| china\\_financial\\_herald | 对话陆家嘴 |
 | fashion                  | 时尚       |
 | ad                       | 商业资讯   |
 | info                     | 资讯       |
@@ -68,21 +67,23 @@ async function handler(ctx) {
         });
 
         for (const c of response.data.header.news) {
-            if (c.EnglishName === id || c.ChannelID === id) {
-                channel = {
-                    id: c.ChannelID,
-                    name: c.ChannelName,
-                    slug: c.EnglishName,
-                };
-                break;
+            if (!(c.EnglishName === id || c.ChannelID === id)) {
+                continue;
             }
+
+            channel = {
+                id: c.ChannelID,
+                name: c.ChannelName,
+                slug: c.EnglishName,
+            };
+            break;
         }
     }
 
     const currentUrl = `${rootUrl}/news${id ? `/${channel.slug}` : ''}`;
     const apiUrl = `${rootUrl}/api/ajax/${id ? `getlistbycid?cid=${channel.id}` : 'getjuhelist?action=news'}&page=1&pagesize=${ctx.req.query('limit') ?? 30}`;
 
-    const items = await ProcessItems(apiUrl, cache.tryGet);
+    const items = await ProcessItems(apiUrl);
 
     return {
         title: `第一财经 - ${channel?.name ?? '新闻'}`,

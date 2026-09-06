@@ -1,5 +1,6 @@
 import type { Data, Route } from '@/types';
-import { getPostItems, CategoryParam, CommonRouteProperties, CommonDataProperties } from './common';
+
+import { CategoryParam, CommonDataProperties, CommonRouteProperties, getPostItems } from './common';
 
 export const route: Route = {
     ...CommonRouteProperties,
@@ -15,7 +16,7 @@ export const route: Route = {
     parameters: {
         category: CategoryParam,
     },
-    handler: async (ctx) => {
+    handler: async (ctx): Promise<Data> => {
         const { category = '' } = ctx.req.param();
         const items = await getPostItems({ swimlane: 'LATEST', category: category === '' ? undefined : category });
         return {
@@ -23,6 +24,6 @@ export const route: Route = {
             title: `Voronoi Latest Posts${category ? ` - ${category}` : ''}`,
             link: 'https://www.voronoiapp.com/latest',
             item: items,
-        } as Data;
+        };
     },
 };

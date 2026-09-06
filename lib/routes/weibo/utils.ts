@@ -1,13 +1,176 @@
-import cache from '@/utils/cache';
 import querystring from 'node:querystring';
-import got from '@/utils/got';
+
 import { load } from 'cheerio';
+
+import { config } from '@/config';
+import cache from '@/utils/cache';
+import got from '@/utils/got';
+import logger from '@/utils/logger';
+import { getPlaywrightPage } from '@/utils/playwright';
+import { getCookies } from '@/utils/playwright-utils';
 import { fallback, queryToBoolean, queryToInteger } from '@/utils/readable-social';
 
+class RenewWeiboCookiesError extends Error {
+    constructor(message: string) {
+        super(message);
+        this.name = 'RenewWeiboCookiesError';
+    }
+}
+
+interface FormatExtendedParams {
+    readable?: boolean;
+    authorNameBold?: boolean;
+    showAuthorInTitle?: boolean;
+    showAuthorInDesc?: boolean;
+    showAuthorAvatarInDesc?: boolean;
+    showAtBeforeAuthor?: boolean;
+    showEmojiForRetweet?: boolean;
+    showRetweetTextInTitle?: boolean;
+    addLinkForPics?: boolean;
+    showTimestampInDescription?: boolean;
+    widthOfPics?: number;
+    heightOfPics?: number;
+    sizeOfAuthorAvatar?: number;
+    showEmojiInDescription?: boolean;
+    showLinkIconInDescription?: boolean;
+    preferMobileLink?: boolean;
+}
+
+const getDescriptionRenderParams = (routeParams, params: FormatExtendedParams = {}) => ({
+    showEmojiInDescription: fallback(params.showEmojiInDescription, queryToInteger(routeParams.showEmojiInDescription), false),
+    showLinkIconInDescription: fallback(params.showLinkIconInDescription, queryToInteger(routeParams.showLinkIconInDescription), true),
+});
+
+const formatDescriptionText = (html, { showEmojiInDescription, showLinkIconInDescription }) => {
+    let formattedHtml = html;
+
+    if (!showEmojiInDescription) {
+        formattedHtml = formattedHtml.replaceAll(/<span class=["']?url-icon["']?><img\s[^>]*?alt=["']?([^>\s"']+)["']?\s[^>]*?\/><\/span>/g, '$1');
+    }
+
+    if (!showLinkIconInDescription) {
+        formattedHtml = formattedHtml.replaceAll(/(<a\s[^>]*>)<span class=["']?url-icon["']?><img\s[^>]*><\/span>[^<>]*<span class=["']?surl-text["']?>([^<>]*)<\/span><\/a>/g, '$1$2</a>');
+    }
+
+    return formattedHtml;
+};
+
 const weiboUtils = {
+    apiHeaders: {
+        'MWeibo-Pwa': 1,
+        'X-Requested-With': 'XMLHttpRequest',
+        'User-Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 11_0 like Mac OS X) AppleWebKit/604.1.38 (KHTML, like Gecko) Version/11.0 Mobile/15A372 Safari/604.1',
+    },
+    RenewWeiboCookiesError,
+    getCookies: (() => {
+        const url = 'https://m.weibo.cn/';
+        const coolingDownMessage = `Cooling down before new visitor Cookies from ${url} may be fetched`;
+        let coolingDown = false;
+        let visitorCookiesPromise: Promise<string> | undefined;
+
+        return async (renew: any = false) => {
+            if (config.weibo.cookies) {
+                if (renew) {
+                    throw new Error('Cookies expired. Please update WEIBO_COOKIES');
+                }
+                return config.weibo.cookies;
+            }
+
+            const cacheKey = 'weibo:visitor-cookies';
+            if (renew) {
+                cache.set(cacheKey, '', 1);
+            }
+            return await cache.tryGet(cacheKey, async () => {
+                if (visitorCookiesPromise) {
+                    return await visitorCookiesPromise;
+                }
+                if (coolingDown) {
+                    if (renew?.message) {
+                        logger.warn(coolingDownMessage);
+                        throw renew;
+                    }
+                    throw new Error(coolingDownMessage);
+                }
+                coolingDown = true;
+                setTimeout(() => {
+                    coolingDown = false;
+                }, config.cache.routeExpire * 1000);
+
+                if (renew) {
+                    logger.warn(`Renewing visitor Cookies from ${url}`);
+                } else {
+                    logger.info(`Fetching visitor Cookies from ${url}`);
+                }
+                visitorCookiesPromise = (async () => {
+                    let times = 0;
+                    const { page, destroy } = await getPlaywrightPage(url, {
+                        onBeforeLoad: async (page) => {
+                            const expectResourceTypes = new Set(['document', 'script', 'xhr', 'fetch']);
+                            await page.setExtraHTTPHeaders({ 'User-Agent': weiboUtils.apiHeaders['User-Agent'] });
+                            await page.route('**/*', (route) => {
+                                const request = route.request();
+                                // 1st: initial request, 302 to visitor.passport.weibo.cn; 2nd: auth ok
+                                if (!expectResourceTypes.has(request.resourceType()) || times >= 2) {
+                                    route.abort();
+                                    return;
+                                }
+                                if (request.url().startsWith(url)) {
+                                    times++;
+                                }
+                                route.continue();
+                            });
+                        },
+                        gotoConfig: { waitUntil: 'networkidle' },
+                    });
+                    const cookies: string = await getCookies(page, 'weibo.cn');
+                    await destroy();
+                    if (times < 2 || !cookies) {
+                        throw new Error(`Unable to fetch visitor cookies. Please set WEIBO_COOKIES. Redirection: ${times}, last URL: ${page.url()}`);
+                    }
+                    return cookies;
+                })();
+
+                try {
+                    return await visitorCookiesPromise;
+                } finally {
+                    visitorCookiesPromise = undefined;
+                }
+            });
+        };
+    })(),
+    tryWithCookies: (() => {
+        let errors = 0;
+        const verifier = (resp: any): void => {
+            if (resp?.data?.ok === -100) {
+                throw new RenewWeiboCookiesError(`Cookies expired. Msg: ${resp?.data?.msg || ''} ${resp?.data?.url || ''}`);
+            }
+        };
+        return async <T>(callback: (cookies: string, verifier: (resp: any) => void) => Promise<T>): Promise<T> => {
+            try {
+                return await callback(await weiboUtils.getCookies(false), verifier);
+            } catch (error: any) {
+                if (error.message?.includes('WEIBO_COOKIES')) {
+                    throw error;
+                }
+                if (errors > 10) {
+                    logger.warn(`Too many errors while fetching data from weibo API, renewing Cookies: ${error.message}`);
+                    logger.info('Please open an issue on GitHub if renewing Cookies fixes the error');
+                } else if ((error.name === 'HTTPError' || error.name === 'FetchError') && error.status === 432) {
+                    // empty
+                } else if (error.name === 'RenewWeiboCookiesError') {
+                    // empty
+                } else {
+                    errors++;
+                    throw error;
+                }
+                errors = 0;
+                return await callback(await weiboUtils.getCookies(error), verifier);
+            }
+        };
+    })(),
     formatTitle: (html) =>
         html
-            .replaceAll(/<span class=["']url-icon["']><img\s[^>]*?alt=["']?([^>]+?)["']?\s[^>]*?\/?><\/span>/g, '$1') // 表情转换
+            .replaceAll(/<span class=["']url-icon["']><img\s[^>]*?alt=["']?([^>\s"']+)["']?\s[^>]*?\/?><\/span>/g, '$1') // 表情转换
             .replaceAll(/<span class=["']url-icon["']>(<img\s[^>]*>)<\/span>/g, '') // 去掉所有图标
             .replaceAll(/<img\s[^<]*>/g, '[图片]')
             // impossible to have inline script in weibo posts, but CodeQL complains about it
@@ -15,11 +178,12 @@ const weiboUtils = {
             .replaceAll(/<[^<]*>/g, '')
             .replaceAll('\n', ' ')
             .trim(),
-    formatExtended: (ctx, status, uid, params = {}, picsPrefixes = []) => {
+    formatExtended: (ctx, status, uid?, params: FormatExtendedParams = {}, picsPrefixes: string[] = []) => {
         // `uid = undefined` to explicitly mark it as optional, avoiding IDEs prompting warnings
 
         // undefined and strings like "1" is also safely parsed, so no if branch is needed
         const routeParams = querystring.parse(ctx.req.param('routeParams'));
+        const descriptionRenderParams = getDescriptionRenderParams(routeParams, params);
 
         const mergedParams = {
             readable: fallback(params.readable, queryToBoolean(routeParams.readable), false),
@@ -36,8 +200,8 @@ const weiboUtils = {
             widthOfPics: fallback(params.widthOfPics, queryToInteger(routeParams.widthOfPics), -1),
             heightOfPics: fallback(params.heightOfPics, queryToInteger(routeParams.heightOfPics), -1),
             sizeOfAuthorAvatar: fallback(params.sizeOfAuthorAvatar, queryToInteger(routeParams.sizeOfAuthorAvatar), 48),
-            showEmojiInDescription: fallback(params.showEmojiInDescription, queryToInteger(routeParams.showEmojiInDescription), true),
-            showLinkIconInDescription: fallback(params.showLinkIconInDescription, queryToInteger(routeParams.showLinkIconInDescription), true),
+            showEmojiInDescription: descriptionRenderParams.showEmojiInDescription,
+            showLinkIconInDescription: descriptionRenderParams.showLinkIconInDescription,
             preferMobileLink: fallback(params.preferMobileLink, queryToBoolean(routeParams.preferMobileLink), false),
         };
 
@@ -58,41 +222,32 @@ const weiboUtils = {
             widthOfPics,
             heightOfPics,
             sizeOfAuthorAvatar,
-            showEmojiInDescription,
-            showLinkIconInDescription,
             preferMobileLink,
-        } = params;
+        } = mergedParams;
 
         let retweeted = '';
         // 长文章的处理
-        let htmlNewLineUnreplaced = (status.longText && status.longText.longTextContent) || status.text || '';
-        // 表情图标转换为文字
-        if (!showEmojiInDescription) {
-            htmlNewLineUnreplaced = htmlNewLineUnreplaced.replaceAll(/<span class=["']?url-icon["']?><img\s[^>]*?alt=["']?([^>]+?)["']?\s[^>]*?\/><\/span>/g, '$1');
-        }
-        // 去掉链接的图标，保留 a 标签链接
-        if (!showLinkIconInDescription) {
-            htmlNewLineUnreplaced = htmlNewLineUnreplaced.replaceAll(/(<a\s[^>]*>)<span class=["']?url-icon["']?><img\s[^>]*><\/span>[^<>]*?<span class=["']?surl-text["']?>([^<>]*?)<\/span><\/a>/g, '$1$2</a>');
-        }
+        let htmlNewlineUnreplaced = (status.longText && status.longText.longTextContent) || status.text || '';
+        htmlNewlineUnreplaced = formatDescriptionText(htmlNewlineUnreplaced, descriptionRenderParams);
 
         // 提取 话题作为 category
-        const category: string[] = htmlNewLineUnreplaced.match(/<span class=["']?surl-text["']?>#([^<>]*?)#<\/span>/g)?.map((e) => e?.match(/#([^#]+)#/)?.[1]);
+        const category: string[] = htmlNewlineUnreplaced.match(/<span class=["']?surl-text["']?>#([^<>]*?)#<\/span>/g)?.map((e) => e?.match(/#([^#]+)#/)?.[1]);
 
         // 去掉乱七八糟的图标  // 不需要，上述的替换应该已经把所有的图标都替换掉了，且这条 regex 会破坏上述替换不发生时的输出
-        // htmlNewLineUnreplaced = htmlNewLineUnreplaced.replace(/<span class=["']?url-icon["']?>(<img\s[^>]*?>)<\/span>/g, '');
+        // htmlNewlineUnreplaced = htmlNewlineUnreplaced.replace(/<span class=["']?url-icon["']?>(<img\s[^>]*?>)<\/span>/g, '');
         // 将行内图标的高度设置为一行，改善阅读体验。但有些阅读器删除了 style 属性，无法生效  // 不需要，微博已经作此设置
-        // htmlNewLineUnreplaced = htmlNewLineUnreplaced.replace(/(?<=<span class=["']?url-icon["']?>)<img/g, '<img style="height: 1em"');
+        // htmlNewlineUnreplaced = htmlNewlineUnreplaced.replace(/(?<=<span class=["']?url-icon["']?>)<img/g, '<img style="height: 1em"');
         // 去掉全文
-        htmlNewLineUnreplaced = htmlNewLineUnreplaced.replaceAll('全文<br>', '<br>');
-        htmlNewLineUnreplaced = htmlNewLineUnreplaced.replaceAll(/<a href="(.*?)">全文<\/a>/g, '');
+        htmlNewlineUnreplaced = htmlNewlineUnreplaced.replaceAll('全文<br>', '<br>');
+        htmlNewlineUnreplaced = htmlNewlineUnreplaced.replaceAll(/<a href="(.*?)">全文<\/a>/g, '');
 
         // 处理外部链接
-        htmlNewLineUnreplaced = htmlNewLineUnreplaced.replaceAll(/"https:\/\/weibo\.cn\/sinaurl.*?[&?]u=(http.*?)"/g, (match, p1) => `"${decodeURIComponent(p1)}"`);
+        htmlNewlineUnreplaced = htmlNewlineUnreplaced.replaceAll(/"https:\/\/weibo\.cn\/sinaurl.*?[&?]u=(http.*?)"/g, (match, p1) => `"${decodeURIComponent(p1)}"`);
 
         // 处理图片的链接
-        htmlNewLineUnreplaced = htmlNewLineUnreplaced.replaceAll(/<a\s+href="https?:\/\/[^"]+\.(jpg|png|gif)"/g, (match) => `${match} data-rsshub-image="href"`);
+        htmlNewlineUnreplaced = htmlNewlineUnreplaced.replaceAll(/<a\s+href="https?:\/\/[^"]+\.(jpg|png|gif)"/g, (match) => `${match} data-rsshub-image="href"`);
 
-        let html = htmlNewLineUnreplaced.replaceAll('\n', '<br>');
+        let html = htmlNewlineUnreplaced.replaceAll('\n', '<br>');
 
         // 添加用户名和头像
         if (showAuthorInDesc) {
@@ -111,7 +266,7 @@ const weiboUtils = {
         // status.pics can be either an array or an object:
         // array: [ object, object, ... ]
         // object: { '0': object, '1': object, ... }  // REALLY AMAZING data structure
-        if (status.pics && !Array.isArray(status.pics) && typeof status.pics === 'object') {
+        if (status.pics && !Array.isArray(status.pics)) {
             status.pics = Object.values(status.pics);
         }
 
@@ -157,29 +312,37 @@ const weiboUtils = {
                 let style = '';
                 html += '<img ';
                 html += readable ? 'vspace="8" hspace="4"' : '';
-                if (widthOfPics >= 0) {
-                    html += ` width="${widthOfPics}"`;
-                    style += `width: ${widthOfPics}px;`;
+                if (item.large) {
+                    const { geo, url } = item.large;
+
+                    if (geo?.width || widthOfPics >= 0) {
+                        const width = geo?.width || widthOfPics;
+                        html += ` width="${width}"`;
+                        style += `width: ${width}px;`;
+                    }
+
+                    if (geo?.height || heightOfPics >= 0) {
+                        const height = geo?.height || heightOfPics;
+                        html += ` height="${height}"`;
+                        style += `height: ${height}px;`;
+                    }
+
+                    html += ` style="${style}" src="${url}">`;
                 }
-                if (heightOfPics >= 0) {
-                    html += ` height="${heightOfPics}"`;
-                    style += `height: ${heightOfPics}px;`;
-                }
-                html += ` style="${style}"` + ' src="' + item.large.url + '">';
 
                 if (addLinkForPics) {
                     html += '</a>';
                 }
 
-                htmlNewLineUnreplaced += '<img src="" />';
+                htmlNewlineUnreplaced += '<img src="" />';
             }
         }
 
         // 处理转发的微博
         if (status.retweeted_status) {
             html += readable
-                ? `<br clear="both" /><div style="clear: both"></div><blockquote style="background: #80808010;border-top:1px solid #80808030;border-bottom:1px solid #80808030;margin:0;padding:5px 20px;">`
-                : `<br><blockquote> - 转发 `;
+                ? '<br clear="both" /><div style="clear: both"></div><blockquote style="background: #80808010;border-top:1px solid #80808030;border-bottom:1px solid #80808030;margin:0;padding:5px 20px;">'
+                : '<br><blockquote> - 转发 ';
             if (!status.retweeted_status.user) {
                 // 当转发的微博被删除时user为null
                 status.retweeted_status.user = {
@@ -189,10 +352,12 @@ const weiboUtils = {
                 };
             }
             // 插入转发的微博
-            const retweetedParams = Object.assign({}, params);
-            retweetedParams.showAuthorInDesc = true;
-            retweetedParams.showAuthorAvatarInDesc = false;
-            retweetedParams.showAtBeforeAuthor = true;
+            const retweetedParams: FormatExtendedParams = {
+                ...params,
+                showAuthorInDesc: true,
+                showAuthorAvatarInDesc: false,
+                showAtBeforeAuthor: true,
+            };
             retweeted += weiboUtils.formatExtended(ctx, status.retweeted_status, undefined, retweetedParams, picsPrefixes).description;
 
             html += retweeted;
@@ -201,10 +366,10 @@ const weiboUtils = {
                 html += `<br><small>原博：<a href="https://weibo.com/${status.retweeted_status.user.id}/${status.retweeted_status.bid}" target="_blank" rel="noopener noreferrer">https://weibo.com/${status.retweeted_status.user.id}/${status.retweeted_status.bid}</a></small>`;
             }
             if (showTimestampInDescription) {
-                html += `<br><small>` + new Date(status.retweeted_status.created_at).toLocaleString() + `</small>`;
+                html += '<br><small>' + new Date(status.retweeted_status.created_at).toLocaleString() + '</small>';
             }
             if (readable) {
-                html += `<br clear="both" /><div style="clear: both"></div>`;
+                html += '<br clear="both" /><div style="clear: both"></div>';
             }
 
             html += '</blockquote>';
@@ -219,7 +384,7 @@ const weiboUtils = {
             title += status.user.screen_name + ': ';
         }
         if (!status.retweeted_status || showRetweetTextInTitle) {
-            title += weiboUtils.formatTitle(htmlNewLineUnreplaced);
+            title += weiboUtils.formatTitle(htmlNewlineUnreplaced);
         }
         if (status.retweeted_status) {
             title += showEmojiForRetweet ? '🔁 ' : ' - 转发 ';
@@ -233,7 +398,7 @@ const weiboUtils = {
             title += ' [视频]';
         }
 
-        uid = uid || status.user?.id;
+        uid ||= status.user?.id;
         const bid = status.bid || status.id;
         const guid = uid ? `https://weibo.com/${uid}/${bid}` : `https://m.weibo.cn/status/${bid}`;
         const link = preferMobileLink ? `https://m.weibo.cn/status/${bid}` : guid;
@@ -254,9 +419,7 @@ const weiboUtils = {
         const itemResponse = await got.get(link, {
             headers: {
                 Referer: `https://m.weibo.cn/u/${uid}`,
-                'MWeibo-Pwa': 1,
-                'X-Requested-With': 'XMLHttpRequest',
-                'User-Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 11_0 like Mac OS X) AppleWebKit/604.1.38 (KHTML, like Gecko) Version/11.0 Mobile/15A372 Safari/604.1',
+                ...weiboUtils.apiHeaders,
             },
         });
         return itemResponse.data.data;
@@ -326,9 +489,7 @@ const weiboUtils = {
                 const _response = await got.get(link, {
                     headers: {
                         Referer: `https://card.weibo.com/article/m/show/id/${articleId}`,
-                        'MWeibo-Pwa': 1,
-                        'X-Requested-With': 'XMLHttpRequest',
-                        'User-Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 11_0 like Mac OS X) AppleWebKit/604.1.38 (KHTML, like Gecko) Version/11.0 Mobile/15A372 Safari/604.1',
+                        ...weiboUtils.apiHeaders,
                     },
                 });
                 return _response.data;
@@ -373,22 +534,22 @@ const weiboUtils = {
                 // 正文处理，加入一些在微博文章页的 CSS 中定义的不可或缺的样式
                 const $ = load(content);
                 $('p').each((_, elem) => {
-                    elem = $(elem);
-                    let style = elem.attr('style') || '';
+                    const $elem = $(elem);
+                    let style = $elem.attr('style') || '';
                     style = 'margin: 0;padding: 0;border: 0;' + style;
-                    elem.attr('style', style);
+                    $elem.attr('style', style);
                 });
                 $('.image').each((_, elem) => {
-                    elem = $(elem);
-                    let style = elem.attr('style') || '';
+                    const $elem = $(elem);
+                    let style = $elem.attr('style') || '';
                     style = 'display: table;text-align: center;margin-left: auto;margin-right: auto;clear: both;min-width: 50px;' + style;
-                    elem.attr('style', style);
+                    $elem.attr('style', style);
                 });
                 $('img').each((_, elem) => {
-                    elem = $(elem);
-                    let style = elem.attr('style') || '';
+                    const $elem = $(elem);
+                    let style = $elem.attr('style') || '';
                     style = 'display: block;max-width: 100%;margin-left: auto;margin-right: auto;min-width: 50px;' + style;
-                    elem.attr('style', style);
+                    $elem.attr('style', style);
                 });
                 const contentHtml = $.html();
                 html += `<div style="line-height: 1.59;text-align: justify;font-size: 1.0625rem;color: #333;">${contentHtml}</div>`; // 正文
@@ -400,6 +561,9 @@ const weiboUtils = {
         return itemDesc;
     },
     formatComments: async (ctx, itemDesc, status, showBloggerIcons) => {
+        const routeParams = querystring.parse(ctx.req.param('routeParams'));
+        const descriptionRenderParams = getDescriptionRenderParams(routeParams);
+
         if (status && status.comments_count && status.id && status.mid) {
             const id = status.id;
             const mid = status.mid;
@@ -408,16 +572,14 @@ const weiboUtils = {
                 const _response = await got.get(link, {
                     headers: {
                         Referer: `https://m.weibo.cn/detail/${id}`,
-                        'MWeibo-Pwa': 1,
-                        'X-Requested-With': 'XMLHttpRequest',
-                        'User-Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 11_0 like Mac OS X) AppleWebKit/604.1.38 (KHTML, like Gecko) Version/11.0 Mobile/15A372 Safari/604.1',
+                        ...weiboUtils.apiHeaders,
                     },
                 });
                 return _response.data;
             });
             if (response.data && response.data.data) {
                 const comments = response.data.data;
-                itemDesc += `<br clear="both" /><div style="clear: both"></div><div style="background: #80808010;border-top:1px solid #80808030;border-bottom:1px solid #80808030;margin:0;padding:5px 20px;">`;
+                itemDesc += '<br clear="both" /><div style="clear: both"></div><div style="background: #80808010;border-top:1px solid #80808030;border-bottom:1px solid #80808030;margin:0;padding:5px 20px;">';
                 itemDesc += '<h3>热门评论</h3>';
                 for (const comment of comments) {
                     itemDesc += '<p style="margin-bottom: 0.5em;margin-top: 0.5em">';
@@ -425,7 +587,8 @@ const weiboUtils = {
                     if (showBloggerIcons === '1' && comment.blogger_icons) {
                         name += comment.blogger_icons[0].name;
                     }
-                    itemDesc += `<a href="https://weibo.com/${comment.user.id}" target="_blank">${name}</a>: ${comment.text}`;
+                    const commentText = formatDescriptionText(comment.text, descriptionRenderParams);
+                    itemDesc += `<a href="https://weibo.com/${comment.user.id}" target="_blank">${name}</a>: ${commentText}`;
                     // 带有图片的评论直接输出图片
                     if ('pic' in comment) {
                         itemDesc += `<br><img src="${comment.pic.url}">`;
@@ -435,7 +598,8 @@ const weiboUtils = {
                         for (const com of comment.comments) {
                             // 评论的带有图片的评论直接输出图片
                             const pattern = /<a\s+href="https:\/\/weibo\.cn\/sinaurl\?u=([^"]+)"[^>]*><span class='url-icon'><img[^>]*><\/span><span class="surl-text">(查看图片|评论配图|查看动图)<\/span><\/a>/g;
-                            const matches = com.text.match(pattern);
+                            let replyText = com.text;
+                            const matches = replyText.match(pattern);
                             if (matches) {
                                 for (const match of matches) {
                                     const hrefMatch = match.match(/href="https:\/\/weibo\.cn\/sinaurl\?u=([^"]+)"/);
@@ -444,16 +608,17 @@ const weiboUtils = {
                                         const imgSrc = decodeURIComponent(hrefMatch[1]);
                                         const imgTag = `<img src="${imgSrc}" style="width: 1rem; height: 1rem;">`;
                                         // 用替换后的 img 标签替换原来的 <a> 标签部分
-                                        com.text = com.text.replaceAll(match, imgTag);
+                                        replyText = replyText.replaceAll(match, () => imgTag);
                                     }
                                 }
                             }
+                            replyText = formatDescriptionText(replyText, descriptionRenderParams);
                             itemDesc += '<div style="font-size: 0.9em">';
                             let name = com.user.screen_name;
                             if (showBloggerIcons === '1' && com.blogger_icons) {
                                 name += com.blogger_icons[0].name;
                             }
-                            itemDesc += `<a href="https://weibo.com/${com.user.id}" target="_blank">${name}</a>: ${com.text}`;
+                            itemDesc += `<a href="https://weibo.com/${com.user.id}" target="_blank">${name}</a>: ${replyText}`;
                             itemDesc += '</div>';
                         }
                         itemDesc += '</blockquote>';
@@ -478,8 +643,9 @@ const weiboUtils = {
         const replace = (html) => html.replaceAll(regex, 'tvax'); // enforce `tvax` as `tva` has a strict WAF
         const replaceKV = (obj, keys) => {
             for (const key of keys) {
-                if (obj[key]) {
-                    obj[key] = replace(obj[key]);
+                const value = obj[key];
+                if (value) {
+                    obj[key] = replace(value);
                 }
             }
         };

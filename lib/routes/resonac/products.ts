@@ -1,7 +1,8 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 // import { parseDate } from '@/utils/parse-date';
 // import timezone from '@/utils/timezone';
 
@@ -46,7 +47,7 @@ async function handler() {
                 const $ = load(response.data);
                 const item = $('dt.m-toggle__title div span a')
                     .toArray()
-                    .map((el) => ({
+                    .map((el): DataItem & { group: string } => ({
                         title: $('b', el).text().trim(),
                         link: baseUrl + $(el).attr('href'),
                         group: productGroup.groupName,
@@ -61,7 +62,7 @@ async function handler() {
 
     const items = await Promise.all(
         fullList.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 try {
                     const response = await got(item.link);
                     const $ = load(response.data);
@@ -80,6 +81,6 @@ async function handler() {
         title: 'Resonac_Products',
         link: baseUrl,
         description: 'Resonac_Products',
-        item: items,
+        item: items as DataItem[],
     };
 }

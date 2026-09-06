@@ -1,19 +1,23 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/cdrh/:titleOnly?',
+    categories: ['government'],
+    example: '/fda/cdrh',
+    parameters: { titleOnly: 'Title only, empty by default which includes the full text, any other value shows the title only' },
     radar: [
         {
             source: ['fda.gov/medical-devices/news-events-medical-devices/cdrhnew-news-and-updates', 'fda.gov/'],
             target: '/cdrh/:titleOnly',
         },
     ],
-    name: 'Unknown',
-    maintainers: [],
+    name: 'CDRHNew',
+    maintainers: ['nczitzk'],
     handler,
     url: 'fda.gov/medical-devices/news-events-medical-devices/cdrhnew-news-and-updates',
 };
@@ -33,14 +37,14 @@ async function handler(ctx) {
     let items = $('div[role="main"] a')
         .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 30)
         .toArray()
-        .map((item) => {
-            item = $(item);
+        .map((item): DataItem => {
+            const $item = $(item);
 
-            const link = item.attr('href');
+            const link = $item.attr('href');
 
             return {
-                title: item.text(),
-                link: link.startsWith('http') ? link : `${rootUrl}${link}`,
+                title: $item.text(),
+                link: link!.startsWith('http') ? link : `${rootUrl}${link}`,
             };
         });
 
@@ -57,9 +61,9 @@ async function handler(ctx) {
                 item.author = content('meta[property="article:publisher"]').attr('content');
 
                 try {
-                    item.pubDate = parseDate(content('meta[property="article:published_time"]').attr('content').split(', ').pop(), 'MM/DD/YYYY - HH:mm');
+                    item.pubDate = parseDate(content('meta[property="article:published_time"]').attr('content')!.split(', ').pop()!, 'MM/DD/YYYY - HH:mm');
                 } catch {
-                    item.pubDate = parseDate(content('meta[property="article:published_time"]').attr('content'));
+                    item.pubDate = parseDate(content('meta[property="article:published_time"]').attr('content')!);
                 }
 
                 item.description = titleOnly ? null : content('div[role="main"], .doc-content-area').html();

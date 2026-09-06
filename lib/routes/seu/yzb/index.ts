@@ -1,7 +1,8 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
@@ -48,19 +49,19 @@ async function handler(ctx) {
 
     const list = $('#wp_news_w3 td tbody tr')
         .toArray()
-        .map((elem) => {
-            elem = $(elem);
-            const a = elem.find('td a');
+        .map((elem): DataItem => {
+            const $elem = $(elem);
+            const a = $elem.find('td a');
             return {
-                title: a.attr('title'),
-                link: new URL(a.attr('href'), host).href,
-                pubDate: parseDate(elem.find('td div').text()),
+                title: a.attr('title')!,
+                link: new URL(a.attr('href')!, host).href,
+                pubDate: parseDate($elem.find('td div').text()),
             };
         });
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const { data: response } = await got(item.link);
                 const $ = load(response);
 

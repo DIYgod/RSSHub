@@ -1,8 +1,7 @@
-import { Route } from '@/types';
-
+import type { Route } from '@/types';
 import got from '@/utils/got';
-import { art } from '@/utils/render';
-import path from 'node:path';
+
+import { renderGoods } from './templates/goods';
 
 const base_url = 'https://m.xiaomiyoupin.com';
 export const route: Route = {
@@ -38,7 +37,11 @@ async function handler() {
     const sign = urlParams.get('sign');
 
     // 1. fetchPageData
-    const pageData = await got(`${base_url}/mtop/navi/venue/page?page_id=${pageid}&pdl=jianyu&sign=${sign}`);
+    const pageData = await got(`${base_url}/mtop/navi/venue/page?page_id=${pageid}&pdl=jianyu&sign=${sign}`, {
+        headers: {
+            accept: '*/*',
+        },
+    });
     const crowd_funding_floor = pageData.data.data.floors.find((floor) => floor.module_key === 'crowding');
     const query_list = crowd_funding_floor.query_list;
 
@@ -55,7 +58,7 @@ async function handler() {
         return {
             title: goods.name,
             guid: `xiaomiyoupin:${goods.gid}`,
-            description: art(path.join(__dirname, 'templates/goods.art'), goods),
+            description: renderGoods(goods),
             link: goods.jump_url,
             pubDate: new Date(goods.fist_release_time * 1000).toUTCString(),
         };

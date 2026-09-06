@@ -1,11 +1,12 @@
-import { Route, ViewType } from '@/types';
+import { load } from 'cheerio';
 
+import type { Route } from '@/types';
+import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
-import { art } from '@/utils/render';
-import path from 'node:path';
+
+import { renderDescription } from './templates/description';
 
 export const route: Route = {
     path: '/category/:category/:staffpicks?',
@@ -36,7 +37,7 @@ async function handler(ctx) {
     let sortparams = '&direction=desc&sort=date';
     let feedtitle = category;
     if (staffpicks && staffpicks !== 'staffpicks') {
-        return;
+        return null;
     }
 
     if (staffpicks) {
@@ -68,7 +69,7 @@ async function handler(ctx) {
             url: feedlink + (staffpicks ? feedlinkstaffpicks : ''),
         });
         const description = load(response.data);
-        return description('meta[name="description"]').attr('content');
+        return description('meta[name="description"]').attr('content') ?? '';
     });
 
     return {
@@ -77,8 +78,8 @@ async function handler(ctx) {
         description: feedDescription,
         item: vimeojs.map((item) => ({
             title: item.name,
-            description: art(path.join(__dirname, 'templates/description.art'), {
-                videoUrl: item.uri.replace(`/videos`, ''),
+            description: renderDescription({
+                videoUrl: item.uri.replace('/videos', ''),
                 vdescription: item.description || '',
             }),
             pubDate: parseDate(item.created_time),

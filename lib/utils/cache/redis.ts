@@ -1,12 +1,13 @@
-import { config } from '@/config';
 import Redis from 'ioredis';
+
+import { config } from '@/config';
 import logger from '@/utils/logger';
+
 import type CacheModule from './base';
+import { stringify } from './base';
 
 const status = { available: false };
-const clients: {
-    redisClient?: Redis;
-} = {};
+const clients: CacheModule['clients'] = {};
 
 const getCacheTtlKey = (key: string) => {
     if (key.startsWith('rsshub:cacheTtl:')) {
@@ -45,31 +46,32 @@ export default {
                     // redisClient.set(cacheTtlKey, cacheTtl, 'EX', cacheTtl);
                 }
                 clients.redisClient.expire(key, cacheTtl);
-                value = value + '';
+                value += '';
             }
             return value || '';
-        } else {
-            return null;
         }
+        return null;
     },
-    set: (key: string, value?: string | Record<string, any>, maxAge = config.cache.contentExpire) => {
+    has: async (key: string) => {
+        if (key && status.available && clients.redisClient) {
+            const result = await clients.redisClient.exists(key);
+            return result > 0;
+        }
+        return false;
+    },
+    set: <T>(key: string, value?: string | T, maxAge = config.cache.contentExpire) => {
         if (!status.available || !clients.redisClient) {
             return;
         }
-        if (!value || value === 'undefined') {
-            value = '';
-        }
-        if (typeof value === 'object') {
-            value = JSON.stringify(value);
-        }
+        const stored = stringify(value);
         if (key) {
             if (maxAge !== config.cache.contentExpire) {
                 // intentionally store the cache ttl if it is not the default value
                 clients.redisClient.set(getCacheTtlKey(key), maxAge, 'EX', maxAge);
             }
-            return clients.redisClient.set(key, value, 'EX', maxAge); // setMode: https://redis.io/commands/set
+            return clients.redisClient.set(key, stored, 'EX', maxAge); // setMode: https://redis.io/commands/set
         }
     },
     clients,
     status,
-} as CacheModule;
+} satisfies CacheModule;

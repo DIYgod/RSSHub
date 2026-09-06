@@ -1,9 +1,8 @@
-import { Route } from '@/types';
-
+import type { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-import { art } from '@/utils/render';
-import path from 'node:path';
+
+import { renderDescription } from './templates/description';
 
 export const route: Route = {
     path: '/:id',
@@ -23,12 +22,12 @@ export const route: Route = {
     handler,
     description: `如果订阅 [共和国追梦人](http://www.radio.cn/pc-portal/sanji/detail.html?columnId=1552135)，其 URL 为 \`https://www.radio.cn/pc-portal/sanji/detail.html?columnId=1552135\`，可以得到 \`columnId\` 为 \`1552135\`
 
-  所以对应路由为 [\`/radio/1552135\`](https://rsshub.app/radio/1552135)
+所以对应路由为 [\`/radio/1552135\`](https://rsshub.app/radio/1552135)
 
 ::: tip
-  该路由仅适用于更新时间较早的电台节目，如 [共和国追梦人](http://www.radio.cn/pc-portal/sanji/detail.html?columnId=1552135)
+该路由仅适用于更新时间较早的电台节目，如 [共和国追梦人](http://www.radio.cn/pc-portal/sanji/detail.html?columnId=1552135)
 
-  与适用于 [专辑](#yun-ting-zhuan-ji) 路由的专辑其 \`columnId\` 长度相比，它们的 \`columnId\` 长度较短
+与适用于 [专辑](#yun-ting-zhuan-ji) 路由的专辑其 \`columnId\` 长度相比，它们的 \`columnId\` 长度较短
 :::`,
 };
 
@@ -60,7 +59,7 @@ async function handler(ctx) {
             guid: item.id,
             title: item.name,
             link: item.streams[0].url,
-            description: art(path.join(__dirname, 'templates/description.art'), {
+            description: renderDescription({
                 description: item.description,
                 enclosure_url,
                 enclosure_type,

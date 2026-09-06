@@ -1,11 +1,11 @@
-import { Route } from '@/types';
-import { getSubPath } from '@/utils/common-utils';
-import cache from '@/utils/cache';
-import got from '@/utils/got';
 import { load } from 'cheerio';
+
+import type { Route } from '@/types';
+import { getSubPath } from '@/utils/common-utils';
+import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
-import { rootUrl, ProcessItem } from './utils';
+import { ProcessItem, rootUrl } from './utils';
 
 const shortcuts = {
     '/information': '/information/web_news',
@@ -27,9 +27,9 @@ export const route: Route = {
     },
     name: '资讯, 快讯, 用户文章, 主题文章, 专题文章, 搜索文章, 搜索快讯',
     maintainers: ['nczitzk', 'fashioncj'],
-    description: `| 最新资讯频道 | 快讯 | 推荐资讯 | 生活 | 房产 | 职场 | 搜索文章 | 搜索快讯 |
-| ------- | -------- | -------- | -------- | -------- | --------| -------- | -------- |
-| news | newsflashes | recommend | life | estate | workplace | search/articles/关键词 | search/articles/关键词 |`,
+    description: `| 最新资讯频道 | 快讯        | 推荐资讯  | 生活 | 房产   | 职场      | 搜索文章                | 搜索快讯                |
+| ------------ | ----------- | --------- | ---- | ------ | --------- | ----------------------- | ----------------------- |
+| news         | newsflashes | recommend | life | estate | workplace | search/articles/ 关键词 | search/articles/ 关键词 |`,
     handler,
 };
 
@@ -47,7 +47,7 @@ async function handler(ctx) {
 
     const $ = load(response.data);
 
-    const data = JSON.parse(response.data.match(/"itemList":(\[.*?])/)[1]);
+    const data = JSON.parse(response.data.match(/"itemList":(\[.*?\])/)[1]);
 
     let items = data
         .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 30)
@@ -63,12 +63,12 @@ async function handler(ctx) {
             };
         });
 
-    if (!/^\/(search|newsflashes)/.test(path)) {
-        items = await Promise.all(items.map((item) => ProcessItem(item, cache.tryGet)));
+    if (!/^\/(?:search|newsflashes)/.test(path)) {
+        items = await Promise.all(items.map((item) => ProcessItem(item)));
     }
 
     return {
-        title: `36氪 - ${$('title').text().split('_')[0]}`,
+        title: `36氪 - ${$('title').text().split('_', 1)[0]}`,
         link: currentUrl,
         item: items,
     };

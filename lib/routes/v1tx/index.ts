@@ -1,18 +1,21 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/',
+    categories: ['blog'],
+    example: '/v1tx',
     radar: [
         {
             source: ['v1tx.com/'],
             target: '',
         },
     ],
-    name: 'Unknown',
+    name: '最新文章',
     maintainers: ['TonyRL'],
     handler,
     url: 'v1tx.com/',
@@ -25,17 +28,17 @@ async function handler() {
     const $ = load(response);
     const list = $('h2.entry-title a')
         .toArray()
-        .map((item) => {
-            item = $(item);
+        .map((item): DataItem => {
+            const $item = $(item);
             return {
-                title: item.text(),
-                link: item.attr('href'),
+                title: $item.text(),
+                link: $item.attr('href'),
             };
         });
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const { data: response } = await got(item.link);
                 const $ = load(response);
 

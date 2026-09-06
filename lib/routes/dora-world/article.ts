@@ -1,11 +1,22 @@
-import { Route, Data, DataItem, ViewType } from '@/types';
-import got from '@/utils/got';
 import { load } from 'cheerio';
+
+import type { Data, Route } from '@/types';
+import { ViewType } from '@/types';
 import cache from '@/utils/cache';
+import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
 const baseUrl = 'https://www.dora-world.com';
+
+interface DoraArticle {
+    id: string;
+    title: string;
+    page_url: string;
+    image_url: string;
+    publish_at: string;
+    tags: Array<{ name: string }>;
+}
 
 export const route: Route = {
     path: '/article/:topic/:topicId?',
@@ -44,12 +55,12 @@ async function handler(ctx): Promise<Data> {
     const nextBuildId = nextData.buildId;
     const { data: response } = await got(`${baseUrl}/_next/data/${nextBuildId}/${topic}.json${topicIdParam}`);
     const title = `${response.pageProps.label_name} - ドラえもんチャンネル`;
-    const contents = response.pageProps.contents;
+    const contents: DoraArticle[] = response.pageProps.contents;
     const list = contents.map((item) => ({
         title: item.title,
         link: item.page_url.startsWith('http') ? item.page_url : `${baseUrl}${item.page_url}`,
         description: item.page_url.startsWith('/contents/') ? '' : `<p>${item.title}</p><img src="${item.image_url}" alt="">`,
-        pubDate: timezone(parseDate(item.publish_at), +9),
+        pubDate: timezone(parseDate(item.publish_at), 9),
         category: item.tags.map((tag) => tag.name),
         guid: item.id,
     }));
@@ -58,7 +69,7 @@ async function handler(ctx): Promise<Data> {
         link,
         language: 'ja',
         image: 'https://dora-world.com/assets/images/DORAch_web-touch-icon.png',
-        item: (await Promise.all(
+        item: await Promise.all(
             list.map(
                 async (item) =>
                     await cache.tryGet(item.link, async () => {
@@ -68,7 +79,7 @@ async function handler(ctx): Promise<Data> {
                         return item;
                     })
             )
-        ).then((items) => items.filter((item) => item !== null))) as DataItem[],
+        ),
     };
 }
 
@@ -82,7 +93,7 @@ async function getContent(nextBuildId: string, contentId: string) {
     const description =
         content
             .html()
-            ?.replace(rubyRegex, '$1（$2）')
-            ?.replace(/[^\u0009\u000A\u000D\u0020-\uD7FF\uE000-\uFDCF\uFDE0-\uFFFD]/gm, '') ?? '';
+            ?.replaceAll(rubyRegex, '$1（$2）')
+            ?.replaceAll(/[^\t\n\r\u{0020}-\u{D7FF}\u{E000}-\u{FDCF}\u{FDE0}-\u{FFFD}]/gu, '') ?? '';
     return description;
 }

@@ -1,6 +1,7 @@
-import { Route } from '@/types';
-import got from '@/utils/got';
 import { load } from 'cheerio';
+
+import type { Route } from '@/types';
+import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
@@ -29,15 +30,15 @@ async function handler(ctx) {
         .find('.release-date')
         .toArray()
         .map((item) => {
-            item = $(item);
-            const title = item
+            const $item = $(item);
+            const title = $item
                 .parent()
                 .contents()
                 .filter((_, el) => el.nodeType === 3)
                 .text();
-            const pubDate = parseDate(item.text().match(/(\d{4}-\d{2}-\d{2})/)[1]);
+            const pubDate = parseDate($item.text().match(/(\d{4}-\d{2}-\d{2})/)![1]);
 
-            const next = item.parent().nextUntil('hr');
+            const next = $item.parent().nextUntil('hr');
             return {
                 title,
                 description: next

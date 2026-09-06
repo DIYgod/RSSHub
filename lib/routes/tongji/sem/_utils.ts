@@ -1,9 +1,10 @@
-import got from '@/utils/got';
 import { load } from 'cheerio';
-import { parseDate } from '@/utils/parse-date';
-import { config } from '@/config';
 
-export async function getNotifByPage(url): Promise<{ title: string; link: string; pubDate: Date }[]> {
+import { config } from '@/config';
+import got from '@/utils/got';
+import { parseDate } from '@/utils/parse-date';
+
+export async function getNotifByPage(url): Promise<Array<{ title: string; link: string; pubDate: Date }>> {
     const pageUrl: string = url;
 
     try {
@@ -24,11 +25,11 @@ export async function getNotifByPage(url): Promise<{ title: string; link: string
 
             const title = aTagFirst.attr('title');
             const href = aTagFirst.attr('href');
-            const time = aTagSecond.text().trim();
+            const time = aTagSecond.text();
 
             return {
-                title,
-                link: href,
+                title: title!,
+                link: href!,
                 pubDate: parseDate(time, 'YYYY-MM-DD'),
             };
         });

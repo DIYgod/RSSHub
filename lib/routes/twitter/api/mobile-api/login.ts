@@ -1,20 +1,39 @@
 // https://github.com/BANKA2017/twitter-monitor/blob/node/apps/open_account/scripts/login.mjs
 
-import { bearerToken, guestActivateUrl } from './constants';
-import got from '@/utils/got';
-import ofetch from '@/utils/ofetch';
 import crypto from 'node:crypto';
-import { v5 as uuidv5 } from 'uuid';
-import { authenticator } from 'otplib';
-import logger from '@/utils/logger';
-import cache from '@/utils/cache';
+
+import { generate } from 'otplib';
 import { RateLimiterMemory, RateLimiterQueue, RateLimiterRedis } from 'rate-limiter-flexible';
+import { v5 as uuidv5 } from 'uuid';
+
+import cache from '@/utils/cache';
+import got from '@/utils/got';
+import logger from '@/utils/logger';
+import ofetch from '@/utils/ofetch';
+
+import { bearerToken, guestActivateUrl } from './constants';
 
 const ENDPOINT = 'https://api.x.com/1.1/onboarding/task.json';
 
 const NAMESPACE = 'd41d092b-b007-48f7-9129-e9538d2d8fe9';
 
-const headers = {
+type LoginHeaders = {
+    'User-Agent': string;
+    'X-Twitter-API-Version': string;
+    'X-Twitter-Client': string;
+    'X-Twitter-Client-Version': string;
+    'OS-Version': string;
+    'System-User-Agent': string;
+    'X-Twitter-Active-User': string;
+    'Content-Type': string;
+    Authorization: string;
+    // Assigned during the login flow
+    att?: string;
+    'X-Twitter-Client-DeviceID'?: string;
+    'x-guest-token'?: string;
+};
+
+const headers: LoginHeaders = {
     'User-Agent': 'TwitterAndroid/10.21.0-release.0 (310210000-r-0) ONEPLUS+A3010/9 (OnePlus;ONEPLUS+A3010;OnePlus;OnePlus3;0;;1;2016)',
     'X-Twitter-API-Version': '5',
     'X-Twitter-Client': 'TwitterAndroid',
@@ -41,12 +60,18 @@ const loginLimiter = cache.clients.redisClient
 
 const loginLimiterQueue = new RateLimiterQueue(loginLimiter);
 
-const postTask = async (flowToken: string, subtaskId: string, subtaskInput: Record<string, unknown>) =>
+interface SubtaskInput {
+    check_logged_in_account?: { link: string };
+    enter_password?: { link: string; password: string };
+    enter_text?: { link: string; suggestion_id: null; text: string };
+}
+
+const postTask = async (flowToken: string, subtaskId: string, subtaskInput: SubtaskInput) =>
     await got.post(ENDPOINT, {
         headers,
         json: {
             flow_token: flowToken,
-            subtask_inputs: [Object.assign({ subtask_id: subtaskId }, subtaskInput)],
+            subtask_inputs: [{ subtask_id: subtaskId, ...subtaskInput }],
         },
     });
 
@@ -54,41 +79,37 @@ const postTask = async (flowToken: string, subtaskId: string, subtaskInput: Reco
 // So abstract these tasks out into a map so that they can be dynamically executed during the login flow.
 // If there are missing tasks in the future, simply add the implementation of that task to it.
 const flowTasks = {
-    async LoginEnterUserIdentifier({ flowToken, username }) {
-        return await postTask(flowToken, 'LoginEnterUserIdentifier', {
+    LoginEnterUserIdentifier: async ({ flowToken, username }) =>
+        await postTask(flowToken, 'LoginEnterUserIdentifier', {
             enter_text: {
                 suggestion_id: null,
                 text: username,
                 link: 'next_link',
             },
-        });
-    },
-    async LoginEnterPassword({ flowToken, password }) {
-        return await postTask(flowToken, 'LoginEnterPassword', {
+        }),
+    LoginEnterPassword: async ({ flowToken, password }) =>
+        await postTask(flowToken, 'LoginEnterPassword', {
             enter_password: {
                 password,
                 link: 'next_link',
             },
-        });
-    },
-    async LoginEnterAlternateIdentifierSubtask({ flowToken, phoneOrEmail }) {
-        return await postTask(flowToken, 'LoginEnterAlternateIdentifierSubtask', {
+        }),
+    LoginEnterAlternateIdentifierSubtask: async ({ flowToken, phoneOrEmail }) =>
+        await postTask(flowToken, 'LoginEnterAlternateIdentifierSubtask', {
             enter_text: {
                 suggestion_id: null,
                 text: phoneOrEmail,
                 link: 'next_link',
             },
-        });
-    },
-    async AccountDuplicationCheck({ flowToken }) {
-        return await postTask(flowToken, 'AccountDuplicationCheck', {
+        }),
+    AccountDuplicationCheck: async ({ flowToken }) =>
+        await postTask(flowToken, 'AccountDuplicationCheck', {
             check_logged_in_account: {
                 link: 'AccountDuplicationCheck_false',
             },
-        });
-    },
+        }),
     async LoginTwoFactorAuthChallenge({ flowToken, authenticationSecret }) {
-        const token = authenticator.generate(authenticationSecret);
+        const token = await generate({ secret: authenticationSecret });
         return await postTask(flowToken, 'LoginTwoFactorAuthChallenge', {
             enter_text: {
                 suggestion_id: null,
@@ -123,42 +144,39 @@ async function login({ username, password, authenticationSecret, phoneOrEmail })
 
                 headers['x-guest-token'] = guestToken.data.guest_token;
 
-                let task = await ofetch
-                    .raw(
-                        ENDPOINT +
-                            '?' +
-                            new URLSearchParams({
-                                flow_name: 'login',
-                                api_version: '1',
-                                known_device_token: '',
-                                sim_country_code: 'us',
-                            }).toString(),
-                        {
-                            method: 'POST',
-                            headers,
-                            body: {
-                                flow_token: null,
-                                input_flow_data: {
-                                    country_code: null,
-                                    flow_context: {
-                                        referrer_context: {
-                                            referral_details: 'utm_source=google-play&utm_medium=organic',
-                                            referrer_url: '',
-                                        },
-                                        start_location: {
-                                            location: 'deeplink',
-                                        },
+                const { headers: _headers, _data } = await ofetch.raw(
+                    ENDPOINT +
+                        '?' +
+                        new URLSearchParams({
+                            flow_name: 'login',
+                            api_version: '1',
+                            known_device_token: '',
+                            sim_country_code: 'us',
+                        }).toString(),
+                    {
+                        method: 'POST',
+                        headers,
+                        body: {
+                            flow_token: null,
+                            input_flow_data: {
+                                country_code: null,
+                                flow_context: {
+                                    referrer_context: {
+                                        referral_details: 'utm_source=google-play&utm_medium=organic',
+                                        referrer_url: '',
                                     },
-                                    requested_variant: null,
-                                    target_user_id: 0,
+                                    start_location: {
+                                        location: 'deeplink',
+                                    },
                                 },
+                                requested_variant: null,
+                                target_user_id: 0,
                             },
-                        }
-                    )
-                    .then(({ headers: _headers, _data }) => {
-                        headers.att = _headers.get('att');
-                        return { data: _data };
-                    });
+                        },
+                    }
+                );
+                headers.att = _headers.get('att') ?? undefined;
+                let task = { data: _data };
 
                 logger.debug('Twitter login flow start.');
                 const runTask = async ({ data }) => {
@@ -170,7 +188,7 @@ async function login({ username, password, authenticationSecret, phoneOrEmail })
                     }
 
                     // If task does not exist in `flowTasks`, we need to implement it.
-                    if (!(subtask_id in flowTasks)) {
+                    if (!Object.hasOwn(flowTasks, subtask_id)) {
                         logger.error(`Twitter login flow task failed: unknown subtask: ${subtask_id}`);
                         return;
                     }

@@ -1,14 +1,18 @@
-import { Route, ViewType } from '@/types';
+import JSONbig from 'json-bigint';
+
+import { config } from '@/config';
+import CaptchaError from '@/errors/types/captcha';
+import type { Route } from '@/types';
+import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import JSONbig from 'json-bigint';
-import utils, { getLiveUrl, getVideoUrl } from './utils';
+import { parseDuration } from '@/utils/helpers';
 import { parseDate } from '@/utils/parse-date';
 import { fallback, queryToBoolean } from '@/utils/readable-social';
+
+import type { BilibiliWebDynamicResponse, Item2, Modules } from './api-interface';
 import cacheIn from './cache';
-import { BilibiliWebDynamicResponse, Item2, Modules } from './api-interface';
-import { parseDuration } from '@/utils/helpers';
-import { config } from '@/config';
+import utils, { getLiveUrl, getVideoUrl } from './utils';
 
 export const route: Route = {
     path: '/user/dynamic/:uid/:routeParams?',
@@ -34,7 +38,7 @@ export const route: Route = {
             {
                 name: 'BILIBILI_COOKIE_*',
                 optional: true,
-                description: `如果没有此配置，那么必须开启 puppeteer 支持；BILIBILI_COOKIE_{uid}: 用于用户关注动态系列路由，对应 uid 的 b 站用户登录后的 Cookie 值，\`{uid}\` 替换为 uid，如 \`BILIBILI_COOKIE_2267573\`，获取方式：
+                description: `如果没有此配置，那么必须开启 Playwright 支持；BILIBILI_COOKIE_{uid}: 用于用户关注动态系列路由，对应 uid 的 b 站用户登录后的 Cookie 值，\`{uid}\` 替换为 uid，如 \`BILIBILI_COOKIE_2267573\`，获取方式：
 1.  打开 [https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/dynamic_new?uid=0&type=8](https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/dynamic_new?uid=0&type=8)
 2.  打开控制台，切换到 Network 面板，刷新
 3.  点击 dynamic_new 请求，找到 Cookie
@@ -125,34 +129,58 @@ const getIframe = (data?: Modules, embed: boolean = true) => {
 };
 
 const getImgs = (data?: Modules) => {
-    const imgUrls: string[] = [];
+    const imgUrls: Array<{
+        url: string;
+        width?: number;
+        height?: number;
+    }> = [];
     const major = data?.module_dynamic?.major;
     if (!major) {
         return '';
     }
     // 动态图片
     if (major.opus?.pics?.length) {
-        imgUrls.push(...major.opus.pics.map((e) => e.url));
+        imgUrls.push(
+            ...major.opus.pics.map((e) => ({
+                url: e.url,
+                width: e.width,
+                height: e.height,
+            }))
+        );
     }
     // 专栏封面
     if (major.article?.covers?.length) {
-        imgUrls.push(...major.article.covers);
+        imgUrls.push(
+            ...major.article.covers.map((e) => ({
+                url: e,
+            }))
+        );
     }
     // 相簿
     if (major.draw?.items?.length) {
-        imgUrls.push(...major.draw.items.map((e) => e.src));
+        imgUrls.push(
+            ...major.draw.items.map((e) => ({
+                url: e.src,
+                width: e.width,
+                height: e.height,
+            }))
+        );
     }
     // 正在直播的动态
     if (major.live_rcmd?.content) {
-        imgUrls.push(JSON.parse(major.live_rcmd.content)?.live_play_info?.cover);
+        imgUrls.push({
+            url: JSON.parse(major.live_rcmd.content)?.live_play_info?.cover,
+        });
     }
     const type = major.type.replace('MAJOR_TYPE_', '').toLowerCase();
     if (major[type]?.cover) {
-        imgUrls.push(major[type].cover);
+        imgUrls.push({
+            url: major[type]?.cover,
+        });
     }
     return imgUrls
         .filter(Boolean)
-        .map((url) => `<img src="${url}">`)
+        .map((img) => `<img src="${img.url}" ${img.width ? `width="${img.width}"` : ''} ${img.height ? `height="${img.height}"` : ''}>`)
         .join('');
 };
 
@@ -234,6 +262,7 @@ const getUrl = (item?: Item2, useAvid = false) => {
 };
 
 async function handler(ctx) {
+    const isJsonFeed = ctx.req.query('format') === 'json';
     const uid = ctx.req.param('uid');
     const routeParams = Object.fromEntries(new URLSearchParams(ctx.req.param('routeParams')));
     const showEmoji = fallback(undefined, queryToBoolean(routeParams.showEmoji), false);
@@ -258,18 +287,19 @@ async function handler(ctx) {
 
     let body: BilibiliWebDynamicResponse;
 
-    const cookie = (await cacheIn.getCookie()) as string;
+    const cookie = await cacheIn.getCookie();
     body = await getDynamic(cookie);
 
     if (body?.code === -352) {
-        const cookie = (await cacheIn.getCookie(true)) as string;
+        const cookie = await cacheIn.getCookie(true);
         body = await getDynamic(cookie);
 
         if (body?.code === -352) {
-            throw new Error('遇到源站风控校验，请稍后再试');
+            cache.set('bili-cookie', '');
+            throw new CaptchaError('遇到源站风控校验，请稍后再试');
         }
     }
-    const items = (body as BilibiliWebDynamicResponse)?.data?.items;
+    const items = body?.data?.items;
 
     let author = items[0]?.modules?.module_author?.name;
     let face = items[0]?.modules?.module_author?.face;
@@ -316,19 +346,15 @@ async function handler(ctx) {
                             const emoji = node.emoji;
                             description = description.replaceAll(
                                 emoji.text,
-                                `<img alt="${emoji.text}" src="${emoji.icon_url}" style="margin: -1px 1px 0px; display: inline-block; width: 20px; height: 20px; vertical-align: text-bottom;" title="" referrerpolicy="no-referrer">`
+                                () => `<img alt="${emoji.text}" src="${emoji.icon_url}" style="margin: -1px 1px 0px; display: inline-block; width: 20px; height: 20px; vertical-align: text-bottom;" title="">`
                             );
                         }
                         // 处理转发带图评论的情况
                         if (node?.pics?.length) {
                             const { pics, text } = node;
-                            description = description.replaceAll(
-                                text,
+                            description = description.replaceAll(text, () =>
                                 pics
-                                    .map(
-                                        (pic) =>
-                                            `<img alt="${text}" src="${pic.src}" style="margin: 0px 0px 0px; display: inline-block; width: ${pic.width}px; height: ${pic.height}px; vertical-align: text-bottom;" title="" referrerpolicy="no-referrer">`
-                                    )
+                                    .map((pic) => `<img alt="${text}" src="${pic.src}" style="margin: 0px 0px 0px; display: inline-block; width: ${pic.width}px; height: ${pic.height}px; vertical-align: text-bottom;" title="">`)
                                     .join('<br>')
                             );
                         }
@@ -395,7 +421,7 @@ async function handler(ctx) {
                     .filter(Boolean)
                     .join('<br>');
 
-                const subtitles = !config.bilibili.excludeSubtitles && bvid ? await cacheIn.getVideoSubtitleAttachment(bvid) : [];
+                const subtitles = isJsonFeed && !config.bilibili.excludeSubtitles && bvid ? await cacheIn.getVideoSubtitleAttachment(bvid) : [];
 
                 return {
                     title: title || originalDescription,

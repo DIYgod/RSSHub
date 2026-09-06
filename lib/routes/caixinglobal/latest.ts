@@ -1,7 +1,8 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { Data, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
@@ -28,12 +29,12 @@ export const route: Route = {
     url: 'caixinglobal.com/news',
 };
 
-async function handler(ctx) {
+async function handler(ctx): Promise<Data> {
     const { data } = await got('https://gateway.caixin.com/api/extapi/homeInterface.jsp', {
         searchParams: {
             subject: '100990318;100990314;100990311',
             start: 0,
-            count: ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 20,
+            count: ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 20,
             type: '2',
             _: Date.now(),
         },
@@ -73,7 +74,7 @@ async function handler(ctx) {
                     content = data.data.content;
                 }
 
-                item.description = $('.cons-photo').prop('outerHTML') + content;
+                item.description = $('.cons-photo').prop('outerHTML')! + content!;
 
                 return item;
             })

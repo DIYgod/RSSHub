@@ -1,9 +1,10 @@
-import { Route } from '@/types';
-import parser from '@/utils/rss-parser';
+import { load } from 'cheerio';
+
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
+import parser from '@/utils/rss-parser';
 import timezone from '@/utils/timezone';
 
 export const route: Route = {
@@ -25,12 +26,12 @@ export const route: Route = {
     name: 'News',
     maintainers: ['quiniapiezoelectricity'],
     handler,
-    description: `
-| Language  | 한국어 | English | 简体中文 | 日本語 | عربي   | Español | Français |
-| --------- | ------ | ------- | -------- | ------ | ------ | ------- | -------- |
-| \`:lang\` | \`ko\` | \`en\`  | \`cn\`   | \`jp\` | \`ar\` | \`es\`  | \`fr\`   |
+    description: `| Language | 한국어 | English | 简体中文 | 日本語 | عربي | Español | Français |
+| -------- | ------ | ------- | -------- | ------ | ---- | ------- | -------- |
+| \`:lang\`  | \`ko\`   | \`en\`    | \`cn\`     | \`jp\`   | \`ar\` | \`es\`    | \`fr\`     |
 
 For a full list of RSS Feed Channels, please refer to the RSS feed page of the corresponding language
+
 | RSS Feed Page                                             |
 | --------------------------------------------------------- |
 | [한국어](https://www.yna.co.kr/rss/index?site=footer_rss) |
@@ -42,9 +43,8 @@ For a full list of RSS Feed Channels, please refer to the RSS feed page of the c
 | [Français](https://fr.yna.co.kr/channel/index)            |
 
 ::: tip
-For example, the path for the RSS feed url https://www.yna.co.kr/rss/economy.xml and https://cn.yna.co.kr/RSS/news.xml would be \`/ko/economy\` and \`/cn/news\` respectively. 
-:::
-`,
+For example, the path for the RSS feed url <https://www.yna.co.kr/rss/economy.xml> and <https://cn.yna.co.kr/RSS/news.xml> would be \`/ko/economy\` and \`/cn/news\` respectively.
+:::`,
 };
 
 async function handler(ctx) {
@@ -63,27 +63,31 @@ async function handler(ctx) {
     const feed = await parser.parseURL(url);
     const items = await Promise.all(
         feed.items.map((item) =>
-            cache.tryGet(item.link, async () => {
-                item.pubDate = lang === 'ko' ? parseDate(item.pubDate) : timezone(parseDate(item.pubDate), +9); // Timezone is only included in the pubDate of the Korean language RSS
+            cache.tryGet<DataItem>(item.link!, async () => {
                 const response = await got(item.link);
                 const $ = load(response.data);
-                item.author =
-                    item.creator ??
-                    $('.tit-name')
-                        .toArray()
-                        .map((c) => $(c).text())
-                        .join(', ');
                 const article = $('article.story-news');
                 article.find('.related-group').remove();
                 article.find('.writer-zone01').remove();
-                item.description = article.html();
-                return item;
+
+                return {
+                    title: item.title!,
+                    link: item.link,
+                    pubDate: lang === 'ko' ? parseDate(item.pubDate!) : timezone(parseDate(item.pubDate!), 9),
+                    author:
+                        item.creator ??
+                        $('.tit-name')
+                            .toArray()
+                            .map((c) => $(c).text())
+                            .join(', '),
+                    description: article.html(),
+                };
             })
         )
     );
 
     return {
-        title: feed.title,
+        title: feed.title!,
         link: feed.link,
         description: feed.description,
         language: feed.language ?? lang,

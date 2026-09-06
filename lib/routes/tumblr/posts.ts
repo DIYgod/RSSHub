@@ -1,10 +1,12 @@
-import { Data, Route } from '@/types';
-import got from '@/utils/got';
-import utils from './utils';
 import type { Context } from 'hono';
+
 import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
+import type { Data, Route } from '@/types';
+import got from '@/utils/got';
 import { fallback, queryToInteger } from '@/utils/readable-social';
+
+import utils from './utils';
 
 export const route: Route = {
     path: '/posts/:blog',
@@ -36,7 +38,7 @@ export const route: Route = {
         supportScihub: false,
     },
     name: 'Posts',
-    maintainers: ['Rakambda'],
+    maintainers: ['Rakambda', 'PolarisStarnor'],
     description: `::: tip
 Tumblr provides official RSS feeds for non "dashboard only" blogs, for instance [https://biketouring-nearby.tumblr.com](https://biketouring-nearby.tumblr.com/rss).
 :::`,
@@ -53,7 +55,7 @@ async function handler(ctx: Context): Promise<Data> {
 
     const response = await got.get(`https://api.tumblr.com/v2/blog/${blogIdentifier}/posts`, {
         searchParams: {
-            ...utils.generateAuthParams(),
+            api_key: utils.generateAuthParams(),
             limit,
         },
         headers: await utils.generateAuthHeaders(),

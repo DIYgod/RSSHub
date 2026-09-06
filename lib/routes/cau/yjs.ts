@@ -1,6 +1,7 @@
-import { Route } from '@/types';
-import got from '@/utils/got';
 import { load } from 'cheerio';
+
+import type { Route } from '@/types';
+import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
@@ -52,15 +53,15 @@ async function handler() {
         item:
             list &&
             list.toArray().map((item) => {
-                item = $(item);
-                const a = item.find('a');
+                const $item = $(item);
+                const a = $item.find('a');
                 return {
                     title: a
                         .contents()
                         .filter((_, node) => node.type === 'text')
                         .text(),
                     link: `${baseUrl}${a.attr('href')}`,
-                    pubDate: parseDate(item.find('span').text().replaceAll(/[[\]]/g, '')),
+                    pubDate: parseDate($item.find('span').text().replaceAll(/[[\]]/g, '')),
                 };
             }),
     };

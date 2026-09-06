@@ -1,4 +1,5 @@
-import { Route } from '@/types';
+import type { Route } from '@/types';
+
 import { track } from './track';
 
 export const route: Route = {
@@ -34,7 +35,7 @@ export const route: Route = {
     ja: {
         name: '郵便追跡サービス',
         description: `| 日本語 | 英語 |
-| ---- | ---- |
-| ja   | en   |`,
+| ------ | ---- |
+| ja     | en   |`,
     },
 };

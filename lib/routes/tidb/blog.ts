@@ -1,13 +1,14 @@
-import { type Data, type DataItem, type Route, ViewType } from '@/types';
+import type { CheerioAPI } from 'cheerio';
+import { load } from 'cheerio';
+import type { Context } from 'hono';
 
+import type { Data, DataItem, Language, Route } from '@/types';
+import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
-import { type CheerioAPI, load } from 'cheerio';
-import { type Context } from 'hono';
-
-const escapeHtml = (text: string): string => text?.replace(/&/g, '&amp;')?.replace(/</g, '&lt;')?.replace(/>/g, '&gt;')?.replace(/'/g, '&quot;')?.replace(/'/g, '&#039;') ?? text;
+const escapeHtml = (text: string): string => text?.replaceAll('&', '&amp;')?.replaceAll('<', '&lt;')?.replaceAll('>', '&gt;')?.replaceAll('"', '&quot;')?.replaceAll("'", '&#039;') ?? text;
 
 const parseTextChildren = (children: any[]): string => children.map((child: any) => escapeHtml(child.text)).join('');
 
@@ -32,7 +33,8 @@ const parseParagraphChildren = (children: any[]): string =>
         .map((child: any) => {
             if (child.text !== undefined) {
                 return escapeHtml(child.text);
-            } else if (child.type === 'image') {
+            }
+            if (child.type === 'image') {
                 return parseImageNode(child);
             }
             return '';
@@ -63,9 +65,9 @@ const parseContentToHtml = (content: any[]): string =>
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { category = 'latest' } = ctx.req.param();
-    const limit: number = Number.parseInt(ctx.req.query('limit') ?? '20', 10);
+    const limit = Number(ctx.req.query('limit') ?? '20');
 
-    const baseUrl: string = 'https://tidb.net';
+    const baseUrl = 'https://tidb.net';
     const targetUrl: string = new URL(`blog${category === 'latest' ? '' : `/c/${category}`}`, baseUrl).href;
     const targetResponse = await ofetch(targetUrl);
 
@@ -76,7 +78,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
     }
 
     const $: CheerioAPI = load(targetResponse);
-    const language = $('html').attr('lang') ?? 'zh';
+    const language = ($('html').attr('lang') ?? 'zh') as Language;
 
     const apiUrl: string = new URL(`_next/data/${buildId}/${language}/blog${category === 'latest' ? '' : `/c/${category}`}.json`, baseUrl).href;
 
@@ -86,9 +88,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
         },
     });
 
-    let items: DataItem[] = [];
-
-    items = response.pageProps.blogs.content.slice(0, limit).map((item): DataItem => {
+    let items: DataItem[] = response.pageProps.blogs.content.slice(0, limit).map((item): DataItem => {
         const title: string = item.title;
         const description: string | undefined = item.summary;
         const pubDate: number | string = item.publishedAt;
@@ -142,7 +142,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 });
 
                 const title: string = detailResponse.title;
-                const description: string | undefined = detailResponse.content ? parseContentToHtml(JSON.parse(detailResponse.content)) : item.description;
+                const description: string | null | undefined = detailResponse.content ? parseContentToHtml(JSON.parse(detailResponse.content)) : item.description;
                 const pubDate: number | string = detailResponse.publishedAt;
                 const linkUrl: string | undefined = `blog/${detailResponse.slug}`;
                 const categories: string[] = [...new Set([detailResponse.category?.name, ...(detailResponse.tags ?? []).map((c) => c.name)].filter(Boolean))];
@@ -155,7 +155,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                           },
                       ]
                     : undefined;
-                const guid: string = `tidb-blog-${detailResponse.slug}`;
+                const guid = `tidb-blog-${detailResponse.slug}`;
                 const updated: number | string = detailResponse.lastModifiedAt ?? pubDate;
 
                 const processedItem: DataItem = {
@@ -240,7 +240,7 @@ export const route: Route = {
             ],
         },
     },
-    description: `:::tip
+    description: `::: tip
 订阅 [管理与运维](https://tidb.net/blog/c/management-and-operation)，其源网址为 \`https://tidb.net/blog/c/management-and-operation\`，请参考该 URL 指定部分构成参数，此时路由为 [\`/tidb/blog/c/management-and-operation\`](https://rsshub.app/tidb/blog/c/management-and-operation)。
 :::
 
@@ -252,9 +252,7 @@ export const route: Route = {
 | [架构选型](https://tidb.net/blog/c/architecture-selection)     | [architecture-selection](https://rsshub.app/tidb/blog/c/architecture-selection)     |
 | [原理解读](https://tidb.net/blog/c/principle-interpretation)   | [principle-interpretation](https://rsshub.app/tidb/blog/c/principle-interpretation) |
 | [应用开发](https://tidb.net/blog/c/application-development)    | [application-development](https://rsshub.app/tidb/blog/c/application-development)   |
-| [社区动态](https://tidb.net/blog/c/community-feeds)            | [community-feeds](https://rsshub.app/tidb/blog/c/community-feeds)                   |
-
-`,
+| [社区动态](https://tidb.net/blog/c/community-feeds)            | [community-feeds](https://rsshub.app/tidb/blog/c/community-feeds)                   |`,
     categories: ['programming'],
     features: {
         requireConfig: false,

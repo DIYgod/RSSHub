@@ -1,6 +1,7 @@
-import { Route, Data } from '@/types';
-import { getPosts } from './utils';
+import type { Data, Route } from '@/types';
 import got from '@/utils/got';
+
+import { getPosts } from './utils';
 
 export const route: Route = {
     path: '/search/:keyword',
@@ -14,6 +15,7 @@ export const route: Route = {
         supportBT: false,
         supportPodcast: false,
         supportScihub: false,
+        nsfw: true,
     },
     name: 'Search',
     maintainers: ['SnowAgar25'],

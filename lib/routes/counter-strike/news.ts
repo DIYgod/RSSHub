@@ -1,15 +1,15 @@
-import { Route } from '@/types';
-import type { BBobCoreTagNodeTree, PresetFactory } from '@bbob/types';
-
-import got from '@/utils/got';
-import { load } from 'cheerio';
 import bbobHTML from '@bbob/html';
 import presetHTML5 from '@bbob/preset-html5';
+import type { BBobCoreTagNodeTree, PresetFactory } from '@bbob/types';
+import { load } from 'cheerio';
+
+import type { Route } from '@/types';
+import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
 const swapLinebreak = (tree: BBobCoreTagNodeTree) =>
     tree.walk((node) => {
-        if (typeof node === 'string' && node === '\n') {
+        if (node === '\n') {
             return {
                 tag: 'br',
                 content: null,
@@ -23,7 +23,7 @@ const customPreset: PresetFactory = presetHTML5.extend((tags) => ({
     url: (node) => ({
         tag: 'a',
         attrs: {
-            href: Object.keys(node.attrs as Record<string, string>)[0],
+            href: Object.keys(node.attrs!)[0],
             rel: 'noopener',
             target: '_blank',
         },
@@ -53,7 +53,7 @@ const customPreset: PresetFactory = presetHTML5.extend((tags) => ({
 
 export const handler = async (ctx) => {
     const { category = 'all', language = 'english' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 100;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 100;
 
     const rootUrl = 'https://www.counter-strike.net';
     const apiRootUrl = 'https://store.steampowered.com';
@@ -123,7 +123,7 @@ export const route: Route = {
     example: '/counter-strike/news',
     parameters: { category: 'Category, `updates` or `all`, `all` by default', language: 'Language, english by default, see below for more languages' },
     description: `::: tip
-  If you subscribe to [Updates in English](https://www.counter-strike.net/news/updates?l=english)，where the URL is \`https://www.counter-strike.net/news/updates?l=english\`, extract the \`l\`, which is \`english\`, and use it as the parameter to fill in. Therefore, the route will be [\`/counter-strike/news/updates/english\`](https://rsshub.app/counter-strike/news/updates/english).
+If you subscribe to [Updates in English](https://www.counter-strike.net/news/updates?l=english)，where the URL is \`https://www.counter-strike.net/news/updates?l=english\`, extract the \`l\`, which is \`english\`, and use it as the parameter to fill in. Therefore, the route will be [\`/counter-strike/news/updates/english\`](https://rsshub.app/counter-strike/news/updates/english).
 :::
 
 <details>
@@ -160,8 +160,7 @@ export const route: Route = {
 | Tiếng Việt (Vietnamese)                           | vietnamese |
 | Español - Latinoamérica (Spanish - Latin America) | latam      |
 
-</details>
-    `,
+</details>`,
     categories: ['game'],
 
     features: {
@@ -177,9 +176,9 @@ export const route: Route = {
         {
             source: ['www.counter-strike.net/news/:category'],
             target: (params, url) => {
-                url = new URL(url);
+                const parsedUrl = new URL(url);
                 const category = params.category;
-                const language = url.searchParams.get('l');
+                const language = parsedUrl.searchParams.get('l');
 
                 return `/news${category ? `/${category}${language ? `/${language}` : ''}` : ''}`;
             },

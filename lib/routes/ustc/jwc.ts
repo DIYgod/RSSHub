@@ -1,9 +1,11 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
+
 const noticeUrl = 'https://www.teach.ustc.edu.cn/category/notice';
 const noticeType = { teaching: '教学', info: '信息', exam: '考试', exchange: '交流' };
 
@@ -52,10 +54,10 @@ async function handler(ctx) {
         .toArray()
         .map((element) => {
             const child = $(element).children();
-            const info = {
+            const info: DataItem = {
                 title: type === '' ? $(child[0]).find('a').text() + ' - ' + $(child[1]).find('a').text() : $(child[0]).find('a').text(),
                 link: type === '' ? $(child[1]).find('a').attr('href') : $(child[0]).find('a').attr('href'),
-                pubDate: timezone(parseDate($(element).find('.date').text().trim(), 'YYYY-MM-DD'), +8),
+                pubDate: timezone(parseDate($(element).find('.date').text().trim(), 'YYYY-MM-DD'), 8),
             };
             return info;
         });
@@ -64,12 +66,12 @@ async function handler(ctx) {
         items
             .filter((item) => item.link)
             .map((item) =>
-                cache.tryGet(item.link, async () => {
+                cache.tryGet(item.link!, async () => {
                     const response = await got(item.link);
                     const $ = load(response.data);
                     // www.teach ?? pms.cmet ?? news
                     item.description = $('main[class=single]').html() ?? $('.card-footer').html() ?? $('.v_news_content').html();
-                    item.pubDate = $('li[class=meta-date]').text() ? timezone(parseDate($('li[class=meta-date]').text(), 'YYYY-MM-DD HH:mm'), +8) : item.pubDate;
+                    item.pubDate = $('li[class=meta-date]').text() ? timezone(parseDate($('li[class=meta-date]').text(), 'YYYY-MM-DD HH:mm'), 8) : item.pubDate;
                     return item;
                 })
             )

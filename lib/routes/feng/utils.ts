@@ -1,7 +1,9 @@
-import cache from '@/utils/cache';
 import CryptoJS from 'crypto-js';
-import got from '@/utils/got';
+
 import { config } from '@/config';
+import cache from '@/utils/cache';
+import got from '@/utils/got';
+
 const apiUrl = 'https://api.wfdata.club';
 const baseUrl = 'https://www.feng.com';
 const KEY = '2b7e151628aed2a6';
@@ -39,7 +41,7 @@ const getCategory = (topicId) => {
 
 const getForumMeta = async (topicId) => {
     const categoryData = await getCategory(topicId);
-    return Object.values(categoryData.data.dataList).find((item) => item.dataList.find((i) => i.topicId === topicId));
+    return Object.values<any>(categoryData.data.dataList).find((item) => item.dataList.find((i) => i.topicId === topicId));
 };
 
 const getThreads = (topicId, type) => {
@@ -73,4 +75,4 @@ const getThread = (tid, topicId) => {
     });
 };
 
-export { baseUrl, getForumMeta, getThreads, getThread };
+export { baseUrl, getForumMeta, getThread, getThreads };

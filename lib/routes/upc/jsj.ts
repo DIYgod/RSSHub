@@ -1,13 +1,13 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 // 计算机科学与技术学院：http://computer.upc.edu.cn/
 // - 学院新闻：http://computer.upc.edu.cn/6277/list.htm
 // - 学术关注：http://computer.upc.edu.cn/6278/list.htm
 // - 学工动态：http://computer.upc.edu.cn/6279/list.htm
 // - 通知公告：http://computer.upc.edu.cn/6280/list.htm
-
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
@@ -59,21 +59,21 @@ async function handler(ctx) {
     // ## 获取列表
     const list = $('.list tbody table tr')
         .toArray()
-        .map((item) => {
-            item = $(item);
-            const a = item.find('a');
+        .map((item): DataItem => {
+            const $item = $(item);
+            const a = $item.find('a');
             const link = a.attr('href');
             return {
-                title: a.attr('title'),
-                link: link.startsWith('http') ? link : `${baseUrl}${link}`,
-                pubDate: parseDate(item.find('div[style]').text(), 'YYYY-MM-DD'),
+                title: a.attr('title')!,
+                link: link!.startsWith('http') ? link : `${baseUrl}${link}`,
+                pubDate: parseDate($item.find('div[style]').text(), 'YYYY-MM-DD'),
             };
         });
     // ## 定义输出的item
     const out = await Promise.all(
         // ### 遍历列表，筛选出自己想要的内容
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 // 获取详情页面的介绍
                 const detail_response = await got({
                     method: 'get',
@@ -92,9 +92,9 @@ async function handler(ctx) {
     );
 
     return {
-        title: HEAD[type] + `-计算机科学与技术学院`,
+        title: HEAD[type] + '-计算机科学与技术学院',
         link,
-        description: HEAD[type] + `-计算机科学与技术学院`,
+        description: HEAD[type] + '-计算机科学与技术学院',
         item: out,
     };
 }

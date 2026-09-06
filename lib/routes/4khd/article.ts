@@ -1,6 +1,8 @@
 import { load } from 'cheerio';
+
 import { parseDate } from '@/utils/parse-date';
-import { WPPost } from './types';
+
+import type { WPPost } from './types';
 
 const processImages = ($) => {
     $('a').each((_, elem) => {
@@ -19,7 +21,7 @@ function loadArticle(item: WPPost) {
 
     return {
         title: item.title.rendered,
-        description: article.html() ?? '',
+        description: article.html(),
         pubDate: parseDate(item.date_gmt),
         link: item.link,
     };

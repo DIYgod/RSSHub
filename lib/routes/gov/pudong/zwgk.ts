@@ -1,11 +1,12 @@
-import { Route } from '@/types';
-import ofetch from '@/utils/ofetch';
 import { load } from 'cheerio';
-import { parseDate } from '@/utils/parse-date'; // 解析日期的工具函数
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
+import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/parse-date'; // 解析日期的工具函数
 
 export const route: Route = {
-    path: '/pudong/zwgk',
+    path: '/zwgk',
     categories: ['government'],
     example: '/gov/pudong/zwgk',
     features: {
@@ -19,10 +20,10 @@ export const route: Route = {
     radar: [
         {
             source: ['www.pudong.gov.cn/zwgk/zxxxgk/index.html'],
-            target: '/pudong/zwgk',
+            target: '/zwgk',
         },
     ],
-    name: '政务公开-浦东新区',
+    name: '政务公开',
     maintainers: ['himingway'],
     handler,
 };
@@ -48,7 +49,7 @@ async function handler() {
             cache.tryGet(item.link, async () => {
                 const response = await ofetch(item.link);
                 const $ = load(response);
-                item.description = $('#ivs_content').first().html();
+                item.description = $('#ivs_content').html();
                 return item;
             })
         )

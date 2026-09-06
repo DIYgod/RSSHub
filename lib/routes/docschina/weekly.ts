@@ -1,8 +1,9 @@
-import { Route } from '@/types';
-import got from '@/utils/got';
 import { load } from 'cheerio';
-import cache from '@/utils/cache';
 import markdownit from 'markdown-it';
+
+import type { Route } from '@/types';
+import cache from '@/utils/cache';
+import got from '@/utils/got';
 
 const md = markdownit({
     html: true,
@@ -35,7 +36,6 @@ async function handler(ctx) {
     const path = `/news/weekly/${category}`;
     const url = `${baseURL}${path}`;
     const { data: res } = await got(url);
-    // @ts-ignore
     const $ = load(res);
 
     const title = $('head title').text();

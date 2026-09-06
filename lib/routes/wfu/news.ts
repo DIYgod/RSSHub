@@ -1,7 +1,8 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
@@ -23,7 +24,7 @@ async function loadContent(link) {
     let response;
     // 如果不是 大学的站点, 直接返回简单的标题即可
     // 判断 是否外站链接,如果是 则直接返回页面 不做单独的解析
-    const https_reg = /^https:\/\/www.wfu.edu.cn(.*)/;
+    const https_reg = /^https:\/\/www\.wfu\.edu\.cn\/.*/;
     if (!https_reg.test(link)) {
         return { description };
     }
@@ -32,7 +33,7 @@ async function loadContent(link) {
         response = await got.get(link);
     } catch (error) {
         // 如果网络问题 直接出错
-        if (error.name && (error.name === 'HTTPError' || error.name === 'RequestError' || error.name === 'FetchError')) {
+        if (error instanceof Error && ['HTTPError', 'RequestError', 'FetchError'].includes(error.name)) {
             description = 'Page 404 Please Check!';
         }
         return { description };
@@ -41,7 +42,7 @@ async function loadContent(link) {
     const $ = load(response.data);
 
     // 提取文章内容
-    description = $('div.wp_articlecontent').html();
+    description = $('div.wp_articlecontent').html() ?? '';
     // 返回解析的结果
     return { description };
 }
@@ -83,9 +84,6 @@ async function handler(ctx) {
     const response = await got({
         method: 'get',
         url: listPageUrl,
-        headers: {
-            Referer: baseUrl,
-        },
     });
     const $ = load(response.data);
 
@@ -98,7 +96,7 @@ async function handler(ctx) {
             const $ = load(item); // 将列表项加载成 html
             const $item_url = 'https://www.wfu.edu.cn' + $('a').attr('href'); // 获取 每一项的url
             const $title = $('a>div.txt>h1').text(); // 获取每个的标题
-            const $pubdate = timezone(parseDate($('a>div.txt>span.date').text().split('：')[1]), +8); // 获取发布时间
+            const $pubdate = timezone(parseDate($('a>div.txt>span.date').text().split('：', 2)[1]), 8); // 获取发布时间
 
             // 列表上提取到的信息
             // 标题 链接

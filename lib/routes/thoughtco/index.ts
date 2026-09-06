@@ -1,11 +1,11 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
 
+import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
-import { art } from '@/utils/render';
-import path from 'node:path';
+
+import { renderDescription } from './templates/description';
 
 export const route: Route = {
     path: '/:category?',
@@ -317,12 +317,13 @@ export const route: Route = {
 | ----------------------- | ------------------------------- |
 | Tips For Adult Students | tips-for-adult-students-4132468 |
 | Getting Your Ged        | getting-your-ged-4132466        |
+
 </details>`,
 };
 
 async function handler(ctx) {
     const { category = '' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 50;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 50;
 
     const rootUrl = 'https://www.thoughtco.com';
     const currentUrl = new URL(category, rootUrl).href;
@@ -334,18 +335,18 @@ async function handler(ctx) {
     let items = $('a[data-doc-id]')
         .slice(0, limit)
         .toArray()
-        .map((item) => {
-            item = $(item);
+        .map((item): DataItem => {
+            const $item = $(item);
 
             return {
-                title: item.find('span.block-title').text(),
-                link: new URL(item.prop('href'), rootUrl).href,
+                title: $item.find('span.block-title').text(),
+                link: new URL($item.prop('href')!, rootUrl).href,
             };
         });
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const { data: detailResponse } = await got(item.link);
 
                 const content = load(detailResponse);
@@ -353,12 +354,12 @@ async function handler(ctx) {
                 content('div.adslot').remove();
                 content('div.sources-and-citation, .mntl-figure-caption svg').remove();
                 content('div.figure-media').each((_, e) => {
-                    e = $(e);
+                    const $e = $(e);
 
-                    const image = e.find('img');
+                    const image = $e.find('img');
 
-                    e.replaceWith(
-                        art(path.join(__dirname, 'templates/description.art'), {
+                    $e.replaceWith(
+                        renderDescription({
                             image: {
                                 src: image.prop('data-src'),
                                 width: image.prop('width'),
@@ -369,11 +370,11 @@ async function handler(ctx) {
                 });
 
                 item.title = content('meta[property="og:title"]').prop('content');
-                item.description = art(path.join(__dirname, 'templates/description.art'), {
+                item.description = renderDescription({
                     image: {
                         src: content('meta[property="og:image"]').prop('content'),
                     },
-                    description: content('div.article-content').html(),
+                    description: content('div.article-content').html() ?? undefined,
                 });
                 item.author = content('meta[name="sailthru.author"]').prop('content');
                 item.category = [
@@ -394,14 +395,14 @@ async function handler(ctx) {
 
     const author = $('meta[property="og:site_name"]').prop('content');
     const title = $('meta[property="og:title"]').prop('content');
-    const icon = new URL($('link[rel="apple-touch-icon-precomposed"]').prop('href'), rootUrl).href;
+    const icon = new URL($('link[rel="apple-touch-icon-precomposed"]').prop('href')!, rootUrl).href;
 
     return {
         item: items,
         title: `${author}${title.startsWith(author) ? '' : ` - ${title}`}`,
         link: currentUrl,
         description: $('meta[property="og:description"]').prop('content'),
-        language: $('html').prop('lang'),
+        language: $('html').prop('lang') as Language,
         image: $('meta[property="og:image"]').prop('content'),
         icon,
         logo: icon,

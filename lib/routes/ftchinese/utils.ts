@@ -1,7 +1,8 @@
+import { load } from 'cheerio';
+
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import parser from '@/utils/rss-parser';
-import { load } from 'cheerio';
 
 const ProcessFeed = (i, $, link) => {
     const title = $('h1').text();
@@ -66,7 +67,7 @@ const getData = async ({ site = 'www', channel }) => {
                 const response = await got.get(`${item.link}?full=y&archive`);
 
                 const $ = load(response.data);
-                const results = [];
+                const results: any[] = [];
                 for (let i = 0; i < $('div.story-container').length; i++) {
                     results.push(ProcessFeed(i, $, item.link));
                 }

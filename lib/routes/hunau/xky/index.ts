@@ -1,5 +1,6 @@
-import { Route } from '@/types';
-import getContent from '../utils/common';
+import type { Route } from '@/types';
+
+import { getContent } from '../utils/common';
 
 export const route: Route = {
     path: '/xky/:category?/:page?',
@@ -21,12 +22,12 @@ export const route: Route = {
         },
     ],
     name: '信息与智能科学学院',
-    maintainers: [],
+    maintainers: ['lcandy2'],
     handler,
     url: 'xky.hunau.edu.cn/',
     description: `| 分类 | 通知公告   | 学院新闻 | 其他分类通知... |
 | ---- | ---------- | -------- | --------------- |
-| 参数 | tzgg\_8472 | xyxw     | 对应 URL        |`,
+| 参数 | tzgg\\_8472 | xyxw     | 对应 URL        |`,
 };
 
 async function handler(ctx) {
@@ -38,4 +39,6 @@ async function handler(ctx) {
         baseDeparment: 'xky',
         baseClass: 'div.right_list ul li:has(a)',
     });
+
+    return null;
 }

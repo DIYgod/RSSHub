@@ -1,0 +1,51 @@
+import { load } from 'cheerio';
+
+import type { DataItem, Route } from '@/types';
+import cache from '@/utils/cache';
+import got from '@/utils/got';
+import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
+
+export const route: Route = {
+    path: '/stat',
+    categories: ['university'],
+    example: '/ecnu/stat',
+    radar: [
+        {
+            source: ['stat.ecnu.edu.cn'],
+            target: '/stat',
+        },
+    ],
+    name: '统计学院通知公告',
+    maintainers: ['FrozenStarrrr', 'ChiyoYuki', 'ECNU-minus'],
+    handler: async () => {
+        const baseUrl = 'https://stat.ecnu.edu.cn/';
+
+        const response = await got(`${baseUrl}9708/list.htm`);
+        const $ = load(response.data);
+        const links = $('ul.news_list.list2 > li')
+            .toArray()
+            .map((el): DataItem & { link: string } => ({
+                pubDate: timezone(parseDate($(el).find('.news_meta').text()), 8),
+                link: new URL($(el).find('a').attr('href')!, baseUrl).href,
+                title: $(el).find('a').attr('title')!,
+            }));
+        const items = await Promise.all(
+            links.map((item) =>
+                cache.tryGet(item.link, async () => {
+                    const { data } = await got(item.link);
+                    const $ = load(data);
+                    const $read = $('div.wp_articlecontent');
+                    item.description = $read.html();
+                    return item;
+                })
+            )
+        );
+
+        return {
+            title: '统计学院通知公告',
+            link: 'https://stat.ecnu.edu.cn/9708/list.htm',
+            item: items,
+        };
+    },
+};

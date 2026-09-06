@@ -1,4 +1,4 @@
-import { Route } from '@/types';
+import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
@@ -18,9 +18,9 @@ export const route: Route = {
     name: 'Feeds',
     maintainers: ['mocusez'],
     handler,
-    description: `|  Events  | News |    Research Paper     |  Videos  |
-| :----: | :--: | :-------------: | :----: |
-| events | news | research_papers | videos |`,
+    description: `| Events | News |  Research Paper  | Videos |
+| :----: | :--: | :--------------: | :----: |
+| events | news | research\\_papers | videos |`,
 };
 
 async function handler(ctx) {

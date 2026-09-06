@@ -1,229 +1,29 @@
-/* eslint-disable unicorn/prefer-spread */
-/* eslint-disable unicorn/prefer-math-trunc */
-// @ts-nocheck
+// oxlint-disable unicorn/prefer-spread
+// oxlint-disable unicorn/prefer-math-trunc
+// @ts-nocheck cryptographic
 
 // Credits:
 // https://github.com/NearHuiwen/TiktokDouyinCrawler/blob/main/utils/a_bogus.js
 // https://github.com/110Art/a-bogus/blob/main/a_bogus.js
 // https://github.com/ShilongLee/Crawler/blob/main/lib/js/douyin.js
 
-// Reference:
-// https://github.com/Endy-c/gm-crypt/blob/87bfc13f4b234c538d56798ed2457da16bc006ac/src/sm3.js
+import CryptoJS from 'crypto-js';
+import { sm3 } from 'sm-crypto-v2';
 
-import logger from '@/utils/logger';
-
-function rc4_encrypt(plaintext, key) {
-    const s: number[] = [];
-    for (let i = 0; i < 256; i++) {
-        s[i] = i;
-    }
-    for (let i = 0, j = 0; i < 256; i++) {
-        j = (j + s[i] + key.codePointAt(i % key.length)) % 256;
-        const temp = s[i];
-        s[i] = s[j];
-        s[j] = temp;
-    }
-
-    const cipher: string[] = [];
-    for (let i = 0, j = 0, k = 0; k < plaintext.length; k++) {
-        i = (i + 1) % 256;
-        j = (j + s[i]) % 256;
-        const temp = s[i];
-        s[i] = s[j];
-        s[j] = temp;
-        const t = (s[i] + s[j]) % 256;
-        cipher.push(String.fromCodePoint(s[t] ^ plaintext.codePointAt(k)));
-    }
-    return cipher.join('');
+function rc4_encrypt(plaintext: string, key: string): string {
+    const { ciphertext } = CryptoJS.RC4.encrypt(CryptoJS.enc.Latin1.parse(plaintext), CryptoJS.enc.Latin1.parse(key));
+    return CryptoJS.enc.Latin1.stringify(ciphertext);
 }
 
-function rotateLeft32(e, r) {
-    return ((e << (r %= 32)) | (e >>> (32 - r))) >>> 0;
+// SM3 digest as a byte array; accepts a string or a byte array (for double hashing)
+function sm3Sum(message: string | number[]): number[] {
+    const hex = sm3(typeof message === 'string' ? message : Uint8Array.from(message));
+    const bytes: number[] = [];
+    for (let i = 0; i < hex.length; i += 2) {
+        bytes.push(Number.parseInt(hex.slice(i, i + 2), 16));
+    }
+    return bytes;
 }
-
-function T(j) {
-    if (0 <= j && j < 16) {
-        return 0x79_CC_45_19;
-    } else if (16 <= j && j < 64) {
-        return 0x7A_87_9D_8A;
-    } else {
-        logger.error('invalid j for constant Tj');
-    }
-}
-
-function FF(j, x, y, z) {
-    if (0 <= j && j < 16) {
-        return (x ^ y ^ z) >>> 0;
-    } else if (16 <= j && j < 64) {
-        return ((x & y) | (x & z) | (y & z)) >>> 0;
-    } else {
-        logger.error('invalid j for bool function FF');
-        return 0;
-    }
-}
-
-function GG(j, x, y, z) {
-    if (0 <= j && j < 16) {
-        return (x ^ y ^ z) >>> 0;
-    } else if (16 <= j && j < 64) {
-        return ((x & y) | (~x & z)) >>> 0;
-    } else {
-        logger.error('invalid j for bool function GG');
-        return 0;
-    }
-}
-
-function reset(this: any) {
-    this.reg[0] = 0x73_80_16_6F;
-    this.reg[1] = 0x49_14_B2_B9;
-    this.reg[2] = 0x17_24_42_D7;
-    this.reg[3] = 0xDA_8A_06_00;
-    this.reg[4] = 0xA9_6F_30_BC;
-    this.reg[5] = 0x16_31_38_AA;
-    this.reg[6] = 0xE3_8D_EE_4D;
-    this.reg[7] = 0xB0_FB_0E_4E;
-    this.chunk = [];
-    this.size = 0;
-}
-
-function strToBytes(str) {
-    const n = encodeURIComponent(str).replaceAll(/%([0-9A-F]{2})/g, (e, r) => String.fromCodePoint('0x' + r));
-    const a = Array.from({ length: n.length });
-    Array.prototype.forEach.call(n, (e, r) => {
-        a[r] = e.codePointAt(0);
-    });
-    return a;
-}
-
-function write(this: any, message) {
-    const a = typeof message === 'string' ? strToBytes(message) : message;
-    this.size += a.length;
-    let f = 64 - this.chunk.length;
-    if (a.length < f) {
-        this.chunk = this.chunk.concat(a);
-    } else {
-        this.chunk = this.chunk.concat(a.slice(0, f));
-        while (this.chunk.length >= 64) {
-            this._compress(this.chunk);
-            this.chunk = f < a.length ? a.slice(f, Math.min(f + 64, a.length)) : [];
-            f += 64;
-        }
-    }
-}
-
-function sum(this: any, message, encoding) {
-    if (message) {
-        this.reset();
-        this.write(message);
-    }
-    this._fill();
-    for (let f = 0; f < this.chunk.length; f += 64) {
-        this._compress(this.chunk.slice(f, f + 64));
-    }
-    let digest;
-    if (encoding === 'hex') {
-        digest = '';
-        for (let f = 0; f < 8; f++) {
-            digest += se(this.reg[f].toString(16), 8, '0');
-        }
-    } else {
-        digest = Array.from({ length: 32 });
-        for (let f = 0; f < 8; f++) {
-            let c = this.reg[f];
-            digest[4 * f + 3] = (255 & c) >>> 0;
-            c >>>= 8;
-            digest[4 * f + 2] = (255 & c) >>> 0;
-            c >>>= 8;
-            digest[4 * f + 1] = (255 & c) >>> 0;
-            c >>>= 8;
-            digest[4 * f] = (255 & c) >>> 0;
-        }
-    }
-    this.reset();
-    return digest;
-}
-
-function expand(e) {
-    const r: number[] = Array.from({ length: 132 });
-    for (let t = 0; t < 16; t++) {
-        r[t] = e[4 * t] << 24;
-        r[t] |= e[4 * t + 1] << 16;
-        r[t] |= e[4 * t + 2] << 8;
-        r[t] |= e[4 * t + 3];
-        r[t] >>>= 0;
-    }
-    for (let n = 16; n < 68; n++) {
-        let a = r[n - 16] ^ r[n - 9] ^ rotateLeft32(r[n - 3], 15);
-        a = a ^ rotateLeft32(a, 15) ^ rotateLeft32(a, 23);
-        r[n] = (a ^ rotateLeft32(r[n - 13], 7) ^ r[n - 6]) >>> 0;
-    }
-    for (let n = 0; n < 64; n++) {
-        r[n + 68] = (r[n] ^ r[n + 4]) >>> 0;
-    }
-    return r;
-}
-
-function _compress(this: any, t) {
-    if (t < 64) {
-        logger.error('compress error: not enough data');
-        return;
-    } else {
-        const f = expand(t);
-        const i = this.reg.slice(0);
-        for (let c = 0; c < 64; c++) {
-            let o = rotateLeft32(i[0], 12) + i[4] + rotateLeft32(T(c), c);
-            o = (0xFF_FF_FF_FF & o) >>> 0;
-            o = rotateLeft32(o, 7);
-
-            const s = (o ^ rotateLeft32(i[0], 12)) >>> 0;
-            let u = FF(c, i[0], i[1], i[2]);
-            u = u + i[3] + s + f[c + 68];
-            u = (0xFF_FF_FF_FF & u) >>> 0;
-
-            let b = GG(c, i[4], i[5], i[6]);
-            b = b + i[7] + o + f[c];
-            b = (0xFF_FF_FF_FF & b) >>> 0;
-            i[3] = i[2];
-            i[2] = rotateLeft32(i[1], 9);
-            i[1] = i[0];
-            i[0] = u;
-            i[7] = i[6];
-            i[6] = rotateLeft32(i[5], 19);
-            i[5] = i[4];
-            i[4] = (b ^ rotateLeft32(b, 9) ^ rotateLeft32(b, 17)) >>> 0;
-        }
-        for (let l = 0; l < 8; l++) {
-            this.reg[l] = (this.reg[l] ^ i[l]) >>> 0;
-        }
-    }
-}
-
-function _fill(this: any) {
-    const a = 8 * this.size;
-    let f = this.chunk.push(128) % 64;
-    for (64 - f < 8 && (f -= 64); f < 56; f++) {
-        this.chunk.push(0);
-    }
-    for (let i = 0; i < 4; i++) {
-        const c = Math.floor(a / 0x1_00_00_00_00);
-        this.chunk.push((c >>> (8 * (3 - i))) & 0xFF);
-    }
-    for (let i = 0; i < 4; i++) {
-        this.chunk.push((a >>> (8 * (3 - i))) & 0xFF);
-    }
-}
-
-function SM3(this: any) {
-    this.reg = [];
-    this.chunk = [];
-    this.size = 0;
-    this.reset();
-}
-SM3.prototype.reset = reset;
-SM3.prototype.write = write;
-SM3.prototype.sum = sum;
-SM3.prototype._compress = _compress;
-SM3.prototype._fill = _fill;
 
 function result_encrypt(long_str: string, num: 's0' | 's1' | 's2' | 's3' | 's4') {
     const s_obj = {
@@ -275,7 +75,7 @@ function result_encrypt(long_str: string, num: 's0' | 's1' | 's2' | 's3' | 's4')
 }
 
 function get_long_int(round, long_str) {
-    round = round * 3;
+    round *= 3;
     return (long_str.codePointAt(round) << 16) | (long_str.codePointAt(round + 1) << 8) | long_str.codePointAt(round + 2);
 }
 
@@ -290,7 +90,6 @@ function gener_random(random, option) {
 
 // ////////////////////////////////////////////
 function generate_rc4_bb_str(url_search_params, user_agent, window_env_str, suffix = 'cus', Arguments = [0, 1, 14]) {
-    const sm3 = new SM3();
     const start_time = Date.now();
     /**
      * 进行3次加密处理
@@ -299,11 +98,12 @@ function generate_rc4_bb_str(url_search_params, user_agent, window_env_str, suff
      * 3: 对ua处理之后的结果
      */
     // url_search_params两次sm3之的结果
-    const url_search_params_list = sm3.sum(sm3.sum(url_search_params + suffix));
+    const url_search_params_list = sm3Sum(sm3Sum(url_search_params + suffix));
     // 对后缀两次sm3之的结果
-    const cus = sm3.sum(sm3.sum(suffix));
+    const cus = sm3Sum(sm3Sum(suffix));
     // 对ua处理之后的结果
-    const ua = sm3.sum(result_encrypt(rc4_encrypt(user_agent, Reflect.apply(String.fromCharCode, null, [0.003_906_25, 1, 14])), 's3'));
+    const ua_key = String.fromCodePoint(Math.floor(0.00390625), 1, 14);
+    const ua = sm3Sum(result_encrypt(rc4_encrypt(user_agent, ua_key), 's3'));
     //
     const end_time = Date.now();
     // b
@@ -348,7 +148,7 @@ function generate_rc4_bb_str(url_search_params, user_agent, window_env_str, suff
     b[29] = Arguments[0] & 255;
 
     b[30] = (Arguments[1] / 256) & 255;
-    b[31] = Arguments[1] % 256 & 255;
+    b[31] = (Arguments[1] % 256) & 255;
     b[32] = (Arguments[1] >> 24) & 255;
     b[33] = (Arguments[1] >> 16) & 255;
 
@@ -523,7 +323,7 @@ function generate_rc4_bb_str(url_search_params, user_agent, window_env_str, suff
         b[71],
     ];
     bb = bb.concat(window_env_list).concat(b[72]);
-    return rc4_encrypt(String.fromCharCode.apply(null, bb), Reflect.apply(String.fromCharCode, null, [121]));
+    return rc4_encrypt(String.fromCodePoint.apply(null, bb), String.fromCodePoint(121));
 }
 
 function generate_random_str() {
@@ -531,7 +331,7 @@ function generate_random_str() {
     random_str_list = random_str_list.concat(gener_random(Math.random() * 10000, [3, 45]));
     random_str_list = random_str_list.concat(gener_random(Math.random() * 10000, [1, 0]));
     random_str_list = random_str_list.concat(gener_random(Math.random() * 10000, [1, 5]));
-    return String.fromCharCode.apply(null, random_str_list);
+    return String.fromCodePoint.apply(null, random_str_list);
 }
 
 export function generate_a_bogus(url_search_params, user_agent) {

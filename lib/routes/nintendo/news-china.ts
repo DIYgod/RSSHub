@@ -1,8 +1,10 @@
-import { Route } from '@/types';
+import InvalidParameterError from '@/errors/types/invalid-parameter';
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
+
 import util from './utils';
-import InvalidParameterError from '@/errors/types/invalid-parameter';
+
 const news_url = 'https://www.nintendoswitch.com.cn';
 
 export const route: Route = {
@@ -33,7 +35,7 @@ async function handler() {
     const response = await got(news_url);
 
     // 获取Nuxt对象
-    const result = await util.nuxtReader(response.data);
+    const result: any = await util.nuxtReader(response.data);
 
     /* newsList[]
         imgUrl: "https://metadata-images.nintendoswitch.com.cn/formal/8332123215251-EAFBA647-9772-DB4B-3C1A-FE0CC41A3966-封面图(1).jpg"

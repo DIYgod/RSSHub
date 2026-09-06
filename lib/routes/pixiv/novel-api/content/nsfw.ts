@@ -1,11 +1,13 @@
 import { JSDOM, VirtualConsole } from 'jsdom';
-import cache from '@/utils/cache';
-import got from '../../pixiv-got';
-import { maskHeader } from '../../constants';
 import queryString from 'query-string';
-import { parseNovelContent } from './utils';
-import type { NovelContent, NSFWNovelDetail } from './types';
+
+import cache from '@/utils/cache';
 import { parseDate } from '@/utils/parse-date';
+
+import { maskHeader } from '../../constants';
+import got from '../../pixiv-got';
+import type { NovelContent, NSFWNovelDetail } from './types';
+import { parseNovelContent } from './utils';
 
 export async function getNSFWNovelContent(novelId: string, token: string): Promise<NovelContent> {
     return (await cache.tryGet(`https://app-api.pixiv.net/webview/v2/novel:${novelId}`, async () => {
@@ -27,7 +29,7 @@ export async function getNSFWNovelContent(novelId: string, token: string): Promi
             virtualConsole,
         });
 
-        const novelDetail = window.pixiv?.novel as NSFWNovelDetail;
+        const novelDetail: NSFWNovelDetail | undefined = window.pixiv?.novel;
 
         window.close();
 

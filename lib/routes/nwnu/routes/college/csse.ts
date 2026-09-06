@@ -1,44 +1,49 @@
+import { load } from 'cheerio';
+
 import NotFoundError from '@/errors/types/not-found';
-import { DataItem, Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-import { load } from 'cheerio';
+
 import { processEmbedPDF } from '../lib/embed-resource';
 
 const WEBSITE_LOGO = 'https://jsj.nwnu.edu.cn/_upload/tpl/02/2e/558/template558/favicon.ico';
 const BASE_URL = 'https://jsj.nwnu.edu.cn/';
 
-const COLUMNS: Record<string, { title: string; description: string }> = {
-    '2435': {
-        title: '学院新闻',
-        description: '计算机科学与工程 学院新闻',
-    },
-    '2436': {
-        title: '通知公告',
-        description: '计算机科学与工程 通知公告',
-    },
-    '2437': {
-        title: '学术动态',
-        description: '计算机科学与工程 学术动态',
-    },
-    '2446': {
-        title: '研究生招生',
-        description: '计算机科学与工程学院 研究生招生动态及相关新闻',
-    },
-    '8411': {
-        title: '评估动态',
-        description: '计算机科学与工程学院 院系学科评估动态',
-    },
-};
+const COLUMNS = new Map(
+    Object.entries({
+        '2435': {
+            title: '学院新闻',
+            description: '计算机科学与工程 学院新闻',
+        },
+        '2436': {
+            title: '通知公告',
+            description: '计算机科学与工程 通知公告',
+        },
+        '2437': {
+            title: '学术动态',
+            description: '计算机科学与工程 学术动态',
+        },
+        '2446': {
+            title: '研究生招生',
+            description: '计算机科学与工程学院 研究生招生动态及相关新闻',
+        },
+        '8411': {
+            title: '评估动态',
+            description: '计算机科学与工程学院 院系学科评估动态',
+        },
+    })
+);
 
 const handler: Route['handler'] = async (ctx) => {
-    const columnParam = ctx.req.param('column');
-    if (COLUMNS[columnParam] === undefined) {
+    const columnParam = ctx.req.param('column')!;
+    const column = COLUMNS.get(columnParam);
+    if (column === undefined) {
         throw new NotFoundError(`The column ${columnParam} does not exist`);
     }
-    const columnTitle = COLUMNS[columnParam].title;
-    const columnDescription = COLUMNS[columnParam].description;
+    const columnTitle = column.title;
+    const columnDescription = column.description;
     const columnPageUrl = `https://jsj.nwnu.edu.cn/${columnParam}/list.htm`;
 
     // Fetch the list page
@@ -68,9 +73,9 @@ const handler: Route['handler'] = async (ctx) => {
         description: columnDescription,
         link: columnPageUrl,
         image: WEBSITE_LOGO,
-        item: (await Promise.all(
+        item: await Promise.all(
             itemLinks.map((item) =>
-                cache.tryGet(item.link, async () => {
+                cache.tryGet(item.link, async (): Promise<DataItem> => {
                     const DATE_SELECTOR = 'div.sp2 > div > span:nth-child(1)';
                     const CONTENT_SELECTOR = 'div.artInfo';
                     const { data: contentResponse } = await got(item.link);
@@ -87,13 +92,16 @@ const handler: Route['handler'] = async (ctx) => {
                         guid: item.link,
                         id: item.link,
                         image: item.img,
-                        content,
+                        content: {
+                            html: content,
+                            text: content,
+                        },
                         updated: date,
                         language: 'zh-CN',
                     };
                 })
             )
-        )) as DataItem[],
+        ),
         allowEmpty: true,
         language: 'zh-CN',
         feedLink: `https://rsshub.app/nwnu/college/csse/${columnParam}`,
@@ -115,15 +123,14 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    example: '/college/csse/2435',
+    example: '/nwnu/college/csse/2435',
     radar: [
         {
             source: ['jsj.nwnu.edu.cn/:column/list'],
             target: '/college/csse/:column',
         },
     ],
-    description: `
-| column | 标题       | 描述                                          |
+    description: `| column | 标题       | 描述                                          |
 | ------ | ---------- | --------------------------------------------- |
 | 2435   | 学院新闻   | 计算机科学与工程 学院新闻                     |
 | 2436   | 通知公告   | 计算机科学与工程 通知公告                     |

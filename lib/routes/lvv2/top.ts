@@ -1,12 +1,12 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
 
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
-import { art } from '@/utils/render';
-import path from 'node:path';
+
+import { renderOutlink } from './templates/outlink';
 
 const rootUrl = 'https://lvv2.com';
 
@@ -61,35 +61,33 @@ async function handler(ctx) {
     const $ = load(response.data);
     const list = $('#top-content-news > div')
         .toArray()
-        .map((item) => ({
+        .map((item): DataItem => ({
             title: $(item).find('div.md > a').text(),
-            link: new URL($(item).find('div.md > a').attr('href'), rootUrl).href.replace(/(https:\/\/lvv2\.com.*?)\/title.*/, '$1'),
+            link: new URL($(item).find('div.md > a').attr('href')!, rootUrl).href.replace(/(https:\/\/lvv2\.com.*?)\/title.*/, '$1'),
         }));
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const detailResponse = await got.get(item.link);
                 const content = load(detailResponse.data);
 
-                item.pubDate = timezone(parseDate(content('time').attr('datetime')), +8);
+                item.pubDate = timezone(parseDate(content('time').attr('datetime')!), 8);
                 item.author = content('a.author').text();
                 const link = content('h2.title > a.title').attr('href');
                 item.description =
-                    new URL(link, item.link).hostname === 'instant.lvv2.com'
-                        ? await cache.tryGet(link, async () => {
+                    new URL(link!, item.link).hostname === 'instant.lvv2.com'
+                        ? await cache.tryGet(link!, async () => {
                               const articleResponse = await got(link);
                               const article = load(articleResponse.data);
 
                               const description = article('#_tl_editor')
-                                  .html()
+                                  .html()!
                                   .replaceAll(/(<img.*?)data-src(.*?>)/g, '$1src$2');
 
                               return description;
                           })
-                        : art(path.join(__dirname, 'templates/outlink.art'), {
-                              outlink: link,
-                          });
+                        : renderOutlink(link!);
 
                 return item;
             })

@@ -1,8 +1,11 @@
-import { Route, DataItem, Data, ViewType } from '@/types';
+import { load } from 'cheerio';
+
+import type { Data, DataItem, Route } from '@/types';
+import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
+
 import { processContent } from './utils';
 
 export const route: Route = {
@@ -22,7 +25,7 @@ export const route: Route = {
     name: 'Category',
     maintainers: ['SnowAgar25'],
     description: `::: tip
-  \`https://www.pixivision.net/zh-tw/c/interview\` → \`/pixivision/zh-tw/interview\`
+\`https://www.pixivision.net/zh-tw/c/interview\` → \`/pixivision/zh-tw/interview\`
 :::`,
     radar: [
         {
@@ -60,7 +63,7 @@ async function handler(ctx): Promise<Data> {
 
     const items = await Promise.all(
         list.map(async (item) => {
-            const result = await cache.tryGet(item.link, async () => {
+            const result = await cache.tryGet(item.link, async (): Promise<DataItem> => {
                 const { data: articleData } = await got(item.link, headers);
                 const $article = load(articleData);
 
@@ -71,7 +74,7 @@ async function handler(ctx): Promise<Data> {
                     description: processedDescription,
                     link: item.link,
                     pubDate: parseDate($article('time').attr('datetime') ?? ''),
-                } as DataItem;
+                };
             });
             return result;
         })

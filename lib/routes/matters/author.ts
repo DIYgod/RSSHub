@@ -1,14 +1,15 @@
-import { Route } from '@/types';
+import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
+
 import { baseUrl, gqlEndpoint, parseItem } from './utils';
 
 const handler = async (ctx) => {
     const { uid } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 20;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 20;
     const response = await ofetch(gqlEndpoint, {
         method: 'POST',
         body: {
-            query: `{
+            query: /* GraphQL */ `{
                 user(input: {userName: "${uid}"}) {
                   displayName
                   avatar

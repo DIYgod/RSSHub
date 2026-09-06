@@ -1,7 +1,8 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
@@ -31,37 +32,37 @@ export const route: Route = {
 | -------- | -------- |
 | shidai   | yulun    |
 
-  经济
+经济
 
 | 经济视点 | 社会民生 | 三农关注 | 产业研究 |
 | -------- | -------- | -------- | -------- |
 | jingji   | shehui   | sannong  | chanye   |
 
-  国际
+国际
 
 | 国际纵横 | 国防外交 |
 | -------- | -------- |
 | guoji    | guofang  |
 
-  思潮
+思潮
 
 | 理想之旅 | 思潮碰撞 | 文艺新生 | 读书交流 |
 | -------- | -------- | -------- | -------- |
 | lixiang  | sichao   | wenyi    | shushe   |
 
-  历史
+历史
 
 | 历史视野 | 中华文化 | 中华医药 | 共产党人 |
 | -------- | -------- | -------- | -------- |
 | lishi    | zhonghua | zhongyi  | cpers    |
 
-  争鸣
+争鸣
 
 | 风华正茂 | 工农之声 | 网友杂谈 | 网友时评 |
 | -------- | -------- | -------- | -------- |
 | qingnian | gongnong | zatan    | shiping  |
 
-  活动
+活动
 
 | 乌有公告 | 红色旅游 | 乌有讲堂  | 书画欣赏 |
 | -------- | -------- | --------- | -------- |
@@ -85,19 +86,19 @@ async function handler(ctx) {
 
     let items = $('h3 a')
         .toArray()
-        .map((item) => {
-            item = $(item);
+        .map((item): DataItem => {
+            const $item = $(item);
 
             return {
-                title: item.text(),
-                link: item.attr('href'),
+                title: $item.text(),
+                link: $item.attr('href'),
             };
         });
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
-                if (item.link.indexOf('wyzxwk.com') > 0) {
+            cache.tryGet(item.link!, async () => {
+                if (item.link!.indexOf('wyzxwk.com') > 0) {
                     try {
                         const detailResponse = await got({
                             method: 'get',
@@ -123,7 +124,7 @@ async function handler(ctx) {
     );
 
     return {
-        title: `${$('title').text().split(' - ')[0]} - 乌有之乡网刊`,
+        title: `${$('title').text().split(' - ', 1)[0]} - 乌有之乡网刊`,
         link: currentUrl,
         item: items,
     };

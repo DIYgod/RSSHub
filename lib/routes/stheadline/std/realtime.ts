@@ -1,7 +1,8 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
 const baseUrl = 'https://www.stheadline.com';
@@ -30,10 +31,10 @@ async function handler(ctx) {
     let items = $('.news-block .news-detail > a')
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
             return {
-                title: item.find('.title').text(),
-                link: new URL(item.attr('href'), 'https://www.stheadline.com').href,
+                title: $item.find('.title').text(),
+                link: new URL($item.attr('href')!, 'https://www.stheadline.com').href,
             };
         });
 
@@ -46,8 +47,8 @@ async function handler(ctx) {
                 return {
                     ...item,
                     description: $('.content-body').html(),
-                    pubDate: parseDate($('meta[property="article:published_time"]').attr('content')),
-                    category: $("meta[name='keyword']").attr('content').split(','),
+                    pubDate: parseDate($('meta[property="article:published_time"]').attr('content')!),
+                    category: $("meta[name='keyword']").attr('content')!.split(','),
                     guid: item.link.slice(0, item.link.lastIndexOf('/')),
                 };
             })
@@ -58,7 +59,7 @@ async function handler(ctx) {
         title: $('head meta[name="title"]').attr('content') || $('head title').text(),
         description: $('meta[name=description]').attr('content'),
         image: 'https://www.sthlstatic.com/sthl/assets/favicon/android-icon-192x192.png',
-        language: 'zh-HK',
+        language: 'zh-HK' as const,
         link: url,
         item: items,
     };

@@ -1,9 +1,11 @@
-import { Route, ViewType } from '@/types';
+import { load } from 'cheerio';
+
+import type { DataItem, Route } from '@/types';
+import { ViewType } from '@/types';
 import cache from '@/utils/cache';
+import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
-import { load } from 'cheerio';
-import { ofetch } from 'ofetch';
 
 export const route: Route = {
     path: '/gzc/:category?',
@@ -14,7 +16,7 @@ export const route: Route = {
     example: '/hrbust/gzc',
     parameters: { category: '栏目标识，默认为 1305（热点新闻）' },
     description: `| 政策规章 | 资料下载 | 处务公开 | 招标信息 | 岗位职责 | 管理办法 | 物资处理 | 工作动态 | 热点新闻 |
-|----------|----------|----------|----------|----------|----------|----------|----------|----------|
+| -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- |
 | 1287     | 1288     | 1289     | 1291     | 1300     | 1301     | 1302     | 1304     | 1305     |`,
     categories: ['university'],
     features: {
@@ -49,11 +51,11 @@ async function handler(ctx) {
 
     const list = $('ul.wp_article_list li.list_item')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem & { link: string } => {
             const element = $(item);
-            const link = new URL(element.find('a').attr('href'), rootUrl).href;
+            const link = new URL(element.find('a').attr('href')!, rootUrl).href;
             const pubDateText = element.find('span.Article_PublishDate').text().trim();
-            const pubDate = pubDateText ? timezone(parseDate(pubDateText), +8) : null;
+            const pubDate = pubDateText ? timezone(parseDate(pubDateText), 8) : null;
             return {
                 title: element.find('a').text().trim(),
                 pubDate,
@@ -75,7 +77,10 @@ async function handler(ctx) {
 
                 content.find('[style]').removeAttr('style');
                 content.find('font').contents().unwrap();
-                content.html(content.html()?.replaceAll('&nbsp;', ''));
+                const cleaned = content.html()?.replaceAll('&nbsp;', '');
+                if (cleaned !== undefined) {
+                    content.html(cleaned);
+                }
                 content.find('[align]').removeAttr('align');
 
                 return {
@@ -91,7 +96,7 @@ async function handler(ctx) {
     return {
         title: `${bigTitle} - 哈尔滨理工大学国有资产管理处`,
         link: columnUrl,
-        language: 'zh-CN',
+        language: 'zh-CN' as const,
         item: items,
     };
 }

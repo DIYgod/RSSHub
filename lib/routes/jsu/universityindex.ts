@@ -1,9 +1,11 @@
-import { Route } from '@/types';
+import { load } from 'cheerio'; // 可以使用类似 jQuery 的 API HTML 解析器
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 // 导入必要的模组
 import got from '@/utils/got'; // 自订的 got
-import { load } from 'cheerio'; // 可以使用类似 jQuery 的 API HTML 解析器
 import { parseDate } from '@/utils/parse-date';
+
 import { getPageItemAndDate } from './utils';
 
 export const route: Route = {
@@ -36,15 +38,15 @@ async function handler() {
     const list = $('body > div.container.container-fluid.dynava.no-padding.cleafix > div.con_wz_fr.fr.cleafix > div:nth-child(2) > ul > li').toArray();
     const out = await Promise.all(
         list.map((item) => {
-            item = $(item);
-            const link = new URL(item.find('a').attr('href'), baseUrl).href;
+            const $item = $(item);
+            const link = new URL($item.find('a').attr('href')!, baseUrl).href;
             return cache.tryGet(link, async () => {
                 const description = await getPageItemAndDate(
                     '#vsb_content',
                     link,
                     'body > div.container.container-fluid.dynava.no-padding.cleafix > div.con_wz_fr.fr.cleafix > form > div > h1',
                     'body > div.container.container-fluid.dynava.no-padding.cleafix > div.con_wz_fr.fr.cleafix > form > div > div:nth-child(2)',
-                    (date) => date.split('时间：')[1].split(' 作者：')[0]
+                    (date) => date.split('时间：', 2)[1].split(' 作者：', 1)[0]
                 );
                 const pubDate = parseDate(description.date, 'YYYY-MM-DD');
                 return {

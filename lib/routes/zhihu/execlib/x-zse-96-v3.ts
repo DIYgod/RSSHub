@@ -1,8 +1,9 @@
+// oxlint-disable unicorn/prefer-code-point unicorn/prefer-single-call unicorn-js/prefer-array-from-map unicorn/prefer-spread unicorn-js/no-array-concat-in-loop
 // Credit:
 // https://blog.csdn.net/zjq592767809/article/details/126512798
 // https://blog.csdn.net/zhoumi_/article/details/126659351
 
-/* eslint-disable @typescript-eslint/no-unused-expressions */
+// oxlint-disable @typescript-eslint/no-unused-expressions
 
 function i(e, t, n) {
     ((t[n] = 255 & (e >>> 24)), (t[n + 1] = 255 & (e >>> 16)), (t[n + 2] = 255 & (e >>> 8)), (t[n + 3] = 255 & e));
@@ -14,8 +15,8 @@ function Q(e, t) {
     return ((4_294_967_295 & e) << t) | (e >>> (32 - t));
 }
 function G(e) {
-    const t = Array.from({ length: 4 });
-    const n = Array.from({ length: 4 });
+    const t = Array.from<number>({ length: 4 });
+    const n = Array.from<number>({ length: 4 });
     (i(e, t, 0), (n[0] = h.zb[255 & t[0]]), (n[1] = h.zb[255 & t[1]]), (n[2] = h.zb[255 & t[2]]), (n[3] = h.zb[255 & t[3]]));
     const r = B(n, 0);
     return r ^ Q(r, 2) ^ Q(r, 10) ^ Q(r, 18) ^ Q(r, 24);
@@ -28,14 +29,13 @@ const __g = {
             for (let o = e.slice(16 * i, 16 * (i + 1)), c = 0; c < 16; c++) {
                 a[c] = o[c] ^ t[c];
             }
-            // eslint-disable-next-line unicorn/prefer-spread
             ((t = __g.r(a)), (n = n.concat(t)), i++);
         }
         return n;
     },
     r(e) {
-        const t = Array.from({ length: 16 });
-        const n = Array.from({ length: 36 });
+        const t = Array.from<number>({ length: 16 });
+        const n = Array.from<number>({ length: 36 });
         ((n[0] = B(e, 0)), (n[1] = B(e, 4)), (n[2] = B(e, 8)), (n[3] = B(e, 12)));
         for (let r = 0; r < 32; r++) {
             const o = G(n[r + 1] ^ n[r + 2] ^ n[r + 3] ^ h.zk[r]);
@@ -73,7 +73,7 @@ const encode = (param) => {
 };
 
 const preProcess = (md5Str) => {
-    const md5CharCodeAtArr = [];
+    const md5CharCodeAtArr: any[] = [];
     for (let i = 0; i < md5Str.length; i++) {
         md5CharCodeAtArr.push(md5Str.charCodeAt(i));
     }
@@ -86,7 +86,7 @@ const preProcess = (md5Str) => {
 
     const md5CharCodeAtFrontArr = md5CharCodeAtArr.slice(0, 16);
     const fixArr = [48, 53, 57, 48, 53, 51, 102, 55, 100, 49, 53, 101, 48, 49, 100, 55];
-    const new_md5_charCodeAt_arr = [];
+    const new_md5_charCodeAt_arr: number[] = [];
     for (const [i, element] of md5CharCodeAtFrontArr.entries()) {
         new_md5_charCodeAt_arr.push(element ^ fixArr[i] ^ 42);
     }
@@ -94,11 +94,10 @@ const preProcess = (md5Str) => {
     const __g_r = __g.r(new_md5_charCodeAt_arr);
     const md5CharCodeAtBackArr = md5CharCodeAtArr.slice(16, 48);
     const __g_x = __g.x(md5CharCodeAtBackArr, __g_r);
-    // eslint-disable-next-line unicorn/prefer-spread
     return __g_r.concat(__g_x);
 };
 
-const encrypt = (md5Str) => {
+export const encrypt = (md5Str) => {
     const processed = preProcess(md5Str);
 
     let current = 0;
@@ -123,5 +122,3 @@ const encrypt = (md5Str) => {
     }
     return resultStr;
 };
-
-export default encrypt;

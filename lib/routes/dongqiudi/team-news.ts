@@ -1,9 +1,10 @@
-import { Route } from '@/types';
-import utils from './utils';
+import type { Route } from '@/types';
+
+import { processFeed } from './utils';
 
 export const route: Route = {
     path: '/team_news/:team',
-    categories: ['new-media'],
+    categories: ['sport'],
     example: '/dongqiudi/team_news/50001755',
     parameters: { team: '球队 id, 可在[懂球帝数据](https://www.dongqiudi.com/data)中找到' },
     radar: [
@@ -20,5 +21,5 @@ export const route: Route = {
 async function handler(ctx) {
     const teamId = ctx.req.param('team');
 
-    return await utils.ProcessFeed(ctx, 'team', teamId);
+    return await processFeed('team', teamId);
 }

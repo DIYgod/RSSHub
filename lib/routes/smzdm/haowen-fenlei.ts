@@ -1,12 +1,15 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import { config } from '@/config';
+import ConfigNotFoundError from '@/errors/types/config-not-found';
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
-import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
-import { config } from '@/config';
+import timezone from '@/utils/timezone';
+
 import { getHeaders } from './utils';
-import ConfigNotFoundError from '@/errors/types/config-not-found';
+
 export const route: Route = {
     path: '/haowen/fenlei/:name/:sort?',
     categories: ['shopping'],
@@ -58,27 +61,27 @@ async function handler(ctx) {
     const list = $('div.list.post-list')
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
             return {
-                title: item.find('h2.item-name a').text(),
-                link: item.find('h2.item-name a').attr('href'),
-                description: item.find('.item-info').html(),
-                author: item.find('.nickname').text(),
-                pubDate: timezone(parseDate(item.find('span.time').text(), ['HH:mm', 'MM-DD HH:mm', 'YYYY-MM-DD HH:mm']), 8),
+                title: $item.find('h2.item-name a').text(),
+                link: $item.find('h2.item-name a').attr('href'),
+                description: $item.find('.item-info').html(),
+                author: $item.find('.nickname').text(),
+                pubDate: timezone(parseDate($item.find('span.time').text(), ['HH:mm', 'MM-DD HH:mm', 'YYYY-MM-DD HH:mm']), 8),
             };
         });
 
     const out = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 try {
                     const response = await got(item.link, {
                         headers: getHeaders(),
                     });
                     const $ = load(response.data);
                     item.description = $('article').html();
-                    item.pubDate = timezone(parseDate($('meta[property="og:release_date"]').attr('content')), 8);
-                    item.author = $('meta[property="og:author"]').attr('content');
+                    item.pubDate = timezone(parseDate($('meta[property="og:release_date"]').attr('content')!), 8);
+                    item.author = $('meta[property="og:author"]').attr('content')!;
                 } catch {
                     // 404
                 }

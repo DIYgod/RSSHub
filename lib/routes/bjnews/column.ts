@@ -1,4 +1,4 @@
-import { Route } from '@/types';
+import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
@@ -29,8 +29,8 @@ async function handler(ctx) {
     const list = res.data.slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 15).map((e) => ({
         title: e.row.title,
         guid: e.uuid,
-        pubDate: timezone(parseDate(e.row.publish_time), +8),
-        updated: timezone(parseDate(e.row.update_time), +8),
+        pubDate: timezone(parseDate(e.row.publish_time), 8),
+        updated: timezone(parseDate(e.row.update_time), 8),
         link: `https://www.bjnews.com.cn/detail/${e.uuid}.html`,
     }));
 

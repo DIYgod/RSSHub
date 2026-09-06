@@ -1,9 +1,9 @@
-import { Route } from '@/types';
-import cache from '@/utils/cache';
-import got from '@/utils/got';
 import { load } from 'cheerio';
 
-import { rootUrl, ProcessItems } from './utils';
+import type { Route } from '@/types';
+import got from '@/utils/got';
+
+import { ProcessItems, rootUrl } from './utils';
 
 export const route: Route = {
     path: '/vip/:id?',
@@ -42,7 +42,7 @@ async function handler(ctx) {
 
     const $ = load(response.data);
 
-    const items = await ProcessItems(apiUrl, cache.tryGet);
+    const items = await ProcessItems(apiUrl);
 
     return {
         title: `第一财经VIP频道 - ${$('title').text()}`,

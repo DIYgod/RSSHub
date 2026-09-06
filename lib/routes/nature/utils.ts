@@ -1,39 +1,41 @@
+import { load } from 'cheerio';
+import { CookieJar } from 'tough-cookie';
+
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
-import { CookieJar } from 'tough-cookie';
+
 const baseUrl = 'https://www.nature.com';
 
 const fixFigure = (html) => {
     html('picture source').each((_, i) => {
-        i = html(i);
+        const $i = html(i);
         if (
-            i.attr('srcset') &&
-            (i.attr('srcset').startsWith('//media.springernature.com/lw685/') ||
-                i.attr('srcset').startsWith('//media.springernature.com/m312/') ||
-                i.attr('srcset').startsWith('//media.springernature.com/relative-r300-703_m1050/') ||
-                i.attr('srcset').startsWith('//media.springernature.com/w300/'))
+            $i.attr('srcset') &&
+            ($i.attr('srcset').startsWith('//media.springernature.com/lw685/') ||
+                $i.attr('srcset').startsWith('//media.springernature.com/m312/') ||
+                $i.attr('srcset').startsWith('//media.springernature.com/relative-r300-703_m1050/') ||
+                $i.attr('srcset').startsWith('//media.springernature.com/w300/'))
         ) {
-            i.attr('srcset', i.attr('srcset').replace('//media.springernature.com/lw685/', '//media.springernature.com/full/'));
-            i.attr('srcset', i.attr('srcset').replace('//media.springernature.com/m312/', '//media.springernature.com/full/'));
-            i.attr('srcset', i.attr('srcset').replace('//media.springernature.com/relative-r300-703_m1050/', '//media.springernature.com/full/'));
-            i.attr('srcset', i.attr('srcset').replace('//media.springernature.com/w300/', '//media.springernature.com/full/'));
+            $i.attr('srcset', $i.attr('srcset').replace('//media.springernature.com/lw685/', '//media.springernature.com/full/'));
+            $i.attr('srcset', $i.attr('srcset').replace('//media.springernature.com/m312/', '//media.springernature.com/full/'));
+            $i.attr('srcset', $i.attr('srcset').replace('//media.springernature.com/relative-r300-703_m1050/', '//media.springernature.com/full/'));
+            $i.attr('srcset', $i.attr('srcset').replace('//media.springernature.com/w300/', '//media.springernature.com/full/'));
         }
     });
     html('img').each((_, i) => {
-        i = html(i);
+        const $i = html(i);
         if (
-            i.attr('src') &&
-            (i.attr('src').startsWith('//media.springernature.com/lw685/') ||
-                i.attr('src').startsWith('//media.springernature.com/m312/') ||
-                i.attr('src').startsWith('//media.springernature.com/relative-r300-703_m1050/') ||
-                i.attr('src').startsWith('//media.springernature.com/w300/'))
+            $i.attr('src') &&
+            ($i.attr('src').startsWith('//media.springernature.com/lw685/') ||
+                $i.attr('src').startsWith('//media.springernature.com/m312/') ||
+                $i.attr('src').startsWith('//media.springernature.com/relative-r300-703_m1050/') ||
+                $i.attr('src').startsWith('//media.springernature.com/w300/'))
         ) {
-            i.attr('src', i.attr('src').replace('//media.springernature.com/lw685/', '//media.springernature.com/full/'));
-            i.attr('src', i.attr('src').replace('//media.springernature.com/m312/', '//media.springernature.com/full/'));
-            i.attr('src', i.attr('src').replace('//media.springernature.com/relative-r300-703_m1050/', '//media.springernature.com/full/'));
-            i.attr('src', i.attr('src').replace('//media.springernature.com/w300/', '//media.springernature.com/full/'));
+            $i.attr('src', $i.attr('src').replace('//media.springernature.com/lw685/', '//media.springernature.com/full/'));
+            $i.attr('src', $i.attr('src').replace('//media.springernature.com/m312/', '//media.springernature.com/full/'));
+            $i.attr('src', $i.attr('src').replace('//media.springernature.com/relative-r300-703_m1050/', '//media.springernature.com/full/'));
+            $i.attr('src', $i.attr('src').replace('//media.springernature.com/w300/', '//media.springernature.com/full/'));
         }
     });
 };
@@ -42,11 +44,11 @@ const getArticleList = (html) =>
     html('.app-article-list-row__item')
         .toArray()
         .map((item) => {
-            item = html(item);
+            const $item = html(item);
             return {
-                title: item.find('a').text(),
-                link: baseUrl + item.find('a').attr('href'),
-                pubDate: parseDate(item.find('.c-meta time').attr('datetime'), 'YYYY-MM-DD'),
+                title: $item.find('a').text(),
+                link: baseUrl + $item.find('a').attr('href'),
+                pubDate: parseDate($item.find('.c-meta time').attr('datetime'), 'YYYY-MM-DD'),
             };
         });
 
@@ -62,7 +64,7 @@ const getArticle = (item) =>
             item.author = meta.content.contentInfo.authors.join(', ');
             item.pubDate = parseDate(meta.content.contentInfo.publishedAt, 'X') || item.pubDate;
         } else {
-            const meta = JSON.parse($('script[type="application/ld+json"]').html());
+            const meta = JSON.parse($('script[type="application/ld+json"]').html() ?? '');
             const freeAccess = meta.mainEntity.isAccessibleForFree;
             let description;
 
@@ -103,7 +105,7 @@ const getDataLayer = (html) =>
     JSON.parse(
         html('script[data-test=dataLayer]')
             .text()
-            .match(/window\.dataLayer = \[(.*)];/s)[1]
+            .match(/window\.dataLayer = \[(.*)\];/s)[1]
     );
 
 const cookieJar = new CookieJar();

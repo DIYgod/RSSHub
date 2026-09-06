@@ -1,9 +1,9 @@
-import { Route } from '@/types';
 import { config } from '@/config';
-
-import parseArticle from './parse-article.js';
-import { getWebInlineTopicFeedQuery } from './graphql.js';
 import ConfigNotFoundError from '@/errors/types/config-not-found.js';
+import type { Route } from '@/types';
+
+import { getWebInlineTopicFeedQuery } from './graphql.js';
+import parseArticle from './parse-article.js';
 
 export const route: Route = {
     path: '/tag/:user/:tag',
@@ -29,7 +29,7 @@ export const route: Route = {
     description: `There are many tags, which can be obtained by clicking on a tag from the homepage and looking at the URL. For example, if the URL is \`https://medium.com/?tag=web3\`, then the tag is \`web3\`.
 
 ::: warning
-  Personalized recommendations require the cookie value after logging in, so only self-hosting is supported. See the configuration module on the deployment page for details.
+Personalized recommendations require the cookie value after logging in, so only self-hosting is supported. See the configuration module on the deployment page for details.
 :::`,
 };
 

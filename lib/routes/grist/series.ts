@@ -1,4 +1,5 @@
-import { Route } from '@/types';
+import type { Data, Route } from '@/types';
+
 import { getData, getList } from './utils';
 
 export const route: Route = {
@@ -25,7 +26,7 @@ export const route: Route = {
     url: 'grist.org/articles/',
 };
 
-async function handler(ctx) {
+async function handler(ctx): Promise<Data> {
     const baseUrl = 'https://grist.org';
     const searchRoute = '/wp-json/wp/v2/series?slug=';
     const articleRoute = '/wp-json/wp/v2/posts?series=';

@@ -1,8 +1,9 @@
-import { Route } from '@/types';
-import got from '@/utils/got';
 import { load } from 'cheerio';
-import { parseRelativeDate } from '@/utils/parse-date';
+
+import type { DataItem, Route } from '@/types';
+import got from '@/utils/got';
 import md5 from '@/utils/md5';
+import { parseRelativeDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/news',
@@ -45,10 +46,10 @@ async function handler() {
     const items = $(`div.homeItem[v-if="showFeedLevel == 'read'"]`)
         .toArray()
         .map((item) => {
-            const data = {
+            const data: DataItem = {
                 title: '资讯',
                 author: $(item).find('div.homeName').text(),
-                pubDate: parseRelativeDate($(item).find('div.homeTime').first().text().split(' ')[0]),
+                pubDate: parseRelativeDate($(item).find('div.homeTime').first().text().split(' ', 1)[0]),
             };
 
             $(item).find('div.homeName').remove();

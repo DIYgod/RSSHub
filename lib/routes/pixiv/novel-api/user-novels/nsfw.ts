@@ -1,16 +1,17 @@
-import got from '../../pixiv-got';
-import { maskHeader } from '../../constants';
 import queryString from 'query-string';
+
 import { config } from '@/config';
+import ConfigNotFoundError from '@/errors/types/config-not-found';
+import InvalidParameterError from '@/errors/types/invalid-parameter';
+import { parseDate } from '@/utils/parse-date';
+
+import { maskHeader } from '../../constants';
+import got from '../../pixiv-got';
+import { getToken } from '../../token';
 import pixivUtils from '../../utils';
 import { getNSFWNovelContent } from '../content/nsfw';
-import { parseDate } from '@/utils/parse-date';
 import { convertPixivProtocolExtended } from '../content/utils';
-import type { NSFWNovelsResponse, NovelList } from './types';
-import ConfigNotFoundError from '@/errors/types/config-not-found';
-import cache from '@/utils/cache';
-import { getToken } from '../../token';
-import InvalidParameterError from '@/errors/types/invalid-parameter';
+import type { NovelList, NSFWNovelsResponse } from './types';
 
 function getNovels(user_id: string, token: string): Promise<NSFWNovelsResponse> {
     return got('https://app-api.pixiv.net/v1/user/novels', {
@@ -30,7 +31,7 @@ export async function getNSFWUserNovels(id: string, fullContent: boolean = false
         throw new ConfigNotFoundError('This user is an R18 creator, PIXIV_REFRESHTOKEN is required.\npixiv RSS is disabled due to the lack of relevant config.\n該用戶爲 R18 創作者，需要 PIXIV_REFRESHTOKEN。');
     }
 
-    const token = await getToken(cache.tryGet);
+    const token = await getToken();
     if (!token) {
         throw new ConfigNotFoundError('pixiv not login');
     }

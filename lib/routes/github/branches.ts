@@ -1,6 +1,6 @@
-import { Route } from '@/types';
-import got from '@/utils/got';
 import { config } from '@/config';
+import type { Route } from '@/types';
+import got from '@/utils/got';
 
 export const route: Route = {
     path: '/branches/:user/:repo',
@@ -32,10 +32,7 @@ async function handler(ctx) {
     const host = `https://github.com/${user}/${repo}`;
     const url = `https://api.github.com/repos/${user}/${repo}/branches`;
 
-    const headers = {};
-    if (config.github && config.github.access_token) {
-        headers.Authorization = `token ${config.github.access_token}`;
-    }
+    const headers = config.github && config.github.access_token ? { Authorization: `token ${config.github.access_token}` } : {};
     const response = await got({
         method: 'get',
         url,

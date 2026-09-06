@@ -1,9 +1,11 @@
-import { Route } from '@/types';
 import { load } from 'cheerio';
+
+import InvalidParameterError from '@/errors/types/invalid-parameter';
+import type { Route } from '@/types';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
+
 import { getContent } from './utils';
-import InvalidParameterError from '@/errors/types/invalid-parameter';
 
 const map = new Map([
     ['gstz', { title: '南京理工大学电光学院研学网 -- 公示通知', id: '/6509' }],
@@ -51,8 +53,8 @@ async function handler(ctx) {
         title: info.title,
         link: siteUrl,
         item: list.toArray().map((item) => ({
-            title: $(item).find('a').attr('title').trim(),
-            pubDate: timezone(parseDate($(item).find('span.Article_PublishDate').text(), 'YYYY-MM-DD'), +8),
+            title: $(item).find('a').attr('title')!.trim(),
+            pubDate: timezone(parseDate($(item).find('span.Article_PublishDate').text(), 'YYYY-MM-DD'), 8),
             link: $(item).find('a').attr('href'),
         })),
     };

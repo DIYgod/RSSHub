@@ -1,0 +1,84 @@
+diff --git a/network/connection/TCPMTProxy.js b/network/connection/TCPMTProxy.js
+index 80886d2db81dd8c8d4fbc5d57cc14b077f6fc754..13fdb8d73e737d40ad1c296568441158a0d787ea 100644
+--- a/network/connection/TCPMTProxy.js
++++ b/network/connection/TCPMTProxy.js
+@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
+ exports.ConnectionTCPMTProxyAbridged = exports.TCPMTProxy = void 0;
+ const node_crypto_1 = require("node:crypto");
+ const Connection_1 = require("./Connection");
+-const TCPAbridged_1 = require("./TCPAbridged");
++const errors_1 = require("../../errors");
+ const Helpers_1 = require("../../Helpers");
+ const CTR_1 = require("../../crypto/CTR");
+ const SECRET_LEN = 16;
+@@ -116,6 +116,7 @@ const TLS_RECORD_HANDSHAKE = 0x16;
+ const TLS_RECORD_CHANGE_CIPHER_SPEC = 0x14;
+ const TLS_RECORD_APPLICATION_DATA = 0x17;
+ const TLS_APP_DATA_PREFIX = Buffer.from([0x17, 0x03, 0x03]);
++const CLIENT_CHANGE_CIPHER_SPEC = Buffer.from([0x14, 0x03, 0x03, 0x00, 0x01, 0x01]);
+ const FAKE_TLS_HELLO_SIZE = 517;
+ const FAKE_TLS_HELLO_RANDOM_OFFSET = 11;
+ const FAKE_TLS_HELLO_RANDOM_LEN = 32;
+@@ -284,6 +285,7 @@ class FakeTlsSocket {
+         const hello = this.sendClientHello();
+         this.inner.write(hello);
+         await this.readAndVerifyServerHandshake();
++        this.inner.write(CLIENT_CHANGE_CIPHER_SPEC);
+     }
+     write(data) {
+         for (let off = 0; off < data.length; off += TLS_RECORD_MAX_PAYLOAD) {
+@@ -313,9 +315,9 @@ class FakeTlsSocket {
+         const hello = buildClientHello(this.domain, sessionId);
+         const stamp = (0, node_crypto_1.createHmac)("sha256", this.secret).update(hello).digest();
+         const now = Math.floor(Date.now() / 1000) >>> 0;
+-        const lastWord = (stamp.readUInt32BE(FAKE_TLS_RANDOM_TIMESTAMP_XOR_OFFSET) ^ now) >>>
++        const lastWord = (stamp.readUInt32LE(FAKE_TLS_RANDOM_TIMESTAMP_XOR_OFFSET) ^ now) >>>
+             0;
+-        stamp.writeUInt32BE(lastWord, FAKE_TLS_RANDOM_TIMESTAMP_XOR_OFFSET);
++        stamp.writeUInt32LE(lastWord, FAKE_TLS_RANDOM_TIMESTAMP_XOR_OFFSET);
+         stamp.copy(hello, FAKE_TLS_HELLO_RANDOM_OFFSET);
+         this.clientRandom = stamp;
+         return hello;
+@@ -398,14 +400,39 @@ class TCPMTProxy extends Connection_1.ObfuscatedConnection {
+     }
+ }
+ exports.TCPMTProxy = TCPMTProxy;
++class PaddedIntermediatePacketCodec extends Connection_1.PacketCodec {
++    constructor(props) {
++        super(props);
++        this.tag = PaddedIntermediatePacketCodec.tag;
++        this.obfuscateTag = PaddedIntermediatePacketCodec.obfuscateTag;
++    }
++    encodePacket(data) {
++        const padSize = (0, node_crypto_1.randomBytes)(1)[0] & 3;
++        const header = Buffer.alloc(4);
++        header.writeInt32LE(data.length + padSize, 0);
++        return Buffer.concat([header, data, (0, node_crypto_1.randomBytes)(padSize)]);
++    }
++    async readPacket(reader) {
++        const lengthBuffer = await reader.readExactly(4);
++        const length = lengthBuffer.readInt32LE(0);
++        const body = await reader.readExactly(length);
++        if (length === 4 && body.readInt32LE(0) < 0) {
++            throw new errors_1.InvalidBufferError(body);
++        }
++        const padSize = length % 4;
++        return padSize === 0 ? body : body.subarray(0, length - padSize);
++    }
++}
++PaddedIntermediatePacketCodec.tag = null;
++PaddedIntermediatePacketCodec.obfuscateTag = Buffer.from("dddddddd", "hex");
+ /**
+- * MTProxy connection using the Abridged packet codec — automatically selected
+- * when `proxy.MTProxy` is `true`.
++ * MTProxy connection using the padded intermediate packet codec — automatically
++ * selected when `proxy.MTProxy` is `true`.
+  */
+ class ConnectionTCPMTProxyAbridged extends TCPMTProxy {
+     constructor() {
+         super(...arguments);
+-        this.PacketCodecClass = TCPAbridged_1.AbridgedPacketCodec;
++        this.PacketCodecClass = PaddedIntermediatePacketCodec;
+     }
+ }
+ exports.ConnectionTCPMTProxyAbridged = ConnectionTCPMTProxyAbridged;

@@ -1,7 +1,8 @@
-import { Route } from '@/types';
+import MarkdownIt from 'markdown-it';
+
+import type { Data, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
-import MarkdownIt from 'markdown-it';
 
 const md = MarkdownIt({
     html: true,
@@ -30,7 +31,7 @@ export const route: Route = {
     handler,
 };
 
-async function handler() {
+async function handler(): Promise<Data> {
     const response = await ofetch('https://svc-drcn.developer.huawei.com/community/servlet/consumer/partnerCommunityService/v1/servlet/samplecode/getSampleCodes', {
         method: 'POST',
         headers: {

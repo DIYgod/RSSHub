@@ -1,18 +1,18 @@
 const host = 'http://www.customs.gov.cn';
 
-const puppeteerGet = async (url, browser) => {
-    const page = await browser.newPage();
+const playwrightGet = async (url, context) => {
+    const page = await context.newPage();
     await page.setExtraHTTPHeaders({ referer: host });
-    await page.setRequestInterception(true);
-    page.on('request', (request) => {
-        request.resourceType() === 'document' || request.resourceType() === 'script' ? request.continue() : request.abort();
+    await page.route('**/*', (route) => {
+        const request = route.request();
+        request.resourceType() === 'document' || request.resourceType() === 'script' ? route.continue() : route.abort();
     });
     await page.goto(url, {
         waitUntil: 'domcontentloaded',
     });
     await page.waitForSelector('.pubCon');
-    const html = await page.evaluate(() => document.documentElement.innerHTML);
+    const html = await page.evaluate(() => document.documentElement.getHTML());
     return html;
 };
 
-export { host, puppeteerGet };
+export { host, playwrightGet };

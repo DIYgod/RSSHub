@@ -1,12 +1,12 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
 
+import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
 export const handler = async (ctx) => {
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 15;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 15;
 
     const rootUrl = 'https://zfxxgk.ndrc.gov.cn';
     const currentUrl = new URL('web/dirlist.jsp', rootUrl).href;
@@ -15,22 +15,22 @@ export const handler = async (ctx) => {
 
     const $ = load(response);
 
-    const language = $('html').prop('lang');
+    const language = $('html').prop('lang') as Language;
 
     $('th').parent().remove();
 
     let items = $('div.zwxxkg-result tr')
         .slice(0, limit)
         .toArray()
-        .map((item) => {
-            item = $(item);
+        .map((item): DataItem & { link: string } => {
+            const $item = $(item);
 
-            const a = item.find('a.xxgk_list1');
+            const a = $item.find('a.xxgk_list1');
 
             return {
                 title: a.text(),
-                pubDate: parseDate(item.find('td').last().text()),
-                link: new URL(a.prop('href'), currentUrl).href,
+                pubDate: parseDate($item.find('td').last().text()),
+                link: new URL(a.prop('href')!, currentUrl).href,
                 language,
             };
         });
@@ -54,7 +54,7 @@ export const handler = async (ctx) => {
                     text: $$('div.article').text(),
                 };
                 item.language = language;
-                item.enclosure_url = $$('table.enclosure a.xxgk_list1').length === 0 ? undefined : new URL($$('table.enclosure a.xxgk_list1').first().prop('href'), currentUrl).href;
+                item.enclosure_url = $$('table.enclosure a.xxgk_list1').length === 0 ? undefined : new URL($$('table.enclosure a.xxgk_list1').first().prop('href')!, currentUrl).href;
                 item.enclosure_title = item.enclosure_url ? $$('table.enclosure a.xxgk_list1').first().text() : undefined;
 
                 return item;
@@ -62,7 +62,7 @@ export const handler = async (ctx) => {
         )
     );
 
-    const image = new URL($('div.zwgklogo img').prop('src'), currentUrl).href;
+    const image = new URL($('div.zwgklogo img').prop('src')!, currentUrl).href;
 
     return {
         title: `${$('meta[name="SiteName"]').prop('content')} - ${$('div.zwgktoptitle').text()}`,
@@ -77,9 +77,8 @@ export const handler = async (ctx) => {
 };
 
 export const route: Route = {
-    path: ['/ndrc/zfxxgk'],
-    // path: ['/ndrc/zfxxgk', '/ndrc/zfxxgk/iteminfo'],
-    name: '中华人民共和国国家发展和改革委员会政府信息公开',
+    path: '/zfxxgk',
+    name: '政府信息公开',
     url: 'zfxxgk.ndrc.gov.cn',
     maintainers: ['howfool', 'nczitzk'],
     handler,
@@ -100,7 +99,7 @@ export const route: Route = {
     radar: [
         {
             source: ['zfxxgk.ndrc.gov.cn/web/dirlist.jsp'],
-            target: '/ndrc/zfxxgk',
+            target: '/zfxxgk',
         },
     ],
 };

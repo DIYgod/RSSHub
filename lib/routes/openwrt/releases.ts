@@ -1,17 +1,24 @@
-import { Route } from '@/types';
-import got from '@/utils/got';
 import { load } from 'cheerio';
+
+import type { Route } from '@/types';
+import got from '@/utils/got';
 
 export const route: Route = {
     path: '/releases/:brand/:model',
+    categories: ['program-update'],
+    example: '/openwrt/releases/xiaomi/xiaomi_redmi_router_ac2100',
+    parameters: {
+        brand: 'Device Model, can be found in url of `Table of Hardware` -> `Device Page`',
+        model: 'Same as above',
+    },
     radar: [
         {
             source: ['openwrt.org/toh/:band/:model'],
             target: '/releases/:model',
         },
     ],
-    name: 'Unknown',
-    maintainers: [],
+    name: 'Releases',
+    maintainers: ['DIYgod'],
     handler,
 };
 
@@ -27,7 +34,7 @@ async function handler(ctx) {
         title: $('h1').text() + ' - OpenWrt Releases',
         link: url,
         description: $('.dw-content div.level1').text(),
-        language: 'en-US',
+        language: 'en-us' as const,
         item: [
             {
                 title: table.find('.supported_current_rel').text(),

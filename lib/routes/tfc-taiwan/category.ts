@@ -1,12 +1,13 @@
-import { Route } from '@/types';
-import ofetch from '@/utils/ofetch';
-import { baseUrl, parsePost, parseItem } from './utils';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
+import type { Route } from '@/types';
+import ofetch from '@/utils/ofetch';
+
+import { baseUrl, parseItem, parsePost } from './utils';
 
 const handler = async (ctx) => {
     const { category } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : undefined;
-    const isNumericCategory = !Number.isNaN(Number.parseInt(category, 10));
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : undefined;
+    const isNumericCategory = !Number.isNaN(Number(category));
 
     const categoryResponse = await ofetch(`${baseUrl}/wp-json/wp/v2/categories${isNumericCategory ? `/${category}` : ''}`, {
         query: {

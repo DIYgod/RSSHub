@@ -78,7 +78,7 @@ export const CLOUDCAST_FIELDS = `
   }
 `;
 
-export function getObjectFields(type: string): { objectType: string; objectFields: string } {
+export function getObjectFields(type: string) {
     if (type === 'playlist') {
         return {
             objectType: 'playlist',
@@ -103,12 +103,12 @@ export function getObjectFields(type: string): { objectType: string; objectField
         }
       `,
         };
-    } else {
-        const nodeTemplate = type === 'listens' ? `node { cloudcast { ${CLOUDCAST_FIELDS} } }` : `node { ${CLOUDCAST_FIELDS} }`;
+    }
+    const nodeTemplate = type === 'listens' ? `node { cloudcast { ${CLOUDCAST_FIELDS} } }` : `node { ${CLOUDCAST_FIELDS} }`;
 
-        return {
-            objectType: 'user',
-            objectFields: `
+    return {
+        objectType: 'user',
+        objectFields: `
         displayName
         biog
         picture {
@@ -124,6 +124,5 @@ export function getObjectFields(type: string): { objectType: string; objectField
           }
         }
       `,
-        };
-    }
+    };
 }

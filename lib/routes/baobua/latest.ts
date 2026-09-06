@@ -1,9 +1,11 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
+
+import { loadArticle } from './article';
 import { SUB_NAME_PREFIX, SUB_URL } from './const';
-import loadArticle from './article';
 
 export const route: Route = {
     path: '/',
@@ -51,7 +53,7 @@ async function handler() {
                     }
                     return cache.tryGet(link, () => loadArticle(link));
                 })
-                .filter(Boolean)
+                .filter((entry): entry is NonNullable<typeof entry> => Boolean(entry))
         ),
     };
 }

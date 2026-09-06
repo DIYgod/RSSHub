@@ -1,5 +1,6 @@
-import got from '@/utils/got';
 import { load } from 'cheerio';
+
+import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
 const handler = async () => {
@@ -33,4 +34,5 @@ const handler = async () => {
     };
 };
 
+// TODO: missing route export
 export default handler;

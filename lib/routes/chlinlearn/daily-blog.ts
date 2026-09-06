@@ -1,8 +1,9 @@
-import { Route } from '@/types';
+import CryptoJS from 'crypto-js';
+
+import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch'; // 统一使用的请求库
 import { parseDate } from '@/utils/parse-date'; // 解析日期的工具函数
 import timezone from '@/utils/timezone';
-import CryptoJS from 'crypto-js';
 
 export const route: Route = {
     path: '/daily-blog',
@@ -32,7 +33,7 @@ export const route: Route = {
             headers: {
                 Referer: 'https://daily-blog.chlinlearn.top/blogs/1',
                 'x-req-nonce': r,
-                'x-req-timestamp': n,
+                'x-req-timestamp': String(n),
                 'x-req-key': o,
             },
         });
@@ -41,7 +42,7 @@ export const route: Route = {
             link: item.url,
             author: item.author,
             img: item.icon,
-            pubDate: timezone(parseDate(item.publishTime), +8),
+            pubDate: timezone(parseDate(item.publishTime), 8),
         }));
         return {
             // 源标题

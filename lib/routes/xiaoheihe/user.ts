@@ -1,7 +1,8 @@
-import { Route } from '@/types';
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+
 import { calculate } from './util';
 
 export const route: Route = {
@@ -63,7 +64,7 @@ async function handler(ctx) {
 
     return {
         title: `${username} 的动态`,
-        link: `https://xiaoheihe.cn`,
+        link: 'https://xiaoheihe.cn',
         item: items,
     };
 }

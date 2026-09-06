@@ -1,7 +1,8 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
@@ -78,7 +79,7 @@ async function handler(ctx) {
                 const content = load(detailResponse.data);
 
                 item.description = content('.article-content').html();
-                item.author = item.author ?? content('.author-name p').first().text();
+                item.author ??= content('.author-name p').first().text();
 
                 return item;
             })

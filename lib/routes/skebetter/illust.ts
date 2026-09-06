@@ -1,7 +1,8 @@
-import { Data, DataItem, Route } from '@/types';
-import cache from '@/utils/cache';
-import { processItems, fetchData } from './utils';
 import { config } from '@/config';
+import type { Data, Route } from '@/types';
+import cache from '@/utils/cache';
+
+import { fetchData, processItems } from './utils';
 
 export const route: Route = {
     path: '/illust/:type',
@@ -15,6 +16,7 @@ export const route: Route = {
         supportBT: false,
         supportPodcast: false,
         supportScihub: false,
+        nsfw: true,
     },
     name: 'Illust',
     maintainers: ['SnowAgar25'],
@@ -41,10 +43,9 @@ export const route: Route = {
             target: '/illust/latest',
         },
     ],
-    description: `
-| 急上昇 | 週間 | 月間 | 新着 |
-| ----- | ---- | ---- | ---- |
-| hot | week | month| latest |`,
+    description: `| 急上昇 | 週間 | 月間  | 新着   |
+| ------ | ---- | ----- | ------ |
+| hot    | week | month | latest |`,
 };
 
 async function handler(ctx): Promise<Data> {
@@ -78,6 +79,6 @@ async function handler(ctx): Promise<Data> {
     return {
         title: `Skebetter Illust - ${typeMap[type]}`,
         link: `https://skebetter.com/illust${linkMap[type]}`,
-        item: items as DataItem[],
+        item: items,
     };
 }

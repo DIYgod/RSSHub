@@ -1,7 +1,8 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
@@ -44,24 +45,24 @@ async function handler(ctx) {
 
     const list = $('.list-content a')
         .toArray()
-        .map((item) => {
-            item = $(item);
+        .map((item): DataItem => {
+            const $item = $(item);
             return {
-                title: item.find('p').text(),
-                link: `${baseUrl}${item.attr('href')}`,
-                pubDate: parseDate(item.find('.date').text()), // 2023-03-22
+                title: $item.find('p').text(),
+                link: `${baseUrl}${$item.attr('href')}`,
+                pubDate: parseDate($item.find('.date').text()), // 2023-03-22
             };
         });
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
-                const data = await ofetch(item.link);
+            cache.tryGet(item.link!, async () => {
+                const data = await ofetch(item.link!);
                 const $ = load(data);
 
                 item.author = $('.article-submit')
                     .text()
-                    .match(/发布人：(.*)/)[1];
+                    .match(/发布人：(.*)/)![1];
                 item.description = $('div[data-block-plugin-id="entity_field:node:body"]').html() + ($('div[data-block-plugin-id="entity_field:node:attachments"]').html() ?? '');
                 return item;
             })

@@ -1,7 +1,8 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 
 export const route: Route = {
     path: '/jwc',
@@ -33,15 +34,15 @@ async function handler() {
     const list = $('div.list02 ul > li')
         .not('#wp_paging_w66 li')
         .toArray()
-        .map((item) => ({
+        .map((item): DataItem => ({
             pubDate: $(item).find('span').text(),
-            title: $(item).find('a').attr('title'),
+            title: $(item).find('a').attr('title')!,
             link: `${rootUrl}${$(item).find('a').attr('href')}`,
         }));
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const detailResponse = await got.get(item.link);
                 const content = load(detailResponse.data);
                 const iframeSrc = content('.wp_pdf_player').attr('pdfsrc');

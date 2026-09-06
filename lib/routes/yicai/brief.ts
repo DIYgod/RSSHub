@@ -1,7 +1,7 @@
-import { Route } from '@/types';
+import type { Route } from '@/types';
 import got from '@/utils/got';
-import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 import { rootUrl } from './utils';
 
@@ -42,7 +42,7 @@ async function handler(ctx) {
         title: item.indexTitle,
         link: `${rootUrl}${item.url}`,
         description: item.newcontent,
-        pubDate: timezone(parseDate(`${item.datekey} ${item.hm}`, 'YYYY.MM.DD HH:mm'), +8),
+        pubDate: timezone(parseDate(`${item.datekey} ${item.hm}`, 'YYYY.MM.DD HH:mm'), 8),
     }));
 
     return {

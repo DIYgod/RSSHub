@@ -1,12 +1,12 @@
-import { Route, Data, DataItem } from '@/types';
-import type { BBobCoreTagNodeTree, PresetFactory, NodeContent } from '@bbob/types';
-
-import got from '@/utils/got';
 import bbobHTML from '@bbob/html';
+import { getUniqAttr, isStringNode } from '@bbob/plugin-helper';
 import presetHTML5 from '@bbob/preset-html5';
-import { getUniqAttr } from '@bbob/plugin-helper';
-import { parseDate } from '@/utils/parse-date';
+import type { BBobCoreTagNodeTree, NodeContent, PresetFactory } from '@bbob/types';
 import type { Context } from 'hono';
+
+import type { Data, DataItem, Route } from '@/types';
+import got from '@/utils/got';
+import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/news/:appid/:language?',
@@ -14,13 +14,12 @@ export const route: Route = {
     url: 'steamcommunity.com',
     maintainers: ['keocheung'],
     handler,
-    example: '/news/958260/english',
+    example: '/steam/news/958260/english',
     parameters: {
         appid: 'Game App ID, all digits, can be found in the URL',
         language: 'Language, english by default, see below for more languages',
     },
-    description: `
-<details>
+    description: `<details>
 <summary>More languages</summary>
 
 | 语言代码                                          | 语言名称   |
@@ -54,8 +53,7 @@ export const route: Route = {
 | Tiếng Việt (Vietnamese)                           | vietnamese |
 | Español - Latinoamérica (Spanish - Latin America) | latam      |
 
-</details>
-    `,
+</details>`,
     categories: ['game'],
     features: {
         requireConfig: false,
@@ -110,7 +108,7 @@ const langMap = {
 async function handler(ctx: Context): Promise<Data> {
     const { appid = '958260', language = 'english' } = ctx.req.param();
     const limitQuery = ctx.req.query('limit');
-    const limit = limitQuery ? Number.parseInt(limitQuery, 10) : 100;
+    const limit = limitQuery ? Number(limitQuery) : 100;
 
     const rootUrl = 'https://steamcommunity.com';
     const apiRootUrl = 'https://store.steampowered.com';
@@ -132,7 +130,7 @@ async function handler(ctx: Context): Promise<Data> {
         const title = item.event_name;
         const description = `<div lang="${langMap[language] || ''}">${bbobHTML(
             item.announcement_body.body
-                .replaceAll('{STEAM_CLAN_IMAGE}', `${clanRootUrl}/images`)
+                .replaceAll('{STEAM_CLAN_IMAGE}', () => `${clanRootUrl}/images`)
                 .replaceAll('[olist]', '[list=1]')
                 .replaceAll('[/olist]', '[/list]')
                 .replaceAll(/(\[\/h\d\])\n/g, '$1')
@@ -170,7 +168,7 @@ async function handler(ctx: Context): Promise<Data> {
 
 const linebreakRenderer = (tree: BBobCoreTagNodeTree) =>
     tree.walk((node) => {
-        if (typeof node === 'string' && node === '\n') {
+        if (node === '\n') {
             return {
                 tag: 'br',
                 content: null,
@@ -181,15 +179,16 @@ const linebreakRenderer = (tree: BBobCoreTagNodeTree) =>
 
 const plainUrlRenderer = (tree: BBobCoreTagNodeTree) =>
     tree.walk((node) => {
-        if (typeof node === 'string' && /https?:\/\/[^\s]+/.test(node)) {
+        const text = isStringNode(node) ? String(node) : null;
+        if (text !== null && /https?:\/\/\S+/.test(text)) {
             let lastIndex = 0;
             let match: RegExpExecArray | null;
             const content: NodeContent[] = [];
 
-            const urlRe = /https?:\/\/[^\s]+/g;
-            while ((match = urlRe.exec(node)) !== null) {
+            const urlRe = /https?:\/\/\S+/g;
+            while ((match = urlRe.exec(text)) !== null) {
                 if (match.index > lastIndex) {
-                    content.push(node.slice(lastIndex, match.index));
+                    content.push(text.slice(lastIndex, match.index));
                 }
                 content.push({
                     tag: 'a',
@@ -204,8 +203,8 @@ const plainUrlRenderer = (tree: BBobCoreTagNodeTree) =>
                 lastIndex = match.index + match[0].length;
             }
 
-            if (lastIndex < node.length) {
-                content.push(node.slice(lastIndex));
+            if (lastIndex < text.length) {
+                content.push(text.slice(lastIndex));
             }
 
             if (content.length === 0) {
@@ -243,7 +242,7 @@ const customPreset: PresetFactory = presetHTML5.extend((tags) => ({
     url: (node) => ({
         tag: 'a',
         attrs: {
-            href: Object.keys(node.attrs as Record<string, string>)[0],
+            href: Object.keys(node.attrs!)[0],
             rel: 'noopener',
             target: '_blank',
         },
@@ -252,10 +251,11 @@ const customPreset: PresetFactory = presetHTML5.extend((tags) => ({
     previewyoutube: (node) => ({
         tag: 'iframe',
         attrs: {
-            src: `https://www.youtube-nocookie.com/embed/${(getUniqAttr(node.attrs) as string).match(/[A-Za-z0-9_-]+/)?.[0]}`,
+            src: `https://www.youtube-nocookie.com/embed/${(getUniqAttr(node.attrs) as string).match(/[\w-]+/)?.[0]}`,
             title: 'YouTube video player',
             frameborder: '0',
             allowFullScreen: '1',
+            refererpolicy: 'strict-origin-when-cross-origin',
         },
     }),
     video: (node, { render }) => ({

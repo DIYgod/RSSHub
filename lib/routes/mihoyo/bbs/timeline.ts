@@ -1,9 +1,10 @@
-import { Route } from '@/types';
-import got from '@/utils/got';
-import cache from './cache';
 import { config } from '@/config';
-import { post2item } from './utils';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
+import type { Route } from '@/types';
+import got from '@/utils/got';
+
+import cache from './cache';
+import { post2item } from './utils';
 
 export const route: Route = {
     path: '/bbs/timeline',
@@ -32,7 +33,7 @@ export const route: Route = {
     maintainers: ['CaoMeiYouRen'],
     handler,
     description: `::: warning
-  用户关注动态需要米游社登录后的 Cookie 值，所以只能自建，详情见部署页面的配置模块。
+用户关注动态需要米游社登录后的 Cookie 值，所以只能自建，详情见部署页面的配置模块。
 :::`,
 };
 

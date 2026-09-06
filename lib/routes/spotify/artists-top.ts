@@ -1,6 +1,7 @@
-import { Route } from '@/types';
-import utils from './utils';
+import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
+
+import utils from './utils';
 
 export const route: Route = {
     path: '/top/artists',
@@ -41,7 +42,7 @@ export const route: Route = {
 
 async function handler() {
     const token = await utils.getPrivateToken();
-    const itemsResponse = await ofetch(`https://api.spotify.com/v1/me/top/artists`, {
+    const itemsResponse = await ofetch('https://api.spotify.com/v1/me/top/artists', {
         method: 'GET',
         headers: {
             Authorization: `Bearer ${token}`,
@@ -50,7 +51,7 @@ async function handler() {
     const items = itemsResponse.items;
 
     return {
-        title: `Spotify: My Top Artists`,
+        title: 'Spotify: My Top Artists',
         allowEmpty: true,
         item: items.map((element) => utils.parseArtist(element)),
     };

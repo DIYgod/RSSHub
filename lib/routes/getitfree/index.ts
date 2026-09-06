@@ -1,20 +1,41 @@
-import { Route } from '@/types';
-import got from '@/utils/got';
 import { load } from 'cheerio';
+
+import type { Route } from '@/types';
+import { getSubPath } from '@/utils/common-utils';
+import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
-import { apiSlug, rootUrl, bakeFilterSearchParams, bakeFiltersWithPair, bakeUrl, fetchData, getFilterNameForTitle, getFilterParamsForUrl, parseFilterStr } from './util';
+import { apiSlug, bakeFilterSearchParams, bakeFiltersWithPair, bakeUrl, fetchData, getFilterNameForTitle, getFilterParamsForUrl, parseFilterStr, rootUrl } from './util';
 
 export const route: Route = {
-    path: '/:filter{.+}?',
-    name: 'Unknown',
-    maintainers: [],
+    path: '/category/:id{.+}?',
+    categories: ['shopping'],
+    example: '/getitfree/category/pc',
+    parameters: { id: '分类，见下表，可在对应分类页中找到，默认为所有类别' },
+    radar: [
+        {
+            source: ['getitfree.cn/category/:id'],
+            target: '/category/:id',
+        },
+    ],
+    name: '分类',
+    maintainers: ['sanmmm', 'nczitzk'],
     handler,
+    url: 'getitfree.cn',
+    description: `::: tip
+可以叠加使用得到分类结果并集，如 [\`/getitfree/category/pc,android\`](https://rsshub.app/getitfree/category/pc,android)
+
+亦可与标签组合使用，如 [\`/getitfree/category/pc/tag/ai\`](https://rsshub.app/getitfree/category/pc/tag/ai)
+:::
+
+| 所有类别 | Android | iOS | Mac | PC | UWP | 公告         | 永久免费 | 限时免费 | 正版折扣 |
+| -------- | ------- | --- | --- | -- | --- | ------------ | -------- | -------- | -------- |
+|          | android | ios | mac | pc | uwp | notification | free     | giveaway | discount |`,
 };
 
-async function handler(ctx) {
-    const filter = ctx.req.param('filter');
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 50;
+export async function handler(ctx) {
+    const filter = getSubPath(ctx).slice(1);
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 50;
 
     const filters = parseFilterStr(filter);
     const filtersWithPair = await bakeFiltersWithPair(filters);
@@ -30,7 +51,7 @@ async function handler(ctx) {
 
     const { data: response } = await got(apiUrl);
 
-    const items = (Array.isArray(response) ? response : JSON.parse(response.match(/(\[.*])$/)[1])).slice(0, limit).map((item) => {
+    const items = (Array.isArray(response) ? response : JSON.parse(response.match(/(\[.*\])$/)[1])).slice(0, limit).map((item) => {
         const terminologies = item._embedded['wp:term'];
 
         const content = load(item.content?.rendered ?? item.content);

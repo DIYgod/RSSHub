@@ -1,7 +1,8 @@
-import { Route } from '@/types';
+import type { Context } from 'hono';
+
+import type { Data, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
-import type { Context } from 'hono';
 
 type ContentItem = {
     key: string;
@@ -50,10 +51,10 @@ export const route: Route = {
     url: 'ak.arknights.jp/news',
 };
 
-async function handler(ctx: Context) {
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 9;
+async function handler(ctx: Context): Promise<Data> {
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 9;
 
-    const response = await ofetch('https://www.arknights.jp:10014/news', {
+    const response = await ofetch<{ data: { items: NewsDetail[] } }>('https://www.arknights.jp:10014/news', {
         query: {
             lang: 'ja',
             limit,
@@ -61,7 +62,7 @@ async function handler(ctx: Context) {
         },
     });
 
-    const newsList = (response.data.items as NewsDetail[]).map((item) => ({
+    const newsList = response.data.items.map((item) => ({
         title: item.title,
         description: item.content[0].value,
         pubDate: parseDate(item.publishedAt),

@@ -1,6 +1,7 @@
-import { DataItem, Route } from '@/types';
-import cache from '@/utils/cache';
 import { load } from 'cheerio';
+
+import type { DataItem, Route } from '@/types';
+import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
@@ -28,7 +29,7 @@ export const route: Route = {
     handler,
     url: 'rail.ally.net.cn/',
     description: `::: tip
-  默认抓取前 20 条，可通过 \`?limit=\` 改变。
+默认抓取前 20 条，可通过 \`?limit=\` 改变。
 :::`,
 };
 
@@ -46,7 +47,7 @@ async function handler(ctx) {
         const linkText = $(link).text();
         title = title ? `${title} - ${linkText}` : linkText;
     }
-    title = title || (category && topic ? `${category} - ${topic}` : category) || '首页';
+    title ||= (category && topic ? `${category} - ${topic}` : category) || '首页';
     let links = [
         // list page: http://rail.ally.net.cn/html/lujuzixun/
         $('.left .hynewsO h2 a').toArray(),
@@ -64,33 +65,33 @@ async function handler(ctx) {
         links = $('.left a, .container_left a').toArray();
     }
 
-    let items = links
+    let items: DataItem[] = links
         .map((link) => {
-            link = $(link);
-            const url = link.attr('href');
+            const $link = $(link);
+            const url = $link.attr('href');
             const urlMatch = url && url.match(/\/html\/(\d{4})\/\w+_(\d{4})\/\d+\.html/);
             if (!urlMatch) {
                 return null;
             }
-            const title = link.text();
+            const title = $link.text();
             return {
                 title,
                 link: url.startsWith('/') ? `${rootUrl}${url}` : url,
                 pubDate: timezone(parseDate(`${urlMatch[1]}${urlMatch[2]}`), 8),
             };
         })
-        .filter(Boolean);
+        .filter((item) => item !== null);
     const uniqueItems: DataItem[] = [];
     for (const item of items) {
-        if (!uniqueItems.some((uniqueItem) => uniqueItem.link === item?.link)) {
+        if (uniqueItems.every((uniqueItem) => uniqueItem.link !== item?.link)) {
             uniqueItems.push(item!);
         }
     }
-    items = uniqueItems.sort((a, b) => b.pubDate - a.pubDate).slice(0, ctx.req.query('limit') || 20);
+    items = uniqueItems.toSorted((a, b) => Number(b.pubDate) - Number(a.pubDate)).slice(0, ctx.req.query('limit') || 20);
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const response = await got(item.link);
                 const $ = load(response.data);
                 // fix weird format
@@ -103,9 +104,9 @@ async function handler(ctx) {
                         .each((_, child) => {
                             const $child = $(child);
                             let innerHtml;
-                            if (child.name === 'div') {
+                            if ($child.is('div')) {
                                 innerHtml = $child.html();
-                                innerHtml = innerHtml && innerHtml.trim();
+                                innerHtml &&= innerHtml.trim();
                                 description += !innerHtml || innerHtml === '&nbsp;' ? (description ? '<br>' : '') : innerHtml;
                             } else {
                                 // bare text node or something else
@@ -114,7 +115,7 @@ async function handler(ctx) {
                         });
                 } else {
                     // http://rail.ally.net.cn/html/2022/InviteTen_0407/4686.html
-                    description = $('div.content div').first().html();
+                    description = $('div.content div').first().html() ?? '';
                 }
 
                 description = description.replace(/\s*<br ?\/?>\s*$/, ''); // trim <br> at the end

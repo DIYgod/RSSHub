@@ -1,8 +1,9 @@
-import { Route } from '@/types';
+import type { Route } from '@/types';
 import got from '@/utils/got';
-import { SUB_NAME_PREFIX, SUB_URL } from './const';
+
 import loadArticle from './article';
-import { WPPost } from './types';
+import { SUB_NAME_PREFIX, SUB_URL } from './const';
+import type { WPPost } from './types';
 
 export const route: Route = {
     path: '/category/:category',
@@ -16,6 +17,7 @@ export const route: Route = {
         supportBT: false,
         supportPodcast: false,
         supportScihub: false,
+        nsfw: true,
     },
     radar: [
         {
@@ -34,14 +36,13 @@ async function handler(ctx) {
     const category = ctx.req.param('category');
     const categoryUrl = `${SUB_URL}category/${category}/`;
 
-    const {
-        data: [{ id: categoryId }],
-    } = await got(`${SUB_URL}wp-json/wp/v2/categories?slug=${category}`);
-    const { data: posts } = await got(`${SUB_URL}wp-json/wp/v2/posts?categories=${categoryId}&per_page=${limit}`);
+    const { data } = await got(`${SUB_URL}wp-json/wp/v2/categories?slug=${category}`);
+    const categoryId = data[0].id;
+    const { data: posts }: { data: WPPost[] } = await got(`${SUB_URL}wp-json/wp/v2/posts?categories=${categoryId}&per_page=${limit}`);
 
     return {
         title: `${SUB_NAME_PREFIX} - Category: ${category}`,
         link: categoryUrl,
-        item: posts.map((post) => loadArticle(post as WPPost)),
+        item: posts.map((post) => loadArticle(post)),
     };
 }

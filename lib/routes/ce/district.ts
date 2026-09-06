@@ -1,9 +1,11 @@
-import { Route, ViewType } from '@/types';
+import { load } from 'cheerio';
+
+import type { DataItem, Route } from '@/types';
+import { ViewType } from '@/types';
 import cache from '@/utils/cache';
+import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
-import { load } from 'cheerio';
-import { ofetch } from 'ofetch';
 
 export const route: Route = {
     path: '/district/:category?',
@@ -14,7 +16,7 @@ export const route: Route = {
     example: '/ce/district',
     parameters: { category: '栏目标识，默认为 roll（即时新闻）' },
     description: `| 即时新闻 | 经济动态 | 独家视角 | 专题 | 数说地方 | 地方播报 | 专稿 | 港澳台 |
-|----------|----------|----------|------|----------|----------|------|--------|
+| -------- | -------- | -------- | ---- | -------- | -------- | ---- | ------ |
 | roll     | jjdt     | poll     | ch   | ssdf     | dfbb     | zg   | gat    |`,
     categories: ['traditional-media'],
     features: {
@@ -57,10 +59,10 @@ async function handler(ctx) {
 
     const list = $('div.sec_left li')
         .toArray()
-        .map((e) => {
+        .map((e): DataItem => {
             const element = $(e);
             const title = element.find('a').text().trim();
-            const link = new URL(element.find('a').attr('href'), url).href;
+            const link = new URL(element.find('a').attr('href')!, url).href;
             return {
                 title,
                 link,
@@ -69,13 +71,13 @@ async function handler(ctx) {
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
-                const GB2312Response = await ofetch(item.link, { responseType: 'arrayBuffer' });
+            cache.tryGet(item.link!, async () => {
+                const GB2312Response = await ofetch(item.link!, { responseType: 'arrayBuffer' });
                 const response = new TextDecoder('gb2312').decode(new Uint8Array(GB2312Response));
                 const $ = load(response);
 
                 const pubDateText = $('span#articleTime').text().trim();
-                item.pubDate = timezone(parseDate(pubDateText, 'YYYY年MM月DD日 HH:mm'), +8);
+                item.pubDate = timezone(parseDate(pubDateText, 'YYYY年MM月DD日 HH:mm'), 8);
 
                 item.description = $('div.TRS_Editor').html();
                 return item;

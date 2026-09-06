@@ -1,10 +1,11 @@
-import { Route } from '@/types';
-import cache from '@/utils/cache';
 import { config } from '@/config';
-import { getOriginAvatar } from './utils';
-import logger from '@/utils/logger';
-import puppeteer from '@/utils/puppeteer';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
+import type { DataItem, Route } from '@/types';
+import cache from '@/utils/cache';
+import logger from '@/utils/logger';
+import playwright from '@/utils/playwright';
+
+import { getOriginAvatar } from './utils';
 
 export const route: Route = {
     path: '/live/:rid',
@@ -41,12 +42,11 @@ async function handler(ctx) {
         `douyin:live:${rid}`,
         async () => {
             let roomInfo;
-            const browser = await puppeteer();
-            const page = await browser.newPage();
-            await page.setRequestInterception(true);
-
-            page.on('request', (request) => {
-                request.resourceType() === 'document' || request.resourceType() === 'stylesheet' || request.resourceType() === 'script' || request.resourceType() === 'xhr' ? request.continue() : request.abort();
+            const context = await playwright();
+            const page = await context.newPage();
+            await page.route('**/*', (route) => {
+                const request = route.request();
+                request.resourceType() === 'document' || request.resourceType() === 'stylesheet' || request.resourceType() === 'script' || request.resourceType() === 'xhr' ? route.continue() : route.abort();
             });
             page.on('response', async (response) => {
                 const request = response.request();
@@ -56,9 +56,9 @@ async function handler(ctx) {
             });
             logger.http(`Requesting ${pageUrl}`);
             await page.goto(pageUrl, {
-                waitUntil: 'networkidle2',
+                waitUntil: 'networkidle',
             });
-            await browser.close();
+            await context.close();
 
             return roomInfo;
         },
@@ -75,7 +75,7 @@ async function handler(ctx) {
     const nickname = roomOwner.nickname;
     const userAvatar = roomOwner.avatar_thumb.url_list[0];
 
-    const items = [];
+    const items: DataItem[] = [];
     if (roomInfo.id_str) {
         if (roomInfo.status === 2) {
             items.push({

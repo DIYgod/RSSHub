@@ -1,7 +1,12 @@
-import got from '@/utils/got';
 import { load } from 'cheerio';
 
+import got from '@/utils/got';
+
 export async function getFullText(item) {
+    if (item.link.startsWith('https://www.youtube.com/')) {
+        return item;
+    }
+
     const detailResponse = await got({
         method: 'get',
         url: item.link,
@@ -9,6 +14,13 @@ export async function getFullText(item) {
     const content = load(detailResponse.data);
     content('div.SubscriptionInner').remove();
     content('.gmailNews').remove();
+
+    // Those boxes are for explaining terms. They are injected inline and interrupt reading.
+    // If readers want to learn about terms, they can learn more online.
+    content('.dictionary-box').remove();
+    // Those are for "延伸閱讀" links, which are not part of the main article.
+    content('.moreArticle').remove();
+
     const topImage = content('.fullPic').html();
 
     item.description = (topImage === null ? '' : topImage) + content('.paragraph').eq(0).html();

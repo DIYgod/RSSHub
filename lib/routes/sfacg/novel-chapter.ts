@@ -1,7 +1,8 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
@@ -40,23 +41,23 @@ async function handler(ctx) {
     const list = $('div.catalog-list ul li a')
         .slice(-limit)
         .toArray()
-        .map((item) => {
-            item = $(item);
+        .map((item): DataItem => {
+            const $item = $(item);
             return {
-                title: item.attr('title'),
-                link: `${baseUrl}${item.attr('href')}`,
+                title: $item.attr('title')!,
+                link: `${baseUrl}${$item.attr('href')}`,
             };
         });
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const { data: response } = await got(item.link);
                 const $ = load(response);
 
                 item.description = $('div.article-content').html();
 
                 const rawDate = $('div.article-desc span').eq(1).text();
-                item.pubDate = timezone(parseDate(rawDate.replace('更新时间：', '')), +8);
+                item.pubDate = timezone(parseDate(rawDate.replace('更新时间：', '')), 8);
 
                 return item;
             })
@@ -70,7 +71,7 @@ async function handler(ctx) {
         title: `SF轻小说 ${$('h1.story-title').text()}`,
         link: `${baseUrl}/Novel/${id}`,
         description: $i('p.introduce').text(),
-        image: $i('div.summary-pic img').attr('src').replace('http://', 'https://'),
+        image: $i('div.summary-pic img').attr('src')!.replace('http://', 'https://'),
         item: items,
     };
 }

@@ -1,7 +1,8 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
@@ -12,7 +13,7 @@ const categories = {
 };
 
 export const route: Route = {
-    path: '/nrta/news/:category?',
+    path: '/news/:category?',
     categories: ['government'],
     example: '/gov/nrta/news',
     parameters: { category: '资讯类别，可从地址中获取，默认为总局要闻' },
@@ -44,7 +45,7 @@ async function handler(ctx) {
         url: currentUrl,
     });
 
-    const regex = /<!\[cdata\[([\S\s]*?)]]>(?=\s*<)/gi;
+    const regex = /<!\[cdata\[([\s\S]*?)\]\]>(?=\s*<)/gi;
     const data = response.data.replaceAll(regex, '$1');
 
     const $ = load(data, {
@@ -53,15 +54,16 @@ async function handler(ctx) {
 
     const list = $('a', 'record')
         .toArray()
-        .map((item) => {
-            item = $(item);
+        .map((item): DataItem => {
+            const $item = $(item);
             return {
-                link: item.attr('href'),
+                link: $item.attr('href'),
+                title: '',
             };
         });
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const detailResponse = await got({
                     method: 'get',
                     url: item.link,
@@ -69,17 +71,17 @@ async function handler(ctx) {
                 const content = load(detailResponse.data);
                 item.title = content('td[id="artTitMob"]').text();
                 item.description = content('div[id="c"]').html();
-                item.pubDate = timezone(parseDate(content('.mobile_time.shareWarpTime').text().trim()), +8);
+                item.pubDate = timezone(parseDate(content('.mobile_time.shareWarpTime').text().trim()), 8);
                 item.author = content('.mobile_time.shareFromz').text();
                 return item;
             })
         )
     );
     return {
-        title: category in categories ? categories[category] : '其他',
+        title: Object.hasOwn(categories, category) ? categories[category] : '其他',
         link: `http://www.nrta.gov.cn/col/col${category}/index.html`,
         description: '国家广播电视总局',
-        language: 'zh-cn',
+        language: 'zh-CN' as const satisfies Language,
         item: items,
     };
 }

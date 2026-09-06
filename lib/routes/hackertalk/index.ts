@@ -1,18 +1,22 @@
-import { Route } from '@/types';
+import MarkdownIt from 'markdown-it';
+
+import type { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-import MarkdownIt from 'markdown-it';
+
 const md = MarkdownIt();
 
 export const route: Route = {
     path: '/',
+    categories: ['bbs'],
+    example: '/hackertalk',
     radar: [
         {
             source: ['hackertalk.net/'],
             target: '',
         },
     ],
-    name: 'Unknown',
+    name: '最新帖子',
     maintainers: ['hyoban'],
     handler,
     url: 'hackertalk.net/',

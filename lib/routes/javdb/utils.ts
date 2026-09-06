@@ -1,12 +1,14 @@
-import cache from '@/utils/cache';
-import got from '@/utils/got';
 import { load } from 'cheerio';
-import { parseDate } from '@/utils/parse-date';
-import { config } from '@/config';
-import { Cookie, CookieJar } from 'tough-cookie';
 
+import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
-const allowDomain = new Set(['javdb.com', 'javdb36.com', 'javdb007.com', 'javdb521.com']);
+import type { DataItem } from '@/types';
+import cache from '@/utils/cache';
+import logger from '@/utils/logger';
+import { parseDate } from '@/utils/parse-date';
+import { getPlaywrightPage } from '@/utils/playwright';
+
+const allowDomain = new Set(['javdb.com', 'javdb571.com', 'javdb36.com', 'javdb007.com', 'javdb521.com']);
 
 const ProcessItems = async (ctx, currentUrl, title) => {
     const domain = ctx.req.query('domain') ?? 'javdb.com';
@@ -17,56 +19,58 @@ const ProcessItems = async (ctx, currentUrl, title) => {
 
     const rootUrl = `https://${domain}`;
 
-    const cookieJar = new CookieJar();
-
-    if (config.javdb.session) {
-        const cookie = Cookie.fromJSON({
-            key: '_jdb_session',
-            value: config.javdb.session,
-            domain,
-            path: '/',
-        });
-        cookie && cookieJar.setCookie(cookie, rootUrl);
-    }
-
-    const response = await got({
-        method: 'get',
-        url: url.href,
-        cookieJar,
-        headers: {
-            'User-Agent': config.trueUA,
+    const { page, destroy, context } = await getPlaywrightPage(url.href, {
+        onBeforeLoad: async (page) => {
+            if (config.javdb.session) {
+                await page.context().addCookies([
+                    {
+                        name: '_jdb_session',
+                        value: config.javdb.session,
+                        domain,
+                        path: '/',
+                    },
+                ]);
+            }
+            await page.route('**/*', (route) => {
+                const request = route.request();
+                request.resourceType() === 'document' ? route.continue() : route.abort();
+            });
         },
     });
+    const response = await page.content();
+    await page.close();
 
-    const $ = load(response.data);
+    const $ = load(response);
 
     $('.tags, .tag-can-play, .over18-modal').remove();
 
     let items = $('div.item')
         .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 20)
         .toArray()
-        .map((item) => {
-            item = $(item);
+        .map((item): DataItem => {
+            const element = $(item);
             return {
-                title: item.find('.video-title').text(),
-                link: `${rootUrl}${item.find('.box').attr('href')}`,
-                pubDate: parseDate(item.find('.meta').text()),
+                title: element.find('.video-title').text(),
+                link: `${rootUrl}${element.find('.box').attr('href')}`,
+                pubDate: parseDate(element.find('.meta').text()),
             };
         });
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
-                const detailResponse = await got({
-                    method: 'get',
-                    url: item.link,
-                    cookieJar,
-                    headers: {
-                        'User-Agent': config.trueUA,
-                    },
+            cache.tryGet(item.link!, async () => {
+                const page = await context.newPage();
+                await page.route('**/*', (route) => {
+                    const request = route.request();
+                    request.resourceType() === 'document' ? route.continue() : route.abort();
                 });
+                logger.http(`Requesting ${item.link}`);
+                await page.goto(item.link!, {
+                    waitUntil: 'domcontentloaded',
+                });
+                const detailResponse = await page.content();
 
-                const content = load(detailResponse.data);
+                const content = load(detailResponse);
 
                 item.enclosure_type = 'application/x-bittorrent';
                 item.enclosure_url = content('#magnets-content button[data-clipboard-text]').first().attr('data-clipboard-text');
@@ -75,16 +79,18 @@ const ProcessItems = async (ctx, currentUrl, title) => {
                 content('#modal-review-watched, #modal-comment-warning, #modal-save-list').remove();
                 content('.review-buttons, .copy-to-clipboard, .preview-video-container, .play-button').remove();
 
-                content('.preview-images img').each(function () {
-                    content(this).removeAttr('data-src');
-                    content(this).attr('src', content(this).parent().attr('href'));
+                content('.preview-images img').each((_, el) => {
+                    content(el).removeAttr('data-src');
+                    content(el).attr('src', content(el).parent().attr('href'));
                 });
 
                 item.category = content('.panel-block .value a')
                     .toArray()
                     .map((v) => content(v).text());
                 item.author = content('.panel-block .value').last().parent().find('.value a').first().text();
-                item.description = content('.cover-container, .column-video-cover').html() + content('.movie-panel-info').html() + content('#magnets-content').html() + content('.preview-images').html();
+                item.description = content('.cover-container, .column-video-cover').html()! + content('.movie-panel-info').html()! + content('#magnets-content').html() + content('.preview-images').html();
+
+                await page.close();
 
                 return item;
             })
@@ -92,7 +98,9 @@ const ProcessItems = async (ctx, currentUrl, title) => {
     );
 
     const htmlTitle = $('title').text();
-    const subject = htmlTitle.includes('|') ? htmlTitle.split('|')[0] : '';
+    const subject = htmlTitle.includes('|') ? htmlTitle.split('|', 1)[0] : '';
+
+    await destroy();
 
     return {
         title: subject === '' ? title : `${subject} - ${title}`,

@@ -1,11 +1,11 @@
-import { Route } from '@/types';
-import cache from '@/utils/cache';
-import got from '@/utils/got';
 import { load } from 'cheerio';
-import timezone from '@/utils/timezone';
-import { parseDate } from '@/utils/parse-date';
 
-import { rootUrl, ossUrl, ProcessFeed } from './utils';
+import type { Route } from '@/types';
+import got from '@/utils/got';
+import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
+
+import { ossUrl, ProcessFeed, rootUrl } from './utils';
 
 export const route: Route = {
     path: '/zhuanti/:id',
@@ -24,13 +24,13 @@ export const route: Route = {
     maintainers: ['nczitzk'],
     handler,
     description: `::: tip
-  更多专题请见 [关键词](http://www.aisixiang.com/zhuanti/)
+更多专题请见 [关键词](http://www.aisixiang.com/zhuanti/)
 :::`,
 };
 
 async function handler(ctx) {
     const id = ctx.req.param('id');
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 30;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 30;
 
     const currentUrl = new URL(`zhuanti/${id}.html`, rootUrl).href;
 
@@ -38,30 +38,30 @@ async function handler(ctx) {
 
     const $ = load(response);
 
-    const title = $('div.tips h2').first().text();
+    const title = $('div.tips h2').text();
 
     const items = $('div.article-title')
         .slice(0, limit)
         .toArray()
         .map((item) => {
-            item = $(item);
+            const $item = $(item);
 
-            const a = item.find('a');
+            const a = $item.find('a');
 
             return {
                 title: a.text(),
-                link: new URL(a.prop('href'), rootUrl).href,
-                author: a.text().split('：')[0],
-                pubDate: timezone(parseDate(item.find('span').text()), +8),
+                link: new URL(a.prop('href')!, rootUrl).href,
+                author: a.text().split('：', 1)[0],
+                pubDate: timezone(parseDate($item.find('span').text()), 8),
             };
         });
 
     return {
-        item: await ProcessFeed(limit, cache.tryGet, items),
+        item: await ProcessFeed(limit, items),
         title: `爱思想 - ${title}`,
         link: currentUrl,
         description: $('div.tips p').text(),
-        language: 'zh-cn',
+        language: 'zh-CN' as const,
         image: new URL('images/logo_zhuanti.jpg', ossUrl).href,
         subtitle: title,
     };

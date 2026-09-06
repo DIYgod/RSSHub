@@ -1,8 +1,7 @@
-import { Route } from '@/types';
-import cache from '@/utils/cache';
+import type { Route } from '@/types';
 import got from '@/utils/got';
 
-import { rootUrl, ProcessItems } from './utils';
+import { ProcessItems, rootUrl } from './utils';
 
 export const route: Route = {
     path: '/video/:id?',
@@ -58,7 +57,7 @@ export const route: Route = {
 | diyishengyin         | 第一声音                     |
 | sanliangboqianjin    | 财智双全                     |
 | weilaiyaoqinghan     | 未来邀请函                   |
-| zjdy                 | 主角 ▪ 大医                 |
+| zjdy                 | 主角 ▪ 大医                  |
 | leye                 | 乐业之城                     |
 | sanrenxing           | 价值三人行                   |
 | yuandongli           | 中国源动力                   |
@@ -78,21 +77,23 @@ async function handler(ctx) {
         });
 
         for (const c of response.data.header.video) {
-            if (c.EnglishName === id || c.ChannelID === id) {
-                channel = {
-                    id: c.ChannelID,
-                    name: c.ChannelName,
-                    slug: c.EnglishName,
-                };
-                break;
+            if (!(c.EnglishName === id || c.ChannelID === id)) {
+                continue;
             }
+
+            channel = {
+                id: c.ChannelID,
+                name: c.ChannelName,
+                slug: c.EnglishName,
+            };
+            break;
         }
     }
 
     const currentUrl = `${rootUrl}/video${id ? `/${channel.slug}` : ''}`;
     const apiUrl = `${rootUrl}/api/ajax/${id ? `getlistbycid?cid=${channel.id}` : 'getjuhelist?action=video'}&page=1&pagesize=${ctx.req.query('limit') ?? 30}`;
 
-    const items = await ProcessItems(apiUrl, cache.tryGet);
+    const items = await ProcessItems(apiUrl);
 
     return {
         title: `第一财经 - ${channel?.name ?? '视听'}`,

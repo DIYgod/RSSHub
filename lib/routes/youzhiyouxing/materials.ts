@@ -1,7 +1,9 @@
-import { Route, ViewType } from '@/types';
+import { load } from 'cheerio';
+
+import type { DataItem, Route } from '@/types';
+import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
@@ -62,19 +64,19 @@ async function handler(ctx) {
 
     let items = $('li[id*="material"]')
         .toArray()
-        .map((item) => {
-            item = $(item);
+        .map((item): DataItem => {
+            const $item = $(item);
 
             return {
-                title: item.text(),
-                link: `${rootUrl}${item.find('a').attr('href')}`,
-                pubDate: parseDate(item.find('.tw-text-t-muted').text(), ['YYYY年M月D日', 'M月D日']),
+                title: $item.text(),
+                link: `${rootUrl}${$item.find('a').attr('href')}`,
+                pubDate: parseDate($item.find('.tw-text-t-muted').text(), ['YYYY年M月D日', 'M月D日']),
             };
         });
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const detailResponse = await got({
                     method: 'get',
                     url: item.link,
@@ -84,7 +86,7 @@ async function handler(ctx) {
 
                 item.author = content('.tw-inline').text().replace('·', '');
                 item.description = content('#zx-material-marker-root')
-                    .html()
+                    .html()!
                     .replaceAll(/(<img.*?) src(=.*?>)/g, '$1 data$2')
                     .replaceAll(/(<img.*?) data-src(=.*?>)/g, '$1 src$2');
 

@@ -1,6 +1,7 @@
-import { Route } from '@/types';
-import got from '@/utils/got';
 import dayjs from 'dayjs';
+
+import type { Route } from '@/types';
+import got from '@/utils/got';
 
 export const route: Route = {
     path: '/exchangesys/:type',
@@ -16,7 +17,7 @@ export const route: Route = {
         supportScihub: false,
     },
     name: '本科生交换生系统',
-    maintainers: [],
+    maintainers: ['cqjjjzr'],
     handler,
     description: `| 新闻通知 | 交换生项目 |
 | -------- | ---------- |

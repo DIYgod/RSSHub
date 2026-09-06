@@ -1,6 +1,7 @@
-import { Route } from '@/types';
+import type { Route } from '@/types';
 import got from '@/utils/got';
-import apiKey from './api-key';
+
+import { keys as apiKey } from './api-key';
 import { handleMovieItem } from './utils';
 
 export const route: Route = {

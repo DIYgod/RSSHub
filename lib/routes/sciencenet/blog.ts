@@ -1,10 +1,11 @@
-import { Route } from '@/types';
-import cache from '@/utils/cache';
-import got from '@/utils/got';
 import { load } from 'cheerio';
 import iconv from 'iconv-lite';
-import timezone from '@/utils/timezone';
+
+import type { DataItem, Route } from '@/types';
+import cache from '@/utils/cache';
+import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/blog/:type?/:time?/:sort?',
@@ -28,13 +29,13 @@ export const route: Route = {
 | --------- | ---- | ---- |
 | recommend | new  | hot  |
 
-  时间
+时间
 
 | 36 小时内精选博文 | 一周内精选博文 | 一月内精选博文 | 半年内精选博文 | 所有时间精选博文 |
 | ----------------- | -------------- | -------------- | -------------- | ---------------- |
 | 1                 | 2              | 3              | 4              | 5                |
 
-  排序
+排序
 
 | 按发表时间排序 | 按评论数排序 | 按点击数排序 |
 | -------------- | ------------ | ------------ |
@@ -60,19 +61,19 @@ async function handler(ctx) {
     let items = $('tr td a[title]')
         .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 50)
         .toArray()
-        .map((item) => {
-            item = $(item);
+        .map((item): DataItem => {
+            const $item = $(item);
 
             return {
-                title: item.text(),
-                link: `${rootUrl}/${item.attr('href')}`,
-                pubDate: new Date(item.next().text()).toUTCString(),
+                title: $item.text(),
+                link: `${rootUrl}/${$item.attr('href')}`,
+                pubDate: new Date($item.next().text()).toUTCString(),
             };
         });
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const detailResponse = await got({
                     method: 'get',
                     url: item.link,
@@ -83,7 +84,7 @@ async function handler(ctx) {
 
                 item.author = content('.xs2').text();
                 item.description = content('#blog_article').html();
-                item.pubDate = timezone(parseDate(content('.xg1').eq(5).text()), +8);
+                item.pubDate = timezone(parseDate(content('.xg1').eq(5).text()), 8);
 
                 return item;
             })

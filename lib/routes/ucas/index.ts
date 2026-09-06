@@ -1,7 +1,8 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
 const rootUrl = 'https://zhaopin.ucas.ac.cn';
@@ -61,12 +62,12 @@ async function handler(ctx) {
 
                 const descDeadline = pageContent('#col1_content > div.content_head > div.top').html();
                 const descContent = pageContent('#col1_content > div.entry').html();
-                const desc = descDeadline + descContent;
+                const desc = descDeadline! + descContent!;
                 return desc;
             });
 
             return {
-                title,
+                title: title!,
                 link,
                 pubDate,
                 description: desc,

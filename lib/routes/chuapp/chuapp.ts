@@ -1,9 +1,10 @@
-import { Context } from 'hono';
 import { load } from 'cheerio';
-import { Data, Route, DataItem } from '@/types';
-import { parseDate } from '@/utils/parse-date';
+import type { Context } from 'hono';
+
+import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/:category?',
@@ -12,14 +13,12 @@ export const route: Route = {
     parameters: {
         category: '栏目分类，见下表',
     },
-    description: `
-  | \`category\` | 栏目分类 |
-  | ------------ | ------- |
-  | \`daily\`    | 每日聚焦 |
-  | \`pcz\`      | 最好玩   |
-  | \`night\`    | 触乐夜话 |
-  | \`news\`     | 动态资讯 |
-    `,
+    description: `| \`category\` | 栏目分类 |
+| ---------- | -------- |
+| \`daily\`    | 每日聚焦 |
+| \`pcz\`      | 最好玩   |
+| \`night\`    | 触乐夜话 |
+| \`news\`     | 动态资讯 |`,
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -44,30 +43,15 @@ export const route: Route = {
 };
 
 const baseUrl = 'https://www.chuapp.com';
-const pathLut: Record<string, { title: string; suffix: string }> = {
-    daily: {
-        title: '每日聚焦',
-        suffix: '/category/daily',
-    },
-    pcz: {
-        title: '最好玩',
-        suffix: '/category/pcz',
-    },
-    night: {
-        title: '触乐夜话',
-        suffix: '/tag/index/id/20369.html',
-    },
-    news: {
-        // route from the old implementation
-        title: '动态资讯',
-        suffix: '/category/zsyx',
-    },
-    zsyx: {
-        // route for radar
-        title: '动态资讯',
-        suffix: '/category/zsyx',
-    },
-};
+const pathLut = new Map([
+    ['daily', { title: '每日聚焦', suffix: '/category/daily' }],
+    ['pcz', { title: '最好玩', suffix: '/category/pcz' }],
+    ['night', { title: '触乐夜话', suffix: '/tag/index/id/20369.html' }],
+    // route from the old implementation
+    ['news', { title: '动态资讯', suffix: '/category/zsyx' }],
+    // route for radar
+    ['zsyx', { title: '动态资讯', suffix: '/category/zsyx' }],
+]);
 
 type InvalidArticle = {
     title?: string;
@@ -91,7 +75,7 @@ function toJavaScriptTimestamp(x: string | number | null | undefined): number {
 
 async function handler(ctx: Context): Promise<Data | null> {
     const { category = 'night' } = ctx.req.param();
-    const subpath = pathLut[category];
+    const subpath = pathLut.get(category);
     if (!subpath) {
         return null;
     }
@@ -107,7 +91,7 @@ async function handler(ctx: Context): Promise<Data | null> {
             link: $(element).attr('href'),
         }));
 
-    const processedItems: Promise<DataItem>[] = articles
+    const processedItems: Array<Promise<DataItem>> = articles
         .filter((article: RawArticle): article is ValidArticle => isValidArticle(article))
         .map((article: ValidArticle) => {
             if (article.link.startsWith('/')) {
@@ -128,13 +112,13 @@ async function handler(ctx: Context): Promise<Data | null> {
                 const item: DataItem = {
                     title: article.title,
                     link: article.link,
-                    description: s('.content .the-content').html() || '',
+                    description: s('.content .the-content').html(),
                     pubDate: parseDate(toJavaScriptTimestamp(s('.friendly_time').attr('data-time'))),
-                    author: s('.author-time .fn-left').text() || '',
+                    author: s('.author-time .fn-left').text(),
                 };
 
                 return item;
-            }) as Promise<DataItem>;
+            });
         });
 
     const items = await Promise.all(processedItems);

@@ -1,13 +1,13 @@
+import path from 'node:path';
+
+import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import path from 'node:path';
+import { PRESETS } from '@/utils/header-generator';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
-import randUserAgent from '@/utils/rand-user-agent';
 
-const UA = randUserAgent({ browser: 'mobile safari', os: 'ios', device: 'mobile' });
-
-const getNews = async (category) => {
+export const getNews = async (category) => {
     const url = `https://news.cctv.com/2019/07/gaiban/cmsdatainterface/page/${category}_1.jsonp`;
 
     const response = await got({
@@ -15,8 +15,8 @@ const getNews = async (category) => {
         url,
         headers: {
             Referer: `http://news.cctv.com/${category}`,
-            'User-Agent': UA,
         },
+        headerGeneratorOptions: PRESETS.MODERN_IOS,
     });
 
     const data = JSON.parse(response.data.slice(category.length + 1, -1));
@@ -24,10 +24,10 @@ const getNews = async (category) => {
     const resultItem = await Promise.all(
         list.map(({ title, url, focus_date, image }) =>
             cache.tryGet(`cctv-news: ${url}`, async () => {
-                const item = {
+                const item: DataItem = {
                     title,
                     link: url,
-                    pubDate: timezone(parseDate(focus_date), +8),
+                    pubDate: timezone(parseDate(focus_date), 8),
                 };
                 const id = path.parse(url).name;
                 const unknownTip = '未知类型，请点击<a href="https://github.com/DIYgod/RSSHub/issues">链接</a>提交issue';
@@ -46,7 +46,7 @@ const getNews = async (category) => {
                     type = 'PHO';
                 } else if (id.startsWith('VIDE')) {
                     // 视频
-                    const vid = path.parse(image).name.split('-')[0];
+                    const vid = path.parse(image).name.split('-', 1)[0];
                     api = `https://vdn.apps.cntv.cn/api/getHttpVideoInfo.do?pid=${vid}`;
                     type = 'VIDE';
                 } else {
@@ -58,9 +58,7 @@ const getNews = async (category) => {
                     const { data } = await got({
                         method: 'get',
                         url: api,
-                        headers: {
-                            'User-Agent': UA,
-                        },
+                        headerGeneratorOptions: PRESETS.MODERN_IOS,
                     });
 
                     switch (type) {
@@ -106,4 +104,3 @@ const getNews = async (category) => {
         item: resultItem,
     };
 };
-export default getNews;

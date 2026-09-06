@@ -1,9 +1,10 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
-import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 const host = 'https://www.ymgal.games';
 
@@ -37,7 +38,7 @@ async function handler(ctx) {
     const type = ctx.req.param('type') || 'all';
 
     const link = `${host}/co/topic/list` + types[type];
-    let data = [];
+    let data: any[] = [];
     if (type === 'all') {
         await Promise.all(
             Object.values(types).map(async (type) => {
@@ -45,7 +46,7 @@ async function handler(ctx) {
                 data.push(...response.data.data);
             })
         );
-        data = data.sort((a, b) => b.publishTime - a.publishTime).slice(0, 10);
+        data = data.toSorted((a, b) => b.publishTime - a.publishTime).slice(0, 10);
     } else {
         const response = await got(link);
         data = response.data.data;
@@ -57,7 +58,7 @@ async function handler(ctx) {
             return cache.tryGet(itemUrl, async () => {
                 const result = await got(itemUrl);
                 const $ = load(result.data);
-                const description = $('article').html().trim();
+                const description = $('article').html()!.trim();
                 return {
                     title: item.title,
                     link: itemUrl,

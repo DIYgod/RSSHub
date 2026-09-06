@@ -1,6 +1,6 @@
-import { Route } from '@/types';
-import cache from '@/utils/cache';
-import { rootUrl, apiRootUrl, types, ProcessThreads } from './utils';
+import type { Route } from '@/types';
+
+import { apiRootUrl, ProcessThreads, rootUrl, types } from './utils';
 
 export const route: Route = {
     path: '/thread/:type?/:order?',
@@ -8,7 +8,7 @@ export const route: Route = {
     parameters: { type: '帖子分类, 见下表，默认为 hot，即热门帖子', order: '排序方式，见下表，默认为空，即最新回复' },
     name: '帖子',
     categories: ['bbs'],
-    maintainers: ['EthanWng97', 'DIYgod', 'nczitzk'],
+    maintainers: ['IvanWng97', 'DIYgod', 'nczitzk'],
     handler,
     url: 'instant.1point3acres.com/',
     description: `分类
@@ -17,7 +17,7 @@ export const route: Route = {
 | -------- | -------- |
 | hot      | new      |
 
-  排序方式
+排序方式
 
 | 最新回复 | 最新发布 |
 | -------- | -------- |
@@ -34,6 +34,6 @@ async function handler(ctx) {
     return {
         title: `一亩三分地 - ${types[type]}`,
         link: rootUrl,
-        item: await ProcessThreads(cache.tryGet, apiUrl, order),
+        item: await ProcessThreads(apiUrl, order),
     };
 }

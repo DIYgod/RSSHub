@@ -1,4 +1,4 @@
-import { Route } from '@/types';
+import type { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
@@ -16,9 +16,9 @@ export const route: Route = {
     ],
     name: '全部',
     maintainers: ['fashioncj'],
-    description: `| 简体中文    | 繁体中文     |
-| ------- | -------- |
-| zh-hans | zh-hant | `,
+    description: `| 简体中文 | 繁体中文 |
+| -------- | -------- |
+| zh-hans  | zh-hant  |`,
     handler,
 };
 

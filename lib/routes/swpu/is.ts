@@ -1,8 +1,9 @@
-import { Route } from '@/types';
-import cache from '@/utils/cache';
-import { parseDate } from '@/utils/parse-date';
 import { load } from 'cheerio';
+
+import type { Data, DataItem, Route } from '@/types';
+import cache from '@/utils/cache';
 import got from '@/utils/got';
+import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
 export const route: Route = {
@@ -33,7 +34,7 @@ export const route: Route = {
 | 代码 | xyxw     | tzgg     | jyjx     | xsgz     | zsjy     |`,
 };
 
-async function handler(ctx) {
+async function handler(ctx): Promise<Data> {
     const url = `https://www.swpu.edu.cn/is/xydt/${ctx.req.param('code')}.htm`;
 
     const res = await got(url);
@@ -44,15 +45,15 @@ async function handler(ctx) {
 
     const items = $('tr[height="20"]')
         .toArray()
-        .map((elem) => ({
+        .map((elem): DataItem => ({
             title: $('a[title]', elem).text().trim(),
-            pubDate: timezone(parseDate($('td:eq(1)', elem).text(), 'YYYY年MM月DD日'), +8),
-            link: `https://www.swpu.edu.cn/is/${$('a[href]', elem).attr('href').split('../')[1]}`,
+            pubDate: timezone(parseDate($('td:eq(1)', elem).text(), 'YYYY年MM月DD日'), 8),
+            link: `https://www.swpu.edu.cn/is/${$('a[href]', elem).attr('href')!.split('../', 2)[1]}`,
         }));
 
     const out = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const res = await got(item.link);
                 const $ = load(res.data);
                 if ($('title').text().startsWith('系统提示')) {
@@ -62,10 +63,12 @@ async function handler(ctx) {
                     item.author = '学院';
                     item.description = $('.v_news_content').html();
                     for (const elem of $('.v_news_content p')) {
-                        if ($(elem).css('text-align') === 'right') {
-                            item.author = $(elem).text();
-                            break;
+                        if ($(elem).css('text-align') !== 'right') {
+                            continue;
                         }
+
+                        item.author = $(elem).text();
+                        break;
                     }
                 }
                 return item;

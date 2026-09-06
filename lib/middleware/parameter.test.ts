@@ -1,5 +1,6 @@
-import { describe, expect, it, vi } from 'vitest';
+import { Context } from 'hono';
 import Parser from 'rss-parser';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 
 process.env.OPENAI_API_KEY = 'sk-1234567890';
 process.env.OPENAI_API_ENDPOINT = 'https://api.openai.mock/v1';
@@ -7,11 +8,25 @@ process.env.OPENAI_API_ENDPOINT = 'https://api.openai.mock/v1';
 vi.mock('@/utils/request-rewriter', () => ({ default: null }));
 const { config } = await import('@/config');
 const { default: app } = await import('@/app');
+const { default: parameter } = await import('@/middleware/parameter');
 
 const parser = new Parser();
 
+const runMiddleware = async (data: any, query: Record<string, string | undefined>) => {
+    const searchParams = new URLSearchParams();
+    for (const [key, value] of Object.entries(query)) {
+        if (value !== undefined) {
+            searchParams.set(key, value);
+        }
+    }
+    const ctx = new Context(new Request(`http://localhost/test?${searchParams.toString()}`));
+    ctx.set('data', data);
+    await parameter(ctx, async () => {});
+    return ctx.get('data');
+};
+
 describe('filter', () => {
-    it(`filter`, async () => {
+    it('filter', async () => {
         const response = await app.request('/test/1?filter=Description4|Title5');
         const parsed = await parser.parseString(await response.text());
         expect(parsed.items.length).toBe(2);
@@ -19,13 +34,13 @@ describe('filter', () => {
         expect(parsed.items[1].title).toBe('Title5');
     });
 
-    it(`filter filter_case_sensitive default`, async () => {
+    it('filter filter_case_sensitive default', async () => {
         const response = await app.request('/test/1?filter=description4|title5');
         const parsed = await parser.parseString(await response.text());
         expect(parsed.items.length).toBe(0);
     });
 
-    it(`filter filter_case_sensitive=false`, async () => {
+    it('filter filter_case_sensitive=false', async () => {
         const response = await app.request('/test/1?filter=description4|title5&filter_case_sensitive=false');
         const parsed = await parser.parseString(await response.text());
         expect(parsed.items.length).toBe(2);
@@ -33,35 +48,35 @@ describe('filter', () => {
         expect(parsed.items[1].title).toBe('Title5');
     });
 
-    it(`filter_title`, async () => {
+    it('filter_title', async () => {
         const response = await app.request('/test/1?filter_title=Description4|Title5');
         const parsed = await parser.parseString(await response.text());
         expect(parsed.items.length).toBe(1);
         expect(parsed.items[0].title).toBe('Title5');
     });
 
-    it(`filter_title filter_case_sensitive=false`, async () => {
+    it('filter_title filter_case_sensitive=false', async () => {
         const response = await app.request('/test/1?filter_title=description4|title5&filter_case_sensitive=false');
         const parsed = await parser.parseString(await response.text());
         expect(parsed.items.length).toBe(1);
         expect(parsed.items[0].title).toBe('Title5');
     });
 
-    it(`filter_description`, async () => {
+    it('filter_description', async () => {
         const response = await app.request('/test/1?filter_description=Description4|Title5');
         const parsed = await parser.parseString(await response.text());
         expect(parsed.items.length).toBe(1);
         expect(parsed.items[0].title).toBe('Title4');
     });
 
-    it(`filter_description filter_case_sensitive=false`, async () => {
+    it('filter_description filter_case_sensitive=false', async () => {
         const response = await app.request('/test/1?filter_description=description4|title5&filter_case_sensitive=false');
         const parsed = await parser.parseString(await response.text());
         expect(parsed.items.length).toBe(1);
         expect(parsed.items[0].title).toBe('Title4');
     });
 
-    it(`filter_author`, async () => {
+    it('filter_author', async () => {
         const response = await app.request('/test/1?filter_author=DIYgod4|DIYgod5');
         const parsed = await parser.parseString(await response.text());
         expect(parsed.items.length).toBe(2);
@@ -69,13 +84,13 @@ describe('filter', () => {
         expect(parsed.items[1].title).toBe('Title5');
     });
 
-    it(`filter_author filter_case_sensitive default`, async () => {
+    it('filter_author filter_case_sensitive default', async () => {
         const response = await app.request('/test/1?filter_author=diygod4|diygod5');
         const parsed = await parser.parseString(await response.text());
         expect(parsed.items.length).toBe(0);
     });
 
-    it(`filter_author filter_case_sensitive=false`, async () => {
+    it('filter_author filter_case_sensitive=false', async () => {
         const response = await app.request('/test/1?filter_author=diygod4|diygod5&filter_case_sensitive=false');
         const parsed = await parser.parseString(await response.text());
         expect(parsed.items.length).toBe(2);
@@ -83,7 +98,7 @@ describe('filter', () => {
         expect(parsed.items[1].title).toBe('Title5');
     });
 
-    it(`filter_category`, async () => {
+    it('filter_category', async () => {
         const response = await app.request('/test/filter?filter_category=Category0|Category1');
         const parsed = await parser.parseString(await response.text());
         expect(parsed.items.length).toBe(2);
@@ -91,13 +106,13 @@ describe('filter', () => {
         expect(parsed.items[1].title).toBe('Filter Title2');
     });
 
-    it(`filter_category filter_case_sensitive default`, async () => {
+    it('filter_category filter_case_sensitive default', async () => {
         const response = await app.request('/test/filter?filter_category=category0|category1');
         const parsed = await parser.parseString(await response.text());
         expect(parsed.items.length).toBe(0);
     });
 
-    it(`filter_category filter_case_sensitive=false`, async () => {
+    it('filter_category filter_case_sensitive=false', async () => {
         const response = await app.request('/test/filter?filter_category=category0|category1&filter_case_sensitive=false');
         const parsed = await parser.parseString(await response.text());
         expect(parsed.items.length).toBe(2);
@@ -105,14 +120,14 @@ describe('filter', () => {
         expect(parsed.items[1].title).toBe('Filter Title2');
     });
 
-    it(`filter_category filter_case_sensitive=false category string`, async () => {
+    it('filter_category filter_case_sensitive=false category string', async () => {
         const response = await app.request('/test/filter?filter_category=category3&filter_case_sensitive=false');
         const parsed = await parser.parseString(await response.text());
         expect(parsed.items.length).toBe(1);
         expect(parsed.items[0].title).toBe('Filter Title3');
     });
 
-    it(`filter_category illegal_category`, async () => {
+    it('filter_category illegal_category', async () => {
         const response = await app.request('/test/filter-illegal-category?filter_category=CategoryIllegal');
         const parsed = await parser.parseString(await response.text());
         expect(parsed.items.length).toBe(1);
@@ -120,7 +135,7 @@ describe('filter', () => {
         expect(parsed.items[0].categories?.[0]).toBe('CategoryIllegal');
     });
 
-    it(`filter_time`, async () => {
+    it('filter_time', async () => {
         const response = await app.request('/test/current_time?filter_time=25');
         const parsed = await parser.parseString(await response.text());
         expect(parsed.items.length).toBe(2);
@@ -128,7 +143,7 @@ describe('filter', () => {
         expect(parsed.items[1].title).toBe('Title2');
     });
 
-    it(`filterout`, async () => {
+    it('filterout', async () => {
         const response = await app.request('/test/1?filterout=Description4|Title5');
         const parsed = await parser.parseString(await response.text());
         expect(parsed.items.length).toBe(3);
@@ -137,7 +152,7 @@ describe('filter', () => {
         expect(parsed.items[2].title).toBe('Title3');
     });
 
-    it(`filterout filter_case_sensitive default`, async () => {
+    it('filterout filter_case_sensitive default', async () => {
         const response = await app.request('/test/1?filterout=description4|title5');
         const parsed = await parser.parseString(await response.text());
         expect(parsed.items.length).toBe(5);
@@ -146,7 +161,7 @@ describe('filter', () => {
         expect(parsed.items[2].title).toBe('Title3');
     });
 
-    it(`filterout filter_case_sensitive=false`, async () => {
+    it('filterout filter_case_sensitive=false', async () => {
         const response = await app.request('/test/1?filterout=description4|title5&filter_case_sensitive=false');
         const parsed = await parser.parseString(await response.text());
         expect(parsed.items.length).toBe(3);
@@ -155,7 +170,7 @@ describe('filter', () => {
         expect(parsed.items[2].title).toBe('Title3');
     });
 
-    it(`filterout_title`, async () => {
+    it('filterout_title', async () => {
         const response = await app.request('/test/1?filterout_title=Description4|Title5');
         const parsed = await parser.parseString(await response.text());
         expect(parsed.items.length).toBe(4);
@@ -165,7 +180,7 @@ describe('filter', () => {
         expect(parsed.items[3].title).toBe('Title4');
     });
 
-    it(`filterout_title filter_case_sensitive=false`, async () => {
+    it('filterout_title filter_case_sensitive=false', async () => {
         const response = await app.request('/test/1?filterout_title=description4|title5&filter_case_sensitive=false');
         const parsed = await parser.parseString(await response.text());
         expect(parsed.items.length).toBe(4);
@@ -175,7 +190,7 @@ describe('filter', () => {
         expect(parsed.items[3].title).toBe('Title4');
     });
 
-    it(`filterout_description`, async () => {
+    it('filterout_description', async () => {
         const response = await app.request('/test/1?filterout_description=Description4|Title5');
         const parsed = await parser.parseString(await response.text());
         expect(parsed.items.length).toBe(4);
@@ -185,7 +200,7 @@ describe('filter', () => {
         expect(parsed.items[3].title).toBe('Title5');
     });
 
-    it(`filterout_description filter_case_sensitive=false`, async () => {
+    it('filterout_description filter_case_sensitive=false', async () => {
         const response = await app.request('/test/1?filterout_description=description4|title5&filter_case_sensitive=false');
         const parsed = await parser.parseString(await response.text());
         expect(parsed.items.length).toBe(4);
@@ -195,7 +210,7 @@ describe('filter', () => {
         expect(parsed.items[3].title).toBe('Title5');
     });
 
-    it(`filterout_author`, async () => {
+    it('filterout_author', async () => {
         const response = await app.request('/test/1?filterout_author=DIYgod4|DIYgod5');
         const parsed = await parser.parseString(await response.text());
         expect(parsed.items.length).toBe(3);
@@ -204,7 +219,7 @@ describe('filter', () => {
         expect(parsed.items[2].title).toBe('Title3');
     });
 
-    it(`filterout_author filter_case_sensitive default`, async () => {
+    it('filterout_author filter_case_sensitive default', async () => {
         const response = await app.request('/test/1?filterout_author=diygod4|diygod5');
         const parsed = await parser.parseString(await response.text());
         expect(parsed.items.length).toBe(5);
@@ -213,7 +228,7 @@ describe('filter', () => {
         expect(parsed.items[2].title).toBe('Title3');
     });
 
-    it(`filterout_author filter_case_sensitive=false`, async () => {
+    it('filterout_author filter_case_sensitive=false', async () => {
         const response = await app.request('/test/1?filterout_author=diygod4|diygod5&filter_case_sensitive=false');
         const parsed = await parser.parseString(await response.text());
         expect(parsed.items.length).toBe(3);
@@ -222,7 +237,7 @@ describe('filter', () => {
         expect(parsed.items[2].title).toBe('Title3');
     });
 
-    it(`filterout_category`, async () => {
+    it('filterout_category', async () => {
         const response = await app.request('/test/filter?filterout_category=Category0|Category1');
         const parsed = await parser.parseString(await response.text());
         expect(parsed.items.length).toBe(6);
@@ -231,7 +246,7 @@ describe('filter', () => {
         expect(parsed.items[2].title).toBe('Title2');
     });
 
-    it(`filterout_category filter_case_sensitive default`, async () => {
+    it('filterout_category filter_case_sensitive default', async () => {
         const response = await app.request('/test/filter?filterout_category=category0|category1');
         const parsed = await parser.parseString(await response.text());
         expect(parsed.items.length).toBe(8);
@@ -241,7 +256,7 @@ describe('filter', () => {
         expect(parsed.items[3].title).toBe('Title1');
     });
 
-    it(`filterout_category filter_case_sensitive=false`, async () => {
+    it('filterout_category filter_case_sensitive=false', async () => {
         const response = await app.request('/test/filter?filterout_category=category0|category1&filter_case_sensitive=false');
         const parsed = await parser.parseString(await response.text());
         expect(parsed.items.length).toBe(6);
@@ -250,14 +265,14 @@ describe('filter', () => {
         expect(parsed.items[2].title).toBe('Title2');
     });
 
-    it(`filter combination`, async () => {
+    it('filter combination', async () => {
         const response = await app.request('/test/filter?filter_title=Filter&filter_description=Description1');
         const parsed = await parser.parseString(await response.text());
         expect(parsed.items.length).toBe(1);
         expect(parsed.items[0].title).toBe('Filter Title1');
     });
 
-    it(`filterout combination`, async () => {
+    it('filterout combination', async () => {
         const response = await app.request('/test/filter?filterout_title=Filter&filterout_description=Description1');
         const parsed = await parser.parseString(await response.text());
         expect(parsed.items.length).toBe(4);
@@ -266,7 +281,7 @@ describe('filter', () => {
 });
 
 describe('limit', () => {
-    it(`limit`, async () => {
+    it('limit', async () => {
         const response = await app.request('/test/1?limit=3');
         const parsed = await parser.parseString(await response.text());
         expect(parsed.items.length).toBe(3);
@@ -289,16 +304,16 @@ describe('sorted', () => {
 });
 
 describe('tgiv', () => {
-    it(`tgiv`, async () => {
+    it('tgiv', async () => {
         const response = await app.request('/test/1?tgiv=test');
         const parsed = await parser.parseString(await response.text());
-        expect(parsed.items[0].link).toBe(`https://t.me/iv?url=https%3A%2F%2Fgithub.com%2FDIYgod%2FRSSHub%2Fissues%2F1&rhash=test`);
-        expect(parsed.items[1].link).toBe(`https://t.me/iv?url=https%3A%2F%2Fgithub.com%2FDIYgod%2FRSSHub%2Fissues%2F2&rhash=test`);
+        expect(parsed.items[0].link).toBe('https://t.me/iv?url=https%3A%2F%2Fgithub.com%2FDIYgod%2FRSSHub%2Fissues%2F1&rhash=test');
+        expect(parsed.items[1].link).toBe('https://t.me/iv?url=https%3A%2F%2Fgithub.com%2FDIYgod%2FRSSHub%2Fissues%2F2&rhash=test');
     });
 });
 
 describe('empty', () => {
-    it(`empty`, async () => {
+    it('empty', async () => {
         const response1 = await app.request('/test/empty');
         expect(response1.status).toBe(503);
         expect(await response1.text()).toMatch(/Error: this route is empty/);
@@ -311,7 +326,7 @@ describe('empty', () => {
 });
 
 describe('allow_empty', () => {
-    it(`allow_empty`, async () => {
+    it('allow_empty', async () => {
         const response = await app.request('/test/allow_empty');
         expect(response.status).toBe(200);
         const parsed = await parser.parseString(await response.text());
@@ -320,7 +335,7 @@ describe('allow_empty', () => {
 });
 
 describe('wrong_path', () => {
-    it(`wrong_path`, async () => {
+    it('wrong_path', async () => {
         const response = await app.request('/wrong');
         expect(response.status).toBe(404);
         expect(response.headers.get('cache-control')).toBe(`public, max-age=${config.cache.routeExpire}`);
@@ -329,7 +344,7 @@ describe('wrong_path', () => {
 });
 
 describe('fulltext_mode', () => {
-    it(`fulltext`, async () => {
+    it('fulltext', async () => {
         const response = await app.request('/test/1?mode=fulltext');
         expect(response.status).toBe(200);
         const parsed = await parser.parseString(await response.text());
@@ -338,7 +353,7 @@ describe('fulltext_mode', () => {
 });
 
 describe('complicated_description', () => {
-    it(`complicated_description`, async () => {
+    it('complicated_description', async () => {
         const response = await app.request('/test/complicated');
         expect(response.status).toBe(200);
         const parsed = await parser.parseString(await response.text());
@@ -359,7 +374,7 @@ describe('complicated_description', () => {
 });
 
 describe('multimedia_description', () => {
-    it(`multimedia_description`, async () => {
+    it('multimedia_description', async () => {
         const response = await app.request('/test/multimedia');
         expect(response.status).toBe(200);
         const parsed = await parser.parseString(await response.text());
@@ -375,7 +390,7 @@ describe('multimedia_description', () => {
 });
 
 describe('sort', () => {
-    it(`sort`, async () => {
+    it('sort', async () => {
         const response = await app.request('/test/sort');
         expect(response.status).toBe(200);
         const parsed = await parser.parseString(await response.text());
@@ -387,7 +402,7 @@ describe('sort', () => {
 });
 
 describe('mess parameter', () => {
-    it(`date`, async () => {
+    it('date', async () => {
         const response = await app.request('/test/mess');
         expect(response.status).toBe(200);
         const parsed = await parser.parseString(await response.text());
@@ -397,7 +412,7 @@ describe('mess parameter', () => {
 });
 
 describe('opencc', () => {
-    it(`opencc`, async () => {
+    it('opencc', async () => {
         const response = await app.request('/test/opencc?opencc=t2s');
         const parsed = await parser.parseString(await response.text());
         expect(parsed.items[0].title).toBe('小可爱');
@@ -406,7 +421,7 @@ describe('opencc', () => {
 });
 
 describe('brief', () => {
-    it(`brief`, async () => {
+    it('brief', async () => {
         const response = await app.request('/test/brief?brief=100');
         const parsed = await parser.parseString(await response.text());
         expect(parsed.items[0].title).toBe('小可愛');
@@ -417,7 +432,7 @@ describe('brief', () => {
 });
 
 describe('multi parameter', () => {
-    it(`filter before limit`, async () => {
+    it('filter before limit', async () => {
         const response = await app.request('/test/filter-limit?filterout_title=2&limit=2');
         const parsed = await parser.parseString(await response.text());
         expect(parsed.items.length).toBe(2);
@@ -458,5 +473,178 @@ describe('openai', () => {
         const parsedDescriptionOnly = await parser.parseString(await responseDescriptionOnly.text());
         expect(parsedDescriptionOnly.items[0].title).not.toContain('AI processed content.');
         expect(parsedDescriptionOnly.items[0].content).toContain('AI processed content.');
+    });
+});
+
+describe('parameter middleware branches', () => {
+    it('normalizes base urls and updates quote links', async () => {
+        const data = {
+            link: 'example.com/base',
+            item: [
+                {
+                    title: 'Item 1',
+                    link: '/relative',
+                    description: '<div class="rsshub-quote">Quote</div><a href="/foo">Foo</a>',
+                    _extra: {
+                        links: [{ href: 'https://example.com' }],
+                    },
+                },
+                {
+                    title: 'Item 2',
+                    description: '<img src="/img.png" />',
+                },
+            ],
+            allowEmpty: true,
+        };
+
+        const result = await runMiddleware(data, {});
+        expect(result.item[0].link).toBe('http://example.com/relative');
+        expect(result.item[1].description).toContain('http://example.com/img.png');
+        expect(result.item[0]._extra.links[0].content_html).toContain('rsshub-quote');
+    });
+
+    it('keeps items without link in tgiv mode', async () => {
+        const data = {
+            link: 'https://example.com',
+            item: [{ title: 'NoLink' }],
+        };
+
+        const result = await runMiddleware(data, { tgiv: 'hash' });
+        expect(result.item[0].link).toBeUndefined();
+    });
+
+    it('rewrites links for scihub', async () => {
+        const data = {
+            link: 'https://example.com',
+            item: [
+                { title: 'With DOI', doi: '10.1000/xyz' },
+                { title: 'With link', link: 'https://example.com/paper' },
+            ],
+        };
+
+        const result = await runMiddleware(data, { scihub: '1' });
+        expect(result.item[0].link).toBe(`${config.scihub.host}10.1000/xyz`);
+        expect(result.item[1].link).toBe(`${config.scihub.host}https://example.com/paper`);
+    });
+
+    it('throws on invalid brief value', async () => {
+        const data = {
+            link: 'https://example.com',
+            item: [{ title: 'Item', description: 'Desc' }],
+        };
+
+        await expect(runMiddleware(data, { brief: '10' })).rejects.toThrow('Invalid parameter brief');
+    });
+
+    it('processes openai description and title', async () => {
+        const originalInput = config.openai.inputOption;
+
+        const descriptionData = {
+            link: 'https://example.com',
+            item: [
+                {
+                    title: 'Title',
+                    description: 'Description',
+                    link: `https://example.com/${Date.now()}/desc`,
+                },
+            ],
+        };
+        config.openai.inputOption = 'description';
+        const descriptionResult = await runMiddleware(descriptionData, { chatgpt: 'true' });
+        expect(descriptionResult.item[0].description).toContain('AI processed content.');
+
+        const titleData = {
+            link: 'https://example.com',
+            item: [
+                {
+                    title: 'Title',
+                    description: 'Description',
+                    link: `https://example.com/${Date.now()}/title`,
+                },
+            ],
+        };
+        config.openai.inputOption = 'title';
+        const titleResult = await runMiddleware(titleData, { chatgpt: 'true' });
+        expect(titleResult.item[0].title).toContain('AI processed content.');
+
+        config.openai.inputOption = originalInput;
+    });
+});
+
+describe.each([{ engine: 'regexp' as const }, { engine: 're2' as const }])('parameter middleware filtering with $engine engine', ({ engine }) => {
+    it('filters items', async () => {
+        const originalEngine = config.feature.filter_regex_engine;
+        config.feature.filter_regex_engine = engine;
+
+        const data = {
+            link: 'https://example.com',
+            item: [
+                { title: 'Keep', description: 'A' },
+                { title: 'Drop', description: 'B' },
+            ],
+        };
+
+        const result = await runMiddleware(data, { filter: 'Keep' });
+        expect(result.item).toHaveLength(1);
+        expect(result.item[0].title).toBe('Keep');
+
+        config.feature.filter_regex_engine = originalEngine;
+    });
+
+    it('matches categories when other fields do not match', async () => {
+        const originalEngine = config.feature.filter_regex_engine;
+        config.feature.filter_regex_engine = engine;
+
+        const data = {
+            link: 'https://example.com',
+            item: [
+                {
+                    title: 'Nope',
+                    description: 'Also nope',
+                    author: 'Still nope',
+                    category: ['Match'],
+                },
+            ],
+        };
+
+        const result = await runMiddleware(data, { filter: 'Match' });
+        expect(result.item).toHaveLength(1);
+        expect(result.item[0].category).toContain('Match');
+
+        config.feature.filter_regex_engine = originalEngine;
+    });
+});
+
+describe('filter-engine', () => {
+    afterEach(() => {
+        delete process.env.FILTER_REGEX_ENGINE;
+        vi.resetModules();
+    });
+
+    it('filter RE2 engine ReDoS attack', async () => {
+        const freshApp = (await import('@/app')).default;
+
+        const response = await freshApp.request('/test/1?filter=abc(%3F%3Ddef)');
+        expect(response.status).toBe(503);
+        expect(await response.text()).toMatch(/RE2JSSyntaxException/);
+    });
+
+    it('filter Regexp engine backward compatibility', async () => {
+        process.env.FILTER_REGEX_ENGINE = 'regexp';
+
+        const freshApp = (await import('@/app')).default;
+
+        const response = await freshApp.request('/test/1?filter=abc(%3F%3Ddef)');
+        expect(response.status).toBe(200);
+    });
+
+    it('filter Regexp engine test config', async () => {
+        process.env.FILTER_REGEX_ENGINE = 'somethingelse';
+
+        const freshApp = (await import('@/app')).default;
+
+        const response = await freshApp.request('/test/1?filter=abc(%3F%3Ddef)');
+        expect(response.status).toBe(503);
+        expect(await response.text()).toMatch(/somethingelse/);
     });
 });

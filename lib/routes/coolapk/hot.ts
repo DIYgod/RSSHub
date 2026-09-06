@@ -1,10 +1,11 @@
-import { Route } from '@/types';
+import type { Route } from '@/types';
 import got from '@/utils/got';
+
 import utils from './utils';
+
 const getLinkAndTitle = (type, period) => {
     const baseURL = 'https://api.coolapk.com/v6/page/dataList?url=';
-    let link;
-    const res = {};
+    const res = { link: '', title: '' };
     const types = {
         jrrm: {
             title: '今日热门',
@@ -30,6 +31,12 @@ const getLinkAndTitle = (type, period) => {
         },
     };
 
+    if (type === 'jrrm') {
+        res.link = types.jrrm.url;
+        res.title = types.jrrm.title;
+        return res;
+    }
+    let link;
     const periods = {
         daily: {
             description: '日榜',
@@ -40,12 +47,7 @@ const getLinkAndTitle = (type, period) => {
             statType: '7days',
         },
     };
-
-    if (type === 'jrrm') {
-        res.link = types.jrrm.url;
-        res.title = types.jrrm.title;
-        return res;
-    } else if (type === 'ktb') {
+    if (type === 'ktb') {
         const trans = {
             daily: {
                 description: '周榜',
@@ -56,11 +58,11 @@ const getLinkAndTitle = (type, period) => {
                 statDays: '30days',
             },
         };
-        link = `#/feed/coolPictureList?statDays=` + trans[period].statDays + `&listType=statFavNum&buildCard=1&title=` + trans[period].description + `&page=1`;
+        link = '#/feed/coolPictureList?statDays=' + trans[period].statDays + '&listType=statFavNum&buildCard=1&title=' + trans[period].description + '&page=1';
         res.title = '酷图榜-' + trans[period].description;
     } else {
-        link = `#/feed/statList?statType=` + periods[period].statType + `&sortField=` + types[type].sortField + `&title=` + periods[period].description + `&page=1`;
-        res.title = types[type].title + `-` + periods[period].description;
+        link = '#/feed/statList?statType=' + periods[period].statType + '&sortField=' + types[type].sortField + '&title=' + periods[period].description + '&page=1';
+        res.title = types[type].title + '-' + periods[period].description;
     }
     res.link = baseURL + encodeURIComponent(link);
     return res;
@@ -97,7 +99,7 @@ export const route: Route = {
 | period   | daily | weekly |
 
 ::: tip
-  今日热门没有周榜，酷图榜日榜的参数会变成周榜，周榜的参数会变成月榜。
+今日热门没有周榜，酷图榜日榜的参数会变成周榜，周榜的参数会变成月榜。
 :::`,
 };
 
@@ -109,7 +111,7 @@ async function handler(ctx) {
         headers: utils.getHeaders(),
     });
     const data = r.data.data;
-    const t = [];
+    const t: any[] = [];
     for (const i of data) {
         if (i.entityType === 'card') {
             for (const k of i.entities) {
@@ -120,14 +122,12 @@ async function handler(ctx) {
         }
     }
 
-    let out = await Promise.all(t.map((item) => utils.parseDynamic(item)));
-
-    out = out.filter(Boolean);
+    const out = await Promise.all(t.map((item) => utils.parseDynamic(item)));
 
     return {
         title,
         link: 'https://www.coolapk.com/',
-        description: `热榜-` + title,
-        item: out,
+        description: '热榜-' + title,
+        item: out.filter((item) => item !== undefined),
     };
 }

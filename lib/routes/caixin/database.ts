@@ -1,12 +1,12 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
 
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
-import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
-import { art } from '@/utils/render';
-import path from 'node:path';
+import timezone from '@/utils/timezone';
+
+import { renderArticle } from './templates/article';
 
 export const route: Route = {
     path: '/database',
@@ -41,22 +41,22 @@ async function handler() {
 
     const list = $('h4 a')
         .toArray()
-        .map((item) => {
-            item = $(item);
+        .map((item): DataItem => {
+            const $item = $(item);
             return {
-                title: item.text(),
-                link: item.attr('href').replace('http://', 'https://'),
+                title: $item.text(),
+                link: $item.attr('href')!.replace('http://', 'https://'),
             };
         });
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const detailResponse = await got(item.link);
                 const content = load(detailResponse.data);
 
-                item.pubDate = timezone(parseDate(content('#pubtime_baidu').text()), +8);
-                item.description = art(path.join(__dirname, 'templates/article.art'), {
+                item.pubDate = timezone(parseDate(content('#pubtime_baidu').text()), 8);
+                item.description = renderArticle({
                     item,
                     $: content,
                 });

@@ -1,7 +1,9 @@
 import { load } from 'cheerio';
+
+import { config } from '@/config';
+import type { DataItem } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-import { config } from '@/config';
 
 const siteLink = 'https://chinafactcheck.com';
 
@@ -31,30 +33,21 @@ const getArticleDetail = async (link) => {
     });
     const $ = cleanDom(load(response.data));
 
-    const title = $('.content-head h2').text().trim();
-    const author = $('.content-persons p span:last').text().trim();
-    const pubDate = parseDate($('.content-time').text().trim(), 'YYYY-MM-DD');
+    const title = $('.content-head h2').text();
+    const author = $('.content-persons p span:last').text();
+    const pubDate = parseDate($('.content-time').text(), 'YYYY-MM-DD');
 
     const description = $('div[class=content-list-box]').html();
     const category = $('.content-tags a[rel="tag"]')
         .toArray()
-        .map((item) => $(item).text().trim());
-    return new ArticleDetail(title, author, pubDate, description, category);
+        .map((item) => $(item).text());
+    const detail: DataItem = { title, author, pubDate, description, category };
+    return detail;
 };
-class ArticleDetail {
-    constructor(title, author, pubDate, description, category) {
-        this.title = title;
-        this.author = author;
-        this.pubDate = pubDate;
-        this.description = description;
-        this.category = category;
-    }
-}
 
 export default {
     siteLink,
     cleanDom,
     getArticleDetail,
-    ArticleDetail,
     trueUA: config.trueUA,
 };

@@ -1,6 +1,0 @@
-<div>
-    {{question.difficulty}} {{question.date}}
-    <br><br>
-    {{question.tags}}
-    <br><br>
-</div>

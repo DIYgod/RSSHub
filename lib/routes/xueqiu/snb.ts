@@ -1,9 +1,7 @@
-import { Route } from '@/types';
+import type { Route } from '@/types';
 import got from '@/utils/got';
+import { PRESETS } from '@/utils/header-generator';
 import { parseDate } from '@/utils/parse-date';
-import randUserAgent from '@/utils/rand-user-agent';
-
-const UA = randUserAgent({ browser: 'chrome', os: 'android', device: 'mobile' });
 
 export const route: Route = {
     path: '/snb/:id',
@@ -33,15 +31,13 @@ async function handler(ctx) {
     const url = 'https://xueqiu.com/p/' + id;
 
     const response = await got(url, {
-        headers: {
-            'User-Agent': UA,
-        },
+        headerGeneratorOptions: PRESETS.MODERN_ANDROID,
     });
 
     const data = response.data;
-    const pattern = /SNB.cubeInfo = {(.+)}/;
+    const pattern = /SNB.cubeInfo = \{(.+)\}/;
     const info = pattern.exec(data);
-    const obj = JSON.parse('{' + info[1] + '}');
+    const obj = JSON.parse('{' + info![1] + '}');
     const rebalancing_histories = obj.sell_rebalancing.rebalancing_histories;
     const snb_title = obj.name + ' 的调仓历史';
     const snb_description = obj.description;

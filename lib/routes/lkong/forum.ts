@@ -1,21 +1,25 @@
-import { Route } from '@/types';
-
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-import { art } from '@/utils/render';
-import path from 'node:path';
 
 import { viewForum, viewThread } from './query';
+import { renderContent } from './templates/content';
 
 export const route: Route = {
     path: '/forum/:id?/:digest?',
+    categories: ['bbs'],
+    example: '/lkong/forum/60',
+    parameters: {
+        id: '分区 id, 可在分区的URL里找到',
+        digest: '默认获取全部主题，任意值则只获取精华主题',
+    },
     radar: [
         {
             source: ['lkong.com/forum/:id', 'lkong.com/'],
         },
     ],
-    name: 'Unknown',
+    name: '分区',
     maintainers: ['nczitzk', 'ma6254'],
     handler,
 };
@@ -51,9 +55,7 @@ async function handler(ctx) {
 
                 item.author = detailResponse.data.data.thread?.author.name;
                 item.pubDate = parseDate(detailResponse.data.data.thread?.dateline);
-                item.description = art(path.join(__dirname, 'templates/content.art'), {
-                    content: JSON.parse(detailResponse.data.data.posts[0].content),
-                });
+                item.description = renderContent(JSON.parse(detailResponse.data.data.posts[0].content));
                 delete item.guid;
 
                 return item;

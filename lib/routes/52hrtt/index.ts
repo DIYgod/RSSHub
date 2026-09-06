@@ -1,9 +1,10 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
-import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/:area?/:type?',
@@ -23,7 +24,7 @@ export const route: Route = {
     handler,
     description: `地区和分类皆可在浏览器地址栏中找到，下面是一个例子。
 
-  访问华人头条全球站的国际分类，会跳转到 \`https://www.52hrtt.com/global/n/w?infoTypeId=A1459145516533\`。其中 \`global\` 即为 **全球** 对应的地区代码，\`A1459145516533\` 即为 **国际** 对应的分类代码。`,
+访问华人头条全球站的国际分类，会跳转到 \`https://www.52hrtt.com/global/n/w?infoTypeId=A1459145516533\`。其中 \`global\` 即为 **全球** 对应的地区代码，\`A1459145516533\` 即为 **国际** 对应的分类代码。`,
 };
 
 async function handler(ctx) {
@@ -51,7 +52,7 @@ async function handler(ctx) {
         .map((item) => ({
             title: item.infoTitle,
             author: item.quoteFrom,
-            pubDate: timezone(parseDate(item.infoStartTime), +8),
+            pubDate: timezone(parseDate(item.infoStartTime), 8),
             link: `${rootUrl}/${area}/n/w/info/${item.infoCentreId}`,
         }));
 

@@ -1,3 +1,4 @@
+import type { Route } from '@/types';
 import got from '@/utils/got';
 
 const categoryMap = {
@@ -39,7 +40,7 @@ export const route: Route = {
 | ---- | ---- |
 | rec  | hot  |
 
-  目录类型
+目录类型
 
 | 所有 | 绘画 | 视频 | 写作 | 游戏 | 音乐 | 播客 | 摄影 | 技术 | Vtuber | 舞蹈 | 体育 | 旅游 | 美食 | 时尚 | 数码 | 动画 | 其他 |
 | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ------ | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |

@@ -1,8 +1,9 @@
-import { Route } from '@/types';
-import { processItems } from './utils';
-import got from '@/utils/got';
-import cache from '@/utils/cache';
 import { config } from '@/config';
+import type { Route } from '@/types';
+import cache from '@/utils/cache';
+import got from '@/utils/got';
+
+import { processItems } from './utils';
 
 export const route: Route = {
     path: '/news/:lang?/:id?',
@@ -23,12 +24,10 @@ export const route: Route = {
     name: 'News',
     maintainers: ['quiniapiezoelectricity'],
     handler,
-    description: `
-::: tip
+    description: `::: tip
 Parameters can be obtained from the official website, for instance:
-For the site https://www.dw.com/de/deutschland/s-12321 the language code would be \`de\` and the category ID would be \`s-1432\`.
-:::
-`,
+For the site <https://www.dw.com/de/deutschland/s-12321> the language code would be \`de\` and the category ID would be \`s-1432\`.
+:::`,
     radar: [
         {
             source: ['www.dw.com/:lang/:name/:id'],
@@ -37,7 +36,7 @@ For the site https://www.dw.com/de/deutschland/s-12321 the language code would b
     ],
 };
 
-const defaultUrl = `https://www.dw.com/graph-api/en/content/navigation/9097`;
+const defaultUrl = 'https://www.dw.com/graph-api/en/content/navigation/9097';
 const typenames = new Set(['Article', 'Liveblog', 'Video']);
 
 async function handler(ctx) {
@@ -67,7 +66,7 @@ async function handler(ctx) {
     const feed = response.data.data.content;
     cache.set('dw:navigation', feed.topStoriesNavigations, config.cache.routeExpire);
 
-    const list = feed.contentComposition.informationSpaces.flatMap((section) => Object.values(section).flatMap((component) => component[0]?.contents || [])).filter((item) => typenames.has(item.__typename) && item.id);
+    const list = feed.contentComposition.informationSpaces.flatMap((section) => Object.values<any>(section).flatMap((component) => component[0]?.contents || [])).filter((item) => typenames.has(item.__typename) && item.id);
     const items = await processItems(
         list.map((item) => {
             item.link = new URL(item.namedUrl, 'https://www.dw.com').href;

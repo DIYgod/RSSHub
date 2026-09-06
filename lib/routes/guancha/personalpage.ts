@@ -1,4 +1,4 @@
-import { Route } from '@/types';
+import type { Route } from '@/types';
 import got from '@/utils/got';
 
 export const route: Route = {
@@ -38,7 +38,7 @@ async function handler(ctx) {
         const minuteRelativeTime = /(\d+)\s*分钟前/;
         const hourRelativeTime = /(\d+)\s*小时前/;
         const yesterdayRelativeTime = /昨天\s*(\d+):(\d+)/;
-        const shortDate = /(\d+)-(\d+)\s*(\d+):(\d+)/;
+        const shortDate = /(\d+)-(\d+)\s+(\d+):(\d+)/;
 
         // offset to ADD for transforming China time to UTC
         const chinaToUtcOffset = -8 * 3600 * 1000;
@@ -52,15 +52,15 @@ async function handler(ctx) {
             time = new Date();
         } else if (minuteRelativeTime.test(e)) {
             const rel = minuteRelativeTime.exec(e);
-            time = new Date(Date.now() - Number.parseInt(rel[1]) * 60 * 1000);
+            time = new Date(Date.now() - Number.parseInt(rel![1]) * 60 * 1000);
         } else if (hourRelativeTime.test(e)) {
             const rel = hourRelativeTime.exec(e);
-            time = new Date(Date.now() - Number.parseInt(rel[1]) * 60 * 60 * 1000);
+            time = new Date(Date.now() - Number.parseInt(rel![1]) * 60 * 60 * 1000);
         } else if (yesterdayRelativeTime.test(e)) {
             const rel = yesterdayRelativeTime.exec(e);
             // this time is China time data in local timezone
             time = new Date(Date.now() - 86400 * 1000 + localToChinaOffset);
-            time.setHours(Number.parseInt(rel[1]), Number.parseInt(rel[2]), 0, 0);
+            time.setHours(Number.parseInt(rel![1]), Number.parseInt(rel![2]), 0, 0);
             // transform back to china timezone
             time = new Date(time.getTime() - localToChinaOffset);
         } else if (shortDate.test(e)) {
@@ -68,7 +68,7 @@ async function handler(ctx) {
             const now = new Date(Date.now() + localToChinaOffset);
             const year = now.getFullYear();
             // this time is China time data in local timezone
-            time = new Date(year, Number.parseInt(rel[1]) - 1, Number.parseInt(rel[2]), Number.parseInt(rel[3]), Number.parseInt(rel[4]));
+            time = new Date(year, Number.parseInt(rel![1]) - 1, Number.parseInt(rel![2]), Number.parseInt(rel![3]), Number.parseInt(rel![4]));
             // transform back to china timezone
             time = new Date(time.getTime() - localToChinaOffset);
         } else {

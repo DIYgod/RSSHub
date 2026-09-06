@@ -1,8 +1,8 @@
-import { Route } from '@/types';
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/channel/:id',
@@ -32,7 +32,7 @@ async function handler(ctx) {
     const items = response.data.programs.map((item) => ({
         title: item.title,
         link: `https://www.qingting.fm/channels/${ctx.req.param('id')}/programs/${item.id}/`,
-        pubDate: timezone(parseDate(item.update_time), +8),
+        pubDate: timezone(parseDate(item.update_time), 8),
     }));
 
     return {
@@ -42,7 +42,7 @@ async function handler(ctx) {
             items.map((item) =>
                 cache.tryGet(item.link, async () => {
                     response = await ofetch(item.link);
-                    const data = JSON.parse(response.match(/},"program":(.*?),"plist":/)[1]);
+                    const data = JSON.parse(response.match(/\},"program":(.*?),"plist":/)[1]);
                     item.description = data.richtext;
                     return item;
                 })

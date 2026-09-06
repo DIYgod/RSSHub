@@ -1,9 +1,10 @@
-import { Route } from '@/types';
+import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { baseUrl, parsePost, parseItem } from './utils';
+
+import { baseUrl, parseItem, parsePost } from './utils';
 
 const handler = async (ctx) => {
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : undefined;
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : undefined;
 
     const pageResponse = await ofetch(`${baseUrl}/wp-json/wp/v2/pages/89173`);
     const postsResponse = await parsePost(limit, undefined);

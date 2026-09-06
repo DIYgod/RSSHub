@@ -1,9 +1,10 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+import pMap from 'p-map';
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-import { load } from 'cheerio';
-import pMap from 'p-map';
 
 export const route: Route = {
     path: '/realtime/:category?',
@@ -45,7 +46,7 @@ async function handler(ctx) {
         $('article.infScroll').toArray(),
         (item) => {
             const link = $(item).find('.post-title').attr('href');
-            return cache.tryGet(link, async () => {
+            return cache.tryGet(link!, async () => {
                 const response = await got(link);
                 const $ = load(response.data);
                 const mainContent = $('#main-content');
@@ -54,7 +55,7 @@ async function handler(ctx) {
                 titleElement.remove();
                 const postMetaElement = mainContent.find('.post-meta');
                 const category = postMetaElement.find('.category').text();
-                const pubDate = parseDate(postMetaElement.find('time').attr('datetime'));
+                const pubDate = parseDate(postMetaElement.find('time').attr('datetime')!);
                 postMetaElement.remove();
                 $('.post-comments').remove();
 

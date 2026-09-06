@@ -1,5 +1,6 @@
-import { Route } from '@/types';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
+import type { Route } from '@/types';
+
 import { doGot, genSize } from './util';
 
 export const route: Route = {
@@ -40,7 +41,7 @@ async function handler(ctx) {
     const _link = `${host}/prod/core/system/getVideoDetail/${number}`;
 
     const data = (await doGot(0, host, _link)).data;
-    const items = Object.values(data.ecca).flatMap((item) =>
+    const items = Object.values<any[]>(data.ecca).flatMap((item) =>
         item.map((i) => ({
             title: i.zname,
             guid: i.zname,

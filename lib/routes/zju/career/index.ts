@@ -1,6 +1,7 @@
-import { Route } from '@/types';
-import got from '@/utils/got';
 import { load } from 'cheerio';
+
+import type { Route } from '@/types';
+import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
 const rootUrl = 'http://www.career.zju.edu.cn';
@@ -36,25 +37,25 @@ export const route: Route = {
 
 async function handler(ctx) {
     const type = Number.parseInt(ctx.req.param('type'));
-    const id = map.get(type).id;
+    const id = map.get(type)!.id;
     const res = await got(`${host}${id}`);
 
     const $ = load(res.data);
     const list = $('.com-list li');
     const items = list.toArray().map((item) => {
-        item = $(item);
-        const link = item.find('a').eq(0);
+        const $item = $(item);
+        const link = $item.find('a').eq(0);
         return {
             // title: item.find('a').attr('title'),
-            title: item.find('span').eq(0).attr('title'),
-            pubDate: parseDate(item.find('.news-time').text()),
+            title: $item.find('span').eq(0).attr('title')!,
+            pubDate: parseDate($item.find('.news-time').text()),
 
-            link: link.attr('href').startsWith('http') ? link.attr('href') : `${rootUrl}/jyxt${link.attr('data-src')}xwid=${link.attr('data-xwid')}&lmtype=${link.attr('data-lmtype')}`,
+            link: link.attr('href')!.startsWith('http') ? link.attr('href') : `${rootUrl}/jyxt${link.attr('data-src')}xwid=${link.attr('data-xwid')}&lmtype=${link.attr('data-lmtype')}`,
         };
     });
 
     return {
-        title: map.get(type).title,
+        title: map.get(type)!.title,
         link: `${host}${id}`,
         item: items,
     };

@@ -1,8 +1,7 @@
-import { Route } from '@/types';
-
+import type { Route } from '@/types';
 import got from '@/utils/got';
-import { art } from '@/utils/render';
-import path from 'node:path';
+
+import { renderProductDescription } from './templates/product-description';
 import { generateRssData } from './utils';
 
 export const route: Route = {
@@ -24,7 +23,7 @@ export const route: Route = {
         },
     ],
     name: 'Outlet',
-    maintainers: ['EthanWng97'],
+    maintainers: ['IvanWng97'],
     handler,
     description: `Country
 
@@ -32,14 +31,14 @@ export const route: Route = {
 | ------------- | ------ | -------------- |
 | us            | ca     | gb             |
 
-  gender
+gender
 
 | male | female |
 | ---- | ------ |
 | mens | womens |
 
 ::: tip
-  Parameter \`country\` can be found within the url of \`Arcteryx\` website.
+Parameter \`country\` can be found within the url of \`Arcteryx\` website.
 :::`,
 };
 
@@ -69,9 +68,7 @@ async function handler(ctx) {
         item: items.map((item) => ({
             title: item.name,
             link: productUrl + item.slug,
-            description: art(path.join(__dirname, 'templates/product-description.art'), {
-                item,
-            }),
+            description: renderProductDescription(item),
         })),
     };
 }

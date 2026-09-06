@@ -1,4 +1,5 @@
-import { Route } from '@/types';
+import type { Route } from '@/types';
+
 import { handler } from './common/review';
 
 export const route: Route = {
@@ -27,7 +28,7 @@ export const route: Route = {
     name: '游戏评价',
     maintainers: ['hoilc', 'TonyRL'],
     handler,
-    description: `| 最新   | 综合 |
-| --- | --- |
-| new | hot |`,
+    description: `| 最新 | 综合 |
+| ---- | ---- |
+| new  | hot  |`,
 };

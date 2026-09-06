@@ -1,5 +1,7 @@
-import { Route, ViewType } from '@/types';
+import type { Route } from '@/types';
+import { ViewType } from '@/types';
 import cache from '@/utils/cache';
+
 import { getData, getList } from './utils';
 
 export const route: Route = {
@@ -54,6 +56,6 @@ async function handler() {
         description: 'Daily Updates on stockedge.com',
         logo: 'https://web.stockedge.com/assets/icon/favicon.png',
         icon: 'https://web.stockedge.com/assets/img/light/icon.png',
-        language: 'en-us',
+        language: 'en-us' as const,
     };
 }

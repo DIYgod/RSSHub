@@ -1,6 +1,7 @@
-import { Route } from '@/types';
-import got from '@/utils/got';
 import { JSDOM } from 'jsdom';
+
+import type { Route } from '@/types';
+import got from '@/utils/got';
 
 export const route: Route = {
     path: '/hottest',
@@ -27,11 +28,7 @@ export const route: Route = {
 };
 
 async function handler() {
-    const data = await got.get(`https://www.hotukdeals.com/`, {
-        headers: {
-            Referer: `https://www.hotukdeals.com/`,
-        },
-    });
+    const data = await got.get('https://www.hotukdeals.com/');
 
     const dom = new JSDOM(data.data, {
         runScripts: 'dangerously',
@@ -39,8 +36,8 @@ async function handler() {
     const threads = dom.window.__INITIAL_STATE__.widgets.hottestWidget.threads;
 
     return {
-        title: `hotukdeals hottest`,
-        link: `https://www.hotukdeals.com/`,
+        title: 'hotukdeals hottest',
+        link: 'https://www.hotukdeals.com/',
         item: threads.map((item) => ({
             title: item.title,
             description: `<img src="https://images.hotukdeals.com/${item.mainImage.path}/${item.mainImage.name}/re/768x768/qt/60/${item.mainImage.name}.jpg"><br>${item.temperature}° ${item.title}<br>${item.displayPrice}`,

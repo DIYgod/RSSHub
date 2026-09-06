@@ -1,39 +1,31 @@
+import type { Data } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { Data } from '@/types';
-import { Article, Language, SUPPORTED_LANGUAGES } from './constants';
 
-/**
- * Parse a number or a number as string.\
- * **NOTE:** this may return `NaN` if the string is not a number or the value is `undefined` and no {@link fallback} is provided.
- */
-export const parseInteger = (value?: string | number, fallback?: number): number => {
-    if (typeof value === 'number') {
-        return value;
-    }
+import type { Article } from './constants';
+import { Language, SUPPORTED_LANGUAGES } from './constants';
 
+/** Parse a query string value as a number, falling back to {@link fallback} when it is absent or not a number. */
+export const parseInteger = (value: string | undefined, fallback: number): number => {
     if (value === undefined) {
-        return fallback === undefined ? NaN : fallback;
-    }
-
-    const parsed = Number.parseInt(value, 10);
-
-    if (fallback !== undefined && Number.isNaN(parsed)) {
         return fallback;
     }
 
-    return parsed;
+    const parsed = Number(value);
+
+    return Number.isNaN(parsed) ? fallback : parsed;
 };
 
 /** Type-guard to ensure {@link language} is a valid value of {@link SUPPORTED_LANGUAGES}. */
-export const isValidLanguage = (language: string): language is Language => SUPPORTED_LANGUAGES.includes(language as Language);
+export const isValidLanguage = (language: string): language is Language => SUPPORTED_LANGUAGES.some((supported) => supported === language);
 
 /** Fetch the articles for a given language in a given category. */
-export const fetchArticles = (language: Language): Promise<Article[]> => {
+export const fetchArticles = async (language: Language): Promise<Article[]> => {
     if (language === Language.Chinese) {
         return ofetch<Article[]>('https://media-cdn-mingchao.kurogame.com/akiwebsite/website2.0/json/G152/zh/ArticleMenu.json', { query: { t: Date.now() } });
     }
 
-    return ofetch<{ article: Article[] }>(`https://hw-media-cdn-mingchao.kurogame.com/akiwebsite/website2.0/json/G152/${language}/MainMenu.json`).then((data) => data.article);
+    const data = await ofetch<{ article: Article[] }>(`https://hw-media-cdn-mingchao.kurogame.com/akiwebsite/website2.0/json/G152/${language}/MainMenu.json`);
+    return data.article;
 };
 
 /** Get the link to the article content. */

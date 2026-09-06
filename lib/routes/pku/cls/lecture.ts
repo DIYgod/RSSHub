@@ -1,6 +1,7 @@
-import { Route } from '@/types';
-import got from '@/utils/got';
 import { load } from 'cheerio';
+
+import type { Route } from '@/types';
+import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
 const homeUrl = 'http://bio.pku.edu.cn/homes/Index/news_jz/7/7.html';
@@ -35,9 +36,9 @@ async function handler() {
 
     const $ = load(response.data);
     return {
-        title: `北京大学生命科学学院近期讲座`,
+        title: '北京大学生命科学学院近期讲座',
         link: homeUrl,
-        description: `北京大学生命科学学院近期讲座`,
+        description: '北京大学生命科学学院近期讲座',
         item: $('a.clearfix')
             .toArray()
             .map((item) => ({

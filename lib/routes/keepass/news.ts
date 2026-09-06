@@ -1,12 +1,15 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/',
-    name: 'Unknown',
+    categories: ['program-update'],
+    example: '/keepass',
+    name: 'News',
     maintainers: ['TonyRL'],
     handler,
 };
@@ -18,20 +21,20 @@ async function handler(ctx) {
 
     const list = $('p > a')
         .toArray()
-        .map((elem) => {
-            elem = $(elem);
+        .map((elem): DataItem => {
+            const $elem = $(elem);
             return {
-                title: elem.find('b').text(),
-                link: new URL(elem.attr('href'), baseUrl).href,
-                pubDate: parseDate(elem.next().next('small').text().split('.')[0]),
+                title: $elem.find('b').text(),
+                link: new URL($elem.attr('href')!, baseUrl).href,
+                pubDate: parseDate($elem.next().next('small').text().split('.', 1)[0]),
             };
         })
-        .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 10);
+        .slice(0, ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 10);
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
-                if (!item.link.startsWith('https://keepass.info/')) {
+            cache.tryGet(item.link!, async () => {
+                if (!item.link!.startsWith('https://keepass.info/')) {
                     return item;
                 }
 
@@ -48,7 +51,7 @@ async function handler(ctx) {
     );
 
     return {
-        title: $('head title').attr('content'),
+        title: $('head title').text(),
         link: baseUrl,
         item: items,
     };

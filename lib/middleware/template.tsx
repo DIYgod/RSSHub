@@ -1,10 +1,10 @@
-import { rss3, json, RSS, Atom } from '@/utils/render';
-import { config } from '@/config';
-import { collapseWhitespace, convertDateToISO8601 } from '@/utils/common-utils';
 import type { MiddlewareHandler } from 'hono';
-import { Data } from '@/types';
 
+import { config } from '@/config';
+import type { Data } from '@/types';
 import cacheModule from '@/utils/cache/index';
+import { collapseWhitespace, convertDateToISO8601 } from '@/utils/common-utils';
+import { Atom, json, RSS, rss3 } from '@/utils/render';
 
 const middleware: MiddlewareHandler = async (ctx, next) => {
     // Set RSS <ttl> (minute) according to the availability of cache
@@ -20,7 +20,7 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
     }
 
     const data: Data = ctx.get('data');
-    const outputType = ctx.req.query('format') || 'rss';
+    const outputType = ctx.req.query('format') || config.format;
 
     // only enable when debugInfo=true
     if (config.debugInfo) {
@@ -28,7 +28,7 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
             return ctx.json(ctx.get('json') || { message: 'plugin does not set debug json' });
         }
 
-        if (/(\d+)\.debug\.html$/.test(outputType)) {
+        if (/\d+\.debug\.html$/.test(outputType)) {
             const index = Number.parseInt(outputType.match(/(\d+)\.debug\.html$/)?.[1] || '0');
             return ctx.html(data?.item?.[index]?.description || `data.item[${index}].description not found`);
         }
@@ -36,8 +36,8 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
 
     if (data) {
         data.title = collapseWhitespace(data.title) || '';
-        data.description && (data.description = collapseWhitespace(data.description) || '');
-        data.author && (data.author = collapseWhitespace(data.author) || '');
+        data.description &&= collapseWhitespace(data.description) || '';
+        data.author &&= collapseWhitespace(data.author) || '';
 
         if (data.item) {
             for (const item of data.item) {
@@ -58,21 +58,22 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
                     // https://stackoverflow.com/questions/1497885/remove-control-characters-from-php-string/1497928#1497928
                     // remove unicode control characters
                     // see #14940 #14943 #15262
-                    item.description = item.description.replaceAll(/[\u0000-\u0009\u000B\u000C\u000E-\u001F\u007F\u200B\uFFFF]/g, '');
+                    // oxlint-disable-next-line no-control-regex
+                    item.description = item.description.replaceAll(/[\u{0000}-\u{0009}\v\f\u{000E}-\u{001F}\u{007F}\u{200B}\u{FFFF}]/gu, '');
                 }
 
-                if (typeof item.author === 'string') {
-                    item.author = collapseWhitespace(item.author) || '';
-                } else if (typeof item.author === 'object' && item.author !== null) {
+                if (Array.isArray(item.author)) {
                     for (const a of item.author) {
                         a.name = collapseWhitespace(a.name) || '';
                     }
                     if (outputType !== 'json') {
-                        item.author = item.author.map((a: { name: string }) => a.name).join(', ');
+                        item.author = item.author.map((a) => a.name).join(', ');
                     }
+                } else if (item.author) {
+                    item.author = collapseWhitespace(item.author) || '';
                 }
 
-                if (item.itunes_duration && ((typeof item.itunes_duration === 'string' && !item.itunes_duration.includes(':')) || (typeof item.itunes_duration === 'number' && !Number.isNaN(item.itunes_duration)))) {
+                if (item.itunes_duration && !String(item.itunes_duration).includes(':')) {
                     item.itunes_duration = +item.itunes_duration;
                     item.itunes_duration =
                         Math.floor(item.itunes_duration / 3600) + ':' + (Math.floor((item.itunes_duration % 3600) / 60) / 100).toFixed(2).slice(-2) + ':' + (((item.itunes_duration % 3600) % 60) / 100).toFixed(2).slice(-2);
@@ -80,12 +81,12 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
 
                 if (outputType !== 'rss') {
                     try {
-                        item.pubDate && (item.pubDate = convertDateToISO8601(item.pubDate) || '');
+                        item.pubDate &&= convertDateToISO8601(item.pubDate) || '';
                     } catch {
                         item.pubDate = '';
                     }
                     try {
-                        item.updated && (item.updated = convertDateToISO8601(item.updated) || '');
+                        item.updated &&= convertDateToISO8601(item.updated) || '';
                     } catch {
                         item.updated = '';
                     }
@@ -109,22 +110,22 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
 
     if (ctx.get('redirect')) {
         return ctx.redirect(ctx.get('redirect'), 301);
-    } else if (ctx.get('no-content')) {
+    }
+    if (ctx.get('no-content')) {
         return ctx.body(null);
-    } else {
-        // retain .ums for backward compatibility
-        switch (outputType) {
-            case 'ums':
-            case 'rss3':
-                return ctx.json(rss3(result));
-            case 'json':
-                ctx.header('Content-Type', 'application/feed+json; charset=UTF-8');
-                return ctx.body(json(result));
-            case 'atom':
-                return ctx.render(<Atom data={result} />);
-            default:
-                return ctx.render(<RSS data={result} />);
-        }
+    }
+    // retain .ums for backward compatibility
+    switch (outputType) {
+        case 'ums':
+        case 'rss3':
+            return ctx.json(rss3(result));
+        case 'json':
+            ctx.header('Content-Type', 'application/feed+json; charset=UTF-8');
+            return ctx.body(json(result));
+        case 'atom':
+            return ctx.render(<Atom data={result} />);
+        default:
+            return ctx.render(<RSS data={result} />);
     }
 };
 

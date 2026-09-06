@@ -1,19 +1,22 @@
-import { Route } from '@/types';
-import got from '@/utils/got';
 import { load } from 'cheerio';
-import * as url from 'node:url';
+
+import type { Route } from '@/types';
+import got from '@/utils/got';
 
 const host = 'https://www.douban.com/explore/column/';
 export const route: Route = {
     path: '/explore/column/:id',
-    name: 'Unknown',
-    maintainers: [],
+    categories: ['social-media'],
+    example: '/douban/explore/column/2',
+    parameters: { id: '分栏目id' },
+    name: '浏览发现分栏目',
+    maintainers: ['LogicJake'],
     handler,
 };
 
 async function handler(ctx) {
     const id = ctx.req.param('id');
-    const link = url.resolve(host, id);
+    const link = new URL(id, host).href;
     const response = await got.get(link);
     const $ = load(response.data);
     const title = $('div.h1').text();

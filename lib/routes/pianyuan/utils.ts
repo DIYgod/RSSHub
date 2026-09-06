@@ -1,7 +1,9 @@
 import { load } from 'cheerio';
-import got from '@/utils/got';
+
 import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
+import got from '@/utils/got';
+
 const security_key = 'pianyuan-security_session_verify';
 const PHPSESSID_key = 'pianyuan-PHPSESSID';
 const loginauth_key = 'pianyuan-py_loginauth';
@@ -21,9 +23,9 @@ const ProcessFeed = async (list, cache) => {
                 const size = content('#main-container > div > div.col-sm-10.col-md-8.col-lg-8 > div > ul > li:nth-child(2)').text();
                 let length;
                 if (size.includes('MB')) {
-                    length = size.replace('MB', '') * 1024;
+                    length = Number(size.replace('MB', '')) * 1024;
                 } else if (size.includes('GB')) {
-                    length = size.replace('GB', '') * 1024 * 1024;
+                    length = Number(size.replace('GB', '')) * 1024 * 1024;
                 }
                 // const description ='';
 
@@ -69,11 +71,11 @@ async function request(link, cache) {
     if (set_cookie) {
         for (const e of set_cookie) {
             if (e.includes('security_session_verify')) {
-                cache.set(security_key, e.split(';')[0]);
+                cache.set(security_key, e.split(';', 1)[0]);
             } else if (e.includes('PHPSESSID')) {
-                cache.set(PHPSESSID_key, e.split(';')[0]);
+                cache.set(PHPSESSID_key, e.split(';', 1)[0]);
             } else if (e.includes('py_loginauth')) {
-                cache.set(loginauth_key, e.split(';')[0]);
+                cache.set(loginauth_key, e.split(';', 1)[0]);
             }
         }
     }

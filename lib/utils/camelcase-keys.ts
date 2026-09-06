@@ -1,5 +1,4 @@
-const isObject = (obj: any) => obj && typeof obj === 'object';
-const isPlainObject = (obj: any) => isObject(obj) && Object.prototype.toString.call(obj) === '[object Object]' && Object.getPrototypeOf(obj) === Object.prototype;
+const isPlainObject = (obj: any) => Boolean(obj) && Object.prototype.toString.call(obj) === '[object Object]' && Object.getPrototypeOf(obj) === Object.prototype;
 
 /**
  * A simple camelCase function that only handles strings, but not handling symbol, date, or other complex case.
@@ -7,16 +6,17 @@ const isPlainObject = (obj: any) => isObject(obj) && Object.prototype.toString.c
  */
 export const camelcaseKeys = <T = any>(obj: any): T => {
     if (Array.isArray(obj)) {
-        return obj.map((x) => camelcaseKeys(x)) as any;
+        const result: any = obj.map((x) => camelcaseKeys(x));
+        return result;
     }
 
     if (isPlainObject(obj)) {
         const result: any = {};
-        for (const key of Object.keys(obj)) {
+        for (const [key, value] of Object.entries(obj)) {
             const nextKey = isMongoId(key) ? key : camelcase(key);
-            result[nextKey] = camelcaseKeys(obj[key]);
+            result[nextKey] = camelcaseKeys(value);
         }
-        return result as any;
+        return result;
     }
 
     return obj;
@@ -25,4 +25,4 @@ export const camelcaseKeys = <T = any>(obj: any): T => {
 export function camelcase(str: string) {
     return str.replace(/^_+/, '').replaceAll(/([_-][a-z])/gi, ($1) => $1.toUpperCase().replace('-', '').replace('_', ''));
 }
-const isMongoId = (id: string) => id.length === 24 && /^[\dA-Fa-f]{24}$/.test(id);
+const isMongoId = (id: string) => id.length === 24 && /^[\dA-F]{24}$/i.test(id);
