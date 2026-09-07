@@ -59,15 +59,9 @@ export const route: Route = {
                     const startDate = dateParts[0] || undefined;
                     const endDate = dateParts[1] || undefined;
 
-                    let imgUrl: string | undefined;
                     const scriptText = $li.find('p.image script').html() || '';
-                    const jsonMatch = scriptText.match(/var\s+jsonImageStr\s*=\s*'(\[.*?\])'/s);
-                    if (jsonMatch?.[1]) {
-                        const images = JSON.parse(jsonMatch[1]) as Array<{ savepath?: string }>;
-                        if (images[0]?.savepath) {
-                            imgUrl = new URL(images[0].savepath, baseUrl).href;
-                        }
-                    }
+                    const images = JSON.parse(scriptText.match(/var\s+jsonImageStr\s*=\s*'(\[.*?\])'/s)![1]) as Array<{ savepath: string }>;
+                    const imgUrl = new URL(images[0].savepath, baseUrl).href;
 
                     return cache.tryGet(link, async (): Promise<DataItem> => {
                         // Fetch detail page for pubDate
