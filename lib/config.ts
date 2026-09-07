@@ -14,6 +14,7 @@ type ConfigEnvKeys =
     | 'CHROMIUM_EXECUTABLE_PATH'
     // Network
     | 'PORT'
+    | 'SOCKET'
     | 'LISTEN_INADDR_ANY'
     | 'DISABLE_IPV6'
     | 'REQUEST_RETRY'
@@ -270,6 +271,7 @@ export type Config = {
     // network
     connect: {
         port: number;
+        socket?: string;
     };
     listenInaddrAny: boolean;
     disableIPv6: boolean;
@@ -776,6 +778,7 @@ const calculateValue = () => {
         // network
         connect: {
             port: toInt(envs.PORT, 1200), // 监听端口
+            socket: envs.SOCKET || undefined, // listen on a unix socket instead of a TCP port
         },
         listenInaddrAny: toBoolean(envs.LISTEN_INADDR_ANY, true), // 是否允许公网连接，取值 0 1
         disableIPv6: toBoolean(envs.DISABLE_IPV6, false),
