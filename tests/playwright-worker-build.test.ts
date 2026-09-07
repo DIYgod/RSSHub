@@ -20,10 +20,14 @@ afterAll(async () => {
 
 describe('Playwright Worker client build', () => {
     it('keeps the native module namespace out of the Worker shim dependency cycle', () => {
-        const result = addBuiltinRequireMap('require("node:module"); require("process");');
+        const input = 'import { createRequire } from "node:module";\nvar __require = /* #__PURE__ */ (() => createRequire(import.meta.url))();\nrequire("node:module"); require("process");';
+        const result = addBuiltinRequireMap(input);
+        expect(result.source).not.toContain('createRequire');
+        expect(result.source).toContain('var __require = (...args) => require(...args);');
         expect(result.source).toContain('import * as builtin0 from "module";');
         expect(result.source).not.toContain('from "node:module"');
         expect(result.source).toContain('"node:module": (builtin0.default ?? builtin0)');
+        expect(() => addBuiltinRequireMap('require("node:module");')).toThrow('exactly one createRequire import');
     });
 
     it('fails visibly when a dependency update changes or duplicates a metadata require', () => {
@@ -60,6 +64,8 @@ describe('Playwright Worker client build', () => {
         const { stdout } = await exec(process.execPath, ['--input-type=module', '-e', script], { timeout: 20000 });
         expect(stdout).toBe('lazy-client-ready');
         expect(result.builtins).toContain('process');
+        const bundleSource = await readFile(path.join(outputDir, 'playwright-worker.mjs'), 'utf8');
+        expect(bundleSource).not.toContain('createRequire(import.meta.url)');
         const manifest = JSON.parse(await readFile(path.join(outputDir, 'playwright-worker.json'), 'utf8'));
         expect(manifest.version).toBe(result.version);
     }, 30000);

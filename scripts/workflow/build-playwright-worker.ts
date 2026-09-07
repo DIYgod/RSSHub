@@ -3,7 +3,7 @@ import { builtinModules, createRequire } from 'node:module';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-import { build } from 'esbuild';
+import { rolldown } from 'rolldown';
 
 const repoRoot = fileURLToPath(new URL('../..', import.meta.url));
 const packageRequire = createRequire(new URL('../../package.json', import.meta.url));
@@ -11,6 +11,8 @@ const patchrightRequire = createRequire(packageRequire.resolve('patchright'));
 const corePath = patchrightRequire.resolve('patchright-core/lib/coreBundle');
 const packageDir = path.dirname(path.dirname(corePath));
 const builtinNames = new Set(builtinModules.map((name) => name.replace(/^node:/, '')));
+
+const workerEntryId = '\0virtual:playwright-worker-entry.mjs';
 
 type Metadata = Record<'package.json' | 'browsers.json', unknown>;
 
@@ -30,6 +32,16 @@ export function inlinePackageMetadata(source: string, metadata: Metadata) {
 }
 
 export function addBuiltinRequireMap(source: string) {
+    const importLine = 'import { createRequire } from "node:module";\n';
+    if (source.split(importLine).length - 1 !== 1) {
+        throw new Error('Playwright Worker build expected exactly one createRequire import');
+    }
+    source = source.replace(importLine, '');
+    const helperPattern = /^var __require = .*createRequire\(import\.meta\.url\).*;$/gm;
+    if (source.matchAll(helperPattern).toArray().length !== 1) {
+        throw new Error('Playwright Worker build expected exactly one createRequire runtime helper');
+    }
+    source = source.replace(helperPattern, 'var __require = (...args) => require(...args);');
     const usedBuiltins = [
         ...new Set(
             source
@@ -62,50 +74,54 @@ export async function buildPlaywrightWorker(outputDir = path.join(repoRoot, 'ass
         'package.json': packageMetadata,
         'browsers.json': JSON.parse(browsersJson),
     });
-    const result = await build({
-        stdin: {
-            // Patchright initializes AbortController and other request-scoped state.
-            // Keep its first import inside the caller's Worker request handler.
-            contents: `let corePromise;
-export function getPlaywrightCore() {
-    return corePromise ??= import('rsshub-playwright-core').then((module) => module.default ?? module);
-}`,
-            loader: 'js',
-            resolveDir: repoRoot,
-            sourcefile: 'playwright-worker.mjs',
-        },
-        bundle: true,
-        format: 'esm',
+    const bundle = await rolldown({
+        input: workerEntryId,
         platform: 'node',
-        target: 'esnext',
+        treeshake: false,
         // Remote Chromium needs neither the local BiDi mapper nor macOS file watching.
         // A runtime call to an unbundled optional module fails through the require map.
-        external: ['chromium-bidi/*', 'fsevents'],
-        write: false,
-        define: {
-            __dirname: JSON.stringify('/bundle/lib'),
-            __filename: JSON.stringify('/bundle/lib/coreBundle.js'),
+        external: (id) => id === 'fsevents' || id.startsWith('chromium-bidi/'),
+        transform: {
+            define: {
+                __dirname: JSON.stringify('/bundle/lib'),
+                __filename: JSON.stringify('/bundle/lib/coreBundle.js'),
+            },
         },
+        logLevel: 'silent',
         plugins: [
             {
                 name: 'playwright-worker-metadata',
-                setup(builder) {
-                    builder.onResolve({ filter: /^rsshub-playwright-core$/ }, () => ({ path: corePath }));
-                    builder.onLoad({ filter: /\/lib\/coreBundle\.js$/ }, (args) => {
-                        if (args.path === corePath) {
-                            return { contents: source, loader: 'js', resolveDir: path.dirname(corePath) };
-                        }
-                    });
+                resolveId(id) {
+                    if (id === workerEntryId || id === 'rsshub-playwright-core') {
+                        return id === workerEntryId ? workerEntryId : corePath;
+                    }
+                    return null;
+                },
+                load(id) {
+                    if (id === workerEntryId) {
+                        // Patchright initializes AbortController and other request-scoped state.
+                        // Keep its first import inside the caller's Worker request handler.
+                        return `let corePromise;
+export function getPlaywrightCore() {
+    return corePromise ??= import('rsshub-playwright-core').then((module) => module.default ?? module);
+}`;
+                    }
+                    if (id === corePath) {
+                        return source;
+                    }
+                    return null;
                 },
             },
         ],
     });
-    const generated = addBuiltinRequireMap(result.outputFiles[0].text);
+    const { output } = await bundle.generate({ format: 'esm', codeSplitting: false });
+    const generated = addBuiltinRequireMap(output[0].code);
     await mkdir(outputDir, { recursive: true });
     await Promise.all([
         writeFile(path.join(outputDir, 'playwright-worker.mjs'), generated.source),
         writeFile(path.join(outputDir, 'playwright-worker.json'), JSON.stringify({ version: packageMetadata.version, builtins: generated.usedBuiltins }, null, 2) + '\n'),
     ]);
+    await bundle.close();
     return { version: packageMetadata.version, bytes: Buffer.byteLength(generated.source), builtins: generated.usedBuiltins };
 }
 

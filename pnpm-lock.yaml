@@ -368,9 +368,6 @@ importers:
       domhandler:
         specifier: 6.0.1
         version: 6.0.1
-      esbuild:
-        specifier: 0.28.1
-        version: 0.28.1
       eslint:
         specifier: 10.9.1
         version: 10.9.1(jiti@2.7.0)
@@ -446,6 +443,9 @@ importers:
       remark-parse:
         specifier: 11.0.0
         version: 11.0.0
+      rolldown:
+        specifier: 1.2.7
+        version: 1.2.7
       tsdown:
         specifier: 0.23.0
         version: 0.23.0(@typescript/typescript6@6.0.2)(oxc-resolver@11.24.2)(tsx@4.23.13)(unrun@0.3.1)
