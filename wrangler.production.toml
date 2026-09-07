@@ -1,3 +1,4 @@
+# Cloudflare Workers Builds must use: wrangler deploy --config wrangler.production.toml
 name = "rsshub"
 main = "dist-worker/worker.mjs"
 compatibility_date = "2026-09-01"
@@ -30,14 +31,13 @@ binding = "BROWSER"
 binding = "CACHE"
 
 # PLAYWRIGHT_WS_ENDPOINT takes priority over BROWSER; use a matching Playwright version.
-# Optional service binding when the WebSocket server is another Worker on this account.
-# [[services]]
-# binding = "PLAYWRIGHT_SERVICE"
-# service = "your-playwright-service"
+[[services]]
+binding = "PLAYWRIGHT_SERVICE"
+service = "cloudflare-patchright"
 
 [vars]
 # Only use the service binding for this endpoint origin.
-# PLAYWRIGHT_SERVICE_ORIGIN = "https://your-playwright-service.example.com"
+PLAYWRIGHT_SERVICE_ORIGIN = "https://cloudflare-patchright.rss3.workers.dev"
 # Environment variables can be set here or via wrangler secret
 # DEBUG_INFO = "false"
 

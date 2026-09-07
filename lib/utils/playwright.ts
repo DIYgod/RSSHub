@@ -83,13 +83,14 @@ const toBrowserlessCDPLaunchOptions = (currentProxy?: ProxyState | null): Browse
     };
 };
 
-const getContextOptions = (): BrowserContextOptions => ({
+const getContextOptions = (javaScriptEnabled?: boolean): BrowserContextOptions => ({
+    ...(javaScriptEnabled !== undefined && { javaScriptEnabled }),
     ignoreHTTPSErrors: true,
     userAgent: config.ua,
 });
 
 // CDP > WS > local
-const launchBrowser = async (currentProxy?: ProxyState | null) => {
+const launchBrowser = async (currentProxy?: ProxyState | null, javaScriptEnabled?: boolean) => {
     let browser: Browser;
     if (config.playwrightCDPEndpoint) {
         browser = await chromium.connectOverCDP(getBrowserlessEndpoint(config.playwrightCDPEndpoint, toBrowserlessCDPLaunchOptions(currentProxy)));
@@ -99,7 +100,7 @@ const launchBrowser = async (currentProxy?: ProxyState | null) => {
         browser = await chromium.launch(getLaunchOptions(currentProxy));
     }
     try {
-        const context = await browser.newContext(getContextOptions());
+        const context = await browser.newContext(getContextOptions(javaScriptEnabled));
         return { browser, context };
     } catch (error) {
         await browser.close();
@@ -132,6 +133,7 @@ export default async function outPlaywright() {
 
 // No-op in Node.js environment (used by Worker build via alias)
 export const setBrowserBinding = (_binding: any) => {};
+export const setPlaywrightServiceBinding = (_binding?: unknown, _origin?: string) => {};
 
 /**
  * @returns Playwright page
@@ -143,9 +145,14 @@ export const getPlaywrightPage = async (
         closeTimeout?: number;
         gotoConfig?: GotoOptions;
         noGoto?: boolean;
+        javaScriptEnabled?: boolean;
+        useConfiguredEndpoint?: boolean;
         onBeforeLoad?: (page: Page, context?: BrowserContext) => Promise<void> | void;
     } = {}
 ) => {
+    if (instanceOptions.useConfiguredEndpoint && !config.playwrightWSEndpoint) {
+        throw new Error('Configure PLAYWRIGHT_WS_ENDPOINT to use the remote Playwright browser.');
+    }
     let allowProxy = false;
     const proxyRegex = new RegExp(proxy.proxyObj.url_regex);
     let urlHandler: URL | undefined;
@@ -162,7 +169,7 @@ export const getPlaywrightPage = async (
     const currentProxy = proxy.getCurrentProxy();
     const currentProxyState = currentProxy && allowProxy ? currentProxy : null;
     const hasProxy = Boolean(getProxyOptions(currentProxyState).proxy);
-    const { browser, context } = await launchBrowser(currentProxyState);
+    const { browser, context } = await launchBrowser(currentProxyState, instanceOptions.javaScriptEnabled);
     const closeTimer = scheduleClose(browser, instanceOptions.closeTimeout);
     const destroy = async () => {
         clearTimeout(closeTimer);
