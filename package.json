@@ -165,7 +165,7 @@
         "@types/json-bigint": "1.0.4",
         "@types/jsrsasign": "10.5.15",
         "@types/module-alias": "2.0.4",
-        "@types/node": "26.4.0",
+        "@types/node": "26.4.1",
         "@types/sanitize-html": "2.16.1",
         "@typescript-eslint/eslint-plugin": "8.69.0",
         "@typescript-eslint/parser": "8.69.0",
