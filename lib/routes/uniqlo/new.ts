@@ -24,7 +24,7 @@ async function handler(ctx) {
 
     const map = {
         sg: {
-            url: 'https://www.uniqlo.com/sg/api/commerce/v3/en/products',
+            url: 'https://www.uniqlo.com/sg/api/commerce/v5/en/products',
             withFlag: true,
             path: {
                 women: 5855,
@@ -56,26 +56,32 @@ async function handler(ctx) {
         },
     };
     const { data } = await got(map[country].url, {
+        headers: {
+            'x-fr-clientid': `uq.${country}.web-spa`,
+        },
         searchParams: {
             path: map[country].path[category],
-            flagCodes: map[country].withFlag ? 'salesStart newSKU,salesStart newSKU,salesStart newSKU' : undefined,
+            flagCodes: map[country].withFlag ? 'salesStart,newSKU' : undefined,
             sort: 1,
             limit: 24,
             offset: 0,
+            httpFailure: true,
         },
     });
 
-    const items = data.result.items.map((item) => ({
-        title: item.name,
-        link: `https://www.uniqlo.com/${country}/${map[country].lang || 'en'}/products/${item.productId}`,
-        description: `${item.longDescription || item.name}<br><br>Price: ${(item.prices.base || item.prices.promo).currency.symbol}${(item.prices.base || item.prices.promo).value}<br><br>${
-            item.images.main.length ? item.images.main.map((image) => `<img src="${image.url || image.image}">`).join('') : ''
-        }${item.images.sub.map((image) => `<img src="${image.url || image.image}">`).join('')}`,
-    }));
+    const items = data.result.items.map((item) => {
+        const price = item.prices.base || item.prices.promo;
+        const images = [...Object.values<{ url?: string; image?: string }>(item.images.main || {}), ...(item.images.sub || [])];
+        return {
+            title: item.name,
+            link: `https://www.uniqlo.com/${country}/${map[country].lang || 'en'}/products/${item.productId}`,
+            description: `${item.longDescription || ''}<br><br>Price: ${price.currency.symbol}${price.value}<br><br>${images.map((image) => `<img src="${image.url || image.image}">`).join('')}`,
+        };
+    });
 
     return {
         title: `Uniqlo ${category} new arrivals in ${country}`,
-        link: `https://www.uniqlo.com/${country}/${map[country].lang || 'en'}/feature/new/${category}`,
+        link: `https://www.uniqlo.com/${country}/${map[country].lang || 'en'}/feature/new/${category}/`,
         item: items,
     };
 }

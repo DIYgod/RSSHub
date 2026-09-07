@@ -3,6 +3,8 @@ import logger from '@/utils/logger';
 import type { getPlaywrightPage } from '@/utils/playwright';
 
 const maxFormBytes = 16 * 1024;
+const bilibiliRetryPaths = new Set(['/x/web-interface/popular', '/x/polymer/web-dynamic/v1/feed/space', '/x/space/wbi/arc/search']);
+const pixivRetryPaths = new Set(['/v1/illust/ranking', '/v1/user/illusts', '/v1/search/illust', '/v1/search/popular-preview/illust']);
 const responseHeadersToRemove = new Set(['connection', 'keep-alive', 'proxy-authenticate', 'proxy-authorization', 'te', 'trailer', 'transfer-encoding', 'upgrade', 'content-encoding', 'content-length']);
 
 type PlaywrightPage = Awaited<ReturnType<typeof getPlaywrightPage>>;
@@ -41,10 +43,15 @@ async function discardBody(body: { cancel(): Promise<unknown> }) {
 function retryStatus(request: Request): number | undefined {
     const url = new URL(request.url);
     if (request.method === 'GET') {
-        if (url.origin === 'https://api.bilibili.com' && url.pathname === '/x/web-interface/popular') {
+        if (
+            url.origin === 'https://api.bilibili.com' &&
+            bilibiliRetryPaths.has(url.pathname) &&
+            // The legacy video-all route fetches later pages concurrently.
+            (url.pathname !== '/x/space/wbi/arc/search' || url.searchParams.get('pn') === '1')
+        ) {
             return 412;
         }
-        if (url.origin === 'https://app-api.pixiv.net' && url.pathname === '/v1/illust/ranking') {
+        if (url.origin === 'https://app-api.pixiv.net' && pixivRetryPaths.has(url.pathname)) {
             return 403;
         }
     } else if (
@@ -115,17 +122,17 @@ async function destroyPage(instance: PlaywrightPage) {
     }
 }
 
-async function replayRequest(request: Request, body?: Uint8Array): Promise<Response> {
+async function replayRequest(request: Request, signal: AbortSignal, body?: Uint8Array): Promise<Response> {
     const controller = new AbortController();
     const onAbort = () => controller.abort();
-    request.signal.addEventListener('abort', onAbort, { once: true });
+    signal.addEventListener('abort', onAbort, { once: true });
     const timeout = Math.max(1, Math.min(config.requestTimeout || 30000, 30000));
     const timer = setTimeout(onAbort, timeout);
     const wait = <T>(promise: Promise<T>) => abortable(promise, controller.signal);
     let instance: PlaywrightPage | undefined;
     let closing = false;
     try {
-        if (request.signal.aborted) {
+        if (signal.aborted) {
             throw abortError();
         }
         const { getPlaywrightPage } = await wait(import('@/utils/playwright'));
@@ -191,7 +198,7 @@ async function replayRequest(request: Request, body?: Uint8Array): Promise<Respo
     } finally {
         closing = true;
         clearTimeout(timer);
-        request.signal.removeEventListener('abort', onAbort);
+        signal.removeEventListener('abort', onAbort);
         if (instance) {
             await destroyPage(instance);
         }
@@ -224,7 +231,8 @@ export default async function fetchWithPlaywrightRetry(request: Request, nativeF
             return response;
         }
         try {
-            const replayedResponse = await replayRequest(replay, body);
+            // Keep the original signal: a cloned Request can lose abort propagation after GC.
+            const replayedResponse = await replayRequest(replay, request.signal, body);
             if (request.signal.aborted) {
                 throw abortError();
             }

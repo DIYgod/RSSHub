@@ -14,6 +14,11 @@ vi.mock('@/utils/logger', () => ({ default: { warn } }));
 
 const biliUrl = 'https://api.bilibili.com/x/web-interface/popular?ps=20&pn=1';
 const rankingUrl = 'https://app-api.pixiv.net/v1/illust/ranking?mode=week_r18&filter=for_ios';
+const dynamicUrl = 'https://api.bilibili.com/x/polymer/web-dynamic/v1/feed/space?host_mid=2267573&features=itemOpusStyle%2ClistOnlyfans';
+const videosUrl = 'https://api.bilibili.com/x/space/wbi/arc/search?mid=946974&ps=30&pn=1&w_rid=signed-fixture';
+const userIllustsUrl = 'https://app-api.pixiv.net/v1/user/illusts?user_id=15288095&filter=for_ios';
+const searchUrl = 'https://app-api.pixiv.net/v1/search/illust?word=%E7%8C%AB%20%26%20dog&sort=date_desc&filter=for_ios';
+const popularSearchUrl = 'https://app-api.pixiv.net/v1/search/popular-preview/illust?word=Nezuko&filter=for_ios';
 const oauthUrl = 'https://oauth.secure.pixiv.net/auth/token';
 const form = 'grant_type=refresh_token&refresh_token=refresh-fixture%2Bvalue&client_secret=client-fixture';
 
@@ -81,6 +86,15 @@ describe('targeted Playwright fetch retry', () => {
         ['https://api.bilibili.com:8443/x/web-interface/popular', 'GET', 412],
         [rankingUrl, 'GET', 401],
         [rankingUrl, 'GET', 412],
+        [dynamicUrl, 'GET', 200],
+        [videosUrl, 'POST', 412],
+        [videosUrl.replace('pn=1', 'pn=2'), 'GET', 412],
+        [userIllustsUrl, 'GET', 401],
+        [searchUrl, 'GET', 200],
+        [popularSearchUrl, 'POST', 403],
+        ['https://app-api.pixiv.net/v1/search/illust/other', 'GET', 403],
+        ['https://app-api.pixiv.net.evil.test/v1/user/illusts', 'GET', 403],
+        ['https://app-api.pixiv.net/v1/user/bookmarks/illust', 'GET', 403],
         [oauthUrl, 'GET', 403],
         [oauthUrl, 'POST', 403],
         ['https://oauth.secure.pixiv.net/auth/other', 'POST', 403],
@@ -110,9 +124,14 @@ describe('targeted Playwright fetch retry', () => {
     it.each([
         [biliUrl, 412],
         [rankingUrl, 403],
+        [dynamicUrl, 412],
+        [videosUrl, 412],
+        [userIllustsUrl, 403],
+        [searchUrl, 403],
+        [popularSearchUrl, 403],
     ])('replays one allowlisted GET and preserves response data for %s', async (url, status) => {
         const { instance, session } = makeBrowser(url as string);
-        const request = new Request(url as string, { headers: { authorization: 'Bearer fixture', 'user-agent': 'upstream-client', referer: 'https://source.test/' } });
+        const request = new Request(url as string, { headers: { authorization: 'Bearer fixture', cookie: 'SESSDATA=cookie-fixture', 'user-agent': 'upstream-client', referer: 'https://source.test/' } });
         const native = vi.fn(() => Promise.resolve(new Response('denied', { status: status as number })));
 
         const response = await fetchWithPlaywrightRetry(request, native);
@@ -223,14 +242,19 @@ describe('targeted Playwright fetch retry', () => {
         expect(JSON.stringify(warn.mock.calls)).not.toContain('endpoint-fixture');
     });
 
-    it('propagates cancellation during navigation and awaits cleanup', async () => {
+    it.each([false, true])('propagates cancellation during navigation and awaits cleanup (detached clone signal: %s)', async (detachedCloneSignal) => {
         const { page, emit, instance } = makeBrowser(biliUrl);
         page.goto.mockImplementation(() => {
             emit();
             return new Promise(() => {});
         });
         const controller = new AbortController();
-        const result = fetchWithPlaywrightRetry(new Request(biliUrl, { signal: controller.signal }), () => Promise.resolve(new Response('denied', { status: 412 })));
+        const request = new Request(biliUrl, { signal: controller.signal });
+        if (detachedCloneSignal) {
+            // Reproduce the clone losing signal propagation after its internal controller is collected.
+            vi.spyOn(request, 'clone').mockImplementation(() => new Request(biliUrl));
+        }
+        const result = fetchWithPlaywrightRetry(request, () => Promise.resolve(new Response('denied', { status: 412 })));
         const assertion = expect(result).rejects.toMatchObject({ name: 'AbortError' });
         await vi.waitFor(() => expect(page.goto).toHaveBeenCalled());
         controller.abort();

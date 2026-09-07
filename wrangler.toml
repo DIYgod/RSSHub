@@ -1,7 +1,7 @@
 name = "rsshub"
 main = "dist-worker/worker.mjs"
 compatibility_date = "2026-09-01"
-compatibility_flags = ["nodejs_compat", "global_fetch_strictly_public"]
+compatibility_flags = ["global_fetch_strictly_public"]
 
 find_additional_modules = true
 base_dir = "dist-worker/modules"

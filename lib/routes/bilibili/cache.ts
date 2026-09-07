@@ -4,6 +4,7 @@ import { RateLimiterMemory, RateLimiterQueue } from 'rate-limiter-flexible';
 import { config } from '@/config';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
+import { isWorker } from '@/utils/is-worker';
 import logger from '@/utils/logger';
 import { getPlaywrightPage } from '@/utils/playwright';
 
@@ -262,7 +263,8 @@ const getVideoSubtitle = async (
         lan_doc: string;
     }>
 > => {
-    if (!bvid) {
+    // Workers skip subtitle metadata and downloads, regardless of route configuration.
+    if (isWorker || !bvid) {
         return [];
     }
 
