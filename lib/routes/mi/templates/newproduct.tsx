@@ -1,19 +1,19 @@
 import { renderToString } from 'hono/jsx/dom/server';
 
 export type NewProduct = {
-    /** 产品图片 */
+    /** Product image */
     image: string;
-    /** 卖点列表 */
+    /** Sell point list */
     sellPointList: string[];
-    /** 商品列表 */
+    /** Product list */
     goodsList: Array<{
-        /** 商品图片 */
+        /** Product image */
         image: string;
-        /** 商品名称 */
+        /** Product name */
         name: string;
-        /** 原价 */
+        /** Original price */
         marketPrice: string;
-        /** 现价 */
+        /** Current price */
         price: string;
     }>;
 };

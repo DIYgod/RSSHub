@@ -11,29 +11,29 @@ dayjs.extend(timezone);
 dayjs.extend(utc);
 
 export type Crowdfunding = {
-    /** 项目图片 */
+    /** Project image */
     image: string;
-    /** 项目卖点 */
+    /** Project sell point */
     sellPoint: string;
-    /** 众筹价格 */
+    /** Crowdfunding price */
     price: string;
-    /** 建议零售价 */
+    /** Suggested retail price */
     marketPrice: string;
-    /** 众筹开始时间 */
+    /** Crowdfunding start time */
     startTime: Date;
-    /** 众筹结束时间 */
+    /** Crowdfunding end time */
     endTime: Date;
-    /** 物流信息 */
+    /** Shipping info */
     sendInfo: string;
-    /** 支持档位列表 */
+    /** Support tier list */
     supportList: Array<{
-        /** 商品图片 */
+        /** Product image */
         image: string;
-        /** 档位名称 */
+        /** Tier name */
         name: string;
-        /** 档位价格 */
+        /** Tier price */
         price: string;
-        /** 档位描述 */
+        /** Tier description */
         description: string;
     }>;
 };
