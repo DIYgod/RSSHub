@@ -41,7 +41,7 @@ const NewProductDescription = ({ newProduct }: { newProduct: NewProduct }) => (
                 {newProduct.goodsList.map((goods) => (
                     <tr>
                         <td>
-                            <img src={goods.image} width={48} height="auto" />
+                            <img src={goods.image} width={48} height={48} />
                         </td>
                         <td>{goods.name}</td>
                         <td>{goods.marketPrice} 元</td>

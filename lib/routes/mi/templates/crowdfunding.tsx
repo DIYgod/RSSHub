@@ -65,7 +65,7 @@ const CrowdfundingDescription = ({ crowdfunding }: { crowdfunding: Crowdfunding 
                 {crowdfunding.supportList.map((support) => (
                     <tr>
                         <td>
-                            <img src={support.image} width={48} height="auto" />
+                            <img src={support.image} width={48} height={48} />
                         </td>
                         <td>{support.name}</td>
                         <td>{support.price} 元</td>
