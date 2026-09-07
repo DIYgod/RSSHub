@@ -152,7 +152,6 @@
         "@cloudflare/playwright": "1.3.6",
         "@cloudflare/vitest-pool-workers": "0.22.0",
         "@cloudflare/workers-types": "5.20260901.1",
-        "@eslint/eslintrc": "3.3.7",
         "@eslint/js": "10.0.1",
         "@oxlint/plugins": "1.81.0",
         "@stylistic/eslint-plugin": "5.10.0",
