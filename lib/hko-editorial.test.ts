@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { getLanguage, parseDataset, rewriteRelativeUrls } from './hko-editorial';
+import { getLanguage, parseDataset, rewriteRelativeUrls } from './routes/hko/utils';
 
 describe('HKO editorial helpers', () => {
     it('selects a supported language and rejects unsupported languages', () => {

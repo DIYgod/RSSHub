@@ -1,11 +1,12 @@
 import { load } from 'cheerio';
 import type { Context } from 'hono';
 
-import { getLanguage, type HkoLanguage, parseDataset, removeBom, resolveHkoUrl, rewriteRelativeUrls } from '@/hko-editorial';
 import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+
+import { getLanguage, type HkoLanguage, parseDataset, removeBom, resolveHkoUrl, rewriteRelativeUrls } from './utils';
 
 const languages = {
     en: 'en',
