@@ -2,19 +2,19 @@ interface DataResponse<Data> {
     data: Data;
 }
 
-export interface Goods {
+export interface NewProductListItem {
     img800s: string;
     itemId: number;
     name: string;
 }
 
-export type ListResponse = DataResponse<{
+export type NewProductListResponse = DataResponse<{
     floors: Array<{
         dynamicData?: Array<{
             list: Array<{
                 type: string;
                 value: {
-                    goods: Goods;
+                    goods: NewProductListItem;
                 };
             }>;
         }>;
@@ -22,18 +22,18 @@ export type ListResponse = DataResponse<{
     }>;
 }>;
 
-interface DetailGoods {
+interface NewProductDetailGoods {
     imgUrl: string;
     marketPrice: string;
     name: string;
     price: string;
 }
 
-export interface DetailData {
-    batchedInfoMap?: Record<string, { batchedSsuList: DetailGoods[] }>;
-    batchedSsuList: DetailGoods[];
+export interface NewProductDetailItem {
+    batchedInfoMap?: Record<string, { batchedSsuList: NewProductDetailGoods[] }>;
+    batchedSsuList: NewProductDetailGoods[];
     goodsInfo: {
-        goodsList: DetailGoods[];
+        goodsList: NewProductDetailGoods[];
     };
     product: {
         productId: number;
@@ -41,4 +41,4 @@ export interface DetailData {
     };
 }
 
-export type DetailResponse = DataResponse<DetailData>;
+export type NewProductDetailResponse = DataResponse<NewProductDetailItem>;

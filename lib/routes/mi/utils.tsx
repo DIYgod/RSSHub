@@ -8,7 +8,7 @@ import { renderToString } from 'hono/jsx/dom/server';
 
 import ofetch from '@/utils/ofetch';
 
-import type { CrowdfundingData, CrowdfundingDetailData, CrowdfundingDetailInfo, CrowdfundingItem, DataResponse, NewProductDetailData, NewProductItem, NewProductListData } from './types';
+import type { CrowdfundingDetailItem, CrowdfundingDetailResponse, CrowdfundingListItem, CrowdfundingListResponse, NewProductDetailItem, NewProductDetailResponse, NewProductListItem, NewProductListResponse } from './types';
 
 dayjs.extend(localizedFormat);
 dayjs.extend(timezone);
@@ -17,18 +17,18 @@ dayjs.extend(utc);
 /**
  * Fetch the list of crowdfunding projects, merging the current projects (primary) with the history projects (supplement).
  *
- * @returns {Promise<CrowdfundingItem[]>} The merged crowdfunding project list.
+ * @returns {Promise<CrowdfundingListItem[]>} The merged crowdfunding project list.
  */
-export const getCrowdfundingList = async (): Promise<CrowdfundingItem[]> => {
+export const getCrowdfundingList = async (): Promise<CrowdfundingListItem[]> => {
     // oxlint-disable-next-line unicorn/consistent-function-scoping
     const fetch = (query?: Record<string, number>) =>
-        ofetch<DataResponse<CrowdfundingData>>('https://m.mi.com/v1/crowd/crowd_home', {
+        ofetch<CrowdfundingListResponse>('https://m.mi.com/v1/crowd/crowd_home', {
             method: 'POST',
             query,
         });
     const [response, historyResponse] = await Promise.all([fetch(), fetch({ status: 1 })]);
-    const map = new Map<number, CrowdfundingItem>();
-    const setIfNeeded = (items: CrowdfundingItem[]) => {
+    const map = new Map<number, CrowdfundingListItem>();
+    const setIfNeeded = (items: CrowdfundingListItem[]) => {
         for (const item of items) {
             if (!map.has(item.project_id)) {
                 map.set(item.project_id, item);
@@ -47,11 +47,11 @@ export const getCrowdfundingList = async (): Promise<CrowdfundingItem[]> => {
 /**
  * Fetch crowdfunding project details.
  *
- * @param {CrowdfundingItem} item - Crowdfunding item.
- * @returns {Promise<CrowdfundingDetailInfo>} Crowdfunding item details.
+ * @param {CrowdfundingListItem} item - Crowdfunding item.
+ * @returns {Promise<CrowdfundingDetailItem>} Crowdfunding item details.
  */
-export const getCrowdfundingItem = async (item: CrowdfundingItem): Promise<CrowdfundingDetailInfo> => {
-    const response = await ofetch<DataResponse<CrowdfundingDetailData>>('https://m.mi.com/v1/crowd/crowd_detail', {
+export const getCrowdfundingItem = async (item: CrowdfundingListItem): Promise<CrowdfundingDetailItem> => {
+    const response = await ofetch<CrowdfundingDetailResponse>('https://m.mi.com/v1/crowd/crowd_detail', {
         method: 'POST',
         query: {
             project_id: item.project_id,
@@ -63,14 +63,14 @@ export const getCrowdfundingItem = async (item: CrowdfundingItem): Promise<Crowd
 /**
  * Fetch the list of new products, merging `date_list` (primary) with `history_date_list` (supplement) and `new_list` (supplement).
  *
- * @returns {Promise<NewProductItem[]>} The merged new product list.
+ * @returns {Promise<NewProductListItem[]>} The merged new product list.
  */
-export const getNewProductList = async (): Promise<NewProductItem[]> => {
-    const response = await ofetch<DataResponse<NewProductListData>>('https://api.m.mi.com/v1/home/product_channel_get_list', {
+export const getNewProductList = async (): Promise<NewProductListItem[]> => {
+    const response = await ofetch<NewProductListResponse>('https://api.m.mi.com/v1/home/product_channel_get_list', {
         method: 'POST',
     });
-    const map = new Map<number, NewProductItem>();
-    const setIfNeeded = (items: NewProductItem[]) => {
+    const map = new Map<number, NewProductListItem>();
+    const setIfNeeded = (items: NewProductListItem[]) => {
         for (const item of items) {
             if (!map.has(item.product_id)) {
                 map.set(item.product_id, item);
@@ -90,18 +90,18 @@ export const getNewProductList = async (): Promise<NewProductItem[]> => {
 /**
  * Fetch new product details.
  *
- * @param {NewProductItem} item - New product list item.
- * @returns {Promise<NewProductDetailData>} New product details.
+ * @param {NewProductListItem} item - New product list item.
+ * @returns {Promise<NewProductDetailItem>} New product details.
  */
-export const getNewProductItem = async (item: NewProductItem): Promise<NewProductDetailData> => {
-    const response = await ofetch<DataResponse<NewProductDetailData>>('https://m.mi.com/mtop/xiaomishop/product/info', {
+export const getNewProductItem = async (item: NewProductListItem): Promise<NewProductDetailItem> => {
+    const response = await ofetch<NewProductDetailResponse>('https://m.mi.com/mtop/xiaomishop/product/info', {
         body: [{}, { productId: item.product_id }],
         method: 'POST',
     });
     return response.data;
 };
 
-const CrowdfundingDescription = ({ listItem, detail }: { listItem: CrowdfundingItem; detail: CrowdfundingDetailInfo }) => (
+const CrowdfundingDescription = ({ listItem, detail }: { listItem: CrowdfundingListItem; detail: CrowdfundingDetailItem }) => (
     <>
         <img src={detail.big_image} />
         <br />
@@ -141,13 +141,13 @@ const CrowdfundingDescription = ({ listItem, detail }: { listItem: CrowdfundingI
 /**
  * Render the crowdfunding item description.
  *
- * @param {CrowdfundingItem} listItem - Crowdfunding item list item.
- * @param {CrowdfundingDetailInfo} detail - Crowdfunding item details.
+ * @param {CrowdfundingListItem} listItem - Crowdfunding item list item.
+ * @param {CrowdfundingDetailItem} detail - Crowdfunding item details.
  * @returns {string} Rendered description HTML.
  */
-export const renderCrowdfunding = (listItem: CrowdfundingItem, detail: CrowdfundingDetailInfo): string => renderToString(<CrowdfundingDescription listItem={listItem} detail={detail} />);
+export const renderCrowdfunding = (listItem: CrowdfundingListItem, detail: CrowdfundingDetailItem): string => renderToString(<CrowdfundingDescription listItem={listItem} detail={detail} />);
 
-const NewProductDescription = ({ listItem, detail }: { listItem: NewProductItem; detail: NewProductDetailData }) => (
+const NewProductDescription = ({ listItem, detail }: { listItem: NewProductListItem; detail: NewProductDetailItem }) => (
     <>
         <img src={listItem.img} />
         <br />
@@ -185,11 +185,11 @@ const NewProductDescription = ({ listItem, detail }: { listItem: NewProductItem;
 /**
  * Render the new product item description.
  *
- * @param {NewProductItem} listItem - New product list item.
- * @param {NewProductDetailData} detail - New product details.
+ * @param {NewProductListItem} listItem - New product list item.
+ * @param {NewProductDetailItem} detail - New product details.
  * @returns {string} Rendered description HTML.
  */
-export const renderNewProduct = (listItem: NewProductItem, detail: NewProductDetailData): string => renderToString(<NewProductDescription listItem={listItem} detail={detail} />);
+export const renderNewProduct = (listItem: NewProductListItem, detail: NewProductDetailItem): string => renderToString(<NewProductDescription listItem={listItem} detail={detail} />);
 
 const formatDate = (timestamp: number): string => dayjs.unix(timestamp).tz('Asia/Shanghai').locale('zh-cn').format('lll');
 

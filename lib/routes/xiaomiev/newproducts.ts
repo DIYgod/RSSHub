@@ -2,7 +2,7 @@ import type { Data, DataItem, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 
-import type { DetailData, Goods } from './types';
+import type { NewProductDetailItem, NewProductListItem } from './types';
 import utils from './utils';
 
 export const route: Route = {
@@ -24,7 +24,7 @@ export const route: Route = {
     view: ViewType.Notifications,
 };
 
-const getDataItems = (list: Goods[]): Promise<DataItem[]> =>
+const getDataItems = (list: NewProductListItem[]): Promise<DataItem[]> =>
     Promise.all(
         list.map((listItem) =>
             cache.tryGet(`xiaomiev:product:dataitem:${listItem.itemId}`, async () => {
@@ -34,7 +34,7 @@ const getDataItems = (list: Goods[]): Promise<DataItem[]> =>
         )
     );
 
-const getDataItem = (listItem: Goods, detail: DetailData): DataItem => ({
+const getDataItem = (listItem: NewProductListItem, detail: NewProductDetailItem): DataItem => ({
     title: listItem.name,
     description: utils.renderNewProduct(listItem, detail),
     link: `https://shop.retail.xiaomiev.com/shop/cltd/product?pid=${listItem.itemId}`,

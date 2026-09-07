@@ -3,7 +3,7 @@ import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import { parseDate } from '@/utils/parse-date';
 
-import type { NewProductDetailData, NewProductItem } from './types';
+import type { NewProductDetailItem, NewProductListItem } from './types';
 import utils from './utils';
 
 export const route: Route = {
@@ -25,7 +25,7 @@ export const route: Route = {
     view: ViewType.Notifications,
 };
 
-const getDataItems = (list: NewProductItem[]): Promise<DataItem[]> =>
+const getDataItems = (list: NewProductListItem[]): Promise<DataItem[]> =>
     Promise.all(
         list.map((listItem) =>
             cache.tryGet(`mi:product:dataitem:${listItem.product_id}`, async () => {
@@ -35,7 +35,7 @@ const getDataItems = (list: NewProductItem[]): Promise<DataItem[]> =>
         )
     );
 
-const getDataItem = (listItem: NewProductItem, detail: NewProductDetailData): DataItem => ({
+const getDataItem = (listItem: NewProductListItem, detail: NewProductDetailItem): DataItem => ({
     title: listItem.product_name,
     description: utils.renderNewProduct(listItem, detail),
     link: `https://m.mi.com/commodity/detail/${listItem.product_id}`,

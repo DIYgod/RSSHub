@@ -3,7 +3,7 @@ import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import { parseDate } from '@/utils/parse-date';
 
-import type { CrowdfundingDetailInfo, CrowdfundingItem } from './types';
+import type { CrowdfundingDetailItem, CrowdfundingListItem } from './types';
 import utils from './utils';
 
 export const route: Route = {
@@ -31,7 +31,7 @@ export const route: Route = {
     view: ViewType.Notifications,
 };
 
-const getDataItems = (list: CrowdfundingItem[]): Promise<DataItem[]> =>
+const getDataItems = (list: CrowdfundingListItem[]): Promise<DataItem[]> =>
     Promise.all(
         list.map((listItem) =>
             cache.tryGet(`mi:crowdfunding:dataitem:${listItem.project_id}`, async () => {
@@ -41,7 +41,7 @@ const getDataItems = (list: CrowdfundingItem[]): Promise<DataItem[]> =>
         )
     );
 
-const getDataItem = (listItem: CrowdfundingItem, detail: CrowdfundingDetailInfo): DataItem => ({
+const getDataItem = (listItem: CrowdfundingListItem, detail: CrowdfundingDetailItem): DataItem => ({
     title: listItem.product_name,
     description: utils.renderCrowdfunding(listItem, detail),
     link: `https://m.mi.com/crowdfunding/proddetail/${listItem.project_id}`,

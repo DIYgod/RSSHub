@@ -2,15 +2,15 @@ import { renderToString } from 'hono/jsx/dom/server';
 
 import ofetch from '@/utils/ofetch';
 
-import type { DetailData, DetailResponse, Goods, ListResponse } from './types';
+import type { NewProductDetailItem, NewProductDetailResponse, NewProductListItem, NewProductListResponse } from './types';
 
 /**
  * Fetch the list of new products, extracting goods from every `car_product_list` floor.
  *
- * @returns {Promise<Goods[]>} The new product list.
+ * @returns {Promise<NewProductListItem[]>} The new product list.
  */
-export const getNewProductList = async (): Promise<Goods[]> => {
-    const response = await ofetch<ListResponse>('https://carshop-api.retail.xiaomiev.com/mtop/carlife/home/index', {
+export const getNewProductList = async (): Promise<NewProductListItem[]> => {
+    const response = await ofetch<NewProductListResponse>('https://carshop-api.retail.xiaomiev.com/mtop/carlife/home/index', {
         body: [
             {},
             {
@@ -26,7 +26,7 @@ export const getNewProductList = async (): Promise<Goods[]> => {
         ],
         method: 'POST',
     });
-    const map = new Map<number, Goods>();
+    const map = new Map<number, NewProductListItem>();
     for (const floor of response.data.floors) {
         if (floor.moduleKey !== 'car_product_list') {
             continue;
@@ -46,11 +46,11 @@ export const getNewProductList = async (): Promise<Goods[]> => {
 /**
  * Fetch new product details.
  *
- * @param {Goods} item - New product list item.
- * @returns {Promise<DetailData>} New product details.
+ * @param {NewProductListItem} item - New product list item.
+ * @returns {Promise<NewProductDetailItem>} New product details.
  */
-export const getNewProductItem = async (item: Goods): Promise<DetailData> => {
-    const response = await ofetch<DetailResponse>('https://carshop-api.retail.xiaomiev.com/mtop/carlife/product/info', {
+export const getNewProductItem = async (item: NewProductListItem): Promise<NewProductDetailItem> => {
+    const response = await ofetch<NewProductDetailResponse>('https://carshop-api.retail.xiaomiev.com/mtop/carlife/product/info', {
         body: [
             {},
             {
@@ -67,7 +67,7 @@ export const getNewProductItem = async (item: Goods): Promise<DetailData> => {
     return response.data;
 };
 
-const NewProductDescription = ({ listItem, detail }: { listItem: Goods; detail: DetailData }) => (
+const NewProductDescription = ({ listItem, detail }: { listItem: NewProductListItem; detail: NewProductDetailItem }) => (
     <>
         <img src={listItem.img800s} />
         <br />
@@ -105,11 +105,11 @@ const NewProductDescription = ({ listItem, detail }: { listItem: Goods; detail: 
 /**
  * Render the new product item description.
  *
- * @param {Goods} listItem - New product list item.
- * @param {DetailData} detail - New product details.
+ * @param {NewProductListItem} listItem - New product list item.
+ * @param {NewProductDetailItem} detail - New product details.
  * @returns {string} Rendered description HTML.
  */
-export const renderNewProduct = (listItem: Goods, detail: DetailData): string => renderToString(<NewProductDescription listItem={listItem} detail={detail} />);
+export const renderNewProduct = (listItem: NewProductListItem, detail: NewProductDetailItem): string => renderToString(<NewProductDescription listItem={listItem} detail={detail} />);
 
 export default {
     getNewProductList,
