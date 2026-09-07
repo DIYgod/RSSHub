@@ -29,15 +29,15 @@ const getDataItems = (list: NewProductListItem[]): Promise<DataItem[]> =>
     Promise.all(
         list.map((listItem) =>
             cache.tryGet(`mi:product:dataitem:${listItem.product_id}`, async () => {
-                const detail = await utils.getNewProductItem(listItem);
-                return getDataItem(listItem, detail);
+                const detailItem = await utils.getNewProductItem(listItem);
+                return getDataItem(listItem, detailItem);
             })
         )
     );
 
-const getDataItem = (listItem: NewProductListItem, detail: NewProductDetailItem): DataItem => ({
+const getDataItem = (listItem: NewProductListItem, detailItem: NewProductDetailItem): DataItem => ({
     title: listItem.product_name,
-    description: utils.renderNewProduct(listItem, detail),
+    description: utils.renderNewProduct(listItem, detailItem),
     link: `https://m.mi.com/commodity/detail/${listItem.product_id}`,
     image: listItem.img,
     pubDate: parseDate(listItem.start_time, 'X'),

@@ -101,17 +101,17 @@ export const getNewProductItem = async (item: NewProductListItem): Promise<NewPr
     return response.data;
 };
 
-const CrowdfundingDescription = ({ listItem, detail }: { listItem: CrowdfundingListItem; detail: CrowdfundingDetailItem }) => (
+const CrowdfundingDescription = ({ listItem, detailItem }: { listItem: CrowdfundingListItem; detailItem: CrowdfundingDetailItem }) => (
     <>
-        <img src={detail.big_image} />
+        <img src={detailItem.big_image} />
         <br />
-        {detail.project_desc}
+        {detailItem.project_desc}
         <br />
-        众筹价：{detail.price} 元，建议零售价：{listItem.product_market_price} 元
+        众筹价：{detailItem.price} 元，建议零售价：{listItem.product_market_price} 元
         <br />
-        众筹开始：{formatDate(detail.start_time)}，众筹结束：{formatDate(detail.end_time)}
+        众筹开始：{formatDate(detailItem.start_time)}，众筹结束：{formatDate(detailItem.end_time)}
         <br />
-        物流：{detail.send_info}
+        物流：{detailItem.send_info}
         <br />
         <table>
             <thead>
@@ -123,7 +123,7 @@ const CrowdfundingDescription = ({ listItem, detail }: { listItem: CrowdfundingL
                 </tr>
             </thead>
             <tbody>
-                {detail.support_list.map((support) => (
+                {detailItem.support_list.map((support) => (
                     <tr>
                         <td>
                             <img src={support.goods_list[0]?.goods_image} width={48} height="auto" />
@@ -142,17 +142,17 @@ const CrowdfundingDescription = ({ listItem, detail }: { listItem: CrowdfundingL
  * Render the crowdfunding item description.
  *
  * @param {CrowdfundingListItem} listItem - Crowdfunding item list item.
- * @param {CrowdfundingDetailItem} detail - Crowdfunding item details.
+ * @param {CrowdfundingDetailItem} detailItem - Crowdfunding item details.
  * @returns {string} Rendered description HTML.
  */
-export const renderCrowdfunding = (listItem: CrowdfundingListItem, detail: CrowdfundingDetailItem): string => renderToString(<CrowdfundingDescription listItem={listItem} detail={detail} />);
+export const renderCrowdfunding = (listItem: CrowdfundingListItem, detailItem: CrowdfundingDetailItem): string => renderToString(<CrowdfundingDescription listItem={listItem} detailItem={detailItem} />);
 
-const NewProductDescription = ({ listItem, detail }: { listItem: NewProductListItem; detail: NewProductDetailItem }) => (
+const NewProductDescription = ({ listItem, detailItem }: { listItem: NewProductListItem; detailItem: NewProductDetailItem }) => (
     <>
         <img src={listItem.img} />
         <br />
         <ol>
-            {detail.product.sellPointList.map((point) => (
+            {detailItem.product.sellPointList.map((point) => (
                 <li>{point}</li>
             ))}
         </ol>
@@ -167,7 +167,7 @@ const NewProductDescription = ({ listItem, detail }: { listItem: NewProductListI
                 </tr>
             </thead>
             <tbody>
-                {[...(detail.goodsInfo.goodsList ?? []), ...(detail.relationBatchedInfo?.relationBatchedList.flatMap((relation) => relation.goodsInfo) ?? [])].map((goods) => (
+                {[...(detailItem.goodsInfo.goodsList ?? []), ...(detailItem.relationBatchedInfo?.relationBatchedList.flatMap((relation) => relation.goodsInfo) ?? [])].map((goods) => (
                     <tr>
                         <td>
                             <img src={goods.imgUrl} width={48} height="auto" />
@@ -186,10 +186,10 @@ const NewProductDescription = ({ listItem, detail }: { listItem: NewProductListI
  * Render the new product item description.
  *
  * @param {NewProductListItem} listItem - New product list item.
- * @param {NewProductDetailItem} detail - New product details.
+ * @param {NewProductDetailItem} detailItem - New product details.
  * @returns {string} Rendered description HTML.
  */
-export const renderNewProduct = (listItem: NewProductListItem, detail: NewProductDetailItem): string => renderToString(<NewProductDescription listItem={listItem} detail={detail} />);
+export const renderNewProduct = (listItem: NewProductListItem, detailItem: NewProductDetailItem): string => renderToString(<NewProductDescription listItem={listItem} detailItem={detailItem} />);
 
 const formatDate = (timestamp: number): string => dayjs.unix(timestamp).tz('Asia/Shanghai').locale('zh-cn').format('lll');
 

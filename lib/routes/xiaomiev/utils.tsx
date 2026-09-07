@@ -67,12 +67,12 @@ export const getNewProductItem = async (item: NewProductListItem): Promise<NewPr
     return response.data;
 };
 
-const NewProductDescription = ({ listItem, detail }: { listItem: NewProductListItem; detail: NewProductDetailItem }) => (
+const NewProductDescription = ({ listItem, detailItem }: { listItem: NewProductListItem; detailItem: NewProductDetailItem }) => (
     <>
         <img src={listItem.img800s} />
         <br />
         <ol>
-            {detail.product.sellPointList.map((point) => (
+            {detailItem.product.sellPointList.map((point) => (
                 <li>{point}</li>
             ))}
         </ol>
@@ -87,7 +87,7 @@ const NewProductDescription = ({ listItem, detail }: { listItem: NewProductListI
                 </tr>
             </thead>
             <tbody>
-                {[...detail.goodsInfo.goodsList, ...detail.batchedSsuList, ...Object.values(detail.batchedInfoMap ?? {}).flatMap(({ batchedSsuList }) => batchedSsuList)].map((goods) => (
+                {[...detailItem.goodsInfo.goodsList, ...detailItem.batchedSsuList, ...Object.values(detailItem.batchedInfoMap ?? {}).flatMap(({ batchedSsuList }) => batchedSsuList)].map((goods) => (
                     <tr>
                         <td>
                             <img src={goods.imgUrl} width={48} height="auto" />
@@ -106,10 +106,10 @@ const NewProductDescription = ({ listItem, detail }: { listItem: NewProductListI
  * Render the new product item description.
  *
  * @param {NewProductListItem} listItem - New product list item.
- * @param {NewProductDetailItem} detail - New product details.
+ * @param {NewProductDetailItem} detailItem - New product details.
  * @returns {string} Rendered description HTML.
  */
-export const renderNewProduct = (listItem: NewProductListItem, detail: NewProductDetailItem): string => renderToString(<NewProductDescription listItem={listItem} detail={detail} />);
+export const renderNewProduct = (listItem: NewProductListItem, detailItem: NewProductDetailItem): string => renderToString(<NewProductDescription listItem={listItem} detailItem={detailItem} />);
 
 export default {
     getNewProductList,

@@ -28,15 +28,15 @@ const getDataItems = (list: NewProductListItem[]): Promise<DataItem[]> =>
     Promise.all(
         list.map((listItem) =>
             cache.tryGet(`xiaomiev:product:dataitem:${listItem.itemId}`, async () => {
-                const detail = await utils.getNewProductItem(listItem);
-                return getDataItem(listItem, detail);
+                const detailItem = await utils.getNewProductItem(listItem);
+                return getDataItem(listItem, detailItem);
             })
         )
     );
 
-const getDataItem = (listItem: NewProductListItem, detail: NewProductDetailItem): DataItem => ({
+const getDataItem = (listItem: NewProductListItem, detailItem: NewProductDetailItem): DataItem => ({
     title: listItem.name,
-    description: utils.renderNewProduct(listItem, detail),
+    description: utils.renderNewProduct(listItem, detailItem),
     link: `https://shop.retail.xiaomiev.com/shop/cltd/product?pid=${listItem.itemId}`,
     image: listItem.img800s,
     language: 'zh-CN',

@@ -35,18 +35,18 @@ const getDataItems = (list: CrowdfundingListItem[]): Promise<DataItem[]> =>
     Promise.all(
         list.map((listItem) =>
             cache.tryGet(`mi:crowdfunding:dataitem:${listItem.project_id}`, async () => {
-                const detail = await utils.getCrowdfundingItem(listItem);
-                return getDataItem(listItem, detail);
+                const detailItem = await utils.getCrowdfundingItem(listItem);
+                return getDataItem(listItem, detailItem);
             })
         )
     );
 
-const getDataItem = (listItem: CrowdfundingListItem, detail: CrowdfundingDetailItem): DataItem => ({
+const getDataItem = (listItem: CrowdfundingListItem, detailItem: CrowdfundingDetailItem): DataItem => ({
     title: listItem.product_name,
-    description: utils.renderCrowdfunding(listItem, detail),
+    description: utils.renderCrowdfunding(listItem, detailItem),
     link: `https://m.mi.com/crowdfunding/proddetail/${listItem.project_id}`,
     image: listItem.img_url,
-    pubDate: parseDate(detail.start_time, 'X'),
+    pubDate: parseDate(detailItem.start_time, 'X'),
     language: 'zh-CN',
 });
 
