@@ -21,6 +21,7 @@ export const parseItems = async (items, language) =>
 
                     item.title = title;
                     item.description = description;
+                    // No parsing item.pubDate because it may match the date in comments
                     item.category = $$('a.badge')
                         .toArray()
                         .map((c) => $$(c).text());
