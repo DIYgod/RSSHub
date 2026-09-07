@@ -56,6 +56,7 @@ export default defineConfig({
         cloudflareTest({
             miniflare: {
                 compatibilityDate: '2026-09-01',
+                compatibilityFlags: ['global_fetch_strictly_public'],
                 kvNamespaces: ['CACHE'],
                 modulesRules: [{ type: 'CompiledWasm', include: ['**/*.wasm'] }],
             },
