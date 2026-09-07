@@ -116,7 +116,7 @@
         "pac-proxy-agent": "9.1.0",
         "patchright": "1.62.2",
         "postal-mime": "3.0.0",
-        "query-string": "9.5.0",
+        "query-string": "9.5.1",
         "rate-limiter-flexible": "11.2.0",
         "re2js": "2.8.6",
         "rfc4648": "1.5.4",
