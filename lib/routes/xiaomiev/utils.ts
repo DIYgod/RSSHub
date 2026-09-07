@@ -1,5 +1,4 @@
-import { renderToString } from 'hono/jsx/dom/server';
-
+import type { NewProduct } from '@/routes/mi/templates/newproduct';
 import ofetch from '@/utils/ofetch';
 
 import type { NewProductDetailItem, NewProductDetailResponse, NewProductListItem, NewProductListResponse } from './types';
@@ -67,52 +66,26 @@ export const getNewProductItem = async (item: NewProductListItem): Promise<NewPr
     return response.data;
 };
 
-const NewProductDescription = ({ listItem, detailItem }: { listItem: NewProductListItem; detailItem: NewProductDetailItem }) => (
-    <>
-        <img src={listItem.img800s} />
-        <br />
-        <ol>
-            {detailItem.product.sellPointList.map((point) => (
-                <li>{point}</li>
-            ))}
-        </ol>
-        <br />
-        <table>
-            <thead>
-                <tr>
-                    <th>图片</th>
-                    <th>规格</th>
-                    <th>原价</th>
-                    <th>现价</th>
-                </tr>
-            </thead>
-            <tbody>
-                {[...detailItem.goodsInfo.goodsList, ...detailItem.batchedSsuList, ...Object.values(detailItem.batchedInfoMap ?? {}).flatMap(({ batchedSsuList }) => batchedSsuList)].map((goods) => (
-                    <tr>
-                        <td>
-                            <img src={goods.imgUrl} width={48} height="auto" />
-                        </td>
-                        <td>{goods.name}</td>
-                        <td>{goods.marketPrice} 元</td>
-                        <td>{goods.price} 元</td>
-                    </tr>
-                ))}
-            </tbody>
-        </table>
-    </>
-);
-
 /**
- * Render the new product item description.
+ * Convert xiaomiev NewProductListItem + NewProductDetailItem to NewProduct template props.
  *
  * @param {NewProductListItem} listItem - New product list item.
- * @param {NewProductDetailItem} detailItem - New product details.
- * @returns {string} Rendered description HTML.
+ * @param {NewProductDetailItem} detailItem - New product detail item.
+ * @returns {NewProduct} New product template props.
  */
-export const renderNewProduct = (listItem: NewProductListItem, detailItem: NewProductDetailItem): string => renderToString(<NewProductDescription listItem={listItem} detailItem={detailItem} />);
+export const toNewProduct = (listItem: NewProductListItem, detailItem: NewProductDetailItem): NewProduct => ({
+    image: listItem.img800s,
+    sellPointList: detailItem.product.sellPointList,
+    goodsList: [...detailItem.goodsInfo.goodsList, ...detailItem.batchedSsuList, ...Object.values(detailItem.batchedInfoMap ?? {}).flatMap(({ batchedSsuList }) => batchedSsuList)].map((goods) => ({
+        image: goods.imgUrl,
+        name: goods.name,
+        marketPrice: goods.marketPrice,
+        price: goods.price,
+    })),
+});
 
 export default {
     getNewProductList,
     getNewProductItem,
-    renderNewProduct,
+    toNewProduct,
 };

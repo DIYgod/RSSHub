@@ -3,6 +3,7 @@ import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import { parseDate } from '@/utils/parse-date';
 
+import { renderNewProduct } from './templates/newproduct';
 import type { NewProductDetailItem, NewProductListItem } from './types';
 import utils from './utils';
 
@@ -37,7 +38,7 @@ const getDataItems = (list: NewProductListItem[]): Promise<DataItem[]> =>
 
 const getDataItem = (listItem: NewProductListItem, detailItem: NewProductDetailItem): DataItem => ({
     title: listItem.product_name,
-    description: utils.renderNewProduct(listItem, detailItem),
+    description: renderNewProduct(utils.toNewProduct(listItem, detailItem)),
     link: `https://m.mi.com/commodity/detail/${listItem.product_id}`,
     image: listItem.img,
     pubDate: parseDate(listItem.start_time, 'X'),

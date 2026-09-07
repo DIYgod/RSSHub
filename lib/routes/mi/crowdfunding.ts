@@ -3,6 +3,7 @@ import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import { parseDate } from '@/utils/parse-date';
 
+import { renderCrowdfunding } from './templates/crowdfunding';
 import type { CrowdfundingDetailItem, CrowdfundingListItem } from './types';
 import utils from './utils';
 
@@ -43,7 +44,7 @@ const getDataItems = (list: CrowdfundingListItem[]): Promise<DataItem[]> =>
 
 const getDataItem = (listItem: CrowdfundingListItem, detailItem: CrowdfundingDetailItem): DataItem => ({
     title: listItem.product_name,
-    description: utils.renderCrowdfunding(listItem, detailItem),
+    description: renderCrowdfunding(utils.toCrowdfunding(listItem, detailItem)),
     link: `https://m.mi.com/crowdfunding/proddetail/${listItem.project_id}`,
     image: listItem.img_url,
     pubDate: parseDate(detailItem.start_time, 'X'),

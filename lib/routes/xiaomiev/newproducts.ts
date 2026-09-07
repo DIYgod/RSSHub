@@ -1,3 +1,4 @@
+import { renderNewProduct } from '@/routes/mi/templates/newproduct';
 import type { Data, DataItem, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
@@ -36,7 +37,7 @@ const getDataItems = (list: NewProductListItem[]): Promise<DataItem[]> =>
 
 const getDataItem = (listItem: NewProductListItem, detailItem: NewProductDetailItem): DataItem => ({
     title: listItem.name,
-    description: utils.renderNewProduct(listItem, detailItem),
+    description: renderNewProduct(utils.toNewProduct(listItem, detailItem)),
     link: `https://shop.retail.xiaomiev.com/shop/cltd/product?pid=${listItem.itemId}`,
     image: listItem.img800s,
     language: 'zh-CN',
