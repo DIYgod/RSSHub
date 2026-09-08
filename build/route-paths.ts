@@ -37,6 +37,7 @@ export type RoutePath =
   | `/199it/:category{.+}?`
   | `/19lou/:city?`
   | `/1lou/:params{.+}?`
+  | `/1lou/search/:params`
   | `/1point3acres/blog/:category?`
   | `/1point3acres/category/:id?/:type?/:order?`
   | `/1point3acres/offer/:year?/:major?/:school?`

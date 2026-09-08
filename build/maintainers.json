@@ -2246,10 +2246,6 @@
   "/19lou/:city?": [
     "nczitzk"
   ],
-  "/1lou/:params{.+}?": [
-    "falling",
-    "nczitzk"
-  ],
   "/1point3acres/user/:id/posts": [
     "Maecenas"
   ],
@@ -9622,6 +9618,13 @@
   "/18comic/search/:option?/:category?/:keyword?/:time?/:order?": [
     "nczitzk",
     "pseudoyu"
+  ],
+  "/1lou/:params{.+}?": [
+    "falling",
+    "nczitzk"
+  ],
+  "/1lou/search/:params": [
+    "JimenezLi"
   ],
   "/36kr/:category/:subCategory?/:keyword?": [
     "nczitzk",
