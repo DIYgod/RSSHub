@@ -114,7 +114,7 @@ const KEYWORDS: KeywordDefinition[] = [
         calc: () => dayjs().subtract(2, 'days').startOf('day'),
     },
     {
-        regExp: /^(?:明[天日早晨晚]|t(?:omorrow)?)/i,
+        regExp: /^(?:明[天日早晨晚]|t(?:omorrow|(?![a-z])))/i,
         calc: () => dayjs().add(1, 'days').startOf('day'),
     },
     {
