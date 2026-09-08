@@ -1,7 +1,4 @@
-import { load } from 'cheerio';
-
 import type { Route } from '@/types';
-import cache from '@/utils/cache';
 import got from '@/utils/got';
 
 import { loadArticle } from './article';
@@ -34,19 +31,11 @@ export const route: Route = {
 
 async function handler(ctx) {
     const limit = Number.parseInt(ctx.req.query('limit')) || 20;
-    const response = await got(SUB_URL);
-    const $ = load(response.body);
-    const itemRaw = $('article.blog-entry').slice(0, limit).toArray();
+    const { data: posts } = await got(`${SUB_URL}wp-json/wp/v2/posts?per_page=${limit}&_embed`);
 
     return {
         title: `${SUB_NAME_PREFIX} - Latest`,
         link: SUB_URL,
-        item: await Promise.all(
-            itemRaw.map((e) => {
-                const item = $(e);
-                const link = item.find('h2.entry-title a').attr('href');
-                return cache.tryGet(link!, () => loadArticle(link));
-            })
-        ),
+        item: posts.map((post) => loadArticle(post)),
     };
 }

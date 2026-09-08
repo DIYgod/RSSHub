@@ -1,7 +1,4 @@
-import { load } from 'cheerio';
-
 import type { Route } from '@/types';
-import cache from '@/utils/cache';
 import got from '@/utils/got';
 
 import { loadArticle } from './article';
@@ -27,22 +24,15 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
+    const limit = Number.parseInt(ctx.req.query('limit')) || 20;
     const keyword = ctx.req.param('keyword');
     const url = `${SUB_URL}?s=${keyword}`;
 
-    const response = await got(url);
-    const $ = load(response.body);
-    const itemRaw = $('article.post').toArray();
+    const { data: posts } = await got(`${SUB_URL}wp-json/wp/v2/posts?search=${keyword}&per_page=${limit}&_embed`);
 
     return {
         title: `${SUB_NAME_PREFIX} - Search: ${keyword}`,
         link: url,
-        item: await Promise.all(
-            itemRaw.map((e) => {
-                const item = $(e);
-                const link = item.find('h2.entry-title a').attr('href');
-                return cache.tryGet(link!, () => loadArticle(link));
-            })
-        ),
+        item: posts.map((post) => loadArticle(post)),
     };
 }
