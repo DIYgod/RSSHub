@@ -3,7 +3,6 @@ import type { Context } from 'hono';
 import type { DataItem, Language, Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
 
 import { parseItems } from './util';
 
@@ -50,7 +49,7 @@ export const handler = async (ctx: Context) => {
 
     const items: Array<DataItem & { link: string }> = hits.slice(0, limit).map((item) => ({
         title: item.highlighted_subject.replaceAll(/<\/?mark>/g, ''),
-        pubDate: timezone(parseDate(item.create_date, 'X'), 8),
+        pubDate: parseDate(item.create_date, 'X'),
         link: new URL(item.thread_url, rootUrl).href,
         category: [item.username],
         author: item.username,
