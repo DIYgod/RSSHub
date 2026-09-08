@@ -2293,6 +2293,7 @@ export type RoutePath =
   | `/mymusicsheet/user/sheets/:username/:iso?/:freeOnly?`
   | `/mysql/release/:version?`
   | `/naceweb/blog/:sort?`
+  | `/namoc/zhanlan`
   | `/nanhua/report/:type1/:type2`
   | `/nankai/ai/:type?`
   | `/nankai/cc/:type?`

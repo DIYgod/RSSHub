@@ -85810,6 +85810,37 @@ export default {
     ],
     "lang": "en"
   },
+  "namoc": {
+    "routes": {
+      "/zhanlan": {
+        "path": "/zhanlan",
+        "categories": [
+          "travel"
+        ],
+        "example": "/namoc/zhanlan",
+        "name": "Exhibitions",
+        "maintainers": [
+          "magazian"
+        ],
+        "radar": [
+          {
+            "source": [
+              "www.namoc.cn/namoc/zhanlan/zl_list.shtml"
+            ],
+            "target": "/zhanlan"
+          }
+        ],
+        "location": "zhanlan.tsx",
+        "module": () => import('@/routes/namoc/zhanlan.tsx')
+      }
+    },
+    "apiRoutes": {},
+    "name": "National Art Museum of China",
+    "url": "www.namoc.cn",
+    "zh": {
+      "name": "中国美术馆"
+    }
+  },
   "nankai": {
     "routes": {
       "/ai/:type?": {

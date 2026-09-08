@@ -30837,6 +30837,19 @@
       }
     ]
   },
+  "namoc.cn": {
+    "_name": "National Art Museum of China",
+    "www": [
+      {
+        "title": "Exhibitions",
+        "docs": "https://docs.rsshub.app/routes/travel",
+        "source": [
+          "/namoc/zhanlan/zl_list.shtml"
+        ],
+        "target": "/namoc/zhanlan"
+      }
+    ]
+  },
   "nankai.edu.cn": {
     "_name": "南开大学",
     "ai": [
