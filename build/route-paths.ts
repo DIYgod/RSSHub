@@ -2144,6 +2144,7 @@ export type RoutePath =
   | `/makerworld/trending`
   | `/makerworld/user/:handle/upload`
   | `/malaysiakini/:lang/:category?`
+  | `/maldita/updates/:category?`
   | `/mamibuy/:caty?`
   | `/mangadex/manga/:id/:lang?`
   | `/mangadex/mdlist/:id/:lang?`

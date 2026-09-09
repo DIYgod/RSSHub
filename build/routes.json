@@ -81158,6 +81158,46 @@
     "url": "magnumphotos.com",
     "lang": "en"
   },
+  "maldita": {
+    "routes": {
+      "/updates/:category?": {
+        "path": "/updates/:category?",
+        "categories": [
+          "new-media"
+        ],
+        "example": "/maldita/updates/desinfo",
+        "parameters": {
+          "category": "Category to fetch"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "maldita.es/:category/"
+            ],
+            "target": "/updates/:category"
+          }
+        ],
+        "name": "Latest Updates",
+        "maintainers": [
+          "canonnizq"
+        ],
+        "description": "Categories: all | desinfo | prebunking | investigaciones | control-del-poder | policy",
+        "location": "updates.ts",
+        "module": "() => import('@/routes/maldita/updates.ts')"
+      }
+    },
+    "apiRoutes": {},
+    "name": "Maldita.es",
+    "url": "maldita.es"
+  },
   "manhuagui": {
     "routes": {
       "/comic/:id/:chapterCnt?": {

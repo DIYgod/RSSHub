@@ -27820,6 +27820,19 @@
       }
     ]
   },
+  "maldita.es": {
+    "_name": "Maldita.es",
+    ".": [
+      {
+        "title": "Latest Updates",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/:category/"
+        ],
+        "target": "/maldita/updates/:category"
+      }
+    ]
+  },
   "mhgui.com": {
     "_name": "看漫画",
     "www": [
