@@ -9,7 +9,7 @@ export const route = {
     path: '/exhibitionIndex/:type',
     categories: ['travel'],
     example: '/yinxubwg/exhibitionIndex/2',
-    params: {
+    parameters: {
         type: 'Exhibition type. Supported values: `1` (Permanent Exhibition), `2` (Temporary Exhibition), `3` (Past Exhibitions).',
     },
     name: 'Exhibition Information',
