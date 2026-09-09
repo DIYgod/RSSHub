@@ -1,5 +1,4 @@
 import { load } from 'cheerio';
-import { renderToString } from 'hono/jsx/dom/server';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
@@ -43,12 +42,13 @@ export const route: Route = {
         const response = await ofetch(currentUrl);
         const $ = load(response);
 
-        // The city switcher is the only section with a dropdown, the `all` page additionally has a "world" section above it.
-        const cityName = $('a[data-toggle="dropdown"] h3').first().text().trim();
-        const typeName = $('ul.nav-pills li.active a').text().trim();
+        // The city switcher is the only element with a dropdown, the `all` page has an extra "world" section above it.
+        const cityName = $('a[data-toggle="dropdown"] h3').text();
+        // Scoped to `ul.nav-pills` because the top navbar has another `li.active`.
+        const typeName = $('ul.nav-pills li.active a').text();
 
-        // The `all` page also contains a featured list (`ul.imsm-entries.thumb`) with a different
-        // markup, whose items are shared across every city, so only the main list is used here.
+        // The `all` page also has a featured list (`ul.imsm-entries.thumb`) with a different markup,
+        // whose items are shared across every city, so only the main list is used.
         const list = $('ul.imsm-entries.list > li')
             .toArray()
             .map((item) => {
@@ -56,7 +56,7 @@ export const route: Route = {
                 const $info = $item.find('a.info');
 
                 return {
-                    title: $info.find('div.title').text().trim(),
+                    title: $info.find('div.title').text(),
                     link: new URL($info.attr('href')!, rootUrl).href,
                 };
             });
@@ -69,19 +69,17 @@ export const route: Route = {
                     const $entry = $detail('div.imsm-entry');
 
                     const cover = $entry.find('img.fit-width').attr('src');
-                    const infoTable = $entry.find('table.info-fields').html();
-                    const content = $entry.find('div.content').html();
+
+                    const $description = $detail('<div>');
+                    if (cover) {
+                        $description.append($detail('<img>').attr('src', cover));
+                    }
+                    $description.append($entry.find('table.info-fields'), $entry.find('div.content'));
 
                     return {
                         title: item.title,
                         link: item.link,
-                        description: renderToString(
-                            <div>
-                                {cover && <img src={cover} />}
-                                {infoTable && <div dangerouslySetInnerHTML={{ __html: infoTable }} />}
-                                {content && <div dangerouslySetInnerHTML={{ __html: content }} />}
-                            </div>
-                        ),
+                        description: $description.html(),
                         image: cover,
                     };
                 })
