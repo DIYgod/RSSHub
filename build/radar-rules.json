@@ -9455,6 +9455,19 @@
       }
     ]
   },
+  "98zhibo.com": {
+    "_name": "98直播吧",
+    "www": [
+      {
+        "title": "足球集锦",
+        "docs": "https://docs.rsshub.app/routes/sport",
+        "source": [
+          "/zuqiujijin/"
+        ],
+        "target": "/98zhibo/zuqiujijin"
+      }
+    ]
+  },
   "a9vg.com": {
     "_name": "A9VG 电玩部落",
     "www": [

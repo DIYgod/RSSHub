@@ -31144,6 +31144,35 @@
     "description": "::: tip\n91porn has multiple backup domains, routes use the permanent domain `https://91porn.com` by default. If the domain is not accessible, you can add `?domain=<domain>` to specify the domain to be used. If you want to specify the backup domain to `https://0122.91p30.com`, you can add `?domain=0122.91p30.com` to the end of all 91porn routes, then the route will become [`/91porn?domain=0122.91p30.com`](https://rsshub.app/91porn?domain=0122.91p30.com)\n:::",
     "lang": "zh-CN"
   },
+  "98zhibo": {
+    "routes": {
+      "/zuqiujijin": {
+        "path": "/zuqiujijin",
+        "categories": [
+          "sport"
+        ],
+        "example": "/98zhibo/zuqiujijin",
+        "name": "足球集锦",
+        "maintainers": [
+          "chouj"
+        ],
+        "radar": [
+          {
+            "source": [
+              "www.98zhibo.com/zuqiujijin/"
+            ],
+            "target": "/zuqiujijin"
+          }
+        ],
+        "location": "zuqiujijin.ts",
+        "module": "() => import('@/routes/98zhibo/zuqiujijin.ts')"
+      }
+    },
+    "apiRoutes": {},
+    "name": "98直播吧",
+    "url": "www.98zhibo.com",
+    "lang": "zh-CN"
+  },
   "99percentinvisible": {
     "routes": {
       "/transcript": {
