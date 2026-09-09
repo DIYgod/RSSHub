@@ -46,7 +46,7 @@ async function handler(): Promise<Data> {
         .map((item) => {
             const $item = $(item);
             const $link = $item.find('a');
-            const title = $link.text().trim();
+            const title = $link.text();
 
             return {
                 title,
