@@ -1733,6 +1733,7 @@ export type RoutePath =
   | `/ichunqiu/`
   | `/iciba/:days?/:img_type?`
   | `/icity/:id`
+  | `/icity/imuseum/:city/:type?`
   | `/icourse163/newest`
   | `/idaily/:language?`
   | `/idolmaster/news/:routeParams?`

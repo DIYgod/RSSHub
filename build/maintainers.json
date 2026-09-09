@@ -5382,6 +5382,9 @@
   "/ichunqiu/": [
     "8430177"
   ],
+  "/icity/imuseum/:city/:type?": [
+    "chouj"
+  ],
   "/icity/:id": [
     "nczitzk"
   ],

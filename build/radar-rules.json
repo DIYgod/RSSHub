@@ -25107,6 +25107,19 @@
       }
     ]
   },
+  "icity.ly": {
+    "_name": "iCity",
+    "art": [
+      {
+        "title": "iMuseum 城市展览",
+        "docs": "https://docs.rsshub.app/routes/travel",
+        "source": [
+          "/:city"
+        ],
+        "target": "/icity/imuseum/:city"
+      }
+    ]
+  },
   "idai.ly": {
     "_name": "iDaily",
     ".": [
