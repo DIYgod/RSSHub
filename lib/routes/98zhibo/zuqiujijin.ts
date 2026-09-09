@@ -9,10 +9,6 @@ import timezone from '@/utils/timezone';
 
 const baseUrl = 'https://www.98zhibo.com';
 
-const headers = {
-    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0 Safari/537.36',
-};
-
 export const route: Route = {
     path: '/zuqiujijin',
     categories: ['sport'],
@@ -41,7 +37,6 @@ async function handler(): Promise<Data> {
         method: 'get',
         url: currentUrl,
         responseType: 'buffer',
-        headers,
     });
 
     const $ = load(iconv.decode(response.data, 'gbk'));
@@ -67,7 +62,6 @@ async function handler(): Promise<Data> {
                     method: 'get',
                     url: item.link,
                     responseType: 'buffer',
-                    headers,
                 });
                 const $detail = load(iconv.decode(detailResponse.data, 'gbk'));
 
