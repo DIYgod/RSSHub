@@ -305,7 +305,7 @@ async function getUserWithCookie(url: string) {
 
     const tokenizedPaths = new Map<string, string>();
 
-    $('a[href*="xsec_token"]').each((_, item) => {
+    $('#userPostedFeeds a[href*="xsec_token"]').each((_, item) => {
         const href = $(item).attr('href');
         if (!href) {
             return;
