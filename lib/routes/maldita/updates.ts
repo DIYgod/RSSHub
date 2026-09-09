@@ -7,7 +7,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/updates/:category?',
-    categories: ['traditional-media'],
+    categories: ['new-media'],
     example: '/maldita/updates/desinfo',
     parameters: { category: 'Category to fetch' },
     features: {
@@ -30,14 +30,14 @@ export const route: Route = {
 
     handler: async (ctx) => {
         const { category = 'all' } = ctx.req.param();
-        const url = `https://maldita.es/${category === 'all' ? '' : category}`;
+        const url = `https://maldita.es/${category === 'all' ? '' : `${category}/`}`;
 
         const response = await ofetch(url);
         const $ = load(response);
 
         const name = $('h1').text() || 'All updates';
 
-        const links = $(category === 'all' ? 'a.ac-link' : '#content a[href*="maldita.es"]')
+        const links = $(category === 'all' ? 'a.ac-link' : '#content a[href*="maldita.es"]:has(div)')
             .toArray()
             .map((item) => $(item).attr('href')!);
 
