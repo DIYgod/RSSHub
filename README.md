@@ -24,7 +24,7 @@ RSSHub pairs especially well with <a href="https://folo.is/">Folo</a>, an AI RSS
 <td align="center" valign="top" width="50%">
 <a href="https://stardesk.onelink.me/p0R7/1v2u6fld"><img src="https://github.com/user-attachments/assets/f23cb580-ab92-46cb-8b5b-277fc8933775" alt="StarDesk" width="419"></a>
 <br>
-RSSHub keeps me informed. <a href="https://stardesk.onelink.me/p0R7/1v2u6fld">StarDesk</a> lets me respond wherever I am. If a route needs updating, a feed stops working, or I just need to check logs and restart the RSSHub container, I can remote into my PC from my phone with StarDesk anywhere and get it sorted in minutes. I can even run a few terminal commands straight from my phone instead of opening a full desktop session. And it's free, I figured it was worth trying.
+RSSHub keeps me informed, and <a href="https://stardesk.onelink.me/p0R7/1v2u6fld">StarDesk</a> lets me fix routes or feeds remotely, even run terminal commands from my phone. It’s fast, convenient, and free.
 </td>
 </tr>
 </table>
