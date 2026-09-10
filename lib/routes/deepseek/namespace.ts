@@ -1,8 +1,12 @@
 import type { Namespace } from '@/types';
 
 export const namespace: Namespace = {
-    name: 'Deepseek',
+    name: 'DeepSeek',
     url: 'api-docs.deepseek.com',
-    description: 'Deepseek API 文档。',
+    description: 'DeepSeek API documentation.',
     lang: 'zh-CN',
+    zh: {
+        name: 'DeepSeek',
+        description: 'DeepSeek API 文档。',
+    },
 };
