@@ -1,3 +1,4 @@
+import * as cheerio from 'cheerio';
 import MarkdownIt from 'markdown-it';
 
 import type { Route } from '@/types';
@@ -37,8 +38,6 @@ interface UserProfileProps {
     posts?: SocialPost[];
     totalPosts?: number;
 }
-
-const decodeHtmlEntities = (input: string): string => input.replaceAll('&quot;', '"').replaceAll('&amp;', '&').replaceAll('&lt;', '<').replaceAll('&gt;', '>').replaceAll('&#39;', "'");
 
 const getTitle = (raw: string): string => {
     const line = raw
@@ -96,12 +95,13 @@ async function handler(ctx) {
         },
     });
 
-    const matched = /data-target="UserProfile"[^>]*data-props="([^"]*)"/.exec(html);
-    if (!matched) {
+    const $ = cheerio.load(html);
+    const dataProps = $('[data-target="UserProfile"]').attr('data-props');
+    if (!dataProps) {
         throw new Error(`Failed to extract the profile data of "${user}" from the page`);
     }
 
-    const props = JSON.parse(decodeHtmlEntities(matched[1])) as UserProfileProps;
+    const props = JSON.parse(dataProps) as UserProfileProps;
     const posts = props.posts ?? [];
 
     const items = posts.map((post) => {
