@@ -144629,7 +144629,7 @@ export default {
             {
               "name": "JAVDB_SESSION",
               "description": "JavDB登陆后的session值，可在控制台的cookie下查找 `_jdb_session` 的值，即可获取",
-              "optional": true
+              "optional": false
             }
           ],
           "requirePuppeteer": false,
