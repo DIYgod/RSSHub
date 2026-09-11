@@ -3,7 +3,7 @@ import cache from '@/utils/cache';
 import logger from '@/utils/logger';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
-import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
+import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/daily',
@@ -31,7 +31,6 @@ export const route: Route = {
 
 async function handler() {
     const latest = await ofetch('https://daily.zhihu.com/api/4/stories/latest');
-    const latestDate = `${latest.date.slice(0, 4)}-${latest.date.slice(4, 6)}-${latest.date.slice(6, 8)}`;
 
     const items = (
         await Promise.all(
@@ -49,7 +48,7 @@ async function handler() {
                         description: storyJson.body,
                         link: storyJson.url,
                         image: storyJson.image,
-                        pubDate: storyJson.publish_time ? parseDate(storyJson.publish_time, 'X') : parseDateInTimezone(latestDate, 8),
+                        pubDate: storyJson.publish_time ? parseDate(storyJson.publish_time, 'X') : timezone(parseDate(latest.date, 'YYYYMMDD'), 8),
                     };
                 } catch (error) {
                     logger.debug(`Failed to fetch story detail: ${storyUrl} - ${error instanceof Error ? error.message : String(error)}`);
