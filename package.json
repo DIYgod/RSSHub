@@ -88,7 +88,7 @@
         "dayjs": "1.11.23",
         "destr": "2.0.5",
         "dotenv": "17.4.2",
-        "entities": "8.0.0",
+        "entities": "8.1.0",
         "etag": "1.8.1",
         "fanfou-sdk": "6.0.0",
         "google-play-scraper": "10.1.3",
