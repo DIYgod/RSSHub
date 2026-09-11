@@ -25902,6 +25902,19 @@
       }
     ]
   },
+  "iracing.com": {
+    "_name": "iRacing",
+    "www": [
+      {
+        "title": "News",
+        "docs": "https://docs.rsshub.app/routes/game",
+        "source": [
+          "/category/news/sim-racing-news"
+        ],
+        "target": "/iracing/news"
+      }
+    ]
+  },
   "itc.cn": {
     "_name": "Open Github社区",
     "open": [

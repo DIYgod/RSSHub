@@ -74516,6 +74516,43 @@ export default {
     "url": "iqnew.com",
     "lang": "zh-CN"
   },
+  "iracing": {
+    "routes": {
+      "/news": {
+        "path": "/news",
+        "categories": [
+          "game"
+        ],
+        "example": "/iracing/news",
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "www.iracing.com/category/news/sim-racing-news"
+            ],
+            "target": "/news"
+          }
+        ],
+        "name": "News",
+        "maintainers": [
+          "canonnizq"
+        ],
+        "location": "news.ts",
+        "module": () => import('@/routes/iracing/news.ts')
+      }
+    },
+    "apiRoutes": {},
+    "name": "iRacing",
+    "url": "iracing.com",
+    "description": ""
+  },
   "itc": {
     "routes": {
       "/collection/:colType": {
