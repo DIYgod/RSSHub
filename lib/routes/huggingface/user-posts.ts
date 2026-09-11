@@ -48,10 +48,7 @@ const getTitle = (raw: string): string => {
         .replace(/^#{1,6}\s*/, '')
         .replaceAll(/[*_`~]/g, '')
         .trim();
-    if (!plain) {
-        return 'Untitled post';
-    }
-    return plain.length > 100 ? `${plain.slice(0, 100)}...` : plain;
+    return plain || 'Untitled post';
 };
 
 export const route: Route = {
