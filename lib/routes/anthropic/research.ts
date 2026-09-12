@@ -67,10 +67,41 @@ async function handler(ctx) {
             };
         });
 
-    const sections = fd.flatMap((d) => (Array.isArray(d.data) ? d.data : [])).flatMap((item) => item?.page?.sections ?? []);
-    const publicationSections = sections.filter((section) => section?.title === 'Publications');
+    // The publication list used to sit at a fixed `page.sections` path. It is now nested deeper in
+    // the flight payload, so walk the parsed data and pick the section up wherever it happens to be.
+    const publicationSections: any[] = [];
+    const collect = (node: any) => {
+        if (!node || typeof node !== 'object') {
+            return;
+        }
+        if (Array.isArray(node)) {
+            for (const child of node) {
+                collect(child);
+            }
+            return;
+        }
+        if (node.title === 'Publications' && Array.isArray(node.posts)) {
+            publicationSections.push(node);
+        }
+        for (const child of Object.values(node)) {
+            collect(child);
+        }
+    };
+    for (const d of fd) {
+        collect(d.data);
+    }
+
+    const seen = new Set<string>();
     const posts = publicationSections
         .flatMap((section) => section?.posts ?? [])
+        .filter((post) => {
+            const slug = post?.slug?.current;
+            if (!slug || seen.has(slug)) {
+                return false;
+            }
+            seen.add(slug);
+            return true;
+        })
         .slice(0, limit)
         .map((post): DataItem => ({
             title: post.title,
