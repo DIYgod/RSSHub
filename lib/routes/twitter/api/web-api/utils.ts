@@ -55,7 +55,7 @@ const token2Cookie = async (token) => {
 const lockPrefix = 'twitter:lock-token1:';
 
 const getAuth = async (retry: number) => {
-    if (!config.twitter.authToken || retry <= 0) {
+    if (!config.twitter.authToken?.length || retry <= 0) {
         return;
     }
     const index = authTokenIndex++ % config.twitter.authToken.length;
