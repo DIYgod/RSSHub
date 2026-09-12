@@ -1686,6 +1686,12 @@
   "/xkb/:channel": [
     "TimWu007"
   ],
+  "/yinxubwg/notice": [
+    "magazian"
+  ],
+  "/yinxubwg/exhibitionIndex/:type": [
+    "magazian"
+  ],
   "/yoasobi-music/info/:category?": [
     "Kiotlin"
   ],
