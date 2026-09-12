@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { DataItem, Route } from '@/types';
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -120,6 +120,6 @@ async function handler(ctx) {
     return {
         title: `湖南日报${id ? ` - ${$('strong').first().parent().text()}` : ''}`,
         link: currentUrl,
-        item: items as DataItem[],
+        item: items,
     };
 }

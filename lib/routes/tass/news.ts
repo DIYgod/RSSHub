@@ -32,6 +32,8 @@ export const route: Route = {
 | politics                     | world | economy            | defense            | science         | emergencies | society           | pressreview  | sports |`,
 };
 
+const language: Language = 'en';
+
 async function handler(ctx) {
     const { category = 'politics' } = ctx.req.param();
 
@@ -79,7 +81,7 @@ async function handler(ctx) {
     return {
         title: $('head title').text(),
         link,
-        language: 'en' as Language,
+        language,
         image: $('head meta[property="og:image"]').attr('content'),
         icon: $('head link[rel="apple-touch-icon"]').attr('href'),
         logo: $('head link[rel="apple-touch-icon"]').attr('href'),

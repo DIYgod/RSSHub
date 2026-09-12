@@ -52,23 +52,25 @@ async function handler(ctx: Context): Promise<Data> {
 
     return {
         title: `${profile.data.name}'s subscriptions`,
-        item: (subscriptions.data.filter((i) => !isInbox(i) && (!isFeed(i) || !i.feeds.errorAt)) as Array<Exclude<Subscription, InboxSubscription>>).map((subscription) => {
-            if (isList(subscription)) {
+        item: subscriptions.data
+            .filter((i): i is Exclude<Subscription, InboxSubscription> => !isInbox(i) && (!isFeed(i) || !i.feeds.errorAt))
+            .map((subscription) => {
+                if (isList(subscription)) {
+                    return {
+                        title: subscription.lists.title,
+                        description: subscription.lists.description,
+                        link: `https://app.follow.is/list/${subscription.listId}`,
+                        image: subscription.lists.image,
+                    };
+                }
                 return {
-                    title: subscription.lists.title,
-                    description: subscription.lists.description,
-                    link: `https://app.follow.is/list/${subscription.listId}`,
-                    image: subscription.lists.image,
+                    title: subscription.feeds.title,
+                    description: subscription.feeds.description,
+                    link: `https://app.follow.is/feed/${subscription.feedId}`,
+                    image: getUrlIcon(subscription.feeds.siteUrl).src,
+                    category: subscription.category ? [subscription.category] : undefined,
                 };
-            }
-            return {
-                title: subscription.feeds.title,
-                description: subscription.feeds.description,
-                link: `https://app.follow.is/feed/${subscription.feedId}`,
-                image: getUrlIcon(subscription.feeds.siteUrl).src,
-                category: subscription.category ? [subscription.category] : undefined,
-            };
-        }),
+            }),
         link: `https://app.follow.is/share/users/${handleOrId}`,
         image: profile.data.image,
     };

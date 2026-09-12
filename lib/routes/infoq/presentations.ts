@@ -18,7 +18,7 @@ export const handler = async (ctx) => {
 
     const $ = load(response);
 
-    const language = $('html').prop('lang');
+    const language = $('html').prop('lang') as Language;
 
     let items = $('ul[data-tax="presentations"] li[data-path]')
         .slice(0, limit)
@@ -67,7 +67,7 @@ export const handler = async (ctx) => {
                 },
                 image,
                 banner: image,
-                language: language as Language,
+                language,
                 enclosure_url: length ? link : undefined,
                 enclosure_type: length ? 'video/mp4' : undefined,
                 enclosure_title: title,
@@ -139,7 +139,7 @@ export const handler = async (ctx) => {
                 };
                 item.image = image;
                 item.banner = image;
-                item.language = language as Language;
+                item.language = language;
                 item.enclosure_url = videoSrc;
                 item.enclosure_type = item.enclosure_url ? 'video/mp4' : undefined;
                 item.enclosure_title = title;
@@ -161,7 +161,7 @@ export const handler = async (ctx) => {
         allowEmpty: true,
         image,
         author: title.split(/-/).pop(),
-        language: language as Language,
+        language,
     };
 };
 

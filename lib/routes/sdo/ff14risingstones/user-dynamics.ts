@@ -30,5 +30,5 @@ async function handler(ctx: Context) {
         link: `${INDEX_URL}#/me/dynamics?uuid=${uid}`,
         image: userInfo.avatar,
         item: await generateDynamicFeeds(dynamics),
-    } as Data;
+    } satisfies Data;
 }

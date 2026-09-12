@@ -1,4 +1,4 @@
-import type { Data, DataItem, Route } from '@/types';
+import type { Data, Route } from '@/types';
 import got from '@/utils/got';
 
 import type { ContentsResponse } from './types';
@@ -45,6 +45,6 @@ async function handler(ctx): Promise<Data> {
         title: `南方周末-${data.data.current_term.title}`,
         link,
         image: 'https://www.infzm.com/favicon.ico',
-        item: resultItem as DataItem[],
+        item: resultItem,
     };
 }

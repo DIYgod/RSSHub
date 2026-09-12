@@ -20,7 +20,7 @@ export const handler = async (ctx) => {
 
     const $ = load(iconv.decode(response, 'gbk'));
 
-    const language = $('html').prop('lang');
+    const language = $('html').prop('lang') as Language;
 
     let items = $('div.new_list_c')
         .slice(0, limit)
@@ -33,7 +33,7 @@ export const handler = async (ctx) => {
                 pubDate: timezone(parseDate($item.find('div.new_list_time').text(), ['HH:mm', 'M/D']), 8),
                 link: new URL($item.find('h6 a').prop('href')!, rootUrl).href,
                 author: $item.find('div.new_list_author').text().trim(),
-                language: language as Language,
+                language,
             };
         });
 
@@ -57,7 +57,7 @@ export const handler = async (ctx) => {
                     html: description,
                     text: $$('.text').text(),
                 };
-                item.language = language as Language;
+                item.language = language;
 
                 return item;
             })
@@ -74,7 +74,7 @@ export const handler = async (ctx) => {
         allowEmpty: true,
         image,
         author: $('p.top1-1-1 a').first().text(),
-        language: language as Language,
+        language,
     };
 };
 

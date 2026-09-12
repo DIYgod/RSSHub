@@ -2,6 +2,35 @@ import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
+interface QaUser {
+    userName?: string;
+}
+
+interface QaComment {
+    user?: QaUser;
+    plainTextDescription?: string;
+}
+
+interface QaRecord {
+    id: number;
+    title?: string;
+    content?: string;
+    user?: QaUser;
+    tags?: string[];
+    bestComment?: QaComment;
+    createTime: number;
+    thumbNum?: number;
+    commentNum?: number;
+}
+
+interface QaResponse {
+    code: number;
+    message?: string;
+    data?: {
+        records?: QaRecord[];
+    };
+}
+
 export const route: Route = {
     path: '/questions/:sort?',
     categories: ['programming'],
@@ -34,7 +63,7 @@ async function handler(ctx) {
 
     const sortConfig = sort === 'hot' ? { field: 'favourNum', name: '热门' } : { field: 'createTime', name: '最新' };
 
-    const response = await ofetch('https://api.codefather.cn/api/qa/list/page/vo', {
+    const response = await ofetch<QaResponse>('https://api.codefather.cn/api/qa/list/page/vo', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -53,33 +82,31 @@ async function handler(ctx) {
 
     const records = response.data?.records || [];
 
-    const items = records.map((item: Record<string, unknown>) => {
-        const title = (item.title as string) || '无标题';
-        const content = (item.content as string) || '';
-        const user = (item.user as Record<string, unknown>) || {};
-        const tags = (item.tags as string[]) || [];
-        const bestComment = item.bestComment as Record<string, unknown> | undefined;
+    const items = records.map((item) => {
+        const title = item.title || '无标题';
+        const content = item.content || '';
+        const tags = item.tags || [];
+        const bestComment = item.bestComment;
 
         // Build description content
         let description = `<div>${content.replaceAll('\n', '<br>')}</div>`;
 
         // Add best answer
         if (bestComment) {
-            const answerUser = (bestComment.user as Record<string, unknown>) || {};
             description += '<hr><h4>💡 最佳回答</h4>';
-            description += `<p><strong>${answerUser.userName || '匿名'}</strong>：</p>`;
-            description += `<p>${(bestComment.plainTextDescription as string) || ''}</p>`;
+            description += `<p><strong>${bestComment.user?.userName || '匿名'}</strong>：</p>`;
+            description += `<p>${bestComment.plainTextDescription || ''}</p>`;
         }
 
         return {
             title,
             link: `https://www.codefather.cn/qa/${item.id}`,
             description,
-            pubDate: parseDate(item.createTime as number),
-            author: user.userName as string,
+            pubDate: parseDate(item.createTime),
+            author: item.user?.userName,
             category: tags,
-            upvotes: item.thumbNum as number,
-            comments: item.commentNum as number,
+            upvotes: item.thumbNum,
+            comments: item.commentNum,
         };
     });
 

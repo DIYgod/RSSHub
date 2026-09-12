@@ -72,7 +72,7 @@ function parseWarnings(script: string, variableName: string): RawWarning[] {
     const pattern = new RegExp(`var\\s+${variableName}\\s*=\\s*(\\[[\\s\\S]*?\\])\\s*(?=var\\s+\\w+\\s*=|$)`);
     const json = pattern.exec(script)?.[1];
 
-    return json ? (JSON.parse(json) as RawWarning[]) : [];
+    return json ? JSON.parse(json) : [];
 }
 
 function isRealWarning(warning: RawWarning): boolean {

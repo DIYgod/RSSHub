@@ -33,7 +33,7 @@ async function loadContent(link) {
         response = await got.get(link);
     } catch (error) {
         // 如果网络问题 直接出错
-        if ((error as Error).name && ['HTTPError', 'RequestError', 'FetchError'].includes((error as Error).name)) {
+        if (error instanceof Error && ['HTTPError', 'RequestError', 'FetchError'].includes(error.name)) {
             description = 'Page 404 Please Check!';
         }
         return { description };

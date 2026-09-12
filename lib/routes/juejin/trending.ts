@@ -3,6 +3,14 @@ import ofetch from '@/utils/ofetch';
 
 import { getCategoryBrief, parseList, ProcessFeed } from './utils';
 
+interface FeedRequestBody {
+    cursor: string;
+    id_type: number;
+    limit: number;
+    sort_type: number;
+    cate_id?: string;
+}
+
 export const route: Route = {
     path: '/trending/:category/:type',
     categories: ['programming'],
@@ -132,7 +140,7 @@ async function handler(ctx) {
     const link = `https://juejin.im/${url}?sort=${p.link}`;
 
     let getUrl = 'https://api.juejin.cn/recommend_api/v1/article/recommend_all_feed';
-    const getJson: { cursor: string; id_type: number; limit: number; sort_type: number; cate_id?: string } = {
+    const getJson: FeedRequestBody = {
         cursor: '0',
         id_type: 2,
         limit: 20,

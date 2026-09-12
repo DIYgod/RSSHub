@@ -17,9 +17,9 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
     const response = await ofetch(targetUrl);
     const $: CheerioAPI = load(response);
-    const language = $('html').attr('lang') ?? 'zh-TW';
+    const language = ($('html').attr('lang') ?? 'zh-TW') as Language;
 
-    const items: DataItem[] = $('div.bwbook_package')
+    const items: DataItem[] = $('div.book_package')
         .slice(0, limit)
         .toArray()
         .map((el) => {
@@ -31,9 +31,9 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
             const title = `${name} - ${authorStr} ${price}`;
             const image: string | undefined = $el
-                .find('img')
+                .find('div.bookcover img')
                 .attr('data-src')
-                ?.replace(/_\d+(\.\w+)$/, '$1');
+                ?.replace(/_\d+(?:_mask)?(\.\w+)$/, '$1');
             const description: string | undefined = renderToString(
                 image ? (
                     <figure>
@@ -41,7 +41,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                     </figure>
                 ) : null
             );
-            const linkUrl: string | undefined = $el.find('div.bwbookitem a').attr('href');
+            const linkUrl: string | undefined = $el.find('div.bookitem a').attr('href');
             const authors: DataItem['author'] = authorStr.split(/,/).map((a) => ({
                 name: a,
             }));
@@ -57,7 +57,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 },
                 image,
                 banner: image,
-                language: language as Language,
+                language,
             };
 
             return processedItem;
@@ -71,7 +71,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
         allowEmpty: true,
         image: $('meta[property="og:image"]').attr('content'),
         author: $('meta[property="og:site_name"]').attr('content'),
-        language: language as Language,
+        language,
         id: $('meta[property="og:url"]').attr('content'),
     };
 };
@@ -80,7 +80,7 @@ export const route: Route = {
     path: '/search/:filter?',
     name: '搜尋',
     url: 'www.bookwalker.com.tw',
-    maintainers: ['nczitzk'],
+    maintainers: ['wushijishan', 'nczitzk'],
     handler,
     example: '/bookwalker/search/order=sell_desc&s=34',
     parameters: {

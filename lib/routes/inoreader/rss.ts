@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { DataItem, Route } from '@/types';
+import type { Route } from '@/types';
 import { ViewType } from '@/types';
 import parser from '@/utils/rss-parser';
 
@@ -29,7 +29,7 @@ async function handler(ctx) {
     const rootUrl = 'https://www.inoreader.com/stream';
     const rssUrl = `${rootUrl}/user/${user}/tag/${tag}`;
     const feed = await parser.parseURL(rssUrl);
-    feed.items = feed.items.map((item) => {
+    const items = feed.items.map((item) => {
         if (item && item.enclosure && item.enclosure.type!.includes('audio')) {
             // output podcast rss
             // get first image in content
@@ -64,6 +64,6 @@ async function handler(ctx) {
         image: 'https://www.inoreader.com/brand/img/ino_app_icon.png',
         link: feed.link,
         description: feed.description,
-        item: feed.items as DataItem[],
+        item: items,
     };
 }

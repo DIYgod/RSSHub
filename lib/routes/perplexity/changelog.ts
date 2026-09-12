@@ -33,7 +33,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
     const items = $('a[href^="./changelog/"]')
         .toArray()
-        .map((elem) => {
+        .map((elem): DataItem | null => {
             const $link = $(elem);
             const href = $link.attr('href');
 
@@ -87,7 +87,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 pubDate,
                 guid: `perplexity-changelog-${fullLink}`,
                 id: `perplexity-changelog-${fullLink}`,
-            } as DataItem;
+            };
         })
         .filter((item): item is DataItem => item !== null);
 

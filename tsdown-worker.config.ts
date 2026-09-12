@@ -1,11 +1,10 @@
 import fs from 'node:fs';
 import path from 'node:path';
 
-import type { Plugin } from 'rolldown';
-import { defineConfig } from 'tsdown';
+import { defineConfig, type TsdownPlugin } from 'tsdown';
 
 // Plugin to automatically resolve .worker.ts files instead of .ts files
-function workerAliasPlugin(): Plugin {
+function workerAliasPlugin(): TsdownPlugin {
     return {
         name: 'worker-alias',
         resolveId(source, importer) {
@@ -68,24 +67,24 @@ export default defineConfig({
     platform: 'node',
     target: 'esnext',
     treeshake: true,
+    copy: [{ from: 'node_modules/header-generator/data_files', to: 'dist-worker/modules' }],
     define: {
         'process.env.NODE_ENV': JSON.stringify('production'),
         'process.env.VERCEL_ENV': JSON.stringify(''),
         'import.meta.dirname': JSON.stringify('/worker'),
         'import.meta.url': JSON.stringify('file:///worker/index.mjs'),
         // CommonJS compatibility
-        __dirname: JSON.stringify('/worker'),
+        __dirname: JSON.stringify('/bundle'),
         __filename: JSON.stringify('/worker/index.mjs'),
     },
     plugins: [workerAliasPlugin()],
     alias: {
         // External dependencies that need Worker-compatible replacements
         'node:module': path.resolve('./lib/shims/node-module.ts'),
-        'node:child_process': path.resolve('./lib/shims/node-child-process.ts'),
         'dotenv/config': path.resolve('./lib/shims/dotenv-config.ts'),
         '@sentry/node': path.resolve('./lib/shims/sentry-node.ts'),
         '@honeybadger-io/js': path.resolve('./lib/shims/honeybadger.ts'),
-        'xxhash-wasm': path.resolve('./lib/shims/xxhash-wasm.ts'),
+        typescript: path.resolve('./lib/shims/typescript.ts'),
         // Routes file with Worker-specific build (match relative import from lib/)
         '../assets/build/routes.js': path.resolve('./assets/build/routes-worker.js'),
         // routes.json is only used in test environment, but rolldown still tries to resolve it
@@ -94,6 +93,8 @@ export default defineConfig({
     deps: {
         onlyBundle: false,
         neverBundle: [
+            // Let Wrangler select the package's static-WASM workerd export.
+            'xxhash-wasm',
             // Exclude non-code files that might be accidentally imported
             /\/_README$/,
             /\.node$/,

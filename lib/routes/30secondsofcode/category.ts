@@ -64,5 +64,5 @@ async function handler(ctx) {
         image: `${rootUrl}${image}`,
         link: rootUrl,
         item: items,
-    } as Data;
+    } satisfies Data;
 }

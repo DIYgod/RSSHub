@@ -1,5 +1,15 @@
 import { describe, expect, it, vi } from 'vitest';
 
+interface FollowConfigPayload {
+    ownerUserId?: string;
+    description?: string;
+    price?: number;
+    userLimit?: number;
+    cacheTime: number;
+    gitHash: string;
+    gitDate?: number;
+}
+
 describe('api/follow/config', () => {
     it('returns follow config payload', async () => {
         process.env.FOLLOW_OWNER_USER_ID = 'owner';
@@ -8,13 +18,11 @@ describe('api/follow/config', () => {
         process.env.FOLLOW_USER_LIMIT = '10';
 
         vi.resetModules();
-        const { handler } = await import('@/api/follow/config');
+        const { default: api } = await import('@/api');
 
-        const ctx = {
-            json: (data: unknown) => data,
-        };
-
-        const result = (handler as (c: typeof ctx) => unknown)(ctx) as Record<string, unknown>;
+        const response = await api.request('/follow/config');
+        expect(response.status).toBe(200);
+        const result: FollowConfigPayload = await response.json();
 
         expect(result).toMatchObject({
             ownerUserId: 'owner',
@@ -22,8 +30,8 @@ describe('api/follow/config', () => {
             price: 123,
             userLimit: 10,
         });
-        expect(typeof result.cacheTime).toBe('number');
-        expect(typeof result.gitHash).toBe('string');
+        expect(result.cacheTime).toEqual(expect.any(Number));
+        expect(result.gitHash).toEqual(expect.any(String));
 
         delete process.env.FOLLOW_OWNER_USER_ID;
         delete process.env.FOLLOW_DESCRIPTION;

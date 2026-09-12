@@ -1,5 +1,6 @@
 import type { Route } from '@/types';
 import buildData from '@/utils/common-config';
+import { parseDate } from '@/utils/parse-date';
 
 const baseUrl = 'https://www.iiilab.com/';
 
@@ -24,19 +25,18 @@ async function handler() {
     return await buildData({
         link,
         url: link,
-        title: '%title%',
-        description: '%description%',
-        params: {
-            title: '发现',
-            description: '人人都是自媒体-发现',
-        },
+        title: '发现',
+        description: '人人都是自媒体-发现',
         item: {
             item: '.aw-common-list > div',
-            title: `$('a').first().text()`,
-            link: `$('a').first().attr('href')`,
-            description: `$('.markitup-box').text()`,
-            pubDate: `parseDate($('.text-color-999').first().text(), 'YYYY-MM-DD HH:mm')`,
-            guid: Buffer.from(`$('a').attr('href')`).toString('base64'),
+            title: ($) => $('a').first().text(),
+            link: ($) => $('a').first().attr('href'),
+            description: ($) => $('.markitup-box').text(),
+            pubDate: ($) => parseDate($('.text-color-999').first().text(), 'YYYY-MM-DD HH:mm'),
+            guid: ($) => {
+                const href = $('a').attr('href');
+                return href ? Buffer.from(href).toString('base64') : undefined;
+            },
         },
     });
 }

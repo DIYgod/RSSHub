@@ -38,7 +38,7 @@ function extractArticlesFromDOM($: CheerioAPI): DataItem[] {
                   }
                 : null;
         })
-        .filter(Boolean) as DataItem[];
+        .filter((item) => item !== null);
 }
 
 async function handler() {

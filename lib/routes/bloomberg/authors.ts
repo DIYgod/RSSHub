@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 import pMap from 'p-map';
 
-import type { Language, Route } from '@/types';
+import type { Data, Route } from '@/types';
 import { ViewType } from '@/types';
 import ofetch from '@/utils/ofetch';
 import rssParser from '@/utils/rss-parser';
@@ -55,7 +55,7 @@ export const route: Route = {
     handler,
 };
 
-async function handler(ctx) {
+async function handler(ctx): Promise<Data> {
     const { id, slug, source } = ctx.req.param();
     const link = `https://www.bloomberg.com/authors/${id}/${slug}`;
 
@@ -74,7 +74,7 @@ async function handler(ctx) {
     return {
         title: `Bloomberg - ${authorName}`,
         link,
-        language: 'en-us' as Language,
+        language: 'en-us',
         item,
     };
 }

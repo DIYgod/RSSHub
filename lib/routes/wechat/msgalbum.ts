@@ -57,7 +57,7 @@ async function handler(ctx) {
             link: articledata[index].link,
             guid: articledata[index].guid,
             author: articledata[index].author,
-            pubDate: dayjs.unix($(item).find('.js_article_create_time').text() as unknown as number).format(),
+            pubDate: dayjs.unix(Number($(item).find('.js_article_create_time').text())).format(),
         })),
     };
 }

@@ -7,11 +7,17 @@ import { parseDate } from '@/utils/parse-date';
 
 export const rootUrl = 'https://www.newslaundry.com';
 
-export async function fetchCollection(collectionSlug: string, customUrl?: string, skipFirstItem: boolean = false) {
+interface Collection {
+    name: string;
+    summary?: string;
+    items?: Array<{ story: any }>;
+}
+
+export async function fetchCollection(collectionSlug: string, customUrl?: string, skipFirstItem: boolean = false): Promise<Data> {
     const apiUrl = `${rootUrl}/api/v1/collections/${collectionSlug}`;
     const currentUrl = customUrl || `${rootUrl}/${collectionSlug}`;
 
-    const response = await ofetch(apiUrl);
+    const response = await ofetch<Collection>(apiUrl);
 
     if (!response.items || !response.items.length) {
         throw new Error('No articles found');
@@ -29,7 +35,7 @@ export async function fetchCollection(collectionSlug: string, customUrl?: string
         language: 'en',
         logo: `${rootUrl}/favicon.ico`,
         icon: `${rootUrl}/favicon.ico`,
-    } as Data;
+    };
 }
 
 function processStory(story: any): DataItem {
@@ -37,7 +43,7 @@ function processStory(story: any): DataItem {
     const pubDate = story['published-at'] ? parseDate(story['published-at']) : null;
 
     // Prepare data for template
-    const heroImage = story['hero-image-s3-key'] ? `https://media.assettype.com/${story['hero-image-s3-key']}?auto=format%2Ccompress&fit=max&dpr=1.0&format=webp` : null;
+    const heroImage = story['hero-image-s3-key'] ? `https://media.assettype.com/${story['hero-image-s3-key']}?auto=format%2Ccompress&fit=max&dpr=1.0&format=webp` : undefined;
 
     // Extract elements from cards
     const elements =
@@ -150,5 +156,5 @@ function processStory(story: any): DataItem {
         updated: story['last-correction-published-at'] ? parseDate(story['last-correction-published-at']) : undefined,
         author: authors.length > 0 ? authors : story['author-name'],
         category: story.tags?.map((tag) => tag.name) || [],
-    } as DataItem;
+    };
 }

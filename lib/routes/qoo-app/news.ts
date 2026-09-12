@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Language, Route } from '@/types';
+import type { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
@@ -58,7 +58,7 @@ async function handler(ctx) {
                 : 'QooApp 是專注二次元的專業平台，旨在聚集世界各地熱愛ACG的用戶，為他們創造有價值的服務和產品。從遊戲商店、新聞資訊、玩家社群，到線下聚會、漫畫閱讀、遊戲發行——QooApp不斷進化中，拓展突破次元的遊玩體驗。',
         image: siteIcon,
         link: `${newsUrl}${lang ? `/${lang}` : ''}`,
-        language: (lang === 'en' ? 'en' : 'zh') as Language,
+        language: lang === 'en' ? ('en' as const) : ('zh' as const),
         item: items,
     };
 }

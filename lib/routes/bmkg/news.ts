@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { DataItem, Language, Route } from '@/types';
+import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 
@@ -28,7 +28,7 @@ export const route: Route = {
     url: 'bmkg.go.id/',
 };
 
-async function handler() {
+async function handler(): Promise<Data> {
     const url = 'https://www.bmkg.go.id';
     const response = await got(url);
     const $ = load(response.data);
@@ -64,6 +64,6 @@ async function handler() {
         link: url,
         description: '印尼气象气候和地球物理局 新闻 | BMKG news',
         item: items,
-        language: 'in' as Language,
+        language: 'in',
     };
 }

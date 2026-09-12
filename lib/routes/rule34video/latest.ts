@@ -45,7 +45,7 @@ interface VideoItem {
 async function handler() {
     const response = await got({
         method: 'get',
-        url: 'https://www.rule34video.com/latest-updates/',
+        url: 'https://rule34video.com/latest-updates/',
     });
 
     const $ = load(response.data);
@@ -75,14 +75,14 @@ async function handler() {
                 hasSound,
                 isHD,
                 videoId,
-            } as VideoItem;
+            } satisfies VideoItem;
         })
         .filter((item) => item.title && item.link);
 
     return {
         allowEmpty: true,
         title: 'Rule34 Video Latest Updates',
-        link: 'https://www.rule34video.com/latest-updates/',
+        link: 'https://rule34video.com/latest-updates/',
         description: 'Latest updates from Rule34 Video',
         item: items.map((item) => buildDataItem(item)),
     };

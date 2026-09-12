@@ -9,6 +9,16 @@ import { parseDate } from '@/utils/parse-date';
 
 import type { BitgetResponse } from './type';
 
+interface AnnouncementRequestBody {
+    pageSize: string;
+    openUnread: number;
+    stationLetterType: string;
+    isPre: boolean;
+    lastEndId: null;
+    languageType: number;
+    excludeStationLetterType?: string;
+}
+
 const handler: Route['handler'] = async (ctx) => {
     const baseUrl = 'https://www.bitget.com';
     const announcementApiUrl = `${baseUrl}/v1/msg/push/stationLetterNew`;
@@ -24,15 +34,7 @@ const handler: Route['handler'] = async (ctx) => {
     const pageSize = ctx.req.query('limit') ?? '10';
 
     // stationLetterType: 0 表示全部通知，02 表示新币上线，01 表示最新活动，06 表示最新公告
-    const reqBody: {
-        pageSize: string;
-        openUnread: number;
-        stationLetterType: string;
-        isPre: boolean;
-        lastEndId: null;
-        languageType: number;
-        excludeStationLetterType?: string;
-    } = {
+    const reqBody: AnnouncementRequestBody = {
         pageSize,
         openUnread: 0,
         stationLetterType: '0',
@@ -64,7 +66,7 @@ const handler: Route['handler'] = async (ctx) => {
             throw new Error('Invalid type');
     }
 
-    const response = (await cache.tryGet(
+    const response = await cache.tryGet(
         `bitget:announcement:${type}:${pageSize}:${lang}`,
         async () => {
             const result = await ofetch<BitgetResponse>(announcementApiUrl, {
@@ -79,44 +81,43 @@ const handler: Route['handler'] = async (ctx) => {
         },
         config.cache.routeExpire,
         false
-    )) as BitgetResponse;
+    );
 
     if (!response) {
         throw new Error('Failed to fetch announcements');
     }
     const items = response.data.items;
     const data = await Promise.all(
-        items.map(
-            (item) =>
-                cache.tryGet(`bitget:announcement:${item.id}:${pageSize}:${lang}`, async () => {
-                    // 从 unix 时间戳转换为日期
-                    const date = parseDate(Number(item.sendTime));
-                    const dataItem: DataItem = {
-                        title: item.title ?? '',
-                        link: item.openUrl ?? '',
-                        pubDate: item.sendTime ? date : undefined,
-                        description: item.content ?? '',
-                        image: item.imgUrl,
-                    };
+        items.map((item) =>
+            cache.tryGet(`bitget:announcement:${item.id}:${pageSize}:${lang}`, async () => {
+                // 从 unix 时间戳转换为日期
+                const date = parseDate(Number(item.sendTime));
+                const dataItem: DataItem = {
+                    title: item.title ?? '',
+                    link: item.openUrl ?? '',
+                    pubDate: item.sendTime ? date : undefined,
+                    description: item.content ?? '',
+                    image: item.imgUrl,
+                };
 
-                    if (item.stationLetterType === '01' || item.stationLetterType === '06') {
-                        try {
-                            const itemResponse = await ofetch<string>(item.openUrl ?? '', {
-                                headers,
-                            });
-                            const $ = load(itemResponse);
-                            const nextData = JSON.parse($('script#__NEXT_DATA__').text());
-                            dataItem.description = nextData.props.pageProps.details?.content || nextData.props.pageProps.pageInitInfo?.ruleContent || item.content || '';
-                        } catch (error: any) {
-                            if (error.name && ['HTTPError', 'RequestError', 'FetchError'].includes(error.name)) {
-                                dataItem.description = item.content ?? '';
-                            } else {
-                                throw error;
-                            }
+                if (item.stationLetterType === '01' || item.stationLetterType === '06') {
+                    try {
+                        const itemResponse = await ofetch<string>(item.openUrl ?? '', {
+                            headers,
+                        });
+                        const $ = load(itemResponse);
+                        const nextData = JSON.parse($('script#__NEXT_DATA__').text());
+                        dataItem.description = nextData.props.pageProps.details?.content || nextData.props.pageProps.pageInitInfo?.ruleContent || item.content || '';
+                    } catch (error: any) {
+                        if (error.name && ['HTTPError', 'RequestError', 'FetchError'].includes(error.name)) {
+                            dataItem.description = item.content ?? '';
+                        } else {
+                            throw error;
                         }
                     }
-                    return dataItem;
-                }) as Promise<DataItem>
+                }
+                return dataItem;
+            })
         )
     );
 

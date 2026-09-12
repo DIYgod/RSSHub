@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 import iconv from 'iconv-lite';
 
-import type { DataItem, Language, Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -84,7 +84,7 @@ async function handler(ctx) {
         title: $('title').text(),
         link: currentUrl,
         description: subtitle,
-        language: 'zh' as Language,
+        language: 'zh' as const,
         image,
         subtitle,
         allowEmpty: true,

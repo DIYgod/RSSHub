@@ -23,7 +23,7 @@ const convertDateToISO8601 = (date?: string | Date | number | null) => {
     if (!date) {
         return date;
     }
-    if (typeof date !== 'object') {
+    if (!(date instanceof Date)) {
         // some routes may call `.toUTCString()` before passing the date to ctx...
         date = parseDate(date);
     }

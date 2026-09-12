@@ -14,7 +14,7 @@ export const handler = async (ctx) => {
 
     const $ = load(response);
 
-    const language = $('html').prop('lang');
+    const language = $('html').prop('lang') as Language;
 
     const items = $('a[data-icon="pdf"]')
         .slice(0, limit)
@@ -28,7 +28,7 @@ export const handler = async (ctx) => {
             return {
                 title,
                 link,
-                language: language as Language,
+                language,
                 enclosure_url: link,
                 enclosure_type: link ? 'application/pdf' : undefined,
                 enclosure_title: title,
@@ -45,7 +45,7 @@ export const handler = async (ctx) => {
         allowEmpty: true,
         image,
         author: $('meta[property="og:site_name"]').prop('content'),
-        language: language as Language,
+        language,
     };
 };
 

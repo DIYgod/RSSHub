@@ -67,7 +67,7 @@ const allowedBrowserRequestTypes = new Set(['document', 'script', 'xhr', 'fetch'
 const browserResponseTimeout = 45000;
 const browserCloseTimeout = 90000;
 
-const getErrorMessage = (error: unknown) => (error instanceof Error ? error.message : String(error));
+const getErrorMessage = (cause: unknown) => (cause instanceof Error ? cause.message : String(cause));
 
 const isVideoListApiResponse = (response: BrowserResponse) => {
     const request = response.request();

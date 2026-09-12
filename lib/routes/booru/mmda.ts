@@ -96,9 +96,9 @@ async function handler(ctx) {
                 const statisticsStr = statisticsTages.text();
 
                 const regex = /(?<key>[^\s:]+)\s*:\s*(?<value>.+)/g;
-                const result: Record<string, any> = {};
+                const result: Record<string, string | undefined> = {};
                 for (const match of statisticsStr.matchAll(regex)) {
-                    const { key, value } = match.groups ?? ({} as { key: string; value: string });
+                    const { key, value } = match.groups!;
                     result[key.trim().toLocaleLowerCase()] = value.trim();
                 }
 

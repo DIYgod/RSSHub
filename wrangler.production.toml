@@ -1,0 +1,48 @@
+# Cloudflare Workers Builds must use: wrangler deploy --config wrangler.production.toml
+name = "rsshub"
+main = "dist-worker/worker.mjs"
+compatibility_date = "2026-09-01"
+compatibility_flags = ["global_fetch_strictly_public"]
+
+find_additional_modules = true
+base_dir = "dist-worker/modules"
+rules = [{ type = "Data", globs = ["data_files/**"], fallthrough = true }]
+
+# Serve static assets from lib/assets
+assets = { directory = "lib/assets" }
+
+[build]
+command = "pnpm run worker-build"
+
+# Workers Paid plan is recommended for better performance
+# Free plan has 10ms CPU time limit per request
+# Paid plan has 30s CPU time limit per request
+
+[observability]
+enabled = true
+
+# Browser Run API for Playwright support
+# Requires Workers Paid plan
+[browser]
+binding = "BROWSER"
+
+# KV namespace for caching (auto-provisioned on first deploy)
+[[kv_namespaces]]
+binding = "CACHE"
+
+# PLAYWRIGHT_WS_ENDPOINT takes priority over BROWSER; use a matching Playwright version.
+[[services]]
+binding = "PLAYWRIGHT_SERVICE"
+service = "cloudflare-patchright"
+
+[vars]
+# Only use the service binding for this endpoint origin.
+PLAYWRIGHT_SERVICE_ORIGIN = "https://cloudflare-patchright.rss3.workers.dev"
+# Environment variables can be set here or via wrangler secret
+# DEBUG_INFO = "false"
+
+# For production, use wrangler secret put <KEY> to set sensitive values
+# Example secrets:
+# - ACCESS_KEY
+# - GITHUB_ACCESS_TOKEN
+# - etc.

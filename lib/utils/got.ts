@@ -6,7 +6,7 @@ import { getSearchParamsString } from './helpers';
 
 const getFakeGot = (defaultOptions?: any) => {
     const fakeGot = async (request, options?: any) => {
-        if (!(typeof request === 'string' || request instanceof Request) && request.url) {
+        if (!(request instanceof Request) && request.url) {
             options = {
                 ...request,
                 ...options,
@@ -30,7 +30,7 @@ const getFakeGot = (defaultOptions?: any) => {
             delete options.json;
         }
         if (options?.form && !options.body) {
-            options.body = new URLSearchParams(options.form as Record<string, string>).toString();
+            options.body = new URLSearchParams(options.form).toString();
             if (!options.headers) {
                 options.headers = {};
             }

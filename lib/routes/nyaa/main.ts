@@ -28,12 +28,20 @@ export const route: Route = {
         supportScihub: false,
     },
     name: 'Search Result',
-    maintainers: ['Lava-Swimmer', 'noname1776', 'camera-2018', 'Q16KBreak'],
+    maintainers: ['LandonLi', 'noname1776', 'camera-2018', 'Q16KBreak'],
     handler,
 };
 
+type NyaaItem = {
+    magnet?: string;
+    infoHash?: string;
+    description?: string;
+    enclosure_url?: string;
+    enclosure_type?: string;
+};
+
 async function handler(ctx) {
-    const parser = new Parser<Record<string, any>, Record<string, any>>({
+    const parser = new Parser<object, NyaaItem>({
         customFields: {
             item: ['magnet', ['nyaa:infoHash', 'infoHash']],
         },

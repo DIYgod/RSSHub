@@ -1,5 +1,4 @@
 import { load } from 'cheerio';
-import type { Element } from 'domhandler';
 import pMap from 'p-map';
 import { CookieJar } from 'tough-cookie';
 
@@ -122,7 +121,7 @@ async function handler(ctx) {
         articles,
         async (data) => {
             const link = data.link;
-            data.description = (await cache.tryGet(link, async () => {
+            data.description = await cache.tryGet(link, async () => {
                 // 获取数据
                 const response = await got(link, {
                     cookieJar,
@@ -136,7 +135,7 @@ async function handler(ctx) {
                     .remove();
                 node.find('*')
                     .contents()
-                    .filter((_, el) => el.type === 'comment' || (el as Element).tagName === 'meta' || (el as Element).tagName === 'style')
+                    .filter((_, el) => el.type === 'comment' || $(el).is('meta, style'))
                     .remove();
                 node.find('*').each((_, el) => {
                     if (el.attribs.style !== undefined) {
@@ -198,7 +197,7 @@ async function handler(ctx) {
                 });
 
                 return node.html() ?? '';
-            })) as string;
+            });
             return data;
         },
         { concurrency: 2 }

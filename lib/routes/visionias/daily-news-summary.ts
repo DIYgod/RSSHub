@@ -50,7 +50,7 @@ function processNews(page) {
     const $ = load(page);
     const items = $('#quiz-start div[x-data="{ isExpanded: false }"]')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const title = $(item).find('a>h5').text().trim();
             const content = $(item).find('a>div').html();
             const link = $(item).find('div>p>a').attr('href') || '';
@@ -59,7 +59,7 @@ function processNews(page) {
                 link,
                 guid: link,
                 description: content,
-            } as DataItem;
+            };
         });
 
     return items;

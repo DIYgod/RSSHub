@@ -28,12 +28,12 @@ export async function getSFWUserNovels(id: string, fullContent: boolean = false,
         searchParams.append('ids[]', novel);
     }
 
-    const { data } = (await got(`${baseUrl}/ajax/user/${id}/profile/novels`, {
+    const { data }: SFWNovelsResponse = await got(`${baseUrl}/ajax/user/${id}/profile/novels`, {
         headers: {
             referer: url,
         },
         searchParams,
-    })) as SFWNovelsResponse;
+    });
 
     const items = await Promise.all(
         Object.values(data.body.works).map(async (item) => {

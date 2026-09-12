@@ -38,14 +38,13 @@ async function handler(ctx) {
 
     const episodes: DataItem[] = [];
 
-    const getEpisode = (item: EpisodeResult, title: string) =>
-        ({
-            title,
-            description: utils.renderOGVDescription(embed, item.cover, item.long_title, seasonId, String(item.id)),
-            link: item.share_url,
-            image: item.cover.replace('http://', 'https://'),
-            language: 'zh-CN',
-        }) as DataItem;
+    const getEpisode = (item: EpisodeResult, title: string): DataItem => ({
+        title,
+        description: utils.renderOGVDescription(embed, item.cover, item.long_title, seasonId, String(item.id)),
+        link: item.share_url,
+        image: item.cover.replace('http://', 'https://'),
+        language: 'zh-CN',
+    });
 
     for (const item of seasonData.main_section.episodes) {
         const episode = getEpisode(item, `第${item.title}话 ${item.long_title}`);
@@ -66,5 +65,5 @@ async function handler(ctx) {
         item: episodes,
         image: mediaData.cover.replace('http://', 'https://'),
         language: 'zh-CN',
-    } as Data;
+    } satisfies Data;
 }

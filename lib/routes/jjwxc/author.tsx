@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
 import iconv from 'iconv-lite';
 
-import type { Language, Route } from '@/types';
+import type { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
@@ -102,7 +102,7 @@ async function handler(ctx) {
         title: `${logoEl.prop('alt').replace(/logo/, '')} | ${author} - 最近更新`,
         link: currentUrl,
         description: $('span[itemprop="description"]').text(),
-        language: 'zh' as Language,
+        language: 'zh' as const,
         image,
         icon,
         logo: icon,

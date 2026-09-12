@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Data, DataItem, Route } from '@/types';
+import type { Data, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
@@ -104,7 +104,7 @@ async function handler(ctx): Promise<Data> {
         title: category ? `とらのあな総合インフォメーション - ${category}` : 'とらのあな総合インフォメーション',
         link: category ? `https://news.toranoana.jp/category/${category}` : 'https://news.toranoana.jp/',
         description: 'とらのあなの最新情報をお届け！同人誌、書籍、コミック、店舗フェア、イラスト展、とらのあな限定版、キャンペーンなど…スペシャルでお得な情報をいち早くチェック！',
-        item: items.filter(Boolean) as DataItem[],
+        item: items.filter(Boolean),
         language: 'ja',
     };
 }

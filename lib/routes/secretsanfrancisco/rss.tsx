@@ -44,6 +44,7 @@ async function handler(ctx) {
         category = await cache.tryGet(`${baseUrl}${categoryApiPath}`, async () => {
             const { data } = await got(`${baseUrl}${categoryApiPath}`, {
                 searchParams: { slug: categorySlug },
+                headers: { accept: 'application/json' },
             });
             if (!data || data.length === 0) {
                 throw new Error(`Category "${categorySlug}" not found`);
@@ -64,6 +65,7 @@ async function handler(ctx) {
             _embed: '',
             ...(categoryId && { categories: categoryId }),
         },
+        headers: { accept: 'application/json' },
     });
 
     const items = postsResponse.data
@@ -91,8 +93,9 @@ async function handler(ctx) {
                     </>
                 ),
                 link: item.link,
-                pubDate: parseDate(item.date_gmt),
-                updated: parseDate(item.modified_gmt),
+                // WordPress returns *_gmt without a timezone designator
+                pubDate: parseDate(`${item.date_gmt}Z`),
+                updated: parseDate(`${item.modified_gmt}Z`),
                 image,
                 author: item._embedded.author[0].name,
             };

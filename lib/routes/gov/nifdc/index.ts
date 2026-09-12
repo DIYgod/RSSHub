@@ -93,7 +93,7 @@ async function handler(ctx) {
         title: $('title').text().replace(/----/, ' - '),
         link: currentUrl,
         description: $('meta[name="ColumnDescription"]').prop('content'),
-        language: 'zh' as Language,
+        language: 'zh' as const satisfies Language,
         image,
         icon,
         logo: icon,

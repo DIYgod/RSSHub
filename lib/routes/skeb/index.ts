@@ -1,5 +1,5 @@
 import { config } from '@/config';
-import type { Data, DataItem, Route } from '@/types';
+import type { Data, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 
@@ -112,7 +112,7 @@ async function handler(ctx): Promise<Data> {
         false
     );
 
-    if (!apiData || typeof apiData !== 'object') {
+    if (!apiData) {
         throw new Error('Invalid data received from API');
     }
 
@@ -122,12 +122,13 @@ async function handler(ctx): Promise<Data> {
         }
 
         const processItem = workCategories.has(category) ? processWork : processCreator;
-        return (await Promise.all(apiData[category].map(async (item) => await processItem(item)).filter(Boolean))) as DataItem[];
+        const processed = await Promise.all(apiData[category].map(async (item) => await processItem(item)));
+        return processed.filter((item) => item !== null);
     });
 
     return {
         title: `Skeb - ${categoryMap[category]}`,
         link: `${baseUrl}/#${category}`,
-        item: items as DataItem[],
+        item: items,
     };
 }

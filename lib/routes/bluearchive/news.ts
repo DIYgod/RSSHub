@@ -5,12 +5,12 @@ import { parseDate } from '@/utils/parse-date';
 // type id => display name
 type Mapping = Record<string, string>;
 
-const JP: Mapping = {
+const JP = {
     '0': '全て',
     '1': 'イベント',
     '2': 'お知らせ',
     '3': 'メンテナンス',
-};
+} satisfies Mapping;
 
 // render into MD table
 const mkTable = (mapping: Mapping): string => {

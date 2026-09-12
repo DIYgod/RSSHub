@@ -38,13 +38,14 @@ const getData = (url) =>
 
         const icon = new URL('favicon.ico', rootUrl).href;
         const author = $('meta[property="og:site_name"]').prop('content');
+        const language = $('html').prop('lang') as Language;
 
         return {
             data: {
                 title: $('span.bg-clip-text').text() || `${author}·${$('meta[property="og:title"]').prop('content').split('-', 1)[0]}`,
                 link: url,
                 description: $('meta[property="og:description"]').prop('content'),
-                language: $('html').prop('lang') as Language,
+                language,
                 image: $('meta[property="og:image"]').prop('content'),
                 icon,
                 logo: icon,

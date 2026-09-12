@@ -64,7 +64,7 @@ async function handler(ctx) {
     return {
         ...feed,
         title: `${feed.title} - CSDN博客`,
-        image: feed.image as unknown as string,
+        image: feed.image?.url,
         item: items as DataItem[],
     };
 }

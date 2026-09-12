@@ -45,7 +45,7 @@ async function handler(/* ctx*/): Promise<Data> {
 
     const items: DataItem[] = await Promise.all(
         list.map((item: DataItem) =>
-            cache.tryGet(item.link!, async () => {
+            cache.tryGet(item.link!, async (): Promise<DataItem> => {
                 const detailResponse = await got.get(item.link);
                 const content = load(detailResponse.data);
                 item.category = content('.div.topics > a')
@@ -54,7 +54,7 @@ async function handler(/* ctx*/): Promise<Data> {
                 item.description = content('.post-body').html();
                 return item;
             })
-        ) as Array<Promise<DataItem>>
+        )
     );
 
     return {

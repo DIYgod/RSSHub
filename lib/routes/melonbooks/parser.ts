@@ -37,5 +37,5 @@ export function parseItems($: CheerioAPI, baseUrl: string, fetchRestrictedConten
                 };
             })
         )
-    ) as unknown as Promise<DataItem[]>;
+    );
 }

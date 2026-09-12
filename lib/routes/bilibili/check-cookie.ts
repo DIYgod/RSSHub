@@ -1,4 +1,5 @@
 import type { APIRoute } from '@/types';
+import { isWorker } from '@/utils/is-worker';
 import ofetch from '@/utils/ofetch';
 
 import cacheIn from './cache';
@@ -22,10 +23,15 @@ async function handler() {
     const response = await ofetch('https://api.bilibili.com/x/web-interface/nav', {
         headers: {
             Referer: 'https://space.bilibili.com/1/',
-            Cookie: cookie as string,
+            Cookie: cookie,
         },
     });
     const isResponseValid = response.code === 0 && !!response.data.mid;
+
+    // Workers do not fetch subtitles, so only validate the login session there.
+    if (isWorker) {
+        return { code: isResponseValid ? 0 : -1 };
+    }
 
     const subtitleResponse = await ofetch('https://api.bilibili.com/x/player/wbi/v2?bvid=BV1iU411o7R2&cid=1550543560', {
         headers: {

@@ -52,7 +52,7 @@ const processItems: ($: CheerioAPI, targetEl: Cheerio<Element>, limit: number) =
     return (
         await Promise.all(
             items.map((item) => {
-                if (!item.link && typeof item.link !== 'string') {
+                if (item.link === undefined) {
                     return item;
                 }
 

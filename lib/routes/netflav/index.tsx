@@ -24,6 +24,19 @@ export const route: Route = {
     },
 };
 
+interface NetflavVideo {
+    title: string;
+    description: string;
+    videoId: string;
+    sourceDate: string;
+    actors: string[];
+    tags?: string[];
+    preview_hp?: string;
+    preview?: string;
+    previewImagesUrl?: string;
+    previewImages?: string[];
+}
+
 async function handler() {
     const baseUrl = 'https://netflav.com';
     const { data } = await got(baseUrl);
@@ -35,13 +48,18 @@ async function handler() {
         props: { initialState },
     } = nextData;
 
-    const items = [...initialState.censored.docs, ...initialState.uncensored.docs, ...initialState.chinese.docs, ...initialState.trending.docs].map((item) => ({
+    const docs: NetflavVideo[] = [...initialState.censored.docs, ...initialState.uncensored.docs, ...initialState.chinese.docs, ...initialState.trending.docs];
+
+    const items = docs.map((item) => ({
         title: item.title,
-        description: renderDescription([...new Set([item.preview_hp, item.preview, item.previewImagesUrl, ...(item.previewImages || [])])].filter(Boolean), item.description),
+        description: renderDescription(
+            [...new Set([item.preview_hp, item.preview, item.previewImagesUrl, ...(item.previewImages || [])])].filter((img): img is string => Boolean(img)),
+            item.description
+        ),
         link: `https://netflav.com/video?id=${item.videoId}`,
         pubDate: parseDate(item.sourceDate),
         author: [...new Set(item.actors.map((a) => a.replace(/^(\w{2}:)/, '')))].join(', '),
-        category: [...new Set(item.tags?.map((t) => t.replace(/^(\w{2}:)/, '')))] as string[],
+        category: [...new Set(item.tags?.map((t) => t.replace(/^(\w{2}:)/, '')))],
     }));
 
     return {

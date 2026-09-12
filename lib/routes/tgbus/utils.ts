@@ -8,7 +8,7 @@ import timezone from '@/utils/timezone';
 const parseArticle = (item) =>
     cache.tryGet(item.link, async () => {
         const { data: response } = await got(item.link);
-        const $ = load(response as unknown as string);
+        const $ = load(response);
 
         const infoBox = $('div.info-box');
         item.author = infoBox.find('b:nth-child(4)').text().trim();

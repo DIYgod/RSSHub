@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { DataItem, Route } from '@/types';
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -10,7 +10,7 @@ const handler: Route['handler'] = async () => {
 
     const $ = load(data);
 
-    const item = (await Promise.all(
+    const item = await Promise.all(
         $('article')
             .toArray()
             .slice(0, 20)
@@ -36,7 +36,7 @@ const handler: Route['handler'] = async () => {
                     };
                 });
             })
-    )) as DataItem[];
+    );
 
     return {
         title: 'Next.js Blog',

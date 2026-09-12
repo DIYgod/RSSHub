@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 
-import type { Data, DataItem, Route } from '@/types';
+import type { Data, DataItem, Language, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
@@ -55,11 +55,11 @@ async function handler(): Promise<Data> {
     const html = await ofetch(currentUrl);
     const $ = load(html);
 
-    const language: string = $('html').attr('lang') || 'zh-TW';
+    const language = ($('html').attr('lang') || 'zh-TW') as Language;
     const articleNodes = $('div.kf-diagramtext-list > div.kf-diagramtext-col').toArray();
 
     const items: DataItem[] = articleNodes
-        .map((colEl) => {
+        .map((colEl): DataItem => {
             const node = $(colEl);
             const anchor = node.find('a[href*="/Article/C000003/detail"]');
 
@@ -69,7 +69,8 @@ async function handler(): Promise<Data> {
             const title = node.find('div.kf-title').text().trim();
 
             const dateText = node.find('div.kf-date > span').text().trim();
-            const pubDate = dateText ? timezone(parseRocDate(dateText), 8) : undefined;
+            const parsedDate = parseRocDate(dateText);
+            const pubDate = parsedDate ? timezone(parsedDate, 8) : undefined;
 
             const imagePath = node.find('img').attr('src');
             const image = imagePath ? new URL(imagePath, baseUrl).href : undefined;
@@ -93,14 +94,14 @@ async function handler(): Promise<Data> {
                 link,
                 pubDate,
                 image,
-            } as DataItem;
+            };
         })
-        .filter(Boolean) as DataItem[];
+        .filter(Boolean);
 
     return {
         title: `${namespace.name} - 最新文章`,
         link: currentUrl,
         language,
         item: items,
-    } as Data;
+    };
 }

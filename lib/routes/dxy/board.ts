@@ -30,14 +30,14 @@ async function handler(ctx) {
     const { boardId } = ctx.req.param();
     const { limit = '20' } = ctx.req.query();
 
-    const boardDetail = (await cache.tryGet(`dxy:board:detail:${boardId}`, async () => {
+    const boardDetail = await cache.tryGet(`dxy:board:detail:${boardId}`, async () => {
         const detailParams = {
             boardId,
             timestamp: Date.now(),
             noncestr: generateNonce(8, 'number'),
         };
 
-        const detail = await ofetch(`${phoneBaseUrl}/bbsapi/bbs/board/detail`, {
+        const detail = await ofetch<{ code: string; message: string; data: BoardInfo }>(`${phoneBaseUrl}/bbsapi/bbs/board/detail`, {
             query: {
                 ...detailParams,
                 sign: sign(detailParams),
@@ -47,9 +47,9 @@ async function handler(ctx) {
             throw new Error(detail.message);
         }
         return detail.data;
-    })) as BoardInfo;
+    });
 
-    const boardList = (await cache.tryGet(
+    const boardList = await cache.tryGet(
         `dxy:board:list:${boardId}`,
         async () => {
             const listParams = {
@@ -62,7 +62,7 @@ async function handler(ctx) {
                 noncestr: generateNonce(8, 'number'),
             };
 
-            const recommendList = await ofetch(`${phoneBaseUrl}/bbsapi/bbs/board/post/list`, {
+            const recommendList = await ofetch<{ code: string; message: string; data: PostListData }>(`${phoneBaseUrl}/bbsapi/bbs/board/post/list`, {
                 query: {
                     ...listParams,
                     sign: sign(listParams),
@@ -75,7 +75,7 @@ async function handler(ctx) {
         },
         config.cache.routeExpire,
         false
-    )) as PostListData;
+    );
 
     const list = boardList.result.map((item) => ({
         title: item.subject,

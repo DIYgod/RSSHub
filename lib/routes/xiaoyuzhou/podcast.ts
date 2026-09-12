@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { DataItem, Route } from '@/types';
+import type { Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
@@ -44,14 +44,16 @@ async function handler(ctx) {
         response = await ofetch(link);
 
         $ = load(response);
-        const nextDataElement = $('#__NEXT_DATA__').get(0);
-        page_data = JSON.parse(nextDataElement.children[0].data);
-
-        // If no episodes found, we should try episode URL
-        if (!page_data.props.pageProps.podcast?.episodes) {
-            throw new Error('No episodes found in podcast data');
+        page_data = JSON.parse($('#__NEXT_DATA__').text());
+    } catch (error) {
+        // An episode ID may return 404 at the podcast URL. Preserve access and
+        // transport errors instead of hiding them behind a second failed request.
+        if (!(error instanceof Error) || !('status' in error) || error.status !== 404) {
+            throw error;
         }
-    } catch {
+    }
+
+    if (!page_data?.props?.pageProps?.podcast?.episodes) {
         // Try as episode instead
         link = `https://www.xiaoyuzhoufm.com/episode/${id}`;
         response = await ofetch(link);
@@ -65,9 +67,12 @@ async function handler(ctx) {
             response = await ofetch(link);
 
             $ = load(response);
-            const nextDataElement = $('#__NEXT_DATA__').get(0);
-            page_data = JSON.parse(nextDataElement.children[0].data);
+            page_data = JSON.parse($('#__NEXT_DATA__').text());
         }
+    }
+
+    if (!page_data?.props?.pageProps?.podcast?.episodes) {
+        throw new Error('Xiaoyuzhou did not return podcast data for this podcast or episode ID.');
     }
 
     let episodes = page_data.props.pageProps.podcast.episodes.map((item) => ({
@@ -88,7 +93,7 @@ async function handler(ctx) {
                 const response = await ofetch(episodeLink);
                 const episodeItem = response.pageProps.episode;
                 item.description = episodeItem.shownotes || episodeItem.description || episodeItem.title || '';
-                return item as DataItem;
+                return item;
             })
         )
     );

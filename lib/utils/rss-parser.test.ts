@@ -7,7 +7,7 @@ import parser from '@/utils/rss-parser';
 
 const rssXml = '<rss version="2.0"><channel><title>Test</title><item><title>Item</title></item></channel></rss>';
 
-const toArrayBuffer = (buf: Buffer): ArrayBuffer => buf.buffer.slice(buf.byteOffset, buf.byteOffset + buf.byteLength) as ArrayBuffer;
+const toArrayBuffer = (buf: Buffer) => buf.buffer.slice(buf.byteOffset, buf.byteOffset + buf.byteLength);
 
 describe('rss-parser', () => {
     it('rss', async () => {

@@ -16,7 +16,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
     const response = await ofetch(targetUrl);
     const $: CheerioAPI = load(response);
-    const language = $('html').attr('lang') ?? 'en';
+    const language = ($('html').attr('lang') ?? 'en') as Language;
 
     const title: string = $('meta[property="og:title"]').attr('content')!;
     const description: string | undefined = $('div#description').html() ?? undefined;
@@ -26,15 +26,17 @@ export const handler = async (ctx: Context): Promise<Data> => {
     const authorEls: Element[] = $('img[alt="gravatar"]').toArray();
     const authors: DataItem['author'] = authorEls.map((authorEl) => {
         const $authorEl: Cheerio<Element> = $(authorEl).parent();
+        const authorHref = $authorEl.attr('href');
 
         return {
             name: $authorEl.find('span').text(),
-            url: $authorEl.attr('href') ? new URL($authorEl.attr('href') as string, baseUrl).href : undefined,
+            url: authorHref ? new URL(authorHref, baseUrl).href : undefined,
             avatar: $authorEl.attr('src'),
         };
     });
     const guid = `chocolatey-${title}`;
-    const image: string | undefined = $('div.package-logo img').attr('src') ? new URL($('div.package-logo img').attr('src') as string, baseUrl).href : undefined;
+    const logoSrc = $('div.package-logo img').attr('src');
+    const image: string | undefined = logoSrc ? new URL(logoSrc, baseUrl).href : undefined;
     const upDatedStr: string | undefined = pubDateStr;
 
     const processedItem: DataItem = {
@@ -53,7 +55,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
         image,
         banner: image,
         updated: upDatedStr ? parseDate(upDatedStr) : undefined,
-        language: language as Language,
+        language,
     };
 
     const items: DataItem[] = [processedItem];
@@ -66,7 +68,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
         allowEmpty: true,
         image: $('meta[property="og:image"]').attr('content'),
         author: $('meta[property="og:site_name"]').attr('content'),
-        language: language as Language,
+        language,
         id: $('meta[property="og:url"]').attr('content'),
     };
 };

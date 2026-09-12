@@ -29,7 +29,7 @@ export const route: Route = {
     url: 'dev.to',
 };
 
-async function handler() {
+async function handler(): Promise<Data> {
     const baseUrl = 'https://dev.to';
     const response = await got(baseUrl);
     const $ = load(response.data);
@@ -48,7 +48,7 @@ async function handler() {
     // Fetch content for each guide
     const items = await Promise.all(
         guideLinks.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link, async (): Promise<DataItem> => {
                 const articleResponse = await got(item.link);
                 const $article = load(articleResponse.data);
 
@@ -85,7 +85,7 @@ async function handler() {
                             avatar: authorAvatar,
                         },
                     ],
-                } as DataItem;
+                };
             })
         )
     );
@@ -97,5 +97,5 @@ async function handler() {
         language: 'en-us',
         item: items,
         icon: 'https://media2.dev.to/dynamic/image/width=32,height=,fit=scale-down,gravity=auto,format=auto/https%3A%2F%2Fdev-to-uploads.s3.amazonaws.com%2Fuploads%2Farticles%2F8j7kvp660rqzt99zui8e.png',
-    } as Data;
+    };
 }

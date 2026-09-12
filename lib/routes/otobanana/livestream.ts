@@ -46,7 +46,7 @@ async function handler(ctx) {
         image: userInfo.avatar_url,
         icon: userInfo.avatar_url,
         logo: userInfo.avatar_url,
-        language: 'ja' as Language,
+        language: 'ja' as const satisfies Language,
         author: userInfo.name,
         itunes_author: userInfo.name,
         item: casts,

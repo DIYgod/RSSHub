@@ -31,7 +31,7 @@ const RSS: FC<{ data: Data }> = ({ data }) => (
                         <name>{item.author}</name>
                     </author>
                 )}
-                {typeof item.category === 'string' ? <category term={item.category}></category> : item.category?.map((c) => <category term={c}></category>)}
+                {item.category !== undefined && (Array.isArray(item.category) ? item.category : [item.category]).map((c) => <category term={c}></category>)}
                 {item.media &&
                     Object.entries(item.media).map(([key, value]) => {
                         const Tag = `media:${key}`;

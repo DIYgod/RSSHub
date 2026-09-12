@@ -33,7 +33,7 @@ export const handler = async (ctx) => {
                 title,
                 description,
                 pubDate: parseDate($item.find('span').text(), 'YYYY/M/D'),
-                link: $item.find('a').first().prop('href'),
+                link: $item.find('a').prop('href'),
             };
         });
 
@@ -84,7 +84,7 @@ export const route: Route = {
     path: '/:language?/:category?',
     name: '德恒探索',
     url: 'dehenglaw.com',
-    maintainers: ['nczitzk'],
+    maintainers: ['snipersteve', 'nczitzk'],
     handler,
     example: '/dehenglaw/CN/paper',
     parameters: { language: '语言，默认为中文，即 CN，可在对应分类页 URL 中找到，可选 CN 和 EN', category: '分类，默认为专业文章，即 paper，可在对应分类页 URL 中找到' },

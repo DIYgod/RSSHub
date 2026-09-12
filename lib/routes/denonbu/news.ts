@@ -130,6 +130,21 @@ async function getToken(): Promise<string> {
     return token;
 }
 
+interface NewsItem {
+    source_type: string;
+    id: number;
+    sid?: number;
+    uid?: string;
+    title?: string;
+    body: string;
+    post_date: string;
+    media?: string[];
+    account?: {
+        account_id?: string;
+    };
+    category: Array<{ name: string }>;
+}
+
 function buildLink(body: any): string | null {
     switch (body.source_type) {
         case 'main':
@@ -170,7 +185,7 @@ async function handler(ctx: Context): Promise<Data> {
         })
     ).payload.items;
 
-    const items = data.map((item) => {
+    const items = data.map((item: NewsItem) => {
         const { title, body, post_date, category, media } = item;
         const link = buildLink(item);
         const result: DataItem = {
@@ -182,11 +197,7 @@ async function handler(ctx: Context): Promise<Data> {
         };
 
         if (media?.[0]) {
-            const firstMedia = media[0];
-            const imageUrl = typeof firstMedia === 'string' ? firstMedia : firstMedia?.url;
-            if (typeof imageUrl === 'string') {
-                result.image = imageUrl;
-            }
+            result.image = media[0];
         }
 
         return result;

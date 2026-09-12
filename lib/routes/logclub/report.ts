@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Language, Route } from '@/types';
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -133,7 +133,7 @@ async function handler(ctx) {
         title: `${$('title').text()}${title}`,
         link: currentUrl,
         description: $('meta[name="description"]').prop('content'),
-        language: 'zh' as Language,
+        language: 'zh' as const,
         image: new URL($('div.logo_img img').prop('src')!, rootUrl).href,
         icon,
         logo: icon,

@@ -65,7 +65,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
     const targetResponse = await ofetch(targetUrl);
     const $: CheerioAPI = load(targetResponse);
-    const language: string = $('html').attr('lang') ?? 'zh-CN';
+    const language = ($('html').attr('lang') ?? 'zh-CN') as Language;
 
     const authResponse = await ofetch(authUrl, {
         method: 'POST',
@@ -91,7 +91,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
             const title: string = item.title;
             const pubDate: string = item.inputtime;
             const linkUrl: string | undefined = item.url;
-            const categories: string[] = [...new Set(((item.keywords ?? '') as string)?.split(/,/).filter(Boolean))];
+            const categories: string[] = [...new Set<string>((item.keywords ?? '').split(/,/).filter(Boolean))];
             const authors: DataItem['author'] = [...new Set([item.mp?.name, item.author, item.editor, item.source].filter(Boolean))].map((name) => ({
                 name,
             }));
@@ -110,7 +110,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 image,
                 banner: image,
                 updated: updated ? parseDate(updated, 'X') : undefined,
-                language: language as Language,
+                language,
             };
 
             return processedItem;
@@ -148,7 +148,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                             text: description,
                         },
                         updated: upDatedStr ? timezone(parseDate(upDatedStr), 8) : item.updated,
-                        language: language as Language,
+                        language,
                     };
 
                     return {
@@ -169,7 +169,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
         item: items,
         allowEmpty: true,
         author,
-        language: language as Language,
+        language,
         id: targetUrl,
     };
 };

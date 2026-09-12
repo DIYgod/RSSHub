@@ -69,7 +69,7 @@ export const fetchArticles = async (limit: number, category?: string): Promise<D
         items.slice(0, limit).map<Promise<DataItem>>((element) => {
             const id = $(element).find('guid').text();
 
-            return cache.tryGet(`openai:news:${id}`, async () => {
+            return cache.tryGet(`openai:news:${id}`, async (): Promise<DataItem> => {
                 const title = $(element).find('title').text();
                 const pubDate = parseDate($(element).find('pubDate').text());
                 const link = $(element).find('link').text();
@@ -84,8 +84,8 @@ export const fetchArticles = async (limit: number, category?: string): Promise<D
                     description: content,
                     category: categories,
                     author,
-                } as DataItem;
-            }) as Promise<DataItem>;
+                };
+            });
         })
     );
 };

@@ -38,7 +38,7 @@ async function handler() {
             .map((item) => {
                 const $item = $(item);
                 const link = `${ORIGIN}${$item.find('a').attr('href')!}`;
-                return cache.tryGet(link, async () => {
+                return cache.tryGet<DataItem>(link, async () => {
                     const category = $item.find('p span').last().text();
                     const title = $item.find('a').text();
                     return {
@@ -47,7 +47,7 @@ async function handler() {
                         pubDate: timezone(parseDate($item.find('p span').first().text()), 9),
                         category: [category],
                         description: await getDescription(link),
-                    } as DataItem;
+                    };
                 });
             })
     );

@@ -39,7 +39,7 @@ export const route: Route = {
         },
     ],
     name: '作者',
-    maintainers: ['SunShinenny', 'hoilc'],
+    maintainers: ['sunshinenny', 'hoilc'],
     handler,
 };
 

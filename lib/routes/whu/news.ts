@@ -24,12 +24,12 @@ export const route: Route = {
 此外 route 后可以加上 \`?limit=n\` 的查询参数，表示只获取前 n 条新闻；如果不指定默认为 10。`,
 };
 
-const parseCategory = (category: string | number) => {
+const parseCategory = (category: string) => {
     const outputs = ['wdzx/wdyw', 'kydt', 'stkj/ljyx', 'stkj/wdsp'];
-    if (['0', '1', '2', '3'].includes(category as string)) {
+    if (['0', '1', '2', '3'].includes(category)) {
         return outputs[category];
     }
-    if (outputs.includes(category as string)) {
+    if (outputs.includes(category)) {
         return category;
     }
     return 'wdzx/wdyw';
@@ -85,12 +85,14 @@ async function handler(ctx) {
 
     const icon = new URL($('link[rel="shortcut icon"]').prop('href')!, rootUrl).href;
 
+    const language = $('html').prop('lang') as Language;
+
     return {
         item: items,
         title: `${siteName} - ${columnName}`,
         link: currentUrl,
         description: getMeta(meta, 'description'),
-        language: $('html').prop('lang') as Language,
+        language,
         image: new URL($('div.logo img').prop('src')!, rootUrl).href,
         icon,
         logo: icon,

@@ -50,7 +50,7 @@ export const handler = async (ctx) => {
                     renderDescription({
                         description: $$('div.edit_con_original').html() ?? undefined,
                     });
-                const image = $$('img.raw-image').first().prop('src');
+                const image = $$('img.raw-image').prop('src');
 
                 item.title = title;
                 item.description = description;
@@ -87,7 +87,7 @@ export const route: Route = {
     path: '/research/article/:language?',
     name: '中伦研究专业文章',
     url: 'zhonglun.com',
-    maintainers: ['nczitzk'],
+    maintainers: ['snipersteve', 'nczitzk'],
     handler,
     example: '/zhonglun/research/article/zh',
     parameters: { category: '语言，默认为 zh，即简体中文，可在对应分类页 URL 中找到' },

@@ -19,7 +19,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
     const response = await ofetch(targetUrl);
     const $: CheerioAPI = load(response);
-    const language = $('html').attr('lang') ?? 'zh-CN';
+    const language = ($('html').attr('lang') ?? 'zh-CN') as Language;
 
     let items: DataItem[] = $('ul#div li')
         .slice(0, limit)
@@ -39,7 +39,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 pubDate: parseDate(pubDateStr),
                 link: linkUrl ? new URL(linkUrl, targetUrl).href : undefined,
                 updated: parseDate(upDatedStr),
-                language: language as Language,
+                language,
             };
 
             return processedItem;
@@ -61,7 +61,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                     const pubDateStr: string | undefined = $$('meta[name="PubDate"]').attr('content');
                     const linkUrl: string | undefined = $$('meta[name="Url"]').attr('content');
                     const categoryEls: Element[] = $$('meta[name="ColumnName"], meta[name="ContentSource"], meta[name="Keywords"]').toArray();
-                    const categories: string[] = [...new Set(categoryEls.map((el) => $$(el).attr('content') as string).filter(Boolean))];
+                    const categories: string[] = [...new Set(categoryEls.map((el) => $$(el).attr('content')).filter((content): content is string => Boolean(content)))];
                     const authors: DataItem['author'] = $$('meta[name="Author"]').attr('content');
                     const upDatedStr: string | undefined = pubDateStr;
 
@@ -77,7 +77,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                             text: description,
                         },
                         updated: upDatedStr ? timezone(parseDate(upDatedStr), 8) : item.updated,
-                        language: language as Language,
+                        language,
                     };
 
                     const $enclosureEl: Cheerio<Element> = $$('div.sj_fujianxia_right ul li a').first();
@@ -115,7 +115,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
         allowEmpty: true,
         image: new URL('images/logo-china.png', baseUrl).href,
         author,
-        language: language as Language,
+        language,
     };
 };
 

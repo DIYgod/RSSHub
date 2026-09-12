@@ -2,7 +2,7 @@ import type { CheerioAPI } from 'cheerio';
 import { load } from 'cheerio';
 import type { Item } from 'rss-parser';
 
-import type { Language, Route } from '@/types';
+import type { Data, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
@@ -53,14 +53,14 @@ const fetchArticle = (item: Item & { link: string; author?: string }) =>
         };
     });
 
-async function handler(ctx) {
+async function handler(ctx): Promise<Data> {
     const limit = Number(ctx.req.query('limit')) || defaultLimit;
     const feedResponse = await ofetch(feedUrl, {
         parseResponse: (text) => text,
     });
     const feed = await parser.parseString(feedResponse);
     const items = await Promise.all(
-        (feed.items as Item[])
+        feed.items
             .slice(0, limit)
             .filter((item): item is Item & { link: string } => Boolean(item.link))
             .map((item) => fetchArticle(item))
@@ -72,7 +72,7 @@ async function handler(ctx) {
         feedLink: feedUrl,
         description: 'Apple 新闻中心是 Apple 新闻的来源。阅读新闻稿、获取最新消息、观看视频和下载图片。',
         item: items,
-        language: 'zh-CN' as Language,
+        language: 'zh-CN',
     };
 }
 

@@ -43,16 +43,16 @@ async function handler(): Promise<Data> {
             };
         });
 
-    const items = (await Promise.all(
+    const items = await Promise.all(
         contents.map((content) =>
-            cache.tryGet(content.link!, async () => {
+            cache.tryGet<DataItem>(content.link!, async () => {
                 const childRes = await got(content.link);
                 const $$ = load(childRes.data);
                 content.description = $$('.maglistbox').html()!;
                 return content;
             })
         )
-    )) as DataItem[];
+    );
     return {
         title: '意林杂志网',
         link: baseUrl,

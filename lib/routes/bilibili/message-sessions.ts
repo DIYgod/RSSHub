@@ -175,7 +175,7 @@ async function handler(ctx) {
     // Fetch user info for all talkers
     let userCards: Record<string, UserInfo> = {};
     if (talkerIds.length > 0) {
-        const userCardsResponse = await cache.tryGet(
+        const userCardsResponse = await cache.tryGet<Record<string, UserInfo>>(
             `bilibili-user-cards-${talkerIds.join(',')}`,
             async () => {
                 const res = await ofetch<UserCardsResponse>('https://api.bilibili.com/x/polymer/pc-electron/v1/user/cards', {
@@ -193,7 +193,7 @@ async function handler(ctx) {
             },
             config.cache.routeExpire
         );
-        userCards = userCardsResponse as Record<string, UserInfo>;
+        userCards = userCardsResponse;
     }
 
     const items: DataItem[] = sessionList

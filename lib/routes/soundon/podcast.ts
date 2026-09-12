@@ -13,19 +13,19 @@ const handler = async (ctx) => {
     const apiEndpoint = 'https://api.soundon.fm/v2/client';
     const apiToken = 'KilpEMLQeNzxmNBL55u5';
 
-    const podcastInfo = (await cache.tryGet(`soundon:${id}`, async () => {
-        const response = await ofetch(`${apiEndpoint}/podcasts/${id}`, {
+    const podcastInfo = await cache.tryGet(`soundon:${id}`, async () => {
+        const response = await ofetch<{ data: { data: PodcastInfo } }>(`${apiEndpoint}/podcasts/${id}`, {
             headers: {
                 'api-token': apiToken,
             },
         });
         return response.data.data;
-    })) as PodcastInfo;
+    });
 
-    const episodes = (await cache.tryGet(
+    const episodes = await cache.tryGet(
         `soundon:${id}:episodes`,
         async () => {
-            const response = await ofetch(`${apiEndpoint}/podcasts/${id}/episodes`, {
+            const response = await ofetch<{ data: Podcast[] }>(`${apiEndpoint}/podcasts/${id}/episodes`, {
                 headers: {
                     'api-token': apiToken,
                 },
@@ -34,7 +34,7 @@ const handler = async (ctx) => {
         },
         config.cache.routeExpire,
         false
-    )) as Podcast[];
+    );
 
     const items = episodes.map(({ data: item }) => ({
         title: item.title,

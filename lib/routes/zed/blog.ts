@@ -37,9 +37,10 @@ async function handler() {
     const feed = await parser.parseURL('https://zed.dev/blog.rss');
 
     const items = await Promise.all(
-        feed.items.map((item) =>
-            cache.tryGet(item.link as string, async () => {
-                const data = await ofetch(item.link as string);
+        feed.items.map((item) => {
+            const { link, title } = item as { link: string; title: string };
+            return cache.tryGet(link, async () => {
+                const data = await ofetch(link);
                 const $ = load(data);
 
                 const article = $('article');
@@ -53,17 +54,15 @@ async function handler() {
                 article.find('figcaption').remove();
                 article.find('aside').remove(); // remove Looking and hiring part
 
-                item.content = article.html() as string;
-
                 return {
-                    title: item.title,
-                    link: item.link,
-                    description: item.content,
+                    title,
+                    link,
+                    description: article.html(),
                     pubDate: item.pubDate,
                     author: item.creator,
-                } as DataItem;
-            })
-        )
+                } satisfies DataItem;
+            });
+        })
     );
 
     return {

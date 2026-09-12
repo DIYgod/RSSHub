@@ -159,7 +159,7 @@ export default async function identify({ github, context, core }, body, number, 
                     .slice(headingIndex + 1, nextHeading === -1 ? undefined : nextHeading)
                     .filter((node) => node.type === 'list')
                     .flatMap((node) => node.children ?? [])
-                    .filter((item) => typeof item.checked === 'boolean').length;
+                    .filter((item) => item.checked === true || item.checked === false).length;
                 return checkboxCount < 5;
             };
 

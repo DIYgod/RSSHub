@@ -28,7 +28,7 @@ async function handler() {
     const $ = load(response.data);
 
     const alist = $('a.post-title-link');
-    const list = alist.toArray().map((item) => {
+    const list = alist.toArray().map((item): DataItem => {
         const element = $(item);
 
         const link = element.attr('href') || '';
@@ -40,7 +40,7 @@ async function handler() {
             title,
             link,
         };
-    }) as DataItem[];
+    });
     const items = await Promise.all(
         list.slice(0, 15).map((item) =>
             cache.tryGet(item.link!, async () => {

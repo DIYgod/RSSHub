@@ -1,5 +1,5 @@
 import { raw } from 'hono/html';
-import type { FC } from 'hono/jsx';
+import { jsx } from 'hono/jsx';
 import { renderToString } from 'hono/jsx/dom/server';
 
 type DescriptionImage = {
@@ -34,10 +34,7 @@ const ScientificAmericanDescription = ({ images, intro, content }: DescriptionDa
             );
         })}
         {intro ? raw(intro) : null}
-        {content?.map((block) => {
-            const Tag = block.tag as unknown as FC;
-            return <Tag>{raw(block.content)}</Tag>;
-        })}
+        {content?.map((block) => jsx(block.tag, null, raw(block.content)))}
     </>
 );
 

@@ -56,10 +56,10 @@ export const route: Route = {
                 let articleId = parsedArticleUrl?.pathname.split('/').pop();
                 if (articleId?.startsWith('ar-')) {
                     articleId = articleId.slice(3);
-                    const fetchedArticleContentHtml = (await cache.tryGet(articleId, async () => {
-                        const articleData = await ofetch(`https://assets.msn.com/content/view/v2/Detail/${market}/${articleId}`);
+                    const fetchedArticleContentHtml = await cache.tryGet(articleId, async () => {
+                        const articleData = await ofetch<{ body: string }>(`https://assets.msn.com/content/view/v2/Detail/${market}/${articleId}`);
                         return articleData.body;
-                    })) as string;
+                    });
                     articleContentHtml = fetchedArticleContentHtml.replace(fetchedArticleContentHtmlImgRegex, '<img src="https://img-s-msn-com.akamaized.net/tenant/amp/entityid/$1.img">');
                 }
 

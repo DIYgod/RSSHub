@@ -47,7 +47,7 @@ const RSS: FC<{ data: Data }> = ({ data }) => {
                         {item.itunes_item_image && <itunes:image href={item.itunes_item_image} />}
                         {item.enclosure_url && <enclosure url={item.enclosure_url} length={item.enclosure_length} type={item.enclosure_type} />}
                         {item.itunes_duration && <itunes:duration>{item.itunes_duration}</itunes:duration>}
-                        {typeof item.category === 'string' ? <category>{item.category}</category> : item.category?.map((c) => <category>{c}</category>)}
+                        {item.category !== undefined && (Array.isArray(item.category) ? item.category : [item.category]).map((c) => <category>{c}</category>)}
                         {item.media &&
                             Object.entries(item.media).map(([key, value]) => {
                                 const Tag = `media:${key}`;

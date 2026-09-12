@@ -1,6 +1,6 @@
 import { parseDate } from '@/utils/parse-date';
 
-export const eventTypeMapping: Record<string, string> = {
+export const eventTypeMapping = {
     create: 'CreateEvent',
     delete: 'DeleteEvent',
     issuecomm: 'IssueCommentEvent',

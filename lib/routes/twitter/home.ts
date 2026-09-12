@@ -1,4 +1,4 @@
-import type { DataItem, Route } from '@/types';
+import type { Route } from '@/types';
 
 import api from './api';
 import utils from './utils';
@@ -58,7 +58,7 @@ async function handler(ctx) {
         link: 'https://x.com/home',
         // description: userInfo?.description,
         item: utils.ProcessFeed(ctx, {
-            data: data as any,
-        }) as DataItem[],
+            data,
+        }),
     };
 }

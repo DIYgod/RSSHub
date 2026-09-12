@@ -80,6 +80,6 @@ async function handler(ctx) {
     return {
         title: `IT之家 - ${name}标签`,
         link: url,
-        item: items.filter(Boolean) as DataItem[],
+        item: items.filter(Boolean),
     };
 }

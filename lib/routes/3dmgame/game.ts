@@ -17,7 +17,7 @@ export const route: Route = {
     ],
     name: '游戏资讯',
     categories: ['game'],
-    maintainers: ['sinchang', 'jacky2001114', 'HenryQW', 'lyqluis'],
+    maintainers: ['sinchang', 'yangkghjh', 'HenryQW', 'lyqluis'],
     handler,
     description: `| 新闻 | 攻略 | 资源     |
 | ---- | ---- | -------- |

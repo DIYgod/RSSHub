@@ -72,7 +72,16 @@ async function handler(ctx) {
     };
 }
 
-const renderDescription = (item): string =>
+interface WebFont {
+    family: string;
+    category: string;
+    version: string;
+    lastModified: string;
+    subsets?: string[];
+    files?: Record<string, string>;
+}
+
+const renderDescription = (item: WebFont): string =>
     renderToString(
         <>
             <text>Family: {item.family}</text>
@@ -89,7 +98,7 @@ const renderDescription = (item): string =>
             <br />
             {Object.entries(item.files ?? {}).map(([key, value]) => (
                 <>
-                    <a href={value as string}>{key}</a>&nbsp;&nbsp;
+                    <a href={value}>{key}</a>&nbsp;&nbsp;
                 </>
             ))}
         </>

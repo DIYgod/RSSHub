@@ -2,6 +2,7 @@ import pMap from 'p-map';
 import { getSubtitles } from 'youtube-caption-extractor';
 
 import cache from '@/utils/cache';
+import { isWorker } from '@/utils/is-worker';
 
 function pad(n: number, width: number = 2) {
     return String(n).padStart(width, '0');
@@ -35,8 +36,12 @@ ${seg.text}
         .join('\n');
 }
 
-export const getSubtitlesByVideoId = (videoId: string) =>
-    cache.tryGet(`youtube:getSubtitlesByVideoId:${videoId}`, async () => {
+export const getSubtitlesByVideoId = (videoId: string) => {
+    // Subtitle extraction can exceed the Workers memory limit.
+    if (isWorker) {
+        return Promise.resolve('');
+    }
+    return cache.tryGet(`youtube:getSubtitlesByVideoId:${videoId}`, async () => {
         try {
             const subtitles = await getSubtitles({ videoID: videoId });
             const srt = convertToSrt(subtitles);
@@ -46,6 +51,7 @@ export const getSubtitlesByVideoId = (videoId: string) =>
             return '';
         }
     });
+};
 
 const createSubtitleDataUrl = (srt: string): string => `data:text/plain;charset=utf-8,${encodeURIComponent(srt)}`;
 
@@ -74,6 +80,9 @@ export const getSrtAttachment = async (videoId: string): Promise<Array<{ url: st
 };
 
 export const getSrtAttachmentBatch = async (videoIds: string[]) => {
+    if (isWorker) {
+        return {};
+    }
     const results = await pMap(
         videoIds,
         async (videoId) => {

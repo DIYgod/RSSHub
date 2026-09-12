@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { DataItem, Route } from '@/types';
+import type { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
@@ -60,6 +60,6 @@ async function handler() {
                     pubDate: timezone(parseDate(year + day, 'YYYYMM-DD'), 8),
                 };
             })
-            .filter(Boolean) as DataItem[],
+            .filter((item) => item !== null),
     };
 }

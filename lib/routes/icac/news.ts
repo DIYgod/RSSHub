@@ -58,7 +58,7 @@ async function handler(ctx) {
                 c('.col-3-wrap.clearfix.pressPhoto div').removeAttr('class');
                 const des = c('.pressContent.full').html();
                 const thumbs = c('.col-3-wrap.clearfix.pressPhoto').html() ?? '';
-                item.pubDate = parseDate(decodeURI(c('.date').text().trim()), ['YYYY年MM月DD日', 'YYYY年MM月D日', 'YYYY年M月DD日', 'YYYY年M月D日'], true as unknown as string);
+                item.pubDate = parseDate(decodeURI(c('.date').text().trim()), ['YYYY年MM月DD日', 'YYYY年MM月D日', 'YYYY年M月DD日', 'YYYY年M月D日'], true);
                 item.description = des + thumbs;
                 return item;
             })

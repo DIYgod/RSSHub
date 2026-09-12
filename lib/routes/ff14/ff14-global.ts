@@ -34,6 +34,15 @@ Category
 | --- | ------ | ------- | ----------- | ------- | ------ | ---------- |`,
 };
 
+interface LodestoneNewsItem {
+    id: string;
+    url: string;
+    title: string;
+    time: string;
+    description?: string;
+    image?: string;
+}
+
 async function handler(ctx) {
     const lang = ctx.req.param('lang');
     const type = ctx.req.param('type') ?? 'all';
@@ -47,12 +56,10 @@ async function handler(ctx) {
         url: `https://lodestonenews.com/news/${type}?locale=${lang}`,
     });
 
-    let data;
+    let data: LodestoneNewsItem[];
     if (type === 'all') {
-        data = [];
-        for (const arr of Object.values(response.data) as unknown[][]) {
-            data = [...data, ...arr];
-        }
+        const groups: Record<string, LodestoneNewsItem[]> = response.data;
+        data = Object.values(groups).flat();
     } else {
         data = response.data;
     }

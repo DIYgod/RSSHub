@@ -14,46 +14,46 @@ const apiUrl = `${baseUrl}/api/v10`;
 
 export const getGuild = (guildId, authorization) =>
     cache.tryGet(`discord:guilds:${guildId}`, () =>
-        ofetch(`${apiUrl}/guilds/${guildId}`, {
+        ofetch<RESTGetAPIGuildResult>(`${apiUrl}/guilds/${guildId}`, {
             headers: {
                 authorization,
             },
         })
-    ) as Promise<RESTGetAPIGuildResult>;
+    );
 
 export const getGuildChannels = (guildId, authorization) =>
     cache.tryGet(`discord:guilds:${guildId}:channels`, () =>
-        ofetch(`${apiUrl}/guilds/${guildId}/channels`, {
+        ofetch<RESTGetAPIGuildChannelsResult>(`${apiUrl}/guilds/${guildId}/channels`, {
             headers: {
                 authorization,
             },
         })
-    ) as Promise<RESTGetAPIGuildChannelsResult>;
+    );
 
 export const getChannel = (channelId, authorization) =>
     cache.tryGet(`discord:channels:${channelId}`, () =>
-        ofetch(`${apiUrl}/channels/${channelId}`, {
+        ofetch<RESTGetAPIChannelResult>(`${apiUrl}/channels/${channelId}`, {
             headers: {
                 authorization,
             },
         })
-    ) as Promise<RESTGetAPIChannelResult>;
+    );
 
 export const getChannelMessages = (channelId, authorization, limit = 100) =>
     cache.tryGet(
         `discord:channels:${channelId}:messages`,
         () =>
-            ofetch(`${apiUrl}/channels/${channelId}/messages`, {
+            ofetch<RESTGetAPIChannelMessagesResult>(`${apiUrl}/channels/${channelId}/messages`, {
                 headers: {
                     authorization,
                 },
                 query: {
                     limit,
-                } as RESTGetAPIChannelMessagesQuery,
+                } satisfies RESTGetAPIChannelMessagesQuery,
             }),
         config.cache.routeExpire,
         false
-    ) as Promise<RESTGetAPIChannelMessagesResult>;
+    );
 
 interface SearchGuildMessagesResult {
     analytics_id: string;
@@ -62,9 +62,11 @@ interface SearchGuildMessagesResult {
     messages: APIMessage[][];
 }
 
-export const VALID_HAS_TYPES = new Set(['link', 'embed', 'poll', 'file', 'video', 'image', 'sound', 'sticker', 'snapshot'] as const);
+const HAS_TYPES = ['link', 'embed', 'poll', 'file', 'video', 'image', 'sound', 'sticker', 'snapshot'] as const;
 
-export type HasType = typeof VALID_HAS_TYPES extends Set<infer T> ? T : never;
+export type HasType = (typeof HAS_TYPES)[number];
+
+export const VALID_HAS_TYPES: ReadonlySet<string> = new Set(HAS_TYPES);
 
 export interface SearchGuildMessagesParams {
     content?: string;
@@ -86,14 +88,14 @@ export const searchGuildMessages = (guildId: string, authorization: string, para
                 has: params.has?.length ? params.has : undefined,
             };
 
-            return ofetch(`${apiUrl}/guilds/${guildId}/messages/search`, {
+            return ofetch<SearchGuildMessagesResult>(`${apiUrl}/guilds/${guildId}/messages/search`, {
                 headers: { authorization },
                 query: queryParams,
             });
         },
         config.cache.routeExpire,
         false
-    ) as Promise<SearchGuildMessagesResult>;
+    );
 
 export const getQuests = (authorization: string) =>
     cache.tryGet(
@@ -127,4 +129,4 @@ export const getQuests = (authorization: string) =>
         },
         config.cache.routeExpire,
         false
-    ) as Promise<QuestResponse>;
+    );

@@ -1,4 +1,4 @@
-import type { Data, DataItem, Route } from '@/types';
+import type { Data, Route } from '@/types';
 import { parseDate } from '@/utils/parse-date';
 
 import { API_HOST, CDN_HOST, HOST } from './constant';
@@ -41,7 +41,7 @@ async function handler(ctx): Promise<Data> {
             pubDate: parseDate(item.createdAt),
             link: `${HOST}/post/${item.id}`,
             description,
-        } as DataItem;
+        };
     });
 
     return {

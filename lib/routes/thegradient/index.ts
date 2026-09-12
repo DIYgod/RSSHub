@@ -28,7 +28,7 @@ async function handler() {
     const response = await got(currentUrl);
     const $ = load(response.data);
 
-    let items = $('.c-post-card-wrap')
+    const posts = $('.c-post-card-wrap')
         .toArray()
         .map((item) => {
             const $item = $(item);
@@ -50,28 +50,24 @@ async function handler() {
                 title,
                 link,
                 pubDate,
-            } as DataItem;
+            };
         })
-        .filter((item): item is DataItem => item !== null);
+        .filter((post) => post !== null);
 
-    items = (
-        await Promise.all(
-            items.map((item) =>
-                cache.tryGet(item.link as string, async () => {
-                    try {
-                        const detailResponse = await got(item.link);
-                        const $detail = load(detailResponse.data);
+    const items = await Promise.all(
+        posts.map((post) =>
+            cache.tryGet(post.link, async (): Promise<DataItem> => {
+                try {
+                    const detailResponse = await got(post.link);
+                    const $detail = load(detailResponse.data);
 
-                        item.description = $detail('.c-content').html();
-
-                        return item as DataItem;
-                    } catch {
-                        return item;
-                    }
-                })
-            )
+                    return { ...post, description: $detail('.c-content').html() };
+                } catch {
+                    return post;
+                }
+            })
         )
-    ).filter((item): item is DataItem => item !== null);
+    );
 
     return {
         title: 'The Gradient Blog',

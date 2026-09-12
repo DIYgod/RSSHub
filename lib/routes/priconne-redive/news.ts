@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { DataItem, Language, Route } from '@/types';
+import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -43,7 +43,7 @@ export const route: Route = {
 | zh-cn | zh-tw | jp   |`,
 };
 
-async function handler(ctx) {
+async function handler(ctx): Promise<Data | null> {
     const { server = 'jp' } = ctx.req.param();
 
     switch (server) {
@@ -93,7 +93,7 @@ async function handler(ctx) {
             return {
                 title: '公主链接日服-新闻',
                 link: 'https://priconne-redive.jp/news/',
-                language: 'ja' as Language,
+                language: 'ja',
                 item: out,
             };
         }

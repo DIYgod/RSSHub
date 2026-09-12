@@ -19,7 +19,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
     const response = await ofetch(targetUrl);
     const $: CheerioAPI = load(response);
-    const language = $('html').attr('lang') ?? 'zh-CN';
+    const language = ($('html').attr('lang') ?? 'zh-CN') as Language;
 
     let items: DataItem[] = $('article.newsplus')
         .slice(0, limit)
@@ -43,7 +43,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 image,
                 banner: image,
                 updated: upDatedStr ? parseDate(upDatedStr) : undefined,
-                language: language as Language,
+                language,
             };
 
             return processedItem;
@@ -85,7 +85,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                         pubDate: pubDateStr ? parseDate(pubDateStr) : item.pubDate,
                         category: categories,
                         updated: upDatedStr ? parseDate(upDatedStr) : item.updated,
-                        language: language as Language,
+                        language,
                     };
 
                     const extraLinkEls: Element[] = $$('ul.related_post li a').toArray();
@@ -141,8 +141,8 @@ export const handler = async (ctx: Context): Promise<Data> => {
         item: items,
         allowEmpty: true,
         image: $('h3.site-title img').attr('src'),
-        author: title.split(/-/).pop()?.trim(),
-        language: language as Language,
+        author: title.split(/-/).pop(),
+        language,
         id: targetUrl,
     };
 };
@@ -151,7 +151,7 @@ export const route: Route = {
     path: '/:category{.+}?',
     name: '资讯',
     url: '199it.com',
-    maintainers: ['nczitzk'],
+    maintainers: ['salviox', 'nczitzk'],
     handler,
     example: '/199it/newly',
     parameters: {

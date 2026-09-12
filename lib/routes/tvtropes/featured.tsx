@@ -74,12 +74,14 @@ async function handler(ctx) {
     const image = new URL($('img.logo-big').prop('src')!, rootUrl).href;
     const icon = $('link[rel="shortcut icon"]').prop('href');
 
+    const language = $('html').prop('lang') as Language;
+
     return {
         item: items,
         title: `${$('title').text()} - ${item.find('span.box-title').text()}`,
         link: rootUrl,
         description: $('meta[name="description"]').prop('content'),
-        language: $('html').prop('lang') as Language,
+        language,
         image,
         icon,
         logo: icon,

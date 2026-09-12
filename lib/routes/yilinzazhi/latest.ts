@@ -31,7 +31,7 @@ type Stage = {
 
 type Catalog = {
     title: string;
-    tables: Data[];
+    tables: DataItem[];
 };
 
 async function handler(): Promise<Data> {
@@ -59,7 +59,7 @@ async function handler(): Promise<Data> {
             return { link, title };
         })[0];
 
-    const catalogs = (await cache.tryGet(stage.link, async () => {
+    const catalogs = await cache.tryGet<Catalog[]>(stage.link, async () => {
         const stageRes = await got(stage.link);
         const $$ = load(stageRes.data);
         const catalogsEl = $$('.maglistbox dl').toArray();
@@ -68,7 +68,7 @@ async function handler(): Promise<Data> {
             const tables = $$(catalog)
                 .find('a')
                 .toArray()
-                .map<Data>((aTag) => {
+                .map<DataItem>((aTag) => {
                     const href = $$(aTag).attr('href')!;
                     const yearType = currentYear + href.slice(4, 5);
                     return {
@@ -79,14 +79,14 @@ async function handler(): Promise<Data> {
             return { title, tables };
         });
         return children;
-    })) as Catalog[];
+    });
 
-    const contents: Data[] = catalogs.flatMap((catalog) => catalog.tables);
+    const contents: DataItem[] = catalogs.flatMap((catalog) => catalog.tables);
 
-    const items = (await Promise.all(
+    const items = await Promise.all(
         contents.map(
             async (target) =>
-                await cache.tryGet(target.link!, async () => {
+                await cache.tryGet<DataItem>(target.link!, async () => {
                     const detailRes = await got(target.link);
                     const $$ = load(detailRes.data);
                     const detailContainer = $$('.blkContainerSblk.collectionContainer');
@@ -96,7 +96,7 @@ async function handler(): Promise<Data> {
                     return target;
                 })
         )
-    )) as DataItem[];
+    );
 
     return {
         title: '意林 - 近期文章汇总',

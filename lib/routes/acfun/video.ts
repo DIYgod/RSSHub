@@ -54,7 +54,7 @@ async function handler(ctx) {
             const itemImg = $item.find('figure img').attr('src');
             const itemUrl = $item.attr('href')!;
             const itemDate = $item.find('.date').text();
-            const wbInfo = JSON.parse(($item.data('wb-info') as string) || '{}');
+            const wbInfo = JSON.parse($item.attr('data-wb-info') || '{}');
             const aid = wbInfo.atmid || wbInfo.mediaId || itemUrl.match(/\/v\/(ac\d+)/)?.[1];
 
             return {

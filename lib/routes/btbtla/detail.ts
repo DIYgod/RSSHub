@@ -54,7 +54,7 @@ async function handler(ctx) {
             return {
                 title,
                 link,
-                enclosure_url: magnet as string,
+                enclosure_url: magnet,
                 enclosure_type: 'application/x-bittorrent',
             };
         })

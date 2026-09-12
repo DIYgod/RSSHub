@@ -37,9 +37,10 @@ async function handler() {
     const feed = await parser.parseURL('https://www.warp.dev/blog/feed.xml');
 
     const items = await Promise.all(
-        feed.items.map((item) =>
-            cache.tryGet(item.link as string, async () => {
-                const data = await ofetch(item.link as string);
+        feed.items.map((item) => {
+            const { link, title } = item as { link: string; title: string };
+            return cache.tryGet(link, async (): Promise<DataItem> => {
+                const data = await ofetch(link);
                 const $ = load(data);
 
                 const main = $('main');
@@ -55,17 +56,15 @@ async function handler() {
                 // remove title, time and button
                 main.find('section').first().find('div').first().remove();
 
-                item.content = main.html() as string;
-
                 return {
-                    title: item.title,
-                    link: item.link,
-                    description: item.content,
+                    title,
+                    link,
+                    description: main.html(),
                     pubDate: item.pubDate,
                     author: item.creator,
-                } as DataItem;
-            })
-        )
+                };
+            });
+        })
     );
 
     return {

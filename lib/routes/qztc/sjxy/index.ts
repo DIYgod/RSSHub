@@ -116,5 +116,5 @@ async function handler(ctx) {
         title: $('head > title').text() + ' - 泉州师范学院-数学与计算机科学学院 软件学院',
         link: rootUrl + type + '/list.htm',
         item: items,
-    } as Data;
+    } satisfies Data;
 }

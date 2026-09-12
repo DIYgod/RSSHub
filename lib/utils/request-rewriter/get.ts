@@ -1,6 +1,7 @@
 // oxlint-disable unicorn-js/no-this-outside-of-class
 import type http from 'node:http';
 import type https from 'node:https';
+import type { ParsedUrlQuery } from 'node:querystring';
 
 import type { HeaderGeneratorOptions } from 'header-generator';
 
@@ -16,12 +17,12 @@ interface ExtendedRequestOptions extends http.RequestOptions {
     // legacy `url.parse()` shaped options, still accepted by node:http
     href?: string;
     search?: string;
-    query?: string | Record<string, any>;
+    query?: string | ParsedUrlQuery;
     headers?: http.OutgoingHttpHeaders;
 }
 
-const getWrappedGet: <T extends Get>(origin: T) => T = (origin) =>
-    function (this: any, ...args: Parameters<typeof origin>) {
+const getWrappedGet = <T extends Get>(origin: T): T => {
+    const wrapped = function (this: any, ...args: Parameters<T>) {
         let url: URL | null;
         let options: ExtendedRequestOptions = {};
         let callback: ((res: http.IncomingMessage) => void) | undefined;
@@ -46,7 +47,7 @@ const getWrappedGet: <T extends Get>(origin: T) => T = (origin) =>
             }
         }
         if (!url) {
-            return Reflect.apply(origin, this, args) as ReturnType<typeof origin>;
+            return origin.apply(this, args);
         }
 
         logger.debug(`Outgoing request: ${options.method || 'GET'} ${url}`);
@@ -97,7 +98,10 @@ const getWrappedGet: <T extends Get>(origin: T) => T = (origin) =>
         // oxlint-disable-next-line no-unused-vars
         const { headerGeneratorOptions, ...cleanOptions } = options;
 
-        return Reflect.apply(origin, this, [url, cleanOptions, callback]) as ReturnType<typeof origin>;
-    } as unknown as typeof origin;
+        return origin.call(this, url, cleanOptions, callback);
+    };
+
+    return wrapped as T;
+};
 
 export default getWrappedGet;

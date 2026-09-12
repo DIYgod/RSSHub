@@ -35,7 +35,7 @@ async function handler(ctx: Context) {
     const response = await got(url, { headers: { cookie } });
     const $ = load(response.data);
 
-    let items = $('form table')
+    const threads = $('form table')
         .last()
         .find('tbody')
         .toArray()
@@ -49,7 +49,7 @@ async function handler(ctx: Context) {
             };
         });
 
-    items = (await Promise.all(items.map((item) => cache.tryGet(item.link, async () => await getThread(cookie, item))))) as typeof items;
+    const items = await Promise.all(threads.map((item) => cache.tryGet(item.link, async () => await getThread(cookie, item))));
 
     return {
         title: $('head title').text(),

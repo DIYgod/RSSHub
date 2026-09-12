@@ -37,7 +37,7 @@ export const route: Route = {
         },
     ],
     name: '正在热映',
-    maintainers: ['JackyST0'],
+    maintainers: ['HenryQW', 'JackyST0'],
     handler,
 };
 

@@ -7,7 +7,9 @@ import type { Data } from '@/types';
 import logger from '@/utils/logger';
 
 const templateRegex = /\$\{([^{}]+)\}/g;
-const allowedUrlProperties = new Set(['hash', 'host', 'hostname', 'href', 'origin', 'password', 'pathname', 'port', 'protocol', 'search', 'searchParams', 'username']);
+const urlProperties = ['hash', 'host', 'hostname', 'href', 'origin', 'password', 'pathname', 'port', 'protocol', 'search', 'searchParams', 'username'] as const;
+type UrlProperty = (typeof urlProperties)[number];
+const allowedUrlProperties = new Set<string>(urlProperties);
 
 // match path or sub-path
 const matchPath = (path: string, paths: string[]) => {
@@ -26,15 +28,16 @@ const filterPath = (path: string) => {
     return !(include && !matchPath(path, include)) && !(exclude && matchPath(path, exclude));
 };
 
-const interpolate = (str: string, obj: Record<string, any>) =>
-    str.replaceAll(templateRegex, (_, prop) => {
+const interpolate = (str: string, url: URL) =>
+    str.replaceAll(templateRegex, (_, prop: string) => {
         let needEncode = false;
         if (prop.endsWith('_ue')) {
             // url encode
             prop = prop.slice(0, -3);
             needEncode = true;
         }
-        return needEncode ? encodeURIComponent(obj[prop]) : obj[prop];
+        const value = String(url[prop as UrlProperty]);
+        return needEncode ? encodeURIComponent(value) : value;
     });
 const parseUrl = (str: string) => {
     let url;

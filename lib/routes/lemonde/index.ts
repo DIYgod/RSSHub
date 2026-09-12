@@ -1,13 +1,13 @@
 import { load } from 'cheerio';
 
-import type { Language, Route } from '@/types';
+import type { Data, Route } from '@/types';
 import { ViewType } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
 const ROOT_URL = 'https://www.lemonde.fr';
 
-const feedMap: Record<string, string> = {
+const feedMap = {
     '': `${ROOT_URL}/rss/une.xml`,
     international: `${ROOT_URL}/international/rss_full.xml`,
     politique: `${ROOT_URL}/politique/rss_full.xml`,
@@ -72,7 +72,7 @@ export const route: Route = {
 | decodeurs     | Fact-checking          |`,
 };
 
-async function handler(ctx) {
+async function handler(ctx): Promise<Data> {
     const category = ctx.req.param('category') ?? '';
     const feedUrl = feedMap[category];
 
@@ -132,7 +132,7 @@ async function handler(ctx) {
         title: feedTitle || 'Le Monde',
         link: feedLink,
         description: feedTitle || 'Le Monde',
-        language: 'fr' as Language,
+        language: 'fr',
         item: items,
     };
 }

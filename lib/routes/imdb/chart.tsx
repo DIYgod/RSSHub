@@ -81,7 +81,7 @@ async function handler(ctx: Context) {
             plot: node.plot,
         }),
         link: `${baseUrl}/title/${node.id}`,
-        category: node.titleGenres.genres.map((g) => chartTitles.genres.find((genre) => genre.filterId === g.genre.text)?.text) as string[],
+        category: node.titleGenres.genres.map((g) => chartTitles.genres.find((genre) => genre.filterId === g.genre.text)?.text).filter((text) => text !== undefined),
     }));
 
     return {

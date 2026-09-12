@@ -1,7 +1,8 @@
+import type { Context } from 'hono';
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 
-import type { Language, Route } from '@/types';
+import type { Data, Route } from '@/types';
 import { parseDate } from '@/utils/parse-date';
 
 import { baseUrl, getCreatorFragment, getCreatorPostReelList } from './utils';
@@ -61,7 +62,7 @@ const renderDescription = ({ description, thumbnailUrl, sampleVideoId, imageUrls
         </>
     );
 
-async function handler(ctx) {
+async function handler(ctx: Context): Promise<Data> {
     const { identifier } = ctx.req.param();
     const limit = Number(ctx.req.query('limit') || 18);
 
@@ -89,7 +90,7 @@ async function handler(ctx) {
         image: creatorInfo.avatarImageUrl,
         icon: creatorInfo.avatarImageUrl,
         logo: creatorInfo.avatarImageUrl,
-        language: 'ja' as Language,
+        language: 'ja',
         item: items,
     };
 }

@@ -1,7 +1,6 @@
 import { load } from 'cheerio';
-import type { Text } from 'domhandler';
 
-import type { DataItem, Language, Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -84,7 +83,7 @@ async function handler(ctx) {
                             return $('#view').html();
                         })
                     );
-                    content.append(pages as unknown as string);
+                    content.append(...pages.filter((page) => page !== null));
                 }
 
                 // remove unwanted elements
@@ -97,7 +96,10 @@ async function handler(ctx) {
                 // Taken from /caixin/blog.js
                 content
                     .find('#view > p')
-                    .filter((_, e) => (e.children[0] as Text | undefined)?.data === String.fromCodePoint(160))
+                    .filter((_, e) => {
+                        const [firstChild] = e.children;
+                        return firstChild?.type === 'text' && firstChild.data === String.fromCodePoint(160);
+                    })
                     .remove();
 
                 // fix lazyload image
@@ -124,7 +126,7 @@ async function handler(ctx) {
         title: `電腦領域 HKEPC${categoryMap[category].feedSuffix}`,
         link: `https://www.hkepc.com/${category}`,
         description: '電腦領域 HKEPC Hardware - 全港 No.1 PC網站',
-        language: 'zh-HK' as Language,
+        language: 'zh-HK' as const,
         item: items,
     };
 }

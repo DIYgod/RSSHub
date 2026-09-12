@@ -14,7 +14,7 @@ const getInnertube = () => {
         // Lazy init to avoid network calls during import time (e.g. when building)
         innertubePromise = Innertube.create({
             fetch: (input, init) => {
-                const url = typeof input === 'string' ? input : input instanceof URL ? input.toString() : input.url;
+                const url = input instanceof Request ? input.url : input.toString();
 
                 return fetch(url, {
                     method: input?.method,
@@ -25,8 +25,6 @@ const getInnertube = () => {
     }
     return innertubePromise;
 };
-
-const isLockupVideo = (video: unknown): video is YTNodes.LockupView => video instanceof YTNodes.LockupView;
 
 const lockupViewToItem = (video: YTNodes.LockupView, embed: boolean): DataItem => {
     const videoId = video.content_id;
@@ -60,14 +58,14 @@ const lockupViewToItem = (video: YTNodes.LockupView, embed: boolean): DataItem =
 };
 
 export const getChannelIdByUsername = (username: string) =>
-    cache.tryGet(`youtube:getChannelIdByUsername:${username}`, async () => {
+    cache.tryGet<string>(`youtube:getChannelIdByUsername:${username}`, async () => {
         const innertube = await getInnertube();
         const navigationEndpoint = await innertube.resolveURL(`https://www.youtube.com/${username}`);
         return navigationEndpoint.payload.browseId;
     });
 
 export const getDataByUsername = async ({ username, embed, filterShorts, isJsonFeed }: { username: string; embed: boolean; filterShorts: boolean; isJsonFeed: boolean }): Promise<Data> => {
-    const channelId = (await getChannelIdByUsername(username)) as string;
+    const channelId = await getChannelIdByUsername(username);
     return getDataByChannelId({ channelId, embed, filterShorts, isJsonFeed });
 };
 
@@ -75,7 +73,7 @@ export const getDataByChannelId = async ({ channelId, embed, isJsonFeed }: { cha
     const innertube = await getInnertube();
     const channel = await innertube.getChannel(channelId);
     const videos = await channel.getVideos();
-    const lockupVideos = videos.videos.filter((video) => isLockupVideo(video));
+    const lockupVideos = videos.videos.filter((video) => video instanceof YTNodes.LockupView);
     const videoSubtitles = isJsonFeed ? await getSrtAttachmentBatch(lockupVideos.map((video) => video.content_id)) : {};
 
     return {
@@ -103,6 +101,6 @@ export const getDataByPlaylistId = async ({ playlistId, embed }: { playlistId: s
         image: playlist.info.thumbnails?.[0].url,
         description: playlist.info.description || `${playlist.info.title} by ${playlist.info.author.name}`,
 
-        item: videos.filter((video) => isLockupVideo(video)).map((video) => lockupViewToItem(video, embed)),
+        item: videos.filter((video) => video instanceof YTNodes.LockupView).map((video) => lockupViewToItem(video, embed)),
     };
 };

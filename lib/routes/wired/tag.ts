@@ -23,7 +23,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const baseUrl = 'https://www.wired.com';
-    const { tag } = ctx.req.param() as { tag: string };
+    const tag = ctx.req.param('tag');
     const link = `${baseUrl}/tag/${tag}/`;
 
     const response = await ofetch(link);
@@ -92,7 +92,7 @@ async function handler(ctx) {
         description: preloadedState.transformed['head.description'],
         link,
         image: `${baseUrl}${preloadedState.transformed.logo.sources.sm.url}`,
-        language: 'en' as Language,
+        language: 'en' as const satisfies Language,
         item: items,
     };
 }

@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Language } from '@/types';
+import type { Data } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -15,7 +15,7 @@ const apiShowUrl = new URL('v2/content/app_content/show', apiRootUrl).href;
  * @returns {Promise<Object>} - A promise that resolves to an object containing the retrieved information.
  */
 const getInfo = (url) =>
-    cache.tryGet(url, async () => {
+    cache.tryGet(url, async (): Promise<Data> => {
         const { data: response } = await got(url);
 
         const $ = load(response);
@@ -28,11 +28,10 @@ const getInfo = (url) =>
             title: $('title').text(),
             link: url,
             description: $('meta[name="description"]').prop('content'),
-            language: 'zh-CN' as Language,
+            language: 'zh-CN',
             image: avatar || image,
             icon,
             logo: icon,
-            subtitle: $('meta[name="keywords"]').prop('content'),
             author: $('meta[name="app-mobile-web-app-title"]').prop('content'),
         };
     });

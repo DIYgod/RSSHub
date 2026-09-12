@@ -113,6 +113,6 @@ async function handler(ctx) {
         title: '《明日方舟》游戏公告与新闻',
         link: 'https://ak.hypergryph.com/news',
         item: items,
-        language: 'zh-CN' as Language,
+        language: 'zh-CN' as const satisfies Language,
     };
 }

@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 import type { Context } from 'hono';
 
 import InvalidParameterError from '@/errors/types/invalid-parameter';
-import type { Data, DataItem, Route } from '@/types';
+import type { Data, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -98,6 +98,6 @@ async function handler(ctx: Context): Promise<Data> {
         title: `研究生院通知（${typeName}）`,
         link: baseUrl,
         description: `电子科技大学研究生院通知（${typeName}）`,
-        item: out as DataItem[],
+        item: out,
     };
 }

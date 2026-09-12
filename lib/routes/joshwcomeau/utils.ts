@@ -7,8 +7,13 @@ import { parseDate } from '@/utils/parse-date';
 
 export const rootUrl = 'https://www.joshwcomeau.com';
 
-export async function getRelativeUrlList(url, selector) {
-    const response = await ofetch(url);
+interface PostLink {
+    url: string;
+    cardTitle: string;
+}
+
+export async function getRelativeUrlList(url: string, selector: string) {
+    const response = await ofetch<string>(url);
     const $ = load(response);
     const heading = $('header>h1').text();
     const urls = $(selector)
@@ -21,20 +26,20 @@ export async function getRelativeUrlList(url, selector) {
     return { heading, urls };
 }
 
-export async function processList(list) {
+export async function processList(list: PostLink[]): Promise<DataItem[]> {
     const listPromise = await Promise.allSettled(list.map(async (item) => await cache.tryGet(`joshwcomeau:${item.url}`, async () => await getPostContent(item))));
-    return listPromise.map((item, index) => (item.status === 'fulfilled' ? item.value : ({ title: 'Error Reading Item', link: `${rootUrl}${list[index]?.url}` } as DataItem)));
+    return listPromise.map((item, index) => (item.status === 'fulfilled' ? item.value : { title: 'Error Reading Item', link: `${rootUrl}${list[index]?.url}` }));
 }
 
-export async function getPostContent({ url, cardTitle }) {
+export async function getPostContent({ url, cardTitle }: PostLink): Promise<DataItem> {
     if (url.startsWith('https')) {
         return {
             title: cardTitle ?? 'External Content',
             description: 'Read it on external Site',
             link: url,
-        } as DataItem;
+        };
     }
-    const response = await ofetch(`${rootUrl}${url}`);
+    const response = await ofetch<string>(`${rootUrl}${url}`);
     const $ = load(response);
     const title = $('meta[property="og:title"]').attr('content')?.replace('• Josh W. Comeau', '');
     const summary = $('meta[property="og:description"]').attr('content');

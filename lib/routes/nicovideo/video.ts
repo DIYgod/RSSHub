@@ -1,6 +1,6 @@
 import type { Context } from 'hono';
 
-import type { DataItem, Route } from '@/types';
+import type { Route } from '@/types';
 import { parseDate } from '@/utils/parse-date';
 
 import type { UserInfo, VideoItem } from './types';
@@ -19,10 +19,10 @@ const handler = async (ctx: Context) => {
         pubDate: parseDate(video.registeredAt),
         author: [{ name: video.owner.name, avatar: video.owner.iconUrl, url: `https://www.nicovideo.jp/user/${video.owner.id}` }],
         description: renderVideo(video, embed),
-        image: video.thumbnail.nHdUrl || video.thumbnail.largeUrl || video.thumbnail.middleUrl,
+        image: (video.thumbnail.nHdUrl || video.thumbnail.largeUrl || video.thumbnail.middleUrl) ?? undefined,
         upvotes: video.count.like,
         comments: video.count.comment,
-    })) as DataItem[];
+    }));
 
     return {
         title: `${userInfo.nickname} - ニコニコ`,

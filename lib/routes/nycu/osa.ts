@@ -13,53 +13,55 @@ function ROCDate(dateStr: string | Date): Date {
     return timezone(date, 8);
 }
 
-const data: Record<string, { module: string; name: string }> = {
-    '2660': {
-        module: 'nycu0091',
-        name: '榮譽榜 - 榮譽事蹟',
-    },
-    '2844': {
-        module: 'nycu0082',
-        name: '經濟支持及學生輔導 - 生輔一、二',
-    },
-    '3440': {
-        module: 'nycu0083',
-        name: '學生宿舍(陽明校區) - 住宿服務一',
-    },
-    '3465': {
-        module: 'nycu0084',
-        name: '學生宿舍(交大校區) - 住宿服務二',
-    },
-    '3494': {
-        module: 'nycu0085',
-        name: '課外活動 - 課外活動一、二組',
-    },
-    '3554': {
-        module: 'nycu0086',
-        name: '健康照護 - 衛生保健組',
-    },
-    '3594': {
-        module: 'nycu0087',
-        name: '職涯發展 - 職涯發展組',
-    },
-    '3635': {
-        module: 'nycu0088',
-        name: '服務學習 - 服務學習中心',
-    },
-    '3669': {
-        module: 'nycu0089',
-        name: '原民資源 - 原資中心',
-    },
-    '3681': {
-        module: 'nycu0090',
-        name: '深耕助學 - 深耕助學',
-    },
-};
+const data = new Map(
+    Object.entries({
+        '2660': {
+            module: 'nycu0091',
+            name: '榮譽榜 - 榮譽事蹟',
+        },
+        '2844': {
+            module: 'nycu0082',
+            name: '經濟支持及學生輔導 - 生輔一、二',
+        },
+        '3440': {
+            module: 'nycu0083',
+            name: '學生宿舍(陽明校區) - 住宿服務一',
+        },
+        '3465': {
+            module: 'nycu0084',
+            name: '學生宿舍(交大校區) - 住宿服務二',
+        },
+        '3494': {
+            module: 'nycu0085',
+            name: '課外活動 - 課外活動一、二組',
+        },
+        '3554': {
+            module: 'nycu0086',
+            name: '健康照護 - 衛生保健組',
+        },
+        '3594': {
+            module: 'nycu0087',
+            name: '職涯發展 - 職涯發展組',
+        },
+        '3635': {
+            module: 'nycu0088',
+            name: '服務學習 - 服務學習中心',
+        },
+        '3669': {
+            module: 'nycu0089',
+            name: '原民資源 - 原資中心',
+        },
+        '3681': {
+            module: 'nycu0090',
+            name: '深耕助學 - 深耕助學',
+        },
+    })
+);
 
 async function handler(ctx: Context): Promise<Data> {
     const id = ctx.req.param('id') ?? '2844';
 
-    const { module, name } = data[id];
+    const { module, name } = data.get(id)!;
 
     const url = `https://osa.nycu.edu.tw/osa/ch/app/data/list?module=${module}&id=${id}`;
 

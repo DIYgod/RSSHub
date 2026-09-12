@@ -27,7 +27,7 @@ export const handler = async (ctx): Promise<Data> => {
     // Scope to #lists for newsflash-type pages, otherwise search the full page
     const container = $('#lists').length ? $('#lists') : $('body');
 
-    let items = {};
+    const items = new Map<string, DataItem>();
     const links = container.find('a').toArray();
     for (const el of links) {
         const item = $(el);
@@ -35,21 +35,23 @@ export const handler = async (ctx): Promise<Data> => {
         const link = href ? (href.startsWith('/') ? new URL(href, rootUrl).href : href) : undefined;
 
         if (link && /\/(?:article|video)\/\w+\.html/.test(link)) {
-            items[link] = {
+            items.set(link, {
                 title: item.text(),
                 link,
-            };
+            });
         }
     }
 
-    items = await Promise.all(
-        Object.values(items)
+    const articles = await Promise.all(
+        items
+            .values()
+            .toArray()
             .slice(0, limit)
             .map((item) => fetchArticle(item))
     );
 
     return {
-        item: items as DataItem[],
+        item: articles,
         ...feedMeta($, currentUrl),
     };
 };

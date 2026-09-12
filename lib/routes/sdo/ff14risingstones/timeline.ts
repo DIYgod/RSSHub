@@ -29,5 +29,5 @@ async function handler(ctx: Context) {
         link: `${INDEX_URL}#/dynamic`,
         image: LOGO_URL,
         item: await generateDynamicFeeds(dynamics),
-    } as Data;
+    } satisfies Data;
 }

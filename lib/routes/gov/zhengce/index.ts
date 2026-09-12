@@ -117,7 +117,7 @@ export async function handler(ctx) {
         title: author && subtitle ? `${author} - ${subtitle}` : $('title').text(),
         link: currentUrl,
         description: $('meta[name="description"]').prop('content'),
-        language: 'zh-CN' as Language,
+        language: 'zh-CN' as const satisfies Language,
         image,
         icon,
         logo: icon,

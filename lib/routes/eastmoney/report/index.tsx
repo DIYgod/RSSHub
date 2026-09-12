@@ -6,7 +6,7 @@ import type { Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
 
 import { getEpsOrPeStr, getRatingChangeStr } from '../utils';
 
@@ -81,18 +81,18 @@ async function handler(ctx) {
         return {
             title: `[${item.orgSName}]${stockName}${item.title}`,
             link: `${baseUrl}/report/${linkType[category]}` + (category === 'stock' ? `/${item.infoCode}.html` : `.jshtml?encodeUrl=${item.encodeUrl}`),
-            pubDate: parseDate(item.publishDate),
+            pubDate: parseDateInTimezone(item.publishDate, 8),
             author: item.researcher,
             originItem: item, // temp use
         };
     });
 
     const items = await Promise.all(
-        list.map((item) => {
+        list.map(async (item) => {
             const tempOriginItem = item.originItem;
             delete item.originItem; // temp use
 
-            return cache.tryGet(item.link, async () => {
+            const cached = await cache.tryGet(item.link, async () => {
                 try {
                     const { data: response } = await got(item.link);
                     const $ = load(response);
@@ -158,6 +158,7 @@ async function handler(ctx) {
                     return item;
                 }
             });
+            return { ...cached, pubDate: item.pubDate };
         })
     );
 

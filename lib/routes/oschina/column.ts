@@ -22,7 +22,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
     const response = await ofetch(targetUrl);
     const $: CheerioAPI = load(response);
-    const language: string = $('html').attr('lang') ?? 'zh-CN';
+    const language = ($('html').attr('lang') ?? 'zh-CN') as Language;
 
     let items: DataItem[] = $('div.news-item')
         .slice(0, limit)
@@ -61,7 +61,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 image,
                 banner: image,
                 updated: upDatedStr ? timezone(parseDate(upDatedStr), 8) : undefined,
-                language: language as Language,
+                language,
             };
 
             return processedItem;
@@ -93,7 +93,11 @@ export const handler = async (ctx: Context): Promise<Data> => {
                     const categories: string[] = [...new Set(categoryEls.map((el) => $$(el).text()).filter(Boolean))];
                     const authorEls: Element[] = $$('div.article-box__meta div.item-list div.item a')
                         .toArray()
-                        .filter((i) => ($$(i).attr('href') ? new RegExp(String.raw`^${userHostRegex}/u/\d+$`).test($$(i).attr('href') as string) : false));
+                        .filter((i) => {
+                            const href: string | undefined = $$(i).attr('href');
+
+                            return href ? new RegExp(String.raw`^${userHostRegex}/u/\d+$`).test(href) : false;
+                        });
                     const authors: DataItem['author'] = authorEls.map((authorEl) => {
                         const $authorEl: Cheerio<Element> = $$(authorEl);
 
@@ -122,7 +126,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                         image,
                         banner: image,
                         updated: upDatedStr ? parseDate(upDatedStr) : item.updated,
-                        language: language as Language,
+                        language,
                     };
 
                     const extraLinkEls: Element[] = $$('div.related-links-box ul.link-list li a').toArray();
@@ -166,7 +170,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
         allowEmpty: true,
         image: $('a.logo img').attr('src'),
         author,
-        language: language as Language,
+        language,
         id: $('val[data-name="weixinShareUrl"]').attr('data-value'),
     };
 };

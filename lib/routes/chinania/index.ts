@@ -16,7 +16,7 @@ export const handler = async (ctx) => {
 
     const $ = load(response);
 
-    const language = $('html').prop('lang');
+    const language = $('html').prop('lang') as Language;
 
     let items = $('ul.notice_list_ul li')
         .slice(0, limit)
@@ -28,7 +28,7 @@ export const handler = async (ctx) => {
                 title: $item.find('p').first().text(),
                 pubDate: parseDate($item.find('p').last().text()),
                 link: $item.find('a').prop('href'),
-                language: language as Language,
+                language,
             };
         });
 
@@ -50,7 +50,7 @@ export const handler = async (ctx) => {
                     html: description,
                     text: $$('div.article_content').text(),
                 };
-                item.language = language as Language;
+                item.language = language;
 
                 return item;
             })
@@ -68,7 +68,7 @@ export const handler = async (ctx) => {
         allowEmpty: true,
         image,
         author: $("meta[name='keywords']").prop('content'),
-        language: language as Language,
+        language,
     };
 };
 

@@ -1,0 +1,22 @@
+{
+    "data": {
+        "items": [
+            {
+                "uid": "topic-42",
+                "title": "Topic \"quoted\" & 中文",
+                "summary": "First paragraph.\nA quoted \"statement\", path C:\\topic, and <markup>.",
+                "createdAt": "2026-09-06T08:00:00.000Z",
+                "publishDate": "2026-09-06T09:40:34.084Z",
+                "siteCount": 2,
+                "siteNameDisplay": "Source A",
+                "newsAggList": [
+                    { "uid": "news-1", "url": "https://example.com/report-1", "title": "Report A", "siteNameDisplay": "Source A" },
+                    { "uid": "news-2", "url": "https://example.com/report-2", "title": "Report B", "siteNameDisplay": "Source B" }
+                ],
+                "entityList": [{ "name": "Entity" }],
+                "tagList": [{ "name": "Technology" }],
+                "itemId": 42
+            }
+        ]
+    }
+}

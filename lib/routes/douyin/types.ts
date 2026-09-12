@@ -299,10 +299,8 @@ interface AnimatedCover {
     url_list: string[];
 }
 
-type OriginalSoundInfos = unknown;
-
 interface Audio {
-    original_sound_infos: OriginalSoundInfos;
+    original_sound_infos: unknown;
 }
 
 interface BigThumbs {

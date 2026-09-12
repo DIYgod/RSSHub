@@ -18,7 +18,7 @@ export async function getPollResults(client, message, m: Api.MessageMediaPoll) {
     const resultsUpdateResponse = await client.invoke(new Api.messages.GetPollResults({ peer: message.peerId, msgId: message.id }));
     let results: Api.PollResults;
     if (resultsUpdateResponse?.updates[0] instanceof Api.UpdateMessagePoll) {
-        results = resultsUpdateResponse.updates[0].results as Api.PollResults;
+        results = resultsUpdateResponse.updates[0].results;
     }
     const txt = `<h4>${m.poll.quiz ? 'Quiz' : 'Poll'}: ${m.poll.question.text}</h4>
         <div><ul>${m.poll.answers
@@ -64,7 +64,7 @@ export function getMediaLink(src: string, m: Api.TypeMessageMedia) {
         return `<img src="${src}" alt=""/>`;
     }
     if (doc && mime.startsWith('video/')) {
-        const vid = (doc.attributes.find((t) => t instanceof Api.DocumentAttributeVideo) ?? { w: 1080, h: 720 }) as { w: number; h: number };
+        const vid = doc.attributes.find((t) => t instanceof Api.DocumentAttributeVideo) ?? { w: 1080, h: 720 };
         return `<video controls preload="metadata" poster="${withSearchParams(src, { thumb: '' })}" width="${vid.w / 2}" height="${vid.h / 2}"><source src="${src}" type="${mime}"></video>`;
     }
     if (doc && mime.startsWith('audio/')) {

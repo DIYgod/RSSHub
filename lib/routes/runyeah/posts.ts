@@ -27,7 +27,7 @@ async function handler(ctx) {
     });
 
     let data = response;
-    if (typeof response !== 'object') {
+    if (!Array.isArray(response)) {
         // remove php warnings before JSON
         data = JSON.parse(response.match(/\[(.*)\]/)[0]);
     }

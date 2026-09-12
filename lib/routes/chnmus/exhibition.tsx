@@ -104,7 +104,7 @@ export const route: Route = {
                 // use seperate cache key for special path
                 const cacheKey = isSpecial ? `${item.itemLink}-special` : item.itemLink;
 
-                return cache.tryGet(cacheKey, async (): Promise<Record<string, any>> => {
+                return cache.tryGet(cacheKey, async (): Promise<Partial<DataItem>> => {
                     const detailResponse = await got({
                         method: 'get',
                         url: item.itemLink,
@@ -130,7 +130,7 @@ export const route: Route = {
                                     <img src={item.imgUrl} />
                                 </div>
                             ),
-                        } as Record<string, any>;
+                        };
                     }
 
                     // Special path to return detail exhibition information
@@ -142,7 +142,7 @@ export const route: Route = {
 
                     // filter out items without title, for example: https://www.chnmus.net/ch/information/exhibition/details.html?id=7400076083917230080#list
                     if (!title) {
-                        return {} as Record<string, any>;
+                        return {};
                     }
 
                     const location = texts
@@ -195,8 +195,8 @@ export const route: Route = {
                             endDate,
                             itemLink,
                         },
-                    } as Record<string, any>;
-                }) as Promise<DataItem>;
+                    };
+                });
             })
         );
 
@@ -204,7 +204,7 @@ export const route: Route = {
             title: `${museumName} - 展览资讯${isSpecial ? ' - 特展详情' : ''}`,
             link: apiUrl,
             language: 'zh-CN',
-            item: items.filter((item) => item.title) as DataItem[],
+            item: items.filter((item): item is DataItem => Boolean(item.title)),
         };
     },
 };

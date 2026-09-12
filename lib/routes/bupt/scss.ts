@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Data, DataItem, Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -94,6 +94,6 @@ async function handler() {
     return {
         title: `北京邮电大学网络空间安全学院 - ${pageTitle}`,
         link: currentUrl,
-        item: items as Data['item'],
+        item: items,
     };
 }

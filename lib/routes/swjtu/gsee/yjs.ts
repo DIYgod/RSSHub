@@ -28,7 +28,7 @@ const getItem = (item) => {
             link,
             description: infoText,
         };
-    }) as any;
+    });
 };
 
 export const route: Route = {

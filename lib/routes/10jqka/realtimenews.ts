@@ -19,7 +19,7 @@ export const handler = async (ctx) => {
 
     const $ = load(iconv.decode(currentResponse, 'gbk'));
 
-    const language = $('html').prop('lang');
+    const language = $('html').prop('lang') as Language;
 
     const { data: response } = await got(apiUrl, {
         searchParams: {
@@ -51,7 +51,7 @@ export const handler = async (ctx) => {
                 image,
                 banner: item.picUrl,
                 updated: parseDate(item.rtime, 'X'),
-                language: language as Language,
+                language,
             };
         }) ?? [];
 
@@ -66,7 +66,7 @@ export const handler = async (ctx) => {
         allowEmpty: true,
         image,
         author: $('meta[property="og:site_name"]').prop('content'),
-        language: language as Language,
+        language,
     };
 };
 

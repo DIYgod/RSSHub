@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { DataItem, Language, Route } from '@/types';
+import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -34,7 +34,7 @@ export const route: Route = {
 | 代码 | xyxw     | xytz     |`,
 };
 
-async function handler(ctx) {
+async function handler(ctx): Promise<Data> {
     const url = `https://www.swpu.edu.cn/nccjxy/xydt/${ctx.req.param('code')}.htm`;
 
     const res = await got(url);
@@ -80,7 +80,7 @@ async function handler(ctx) {
         title: `西南石油大学财经学院 ${title}`,
         link: url,
         description: `西南石油大学财经学院 ${title}`,
-        language: 'zh-CN' as Language,
+        language: 'zh-CN',
         item: out,
     };
 }

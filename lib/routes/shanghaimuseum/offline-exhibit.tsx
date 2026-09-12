@@ -28,14 +28,14 @@ export const route: Route = {
     maintainers: ['magazian'],
     radar: [
         {
-            source: ['www.shanghaimuseum.net/mu/frontend/pg/display/offline-exhibit'],
+            source: ['www.shanghaimuseum.cn/mu/frontend/pg/display/offline-exhibit'],
             target: '/display/offline-exhibit',
         },
     ],
     handler: async (ctx) => {
         const type = ctx.req.param('type');
 
-        const baseUrl = 'https://www.shanghaimuseum.net';
+        const baseUrl = 'https://www.shanghaimuseum.cn';
         const apiUrl = `${baseUrl}/mu/frontend/pg/display/search-exhibit`;
 
         const fetchExhibits = async (status: string, limit = 20): Promise<ExhibitItem[]> => {
@@ -72,7 +72,7 @@ export const route: Route = {
         const items = rawItems.map((item) => {
             const title = item.name;
             const itemLink = `${baseUrl}/mu/frontend/pg/article/id/${item.code}`;
-            const imgUrl = item.picPath ? `${baseUrl}/${item.picPath}` : '';
+            const imgUrl = item.picPath ? `${baseUrl}/mu/${item.picPath}` : '';
             const location = item.exhibitPlace || '上海博物馆';
             const pubDate = timezone(parseDate(item.issueTime), 8);
 

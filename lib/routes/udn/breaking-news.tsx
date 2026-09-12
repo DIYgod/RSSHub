@@ -43,9 +43,9 @@ async function handler(ctx) {
     const items = await Promise.all(
         response.data.lists.map((item) => {
             let link = item.titleLink.startsWith('http') ? item.titleLink : `${rootUrl}${item.titleLink}`;
-            const linkUrl = new URL(link) as URL & { query: string };
+            const linkUrl = new URL(link);
             // cleanup query paramter
-            linkUrl.query = linkUrl.search = '';
+            linkUrl.search = '';
             link = linkUrl.href;
 
             return cache.tryGet(link, async () => {

@@ -18,7 +18,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
     const response = await ofetch(targetUrl);
     const $: CheerioAPI = load(response);
-    const language = $('html').attr('lang') ?? 'zh';
+    const language = ($('html').attr('lang') ?? 'zh') as Language;
 
     let items: DataItem[] = $('div.tab-pane a')
         .slice(0, limit)
@@ -34,9 +34,9 @@ export const handler = async (ctx: Context): Promise<Data> => {
             const processedItem: DataItem = {
                 title,
                 pubDate: pubDateStr ? parseDate(pubDateStr) : undefined,
-                link: linkUrl ? (linkUrl.startsWith('http') ? linkUrl : new URL(linkUrl as string, targetUrl).href) : undefined,
+                link: linkUrl ? (linkUrl.startsWith('http') ? linkUrl : new URL(linkUrl, targetUrl).href) : undefined,
                 updated: upDatedStr ? parseDate(upDatedStr) : undefined,
-                language: language as Language,
+                language,
             };
 
             return processedItem;
@@ -62,7 +62,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                             $$('meta[name="ColumnType"]').attr('content'),
                             $$('meta[name="ContentSource"]').attr('content'),
                             ...($$('meta[name="Keywords"]').attr('content')?.split(';') ?? []),
-                        ].filter(Boolean) as string[]
+                        ].filter((content): content is string => Boolean(content))
                     ),
                 ];
                 const authors: DataItem['author'] = [$$('meta[name="ColumnSource"]').attr('content'), $$('meta[name="Author"]').attr('content')].filter(Boolean).map((author) => ({
@@ -70,7 +70,8 @@ export const handler = async (ctx: Context): Promise<Data> => {
                     url: undefined,
                     avatar: undefined,
                 }));
-                const image: string | undefined = $$('a.navbar-brand img').attr('src') ? new URL($$('a.navbar-brand img').attr('src') as string, baseUrl).href : undefined;
+                const detailLogoSrc: string | undefined = $$('a.navbar-brand img').attr('src');
+                const image: string | undefined = detailLogoSrc ? new URL(detailLogoSrc, baseUrl).href : undefined;
                 const upDatedStr: string | undefined = pubDateStr;
 
                 const processedItem: DataItem = {
@@ -86,7 +87,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                     image,
                     banner: image,
                     updated: upDatedStr ? parseDate(upDatedStr) : item.updated,
-                    language: language as Language,
+                    language,
                 };
 
                 return {
@@ -97,15 +98,17 @@ export const handler = async (ctx: Context): Promise<Data> => {
         })
     );
 
+    const logoSrc: string | undefined = $('a.navbar-brand img').attr('src');
+
     return {
         title: $('title').text(),
         description: $('meta[name="ColumnDescription"]').attr('content'),
         link: targetUrl,
         item: items,
         allowEmpty: true,
-        image: $('a.navbar-brand img').attr('src') ? new URL($('a.navbar-brand img').attr('src') as string, baseUrl).href : undefined,
+        image: logoSrc ? new URL(logoSrc, baseUrl).href : undefined,
         author: $('meta[name="SiteName"]').attr('content'),
-        language: language as Language,
+        language,
         id: targetUrl,
     };
 };

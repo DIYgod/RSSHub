@@ -71,12 +71,14 @@ async function handler(ctx) {
     const subtitle = $('meta[name="ColumnName"]').prop('content');
     const image = new URL($('div.logo img').prop('src')!, rootUrl).href;
 
+    const language = $('html').prop('lang') as Language;
+
     return {
         item: items,
         title: `${author} - ${subtitle}`,
         link: currentUrl,
         description: $('meta[name="ColumnDescription"]').prop('content'),
-        language: $('html').prop('lang') as Language,
+        language,
         image,
         subtitle,
         author,

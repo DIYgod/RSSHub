@@ -29,7 +29,7 @@ async function handler() {
     return {
         link,
         title: 'Release notes — fish-shell',
-        language: 'en' as Language,
+        language: 'en' as const satisfies Language,
         item: $('#release-notes > section')
             .toArray()
             .map((item) => {

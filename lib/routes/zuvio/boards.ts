@@ -1,4 +1,4 @@
-import type { Language, Route } from '@/types';
+import type { Data, Route } from '@/types';
 
 import { getBoards, rootUrl } from './utils';
 
@@ -20,7 +20,7 @@ export const route: Route = {
     handler,
 };
 
-async function handler() {
+async function handler(): Promise<Data> {
     const items = await getBoards();
 
     return {
@@ -29,6 +29,6 @@ async function handler() {
         image: 'https://s3.hicloud.net.tw/zuvio.public/public/system/images/irs_v4/chicken/shared/webshare.png',
         link: `${rootUrl}/articles`,
         item: items,
-        language: 'zh-TW' as Language,
+        language: 'zh-TW',
     };
 }

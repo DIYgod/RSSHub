@@ -9,13 +9,13 @@ import { parseArticle } from './utils';
 
 type Category = 'news' | 'review' | 'video' | 'special' | 'hardware';
 
-const categories: Record<Category, string> = {
+const categories = {
     news: '最新资讯',
     review: '游戏评测',
     video: '游戏视频',
     special: '巴士首页特稿',
     hardware: '硬件资讯',
-};
+} satisfies Record<Category, string>;
 
 export const route: Route = {
     path: '/list/:category',
@@ -39,11 +39,11 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const category = ctx.req.param('category') as Category;
+    const category = ctx.req.param('category');
     const listUrl = `https://www.tgbus.com/list/${category}/`;
 
     const res = await got(listUrl);
-    const $ = load(res.data as unknown as string);
+    const $ = load(res.data);
     const list = $('div.special-infocard')
         .toArray()
         .map((item) => {

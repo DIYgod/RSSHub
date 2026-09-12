@@ -18,7 +18,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
     const response = await ofetch(targetUrl);
     const $: CheerioAPI = load(response);
-    const language = $('html').attr('lang') ?? 'zh';
+    const language = ($('html').attr('lang') ?? 'zh') as Language;
 
     let items: DataItem[] = $('div.main_left ul li')
         .slice(0, limit)
@@ -37,7 +37,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 pubDate: pubDateStr ? parseDate(pubDateStr) : undefined,
                 link: linkUrl ? new URL(linkUrl, baseUrl).href : undefined,
                 updated: upDatedStr ? parseDate(upDatedStr) : undefined,
-                language: language as Language,
+                language,
             };
 
             return processedItem;
@@ -65,7 +65,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                         html: description,
                         text: description,
                     },
-                    language: language as Language,
+                    language,
                 };
 
                 const $enclosureEl: Cheerio<Element> = $$('div.content_div embed').first();
@@ -88,15 +88,17 @@ export const handler = async (ctx: Context): Promise<Data> => {
         })
     );
 
+    const imageUrl: string | undefined = $('div.logo a img').attr('src');
+
     return {
         title: `${$('title').text()}${$('div.mianbao').contents().last().text()}`,
         description: $('meta[name="description"]').attr('content'),
         link: targetUrl,
         item: items,
         allowEmpty: true,
-        image: $('div.logo a img').attr('src') ? new URL($('div.logo a img').attr('src') as string, targetUrl).href : undefined,
+        image: imageUrl ? new URL(imageUrl, targetUrl).href : undefined,
         author: $('meta[name="keywords"]').attr('content'),
-        language: language as Language,
+        language,
         id: targetUrl,
     };
 };

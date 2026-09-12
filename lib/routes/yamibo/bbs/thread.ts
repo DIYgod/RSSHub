@@ -17,6 +17,7 @@ export const route: Route = {
     handler,
     features: {
         antiCrawler: true,
+        requirePuppeteer: true,
         requireConfig: [
             {
                 optional: true,

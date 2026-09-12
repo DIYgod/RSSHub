@@ -62,6 +62,6 @@ async function handler(ctx) {
 }
 
 const get = async (url: string) => {
-    const buffer = await (got(url) as any).buffer();
-    return decode(buffer, 'gbk');
+    const { data } = await got(url, { responseType: 'buffer' });
+    return decode(data, 'gbk');
 };

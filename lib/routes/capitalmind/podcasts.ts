@@ -24,7 +24,7 @@ export const route: Route = {
     handler,
 };
 
-async function handler() {
+async function handler(): Promise<Data> {
     const items = await fetchArticles('podcasts');
 
     return {
@@ -38,5 +38,5 @@ async function handler() {
         image: `${baseUrl}/favicons/apple-touch-icon.png`,
         icon: `${baseUrl}/favicons/favicon.ico`,
         logo: `${baseUrl}/favicons/favicon.ico`,
-    } as Data;
+    };
 }

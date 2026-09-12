@@ -70,7 +70,7 @@ async function handler(ctx) {
         title,
         description,
         link,
-        language: 'ja' as Language,
+        language: 'ja' as const satisfies Language,
         item: item_list,
     };
 }

@@ -5,7 +5,7 @@ import { ViewType } from '@/types';
 
 import { CONFIG_OPTIONS, generatePostDataItem, getClient, postFilter } from './utils';
 
-const handler = async (ctx: Context) => {
+const handler = async (ctx: Context): Promise<Data> => {
     const limit = Number(ctx.req.query('limit') ?? '20');
     const communityId = ctx.req.param('id');
     const mediaOnly = ctx.req.param('media') === 'media';
@@ -37,7 +37,7 @@ const handler = async (ctx: Context) => {
                 title: communityInfo.community.name,
                 ...generatePostDataItem(post, personasData.personas),
             })) ?? [],
-    } as Data;
+    };
 };
 
 export const route: Route = {

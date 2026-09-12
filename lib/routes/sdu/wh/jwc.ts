@@ -30,6 +30,12 @@ export const route: Route = {
 | gzzd     | zyjs     | sjjx     | zbfc     | fwzn     | jwyw     | gztz     | jwjb     | cyxz     |`,
 };
 
+type ExtractedArticle = {
+    description?: string | null;
+    author?: string;
+    exactDate?: Date;
+};
+
 async function handler(ctx) {
     const column = ctx.req.param('column') ?? 'gztz';
     const baseUrl = data.wh.jwc.url;
@@ -46,7 +52,7 @@ async function handler(ctx) {
             const href = anchor.attr('href');
             const link = href!.startsWith('http') ? href : baseUrl + href;
             const title = $item.text();
-            const { description, author: exactAuthor, exactDate } = (await cache.tryGet(link!, () => extractor(link))) as Record<string, any>;
+            const { description, author: exactAuthor, exactDate } = await cache.tryGet<ExtractedArticle>(link!, () => extractor(link));
             const author = exactAuthor ?? '教务处';
             const pubDate = exactDate ?? timezone(parseDate(dateText.slice(1, -1), 'YYYY-MM-DD'), 8);
             return {

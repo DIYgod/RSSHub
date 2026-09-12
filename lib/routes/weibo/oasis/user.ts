@@ -34,13 +34,23 @@ async function handler(ctx) {
         await buildData({
             link,
             url: link,
-            title: `$('.name-main').text().trim() + ' - 用户 - 绿洲'`,
-            description: `$('.desc').text().trim()`,
+            title: ($) => $('.name-main').text().trim() + ' - 用户 - 绿洲',
+            description: ($) => $('.desc').text().trim(),
             item: {
                 item: '.container .status-item',
-                title: `$('.status-item-title').contents().filter((_, node) => node.type === 'text').text()`,
-                description: `$('.status-item-title').contents().filter((_, node) => node.type === 'text').text() + '<br>' + $('.status-img').html()`,
-                link: `'https://oasis.weibo.cn/v1/h5/share?sid=' + $('.status-item-title').parent().data('id')`,
+                title: ($) =>
+                    $('.status-item-title')
+                        .contents()
+                        .filter((_, node) => node.type === 'text')
+                        .text(),
+                description: ($) =>
+                    $('.status-item-title')
+                        .contents()
+                        .filter((_, node) => node.type === 'text')
+                        .text() +
+                    '<br>' +
+                    $('.status-img').html(),
+                link: ($) => 'https://oasis.weibo.cn/v1/h5/share?sid=' + $('.status-item-title').parent().data('id'),
             },
         })
     );

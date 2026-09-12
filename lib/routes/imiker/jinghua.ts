@@ -104,7 +104,7 @@ async function handler(ctx) {
         title: `${author} - ${description}`,
         link: currentUrl,
         description,
-        language: 'zh' as Language,
+        language: 'zh' as const satisfies Language,
         icon,
         logo: icon,
         subtitle: description,

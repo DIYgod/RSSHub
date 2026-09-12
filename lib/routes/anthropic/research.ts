@@ -22,10 +22,11 @@ export const route: Route = {
     url: 'www.anthropic.com/research',
 };
 
-async function handler() {
+async function handler(ctx) {
     const link = 'https://www.anthropic.com/research';
     const response = await ofetch(link);
     const $ = load(response);
+    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 20;
 
     // self.__next_f.push
     const regexp = /self\.__next_f\.push\((.+)\)/;
@@ -70,6 +71,7 @@ async function handler() {
     const publicationSections = sections.filter((section) => section?.title === 'Publications');
     const posts = publicationSections
         .flatMap((section) => section?.posts ?? [])
+        .slice(0, limit)
         .map((post): DataItem => ({
             title: post.title,
             link: `https://www.anthropic.com/research/${post.slug.current}`,

@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Language, Route } from '@/types';
+import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
@@ -59,6 +59,6 @@ async function handler(ctx) {
         logo: appData.logo.source,
         icon: appData.logo.source,
         item: [item],
-        language: 'en' as Language,
+        language: 'en' as const,
     };
 }

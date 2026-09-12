@@ -118,7 +118,7 @@ async function handler(ctx) {
             .join(' - ')}`,
         link: currentUrl,
         description: $('meta[name="DESCRIPTION"]').prop('content'),
-        language: 'zh-CN' as Language,
+        language: 'zh-CN' as const satisfies Language,
         subtitle: $('meta[name="KEYWORDS"]').prop('content'),
         author: $('meta[name="AUTHOR"]').prop('content'),
     };

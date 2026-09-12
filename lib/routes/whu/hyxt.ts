@@ -88,12 +88,14 @@ async function handler(ctx) {
     const siteName = getMeta(meta, 'SiteName');
     const columnName = getMeta(meta, 'ColumnName');
 
+    const language = $('html').prop('lang') as Language;
+
     return {
         item: items,
         title: `${siteName} - ${columnName}`,
         link: currentUrl,
         description: getMeta(meta, 'ColumnKeywords'),
-        language: $('html').prop('lang') as Language,
+        language,
         image: new URL($('div.top-logo img').prop('src')!, rootUrl).href,
         subtitle: columnName,
         author: siteName,

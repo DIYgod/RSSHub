@@ -1,4 +1,6 @@
-import type { Language, Route } from '@/types';
+import type { Context } from 'hono';
+
+import type { Data, Route } from '@/types';
 import { parseDate } from '@/utils/parse-date';
 
 import { baseUrl, findAccountById, getTagId, getTagSuggestion, icon, parseDescription } from './utils';
@@ -27,7 +29,7 @@ export const route: Route = {
     handler,
 };
 
-async function handler(ctx) {
+async function handler(ctx: Context): Promise<Data> {
     const tag = ctx.req.param('tag');
 
     const tagId = await getTagId(tag);
@@ -50,7 +52,7 @@ async function handler(ctx) {
         image: icon,
         icon,
         logo: icon,
-        language: 'en' as Language,
+        language: 'en',
         item: items,
     };
 }

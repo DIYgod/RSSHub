@@ -97,7 +97,7 @@ async function handler(ctx) {
         title: `finviz - ${category}`,
         link: currentUrl,
         description: $('meta[name="description"]').prop('content'),
-        language: 'en-us' as Language,
+        language: 'en-us' as const satisfies Language,
         image: new URL($('a.logo svg use').first().prop('href')!, rootUrl).href,
         icon,
         logo: icon,

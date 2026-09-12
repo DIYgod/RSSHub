@@ -77,12 +77,14 @@ async function handler(ctx) {
 
     const icon = new URL('favicon.ico', rootUrl).href;
 
+    const language = $('html').prop('lang') as Language;
+
     return {
         item: items,
         title: `${$('title').text()} - ${$('meta[name="ColumnName"]').prop('content')}`,
         link: currentUrl,
         description: $('meta[name="ColumnDescription"]').prop('content'),
-        language: $('html').prop('lang') as Language,
+        language,
         image: new URL($('div.logo img').prop('src')!, rootUrl).href,
         icon,
         logo: icon,

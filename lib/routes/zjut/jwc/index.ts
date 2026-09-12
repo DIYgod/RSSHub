@@ -49,7 +49,7 @@ export const route: Route = {
 | 办事指南      | 1839 |`,
 };
 
-async function handler(ctx) {
+async function handler(ctx): Promise<Data> {
     const type = Number.parseInt(ctx.req.param('type'));
     const response = await ofetch(rootUrl + type + '/list.htm');
     const $ = load(response);
@@ -114,5 +114,5 @@ async function handler(ctx) {
         title: $('head > title').text() + ' - 浙江工业大学教务处',
         link: rootUrl + type + '/list.htm',
         item: items,
-    } as Data;
+    };
 }

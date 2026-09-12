@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 
 import InvalidParameterError from '@/errors/types/invalid-parameter';
-import type { Data, Route } from '@/types';
+import type { Data, Language, Route } from '@/types';
 import { ViewType } from '@/types';
 import got from '@/utils/got';
 import { isValidHost } from '@/utils/valid-host';
@@ -53,7 +53,7 @@ async function handler(ctx): Promise<Data> {
         description: $('section.aboutMeSection').text().trim(),
         link,
         image: $('#getAvatar').attr('src'),
-        language: $('html').attr('lang') as any,
+        language: $('html').attr('lang') as Language | undefined,
         item: items,
     };
 }

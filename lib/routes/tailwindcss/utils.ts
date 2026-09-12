@@ -36,25 +36,21 @@ export const fetchFeed = async (limit: number): Promise<Data> => {
                     throw new Error(`No article URL found for article with id ${id}`);
                 }
 
-                return cache.tryGet(
-                    `tailwindcss:${id}`,
-                    async () =>
-                        ({
-                            title,
-                            link: url,
-                            image: imageUrl,
-                            description: await fetchArticleContent(url),
-                            author: $(entry)
-                                .find('author')
-                                .toArray()
-                                .map((el) => ({
-                                    name: $(el).find('name').text(),
-                                    url: $(el).find('url').text(),
-                                })),
-                            pubDate: $(entry).find('updated').text(),
-                            guid: $(entry).find('id').text(),
-                        }) as DataItem
-                );
+                return cache.tryGet(`tailwindcss:${id}`, async (): Promise<DataItem> => ({
+                    title,
+                    link: url,
+                    image: imageUrl,
+                    description: await fetchArticleContent(url),
+                    author: $(entry)
+                        .find('author')
+                        .toArray()
+                        .map((el) => ({
+                            name: $(el).find('name').text(),
+                            url: $(el).find('url').text(),
+                        })),
+                    pubDate: $(entry).find('updated').text(),
+                    guid: $(entry).find('id').text(),
+                }));
             })
     );
 
@@ -66,5 +62,5 @@ export const fetchFeed = async (limit: number): Promise<Data> => {
         icon: $('feed > icon').text(),
         description: $('feed > subtitle').text(),
         link: $('feed > link[rel="alternate"]').attr('href'),
-    } as Data;
+    };
 };

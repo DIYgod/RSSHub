@@ -176,8 +176,8 @@ const render = (node) => {
 
                     innerHTML += renderImage({
                         url,
-                        alt: Object.values(img.title)[0] as string,
-                        caption: img.description ? (Object.values(img.description)[0] as string) : '',
+                        alt: Object.values<string>(img.title)[0],
+                        caption: img.description ? Object.values<string>(img.description)[0] : '',
                     });
                 }
             }

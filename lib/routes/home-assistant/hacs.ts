@@ -10,29 +10,31 @@ export const route: Route = {
     handler,
 };
 
+interface HacsRepository {
+    manifest: {
+        name: string;
+    };
+    manifest_name: string;
+    description: string;
+    full_name: string;
+    domain: string;
+    stargazers_count: number;
+    topics?: string[];
+    last_updated: string;
+    last_fetched: number;
+}
+
 async function handler() {
     const sections = ['appdaemon', 'critical', 'integration', 'theme', 'python_script', 'plugin'];
     const dataList = (
         await Promise.all(
             sections.map(async (section) => {
                 const url = `https://data-v2.hacs.xyz/${section}/data.json`;
-                const response = await ofetch(url);
+                const response = await ofetch<Record<string, HacsRepository>>(url);
                 return Object.values(response);
             })
         )
-    ).flat() as Array<{
-        manifest: {
-            name: string;
-        };
-        manifest_name: string;
-        description: string;
-        full_name: string;
-        domain: string;
-        stargazers_count: number;
-        topics?: string[];
-        last_updated: string;
-        last_fetched: number;
-    }>;
+    ).flat();
 
     return {
         title: 'HACS Repositories',

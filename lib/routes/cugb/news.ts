@@ -8,9 +8,9 @@ import timezone from '@/utils/timezone';
 
 const rootUrl = 'https://www.cugb.edu.cn';
 
-const channels: Record<string, string> = {
+const channels = {
     bdxw: '北地新闻',
-};
+} satisfies Record<string, string>;
 
 export const route: Route = {
     path: '/news/:channel?',
@@ -56,22 +56,22 @@ async function handler(ctx): Promise<Data> {
                 .map((s) => s.trim());
             return {
                 title: item.find('h3.tit').text(),
-                link: new URL(item.attr('href') as string, rootUrl).href,
+                link: new URL(item.attr('href')!, rootUrl).href,
                 pubDate: timezone(parseDate(date), 8),
                 author,
             };
         });
 
-    const items = (await Promise.all(
+    const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link as string, async () => {
-                const { data: detailResponse } = await got(item.link as string);
+            cache.tryGet(item.link!, async () => {
+                const { data: detailResponse } = await got(item.link!);
                 const content = load(detailResponse);
                 item.description = content('div.postbody').html();
                 return item;
             })
         )
-    )) as DataItem[];
+    );
 
     return {
         title: `中国地质大学（北京） - ${channels[channel] ?? channel}`,

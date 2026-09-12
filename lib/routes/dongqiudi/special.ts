@@ -1,9 +1,11 @@
+import { FetchError } from 'ofetch';
+
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
-import utils from './utils';
+import { processFeedType2 } from './utils';
 
 export const route: Route = {
     path: '/special/:id',
@@ -40,9 +42,9 @@ async function handler(ctx) {
             cache.tryGet(item.link, async () => {
                 try {
                     const { data: response } = await got(item.link);
-                    utils.ProcessFeedType2(item, response);
+                    processFeedType2(item, response);
                 } catch (error) {
-                    if (!(error instanceof Error) || !['HTTPError', 'RequestError', 'FetchError'].includes(error.name)) {
+                    if (!(error instanceof FetchError) || error.statusCode !== 404) {
                         throw error;
                     }
                     // Keep the list item when the article page is gone or temporarily unavailable.

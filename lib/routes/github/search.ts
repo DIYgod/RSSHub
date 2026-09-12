@@ -44,7 +44,7 @@ async function handler(ctx) {
         },
     });
 
-    const out = response.payload.results.map((item) => {
+    const out = response.payload.results.map((item): DataItem => {
         const {
             repo: { repository },
             hl_trunc_description,
@@ -55,7 +55,7 @@ async function handler(ctx) {
             author: repository.owner_login,
             link: host.concat(`/${repository.owner_login}/${repository.name}`),
             description: hl_trunc_description,
-        } as DataItem;
+        };
     });
 
     return {

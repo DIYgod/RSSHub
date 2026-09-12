@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 import type { Context } from 'hono';
 
-import type { Data, DataItem, Route } from '@/types';
+import type { Data, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -46,8 +46,8 @@ async function handler(ctx: Context): Promise<Data> {
     const { title, catchphrase } = __APOLLO_STATE__[`Work:${id}`];
 
     const values = Object.values<{ __typename: string }>(__APOLLO_STATE__);
-    const episodes = values.filter((value) => value.__typename === 'Episode') as NextDataEpisode[];
-    const items = (await Promise.all(
+    const episodes = values.filter((value): value is NextDataEpisode => value.__typename === 'Episode');
+    const items = await Promise.all(
         episodes
             .toSorted((a, b) => b.publishedAt.localeCompare(a.publishedAt))
             .slice(0, limit)
@@ -66,7 +66,7 @@ async function handler(ctx: Context): Promise<Data> {
                     };
                 });
             })
-    )) as DataItem[];
+    );
 
     return {
         title,

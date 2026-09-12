@@ -26,6 +26,10 @@ const categories = {
     },
 } as const;
 
+const isCategory = (key: string): key is keyof typeof categories => Object.hasOwn(categories, key);
+
+type PagePropsData = Partial<Record<(typeof categories)[keyof typeof categories]['data'], Array<HomePostItem | NewsDataItem>>>;
+
 export const route: Route = {
     path: ['/dept/:category?', '/:category?'],
     name: '手机虎扑网',
@@ -53,11 +57,10 @@ export const route: Route = {
         },
     ],
     handler: async (ctx): Promise<Data> => {
-        const c = ctx.req.param('category') || '';
-        if (!Object.hasOwn(categories, c)) {
+        const category = ctx.req.param('category') || '';
+        if (!isCategory(category)) {
             throw new Error('Invalid category. Valid options are: ' + Object.keys(categories).filter(Boolean).join(', '));
         }
-        const category = c as keyof typeof categories;
 
         const rootUrl = 'https://m.hupu.com';
         const currentUrl = `${rootUrl}/${category}`;
@@ -75,10 +78,9 @@ export const route: Route = {
             throw new Error(`Expected '${dataKey}' property not found in pageProps for category: ${category || 'home'}`);
         }
 
-        const rawDataArray: Array<HomePostItem | NewsDataItem> = (() => {
-            const data = (pageProps as any)[dataKey];
-            return Array.isArray(data) ? data : [];
-        })();
+        const pagePropsData: PagePropsData = pageProps;
+        const rawData = pagePropsData[dataKey];
+        const rawDataArray = Array.isArray(rawData) ? rawData : [];
 
         let items: DataItem[] = rawDataArray.map((item) =>
             isHomePostItem(item)
@@ -102,6 +104,6 @@ export const route: Route = {
             title: `虎扑 - ${categories[category].title}`,
             link: currentUrl,
             item: items,
-        } as Data;
+        };
     },
 };

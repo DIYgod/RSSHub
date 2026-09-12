@@ -1,5 +1,4 @@
 import type { Context } from 'hono';
-import type { FetchOptions } from 'ofetch';
 
 import type { Data, DataItem, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
@@ -38,7 +37,7 @@ const commonHeaders = {
 async function handler(ctx: Context): Promise<Data> {
     const { id } = ctx.req.param();
 
-    const { result: browser } = await ofetch('https://platform-api.tver.jp/v2/api/platform_users/browser/create', {
+    const browserRequest = {
         method: 'POST',
         body: 'device_type=pc',
         headers: {
@@ -48,11 +47,13 @@ async function handler(ctx: Context): Promise<Data> {
         referer: 'https://s.tver.jp/',
         credentials: 'omit',
         mode: 'cors',
-    } as FetchOptions<'json'>);
+    } as const;
+
+    const { result: browser } = await ofetch('https://platform-api.tver.jp/v2/api/platform_users/browser/create', browserRequest);
 
     const { platform_uid, platform_token } = browser;
 
-    const { title, description, broadcastProvider } = await ofetch(`https://statics.tver.jp/content/series/${id}.json`, {
+    const seriesRequest = {
         method: 'GET',
         headers: {
             ...commonHeaders,
@@ -60,9 +61,11 @@ async function handler(ctx: Context): Promise<Data> {
         referer: 'https://tver.jp/',
         credentials: 'omit',
         mode: 'cors',
-    } as FetchOptions<'json'>);
+    } as const;
 
-    const { result } = await ofetch(`https://platform-api.tver.jp/service/api/v1/callSeriesEpisodes/${id}?platform_uid=${platform_uid}&platform_token=${platform_token}`, {
+    const { title, description, broadcastProvider } = await ofetch(`https://statics.tver.jp/content/series/${id}.json`, seriesRequest);
+
+    const episodesRequest = {
         method: 'GET',
         headers: {
             ...commonHeaders,
@@ -71,7 +74,9 @@ async function handler(ctx: Context): Promise<Data> {
         referer: 'https://tver.jp/',
         credentials: 'omit',
         mode: 'cors',
-    } as FetchOptions<'json'>);
+    } as const;
+
+    const { result } = await ofetch(`https://platform-api.tver.jp/service/api/v1/callSeriesEpisodes/${id}?platform_uid=${platform_uid}&platform_token=${platform_token}`, episodesRequest);
 
     const items: DataItem[] = (result.contents?.[0]?.contents ?? [])
         .filter((i) => i.type === 'episode')

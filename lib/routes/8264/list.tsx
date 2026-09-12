@@ -160,7 +160,7 @@ async function handler(ctx) {
         title: `${$('span.country, h2').text()} - ${description.split(',').pop()}`,
         link: currentUrl,
         description,
-        language: 'zh-CN' as Language,
+        language: 'zh-CN' as const satisfies Language,
         icon,
         logo: icon,
         subtitle: $('meta[name="keywords"]').prop('content').trim(),

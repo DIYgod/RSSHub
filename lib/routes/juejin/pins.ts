@@ -37,15 +37,9 @@ async function handler(ctx) {
         '6824710203112423437': '树洞一下',
     };
 
-    let url: string;
-    let json: Record<string, unknown>;
-    if (/^\d+$/.test(type)) {
-        url = 'https://api.juejin.cn/recommend_api/v1/short_msg/topic';
-        json = { id_type: 4, sort_type: 500, cursor: '0', limit: 20, topic_id: type };
-    } else {
-        url = `https://api.juejin.cn/recommend_api/v1/short_msg/${type}`;
-        json = { id_type: 4, sort_type: 200, cursor: '0', limit: 20 };
-    }
+    const isTopic = /^\d+$/.test(type);
+    const url = isTopic ? 'https://api.juejin.cn/recommend_api/v1/short_msg/topic' : `https://api.juejin.cn/recommend_api/v1/short_msg/${type}`;
+    const json = isTopic ? { id_type: 4, sort_type: 500, cursor: '0', limit: 20, topic_id: type } : { id_type: 4, sort_type: 200, cursor: '0', limit: 20 };
 
     const response = await ofetch(url, {
         method: 'POST',

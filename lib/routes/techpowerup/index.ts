@@ -21,6 +21,8 @@ export const route: Route = {
     url: 'www.techpowerup.com/',
 };
 
+const language: Language = 'en';
+
 async function handler() {
     const response = await ofetch(baseUrl, {
         headers,
@@ -80,7 +82,7 @@ async function handler() {
     return {
         title: 'TechPowerUp',
         link: baseUrl,
-        language: 'en' as Language,
+        language,
         image: 'https://tpucdn.com/apple-touch-icon-v1684568903519.png',
         item: items,
     };

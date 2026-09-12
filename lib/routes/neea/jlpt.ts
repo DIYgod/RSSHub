@@ -17,7 +17,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
     const response = await ofetch(targetUrl);
     const $: CheerioAPI = load(response);
-    const language = $('html').attr('lang') ?? 'zh-CN';
+    const language = ($('html').attr('lang') ?? 'zh-CN') as Language;
 
     let items: DataItem[] = $('div.indexcontent a')
         .slice(0, limit)
@@ -35,7 +35,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 pubDate: pubDateStr ? parseDate(pubDateStr) : undefined,
                 link: linkUrl ? new URL(linkUrl, baseUrl).href : undefined,
                 updated: upDatedStr ? parseDate(upDatedStr) : undefined,
-                language: language as Language,
+                language,
             };
 
             return processedItem;
@@ -70,6 +70,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
     ).filter((_): _ is DataItem => true);
 
     const title: string = $('title').text();
+    const imageUrl: string | undefined = $('div.header img').attr('arc');
 
     return {
         title: `${title.split(/-/).pop()} - ${$('div.indexcontent h1').text()}`,
@@ -77,9 +78,9 @@ export const handler = async (ctx: Context): Promise<Data> => {
         link: targetUrl,
         item: items,
         allowEmpty: true,
-        image: $('div.header img').attr('arc') ? new URL($('div.header img').attr('arc') as string, baseUrl).href : undefined,
+        image: imageUrl ? new URL(imageUrl, baseUrl).href : undefined,
         author: title.split(/-/, 1)[0],
-        language: language as Language,
+        language,
         id: targetUrl,
     };
 };

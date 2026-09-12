@@ -91,7 +91,8 @@ async function handler(ctx) {
             const version = href.replace('/', '');
             const versionUrl = `https://central.sonatype.com/artifact/${group}/${artifact}/${version}`;
 
-            const rawText = element.nextSibling ? (element.nextSibling as any).nodeValue : '';
+            const sibling = element.nextSibling;
+            const rawText = sibling?.type === 'text' ? sibling.data : '';
 
             // Date format: 2024-09-22 04:19
             const match = rawText.match(DATE_REGEX);

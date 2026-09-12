@@ -37,17 +37,14 @@ async function handler(ctx) {
     const tagSlug = ctx.req.param('tagSlug');
     const limit = 30;
 
-    const query: Record<string, unknown> = {
+    const query = {
         active: true,
         closed: false,
         limit,
         order: 'volume',
         ascending: false,
+        tag_slug: tagSlug || undefined,
     };
-
-    if (tagSlug) {
-        query.tag_slug = tagSlug;
-    }
 
     const response = await ofetch<EventsPagination>(`${GAMMA_API}/events/pagination`, { query });
 
@@ -58,7 +55,7 @@ async function handler(ctx) {
         description: formatEventDescription(event),
         link: `https://polymarket.com/event/${event.slug}`,
         pubDate: event.startDate ? parseDate(event.startDate) : undefined,
-        category: event.tags?.map((t) => t.label).filter(Boolean) as string[],
+        category: event.tags?.map((t) => t.label).filter((label): label is string => Boolean(label)),
     }));
 
     return {

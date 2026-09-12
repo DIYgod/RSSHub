@@ -41,12 +41,15 @@ async function handler(ctx) {
     const $ = load(html);
     const items = $('div.l-box.l-box--no-border.card__text')
         .toArray()
-        .map((article) => ({
-            title: $(article).find('.card__text a').text().trim(),
-            link: $(article).find('.card__text a').attr('href'),
-            description: $(article).find('p').last().text().trim(),
-            pubDate: timezone($(article).find('.card__date time').attr('datetime')),
-        }));
+        .map((article) => {
+            const datetime = $(article).find('.card__date time').attr('datetime');
+            return {
+                title: $(article).find('.card__text a').text().trim(),
+                link: $(article).find('.card__text a').attr('href'),
+                description: $(article).find('p').last().text().trim(),
+                pubDate: datetime ? timezone(datetime) : undefined,
+            };
+        });
     await context.close();
     return {
         title: `parliament - lordslibrary - ${topic}`,

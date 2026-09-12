@@ -29,7 +29,7 @@ export const route: Route = {
     url: 'dev.to/top',
 };
 
-async function handler(ctx) {
+async function handler(ctx): Promise<Data> {
     const period = ctx.req.param('period');
     const baseUrl = 'https://dev.to';
     const link = `${baseUrl}/top/${period}`;
@@ -66,7 +66,7 @@ async function handler(ctx) {
     const items = await Promise.all(
         data.result.map((item) => {
             const articleUrl = `${baseUrl}${item.path}`;
-            return cache.tryGet(articleUrl, async () => {
+            return cache.tryGet(articleUrl, async (): Promise<DataItem> => {
                 const articleResponse = await got(articleUrl);
                 const $ = load(articleResponse.data);
 
@@ -90,7 +90,7 @@ async function handler(ctx) {
                     description: content,
                     category: item.tag_list,
                     image: coverImage,
-                } as DataItem;
+                };
             });
         })
     );
@@ -102,5 +102,5 @@ async function handler(ctx) {
         language: 'en-us',
         item: items,
         icon: 'https://media2.dev.to/dynamic/image/width=32,height=,fit=scale-down,gravity=auto,format=auto/https%3A%2F%2Fdev-to-uploads.s3.amazonaws.com%2Fuploads%2Farticles%2F8j7kvp660rqzt99zui8e.png',
-    } as Data;
+    };
 }

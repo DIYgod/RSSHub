@@ -35,16 +35,13 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const column = ctx.req.param('column') ?? 'home';
+    const column: string = ctx.req.param('column') ?? 'home';
 
     const columns = await cache.tryGet('https://www.tkww.hk/columns.json', async () => await got('https://www.tkww.hk/columns.json'), config.cache.routeExpire, false);
 
     let metadata;
     let scope = columns.data.data;
     for (const segment of column.split('/')) {
-        if (typeof segment !== 'string') {
-            continue;
-        }
         metadata = scope.find((item) => item.name === segment || item.dirname === segment);
         scope = metadata?.children ?? [];
     }

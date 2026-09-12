@@ -76,7 +76,6 @@ async function handler(ctx) {
                           description: firstA.html(),
                       }
                     : await cache.tryGet(itemUrl, async () => {
-                          const res: { description?: DataItem['description'] } = {};
                           const response = await got({
                               method: 'get',
                               url: itemUrl,
@@ -86,15 +85,17 @@ async function handler(ctx) {
                           });
                           const data = load(response.data);
 
+                          let description: DataItem['description'];
+
                           if (itemUrl.includes('www.gov.cn')) {
-                              res.description = data('#UCAP-CONTENT').html();
+                              description = data('#UCAP-CONTENT').html();
                           } else if (itemUrl.includes('srcsite')) {
-                              res.description = data('div#content_body_xxgk').html();
+                              description = data('div#content_body_xxgk').html();
                           } else if (itemUrl.includes('jyb_')) {
-                              res.description = data('div.moe-detail-box').html() || data('div#moe-detail-box').html();
+                              description = data('div.moe-detail-box').html() || data('div#moe-detail-box').html();
                           }
 
-                          return res;
+                          return { description };
                       });
 
                 return {

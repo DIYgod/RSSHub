@@ -1,5 +1,5 @@
 import bbobHTML from '@bbob/html';
-import { getUniqAttr } from '@bbob/plugin-helper';
+import { getUniqAttr, isStringNode } from '@bbob/plugin-helper';
 import presetHTML5 from '@bbob/preset-html5';
 import type { BBobCoreTagNodeTree, NodeContent, PresetFactory } from '@bbob/types';
 import type { Context } from 'hono';
@@ -168,7 +168,7 @@ async function handler(ctx: Context): Promise<Data> {
 
 const linebreakRenderer = (tree: BBobCoreTagNodeTree) =>
     tree.walk((node) => {
-        if (typeof node === 'string' && node === '\n') {
+        if (node === '\n') {
             return {
                 tag: 'br',
                 content: null,
@@ -179,15 +179,16 @@ const linebreakRenderer = (tree: BBobCoreTagNodeTree) =>
 
 const plainUrlRenderer = (tree: BBobCoreTagNodeTree) =>
     tree.walk((node) => {
-        if (typeof node === 'string' && /https?:\/\/\S+/.test(node)) {
+        const text = isStringNode(node) ? String(node) : null;
+        if (text !== null && /https?:\/\/\S+/.test(text)) {
             let lastIndex = 0;
             let match: RegExpExecArray | null;
             const content: NodeContent[] = [];
 
             const urlRe = /https?:\/\/\S+/g;
-            while ((match = urlRe.exec(node)) !== null) {
+            while ((match = urlRe.exec(text)) !== null) {
                 if (match.index > lastIndex) {
-                    content.push(node.slice(lastIndex, match.index));
+                    content.push(text.slice(lastIndex, match.index));
                 }
                 content.push({
                     tag: 'a',
@@ -202,8 +203,8 @@ const plainUrlRenderer = (tree: BBobCoreTagNodeTree) =>
                 lastIndex = match.index + match[0].length;
             }
 
-            if (lastIndex < node.length) {
-                content.push(node.slice(lastIndex));
+            if (lastIndex < text.length) {
+                content.push(text.slice(lastIndex));
             }
 
             if (content.length === 0) {
@@ -241,7 +242,7 @@ const customPreset: PresetFactory = presetHTML5.extend((tags) => ({
     url: (node) => ({
         tag: 'a',
         attrs: {
-            href: Object.keys(node.attrs as Record<string, string>)[0],
+            href: Object.keys(node.attrs!)[0],
             rel: 'noopener',
             target: '_blank',
         },

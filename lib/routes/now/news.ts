@@ -83,7 +83,7 @@ async function handler(ctx) {
     }
 
     const response = await ofetch(apiUrl);
-    const isApi = typeof response === 'object' && Array.isArray(response);
+    const isApi = Array.isArray(response);
     const $ = load(response);
 
     let list;

@@ -1,5 +1,4 @@
 import { load } from 'cheerio';
-import type { Element } from 'domhandler';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
@@ -43,9 +42,11 @@ async function handler(ctx) {
     const list = $('.column-news-list .cols_list .cols');
     const items = await Promise.all(
         list.map((i, item) => {
-            const [titleLink, time] = item.children as Element[];
-            const itemDate = $(time).text();
-            const { href: path, title: itemTitle } = (titleLink.children[0] as Element).attribs;
+            const $children = $(item).children();
+            const itemDate = $children.eq(1).text();
+            const $titleLink = $children.eq(0).children().first();
+            const path = $titleLink.attr('href')!;
+            const itemTitle = $titleLink.attr('title')!;
 
             const itemUrl = path.startsWith('http') ? path : host + path;
             return cache.tryGet(itemUrl, async () => {

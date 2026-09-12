@@ -147,7 +147,7 @@ function strToBase64URL(s: string): string {
 }
 
 function publicKeyToJWK(publicKey: crypto.KeyObject): any {
-    const jwk = publicKey.export({ format: 'jwk' }) as { x: string; y: string };
+    const jwk = publicKey.export({ format: 'jwk' });
     return {
         crv: 'P-256',
         kty: 'EC',
@@ -164,7 +164,17 @@ function publicKeyToHeader(publicKey: crypto.KeyObject): any {
     };
 }
 
-function derDecode(der: Buffer): { r: Buffer; s: Buffer } {
+interface DerSignature {
+    r: Buffer;
+    s: Buffer;
+}
+
+interface DerLength {
+    length: number;
+    bytesRead: number;
+}
+
+function derDecode(der: Buffer): DerSignature {
     let offset = 0;
 
     if (der[offset++] !== 0x30) {
@@ -199,7 +209,7 @@ function derDecode(der: Buffer): { r: Buffer; s: Buffer } {
     };
 }
 
-function readDerLength(buf: Buffer, offset: number): { length: number; bytesRead: number } {
+function readDerLength(buf: Buffer, offset: number): DerLength {
     const byte = buf[offset];
     if (byte < 0x80) {
         return { length: byte, bytesRead: 1 };
@@ -393,32 +403,30 @@ const fetchItemDetail = (item_id: string, item_type: string, country_code?: stri
 };
 
 const formatItemDetail = (detail: ItemDetail | ShopItemDetail): DataItem => {
-    if ((detail as ShopItemDetail).displayName) {
-        const shopItemDetail = detail as ShopItemDetail;
+    if ('displayName' in detail) {
         return {
-            title: shopItemDetail.displayName,
-            description: renderShopItemDescription(shopItemDetail),
-            pubDate: parseDate(shopItemDetail.createTime),
-            guid: shopItemDetail.name,
-            link: `${rootShopProductURL}${shopItemDetail.name}`,
-            image: shopItemDetail.thumbnail,
+            title: detail.displayName,
+            description: renderShopItemDescription(detail),
+            pubDate: parseDate(detail.createTime),
+            guid: detail.name,
+            link: `${rootShopProductURL}${detail.name}`,
+            image: detail.thumbnail,
             language: 'ja',
-            author: shopItemDetail.productDetail.shop.displayName,
-            updated: parseDate(shopItemDetail.updateTime),
+            author: detail.productDetail.shop.displayName,
+            updated: parseDate(detail.updateTime),
         };
     }
 
-    const itemDetail = detail as ItemDetail;
     return {
-        title: itemDetail.data.name,
-        description: renderItemDescription(itemDetail.data),
-        pubDate: parseDate(itemDetail.data.created * 1000),
-        guid: itemDetail.data.id,
-        link: `${rootProductURL}${itemDetail.data.id}`,
-        image: itemDetail.data.thumbnails[0],
+        title: detail.data.name,
+        description: renderItemDescription(detail.data),
+        pubDate: parseDate(detail.data.created * 1000),
+        guid: detail.data.id,
+        link: `${rootProductURL}${detail.data.id}`,
+        image: detail.data.thumbnails[0],
         language: 'ja',
-        author: itemDetail.data.seller.name,
-        updated: parseDate(itemDetail.data.updated * 1000),
+        author: detail.data.seller.name,
+        updated: parseDate(detail.data.updated * 1000),
     };
 };
 

@@ -45,7 +45,7 @@ async function handler(ctx) {
     const author = $('div.user-main-info > span.txt-info > a.uname').text();
     const authorimg = $('div.user-main-info > .poster > img').attr('data-src');
 
-    let items = await Promise.all(
+    const items: Array<DataItem | null> = await Promise.all(
         list.map((item) => {
             const $ = load(item);
             const link = $('a').attr('href');
@@ -90,13 +90,11 @@ async function handler(ctx) {
         })
     );
 
-    items = items.filter(Boolean);
-
     return {
         title: author + ' - 唱吧',
         link: url,
         description: $('meta[name="description"]').attr('content') || author + ' - 唱吧',
-        item: items as DataItem[],
+        item: items.filter((item) => item !== null),
         image: authorimg,
         itunes_author: author,
         itunes_category: '唱吧',

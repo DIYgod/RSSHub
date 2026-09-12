@@ -20,7 +20,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
     const response = await ofetch(targetUrl);
     const $: CheerioAPI = load(response);
-    const language = $('html').attr('lang') ?? 'en';
+    const language = ($('html').attr('lang') ?? 'en') as Language;
 
     const items: DataItem[] = $('div.paper')
         .slice(0, limit)
@@ -62,7 +62,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 guid,
                 id: guid,
                 updated: upDatedStr ? timezone(parseDate(upDatedStr), 0) : undefined,
-                language: language as Language,
+                language,
             };
 
             const $enclosureEl: Cheerio<Element> = $el.find('a.title-pdf');
@@ -105,7 +105,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
         item: items,
         allowEmpty: true,
         image: $('meta[property="og:image"]').attr('content'),
-        language: language as Language,
+        language,
         feedLink: `${targetUrl}/feed`,
         id: targetUrl,
     };

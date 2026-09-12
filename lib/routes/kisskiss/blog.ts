@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { DataItem, Language, Route } from '@/types';
+import type { Data, DataItem, Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
@@ -32,7 +32,7 @@ export const route: Route = {
     handler,
 };
 
-async function handler(ctx) {
+async function handler(ctx): Promise<Data> {
     const { category } = ctx.req.param();
     const url = category ? `${baseUrl}?category=${category}` : baseUrl;
 
@@ -71,6 +71,6 @@ async function handler(ctx) {
         title: 'KISS ブログ',
         link: url,
         item: items,
-        language: 'ja' as Language,
+        language: 'ja',
     };
 }

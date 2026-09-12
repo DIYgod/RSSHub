@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 
 import InvalidParameterError from '@/errors/types/invalid-parameter';
-import type { Language, Route } from '@/types';
+import type { Route } from '@/types';
 import got from '@/utils/got';
 
 import { ossUrl, ProcessFeed, rootUrl } from './utils';
@@ -65,7 +65,7 @@ async function handler(ctx) {
         title: `爱思想 - ${title}`,
         link: currentUrl,
         description: $('div.thinktank-author-description-box p').text(),
-        language: 'zh-CN' as Language,
+        language: 'zh-CN' as const,
         image: new URL('images/logo_thinktank.jpg', ossUrl).href,
         subtitle: title,
     };

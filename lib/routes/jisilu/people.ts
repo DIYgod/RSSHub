@@ -10,10 +10,10 @@ import ofetch from '@/utils/ofetch';
 
 import { processItems, rootUrl } from './util';
 
-const actions: { [key: string]: string } = {
-    questions: '101',
-    answers: '201',
-};
+const actions = new Map([
+    ['questions', '101'],
+    ['answers', '201'],
+]);
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { id, type = 'questions' } = ctx.req.param();
@@ -35,7 +35,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
         throw new InvalidParameterError('请填入合法的用户 id，参见用户排名 https://www.jisilu.cn/users/');
     }
 
-    const apiUrl: string = new URL(`people/ajax/user_actions/uid-${userId}__actions-${actions[type]}__page-1`, rootUrl).href;
+    const apiUrl: string = new URL(`people/ajax/user_actions/uid-${userId}__actions-${actions.get(type)}__page-1`, rootUrl).href;
 
     const detailResponse = await ofetch(apiUrl);
     const $$: CheerioAPI = load(detailResponse);

@@ -46,5 +46,5 @@ async function handler(ctx) {
     return {
         ...res,
         item: items,
-    } as unknown as Data;
+    } as Data;
 }

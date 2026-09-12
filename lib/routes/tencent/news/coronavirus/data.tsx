@@ -19,6 +19,13 @@ export const route: Route = {
     handler,
 };
 
+interface AreaNode {
+    name: string;
+    today?: { confirm?: number };
+    total?: { nowConfirm?: number; confirm?: number; dead?: number; mtime?: string };
+    children?: AreaNode[];
+}
+
 async function handler(ctx) {
     const province = ctx.req.param('province') || '';
     const city = ctx.req.param('city') || '';
@@ -31,7 +38,7 @@ async function handler(ctx) {
     const nationalData = areaTree?.[0];
     const provinceList = nationalData?.children;
 
-    let coronavirusData: Record<string, any>;
+    let coronavirusData: AreaNode | undefined;
     let placeName: string;
 
     if (!province || province === '中国' || province === '全国') {

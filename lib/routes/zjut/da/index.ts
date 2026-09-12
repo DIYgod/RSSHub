@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 import iconv from 'iconv-lite';
 
-import type { DataItem, Route } from '@/types';
+import type { Data, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -40,7 +40,7 @@ export const route: Route = {
 | 1        | 2        | 3        | 4        | 5          | 6        |`,
 };
 
-async function handler(ctx) {
+async function handler(ctx): Promise<Data> {
     const type = Number.parseInt(ctx.req.param('type'));
     const id = map.get(type)?.id;
     const listResponse = await got(`${host}${id}`, {
@@ -88,6 +88,6 @@ async function handler(ctx) {
     return {
         title: map.get(type)!.title,
         link: `${host}${id}`,
-        item: items as DataItem[],
+        item: items,
     };
 }

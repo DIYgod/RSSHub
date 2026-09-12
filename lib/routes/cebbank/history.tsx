@@ -1,4 +1,4 @@
-import { type CheerioOptions, load } from 'cheerio';
+import { load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
 
 import type { DataItem, Route } from '@/types';
@@ -49,7 +49,7 @@ async function handler(ctx) {
             if (i < 2) {
                 return null;
             }
-            const c = load(e, { decodeEntities: false } as CheerioOptions);
+            const c = load(e);
             return {
                 title: c('td:nth-child(1)').text(),
                 description: renderToString(

@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 import type { Text } from 'domhandler';
 
-import type { Language, Route } from '@/types';
+import type { Data, Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
@@ -30,7 +30,7 @@ export const route: Route = {
     url: 'bmkg.go.id/',
 };
 
-async function handler() {
+async function handler(): Promise<Data> {
     const url = 'https://www.bmkg.go.id/gempabumi-terkini.html';
     const response = await got(url);
     const $ = load(response.data);
@@ -38,7 +38,7 @@ async function handler() {
         .toArray()
         .map((item) => {
             const $item = $(item);
-            const td = $item.find('td') as unknown as Array<{ children: Text[] }>;
+            const td = $item.find('td').toArray() as Array<{ children: Text[] }>;
             return {
                 title: `${td[2].children[0].data}|${td[3].children[0].data}|${td[4].children[0].data}|${td[5].children[0].data}|${td[6].children[0].data}`,
                 link: url,
@@ -51,6 +51,6 @@ async function handler() {
         link: url,
         description: '印尼气象气候和地球物理局 最近的地震(M ≥ 5.0) | BMKG earthquake',
         item: items,
-        language: 'in' as Language,
+        language: 'in',
     };
 }

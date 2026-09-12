@@ -38,8 +38,9 @@ const twitterGot = async (url, params) => {
         },
     };
 
+    const { Authorization } = oauth.toHeader(oauth.authorize(requestData, token));
     const response = await ofetch.raw(requestData.url, {
-        headers: oauth.toHeader(oauth.authorize(requestData, token)) as unknown as Record<string, string>,
+        headers: { Authorization },
     });
     if (response.status === 401) {
         cache.globalCache.set(token.cacheKey, '');

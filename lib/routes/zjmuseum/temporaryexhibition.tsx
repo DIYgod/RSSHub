@@ -37,11 +37,11 @@ export const route = {
 
         const museumName = namespace.zh?.name || namespace.name;
 
-        const titleTag = typeParam ? apiConfig[typeParam as keyof typeof apiConfig]?.name : '全部展览';
+        const titleTag = typeParam ? apiConfig[typeParam]?.name : '全部展览';
 
         const responses = await Promise.all(
             fetchTypes.map(async (t) => {
-                const config = apiConfig[t as keyof typeof apiConfig];
+                const config = apiConfig[t];
 
                 const response = await got({
                     method: 'post',

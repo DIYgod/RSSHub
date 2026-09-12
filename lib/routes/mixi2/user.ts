@@ -7,7 +7,7 @@ import { parseDate } from '@/utils/parse-date';
 
 import { CONFIG_OPTIONS, getClient, parsePost, postFilter } from './utils';
 
-const handler = async (ctx: Context) => {
+const handler = async (ctx: Context): Promise<Data> => {
     const limit = Number(ctx.req.query('limit') ?? '20');
     const name = ctx.req.param('name');
     const mediaOnly = ctx.req.param('media') === 'media';
@@ -42,7 +42,7 @@ const handler = async (ctx: Context) => {
                 author: persona?.name,
                 link: `https://mixi.social/@${persona?.name}/posts/${post.postId}`,
             })) ?? [],
-    } as Data;
+    };
 };
 
 export const route: Route = {

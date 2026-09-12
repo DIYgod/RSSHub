@@ -39,5 +39,5 @@ async function handler() {
         description: 'Discover short code snippets for all your development needs.',
         link: rootUrl,
         item: items,
-    } as Data;
+    } satisfies Data;
 }

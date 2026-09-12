@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import { FetchError } from 'ofetch';
 
 import type { DataItem, Route } from '@/types';
 import logger from '@/utils/logger';
@@ -80,7 +81,7 @@ async function fetchAndParsePage(wechatId: string): Promise<SogouItemInternal[]>
                     }
                 }
 
-                if (typeof location === 'string' && location) {
+                if (location) {
                     if (location.startsWith('http://mp.weixin.qq.com/') || location.startsWith('https://mp.weixin.qq.com/')) {
                         realLink = location;
                     } else {
@@ -109,7 +110,7 @@ async function fetchAndParsePage(wechatId: string): Promise<SogouItemInternal[]>
             }
         } catch (error: unknown) {
             const errorMsg = error instanceof Error ? error.message : String(error);
-            if (typeof error === 'object' && error !== null && 'response' in error && typeof error.response === 'object' && error.response !== null && 'status' in error.response) {
+            if (error instanceof FetchError && error.response) {
                 logger.debug(`Redirect request failed for "${title}" (wechatId: ${wechatId}) with status ${error.response.status}: ${errorMsg}`);
             } else {
                 logger.debug(`Redirect request failed for "${title}" (wechatId: ${wechatId}): ${errorMsg}`);
@@ -129,7 +130,7 @@ async function fetchAndParsePage(wechatId: string): Promise<SogouItemInternal[]>
             _internal: {
                 isWeChatLink,
             },
-        } as SogouItemInternal;
+        };
     });
 
     return (await Promise.all(pageItemsPromises)).filter((item): item is SogouItemInternal => item !== null);
@@ -161,7 +162,7 @@ async function handler(ctx) {
     const firstPageFirstItem = allItems[0];
     const accountTitle = firstPageFirstItem?.author || wechatId;
 
-    const finalItemsPromises = allItems.map(async (item: SogouItemInternal): Promise<DataItem | null> => {
+    const finalItemsPromises = allItems.map(async (item: SogouItemInternal): Promise<DataItem> => {
         let resultItem: DataItem | SogouItemInternal = item;
         if (item._internal.isWeChatLink) {
             try {
@@ -171,23 +172,19 @@ async function handler(ctx) {
             }
         }
 
-        if (resultItem && typeof resultItem === 'object') {
-            const finalItem: DataItem = {
-                title: resultItem.title,
-                link: resultItem.link,
-                description: resultItem.description,
-                author: resultItem.author,
-                pubDate: resultItem.pubDate,
-                guid: resultItem.guid,
-                ...(resultItem.content && { content: resultItem.content }),
-            };
-            return finalItem;
-        }
-        logger.debug(`Unexpected null or non-object item during final processing for link: ${item?.link}`);
-        return null;
+        const finalItem: DataItem = {
+            title: resultItem.title,
+            link: resultItem.link,
+            description: resultItem.description,
+            author: resultItem.author,
+            pubDate: resultItem.pubDate,
+            guid: resultItem.guid,
+            ...(resultItem.content && { content: resultItem.content }),
+        };
+        return finalItem;
     });
 
-    const finalItems: DataItem[] = (await Promise.all(finalItemsPromises)).filter((item): item is DataItem => item !== null);
+    const finalItems = await Promise.all(finalItemsPromises);
 
     return {
         title: `${accountTitle} 的微信公众号`,

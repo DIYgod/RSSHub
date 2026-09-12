@@ -9,6 +9,12 @@ import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import playwright, { getPlaywrightPage } from '@/utils/playwright';
 
+declare global {
+    interface Window {
+        __INITIAL_SSR_STATE__: { Main: any };
+    }
+}
+
 // Common headers for requests
 const getHeaders = (cookie?: string) => ({
     Accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
@@ -148,7 +154,7 @@ const getBoard = (url, cache) =>
                 logger.http(`Requesting ${url}`);
                 await page.goto(url);
                 await page.waitForSelector('.pc-container');
-                const initialSsrState = await page.evaluate(() => (window as any).__INITIAL_SSR_STATE__);
+                const initialSsrState = await page.evaluate(() => window.__INITIAL_SSR_STATE__);
                 return initialSsrState.Main;
             } finally {
                 await context.close();
@@ -205,7 +211,7 @@ async function renderNotesFulltext(notes, urlPrex, displayLivePhoto) {
 }
 
 async function getFullNote(link, displayLivePhoto) {
-    const data = (await cache.tryGet(link, async () => {
+    const data = await cache.tryGet(link, async () => {
         const res = await fetchWithProxy(link, config.xiaohongshu.cookie);
         const $ = load(res);
         const script = extractInitialState($);
@@ -286,7 +292,7 @@ async function getFullNote(link, displayLivePhoto) {
             pubDate,
             updated,
         };
-    })) as { title: string; description: string; pubDate: Date; updated: Date };
+    });
     return data;
 }
 
@@ -294,16 +300,29 @@ async function getUserWithCookie(url: string) {
     const cookie = config.xiaohongshu.cookie;
     const res = await fetchWithProxy(url, cookie);
     const $ = load(res);
-    const paths = $('#userPostedFeeds > section > div > a.cover.ld.mask').map((i, item) => item.attributes[3].value);
     const script = extractInitialState($);
     const state = JSON.parse(script);
-    let index = 0;
-    for (const item of state.user.notes.flat()) {
-        const path = paths[index];
-        if (path && path.includes('?')) {
-            item.id += path?.slice(path.indexOf('?'));
+
+    const tokenizedPaths = new Map<string, string>();
+
+    $('#userPostedFeeds a[href*="xsec_token"]').each((_, item) => {
+        const href = $(item).attr('href');
+        if (!href) {
+            return;
         }
-        index += 1;
+
+        const match = href.match(/\/([0-9a-f]{24})(?:\?|$)/i);
+        if (match && href.includes('?')) {
+            tokenizedPaths.set(match[1], href);
+        }
+    });
+
+    for (const item of state.user.notes.flat()) {
+        const path = tokenizedPaths.get(item.id);
+
+        if (path) {
+            item.id += path.slice(path.indexOf('?'));
+        }
     }
     return state.user;
 }
@@ -311,8 +330,11 @@ async function getUserWithCookie(url: string) {
 // Add helper function to extract initial state
 function extractInitialState($: CheerioAPI) {
     let script = $('script:contains("window.__INITIAL_STATE__=")').text();
+
     script = script.slice(script.indexOf('window.__INITIAL_STATE__=') + 'window.__INITIAL_STATE__='.length);
-    script = script.replaceAll('undefined', 'null');
+
+    script = script.replaceAll('undefined', 'null').replaceAll(/new Map\(\s*\[\s*\]\s*\)/g, 'null');
+
     return script;
 }
 

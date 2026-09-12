@@ -136,13 +136,14 @@ async function handler(ctx) {
     const description = $('meta[name="description"]').prop('content');
     const author = description.split(/,/, 1)[0];
     const icon = $('link[rel="shortcut icon"]').prop('href');
+    const language = $('html').prop('lang') as Language;
 
     return {
         item: items,
         title: $('title').text(),
         link: baseUrl,
         description,
-        language: $('html').prop('lang') as Language,
+        language,
         image: $('div.logo a img').prop('src'),
         icon,
         logo: icon,

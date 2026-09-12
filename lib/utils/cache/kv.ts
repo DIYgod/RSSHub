@@ -5,6 +5,7 @@ import type { KVNamespace } from '@cloudflare/workers-types';
 import { config } from '@/config';
 
 import type CacheModule from './base';
+import { stringify } from './base';
 
 let kvNamespace: KVNamespace | null = null;
 
@@ -51,18 +52,13 @@ export default {
         }
         return false;
     },
-    set: async (key: string, value?: string | Record<string, any>, maxAge = config.cache.contentExpire) => {
+    set: async <T>(key: string, value?: string | T, maxAge = config.cache.contentExpire) => {
         if (!status.available || !kvNamespace) {
             return;
         }
-        if (!value || value === 'undefined') {
-            value = '';
-        }
-        if (typeof value === 'object') {
-            value = JSON.stringify(value);
-        }
+        const stored = stringify(value);
         if (key) {
-            const promises: Array<Promise<void>> = [kvNamespace.put(key, value, { expirationTtl: maxAge })];
+            const promises: Array<Promise<void>> = [kvNamespace.put(key, stored, { expirationTtl: maxAge })];
 
             if (maxAge !== config.cache.contentExpire) {
                 // Store the cache ttl if it is not the default value
@@ -74,4 +70,4 @@ export default {
     },
     clients: {},
     status,
-} as CacheModule;
+} satisfies CacheModule;

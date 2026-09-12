@@ -1,20 +1,22 @@
 import { getCurrentCell, setCurrentCell } from 'node-network-devtools';
-import undici from 'undici';
+import undici, { ProxyAgent, Request } from 'undici';
 import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest';
 
-import { useCustomHeader } from './fetch';
+import proxy from '@/utils/proxy';
+import type { ProxyState } from '@/utils/proxy/multi-proxy';
 
-const getInitRequest = () =>
-    ({
-        requestHeaders: {} as Record<string, string>,
-        id: '',
-        loadCallFrames: () => {},
-        cookies: '',
-        requestData: '',
-        responseData: '',
-        responseHeaders: {},
-        responseInfo: {},
-    }) satisfies NonNullable<ReturnType<typeof getCurrentCell>>['request'];
+import wrappedFetch, { useCustomHeader } from './fetch';
+
+const getInitRequest = (): NonNullable<ReturnType<typeof getCurrentCell>>['request'] => ({
+    requestHeaders: {},
+    id: '',
+    loadCallFrames: () => {},
+    cookies: '',
+    requestData: '',
+    responseData: '',
+    responseHeaders: {},
+    responseInfo: {},
+});
 
 enum Env {
     dev = 'dev',
@@ -98,7 +100,6 @@ describe('useCustomHeader', () => {
 describe('wrappedFetch', () => {
     test('throws when fetch fails without proxy retry', async () => {
         const fetchSpy = vi.spyOn(undici, 'fetch').mockRejectedValueOnce(new Error('boom'));
-        const { default: wrappedFetch } = await import('./fetch');
 
         await expect(wrappedFetch('http://example.com')).rejects.toThrow('boom');
 
@@ -106,72 +107,62 @@ describe('wrappedFetch', () => {
     });
 });
 
-describe('request-rewriter fetch retry', () => {
-    const buildProxyState = () => [
-        {
-            uri: 'http://proxy1.test',
-            isActive: true,
-            failureCount: 0,
-            urlHandler: new URL('http://proxy1.test'),
-        },
-        {
-            uri: 'http://proxy2.test',
-            isActive: true,
-            failureCount: 0,
-            urlHandler: new URL('http://proxy2.test'),
-        },
-    ];
+const buildProxyState = (): ProxyState[] => [
+    {
+        uri: 'http://proxy1.test',
+        isActive: true,
+        failureCount: 0,
+        urlHandler: new URL('http://proxy1.test'),
+    },
+    {
+        uri: 'http://proxy2.test',
+        isActive: true,
+        failureCount: 0,
+        urlHandler: new URL('http://proxy2.test'),
+    },
+];
 
-    const loadWrappedFetch = async (proxyMock: any) => {
-        vi.resetModules();
-        vi.doMock('@/utils/logger', () => ({
-            default: {
-                debug: vi.fn(),
-                warn: vi.fn(),
-                info: vi.fn(),
-                error: vi.fn(),
-                http: vi.fn(),
-            },
-        }));
-        vi.doMock('@/utils/proxy', () => ({
-            default: proxyMock,
-        }));
-
-        return (await import('@/utils/request-rewriter/fetch')).default;
+const applyProxyState = (proxies: ProxyState[]) => {
+    proxy.proxyObj.strategy = 'on_retry';
+    proxy.proxyObj.url_regex = 'example.com';
+    proxy.proxyUrlHandler = null;
+    proxy.multiProxy = {
+        allProxies: proxies,
+        proxyObj: { url_regex: 'example.com', strategy: 'on_retry' },
+        getNextProxy: () => null,
+        markProxyFailed: () => {},
+        resetProxy: () => {},
     };
+};
+
+describe('request-rewriter fetch retry', () => {
+    const originalStrategy = proxy.proxyObj.strategy;
+    const originalUrlRegex = proxy.proxyObj.url_regex;
+    const originalMultiProxy = proxy.multiProxy;
+    const originalProxyUrlHandler = proxy.proxyUrlHandler;
 
     afterEach(() => {
         vi.restoreAllMocks();
-        vi.resetModules();
-        vi.unmock('@/utils/logger');
-        vi.unmock('@/utils/proxy');
+        proxy.proxyObj.strategy = originalStrategy;
+        proxy.proxyObj.url_regex = originalUrlRegex;
+        proxy.multiProxy = originalMultiProxy;
+        proxy.proxyUrlHandler = originalProxyUrlHandler;
     });
 
     test('retries with the next proxy when prefer-proxy header is set', async () => {
         const proxies = buildProxyState();
-        let index = 0;
-        const proxyMock = {
-            proxyObj: {
-                strategy: 'on_retry',
-                url_regex: 'example.com',
-            },
-            proxyUrlHandler: null,
-            multiProxy: {
-                allProxies: proxies,
-            },
-            getCurrentProxy: vi.fn(() => proxies[index]),
-            markProxyFailed: vi.fn(() => {
-                index = 1;
-            }),
-            getDispatcherForProxy: vi.fn((proxyState) => ({
-                proxy: proxyState.uri,
-            })),
-        };
+        applyProxyState(proxies);
 
-        const wrappedFetch = await loadWrappedFetch(proxyMock);
+        let index = 0;
+        vi.spyOn(proxy, 'getCurrentProxy').mockImplementation(() => proxies[index]);
+        const markProxyFailedSpy = vi.spyOn(proxy, 'markProxyFailed').mockImplementation(() => {
+            index = 1;
+        });
+        const getDispatcherForProxySpy = vi.spyOn(proxy, 'getDispatcherForProxy').mockImplementation((proxyState) => new ProxyAgent({ uri: proxyState.uri }));
+
         const fetchSpy = vi.spyOn(undici, 'fetch');
         fetchSpy.mockRejectedValueOnce(new Error('boom'));
-        fetchSpy.mockResolvedValueOnce(new Response('ok') as unknown as Awaited<ReturnType<typeof undici.fetch>>);
+        fetchSpy.mockResolvedValueOnce(new undici.Response('ok'));
 
         const response = await wrappedFetch('http://example.com/resource', {
             headers: new Headers({
@@ -179,37 +170,29 @@ describe('request-rewriter fetch retry', () => {
             }),
         });
 
-        expect(response).toBeInstanceOf(Response);
+        expect(response).toBeInstanceOf(undici.Response);
         expect(fetchSpy).toHaveBeenCalledTimes(2);
-        expect(proxyMock.markProxyFailed).toHaveBeenCalledWith('http://proxy1.test');
-        expect(proxyMock.getDispatcherForProxy).toHaveBeenCalledWith(proxies[1]);
+        expect(markProxyFailedSpy).toHaveBeenCalledWith('http://proxy1.test');
+        expect(getDispatcherForProxySpy).toHaveBeenCalledWith(proxies[1]);
 
-        const requestArg = fetchSpy.mock.calls[0][0] as unknown as Request;
+        const requestArg = fetchSpy.mock.calls[0][0];
+        if (!(requestArg instanceof Request)) {
+            throw new TypeError('wrappedFetch must pass a Request to undici.fetch');
+        }
         expect(requestArg.headers.get('x-prefer-proxy')).toBeNull();
     });
 
     test('drops dispatcher when no next proxy is available', async () => {
         const proxies = buildProxyState();
-        const proxyMock = {
-            proxyObj: {
-                strategy: 'on_retry',
-                url_regex: 'example.com',
-            },
-            proxyUrlHandler: null,
-            multiProxy: {
-                allProxies: proxies,
-            },
-            getCurrentProxy: vi.fn(() => proxies[0]),
-            markProxyFailed: vi.fn(),
-            getDispatcherForProxy: vi.fn((proxyState) => ({
-                proxy: proxyState.uri,
-            })),
-        };
+        applyProxyState(proxies);
 
-        const wrappedFetch = await loadWrappedFetch(proxyMock);
+        vi.spyOn(proxy, 'getCurrentProxy').mockImplementation(() => proxies[0]);
+        vi.spyOn(proxy, 'markProxyFailed').mockImplementation(() => {});
+        vi.spyOn(proxy, 'getDispatcherForProxy').mockImplementation((proxyState) => new ProxyAgent({ uri: proxyState.uri }));
+
         const fetchSpy = vi.spyOn(undici, 'fetch');
         fetchSpy.mockRejectedValueOnce(new Error('boom'));
-        fetchSpy.mockResolvedValueOnce(new Response('ok') as unknown as Awaited<ReturnType<typeof undici.fetch>>);
+        fetchSpy.mockResolvedValueOnce(new undici.Response('ok'));
 
         await wrappedFetch('http://example.com/resource', {
             headers: {

@@ -32,7 +32,7 @@ export const route: Route = {
     url: 'jwc.ncu.edu.cn/Notices.jsp',
 };
 
-async function handler() {
+async function handler(): Promise<Data> {
     const targetUrl = `${baseUrl}/Notices.jsp?urltype=tree.TreeTempUrl&wbtreeid=1541`;
 
     const response = await ofetch(targetUrl);
@@ -92,5 +92,5 @@ async function handler() {
         link: targetUrl,
         description: '南昌大学教务处通知公告',
         item: items,
-    } as Data;
+    };
 }

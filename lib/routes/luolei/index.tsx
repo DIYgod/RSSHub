@@ -61,7 +61,7 @@ export const handler = async (ctx) => {
 
     const $ = load(response);
 
-    const language = $('html').prop('lang');
+    const language = $('html').prop('lang') as Language;
     const themeEl = $('link[rel="modulepreload"]')
         .toArray()
         .findLast((l) => /theme\..*\.js$/.test($(l).prop('href')!));
@@ -99,7 +99,7 @@ export const handler = async (ctx) => {
                 },
                 image,
                 banner: image,
-                language: language as Language,
+                language,
             };
         });
 
@@ -142,7 +142,7 @@ export const handler = async (ctx) => {
         allowEmpty: true,
         image,
         author: $('meta[property="og:title"]').prop('content'),
-        language: language as Language,
+        language,
     };
 };
 

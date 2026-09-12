@@ -118,7 +118,7 @@ export const route: Route = {
     path: '/local/:type',
     name: '国内考试动态',
     url: 'www.neea.edu.cn',
-    maintainers: ['SunShinenny'],
+    maintainers: ['sunshinenny'],
     example: '/neea/local/cet',
     parameters: { type: '考试项目，见下表' },
     categories: ['study'],

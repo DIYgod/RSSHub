@@ -64,7 +64,7 @@ async function handler(ctx) {
             const {
                 data: items,
                 paging: { totals },
-            } = firstPageResponse.data;
+            }: { data: CollectionItem[]; paging: { totals: number } } = firstPageResponse.data;
 
             if (totals > 20) {
                 const offsetList = Array.from({ length: Math.ceil(totals / 20) - 1 }, (_, index) => (index + 1) * 20);
@@ -95,12 +95,11 @@ async function handler(ctx) {
         })
     );
 
-    const items = allCollectionItems.flatMap(
-        (collection) =>
-            collection.items.map((item) => ({
-                ...item,
-                collectionTitle: collection.collectionTitle,
-            })) as CollectionItem[]
+    const items = allCollectionItems.flatMap((collection) =>
+        collection.items.map((item) => ({
+            ...item,
+            collectionTitle: collection.collectionTitle,
+        }))
     );
 
     return {

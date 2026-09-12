@@ -1,10 +1,10 @@
-import type { Language, Route } from '@/types';
+import type { Data, Route } from '@/types';
 
 import { applyLanguageToTagSlug, CHANNEL_TAG_MAP, ghostFetch, postsToItems } from './utils';
 
 // Reason: Old app categories map to Ghost channel tag + language.
 // The _sc suffix = Simplified Chinese (zh-hans), _tc = Traditional Chinese (zh-hant).
-const APP_CATEGORY_MAP: Record<string, { channelType: string; language: string }> = {
+const APP_CATEGORY_MAP = {
     latest_sc: { channelType: 'latest', language: 'zh-hans' },
     latest_tc: { channelType: 'latest', language: 'zh-hant' },
     daily_brief_sc: { channelType: 'daily-brief', language: 'zh-hans' },
@@ -23,10 +23,10 @@ const APP_CATEGORY_MAP: Record<string, { channelType: string; language: string }
     hongkong_tc: { channelType: 'hongkong', language: 'zh-hant' },
     taiwan_sc: { channelType: 'taiwan', language: 'zh-hans' },
     taiwan_tc: { channelType: 'taiwan', language: 'zh-hant' },
-};
+} satisfies Record<string, { channelType: string; language: string }>;
 
 // Reason: Display labels for the old app categories, kept for RSS feed titles
-const APP_CATEGORY_LABELS: Record<string, string> = {
+const APP_CATEGORY_LABELS = {
     latest_sc: '最新',
     latest_tc: '最新',
     daily_brief_sc: '日报',
@@ -45,7 +45,7 @@ const APP_CATEGORY_LABELS: Record<string, string> = {
     hongkong_tc: '香港',
     taiwan_sc: '台湾',
     taiwan_tc: '台灣',
-};
+} satisfies Record<string, string>;
 
 export const route: Route = {
     path: '/app/:category?',
@@ -96,7 +96,7 @@ export const route: Route = {
 :::`,
 };
 
-async function handler(ctx) {
+async function handler(ctx): Promise<Data> {
     const category = ctx.req.param('category') ?? 'latest_sc';
 
     const mapping = APP_CATEGORY_MAP[category];
@@ -117,7 +117,7 @@ async function handler(ctx) {
         filter = `tag:${tagSlug}`;
     }
 
-    const params: Record<string, string> = {
+    const params = {
         include: 'tags,authors',
         limit: '20',
         filter,
@@ -133,7 +133,7 @@ async function handler(ctx) {
         title: `${name} - ${label}`,
         link: 'https://theinitium.com/latest/',
         icon: 'https://theinitium.com/favicon.ico',
-        language: (language === 'zh-hans' ? 'zh-CN' : 'zh-TW') as Language,
+        language: language === 'zh-hans' ? 'zh-CN' : 'zh-TW',
         item: items,
     };
 }

@@ -60,13 +60,27 @@ interface ExhibitType {
     isList?: boolean;
 }
 
-const TYPE_MAP: Record<string, ExhibitType> = {
+interface Exhibit {
+    title: string;
+    link: string;
+    id: number;
+    imgSrc?: string[];
+    position?: string;
+    timedesc: string;
+}
+
+interface ExhibitList {
+    list: Exhibit[];
+    title: string;
+}
+
+const TYPE_MAP = {
     review: { modular: 'exIndexReview', code: 'properties', value: '5' },
     abroad: { modular: 'exIndexGoAbroad', code: 'properties', value: '7' },
     virtual: { modular: 'exIndexVirtual', code: 'properties', value: '11' },
     forecast: { modular: 'exIndexForecast', code: 'properties', value: '1' },
     default: { modular: 'exIndex', code: '', value: '0', pageSize: 6, pageNum: 1, isList: true },
-};
+} satisfies Record<string, ExhibitType>;
 
 export const route: Route = {
     path: '/exhibitionIndex/:type?',
@@ -94,7 +108,7 @@ export const route: Route = {
 
         const museumName = namespace.zh?.name || namespace.name;
 
-        const fetchExhibits = async (config: ExhibitType) => {
+        const fetchExhibits = async (config: ExhibitType): Promise<ExhibitList> => {
             const response = await got.post(apiUrl, {
                 form: config,
             });
@@ -102,8 +116,8 @@ export const route: Route = {
             const data = response.data?.data;
 
             return {
-                list: data.list as Array<Record<string, any>>,
-                title: data.title as string,
+                list: data.list,
+                title: data.title,
             };
         };
 

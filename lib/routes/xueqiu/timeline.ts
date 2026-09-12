@@ -37,17 +37,17 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const cookie = config.xueqiu.cookies;
     const limit = ctx.req.query('limit') || 15;
     const usergroup_id = ctx.req.param('usergroup_id') ?? -1;
-    if (cookie === undefined) {
+    if (config.xueqiu.cookies === undefined) {
         throw new ConfigNotFoundError('缺少雪球用户登录后的 Cookie 值');
     }
+    const cookie: string = config.xueqiu.cookies;
     let out: DataItem[] = [];
     let max_id = -1;
 
     async function fetchItems() {
-        const data = await fetchNextID(max_id, cookie as string, usergroup_id);
+        const data = await fetchNextID(max_id, cookie, usergroup_id);
         const items = await Promise.all(
             data.home_timeline.map((item) =>
                 cache.tryGet(item.target, async () => {

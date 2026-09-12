@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 
-import type { Language, Route } from '@/types';
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -75,7 +75,7 @@ async function handler() {
         link: feed.link,
         description: feed.title,
         item: items,
-        language: 'pl' as Language,
+        language: 'pl' as const,
         image: 'https://ocdn.eu/wiadomosciucs/static/logo2017/onet2017big_dark.png',
     };
 }

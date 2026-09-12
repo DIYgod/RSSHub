@@ -38,7 +38,7 @@ const location = {
     beijing: '103873152',
 };
 
-const makeVariables = (variables: Record<string, any>) =>
+const makeVariables = (variables: Record<string, string | number | boolean>) =>
     '(' +
     Object.entries(variables)
         .filter(([, v]) => v)

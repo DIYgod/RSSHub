@@ -69,7 +69,7 @@ async function handler() {
                 link,
                 date,
             };
-        }) as Array<{ title: string; link: string; date?: string }>;
+        });
 
     const items = await Promise.all(
         list.map((item) =>

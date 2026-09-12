@@ -7,7 +7,7 @@ export type DirectoryImportOptions = {
     includeSubdirectories?: boolean;
 };
 
-export const directoryImport = (_options: DirectoryImportOptions): Record<string, unknown> => {
+export const directoryImport = <T = unknown>(_options: DirectoryImportOptions): Record<string, T> => {
     // This should never be called in Worker builds
     // Worker builds use pre-built routes from routes-worker.js
     throw new Error('directoryImport is not available in Worker builds');

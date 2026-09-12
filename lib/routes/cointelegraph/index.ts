@@ -44,7 +44,7 @@ async function handler(): Promise<Data> {
                 link: item.link?.split('?', 1)[0],
             }))
             .map((item) =>
-                cache.tryGet(item.link!, async () => {
+                cache.tryGet(item.link!, async (): Promise<DataItem> => {
                     const link = item.link!;
 
                     // Extract full text
@@ -63,7 +63,7 @@ async function handler(): Promise<Data> {
                         author: item.creator || 'CoinTelegraph',
                         category: item.categories || [],
                         image: item.enclosure?.url,
-                    } as DataItem;
+                    };
                 })
             )
     );

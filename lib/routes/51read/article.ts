@@ -57,7 +57,7 @@ async function handler(ctx) {
         item,
         image: $book('.bi-img img').attr('src'),
         author: $book('.bi-wt a').text(),
-        language: 'zh-CN' as Language,
+        language: 'zh-CN' as const satisfies Language,
     };
 }
 
@@ -75,7 +75,7 @@ const createItem = async (baseUrl: string, page: number) => {
 };
 
 const buildItem = (url: string) =>
-    cache.tryGet(url, async () => {
+    cache.tryGet(url, async (): Promise<DataItem> => {
         const html = await ofetch(url);
         const $ = load(html);
 
@@ -84,4 +84,4 @@ const buildItem = (url: string) =>
             description: $('.kb-cot').html(),
             link: url,
         };
-    }) as Promise<DataItem>;
+    });

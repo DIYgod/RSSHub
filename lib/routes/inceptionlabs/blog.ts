@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { DataItem, Route } from '@/types';
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -38,7 +38,7 @@ async function handler() {
     // avoiding duplicate entries from SSR breakpoint rendering (desktop/mobile).
     const posts = $('a[href^="./blog/"][data-framer-name="Desktop"]')
         .toArray()
-        .map((el): DataItem | null => {
+        .map((el) => {
             const $el = $(el);
             const href = $el.attr('href') ?? '';
 
@@ -85,12 +85,12 @@ async function handler() {
                 pubDate,
             };
         })
-        .filter((post): post is DataItem => post !== null);
+        .filter((post) => post !== null);
 
     const items = await Promise.all(
         posts.map((post) =>
-            cache.tryGet(post.link!, async () => {
-                const postHtml = await ofetch(post.link!);
+            cache.tryGet(post.link, async () => {
+                const postHtml = await ofetch(post.link);
                 const $post = load(postHtml);
 
                 // Full article content
@@ -103,8 +103,8 @@ async function handler() {
                     ...post,
                     description: contentHtml,
                     author,
-                    pubDate: parseDate(post.pubDate as string),
-                } as DataItem;
+                    pubDate: parseDate(post.pubDate),
+                };
             })
         )
     );

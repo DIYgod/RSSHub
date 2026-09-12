@@ -37,7 +37,7 @@ export const route: Route = {
 | 54       | 55       | 53       |`,
 };
 
-async function handler(ctx) {
+async function handler(ctx): Promise<Data> {
     const type = Number.parseInt(ctx.req.param('type'));
     const response = await ofetch(rootUrl + type);
     const $ = load(response);
@@ -102,5 +102,5 @@ async function handler(ctx) {
         title: $('li#classname').text() + ' - 浙江工业大学计算机科学与技术学院、软件学院',
         link: rootUrl + type,
         item: items,
-    } as Data;
+    };
 }

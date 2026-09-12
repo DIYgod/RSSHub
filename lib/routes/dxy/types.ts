@@ -183,7 +183,6 @@ interface RecommendPost {
     postInfo: Post;
     feedType: number;
     source: string;
-    pointMap: Record<string, unknown>;
     globalId: string;
 }
 

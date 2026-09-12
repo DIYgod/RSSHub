@@ -34,7 +34,7 @@ export const route: Route = {
         },
     ],
     name: '用户文章',
-    maintainers: ['xfangbao'],
+    maintainers: ['salviox'],
     handler,
 };
 

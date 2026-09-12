@@ -59,7 +59,7 @@ export function getDataItem(href: string) {
             ...dataItem,
             link,
         };
-    }) as Promise<DataItem>;
+    });
 }
 
 function parseArticle($: CheerioAPI): DataItem {

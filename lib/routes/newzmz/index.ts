@@ -86,7 +86,7 @@ async function handler(ctx) {
         title,
         link: currentUrl,
         description: $('meta[name="description"]').prop('content'),
-        language: 'zh-CN' as Language,
+        language: 'zh-CN' as const satisfies Language,
         image: $('img.logo-img').prop('src'),
         icon,
         logo: icon,

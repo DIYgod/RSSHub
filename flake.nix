@@ -27,7 +27,7 @@
           src = ./.;
 
           nativeBuildInputs = with pkgs; [
-            nodejs_22
+            nodejs_24
             pnpm
             pnpmConfigHook
             git

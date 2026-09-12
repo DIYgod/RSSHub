@@ -110,11 +110,13 @@ async function handler(ctx) {
 
     const icon = new URL('favicon.ico', rootUrl).href;
 
+    const language = $('html').prop('lang') as Language;
+
     return {
         item: items,
         title: $('title').text(),
         link: currentUrl,
-        language: $('html').prop('lang') as Language,
+        language,
         image: new URL('r/cms/www/default/zhuanti/2021djt/images/top.png', rootUrl).href,
         icon,
         logo: icon,

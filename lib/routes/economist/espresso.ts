@@ -63,7 +63,7 @@ async function handler() {
         title: metadata.title,
         link,
         description: metadata.description,
-        language: 'en-gb' as Language,
+        language: 'en-gb' as const satisfies Language,
         image: metadata.imageUrl,
         item: items,
     };

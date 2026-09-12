@@ -21,6 +21,7 @@ export type NamespacesType = Record<
             string,
             APIRoute & {
                 location: string;
+                module?: () => Promise<{ apiRoute: APIRoute }>;
             }
         >;
     }
@@ -47,7 +48,7 @@ export function collectNamespaceRoots(moduleKeys: string[]): Set<string> {
  * A module belongs to its longest matching namespace root; modules with no matching root fall back to their first
  * path segment (flat namespaces). `location` is the module path relative to the resolved namespace root.
  */
-export function resolveModuleNamespace(moduleKey: string, roots: Set<string>): { namespace: string; location: string } {
+export function resolveModuleNamespace(moduleKey: string, roots: Set<string>) {
     const segments = moduleKey.split(SEPARATOR).filter(Boolean);
     for (let i = segments.length - 1; i >= 1; i--) {
         const candidate = segments.slice(0, i).join('/');
@@ -174,7 +175,7 @@ export function registerRssRoutes(app: Hono, namespaces: NamespacesType): void {
             const wrappedHandler: Handler = async (ctx) => {
                 logger.debug(`Matched route: ${routePath(ctx)}`);
                 if (!ctx.get('data')) {
-                    if (typeof routeData.handler !== 'function') {
+                    if (!routeData.handler) {
                         if (process.env.NODE_ENV === 'test') {
                             const { route } = await import(`./routes/${namespace}/${routeData.location}`);
                             routeData.handler = route.handler;
@@ -204,22 +205,14 @@ export function registerApiRoutes(app: Hono, namespaces: NamespacesType): void {
             continue;
         }
 
-        const sortedRoutes = Object.entries(namespaceData.apiRoutes) as Array<
-            [
-                string,
-                APIRoute & {
-                    location: string;
-                    module?: () => Promise<{ apiRoute: APIRoute }>;
-                },
-            ]
-        >;
+        const sortedRoutes = Object.entries(namespaceData.apiRoutes);
 
         for (const [path, routeData] of sortedRoutes) {
             const wrappedHandler: Handler = async (ctx) => {
                 if (ctx.get('apiData')) {
                     return;
                 }
-                if (typeof routeData.handler !== 'function') {
+                if (!routeData.handler) {
                     if (process.env.NODE_ENV === 'test') {
                         const { apiRoute } = await import(`./routes/${namespace}/${routeData.location}`);
                         routeData.handler = apiRoute.handler;

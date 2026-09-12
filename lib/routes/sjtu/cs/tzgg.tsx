@@ -9,7 +9,7 @@ import timezone from '@/utils/timezone';
 const host = 'https://www.cs.sjtu.edu.cn';
 const ajaxUrl = `${host}/active/ajax_type_list.html`;
 
-const categoryMap: Record<string, { name: string; code: string }> = {
+const categoryMap = {
     bkspy: { name: '本科生培养', code: 'notice-xssw-bkspy' },
     yjspy: { name: '研究生培养', code: 'notice-xssw-yjspy' },
     gjjl: { name: '国际交流', code: 'notice-xssw-gjjl' },
@@ -73,7 +73,7 @@ function enrichItem(item: ListItem): Promise<DataItem> {
             description: $txt.html(),
             pubDate: pubDate ?? timezone(parseDate(item.date, 'YYYY-MM-DD'), 8),
         };
-    }) as Promise<DataItem>;
+    });
 }
 
 export const route: Route = {

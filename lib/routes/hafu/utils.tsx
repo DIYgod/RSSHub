@@ -34,7 +34,7 @@ export const parseList = async (ctx, type) => {
 };
 
 async function tryGetFullText(href, link, type) {
-    let articleData: CheerioAPI | string = '';
+    let articleData: CheerioAPI | null = null;
     let description: string;
     // for some unexpected href link
     try {
@@ -97,7 +97,7 @@ async function ggtzParse(ctx, $) {
                 const { articleData, description } = await tryGetFullText(href, link, 'ggtz');
                 let author = '';
                 let pubDate: Date;
-                if (typeof articleData === 'function') {
+                if (articleData) {
                     const header = articleData('h1').next().text();
                     const index = header.indexOf('日期');
 
@@ -142,7 +142,7 @@ async function jwcParse(ctx, $) {
                 const { articleData, description } = await tryGetFullText(href, link, 'jwc');
 
                 let author = '';
-                if (typeof articleData === 'function') {
+                if (articleData) {
                     author = articleData('span[class=authorstyle259690]').text();
                 }
 
@@ -176,7 +176,7 @@ async function zsjycParse(ctx, $) {
                 const { articleData, description } = await tryGetFullText(href, link, 'zsjyc');
 
                 let pubDate: Date;
-                if (typeof articleData === 'function') {
+                if (articleData) {
                     const date = articleData('span[class=timestyle127702]').text();
                     pubDate = parseDate(date, 'YYYY-MM-DD HH:mm');
                 } else {

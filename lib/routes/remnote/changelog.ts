@@ -53,6 +53,6 @@ async function handler() {
         link: `https://${FQDN}/changelog`,
         image: 'https://vault.hnxt.dev/uploads/organization_customization/favicon/3970/88153ff13b4b03492ddfee6e675228c1.png',
         item: items,
-        language: 'en-us' as Language,
+        language: 'en-us' as const satisfies Language,
     };
 }

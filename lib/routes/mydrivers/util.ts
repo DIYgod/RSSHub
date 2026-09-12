@@ -61,7 +61,7 @@ const getInfo = (url, range?) =>
             title: `${title} - ${range !== undefined && ranges ? ranges[range] : $(`a[data-id="${url.split(/=/).pop()}"]`).text() || $('#newsEventSwitch a.cur').text()}`,
             link: url,
             description: $('meta[name="description"]').prop('content'),
-            language: 'zh-CN' as Language,
+            language: 'zh-CN' as const satisfies Language,
             image,
             icon,
             logo: icon,
@@ -75,7 +75,6 @@ const getInfo = (url, range?) =>
  * Process items asynchronously.
  *
  * @param {Array<Object>} items - The array of items to process.
- * @param {function} tryGet - The tryGet function that handles the retrieval process.
  * @returns {Promise<Array<Object>>} Returns a Promise that resolves to an array of processed items.
  */
 const processItems = async (items) =>

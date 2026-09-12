@@ -79,11 +79,13 @@ async function handler(ctx) {
         };
     });
 
+    const language: Language = 'zh-CN';
+
     return {
         title,
         link,
         description,
-        language: 'zh-CN' as Language,
+        language,
         itunes_author: '机核 GCORES',
         image: `https://www.gcores.com/${image}`,
         item,

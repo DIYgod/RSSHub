@@ -73,9 +73,11 @@ async function handler(ctx) {
     const response = await got({
         method: 'get',
         url: currentUrl,
-        headers: {
-            Cookie: `_waftokenid=${wafTokenId}`,
-        },
+        headers: wafTokenId
+            ? {
+                  Cookie: `_waftokenid=${wafTokenId}`,
+              }
+            : undefined,
     });
 
     const data = getProperty(JSON.parse(response.data.match(/window.initialState=(\{.*\})/)[1]), categories[category].key);

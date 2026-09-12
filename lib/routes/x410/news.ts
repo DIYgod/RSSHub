@@ -19,7 +19,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
     const response = await ofetch(targetUrl);
     const $: CheerioAPI = load(response);
-    const language = $('html').attr('lang') ?? 'en';
+    const language = ($('html').attr('lang') ?? 'en') as Language;
 
     let items: DataItem[] = $('article.post')
         .slice(0, limit)
@@ -52,7 +52,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 image,
                 banner: image,
                 updated: upDatedStr ? parseDate(upDatedStr) : undefined,
-                language: language as Language,
+                language,
             };
 
             return processedItem;
@@ -110,7 +110,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                     image,
                     banner: image,
                     updated: upDatedStr ? parseDate(upDatedStr) : item.updated,
-                    language: language as Language,
+                    language,
                 };
 
                 return {
@@ -121,15 +121,17 @@ export const handler = async (ctx: Context): Promise<Data> => {
         })
     );
 
+    const tileImage: string | undefined = $('meta[name="msapplication-TileImage"]').attr('content');
+
     return {
         title: $('title').text(),
         description: $('meta[property="og:description"]').attr('content'),
         link: targetUrl,
         item: items,
         allowEmpty: true,
-        image: $('meta[name="msapplication-TileImage"]').attr('content') ? new URL($('meta[name="msapplication-TileImage"]').attr('content') as string, baseUrl).href : undefined,
+        image: tileImage ? new URL(tileImage, baseUrl).href : undefined,
         author: $('meta[property="og:site_name"]').attr('content'),
-        language: language as Language,
+        language,
         id: targetUrl,
     };
 };

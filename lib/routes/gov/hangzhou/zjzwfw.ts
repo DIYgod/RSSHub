@@ -28,7 +28,7 @@ export async function crawler(item: any, context: any): Promise<string> {
     }
 }
 
-export function analyzer(box: any): object {
+export function analyzer(box: any) {
     return {
         serviceInfo: {
             serviceTarget: box.find('.row:nth(1)>div:nth(1)').find('.inner').children().first().attr('content'),

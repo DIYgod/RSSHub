@@ -26,6 +26,19 @@ const renderDescription = (image, description, score) =>
         </>
     );
 
+interface FinderSearchParams {
+    sortBy: string;
+    productType: string;
+    limit: number;
+    apiKey: string;
+    genres?: string;
+    releaseType?: string;
+    releaseYearMin?: string;
+    releaseYearMax?: string;
+    gamePlatformIds?: string;
+    streamingNetworkIds?: string;
+}
+
 export const route: Route = {
     path: '/game/:sort?/:filter?',
     categories: ['new-media'],
@@ -71,18 +84,7 @@ export async function handler(ctx) {
 
     const apiKey = currentResponse.match(/apiKey=(.*?)&/)[1];
 
-    const searchParams: {
-        sortBy: string;
-        productType: string;
-        limit: number;
-        apiKey: string;
-        genres?: string;
-        releaseType?: string;
-        releaseYearMin?: string;
-        releaseYearMax?: string;
-        gamePlatformIds?: string;
-        streamingNetworkIds?: string;
-    } = {
+    const searchParams: FinderSearchParams = {
         sortBy: `-${sorts[sort].id}`,
         productType: types[type].id,
         limit,

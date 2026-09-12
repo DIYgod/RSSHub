@@ -72,20 +72,9 @@ Support for announcements and fancards:
 :::`,
 };
 
-function parseJsonField(field: any): any {
-    if (typeof field !== 'string') {
-        return field;
-    }
-
-    try {
-        let parsedData = JSON.parse(field);
-        if (typeof parsedData === 'string') {
-            parsedData = JSON.parse(parsedData);
-        }
-        return parsedData;
-    } catch {
-        return field;
-    }
+interface KemonoAttachment {
+    name?: string;
+    path?: string;
 }
 
 function buildApiUrl(source: string, userId?: string, contentType?: string): string {
@@ -135,27 +124,23 @@ async function fetchUserProfile(source: string, userId: string): Promise<string>
 function processPostFiles(post: KemonoPost): KemonoFile[] {
     const files: KemonoFile[] = [];
 
-    if (post.file) {
-        const parsedFile = parseJsonField(post.file);
-        if (parsedFile && typeof parsedFile === 'object' && 'path' in parsedFile) {
-            files.push({
-                name: parsedFile.name || 'Unnamed File',
-                path: parsedFile.path,
-                extension: extractFileExtension(parsedFile.path),
-            });
-        }
+    const file: KemonoAttachment | undefined = post.file;
+    if (file?.path) {
+        files.push({
+            name: file.name || 'Unnamed File',
+            path: file.path,
+            extension: extractFileExtension(file.path),
+        });
     }
 
-    if (Array.isArray(post.attachments)) {
-        for (const attachment of post.attachments) {
-            const parsedAttachment = parseJsonField(attachment);
-            if (parsedAttachment && typeof parsedAttachment === 'object' && 'path' in parsedAttachment) {
-                files.push({
-                    name: parsedAttachment.name || 'Unnamed Attachment',
-                    path: parsedAttachment.path,
-                    extension: extractFileExtension(parsedAttachment.path),
-                });
-            }
+    const attachments: KemonoAttachment[] = post.attachments ?? [];
+    for (const attachment of attachments) {
+        if (attachment.path) {
+            files.push({
+                name: attachment.name || 'Unnamed Attachment',
+                path: attachment.path,
+                extension: extractFileExtension(attachment.path),
+            });
         }
     }
 

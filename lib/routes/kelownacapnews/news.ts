@@ -88,7 +88,7 @@ export const route: Route = {
         return {
             title: `${$('.body-title').text()} - Kelowna Capital News`,
             link: `${baseURL}/${type}`,
-            item: items as DataItem[],
+            item: items,
         };
     },
 };

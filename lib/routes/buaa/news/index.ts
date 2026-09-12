@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 import type { Context } from 'hono';
 
-import type { Data, DataItem, Language, Route } from '@/types';
+import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -48,7 +48,7 @@ async function handler(ctx: Context): Promise<Data> {
             };
         });
 
-    const result = (await Promise.all(
+    const result = await Promise.all(
         list.map((item) =>
             cache.tryGet(item.link!, async () => {
                 const response = await got(item.link);
@@ -60,13 +60,13 @@ async function handler(ctx: Context): Promise<Data> {
                 return item;
             })
         )
-    )) as DataItem[];
+    );
 
     return {
         title: `北航新闻 - ${title}`,
         link,
         description: `北京航空航天大学新闻网 - ${title}`,
-        language: 'zh-CN' as Language,
+        language: 'zh-CN',
         item: result,
     };
 }

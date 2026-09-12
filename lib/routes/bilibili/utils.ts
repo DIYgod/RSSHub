@@ -1,7 +1,8 @@
-/* eslint-disable unicorn/prefer-code-point */
+/* oxlint-disable unicorn/prefer-code-point */
 import CryptoJS from 'crypto-js';
 
 import { config } from '@/config';
+import type cacheModule from '@/utils/cache';
 import md5 from '@/utils/md5';
 import ofetch from '@/utils/ofetch';
 
@@ -204,7 +205,7 @@ const bvidTime = 1_589_990_400;
  * @param cache - 缓存 module。
  * @returns {Promise<MediaResult>} 番剧信息。
  */
-export const getBangumi = (id: string, cache): Promise<MediaResult> =>
+export const getBangumi = (id: string, cache: typeof cacheModule): Promise<MediaResult> =>
     cache.tryGet(
         `bilibili:getBangumi:${id}`,
         async () => {
@@ -221,7 +222,7 @@ export const getBangumi = (id: string, cache): Promise<MediaResult> =>
         },
         config.cache.routeExpire,
         false
-    ) as Promise<MediaResult>;
+    );
 
 /**
  * 获取番剧分集信息并缓存
@@ -230,7 +231,7 @@ export const getBangumi = (id: string, cache): Promise<MediaResult> =>
  * @param cache - 缓存 module。
  * @returns {Promise<SeasonResult>} 番剧分集信息。
  */
-export const getBangumiItems = (id: string, cache): Promise<SeasonResult> =>
+export const getBangumiItems = (id: string, cache: typeof cacheModule): Promise<SeasonResult> =>
     cache.tryGet(
         `bilibili:getBangumiItems:${id}`,
         async () => {
@@ -243,7 +244,7 @@ export const getBangumiItems = (id: string, cache): Promise<SeasonResult> =>
         },
         config.cache.routeExpire,
         false
-    ) as Promise<SeasonResult>;
+    );
 
 /**
  * Render the UGC (user-generated content) description.

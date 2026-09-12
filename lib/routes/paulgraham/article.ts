@@ -78,7 +78,7 @@ async function handler(ctx) {
         title: `${author} - ${title}`,
         link: currentUrl,
         description: title,
-        language: 'en' as Language,
+        language: 'en' as const satisfies Language,
         image: $(`img[alt="${title}"]`).prop('src'),
         icon,
         logo: icon,

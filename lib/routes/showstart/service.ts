@@ -138,7 +138,13 @@ async function fetchBrandList(
     }));
 }
 
-async function fetchParams() {
+interface City {
+    cityCode: string;
+    cityName: string;
+    styles: Array<{ key: string; showName: string }>;
+}
+
+async function fetchParams(): Promise<{ result: City[] }> {
     const accessToken = await getAccessToken();
     return post('/web/activity/list/params', accessToken);
 }
@@ -159,7 +165,7 @@ async function fetchCityList(keyword = '') {
 // so we need to fetch all city items and then extract styles from them
 async function fetchStyleList(keyword = '') {
     const resp = await fetchParams();
-    let styles = resp.result.flatMap((item) => item.styles) as Array<{ key: string; showName: string }>;
+    let styles = resp.result.flatMap((item) => item.styles);
     styles = uniqBy(styles, 'key');
     styles = sortBy(styles, 'key');
     return styles

@@ -1,5 +1,4 @@
-import { load } from 'cheerio';
-
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
@@ -39,19 +38,18 @@ async function handler(ctx) {
     const category = ctx.req.param('category');
     const categoryUrl = `${SUB_URL}category/${category}/`;
 
-    const response = await got(categoryUrl);
-    const $ = load(response.body);
-    const itemRaw = $('article.blog-entry').slice(0, limit).toArray();
+    const categoryId = await cache.tryGet(`everia:category:${category}`, async () => {
+        const { data: categories } = await got(`${SUB_URL}wp-json/wp/v2/categories?slug=${category}`);
+        if (!categories.length) {
+            throw new InvalidParameterError(`Category not found: ${category}`);
+        }
+        return categories[0].id as number;
+    });
+    const { data: posts } = await got(`${SUB_URL}wp-json/wp/v2/posts?categories=${categoryId}&per_page=${limit}&_embed`);
 
     return {
         title: `${SUB_NAME_PREFIX} - Category: ${category}`,
         link: categoryUrl,
-        item: await Promise.all(
-            itemRaw.map((e) => {
-                const item = $(e);
-                const link = item.find('h2.entry-title a').attr('href');
-                return cache.tryGet(link!, () => loadArticle(link));
-            })
-        ),
+        item: posts.map((post) => loadArticle(post)),
     };
 }

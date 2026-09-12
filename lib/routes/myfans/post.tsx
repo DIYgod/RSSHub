@@ -52,7 +52,7 @@ async function handler(ctx) {
     const posts = await getPostByAccountId(account.id);
 
     const items = posts.map((p) => ({
-        title: p.body?.replaceAll('\r\n', ' ').trim().split(' ', 1)[0]!,
+        title: p.body!.replaceAll('\r\n', ' ').trim().split(' ', 1)[0],
         description: renderDescription(p.post_images, p.body!.replaceAll('\r\n', '<br>')),
         pubDate: parseDate(p.published_at),
         link: `${baseUrl}/posts/${p.id}`,
@@ -67,7 +67,7 @@ Followers ${account.followings_count} Follow ${account.about.replaceAll('\r\n', 
         image: account.avatar_url,
         icon: account.avatar_url,
         logo: account.avatar_url,
-        language: 'ja' as Language,
+        language: 'ja' as const satisfies Language,
         item: items,
     };
 }

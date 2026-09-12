@@ -16,7 +16,7 @@ export const handler = async (ctx) => {
 
     const $ = load(response);
 
-    const language = $('html').prop('lang');
+    const language = $('html').prop('lang') as Language;
 
     let items = $('div.ztst_list_contBox_inner ul li')
         .slice(0, limit)
@@ -30,7 +30,7 @@ export const handler = async (ctx) => {
                 title: a.prop('title') ?? '',
                 pubDate: parseDate($item.find('div.pubTime').text().split(/：/).pop()!, 'YYYY.MM.DD'),
                 link: new URL(a.prop('href')!, currentUrl).href,
-                language: language as Language,
+                language,
             };
         });
 
@@ -64,7 +64,7 @@ export const handler = async (ctx) => {
                     html: description,
                     text: $$('div.gsj_htmlcon_bot, div.TRS_Editor').text(),
                 };
-                item.language = language as Language;
+                item.language = language;
 
                 return item;
             })
@@ -82,7 +82,7 @@ export const handler = async (ctx) => {
         allowEmpty: true,
         image,
         author: '中华人民共和国农业农村部',
-        language: language as Language,
+        language,
     };
 };
 

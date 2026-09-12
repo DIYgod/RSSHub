@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 
-import type { DataItem, Language, Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -58,7 +58,7 @@ async function handler(ctx) {
         categoryName = '総合';
         list = [
             ...list,
-            ...($('div#CONTENTS_MAIN .m-miM32_itemTitle')
+            ...$('div#CONTENTS_MAIN .m-miM32_itemTitle')
                 .toArray()
                 .map((item) => {
                     const $item = $(item);
@@ -72,7 +72,7 @@ async function handler(ctx) {
                             .map((item) => $(item).text()),
                         paywall: !!$item.find(paidSelector).length,
                     };
-                }) as typeof list),
+                }),
         ];
     } else {
         categoryName = $('h1.l-miH11_title').text().trim();
@@ -110,7 +110,7 @@ async function handler(ctx) {
         description: $('meta[name="description"]').attr('content'),
         link: url,
         image: $('meta[property="og:image"]').attr('content'),
-        language: 'ja' as Language,
+        language: 'ja' as const,
         item: article_type === 'free' ? items.filter((item) => !item.paywall) : items,
     };
 }

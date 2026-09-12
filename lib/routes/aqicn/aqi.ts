@@ -16,7 +16,7 @@ export const route: Route = {
         },
     ],
     name: '实时 AQI',
-    maintainers: ['ladeng07'],
+    maintainers: ['xapool', 'ladeng07'],
     handler,
     url: 'aqicn.org',
     description: `| 参数 | 污染成分 |
@@ -59,7 +59,8 @@ async function handler(ctx) {
             : pollution
                   .split(',')
                   .map((item) => {
-                      const pollutionValue = typeof data.historic[pollutionType[item]] === 'object' ? data.historic[pollutionType[item]][Object.keys(data.historic[pollutionType[item]])[0]] : data.historic[pollutionType[item]][0];
+                      const historicData = data.historic[pollutionType[item]];
+                      const pollutionValue = Array.isArray(historicData) ? historicData[0] : historicData[Object.keys(historicData)[0]];
                       return `${pollutionType[item].toUpperCase()}:<b>${pollutionValue}</b><br>`;
                   })
                   .join('');

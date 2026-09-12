@@ -56,7 +56,7 @@ async function handler() {
         title: $('title').text(),
         link: rootUrl + '/changelog',
         description: $('meta[name="description"]').attr('content'),
-        language: 'en-us' as Language,
+        language: 'en-us' as const satisfies Language,
         item: items,
     };
 }

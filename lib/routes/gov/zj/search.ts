@@ -66,16 +66,16 @@ export const route: Route = {
                     description: $('.newsDescribe>a').text(),
                 };
             }) || [];
-        const res = {};
+        const res = new Map<string, DataItem>();
         for (const current of items) {
-            if (!Object.hasOwn(res, current.link)) {
-                res[current.link] = current;
+            if (!res.has(current.link)) {
+                res.set(current.link, current);
             }
         }
         return {
             title: '浙江省人民政府-全省政府网站统一搜索',
             link: 'https://search.zj.gov.cn/jsearchfront/search.do',
-            item: Object.values(res).map((value) => value) as DataItem[],
+            item: res.values().toArray(),
         };
     },
 };

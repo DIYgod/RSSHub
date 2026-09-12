@@ -61,10 +61,15 @@ async function handler(ctx) {
     const host = `https://github.com/${user}/${repo}/issues`;
     const url = `https://api.github.com/repos/${user}/${repo}/issues`;
 
-    const headers: Record<string, string> = { Accept: 'application/vnd.github.v3+json' };
-    if (config.github && config.github.access_token) {
-        headers.Authorization = `token ${config.github.access_token}`;
-    }
+    const headers =
+        config.github && config.github.access_token
+            ? {
+                  Accept: 'application/vnd.github.v3+json',
+                  Authorization: `token ${config.github.access_token}`,
+              }
+            : {
+                  Accept: 'application/vnd.github.v3+json',
+              };
     const response = await got({
         method: 'get',
         url,

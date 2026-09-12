@@ -2,7 +2,7 @@ import type { Context } from 'hono';
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 
-import type { Data, DataItem, Language, Route } from '@/types';
+import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -129,13 +129,13 @@ async function handler(ctx: Context): Promise<Data> {
     !dcpCode && !clsNo && searchParams.set('dcpCode', 'nolimit'); // No classification filter
     const url = `https://space.lib.buaa.edu.cn/meta-local/opac/new/100/${clsNo ? 'byclass' : 'bysubject'}?${searchParams.toString()}`;
     const { data } = await got(url);
-    const list = (data?.data?.dataList || []) as Book[];
+    const list: Book[] = data?.data?.dataList || [];
     const item = await Promise.all(list.map(async (item: Book) => await getItem(item)));
     const res: Data = {
         title: '北航图书馆 - 新书速递',
         item,
         description: '北京航空航天大学图书馆新书速递',
-        language: 'zh-CN' as Language,
+        language: 'zh-CN',
         link: 'https://space.lib.buaa.edu.cn/space/newBook',
         author: '北京航空航天大学图书馆',
         allowEmpty: true,
@@ -145,9 +145,9 @@ async function handler(ctx: Context): Promise<Data> {
 }
 
 async function getItem(item: Book): Promise<DataItem> {
-    return (await cache.tryGet(item.isbn, async () => {
+    return await cache.tryGet(item.isbn, async (): Promise<DataItem> => {
         const info = await getItemInfo(item.isbn);
-        const holdings = JSON.parse(item.holdings) as Holding[];
+        const holdings: Holding[] = JSON.parse(item.holdings);
         const link = `https://space.lib.buaa.edu.cn/space/searchDetailLocal/${item.bibId}`;
         const content = renderToString(
             <>
@@ -238,7 +238,7 @@ async function getItem(item: Book): Promise<DataItem> {
             description: content,
             link,
         };
-    })) as DataItem;
+    });
 }
 
 async function getItemInfo(isbn: string): Promise<Info | null> {

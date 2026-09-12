@@ -36,5 +36,5 @@ async function handler(ctx: Context) {
             pubDate: timezone(parseDate(i.log_time), 8),
             guid: `sdo/ff14risingstones/resently:${uid}-${i.detail}`,
         })),
-    } as Data;
+    } satisfies Data;
 }

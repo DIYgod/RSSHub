@@ -1,5 +1,4 @@
 import { load } from 'cheerio';
-import type { Text } from 'domhandler';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
@@ -54,7 +53,7 @@ async function handler(ctx) {
                 const res = await got(item.link);
                 const doc = load(res.data);
                 // This script holds publish datetime info {"datePublished": "2022-05-12T08:45:04+01:00"}
-                const dateScript = (doc('script[type="application/ld+json"]').toArray()[0].children[0] as Text).data;
+                const dateScript = doc('script[type="application/ld+json"]').first().text();
                 const re = /"datePublished": "(?<dateTimePub>.*)"/;
                 const dateStr = re.exec(dateScript)!.groups!.dateTimePub;
                 const pubDateTime = parseDate(dateStr, 'YYYY-MM-DDTHH:mm:ssZ');

@@ -72,7 +72,7 @@ async function handler() {
         link: url,
         item: items,
         image: 'https:' + face.attr('href'),
-        language: 'en' as Language,
+        language: 'en' as const satisfies Language,
         author: 'Wargaming',
     };
 }

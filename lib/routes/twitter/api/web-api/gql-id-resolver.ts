@@ -6,7 +6,7 @@ import ofetch from '@/utils/ofetch';
 const CACHE_KEY = 'twitter:gql-query-ids';
 
 // Hardcoded fallback IDs (last known working values)
-export const fallbackIds: Record<string, string> = {
+export const fallbackIds = {
     UserTweets: 'eoJ5zbv51Z_KVl81v9PmLQ',
     UserByScreenName: 'Gb-d6r0vxPOADdG62OEBpQ',
     HomeTimeline: '3b9_7tltt0hJRef-xm_3sw',
@@ -21,13 +21,17 @@ export const fallbackIds: Record<string, string> = {
 
 const operationNames = Object.keys(fallbackIds);
 
+interface InternalApiDocument {
+    graphql?: Record<string, { queryId?: string } | undefined>;
+}
+
 async function fetchAndExtractIds(): Promise<Record<string, string>> {
-    const api = await ofetch('https://cdn.jsdelivr.net/gh/fa0311/TwitterInternalAPIDocument@master/docs/json/API.json');
+    const api = await ofetch<InternalApiDocument>('https://cdn.jsdelivr.net/gh/fa0311/TwitterInternalAPIDocument@master/docs/json/API.json');
 
     const ids: Record<string, string> = {};
     for (const name of operationNames) {
         const queryId = api?.graphql?.[name]?.queryId;
-        if (typeof queryId === 'string') {
+        if (queryId !== undefined) {
             ids[name] = queryId;
         }
     }
@@ -41,8 +45,8 @@ export async function resolveQueryIds(): Promise<Record<string, string>> {
     const cached = await cache.get(CACHE_KEY);
     if (cached) {
         try {
-            const parsed = typeof cached === 'string' ? JSON.parse(cached) : cached;
-            if (parsed && typeof parsed === 'object' && Object.keys(parsed).length > 0) {
+            const parsed: Record<string, string> = JSON.parse(cached);
+            if (Object.keys(parsed).length > 0) {
                 logger.debug('twitter gql-id-resolver: using cached query IDs');
                 return { ...fallbackIds, ...parsed };
             }
@@ -81,7 +85,7 @@ export async function resolveQueryIds(): Promise<Record<string, string>> {
     return { ...fallbackIds, ...ids };
 }
 
-export function buildGqlMap(queryIds: Record<string, string>): Record<string, string> {
+export function buildGqlMap(queryIds: Record<string, string>) {
     const map: Record<string, string> = {};
     for (const name of operationNames) {
         const id = queryIds[name] || fallbackIds[name];

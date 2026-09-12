@@ -17,13 +17,17 @@ type DescriptionData = {
 const AccessBriefingDescription = ({ images, intro, description }: DescriptionData) => (
     <>
         {images?.length
-            ? images.map((image) =>
-                  image?.src ? (
+            ? images.map((image) => {
+                  if (!image?.src) {
+                      return null;
+                  }
+                  const alt = image.height ?? image.width ?? image.alt;
+                  return (
                       <figure>
-                          <img alt={(image.height ?? image.width ?? image.alt) as string | undefined} src={image.src} />
+                          <img alt={alt === undefined ? undefined : String(alt)} src={image.src} />
                       </figure>
-                  ) : null
-              )
+                  );
+              })
             : null}
         {intro ? <blockquote>{intro}</blockquote> : null}
         {description ? raw(description) : null}

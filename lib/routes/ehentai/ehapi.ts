@@ -8,7 +8,11 @@ import got from '@/utils/got';
 import logger from '@/utils/logger';
 import timezone from '@/utils/timezone';
 
-const headers: Record<string, any> = {};
+interface RequestHeaders {
+    cookie?: string;
+}
+
+const headers: RequestHeaders = {};
 const has_cookie = config.ehentai.ipb_member_id && config.ehentai.ipb_pass_hash && config.ehentai.sk;
 const from_ex = has_cookie && config.ehentai.igneous;
 if (has_cookie) {
@@ -22,7 +26,7 @@ if (has_cookie) {
 }
 
 if (config.ehentai.star) {
-    headers.cookie += `;star=${config.ehentai.star}`;
+    headers.cookie = `${headers.cookie};star=${config.ehentai.star}`;
 }
 
 function ehgot(url) {
@@ -43,7 +47,7 @@ function ehgot_thumb(cache, thumb_url) {
     });
 }
 
-async function parsePage(cache, data, get_bittorrent = false, embed_thumb = false) {
+async function parsePage(cache, data, get_bittorrent: string | boolean = false, embed_thumb: string | boolean = false) {
     const $ = load(data);
     // "m" for Minimal
     // "p" for Minimal+
@@ -194,13 +198,13 @@ function updateBittorrent_url(cache, items) {
     return items;
 }
 
-async function gatherItemsByPage(cache, url, get_bittorrent = false, embed_thumb = false) {
+async function gatherItemsByPage(cache, url, get_bittorrent: string | boolean = false, embed_thumb: string | boolean = false) {
     const response = await ehgot(url);
     const items = await parsePage(cache, response.data, get_bittorrent, embed_thumb);
     return updateBittorrent_url(cache, items);
 }
 
-async function getFavoritesItems(cache, favcat, inline_set, page, get_bittorrent = false, embed_thumb = false) {
+async function getFavoritesItems(cache, favcat, inline_set, page, get_bittorrent: string | boolean = false, embed_thumb: string | boolean = false) {
     if (page) {
         return gatherItemsByPage(cache, `favorites.php?favcat=${favcat}&next=${page}`, get_bittorrent, embed_thumb);
     }
@@ -209,11 +213,11 @@ async function getFavoritesItems(cache, favcat, inline_set, page, get_bittorrent
     return updateBittorrent_url(cache, items);
 }
 
-function getSearchItems(cache, params, page, get_bittorrent = false, embed_thumb = false) {
+function getSearchItems(cache, params, page, get_bittorrent: string | boolean = false, embed_thumb: string | boolean = false) {
     return page ? gatherItemsByPage(cache, `?${params}&next=${page}`, get_bittorrent, embed_thumb) : gatherItemsByPage(cache, `?${params}`, get_bittorrent, embed_thumb);
 }
 
-function getTagItems(cache, tag, page, get_bittorrent = false, embed_thumb = false) {
+function getTagItems(cache, tag, page, get_bittorrent: string | boolean = false, embed_thumb: string | boolean = false) {
     return page ? gatherItemsByPage(cache, `tag/${tag}?next=${page}`, get_bittorrent, embed_thumb) : gatherItemsByPage(cache, `tag/${tag}`, get_bittorrent, embed_thumb);
 }
 

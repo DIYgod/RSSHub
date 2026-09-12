@@ -24,7 +24,7 @@ export const route: Route = {
     handler,
 };
 
-async function handler() {
+async function handler(): Promise<Data> {
     const items = await fetchArticles('insights');
 
     return {
@@ -37,5 +37,5 @@ async function handler() {
         image: `${baseUrl}/favicons/favicon.ico`,
         icon: `${baseUrl}/favicons/favicon.ico`,
         logo: `${baseUrl}/favicons/favicon.ico`,
-    } as Data;
+    };
 }

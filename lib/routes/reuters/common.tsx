@@ -1,6 +1,5 @@
 import { load } from 'cheerio';
 import { raw } from 'hono/html';
-import type { FC } from 'hono/jsx';
 import { renderToString } from 'hono/jsx/dom/server';
 
 import type { Route } from '@/types';
@@ -8,6 +7,8 @@ import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+
+type HeadingTag = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
 
 type ReutersContent = {
     result: {
@@ -99,7 +100,7 @@ const renderDescription = ({ result }: ReutersContent): string => {
                 }
 
                 if (element.type === 'header') {
-                    const HeaderTag = `h${element.level ?? 1}` as unknown as FC;
+                    const HeaderTag = `h${element.level ?? 1}` as HeadingTag;
                     return <HeaderTag key={`header-${index}`}>{element.content ? raw(element.content) : null}</HeaderTag>;
                 }
 

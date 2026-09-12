@@ -1,4 +1,4 @@
-import type { Language, Route } from '@/types';
+import type { Data, Route } from '@/types';
 import { ViewType } from '@/types';
 
 import { baseUrl, getData, getList, variables } from './utils.js';
@@ -203,7 +203,7 @@ export const route: Route = {
     url: 'app.daily.dev/squads/discover',
 };
 
-async function handler(ctx) {
+async function handler(ctx): Promise<Data> {
     const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 20;
     const squads = ctx.req.param('squads');
 
@@ -238,6 +238,6 @@ async function handler(ctx) {
         description,
         logo: `${baseUrl}/favicon-32x32.png`,
         icon: `${baseUrl}/favicon-32x32.png`,
-        language: 'en-us' as Language,
+        language: 'en-us',
     };
 }

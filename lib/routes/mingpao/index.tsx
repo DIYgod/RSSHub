@@ -172,10 +172,9 @@ async function handler(ctx) {
                 delete item.isoDate;
 
                 item.description = renderDesc(fancybox, $('.txt4').html() ?? $('.article_content.line_1_5em').html() ?? $('.txt3').html());
-                item.pubDate = parseDate(item.pubDate!) as unknown as string;
                 item.guid = item.link!.includes('?') ? item.link : item.link!.slice(0, item.link!.lastIndexOf('/'));
 
-                return item;
+                return { ...item, pubDate: parseDate(item.pubDate!) };
             })
         )
     );

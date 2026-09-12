@@ -1,4 +1,4 @@
-import type { Language, Route } from '@/types';
+import type { Data, Route } from '@/types';
 import { ViewType } from '@/types';
 
 import { baseUrl, getData, getList, variables } from './utils.js';
@@ -91,7 +91,7 @@ export const route: Route = {
     },
 };
 
-async function handler(ctx) {
+async function handler(ctx): Promise<Data> {
     const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 20;
     const dateSort = ctx.req.param('dateSort') ? JSON.parse(ctx.req.param('dateSort')) : true;
     const period = ctx.req.param('period') ? Number(ctx.req.param('period')) : 7;
@@ -115,6 +115,6 @@ async function handler(ctx) {
         description: 'Stay on top of real-time developer discussions on daily.dev. Join conversations happening now and engage with the most active community members.',
         logo: `${baseUrl}/favicon-32x32.png`,
         icon: `${baseUrl}/favicon-32x32.png`,
-        language: 'en-us' as Language,
+        language: 'en-us',
     };
 }

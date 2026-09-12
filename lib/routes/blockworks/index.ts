@@ -44,9 +44,12 @@ async function handler(ctx): Promise<Data> {
 
     const items = await Promise.all(
         limitedItems
-            .map((item) => ({ ...item, link: item.link?.split('?', 1)[0] }) as typeof item & { author?: DataItem['author'] })
+            .map((item) => {
+                const entry: typeof item & { author?: DataItem['author'] } = { ...item, link: item.link?.split('?', 1)[0] };
+                return entry;
+            })
             .map((item) =>
-                cache.tryGet(item.link!, async () => {
+                cache.tryGet<DataItem>(item.link!, async () => {
                     // Get cached content or fetch new content
                     const content = await extractFullText(item.link!.split('/').pop()!, buildId);
 
@@ -62,7 +65,7 @@ async function handler(ctx): Promise<Data> {
                                   content: { url: content.imageUrl },
                               }
                             : undefined,
-                    } as DataItem;
+                    };
                 })
             )
     );
@@ -123,4 +126,4 @@ const getBuildId = () =>
         },
         config.cache.routeExpire,
         false
-    ) as Promise<string>;
+    );

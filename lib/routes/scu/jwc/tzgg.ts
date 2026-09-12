@@ -68,7 +68,7 @@ async function handler() {
         link: baseIndexUrl,
         description: '四川大学教务处通知公告',
         item: items,
-        language: 'zh-CN' as Language,
+        language: 'zh-CN' as const satisfies Language,
         image: 'https://www.scu.edu.cn/__local/B/67/25/DFAF986CCD6529E52D7830F180D_C37C7DEE_4340.png',
         logo: 'https://www.scu.edu.cn/__local/B/67/25/DFAF986CCD6529E52D7830F180D_C37C7DEE_4340.png',
         icon: 'https://www.scu.edu.cn/__local/B/67/25/DFAF986CCD6529E52D7830F180D_C37C7DEE_4340.png',

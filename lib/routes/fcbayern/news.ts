@@ -1,6 +1,6 @@
 import type { Context } from 'hono';
 
-import type { Language, Route } from '@/types';
+import type { Data, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
@@ -157,7 +157,7 @@ export const route: Route = {
     url: 'fcbayern.com',
 };
 
-async function handler(ctx: Context) {
+async function handler(ctx: Context): Promise<Data> {
     const { language = 'en' } = ctx.req.param();
     const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')!) : 20;
 
@@ -166,7 +166,8 @@ async function handler(ctx: Context) {
     }
 
     const baseUrl = 'https://fcbayern.com';
-    const channelId = languages[language] ?? languages.en;
+    const languageKey = language === 'es' ? 'es' : language === 'de' ? 'de' : 'en';
+    const channelId = languages[languageKey];
 
     const response = await ofetch(`${baseUrl}/graphql`, {
         method: 'POST',
@@ -199,8 +200,8 @@ async function handler(ctx: Context) {
 
     return {
         title: 'FC Bayern München - News',
-        link: `${baseUrl}/${language}/news`,
-        language: language as Language,
+        link: `${baseUrl}/${languageKey}/news`,
+        language: languageKey,
         image: `${baseUrl}/favicon.ico`,
         item: items,
     };

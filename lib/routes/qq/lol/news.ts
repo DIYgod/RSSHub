@@ -32,7 +32,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
     });
 
     const $: CheerioAPI = load(iconv.decode(Buffer.from(targetResponse), 'gbk'));
-    const language = $('html').attr('lang') ?? 'zh-CN';
+    const language = ($('html').attr('lang') ?? 'zh-CN') as Language;
 
     let items: DataItem[] = response.data.result.slice(0, limit).map((item): DataItem => {
         const title: string = item.sTitle;
@@ -60,7 +60,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
             image,
             banner: image,
             updated: updated ? timezone(parseDate(updated), 8) : undefined,
-            language: language as Language,
+            language,
         };
 
         return processedItem;
@@ -118,7 +118,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                         image,
                         banner: image,
                         updated: updated ? timezone(parseDate(updated), 8) : undefined,
-                        language: language as Language,
+                        language,
                     };
 
                     return {
@@ -141,7 +141,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
         allowEmpty: true,
         image: `https:${$('a.logo img').attr('src')}`,
         author: $('meta[name="author"]').attr('content'),
-        language: language as Language,
+        language,
         id: targetUrl,
     };
 };

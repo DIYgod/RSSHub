@@ -116,8 +116,8 @@ export function checkConfig() {
     }
 }
 
-export function request(url: string, options?: RequestInit) {
-    return ofetch(url, {
+export function request<T>(url: string, options?: RequestInit) {
+    return ofetch<T>(url, {
         ...options,
         headers: {
             Cookie: `ff14risingstones=${config.sdo.ff14risingstones}`,
@@ -128,7 +128,7 @@ export function request(url: string, options?: RequestInit) {
 }
 
 export async function requestAPI<T = any>(url: string, options?: RequestInit) {
-    const response = (await request(url, options)) as BaseResponse<T>;
+    const response = await request<BaseResponse<T>>(url, options);
 
     if (response.code !== 10000) {
         throw new Error(response.msg);
@@ -148,7 +148,7 @@ export async function generatePostFeeds(posts: UserPost[]) {
                 updated: detail?.updated_at ? timezone(parseDate(detail.updated_at), 8) : undefined,
                 guid: `sdo/ff14risingstones/posts:${post.posts_id}`,
                 author: `${post.character_name}@${post.group_name}`,
-            } as DataItem;
+            } satisfies DataItem;
         })
     );
 }
@@ -308,7 +308,7 @@ export async function generateDynamicFeeds(dynamics: UserDynamic[]) {
                 guid: `sdo/ff14risingstones/dynamics:${dynamic.id}`,
                 author: `${dynamic.character_name}@${dynamic.group_name}`,
                 description,
-            } as DataItem;
+            } satisfies DataItem;
         })
     );
 }

@@ -87,7 +87,7 @@ async function handler(ctx) {
     return {
         title: $('head title').text(),
         link: url,
-        language: 'zh-TW' as Language,
+        language: 'zh-TW' as const satisfies Language,
         item: items,
     };
 }

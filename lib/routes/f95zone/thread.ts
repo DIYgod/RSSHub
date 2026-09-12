@@ -87,7 +87,7 @@ Note: If you want to track a specific post's content changes (e.g., first post w
                         author,
                     };
                 })
-                .filter(Boolean) as DataItem[];
+                .filter((post) => post !== undefined);
 
         // Extract posts from the first page
         const allPosts: DataItem[] = [...extractPosts($firstPage)];

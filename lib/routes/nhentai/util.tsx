@@ -71,8 +71,8 @@ const fetchPage = async (url: string): Promise<string> => {
     try {
         return await ofetch(url);
     } catch (error: unknown) {
-        const status = (error as { status?: number; statusCode?: number }).status ?? (error as { status?: number; statusCode?: number }).statusCode;
-        if (status === 403) {
+        const { status, statusCode } = error as { status?: number; statusCode?: number };
+        if ((status ?? statusCode) === 403) {
             const { page, destroy } = await getPlaywrightPage(url, {
                 onBeforeLoad: async (page) => {
                     const allowedTypes = new Set(['document', 'script', 'xhr', 'fetch']);

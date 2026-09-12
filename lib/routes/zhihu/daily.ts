@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { DataItem, Route } from '@/types';
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import logger from '@/utils/logger';
 import ofetch from '@/utils/ofetch';
@@ -63,7 +63,7 @@ async function handler() {
                     }
                 })
         )
-    ).filter(Boolean) as DataItem[];
+    ).filter((item) => item !== null);
 
     return {
         title: '知乎日报',

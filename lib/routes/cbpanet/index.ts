@@ -17,7 +17,7 @@ export const handler = async (ctx) => {
 
     const $ = load(response);
 
-    const language = $('html').prop('lang');
+    const language = $('html').prop('lang') as Language | undefined;
 
     let items = $('div.divmore ul li')
         .slice(0, limit)
@@ -74,7 +74,7 @@ export const handler = async (ctx) => {
         allowEmpty: true,
         image,
         author: title.split(/-/, 1)[0],
-        language: language as Language,
+        language,
     };
 };
 

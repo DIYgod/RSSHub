@@ -54,7 +54,7 @@ async function handler(ctx) {
         title: `Twitter Keyword - ${keyword}`,
         link: `https://x.com/search?q=${encodeURIComponent(keyword)}`,
         item: utils.ProcessFeed(ctx, {
-            data: data as any,
+            data,
         }),
         allowEmpty: true,
     };

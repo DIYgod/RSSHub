@@ -1,4 +1,4 @@
-import type { Language, Route } from '@/types';
+import type { Data, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
@@ -28,7 +28,7 @@ export const route: Route = {
     url: 'unusualwhales.com/news',
 };
 
-async function handler() {
+async function handler(): Promise<Data> {
     const response = await ofetch(`${apiBase}/api/news/headlines-feed?limit=100`);
 
     const items = response.data.map((item) => ({
@@ -45,7 +45,7 @@ async function handler() {
         description: 'Explore unusual options, options flow, dark pools, short activity, and stock activity on unusualwhales.com. Unusual whales has a full news service available!',
         link: 'https://unusualwhales.com/news-feed',
         image: 'https://unusualwhales.com/android-icon-192x192.png',
-        language: 'en-us' as Language,
+        language: 'en-us',
         item: items,
     };
 }

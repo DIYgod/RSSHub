@@ -1,94 +1,55 @@
-import { load } from 'cheerio';
+import type { CheerioAPI } from 'cheerio';
 import dayjs from 'dayjs';
-import { JSDOM } from 'jsdom';
-import { JSONPath } from 'jsonpath-plus';
 
-import NotFoundError from '@/errors/types/not-found';
-import cache from '@/utils/cache';
-import ofetch from '@/utils/ofetch';
+import { queryToBoolean } from '@/utils/readable-social';
 
-const profileUrl = (user: string) => `https://www.threads.com/@${user}`;
-const threadUrl = (code: string) => `https://www.threads.com/t/${code}`;
+export const profileUrl = (user: string) => `https://www.threads.com/@${user}`;
+export const threadUrl = (code: string) => `https://www.threads.com/t/${code}`;
 
-const USER_AGENT = 'Mozilla/5.0 (iPhone; CPU iPhone OS 16_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.6 Mobile/15E148 Safari/604.1';
+export interface ThreadItem {
+    post: {
+        user?: {
+            username: string;
+            profile_pic_url: string;
+        };
+        taken_at: number;
+        code: string;
+        caption?: {
+            text: string;
+        };
+    };
+}
 
-const extractTokens = async (user): Promise<{ lsd: string }> => {
-    const response = await ofetch(profileUrl(user), {
-        headers: {
-            'User-Agent': USER_AGENT,
-            Accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
-            'Accept-Encoding': 'gzip, br',
-            'Accept-Language': 'zh-CN,zh;q=0.9',
-            'Cache-Control': 'no-cache',
-            Pragma: 'no-cache',
-            'Sec-Fetch-Dest': 'document',
-            'Sec-Fetch-Mode': 'navigate',
-            'Sec-Fetch-Site': 'none',
-            'Sec-Fetch-User': '?1',
-            'Upgrade-Insecure-Requests': '1',
-        },
-    });
-
-    const $ = load(response);
-    const data = $('script:contains("LSD"):first').text();
-    const lsd = data.match(/"LSD",\[\],\{"token":"([\w@-]+)"\},/)?.[1];
-
-    if (!lsd) {
-        throw new NotFoundError('LSD token not found');
-    }
-
-    return { lsd };
-};
-
-const getUserId = async (user: string): Promise<string> => {
-    const result = await cache.tryGet(`threads:userId:${user}`, async () => {
-        const response = await ofetch(profileUrl(user), {
-            headers: {
-                'User-Agent': USER_AGENT,
-                Accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
-                'Accept-Encoding': 'gzip, br',
-                'Accept-Language': 'zh-CN,zh;q=0.9',
-                'Cache-Control': 'no-cache',
-                Pragma: 'no-cache',
-                'Sec-Fetch-Dest': 'document',
-                'Sec-Fetch-Mode': 'navigate',
-                'Sec-Fetch-Site': 'none',
-                'Sec-Fetch-User': '?1',
-                'Upgrade-Insecure-Requests': '1',
-            },
-        });
-
-        const dom = new JSDOM(response);
-        const { document } = dom.window;
-
-        for (const el of document.querySelectorAll('script[data-sjs]')) {
-            try {
-                const data = JSONPath({
-                    path: '$..user_id',
-                    json: JSON.parse(el.textContent || ''),
-                });
-
-                if (data?.[0]) {
-                    return data[0];
-                }
-            } catch {
-                // Skip invalid JSON
-            }
+const findThreadItems = (node, acc: ThreadItem[] = []): ThreadItem[] => {
+    if (node instanceof Object) {
+        if (Array.isArray(node.thread_items)) {
+            acc.push(...node.thread_items);
         }
-
-        throw new NotFoundError('User ID not found');
-    });
-
-    if (result) {
-        if (typeof result === 'string') {
-            return result;
-        }
-        if (typeof result === 'number') {
-            return result.toString();
+        for (const value of Object.values(node)) {
+            findThreadItems(value, acc);
         }
     }
-    throw new TypeError('Invalid user ID type');
+    return acc;
 };
+
+export const extractThreadItems = ($: CheerioAPI): ThreadItem[] => {
+    let threadsData: ThreadItem[] = [];
+    $('script[data-sjs]:contains("thread_items")').each((_, script) => {
+        threadsData = findThreadItems(JSON.parse($(script).text()));
+        return threadsData.length === 0;
+    });
+    return threadsData;
+};
+
+export const parseRouteOptions = (params: URLSearchParams) => ({
+    showAuthorInTitle: queryToBoolean(params.get('showAuthorInTitle')) ?? true,
+    showAuthorInDesc: queryToBoolean(params.get('showAuthorInDesc')) ?? true,
+    showAuthorAvatarInDesc: queryToBoolean(params.get('showAuthorAvatarInDesc')) ?? false,
+    showQuotedInTitle: queryToBoolean(params.get('showQuotedInTitle')) ?? true,
+    showQuotedAuthorAvatarInDesc: queryToBoolean(params.get('showQuotedAuthorAvatarInDesc')) ?? false,
+    showEmojiForQuotesAndReply: queryToBoolean(params.get('showEmojiForQuotesAndReply')) ?? true,
+    replies: queryToBoolean(params.get('replies')) ?? false,
+});
 
 const hasMedia = (post) => post.image_versions2 || post.carousel_media || post.video_versions;
 
@@ -112,7 +73,7 @@ const buildMedia = (post) => {
     return html;
 };
 
-const buildContent = (item, options) => {
+export const buildContent = (item, options) => {
     let title = '';
     let description = '';
     const quotedPost = item.post.text_post_app_info?.share_info?.quoted_post;
@@ -168,5 +129,3 @@ const buildContent = (item, options) => {
     }
     return { title, description };
 };
-
-export { buildContent, extractTokens, getUserId, profileUrl, threadUrl };

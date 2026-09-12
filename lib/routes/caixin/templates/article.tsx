@@ -16,8 +16,8 @@ export const renderArticle = ({ item, $ }: ArticleData) => {
               .match(/initPlayer\('(.*?)','(.*?)'\)/)
         : null;
     const mainContent = $('div#Main_Content_Val.text').length ? $('div#Main_Content_Val.text').html() : null;
-    const picsValue = item.pics;
-    const picsList = typeof picsValue === 'string' && picsValue.includes('#') ? picsValue.split('#') : null;
+    const picsValue: string | undefined = item.pics;
+    const picsList = picsValue && picsValue.includes('#') ? picsValue.split('#') : null;
 
     return renderToString(
         <>

@@ -72,7 +72,7 @@ async function handler(ctx) {
             };
         });
 
-    let items = (await Promise.all(
+    const results = (await Promise.all(
         list.map((item) =>
             cache.tryGet(item.link, async (): Promise<any> => {
                 let response;
@@ -107,8 +107,8 @@ async function handler(ctx) {
                 return item;
             })
         )
-    )) as DataItem[];
-    items = items.filter((item) => item !== null);
+    )) as Array<DataItem | null>;
+    const items = results.filter((item) => item !== null);
 
     return {
         title: $('title').text(),

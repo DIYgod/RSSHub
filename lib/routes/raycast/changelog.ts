@@ -6,7 +6,7 @@ import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
 const handler: Route['handler'] = async () => {
-    const item = (await cache.tryGet('raycast:changelog', async () => {
+    const item = await cache.tryGet('raycast:changelog', async () => {
         const data = await ofetch('https://www.raycast.com/changelog');
 
         const $ = load(data);
@@ -27,7 +27,7 @@ const handler: Route['handler'] = async () => {
                     pubDate: parseDate(date),
                 };
             });
-    })) as DataItem[];
+    });
 
     return {
         title: 'Raycast Changelog',

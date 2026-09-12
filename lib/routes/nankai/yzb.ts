@@ -92,7 +92,7 @@ export const route: Route = {
         return {
             title: `南开大学研究生招生网-${$('.column-title').text()}`,
             link: `${baseUrl}/${type}/list.htm`,
-            item: items as any[],
+            item: items,
         };
     },
 };

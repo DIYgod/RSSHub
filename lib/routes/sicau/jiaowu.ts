@@ -49,7 +49,7 @@ export const route: Route = {
 
         let items = $('tbody > .text-c:nth-child(-n+10)')
             .toArray()
-            .map((item) => {
+            .map((item): DataItem => {
                 const children = $(item).children();
                 const a = children.eq(2).find('a');
                 return {
@@ -59,7 +59,7 @@ export const route: Route = {
                     pubDate: timezone(parseDate(children.eq(3).text(), 'YYYY-M-D'), 8),
                     author: children.eq(4).text(),
                     description: '请在应用内抓取全文内容',
-                } as DataItem;
+                };
             });
 
         if (detail) {

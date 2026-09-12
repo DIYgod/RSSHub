@@ -156,7 +156,7 @@ async function handler(ctx) {
                 ],
 
                 _extra: { raw: item },
-            } as DataItem;
+            } satisfies DataItem;
         }),
     };
 }

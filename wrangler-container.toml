@@ -1,7 +1,6 @@
 name = "rsshub-container"
 main = "dist-container/container.mjs"
-compatibility_date = "2026-01-16"
-compatibility_flags = ["nodejs_compat"]
+compatibility_date = "2026-09-01"
 
 [build]
 command = "pnpm run container-build"

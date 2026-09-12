@@ -68,7 +68,7 @@ async function handler(ctx) {
         '1y': 'Last year',
     };
 
-    const mime: Record<string, string> = {
+    const mime = {
         jpg: 'jpeg',
         png: 'png',
     };

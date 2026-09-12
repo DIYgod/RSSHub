@@ -32,9 +32,9 @@ const parseJapaneseDate = (text: string) => {
 };
 
 async function fetchPage(url: string) {
-    const raw = await ofetch(url, { responseType: 'arrayBuffer' });
+    const raw = await ofetch<ArrayBuffer, 'arrayBuffer'>(url, { responseType: 'arrayBuffer' });
     const decoder = new TextDecoder('shift-jis');
-    return decoder.decode(raw as ArrayBuffer);
+    return decoder.decode(raw);
 }
 
 async function handler(ctx: Context) {

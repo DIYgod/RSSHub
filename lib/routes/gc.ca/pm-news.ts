@@ -47,7 +47,7 @@ export const route: Route = {
         const $ = load(replaceItem.data);
         const items: DataItem[] = $('.news-row')
             .toArray()
-            .map((element) => {
+            .map((element): DataItem | null => {
                 const $element = $(element);
                 const $titleLink = $element.find('.title a');
                 const $category = $element.find('.category');
@@ -64,7 +64,7 @@ export const route: Route = {
                         link,
                         category: [category],
                         pubDate: date ? parseDate(date) : undefined,
-                    } as DataItem;
+                    };
                 }
                 return null;
             })

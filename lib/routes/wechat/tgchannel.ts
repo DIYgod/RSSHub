@@ -1,6 +1,6 @@
 import type { Cheerio } from 'cheerio';
 import { load } from 'cheerio';
-import type { Element } from 'domhandler';
+import type { AnyNode } from 'domhandler';
 
 import type { DataItem, Route } from '@/types';
 import got from '@/utils/got';
@@ -54,7 +54,7 @@ async function handler(ctx) {
 
     const out = await Promise.all(
         list.toArray().map(async (item) => {
-            let $item = $(item);
+            let $item: Cheerio<AnyNode> = $(item);
 
             if (searchQuery) {
                 // 删除关键字高亮 <mark class="highlight">
@@ -62,10 +62,10 @@ async function handler(ctx) {
                 if (highlightMarks) {
                     for (const mark of highlightMarks) {
                         const $mark = $(mark);
-                        const markInnerHtml = $mark.html();
-                        $mark.replaceWith(markInnerHtml as string);
+                        const markInnerHtml = $mark.html() as string;
+                        $mark.replaceWith(markInnerHtml);
                     }
-                    $item = $($item.html() as string) as Cheerio<Element>; // 删除关键字高亮后，相邻的裸文本节点不会被自动合并，重新生成 cheerio 对象以确保后续流程正常运行
+                    $item = $($item.html() as string); // 删除关键字高亮后，相邻的裸文本节点不会被自动合并，重新生成 cheerio 对象以确保后续流程正常运行
                 }
             }
 

@@ -1,4 +1,4 @@
-import type { Language, Route } from '@/types';
+import type { Data, Route } from '@/types';
 
 import { getData, getList } from './utils';
 
@@ -71,7 +71,7 @@ export const route: Route = {
 | Video                    | video              |`,
 };
 
-async function handler(ctx) {
+async function handler(ctx): Promise<Data> {
     const baseUrl = 'https://grist.org';
     const searchRoute = '/wp-json/wp/v2/categories?slug=';
     const articleRoute = '/wp-json/wp/v2/posts?categories=';
@@ -87,6 +87,6 @@ async function handler(ctx) {
         description: `${topic[0].toUpperCase() + topic.slice(1)} Articles on grist.org`,
         logo: 'https://grist.org/wp-content/uploads/2021/03/cropped-Grist-Favicon.png?w=192',
         icon: 'https://grist.org/wp-content/uploads/2021/03/cropped-Grist-Favicon.png?w=32',
-        language: 'en-us' as Language,
+        language: 'en-us',
     };
 }

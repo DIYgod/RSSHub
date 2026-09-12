@@ -108,14 +108,14 @@ interface VoiceInfo {
 async function handler(ctx) {
     const { pphId } = ctx.req.param();
 
-    const mobileBuildId = (await cache.tryGet('thepaper:m:buildId', async () => {
+    const mobileBuildId = await cache.tryGet<string>('thepaper:m:buildId', async () => {
         const response = await ofetch('https://m.thepaper.cn');
         const $ = load(response);
         const nextData = JSON.parse($('script#__NEXT_DATA__').text());
         return nextData.buildId;
-    })) as string;
+    });
 
-    const userInfo = (await cache.tryGet(`thepaper:user:${pphId}`, async () => {
+    const userInfo = await cache.tryGet<AuthorInfo>(`thepaper:user:${pphId}`, async () => {
         const response = await ofetch(`https://api.thepaper.cn/userservice/user/homePage/${pphId}`, {
             headers: {
                 'Client-Type': '2',
@@ -124,7 +124,7 @@ async function handler(ctx) {
             },
         });
         return response.userInfo;
-    })) as AuthorInfo;
+    });
 
     const response = await ofetch<PPHContentResponse>('https://api.thepaper.cn/contentapi/cont/pph/user', {
         method: 'POST',

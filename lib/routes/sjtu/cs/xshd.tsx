@@ -132,7 +132,7 @@ function enrichItem(item: ListItem): Promise<DataItem> {
             image: item.image || undefined,
             pubDate,
         };
-    }) as Promise<DataItem>;
+    });
 }
 
 export const route: Route = {

@@ -5,7 +5,15 @@ import { routePath } from 'hono/route';
 import { config } from '@/config';
 import type { Data } from '@/types';
 
-const headers: Record<string, string> = {
+type CommonResponseHeaders = {
+    'Access-Control-Allow-Methods': string;
+    'Content-Type': string;
+    'Cache-Control': string;
+    'X-Content-Type-Options': string;
+    'RSSHub-Node'?: string;
+};
+
+const headers: CommonResponseHeaders = {
     'Access-Control-Allow-Methods': 'GET',
     'Content-Type': 'application/xml; charset=utf-8',
     'Cache-Control': `public, max-age=${config.cache.routeExpire}`,

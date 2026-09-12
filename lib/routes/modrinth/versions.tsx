@@ -90,10 +90,8 @@ export const route: Route = {
 };
 
 async function handler(ctx: Context) {
-    const { id, routeParams } = ctx.req.param() as {
-        id: string;
-        routeParams?: string;
-    };
+    const id = ctx.req.param('id');
+    const routeParams = ctx.req.param('routeParams');
 
     /**
      * /@type {{

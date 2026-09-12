@@ -68,9 +68,9 @@ export const parseArticleList = (response: string) => {
         .filter((item) => item !== undefined) satisfies DataItem[];
 };
 
-export const getArticle = (item) =>
-    cache.tryGet(item.link, async () => {
-        const response = await ofetch(item.link);
+export const getArticle = (item: DataItem) =>
+    cache.tryGet(item.link!, async (): Promise<DataItem> => {
+        const response = await ofetch(item.link!);
         const $ = load(response);
         const content = $('.Mid2L_con, .MidLcon');
         content.find('.appGameBuyCardIframe, .GSAppButton, .Mid2L_down').remove();
@@ -92,8 +92,8 @@ export const getArticle = (item) =>
             }
         });
         item.description = content.html() || item.description;
-        return item satisfies DataItem;
-    }) as Promise<DataItem>;
+        return item;
+    });
 
 export const getUserArticleList = async (userId: string) => {
     const response = await ofetch<UserArticleList>(
@@ -111,19 +111,20 @@ export const parseUserArticleList = (body: string) => {
     const $ = load(body);
     const list = $('.cmt-list');
     const info = list.find('.uname').first();
+    const items: DataItem[] = list.toArray().map((item) => {
+        const e = $(item);
+        const title = e.find('.qzcmt-content-tit a');
+        return {
+            title: title.text(),
+            link: title.attr('href'),
+            pubDate: parseDate(e.attr('data-time')!),
+            description: e.find('.qzcmt-content-txt span').text(),
+        };
+    });
     return {
         uname: info.text(),
         link: info.attr('href'),
-        list: list.toArray().map((item) => {
-            const e = $(item);
-            const title = e.find('.qzcmt-content-tit a');
-            return {
-                title: title.text(),
-                link: title.attr('href'),
-                pubDate: parseDate(e.attr('data-time')!),
-                description: e.find('.qzcmt-content-txt span').text(),
-            };
-        }) as DataItem[],
+        list: items,
     };
 };
 

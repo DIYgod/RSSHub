@@ -32,7 +32,7 @@ export async function handler(ctx) {
     const $ = load(response);
 
     const author = 'Reactiflux';
-    const language = 'en';
+    const language: Language = 'en';
     const image = $('meta[property="og:image"]').prop('content');
 
     let items =
@@ -50,7 +50,7 @@ export async function handler(ctx) {
                     id: guid,
                     image,
                     banner: image,
-                    language: language as Language,
+                    language,
                 };
             }) ?? [];
 
@@ -99,6 +99,6 @@ export async function handler(ctx) {
         allowEmpty: true,
         image,
         author,
-        language: language as Language,
+        language,
     };
 }

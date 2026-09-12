@@ -39,14 +39,14 @@ async function handler(ctx): Promise<Data> {
 
     const cookies = (initResponse.headers.getSetCookie?.() || []).map((c) => c.split(';', 1)[0]).join('; ');
 
-    const { html } = await ofetch(targetUrl, {
+    const { html } = await ofetch<{ html: string }>(targetUrl, {
         headers: {
             'Accept-Language': 'zh-CN,zh;q=0.9',
             Cookie: cookies,
         },
     });
 
-    const $ = load(html as string);
+    const $ = load(html);
     const items: DataItem[] = $('li')
         .toArray()
         .map((item) => {

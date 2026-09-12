@@ -36,7 +36,7 @@ export const route: Route = {
         antiCrawler: true,
     },
     name: '小说',
-    maintainers: ['nczitzk'],
+    maintainers: ['jjeejj', 'machsix', 'nczitzk'],
     description: `::: tip
 
 #### 使用方法

@@ -1,5 +1,6 @@
 import type { Route } from '@/types';
 import buildData from '@/utils/common-config';
+import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
 
 export const route: Route = {
     path: '/zhengceku/:department',
@@ -26,16 +27,14 @@ async function handler(ctx) {
     return await buildData({
         link,
         url: link,
-        title: '%title%',
+        title: ($) => $('.channel_tab > .noline > a').text().trim() + ' - 政府文件库',
         description: '政府文件库, 当页的所有列表',
-        params: {
-            title: `$('.channel_tab > .noline > a').text().trim() + ' - 政府文件库'`,
-        },
         item: {
             item: '.news_box > .list > ul > li:not(.line)',
-            title: `$('h4 > a').text()`,
-            link: `$('h4 > a').attr('href')`,
-            pubDate: `parseDate($('h4 > .date').text().trim())`,
+            title: ($) => $('h4 > a').text(),
+            link: ($) => $('h4 > a').attr('href'),
+            // The list provides calendar dates, represented at UTC midnight.
+            pubDate: ($) => parseDateInTimezone($('h4 > .date').text().trim(), 0),
         },
     });
 }

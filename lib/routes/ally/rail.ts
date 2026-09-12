@@ -1,5 +1,4 @@
 import { load } from 'cheerio';
-import type { Element } from 'domhandler';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
@@ -81,7 +80,7 @@ async function handler(ctx) {
                 pubDate: timezone(parseDate(`${urlMatch[1]}${urlMatch[2]}`), 8),
             };
         })
-        .filter(Boolean) as DataItem[];
+        .filter((item) => item !== null);
     const uniqueItems: DataItem[] = [];
     for (const item of items) {
         if (uniqueItems.every((uniqueItem) => uniqueItem.link !== item?.link)) {
@@ -105,7 +104,7 @@ async function handler(ctx) {
                         .each((_, child) => {
                             const $child = $(child);
                             let innerHtml;
-                            if ((child as Element).name === 'div') {
+                            if ($child.is('div')) {
                                 innerHtml = $child.html();
                                 innerHtml &&= innerHtml.trim();
                                 description += !innerHtml || innerHtml === '&nbsp;' ? (description ? '<br>' : '') : innerHtml;

@@ -6,6 +6,10 @@ import { parseDate } from '@/utils/parse-date';
 
 import { processImage } from './utils';
 
+interface ContentBlock {
+    content?: string;
+}
+
 export const route: Route = {
     path: '/timeline',
     categories: ['social-media'],
@@ -86,16 +90,14 @@ async function handler(ctx) {
         }
         return actors.map((e) => e.name).join(', ');
     };
-
-    const getContent = (content) => {
+    const getContent = (content: string | ContentBlock[] | undefined) => {
         if (!content || !Array.isArray(content)) {
             return content;
         }
-        // content can be a string or an array of objects
         return (
             content
                 .map((e) => e.content)
-                .filter((e) => !!e && typeof e === 'string')
+                .filter((e) => !!e)
                 // some content may not be wrapped in tag, it will cause error when parsing
                 .map((e) => `<div>${e}</div>`)
                 .join('')

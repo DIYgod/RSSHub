@@ -3,7 +3,7 @@ import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 import pMap from 'p-map';
 
-import type { Language, Route } from '@/types';
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 
@@ -146,6 +146,6 @@ async function handler(ctx) {
         description: Object.hasOwn(topics, category) ? `${topics[category]} : News on dlnews.com` : 'Latest News on dlnews.com',
         logo: 'https://www.dlnews.com/pf/resources/favicon.ico?d=284',
         icon: 'https://www.dlnews.com/pf/resources/favicon.ico?d=284',
-        language: 'en-us' as Language,
+        language: 'en-us' as const,
     };
 }

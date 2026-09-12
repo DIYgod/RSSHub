@@ -18,7 +18,7 @@ export const handler = async (ctx) => {
 
     const $ = load(response);
 
-    const language = $('html').prop('lang');
+    const language = $('html').prop('lang') as Language;
 
     let items = $('div.article-list ul li')
         .slice(0, limit)
@@ -51,7 +51,7 @@ export const handler = async (ctx) => {
                 },
                 image,
                 banner: image,
-                language: language as Language,
+                language,
             };
         });
 
@@ -73,7 +73,7 @@ export const handler = async (ctx) => {
                     html: description ?? '',
                     text: $$('div.articleContent').text(),
                 };
-                item.language = language as Language;
+                item.language = language;
 
                 return item;
             })
@@ -91,7 +91,7 @@ export const handler = async (ctx) => {
         allowEmpty: true,
         image,
         author: title.split(/,/).pop(),
-        language: language as Language,
+        language,
     };
 };
 
@@ -99,7 +99,7 @@ export const route: Route = {
     path: '/:category?',
     name: '资讯',
     url: '005.tv',
-    maintainers: ['nczitzk'],
+    maintainers: ['junfengP', 'nczitzk'],
     handler,
     example: '/005/zx',
     parameters: { category: '分类，可在对应分类页 URL 中找到，默认为二次元资讯' },

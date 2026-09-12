@@ -4,30 +4,19 @@ import ofetch from '@/utils/ofetch';
 import type { Article } from './constants';
 import { Language, SUPPORTED_LANGUAGES } from './constants';
 
-/**
- * Parse a number or a number as string.\
- * **NOTE:** this may return `NaN` if the string is not a number or the value is `undefined` and no {@link fallback} is provided.
- */
-export const parseInteger = (value?: string | number, fallback?: number): number => {
-    if (typeof value === 'number') {
-        return value;
-    }
-
+/** Parse a query string value as a number, falling back to {@link fallback} when it is absent or not a number. */
+export const parseInteger = (value: string | undefined, fallback: number): number => {
     if (value === undefined) {
-        return fallback === undefined ? NaN : fallback;
+        return fallback;
     }
 
     const parsed = Number(value);
 
-    if (fallback !== undefined && Number.isNaN(parsed)) {
-        return fallback;
-    }
-
-    return parsed;
+    return Number.isNaN(parsed) ? fallback : parsed;
 };
 
 /** Type-guard to ensure {@link language} is a valid value of {@link SUPPORTED_LANGUAGES}. */
-export const isValidLanguage = (language: string): language is Language => SUPPORTED_LANGUAGES.includes(language as Language);
+export const isValidLanguage = (language: string): language is Language => SUPPORTED_LANGUAGES.some((supported) => supported === language);
 
 /** Fetch the articles for a given language in a given category. */
 export const fetchArticles = async (language: Language): Promise<Article[]> => {

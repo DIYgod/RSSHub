@@ -3,7 +3,7 @@ import type { SearchParams } from 'narou';
 import { NarouNovelFetch, SearchBuilderR18 } from 'narou';
 
 import InvalidParameterError from '@/errors/types/invalid-parameter';
-import type { Data, DataItem, Route } from '@/types';
+import type { Data, Route } from '@/types';
 
 import { renderDescription } from './templates/description';
 import { NovelType, novelTypeToJapanese, periodToJapanese, periodToOrder, RankingPeriod, SyosetuSub, syosetuSubToJapanese, syosetuSubToNocgenre } from './types/ranking-r18';
@@ -120,22 +120,17 @@ For example: \`daily_total\`, \`weekly_r\`, \`monthly_er\`
     ],
 };
 
-function parseRankingType(type: string): { period: RankingPeriod; novelType: NovelType } {
+function parseRankingType(type: string) {
     const [periodStr, novelTypeStr] = type.split('_', 2);
 
-    const period = periodStr as RankingPeriod;
-    const novelType = novelTypeStr as NovelType;
+    const period = Object.values(RankingPeriod).find((value) => value === periodStr);
+    const novelType = Object.values(NovelType).find((value) => value === novelTypeStr);
 
-    const isValid = [Object.values(RankingPeriod).includes(period), Object.values(NovelType).includes(novelType)].every(Boolean);
-
-    if (!isValid) {
+    if (!period || !novelType) {
         throw new InvalidParameterError(`Invalid ranking type: ${type}`);
     }
 
-    return {
-        period: periodStr as RankingPeriod,
-        novelType: novelTypeStr as NovelType,
-    };
+    return { period, novelType };
 }
 
 function getRankingTitle(type: string, limit: number): string {
@@ -182,7 +177,7 @@ async function handler(ctx: Context): Promise<Data> {
     return {
         title: `小説家になろう (${sub}) - ${getRankingTitle(type, limit)}`,
         link: rankingUrl,
-        item: items as DataItem[],
+        item: items,
         language: 'ja',
     };
 }

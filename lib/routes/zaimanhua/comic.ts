@@ -8,6 +8,33 @@ import { parseDate } from '@/utils/parse-date';
 
 import { renderComic } from './template/comic';
 
+interface Chapter {
+    chapter_id: number;
+    chapter_title: string;
+    updatetime: number;
+}
+
+interface ComicDetailResponse {
+    data: {
+        comicInfo: {
+            title: string;
+            comicPy: string;
+            chapterList: Array<{
+                title: string;
+                data: Chapter[];
+            }>;
+        };
+    };
+}
+
+interface ChapterDetailResponse {
+    data: {
+        chapterInfo: {
+            page_url?: string[];
+        };
+    };
+}
+
 export const route: Route = {
     path: '/comic/:id',
     categories: ['anime'],
@@ -48,7 +75,7 @@ async function handler(ctx) {
     const id = ctx.req.param('id');
     const currentComicUrl = `${baseUrl}/api/v1/comic2/comic/detail?id=${id}`;
 
-    const headers: Record<string, string> = {
+    const headers: HeadersInit = {
         'user-agent': config.trueUA,
     };
 
@@ -57,11 +84,11 @@ async function handler(ctx) {
         headers.Authorization = token.startsWith('Bearer ') ? token : `Bearer ${token}`;
     }
 
-    const response = await ofetch(currentComicUrl, { headers });
+    const response = await ofetch<ComicDetailResponse>(currentComicUrl, { headers });
 
     const comicInfo = response.data.comicInfo;
     const status = comicInfo.chapterList[0].title; // 更新状态
-    const data = comicInfo.chapterList[0].data as Array<Record<string, any>>;
+    const data = comicInfo.chapterList[0].data;
     const comicPy = comicInfo.comicPy;
     const comicTitle = comicInfo.title;
     const items = await pMap(
@@ -72,7 +99,7 @@ async function handler(ctx) {
 
             return await cache.tryGet(chapterUrl, async () => {
                 // 获取章节内容
-                const chapterResponse = await ofetch(chapterUrl, { headers });
+                const chapterResponse = await ofetch<ChapterDetailResponse>(chapterUrl, { headers });
 
                 const chapterData = chapterResponse.data;
                 const description = renderComic(chapterData.chapterInfo.page_url || []);

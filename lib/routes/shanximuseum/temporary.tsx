@@ -22,7 +22,7 @@ export const route = {
         },
     ],
     handler: async (ctx) => {
-        const typeParam = ctx.req.param('type');
+        const typeParam: string | undefined = ctx.req.param('type');
         // Support multiple status combinations separated by &, + or , (e.g., now&future)
         const fetchTypes = typeParam ? [...new Set(typeParam.split(/[&+,|-]/))] : ['now', 'future', 'past'];
 
@@ -50,11 +50,11 @@ export const route = {
 
         const museumName = namespace.zh?.name || namespace.name;
 
-        const titleTag = fetchTypes.length === 3 ? '全部展览' : fetchTypes.map((t) => apiConfig[t as keyof typeof apiConfig]?.name).join(' & ');
+        const titleTag = fetchTypes.length === 3 ? '全部展览' : fetchTypes.map((t) => apiConfig[t]?.name).join(' & ');
 
         const responses = await Promise.all(
             fetchTypes.map(async (t) => {
-                const config = apiConfig[t as keyof typeof apiConfig];
+                const config = apiConfig[t];
 
                 // add trycatch to prevent one failed request, espacially for now/future exhibition.
                 try {

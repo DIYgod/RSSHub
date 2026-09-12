@@ -10,14 +10,20 @@ import remarkPangu from 'remark-pangu';
 const __dirname = import.meta.dirname;
 const routesDir = path.resolve(__dirname, '../../lib/routes');
 
+interface MdastNode {
+    type: string;
+    value?: string;
+    children?: MdastNode[];
+}
+
 function remarkDirectiveSpace() {
     return (tree: any) => {
         walkDirectiveAst(tree);
     };
 }
 
-function walkDirectiveAst(node: any): void {
-    if (node.type === 'text' && typeof node.value === 'string') {
+function walkDirectiveAst(node: MdastNode): void {
+    if (node.type === 'text' && node.value !== undefined) {
         node.value = node.value.replaceAll(/^:::([A-Z][\w-]*)/gim, '::: $1');
     }
     if (Array.isArray(node.children)) {
@@ -30,7 +36,7 @@ function walkDirectiveAst(node: any): void {
 // Without remark-directive, a `:::` line right after a list/table gets absorbed:
 // lists swallow it as lazy continuation, GFM tables consume it as another row.
 // Lift trailing `:::` out so it stringifies flush left.
-function shouldLiftFromList(list: any): boolean {
+function shouldLiftFromList(list: MdastNode): boolean {
     const lastItem = list.children?.at(-1);
     if (lastItem?.type !== 'listItem') {
         return false;
@@ -43,14 +49,17 @@ function shouldLiftFromList(list: any): boolean {
     if (lastText?.type !== 'text') {
         return false;
     }
-    return (lastText.value as string).trimEnd().endsWith('\n:::');
+    return lastText.value?.trimEnd().endsWith('\n:::') === true;
 }
 
-function liftFromList(list: any): void {
-    const lastItem = list.children.at(-1);
-    const lastPara = lastItem.children.at(-1);
-    const lastText = lastPara.children.at(-1);
-    lastText.value = (lastText.value as string).trimEnd().slice(0, -4);
+function liftFromList(list: MdastNode): void {
+    const lastItem = list.children?.at(-1);
+    const lastPara = lastItem?.children?.at(-1);
+    const lastText = lastPara?.children?.at(-1);
+    if (!lastItem?.children || !lastPara?.children || !lastText?.value) {
+        return;
+    }
+    lastText.value = lastText.value.trimEnd().slice(0, -4);
     if (lastText.value === '') {
         lastPara.children.pop();
     }
@@ -59,7 +68,7 @@ function liftFromList(list: any): void {
     }
 }
 
-function shouldLiftFromTable(table: any): boolean {
+function shouldLiftFromTable(table: MdastNode): boolean {
     const lastRow = table.children?.at(-1);
     if (lastRow?.type !== 'tableRow') {
         return false;
@@ -84,7 +93,7 @@ function shouldLiftFromTable(table: any): boolean {
     return true;
 }
 
-function visitForLift(parent: any): void {
+function visitForLift(parent: MdastNode): void {
     if (!Array.isArray(parent.children)) {
         return;
     }
@@ -98,7 +107,7 @@ function visitForLift(parent: any): void {
             liftFromList(node);
             lifted = true;
         } else if (node.type === 'table' && shouldLiftFromTable(node)) {
-            node.children.pop();
+            node.children?.pop();
             lifted = true;
         }
         if (lifted) {
@@ -138,19 +147,22 @@ function getPropertyName(prop: ObjectExpression['properties'][number]): string {
     if (prop.key.type === 'Identifier') {
         return prop.key.name;
     }
-    if (prop.key.type === 'Literal' && typeof prop.key.value === 'string') {
-        return prop.key.value;
+    if (prop.key.type === 'Literal') {
+        return String(prop.key.value);
     }
     return '';
 }
 
-const TARGETS: Record<string, string> = { route: 'Route', namespace: 'Namespace' };
+const TARGETS = new Map([
+    ['route', 'Route'],
+    ['namespace', 'Namespace'],
+]);
 
 function isTargetTypedDeclaration(decl: VariableDeclarator): boolean {
     if (decl.id.type !== 'Identifier') {
         return false;
     }
-    const expectedType = TARGETS[decl.id.name];
+    const expectedType = TARGETS.get(decl.id.name);
     if (!expectedType) {
         return false;
     }
@@ -169,18 +181,21 @@ function collectDescriptionEdits(program: Program): DescriptionEdit[] {
             const name = getPropertyName(prop);
             const init = prop.value;
             if (name === 'description') {
-                if (init.type === 'Literal' && typeof init.value === 'string') {
+                if (init.type === 'Literal') {
                     edits.push({
                         start: init.start,
                         end: init.end,
-                        raw: init.value,
+                        raw: init.value as string,
                     });
-                } else if (init.type === 'TemplateLiteral' && init.expressions.length === 0 && typeof init.quasis[0]?.value.cooked === 'string') {
-                    edits.push({
-                        start: init.start,
-                        end: init.end,
-                        raw: init.quasis[0].value.cooked,
-                    });
+                } else if (init.type === 'TemplateLiteral' && init.expressions.length === 0) {
+                    const cooked = init.quasis[0]?.value.cooked;
+                    if (cooked !== null && cooked !== undefined) {
+                        edits.push({
+                            start: init.start,
+                            end: init.end,
+                            raw: cooked,
+                        });
+                    }
                 }
             } else if ((name.includes('ja') || name.includes('zh')) && init.type === 'ObjectExpression') {
                 visitObject(init);
@@ -242,7 +257,7 @@ async function processFile(filePath: string): Promise<void> {
     const formattedResults = await Promise.all(
         edits.map(async (edit) => {
             if (!edit.raw.trim()) {
-                return { edit, formatted: null as string | null };
+                return { edit, formatted: null };
             }
             const file = await processor.process(edit.raw);
             return {

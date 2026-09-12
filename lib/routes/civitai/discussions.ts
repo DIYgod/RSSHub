@@ -53,7 +53,7 @@ async function handler(ctx) {
         }
     );
 
-    const items = [...data[0].result.data.json.reviews, ...data[1].result.data.json.comments]
+    const items: DataItem[] = [...data[0].result.data.json.reviews, ...data[1].result.data.json.comments]
         .map((item) =>
             item.images?.length || item.content
                 ? {
@@ -66,7 +66,7 @@ async function handler(ctx) {
                   }
                 : null
         )
-        .filter(Boolean) as DataItem[];
+        .filter((item) => item !== null);
 
     return {
         title: `Civitai model ${params.modelId} discussions`,

@@ -19,7 +19,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
     const response = await ofetch(targetUrl);
     const $: CheerioAPI = load(response);
-    const language = $('html').attr('lang') ?? 'en';
+    const language = ($('html').attr('lang') ?? 'en') as Language;
 
     let items: DataItem[] = $('div.blog-row')
         .slice(0, limit)
@@ -56,7 +56,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 image,
                 banner: image,
                 updated: upDatedStr ? parseDate(upDatedStr) : undefined,
-                language: language as Language,
+                language,
             };
 
             return processedItem;
@@ -84,10 +84,11 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 const authorEls: Element[] = $$('img.avatar').toArray();
                 const authors: DataItem['author'] = authorEls.map((authorEl) => {
                     const $$authorEl: Cheerio<Element> = $$(authorEl).parent().next().find('a');
+                    const authorHref: string | undefined = $$authorEl.attr('href');
 
                     return {
                         name: $$authorEl.text(),
-                        url: $$authorEl.attr('href') ? new URL($$authorEl.attr('href') as string, baseUrl).href : undefined,
+                        url: authorHref ? new URL(authorHref, baseUrl).href : undefined,
                         avatar: `https:${$$(authorEl).attr('src')?.split(/\?/, 1)[0]}`,
                     };
                 });
@@ -104,7 +105,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                         text: description,
                     },
                     updated: upDatedStr ? parseDate(upDatedStr) : item.updated,
-                    language: language as Language,
+                    language,
                 };
 
                 return {
@@ -115,13 +116,15 @@ export const handler = async (ctx: Context): Promise<Data> => {
         })
     );
 
+    const logoSrc: string | undefined = $('img.navbar-logo').attr('src');
+
     return {
         title: $('title').text(),
         link: targetUrl,
         item: items,
         allowEmpty: true,
-        image: $('img.navbar-logo').attr('src') ? new URL($('img.navbar-logo').attr('src') as string, baseUrl).href : undefined,
-        language: language as Language,
+        image: logoSrc ? new URL(logoSrc, baseUrl).href : undefined,
+        language,
         id: targetUrl,
     };
 };

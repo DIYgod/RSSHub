@@ -74,30 +74,40 @@ function getAcwScV2Cookie(response: string) {
     return `acw_sc__v2=${getAcwScV2ByArg1(arg1)}`;
 }
 
-async function requestApi<T>(endpoint: string, referer: string, searchParams?: Record<string, string | number | boolean>) {
+function parseJsonBody<T>(body: string): T | null {
+    try {
+        return JSON.parse(body);
+    } catch {
+        return null;
+    }
+}
+
+async function requestApi<T>(endpoint: string, referer: string, searchParams?: Record<string, string | number | boolean | undefined>) {
     const request = () =>
         got.get(`${apiRootUrl}${endpoint}`, {
             searchParams,
             headers: getHeaders(referer),
         });
 
-    const { data } = await request();
-    if (typeof data !== 'string') {
-        return data as T;
+    const { body } = await request();
+    const payload = parseJsonBody<T>(body);
+    if (payload !== null) {
+        return payload;
     }
 
-    const cookie = getAcwScV2Cookie(data);
+    const cookie = getAcwScV2Cookie(body);
     if (!cookie) {
         throw new Error('TechFlow API returned an unexpected non-JSON response.');
     }
 
     acwScV2Cookie = cookie;
     const retryResponse = await request();
-    if (typeof retryResponse.data === 'string') {
+    const retryPayload = parseJsonBody<T>(retryResponse.body);
+    if (retryPayload === null) {
         throw new TypeError('TechFlow API still returned an anti-crawler challenge after retry.');
     }
 
-    return retryResponse.data as T;
+    return retryPayload;
 }
 
 function getPictureUrl(picture?: string) {
@@ -108,7 +118,8 @@ function getPictureUrl(picture?: string) {
 }
 
 function getCategories(article: Article) {
-    return [...new Set([article.category?.name, ...(article.labels?.map((label) => label.label) ?? [])].filter(Boolean))] as string[];
+    const names = [article.category?.name, ...(article.labels?.map((label) => label.label) ?? [])];
+    return [...new Set(names.filter((name): name is string => Boolean(name)))];
 }
 
 function getArticleItem(article: Article, content?: string): DataItem {
@@ -140,14 +151,11 @@ function getNewsflashItem(newsflash: Newsflash, content?: string): DataItem {
 
 async function getArticleItems({ category, limit }: { category?: string; limit: string | number }) {
     const link = `${rootUrl}/${locale}/article`;
-    const searchParams: Record<string, string | number> = {
+    const searchParams = {
         page: 1,
         page_size: limit,
+        category_id: category || undefined,
     };
-
-    if (category) {
-        searchParams.category_id = category;
-    }
 
     const response = await requestApi<ApiListResponse<Article>>('/client/articles', link, searchParams);
     if (!Array.isArray(response.data)) {

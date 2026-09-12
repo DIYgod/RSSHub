@@ -63,12 +63,14 @@ async function handler(ctx) {
     const image = new URL('_images/Pine_Script_logo.svg', currentUrl).href;
     const icon = new URL('favicon.ico', rootUrl).href;
 
+    const language = $('html').prop('lang') as Language;
+
     return {
         item: items,
         title: $('title').text(),
         link: currentUrl,
         description: $('div.text-logo').text(),
-        language: $('html').prop('lang') as Language,
+        language,
         image,
         icon,
         logo: icon,

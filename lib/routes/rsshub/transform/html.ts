@@ -131,7 +131,7 @@ Parsing of \`routeParams\` parameter:
                             url: item.link,
                             responseType: 'arrayBuffer',
                         });
-                        if (!response || typeof response === 'string') {
+                        if (!response) {
                             return item;
                         }
 

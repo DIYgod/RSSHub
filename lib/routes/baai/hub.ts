@@ -49,9 +49,9 @@ async function handler(ctx) {
 
     let title, description, brief, iconUrl;
     if (tagId) {
-        const tagsData = await getTagsData();
+        const tagsData: Array<{ id: string; title: string; description: string; brief: string; iconUrl: string }> = await getTagsData();
 
-        const tag = (tagsData as Array<Record<string, string>>).find((tag) => tag.id === tagId);
+        const tag = tagsData.find((tag) => tag.id === tagId);
         if (tag) {
             title = tag.title;
             description = tag.description;

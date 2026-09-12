@@ -9,14 +9,7 @@ import { parseDate } from '@/utils/parse-date';
 
 import type { RawRecord } from './types';
 
-const categories: Record<
-    string,
-    {
-        label: string;
-        scene: number;
-        view: number;
-    }
-> = {
+const categories = {
     today: {
         label: "Today's News",
         scene: 12,
@@ -92,7 +85,7 @@ async function handler(ctx: Context): Promise<Data> {
         throw new InvalidParameterError('Invalid category');
     }
 
-    const { scene, view, label } = categories[category];
+    const { scene, view, label } = categories[category as keyof typeof categories];
 
     const data = await ofetch<{
         records: RawRecord[];
@@ -106,7 +99,7 @@ async function handler(ctx: Context): Promise<Data> {
     return {
         title: `${label} - Cybercrime Magazine`,
         link: `${rootUrl}/${category}`,
-        item: data.records.map((item) => {
+        item: data.records.map((item): DataItem => {
             const $ = load(item.field_3, null, false);
             const link = $('a').attr('href');
             const source = item.field_4;
@@ -118,7 +111,7 @@ async function handler(ctx: Context): Promise<Data> {
                 pubDate: parseDate(item.field_2.iso_timestamp),
                 link,
                 guid: `cybersecurityventures:${item.id}`,
-            } as DataItem;
+            };
         }),
     };
 }

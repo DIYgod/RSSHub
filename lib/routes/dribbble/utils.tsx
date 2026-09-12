@@ -32,9 +32,10 @@ async function loadContent(link) {
 
             object.find('video').each((_, video) => {
                 const $video = $(video);
+                const dataSrc = $video.attr('data-src');
 
-                if (!$video.attr('src') && $video.data('src')) {
-                    $video.attr('src', $video.data('src') as string);
+                if (!$video.attr('src') && dataSrc) {
+                    $video.attr('src', dataSrc);
                     $video.removeAttr('data-src');
                     $video.removeAttr('data-video-small');
                     $video.removeAttr('data-video-medium');
@@ -43,15 +44,17 @@ async function loadContent(link) {
             });
             object.find('img').each((_, img) => {
                 const $img = $(img);
+                const animatedUrl = $img.attr('data-animated-url');
+                const dataSrc = $img.attr('data-src');
 
-                if ($img.data('animated-url')) {
-                    $img.attr('src', $img.data('animated-url') as string);
+                if (animatedUrl) {
+                    $img.attr('src', animatedUrl);
                     $img.removeAttr('data-animated-url');
                     $img.removeAttr('srcset');
                 }
 
-                if (!$img.attr('src') && $img.data('src')) {
-                    $img.attr('src', ($img.data('src') as string).split('?', 1)[0]);
+                if (!$img.attr('src') && dataSrc) {
+                    $img.attr('src', dataSrc.split('?', 1)[0]);
                     $img.removeAttr('data-src');
                 }
 

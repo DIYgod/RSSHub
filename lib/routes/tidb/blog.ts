@@ -78,7 +78,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
     }
 
     const $: CheerioAPI = load(targetResponse);
-    const language = $('html').attr('lang') ?? 'zh';
+    const language = ($('html').attr('lang') ?? 'zh') as Language;
 
     const apiUrl: string = new URL(`_next/data/${buildId}/${language}/blog${category === 'latest' ? '' : `/c/${category}`}.json`, baseUrl).href;
 
@@ -120,7 +120,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 text: description,
             },
             updated: updated ? parseDate(updated) : undefined,
-            language: language as Language,
+            language,
         };
 
         return processedItem;
@@ -172,7 +172,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                         text: description,
                     },
                     updated: updated ? parseDate(updated) : undefined,
-                    language: language as Language,
+                    language,
                 };
 
                 return {
@@ -193,7 +193,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
         allowEmpty: true,
         image: $('meta[property="og:image"]').attr('content'),
         author: title.split(/\|/).pop()?.trim(),
-        language: language as Language,
+        language,
         id: targetUrl,
     };
 };

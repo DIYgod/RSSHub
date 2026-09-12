@@ -81,7 +81,7 @@ async function handler(ctx) {
         title: Object.hasOwn(categories, category) ? categories[category] : '其他',
         link: `http://www.nrta.gov.cn/col/col${category}/index.html`,
         description: '国家广播电视总局',
-        language: 'zh-CN' as Language,
+        language: 'zh-CN' as const satisfies Language,
         item: items,
     };
 }

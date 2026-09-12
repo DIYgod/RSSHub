@@ -80,21 +80,21 @@ async function handler(ctx) {
 
     const items = firstOutbox.orderedItems;
 
-    const itemResolvers = [] as Array<Promise<any>>;
+    const itemResolvers: Array<Promise<any>> = [];
 
     for (const item of items) {
         if (!['Announce', 'Create', 'Update'].includes(item.type)) {
             continue;
         }
-        if (typeof item.object === 'string') {
+        if (item.object.type) {
+            itemResolvers.push(Promise.resolve(item));
+        } else {
             itemResolvers.push(
                 (async (item) => {
                     item.object = await ofetch(item.object, requestOptions);
                     return item;
                 })(item)
             );
-        } else {
-            itemResolvers.push(Promise.resolve(item));
         }
     }
 

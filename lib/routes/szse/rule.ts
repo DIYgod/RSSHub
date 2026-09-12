@@ -65,6 +65,7 @@ export const handler = async (ctx) => {
     );
 
     const image = $('a.navbar-brand img').prop('src');
+    const language = $('html').prop('lang') as Language;
 
     return {
         title: `深圳证券交易所 - ${channelEl.text()}`,
@@ -74,7 +75,7 @@ export const handler = async (ctx) => {
         allowEmpty: true,
         image,
         author: $('meta[name="author"]').prop('content'),
-        language: $('html').prop('lang') as Language,
+        language,
     };
 };
 

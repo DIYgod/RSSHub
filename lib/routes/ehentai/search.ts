@@ -26,8 +26,8 @@ async function handler(ctx) {
     const page = ctx.req.param('page');
     let params = ctx.req.param('params');
     const routeParams = new URLSearchParams(ctx.req.param('routeParams'));
-    const bittorrent = (routeParams.get('bittorrent') || false) as unknown as boolean;
-    const embed_thumb = (routeParams.get('embed_thumb') || false) as unknown as boolean;
+    const bittorrent = routeParams.get('bittorrent') || false;
+    const embed_thumb = routeParams.get('embed_thumb') || false;
     let items;
     if (page) {
         // 如果定义了page，就要覆盖params

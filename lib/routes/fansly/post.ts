@@ -1,4 +1,6 @@
-import type { Language, Route } from '@/types';
+import type { Context } from 'hono';
+
+import type { Data, Route } from '@/types';
 import { parseDate } from '@/utils/parse-date';
 
 import { baseUrl, getAccountByUsername, getTimelineByAccountId, parseDescription } from './utils';
@@ -27,7 +29,7 @@ export const route: Route = {
     handler,
 };
 
-async function handler(ctx) {
+async function handler(ctx: Context): Promise<Data> {
     const username = ctx.req.param('username');
 
     const account = await getAccountByUsername(username);
@@ -48,7 +50,7 @@ async function handler(ctx) {
         image: account.banner.locations[0].location,
         icon: account.avatar.locations[0].location,
         logo: account.avatar.locations[0].location,
-        language: 'en' as Language,
+        language: 'en',
         allowEmpty: true,
         item: items,
     };

@@ -39,7 +39,7 @@ export const route: Route = {
         const $ = load(response);
 
         // 获取分类名称映射
-        const categoryMap: Record<string, string> = {
+        const categoryMap = {
             zxdt: '最新动态',
             xygg: '学院公告',
             xszc: '学生之窗',
@@ -58,7 +58,7 @@ export const route: Route = {
         const list = $('.gage-list-news table tr')
             .slice(1) // 跳过表头
             .toArray()
-            .map((tr) => {
+            .map((tr): DataItem | null => {
                 const $tr = $(tr);
                 const cells = $tr.find('td');
 
@@ -93,22 +93,20 @@ export const route: Route = {
                     description: '', // 初始化description属性
                 };
             })
-            .filter((item) => item && item.link && item.title); // 过滤掉空项目和没有链接的项目
+            .filter((item): item is DataItem => Boolean(item?.link && item.title)); // 过滤掉空项目和没有链接的项目
 
         // 获取每篇文章的详细内容
         const items = await Promise.all(
             list.map((item) =>
-                item
-                    ? cache.tryGet(item.link, async () => {
-                          const { data: response } = await got(item.link);
-                          const $ = load(response);
+                cache.tryGet(item.link!, async () => {
+                    const { data: response } = await got(item.link);
+                    const $ = load(response);
 
-                          const $description = $('.v_news_content');
+                    const $description = $('.v_news_content');
 
-                          item.description = $description.html() || item.title;
-                          return item;
-                      })
-                    : null
+                    item.description = $description.html() || item.title;
+                    return item;
+                })
             )
         );
 
@@ -118,7 +116,7 @@ export const route: Route = {
             // 源链接
             link: `${baseUrl}/xwzx/${type}.htm`,
             // 源文章
-            item: items as DataItem[],
+            item: items,
         };
     },
 };

@@ -27,7 +27,7 @@ export async function fetchNovelInfo(ncode: string): Promise<{ baseUrl: string; 
 }
 
 export async function fetchChapterContent(chapterUrl: string, chapter?: number): Promise<DataItem> {
-    return (await cache.tryGet(chapterUrl, async () => {
+    return await cache.tryGet(chapterUrl, async (): Promise<DataItem> => {
         const response = await ofetch(chapterUrl, {
             headers: {
                 Cookie: 'over18=yes',
@@ -48,5 +48,5 @@ export async function fetchChapterContent(chapterUrl: string, chapter?: number):
             pubDate,
             language: 'ja',
         };
-    })) as DataItem;
+    });
 }

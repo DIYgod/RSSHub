@@ -23,9 +23,9 @@ async function handler(ctx) {
     const link = `https://www.dongqiudi.com/team/${team}.html`;
 
     const { data: scheduleData } = await got(`https://api.dongqiudi.com/data/v1/team/schedule/${team}`);
-    const lastSeason = scheduleData.season_list.find((s) => !s.current);
+    const currentSeason = scheduleData.season_list.find((s) => s.current);
 
-    if (!lastSeason) {
+    if (!currentSeason) {
         return {
             title: `${team} 比赛结果`,
             link,
@@ -33,10 +33,11 @@ async function handler(ctx) {
         };
     }
 
-    const { data: seasonResp } = await got(lastSeason.url);
-    const resultData = seasonResp.data.filter((match) => match.fs_A && match.fs_B);
+    const { data: seasonResp } = await got(currentSeason.url);
+    const resultData = seasonResp.data.filter((match) => match.status === 'Played');
 
     const teamName = resultData.length ? (resultData[0].team_A_id === team ? resultData[0].team_A_name : resultData[0].team_B_name) : team;
+    const image = resultData.length ? (resultData[0].team_A_id === team ? resultData[0].team_A_logo : resultData[0].team_B_logo) : undefined;
 
     const out = resultData.map((result) => ({
         title: `${result.match_title} ${result.team_A_name} ${result.fs_A}-${result.fs_B} ${result.team_B_name}`,
@@ -48,6 +49,7 @@ async function handler(ctx) {
     return {
         title: `${teamName} 比赛结果`,
         link,
-        item: out.slice(-10),
+        image,
+        item: out,
     };
 }

@@ -54,7 +54,7 @@ async function handler() {
                 link: currentUrl,
                 guid: `${currentUrl}#${device}-${matchVersion?.[1] ?? title}`,
                 description: $item.next().html(),
-                pubDate: parseDate(matchDate?.[1].replace(/(st|nd|rd|th)?,/, '')!, ['MMMM D YYYY', 'MMM D YYYY']),
+                pubDate: parseDate(matchDate![1].replace(/(st|nd|rd|th)?,/, ''), ['MMMM D YYYY', 'MMM D YYYY']),
             };
         });
 

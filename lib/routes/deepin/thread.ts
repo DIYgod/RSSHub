@@ -87,11 +87,10 @@ async function handler(ctx) {
                 };
                 const cacheData = await ofetch<ThreadInfoResult>('https://bbs.deepin.org.cn/api/v1/thread/info?id=' + item.id);
                 if (cacheData) {
-                    const info = cacheData as ThreadInfoResult;
-                    item.description = info.data.post.message;
+                    item.description = cacheData.data.post.message;
                 }
                 return item;
-            }) as Promise<DataItem>;
+            });
         })
     );
     return {

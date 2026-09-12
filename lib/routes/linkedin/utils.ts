@@ -120,7 +120,7 @@ function parseJobDetail(data) {
 }
 
 const parseRouteParam = (searchParam: string | null): string => {
-    if (!searchParam || typeof searchParam !== 'string') {
+    if (!searchParam) {
         return 'all';
     }
     return encodeURIComponent(searchParam.split(',').join('-'));

@@ -1,6 +1,6 @@
-import type { Context } from 'hono';
+import { Context } from 'hono';
 import Parser from 'rss-parser';
-import { afterAll, afterEach, beforeAll, describe, expect, it, vi } from 'vitest';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 
 process.env.OPENAI_API_KEY = 'sk-1234567890';
 process.env.OPENAI_API_ENDPOINT = 'https://api.openai.mock/v1';
@@ -12,17 +12,17 @@ const { default: parameter } = await import('@/middleware/parameter');
 
 const parser = new Parser();
 
-const runMiddleware = async (data: any, query: Record<string, string | undefined>, middleware = parameter) => {
-    const store = new Map<string, unknown>([['data', data]]);
-    const ctx = {
-        req: {
-            query: (key: string) => query[key],
-        },
-        get: (key: string) => store.get(key),
-        set: (key: string, value: unknown) => store.set(key, value),
-    } as unknown as Context;
-    await middleware(ctx, async () => {});
-    return store.get('data') as any;
+const runMiddleware = async (data: any, query: Record<string, string | undefined>) => {
+    const searchParams = new URLSearchParams();
+    for (const [key, value] of Object.entries(query)) {
+        if (value !== undefined) {
+            searchParams.set(key, value);
+        }
+    }
+    const ctx = new Context(new Request(`http://localhost/test?${searchParams.toString()}`));
+    ctx.set('data', data);
+    await parameter(ctx, async () => {});
+    return ctx.get('data');
 };
 
 describe('filter', () => {
@@ -571,56 +571,10 @@ describe('parameter middleware branches', () => {
     });
 });
 
-class FakeRE2 {
-    static CASE_INSENSITIVE = 1;
-
-    static compile(pattern: string) {
-        return new FakeRE2(pattern);
-    }
-
-    private pattern: string;
-
-    constructor(pattern: string) {
-        this.pattern = pattern;
-    }
-
-    matcher(text: string) {
-        return {
-            find: () => text.includes(this.pattern),
-        };
-    }
-}
-
 describe.each([{ engine: 'regexp' as const }, { engine: 're2' as const }])('parameter middleware filtering with $engine engine', ({ engine }) => {
-    let engineConfig = config;
-    let engineParameter = parameter;
-
-    beforeAll(async () => {
-        if (engine !== 're2') {
-            return;
-        }
-        vi.resetModules();
-        // Ensure instanceof checks behave as expected.
-        vi.doMock('re2js', () => ({
-            RE2JS: FakeRE2,
-        }));
-        const configModule = await import('@/config');
-        engineConfig = configModule.config;
-        const parameterModule = await import('@/middleware/parameter');
-        engineParameter = parameterModule.default;
-    });
-
-    afterAll(() => {
-        if (engine !== 're2') {
-            return;
-        }
-        vi.doUnmock('re2js');
-        vi.resetModules();
-    });
-
     it('filters items', async () => {
-        const originalEngine = engineConfig.feature.filter_regex_engine;
-        engineConfig.feature.filter_regex_engine = engine;
+        const originalEngine = config.feature.filter_regex_engine;
+        config.feature.filter_regex_engine = engine;
 
         const data = {
             link: 'https://example.com',
@@ -630,16 +584,16 @@ describe.each([{ engine: 'regexp' as const }, { engine: 're2' as const }])('para
             ],
         };
 
-        const result = await runMiddleware(data, { filter: 'Keep' }, engineParameter);
+        const result = await runMiddleware(data, { filter: 'Keep' });
         expect(result.item).toHaveLength(1);
         expect(result.item[0].title).toBe('Keep');
 
-        engineConfig.feature.filter_regex_engine = originalEngine;
+        config.feature.filter_regex_engine = originalEngine;
     });
 
     it('matches categories when other fields do not match', async () => {
-        const originalEngine = engineConfig.feature.filter_regex_engine;
-        engineConfig.feature.filter_regex_engine = engine;
+        const originalEngine = config.feature.filter_regex_engine;
+        config.feature.filter_regex_engine = engine;
 
         const data = {
             link: 'https://example.com',
@@ -653,11 +607,11 @@ describe.each([{ engine: 'regexp' as const }, { engine: 're2' as const }])('para
             ],
         };
 
-        const result = await runMiddleware(data, { filter: 'Match' }, engineParameter);
+        const result = await runMiddleware(data, { filter: 'Match' });
         expect(result.item).toHaveLength(1);
         expect(result.item[0].category).toContain('Match');
 
-        engineConfig.feature.filter_regex_engine = originalEngine;
+        config.feature.filter_regex_engine = originalEngine;
     });
 });
 

@@ -57,6 +57,6 @@ async function handler(ctx) {
         title: '虚词 p-articles',
         link: sectionUrl,
         item: items,
-        language: 'zh-CN' as Language,
+        language: 'zh-CN' as const satisfies Language,
     };
 }

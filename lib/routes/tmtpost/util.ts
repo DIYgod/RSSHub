@@ -16,7 +16,7 @@ const headers = {
     'app-version': 'web1.0',
 };
 
-const processItems = async (limit: number, query: Record<string, any>, apiUrl: string, targetUrl: string): Promise<Data> => {
+const processItems = async (limit: number, query: Record<string, string>, apiUrl: string, targetUrl: string): Promise<Data> => {
     const response = await ofetch(apiUrl, {
         query: {
             limit,
@@ -27,7 +27,7 @@ const processItems = async (limit: number, query: Record<string, any>, apiUrl: s
 
     const targetResponse = await ofetch(targetUrl);
     const $: CheerioAPI = load(targetResponse);
-    const language = $('html').attr('lang') ?? 'zh-CN';
+    const language = ($('html').attr('lang') ?? 'zh-CN') as Language;
 
     let items: DataItem[] = response.data.slice(0, limit).map((item): DataItem => {
         const title: string = item.title;
@@ -54,7 +54,7 @@ const processItems = async (limit: number, query: Record<string, any>, apiUrl: s
             image,
             banner: image,
             updated: updated ? parseDate(updated, 'X') : undefined,
-            language: language as Language,
+            language,
         };
 
         return processedItem;
@@ -91,11 +91,9 @@ const processItems = async (limit: number, query: Record<string, any>, apiUrl: s
                     const linkUrl: string | undefined = data.share_link;
                     const categories: string[] = [
                         ...new Set(
-                            (
-                                [...(data.categories ?? []), ...(data.stock_list ?? []), ...(data.big_plate ?? []), ...(data.concept_plate ?? []), ...(data.plate ?? []), ...(data.plate_list ?? []), ...(data.tags ?? [])].map(
-                                    (c) => c.title ?? c.name ?? c.tag
-                                ) as string[]
-                            ).filter(Boolean)
+                            [...(data.categories ?? []), ...(data.stock_list ?? []), ...(data.big_plate ?? []), ...(data.concept_plate ?? []), ...(data.plate ?? []), ...(data.plate_list ?? []), ...(data.tags ?? [])]
+                                .map((c) => c.title ?? c.name ?? c.tag)
+                                .filter(Boolean)
                         ),
                     ];
                     const authors: DataItem['author'] = data.authors?.map((author) => ({
@@ -123,7 +121,7 @@ const processItems = async (limit: number, query: Record<string, any>, apiUrl: s
                         image,
                         banner: image,
                         updated: updated ? parseDate(updated, 'X') : undefined,
-                        language: language as Language,
+                        language,
                     };
 
                     const enclosureUrl: string | undefined = data.audio;
@@ -192,7 +190,7 @@ const processItems = async (limit: number, query: Record<string, any>, apiUrl: s
         allowEmpty: true,
         image: $('meta[property="og:image"]').attr('content'),
         author: title.split(/-/).pop(),
-        language: language as Language,
+        language,
         itunes_author: author,
         itunes_category: 'Technology',
         id: targetUrl,

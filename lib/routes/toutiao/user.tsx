@@ -1,6 +1,7 @@
 import { renderToString } from 'hono/jsx/dom/server';
 
 import { config } from '@/config';
+import NotFoundError from '@/errors/types/not-found';
 import RejectError from '@/errors/types/reject';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
@@ -21,7 +22,7 @@ const renderVideo = (url, poster) =>
 export const route: Route = {
     path: '/user/token/:token',
     categories: ['new-media'],
-    example: '/toutiao/user/token/MS4wLjABAAAAEmbqJP2CmC8XXv1BpMvQ3sQHKAxFsq8wHxj8XVIQWja6tMcB-QEbFkzkRNgMl12M',
+    example: '/toutiao/user/token/MS4wLjABAAAApOspM7AnWqplD9FIBGnhJRfUjFT_msD1KZMfNPBZa-c',
     parameters: { token: '用户 token，可在用户主页 URL 找到' },
     features: {
         antiCrawler: true,
@@ -39,7 +40,7 @@ export const route: Route = {
 async function handler(ctx) {
     const { token } = ctx.req.param();
 
-    const feed = (await cache.tryGet(
+    const feed = await cache.tryGet(
         `toutiao:user:${token}`,
         async () => {
             const query = `category=profile_all&token=${token}&max_behot_time=0&entrance_gid&aid=24&app_name=toutiao_web`;
@@ -47,7 +48,7 @@ async function handler(ctx) {
             const headers = generateHeaders(PRESETS.MODERN_WINDOWS_CHROME);
             const userAgent = headers['user-agent'];
 
-            const data = await ofetch(`https://www.toutiao.com/api/pc/list/feed?${query}&a_bogus=${generate_a_bogus(query, userAgent)}`, {
+            const data = await ofetch<{ data: Feed[] }>(`https://www.toutiao.com/api/pc/list/feed?${query}&a_bogus=${generate_a_bogus(query, userAgent)}`, {
                 headerGeneratorOptions: PRESETS.MODERN_WINDOWS_CHROME,
             });
 
@@ -55,10 +56,13 @@ async function handler(ctx) {
         },
         config.cache.routeExpire,
         false
-    )) as Feed[];
+    );
 
     if (!feed) {
         throw new RejectError('无法获取用户信息');
+    }
+    if (feed.length === 0) {
+        throw new NotFoundError('暂未发表作品');
     }
 
     const items = feed.map((item) => {

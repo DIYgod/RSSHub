@@ -16,7 +16,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
     const targetResponse = await ofetch(targetUrl);
     const $: CheerioAPI = load(targetResponse);
-    const language = $('html').attr('lang') ?? 'en';
+    const language = ($('html').attr('lang') ?? 'en') as Language;
 
     const response = await ofetch(apiUrl, {
         query: {
@@ -44,7 +44,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
             category: categories,
             guid,
             id: guid,
-            language: language as Language,
+            language,
         };
 
         const enclosureUrl: string | undefined = item.download_url;
@@ -72,7 +72,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
         allowEmpty: true,
         image: $('meta[property="og:image"]').attr('content'),
         author: $('meta[property="og:site_name"]').attr('content'),
-        language: language as Language,
+        language,
         id: $('meta[property="og:url"]').attr('content'),
     };
 };

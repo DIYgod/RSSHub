@@ -30,7 +30,7 @@ export const route: Route = {
     handler,
 };
 
-async function handler() {
+async function handler(): Promise<Data> {
     // const category = ctx.req.param('category') ?? '';
     // const subCategory = ctx.req.param('subCategory') ?? '';
 
@@ -48,5 +48,5 @@ async function handler() {
         language: 'en',
         logo: `${rootUrl}/favicon.ico`,
         icon: `${rootUrl}/favicon.ico`,
-    } as Data;
+    };
 }

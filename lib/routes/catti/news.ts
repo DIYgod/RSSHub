@@ -10,7 +10,7 @@ type NewsCategory = {
     description: string;
 };
 
-const NEWS_TYPES: Record<string, NewsCategory> = {
+const NEWS_TYPES = {
     ggl: {
         title: '通知公告',
         description: 'CATTI 考试通知和公告',
@@ -23,7 +23,7 @@ const NEWS_TYPES: Record<string, NewsCategory> = {
         title: '最新政策',
         description: 'CATTI 考试最新政策',
     },
-};
+} satisfies Record<string, NewsCategory>;
 
 const handler: Route['handler'] = async (ctx) => {
     const category = ctx.req.param('category')!;

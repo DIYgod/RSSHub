@@ -25,6 +25,12 @@ export const route: Route = {
     handler,
 };
 
+interface TopicDoc {
+    title?: DataItem['title'];
+    createdByName?: string;
+    tags?: string[];
+}
+
 async function handler(ctx) {
     const baseUrl = 'https://www.modb.pro';
     const topicId = ctx.req.param('id');
@@ -36,7 +42,7 @@ async function handler(ctx) {
         },
     });
     const list = response.list.map((item) => {
-        let doc: { title?: DataItem['title']; createdByName?: string; tags?: string[] } = {};
+        let doc: TopicDoc = {};
         let baseLink = {};
         switch (item.type) {
             case 0:

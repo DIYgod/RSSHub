@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Language, Route } from '@/types';
+import type { Data, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
@@ -28,7 +28,7 @@ export const route: Route = {
     url: 'desktop.webcatalog.io/en/changelog',
 };
 
-async function handler() {
+async function handler(): Promise<Data> {
     const url = 'https://desktop.webcatalog.io/en/changelog';
     const response = await ofetch(url);
     const $ = load(response);
@@ -55,6 +55,6 @@ async function handler() {
         title: 'WebCatalog Changelog',
         link: url,
         item: items,
-        language: 'en' as Language,
+        language: 'en',
     };
 }

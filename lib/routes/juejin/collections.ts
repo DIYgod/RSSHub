@@ -1,7 +1,6 @@
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 
-import type { Article } from './types';
 import { getCollection, parseList, ProcessFeed } from './utils';
 
 export const route: Route = {
@@ -37,12 +36,12 @@ async function getArticleList(collectionId) {
 
 async function handler(ctx) {
     const userId = ctx.req.param('userId');
-    const response = await ofetch(`https://api.juejin.cn/interact_api/v1/collectionSet/list?user_id=${userId}&cursor=0&limit=20`);
+    const response = await ofetch<{ data: Array<{ tag_id: string }> }>(`https://api.juejin.cn/interact_api/v1/collectionSet/list?user_id=${userId}&cursor=0&limit=20`);
 
     // 获取用户所有收藏夹id
     const collectionId = response.data.map((item) => item.tag_id);
 
-    const temp = (await Promise.all(collectionId.map((id) => getArticleList(id)))) as Article[][];
+    const temp = await Promise.all(collectionId.map((id) => getArticleList(id)));
     const posts = temp.flat().filter(Boolean);
     const list = parseList(posts);
 

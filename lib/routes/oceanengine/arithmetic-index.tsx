@@ -7,7 +7,7 @@ import { routePath } from 'hono/route';
 
 import { config } from '@/config';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
-import type { Language, Route } from '@/types';
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import { parseDate } from '@/utils/parse-date';
 import playwright from '@/utils/playwright';
@@ -162,7 +162,7 @@ export async function handler(ctx) {
         title: `${keyword} - ${channelName}指数波峰`,
         link,
         description: `巨量算数 - ${channelName}算数指数 | 关键词: ${keyword}`,
-        language: 'zh-CN' as Language,
+        language: 'zh-CN' as const,
         item,
     };
 }

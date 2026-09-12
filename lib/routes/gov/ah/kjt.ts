@@ -17,7 +17,7 @@ export const handler = async (ctx) => {
 
     const $ = load(response);
 
-    const language = $('html').prop('lang');
+    const language = $('html').prop('lang') as Language;
 
     let items = $('ul.doc_list li')
         .slice(0, limit)
@@ -33,7 +33,7 @@ export const handler = async (ctx) => {
                 title,
                 pubDate: parseDate($item.find('span.date').text()),
                 link: a.prop('href'),
-                language: language as Language,
+                language,
             };
         });
 
@@ -64,7 +64,7 @@ export const handler = async (ctx) => {
                     text: $$('div.wzcon').text(),
                 };
                 item.updated = timezone(parseDate($$('meta[name="HtmlGenerateTime"]').prop('content')), 8);
-                item.language = language as Language;
+                item.language = language;
 
                 return item;
             })
@@ -82,7 +82,7 @@ export const handler = async (ctx) => {
         allowEmpty: true,
         image,
         author,
-        language: language as Language,
+        language,
     };
 };
 

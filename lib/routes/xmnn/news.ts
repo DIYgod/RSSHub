@@ -55,21 +55,21 @@ async function handler(ctx) {
     let items = $('div#sort_body ul li a')
         .slice(0, limit)
         .toArray()
-        .map((item) => {
+        .map((item): DataItem & { link: string } => {
             const $item = $(item);
 
             return {
                 title: $item.find('h1').text().trim(),
-                link: $item.prop('href'),
+                link: $item.prop('href')!,
                 description: $item.find('div.abstract').html(),
-                author: $item.find('div.source').text() as string | string[],
+                author: $item.find('div.source').text(),
                 pubDate: timezone(parseDate($item.find('div.time').text()), 8),
             };
         });
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link!, async () => {
+            cache.tryGet(item.link, async () => {
                 const { data: detailResponse } = await got(item.link);
 
                 const content = load(detailResponse);
@@ -78,7 +78,7 @@ async function handler(ctx) {
                 item.description = content('div.TRS_Editor').html();
                 item.author = content('span.cont-a-src a')
                     .toArray()
-                    .map((a) => content(a).text());
+                    .map((a) => ({ name: content(a).text() }));
                 item.pubDate = timezone(parseDate(content('span.time, div.pubtime div.w').contents().first().text().trim()), 8);
 
                 return item;
@@ -89,12 +89,14 @@ async function handler(ctx) {
     const title = $('title').text();
     const icon = new URL($('link[rel="icon"]').prop('href')!, rootUrl).href;
 
+    const language: Language = 'zh';
+
     return {
-        item: items as DataItem[],
+        item: items,
         title,
         link: currentUrl,
         description: $('meta[name="description"]').prop('content'),
-        language: 'zh' as Language,
+        language,
         icon,
         logo: icon,
         subtitle: $('div.h').text(),

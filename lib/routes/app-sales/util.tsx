@@ -1,6 +1,5 @@
-import type { Cheerio, CheerioAPI } from 'cheerio';
+import type { CheerioAPI } from 'cheerio';
 import { load } from 'cheerio';
-import type { Element } from 'domhandler';
 import { renderToString } from 'hono/jsx/dom/server';
 
 import type { DataItem } from '@/types';
@@ -135,7 +134,7 @@ const processItems = ($: CheerioAPI, selector: string): DataItem[] =>
     $(selector)
         .toArray()
         .map((el) => {
-            const $el = $(el) as Cheerio<Element>;
+            const $el = $(el);
 
             const appName: string = $el.find('p.app-name').text()?.trim();
             const appDev: string = $el.find('p.app-dev').text()?.trim();
@@ -173,7 +172,7 @@ const processItems = ($: CheerioAPI, selector: string): DataItem[] =>
                 priceDisco,
                 linkUrl,
             });
-            const categories: string[] = [isHot ? 'Hot' : undefined, isFree ? 'Free' : undefined].filter(Boolean) as string[];
+            const categories: string[] = [isHot ? 'Hot' : undefined, isFree ? 'Free' : undefined].filter((category) => category !== undefined);
             const authors: DataItem['author'] = appDev;
             const guid: string = [appName, appDev, rating, downloads, bookmarks, priceNew].filter(Boolean).join('-');
 
@@ -206,16 +205,9 @@ const getAvailablePageUrls = ($: CheerioAPI, targetUrl: string): string[] =>
     $('ul.pagination li.waves-effect a')
         .slice(0, -1)
         .toArray()
-        .filter((el) => {
-            const $el: Cheerio<Element> = $(el);
-
-            return $el.attr('href');
-        })
-        .map((el) => {
-            const $el: Cheerio<Element> = $(el);
-
-            return new URL($el.attr('href') as string, targetUrl).href;
-        });
+        .map((el) => $(el).attr('href'))
+        .filter((href): href is string => Boolean(href))
+        .map((href) => new URL(href, targetUrl).href);
 
 /**
  * Aggregates items across paginated pages

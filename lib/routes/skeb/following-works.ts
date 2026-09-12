@@ -1,6 +1,6 @@
 import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
-import type { Data, DataItem, Route } from '@/types';
+import type { Data, Route } from '@/types';
 
 import { getFollowingsItems } from './utils';
 
@@ -49,6 +49,6 @@ async function handler(ctx): Promise<Data> {
     return {
         title: `Skeb - ${username} - フォロー中のクリエイターの新着作品`,
         link: `https://skeb.jp/${username}`,
-        item: items as DataItem[],
+        item: items,
     };
 }

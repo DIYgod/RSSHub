@@ -81,7 +81,7 @@ async function handler(ctx) {
                     const topList = $('.tab-pane')
                         .toArray()
                         .map((item) => ({
-                            title: $(item).attr('id')?.toUpperCase() as string,
+                            title: $(item).attr('id')?.toUpperCase() ?? '',
                             content: $(item).find('ul').toString(),
                         }));
 

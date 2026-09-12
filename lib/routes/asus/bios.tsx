@@ -19,13 +19,23 @@ const endPoints = {
     },
 };
 
+type ProductInfo = {
+    productID: string;
+    hashId: string;
+    url: string;
+    title: string;
+    image: string;
+    m1Id: string;
+    productLine: string;
+};
+
 const getProductInfo = (model, language) => {
     const currentEndpoint = endPoints[language] ?? endPoints.zh;
     const { url, lang, websiteCode } = currentEndpoint;
 
     const searchAPI = `${url}recent-data/apiv2/SearchSuggestion?SystemCode=asus&WebsiteCode=${websiteCode}&SearchKey=${model}&SearchType=ProductsAll&RowLimit=4&sitelang=${lang}`;
 
-    return cache.tryGet(`asus:bios:${model}:${language}`, async () => {
+    return cache.tryGet(`asus:bios:${model}:${language}`, async (): Promise<ProductInfo> => {
         const response = await ofetch(searchAPI);
         const product = response.Result[0].Content[0];
 
@@ -38,15 +48,7 @@ const getProductInfo = (model, language) => {
             m1Id: product.M1Id,
             productLine: product.ProductLine,
         };
-    }) as Promise<{
-        productID: string;
-        hashId: string;
-        url: string;
-        title: string;
-        image: string;
-        m1Id: string;
-        productLine: string;
-    }>;
+    });
 };
 
 export const route: Route = {

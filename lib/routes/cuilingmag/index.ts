@@ -18,7 +18,7 @@ export const handler = async (ctx) => {
 
     const $ = load(response);
 
-    const language = $('html').prop('lang');
+    const language = $('html').prop('lang') as Language;
 
     let items = $('div.new-list-div, div.item')
         .slice(0, limit)
@@ -49,7 +49,7 @@ export const handler = async (ctx) => {
                 author: $item.find('a.new-list-p, div.author').text().trim(),
                 image,
                 banner: image,
-                language: language as Language,
+                language,
                 enclosure_url: image,
                 enclosure_type: image ? `image/${image.split(/\./).pop()}` : undefined,
                 enclosure_title: title,
@@ -104,7 +104,7 @@ export const handler = async (ctx) => {
                     text: $$('div.article-content').text(),
                 };
                 item.banner = banner;
-                item.language = language as Language;
+                item.language = language;
                 item.enclosure_url = banner ?? item.enclosure_url;
                 item.enclosure_type = banner ? `image/${banner.split(/\./).pop()}` : item.enclosure_type;
                 item.enclosure_title = title;
@@ -125,7 +125,7 @@ export const handler = async (ctx) => {
         allowEmpty: true,
         image,
         author: title.split(/-/).pop(),
-        language: language as Language,
+        language,
     };
 };
 

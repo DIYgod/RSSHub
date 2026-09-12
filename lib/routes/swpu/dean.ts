@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Data, DataItem, Language, Route } from '@/types';
+import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -55,29 +55,28 @@ async function handler(ctx): Promise<Data> {
 
     // 请求全文
     const out = await Promise.all(
-        items.map(
-            async (item) =>
-                (await cache.tryGet(item.link!, async () => {
-                    const resp = await got.get(item.link);
-                    const $ = load(resp.data);
-                    if ($('title').text().startsWith('系统提示')) {
-                        item.author = '系统';
-                        item.description = '无权访问';
-                    } else {
-                        item.author = '教务处';
-                        item.description = $('.v_news_content').html()!;
-                        item.pubDate = timezone(parseDate($('#lbDate').text(), '更新时间：YYYY年MM月DD日'), 8);
-                        for (const elem of $('.v_news_content p')) {
-                            if ($(elem).css('text-align') !== 'right') {
-                                continue;
-                            }
-
-                            item.author = $(elem).text();
-                            break;
+        items.map((item) =>
+            cache.tryGet(item.link!, async () => {
+                const resp = await got.get(item.link);
+                const $ = load(resp.data);
+                if ($('title').text().startsWith('系统提示')) {
+                    item.author = '系统';
+                    item.description = '无权访问';
+                } else {
+                    item.author = '教务处';
+                    item.description = $('.v_news_content').html()!;
+                    item.pubDate = timezone(parseDate($('#lbDate').text(), '更新时间：YYYY年MM月DD日'), 8);
+                    for (const elem of $('.v_news_content p')) {
+                        if ($(elem).css('text-align') !== 'right') {
+                            continue;
                         }
+
+                        item.author = $(elem).text();
+                        break;
                     }
-                    return item;
-                })) as DataItem
+                }
+                return item;
+            })
         )
     );
 
@@ -85,7 +84,7 @@ async function handler(ctx): Promise<Data> {
         title: `西南石油大学教务处 ${title}`,
         link: url,
         description: `西南石油大学教务处 ${title}`,
-        language: 'zh-CN' as Language,
+        language: 'zh-CN',
         item: out,
     };
 }

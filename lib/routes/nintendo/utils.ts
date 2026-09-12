@@ -3,22 +3,24 @@ import 'dayjs/locale/zh-cn.js';
 import { load } from 'cheerio';
 import dayjs from 'dayjs';
 import localizedFormat from 'dayjs/plugin/localizedFormat.js';
-import { JSDOM } from 'jsdom';
 
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { parseScriptData } from '@/utils/parse-script-data';
 
 import { renderEshopCnDescription } from './templates/eshop-cn';
 
 dayjs.extend(localizedFormat);
 
 function nuxtReader(data) {
-    let nuxt: Record<string, unknown>;
+    let nuxt;
     try {
-        const dom = new JSDOM(data, {
-            runScripts: 'dangerously',
-        });
-        nuxt = dom.window.__NUXT__.data[0];
+        const $ = load(data);
+        const script = $('script')
+            .toArray()
+            .map((element) => $(element).text())
+            .find((source) => /\b__NUXT__\s*=/.test(source));
+        nuxt = parseScriptData<{ data: any[] }>(script ?? '', '__NUXT__').data[0];
     } catch {
         throw new Error('Nuxt 框架信息提取失败，请报告这个问题');
     }

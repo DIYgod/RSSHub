@@ -23,7 +23,7 @@ export const handler = async (ctx) => {
     const $ = load(iconv.decode(response, 'gbk'));
 
     const author = '国家气候中心';
-    const language = 'zh' as Language;
+    const language: Language = 'zh';
 
     const items = $('ul.img-con-new-con li img[id]')
         .toArray()

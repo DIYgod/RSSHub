@@ -41,7 +41,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
             per_page: limit,
             ...(taxonomy && searchId
                 ? {
-                      [taxonomy as string]: searchId,
+                      [taxonomy]: searchId,
                   }
                 : {
                       search: keyword,
@@ -51,7 +51,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
     const targetResponse = await ofetch(targetUrl);
     const $: CheerioAPI = load(targetResponse);
-    const language = $('html').attr('lang') ?? 'ja';
+    const language = ($('html').attr('lang') ?? 'ja') as Language;
 
     const postIds: number[] = [];
     const regExp = new RegExp(String.raw`^${baseUrl.replaceAll(/[.*+?^${}()|[\]\\]/g, String.raw`\$&`)}/?(?:[a-zA-Z0-9-]+/)*\?p=\d+$`);
@@ -150,7 +150,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
             image,
             banner: image,
             updated: updated ? parseDate(updated) : undefined,
-            language: language as Language,
+            language,
         };
 
         if (enclosureUrl) {
@@ -174,7 +174,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
         allowEmpty: true,
         image: $('meta[property="og:image"]').attr('content'),
         author: $('meta[property="og:site_name"]').attr('content'),
-        language: language as Language,
+        language,
         id: targetUrl,
     };
 };

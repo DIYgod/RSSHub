@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 import type { Context } from 'hono';
 
-import type { Data, Route } from '@/types';
+import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -20,21 +20,21 @@ const handler = async (ctx: Context): Promise<Data | null> => {
     const description = $('meta[name="ColumnDescription"]').prop('content');
     const indexes = $('ul.liBox li')
         .toArray()
-        .map((li) => {
+        .map((li): DataItem & { link: string } => {
             const a = $(li).find('a');
             const pubDate = $(li).find('span').text();
             const href = a.prop('href') as string;
             const link = href.startsWith('http') ? href : new URL(href, currentUrl).href;
             return {
-                title: a.prop('title'),
+                title: a.prop('title') as string,
                 link,
                 pubDate: timezone(parseDate(pubDate), 8),
             };
         });
 
     const items = await Promise.all(
-        indexes.map((item: Data) =>
-            cache.tryGet(item.link!, async () => {
+        indexes.map((item) =>
+            cache.tryGet(item.link, async (): Promise<DataItem> => {
                 const { data: detailResponse } = await got(item.link);
                 const content = load(detailResponse);
                 item.description = content('div.my_doccontent').html();
@@ -50,7 +50,7 @@ const handler = async (ctx: Context): Promise<Data | null> => {
         link: currentUrl,
         description: `${description} - ${siteName}`,
         author,
-    } as Data;
+    };
 };
 
 export const route: Route = {

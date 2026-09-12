@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
 
-import type { DataItem, Route } from '@/types';
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -98,7 +98,7 @@ export const route: Route = {
 
                     // if title or duration ends with ..., need to fetch the detail page to get the full info
                     if (title.endsWith('...') || fullDuration.endsWith('...')) {
-                        const detailData = await cache.tryGet(link, async () => {
+                        const detailData = await cache.tryGet<string>(link, async () => {
                             const detailRes = await got({
                                 method: 'get',
                                 url: link,
@@ -106,7 +106,7 @@ export const route: Route = {
                             return detailRes.data;
                         });
 
-                        const $detail = load(detailData as string);
+                        const $detail = load(detailData);
 
                         const detailTitle = $detail('.universal2 .title, .universal3 .tbox .title').text();
                         if (detailTitle) {
@@ -174,7 +174,7 @@ export const route: Route = {
             title: `${museumName} - 临时展览`,
             link: apiUrl,
             language: 'zh-CN',
-            item: items as DataItem[],
+            item: items,
         };
     },
 };

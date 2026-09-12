@@ -7,6 +7,12 @@ import ofetch from '@/utils/ofetch';
 
 export const baseUrl = 'https://www.capitalmind.in';
 
+interface PodcastData {
+    mediaUrl?: string;
+    itunes_duration?: number;
+    image?: string;
+}
+
 export async function fetchArticles(path) {
     const url = `${baseUrl}/${path}/page/1`;
     const response = await ofetch(url);
@@ -58,7 +64,7 @@ export async function fetchArticles(path) {
                 $content.find('footer').remove();
 
                 // Process Libsyn podcast iframe (assuming only one)
-                let podcastData: { mediaUrl?: string; itunes_duration?: number; image?: string } = {};
+                let podcastData: PodcastData = {};
 
                 const $iframe = $content.find('iframe[src*="libsyn.com/embed/episode/id/"]');
                 if ($iframe.length) {

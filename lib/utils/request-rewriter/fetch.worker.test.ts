@@ -1,6 +1,6 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
 
-const fetchMock = vi.fn<(...args: any[]) => Promise<Response>>(() => Promise.resolve(new Response('ok')));
+const fetchMock = vi.fn<(request: Request) => Promise<Response>>(() => Promise.resolve(new Response('ok')));
 
 // The module captures the global fetch at import time, so stub before importing
 const loadWrappedFetch = async () => {
@@ -9,7 +9,13 @@ const loadWrappedFetch = async () => {
     return (await import('@/utils/request-rewriter/fetch.worker')).default;
 };
 
-const lastRequest = () => fetchMock.mock.lastCall?.[0] as unknown as Request;
+const lastRequest = () => {
+    const request = fetchMock.mock.lastCall?.[0];
+    if (!request) {
+        throw new Error('the wrapper did not call fetch');
+    }
+    return request;
+};
 
 afterEach(() => {
     vi.unstubAllGlobals();

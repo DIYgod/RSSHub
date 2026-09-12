@@ -36,7 +36,7 @@ async function handler(ctx) {
         tzgg: ['通知公告', 'https://jyc.xupt.edu.cn/index/tzgg.htm'],
     };
 
-    const [typeName, url] = typeDict[type as keyof typeof typeDict] || typeDict.tzgg;
+    const [typeName, url] = typeDict[type] || typeDict.tzgg;
 
     const response = await ofetch(url);
     const $ = load(response);

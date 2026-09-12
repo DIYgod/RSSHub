@@ -45,7 +45,7 @@ const parseNotes = (data: MisskeyNote[], site: string, simplifyAuthor: boolean =
     data.map((item: MisskeyNote) => {
         const isRenote = item.renote && Object.keys(item.renote).length > 0;
         const isReply = item.reply && Object.keys(item.reply).length > 0;
-        const noteToUse: MisskeyNote = isRenote ? (item.renote as MisskeyNote) : item;
+        const noteToUse = isRenote && item.renote ? item.renote : item;
 
         const host = noteToUse.user.host ?? site;
         const author = simplifyAuthor ? String(noteToUse.user.name) : `${noteToUse.user.name} (${noteToUse.user.username}@${host})`;
@@ -100,7 +100,7 @@ async function getUserTimelineByUsername(username, site, { withRenotes = false, 
     const searchUrl = `https://${site}/api/users/search-by-username-and-host`;
     const cacheUid = `misskey_username/${site}/${username}`;
 
-    const userData = (await cache.tryGet(cacheUid, async () => {
+    const userData = await cache.tryGet<MisskeyUser>(cacheUid, async () => {
         const searchResponse = await got({
             method: 'post',
             url: searchUrl,
@@ -117,7 +117,7 @@ async function getUserTimelineByUsername(username, site, { withRenotes = false, 
             throw new Error(`username ${username} not found`);
         }
         return user;
-    })) as MisskeyUser;
+    });
 
     const accountId = userData.id;
     const avatarUrl = userData.avatarUrl;

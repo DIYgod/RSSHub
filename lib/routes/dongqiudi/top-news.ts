@@ -3,7 +3,7 @@ import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
-import utils from './utils';
+import { processFeedType2 } from './utils';
 
 export const route: Route = {
     path: '/top_news/:id?',
@@ -49,7 +49,7 @@ async function handler(ctx) {
         list.map((item) =>
             cache.tryGet(item.link, async () => {
                 const { data: response } = await got(item.link);
-                utils.ProcessFeedType2(item, response);
+                processFeedType2(item, response);
                 return item;
             })
         )

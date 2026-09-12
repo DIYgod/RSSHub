@@ -119,7 +119,7 @@ export const route: Route = {
                         startDate,
                         endDate,
                     },
-                } as DataItem;
+                };
             });
 
         return {

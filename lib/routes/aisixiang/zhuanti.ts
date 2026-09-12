@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Language, Route } from '@/types';
+import type { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
@@ -61,7 +61,7 @@ async function handler(ctx) {
         title: `爱思想 - ${title}`,
         link: currentUrl,
         description: $('div.tips p').text(),
-        language: 'zh-CN' as Language,
+        language: 'zh-CN' as const,
         image: new URL('images/logo_zhuanti.jpg', ossUrl).href,
         subtitle: title,
     };

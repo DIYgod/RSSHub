@@ -30,7 +30,7 @@ async function handler() {
 
     let items = $('.post-preview')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem | null => {
             const $item = $(item);
             const $link = $item.find('a').first();
             const href = $link.attr('href');
@@ -48,14 +48,14 @@ async function handler() {
                 title,
                 link,
                 pubDate,
-            } as DataItem;
+            };
         })
         .filter((item): item is DataItem => item !== null);
 
     items = (
         await Promise.all(
             items.map((item) =>
-                cache.tryGet(item.link as string, async () => {
+                cache.tryGet(item.link!, async () => {
                     try {
                         const detailResponse = await got(item.link);
                         const $detail = load(detailResponse.data);

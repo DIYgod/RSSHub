@@ -89,7 +89,7 @@ async function handler(ctx) {
     return {
         title: '東森新聞|即時',
         link: category ? `https://news.ebc.net.tw/realtime/${category}` : 'https://news.ebc.net.tw/realtime',
-        language: 'zh-TW' as Language,
+        language: 'zh-TW' as const satisfies Language,
         item: items,
     };
 }

@@ -1,8 +1,11 @@
+import { FetchError } from 'ofetch';
+
 import { config } from '@/config';
 import type { Route } from '@/types';
 import { ViewType } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { getPlaywrightPage } from '@/utils/playwright';
 
 import cache from './cache';
 import utils, { getVideoUrl } from './utils';
@@ -180,6 +183,7 @@ function getAPI(isNumericRid: boolean, rid: string | number) {
             ridChinese: zone?.chinese ?? '',
             ridType: 'x/rid',
             link: 'https://www.bilibili.com/v/popular/rank/all',
+            browserLink: zone?.type === 'x/rid' ? `https://www.bilibili.com/v/popular/rank/${zone.english}` : undefined,
         };
     }
 
@@ -221,7 +225,62 @@ function getAPI(isNumericRid: boolean, rid: string | number) {
         ridChinese,
         ridType,
         link: `https://www.bilibili.com/v/popular/rank/${ridEnglish}`,
+        browserLink: `https://www.bilibili.com/v/popular/rank/${ridEnglish}`,
     };
+}
+
+const allowedBrowserRequestTypes = new Set(['document', 'script', 'xhr', 'fetch']);
+const browserResponseTimeout = 30000;
+
+async function fetchRankingFromBrowser(apiUrl: string, browserLink: string) {
+    const expectedUrl = new URL(apiUrl);
+    const { page, destroy } = await getPlaywrightPage(browserLink, { noGoto: true, closeTimeout: 0 });
+    try {
+        await page.route('**/*', (route) => (allowedBrowserRequestTypes.has(route.request().resourceType()) ? route.continue() : route.abort()));
+        // Let the official page initialize its anonymous session and sign the ranking request.
+        const [response] = await Promise.all([
+            page.waitForResponse(
+                (response) => {
+                    const url = new URL(response.url());
+                    return (
+                        url.origin === expectedUrl.origin &&
+                        url.pathname === expectedUrl.pathname &&
+                        url.searchParams.get('rid') === expectedUrl.searchParams.get('rid') &&
+                        url.searchParams.get('type') === expectedUrl.searchParams.get('type')
+                    );
+                },
+                { timeout: browserResponseTimeout }
+            ),
+            page.goto(browserLink, { waitUntil: 'domcontentloaded', timeout: browserResponseTimeout }),
+        ]);
+        if (!response.ok()) {
+            throw new Error(`Bilibili ranking browser request failed with HTTP ${response.status()}`);
+        }
+        return await response.json();
+    } finally {
+        await destroy();
+    }
+}
+
+async function fetchRanking(apiUrl: string, referer: string, browserLink?: string) {
+    let response;
+    try {
+        response = await ofetch(apiUrl, {
+            headers: {
+                Referer: referer,
+                origin: 'https://www.bilibili.com',
+            },
+        });
+    } catch (error) {
+        if (!(error instanceof FetchError) || error.status !== 412 || !browserLink) {
+            throw error;
+        }
+        return fetchRankingFromBrowser(apiUrl, browserLink);
+    }
+    if (response.code === -352 && browserLink) {
+        return fetchRankingFromBrowser(apiUrl, browserLink);
+    }
+    return response;
 }
 
 async function handler(ctx) {
@@ -238,17 +297,12 @@ async function handler(ctx) {
     const embed = !ctx.req.param('embed');
     const isNumericRid = /^\d+$/.test(rid);
 
-    const { apiBase, apiParams, referer, ridChinese, link, ridType } = getAPI(isNumericRid, rid);
+    const { apiBase, apiParams, referer, ridChinese, link, ridType, browserLink } = getAPI(isNumericRid, rid);
     if (ridType.startsWith('pgc/')) {
         throw new Error('This type of ranking is not supported yet');
     }
 
-    const response = await ofetch(`${apiBase}?${apiParams}`, {
-        headers: {
-            Referer: referer,
-            origin: 'https://www.bilibili.com',
-        },
-    });
+    const response = await fetchRanking(`${apiBase}?${apiParams}`, referer, browserLink);
 
     if (response.code !== 0) {
         throw new Error(response.message);

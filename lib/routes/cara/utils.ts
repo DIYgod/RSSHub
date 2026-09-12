@@ -30,10 +30,10 @@ export async function parseUserData(user: string) {
         config.cache.routeExpire,
         false
     );
-    return (await cache.tryGet(`${HOST}:${user}`, async () => {
+    return cache.tryGet(`${HOST}:${user}`, async () => {
         const data = await customFetch<UserNextData>(`${HOST}/_next/data/${buildId}/${user}.json`);
         return data.pageProps.user;
-    })) as UserNextData['pageProps']['user'];
+    });
 }
 
 export async function fetchPortfolioItem(item: PortfolioResponse['data'][number]) {

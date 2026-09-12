@@ -1,3 +1,5 @@
+import type { CookieJar } from 'tough-cookie';
+
 import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
 import cache from '@/utils/cache';
@@ -10,28 +12,31 @@ import { renderVideo } from '../templates/video';
 const baseUrl = 'https://www.instagram.com';
 const COOKIE_URL = baseUrl;
 
-const getCSRFTokenFromJar = async (cookieJar) => {
+const getCSRFTokenFromJar = async (cookieJar: CookieJar) => {
     const cookieString = await cookieJar.getCookieString(COOKIE_URL);
     return cookieString.match(/csrftoken=([^;]+)/)?.[1];
 };
 
-const getHeaders = async (cookieJar) => ({
-    'sec-fetch-dest': 'empty',
-    'sec-fetch-mode': 'cors',
-    'sec-fetch-site': 'same-origin',
-    'x-asbd-id': 359341,
-    'x-csrftoken': await getCSRFTokenFromJar(cookieJar),
-    'x-ig-app-id': 936_619_743_392_459,
-    'x-ig-www-claim': '0',
-});
+const getHeaders = async (cookieJar: CookieJar) => {
+    const csrfToken = (await getCSRFTokenFromJar(cookieJar)) as string;
+    return {
+        'sec-fetch-dest': 'empty',
+        'sec-fetch-mode': 'cors',
+        'sec-fetch-site': 'same-origin',
+        'x-asbd-id': '359341',
+        'x-csrftoken': csrfToken,
+        'x-ig-app-id': '936619743392459',
+        'x-ig-www-claim': '0',
+    };
+};
 
-const checkLogin = async (cookieJar) => {
+const checkLogin = async (cookieJar: CookieJar) => {
     const response = await ofetch(`${baseUrl}/api/v1/web/fxcal/ig_sso_users/`, {
         // cookieJar,
         headers: {
             'content-type': 'application/x-www-form-urlencoded',
-            cookie: (await cookieJar.getCookieString(COOKIE_URL)) as string,
-            ...((await getHeaders(cookieJar)) as unknown as Record<string, string>),
+            cookie: await cookieJar.getCookieString(COOKIE_URL),
+            ...(await getHeaders(cookieJar)),
             // 'X-IG-WWW-Claim': '0',
         },
         method: 'POST',
@@ -46,19 +51,19 @@ const checkLogin = async (cookieJar) => {
     return response.status === 'ok';
 };
 
-const getUserInfo = async (username, cookieJar) => {
+const getUserInfo = async (username, cookieJar: CookieJar) => {
     let webProfileInfo;
     let id = await cache.get(`instagram:getIdByUsername:${username}`);
     let userInfoCache = await cache.get(`instagram:userInfo:${id}`);
-    userInfoCache = userInfoCache && typeof userInfoCache === 'string' ? JSON.parse(userInfoCache) : userInfoCache;
+    userInfoCache = userInfoCache ? JSON.parse(userInfoCache) : userInfoCache;
 
     if (!userInfoCache) {
         try {
             const response = await ofetch.raw(`${baseUrl}/api/v1/users/web_profile_info/`, {
                 // cookieJar,
                 headers: {
-                    cookie: (await cookieJar.getCookieString(COOKIE_URL)) as string,
-                    ...((await getHeaders(cookieJar)) as unknown as Record<string, string>),
+                    cookie: await cookieJar.getCookieString(COOKIE_URL),
+                    ...(await getHeaders(cookieJar)),
                     // 'X-IG-WWW-Claim': (await cache.get('instagram:wwwClaimV2')) ?? undefined,
                 },
                 query: {
@@ -75,7 +80,7 @@ const getUserInfo = async (username, cookieJar) => {
             await cache.set(`instagram:getIdByUsername:${username}`, id ?? '', 31_536_000); // 1 year since it will never change
             await cache.set(`instagram:userInfo:${id}`, webProfileInfo);
         } catch (error) {
-            if ((error as Error).message.includes("Cookie not in this host's domain")) {
+            if (error instanceof Error && error.message.includes("Cookie not in this host's domain")) {
                 throw new ConfigNotFoundError('Invalid cookie');
             }
             throw error;
@@ -85,15 +90,15 @@ const getUserInfo = async (username, cookieJar) => {
     return userInfoCache || webProfileInfo;
 };
 
-const getUserFeedItems = (id, username, cookieJar) =>
+const getUserFeedItems = (id, username, cookieJar: CookieJar) =>
     cache.tryGet(
         `instagram:feed:${id}`,
         async () => {
             const response = await ofetch.raw(`${baseUrl}/api/v1/feed/user/${username}/username/`, {
                 // cookieJar,
                 headers: {
-                    cookie: (await cookieJar.getCookieString(COOKIE_URL)) as string,
-                    ...((await getHeaders(cookieJar)) as unknown as Record<string, string>),
+                    cookie: await cookieJar.getCookieString(COOKIE_URL),
+                    ...(await getHeaders(cookieJar)),
                     // 401 Unauthorized if cookie does not match with IP
                     // 'X-IG-WWW-Claim': await cache.get('instagram:wwwClaimV2'),
                 },
@@ -112,15 +117,15 @@ const getUserFeedItems = (id, username, cookieJar) =>
         false
     );
 
-const getTagsFeed = (tag, cookieJar) =>
+const getTagsFeed = (tag, cookieJar: CookieJar) =>
     cache.tryGet(
         `instagram:tags:${tag}`,
         async () => {
             const response = await ofetch(`${baseUrl}/api/v1/tags/web_info/`, {
                 // cookieJar, cookieJar is behaving weirdly here, so we use cookie header instead
                 headers: {
-                    cookie: (await cookieJar.getCookieString(COOKIE_URL)) as string,
-                    ...((await getHeaders(cookieJar)) as unknown as Record<string, string>),
+                    cookie: await cookieJar.getCookieString(COOKIE_URL),
+                    ...(await getHeaders(cookieJar)),
                 },
                 query: {
                     tag_name: tag,

@@ -4,11 +4,41 @@ import { parseDate } from '@/utils/parse-date';
 
 const validCategories = new Set(['交流', '学习', '项目', '资源', '经验']);
 
-const sortFieldMap: Record<string, { field: string; name: string }> = {
+const sortFieldMap = {
     hot: { field: 'thumbNum', name: '热门' },
     new: { field: 'createTime', name: '最新' },
     recommend: { field: 'recommendTime', name: '推荐' },
 };
+
+interface PostListRequest {
+    current: number;
+    pageSize: number;
+    sortField: string;
+    sortOrder: string;
+    category?: string;
+}
+
+interface CodefatherPost {
+    id: number;
+    content?: string;
+    pictureList?: string[];
+    user?: {
+        userName?: string;
+    };
+    tags?: Array<{ tagName: string }>;
+    category?: string;
+    createTime: number;
+    thumbNum?: number;
+    commentNum?: number;
+}
+
+interface PostListResponse {
+    code: number;
+    message: string;
+    data?: {
+        records?: CodefatherPost[];
+    };
+}
 
 export const route: Route = {
     path: '/posts/:category?/:sort?',
@@ -44,7 +74,7 @@ async function handler(ctx) {
 
     const sortConfig = sortFieldMap[sort] || sortFieldMap.new;
 
-    const requestBody: Record<string, unknown> = {
+    const requestBody: PostListRequest = {
         current: 1,
         pageSize: 20,
         sortField: sortConfig.field,
@@ -55,7 +85,7 @@ async function handler(ctx) {
         requestBody.category = category;
     }
 
-    const response = await ofetch('https://api.codefather.cn/api/post/list/page/vo', {
+    const response = await ofetch<PostListResponse>('https://api.codefather.cn/api/post/list/page/vo', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -69,11 +99,10 @@ async function handler(ctx) {
 
     const records = response.data?.records || [];
 
-    const items = records.map((item: Record<string, unknown>) => {
-        const content = (item.content as string) || '';
-        const pictureList = (item.pictureList as string[]) || [];
-        const user = (item.user as Record<string, unknown>) || {};
-        const tags = (item.tags as Array<{ tagName: string }>) || [];
+    const items = records.map((item) => {
+        const content = item.content || '';
+        const pictureList = item.pictureList || [];
+        const tags = item.tags || [];
 
         // Build description content
         let description = `<p>${content.replaceAll('\n', '<br>')}</p>`;
@@ -91,11 +120,11 @@ async function handler(ctx) {
             title: content.split('\n', 1)[0] || '无标题',
             link: `https://www.codefather.cn/post/${item.id}`,
             description,
-            pubDate: parseDate(item.createTime as number),
-            author: user.userName as string,
-            category: [item.category as string, ...tags.map((t) => t.tagName)].filter(Boolean),
-            upvotes: item.thumbNum as number,
-            comments: item.commentNum as number,
+            pubDate: parseDate(item.createTime),
+            author: item.user?.userName,
+            category: [item.category, ...tags.map((t) => t.tagName)].filter((c): c is string => Boolean(c)),
+            upvotes: item.thumbNum,
+            comments: item.commentNum,
         };
     });
 

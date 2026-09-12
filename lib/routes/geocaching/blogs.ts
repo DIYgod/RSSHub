@@ -43,16 +43,18 @@ export const route: Route = {
 const languageToCategory = { de: 140, fr: 138, es: 702, nl: 737, cs: 1404 };
 const languageToLabel = { de: 'Deutsch', fr: 'Français', es: 'Español', nl: 'Nederlands', cs: 'Čeština' };
 
+type PostsSearchParams = {
+    per_page: number;
+    _embed: number;
+    _fields: string;
+    categories_exclude?: string;
+    categories?: number;
+};
+
 async function handler(ctx) {
     const baseUrl = 'https://www.geocaching.com';
     const language = ctx.req.param('language') ?? 'en';
-    const searchParams: {
-        per_page: number;
-        _embed: number;
-        _fields: string;
-        categories_exclude?: string;
-        categories?: number;
-    } = {
+    const searchParams: PostsSearchParams = {
         per_page: ctx.req.query('limit') ?? 20,
         _embed: 1,
         _fields: ['id', 'title', 'link', 'guid', 'content', 'date_gmt', 'modified_gmt', '_embedded', '_links'].join(','),

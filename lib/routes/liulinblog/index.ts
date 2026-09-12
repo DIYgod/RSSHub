@@ -130,7 +130,7 @@ export async function handler(ctx) {
         title: `${title} - ${subPath === '/' ? '最新' : $('h1.term-title').text().split('搜索到', 1)[0]}`,
         link: currentUrl,
         description: $('meta[name="description"]').prop('content'),
-        language: 'zh-CN' as Language,
+        language: 'zh-CN' as const satisfies Language,
         image: $('img.logo').prop('src'),
         icon,
         logo: icon,

@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import { FetchError } from 'ofetch';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
@@ -70,8 +71,7 @@ async function handler(ctx) {
                     const $ = load(response);
                     item.description = $('div.wp_articlecontent').html();
                 } catch (error) {
-                    const err = error as { response?: { status?: number } };
-                    if (err.response && err.response.status === 404) {
+                    if (error instanceof FetchError && error.statusCode === 404) {
                         item.description = '';
                     } else {
                         throw error;

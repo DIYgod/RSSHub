@@ -1,9 +1,10 @@
-import { JSDOM } from 'jsdom';
+import { load } from 'cheerio';
 import { CookieJar } from 'tough-cookie';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { parseScriptData } from '@/utils/parse-script-data';
 
 const cookieJar = new CookieJar();
 const baseUrl = 'https://xueqiu.com';
@@ -43,10 +44,13 @@ async function handler(ctx) {
     const pageData = await got(pageUrl, {
         cookieJar,
     });
-    const { window } = new JSDOM(pageData.data, {
-        runScripts: 'dangerously',
-    });
-    const SNOWMAN_TARGET = window.SNOWMAN_TARGET;
+    const $ = load(pageData.data);
+    const script = $('script')
+        .toArray()
+        .map((element) => $(element).text())
+        .filter((source) => source.includes('SNOWMAN_TARGET'))
+        .join('\n');
+    const snowmanTarget = parseScriptData<{ screen_name: string; description: string }>(script, 'SNOWMAN_TARGET');
 
     const { data } = await got(`${baseUrl}/statuses/original/timeline.json`, {
         cookieJar,
@@ -65,13 +69,13 @@ async function handler(ctx) {
         description: item.description,
         pubDate: parseDate(item.created_at, 'x'),
         link: `${baseUrl}${item.target}`,
-        author: SNOWMAN_TARGET.screen_name,
+        author: snowmanTarget.screen_name,
     }));
 
     return {
-        title: `${SNOWMAN_TARGET.screen_name} - 雪球`,
+        title: `${snowmanTarget.screen_name} - 雪球`,
         link: pageUrl,
-        description: SNOWMAN_TARGET.description,
+        description: snowmanTarget.description,
         item: items,
     };
 }

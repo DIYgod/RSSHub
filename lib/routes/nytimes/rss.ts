@@ -1,5 +1,4 @@
 import { load } from 'cheerio';
-import type { FetchOptions } from 'ofetch';
 
 import type { Data, Route } from '@/types';
 import { ViewType } from '@/types';
@@ -48,7 +47,7 @@ async function handler(ctx) {
         item: await Promise.all(
             rss.items.map((e) =>
                 cache.tryGet(e.link!, async () => {
-                    const res = await ofetch(e.link!, { headers: { 'User-Agent': 'Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)' }, referer: 'https://www.google.com/' } as FetchOptions<'json'>);
+                    const res = await ofetch(e.link!, { headers: { 'User-Agent': 'Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)' } });
 
                     const $ = load(res);
 
@@ -60,5 +59,5 @@ async function handler(ctx) {
                 })
             )
         ),
-    } as unknown as Data;
+    } as Data;
 }

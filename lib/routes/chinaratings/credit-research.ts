@@ -97,13 +97,14 @@ export const handler = async (ctx: Context): Promise<Data> => {
     ).filter((_): _ is DataItem => true);
 
     const title: string = $('title').text();
+    const logoHref = $('a.logo_c').attr('href');
 
     return {
         title,
         link: targetUrl,
         item: items,
         allowEmpty: true,
-        image: $('a.logo_c').attr('href') ? new URL($('a.logo_c').attr('href') as string, targetUrl).href : undefined,
+        image: logoHref ? new URL(logoHref, targetUrl).href : undefined,
         author: title.split(/-/).pop(),
         language,
         id: targetUrl,

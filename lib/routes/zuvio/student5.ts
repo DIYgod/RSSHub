@@ -1,4 +1,4 @@
-import type { Language, Route } from '@/types';
+import type { Data, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -24,7 +24,7 @@ export const route: Route = {
     handler,
 };
 
-async function handler(ctx) {
+async function handler(ctx): Promise<Data> {
     const { board = '' } = ctx.req.param();
     const title = board ? (await getBoards()).find((i) => i.boardId === board).title : '全部';
 

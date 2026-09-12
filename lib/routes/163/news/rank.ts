@@ -191,6 +191,6 @@ async function handler(ctx) {
     return {
         title: `网易新闻${timeRange[time].title}${type === 'click' ? '点击' : '跟帖'}榜 - ${cfg.title}`,
         link: currentUrl,
-        item: items.filter(Boolean) as DataItem[],
+        item: items.filter((item): item is DataItem => Boolean(item)),
     };
 }

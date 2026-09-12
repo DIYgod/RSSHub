@@ -1,7 +1,8 @@
-import { JSDOM } from 'jsdom';
+import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
+import { parseScriptData } from '@/utils/parse-script-data';
 
 export const route: Route = {
     path: '/hottest',
@@ -30,10 +31,20 @@ export const route: Route = {
 async function handler() {
     const data = await got.get('https://www.hotukdeals.com/');
 
-    const dom = new JSDOM(data.data, {
-        runScripts: 'dangerously',
-    });
-    const threads = dom.window.__INITIAL_STATE__.widgets.hottestWidget.threads;
+    const $ = load(data.data);
+    const script = $('script')
+        .toArray()
+        .map((element) => $(element).text())
+        .filter((source) => source.includes('__INITIAL_STATE__'))
+        .join('\n');
+    const { widgets } = parseScriptData<{
+        widgets: {
+            hottestWidget: {
+                threads: Array<{ title: string; mainImage: { path: string; name: string }; temperature: number; displayPrice: string; url: string }>;
+            };
+        };
+    }>(script, '__INITIAL_STATE__');
+    const threads = widgets.hottestWidget.threads;
 
     return {
         title: 'hotukdeals hottest',

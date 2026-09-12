@@ -41,10 +41,12 @@ async function handler() {
 
     const items = await Promise.all(list.map((item) => finishArticleItem(item)));
 
+    const language = $('html').attr('lang') as Language;
+
     return {
         title: $('head title').text(),
         link,
-        language: $('html').attr('lang') as Language,
+        language,
         image: `${baseUrl}/favicon.ico`,
         item: items,
     };

@@ -16,7 +16,7 @@ export async function processList(listElements) {
             return processItem({ link, date });
         })
     );
-    return items.map((item) => (item.status === 'fulfilled' ? item.value : ({ title: 'Error Reading Item' } as DataItem)));
+    return items.map((item) => (item.status === 'fulfilled' ? item.value : { title: 'Error Reading Item' }));
 }
 
 async function processItem({ link: articleLink, date }) {
@@ -43,6 +43,6 @@ async function processItem({ link: articleLink, date }) {
             category: tags,
             image: `${rootUrl}${image}`,
             banner: `${rootUrl}${image}`,
-        } as DataItem;
+        } satisfies DataItem;
     });
 }

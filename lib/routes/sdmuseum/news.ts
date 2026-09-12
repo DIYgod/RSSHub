@@ -35,12 +35,12 @@ export const route: Route = {
 
         const items = $('record')
             .toArray()
-            .map((el) => {
+            .map((el): DataItem => {
                 const itemHtml = $(el).text();
                 const $item = load(itemHtml);
 
                 const $a = $item('.ltit a');
-                const title = $a.attr('title');
+                const title = $a.attr('title')!;
                 const link = new URL($a.attr('href')!, baseUrl).href;
 
                 // date format 2026.06.03
@@ -57,7 +57,7 @@ export const route: Route = {
             title: `${museumName} - 公告`,
             link: apiUrl,
             language: 'zh-CN',
-            item: items as DataItem[],
+            item: items,
         };
     },
 };
