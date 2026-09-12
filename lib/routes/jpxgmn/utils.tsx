@@ -3,14 +3,22 @@ import { renderToString } from 'hono/jsx/dom/server';
 
 import cache from '@/utils/cache';
 import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
 
 const indexUrl = 'http://mei8.vip/';
 
 const getOriginUrl = async () =>
     await cache.tryGet('jpxgmn:originUrl', async () => {
-        const response = await got(indexUrl);
-        const $ = load(response.data);
+        // 发布页（mei8.vip）已改为 301 直跳源站：发生跨站重定向时最终地址即源站（Fixes #23202）
+        const response = await ofetch.raw(indexUrl);
+        if (new URL(response.url).host !== new URL(indexUrl).host) {
+            return new URL(response.url).origin;
+        }
+        const $ = load(response._data);
         const entries = $('ul > li > span');
+        if (!entries.length) {
+            throw new Error('无法从发布页解析源站地址');
+        }
         return 'http://' + $(entries[Math.floor(Math.random() * entries.length)]).text();
     });
 const getImages = ($articleContent) =>
