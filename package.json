@@ -171,7 +171,7 @@
         "@typescript-eslint/eslint-plugin": "8.70.0",
         "@typescript-eslint/parser": "8.70.0",
         "@vercel/nft": "1.11.0",
-        "@vitest/coverage-v8": "4.1.11",
+        "@vitest/coverage-v8": "5.0.0",
         "discord-api-types": "0.38.55",
         "domhandler": "6.0.1",
         "eslint": "10.10.0",
@@ -206,7 +206,7 @@
         "unified": "11.0.5",
         "unrun": "0.3.1",
         "vite-tsconfig-paths": "7.0.0-alpha.3",
-        "vitest": "4.1.11",
+        "vitest": "5.0.0",
         "wrangler": "4.129.1",
         "yaml-eslint-parser": "2.1.0"
     },
