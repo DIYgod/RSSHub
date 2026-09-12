@@ -48,12 +48,13 @@ const REGEX_IS_PM = /下午|晚上|晚|pm|p\.m\./i;
 const REGEX_IS_AM = /上午|凌晨|早|晨|am|a\.m\./i;
 
 const UNIT_PATTERNS: UnitPattern[] = [
-    { unit: 'years', regExp: /(\d+)\s*(?:年|y(?:ea)?rs?)/i },
-    { unit: 'months', regExp: /(\d+)\s*(?:[个個]?月|months?)/i },
-    { unit: 'weeks', regExp: /(\d+)\s*(?:周|[个個]?星期|weeks?)/i },
+    { unit: 'years', regExp: /(\d+)\s*(?:年|y(?:(?:ea)?rs?)?)/i },
+    { unit: 'months', regExp: /(\d+)\s*(?:[个個]?月|mo(?:n(?:th)?s?)?)/i },
+    { unit: 'weeks', regExp: /(\d+)\s*(?:周|[个個]?星期|w(?:(?:ee)?ks?)?)/i },
     { unit: 'days', regExp: /(\d+)\s*(?:天|日|d(?:ay)?s?)/i },
     { unit: 'hours', regExp: /(\d+)\s*(?:[个個]?(?:小?时|[時点點])|h(?:(?:ou)?r)?s?)/i },
-    { unit: 'minutes', regExp: /(\d+)\s*(?:分[鐘钟]?|m(?:in(?:ute)?)?s?)/i },
+    // The lookahead keeps the bare `m` from also matching the `mo` of a month
+    { unit: 'minutes', regExp: /(\d+)\s*(?:分[鐘钟]?|m(?:in(?:ute)?)?s?(?![a-z]))/i },
     { unit: 'seconds', regExp: /(\d+)\s*(?:秒[鐘钟]?|s(?:ec(?:ond)?)?s?)/i },
 ];
 

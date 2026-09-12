@@ -1,10 +1,12 @@
+import pMap from 'p-map';
 import { Innertube, YTNodes } from 'youtubei.js';
 
+import { config } from '@/config';
 import type { Data, DataItem } from '@/types';
 import cache from '@/utils/cache';
-import { parseRelativeDate } from '@/utils/parse-date';
+import { parseDate, parseRelativeDate } from '@/utils/parse-date';
 
-import { getVideoUrl, renderYoutube } from '../utils';
+import { formatDescription, getVideoUrl, renderYoutube } from '../utils';
 import { getSrtAttachmentBatch } from './subtitles';
 
 let innertubePromise: Promise<Innertube> | undefined;
@@ -26,32 +28,82 @@ const getInnertube = () => {
     return innertubePromise;
 };
 
-const lockupViewToItem = (video: YTNodes.LockupView, embed: boolean): DataItem => {
-    const videoId = video.content_id;
+// A duration is grouped for readability once it reaches a thousand hours, e.g. `20,772:51:34`
+const DURATION_BADGE_REGEX = /^[\d,]+(?::\d+)+$/;
+const UPCOMING_BADGE_TEXT = 'Upcoming';
+const SCHEDULED_PREFIX = 'Scheduled for ';
+
+const getThumbnailBadges = (video: YTNodes.LockupView) => {
     const thumbnail = video.content_image?.is(YTNodes.ThumbnailView) ? video.content_image : undefined;
+    return thumbnail?.overlays.filter((overlay) => overlay.is(YTNodes.ThumbnailBottomOverlayView)).flatMap((overlay) => overlay.badges ?? []) ?? [];
+};
+
+const getMetadataTexts = (video: YTNodes.LockupView) => (video.metadata?.metadata?.metadata_rows ?? []).flatMap((row) => row.metadata_parts ?? []).map((part) => part.text?.text);
+
+type StreamState = 'live' | 'upcoming' | 'completed';
+
+// An ongoing stream carries a "LIVE" badge and a scheduled one an "Upcoming" badge, so anything else has already ended
+const getStreamState = (video: YTNodes.LockupView): StreamState => {
+    const badges = getThumbnailBadges(video);
+    if (badges.some((badge) => badge.badge_style === 'THUMBNAIL_OVERLAY_BADGE_STYLE_LIVE')) {
+        return 'live';
+    }
+    if (badges.some((badge) => badge.text === UPCOMING_BADGE_TEXT) || getMetadataTexts(video).some((text) => text?.startsWith(SCHEDULED_PREFIX))) {
+        return 'upcoming';
+    }
+    return 'completed';
+};
+
+const getPubDate = (metadataTexts: Array<string | undefined>) => {
+    const publishedText = metadataTexts.findLast((text) => text?.endsWith('ago'));
+    if (publishedText) {
+        return parseRelativeDate(publishedText);
+    }
+    // A stream that hasn't started has no publish date, only the time it is scheduled to start at
+    const scheduledText = metadataTexts.find((text) => text?.startsWith(SCHEDULED_PREFIX));
+    return scheduledText ? parseDate(scheduledText.slice(SCHEDULED_PREFIX.length), 'M/D/YY, h:mm A') : undefined;
+};
+
+// The lockup of a video only carries its title, so the description takes one player request per video
+const getVideoDescription = async (videoId: string) => {
+    try {
+        // The value is wrapped in an object because an empty string does not survive a cache round trip
+        const { description } = await cache.tryGet<{ description: string }>(
+            `youtube:getVideoDescription:${videoId}`,
+            async () => {
+                const innertube = await getInnertube();
+                const info = await innertube.getBasicInfo(videoId);
+                return { description: info.basic_info.short_description ?? '' };
+            },
+            config.cache.contentExpire,
+            // The expiration is not renewed on a hit, so an edited description still shows up in a steadily polled feed
+            false
+        );
+        return description;
+    } catch {
+        // A stream can be unplayable, e.g. a members-only one, which should not take the whole feed down
+        return '';
+    }
+};
+
+const lockupViewToItem = (video: YTNodes.LockupView, embed: boolean, description = ''): DataItem => {
+    const videoId = video.content_id;
     const img = `https://i.ytimg.com/vi/${videoId}/maxresdefault.jpg`;
     const metadataRows = video.metadata?.metadata?.metadata_rows ?? [];
-    const publishedText = metadataRows
-        .flatMap((row) => row.metadata_parts ?? [])
-        .map((part) => part.text?.text)
-        .findLast((text) => text?.endsWith('ago'));
-    const durationText = thumbnail?.overlays
-        ?.filter((overlay) => overlay.is(YTNodes.ThumbnailBottomOverlayView))
-        .flatMap((overlay) => overlay.badges ?? [])
-        .find((badge) => /^\d+(?::\d+)+$/.test(badge.text))?.text;
+    const durationText = getThumbnailBadges(video).find((badge) => DURATION_BADGE_REGEX.test(badge.text))?.text;
 
     return {
         title: video.metadata?.title?.text || `YouTube Video ${videoId}`,
-        description: renderYoutube(embed, videoId, img, ''),
+        description: renderYoutube(embed, videoId, img, formatDescription(description)),
         link: `https://www.youtube.com/watch?v=${videoId}`,
         author: metadataRows.length > 1 ? metadataRows[0].metadata_parts?.[0]?.text?.text : undefined,
         image: img,
-        pubDate: publishedText ? parseRelativeDate(publishedText) : undefined,
+        pubDate: getPubDate(getMetadataTexts(video)),
         attachments: [
             {
                 url: getVideoUrl(videoId),
                 mime_type: 'text/html',
-                duration_in_seconds: durationText ? durationText.split(':').reduce((acc, part) => acc * 60 + Number(part), 0) : undefined,
+                duration_in_seconds: durationText ? durationText.split(':').reduce((acc, part) => acc * 60 + Number(part.replaceAll(',', '')), 0) : undefined,
             },
         ],
     };
@@ -87,6 +139,25 @@ export const getDataByChannelId = async ({ channelId, embed, isJsonFeed }: { cha
             item.attachments?.push(...(isJsonFeed ? videoSubtitles[video.content_id] || [] : []));
             return item;
         }),
+    };
+};
+
+export const getStreamsByChannelId = async ({ channelId, embed, includeDescription }: { channelId: string; embed: boolean; includeDescription: boolean }): Promise<Data> => {
+    const innertube = await getInnertube();
+    const channel = await innertube.getChannel(channelId);
+    const streams = await channel.getLiveStreams();
+    const videos = streams.videos.filter((video) => video instanceof YTNodes.LockupView);
+    // pMap keeps the results in the order of the input, so a description matches the stream at the same index
+    const descriptions = includeDescription ? await pMap(videos, (video) => getVideoDescription(video.content_id), { concurrency: 5 }) : [];
+
+    return {
+        title: `${channel.metadata.title || channelId} - Live - YouTube`,
+        link: `https://www.youtube.com/channel/${channelId}/streams`,
+        image: channel.metadata.avatar?.[0].url,
+        description: channel.metadata.description,
+
+        // The state is exposed as a category so that a single state can be picked out with the common `filter_category` parameter
+        item: videos.map((video, index) => ({ ...lockupViewToItem(video, embed, descriptions[index]), category: [getStreamState(video)] })),
     };
 };
 
