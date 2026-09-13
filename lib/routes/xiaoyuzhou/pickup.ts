@@ -58,13 +58,14 @@ const ProcessFeed = async () => {
     return playList.map((item) => {
         const title = item.episode.title + ' - ' + item.episode.podcast.title;
         const eid = item.episode.eid;
-        const itunes_item_image = item.episode.image ? item.episode.image.picUrl : item.episode.podcast.image ? item.episode.podcast.image.picUrl : '';
+        const itunes_item_image = item.episode.image?.picUrl || item.episode.podcast?.image?.picUrl || '';
         const link = `https://www.xiaoyuzhoufm.com/episode/${eid}`;
         const pubDate = item.pubDate;
         const itunes_duration = item.episode.duration;
-        const enclosure_url = item.episode.enclosure.url;
-        const desc = `<p><strong>${item.comment.author.nickname}：</strong>${item.comment.text}</p><hr>` + item.episode.shownotes;
-        const author = item.episode.podcast.author;
+        const enclosure_url = item.episode.enclosure?.url;
+        const comment = item.comment?.author ? `<p><strong>${item.comment.author.nickname}：</strong>${item.comment.text}</p><hr>` : '';
+        const desc = comment + (item.episode.shownotes || '');
+        const author = item.episode.podcast?.author;
 
         return {
             title,
@@ -101,7 +102,7 @@ export const route: Route = {
 
 async function handler() {
     let resultItems = await cache.tryGet(XIAOYUZHOU_ITEMS, () => ProcessFeed());
-    if (!isToday(resultItems[0].pubDate)) {
+    if (resultItems.length > 0 && !isToday(resultItems[0].pubDate)) {
         // force refresh cache
         resultItems = await ProcessFeed();
         cache.set(XIAOYUZHOU_ITEMS, resultItems);
