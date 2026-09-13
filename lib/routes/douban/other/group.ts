@@ -1,5 +1,6 @@
 import { load } from 'cheerio';
 
+import { config } from '@/config';
 import type { DataItem, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
@@ -58,6 +59,9 @@ async function handler(ctx) {
     const response = await got({
         method: 'get',
         url,
+        headers: {
+            Cookie: config.douban.cookie || '',
+        },
     });
 
     const $ = load(response.data);
@@ -76,6 +80,9 @@ async function handler(ctx) {
                     const detailResponse = await got({
                         method: 'get',
                         url: result.link,
+                        headers: {
+                            Cookie: config.douban.cookie || '',
+                        },
                     });
                     const $ = load(detailResponse.data);
 
