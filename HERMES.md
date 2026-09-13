@@ -2,8 +2,8 @@
 
 ## Active objective
 
-The DeepSeek route, Vercel build fix, and safe upstream synchronization are implemented and locally verified on `feat/rsshub-production-migration`.
+Add and deploy authenticated skills.sh trending and hot RSS feeds on `feat/skills-sh-feed`.
 
 ## Next action
 
-Push the feature branch, have the user merge it into `master`, reconnect the existing Vercel RSSHub project to `ljh12138164/RSSHub`, and then validate the production route before enabling DeepSeek ingestion Cron.
+Implement the route and focused tests, verify the Vercel build, then deploy and validate both production feeds.
