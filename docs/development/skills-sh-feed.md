@@ -44,7 +44,10 @@ Feasible on Vercel. skills.sh accepts a Vercel-issued OIDC bearer token, and Ver
 - `vitest run tests/skills-sh.test.ts`: 4 tests passed.
 - `eslint lib/routes/skills-sh/index.ts lib/routes/skills-sh/namespace.ts tests/skills-sh.test.ts`: passed.
 - `npm run vercel-build`: passed, and the generated route registry included `skills-sh`.
-- Production feed validation is pending deployment.
+- Deployed commit `4823470` to the existing `rss-hub` Vercel production project on 2026-09-13.
+- `https://rss.ljhboard.cn/skills-sh/trending`: HTTP 200, 100 items, with install and source-type metadata.
+- `https://rss.ljhboard.cn/skills-sh/hot`: HTTP 200, 100 items, with install, hourly-change, and same-hour-yesterday metadata.
+- Final review found no blocking findings and no accepted follow-ups requiring a roadmap.
 
 ## Risks
 
