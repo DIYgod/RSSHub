@@ -1,3 +1,4 @@
+import translate from 'translation-google';
 import type { CheerioAPI } from 'cheerio';
 import { load } from 'cheerio';
 import type { Element } from 'domhandler';
@@ -428,3 +429,29 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
 };
 
 export default middleware;
+async function translateFeed(ctx: any, data: any, targetLang: string) {
+    if (data && data.title) {
+        try {
+            const res = await translate(data.title, { to: targetLang });
+            data.title = res.text;
+        } catch (err) {}
+    }
+    if (data && data.item) {
+        for (const item of data.item) {
+            try {
+                if (item.title) {
+                    const res = await translate(item.title, { to: targetLang });
+                    item.title = res.text;
+                }
+                if (item.description) {
+                    const res = await translate(item.description, { to: targetLang });
+                    item.description = res.text;
+                }
+            } catch (err) {}
+        }
+    }
+}
+
+
+    }
+
