@@ -1793,6 +1793,7 @@ export type RoutePath =
   | `/instagram/:category/:key`
   | `/instagram/2/:category/:key`
   | `/instructables/projects/:category?`
+  | `/inuki-ichiba/rent/:pref?`
   | `/investor/:id{.+}?`
   | `/iplaysoft/`
   | `/iplaysoft/category/:slug`
@@ -2040,6 +2041,7 @@ export type RoutePath =
   | `/lfsyd/old_home`
   | `/lfsyd/tag/:tagId?`
   | `/lfsyd/user/:id?`
+  | `/lg/tokyo/food-permit/:ward?`
   | `/lhratings/research/:type?`
   | `/lianxh/:category?`
   | `/lifetimes/:category?`
@@ -3216,6 +3218,7 @@ export type RoutePath =
   | `/telegram/media/:entityName/:messageId`
   | `/telegram/stickerpack/:name`
   | `/telegram/stories/:username/:story?`
+  | `/temposmart/estates/:pref?`
   | `/tencent/cloud/developer/column/:categoryId?`
   | `/tencent/news/author/:mid`
   | `/tencent/news/coronavirus/data/:province?/:city?`

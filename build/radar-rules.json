@@ -25646,6 +25646,20 @@
       }
     ]
   },
+  "inuki-ichiba.jp": {
+    "_name": "Inuki Ichiba",
+    ".": [
+      {
+        "title": "新着物件",
+        "docs": "https://docs.rsshub.app/routes/other",
+        "source": [
+          "/sp_rent/1",
+          "/"
+        ],
+        "target": "/inuki-ichiba/rent"
+      }
+    ]
+  },
   "investor.org.cn": {
     "_name": "中国投资者网",
     "www": [
@@ -41191,6 +41205,19 @@
           "/s/:username"
         ],
         "target": "/telegram/channel/:username"
+      }
+    ]
+  },
+  "temposmart.jp": {
+    "_name": "Temposmart",
+    "www": [
+      {
+        "title": "新着物件",
+        "docs": "https://docs.rsshub.app/routes/other",
+        "source": [
+          "/estates/pref/:pref"
+        ],
+        "target": "/temposmart/estates/:pref"
       }
     ]
   },

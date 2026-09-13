@@ -14266,6 +14266,57 @@ export default {
     "url": "join-lemmy.org",
     "lang": "en"
   },
+  "lg": {
+    "routes": {
+      "/tokyo/food-permit/:ward?": {
+        "path": "/tokyo/food-permit/:ward?",
+        "name": "東京都 飲食店営業許可 新規",
+        "url": "catalog.data.metro.tokyo.lg.jp",
+        "maintainers": [
+          "pseudoyu"
+        ],
+        "example": "/lg/tokyo/food-permit",
+        "parameters": {
+          "ward": {
+            "description": "Ward; omit for all sources",
+            "options": [
+              {
+                "value": "shibuya",
+                "label": "渋谷区"
+              },
+              {
+                "value": "minato",
+                "label": "港区"
+              }
+            ]
+          }
+        },
+        "description": "Newly granted food business permits (飲食店営業許可 etc.) in Tokyo wards, from each ward's CC BY open data:\n\n- 渋谷区: [食品営業許可施設一覧 (ArcGIS FeatureServer)](https://city-shibuya-data.opendata.arcgis.com/items/e68f41ebfa5f4ea490ca9af701d44e02) — current and previous month\n- 港区: [食品営業許可一覧 (CSV)](https://catalog.data.metro.tokyo.lg.jp/dataset/t131032d0000000244) — monthly snapshot of valid permits, newest first\n\nItems are sorted by permit date (`pubDate`). `_extra` holds `source`, `ward`, `permit_no`, `name`, `address`, `permit_date`, `business_type` and the publisher's original columns in `raw`. Only 許可 rows are included (届出 rows are skipped).\n\n| Query   | Description                           | Default |\n| ------- | ------------------------------------- | ------- |\n| `limit` | Number of permits per source, max 500 | 100     |",
+        "categories": [
+          "government"
+        ],
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportRadar": false
+        },
+        "location": "tokyo/food-permit.ts",
+        "module": () => import('@/routes/lg/tokyo/food-permit.ts')
+      }
+    },
+    "apiRoutes": {},
+    "name": "Japan Local Government",
+    "url": "lg.jp",
+    "categories": [
+      "government"
+    ],
+    "description": "Local governments of Japan (`lg.jp`)",
+    "lang": "ja",
+    "ja": {
+      "name": "地方公共団体"
+    }
+  },
   "lifeweek": {
     "routes": {
       "/channel/:id": {
@@ -73923,6 +73974,71 @@ export default {
     "url": "instructables.com",
     "lang": "en"
   },
+  "inuki-ichiba": {
+    "routes": {
+      "/rent/:pref?": {
+        "path": "/rent/:pref?",
+        "name": "新着物件",
+        "url": "inuki-ichiba.jp",
+        "maintainers": [
+          "pseudoyu"
+        ],
+        "example": "/inuki-ichiba/rent/tokyo",
+        "parameters": {
+          "pref": {
+            "description": "都道府県 slug or JIS X 0401 code; omit for the site-wide 新着物件 page (一都三県 mixed)",
+            "options": [
+              {
+                "value": "tokyo",
+                "label": "東京都 (13)"
+              },
+              {
+                "value": "kanagawa",
+                "label": "神奈川県 (14)"
+              },
+              {
+                "value": "saitama",
+                "label": "埼玉県 (11)"
+              },
+              {
+                "value": "chiba",
+                "label": "千葉県 (12)"
+              }
+            ]
+          }
+        },
+        "description": "New listings on 居抜き市場，20 per page (first page only). With a prefecture the search results are sorted by 新着順；without one the site's 新着物件 page is used. Each item's `_extra` carries the structured listing fields (賃料，坪，階，最寄駅，敷金・保証金，造作価格，物件タイプ，現業態，飲食条件，…) parsed from the list and detail pages; unknown values are `null`. The site does not publish listing dates, so items have no `pubDate`.\n\n| Query   | Description                                                                  | Default |\n| ------- | ---------------------------------------------------------------------------- | ------- |\n| `limit` | Number of listings to process (detail pages are fetched per listing), max 20 | 20      |",
+        "categories": [
+          "other"
+        ],
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportRadar": true
+        },
+        "radar": [
+          {
+            "source": [
+              "inuki-ichiba.jp/sp_rent/1",
+              "inuki-ichiba.jp/"
+            ],
+            "target": "/rent"
+          }
+        ],
+        "location": "rent.ts",
+        "module": () => import('@/routes/inuki-ichiba/rent.ts')
+      }
+    },
+    "apiRoutes": {},
+    "name": "Inuki Ichiba",
+    "url": "inuki-ichiba.jp",
+    "description": "居抜き市場 — 一都三県の居抜き店舗・貸店舗物件情報サイト",
+    "lang": "ja",
+    "ja": {
+      "name": "居抜き市場"
+    }
+  },
   "investor": {
     "routes": {
       "/:id{.+}?": {
@@ -113204,6 +113320,83 @@ export default {
     "name": "Telegram",
     "url": "t.me",
     "lang": "en"
+  },
+  "temposmart": {
+    "routes": {
+      "/estates/:pref?": {
+        "path": "/estates/:pref?",
+        "name": "新着物件",
+        "url": "www.temposmart.jp",
+        "maintainers": [
+          "pseudoyu"
+        ],
+        "example": "/temposmart/estates/tokyo",
+        "parameters": {
+          "pref": {
+            "description": "都道府県 slug or JIS X 0401 code",
+            "default": "tokyo",
+            "options": [
+              {
+                "value": "tokyo",
+                "label": "東京都 (13)"
+              },
+              {
+                "value": "kanagawa",
+                "label": "神奈川県 (14)"
+              },
+              {
+                "value": "saitama",
+                "label": "埼玉県 (11)"
+              },
+              {
+                "value": "chiba",
+                "label": "千葉県 (12)"
+              },
+              {
+                "value": "osaka",
+                "label": "大阪府 (27)"
+              },
+              {
+                "value": "kyoto",
+                "label": "京都府 (26)"
+              },
+              {
+                "value": "hyogo",
+                "label": "兵庫県 (28)"
+              }
+            ]
+          }
+        },
+        "description": "New listings on テンポスマート for one prefecture, sorted by 新着順 (first page, 50 listings). Each item's `_extra` carries the structured listing fields (賃料，坪，坪単価，階，最寄駅，保証金，礼金，造作譲渡料，現況，業種制限，登録日，…) parsed from the list and detail pages; unknown values are `null`.\n\n| Query   | Description                                                                  | Default |\n| ------- | ---------------------------------------------------------------------------- | ------- |\n| `limit` | Number of listings to process (detail pages are fetched per listing), max 50 | 30      |",
+        "categories": [
+          "other"
+        ],
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportRadar": true
+        },
+        "radar": [
+          {
+            "source": [
+              "www.temposmart.jp/estates/pref/:pref"
+            ],
+            "target": "/estates/:pref"
+          }
+        ],
+        "location": "estates.ts",
+        "module": () => import('@/routes/temposmart/estates.ts')
+      }
+    },
+    "apiRoutes": {},
+    "name": "Temposmart",
+    "url": "www.temposmart.jp",
+    "description": "テンポスマート — 飲食店向け居抜き・貸店舗物件情報サイト",
+    "lang": "ja",
+    "ja": {
+      "name": "テンポスマート"
+    }
   },
   "tencent": {
     "routes": {

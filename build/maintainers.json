@@ -1107,6 +1107,9 @@
     "wb14123",
     "pseudoyu"
   ],
+  "/lg/tokyo/food-permit/:ward?": [
+    "pseudoyu"
+  ],
   "/lifeweek/channel/:id": [
     "changren-wcr"
   ],
@@ -5523,6 +5526,9 @@
   "/instructables/projects/:category?": [
     "wolfg1969"
   ],
+  "/inuki-ichiba/rent/:pref?": [
+    "pseudoyu"
+  ],
   "/investor/:id{.+}?": [
     "nczitzk"
   ],
@@ -8352,6 +8358,9 @@
     "DIYgod",
     "Rongronggg9",
     "synchrone",
+    "pseudoyu"
+  ],
+  "/temposmart/estates/:pref?": [
     "pseudoyu"
   ],
   "/tencent/pvp/newsindex/:type": [
