@@ -1,12 +1,12 @@
 /**
- * Text → structure helpers for テンポスマート listing pages.
+ * Text → structure helpers for Japanese restaurant-property listing pages (shared by the JP tenant-listing routes).
  * Unknown values are `null`, never `0`; site text is kept verbatim in `raw`.
  */
 
 export type ListingCondition = 'inuki' | 'skeleton';
 
 export interface ListingExtra {
-    source: 'temposmart';
+    source: string; // site id, e.g. 'temposmart'
     listing_id: string;
     rent_jpy: number | null; // 賃料（税込、円/月）
     tsubo: number | null; // 坪
