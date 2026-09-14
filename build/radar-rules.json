@@ -41279,6 +41279,20 @@
       }
     ]
   },
+  "temponw.com": {
+    "_name": "Temponw",
+    "www": [
+      {
+        "title": "新着物件",
+        "docs": "https://docs.rsshub.app/routes/other",
+        "source": [
+          "/result",
+          "/"
+        ],
+        "target": "/temponw/estates"
+      }
+    ]
+  },
   "temposmart.jp": {
     "_name": "Temposmart",
     "www": [

@@ -3223,6 +3223,7 @@ export type RoutePath =
   | `/telegram/media/:entityName/:messageId`
   | `/telegram/stickerpack/:name`
   | `/telegram/stories/:username/:story?`
+  | `/temponw/estates/:area?`
   | `/temposmart/estates/:pref?`
   | `/tenant-shop/chintai/:pref?/:type?`
   | `/tencent/cloud/developer/column/:categoryId?`

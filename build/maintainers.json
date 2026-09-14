@@ -8375,6 +8375,9 @@
     "synchrone",
     "pseudoyu"
   ],
+  "/temponw/estates/:area?": [
+    "pseudoyu"
+  ],
   "/temposmart/estates/:pref?": [
     "pseudoyu"
   ],

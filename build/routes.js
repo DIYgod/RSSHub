@@ -113625,6 +113625,59 @@ export default {
     "url": "t.me",
     "lang": "en"
   },
+  "temponw": {
+    "routes": {
+      "/estates/:area?": {
+        "path": "/estates/:area?",
+        "name": "新着物件",
+        "url": "www.temponw.com",
+        "maintainers": [
+          "pseudoyu"
+        ],
+        "example": "/temponw/estates/tokyo",
+        "parameters": {
+          "area": {
+            "description": "`tokyo` for the 23 wards of Tokyo; omit for nationwide",
+            "options": [
+              {
+                "value": "tokyo",
+                "label": "東京23区"
+              }
+            ]
+          }
+        },
+        "description": "Listings on 店舗ネットワーク sorted by 新着順 (first two pages, 20 listings). Each item's `_extra` carries the structured listing fields (賃料，坪，階，最寄駅，保証金，礼金，造作譲渡料，不可業態，…) parsed from the list and detail pages; unknown values are `null`. The site does not publish listing dates, so items have no `pubDate`; the same unit may be listed by several agencies under different ids.",
+        "categories": [
+          "other"
+        ],
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportRadar": true
+        },
+        "radar": [
+          {
+            "source": [
+              "www.temponw.com/result",
+              "www.temponw.com/"
+            ],
+            "target": "/estates"
+          }
+        ],
+        "location": "estates.ts",
+        "module": () => import('@/routes/temponw/estates.ts')
+      }
+    },
+    "apiRoutes": {},
+    "name": "Temponw",
+    "url": "www.temponw.com",
+    "description": "店舗ネットワーク — 貸店舗・テナント物件情報サイト",
+    "lang": "ja",
+    "ja": {
+      "name": "店舗ネットワーク"
+    }
+  },
   "temposmart": {
     "routes": {
       "/estates/:pref?": {
