@@ -26818,6 +26818,19 @@
       }
     ]
   },
+  "keio.co.jp": {
+    "_name": "Keio Corporation",
+    "www": [
+      {
+        "title": "駅別 一日平均乗降人員",
+        "docs": "https://docs.rsshub.app/routes/other",
+        "source": [
+          "/company/corporate/corporate_manual/number-of-passengers.html"
+        ],
+        "target": "/keio/ridership"
+      }
+    ]
+  },
   "kelownacapnews.com": {
     "_name": "Kelowna Capital News",
     "www": [
@@ -33310,6 +33323,19 @@
           "/"
         ],
         "target": "/odaily/user/:id"
+      }
+    ]
+  },
+  "odakyu.jp": {
+    "_name": "Odakyu Electric Railway",
+    "www": [
+      {
+        "title": "駅別乗降人員",
+        "docs": "https://docs.rsshub.app/routes/other",
+        "source": [
+          "/company/railroad/users/"
+        ],
+        "target": "/odakyu/ridership"
       }
     ]
   },
@@ -42034,6 +42060,33 @@
           "/:lang/report"
         ],
         "target": "/tokeninsight/report/:lang"
+      }
+    ]
+  },
+  "tokyometro.jp": {
+    "_name": "Tokyo Metro",
+    "www": [
+      {
+        "title": "各駅の乗降人員ランキング",
+        "docs": "https://docs.rsshub.app/routes/other",
+        "source": [
+          "/corporate/enterprise/passenger_rail/transportation/passengers/:page"
+        ],
+        "target": "/tokyometro/ridership"
+      }
+    ]
+  },
+  "tokyu.co.jp": {
+    "_name": "Tokyu Railways",
+    "www": [
+      {
+        "title": "駅別乗降人員",
+        "docs": "https://docs.rsshub.app/routes/other",
+        "source": [
+          "/railway/company/business/passengers/:year",
+          "/railway/company/business/passengers/"
+        ],
+        "target": "/tokyu/ridership/:year"
       }
     ]
   },

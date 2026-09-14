@@ -1107,9 +1107,6 @@
     "wb14123",
     "pseudoyu"
   ],
-  "/lg/tokyo/food-permit/:ward?": [
-    "pseudoyu"
-  ],
   "/lifeweek/channel/:id": [
     "changren-wcr"
   ],
@@ -5813,6 +5810,9 @@
   "/keepass/": [
     "TonyRL"
   ],
+  "/keio/ridership": [
+    "pseudoyu"
+  ],
   "/kelownacapnews/:type": [
     "hualiong"
   ],
@@ -5963,6 +5963,12 @@
   ],
   "/letterboxd/:username/watchlist": [
     "johan456789"
+  ],
+  "/lg/osaka/food-permit": [
+    "pseudoyu"
+  ],
+  "/lg/tokyo/food-permit/:ward?": [
+    "pseudoyu"
   ],
   "/lhratings/research/:type?": [
     "nczitzk"
@@ -6891,6 +6897,9 @@
   ],
   "/odaily/user/:id": [
     "nczitzk"
+  ],
+  "/odakyu/ridership": [
+    "pseudoyu"
   ],
   "/oesw/:path{.+}?": [
     "sk22"
@@ -8561,6 +8570,12 @@
   ],
   "/tokeninsight/report/:lang?": [
     "fuergaosi233"
+  ],
+  "/tokyometro/ridership/:year?": [
+    "pseudoyu"
+  ],
+  "/tokyu/ridership/:year?": [
+    "pseudoyu"
   ],
   "/tongli/news/:type": [
     "CokeMine"

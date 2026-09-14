@@ -14266,57 +14266,6 @@ export default {
     "url": "join-lemmy.org",
     "lang": "en"
   },
-  "lg": {
-    "routes": {
-      "/tokyo/food-permit/:ward?": {
-        "path": "/tokyo/food-permit/:ward?",
-        "name": "東京都 飲食店営業許可 新規",
-        "url": "catalog.data.metro.tokyo.lg.jp",
-        "maintainers": [
-          "pseudoyu"
-        ],
-        "example": "/lg/tokyo/food-permit",
-        "parameters": {
-          "ward": {
-            "description": "Ward; omit for all sources",
-            "options": [
-              {
-                "value": "shibuya",
-                "label": "渋谷区"
-              },
-              {
-                "value": "minato",
-                "label": "港区"
-              }
-            ]
-          }
-        },
-        "description": "Newly granted food business permits (飲食店営業許可 etc.) in Tokyo wards, from each ward's CC BY open data:\n\n- 渋谷区: [食品営業許可施設一覧 (ArcGIS FeatureServer)](https://city-shibuya-data.opendata.arcgis.com/items/e68f41ebfa5f4ea490ca9af701d44e02) — current and previous month\n- 港区: [食品営業許可一覧 (CSV)](https://catalog.data.metro.tokyo.lg.jp/dataset/t131032d0000000244) — monthly snapshot of valid permits, newest first\n\nItems are sorted by permit date (`pubDate`). `_extra` holds `source`, `ward`, `permit_no`, `name`, `address`, `permit_date`, `business_type` and the publisher's original columns in `raw`. Only 許可 rows are included (届出 rows are skipped).\n\n| Query   | Description                           | Default |\n| ------- | ------------------------------------- | ------- |\n| `limit` | Number of permits per source, max 500 | 100     |",
-        "categories": [
-          "government"
-        ],
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportRadar": false
-        },
-        "location": "tokyo/food-permit.ts",
-        "module": () => import('@/routes/lg/tokyo/food-permit.ts')
-      }
-    },
-    "apiRoutes": {},
-    "name": "Japan Local Government",
-    "url": "lg.jp",
-    "categories": [
-      "government"
-    ],
-    "description": "Local governments of Japan (`lg.jp`)",
-    "lang": "ja",
-    "ja": {
-      "name": "地方公共団体"
-    }
-  },
   "lifeweek": {
     "routes": {
       "/channel/:id": {
@@ -31670,7 +31619,7 @@ export default {
             ]
           }
         },
-        "description": "Ward-level restaurant-property rent benchmarks (坪単価) from ABC 店舗's エリア別の賃料相場 page, one item per 区 of 東京23区. The page gives a single unqualified 相場 figure per ward (「賃料相場は坪単価」, compiled from the site's own listings) — it is stored in `_extra.rent_per_tsubo_jpy` because the site does not say whether it is a mean or a median; 平均 / 中央値 / 最高 / 最低, sample count, period and 更新日 are not published and stay `null`. The page is cached for one day.",
+        "description": "Ward-level restaurant-property rent benchmarks (坪単価) from ABC 店舗's エリア別の賃料相場 page, one item per 区 of 東京 23 区. The page gives a single unqualified 相場 figure per ward (「賃料相場は坪単価」, compiled from the site's own listings) — it is stored in `_extra.rent_per_tsubo_jpy` because the site does not say whether it is a mean or a median; 平均 / 中央値 / 最高 / 最低，sample count, period and 更新日 are not published and stay `null`. The page is cached for one day.",
         "categories": [
           "other"
         ],
@@ -74241,7 +74190,7 @@ export default {
             "description": "Line id from the area page (`/bukken/kanto/market/rent/line/{area}`, e.g. `2` = JR山手線 in 東京23区); when given, one item per station on that line instead of one per 市区町村"
           }
         },
-        "description": "Restaurant-property rent benchmarks (坪単価, 消費税込み募集金額, 直近1年間) published by 飲食店.COM. Without `line` the feed has one item per 市区町村 of the area; with `line` one item per station on that line. Each item's `_extra` carries `rent_per_tsubo_avg_jpy` / `_min_jpy` / `_max_jpy` (円/坪/月), `sample_count` (sum of the 賃料分布図 buckets), `period` and the raw site text; the site publishes no 中央値 and no 更新日, so `rent_per_tsubo_median_jpy` is always `null` and items carry no `pubDate`. Detail pages are cached for one day.",
+        "description": "Restaurant-property rent benchmarks (坪単価，消費税込み募集金額，直近 1 年間) published by 飲食店.COM. Without `line` the feed has one item per 市区町村 of the area; with `line` one item per station on that line. Each item's `_extra` carries `rent_per_tsubo_avg_jpy` / `_min_jpy` / `_max_jpy` (円 / 坪 / 月), `sample_count` (sum of the 賃料分布図 buckets), `period` and the raw site text; the site publishes no 中央値 and no 更新日，so `rent_per_tsubo_median_jpy` is always `null` and items carry no `pubDate`. Detail pages are cached for one day.",
         "categories": [
           "other"
         ],
@@ -78036,6 +77985,48 @@ export default {
     "url": "keepass.info",
     "lang": "en"
   },
+  "keio": {
+    "routes": {
+      "/ridership": {
+        "path": "/ridership",
+        "name": "駅別 一日平均乗降人員",
+        "url": "www.keio.co.jp",
+        "maintainers": [
+          "pseudoyu"
+        ],
+        "example": "/keio/ridership",
+        "parameters": {},
+        "description": "Annual 駅別 一日平均乗降人員 for every Keio station (京王線 incl. 相模原線・高尾線 etc., and 井の頭線), from [駅別 一日平均乗降人員](https://www.keio.co.jp/company/corporate/corporate_manual/number-of-passengers.html). The page lists the latest fiscal year and the one before it side by side, so there is one item per station and year (two per station); there is no year parameter. `_extra` carries `operator`, `station`, `line`, `fiscal_year`, `daily_average` (人/日) and both cells in `raw`. `rank` is `null` (no ranking is printed); `yoy_pct` is computed from the two year columns for the latest year (rounded to 0.1) and `null` for the earlier one. 明大前's （乗換） transfer count is kept in `raw.note`; the 全線計 row is not a station and is skipped. The operator does not publish a release date, so items have no `pubDate`.",
+        "categories": [
+          "other"
+        ],
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportRadar": true
+        },
+        "radar": [
+          {
+            "source": [
+              "www.keio.co.jp/company/corporate/corporate_manual/number-of-passengers.html"
+            ],
+            "target": "/ridership"
+          }
+        ],
+        "location": "ridership.ts",
+        "module": () => import('@/routes/keio/ridership.ts')
+      }
+    },
+    "apiRoutes": {},
+    "name": "Keio Corporation",
+    "url": "www.keio.co.jp",
+    "description": "京王電鉄株式会社",
+    "lang": "ja",
+    "ja": {
+      "name": "京王電鉄"
+    }
+  },
   "kelownacapnews": {
     "routes": {
       "/:type": {
@@ -79999,6 +79990,94 @@ export default {
       "social-media"
     ],
     "lang": "en"
+  },
+  "lg": {
+    "routes": {
+      "/osaka/food-permit": {
+        "path": "/osaka/food-permit",
+        "name": "大阪市 食品営業許可 新規",
+        "url": "www.city.osaka.lg.jp",
+        "maintainers": [
+          "pseudoyu"
+        ],
+        "example": "/lg/osaka/food-permit",
+        "description": "Newest food business permits (食品営業許可) in 大阪市, from the CC BY 4.0 [食品営業許可施設一覧 CSV](https://www.city.osaka.lg.jp/kenko/page/0000575579.html) — a quarterly snapshot of all valid permits with 緯度経度.\n\nThe dataset has no permit date, only 許可満了日, so items have no `pubDate`; they are ordered by 指令番号 (`大 保食第<年度>-<連番>号`), newest first, and only 申請区分 = 新規 rows are included. `_extra` holds `source`, `ward`, `permit_no`, `name`, `address`, `permit_date` (always `null`), `business_type`, `lat`, `lon` and the publisher's original columns in `raw`.\n\n| Query   | Description                 | Default |\n| ------- | --------------------------- | ------- |\n| `limit` | Number of permits, max 500 | 100     |",
+        "categories": [
+          "government"
+        ],
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportRadar": false
+        },
+        "location": "osaka/food-permit.ts",
+        "module": () => import('@/routes/lg/osaka/food-permit.ts')
+      },
+      "/tokyo/food-permit/:ward?": {
+        "path": "/tokyo/food-permit/:ward?",
+        "name": "東京都 飲食店営業許可 新規",
+        "url": "catalog.data.metro.tokyo.lg.jp",
+        "maintainers": [
+          "pseudoyu"
+        ],
+        "example": "/lg/tokyo/food-permit",
+        "parameters": {
+          "ward": {
+            "description": "Ward; omit for all sources",
+            "options": [
+              {
+                "value": "shibuya",
+                "label": "渋谷区"
+              },
+              {
+                "value": "minato",
+                "label": "港区"
+              },
+              {
+                "value": "taito",
+                "label": "台東区"
+              },
+              {
+                "value": "shinagawa",
+                "label": "品川区"
+              },
+              {
+                "value": "setagaya",
+                "label": "世田谷区"
+              },
+              {
+                "value": "meguro",
+                "label": "目黒区"
+              }
+            ]
+          }
+        },
+        "description": "Newly granted food business permits (飲食店営業許可 etc.) in Tokyo wards, from each ward's CC BY open data:\n\n- 渋谷区: [食品営業許可施設一覧 (ArcGIS FeatureServer)](https://city-shibuya-data.opendata.arcgis.com/items/e68f41ebfa5f4ea490ca9af701d44e02) — current and previous month\n- 港区: [食品営業許可一覧 (CSV)](https://catalog.data.metro.tokyo.lg.jp/dataset/t131032d0000000244) — monthly snapshot of valid permits, newest first\n- 台東区: [食品衛生営業施設一覧](https://www.city.taito.lg.jp/kenkohukusi/kenkokikikanrieisei/food/syokuhin-sisetu/index.html) — the two newest monthly 新規許可 CSVs (updated on the 10th)\n- 品川区: [食品衛生許可施設一覧](https://www.city.shinagawa.tokyo.jp/PC/kenkou/kenkou-eisei/kenkou-eisei-syokuhin/opendate.html) — the two newest monthly CSVs (updated on the 15th); individuals' names and addresses are masked by the publisher and come through as `null`\n- 世田谷区: [食品関係施設情報の公開について](https://www.city.setagaya.lg.jp/02245/online_tetsuzuki/3246.html) — the two newest 例月新規許可施設一覧 CSVs (updated on the 15th)\n- 目黒区: [飲食店等 (BODIK CKAN)](https://data.bodik.jp/dataset/131105_food_business) — the two newest 飲食店 新規 monthly CSVs (updated by the 10th)\n\nItems are sorted by permit date (`pubDate`). `_extra` holds `source`, `ward`, `permit_no`, `name`, `address`, `permit_date`, `business_type`, `lat` / `lon` (when the publisher gives them, else `null`) and the publisher's original columns in `raw`. Only 許可 rows are included (届出 rows are skipped).\n\n| Query   | Description                           | Default |\n| ------- | ------------------------------------- | ------- |\n| `limit` | Number of permits per source, max 500 | 100     |",
+        "categories": [
+          "government"
+        ],
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportRadar": false
+        },
+        "location": "tokyo/food-permit.ts",
+        "module": () => import('@/routes/lg/tokyo/food-permit.ts')
+      }
+    },
+    "apiRoutes": {},
+    "name": "Japan Local Government",
+    "url": "lg.jp",
+    "categories": [
+      "government"
+    ],
+    "description": "Local governments of Japan (`lg.jp`)",
+    "lang": "ja",
+    "ja": {
+      "name": "地方公共団体"
+    }
   },
   "lhratings": {
     "routes": {
@@ -93535,6 +93614,48 @@ export default {
     "name": "Odaily 星球日报",
     "url": "odaily.news",
     "lang": "zh-CN"
+  },
+  "odakyu": {
+    "routes": {
+      "/ridership": {
+        "path": "/ridership",
+        "name": "駅別乗降人員",
+        "url": "www.odakyu.jp",
+        "maintainers": [
+          "pseudoyu"
+        ],
+        "example": "/odakyu/ridership",
+        "parameters": {},
+        "description": "Annual 1日平均駅別乗降人員 for every Odakyu station (小田原線 / 江ノ島線 / 多摩線), from [鉄道部門：駅別乗降人員・輸送人員ほか](https://www.odakyu.jp/company/railroad/users/). The operator publishes only the current fiscal year on this page, so there is no year parameter. One item per station; `_extra` carries `operator`, `station`, `line`, `fiscal_year`, `daily_average` (人/日), `rank` (順位 across all lines), `yoy_pct` (増減率) and the page's cell text in `raw`. The operator does not publish a release date, so items have no `pubDate`.",
+        "categories": [
+          "other"
+        ],
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportRadar": true
+        },
+        "radar": [
+          {
+            "source": [
+              "www.odakyu.jp/company/railroad/users/"
+            ],
+            "target": "/ridership"
+          }
+        ],
+        "location": "ridership.ts",
+        "module": () => import('@/routes/odakyu/ridership.ts')
+      }
+    },
+    "apiRoutes": {},
+    "name": "Odakyu Electric Railway",
+    "url": "www.odakyu.jp",
+    "description": "小田急電鉄株式会社",
+    "lang": "ja",
+    "ja": {
+      "name": "小田急電鉄"
+    }
   },
   "oesw": {
     "routes": {
@@ -115859,6 +115980,99 @@ export default {
     "url": "tokeninsight.com",
     "description": "::: tip\nTokenInsight also provides official RSS, you can take a look at <https://api.tokeninsight.com/reference/rss>.\n:::",
     "lang": "en"
+  },
+  "tokyometro": {
+    "routes": {
+      "/ridership/:year?": {
+        "path": "/ridership/:year?",
+        "name": "各駅の乗降人員ランキング",
+        "url": "www.tokyometro.jp",
+        "maintainers": [
+          "pseudoyu"
+        ],
+        "example": "/tokyometro/ridership",
+        "parameters": {
+          "year": {
+            "description": "Fiscal year (`2020` … latest); omit for the latest year"
+          }
+        },
+        "description": "Annual 駅別乗降人員 (one-day average) for every Tokyo Metro station, from [各駅の乗降人員ランキング](https://www.tokyometro.jp/corporate/enterprise/passenger_rail/transportation/passengers/index.html). One item per station and fiscal year; `_extra` carries `operator`, `station`, `line` (several lines joined with `・`), `fiscal_year`, `daily_average` (人/日), `rank`, `yoy_pct` and the page's cell text in `raw`. Stations in the 直通連絡駅・共用駅 table (渋谷, 北千住, 中目黒, …) have no rank because the operator does not rank them. 国会議事堂前 and 溜池山王 are listed as one station (国会・溜池), as on the page. The operator does not publish a release date, so items have no `pubDate`.",
+        "categories": [
+          "other"
+        ],
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportRadar": true
+        },
+        "radar": [
+          {
+            "source": [
+              "www.tokyometro.jp/corporate/enterprise/passenger_rail/transportation/passengers/:page"
+            ],
+            "target": "/ridership"
+          }
+        ],
+        "location": "ridership.ts",
+        "module": () => import('@/routes/tokyometro/ridership.ts')
+      }
+    },
+    "apiRoutes": {},
+    "name": "Tokyo Metro",
+    "url": "www.tokyometro.jp",
+    "description": "東京メトロ — 東京地下鉄株式会社",
+    "lang": "ja",
+    "ja": {
+      "name": "東京メトロ"
+    }
+  },
+  "tokyu": {
+    "routes": {
+      "/ridership/:year?": {
+        "path": "/ridership/:year?",
+        "name": "駅別乗降人員",
+        "url": "www.tokyu.co.jp",
+        "maintainers": [
+          "pseudoyu"
+        ],
+        "example": "/tokyu/ridership",
+        "parameters": {
+          "year": {
+            "description": "Fiscal year (`2014` … latest); omit for the latest year"
+          }
+        },
+        "description": "Annual 駅別乗降人員 (one-day average) for every Tokyu station, from [駅別乗降人員・輸送人員](https://www.tokyu.co.jp/railway/company/business/passengers/). One item per station, line and fiscal year (渋谷, 日吉, 蒲田 … appear once per line, as on the page); `_extra` carries `operator`, `station`, `line`, `fiscal_year`, `daily_average` (計, 人/日), `yoy_pct` and the page's cell text in `raw` (定期 / 定期外 / 計 / 前年比 / previous-year figure). `rank` is `null` because the operator publishes no ranking. 世田谷線 is published as a single 全線 figure and is not included. The operator does not publish a release date, so items have no `pubDate`.",
+        "categories": [
+          "other"
+        ],
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportRadar": true
+        },
+        "radar": [
+          {
+            "source": [
+              "www.tokyu.co.jp/railway/company/business/passengers/:year",
+              "www.tokyu.co.jp/railway/company/business/passengers/"
+            ],
+            "target": "/ridership/:year"
+          }
+        ],
+        "location": "ridership.ts",
+        "module": () => import('@/routes/tokyu/ridership.ts')
+      }
+    },
+    "apiRoutes": {},
+    "name": "Tokyu Railways",
+    "url": "www.tokyu.co.jp",
+    "description": "東急電鉄株式会社",
+    "lang": "ja",
+    "ja": {
+      "name": "東急電鉄"
+    }
   },
   "tongli": {
     "routes": {
