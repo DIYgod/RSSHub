@@ -111,6 +111,7 @@ export type RoutePath =
   | `/aa1/60s/:category?`
   | `/aamacau/:category?/:id?`
   | `/abc-tenpo/property/:pref?`
+  | `/abc-tenpo/rent-benchmark/:pref?`
   | `/abc/:category{.+}?`
   | `/abmedia/:category?`
   | `/abmedia/index`
@@ -1792,6 +1793,7 @@ export type RoutePath =
   | `/inoreader/html_clip/:user/:tag`
   | `/inoreader/rss/:user/:tag`
   | `/inshokuten/bukken/:area?`
+  | `/inshokuten/rent-benchmark/:area?/:line?`
   | `/inspirehep/authors/:id`
   | `/inspirehep/literature/:q`
   | `/instagram/:category/:key`

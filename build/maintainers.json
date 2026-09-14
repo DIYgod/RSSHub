@@ -2386,6 +2386,9 @@
   "/abc-tenpo/property/:pref?": [
     "pseudoyu"
   ],
+  "/abc-tenpo/rent-benchmark/:pref?": [
+    "pseudoyu"
+  ],
   "/abskoop/nsfw": [
     "zhenhappy"
   ],
@@ -5533,6 +5536,9 @@
     "IvanWng97"
   ],
   "/inshokuten/bukken/:area?": [
+    "pseudoyu"
+  ],
+  "/inshokuten/rent-benchmark/:area?/:line?": [
     "pseudoyu"
   ],
   "/instructables/projects/:category?": [

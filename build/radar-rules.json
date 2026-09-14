@@ -9666,6 +9666,14 @@
           "/"
         ],
         "target": "/abc-tenpo/property"
+      },
+      {
+        "title": "エリア別賃料相場",
+        "docs": "https://docs.rsshub.app/routes/other",
+        "source": [
+          "/feature/rent"
+        ],
+        "target": "/abc-tenpo/rent-benchmark"
       }
     ]
   },
@@ -25681,6 +25689,22 @@
           "/bukken/:region/bukkens/list/local-:area"
         ],
         "target": "/inshokutenparams=>`/bukken/${params.area??params.region}`"
+      },
+      {
+        "title": "賃料相場",
+        "docs": "https://docs.rsshub.app/routes/other",
+        "source": [
+          "/bukken/kanto/market/rent/line/:area"
+        ],
+        "target": "/inshokuten/rent-benchmark/:area"
+      },
+      {
+        "title": "賃料相場",
+        "docs": "https://docs.rsshub.app/routes/other",
+        "source": [
+          "/bukken/kanto/market/rent/station/:line"
+        ],
+        "target": "/inshokuten/rent-benchmark/23ward/:line"
       }
     ]
   },

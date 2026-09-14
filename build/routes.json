@@ -31649,6 +31649,47 @@
         ],
         "location": "property.ts",
         "module": "() => import('@/routes/abc-tenpo/property.ts')"
+      },
+      "/rent-benchmark/:pref?": {
+        "path": "/rent-benchmark/:pref?",
+        "name": "エリア別賃料相場",
+        "url": "www.abc-tenpo.com",
+        "maintainers": [
+          "pseudoyu"
+        ],
+        "example": "/abc-tenpo/rent-benchmark/tokyo",
+        "parameters": {
+          "pref": {
+            "description": "Prefecture slug; the site currently publishes 東京23区 only",
+            "default": "tokyo",
+            "options": [
+              {
+                "value": "tokyo",
+                "label": "東京都"
+              }
+            ]
+          }
+        },
+        "description": "Ward-level restaurant-property rent benchmarks (坪単価) from ABC 店舗's エリア別の賃料相場 page, one item per 区 of 東京23区. The page gives a single unqualified 相場 figure per ward (「賃料相場は坪単価」, compiled from the site's own listings) — it is stored in `_extra.rent_per_tsubo_jpy` because the site does not say whether it is a mean or a median; 平均 / 中央値 / 最高 / 最低, sample count, period and 更新日 are not published and stay `null`. The page is cached for one day.",
+        "categories": [
+          "other"
+        ],
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportRadar": true
+        },
+        "radar": [
+          {
+            "source": [
+              "www.abc-tenpo.com/feature/rent"
+            ],
+            "target": "/rent-benchmark"
+          }
+        ],
+        "location": "rent-benchmark.ts",
+        "module": "() => import('@/routes/abc-tenpo/rent-benchmark.ts')"
       }
     },
     "apiRoutes": {},
@@ -74160,6 +74201,72 @@
         ],
         "location": "bukken.ts",
         "module": "() => import('@/routes/inshokuten/bukken.ts')"
+      },
+      "/rent-benchmark/:area?/:line?": {
+        "path": "/rent-benchmark/:area?/:line?",
+        "name": "賃料相場",
+        "url": "www.inshokuten.com",
+        "maintainers": [
+          "pseudoyu"
+        ],
+        "example": "/inshokuten/rent-benchmark/23ward",
+        "parameters": {
+          "area": {
+            "description": "首都圏 sub-area",
+            "default": "23ward",
+            "options": [
+              {
+                "value": "23ward",
+                "label": "東京23区"
+              },
+              {
+                "value": "23ward_out",
+                "label": "東京都下"
+              },
+              {
+                "value": "chiba",
+                "label": "千葉"
+              },
+              {
+                "value": "saitama",
+                "label": "埼玉"
+              },
+              {
+                "value": "yokohama_kawasaki",
+                "label": "神奈川"
+              }
+            ]
+          },
+          "line": {
+            "description": "Line id from the area page (`/bukken/kanto/market/rent/line/{area}`, e.g. `2` = JR山手線 in 東京23区); when given, one item per station on that line instead of one per 市区町村"
+          }
+        },
+        "description": "Restaurant-property rent benchmarks (坪単価, 消費税込み募集金額, 直近1年間) published by 飲食店.COM. Without `line` the feed has one item per 市区町村 of the area; with `line` one item per station on that line. Each item's `_extra` carries `rent_per_tsubo_avg_jpy` / `_min_jpy` / `_max_jpy` (円/坪/月), `sample_count` (sum of the 賃料分布図 buckets), `period` and the raw site text; the site publishes no 中央値 and no 更新日, so `rent_per_tsubo_median_jpy` is always `null` and items carry no `pubDate`. Detail pages are cached for one day.",
+        "categories": [
+          "other"
+        ],
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportRadar": true
+        },
+        "radar": [
+          {
+            "source": [
+              "www.inshokuten.com/bukken/kanto/market/rent/line/:area"
+            ],
+            "target": "/rent-benchmark/:area"
+          },
+          {
+            "source": [
+              "www.inshokuten.com/bukken/kanto/market/rent/station/:line"
+            ],
+            "target": "/rent-benchmark/23ward/:line"
+          }
+        ],
+        "location": "rent-benchmark.ts",
+        "module": "() => import('@/routes/inshokuten/rent-benchmark.ts')"
       }
     },
     "apiRoutes": {},
