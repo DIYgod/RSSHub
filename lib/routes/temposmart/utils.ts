@@ -31,6 +31,24 @@ export interface ListingExtra {
     raw: Record<string, string | null>;
 }
 
+/**
+ * One row of a 賃料相場 (rent benchmark) page — 円 per 坪 per month, unknown = `null`.
+ * Sites that publish 万円 or per-㎡ figures are converted here and keep the original text in `raw`.
+ */
+export interface RentBenchmarkExtra {
+    source: string; // site id, e.g. 'inshokuten'
+    area_kind: 'station' | 'ward';
+    area_name: string; // 新宿 / 千代田区 (station names without 駅)
+    pref: string; // 東京都 / 千葉県 …
+    rent_per_tsubo_median_jpy: number | null;
+    rent_per_tsubo_avg_jpy: number | null;
+    rent_per_tsubo_min_jpy: number | null;
+    rent_per_tsubo_max_jpy: number | null;
+    sample_count: number | null;
+    period: string | null; // '2026-08' or the page's stated period, e.g. '直近1年間'
+    raw: Record<string, string>;
+}
+
 const TSUBO_M2 = 3.30579;
 
 /** Collapse whitespace from cheerio `.text()`; empty → null. */
