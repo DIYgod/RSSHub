@@ -85,6 +85,8 @@ export default defineConfig({
         '@sentry/node': path.resolve('./lib/shims/sentry-node.ts'),
         '@honeybadger-io/js': path.resolve('./lib/shims/honeybadger.ts'),
         typescript: path.resolve('./lib/shims/typescript.ts'),
+        jsdom: path.resolve('./lib/shims/jsdom.ts'),
+        vm2: path.resolve('./lib/shims/vm2.ts'),
         // Routes file with Worker-specific build (match relative import from lib/)
         '../assets/build/routes.js': path.resolve('./assets/build/routes-worker.js'),
         // routes.json is only used in test environment, but rolldown still tries to resolve it

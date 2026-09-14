@@ -1,8 +1,8 @@
 import { load } from 'cheerio';
 
 import type { Route } from '@/types';
+import { parseScriptData } from '@/utils/evaluate-script';
 import got from '@/utils/got';
-import { parseScriptData } from '@/utils/parse-script-data';
 
 export const route: Route = {
     path: '/hottest',

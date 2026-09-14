@@ -5,19 +5,23 @@ import { parseScriptSource } from './parse-js';
 type DataValue = string | number | boolean | null | undefined | DataValue[] | DataObject | ScriptDataError;
 type DataObject = { [key: string]: DataValue };
 type Scope = { values: DataObject; parent?: Scope };
-type Reference = { object: DataObject | DataValue[]; key: string };
+type Reference = { object: DataObject; key: string };
 
 const globalNames = new Set(['window', 'globalThis', 'self']);
 const unsafeKeys = new Set(['__proto__', 'prototype', 'constructor']);
 const maxScriptLength = 2_000_000;
-const maxSteps = 1e5;
+const maxSteps = 10000;
 const maxDepth = 100;
 
 class ScriptDataError extends Error {}
 class UnsafePropertyError extends ScriptDataError {}
 
-const propertyKey = (value: unknown): string => {
-    if (typeof value !== 'string' && typeof value !== 'number') {
+const isKey = (value: DataValue): value is string | number => typeof value === 'string' || typeof value === 'number';
+const isNumber = (value: DataValue): value is number => typeof value === 'number';
+const isObject = (value: DataValue): value is DataObject | DataValue[] => typeof value === 'object' && value !== null && !(value instanceof ScriptDataError);
+
+const propertyKey = (value: DataValue): string => {
+    if (!isKey(value)) {
         throw new ScriptDataError('Script data property keys must be strings or numbers');
     }
     const key = String(value);
@@ -32,7 +36,7 @@ const staticPath = (node: Node): string[] => {
         return [propertyKey(node.name)];
     }
     if (node.type === 'MemberExpression' && !node.optional) {
-        const key = !node.computed && node.property.type === 'Identifier' ? node.property.name : node.property.type === 'Literal' ? node.property.value : undefined;
+        const key = !node.computed && node.property.type === 'Identifier' ? node.property.name : node.property.type === 'Literal' && !('regex' in node.property) && !('bigint' in node.property) ? node.property.value : undefined;
         return [...staticPath(node.object), propertyKey(key)];
     }
     throw new ScriptDataError('Script data targets must be static property paths');
@@ -59,8 +63,6 @@ const targetPath = async (target: string): Promise<string[]> => {
     }
     return path;
 };
-
-const isObject = (value: DataValue): value is DataObject | DataValue[] => typeof value === 'object' && value !== null && !(value instanceof ScriptDataError);
 
 const readProperty = (object: DataValue, key: string): DataValue => {
     if (object instanceof ScriptDataError) {
@@ -134,7 +136,7 @@ class ScriptDataReader {
         if (Array.isArray(object) && (!/^(?:0|[1-9]\d*)$/.test(key) || Number(key) >= maxSteps)) {
             throw new ScriptDataError('Script data arrays require bounded numeric indexes');
         }
-        return { object, key };
+        return { object: object as DataObject, key };
     }
 
     private evaluate(node: Node, scope: Scope, depth: number): DataValue {
@@ -144,7 +146,7 @@ class ScriptDataReader {
                 if ('regex' in node || 'bigint' in node) {
                     break;
                 }
-                return node.value as string | number | boolean | null;
+                return node.value;
             case 'Identifier':
                 return this.identifier(node.name, scope);
             case 'ArrayExpression':
@@ -172,7 +174,7 @@ class ScriptDataReader {
                 if (node.operator === '!') {
                     return !value;
                 }
-                if (typeof value === 'number' && (node.operator === '-' || node.operator === '+')) {
+                if (isNumber(value) && (node.operator === '-' || node.operator === '+')) {
                     return node.operator === '-' ? -value : value;
                 }
                 break;
@@ -191,11 +193,11 @@ class ScriptDataReader {
                         throw new ScriptDataError('Only simple script data assignments are supported');
                     }
                     const value = this.evaluate(node.right, scope, depth + 1);
-                    (object as DataObject)[key] = value;
+                    object[key] = value;
                     return value;
                 } catch (error) {
                     if (error instanceof ScriptDataError) {
-                        (object as DataObject)[key] = error;
+                        object[key] = error;
                         this.poisonedAssignments.add(node);
                     }
                     throw error;
@@ -295,7 +297,7 @@ class ScriptDataReader {
                 return false;
             }
             const children = Array.isArray(value) ? value : [value];
-            return children.some((child) => child && typeof child === 'object' && typeof child.type === 'string' && this.referencesKnownData(child, scope, depth + 1));
+            return children.some((child) => child?.type && this.referencesKnownData(child, scope, depth + 1));
         });
     }
 
@@ -368,7 +370,7 @@ class ScriptDataReader {
         }
     }
 
-    async read(source: string): Promise<DataValue> {
+    async read<T>(source: string): Promise<T> {
         if (source.length > maxScriptLength) {
             throw new ScriptDataError('Script data source exceeds the size limit');
         }
@@ -391,16 +393,20 @@ class ScriptDataReader {
             value = this.callbackValue;
         }
         this.validate(value);
-        return value;
+        return value as T;
     }
 }
 
-export const parseScriptData = async <T = unknown>(source: string, target: string): Promise<T> => (await new ScriptDataReader(await targetPath(target)).read(source)) as T;
+export const parseScriptData = async <T = unknown>(source: string, target: string): Promise<T> => {
+    const path = await targetPath(target);
+    return new ScriptDataReader(path).read<T>(source);
+};
 
 /** Extracts a serialized callback argument without invoking the callback or any external function. */
 export const parseScriptCallback = async <T = unknown>(source: string, callbackPath: string, argumentIndex = 2): Promise<T> => {
     if (!Number.isSafeInteger(argumentIndex) || argumentIndex < 0) {
         throw new ScriptDataError('Script data callback argument index must be a non-negative integer');
     }
-    return (await new ScriptDataReader(await targetPath(callbackPath), argumentIndex).read(source)) as T;
+    const path = await targetPath(callbackPath);
+    return new ScriptDataReader(path, argumentIndex).read<T>(source);
 };

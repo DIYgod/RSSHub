@@ -4,9 +4,9 @@ import { load } from 'cheerio';
 import dayjs from 'dayjs';
 import localizedFormat from 'dayjs/plugin/localizedFormat.js';
 
+import { parseScriptData } from '@/utils/evaluate-script';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-import { parseScriptData } from '@/utils/parse-script-data';
 
 import { renderEshopCnDescription } from './templates/eshop-cn';
 

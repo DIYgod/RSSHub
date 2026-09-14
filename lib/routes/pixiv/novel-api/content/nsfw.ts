@@ -2,8 +2,8 @@ import { load } from 'cheerio';
 import queryString from 'query-string';
 
 import cache from '@/utils/cache';
+import { parseScriptData } from '@/utils/evaluate-script';
 import { parseDate } from '@/utils/parse-date';
-import { parseScriptData } from '@/utils/parse-script-data';
 
 import { maskHeader } from '../../constants';
 import got from '../../pixiv-got';

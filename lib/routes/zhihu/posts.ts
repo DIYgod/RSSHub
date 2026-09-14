@@ -1,6 +1,5 @@
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
-import { isWorker } from '@/utils/is-worker';
 import { parseDate } from '@/utils/parse-date';
 
 import type { Articles } from './types';
@@ -19,7 +18,7 @@ export const route: Route = {
                 optional: true,
             },
         ],
-        requirePuppeteer: isWorker || process.env.WORKER_BUILD === 'true',
+        requirePuppeteer: false,
         antiCrawler: true,
         supportBT: false,
         supportPodcast: false,

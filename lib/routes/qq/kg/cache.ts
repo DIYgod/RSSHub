@@ -1,8 +1,8 @@
 import { load } from 'cheerio';
 
 import cache from '@/utils/cache';
+import { parseScriptData } from '@/utils/evaluate-script';
 import got from '@/utils/got';
-import { parseScriptData } from '@/utils/parse-script-data';
 
 export default {
     getPlayInfo: async (ctx, shareId, ksong_mid = '') => {

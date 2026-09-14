@@ -1,6 +1,6 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
 
-import { parseScriptCallback, parseScriptData } from './parse-script-data';
+import { parseScriptCallback, parseScriptData } from './evaluate-script';
 
 afterEach(() => {
     vi.unstubAllGlobals();
@@ -42,13 +42,12 @@ describe('serialized script data', () => {
     it('does not call unrelated application code or access the host global object', async () => {
         const fetchSpy = vi.fn();
         vi.stubGlobal('fetch', fetchSpy);
-        vi.stubGlobal('__scriptDataSideEffect', 'unchanged');
 
         const value = await parseScriptData('globalThis.__scriptDataSideEffect="changed";fetch("https://example.invalid/");window.__DATA__={ok:true};', '__DATA__');
 
         expect(value).toEqual({ ok: true });
         expect(fetchSpy).not.toHaveBeenCalled();
-        expect(Reflect.get(globalThis, '__scriptDataSideEffect')).toBe('unchanged');
+        expect('__scriptDataSideEffect' in globalThis).toBe(false);
     });
 
     it.each([

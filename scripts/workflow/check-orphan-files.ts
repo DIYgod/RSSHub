@@ -22,7 +22,7 @@ export const findOrphanFiles = async (): Promise<string[]> => {
                 return relative;
             }
             const dir = path.dirname(absolute);
-            const base = path.basename(absolute).replace(/\.(?:spec|test)\.[cm]?[jt]sx?$/, '');
+            const base = path.basename(absolute).replace(/(?:\.worker)?\.(?:spec|test)\.[cm]?[jt]sx?$/, '');
             const exists = entries.some((entry) => entry.parentPath === dir && entry.isFile() && new RegExp(`^${base.replaceAll(/[.*+?^${}()|[\]\\]/g, String.raw`\$&`)}\\.[cm]?[jt]sx?$`).test(entry.name));
             return exists ? null : relative;
         })

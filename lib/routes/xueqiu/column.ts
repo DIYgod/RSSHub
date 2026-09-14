@@ -2,9 +2,9 @@ import { load } from 'cheerio';
 import { CookieJar } from 'tough-cookie';
 
 import type { Route } from '@/types';
+import { parseScriptData } from '@/utils/evaluate-script';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-import { parseScriptData } from '@/utils/parse-script-data';
 
 const cookieJar = new CookieJar();
 const baseUrl = 'https://xueqiu.com';

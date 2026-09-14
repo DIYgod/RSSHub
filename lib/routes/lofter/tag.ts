@@ -3,9 +3,9 @@ import { load } from 'cheerio';
 import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
 import type { Route } from '@/types';
+import { parseScriptCallback } from '@/utils/evaluate-script';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-import { parseScriptCallback } from '@/utils/parse-script-data';
 
 export const route: Route = {
     path: '/tag/:name?/:type?',

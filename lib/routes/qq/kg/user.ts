@@ -1,9 +1,9 @@
 import { load } from 'cheerio';
 
 import type { Route } from '@/types';
+import { parseScriptData } from '@/utils/evaluate-script';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-import { parseScriptData } from '@/utils/parse-script-data';
 
 import cache from './cache';
 
