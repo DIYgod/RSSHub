@@ -22,6 +22,11 @@ export const route: Route = {
                 { value: '1', label: '孟岩专栏' },
                 { value: '3', label: '知行读书会' },
                 { value: '11', label: '你好，同路人' },
+                { value: '5', label: '保险专栏' },
+                { value: '14', label: '有理有据' },
+                { value: '16', label: '投资 ABC' },
+                { value: '17', label: '海外投资Blog' },
+                { value: '18', label: '中国大类资产投资年报' },
             ],
             default: '0',
         },
@@ -44,9 +49,9 @@ export const route: Route = {
     maintainers: ['broven', 'Fatpandac', 'nczitzk'],
     handler,
     url: 'youzhiyouxing.cn/materials',
-    description: `| 全部 | 知行小酒馆 | 知行黑板报 | 无人知晓 | 孟岩专栏 | 知行读书会 | 你好，同路人 |
-| :--: | :--------: | :--------: | :------: | :------: | :--------: | :----------: |
-|   0  |      4     |      2     |    10    |     1    |      3     |      11      |`,
+    description: `| 全部 | 知行小酒馆 | 知行黑板报 | 无人知晓 | 孟岩专栏 | 知行读书会 | 你好，同路人 | 保险专栏 | 有理有据 | 投资 ABC | 海外投资Blog | 中国大类资产投资年报 |
+| :--: | :--------: | :--------: | :------: | :------: | :--------: | :----------: | :------: | :------: | :------: | :----------: | :------------------: |
+|   0  |      4     |      2     |    10    |     1    |      3     |      11      |     5    |    14    |    16    |      17      |          18          |`,
 };
 
 async function handler(ctx) {
@@ -62,15 +67,16 @@ async function handler(ctx) {
 
     const $ = load(response.data);
 
-    let items = $('li[id*="material"]')
+    let items = $('a[id^="material-"]')
         .toArray()
         .map((item): DataItem => {
             const $item = $(item);
 
             return {
-                title: $item.text(),
-                link: `${rootUrl}${$item.find('a').attr('href')}`,
-                pubDate: parseDate($item.find('.tw-text-t-muted').text(), ['YYYY年M月D日', 'M月D日']),
+                title: $item.find('h3').text(),
+                link: `${rootUrl}${$item.attr('href')}`,
+                author: $item.find('.article-column').text(),
+                pubDate: parseDate($item.find('time').text(), ['YYYY年M月D日', 'M月D日']),
             };
         });
 
@@ -84,7 +90,6 @@ async function handler(ctx) {
 
                 const content = load(detailResponse.data);
 
-                item.author = content('.tw-inline').text().replace('·', '');
                 item.description = content('#zx-material-marker-root')
                     .html()!
                     .replaceAll(/(<img.*?) src(=.*?>)/g, '$1 data$2')
@@ -96,7 +101,7 @@ async function handler(ctx) {
     );
 
     return {
-        title: `有知有行 - ${$(`a[phx-value-column_id="${id === '' ? 0 : id}"]`).text()}`,
+        title: `有知有行 - ${$(`[phx-value-column_id="${id === '' ? 0 : id}"]`).text()}`,
         link: currentUrl,
         item: items,
     };
