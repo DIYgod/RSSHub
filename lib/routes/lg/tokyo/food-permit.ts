@@ -26,7 +26,7 @@ export type { PermitExtra } from '../utils';
  * snapshots frozen in 2022–2023, so they are not included.
  */
 
-type Source = 'shibuya' | 'minato' | 'taito' | 'shinagawa' | 'setagaya';
+type Source = 'shibuya' | 'minato' | 'taito' | 'shinagawa' | 'setagaya' | 'meguro';
 
 const SOURCES: Record<Source, { label: string; link: string }> = {
     shibuya: {
@@ -49,7 +49,12 @@ const SOURCES: Record<Source, { label: string; link: string }> = {
         label: '世田谷区',
         link: 'https://www.city.setagaya.lg.jp/02245/online_tetsuzuki/3246.html',
     },
+    meguro: {
+        label: '目黒区',
+        link: 'https://data.bodik.jp/dataset/131105_food_business',
+    },
 };
+const MEGURO_API = 'https://data.bodik.jp/api/3/action/package_show?id=131105_food_business';
 const MONTHS_BACK = 2;
 const SHIBUYA_QUERY = 'https://services3.arcgis.com/UtdeFTavkHfI94t2/arcgis/rest/services/131130_food_businesses_list/FeatureServer/0/query';
 const SHIBUYA_DATE = '許可開始日もしくは届出受理日';
@@ -144,12 +149,26 @@ const fetchSetagaya = async (): Promise<Row[]> => {
     return fetchMonthly(newestLinks($, SOURCES.setagaya.link, (text) => /例月新規許可施設一覧\(R(\d{6})\)/.exec(text)?.[1] ?? null));
 };
 
+/** 目黒区: CKAN resources named `飲食店 新規 令和７年１０月分` (or `新規飲食店施設一覧 …`); 更新 / 届出 / 廃業 files are skipped. */
+const fetchMeguro = async (): Promise<Row[]> => {
+    const body = await ofetch(MEGURO_API);
+    const resources: Array<{ name: string; url: string; format: string }> = body?.result?.resources ?? [];
+    const urls = resources
+        .filter((r) => r.format.toUpperCase() === 'CSV' && r.name.includes('飲食店') && r.name.includes('新規'))
+        .map((r) => ({ url: r.url, key: warekiMonth(r.name) }))
+        .filter((r): r is { url: string; key: string } => r.key !== null)
+        .toSorted((a, b) => b.key.localeCompare(a.key))
+        .map((r) => r.url);
+    return fetchMonthly(urls);
+};
+
 const FETCHERS: Record<Source, () => Promise<Row[]>> = {
     shibuya: fetchShibuya,
     minato: fetchMinato,
     taito: fetchTaito,
     shinagawa: fetchShinagawa,
     setagaya: fetchSetagaya,
+    meguro: fetchMeguro,
 };
 
 const toItem = (source: Source, raw: Row): DataItem & { _extra: PermitExtra } => {
@@ -224,6 +243,7 @@ export const route: Route = {
                 { value: 'taito', label: '台東区' },
                 { value: 'shinagawa', label: '品川区' },
                 { value: 'setagaya', label: '世田谷区' },
+                { value: 'meguro', label: '目黒区' },
             ],
         },
     },
@@ -234,6 +254,7 @@ export const route: Route = {
 - 台東区: [食品衛生営業施設一覧](https://www.city.taito.lg.jp/kenkohukusi/kenkokikikanrieisei/food/syokuhin-sisetu/index.html) — the two newest monthly 新規許可 CSVs (updated on the 10th)
 - 品川区: [食品衛生許可施設一覧](https://www.city.shinagawa.tokyo.jp/PC/kenkou/kenkou-eisei/kenkou-eisei-syokuhin/opendate.html) — the two newest monthly CSVs (updated on the 15th); individuals' names and addresses are masked by the publisher and come through as \`null\`
 - 世田谷区: [食品関係施設情報の公開について](https://www.city.setagaya.lg.jp/02245/online_tetsuzuki/3246.html) — the two newest 例月新規許可施設一覧 CSVs (updated on the 15th)
+- 目黒区: [飲食店等 (BODIK CKAN)](https://data.bodik.jp/dataset/131105_food_business) — the two newest 飲食店 新規 monthly CSVs (updated by the 10th)
 
 Items are sorted by permit date (\`pubDate\`). \`_extra\` holds \`source\`, \`ward\`, \`permit_no\`, \`name\`, \`address\`, \`permit_date\`, \`business_type\`, \`lat\` / \`lon\` (when the publisher gives them, else \`null\`) and the publisher's original columns in \`raw\`. Only 許可 rows are included (届出 rows are skipped).
 
