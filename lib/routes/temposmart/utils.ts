@@ -40,8 +40,9 @@ export interface RentBenchmarkExtra {
     area_kind: 'station' | 'ward';
     area_name: string; // 新宿 / 千代田区 (station names without 駅)
     pref: string; // 東京都 / 千葉県 …
-    rent_per_tsubo_median_jpy: number | null;
-    rent_per_tsubo_avg_jpy: number | null;
+    rent_per_tsubo_jpy: number | null; // the site's headline 坪単価 when it does not say which statistic it is (e.g. abc-tenpo's 賃料相場); null when the site labels its figures
+    rent_per_tsubo_median_jpy: number | null; // only when the site explicitly labels a 中央値
+    rent_per_tsubo_avg_jpy: number | null; // only when the site explicitly labels a 平均
     rent_per_tsubo_min_jpy: number | null;
     rent_per_tsubo_max_jpy: number | null;
     sample_count: number | null;

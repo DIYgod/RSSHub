@@ -91,6 +91,7 @@ const parseDetail = (html: string, base: Pick<RentBenchmarkExtra, 'area_kind' | 
     return {
         source: 'inshokuten',
         ...base,
+        rent_per_tsubo_jpy: null,
         rent_per_tsubo_median_jpy: null,
         rent_per_tsubo_avg_jpy: parseJpy(raw.avg ?? null),
         rent_per_tsubo_min_jpy: parseJpy(raw.min ?? null),

@@ -16,7 +16,7 @@ const PREFECTURES = [{ slug: 'tokyo', label: '東京都' }];
  * `/feature/rent`: one `.p-rent` block (東京23区) with `.p-rent__row` per ward:
  *   .p-rent__name '千代田区', .p-rent__price '28,032<span>円</span>', .p-rent__button a → /property/search?muni[]=141.
  * The page states only 「賃料相場は坪単価」 — no 平均 / 中央値 label, no sample count, no period and no 更新日.
- * The single figure is stored as `rent_per_tsubo_avg_jpy`; treat it as the site's unqualified 相場.
+ * The single figure is stored as `rent_per_tsubo_jpy` (statistic unspecified); avg / median / min / max stay null.
  */
 const parseRows = (html: string, pref: string): DataItem[] => {
     const $ = load(html);
@@ -47,8 +47,9 @@ const parseRows = (html: string, pref: string): DataItem[] => {
                 area_kind: 'ward',
                 area_name: name,
                 pref,
+                rent_per_tsubo_jpy: parseJpy(price),
                 rent_per_tsubo_median_jpy: null,
-                rent_per_tsubo_avg_jpy: parseJpy(price),
+                rent_per_tsubo_avg_jpy: null,
                 rent_per_tsubo_min_jpy: null,
                 rent_per_tsubo_max_jpy: null,
                 sample_count: null,
@@ -60,7 +61,7 @@ const parseRows = (html: string, pref: string): DataItem[] => {
                 title: `${name} 賃料相場`,
                 link: `${PAGE}#${anchor}`,
                 guid: `${PAGE}#${anchor}`,
-                description: extra.rent_per_tsubo_avg_jpy === null ? price : `賃料相場（坪単価） ${extra.rent_per_tsubo_avg_jpy.toLocaleString('ja-JP')}円`,
+                description: extra.rent_per_tsubo_jpy === null ? price : `賃料相場（坪単価） ${extra.rent_per_tsubo_jpy.toLocaleString('ja-JP')}円`,
                 _extra: extra,
             };
         })
@@ -96,7 +97,7 @@ export const route: Route = {
             options: PREFECTURES.map((p) => ({ value: p.slug, label: p.label })),
         },
     },
-    description: `Ward-level restaurant-property rent benchmarks (坪単価) from ABC 店舗's エリア別の賃料相場 page, one item per 区 of 東京23区. The page gives a single unqualified 相場 figure per ward (「賃料相場は坪単価」, compiled from the site's own listings) — it is stored in \`_extra.rent_per_tsubo_avg_jpy\`; 中央値 / 最高 / 最低, sample count, period and 更新日 are not published and stay \`null\`. The page is cached for one day.`,
+    description: `Ward-level restaurant-property rent benchmarks (坪単価) from ABC 店舗's エリア別の賃料相場 page, one item per 区 of 東京23区. The page gives a single unqualified 相場 figure per ward (「賃料相場は坪単価」, compiled from the site's own listings) — it is stored in \`_extra.rent_per_tsubo_jpy\` because the site does not say whether it is a mean or a median; 平均 / 中央値 / 最高 / 最低, sample count, period and 更新日 are not published and stay \`null\`. The page is cached for one day.`,
     categories: ['other'],
     features: {
         requireConfig: false,
