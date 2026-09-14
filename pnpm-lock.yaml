@@ -269,8 +269,8 @@ importers:
         specifier: 14.0.2
         version: 14.0.2
       vm2:
-        specifier: 3.12.1
-        version: 3.12.1
+        specifier: 3.12.2
+        version: 3.12.2
       winston:
         specifier: 3.19.0
         version: 3.19.0
@@ -3727,7 +3727,7 @@ packages:
     engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
 
   difflib@https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed:
-    resolution: {gitHosted: true, tarball: https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed}
+    resolution: {tarball: https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed}
     version: 0.2.6
 
   discord-api-types@0.38.55:
@@ -5025,6 +5025,11 @@ packages:
     engines: {node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1}
     hasBin: true
 
+  nanoid@3.3.19:
+    resolution: {integrity: sha512-Y2tUNy4ouw6tq5oDSKeQYGOyhkUBhNOcGV/02KC+6kd9eDGqdZd++mjMiIDilrBYvjEnCYvVtsuHCuP+okSfug==}
+    engines: {node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1}
+    hasBin: true
+
   nanoid@5.1.16:
     resolution: {integrity: sha512-kVrnsrJqMR8+oLJnGEmSWw9BivK5mt7H3FZatVRjrc5wGqFYuBxX1yG7+A7Gi5AefkX6t/oCkizcQgpu0cY1dQ==}
     engines: {node: ^18 || >=20}
@@ -6248,8 +6253,8 @@ packages:
       jsdom:
         optional: true
 
-  vm2@3.12.1:
-    resolution: {integrity: sha512-VMqg/4swWz7lkse95rxPlgtnb7WkHL2wfDtrgcNIaIjvpskjRmEmS+MKoItl4npwtW+u2Kalle4zarf3aEWjGQ==}
+  vm2@3.12.2:
+    resolution: {integrity: sha512-LRHt4xU6eXshlZEcSZVrTehLGxRDjHvjmFPGwEp4xGpZX61QzH6Xm9wK2nU7XAp36V1w2xILAL1LwxVkgD1Ipw==}
     engines: {node: '>=6.0'}
     hasBin: true
 
@@ -10612,6 +10617,8 @@ snapshots:
 
   nanoid@3.3.18: {}
 
+  nanoid@3.3.19: {}
+
   nanoid@5.1.16: {}
 
   narou@2.0.1: {}
@@ -10988,7 +10995,7 @@ snapshots:
 
   postcss@8.5.28:
     dependencies:
-      nanoid: 3.3.18
+      nanoid: 3.3.19
       picocolors: 1.1.1
       source-map-js: 1.2.1
 
@@ -11924,7 +11931,7 @@ snapshots:
     transitivePeerDependencies:
       - msw
 
-  vm2@3.12.1:
+  vm2@3.12.2:
     dependencies:
       acorn: 8.18.0
       acorn-walk: 8.3.5
