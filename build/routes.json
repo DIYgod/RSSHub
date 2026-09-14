@@ -113702,6 +113702,176 @@
       "name": "テンポスマート"
     }
   },
+  "tenant-shop": {
+    "routes": {
+      "/chintai/:pref?/:type?": {
+        "path": "/chintai/:pref?/:type?",
+        "name": "新着物件",
+        "url": "www.tenant-shop.com",
+        "maintainers": [
+          "pseudoyu"
+        ],
+        "example": "/tenant-shop/chintai/tokyo/food",
+        "parameters": {
+          "pref": {
+            "description": "Prefecture slug or the site's `pa` code",
+            "default": "tokyo",
+            "options": [
+              {
+                "value": "tokyo",
+                "label": "東京都 (14)"
+              },
+              {
+                "value": "kanagawa",
+                "label": "神奈川県 (15)"
+              },
+              {
+                "value": "saitama",
+                "label": "埼玉県 (16)"
+              },
+              {
+                "value": "chiba",
+                "label": "千葉県 (17)"
+              },
+              {
+                "value": "ibaraki",
+                "label": "茨城県 (18)"
+              },
+              {
+                "value": "tochigi",
+                "label": "栃木県 (19)"
+              },
+              {
+                "value": "gunma",
+                "label": "群馬県 (20)"
+              },
+              {
+                "value": "hokkaido",
+                "label": "北海道 (7)"
+              },
+              {
+                "value": "miyagi",
+                "label": "宮城県 (10)"
+              },
+              {
+                "value": "niigata",
+                "label": "新潟県 (21)"
+              },
+              {
+                "value": "nagano",
+                "label": "長野県 (28)"
+              },
+              {
+                "value": "aichi",
+                "label": "愛知県 (25)"
+              },
+              {
+                "value": "gifu",
+                "label": "岐阜県 (26)"
+              },
+              {
+                "value": "shizuoka",
+                "label": "静岡県 (27)"
+              },
+              {
+                "value": "osaka",
+                "label": "大阪府 (1)"
+              },
+              {
+                "value": "kyoto",
+                "label": "京都府 (31)"
+              },
+              {
+                "value": "hyogo",
+                "label": "兵庫県 (32)"
+              },
+              {
+                "value": "shiga",
+                "label": "滋賀県 (5)"
+              },
+              {
+                "value": "nara",
+                "label": "奈良県 (34)"
+              }
+            ]
+          },
+          "type": {
+            "description": "Property type filter; omit for all types",
+            "options": [
+              {
+                "value": "inuki",
+                "label": "居抜き"
+              },
+              {
+                "value": "food",
+                "label": "飲食"
+              },
+              {
+                "value": "office",
+                "label": "オフィス"
+              },
+              {
+                "value": "retail",
+                "label": "物販・サービス"
+              },
+              {
+                "value": "warehouse",
+                "label": "倉庫・工場"
+              },
+              {
+                "value": "beauty",
+                "label": "美容・エステ・医療"
+              },
+              {
+                "value": "roadside",
+                "label": "沿道サービス・借地"
+              },
+              {
+                "value": "mall",
+                "label": "商業施設"
+              }
+            ]
+          }
+        },
+        "description": "New listings (新着物件) on テナントショップネットワーク for one prefecture, newest first (first page, 30 listings). Each item's `_extra` carries the structured listing fields (賃料，坪，坪単価，階，最寄駅，保証金・敷金，礼金，物件登録日，…) parsed from the list and detail pages; unknown values are `null`. East Japan prefectures are served by tenant-shop.com and 愛知 and westward by tenant-shop.jp.\n\n| Query   | Description                                                                  | Default |\n| ------- | ---------------------------------------------------------------------------- | ------- |\n| `limit` | Number of listings to process (detail pages are fetched per listing), max 30 | 30      |",
+        "categories": [
+          "other"
+        ],
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportRadar": true
+        },
+        "radar": [
+          {
+            "source": [
+              "www.tenant-shop.com/chintai_biz/pa-:pa/shin-1",
+              "www.tenant-shop.com/chintai_biz/pa-:pa"
+            ],
+            "target": "/chintai/:pa"
+          },
+          {
+            "source": [
+              "www.tenant-shop.jp/chintai_biz/pa-:pa/shin-1",
+              "www.tenant-shop.jp/chintai_biz/pa-:pa"
+            ],
+            "target": "/chintai/:pa"
+          }
+        ],
+        "location": "chintai.ts",
+        "module": "() => import('@/routes/tenant-shop/chintai.ts')"
+      }
+    },
+    "apiRoutes": {},
+    "name": "Tenant Shop Network",
+    "url": "www.tenant-shop.com",
+    "description": "テナントショップネットワーク — 貸店舗・貸事務所・居抜き物件情報サイト（東日本は tenant-shop.com、愛知以西は tenant-shop.jp）",
+    "lang": "ja",
+    "ja": {
+      "name": "テナントショップネットワーク"
+    }
+  },
   "tencent": {
     "routes": {
       "/pvp/newsindex/:type": {

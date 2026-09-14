@@ -41292,6 +41292,34 @@
       }
     ]
   },
+  "tenant-shop.com": {
+    "_name": "Tenant Shop Network",
+    "www": [
+      {
+        "title": "新着物件",
+        "docs": "https://docs.rsshub.app/routes/other",
+        "source": [
+          "/chintai_biz/pa-:pa/shin-1",
+          "/chintai_biz/pa-:pa"
+        ],
+        "target": "/tenant-shop/chintai/:pa"
+      }
+    ]
+  },
+  "tenant-shop.jp": {
+    "_name": "Tenant Shop Network",
+    "www": [
+      {
+        "title": "新着物件",
+        "docs": "https://docs.rsshub.app/routes/other",
+        "source": [
+          "/chintai_biz/pa-:pa/shin-1",
+          "/chintai_biz/pa-:pa"
+        ],
+        "target": "/tenant-shop/chintai/:pa"
+      }
+    ]
+  },
   "tencent.com": {
     "_name": "腾讯",
     "cloud": [

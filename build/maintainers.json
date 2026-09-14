@@ -8378,6 +8378,9 @@
   "/temposmart/estates/:pref?": [
     "pseudoyu"
   ],
+  "/tenant-shop/chintai/:pref?/:type?": [
+    "pseudoyu"
+  ],
   "/tencent/pvp/newsindex/:type": [
     "Jeason0228",
     "HenryQW"

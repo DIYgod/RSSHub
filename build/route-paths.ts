@@ -3224,6 +3224,7 @@ export type RoutePath =
   | `/telegram/stickerpack/:name`
   | `/telegram/stories/:username/:story?`
   | `/temposmart/estates/:pref?`
+  | `/tenant-shop/chintai/:pref?/:type?`
   | `/tencent/cloud/developer/column/:categoryId?`
   | `/tencent/news/author/:mid`
   | `/tencent/news/coronavirus/data/:province?/:city?`
