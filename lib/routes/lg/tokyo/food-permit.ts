@@ -112,14 +112,16 @@ const fetchCsv = async (url: string): Promise<Row[]> => {
 /** The newest `MONTHS_BACK` monthly files of a page-linked ward, in the order given (newest first), concatenated. */
 const fetchMonthly = async (urls: string[]): Promise<Row[]> => (await Promise.all(urls.slice(0, MONTHS_BACK).map((u) => fetchCsv(u)))).flat();
 
-/** Link `href`s with a sortable key, newest first. */
-const newestLinks = ($: CheerioAPI, base: string, keyOf: (text: string, href: string) => string | null): string[] =>
-    $('a[href$=".csv"]')
+/** Link `href`s with a sortable key, newest first. A ward page may list the same file twice (世田谷区 renders every link once plainly and once with `target="_self"`), so hrefs are made unique. */
+const newestLinks = ($: CheerioAPI, base: string, keyOf: (text: string, href: string) => string | null): string[] => {
+    const links = $('a[href$=".csv"]')
         .toArray()
         .map((a) => ({ href: new URL($(a).attr('href')!, base).href, key: keyOf($(a).text(), $(a).attr('href')!) }))
         .filter((l): l is { href: string; key: string } => l.key !== null)
         .toSorted((a, b) => b.key.localeCompare(a.key))
         .map((l) => l.href);
+    return [...new Set(links)];
+};
 
 /** 台東区: the 月別 table lists each month as 業種順 + 許可日順 (same rows); the file names are not regular (`2026-07-PER-CSV.csv`, `OPD08_PER.csv`), so rows are taken in table order. */
 const fetchTaito = async (): Promise<Row[]> => {
@@ -190,16 +192,28 @@ const toItem = (source: Source, raw: Row): DataItem & { _extra: PermitExtra } =>
     };
 };
 
-/** Newest `limit` 許可 rows of one source; 届出 rows are not an opening signal and are skipped. */
+/** First item per 許可番号, order kept; called after the date-desc sort, so the surviving row is the one with the latest permit date. */
+const uniqueByPermitNo = <T extends { _extra: PermitExtra }>(items: T[]): T[] => {
+    const seen = new Set<string>();
+    return items.filter((it) => {
+        if (seen.has(it._extra.permit_no)) {
+            return false;
+        }
+        seen.add(it._extra.permit_no);
+        return true;
+    });
+};
+
+/** Newest `limit` 許可 rows of one source; 届出 rows are not an opening signal and are skipped. Publishers may repeat a permit (a file linked twice, or a 変更 row re-listed), so 許可番号 is deduplicated. */
 const fetchSource = async (source: Source, limit: number): Promise<Array<DataItem & { _extra: PermitExtra }>> => {
     try {
         const rows = await FETCHERS[source]();
-        return rows
+        const items = rows
             .filter((r) => (r['許可番号'] ?? '') !== '' && (r['許可あるいは届出'] ?? '許可') === '許可')
             .map((raw) => toItem(source, raw))
             .filter((it) => it._extra.permit_date !== null)
-            .toSorted((a, b) => b._extra.permit_date!.localeCompare(a._extra.permit_date!))
-            .slice(0, limit);
+            .toSorted((a, b) => b._extra.permit_date!.localeCompare(a._extra.permit_date!));
+        return uniqueByPermitNo(items).slice(0, limit);
     } catch (error) {
         // One failing publisher must not take the whole feed down.
         logger.warn(`lg/tokyo/food-permit: ${source} failed: ${String(error)}`);
