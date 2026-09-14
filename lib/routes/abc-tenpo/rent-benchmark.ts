@@ -97,7 +97,7 @@ export const route: Route = {
             options: PREFECTURES.map((p) => ({ value: p.slug, label: p.label })),
         },
     },
-    description: `Ward-level restaurant-property rent benchmarks (坪単価) from ABC 店舗's エリア別の賃料相場 page, one item per 区 of 東京23区. The page gives a single unqualified 相場 figure per ward (「賃料相場は坪単価」, compiled from the site's own listings) — it is stored in \`_extra.rent_per_tsubo_jpy\` because the site does not say whether it is a mean or a median; 平均 / 中央値 / 最高 / 最低, sample count, period and 更新日 are not published and stay \`null\`. The page is cached for one day.`,
+    description: `Ward-level restaurant-property rent benchmarks (坪単価) from ABC 店舗's エリア別の賃料相場 page, one item per 区 of 東京 23 区. The page gives a single unqualified 相場 figure per ward (「賃料相場は坪単価」, compiled from the site's own listings) — it is stored in \`_extra.rent_per_tsubo_jpy\` because the site does not say whether it is a mean or a median; 平均 / 中央値 / 最高 / 最低，sample count, period and 更新日 are not published and stay \`null\`. The page is cached for one day.`,
     categories: ['other'],
     features: {
         requireConfig: false,

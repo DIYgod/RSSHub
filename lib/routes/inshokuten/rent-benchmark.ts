@@ -180,7 +180,7 @@ export const route: Route = {
             description: 'Line id from the area page (`/bukken/kanto/market/rent/line/{area}`, e.g. `2` = JR山手線 in 東京23区); when given, one item per station on that line instead of one per 市区町村',
         },
     },
-    description: `Restaurant-property rent benchmarks (坪単価, 消費税込み募集金額, 直近1年間) published by 飲食店.COM. Without \`line\` the feed has one item per 市区町村 of the area; with \`line\` one item per station on that line. Each item's \`_extra\` carries \`rent_per_tsubo_avg_jpy\` / \`_min_jpy\` / \`_max_jpy\` (円/坪/月), \`sample_count\` (sum of the 賃料分布図 buckets), \`period\` and the raw site text; the site publishes no 中央値 and no 更新日, so \`rent_per_tsubo_median_jpy\` is always \`null\` and items carry no \`pubDate\`. Detail pages are cached for one day.`,
+    description: `Restaurant-property rent benchmarks (坪単価，消費税込み募集金額，直近 1 年間) published by 飲食店.COM. Without \`line\` the feed has one item per 市区町村 of the area; with \`line\` one item per station on that line. Each item's \`_extra\` carries \`rent_per_tsubo_avg_jpy\` / \`_min_jpy\` / \`_max_jpy\` (円 / 坪 / 月), \`sample_count\` (sum of the 賃料分布図 buckets), \`period\` and the raw site text; the site publishes no 中央値 and no 更新日，so \`rent_per_tsubo_median_jpy\` is always \`null\` and items carry no \`pubDate\`. Detail pages are cached for one day.`,
     categories: ['other'],
     features: {
         requireConfig: false,
