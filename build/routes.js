@@ -31996,6 +31996,31 @@ export default {
         "location": "article.ts",
         "module": () => import('@/routes/acfun/article.ts')
       },
+      "/user/article/:uid": {
+        "path": "/user/article/:uid",
+        "radar": [
+          {
+            "source": [
+              "www.acfun.cn/u/:id"
+            ],
+            "target": "/user/article/:id"
+          }
+        ],
+        "name": "用户文章",
+        "parameters": {
+          "uid": "用户 UID"
+        },
+        "categories": [
+          "anime"
+        ],
+        "example": "/acfun/user/article/1384329",
+        "view": 0,
+        "maintainers": [
+          "tiaod"
+        ],
+        "location": "user-article.ts",
+        "module": () => import('@/routes/acfun/user-article.ts')
+      },
       "/user/video/:uid/:embed?": {
         "path": "/user/video/:uid/:embed?",
         "radar": [

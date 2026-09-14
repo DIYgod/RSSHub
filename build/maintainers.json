@@ -2405,6 +2405,9 @@
   "/acfun/article/:categoryId/:sortType?/:timeRange?": [
     "TonyRL"
   ],
+  "/acfun/user/article/:uid": [
+    "tiaod"
+  ],
   "/acfun/user/video/:uid/:embed?": [
     "wdssmq"
   ],
