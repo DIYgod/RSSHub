@@ -269,8 +269,8 @@ importers:
         specifier: 14.0.2
         version: 14.0.2
       vm2:
-        specifier: 3.12.1
-        version: 3.12.1
+        specifier: 3.12.2
+        version: 3.12.2
       winston:
         specifier: 3.19.0
         version: 3.19.0
@@ -6253,8 +6253,8 @@ packages:
       jsdom:
         optional: true
 
-  vm2@3.12.1:
-    resolution: {integrity: sha512-VMqg/4swWz7lkse95rxPlgtnb7WkHL2wfDtrgcNIaIjvpskjRmEmS+MKoItl4npwtW+u2Kalle4zarf3aEWjGQ==}
+  vm2@3.12.2:
+    resolution: {integrity: sha512-LRHt4xU6eXshlZEcSZVrTehLGxRDjHvjmFPGwEp4xGpZX61QzH6Xm9wK2nU7XAp36V1w2xILAL1LwxVkgD1Ipw==}
     engines: {node: '>=6.0'}
     hasBin: true
 
@@ -11931,7 +11931,7 @@ snapshots:
     transitivePeerDependencies:
       - msw
 
-  vm2@3.12.1:
+  vm2@3.12.2:
     dependencies:
       acorn: 8.18.0
       acorn-walk: 8.3.5
