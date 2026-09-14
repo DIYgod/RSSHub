@@ -110,6 +110,7 @@ export type RoutePath =
   | `/a9vg/:category{.+}?`
   | `/aa1/60s/:category?`
   | `/aamacau/:category?/:id?`
+  | `/abc-tenpo/property/:pref?`
   | `/abc/:category{.+}?`
   | `/abmedia/:category?`
   | `/abmedia/index`
@@ -466,6 +467,7 @@ export type RoutePath =
   | `/buct/gr/:type`
   | `/buct/jwc`
   | `/bugzilla/bug/:site/:bugId`
+  | `/bukenavi/object/:region?/:pref?`
   | `/bulianglin/`
   | `/bullionvault/gold-news/:category?`
   | `/bupt/funbox`
@@ -1788,6 +1790,7 @@ export type RoutePath =
   | `/infzm/hot`
   | `/inoreader/html_clip/:user/:tag`
   | `/inoreader/rss/:user/:tag`
+  | `/inshokuten/bukken/:area?`
   | `/inspirehep/authors/:id`
   | `/inspirehep/literature/:q`
   | `/instagram/:category/:key`
@@ -1808,6 +1811,7 @@ export type RoutePath =
   | `/iracing/news`
   | `/iresearch/report/:type?/:id?`
   | `/iresearch/weekly/:id?`
+  | `/iri-search/estate/:area?`
   | `/isct/news/:lang`
   | `/issuehunt/funded/:username/:repo`
   | `/itc/collection/:colType`
@@ -3063,6 +3067,7 @@ export type RoutePath =
   | `/sohu/mobile`
   | `/sohu/mp/:xpt`
   | `/solidot/:type?`
+  | `/sonomama/property/:pref?`
   | `/sony/downloads/:productType/:productId`
   | `/sorrycc/`
   | `/sotwe/user/:id`

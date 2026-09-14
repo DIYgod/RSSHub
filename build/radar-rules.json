@@ -9654,6 +9654,21 @@
       }
     ]
   },
+  "abc-tenpo.com": {
+    "_name": "ABC Tenpo",
+    "www": [
+      {
+        "title": "新着物件",
+        "docs": "https://docs.rsshub.app/routes/other",
+        "source": [
+          "/property/search",
+          "/feature/new_arrival",
+          "/"
+        ],
+        "target": "/abc-tenpo/property"
+      }
+    ]
+  },
   "ahhhhfs.com": {
     "_name": "A 姐分享",
     ".": [
@@ -14096,6 +14111,20 @@
           "/611/main.htm"
         ],
         "target": "/buct/jwc"
+      }
+    ]
+  },
+  "bukenavi.jp": {
+    "_name": "Bukenavi",
+    ".": [
+      {
+        "title": "新着物件",
+        "docs": "https://docs.rsshub.app/routes/other",
+        "source": [
+          "/:region/object/list",
+          "/:region"
+        ],
+        "target": "/bukenavi/object/:region"
       }
     ]
   },
@@ -25633,6 +25662,20 @@
       }
     ]
   },
+  "inshokuten.com": {
+    "_name": "Inshokuten.com",
+    "www": [
+      {
+        "title": "新着物件",
+        "docs": "https://docs.rsshub.app/routes/other",
+        "source": [
+          "/bukken/:region/bukkens/list",
+          "/bukken/:region/bukkens/list/local-:area"
+        ],
+        "target": "/inshokutenparams=>`/bukken/${params.area??params.region}`"
+      }
+    ]
+  },
   "instructables.com": {
     "_name": "Instructables",
     ".": [
@@ -25947,6 +25990,20 @@
           "/category/news/sim-racing-news"
         ],
         "target": "/iracing/news"
+      }
+    ]
+  },
+  "iri-search.net": {
+    "_name": "iri-search",
+    "www": [
+      {
+        "title": "新着物件",
+        "docs": "https://docs.rsshub.app/routes/other",
+        "source": [
+          "/estate_search",
+          "/"
+        ],
+        "target": "/iri-search/estate"
       }
     ]
   },
@@ -39341,6 +39398,20 @@
           "/profile"
         ],
         "target": "/sohu(_params,url)=>`/sohu/mp/${new URL(url).searchParams.get(\"xpt\")}`"
+      }
+    ]
+  },
+  "sonomama.net": {
+    "_name": "Sonomama",
+    "www": [
+      {
+        "title": "新着物件",
+        "docs": "https://docs.rsshub.app/routes/other",
+        "source": [
+          "/app/",
+          "/"
+        ],
+        "target": "/sonomama/property"
       }
     ]
   },

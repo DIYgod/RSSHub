@@ -2383,6 +2383,9 @@
     "nczitzk",
     "pseudoyu"
   ],
+  "/abc-tenpo/property/:pref?": [
+    "pseudoyu"
+  ],
   "/abskoop/nsfw": [
     "zhenhappy"
   ],
@@ -3050,6 +3053,9 @@
   ],
   "/bugzilla/bug/:site/:bugId": [
     "FranklinYu"
+  ],
+  "/bukenavi/object/:region?/:pref?": [
+    "pseudoyu"
   ],
   "/bulianglin/": [
     "cnkmmk"
@@ -5523,6 +5529,9 @@
   "/inoreader/rss/:user/:tag": [
     "IvanWng97"
   ],
+  "/inshokuten/bukken/:area?": [
+    "pseudoyu"
+  ],
   "/instructables/projects/:category?": [
     "wolfg1969"
   ],
@@ -5565,6 +5574,9 @@
   ],
   "/iracing/news": [
     "canonnizq"
+  ],
+  "/iri-search/estate/:area?": [
+    "pseudoyu"
   ],
   "/itc/collection/:colType": [
     "cnkmmk"
@@ -8011,6 +8023,9 @@
     "sgqy",
     "hang333",
     "TonyRL"
+  ],
+  "/sonomama/property/:pref?": [
+    "pseudoyu"
   ],
   "/sony/downloads/:productType/:productId": [
     "IvanWng97"
