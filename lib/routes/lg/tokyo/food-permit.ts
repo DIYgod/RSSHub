@@ -26,7 +26,7 @@ export type { PermitExtra } from '../utils';
  * snapshots frozen in 2022–2023, so they are not included.
  */
 
-type Source = 'shibuya' | 'minato' | 'taito';
+type Source = 'shibuya' | 'minato' | 'taito' | 'shinagawa';
 
 const SOURCES: Record<Source, { label: string; link: string }> = {
     shibuya: {
@@ -40,6 +40,10 @@ const SOURCES: Record<Source, { label: string; link: string }> = {
     taito: {
         label: '台東区',
         link: 'https://www.city.taito.lg.jp/kenkohukusi/kenkokikikanrieisei/food/syokuhin-sisetu/index.html',
+    },
+    shinagawa: {
+        label: '品川区',
+        link: 'https://www.city.shinagawa.tokyo.jp/PC/kenkou/kenkou-eisei/kenkou-eisei-syokuhin/opendate.html',
     },
 };
 const MONTHS_BACK = 2;
@@ -122,10 +126,18 @@ const fetchTaito = async (): Promise<Row[]> => {
     return fetchMonthly(urls);
 };
 
+/** 品川区: `令和8年7月分許可施設一覧` links (the 令和6〜7年度 yearly file is skipped). */
+const fetchShinagawa = async (): Promise<Row[]> => {
+    const html: string = await ofetch(SOURCES.shinagawa.link, { responseType: 'text' });
+    const $ = load(html);
+    return fetchMonthly(newestLinks($, SOURCES.shinagawa.link, (text) => (text.includes('月分') ? warekiMonth(text) : null)));
+};
+
 const FETCHERS: Record<Source, () => Promise<Row[]>> = {
     shibuya: fetchShibuya,
     minato: fetchMinato,
     taito: fetchTaito,
+    shinagawa: fetchShinagawa,
 };
 
 const toItem = (source: Source, raw: Row): DataItem & { _extra: PermitExtra } => {
@@ -198,6 +210,7 @@ export const route: Route = {
                 { value: 'shibuya', label: '渋谷区' },
                 { value: 'minato', label: '港区' },
                 { value: 'taito', label: '台東区' },
+                { value: 'shinagawa', label: '品川区' },
             ],
         },
     },
@@ -206,6 +219,7 @@ export const route: Route = {
 - 渋谷区: [食品営業許可施設一覧 (ArcGIS FeatureServer)](https://city-shibuya-data.opendata.arcgis.com/items/e68f41ebfa5f4ea490ca9af701d44e02) — current and previous month
 - 港区: [食品営業許可一覧 (CSV)](https://catalog.data.metro.tokyo.lg.jp/dataset/t131032d0000000244) — monthly snapshot of valid permits, newest first
 - 台東区: [食品衛生営業施設一覧](https://www.city.taito.lg.jp/kenkohukusi/kenkokikikanrieisei/food/syokuhin-sisetu/index.html) — the two newest monthly 新規許可 CSVs (updated on the 10th)
+- 品川区: [食品衛生許可施設一覧](https://www.city.shinagawa.tokyo.jp/PC/kenkou/kenkou-eisei/kenkou-eisei-syokuhin/opendate.html) — the two newest monthly CSVs (updated on the 15th); individuals' names and addresses are masked by the publisher and come through as \`null\`
 
 Items are sorted by permit date (\`pubDate\`). \`_extra\` holds \`source\`, \`ward\`, \`permit_no\`, \`name\`, \`address\`, \`permit_date\`, \`business_type\`, \`lat\` / \`lon\` (when the publisher gives them, else \`null\`) and the publisher's original columns in \`raw\`. Only 許可 rows are included (届出 rows are skipped).
 
