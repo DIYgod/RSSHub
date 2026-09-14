@@ -300,16 +300,29 @@ async function getUserWithCookie(url: string) {
     const cookie = config.xiaohongshu.cookie;
     const res = await fetchWithProxy(url, cookie);
     const $ = load(res);
-    const paths = $('#userPostedFeeds > section > div > a.cover.ld.mask').map((i, item) => item.attributes[3].value);
     const script = extractInitialState($);
     const state = JSON.parse(script);
-    let index = 0;
-    for (const item of state.user.notes.flat()) {
-        const path = paths[index];
-        if (path && path.includes('?')) {
-            item.id += path?.slice(path.indexOf('?'));
+
+    const tokenizedPaths = new Map<string, string>();
+
+    $('#userPostedFeeds a[href*="xsec_token"]').each((_, item) => {
+        const href = $(item).attr('href');
+        if (!href) {
+            return;
         }
-        index += 1;
+
+        const match = href.match(/\/([0-9a-f]{24})(?:\?|$)/i);
+        if (match && href.includes('?')) {
+            tokenizedPaths.set(match[1], href);
+        }
+    });
+
+    for (const item of state.user.notes.flat()) {
+        const path = tokenizedPaths.get(item.id);
+
+        if (path) {
+            item.id += path.slice(path.indexOf('?'));
+        }
     }
     return state.user;
 }
@@ -317,8 +330,11 @@ async function getUserWithCookie(url: string) {
 // Add helper function to extract initial state
 function extractInitialState($: CheerioAPI) {
     let script = $('script:contains("window.__INITIAL_STATE__=")').text();
+
     script = script.slice(script.indexOf('window.__INITIAL_STATE__=') + 'window.__INITIAL_STATE__='.length);
-    script = script.replaceAll('undefined', 'null');
+
+    script = script.replaceAll('undefined', 'null').replaceAll(/new Map\(\s*\[\s*\]\s*\)/g, 'null');
+
     return script;
 }
 
