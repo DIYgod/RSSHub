@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 
 import type { Route } from '@/types';
-import { parseScriptData } from '@/utils/evaluate-script';
+import { evaluateScriptData } from '@/utils/evaluate-script';
 import got from '@/utils/got';
 
 export const route: Route = {
@@ -37,7 +37,7 @@ async function handler() {
         .map((element) => $(element).text())
         .filter((source) => source.includes('__INITIAL_STATE__'))
         .join('\n');
-    const { widgets } = await parseScriptData<{
+    const { widgets } = await evaluateScriptData<{
         widgets: {
             hottestWidget: {
                 threads: Array<{ title: string; mainImage: { path: string; name: string }; temperature: number; displayPrice: string; url: string }>;

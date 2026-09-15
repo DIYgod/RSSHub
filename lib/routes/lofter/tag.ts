@@ -3,7 +3,7 @@ import { load } from 'cheerio';
 import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
 import type { Route } from '@/types';
-import { parseScriptCallback } from '@/utils/evaluate-script';
+import { evaluateScriptCallback } from '@/utils/evaluate-script';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
@@ -83,7 +83,7 @@ async function handler(ctx) {
         },
     });
 
-    const data = await parseScriptCallback<any[]>(response.data, 'dwr.engine._remoteHandleCallback');
+    const data = await evaluateScriptCallback<any[]>(response.data, 'dwr.engine._remoteHandleCallback');
 
     const title =
         {

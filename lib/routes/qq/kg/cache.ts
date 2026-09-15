@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 
 import cache from '@/utils/cache';
-import { parseScriptData } from '@/utils/evaluate-script';
+import { evaluateScriptData } from '@/utils/evaluate-script';
 import got from '@/utils/got';
 
 export default {
@@ -16,7 +16,7 @@ export default {
                 .map((element) => $(element).text())
                 .filter((source) => source.includes('__DATA__'))
                 .join('\n');
-            const data = await parseScriptData<{
+            const data = await evaluateScriptData<{
                 detail: {
                     song_name: string;
                     content: string;
