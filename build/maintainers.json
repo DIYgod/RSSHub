@@ -1220,6 +1220,9 @@
   "/tkww/:column{.+}?": [
     "quiniapiezoelectricity"
   ],
+  "/toei/ridership": [
+    "pseudoyu"
+  ],
   "/topbook/:id?": [
     "nczitzk"
   ],
@@ -5641,6 +5644,9 @@
   "/jbma/report/:filter{.+}?": [
     "nczitzk"
   ],
+  "/jfnet/industry-report": [
+    "pseudoyu"
+  ],
   "/jgsu/jwc": [
     "butten42"
   ],
@@ -5745,6 +5751,9 @@
   ],
   "/jpxgmn/weekly": [
     "Urabartin"
+  ],
+  "/jreast/ridership/:year?": [
+    "pseudoyu"
   ],
   "/jrj/:channelNum": [
     "p3psi-boo"

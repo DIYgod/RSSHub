@@ -1877,6 +1877,7 @@ export type RoutePath =
   | `/jd/price/:id`
   | `/jetbrains/youtrack/comments/:issueId`
   | `/jewishmuseum/exhibitions`
+  | `/jfnet/industry-report`
   | `/jgsu/jwc`
   | `/jiangnan/jwc/:type?`
   | `/jianshu/collection/:id`
@@ -1929,6 +1930,7 @@ export type RoutePath =
   | `/jpxgmn/search/:kw`
   | `/jpxgmn/tab/:tab?`
   | `/jpxgmn/weekly`
+  | `/jreast/ridership/:year?`
   | `/jrj/:channelNum`
   | `/jseea/news/:type?`
   | `/jsu/cxzx/:types?`
@@ -3325,6 +3327,7 @@ export type RoutePath =
   | `/tmtpost/column/:id`
   | `/tmtpost/new`
   | `/tmtpost/nictation`
+  | `/toei/ridership`
   | `/tokeninsight/blog/:lang?`
   | `/tokeninsight/bulletin/:lang?`
   | `/tokeninsight/report/:lang?`

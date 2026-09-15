@@ -15542,6 +15542,49 @@ export default {
     "url": "www.tkww.hk",
     "lang": "zh-HK"
   },
+  "toei": {
+    "routes": {
+      "/ridership": {
+        "path": "/ridership",
+        "name": "都営地下鉄 各駅乗降人員",
+        "url": "www.kotsu.metro.tokyo.jp",
+        "maintainers": [
+          "pseudoyu"
+        ],
+        "example": "/toei/ridership",
+        "parameters": {},
+        "description": "Annual 各駅乗降人員 (one-day average of boarding + alighting passengers) for every 都営地下鉄 station, read from the Tokyo open-data catalog dataset [地下鉄関連情報 各駅乗降人員一覧](https://catalog.data.metro.tokyo.lg.jp/dataset/t000018d0000000030) (CC BY 4.0, one Shift_JIS CSV per line) — the operator's own [各駅乗降人員一覧](https://www.kotsu.metro.tokyo.jp/subway/kanren/passengers.html) page carries the same figures behind a browser challenge. One item per station and line (stations shared by two lines appear once per line with that line's figures); `_extra` follows the shared ridership shape with `daily_average` = 乗車 + 降車 and `measure: 'boarding_alighting'`. Only the current fiscal year is published and the files are overwritten in place; `pubDate` is the resource's last-modified date. Credit: 地下鉄関連情報 各駅乗降人員一覧、東京都・東京都交通局、CC BY 4.0.",
+        "categories": [
+          "other"
+        ],
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportRadar": true
+        },
+        "radar": [
+          {
+            "source": [
+              "www.kotsu.metro.tokyo.jp/subway/kanren/passengers.html",
+              "catalog.data.metro.tokyo.lg.jp/dataset/t000018d0000000030"
+            ],
+            "target": "/ridership"
+          }
+        ],
+        "location": "ridership.ts",
+        "module": () => import('@/routes/toei/ridership.ts')
+      }
+    },
+    "apiRoutes": {},
+    "name": "Toei Transportation",
+    "url": "www.kotsu.metro.tokyo.jp",
+    "description": "東京都交通局（都営地下鉄・都営バス・都電）",
+    "lang": "ja",
+    "ja": {
+      "name": "東京都交通局"
+    }
+  },
   "topbook": {
     "routes": {
       "/:id?": {
@@ -75983,6 +76026,48 @@ export default {
       "description": ""
     }
   },
+  "jfnet": {
+    "routes": {
+      "/industry-report": {
+        "path": "/industry-report",
+        "name": "外食産業市場動向調査（月次）",
+        "url": "www.jfnet.or.jp",
+        "maintainers": [
+          "pseudoyu"
+        ],
+        "example": "/jfnet/industry-report",
+        "parameters": {},
+        "description": "Monthly releases of the 外食産業市場動向調査 from [業界データ](https://www.jfnet.or.jp/industry_report/). One item per survey month linking the PDF and Excel files; `_extra` carries `month` (YYYY-MM), `pdf`, `xls` and `released_at` (the file's upload date from the site's WordPress media API). The segment figures (売上高・客数・客単価 前年同月比) are only published inside the files and are not extracted: the site's 利用規約 reserves reproduction of its 資料 to prior permission.",
+        "categories": [
+          "finance"
+        ],
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportRadar": true
+        },
+        "radar": [
+          {
+            "source": [
+              "www.jfnet.or.jp/industry_report"
+            ],
+            "target": "/industry-report"
+          }
+        ],
+        "location": "industry-report.ts",
+        "module": () => import('@/routes/jfnet/industry-report.ts')
+      }
+    },
+    "apiRoutes": {},
+    "name": "Japan Foodservice Association",
+    "url": "www.jfnet.or.jp",
+    "description": "一般社団法人日本フードサービス協会",
+    "lang": "ja",
+    "ja": {
+      "name": "日本フードサービス協会"
+    }
+  },
   "jgsu": {
     "routes": {
       "/jwc": {
@@ -77232,6 +77317,53 @@ export default {
     "name": "极品性感美女",
     "url": "www.jpxgmn.com",
     "lang": "zh-CN"
+  },
+  "jreast": {
+    "routes": {
+      "/ridership/:year?": {
+        "path": "/ridership/:year?",
+        "name": "各駅の乗車人員",
+        "url": "www.jreast.co.jp",
+        "maintainers": [
+          "pseudoyu"
+        ],
+        "example": "/jreast/ridership",
+        "parameters": {
+          "year": {
+            "description": "Fiscal year (`2019` … latest); omit for the latest year"
+          }
+        },
+        "description": "Annual 各駅の乗車人員 (one-day average of boarding passengers) for every JR東日本 station, from [各駅の乗車人員](https://www.jreast.co.jp/company/data/passenger/) (ベスト100 plus the 101位以下 pages). One item per station and fiscal year; `_extra` follows the shared ridership shape with `measure: 'boarding'` — JR東日本 counts 乗車 only, so the figures are not comparable with the 乗降 figures of other operators. `yoy_pct` is normalised to a % change (the site prints a ratio such as 102.5 from FY2023 on). The operator does not publish a release date, so items have no `pubDate`.\n\n::: warning\nThe site's [ご利用にあたって](https://www.jreast.co.jp/site/rules.html) states: 「当サイト上に掲載されている全ての写真、社名ロゴ、画像、文章等のデータ等の利用については、複製・転用・転載・電磁的加工・送信・頒布・二次的使用・その他これらに類する全ての行為も含め、一切お断りいたします。」 Use the figures accordingly.\n:::",
+        "categories": [
+          "other"
+        ],
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": true,
+          "supportRadar": true
+        },
+        "radar": [
+          {
+            "source": [
+              "www.jreast.co.jp/company/data/passenger/",
+              "www.jreast.co.jp/passenger/"
+            ],
+            "target": "/ridership"
+          }
+        ],
+        "location": "ridership.ts",
+        "module": () => import('@/routes/jreast/ridership.ts')
+      }
+    },
+    "apiRoutes": {},
+    "name": "JR East",
+    "url": "www.jreast.co.jp",
+    "description": "東日本旅客鉄道",
+    "lang": "ja",
+    "ja": {
+      "name": "JR東日本"
+    }
   },
   "jrj": {
     "routes": {

@@ -4362,6 +4362,20 @@
       }
     ]
   },
+  "metro.tokyo.jp": {
+    "_name": "Toei Transportation",
+    "www.kotsu": [
+      {
+        "title": "都営地下鉄 各駅乗降人員",
+        "docs": "https://docs.rsshub.app/routes/other",
+        "source": [
+          "/subway/kanren/passengers.html",
+          "/dataset/t000018d0000000030"
+        ],
+        "target": "/toei/ridership"
+      }
+    ]
+  },
   "topbook.cc": {
     "_name": "Topbook",
     ".": [
@@ -26362,6 +26376,19 @@
       }
     ]
   },
+  "jfnet.or.jp": {
+    "_name": "Japan Foodservice Association",
+    "www": [
+      {
+        "title": "外食産業市場動向調査（月次）",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/industry_report"
+        ],
+        "target": "/jfnet/industry-report"
+      }
+    ]
+  },
   "jianshu.com": {
     "_name": "简书",
     "www": [
@@ -26711,6 +26738,20 @@
           "/"
         ],
         "target": "/jpxgmn/weekly"
+      }
+    ]
+  },
+  "jreast.co.jp": {
+    "_name": "JR East",
+    "www": [
+      {
+        "title": "各駅の乗車人員",
+        "docs": "https://docs.rsshub.app/routes/other",
+        "source": [
+          "/company/data/passenger/",
+          "/passenger/"
+        ],
+        "target": "/jreast/ridership"
       }
     ]
   },
