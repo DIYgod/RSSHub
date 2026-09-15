@@ -81,6 +81,7 @@ const parsePage = (html: string): { years: number[]; items: Array<ReturnType<typ
                     fiscal_year: fy,
                     daily_average: n,
                     unit: '人/日',
+                    measure: 'boarding_alighting',
                     rank: null,
                     // The page prints no 前年比; when it prints the previous year's column, the change is computed from the two cells.
                     yoy_pct: n !== null && p !== null && p > 0 ? round1((n / p - 1) * 100) : null,

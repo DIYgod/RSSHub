@@ -1,12 +1,15 @@
 /**
  * Shared shape + helpers for the 駅別乗降人員 (station ridership) routes of Tokyo private railways
- * (tokyometro / tokyu / odakyu / keio). One item per station per fiscal year; unknown = `null`, never `0`;
+ * (tokyometro / tokyu / odakyu / keio / toei) and JR東日本. One item per station per fiscal year; unknown = `null`, never `0`;
  * the operator's cell text is kept verbatim in `raw`.
  */
 
 import type { DataItem } from '@/types';
 
-export type RidershipSource = 'tokyometro' | 'tokyu' | 'odakyu' | 'keio';
+export type RidershipSource = 'tokyometro' | 'tokyu' | 'odakyu' | 'keio' | 'jreast' | 'toei';
+
+/** What the operator counts: JR東日本 publishes 乗車 (boarding) only, the others 乗降 (boarding + alighting). */
+export type RidershipMeasure = 'boarding' | 'boarding_alighting';
 
 export interface RidershipExtra {
     source: RidershipSource;
@@ -16,6 +19,7 @@ export interface RidershipExtra {
     fiscal_year: number; // 2025 = FY2025 (2025-04 … 2026-03)
     daily_average: number | null; // 一日平均乗降人員
     unit: '人/日';
+    measure: RidershipMeasure;
     rank: number | null; // only when the operator publishes a 順位
     yoy_pct: number | null; // 前年比 / 増減率 (%); negative when the operator prints ▲ or a minus
     raw: Record<string, string>;

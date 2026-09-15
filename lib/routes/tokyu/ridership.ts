@@ -65,6 +65,7 @@ const parsePage = (html: string, link: string): { fiscalYear: number; items: Arr
                         fiscal_year: fiscalYear,
                         daily_average: parseCount(raw.total),
                         unit: '人/日',
+                        measure: 'boarding_alighting',
                         rank: null,
                         yoy_pct: parsePct(raw.yoy),
                         raw,

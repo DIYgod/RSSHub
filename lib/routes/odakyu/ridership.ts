@@ -57,6 +57,7 @@ const parsePage = (html: string): { fiscalYear: number; items: Array<ReturnType<
                         fiscal_year: fiscalYear,
                         daily_average: parseCount(count),
                         unit: '人/日',
+                        measure: 'boarding_alighting',
                         rank: parseCount(rank),
                         yoy_pct: parsePct(yoy),
                         raw,
