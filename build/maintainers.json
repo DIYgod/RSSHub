@@ -342,6 +342,9 @@
   "/jl1mall/forum/:type?/:key?": [
     "nczitzk"
   ],
+  "/jma/wxchart/:type?": [
+    "TonyRL"
+  ],
   "/joneslanglasalle/:language?/:category{.+}?": [
     "nczitzk",
     "pseudoyu"

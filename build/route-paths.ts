@@ -1918,6 +1918,7 @@ export type RoutePath =
   | `/jlu/ccst/xwzx/:category`
   | `/jlu/jwc`
   | `/jlu/phy/:category/:column/:subcolumn?`
+  | `/jma/wxchart/:type?`
   | `/jnu/yw/:type?`
   | `/joins/chinese/:category?`
   | `/joneslanglasalle/:language?/:category{.+}?`

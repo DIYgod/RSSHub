@@ -5250,6 +5250,62 @@ export default {
     "description": "",
     "lang": "zh-CN"
   },
+  "jma": {
+    "routes": {
+      "/wxchart/:type?": {
+        "path": "/wxchart/:type?",
+        "categories": [
+          "forecast"
+        ],
+        "view": 2,
+        "example": "/jma/wxchart/daily",
+        "parameters": {
+          "type": {
+            "description": "Chart type",
+            "options": [
+              {
+                "value": "daily",
+                "label": "天気図（最新）"
+              },
+              {
+                "value": "monthly",
+                "label": "過去の実況天気図（今月）"
+              }
+            ],
+            "default": "daily"
+          }
+        },
+        "radar": [
+          {
+            "source": [
+              "www.jma.go.jp/bosai/weather_map/"
+            ],
+            "target": "/wxchart/daily"
+          },
+          {
+            "source": [
+              "www.data.jma.go.jp/yoho/wxchart/quickmonthly.html"
+            ],
+            "target": "/wxchart/monthly"
+          }
+        ],
+        "name": "天気図",
+        "maintainers": [
+          "TonyRL"
+        ],
+        "url": "www.jma.go.jp/bosai/weather_map/",
+        "location": "wxchart.ts",
+        "module": () => import('@/routes/jma/wxchart.ts')
+      }
+    },
+    "apiRoutes": {},
+    "name": "気象庁 Japan Meteorological Agency",
+    "url": "www.jma.go.jp",
+    "categories": [
+      "forecast"
+    ],
+    "lang": "ja"
+  },
   "joneslanglasalle": {
     "routes": {
       "/:language?/:category{.+}?": {
