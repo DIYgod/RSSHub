@@ -158510,7 +158510,8 @@ export default {
             },
             {
               "name": "WEIBO_REDIRECT_URL",
-              "description": ""
+              "optional": true,
+              "description": "OAuth callback URL. Defaults to `<request origin>/weibo/timeline/0`. Set it when the auto-composed URL doesn't work"
             }
           ],
           "requirePuppeteer": false,
