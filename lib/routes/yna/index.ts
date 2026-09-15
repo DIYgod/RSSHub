@@ -1,5 +1,6 @@
 import { load } from 'cheerio';
 
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
@@ -47,9 +48,19 @@ For example, the path for the RSS feed url <https://www.yna.co.kr/rss/economy.xm
 :::`,
 };
 
+// The language becomes the leading label of the requested host below, so it is
+// checked against the codes the route documents. 'sp' is kept as well because
+// the Spanish feed page linked in the description lives on sp.yna.co.kr.
+const languages = new Set(['ko', 'en', 'cn', 'jp', 'ar', 'es', 'sp', 'fr']);
+
 async function handler(ctx) {
     const lang = ctx.req.param('lang') ?? 'ko';
     const channel = ctx.req.param('channel') ?? 'news';
+
+    if (!languages.has(lang)) {
+        throw new InvalidParameterError('Unsupported language');
+    }
+
     let url;
     switch (lang) {
         case 'ko':
