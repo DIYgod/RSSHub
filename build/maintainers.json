@@ -5973,6 +5973,9 @@
   "/letterboxd/:username/watchlist": [
     "johan456789"
   ],
+  "/lg/tokyo/rail-ridership/:table?": [
+    "pseudoyu"
+  ],
   "/lg/osaka/food-permit": [
     "pseudoyu"
   ],

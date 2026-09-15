@@ -80149,6 +80149,42 @@ export default {
   },
   "lg": {
     "routes": {
+      "/tokyo/rail-ridership/:table?": {
+        "path": "/tokyo/rail-ridership/:table?",
+        "name": "東京都統計年鑑 駅別乗降車人員",
+        "url": "catalog.data.metro.tokyo.lg.jp",
+        "maintainers": [
+          "pseudoyu"
+        ],
+        "example": "/lg/tokyo/rail-ridership",
+        "parameters": {
+          "table": {
+            "description": "Which yearbook table to read; defaults to 私鉄",
+            "options": [
+              {
+                "value": "private",
+                "label": "私鉄の駅別乗降車人員"
+              },
+              {
+                "value": "subway",
+                "label": "地下鉄の駅別乗降車人員"
+              }
+            ]
+          }
+        },
+        "description": "Per-station yearly ridership for Tokyo's private railways and subways, from the [東京都統計年鑑 運輸・観光](https://catalog.data.metro.tokyo.lg.jp/dataset/t000003d2000001150) (CC BY 4.0). One item per station and fiscal year.\n\nThis is the only permissively licensed source covering ゆりかもめ, りんかい線 (東京臨海高速鉄道) and つくばエクスプレス (首都圏新都市鉄道) — their own sites either publish no per-station table or forbid reuse.\n\nRead the figures carefully:\n\n- They are **one-year totals in 千人**, not the 一日平均 in 人/日 that operators publish. `_extra` carries `annual_total` with `unit: '千人/年'` and leaves `daily_average` null; the route never converts between the two.\n- The table gives 乗車人員 and 降車人員 in separate columns. The item carries 乗車 (`measure: 'boarding'`) and leaves 降車 verbatim in `raw`, rather than summing them.\n- Only stations **within 東京都** are listed, so a line is truncated at the prefecture border. The publisher's `マーク` column (kept in `raw`) marks 「◎ 同一会社内の乗換え駅」 and 「※ 区部にある駅 (線)」.\n- Figures 「同一会社内の乗り継ぎは除く」 (exclude transfers within the same company).\n\nThe table number changes between editions (私鉄 was 4-12 in 令和6年 but 4-13 in 令和5年), so the route resolves the current edition and table through the catalog API by name rather than a fixed URL.\n\nAttribution required by the licence: 出典：東京都統計年鑑（東京都総務局統計部）.",
+        "categories": [
+          "other"
+        ],
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportRadar": false
+        },
+        "location": "tokyo/rail-ridership.ts",
+        "module": () => import('@/routes/lg/tokyo/rail-ridership.ts')
+      },
       "/osaka/food-permit": {
         "path": "/osaka/food-permit",
         "name": "大阪市 食品営業許可 新規",
@@ -80157,7 +80193,7 @@ export default {
           "pseudoyu"
         ],
         "example": "/lg/osaka/food-permit",
-        "description": "Newest food business permits (食品営業許可) in 大阪市，from the CC BY 4.0 [食品営業許可施設一覧 CSV](https://www.city.osaka.lg.jp/kenko/page/0000575579.html) — a quarterly snapshot of all valid permits with 緯度経度.\n\nThe dataset has no permit date, only 許可満了日，so items have no `pubDate`; they are ordered by 指令番号 (`大 保食第<年度>-<連番>号`), newest first, and only 申請区分 = 新規 rows are included. `_extra` holds `source`, `ward`, `permit_no`, `name`, `address`, `permit_date` (always `null`), `business_type`, `lat`, `lon` and the publisher's original columns in `raw`.\n\n| Query   | Description                | Default |\n| ------- | -------------------------- | ------- |\n| `limit` | Number of permits, max 500 | 100     |",
+        "description": "Newest food business permits (食品営業許可) in 大阪市，from the CC BY 4.0 [食品営業許可施設一覧 CSV](https://www.city.osaka.lg.jp/kenko/page/0000575579.html) — a quarterly snapshot of all valid permits with 緯度経度.\n\nThe dataset has no permit date, only 許可満了日，so items have no `pubDate`; they are ordered by 指令番号 (`大 保食第<年度>-<連番>号`), newest first, and only 申請区分 = 新規 rows are included. `_extra` holds `source`, `ward`, `permit_no`, `name`, `address`, `permit_date` (always `null`), `expires_at` (許可満了日), `business_type`, `lat`, `lon` and the publisher's original columns in `raw`. 大阪市 publishes no 町字，初回許可日 or 廃業日，so `town`, `first_permit_date` and `closed_date` are always `null` here.\n\n| Query   | Description                | Default |\n| ------- | -------------------------- | ------- |\n| `limit` | Number of permits, max 500 | 100     |",
         "categories": [
           "government"
         ],
@@ -80209,7 +80245,7 @@ export default {
             ]
           }
         },
-        "description": "Newly granted food business permits (飲食店営業許可 etc.) in Tokyo wards, from each ward's CC BY open data:\n\n- 渋谷区: [食品営業許可施設一覧 (ArcGIS FeatureServer)](https://city-shibuya-data.opendata.arcgis.com/items/e68f41ebfa5f4ea490ca9af701d44e02) — current and previous month\n- 港区: [食品営業許可一覧 (CSV)](https://catalog.data.metro.tokyo.lg.jp/dataset/t131032d0000000244) — monthly snapshot of valid permits, newest first\n- 台東区: [食品衛生営業施設一覧](https://www.city.taito.lg.jp/kenkohukusi/kenkokikikanrieisei/food/syokuhin-sisetu/index.html) — the two newest monthly 新規許可 CSVs (updated on the 10th)\n- 品川区: [食品衛生許可施設一覧](https://www.city.shinagawa.tokyo.jp/PC/kenkou/kenkou-eisei/kenkou-eisei-syokuhin/opendate.html) — the two newest monthly CSVs (updated on the 15th); individuals' names and addresses are masked by the publisher and come through as `null`\n- 世田谷区: [食品関係施設情報の公開について](https://www.city.setagaya.lg.jp/02245/online_tetsuzuki/3246.html) — the two newest 例月新規許可施設一覧 CSVs (updated on the 15th)\n- 目黒区: [飲食店等 (BODIK CKAN)](https://data.bodik.jp/dataset/131105_food_business) — the two newest 飲食店 新規 monthly CSVs (updated by the 10th)\n\nItems are sorted by permit date (`pubDate`). `_extra` holds `source`, `ward`, `permit_no`, `name`, `address`, `permit_date`, `business_type`, `lat` / `lon` (when the publisher gives them, else `null`) and the publisher's original columns in `raw`. Only 許可 rows are included (届出 rows are skipped).\n\n| Query   | Description                           | Default |\n| ------- | ------------------------------------- | ------- |\n| `limit` | Number of permits per source, max 500 | 100     |",
+        "description": "Newly granted food business permits (飲食店営業許可 etc.) in Tokyo wards, from each ward's CC BY open data:\n\n- 渋谷区: [食品営業許可施設一覧 (ArcGIS FeatureServer)](https://city-shibuya-data.opendata.arcgis.com/items/e68f41ebfa5f4ea490ca9af701d44e02) — current and previous month\n- 港区: [食品営業許可一覧 (CSV)](https://catalog.data.metro.tokyo.lg.jp/dataset/t131032d0000000244) — monthly snapshot of valid permits, newest first\n- 台東区: [食品衛生営業施設一覧](https://www.city.taito.lg.jp/kenkohukusi/kenkokikikanrieisei/food/syokuhin-sisetu/index.html) — the two newest monthly 新規許可 CSVs (updated on the 10th)\n- 品川区: [食品衛生許可施設一覧](https://www.city.shinagawa.tokyo.jp/PC/kenkou/kenkou-eisei/kenkou-eisei-syokuhin/opendate.html) — the two newest monthly CSVs (updated on the 15th); individuals' names and addresses are masked by the publisher and come through as `null`\n- 世田谷区: [食品関係施設情報の公開について](https://www.city.setagaya.lg.jp/02245/online_tetsuzuki/3246.html) — the two newest 例月新規許可施設一覧 CSVs (updated on the 15th)\n- 目黒区: [飲食店等 (BODIK CKAN)](https://data.bodik.jp/dataset/131105_food_business) — the two newest 飲食店 新規 monthly CSVs (updated by the 10th)\n\nItems are sorted by permit date (`pubDate`). `_extra` holds `source`, `ward`, `permit_no`, `name`, `address`, `town` (町字), `permit_date`, `first_permit_date`, `expires_at` (許可満了日), `closed_date` (廃業日 — non-null means the business has already closed), `business_type`, `lat` / `lon` and the publisher's original columns in `raw`. Every field a publisher omits is `null`, never `0` or an empty string. Only 許可 rows are included (届出 rows are skipped).\n\n| Query   | Description                           | Default |\n| ------- | ------------------------------------- | ------- |\n| `limit` | Number of permits per source, max 500 | 100     |",
         "categories": [
           "government"
         ],

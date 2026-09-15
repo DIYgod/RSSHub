@@ -2053,6 +2053,7 @@ export type RoutePath =
   | `/lfsyd/user/:id?`
   | `/lg/osaka/food-permit`
   | `/lg/tokyo/food-permit/:ward?`
+  | `/lg/tokyo/rail-ridership/:table?`
   | `/lhratings/research/:type?`
   | `/lianxh/:category?`
   | `/lifetimes/:category?`
