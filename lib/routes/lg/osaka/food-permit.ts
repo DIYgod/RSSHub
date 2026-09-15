@@ -4,7 +4,7 @@ import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 
-import { csvRecords, decodeText, type PermitExtra, type Row } from '../utils';
+import { csvRecords, decodeText, isoDate, type PermitExtra, type Row } from '../utils';
 
 /**
  * 食品営業許可 facilities of 大阪市, from the CC BY 4.0 CSV linked on the city's 食品営業許可施設一覧 page
@@ -65,7 +65,23 @@ const toItem = (raw: Row): DataItem & { _extra: PermitExtra } => {
         guid: `lg/osaka/food-permit:${permitNo}`,
         link: PAGE,
         description: [ward, address, businessType, `指令番号 ${permitNo}`, raw['許可満了日'] ? `許可満了日 ${raw['許可満了日']}` : null].filter(Boolean).join(' / '),
-        _extra: { source: 'osaka', ward, permit_no: permitNo, name, address, permit_date: null, business_type: businessType, lat, lon, raw },
+        // 大阪市 publishes neither 町字 nor 初回許可日 nor 廃業日 — the snapshot only lists permits that are still valid.
+        _extra: {
+            source: 'osaka',
+            ward,
+            permit_no: permitNo,
+            name,
+            address,
+            town: null,
+            permit_date: null,
+            first_permit_date: null,
+            expires_at: isoDate(raw['許可満了日'] ?? null),
+            closed_date: null,
+            business_type: businessType,
+            lat,
+            lon,
+            raw,
+        },
     };
 };
 
@@ -102,7 +118,7 @@ export const route: Route = {
     example: '/lg/osaka/food-permit',
     description: `Newest food business permits (食品営業許可) in 大阪市，from the CC BY 4.0 [食品営業許可施設一覧 CSV](https://www.city.osaka.lg.jp/kenko/page/0000575579.html) — a quarterly snapshot of all valid permits with 緯度経度.
 
-The dataset has no permit date, only 許可満了日，so items have no \`pubDate\`; they are ordered by 指令番号 (\`大 保食第<年度>-<連番>号\`), newest first, and only 申請区分 = 新規 rows are included. \`_extra\` holds \`source\`, \`ward\`, \`permit_no\`, \`name\`, \`address\`, \`permit_date\` (always \`null\`), \`business_type\`, \`lat\`, \`lon\` and the publisher's original columns in \`raw\`.
+The dataset has no permit date, only 許可満了日，so items have no \`pubDate\`; they are ordered by 指令番号 (\`大 保食第<年度>-<連番>号\`), newest first, and only 申請区分 = 新規 rows are included. \`_extra\` holds \`source\`, \`ward\`, \`permit_no\`, \`name\`, \`address\`, \`permit_date\` (always \`null\`), \`expires_at\` (許可満了日), \`business_type\`, \`lat\`, \`lon\` and the publisher's original columns in \`raw\`. 大阪市 publishes no 町字，初回許可日 or 廃業日，so \`town\`, \`first_permit_date\` and \`closed_date\` are always \`null\` here.
 
 | Query   | Description                | Default |
 | ------- | -------------------------- | ------- |

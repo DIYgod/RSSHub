@@ -62,6 +62,10 @@ const MINATO_CSV = 'https://opendata.city.minato.tokyo.jp/dataset/54d8c582-00e2-
 const DEFAULT_LIMIT = 100;
 const MAX_LIMIT = 500;
 const DATE_COLS = ['許可年月日', '許可決定日', SHIBUYA_DATE, '許可開始日', '許可日'];
+const FIRST_PERMIT_COLS = ['初回許可年月日', '初回許可日'];
+const EXPIRY_COLS = ['許可満了日', '有効期限'];
+const CLOSED_COLS = ['廃業年月日', '廃業日', '廃止年月日'];
+const TOWN_COLS = ['施設所在地_町字', '町字'];
 
 /** First non-empty column; `※` / `※※※※※` (品川区・台東区 mask individuals' data this way) counts as empty. */
 const pick = (row: Row, cols: readonly string[]): string | null => {
@@ -182,13 +186,17 @@ const toItem = (source: Source, raw: Row): DataItem & { _extra: PermitExtra } =>
     const ward = (pick(raw, ['施設所在地_市区町村', '地方公共団体名']) ?? SOURCES[source].label).replace(/^東京都/, '');
     const lat = toNumber(pick(raw, ['緯度']));
     const lon = toNumber(pick(raw, ['経度']));
+    const town = pick(raw, TOWN_COLS);
+    const firstPermitDate = isoDate(pick(raw, FIRST_PERMIT_COLS));
+    const expiresAt = isoDate(pick(raw, EXPIRY_COLS));
+    const closedDate = isoDate(pick(raw, CLOSED_COLS));
     return {
         title: `${name}（${businessType ?? '業種不明'}）`,
         guid: `lg/tokyo/food-permit:${source}:${permitNo}`,
         link: SOURCES[source].link,
         pubDate: permitDate === null ? undefined : timezone(parseDate(permitDate, 'YYYY-MM-DD'), 9),
         description: [ward, address, businessType, permitDate, `許可番号 ${permitNo}`].filter(Boolean).join(' / '),
-        _extra: { source, ward, permit_no: permitNo, name, address, permit_date: permitDate, business_type: businessType, lat, lon, raw },
+        _extra: { source, ward, permit_no: permitNo, name, address, town, permit_date: permitDate, first_permit_date: firstPermitDate, expires_at: expiresAt, closed_date: closedDate, business_type: businessType, lat, lon, raw },
     };
 };
 
@@ -270,7 +278,7 @@ export const route: Route = {
 - 世田谷区: [食品関係施設情報の公開について](https://www.city.setagaya.lg.jp/02245/online_tetsuzuki/3246.html) — the two newest 例月新規許可施設一覧 CSVs (updated on the 15th)
 - 目黒区: [飲食店等 (BODIK CKAN)](https://data.bodik.jp/dataset/131105_food_business) — the two newest 飲食店 新規 monthly CSVs (updated by the 10th)
 
-Items are sorted by permit date (\`pubDate\`). \`_extra\` holds \`source\`, \`ward\`, \`permit_no\`, \`name\`, \`address\`, \`permit_date\`, \`business_type\`, \`lat\` / \`lon\` (when the publisher gives them, else \`null\`) and the publisher's original columns in \`raw\`. Only 許可 rows are included (届出 rows are skipped).
+Items are sorted by permit date (\`pubDate\`). \`_extra\` holds \`source\`, \`ward\`, \`permit_no\`, \`name\`, \`address\`, \`town\` (町字), \`permit_date\`, \`first_permit_date\`, \`expires_at\` (許可満了日), \`closed_date\` (廃業日 — non-null means the business has already closed), \`business_type\`, \`lat\` / \`lon\` and the publisher's original columns in \`raw\`. Every field a publisher omits is \`null\`, never \`0\` or an empty string. Only 許可 rows are included (届出 rows are skipped).
 
 | Query   | Description                           | Default |
 | ------- | ------------------------------------- | ------- |

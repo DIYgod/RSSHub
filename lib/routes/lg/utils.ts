@@ -65,7 +65,11 @@ export interface PermitExtra {
     permit_no: string;
     name: string;
     address: string | null;
+    town: string | null; // 施設所在地_町字, the finest area unit the 自治体標準オープンデータ schema carries
     permit_date: string | null; // YYYY-MM-DD
+    first_permit_date: string | null; // YYYY-MM-DD; earlier than permit_date once a permit has been renewed
+    expires_at: string | null; // YYYY-MM-DD, 許可満了日
+    closed_date: string | null; // YYYY-MM-DD, 廃業日; non-null means the business has already closed
     business_type: string | null;
     lat: number | null;
     lon: number | null;
