@@ -46,7 +46,7 @@ export function createDevRegistry({ routesDirectory, namespaces }: { routesDirec
                 outer.set(key as never, value as never);
             }
         }
-        if (!ctx.finalized && (ctx.get('data') || ctx.get('apiData'))) {
+        if (!ctx.finalized && (ctx.get('data') || ctx.get('apiData') || ctx.get('redirect') || ctx.get('no-content'))) {
             // Data-producing handlers return undefined (the outer template middleware renders the
             // bridged vars); finalize so Hono does not raise "Context is not finalized".
             ctx.res = new Response(null, { status: 204 });
@@ -104,7 +104,7 @@ export function createDevRegistry({ routesDirectory, namespaces }: { routesDirec
         outerContexts.set(ctx.req.raw, ctx);
         try {
             const response = await subApp.fetch(ctx.req.raw);
-            if (ctx.get('data') || ctx.get('apiData')) {
+            if (ctx.get('data') || ctx.get('apiData') || ctx.get('redirect') || ctx.get('no-content')) {
                 // The upstream template middleware renders from the bridged vars
                 return;
             }

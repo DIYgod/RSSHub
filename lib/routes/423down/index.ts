@@ -13,7 +13,7 @@ export const handler = async (ctx) => {
 
     const domain = '423down.com';
     const rootUrl = `https://www.${domain}`;
-    const currentUrl = new URL(category, rootUrl).href;
+    const currentUrl = `${rootUrl}/${category}`;
 
     const { data: response } = await got(currentUrl);
 

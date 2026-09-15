@@ -1,9 +1,11 @@
 import { load } from 'cheerio';
 
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { isValidHost } from '@/utils/valid-host';
 
 const host = 'https://support.apple.com/';
 
@@ -33,6 +35,10 @@ export const route: Route = {
 
 async function handler(ctx) {
     const country = ctx.req.param('country') ?? '';
+    if (country && !isValidHost(country)) {
+        throw new InvalidParameterError('Invalid country');
+    }
+
     const link = new URL(`${country}/service-programs`, host).href;
 
     const response = await got(link);

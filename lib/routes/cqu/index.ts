@@ -37,7 +37,7 @@ export const route: Route = {
 async function handler(ctx) {
     const { path = 'index/tzgg' } = ctx.req.param();
     const baseUrl = 'http://jwc.cqu.edu.cn';
-    const url = new URL(`${path}.htm`, baseUrl).href;
+    const url = `${baseUrl}/${path}.htm`;
 
     const response = await ofetch(url);
     const $ = load(response);

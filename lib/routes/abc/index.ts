@@ -42,8 +42,8 @@ async function handler(ctx) {
     let currentUrl: string;
     let documentId;
 
-    if (Number.isNaN(category)) {
-        currentUrl = new URL(category, rootUrl).href;
+    if (Number.isNaN(Number(category))) {
+        currentUrl = `${rootUrl}/${category}`;
     } else {
         documentId = category;
         const feedUrl = new URL(`news/feed/${documentId}/rss.xml`, rootUrl).href;

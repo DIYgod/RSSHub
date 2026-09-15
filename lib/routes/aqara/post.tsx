@@ -38,7 +38,7 @@ async function handler(ctx) {
         const filterRegion = filterMatches[1];
         const filterType = filterMatches[2] === 'tag' ? 'tags' : filterMatches[2] === 'category' ? 'categories' : filterMatches[2];
         const filterKeyword = decodeURI(filterMatches[3].split('/').pop());
-        const filterApiUrl = new URL(`${filterRegion}/${apiSlug}/${filterType}?search=${filterKeyword}`, rootUrl).href;
+        const filterApiUrl = `${rootUrl}/${filterRegion}/${apiSlug}/${filterType}?search=${filterKeyword}`;
 
         const { data: filterResponse } = await got(filterApiUrl);
 
@@ -47,7 +47,7 @@ async function handler(ctx) {
         if (filter?.id ?? undefined) {
             filterName = filter.name ?? filterKeyword;
             currentUrl = filter.link ?? currentUrl;
-            apiUrl = new URL(`${filterRegion}/${apiSlug}/posts?_embed=true&per_page=${limit}&${filterType}=${filter.id}`, rootUrl).href;
+            apiUrl = `${rootUrl}/${filterRegion}/${apiSlug}/posts?_embed=true&per_page=${limit}&${filterType}=${filter.id}`;
         }
     }
 

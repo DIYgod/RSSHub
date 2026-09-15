@@ -1,8 +1,10 @@
 import { load } from 'cheerio';
 
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
+import { isValidHost } from '@/utils/valid-host';
 
 import { ProcessFeed, rootUrl } from './utils';
 
@@ -23,6 +25,10 @@ export const route: Route = {
 
 async function handler(ctx) {
     let sectionName: string = ctx.req.param('section');
+    if (!isValidHost(sectionName)) {
+        throw new InvalidParameterError('Invalid section');
+    }
+
     sectionName = sectionName.replace('-', '/');
     sectionName += '/';
     const sectionUrl = new URL(sectionName, rootUrl).href;

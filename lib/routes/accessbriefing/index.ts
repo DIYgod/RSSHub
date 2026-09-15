@@ -12,7 +12,7 @@ export const handler = async (ctx) => {
     const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 30;
 
     const rootUrl = 'https://www.accessbriefing.com';
-    const currentUrl = new URL(category, rootUrl).href;
+    const currentUrl = `${rootUrl}/${category}`;
     const apiUrl = new URL('Ajax/GetPagedArticles', rootUrl).href;
 
     const { data: currentResponse } = await got(currentUrl);

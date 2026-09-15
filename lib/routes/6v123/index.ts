@@ -17,7 +17,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
     const encoding = 'gb2312';
 
     const baseUrl = 'https://www.hao6v.me';
-    const targetUrl: string = new URL(category.startsWith('gvod') ? `${category}.html` : category, baseUrl).href;
+    const targetUrl = `${baseUrl}/${category.startsWith('gvod') ? `${category}.html` : category}`;
 
     const response = await ofetch(targetUrl, {
         responseType: 'arrayBuffer',

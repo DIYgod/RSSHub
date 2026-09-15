@@ -28,7 +28,7 @@ export const handler = async (ctx) => {
     const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 20;
 
     const rootUrl = 'https://fgw.sh.gov.cn';
-    const currentUrl = new URL(`${category}/index.html`, rootUrl).href;
+    const currentUrl = `${rootUrl}/${category}/index.html`;
 
     const { data: response } = await got(currentUrl);
 
