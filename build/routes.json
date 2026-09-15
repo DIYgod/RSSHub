@@ -57164,6 +57164,14 @@
           "junfengP",
           "pseudoyu"
         ],
+        "features": {
+          "requireConfig": [
+            {
+              "name": "ALLOW_USER_SUPPLY_UNSAFE_DOMAIN",
+              "description": "Allow user supplied domain"
+            }
+          ]
+        },
         "description": "| Discuz X Series | Discuz 7.x Series |\n| --------------- | ----------------- |\n| x               | 7                 |",
         "location": "discuz.ts",
         "module": "() => import('@/routes/discuz/discuz.ts')"
@@ -57188,6 +57196,14 @@
           "junfengP",
           "pseudoyu"
         ],
+        "features": {
+          "requireConfig": [
+            {
+              "name": "ALLOW_USER_SUPPLY_UNSAFE_DOMAIN",
+              "description": "Allow user supplied domain"
+            }
+          ]
+        },
         "description": "| Discuz X Series | Discuz 7.x Series |\n| --------------- | ----------------- |\n| x               | 7                 |",
         "location": "discuz.ts",
         "module": "() => import('@/routes/discuz/discuz.ts')"
@@ -57212,6 +57228,14 @@
           "junfengP",
           "pseudoyu"
         ],
+        "features": {
+          "requireConfig": [
+            {
+              "name": "ALLOW_USER_SUPPLY_UNSAFE_DOMAIN",
+              "description": "Allow user supplied domain"
+            }
+          ]
+        },
         "description": "| Discuz X Series | Discuz 7.x Series |\n| --------------- | ----------------- |\n| x               | 7                 |",
         "location": "discuz.ts",
         "module": "() => import('@/routes/discuz/discuz.ts')"
