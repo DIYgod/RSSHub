@@ -1,10 +1,12 @@
 import { load } from 'cheerio';
 
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
+import { isValidHost } from '@/utils/valid-host';
 
 import { renderDescription } from './templates/description';
 
@@ -42,6 +44,10 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { language, category = '' } = ctx.req.param();
+    if (!isValidHost(language)) {
+        throw new InvalidParameterError('Invalid language');
+    }
+
     const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 10;
 
     const rootUrl = 'https://dn.com';

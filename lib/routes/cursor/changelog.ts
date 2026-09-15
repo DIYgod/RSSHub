@@ -3,13 +3,19 @@ import { load } from 'cheerio';
 import type { Element } from 'domhandler';
 import type { Context } from 'hono';
 
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Data, DataItem, Language, Route } from '@/types';
 import { ViewType } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { isValidHost } from '@/utils/valid-host';
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const locale = ctx.req.param('locale');
+    if (locale && !isValidHost(locale)) {
+        throw new InvalidParameterError('Invalid locale');
+    }
+
     const limit = Number(ctx.req.query('limit') ?? '100');
 
     const baseUrl = 'https://cursor.com';

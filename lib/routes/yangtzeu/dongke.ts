@@ -25,7 +25,7 @@ async function handler(ctx): Promise<Data> {
     const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 10;
 
     const rootUrl = 'https://dongke.yangtzeu.edu.cn';
-    const currentUrl = new URL(`/${ctx.req.param('path') ?? 'yqzl/xyxw'}.htm`, rootUrl).href;
+    const currentUrl = `${rootUrl}/${ctx.req.param('path') ?? 'yqzl/xyxw'}.htm`;
 
     const { data: response } = await got(currentUrl);
 

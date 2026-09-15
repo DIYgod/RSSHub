@@ -1,9 +1,11 @@
 import { load } from 'cheerio';
 
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { isValidHost } from '@/utils/valid-host';
 
 import { renderDescription } from './templates/description';
 
@@ -30,6 +32,10 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { category = 'portraits' } = ctx.req.param();
+    if (!isValidHost(category)) {
+        throw new InvalidParameterError('Invalid category');
+    }
+
     const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 30;
 
     const author = 'Ian Spriggs';

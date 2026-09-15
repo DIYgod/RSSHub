@@ -7,6 +7,7 @@ import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import parser from '@/utils/rss-parser';
 import timezone from '@/utils/timezone';
+import { isValidHost } from '@/utils/valid-host';
 
 export const route: Route = {
     path: '/:lang?/:channel?',
@@ -48,17 +49,12 @@ For example, the path for the RSS feed url <https://www.yna.co.kr/rss/economy.xm
 :::`,
 };
 
-// The language becomes the leading label of the requested host below, so it is
-// checked against the codes the route documents. 'sp' is kept as well because
-// the Spanish feed page linked in the description lives on sp.yna.co.kr.
-const languages = new Set(['ko', 'en', 'cn', 'jp', 'ar', 'es', 'sp', 'fr']);
-
 async function handler(ctx) {
     const lang = ctx.req.param('lang') ?? 'ko';
     const channel = ctx.req.param('channel') ?? 'news';
 
-    if (!languages.has(lang)) {
-        throw new InvalidParameterError('Unsupported language');
+    if (!isValidHost(lang)) {
+        throw new InvalidParameterError('Invalid lang');
     }
 
     let url;

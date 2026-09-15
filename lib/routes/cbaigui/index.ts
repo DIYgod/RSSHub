@@ -28,7 +28,7 @@ async function handler(ctx) {
     let filterName;
 
     const path = ctx.req.param('path') ?? '';
-    const currentUrl = new URL(`/${path}`, rootUrl).href;
+    const currentUrl = `${rootUrl}/${path}`;
     let apiUrl = new URL(`${apiSlug}/posts?_embed=true&per_page=${limit}`, rootUrl).href;
 
     const filterMatches = path.match(/^post-(tag|category)\/(.*)$/);

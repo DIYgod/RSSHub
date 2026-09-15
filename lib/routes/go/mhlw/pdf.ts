@@ -8,7 +8,7 @@ export const handler = async (ctx) => {
     const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 30;
 
     const rootUrl = 'https://www.mhlw.go.jp';
-    const currentUrl = new URL(category.endsWith('.html') ? category : `${category}.html`, rootUrl).href;
+    const currentUrl = `${rootUrl}/${category.endsWith('.html') ? category : `${category}.html`}`;
 
     const { data: response } = await got(currentUrl);
 

@@ -39,7 +39,7 @@ async function handler(ctx) {
     const category = ctx.req.param('category') ?? 'National';
     const baseUrl = 'https://www.koreaherald.com/';
 
-    const response = await got(new URL(category, baseUrl).href);
+    const response = await got(`${baseUrl}${category}`);
     const $ = load(response.data);
     const title = $('ul.gnb').find('[class="on"]').length > 0 ? $('ul.gnb').find('[class="on"]').text() : $('div.nav_area > a.category').text();
     const list = $('article.recent_news > ul.news_list > li')
@@ -63,7 +63,7 @@ async function handler(ctx) {
     );
     return {
         title: `The Korea Herald - ${title}`,
-        link: new URL(category, baseUrl).href,
+        link: `${baseUrl}${category}`,
         item: items,
     };
 }

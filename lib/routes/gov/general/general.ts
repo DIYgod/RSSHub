@@ -1,5 +1,6 @@
 import { load } from 'cheerio';
 
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import cache from '@/utils/cache';
 import { getSubPath } from '@/utils/common-utils';
 // 来人拯救一下啊( >﹏<。)
@@ -40,6 +41,7 @@ import { getSubPath } from '@/utils/common-utils';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
+import { isValidHost } from '@/utils/valid-host';
 import { finishArticleItem } from '@/utils/wechat-mp';
 
 import { renderZcjdpt } from './templates/zcjdpt';
@@ -49,6 +51,9 @@ const gdgov = async (info, ctx) => {
         .split('/')
         .filter((item) => item !== '');
     const [site, branch] = path;
+    if (!isValidHost(site) || !isValidHost(branch)) {
+        throw new InvalidParameterError('Invalid site or branch');
+    }
 
     // 网站
     const pathstartat = info.pathstartat === undefined ? 0 : info.pathstartat;

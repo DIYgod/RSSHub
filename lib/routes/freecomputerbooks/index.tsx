@@ -2,9 +2,11 @@ import { load } from 'cheerio';
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
+import { isValidHost } from '@/utils/valid-host';
 
 const baseURL = 'https://freecomputerbooks.com/';
 
@@ -43,6 +45,10 @@ export const route: Route = {
 
 async function handler(ctx) {
     const categoryId = ctx.req.param('category')?.trim();
+    if (categoryId && !isValidHost(categoryId)) {
+        throw new InvalidParameterError('Invalid category');
+    }
+
     const requestURL = categoryId ? new URL(`${categoryId}.html`, baseURL).href : baseURL;
     const $ = await cheerioLoad(requestURL);
 

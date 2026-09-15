@@ -3,12 +3,18 @@ import { load } from 'cheerio';
 import type { Element } from 'domhandler';
 import type { Context } from 'hono';
 
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Data, DataItem, Route } from '@/types';
 import { ViewType } from '@/types';
 import ofetch from '@/utils/ofetch';
+import { isValidHost } from '@/utils/valid-host';
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { language = '' } = ctx.req.param();
+    if (language && !isValidHost(language)) {
+        throw new InvalidParameterError('Invalid language');
+    }
+
     const limit = Number(ctx.req.query('limit') ?? '30');
 
     const baseUrl = 'https://musify.club';

@@ -3,14 +3,20 @@ import { load } from 'cheerio';
 import type { Element } from 'domhandler';
 import type { Context } from 'hono';
 
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Data, DataItem, Language, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { isValidHost } from '@/utils/valid-host';
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { category = 'news', id = '10' } = ctx.req.param();
+    if (!isValidHost(category)) {
+        throw new InvalidParameterError('Invalid category');
+    }
+
     const limit = Number(ctx.req.query('limit') ?? '20');
 
     const baseUrl = 'https://www.cnljxh.org.cn';
