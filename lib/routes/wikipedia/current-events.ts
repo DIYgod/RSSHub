@@ -95,17 +95,43 @@ function stripTemplates(wikitext: string): string {
     return wikitext.replaceAll(/\{\{([^}]+)\}\}/g, '$1');
 }
 
+// sanitizeHtml runs on the wikitext before any tag is built, so & and < reach this point already
+// encoded. Decode them before assembling a URL, or the entity text ends up inside the link. &amp;
+// must go last so that &amp;lt; does not decode all the way to <.
+function decodeSanitizedEntities(text: string): string {
+    return text.replaceAll('&lt;', '<').replaceAll('&gt;', '>').replaceAll('&quot;', '"').replaceAll('&amp;', '&');
+}
+
+// Link targets come from the wikitext, so they are attacker-controlled and land in an href
+// attribute. encodeURI percent-encodes the " that would otherwise close the attribute and let the
+// rest of a crafted target through as markup, and it fixes the spaces that made the URLs invalid.
+function wikiUrl(target: string): string {
+    return `https://en.wikipedia.org/wiki/${encodeURI(decodeSanitizedEntities(target).trim().replaceAll(' ', '_'))}`;
+}
+
+// Anything that is not http(s) — javascript:, data: — is left as plain text rather than linked.
+function externalUrl(url: string): string | null {
+    const decoded = decodeSanitizedEntities(url).trim();
+    return /^https?:\/\//i.test(decoded) ? encodeURI(decoded) : null;
+}
+
 function convertWikiLinks(html: string): string {
     // Convert wiki links [[Link|Text]] or [[Link]]
-    html = html.replaceAll(/\[\[([^|\]]+)\|([^\]]+)\]\]/g, '<a href="https://en.wikipedia.org/wiki/$1">$2</a>');
-    html = html.replaceAll(/\[\[([^\]]+)\]\]/g, '<a href="https://en.wikipedia.org/wiki/$1">$1</a>');
+    html = html.replaceAll(/\[\[([^|\]]+)\|([^\]]+)\]\]/g, (_match, target: string, text: string) => `<a href="${wikiUrl(target)}">${text}</a>`);
+    html = html.replaceAll(/\[\[([^\]]+)\]\]/g, (_match, target: string) => `<a href="${wikiUrl(target)}">${target}</a>`);
     return html;
 }
 
 function convertExternalLinks(html: string): string {
-    // Convert external links [URL Text] or [URL]
-    html = html.replaceAll(/\[([^\s\]]+)\s+([^\s\]][^\]]*|\s)\]/g, '<a href="$1">$2</a>');
-    html = html.replaceAll(/\[([^\s\]]+)\]/g, '<a href="$1">$1</a>');
+    // Convert external links [URL Text] or [URL], leaving non-http(s) ones as the original text
+    html = html.replaceAll(/\[([^\s\]]+)\s+([^\s\]][^\]]*|\s)\]/g, (match, url: string, text: string) => {
+        const href = externalUrl(url);
+        return href ? `<a href="${href}">${text}</a>` : match;
+    });
+    html = html.replaceAll(/\[([^\s\]]+)\]/g, (match, url: string) => {
+        const href = externalUrl(url);
+        return href ? `<a href="${href}">${url}</a>` : match;
+    });
     return html;
 }
 
