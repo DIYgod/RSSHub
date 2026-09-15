@@ -7,7 +7,7 @@ import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
-    path: '/:section?/:type?/:value?',
+    path: '/:section?/:type?/:value?/:minComments?',
     categories: ['programming'],
     view: ViewType.Articles,
     example: '/hackernews/threads/comments_list/dang',
@@ -19,7 +19,12 @@ export const route: Route = {
             description: 'Content format, default to `sources`. `sources` links to original articles, `comments` fetches full comment threads, `comments_list` shows parent story with single comment',
         },
         value: {
-            description: 'For `threads`/`submitted` sections, set user ID. For `over` section, set minimum points threshold (default 100). For other sections, appended as `?id=<value>` (e.g. `value=dang` → `?id=dang`)',
+            description:
+                'For `threads`/`submitted` sections, set user ID. For `over` section, set minimum points threshold (default 100). For other sections, appended as `?id=<value>` (e.g. `value=dang` → `?id=dang`). In story-listing sections (`index`, `best`, `front`, `active`, `newest`, `ask`, `show`, `shownew`, `asknew`, `noobstories`, `pool`, `classic`, `launches`, `news`, `invited`), a purely numeric value acts as minimum comment count instead (same as `minComments`)',
+        },
+        minComments: {
+            description:
+                'Minimum comment count, items below it are filtered out. Works with any story-listing section, e.g. `/hackernews/over/sources/100/10`. For sections where `value` is unused (`index`, `best`, `front`, `active`, `newest`, `ask`, `show`, `shownew`, `asknew`, `noobstories`, `pool`, `classic`, `launches`, `news`, `invited`), the number may be placed in `value` instead, e.g. `/hackernews/index/sources/10`. Ignored on sections without story comment counts (`jobs`, `threads`, `newcomments`, `bestcomments`, `noobcomments`, `highlights`)',
         },
     },
     features: {
@@ -38,13 +43,13 @@ export const route: Route = {
     name: 'Stories',
     maintainers: ['nczitzk', 'xie-dongping'],
     handler,
-    description: `Subscribe to Hacker News content by section, user, or minimum points
+    description: `Subscribe to Hacker News content by section, user, minimum points, or minimum comments
 
 Examples:
 
-| HN100              | User submitted                       | User threads                       | Comments list                            |
-| ------------------ | ------------------------------------ | ---------------------------------- | ---------------------------------------- |
-| \`/hackernews/over\` | \`/hackernews/submitted/sources/dang\` | \`/hackernews/threads/sources/dang\` | \`/hackernews/threads/comments_list/dang\` |`,
+| HN100              | User submitted                       | User threads                       | Comments list                            | Min comments                   |
+| ------------------ | ------------------------------------ | ---------------------------------- | ---------------------------------------- | ------------------------------ |
+| \`/hackernews/over\` | \`/hackernews/submitted/sources/dang\` | \`/hackernews/threads/sources/dang\` | \`/hackernews/threads/comments_list/dang\` | \`/hackernews/index/sources/10\` |`,
 };
 
 type Story = Omit<DataItem, 'comments' | 'upvotes'> & {
@@ -55,58 +60,103 @@ type Story = Omit<DataItem, 'comments' | 'upvotes'> & {
     currentComment: string;
 };
 
-async function handler(ctx) {
-    const section = ctx.req.param('section') ?? 'index';
-    const type = ctx.req.param('type') ?? 'sources';
-    const value = ctx.req.param('value') ?? '';
+const getCommentCount = (item: Story) => {
+    const count = Number.parseInt(String(item.comments));
+    return Number.isNaN(count) ? 0 : count;
+};
 
-    const rootUrl = 'https://news.ycombinator.com';
+const parseComments = (text: string): Story['comments'] => {
+    const normalizedText = text.trim();
+    if (normalizedText === 'discuss') {
+        return normalizedText;
+    }
+
+    const match = normalizedText.match(/^(\d+)\s+comments?$/);
+    return match ? Number.parseInt(match[1]) : '';
+};
+
+const rootUrl = 'https://news.ycombinator.com';
+
+function getListingOptions(section: string, value: string, explicitMinComments?: string) {
+    // Story-listing sections where `value` has no dedicated meaning; a purely numeric value there doubles as the
+    // minimum comment count. Everywhere else numeric values stay HN IDs passed through as `?id=` (e.g. `/item`)
+    const numericThresholdSections = ['index', 'best', 'front', 'active', 'newest', 'ask', 'show', 'shownew', 'asknew', 'noobstories', 'pool', 'classic', 'launches', 'news', 'invited'];
+    // Sections whose rows carry no parseable story comment counts (comment listings or curated link pages),
+    // so the filter cannot apply there
+    const sectionsWithoutCommentCounts = ['jobs', 'threads', 'newcomments', 'bestcomments', 'noobcomments', 'highlights'];
+    const valueIsThreshold = numericThresholdSections.includes(section) && /^\d+$/.test(value);
+    const rawMinComments = explicitMinComments ?? (valueIsThreshold ? value : '');
+    const minComments = /^\d+$/.test(rawMinComments) && !sectionsWithoutCommentCounts.includes(section) ? Number.parseInt(rawMinComments) : 0;
+
     const sectionUrl = section === 'index' ? '' : `/${section}`;
-    let optUrl = value === '' ? '' : '?id=' + value;
+    let optUrl = value !== '' && !valueIsThreshold ? '?id=' + value : '';
 
     if (section === 'over') {
         optUrl = value === '' ? '?points=100' : '?points=' + value;
     }
 
-    const currentUrl = `${rootUrl}${sectionUrl}${optUrl}`;
+    return { currentUrl: `${rootUrl}${sectionUrl}${optUrl}`, minComments };
+}
+
+async function handler(ctx) {
+    const section = ctx.req.param('section') ?? 'index';
+    const type = ctx.req.param('type') ?? 'sources';
+    const cacheType = ['sources', 'comments', 'comments_list'].includes(type) ? type : 'unknown';
+    const value = ctx.req.param('value') ?? '';
+    const { currentUrl, minComments } = getListingOptions(section, value, ctx.req.param('minComments'));
+
     const response = await got(currentUrl);
 
     const $ = load(response.data);
 
-    const list = $('.athing')
-        .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 30)
-        .toArray()
-        .map((thing) => {
-            const $thing = $(thing);
+    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 30;
 
-            const item: Story = {
-                guid: $thing.attr('id'),
-                title: $thing.find('.titleline').children('a').text(),
-                category: $thing.find('.sitestr').text(),
-                author: $thing.next().find('.hnuser').text(),
-                pubDate: parseDate(($thing.find('.age').attr('title') ?? $thing.next().find('.age').attr('title'))!),
+    const things = $('.athing').toArray();
+    const thingsToParse = minComments > 0 ? things : things.slice(0, limit);
 
-                link: '',
-                origin: $thing.find('.titleline').children('a').attr('href'),
-                onStory: $thing.find('.onstory').text().slice(2),
+    const list = thingsToParse.map((thing) => {
+        const $thing = $(thing);
+        const lastSubtextLink = $thing.next().find('a').last().text();
+        // Preserve the legacy U+00A0 split for GUIDs independently of numeric comment parsing.
+        const guidComments = lastSubtextLink.split('\u{00A0}comment', 1)[0];
+        const guid = $thing.attr('id');
+        if (!guid) {
+            throw new Error('Hacker News item is missing an ID');
+        }
 
-                comments: $thing.next().find('a').last().text().split(' comment', 1)[0],
-                upvotes: $thing.next().find('.score').text().split(' point', 1)[0],
+        const item: Story = {
+            guid,
+            title: $thing.find('.titleline').children('a').text(),
+            category: $thing.find('.sitestr').text(),
+            author: $thing.next().find('.hnuser').text(),
+            pubDate: parseDate(($thing.find('.age').attr('title') ?? $thing.next().find('.age').attr('title'))!),
 
-                currentComment: $thing.find('.comment').text(),
-                description: '',
-            };
+            link: '',
+            origin: $thing.find('.titleline').children('a').attr('href'),
+            onStory: $thing.find('.onstory').text().slice(2),
 
-            item.link = `${rootUrl}/item?id=${item.guid}`;
-            item.guid = type === 'sources' ? item.guid : `${item.guid}${item.comments === 'discuss' ? '' : `-${item.comments}`}`;
-            item.description = `<a href="${item.link}">Comments on Hacker News</a> | <a href="${item.origin}">Source</a>`;
+            // Only a "N comments" link carries the count; other trailing links (e.g. an age like "22 days ago"
+            // on /invited) must not be misparsed as one
+            comments: parseComments(lastSubtextLink),
+            upvotes: $thing.next().find('.score').text().split(' point', 1)[0],
 
-            return item;
-        });
+            currentComment: $thing.find('.comment').text(),
+            description: '',
+        };
+
+        item.link = `${rootUrl}/item?id=${item.guid}`;
+        item.guid = type === 'sources' || guidComments === 'discuss' ? item.guid : `${item.guid}-${guidComments}`;
+        item.description = `<a href="${item.link}">Comments on Hacker News</a> | <a href="${item.origin}">Source</a>`;
+
+        return item;
+    });
+
+    const filteredList = minComments > 0 ? list.filter((item) => getCommentCount(item) >= minComments) : list;
+    const limitedList = minComments > 0 ? filteredList.slice(0, limit) : filteredList;
 
     const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.guid!, async () => {
+        limitedList.map((item) =>
+            cache.tryGet(`hackernews:${cacheType}:${item.guid}`, async () => {
                 if (item.comments !== 'discuss' && type === 'comments') {
                     const detailResponse = await got({
                         method: 'get',
@@ -142,9 +192,7 @@ async function handler(ctx) {
                     item.description = item.currentComment;
                 }
 
-                if (Number.isNaN(item.comments)) {
-                    item.comments = 0;
-                }
+                item.comments = getCommentCount(item);
 
                 item.link = (type === 'sources' ? item.origin : item.link)!;
 
