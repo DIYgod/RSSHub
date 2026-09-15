@@ -43,6 +43,7 @@ updates:
                   - '@opentelemetry/*'
           oxc:
               patterns:
+                  - '@oxc-parser/*'
                   - '@oxlint/*'
                   - 'oxc-parser'
                   - 'oxfmt'

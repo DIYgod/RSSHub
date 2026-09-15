@@ -42,7 +42,7 @@ async function handler(ctx) {
             cache.tryGet(item.link, async () => {
                 try {
                     const { data: response } = await got(item.link);
-                    processFeedType2(item, response);
+                    await processFeedType2(item, response);
                 } catch (error) {
                     if (!(error instanceof FetchError) || error.statusCode !== 404) {
                         throw error;

@@ -1,9 +1,9 @@
 import { load } from 'cheerio';
 
 import type { Route } from '@/types';
+import { evaluateScriptData } from '@/utils/evaluate-script';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-import { parseScriptData } from '@/utils/parse-script-data';
 
 import cache from './cache';
 
@@ -36,7 +36,7 @@ async function handler(ctx) {
         .map((element) => $(element).text())
         .filter((source) => source.includes('__DATA__'))
         .join('\n');
-    const data = parseScriptData<{
+    const data = await evaluateScriptData<{
         data: {
             nickname: string;
             head_img_url: string;

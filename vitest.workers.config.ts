@@ -67,9 +67,11 @@ export default defineConfig({
     resolve: {
         alias: {
             'dotenv/config': path.resolve('./lib/shims/dotenv-config.ts'),
+            jsdom: path.resolve('./lib/shims/jsdom.ts'),
+            vm2: path.resolve('./lib/shims/vm2.ts'),
         },
     },
     test: {
-        include: ['lib/**/*.worker.test.ts', 'tests/**/*.worker.test.ts', 'lib/utils/parse-script-data.test.ts', 'lib/utils/parse-date-in-timezone.test.ts', 'tests/source-date-routes.test.ts', 'tests/cache-coordination.test.ts'],
+        include: ['lib/**/*.worker.test.ts', 'tests/**/*.worker.test.ts'],
     },
 });

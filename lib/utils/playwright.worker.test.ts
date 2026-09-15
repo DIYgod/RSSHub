@@ -1,18 +1,18 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
-import { getPlaywrightPage, setBrowserBinding } from '../lib/utils/playwright.worker';
+import { getPlaywrightPage, setBrowserBinding } from './playwright.worker';
 
 const mocks = vi.hoisted(() => ({ endpoint: undefined as string | undefined, launch: vi.fn(), newContext: vi.fn(), newPage: vi.fn(), goto: vi.fn(), close: vi.fn(), contextClose: vi.fn(), connect: vi.fn() }));
 vi.mock('@cloudflare/playwright', () => ({ launch: mocks.launch }));
-vi.mock('../lib/utils/playwright-remote.worker', () => ({ connectRemotePlaywright: mocks.connect, setPlaywrightServiceBinding: vi.fn() }));
-vi.mock('../lib/config', () => ({
+vi.mock('./playwright-remote.worker', () => ({ connectRemotePlaywright: mocks.connect, setPlaywrightServiceBinding: vi.fn() }));
+vi.mock('@/config', () => ({
     config: {
         get playwrightWSEndpoint() {
             return mocks.endpoint;
         },
     },
 }));
-vi.mock('../lib/utils/logger', () => ({ default: { debug: vi.fn(), error: vi.fn(), warn: vi.fn() } }));
+vi.mock('./logger', () => ({ default: { debug: vi.fn(), error: vi.fn(), warn: vi.fn() } }));
 
 beforeEach(() => {
     vi.useFakeTimers();
