@@ -26,8 +26,12 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['rsseverything.com/sharedfeeds', 'rsseverything.com/:language/sharedfeeds'],
+            source: ['rsseverything.com/sharedfeeds'],
             target: '/sharedfeeds',
+        },
+        {
+            source: ['rsseverything.com/:language/sharedfeeds'],
+            target: '/:language/sharedfeeds',
         },
     ],
     name: 'Shared Feeds',
