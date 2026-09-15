@@ -1,12 +1,15 @@
 /**
  * Shared shape + helpers for the 駅別乗降人員 (station ridership) routes of Tokyo private railways
- * (tokyometro / tokyu / odakyu / keio / toei) and JR東日本. One item per station per fiscal year; unknown = `null`, never `0`;
- * the operator's cell text is kept verbatim in `raw`.
+ * (tokyometro / tokyu / odakyu / keio / toei), JR東日本, and 東京都統計年鑑. One item per station per fiscal year;
+ * unknown = `null`, never `0`; the publisher's cell text is kept verbatim in `raw`.
+ *
+ * Operators report a 一日平均 (`daily_average`, 人/日); 東京都統計年鑑 reports a yearly total (`annual_total`, 千人/年).
+ * They are never converted into each other — `unit` says which one an item carries.
  */
 
 import type { DataItem } from '@/types';
 
-export type RidershipSource = 'tokyometro' | 'tokyu' | 'odakyu' | 'keio' | 'jreast' | 'toei';
+export type RidershipSource = 'tokyometro' | 'tokyu' | 'odakyu' | 'keio' | 'jreast' | 'toei' | 'toukei-tokyo';
 
 /** What the operator counts: JR東日本 publishes 乗車 (boarding) only, the others 乗降 (boarding + alighting). */
 export type RidershipMeasure = 'boarding' | 'boarding_alighting';
@@ -17,8 +20,10 @@ export interface RidershipExtra {
     station: string; // as printed by the operator (without 駅)
     line: string | null; // 路線; several lines joined with '・' when the operator lists a station once for all of them
     fiscal_year: number; // 2025 = FY2025 (2025-04 … 2026-03)
-    daily_average: number | null; // 一日平均乗降人員
-    unit: '人/日';
+    daily_average: number | null; // 一日平均乗降人員; null when the publisher gives a yearly total instead
+    /** Yearly total, for publishers that report one (東京都統計年鑑). Absent for the per-operator routes, which report a daily average. Never derived — a route must not convert between the two. */
+    annual_total?: number | null;
+    unit: '人/日' | '千人/年';
     measure: RidershipMeasure;
     rank: number | null; // only when the operator publishes a 順位
     yoy_pct: number | null; // 前年比 / 増減率 (%); negative when the operator prints ▲ or a minus
@@ -53,7 +58,8 @@ export const parseFiscalYear = (text: string): number | null => {
 
 /** Item title / guid / description are derived from `_extra` only, so all four operators read the same way. */
 export const ridershipItem = (extra: RidershipExtra, link: string): DataItem & { _extra: RidershipExtra } => {
-    const people = extra.daily_average === null ? '不明' : `${extra.daily_average.toLocaleString('ja-JP')}人/日`;
+    const figure = extra.daily_average ?? extra.annual_total ?? null;
+    const people = figure === null ? '不明' : `${figure.toLocaleString('ja-JP')}${extra.unit}`;
     const yoy = extra.yoy_pct === null ? null : `前年比 ${extra.yoy_pct > 0 ? '+' : ''}${extra.yoy_pct}%`;
     return {
         title: `${extra.station}（${extra.line ?? extra.operator}） ${extra.fiscal_year}年度 ${people}`,
