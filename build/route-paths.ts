@@ -2537,6 +2537,7 @@ export type RoutePath =
   | `/oevw/:json?`
   | `/ofweek/news`
   | `/oilchem/:type?/:category?/:subCategory?`
+  | `/okayafrica/music/latest`
   | `/okx/:section?`
   | `/olevod/vod/:id`
   | `/olevod/vodlist`

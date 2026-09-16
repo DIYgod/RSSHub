@@ -94014,6 +94014,27 @@
     "url": "oilchem.net",
     "lang": "zh-CN"
   },
+  "okayafrica": {
+    "routes": {
+      "/music/latest": {
+        "path": "/music/latest",
+        "categories": [
+          "new-media"
+        ],
+        "example": "/okayafrica/music/latest",
+        "name": "Music Latest",
+        "maintainers": [
+          "ashi-koki"
+        ],
+        "location": "music.ts",
+        "module": "() => import('@/routes/okayafrica/music.ts')"
+      }
+    },
+    "apiRoutes": {},
+    "name": "OkayAfrica",
+    "url": "www.okayafrica.com",
+    "lang": "en"
+  },
   "okx": {
     "routes": {
       "/:section?": {
