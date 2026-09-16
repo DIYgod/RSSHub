@@ -144,7 +144,7 @@ export const route: Route = {
 
                     let location = texts.find((text) => text.includes('地点：'))?.replaceAll(/(?:展(?:览|出))?地点：/g, '') || '';
 
-                    const locMatch = location.match(/^.*?展厅/) || [''];
+                    const locMatch = location.match(/^.*?厅/) || [''];
 
                     location = locMatch[0];
 
