@@ -39576,6 +39576,20 @@
       }
     ]
   },
+  "south-plus.net": {
+    "_name": "South Plus",
+    ".": [
+      {
+        "title": "论坛帖子",
+        "docs": "https://docs.rsshub.app/routes/bbs",
+        "source": [
+          "/thread.php",
+          "/thread.php"
+        ],
+        "target": "/south-plus/forum/:fid"
+      }
+    ]
+  },
   "spankbang.com": {
     "_name": "SpankBang",
     ".": [

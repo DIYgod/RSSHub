@@ -3089,6 +3089,7 @@ export type RoutePath =
   | `/soundofhope/:channel/:id`
   | `/soundon/p/:id`
   | `/sourceforge/:routeParams?`
+  | `/south-plus/forum/:fid?`
   | `/southcn/nfapp/column/:column?`
   | `/southcn/nfapp/reporter/:reporter`
   | `/soweather/warn`
