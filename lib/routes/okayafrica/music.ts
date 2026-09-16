@@ -40,7 +40,7 @@ async function handler(): Promise<Data> {
                         title: $page('h1.headline').text().trim() || title,
                         link,
                         pubDate: pubDate ? parseDate(pubDate) : undefined,
-                        author: $page('.lab-hidden-byline-name').first().text().trim(),
+                        author: $page('.lab-hidden-byline-name').text(),
                         description: $page('.bodytext').html() ?? undefined,
                         image: $page('meta[property="og:image"]').attr('content'),
                     };
