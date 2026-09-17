@@ -26,12 +26,13 @@ const sections = {
 // The `author` taxonomy only repeats the byline as slugs
 const skipTaxonomies = new Set(['author']);
 
-// Post bodies ship with lazy-loading attributes that keep many feed readers from ever loading the embedded
-// media, and `sizes="auto"` makes renderers that do not support it pick a zero-width candidate
+// Nearly every image here is marked `loading="lazy"` with `sizes="auto"`. Readers that never run the
+// intersection observer show a blank space instead, and `sizes="auto"` makes renderers without support
+// for it pick a zero-width candidate from the srcset.
 const cleanContent = (html: string): string => {
     const $ = load(html, null, false);
     $('img, iframe').each((_, el) => {
-        $(el).removeAttr('loading').removeAttr('decoding').removeAttr('srcset').removeAttr('sizes');
+        $(el).removeAttr('loading').removeAttr('sizes');
     });
     return $.html();
 };
@@ -87,13 +88,7 @@ async function handler(ctx) {
             order: 'desc',
             _embed: 'wp:featuredmedia,wp:term,author',
         },
-        // the default browser-like Accept header can make WordPress serve the HTML page instead of JSON
-        headers: { accept: 'application/json' },
     });
-    if (!Array.isArray(posts)) {
-        throw new TypeError(`Unexpected response from the posts API: ${JSON.stringify(posts).slice(0, 200)}`);
-    }
-
     const items: DataItem[] = posts.map((post) => {
         const featured = post._embedded?.['wp:featuredmedia']?.find((media) => media.id === post.featured_media);
         const image = featured?.source_url;
