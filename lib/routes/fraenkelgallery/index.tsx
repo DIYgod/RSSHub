@@ -20,14 +20,15 @@ const types = {
 const cleanContent = (html: string): string => {
     const $ = load(html, null, false);
     $('.block--button').remove();
-    $('img, iframe').each((_, el) => {
+    $('img').each((_, el) => {
         const $img = $(el);
         const src = $img.attr('src');
         // Jetpack Photon (i0.wp.com) serves a resized variant; without the query string the original is served
         if (src && URL.canParse(src) && new URL(src).hostname.endsWith('.wp.com')) {
             $img.attr('src', src.split('?', 1)[0]);
         }
-        $img.removeAttr('srcset').removeAttr('sizes').removeAttr('loading').removeAttr('decoding').removeAttr('width').removeAttr('height');
+        // srcset, sizes and the dimensions all describe the resized variant the rewrite just replaced
+        $img.removeAttr('srcset').removeAttr('sizes').removeAttr('width').removeAttr('height');
     });
     return $.html();
 };
@@ -73,13 +74,7 @@ async function handler(ctx) {
 
     const entries = await ofetch(`${baseUrl}/wp-json/wp/v2/${endpoint}`, {
         query: { per_page: limit, _embed: 'wp:featuredmedia,wp:term' },
-        // the default browser-like Accept header can make WordPress serve the HTML page instead of JSON
-        headers: { accept: 'application/json' },
     });
-    if (!Array.isArray(entries)) {
-        throw new TypeError(`Unexpected response from the ${endpoint} API: ${JSON.stringify(entries).slice(0, 200)}`);
-    }
-
     const items: DataItem[] = entries.map((entry) => {
         const featured = entry._embedded?.['wp:featuredmedia']?.find((media) => media.id === entry.featured_media);
         const image = featured?.source_url;
@@ -90,7 +85,11 @@ async function handler(ctx) {
             // WordPress returns *_gmt without a timezone designator
             pubDate: parseDate(`${entry.date_gmt}Z`),
             updated: parseDate(`${entry.modified_gmt}Z`),
-            category: (entry._embedded?.['wp:term'] ?? []).flat().map((term) => decodeHTML(term.name)),
+            // an _embed sub-request that fails is inlined as an error object rather than a term list
+            category: (entry._embedded?.['wp:term'] ?? [])
+                .filter((group) => Array.isArray(group))
+                .flat()
+                .map((term) => decodeHTML(term.name)),
             description: renderToString(
                 <>
                     {image ? (
