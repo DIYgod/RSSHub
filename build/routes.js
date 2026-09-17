@@ -85241,6 +85241,27 @@ export default {
     "name": "厚生労働省",
     "url": "www.mhlw.go.jp"
   },
+  "mikiki": {
+    "routes": {
+      "/": {
+        "path": "/",
+        "categories": [
+          "new-media"
+        ],
+        "example": "/mikiki",
+        "name": "最新記事",
+        "maintainers": [
+          "ashi-koki"
+        ],
+        "location": "index.ts",
+        "module": () => import('@/routes/mikiki/index.ts')
+      }
+    },
+    "apiRoutes": {},
+    "name": "Mikiki",
+    "url": "mikiki.tokyo.jp",
+    "lang": "ja"
+  },
   "mindmeister": {
     "routes": {
       "/:category?/:language?": {

@@ -2236,6 +2236,7 @@ export type RoutePath =
   | `/mihoyo/sr/:location?/:category?`
   | `/mihoyo/ys/:location?/:category?`
   | `/mihoyo/zzz/:location?/:category?`
+  | `/mikiki/`
   | `/mindmeister/:category?/:language?`
   | `/minecraft/blockedservers`
   | `/minecraft/java-runtime/:arch?/:javaType?`
