@@ -51850,11 +51850,12 @@
   },
   "openai.com": {
     "_name": "OpenAI",
-    "cookbook": [
+    "developers": [
       {
         "title": "Cookbook",
         "docs": "https://docs.rsshub.app/routes/programming",
         "source": [
+          "/cookbook",
           "/"
         ],
         "target": "/openai/cookbook"
