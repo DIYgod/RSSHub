@@ -2,22 +2,18 @@ import { load } from 'cheerio';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
-import logger from '@/utils/logger';
 import ofetch from '@/utils/ofetch';
 import parser from '@/utils/rss-parser';
 
 import { renderHeader } from './templates/header';
 
-const excludeTypes = new Set(['ActionBoxBlockType', 'NewsletterBlockType', 'RelatedPostsBlockType', 'ProductsTableBlockType', 'FeaturedProductsBlockType', 'TableOfContentsBlockType']);
+const excludeTypes = new Set(['FeaturedProductsBlockType', 'NewsletterBlockType', 'ProductsTableBlockType', 'RelatedPostsBlockType', 'TableOfContentsBlockType']);
 
 const shouldKeep = (b: any) => !excludeTypes.has(b.__typename);
 
-// Rich text lives under `paragraphContents` (formerly `tempContents`), or as a single `contents` object on headings, list items and quotes
+// Rich text moved from `tempContents` to `paragraphContents`; headings, list items and quotes carry a single `contents`
 const renderContents = (b: any): string => (b.paragraphContents ?? b.tempContents ?? [b.contents]).map((c) => c?.html ?? '').join('');
 
-// Render a list of blocks; a single unknown or malformed block is dropped with a warning instead of failing the whole article
-// Errors are deliberately not caught here: an unrenderable block makes the whole article fall back to the
-// server-rendered body, which is still full text, rather than silently emitting a description with a hole in it
 const renderBlocks = (blocks: any[] | undefined, separator: string): string =>
     (blocks ?? [])
         .map((b) => renderBlock(b))
@@ -48,30 +44,30 @@ export const route: Route = {
     description: `| Hub            | Hub name       |
 | -------------- | -------------- |
 |                | All Posts      |
-| tech           | Tech           |
-| reviews        | Reviews        |
-| science        | Science        |
-| entertainment  | Entertainment  |
-| apple          | Apple          |
-| google         | Google         |
-| microsoft      | Microsoft      |
 | amazon         | Amazon         |
-| meta           | Meta           |
-| samsung        | Samsung        |
 | android        | Android        |
+| apple          | Apple          |
 | apps           | Apps           |
-| games          | Gaming         |
-| film           | Film           |
-| tv             | TV Shows       |
-| music          | Music          |
-| streaming      | Streaming      |
+| business       | Business       |
 | creators       | Creators       |
 | culture        | Culture        |
-| policy         | Policy         |
-| business       | Business       |
-| transportation | Transportation |
-| space          | Space          |
+| entertainment  | Entertainment  |
+| film           | Film           |
+| games          | Gaming         |
+| google         | Google         |
 | health         | Health         |
+| meta           | Meta           |
+| microsoft      | Microsoft      |
+| music          | Music          |
+| policy         | Policy         |
+| reviews        | Reviews        |
+| samsung        | Samsung        |
+| science        | Science        |
+| space          | Space          |
+| streaming      | Streaming      |
+| tech           | Tech           |
+| transportation | Transportation |
+| tv             | TV Shows       |
 | web            | Web            |
 
 Any other hub slug from \`theverge.com/rss/<hub>/index.xml\` also works.
@@ -125,89 +121,57 @@ const renderBlock = (b) => {
     }
 };
 
-const renderNode = (node: any): string => {
-    let description = renderHeader({
-        featuredImage: node.featuredImage,
-        ledeMediaData: node.ledeMediaData,
-    });
-
-    description += renderBlocks(node.blocks, '<br><br>');
-
-    if (node.__typename === 'StreamResourceType') {
-        description += (node.posts?.edges ?? [])
-            .map(({ node: n }) => {
-                let d =
-                    `<h2><a href="${n.permalink}">${n.promo?.headline || n.title}</a></h2>` +
-                    renderHeader({
-                        ledeMediaData: n.ledeMediaData,
-                    });
-                switch (n.__typename) {
-                    case 'PostResourceType':
-                        d += (n.excerpt ?? []).map((e) => renderContents(e)).join('<br>');
-                        break;
-                    case 'QuickPostResourceType':
-                        d += renderBlocks(n.blocks, '<br>');
-                        break;
-                    default:
-                        break;
-                }
-                return d;
-            })
-            .join('<br>');
-    }
-
-    return description;
-};
-
 async function handler(ctx) {
     const link = ctx.req.param('hub') ? `https://www.theverge.com/rss/${ctx.req.param('hub')}/index.xml` : 'https://www.theverge.com/rss/index.xml';
 
-    // rss-parser's parseURL relies on Node's https.get, which is unavailable on Cloudflare Workers
-    const feedText = await ofetch(link, {
-        parseResponse: (text) => text,
-    });
-    const feed = await parser.parseString(feedText);
+    const feed = await parser.parseURL(link);
 
     const items = await Promise.all(
-        feed.items.map(async (item) => {
-            try {
-                return await cache.tryGet(item.link!, async () => {
-                    const response = await ofetch(item.link!);
-                    const $ = load(response);
+        feed.items.map((item) =>
+            cache.tryGet(item.link!, async () => {
+                const response = await ofetch(item.link!);
 
-                    try {
-                        const nextData = JSON.parse($('script#__NEXT_DATA__').text());
-                        const node = nextData.props.pageProps.hydration.responses.find((x) => x.operationName === 'PostLayoutQuery' || x.operationName === 'StreamLayoutQuery')?.data?.node;
-                        if (!node) {
-                            throw new Error('layout query not found in __NEXT_DATA__');
-                        }
+                const $ = load(response);
 
-                        item.description = renderNode(node);
-                        item.category = node.categories?.map((c) => c.title);
-                    } catch (error) {
-                        // The Verge changes its GraphQL schema from time to time; fall back to the server-rendered article body,
-                        // which is still full text. If that is gone too, throw so the summary fallback below stays out of the cache
-                        logger.warn(`theverge: failed to render ${item.link} from __NEXT_DATA__, falling back to page HTML: ${error}`);
-                        const body = $('.duet--article--article-body-component');
-                        if (body.length === 0) {
-                            throw new Error(`neither __NEXT_DATA__ nor the article body could be read from ${item.link}`, { cause: error });
-                        }
-                        item.description = body
-                            .toArray()
-                            .map((el) => $(el).html())
-                            .join('');
-                    }
+                const nextData = JSON.parse($('script#__NEXT_DATA__').text());
+                const node = nextData.props.pageProps.hydration.responses.find((x) => x.operationName === 'PostLayoutQuery' || x.operationName === 'StreamLayoutQuery').data.node;
 
-                    return item;
+                let description = renderHeader({
+                    featuredImage: node.featuredImage,
+                    ledeMediaData: node.ledeMediaData,
                 });
-            } catch (error) {
-                // A single unreadable article should not take down the whole feed; this result is not cached, so it is retried next time
-                logger.warn(`theverge: falling back to the feed summary for ${item.link}: ${error}`);
-                // the shared rss-parser does not expose Atom <category> elements, so this path carries no categories
-                item.description = item.content;
+
+                description += renderBlocks(node.blocks, '<br><br>');
+
+                if (node.__typename === 'StreamResourceType') {
+                    description += node.posts.edges
+                        .map(({ node: n }) => {
+                            let d =
+                                `<h2><a href="${n.permalink}">${n.promo.headline || n.title}</a></h2>` +
+                                renderHeader({
+                                    ledeMediaData: n.ledeMediaData,
+                                });
+                            switch (n.__typename) {
+                                case 'PostResourceType':
+                                    d += n.excerpt.map((e) => renderContents(e)).join('<br>');
+                                    break;
+                                case 'QuickPostResourceType':
+                                    d += renderBlocks(n.blocks, '<br>');
+                                    break;
+                                default:
+                                    break;
+                            }
+                            return d;
+                        })
+                        .join('<br>');
+                }
+
+                item.description = description;
+                item.category = node.categories?.map((c) => c.title);
+
                 return item;
-            }
-        })
+            })
+        )
     );
 
     return {
