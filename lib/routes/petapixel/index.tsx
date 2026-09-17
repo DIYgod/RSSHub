@@ -15,14 +15,12 @@ const baseUrl = 'https://petapixel.com';
 const api = (path: string, query: Record<string, string | number>) =>
     ofetch(`${baseUrl}/wp-json/wp/v2/${path}`, {
         query,
-        // the default browser-like Accept header can make WordPress serve the HTML page instead of JSON
-        headers: { accept: 'application/json' },
     });
 
 // `src` points to an 800px variant; pick the largest candidate from srcset and drop browser-only attributes
 const cleanContent = (html: string): string => {
     const $ = load(html, null, false);
-    $('img, iframe').each((_, el) => {
+    $('img').each((_, el) => {
         const $img = $(el);
         const srcset = $img.attr('srcset');
         if (srcset) {
@@ -37,7 +35,8 @@ const cleanContent = (html: string): string => {
                 $img.attr('src', largest.url);
             }
         }
-        $img.removeAttr('srcset').removeAttr('sizes').removeAttr('loading').removeAttr('decoding').removeAttr('width').removeAttr('height');
+        // srcset, sizes and the dimensions all describe the variant the rewrite just replaced
+        $img.removeAttr('srcset').removeAttr('sizes').removeAttr('width').removeAttr('height');
     });
     return $.html();
 };
@@ -91,7 +90,7 @@ async function handler(ctx) {
     const category = categorySlug
         ? await cache.tryGet(`petapixel:category:${categorySlug}`, async () => {
               const data = await api('categories', { slug: categorySlug });
-              if (!Array.isArray(data) || data.length === 0) {
+              if (data.length === 0) {
                   throw new InvalidParameterError(`Category "${categorySlug}" not found`);
               }
               return { id: data[0].id, name: decodeHTML(data[0].name), link: data[0].link };
@@ -103,10 +102,6 @@ async function handler(ctx) {
         _embed: 'wp:featuredmedia,wp:term,author',
         ...(category && { categories: category.id }),
     });
-    if (!Array.isArray(posts)) {
-        throw new TypeError(`Unexpected response from the posts API: ${JSON.stringify(posts).slice(0, 200)}`);
-    }
-
     const items: DataItem[] = posts.map((post) => {
         const featured = post._embedded?.['wp:featuredmedia']?.find((media) => media.id === post.featured_media);
         const image = featured?.source_url;
@@ -118,7 +113,11 @@ async function handler(ctx) {
             pubDate: parseDate(`${post.date_gmt}Z`),
             updated: parseDate(`${post.modified_gmt}Z`),
             author: post._embedded?.author?.[0]?.name,
-            category: (post._embedded?.['wp:term'] ?? []).flat().map((term) => decodeHTML(term.name)),
+            // an _embed sub-request that fails is inlined as an error object rather than a term list
+            category: (post._embedded?.['wp:term'] ?? [])
+                .filter((group) => Array.isArray(group))
+                .flat()
+                .map((term) => decodeHTML(term.name)),
             description: renderToString(
                 <>
                     {image ? (
