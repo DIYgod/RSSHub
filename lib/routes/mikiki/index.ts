@@ -18,7 +18,7 @@ export const route: Route = {
 async function handler(): Promise<Data> {
     const rootUrl = 'https://mikiki.tokyo.jp';
 
-    const feedResponse = await ofetch(`${rootUrl}/list/feed/rss`, { responseType: 'text' });
+    const feedResponse = await ofetch(`${rootUrl}/list/feed/rss`);
     const feed = await parser.parseString(feedResponse);
 
     const items = await Promise.all(
