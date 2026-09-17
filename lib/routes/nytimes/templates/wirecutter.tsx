@@ -57,10 +57,10 @@ const Image: FC<{ src?: string; alt?: string; caption?: string }> = ({ src, alt,
     ) : null;
 
 // A Wirecutter pick: the product, why it won, and its photo
-const Callout: FC<{ node: any }> = ({ node }) => (
+const Callout: FC<{ ribbon?: string; callouts?: any[] }> = ({ ribbon, callouts }) => (
     <>
-        {(node.dbData?.callouts ?? []).map((pick) => {
-            const heading = [pick.ribbon || node.dbData?.ribbon, pick.name].filter(Boolean).join(': ');
+        {(callouts ?? []).map((pick) => {
+            const heading = [pick.ribbon || ribbon, pick.name].filter(Boolean).join(': ');
             return (
                 <blockquote>
                     {heading ? <h4>{heading}</h4> : null}
@@ -85,58 +85,118 @@ const Nodes: FC<{ nodes?: any[] }> = ({ nodes }) => (
     </>
 );
 
-const Node: FC<{ node: any }> = ({ node }) => {
-    if (node.type === 'text') {
-        return <>{node.data ?? ''}</>;
+// Text in the document format carries its formatting as marks rather than as parent elements
+const Marked: FC<{ marks?: any[]; children?: any }> = ({ marks, children }) => {
+    let rendered = <>{children}</>;
+    const applied = marks ?? [];
+    for (const mark of applied) {
+        switch (mark.type) {
+            case 'em':
+                rendered = <em>{rendered}</em>;
+                break;
+            case 'strong':
+                rendered = <strong>{rendered}</strong>;
+                break;
+            case 'wirecutter_link': {
+                const href = mark.attrs?.linkUrl;
+                rendered = href ? <a href={href}>{rendered}</a> : rendered;
+                break;
+            }
+            default:
+                // annotations such as comment_thread carry no presentation
+                break;
+        }
     }
-    if (node.type === 'comment') {
+    return rendered;
+};
+
+const Node: FC<{ node: any }> = ({ node }) => {
+    const type = node.type;
+
+    if (type === 'text') {
+        return <Marked marks={node.marks}>{node.text ?? node.data ?? ''}</Marked>;
+    }
+    if (type === 'comment') {
         return null;
     }
-    if (node.type !== 'tag') {
-        throw new Error(`Unsupported node type: ${node.type}`);
+    if (dropTypes.has(type)) {
+        return null;
     }
 
-    const name = node.name;
-    if (dropTypes.has(name)) {
-        return null;
+    // The DOM-shaped format, where the tag name lives in `name`
+    if (type === 'tag') {
+        const name = node.name;
+        if (dropTypes.has(name)) {
+            return null;
+        }
+        switch (name) {
+            case 'shortcode-gallery':
+                return (
+                    <>
+                        {(node.dbData ?? []).map((image) => (
+                            <Image src={image.dbData?.source ?? image.imagePaths?.full} alt={image.alt} caption={image.credit} />
+                        ))}
+                    </>
+                );
+            case 'shortcode-callout':
+                return <Callout ribbon={node.dbData?.ribbon} callouts={node.dbData?.callouts} />;
+            case 'shortcode-caption':
+                return (
+                    <figure>
+                        <Nodes nodes={node.children} />
+                        {node.dbData?.credit ? <figcaption>{node.dbData.credit}</figcaption> : null}
+                    </figure>
+                );
+            default:
+                break;
+        }
+        if (!allowedTags.has(name)) {
+            throw new Error(`Unsupported tag: ${name}`);
+        }
+
+        const attributes = Object.fromEntries(
+            Object.entries(node.attribs ?? {})
+                .filter(([key]) => allowedAttributes.has(key))
+                .map(([key, value]) => [key, key === 'src' ? originalImage(String(value)) : value])
+        );
+        const Tag = name as unknown as FC;
+
+        return voidTags.has(name) ? (
+            <Tag {...attributes} />
+        ) : (
+            <Tag {...attributes}>
+                <Nodes nodes={node.children} />
+            </Tag>
+        );
     }
-    switch (name) {
-        case 'shortcode-gallery':
+
+    // The document format, where the node type is the element itself
+    switch (type) {
+        case 'paragraph':
             return (
-                <>
-                    {(node.dbData ?? []).map((image) => (
-                        <Image src={image.dbData?.source ?? image.imagePaths?.full} alt={image.alt} caption={image.credit} />
-                    ))}
-                </>
+                <p>
+                    <Nodes nodes={node.content} />
+                </p>
             );
-        case 'shortcode-callout':
-            return <Callout node={node} />;
-        case 'shortcode-caption':
-            return (
-                <figure>
-                    <Nodes nodes={node.children} />
-                    {node.dbData?.credit ? <figcaption>{node.dbData.credit}</figcaption> : null}
-                </figure>
-            );
+        case 'scoop_image_block': {
+            const image = node.attrs?.image;
+            return <Image src={image?.source} alt={image?.alt} caption={[image?.caption, image?.credit].filter(Boolean).join(' ')} />;
+        }
+        case 'product_callout':
+            return <Callout ribbon={node.attrs?.ribbon} callouts={node.attrs?.callouts} />;
         default:
             break;
     }
-    if (!allowedTags.has(name)) {
-        throw new Error(`Unsupported tag: ${name}`);
+    if (!allowedTags.has(type)) {
+        throw new Error(`Unsupported node type: ${type}`);
     }
+    const Tag = type as unknown as FC;
 
-    const attributes = Object.fromEntries(
-        Object.entries(node.attribs ?? {})
-            .filter(([key]) => allowedAttributes.has(key))
-            .map(([key, value]) => [key, key === 'src' ? originalImage(String(value)) : value])
-    );
-    const Tag = name as unknown as FC;
-
-    return voidTags.has(name) ? (
-        <Tag {...attributes} />
+    return voidTags.has(type) ? (
+        <Tag />
     ) : (
-        <Tag {...attributes}>
-            <Nodes nodes={node.children} />
+        <Tag>
+            <Nodes nodes={node.content ?? node.children} />
         </Tag>
     );
 };
