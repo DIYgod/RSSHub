@@ -7,12 +7,12 @@ import parser from '@/utils/rss-parser';
 
 import { renderHeader } from './templates/header';
 
-const excludeTypes = new Set(['FeaturedProductsBlockType', 'NewsletterBlockType', 'ProductsTableBlockType', 'RelatedPostsBlockType', 'TableOfContentsBlockType']);
+const excludeTypes = new Set(['ActionBoxBlockType', 'FeaturedProductsBlockType', 'NewsletterBlockType', 'ProductsTableBlockType', 'RelatedPostsBlockType', 'TableOfContentsBlockType']);
 
 const shouldKeep = (b: any) => !excludeTypes.has(b.__typename);
 
-// Rich text moved from `tempContents` to `paragraphContents`; headings, list items and quotes carry a single `contents`
-const renderContents = (b: any): string => (b.paragraphContents ?? b.tempContents ?? [b.contents]).map((c) => c?.html ?? '').join('');
+// Paragraphs and stream excerpts carry `paragraphContents`; headings, list items and pullquotes carry a single `contents`
+const renderContents = (b: any): string => (b.paragraphContents ?? [b.contents]).map((c) => c?.html ?? '').join('');
 
 const renderBlocks = (blocks: any[] | undefined, separator: string): string =>
     (blocks ?? [])
@@ -48,6 +48,7 @@ export const route: Route = {
 | android        | Android        |
 | apple          | Apple          |
 | apps           | Apps           |
+| blackberry     | BlackBerry     |
 | business       | Business       |
 | creators       | Creators       |
 | culture        | Culture        |
@@ -69,8 +70,6 @@ export const route: Route = {
 | transportation | Transportation |
 | tv             | TV Shows       |
 | web            | Web            |
-
-Any other hub slug from \`theverge.com/rss/<hub>/index.xml\` also works.
 
 Provides a better reading experience (full text articles) over the official one.`,
 };
@@ -112,10 +111,10 @@ const renderBlock = (b) => {
             const product = b.product;
             return `<div><figure><img src="${product.image.thumbnails.horizontal.url.split('?', 1)[0]}" alt="${product.image.alt}" /><figcaption>${product.image.alt}</figcaption></figure><br><a href="${product.bestRetailLink.url}">${product.title} $${product.bestRetailLink.price}</a><br>${product.description.html}${product.pros.html ? `<br>The Good${product.pros.html}The Bad${product.cons.html}` : ''}</div>`;
         }
-        case 'VideoBlockType':
-            return `<figure><iframe src="https://volume.vox-cdn.com/embed/${b.video.volumeUuid}" allowfullscreen></iframe>${b.caption?.html ? `<figcaption>${b.caption.html}</figcaption>` : ''}</figure>`;
         case 'TableBlockType':
             return `<table><tr>${b.header.map((cell) => `<th>${cell}</th>`).join('')}</tr>${b.rows.map((row) => `<tr>${row.map((cell) => `<td>${cell}</td>`).join('')}</tr>`).join('')}</table>`;
+        case 'VideoBlockType':
+            return `<figure><iframe src="https://volume.vox-cdn.com/embed/${b.video.volumeUuid}" allowfullscreen></iframe>${b.caption?.html ? `<figcaption>${b.caption.html}</figcaption>` : ''}</figure>`;
         default:
             throw new Error(`Unsupported block type: ${b.__typename}`);
     }
