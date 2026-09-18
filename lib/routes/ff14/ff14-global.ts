@@ -7,7 +7,7 @@ import { isValidHost } from '@/utils/valid-host';
 import { renderDescription } from './templates/description';
 
 export const route: Route = {
-    path: ['/global/:lang/:type?', '/ff14_global/:lang/:type?'],
+    path: '/global/:lang/:type?',
     categories: ['game'],
     example: '/ff14/global/na/all',
     parameters: { lang: 'Region', type: 'Category, `all` by default' },
