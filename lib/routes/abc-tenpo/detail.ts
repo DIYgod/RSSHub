@@ -1,10 +1,12 @@
 import { load } from 'cheerio';
 
 import type { ListingExtra } from '@/routes/temposmart/utils';
-import { clean, normalizeFloor, parseArea, parseCondition, parseJpy, parseWalkMin, parseWard, summarize, tsuboUnit } from '@/routes/temposmart/utils';
+import { clean, normalizeFloor, parseArea, parseCondition, parseHeavyFood, parseJpy, parseWalkMin, parseWard, parseYmd, summarize, tsuboUnit } from '@/routes/temposmart/utils';
 import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 const HOST = 'https://www.abc-tenpo.com';
 
@@ -44,18 +46,37 @@ const parseDetail = (html: string, id: string): DataItem | null => {
     const titleAddress = clean(ogTitle.split('・', 1)[0]);
     const address = parseWard(titleAddress) === null ? row('所在地', '住所') : titleAddress;
 
+    const tags = $('.c-tag-property__item')
+        .toArray()
+        .map((t) => clean($(t).text()))
+        .filter((t): t is string => t !== null);
+    // The page carries two `.p-property-updated-date__def` blocks — 情報更新日 first, 次回情報更新日 second.
+    const updatedAt = clean($('.p-property-updated-date__def dd').first().text());
+
     const raw: ListingExtra['raw'] = {
         title_address: titleAddress,
         address: row('所在地', '住所'),
         rent: row('賃料'),
+        initial_cost: row('初期費用'),
         station: row('最寄駅', '最寄り駅', '交通'),
         size: row('面積'),
-        floor: row('階数', '階層'),
-        // '現況' is not used as a fallback: on this page that label also heads a tag-cloud block.
-        prev_business: row('前業態'),
-        handover: row('引渡し', '引渡状態', '現状'),
+        floor: row('階層', '階数'),
+        floors: row('階建'),
+        structure: row('構造'),
+        seats: row('席数'),
+        // '現業態' is the label this site uses; '現況' is not a fallback because it also heads a tag-cloud block.
+        prev_business: row('現業態', '前業態'),
+        handover: row('引渡状態', '引渡し', '現状'),
+        business_limit: row('業種制限'),
+        food_condition: row('飲食条件'),
         notes: row('備考', '特記事項'),
+        updated_at: updatedAt,
     };
+
+    // '無し' is how the site says there is no restriction, so it is not carried as one.
+    const limitParts = [raw.business_limit === null || /^(?:無し|なし|[-ー])$/.test(raw.business_limit) ? null : raw.business_limit, raw.food_condition === null ? null : `飲食条件: ${raw.food_condition}`].filter(
+        (p): p is string => p !== null
+    );
 
     const rentJpy = parseJpy(raw.rent);
     const { tsubo, area_m2 } = parseArea(raw.size);
@@ -79,13 +100,13 @@ const parseDetail = (html: string, id: string): DataItem | null => {
         fixtures_transfer_jpy: null,
         condition: parseCondition(raw.handover, ogTitle),
         prev_business: raw.prev_business,
-        heavy_food_ok: null,
-        business_limit: null,
-        // The site publishes no listing date on the detail page.
-        listed_at: null,
+        heavy_food_ok: tags.includes('重飲食可') ? true : parseHeavyFood(raw.business_limit, raw.food_condition),
+        business_limit: limitParts.length > 0 ? limitParts.join(' / ') : null,
+        // 情報更新日 is the only date the site publishes, so this is a last-modified date, not a first-listed one.
+        listed_at: parseYmd(updatedAt),
         ward: parseWard(address),
         address_hint: address,
-        tags: [],
+        tags,
         raw,
     };
 
@@ -94,6 +115,7 @@ const parseDetail = (html: string, id: string): DataItem | null => {
         title: clean(ogTitle.split('｜', 1)[0]) ?? ogTitle,
         link,
         guid: link,
+        pubDate: extra.listed_at === null ? undefined : timezone(parseDate(extra.listed_at, 'YYYY-MM-DD'), 9),
         description: [raw.notes, summarize(extra)].filter(Boolean).join(' / '),
         _extra: extra,
     };
@@ -135,7 +157,7 @@ export const route: Route = {
 
 Its reason to exist is the address. The listing route can only reach the ward (\`東京都文京区\`) because the visible 所在地 field is truncated and marked 会員限定 — but the document title carries the address in full, \`東京都文京区湯島2-31-17・…\`, so \`address_hint\` here reaches the 丁目 **and the 番地**. That makes this one of the few sources that publishes a 番地 to a guest at all.
 
-\`_extra\` follows the shared listing shape. 保証金，礼金 and 造作譲渡料 are members-only on this site and stay \`null\`, and the detail page publishes no listing date, so \`listed_at\` is \`null\` too.`,
+\`_extra\` follows the shared listing shape, including 現業態，業種制限，飲食条件 and the 居抜き / 重飲食可 tags; 構造，階建，席数 and 初期費用 are kept in \`raw\`. 保証金，礼金 and 造作譲渡料 are members-only on this site and stay \`null\`. The only date the site publishes is 情報更新日，so \`listed_at\` and \`pubDate\` are a last-modified date rather than a first-listed one — do not read them as a publication date.`,
     categories: ['other'],
     features: {
         requireConfig: false,
