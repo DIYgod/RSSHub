@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 
 import type { ListingExtra } from '@/routes/temposmart/utils';
-import { clean, normalizeFloor, parseArea, parseJpy, parseWalkMin, parseWard, summarize, tsuboUnit } from '@/routes/temposmart/utils';
+import { clean, normalizeFloor, parseArea, parseCondition, parseJpy, parseWalkMin, parseWard, summarize, tsuboUnit } from '@/routes/temposmart/utils';
 import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
@@ -59,6 +59,8 @@ const parseDetail = (html: string, region: string, id: string): DataItem | null 
 
     // '1,419,000円 @4.73万円' — the 坪単価 follows the rent after an @.
     const [rentText, unitText] = (raw.rent ?? '').split('@', 2);
+    // Same shape as the area route, so the two bukenavi routes stay comparable.
+    const limitParts = [raw.business_types === null ? null : `可: ${raw.business_types}`, raw.excluded_business === null ? null : `不可: ${raw.excluded_business}`].filter((p): p is string => p !== null);
     const { tsubo, area_m2 } = parseArea(raw.size);
     const rentJpy = parseJpy(clean(rentText));
 
@@ -78,10 +80,11 @@ const parseDetail = (html: string, region: string, id: string): DataItem | null 
         deposit_jpy: null,
         key_money_months: null,
         fixtures_transfer_jpy: null,
-        condition: null,
+        condition: parseCondition(title),
         prev_business: raw.prev_business,
-        heavy_food_ok: null,
-        business_limit: [raw.business_types, raw.excluded_business === null ? null : `不可: ${raw.excluded_business}`].filter((p): p is string => p !== null).join(' / ') || null,
+        // As on the area route: the site states 不可業態 rather than 重飲食可否, so this is read off that list.
+        heavy_food_ok: raw.excluded_business === null ? null : !/飲食/.test(raw.excluded_business),
+        business_limit: limitParts.length > 0 ? limitParts.join(' / ') : null,
         // The site publishes no listing date.
         listed_at: null,
         ward: parseWard(raw.address),
