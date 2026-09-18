@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 import pMap from 'p-map';
 
 import type { ListingExtra } from '@/routes/temposmart/utils';
-import { clean, normalizeFloor, parseArea, parseCondition, parseJpy, parseWalkMin, parseWard, summarize, tsuboUnit } from '@/routes/temposmart/utils';
+import { clean, normalizeFloor, parseArea, parseCondition, parseHeavyFood, parseJpy, parseWalkMin, parseWard, summarize, tsuboUnit } from '@/routes/temposmart/utils';
 import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import logger from '@/utils/logger';
@@ -143,7 +143,10 @@ const mergeDetail = (base: ListingExtra, d: DetailFields): ListingExtra => {
         area_m2: area_m2 ?? base.area_m2,
         line: base.line ?? d.line,
         prev_business: d.prev_business,
-        heavy_food_ok: d.ng_business === null ? null : !/飲食/.test(d.ng_business),
+        // Only an explicit 重飲食可 / 不可 counts. An NG list that does not use the word 飲食 is not a
+        // yes: '中華・焼肉・焼き鳥・油の多い業態不可' is a heavy-food ban written out in full, and
+        // '風営法不可' is about something else entirely. Both used to come through as `true`.
+        heavy_food_ok: parseHeavyFood(d.ng_business, d.business_types),
         business_limit: limitParts.length > 0 ? limitParts.join(' / ') : null,
         ward: parseWard(address),
         address_hint: address,
