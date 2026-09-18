@@ -148,6 +148,7 @@ const mergeDetail = (base: ListingExtra, d: DetailFields): ListingExtra => {
         area_m2: area_m2 ?? base.area_m2,
         line: clean(d.access?.split('(最寄駅)', 1)[0]?.replace('(沿線)', '')),
         walk_min: parseWalkMin(d.access),
+        key_money_months: parseMonths(d.key_money),
         business_limit: d.business_limit,
         address_hint: d.address ?? base.address_hint,
         ward: parseWard(d.address) ?? base.ward,
