@@ -33,6 +33,13 @@ interface ListCard {
     extra: ListingExtra;
 }
 
+/** The list page's h1 reads '新宿区の居抜き物件…' / '東京都の居抜き物件…', so the area name is whatever precedes 「の居抜き物件」. */
+const areaLabel = (html: string, fallback: string): string => {
+    const h1 = clean(load(html)('h1').first().text());
+    const name = h1?.split('の居抜き物件', 1)[0];
+    return name !== undefined && name !== h1 ? name : fallback;
+};
+
 interface DetailFields {
     listed_at: string | null;
     updated_at: string | null;
@@ -214,9 +221,22 @@ export const handler = async (ctx): Promise<Data> => {
         throw new Error(`Unknown prefecture "${pref}", expected one of ${PREFECTURES.map((p) => p.slug).join(', ')}`);
     }
     const limit = Math.min(ctx.req.query('limit') ? Number(ctx.req.query('limit')) : DEFAULT_LIMIT, PAGE_SIZE);
-    const listUrl = `${HOST}/estates/pref/${prefecture.code}?sort=new`;
 
-    const cards = parseList(await ofetch(listUrl)).slice(0, limit);
+    // 市区町村 codes are the prefecture's two digits plus three more (新宿区 = 13104). A code from another
+    // prefecture would silently return that prefecture's listings, so the pair is checked rather than trusted.
+    const district: string | undefined = ctx.req.param('district');
+    if (district !== undefined) {
+        if (!/^\d{5}$/.test(district)) {
+            throw new Error(`Invalid district "${district}", expected a 5-digit JIS X 0402 市区町村 code such as 13104`);
+        }
+        if (!district.startsWith(prefecture.code)) {
+            throw new Error(`District "${district}" does not belong to ${prefecture.label} (${prefecture.code})`);
+        }
+    }
+    const listUrl = district === undefined ? `${HOST}/estates/pref/${prefecture.code}?sort=new` : `${HOST}/estates/pref/${prefecture.code}/district/${district}?sort=new`;
+
+    const html: string = await ofetch(listUrl);
+    const cards = parseList(html).slice(0, limit);
 
     const items = await pMap(
         cards,
@@ -236,7 +256,7 @@ export const handler = async (ctx): Promise<Data> => {
     );
 
     return {
-        title: `テンポスマート 新着物件 (${prefecture.label})`,
+        title: `テンポスマート 新着物件 (${areaLabel(html, prefecture.label)})`,
         link: listUrl,
         language: 'ja',
         item: items,
@@ -244,7 +264,7 @@ export const handler = async (ctx): Promise<Data> => {
 };
 
 export const route: Route = {
-    path: '/estates/:pref?',
+    path: '/estates/:pref?/:district?',
     name: '新着物件',
     url: 'www.temposmart.jp',
     maintainers: ['pseudoyu'],
@@ -256,8 +276,13 @@ export const route: Route = {
             default: 'tokyo',
             options: PREFECTURES.map((p) => ({ value: p.slug, label: `${p.label} (${p.code})` })),
         },
+        district: {
+            description: 'Optional 市区町村, as a 5-digit JIS X 0402 code (新宿区 `13104`, 港区 `13103`, 横浜市中区 `14104`). Must belong to `pref`; omit for the whole prefecture.',
+        },
     },
-    description: `New listings on テンポスマート for one prefecture, sorted by 新着順 (first page, 50 listings). Each item's \`_extra\` carries the structured listing fields (賃料，坪，坪単価，階，最寄駅，保証金，礼金，造作譲渡料，現況，業種制限，登録日，…) parsed from the list and detail pages; unknown values are \`null\`.
+    description: `New listings on テンポスマート for one prefecture — or one 市区町村 when \`district\` is given — sorted by 新着順 (first page, 50 listings). Each item's \`_extra\` carries the structured listing fields (賃料，坪，坪単価，階，最寄駅，保証金，礼金，造作譲渡料，現況，業種制限，登録日，…) parsed from the list and detail pages; unknown values are \`null\`.
+
+\`district\` is a 5-digit JIS X 0402 市区町村 code whose first two digits are the prefecture — \`/temposmart/estates/tokyo/13104\` is 新宿区. A code from another prefecture is rejected rather than silently returning that prefecture's listings.
 
 | Query   | Description                                                                  | Default |
 | ------- | ---------------------------------------------------------------------------- | ------- |
