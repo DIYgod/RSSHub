@@ -1143,8 +1143,6 @@ export type RoutePath =
   | `/fda/cdrh/:titleOnly?`
   | `/fediverse/timeline/:account`
   | `/feng/forum/:id/:type?`
-  | `/ff14/ff14_global/:lang/:type?`
-  | `/ff14/ff14_zh/:type?`
   | `/ff14/global/:lang/:type?`
   | `/ff14/zh/:type?`
   | `/fffdm/manhua/:id/:cdn?`

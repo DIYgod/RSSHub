@@ -22672,39 +22672,7 @@ export default {
   "ff14": {
     "routes": {
       "/global/:lang/:type?": {
-        "path": [
-          "/global/:lang/:type?",
-          "/ff14_global/:lang/:type?"
-        ],
-        "categories": [
-          "game"
-        ],
-        "example": "/ff14/global/na/all",
-        "parameters": {
-          "lang": "Region",
-          "type": "Category, `all` by default"
-        },
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "name": "FINAL FANTASY XIV (The Lodestone)",
-        "maintainers": [
-          "kmod-midori"
-        ],
-        "description": "Region\n\n| North Ameria | Europe | France | Germany | Japan |\n| ------------ | ------ | ------ | ------- | ----- |\n| na           | eu     | fr     | de      | jp    |\n\nCategory\n\n| all | topics | notices | maintenance | updates | status | developers |\n| --- | ------ | ------- | ----------- | ------- | ------ | ---------- |",
-        "location": "ff14-global.ts",
-        "module": () => import('@/routes/ff14/ff14-global.ts')
-      },
-      "/ff14_global/:lang/:type?": {
-        "path": [
-          "/global/:lang/:type?",
-          "/ff14_global/:lang/:type?"
-        ],
+        "path": "/global/:lang/:type?",
         "categories": [
           "game"
         ],
@@ -22730,49 +22698,7 @@ export default {
         "module": () => import('@/routes/ff14/ff14-global.ts')
       },
       "/zh/:type?": {
-        "path": [
-          "/zh/:type?",
-          "/ff14_zh/:type?"
-        ],
-        "categories": [
-          "game"
-        ],
-        "example": "/ff14/zh/news",
-        "parameters": {
-          "type": "分类名，预设为 `all`"
-        },
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "radar": [
-          {
-            "source": [
-              "ff.web.sdo.com/web8/index.html"
-            ],
-            "target": "/zh"
-          }
-        ],
-        "name": "最终幻想 14 国服",
-        "maintainers": [
-          "Kiotlin",
-          "ZeroClad",
-          "15x15G"
-        ],
-        "url": "ff.web.sdo.com/web8/index.html",
-        "description": "| 新闻 | 公告     | 活动   | 广告      | 所有 |\n| ---- | -------- | ------ | --------- | ---- |\n| news | announce | events | advertise | all  |",
-        "location": "ff14-zh.ts",
-        "module": () => import('@/routes/ff14/ff14-zh.ts')
-      },
-      "/ff14_zh/:type?": {
-        "path": [
-          "/zh/:type?",
-          "/ff14_zh/:type?"
-        ],
+        "path": "/zh/:type?",
         "categories": [
           "game"
         ],
