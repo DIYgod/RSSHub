@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 import pMap from 'p-map';
 
 import type { ListingExtra } from '@/routes/temposmart/utils';
-import { clean, normalizeFloor, parseArea, parseCondition, parseJpy, parseWalkMin, parseWard, parseYmd, summarize, tsuboUnit } from '@/routes/temposmart/utils';
+import { clean, normalizeFloor, parseArea, parseCondition, parseJpy, parseMonths, parseWalkMin, parseWard, parseYmd, summarize, tsuboUnit } from '@/routes/temposmart/utils';
 import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import logger from '@/utils/logger';
@@ -172,6 +172,7 @@ const parseDetail = (html: string): DetailFields => {
 const mergeDetail = (base: ListingExtra, d: DetailFields): ListingExtra => ({
     ...base,
     deposit_jpy: parseJpy(d.deposit),
+    key_money_months: parseMonths(d.key_money),
     fixtures_transfer_jpy: parseJpy(d.fixtures),
     listed_at: parseYmd(d.listed_at),
     raw: { ...base.raw, listed_at: d.listed_at, deposit: d.deposit, key_money: d.key_money, fixtures: d.fixtures, status: d.status, note: d.note },
