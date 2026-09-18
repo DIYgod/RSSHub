@@ -69,6 +69,9 @@ const parseList = (html: string): ListCard[] => {
 
             const [line, station] = links('駅');
             const [ward, town] = links('エリア');
+            // The title ends with the full address ('… | 台東区浅草橋5丁目'); the エリア links carry only 区 + 町 and drop the 丁目.
+            const titleAddress = clean(title.split('|').pop());
+            const titleWard = parseWard(titleAddress);
             const [floorText, areaText] = (text('階数/面積') ?? '').split(/\s*\/\s*/, 2);
             const typeText = text('物件タイプ/現業態');
             const [typeKind, typeBusiness] = (typeText ?? '').split(/\s*\/\s*/, 2);
@@ -106,8 +109,9 @@ const parseList = (html: string): ListCard[] => {
                 heavy_food_ok: null,
                 business_limit: null,
                 listed_at: null,
-                ward: ward ?? parseWard(title.split('|').pop()?.trim() ?? null),
-                address_hint: ward && town ? `${ward}${town}` : (ward ?? null),
+                ward: ward ?? titleWard,
+                // Prefer the title's address, but only when it really is one (it must name a 区/市) — otherwise fall back to the エリア links.
+                address_hint: (titleWard === null ? null : titleAddress) ?? (ward && town ? `${ward}${town}` : (ward ?? null)),
                 tags,
                 raw,
             };
