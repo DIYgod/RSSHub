@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 
 import type { ListingExtra } from '@/routes/temposmart/utils';
-import { clean, normalizeFloor, parseArea, parseCondition, parseJpy, parseWalkMin, parseWard, summarize, tsuboUnit } from '@/routes/temposmart/utils';
+import { clean, normalizeFloor, parseArea, parseCondition, parseHeavyFood, parseJpy, parseWalkMin, parseWard, summarize, tsuboUnit } from '@/routes/temposmart/utils';
 import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
@@ -82,8 +82,9 @@ const parseDetail = (html: string, region: string, id: string): DataItem | null 
         fixtures_transfer_jpy: null,
         condition: parseCondition(title),
         prev_business: raw.prev_business,
-        // As on the area route: the site states 不可業態 rather than 重飲食可否, so this is read off that list.
-        heavy_food_ok: raw.excluded_business === null ? null : !/飲食/.test(raw.excluded_business),
+        // As on the area route: only an explicit 重飲食可 / 不可 counts, never the absence of 飲食 from
+        // the NG list, which says nothing about heavy food either way.
+        heavy_food_ok: parseHeavyFood(raw.excluded_business, raw.business_types),
         business_limit: limitParts.length > 0 ? limitParts.join(' / ') : null,
         // The site publishes no listing date.
         listed_at: null,
