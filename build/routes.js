@@ -37906,6 +37906,55 @@ export default {
     "url": "atcoder.jp",
     "lang": "en"
   },
+  "athome": {
+    "routes": {
+      "/rent-store/:pref/:city": {
+        "path": "/rent-store/:pref/:city",
+        "name": "貸店舗",
+        "url": "www.athome.co.jp",
+        "maintainers": [
+          "pseudoyu"
+        ],
+        "example": "/athome/rent-store/tokyo/shinjuku-city",
+        "parameters": {
+          "pref": {
+            "description": "都道府県 slug, e.g. `tokyo`, `kanagawa`"
+          },
+          "city": {
+            "description": "市区町村 slug as the site spells it — `shinjuku-city`, `minato-city`, `yokohama_naka-city`. Note the underscore in 政令指定都市 slugs; a hyphen there 404s."
+          }
+        },
+        "description": "貸店舗 listings on アットホーム for one 市区町村 (first page, 30 listings).\n\nThis route needs a browser. The page is Angular Universal SSR sitting behind a JavaScript interstitial, so its first paint can be an 「認証中」 screen that clears itself once the browser finishes loading; only the settled page carries the `#serverApp-state` payload the route reads. The route waits for that element and **throws if it never appears**, so an unsettled page surfaces as an error rather than as a silently empty feed. Expect it to be slower and less reliable than the plain-HTML listing routes, and cache it generously.\n\n`_extra` follows the shared listing shape. `condition` and `prev_business` come from the site's own 店舗プラス block (`isInuki` / `isSkeleton` / `lastTenanto`) rather than being guessed from prose, though most listings leave those unset. 造作価格 is not published here, so `fixtures_transfer_jpy` is always `null`, and `deposit_months` prefers 保証金 with 敷金 as the fallback. `address_hint` reaches the 丁目，and `listed_at` is `null` because 情報公開日 is published only on the detail page, which this route does not open.",
+        "categories": [
+          "other"
+        ],
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": true,
+          "antiCrawler": true,
+          "supportRadar": true
+        },
+        "radar": [
+          {
+            "source": [
+              "www.athome.co.jp/rent_store/:pref/:city/list"
+            ],
+            "target": "/rent-store/:pref/:city"
+          }
+        ],
+        "location": "rent-store.ts",
+        "module": () => import('@/routes/athome/rent-store.ts')
+      }
+    },
+    "apiRoutes": {},
+    "name": "at home",
+    "url": "www.athome.co.jp",
+    "description": "アットホーム — 不動産情報サイト（貸店舗・事業用物件）",
+    "lang": "ja",
+    "ja": {
+      "name": "アットホーム"
+    }
+  },
   "augmentcode": {
     "routes": {
       "/blog": {
@@ -42505,8 +42554,8 @@ export default {
   },
   "bukenavi": {
     "routes": {
-      "/object/:region?/:pref?": {
-        "path": "/object/:region?/:pref?",
+      "/object/:region?/:pref?/:city?": {
+        "path": "/object/:region?/:pref?/:city?",
         "name": "新着物件",
         "url": "bukenavi.jp",
         "maintainers": [
@@ -42532,9 +42581,12 @@ export default {
               }
             ]
           },
-          "pref": "Prefecture slug (tokyo, kanagawa, saitama, chiba, osaka, kyoto, hyogo, aichi) or two-digit JIS X 0401 code; omit for the whole region"
+          "pref": "Prefecture slug (tokyo, kanagawa, saitama, chiba, osaka, kyoto, hyogo, aichi) or two-digit JIS X 0401 code; omit for the whole region",
+          "city": {
+            "description": "Optional 市区町村, as a 5-digit JIS X 0402 code (横浜市中区 `14104`, 新宿区 `13104`). Requires `pref` and must belong to it; omit for the whole prefecture."
+          }
         },
-        "description": "New 居抜き listings on ぶけなび that are currently 募集中，newest first (first page, 10 listings). Each item's `_extra` carries the structured listing fields (賃料，坪，坪単価，階，最寄駅，前業態，業種制限，…) parsed from the list and detail pages; unknown values are `null`. The site does not publish listing dates, so items have no `pubDate`.",
+        "description": "New 居抜き listings on ぶけなび that are currently 募集中，newest first (first page, 10 listings) — for a region, a prefecture, or one 市区町村 when `city` is given. Each item's `_extra` carries the structured listing fields (賃料，坪，坪単価，階，最寄駅，前業態，業種制限，…) parsed from the list and detail pages; unknown values are `null`. The site does not publish listing dates, so items have no `pubDate`.\n\n`city` is a 5-digit JIS X 0402 code and the site pairs it with the prefecture, so both are required — `/bukenavi/object/kanto/kanagawa/14104` is 横浜市中区. A code that does not belong to `pref` is rejected rather than sent on.\n\nNote that `bukenavi.jp/{region}/area/{日本語}` pages are SEO landing pages carrying no listings; the 市区町村 filter is the `city[]` parameter on the list endpoint, which is what this route uses.",
         "categories": [
           "other"
         ],
@@ -43490,6 +43542,87 @@ export default {
     "url": "www.canada.ca",
     "description": "Government of Canada news by department",
     "lang": "en"
+  },
+  "canaeru": {
+    "routes": {
+      "/:pref?/:city?": {
+        "path": "/:pref?/:city?",
+        "name": "居抜き・貸店舗物件",
+        "url": "canaeru.usen.com",
+        "maintainers": [
+          "pseudoyu"
+        ],
+        "example": "/canaeru/tokyo/13104",
+        "parameters": {
+          "pref": {
+            "description": "Prefecture",
+            "default": "tokyo",
+            "options": [
+              {
+                "value": "tokyo",
+                "label": "東京都"
+              },
+              {
+                "value": "kanagawa",
+                "label": "神奈川県"
+              },
+              {
+                "value": "saitama",
+                "label": "埼玉県"
+              },
+              {
+                "value": "chiba",
+                "label": "千葉県"
+              },
+              {
+                "value": "hokkaido",
+                "label": "北海道"
+              },
+              {
+                "value": "aichi",
+                "label": "愛知県"
+              },
+              {
+                "value": "shizuoka",
+                "label": "静岡県"
+              }
+            ]
+          },
+          "city": {
+            "description": "Optional 市区町村, as a 5-digit JIS X 0402 code (新宿区 `13104`, 港区 `13103`, 横浜市中区 `14104`). Must belong to `pref`; omit for the whole prefecture."
+          }
+        },
+        "description": "Listings on canaeru（USEN）for one prefecture — or one 市区町村 when `city` is given (`/canaeru/tokyo/13104` is 新宿区). Each item's `_extra` carries the shared listing fields (賃料，坪，坪単価，階，最寄駅，保証金，礼金，造作価格，現況，…) from the list and detail pages; unknown values are `null`, and the site's 「ー」 placeholder is treated as unknown rather than kept as text.\n\nTwo things this source does better than most: 住所 is published down to the 番地 rather than the 町，and the detail page carries map coordinates. `ListingExtra` has no coordinate fields, so they are passed through verbatim as `raw.lat` / `raw.lng`.\n\n`tags` are the site's own feature flags, keeping only those a listing actually has — the markup lists every flag and greys the rest out with `class=\"off\"` — and 居抜き / スケルトン among them is what sets `condition`.\n\nOne caveat on 造作価格: the publisher occasionally appends 万円 to a figure that is already in 円 (one listing reads `6,050,000万円`), so `fixtures_transfer_jpy` can carry an implausible value. The route parses what is published rather than second-guessing it, so treat `raw.fixtures` as the ground truth when the number looks wrong.\n\n関西 is not offered: the site serves it from a separate base path that could not be reached (`/bukken/osaka`, `/bukken_k/osaka` and `/bukken_o/osaka` all 404).\n\n| Query   | Description                                                                  | Default |\n| ------- | ---------------------------------------------------------------------------- | ------- |\n| `limit` | Number of listings to process (detail pages are fetched per listing), max 10 | 10      |",
+        "categories": [
+          "other"
+        ],
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportRadar": true
+        },
+        "radar": [
+          {
+            "source": [
+              "canaeru.usen.com/bukken/:pref/search/:city",
+              "canaeru.usen.com/bukken/:pref/search"
+            ],
+            "target": "/:pref"
+          }
+        ],
+        "location": "property.ts",
+        "module": () => import('@/routes/canaeru/property.ts')
+      }
+    },
+    "apiRoutes": {},
+    "name": "Canaeru",
+    "url": "canaeru.usen.com",
+    "description": "canaeru（USEN）— 飲食店開業向け 居抜き・貸店舗物件情報サイト",
+    "lang": "ja",
+    "ja": {
+      "name": "カナエル"
+    }
   },
   "canalmuseum": {
     "routes": {

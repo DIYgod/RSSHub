@@ -273,6 +273,7 @@ export type RoutePath =
   | `/asus/gpu-tweak`
   | `/atcoder/contest/:language?/:rated?/:category?/:keyword?`
   | `/atcoder/post/:language?/:keyword?`
+  | `/athome/rent-store/:pref/:city`
   | `/atptour/news/:lang?`
   | `/augmentcode/blog`
   | `/auto-stats/:category?`
@@ -470,7 +471,7 @@ export type RoutePath =
   | `/buct/gr/:type`
   | `/buct/jwc`
   | `/bugzilla/bug/:site/:bugId`
-  | `/bukenavi/object/:region?/:pref?`
+  | `/bukenavi/object/:region?/:pref?/:city?`
   | `/bulianglin/`
   | `/bullionvault/gold-news/:category?`
   | `/bupt/funbox`
@@ -508,6 +509,7 @@ export type RoutePath =
   | `/caixinglobal/latest`
   | `/camchina/:id?`
   | `/canada.ca/news/:lang/:department?`
+  | `/canaeru/:pref?/:city?`
   | `/canalmuseum/consulting/:type`
   | `/canalmuseum/lszl`
   | `/cankaoxiaoxi/:id?`

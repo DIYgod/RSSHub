@@ -2744,6 +2744,9 @@
   "/atcoder/post/:language?/:keyword?": [
     "nczitzk"
   ],
+  "/athome/rent-store/:pref/:city": [
+    "pseudoyu"
+  ],
   "/augmentcode/blog": [
     "nczitzk"
   ],
@@ -3058,7 +3061,7 @@
   "/bugzilla/bug/:site/:bugId": [
     "FranklinYu"
   ],
-  "/bukenavi/object/:region?/:pref?": [
+  "/bukenavi/object/:region?/:pref?/:city?": [
     "pseudoyu"
   ],
   "/bulianglin/": [
@@ -3136,6 +3139,9 @@
   ],
   "/canada.ca/news/:lang/:department?": [
     "elibroftw"
+  ],
+  "/canaeru/:pref?/:city?": [
+    "pseudoyu"
   ],
   "/canalmuseum/consulting/:type": [
     "magazian"

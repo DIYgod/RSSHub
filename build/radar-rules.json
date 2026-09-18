@@ -12709,6 +12709,19 @@
       }
     ]
   },
+  "athome.co.jp": {
+    "_name": "at home",
+    "www": [
+      {
+        "title": "貸店舗",
+        "docs": "https://docs.rsshub.app/routes/other",
+        "source": [
+          "/rent_store/:pref/:city/list"
+        ],
+        "target": "/athome/rent-store/:pref/:city"
+      }
+    ]
+  },
   "augmentcode.com": {
     "_name": "Augment Code",
     ".": [
@@ -14508,6 +14521,20 @@
           "/site/isde/:lang"
         ],
         "target": "/canada.ca/news/:lang/departmentofindustry"
+      }
+    ]
+  },
+  "usen.com": {
+    "_name": "Canaeru",
+    "canaeru": [
+      {
+        "title": "居抜き・貸店舗物件",
+        "docs": "https://docs.rsshub.app/routes/other",
+        "source": [
+          "/bukken/:pref/search/:city",
+          "/bukken/:pref/search"
+        ],
+        "target": "/canaeru/:pref"
       }
     ]
   },
