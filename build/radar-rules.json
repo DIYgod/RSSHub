@@ -9702,6 +9702,14 @@
     "_name": "ABC Tenpo",
     "www": [
       {
+        "title": "物件詳細",
+        "docs": "https://docs.rsshub.app/routes/other",
+        "source": [
+          "/property/view/:id"
+        ],
+        "target": "/abc-tenpo/detail/:id"
+      },
+      {
         "title": "新着物件",
         "docs": "https://docs.rsshub.app/routes/other",
         "source": [
@@ -14190,6 +14198,14 @@
   "bukenavi.jp": {
     "_name": "Bukenavi",
     ".": [
+      {
+        "title": "物件詳細",
+        "docs": "https://docs.rsshub.app/routes/other",
+        "source": [
+          "/:region/object/:id"
+        ],
+        "target": "/bukenavi/detail/:id/:region"
+      },
       {
         "title": "新着物件",
         "docs": "https://docs.rsshub.app/routes/other",

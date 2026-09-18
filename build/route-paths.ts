@@ -111,6 +111,7 @@ export type RoutePath =
   | `/a9vg/:category{.+}?`
   | `/aa1/60s/:category?`
   | `/aamacau/:category?/:id?`
+  | `/abc-tenpo/detail/:id`
   | `/abc-tenpo/property/:pref?`
   | `/abc-tenpo/rent-benchmark/:pref?`
   | `/abc/:category{.+}?`
@@ -471,6 +472,7 @@ export type RoutePath =
   | `/buct/gr/:type`
   | `/buct/jwc`
   | `/bugzilla/bug/:site/:bugId`
+  | `/bukenavi/detail/:id/:region?`
   | `/bukenavi/object/:region?/:pref?/:city?`
   | `/bulianglin/`
   | `/bullionvault/gold-news/:category?`

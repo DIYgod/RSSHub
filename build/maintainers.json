@@ -2381,6 +2381,9 @@
     "nczitzk",
     "pseudoyu"
   ],
+  "/abc-tenpo/detail/:id": [
+    "pseudoyu"
+  ],
   "/abc-tenpo/property/:pref?": [
     "pseudoyu"
   ],
@@ -3060,6 +3063,9 @@
   ],
   "/bugzilla/bug/:site/:bugId": [
     "FranklinYu"
+  ],
+  "/bukenavi/detail/:id/:region?": [
+    "pseudoyu"
   ],
   "/bukenavi/object/:region?/:pref?/:city?": [
     "pseudoyu"

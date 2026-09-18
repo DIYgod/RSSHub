@@ -31617,6 +31617,40 @@
   },
   "abc-tenpo": {
     "routes": {
+      "/detail/:id": {
+        "path": "/detail/:id",
+        "name": "物件詳細",
+        "url": "www.abc-tenpo.com",
+        "maintainers": [
+          "pseudoyu"
+        ],
+        "example": "/abc-tenpo/detail/62829",
+        "parameters": {
+          "id": {
+            "description": "The numeric 物件 id, i.e. the `62829` in `https://www.abc-tenpo.com/property/view/62829`"
+          }
+        },
+        "description": "One listing on ABC 店舗，for following a single property rather than a whole prefecture.\n\nIts reason to exist is the address. The listing route can only reach the ward (`東京都文京区`) because the visible 所在地 field is truncated and marked 会員限定 — but the document title carries the address in full, `東京都文京区湯島2-31-17・…`, so `address_hint` here reaches the 丁目 **and the 番地**. That makes this one of the few sources that publishes a 番地 to a guest at all.\n\n`_extra` follows the shared listing shape. 保証金，礼金 and 造作譲渡料 are members-only on this site and stay `null`, and the detail page publishes no listing date, so `listed_at` is `null` too.",
+        "categories": [
+          "other"
+        ],
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportRadar": true
+        },
+        "radar": [
+          {
+            "source": [
+              "www.abc-tenpo.com/property/view/:id"
+            ],
+            "target": "/detail/:id"
+          }
+        ],
+        "location": "detail.ts",
+        "module": "() => import('@/routes/abc-tenpo/detail.ts')"
+      },
       "/property/:pref?": {
         "path": "/property/:pref?",
         "name": "新着物件",
@@ -42554,6 +42588,62 @@
   },
   "bukenavi": {
     "routes": {
+      "/detail/:id/:region?": {
+        "path": "/detail/:id/:region?",
+        "name": "物件詳細",
+        "url": "bukenavi.jp",
+        "maintainers": [
+          "pseudoyu"
+        ],
+        "example": "/bukenavi/detail/54379",
+        "parameters": {
+          "id": {
+            "description": "The numeric 物件 id, i.e. the `54379` in `https://bukenavi.jp/kanto/object/54379`"
+          },
+          "region": {
+            "description": "Region the listing belongs to; defaults to `kanto`",
+            "default": "kanto",
+            "options": [
+              {
+                "value": "kanto",
+                "label": "kanto"
+              },
+              {
+                "value": "kansai",
+                "label": "kansai"
+              },
+              {
+                "value": "tokai",
+                "label": "tokai"
+              },
+              {
+                "value": "kyushu",
+                "label": "kyushu"
+              }
+            ]
+          }
+        },
+        "description": "One listing on ぶけなび，for following a single property rather than a whole area — a listing's 賃料 and availability change over its life.\n\nIt adds what the area route's cards omit: 乗降者数 for the nearest station, 構造，竣工年月，立地，間口，業種，不可業態，営業年数 and 特記事項，plus exact 面積 and 階数.\n\n**It does not improve the address.** ぶけなび truncates 住所 to the 町 for guests and says so on the page — 「東京都新宿区歌舞伎町 ※詳細はお問い合わせください（住所詳細は会員限定）」 — so the 丁目 is unreachable without an account, and `address_hint` stops at the 町 here exactly as it does on the area route. 敷金，礼金 and 造作 are likewise absent from the guest view, and the site publishes no listing date, so those fields stay `null`.",
+        "categories": [
+          "other"
+        ],
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportRadar": true
+        },
+        "radar": [
+          {
+            "source": [
+              "bukenavi.jp/:region/object/:id"
+            ],
+            "target": "/detail/:id/:region"
+          }
+        ],
+        "location": "detail.ts",
+        "module": "() => import('@/routes/bukenavi/detail.ts')"
+      },
       "/object/:region?/:pref?/:city?": {
         "path": "/object/:region?/:pref?/:city?",
         "name": "新着物件",
