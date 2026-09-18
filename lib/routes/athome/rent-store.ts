@@ -14,9 +14,23 @@ const SLUG = /^[a-z\d_-]+$/;
 /** The SSR state is keyed by the internal BFF call that produced it. */
 const LIST_KEY = '/bukken/list/first-view';
 const DETAIL_KEY = '/bukken/detail/';
-const STATE_TIMEOUT = 45000;
+/**
+ * Bounded so the whole run fits inside RSSHub's 30s default request timeout. The interstitial reloads
+ * itself (`window.location.reload(true)`), which keeps a `domcontentloaded` navigation from ever
+ * settling, so the page is opened with `commit` and the waiting is done here where it can be reported.
+ */
+const NAV_TIMEOUT = 12000;
+const STATE_TIMEOUT = 12000;
 const DEFAULT_LIMIT = 10;
 const PAGE_SIZE = 30;
+/**
+ * Each detail page is a full browser navigation — ~0.7s on a developer machine but ~4.7s on a modest
+ * VPS — so a cold cache at the default limit can outlast RSSHub's own 30s request timeout. Enrichment
+ * runs against this budget and falls back to list-page fields instead of failing the whole feed.
+ */
+const DETAIL_BUDGET_MS = 20000;
+/** Whole-run ceiling for enrichment, measured from the start of the request, not from the list page. */
+const TOTAL_BUDGET_MS = 22000;
 
 /** Fields the list payload does not carry; all of them live on the detail page's own SSR payload. */
 interface Detail {
@@ -241,38 +255,85 @@ export const handler = async (ctx): Promise<Data> => {
         }
     }
     const limit = Math.min(ctx.req.query('limit') ? Number(ctx.req.query('limit')) : DEFAULT_LIMIT, PAGE_SIZE);
+    // 所在地 (to the 丁目), 階, 面積, 賃料 and the ward all come from the list page. The detail visit only
+    // adds 情報公開日, the coordinates and the fee detail, so a consumer that needs none of those can
+    // skip it and make this an ordinary fast route.
+    const wantDetail = ctx.req.query('detail') !== '0';
     const listUrl = `${HOST}/rent_store/${pref}/${city}/list/`;
 
     // One browser for the whole run: the list page, then each detail page by navigating the same tab.
-    // Opening a browser per listing would be an order of magnitude more expensive.
-    const { page, destroy } = await getPlaywrightPage(listUrl, { gotoConfig: { waitUntil: 'domcontentloaded' } });
+    // Opening a browser per listing would be an order of magnitude more expensive. The browser is not
+    // optional — the site answers a plain HTTP client for about four requests and then serves it the
+    // 認証中 interstitial indefinitely, while a real browser keeps being served normally.
+    const startedAt = Date.now();
+    const { page, destroy } = await getPlaywrightPage(listUrl, { gotoConfig: { waitUntil: 'commit', timeout: NAV_TIMEOUT } });
     const items: DataItem[] = [];
     try {
-        await page.waitForSelector('#serverApp-state', { state: 'attached', timeout: STATE_TIMEOUT });
-        const bukken = listOf(await page.content()).slice(0, limit);
+        let bukken: Bukken[];
+        try {
+            await page.waitForSelector('#serverApp-state', { state: 'attached', timeout: STATE_TIMEOUT });
+            bukken = listOf(await page.content()).slice(0, limit);
+        } catch (error) {
+            // Only the list page is fatal: an empty feed is indistinguishable from "no new listings".
+            // Say which failure it was — a blocked client and a slow one need different responses.
+            let blocked = false;
+            try {
+                blocked = (await page.content()).includes('認証中');
+            } catch {
+                // The page may already be gone; the message below still names the failure.
+            }
+            logger.warn(`athome: ${listUrl} failed after ${Date.now() - startedAt}ms (blocked=${blocked}): ${String(error)}`);
+            throw new Error(
+                blocked
+                    ? 'athome: the site is serving the 認証中 interstitial instead of the listing page — this client has been rate-limited; poll less often rather than retrying'
+                    : `athome: the listing page did not produce #serverApp-state within ${STATE_TIMEOUT}ms (no interstitial was shown, so the page was merely slow)`,
+                { cause: error }
+            );
+        }
 
+        const deadline = Math.min(Date.now() + DETAIL_BUDGET_MS, startedAt + TOTAL_BUDGET_MS);
+        let skipped = 0;
         for (const b of bukken) {
-            const link = `${HOST}/rent_store/${b.id}/`;
-            // Cached per listing, so a monitoring poll only pays for listings it has not seen before.
-            // eslint-disable-next-line no-await-in-loop -- one shared tab, so the detail pages must be visited in turn
-            const detail = (await cache.tryGet(`athome:detail:${b.id}`, async () => {
-                await page.goto(link, { waitUntil: 'domcontentloaded' });
-                await page.waitForSelector('#serverApp-state', { state: 'attached', timeout: STATE_TIMEOUT });
-                return detailOf(await page.content());
-            })) as Detail | null;
+            let detail: Detail | null = null;
+            if (wantDetail) {
+                const key = `athome:detail:${b.id}`;
+                // A cache hit costs no navigation, so it never draws on the budget: a warm poll still
+                // returns every listing fully enriched however little time is left.
+                // eslint-disable-next-line no-await-in-loop -- one shared tab, so the detail pages must be visited in turn
+                const cached = await cache.get(key);
+                if (cached) {
+                    detail = JSON.parse(cached) as Detail;
+                } else if (Date.now() < deadline) {
+                    try {
+                        // eslint-disable-next-line no-await-in-loop -- same shared tab
+                        await page.goto(`${HOST}/rent_store/${b.id}/`, { waitUntil: 'domcontentloaded' });
+                        // eslint-disable-next-line no-await-in-loop -- same shared tab
+                        await page.waitForSelector('#serverApp-state', { state: 'attached', timeout: STATE_TIMEOUT });
+                        // eslint-disable-next-line no-await-in-loop -- same shared tab
+                        detail = detailOf(await page.content());
+                        cache.set(key, JSON.stringify(detail));
+                    } catch (error) {
+                        // One unreadable listing must not cost the other 29.
+                        logger.warn(`athome: detail page for ${b.id} failed: ${String(error)}`);
+                    }
+                } else {
+                    skipped += 1;
+                }
+            }
             const item = toItem(b, detail);
             if (item !== null) {
                 items.push(item);
             }
         }
-    } catch (error) {
-        logger.warn(`athome: ${listUrl} failed: ${String(error)}`);
-        throw new Error('athome: the listing page did not settle — it is probably still showing the 認証中 interstitial', { cause: error });
+        if (skipped > 0) {
+            logger.warn(`athome: ${listUrl} ran out of its ${DETAIL_BUDGET_MS}ms enrichment budget; ${skipped} of ${bukken.length} listings carry list-page fields only`);
+        }
     } finally {
         await destroy();
     }
 
-    // The site's default order is not chronological, so the feed is sorted by 情報公開日 itself, newest first.
+    // The site's default order is not chronological, so the feed is sorted by 情報公開日 itself, newest
+    // first. With `detail=0` nothing carries a date and the site's own order is kept.
     items.sort((a, b) => ((b._extra as ListingExtra).listed_at ?? '').localeCompare((a._extra as ListingExtra).listed_at ?? ''));
 
     return {
@@ -300,9 +361,13 @@ export const route: Route = {
     },
     description: `貸店舗 listings on アットホーム for one 市区町村，newest first.
 
-This route needs a browser. The page is Angular Universal SSR sitting behind a JavaScript interstitial, so its first paint can be an 「認証中」 screen that clears itself once the browser finishes loading; only the settled page carries the \`#serverApp-state\` payload the route reads. The route waits for that element and **throws if it never appears**, so an unsettled page surfaces as an error rather than as a silently empty feed. Expect it to be slower and less reliable than the plain-HTML listing routes, and cache it generously.
+This route needs a browser, and the browser is not a convenience. The page is Angular Universal SSR behind a JavaScript interstitial, and only the settled page carries the \`#serverApp-state\` payload the route reads. A plain HTTP client is served normally for about four requests and then gets the 「認証中」 interstitial on everything afterwards — pacing the requests 3s apart does not lift it — while a real browser keeps being served throughout. The interstitial reloads itself, which stops a \`domcontentloaded\` navigation from ever settling, so the page is opened with \`commit\` and every wait is bounded here; a blocked client is reported as such rather than as a slow page. **Being blocked is a volume problem, not a retry problem** — poll less often rather than retrying, and keep the cache warm. The route waits for \`#serverApp-state\` on the **list** page and **throws if it never appears**, so an unsettled page surfaces as an error rather than as a silently empty feed.
 
-情報公開日，the coordinates and the fee detail exist only on each listing's own page, so the route visits them — reusing one browser tab rather than opening a browser per listing, and caching per listing so a repeated poll only pays for listings it has not seen before. That is why \`limit\` defaults to 10 rather than the full page of 30.
+情報公開日，the coordinates and the fee detail exist only on each listing's own page, so the route visits them — reusing one browser tab rather than opening a browser per listing, and caching per listing so a repeated poll only pays for listings it has not seen before.
+
+Each of those visits is a full browser navigation, and on a modest VPS one can take several seconds, so at the default \`limit\` a cold cache can outrun RSSHub's own 30s request timeout. Enrichment therefore runs on a 20s budget: listings reached within it are enriched, the rest are returned with their list-page fields and a warning is logged. A cache hit needs no navigation and so never draws on the budget, which means a warm poll still returns everything fully enriched. A listing whose own page fails is logged and returned with list-page fields too — only the list page failing is fatal.
+
+**Everything the listing itself states — 所在地 down to the 丁目，階，面積，賃料 and the ward — is already on the list page.** If that is all you need, \`detail=0\` skips the per-listing visits entirely and makes this an ordinary fast route; \`listed_at\`，\`pubDate\`, the coordinates and the fee detail are then \`null\`.
 
 **The site's own ordering is not chronological**, so the feed is re-sorted by 情報公開日，newest first. Without that a newly published listing could sit well down the list and never reach a monitor watching the first page.
 
@@ -310,9 +375,10 @@ This route needs a browser. The page is Angular Universal SSR sitting behind a J
 
 \`raw\` additionally carries what the shared contract has no field for: \`lat\` / \`lng\`, the full 所在地 including its 都道府県，建物名 + 部屋番号，設備，築年月，敷引，償却，その他一時金 and the 定期借家 flag.
 
-| Query   | Description                                               | Default |
-| ------- | --------------------------------------------------------- | ------- |
-| \`limit\` | Listings to enrich (one detail page each, cached), max 30 | 10      |`,
+| Query    | Description                                                               | Default |
+| -------- | ------------------------------------------------------------------------- | ------- |
+| \`limit\`  | Listings to return, max 30                                                | 10      |
+| \`detail\` | \`0\` skips the per-listing detail visits and returns list-page fields only | \`1\`     |`,
     categories: ['other'],
     features: {
         requireConfig: false,
