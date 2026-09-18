@@ -8756,6 +8756,21 @@
       }
     ]
   },
+  "35mmc.com": {
+    "_name": "35mmc",
+    "www": [
+      {
+        "title": "Posts",
+        "docs": "https://docs.rsshub.app/routes/picture",
+        "source": [
+          "/category/:category",
+          "/category/:parent/:category",
+          "/"
+        ],
+        "target": "/35mmc/:category?"
+      }
+    ]
+  },
   "3dmgame.com": {
     "_name": "3DMGame",
     ".": [

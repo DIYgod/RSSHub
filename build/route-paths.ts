@@ -52,6 +52,7 @@ export type RoutePath =
   | `/2cycd/:fid/:sort?`
   | `/30secondsofcode/category/:category?/:subCategory?`
   | `/30secondsofcode/latest`
+  | `/35mmc/:category?`
   | `/36kr/:category/:subCategory?/:keyword?`
   | `/36kr/hot-list/:category?`
   | `/3dmgame/games/:name/:type?`

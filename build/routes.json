@@ -30088,6 +30088,53 @@
     "url": "www.30secondsofcode.org",
     "lang": "en"
   },
+  "35mmc": {
+    "routes": {
+      "/:category?": {
+        "path": "/:category?",
+        "categories": [
+          "picture"
+        ],
+        "view": 0,
+        "example": "/35mmc/5-frames-with",
+        "parameters": {
+          "category": "Category slug, see the table below or the URL of a category page. All posts by default"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "www.35mmc.com/category/:category",
+              "www.35mmc.com/category/:parent/:category",
+              "www.35mmc.com/"
+            ]
+          }
+        ],
+        "name": "Posts",
+        "maintainers": [
+          "IvanWng97"
+        ],
+        "description": "The official feed only carries excerpts; this route returns the full post with all images.\n\n| Category                      | Slug                              |\n| ----------------------------- | --------------------------------- |\n| 5 frames with...              | `5-frames-with`                   |\n| Gear Reviews & Experiences    | `reviews-experinces`              |\n| Photos & Projects             | `photos-projects`                 |\n| Theory & Reflections          | `theory-reflections`              |\n| Philosophy & Reflections      | `philosophy-reflections`          |\n| News & Events                 | `news-events`                     |\n| One Shot Story                | `one-shot-story`                  |\n| Tutorials & Knowhow           | `tutorials-knowhow`               |\n| Processes, Tutorials & Guides | `tutorials`                       |\n| Learning Journeys             | `learning-journeys`               |\n| Film                          | `film`                            |\n| Lenses                        | `lenses`                          |\n| Gear Theory                   | `gear-theory`                     |\n| Compact Cameras               | `compact-cameras`                 |\n| Point & Shoot                 | `point-shoot-film-camera-reviews` |\n| Rangefinder Cameras           | `rangefinder-cameras`             |\n| SLRs                          | `slrs`                            |\n| Scale Focus                   | `scale-focus-cameras`             |\n| Medium & Large Format         | `medium-format`                   |\n| Digital Cameras               | `digital-cameras`                 |\n| Accessories & More            | `accessories-more`                |\n| Mods, DIY & Lens Adapting     | `lens-adapting-mods`              |",
+        "location": "index.tsx",
+        "module": "() => import('@/routes/35mmc/index.tsx')"
+      }
+    },
+    "apiRoutes": {},
+    "name": "35mmc",
+    "url": "35mmc.com",
+    "categories": [
+      "picture"
+    ],
+    "description": "Film photography blog: camera and lens reviews, \"5 frames with…\", photo projects and essays.",
+    "lang": "en"
+  },
   "3dmgame": {
     "routes": {
       "/games/:name/:type?": {
