@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 import pMap from 'p-map';
 
 import type { ListingExtra } from '@/routes/temposmart/utils';
-import { clean, normalizeFloor, parseArea, parseHeavyFood, parseJpy, parseMonths, parseWalkMin, parseWard, summarize, tsuboUnit } from '@/routes/temposmart/utils';
+import { clean, normalizeFloor, parseArea, parseCondition, parseHeavyFood, parseJpy, parseMonths, parseWalkMin, parseWard, summarize, tsuboUnit } from '@/routes/temposmart/utils';
 import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import logger from '@/utils/logger';
@@ -30,7 +30,6 @@ interface DetailFields {
     status: string | null; // 現況 '空'
     contract: string | null; // 契約形態 '普通借家'
     term: string | null; // 契約期間 '3年'
-    industry_blocks: string[][]; // [適用業種, 特長, 立地]
     notes: string[]; // 備考 '不可業態： 重飲食不可／24時間営業不可'
 }
 
@@ -136,15 +135,6 @@ const parseDetail = (html: string): DetailFields => {
         status: field('現況'),
         contract: field('契約形態'),
         term: field('契約期間'),
-        industry_blocks: $('.applicable-industry-items')
-            .toArray()
-            .map((block) =>
-                $(block)
-                    .find('.grey-div p')
-                    .toArray()
-                    .map((p) => clean($(p).text()))
-                    .filter((t): t is string => t !== null)
-            ),
         notes: $('.detail-note li')
             .toArray()
             .map((li) => clean($(li).text()))
@@ -153,17 +143,16 @@ const parseDetail = (html: string): DetailFields => {
 };
 
 const mergeDetail = (base: ListingExtra, d: DetailFields): ListingExtra => {
-    const [applicable = [], features = [], location = []] = d.industry_blocks;
     const restriction = clean(d.notes.find((n) => n.includes('不可業態'))?.replace(/^不可業態[:：]\s*/, ''));
-    const limitParts = [applicable.length > 0 ? `可: ${applicable.join('、')}` : null, restriction === null ? null : `不可: ${restriction}`].filter((p): p is string => p !== null);
     return {
         ...base,
         walk_min: parseWalkMin(d.access),
         fixtures_transfer_jpy: parseJpy(d.fixtures),
-        condition: features.includes('スケルトン') ? 'skeleton' : base.condition,
-        heavy_food_ok: parseHeavyFood(restriction) ?? (applicable.length > 0 ? applicable.includes('重飲食') : null),
-        business_limit: limitParts.length > 0 ? limitParts.join(' / ') : null,
-        tags: [...features, ...location],
+        // 現況 is a real field but is published as '-' throughout, so the PR blurb is the only place
+        // this site says 居抜き or スケルトン at all.
+        condition: parseCondition(d.status, base.raw.comment),
+        heavy_food_ok: parseHeavyFood(restriction),
+        business_limit: restriction === null ? null : `不可: ${restriction}`,
         raw: { ...base.raw, access: d.access, fixtures: d.fixtures, status: d.status, contract: d.contract, term: d.term, notes: d.notes.join(' / ') || null },
     };
 };
