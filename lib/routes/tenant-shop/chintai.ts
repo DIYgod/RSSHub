@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 import pMap from 'p-map';
 
 import type { ListingExtra } from '@/routes/temposmart/utils';
-import { clean, normalizeFloor, parseArea, parseJpy, parseMonths, parseWalkMin, parseWard, parseYmd, sumKnown, summarize, tsuboUnit } from '@/routes/temposmart/utils';
+import { clean, normalizeFloor, parseArea, parseCondition, parseJpy, parseMonths, parseWalkMin, parseWard, parseYmd, sumKnown, summarize, tsuboUnit } from '@/routes/temposmart/utils';
 import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import logger from '@/utils/logger';
@@ -169,7 +169,9 @@ const parseDetail = (html: string): DetailFields => {
 
 const mergeDetail = (base: ListingExtra, d: DetailFields): ListingExtra => ({
     ...base,
-    condition: d.facilities.includes('居抜き') ? 'inuki' : base.condition,
+    // The 居抜き facility tag is set on only some listings; for the rest the PR blurb and 備考 are
+    // where the site says 居抜き or スケルトン.
+    condition: d.facilities.includes('居抜き') ? 'inuki' : parseCondition(base.raw.comment, d.remarks),
     listed_at: parseYmd(d.registered_at),
     tags: [...base.tags, ...d.facilities],
     raw: { ...base.raw, status: d.status, registered_at: d.registered_at, updated_at: d.updated_at, remarks: d.remarks },
