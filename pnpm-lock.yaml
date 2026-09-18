@@ -149,8 +149,8 @@ importers:
         specifier: 0.7.3
         version: 0.7.3
       imapflow:
-        specifier: 2.0.2
-        version: 2.0.2
+        specifier: 2.0.3
+        version: 2.0.3
       instagram-private-api:
         specifier: 1.46.1
         version: 1.46.1
@@ -4357,8 +4357,8 @@ packages:
     engines: {node: '>=6.9.0'}
     hasBin: true
 
-  imapflow@2.0.2:
-    resolution: {integrity: sha512-jrWWecWFifN3Feum2MqaTUupNeYSAdPEltKuwGdr8IPdxW72NZXf7ObVUfTWoUH2MPrli0q7SZm9pRt8ob/9XQ==}
+  imapflow@2.0.3:
+    resolution: {integrity: sha512-Y5jq5EbG+7hZVZKBRw6gMii/wh+ZdWpRkq9PE5UHVNm29lE89QodiTxcAWxpTFwqroGsb2UXx3z5TO0Z8tirEw==}
     engines: {node: '>=20.0.0'}
 
   import-in-the-middle@3.4.0:
@@ -4401,6 +4401,10 @@ packages:
 
   ip-address@10.7.0:
     resolution: {integrity: sha512-BGFsyJd5mpXp3rK6jIdADLNgpJUK1jnjzvYF8lK+VyDab9JAmqN0YOKDdP17HlgKb2+ehPgDc8EtnRLbGCAMhA==}
+    engines: {node: '>= 12'}
+
+  ip-address@10.7.1:
+    resolution: {integrity: sha512-4OUAqU9Z1i3vCnS05hzGiFnEMDpQ+62pAD/MVQOp83fYyNC8GleCqaS0QikQBmcWCrKFiUs/B8ztRRiYOAXuCA==}
     engines: {node: '>= 12'}
 
   ip-regex@4.3.0:
@@ -9700,7 +9704,7 @@ snapshots:
 
   image-size@0.7.5: {}
 
-  imapflow@2.0.2:
+  imapflow@2.0.3:
     dependencies:
       '@zone-eu/mailsplit': 5.4.16
       encoding-japanese: 2.3.0
@@ -9770,6 +9774,8 @@ snapshots:
       - supports-color
 
   ip-address@10.7.0: {}
+
+  ip-address@10.7.1: {}
 
   ip-regex@4.3.0: {}
 
@@ -11295,7 +11301,7 @@ snapshots:
 
   socks@2.8.10:
     dependencies:
-      ip-address: 10.7.0
+      ip-address: 10.7.1
       smart-buffer: 4.2.0
 
   socks@2.8.9:
