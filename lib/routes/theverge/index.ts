@@ -90,7 +90,8 @@ const renderBlock = (b) => {
         case 'CoreImageBlockType':
             return `<figure><img src="${b.thumbnail.url.split('?', 1)[0]}" alt="${b.alt}" /><figcaption>${b.caption.html}</figcaption></figure>`;
         case 'CoreListBlockType':
-            return `${b.ordered ? '<ol>' : '<ul>'}${b.items.map((i) => `<li>${renderContents(i)}</li>`).join('')}${b.ordered ? '</ol>' : '</ul>'}`;
+            // a list nested in a quote comes through the GraphQL payload with no fields beyond __typename
+            return b.items?.length ? `${b.ordered ? '<ol>' : '<ul>'}${b.items.map((i) => `<li>${renderContents(i)}</li>`).join('')}${b.ordered ? '</ol>' : '</ul>'}` : '';
         case 'CoreParagraphBlockType':
             return renderContents(b);
         case 'CorePullquoteBlockType':
