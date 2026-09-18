@@ -6,7 +6,7 @@ import timezone from '@/utils/timezone';
 import { renderDescription } from './templates/description';
 
 export const route: Route = {
-    path: ['/zh/:type?', '/ff14_zh/:type?'],
+    path: '/zh/:type?',
     categories: ['game'],
     example: '/ff14/zh/news',
     parameters: { type: '分类名，预设为 `all`' },
@@ -34,7 +34,7 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const referer = 'https://ff.sdo.com/web8/index.html';
+    const referer = 'https://ff.web.sdo.com/web8/index.html';
     const type = ctx.req.param('type') ?? 'all';
 
     const categories = {
@@ -49,13 +49,7 @@ async function handler(ctx) {
         all: `5309,${Object.values(categories).join(',')}`,
     };
 
-    const response = await got({
-        method: 'get',
-        url: `http://api.act.sdo.com/UnionNews/List?gameCode=ff&category=${typeNumber[type]}&pageIndex=0&pageSize=50`,
-        headers: {
-            Referer: referer,
-        },
-    });
+    const response = await got(`https://cqnews.web.sdo.com/api/news/newsList?gameCode=ff&CategoryCode=${typeNumber[type]}&pageIndex=0&pageSize=50`);
 
     const data = response.data.Data;
 
@@ -63,9 +57,9 @@ async function handler(ctx) {
         title: '最终幻想14（国服）新闻中心',
         link: referer + '#/newstab/newslist',
         description: '《最终幻想14》是史克威尔艾尼克斯出品的全球经典游戏品牌FINAL FANTASY系列的最新作品，IGN获得9.2高分！全球累计用户突破1600万！',
-        item: data.map(({ Title, Summary, Author, PublishDate, HomeImagePath, Id }) => ({
+        item: data.map(({ Title, Summary, OutLink, PublishDate, HomeImagePath, Id }) => ({
             title: Title,
-            link: Author || `https://ff.web.sdo.com/web8/index.html#/newstab/newscont/${Id}`,
+            link: OutLink || `https://ff.web.sdo.com/web8/index.html#/newstab/newscont/${Id}`,
             description: renderDescription({
                 image: HomeImagePath,
                 description: Summary,
