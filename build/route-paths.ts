@@ -1733,6 +1733,7 @@ export type RoutePath =
   | `/hzcu/news/latest`
   | `/i-cable/news/:category?`
   | `/i-tenpo/:pref/:city/:type?`
+  | `/i-tenpo/detail/:id`
   | `/ianspriggs/:category?`
   | `/iapp/news`
   | `/icac/news/:lang?`

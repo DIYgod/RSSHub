@@ -5398,6 +5398,9 @@
   "/hzcu/news/latest": [
     "zhang-wangz"
   ],
+  "/i-tenpo/detail/:id": [
+    "pseudoyu"
+  ],
   "/i-tenpo/:pref/:city/:type?": [
     "pseudoyu"
   ],

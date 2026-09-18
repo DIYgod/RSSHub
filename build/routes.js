@@ -72706,6 +72706,40 @@ export default {
   },
   "i-tenpo": {
     "routes": {
+      "/detail/:id": {
+        "path": "/detail/:id",
+        "name": "物件詳細",
+        "url": "www.i-tenpo.com",
+        "maintainers": [
+          "pseudoyu"
+        ],
+        "example": "/i-tenpo/detail/99523",
+        "parameters": {
+          "id": {
+            "description": "The numeric 物件 id, i.e. the `99523` in `https://www.i-tenpo.com/t99523`"
+          }
+        },
+        "description": "One listing on 居抜き店舗.com, for following a single property rather than a whole ward — a listing's 賃料，引渡状態 and availability all change over its life.\n\nIts one advantage over the ward routes is the address. The page's own 所在地 field stops at the 町 exactly as the list does (`東京都新宿区高田馬場 詳細はログイン後に表示`), but the document title carries the 丁目 — `新宿区高田馬場2丁目/高田馬場駅徒歩2分/…` — so `address_hint` reaches the 丁目 here and only here.\n\n`_extra` follows the shared listing shape. 敷金 and 礼金 are shown only to signed-in users, here as on the list page, so they stay `null`. The site publishes 更新日 but no 掲載日，so `listed_at` and `pubDate` are a last-modified date rather than a first-listed one — do not read them as a publication date.",
+        "categories": [
+          "other"
+        ],
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportRadar": true
+        },
+        "radar": [
+          {
+            "source": [
+              "www.i-tenpo.com/t:id"
+            ],
+            "target": "/detail/:id"
+          }
+        ],
+        "location": "detail.ts",
+        "module": () => import('@/routes/i-tenpo/detail.ts')
+      },
       "/:pref/:city/:type?": {
         "path": "/:pref/:city/:type?",
         "name": "居抜き物件",
