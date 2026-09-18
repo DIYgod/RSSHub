@@ -25204,6 +25204,19 @@
       }
     ]
   },
+  "i-tenpo.com": {
+    "_name": "Inukitenpo",
+    "www": [
+      {
+        "title": "居抜き物件",
+        "docs": "https://docs.rsshub.app/routes/other",
+        "source": [
+          "/:pref/:city/:type"
+        ],
+        "target": "/i-tenpo/:pref/:city/:type"
+      }
+    ]
+  },
   "iapp.org": {
     "_name": "IAPP",
     ".": [

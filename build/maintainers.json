@@ -5392,6 +5392,9 @@
   "/hzcu/news/latest": [
     "zhang-wangz"
   ],
+  "/i-tenpo/:pref/:city/:type?": [
+    "pseudoyu"
+  ],
   "/ianspriggs/:category?": [
     "nczitzk"
   ],
@@ -5533,7 +5536,7 @@
   "/inoreader/rss/:user/:tag": [
     "IvanWng97"
   ],
-  "/inshokuten/bukken/:area?": [
+  "/inshokuten/bukken/:area?/:region?": [
     "pseudoyu"
   ],
   "/inshokuten/rent-benchmark/:area?/:line?": [
@@ -8415,7 +8418,7 @@
   "/temponw/estates/:area?": [
     "pseudoyu"
   ],
-  "/temposmart/estates/:pref?": [
+  "/temposmart/estates/:pref?/:district?": [
     "pseudoyu"
   ],
   "/tenant-shop/chintai/:pref?/:type?": [

@@ -72571,6 +72571,58 @@
     ],
     "lang": "zh-CN"
   },
+  "i-tenpo": {
+    "routes": {
+      "/:pref/:city/:type?": {
+        "path": "/:pref/:city/:type?",
+        "name": "居抜き物件",
+        "url": "www.i-tenpo.com",
+        "maintainers": [
+          "pseudoyu"
+        ],
+        "example": "/i-tenpo/tokyo/shinjuku-city",
+        "parameters": {
+          "pref": {
+            "description": "都道府県 slug, e.g. `tokyo`, `kanagawa`"
+          },
+          "city": {
+            "description": "市区町村 slug as the site spells it — `shinjuku-city`, `minato-city`, `yokohamashinaka-city`"
+          },
+          "type": {
+            "description": "Optional 業態 slug, e.g. `bar`, `izakaya`, `cafe`, `restaurant`, `other-restaurants`; omit for every 業態"
+          }
+        },
+        "description": "Listings on 居抜き店舗.com for one 市区町村 (first page, 20 listings), optionally narrowed to one 業態 — `/i-tenpo/tokyo/shinjuku-city/bar` is 新宿区のバー.\n\nEach item's `_extra` follows the shared listing shape (賃料，坪，坪単価，階層，最寄駅，造作価格，前業態，引渡状態，…); unknown values are `null`. 敷金，礼金 and the coordinates are shown only to signed-in users and are therefore always `null`, the 丁目 appears only on the detail page so `address_hint` stops at the 町，and the cards carry no 登録日 so items have no `pubDate`.\n\n引渡状態 combines two things — 営業状況 (`閉店済` / `営業中` / `確認中` / `新築`) and 引渡形態 (`居抜き` / `スケルトン` / `現状渡し`). Only the 引渡形態 half maps to `condition`, so `現状渡し` yields `null` rather than being forced into 居抜き or スケルトン；the whole string stays in `raw.handover`, which is where the 閉店済 closure signal can be read. Likewise 造作価格 `造作なし` / `造作無償` become `0` because they really are zero, while `確認中` stays `null` because it is unknown.\n\nAn unknown 市区町村 slug is answered by the site with the whole prefecture at HTTP 200 rather than a 404, so the route checks the area the page actually resolved and fails instead of silently serving prefecture-wide listings as if they were one ward's.",
+        "categories": [
+          "other"
+        ],
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportRadar": true
+        },
+        "radar": [
+          {
+            "source": [
+              "www.i-tenpo.com/:pref/:city/:type"
+            ],
+            "target": "/:pref/:city/:type"
+          }
+        ],
+        "location": "property.ts",
+        "module": "() => import('@/routes/i-tenpo/property.ts')"
+      }
+    },
+    "apiRoutes": {},
+    "name": "Inukitenpo",
+    "url": "www.i-tenpo.com",
+    "description": "居抜き店舗.com — 飲食店向け居抜き物件・貸店舗情報サイト",
+    "lang": "ja",
+    "ja": {
+      "name": "居抜き店舗.com"
+    }
+  },
   "ianspriggs": {
     "routes": {
       "/:category?": {
@@ -74174,8 +74226,8 @@
   },
   "inshokuten": {
     "routes": {
-      "/bukken/:area?": {
-        "path": "/bukken/:area?",
+      "/bukken/:area?/:region?": {
+        "path": "/bukken/:area?/:region?",
         "name": "新着物件",
         "url": "www.inshokuten.com",
         "maintainers": [
@@ -74224,9 +74276,12 @@
                 "label": "九州"
               }
             ]
+          },
+          "region": {
+            "description": "Optional 区市, as 飲食店.COM's own numeric id — **not** a JIS code (新宿区 `7`, 港区 `4`, 横浜市中区 `63`). Only valid for the `local-*` sub-areas (`23ward`, `23ward_out`, `yokohama_kawasaki`, `chiba`, `saitama`); omit for the whole area."
           }
         },
-        "description": "New restaurant-property listings on 飲食店.COM sorted by 登録日 (first page, 20 listings). Each item's `_extra` carries the structured listing fields (賃料，坪，坪単価，階，最寄駅，造作譲渡料，現況，前業態，出店可能業態，登録日，…); unknown values are `null`. 保証金 and 礼金 are members-only on the site and therefore always `null`.",
+        "description": "New restaurant-property listings on 飲食店.COM sorted by 登録日 (first page, 20 listings) — for a whole area, or for one 区市 when `region` is given. Each item's `_extra` carries the structured listing fields (賃料，坪，坪単価，階，最寄駅，造作譲渡料，現況，前業態，出店可能業態，登録日，…); unknown values are `null`. 保証金 and 礼金 are members-only on the site and therefore always `null`.\n\n`region` is 飲食店.COM's own numeric 区市 id, **not** a JIS code, and applies only to the `local-*` sub-areas — `/inshokuten/bukken/23ward/7` is 新宿区 and `/inshokuten/bukken/yokohama_kawasaki/63` is 横浜市中区。東京 23 区 runs 1–23 and 横浜・川崎 runs 51–72; the site answers an unknown id with a 404, so a wrong value fails loudly instead of silently returning the parent area.",
         "categories": [
           "other"
         ],
@@ -114250,8 +114305,8 @@
   },
   "temposmart": {
     "routes": {
-      "/estates/:pref?": {
-        "path": "/estates/:pref?",
+      "/estates/:pref?/:district?": {
+        "path": "/estates/:pref?/:district?",
         "name": "新着物件",
         "url": "www.temposmart.jp",
         "maintainers": [
@@ -114292,9 +114347,12 @@
                 "label": "兵庫県 (28)"
               }
             ]
+          },
+          "district": {
+            "description": "Optional 市区町村, as a 5-digit JIS X 0402 code (新宿区 `13104`, 港区 `13103`, 横浜市中区 `14104`). Must belong to `pref`; omit for the whole prefecture."
           }
         },
-        "description": "New listings on テンポスマート for one prefecture, sorted by 新着順 (first page, 50 listings). Each item's `_extra` carries the structured listing fields (賃料，坪，坪単価，階，最寄駅，保証金，礼金，造作譲渡料，現況，業種制限，登録日，…) parsed from the list and detail pages; unknown values are `null`.\n\n| Query   | Description                                                                  | Default |\n| ------- | ---------------------------------------------------------------------------- | ------- |\n| `limit` | Number of listings to process (detail pages are fetched per listing), max 50 | 30      |",
+        "description": "New listings on テンポスマート for one prefecture — or one 市区町村 when `district` is given — sorted by 新着順 (first page, 50 listings). Each item's `_extra` carries the structured listing fields (賃料，坪，坪単価，階，最寄駅，保証金，礼金，造作譲渡料，現況，業種制限，登録日，…) parsed from the list and detail pages; unknown values are `null`.\n\n`district` is a 5-digit JIS X 0402 市区町村 code whose first two digits are the prefecture — `/temposmart/estates/tokyo/13104` is 新宿区. A code from another prefecture is rejected rather than silently returning that prefecture's listings.\n\n| Query   | Description                                                                  | Default |\n| ------- | ---------------------------------------------------------------------------- | ------- |\n| `limit` | Number of listings to process (detail pages are fetched per listing), max 50 | 30      |",
         "categories": [
           "other"
         ],

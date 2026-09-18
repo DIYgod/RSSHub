@@ -1730,6 +1730,7 @@ export type RoutePath =
   | `/hzcu/cssearch/latest/:webVpn/:key`
   | `/hzcu/news/latest`
   | `/i-cable/news/:category?`
+  | `/i-tenpo/:pref/:city/:type?`
   | `/ianspriggs/:category?`
   | `/iapp/news`
   | `/icac/news/:lang?`
@@ -1791,7 +1792,7 @@ export type RoutePath =
   | `/infzm/hot`
   | `/inoreader/html_clip/:user/:tag`
   | `/inoreader/rss/:user/:tag`
-  | `/inshokuten/bukken/:area?`
+  | `/inshokuten/bukken/:area?/:region?`
   | `/inshokuten/rent-benchmark/:area?/:line?`
   | `/inspirehep/authors/:id`
   | `/inspirehep/literature/:q`
@@ -3236,7 +3237,7 @@ export type RoutePath =
   | `/telegram/stickerpack/:name`
   | `/telegram/stories/:username/:story?`
   | `/temponw/estates/:area?`
-  | `/temposmart/estates/:pref?`
+  | `/temposmart/estates/:pref?/:district?`
   | `/tenant-shop/chintai/:pref?/:type?`
   | `/tencent/cloud/developer/column/:categoryId?`
   | `/tencent/news/author/:mid`
