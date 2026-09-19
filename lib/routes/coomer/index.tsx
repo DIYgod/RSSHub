@@ -1,6 +1,7 @@
 import { load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
 
+import { config } from '@/config';
 import type { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -52,7 +53,7 @@ async function handler(ctx) {
     const id = ctx.req.param('id');
     const isPosts = source === 'posts';
 
-    const rootUrl = 'https://coomer.st';
+    const rootUrl = config.coomer.rootUrl;
     const apiUrl = `${rootUrl}/api/v1`;
     const currentUrl = isPosts ? `${apiUrl}/posts` : `${apiUrl}/${source}/user/${id}/posts`;
 

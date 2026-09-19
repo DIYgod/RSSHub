@@ -1,4 +1,6 @@
-const KEMONO_ROOT_URL = 'https://kemono.cr';
+import { config } from '@/config';
+
+const KEMONO_ROOT_URL = config.kemono.rootUrl;
 const KEMONO_API_URL = `${KEMONO_ROOT_URL}/api/v1`;
 const MIME_TYPE_MAP = {
     m4a: 'audio/mp4',

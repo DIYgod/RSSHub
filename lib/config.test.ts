@@ -126,6 +126,18 @@ describe('config', () => {
         delete process.env.CACHE_HTTP_TOKEN;
     });
 
+    it('Kemono and Coomer root URLs', async () => {
+        process.env.KEMONO_ROOT_URL = 'https://kemono.example.com';
+        process.env.COOMER_ROOT_URL = 'https://coomer.example.com';
+
+        const { config } = await import('./config');
+        expect(config.kemono.rootUrl).toBe('https://kemono.example.com');
+        expect(config.coomer.rootUrl).toBe('https://coomer.example.com');
+
+        delete process.env.KEMONO_ROOT_URL;
+        delete process.env.COOMER_ROOT_URL;
+    });
+
     it('remote config', async () => {
         process.env.REMOTE_CONFIG = 'http://rsshub.test/config';
 
