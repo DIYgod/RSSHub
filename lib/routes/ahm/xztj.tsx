@@ -4,8 +4,8 @@ import { renderToString } from 'hono/jsx/dom/server';
 
 import type { DataItem, Route } from '@/types';
 import { parseDate } from '@/utils/parse-date';
-import { getPlaywrightPage } from '@/utils/playwright';
 
+import { fetchPage } from './ct2-waap';
 import { namespace } from './namespace';
 
 const baseUrl = 'https://www.ahm.cn';
@@ -26,7 +26,7 @@ export const route: Route = {
     example: '/ahm/exhibition/xztj',
     features: {
         requireConfig: false,
-        requirePuppeteer: true,
+        requirePuppeteer: false,
         antiCrawler: true,
         supportBT: false,
         supportPodcast: false,
@@ -44,21 +44,7 @@ export const route: Route = {
         const museumName = namespace.zh?.name || namespace.name;
         const listUrl = `${baseUrl}/Exhibition/TListNow/xztj`;
 
-        // Anhui Museum website use CT2-WAAP to prevent web scraping, so need to use Playwright to get the page content.
-        const { page, destroy } = await getPlaywrightPage(listUrl, {
-            gotoConfig: { waitUntil: 'domcontentloaded' },
-        });
-
-        let html: string;
-        try {
-            await page.waitForSelector('ul.exhibition-new li', {
-                timeout: 15000,
-            });
-            html = await page.content();
-        } finally {
-            await destroy();
-        }
-
+        const html = await fetchPage(listUrl);
         const $ = load(html);
 
         const items: DataItem[] = $('ul.exhibition-new li')
