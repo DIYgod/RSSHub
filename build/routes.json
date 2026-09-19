@@ -33031,6 +33031,74 @@
     "url": "news.ahjzu.edu.cn",
     "lang": "zh-CN"
   },
+  "ahm": {
+    "routes": {
+      "/news/abxw": {
+        "path": "/news/abxw",
+        "categories": [
+          "travel"
+        ],
+        "example": "/ahm/news/abxw",
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": true,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "www.ahm.cn/News/List/abxw"
+            ],
+            "target": "/news/abxw"
+          }
+        ],
+        "name": "安博新闻",
+        "maintainers": [
+          "magazian"
+        ],
+        "location": "abxw.ts",
+        "module": "() => import('@/routes/ahm/abxw.ts')"
+      },
+      "/exhibition/xztj": {
+        "path": "/exhibition/xztj",
+        "categories": [
+          "travel"
+        ],
+        "example": "/ahm/exhibition/xztj",
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": true,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "www.ahm.cn/Exhibition/TListNow/xztj"
+            ],
+            "target": "/exhibition/xztj"
+          }
+        ],
+        "name": "Special Exhibition",
+        "maintainers": [
+          "magazian"
+        ],
+        "location": "xztj.tsx",
+        "module": "() => import('@/routes/ahm/xztj.tsx')"
+      }
+    },
+    "apiRoutes": {},
+    "name": "Anhui Museum",
+    "url": "www.ahm.cn",
+    "zh": {
+      "name": "安徽博物院"
+    }
+  },
   "ahmu": {
     "routes": {
       "/news": {

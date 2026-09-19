@@ -153,6 +153,8 @@ export type RoutePath =
   | `/ahau/jwc/:type`
   | `/ahau/main/:type`
   | `/ahjzu/news`
+  | `/ahm/exhibition/xztj`
+  | `/ahm/news/abxw`
   | `/ahmu/news`
   | `/ahstu/:type?`
   | `/ahut/cstzgg`

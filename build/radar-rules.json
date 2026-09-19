@@ -10275,6 +10275,27 @@
       }
     ]
   },
+  "ahm.cn": {
+    "_name": "Anhui Museum",
+    "www": [
+      {
+        "title": "安博新闻",
+        "docs": "https://docs.rsshub.app/routes/travel",
+        "source": [
+          "/News/List/abxw"
+        ],
+        "target": "/ahm/news/abxw"
+      },
+      {
+        "title": "Special Exhibition",
+        "docs": "https://docs.rsshub.app/routes/travel",
+        "source": [
+          "/Exhibition/TListNow/xztj"
+        ],
+        "target": "/ahm/exhibition/xztj"
+      }
+    ]
+  },
   "ahmu.edu.cn": {
     "_name": "安徽医科大学",
     "yjsxy": [
