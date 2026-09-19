@@ -7,6 +7,7 @@ import { config } from '@/config';
 import NotFoundError from '@/errors/types/not-found';
 import type { Data } from '@/types';
 import cache from '@/utils/cache';
+import { isWorker } from '@/utils/is-worker';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
@@ -14,6 +15,8 @@ import { formatDescription, getChannelWithId, getChannelWithUsername, getPlaylis
 import { getSrtAttachmentBatch } from './subtitles';
 
 const { OAuth2 } = googleAuth;
+const workerFetch: typeof fetch = (input, init) => fetch(input, init);
+const transportOptions = isWorker ? { fetchImplementation: workerFetch } : {};
 
 dayjs.extend(duration);
 
@@ -30,6 +33,7 @@ if (config.youtube && config.youtube.key) {
         youtube[index] = googleYoutube({
             version: 'v3',
             auth: key,
+            ...transportOptions,
         });
         count = index + 1;
     }
@@ -53,7 +57,12 @@ const exec = async (func) => {
 
 let youtubeOAuth2Client;
 if (config.youtube && config.youtube.clientId && config.youtube.clientSecret && config.youtube.refreshToken) {
-    youtubeOAuth2Client = new OAuth2(config.youtube.clientId, config.youtube.clientSecret, 'https://developers.google.com/oauthplayground');
+    youtubeOAuth2Client = new OAuth2({
+        clientId: config.youtube.clientId,
+        clientSecret: config.youtube.clientSecret,
+        redirectUri: 'https://developers.google.com/oauthplayground',
+        transporterOptions: transportOptions,
+    });
     youtubeOAuth2Client.setCredentials({ refresh_token: config.youtube.refreshToken });
 }
 

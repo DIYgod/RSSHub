@@ -5,7 +5,7 @@
     "singleQuote": true,
     "trailingComma": "es5",
     "arrowParens": "always",
-    "ignorePatterns": ["lib/routes-deprecated", "lib/router.js", "babel.config.js", "scripts/docker/minify-docker.js", "dist", "pnpm-lock.yaml"],
+    "ignorePatterns": ["scripts/docker/minify-docker.js", "dist", "pnpm-lock.yaml"],
     "sortPackageJson": {
         "sortScripts": true
     },

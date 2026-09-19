@@ -16,7 +16,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
     const limit = Number(ctx.req.query('limit') ?? '50');
 
     const baseUrl = 'https://papers.cool';
-    const targetUrl: string = new URL(`${id}?show=${limit}`, baseUrl).href;
+    const targetUrl = `${baseUrl}/${id}?show=${limit}`;
 
     const response = await ofetch(targetUrl);
     const $: CheerioAPI = load(response);

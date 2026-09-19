@@ -1,11 +1,9 @@
-import type { CheerioAPI } from 'cheerio';
-import { load } from 'cheerio';
 import type { Context } from 'hono';
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 
 import InvalidParameterError from '@/errors/types/invalid-parameter';
-import type { Data, DataItem, Language, Route } from '@/types';
+import type { Data, DataItem, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
@@ -47,6 +45,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
     const targetUrl: string = new URL(`news${category === 'all' ? '' : `/newslist?type=${category}`}`, baseUrl).href;
     const apiBaseUrl = 'https://api.gamebase.com.tw';
     const apiUrl: string = new URL('api/news/getNewsList', apiBaseUrl).href;
+    const language = 'zh-TW';
 
     const response = await ofetch(apiUrl, {
         method: 'post',
@@ -57,29 +56,29 @@ export const handler = async (ctx: Context): Promise<Data> => {
         },
     });
 
-    const targetResponse = await ofetch(targetUrl);
-    const $: CheerioAPI = load(targetResponse);
-    const language = ($('html').attr('lang') ?? 'zh-TW') as Language;
-
     const items: DataItem[] = await Promise.all(
         response.return_msg?.list?.slice(0, limit).map((item) =>
             cache.tryGet(`gamebase-news-${item.news_no}`, async (): Promise<DataItem> => {
-                const title: string = item.news_title;
-                const pubDate: number | string = item.post_time;
+                const detailResponse = await ofetch(`${apiBaseUrl}/api/news/getNewsInfo`, {
+                    method: 'post',
+                    body: {
+                        news_no: item.news_no,
+                        GB_type: 'newsInfo',
+                    },
+                });
+
+                const detail = detailResponse.return_msg ?? item;
+
+                const title: string = detail.news_title ?? item.news_title;
+                const pubDate: number | string = detail.post_time ?? item.post_time;
                 const linkUrl: string | undefined = item.news_no ? `news/detail/${item.news_no}` : undefined;
-                const categories: string[] = [item.system];
-                const authors: DataItem['author'] = item.nickname;
+                const categories: string[] = detail.tag?.length ? detail.tag.map((t) => t.tag_name) : item.system ? [item.system] : [];
+                const authors: DataItem['author'] = detail.nickname ?? item.nickname;
                 const guid = `gamebase-news-${item.news_no}`;
-                const image: string | undefined = item.news_img;
-                const updated: number | string = item.updated ?? pubDate;
+                const image: string | undefined = detail.news_img ?? item.news_img;
+                const updated: number | string = detail.update_date ?? item.update_date ?? pubDate;
 
-                let metaDesc = item.news_meta?.meta_des;
-
-                if (!metaDesc) {
-                    const detailResponse = await ofetch(item.link);
-
-                    metaDesc = (detailResponse.match(/(\\u003C.*?)","/)?.[1] ?? '').replaceAll(String.raw`\"`, '"').replaceAll(/\\u([\da-f]{4})/gi, (match, hex) => String.fromCodePoint(Number.parseInt(hex, 16)));
-                }
+                const metaDesc = detail.news_content ?? detail.news_meta?.meta_des;
 
                 const description: string = renderDescription({
                     images:
@@ -91,7 +90,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                                   },
                               ]
                             : undefined,
-                    intro: item.news_short_desc,
+                    intro: detail.news_short_desc ?? item.news_short_desc,
                     description: metaDesc,
                 });
 
@@ -120,15 +119,15 @@ export const handler = async (ctx: Context): Promise<Data> => {
     );
 
     return {
-        title: $('title').text(),
-        description: $('meta[property="og:description"]').attr('content'),
+        title: '新聞 | 遊戲基地 Gamebase',
+        description: '精選基地編輯每日為你帶來的電玩、動漫、娛樂遊戲最新新聞',
         link: targetUrl,
         item: items,
         allowEmpty: true,
-        image: $('meta[property="og:image"]').attr('content'),
-        author: $('meta[property="og:title"]').attr('content')?.split(/\|/).pop()?.trim(),
+        image: 'https://image.gamebase.com.tw/gb_tw/static/logo_01.png',
+        author: '遊戲基地 Gamebase',
         language,
-        id: $('meta[property="og:url"]').attr('content'),
+        id: targetUrl,
     };
 };
 

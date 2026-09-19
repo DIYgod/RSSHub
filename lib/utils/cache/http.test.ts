@@ -115,6 +115,21 @@ describe('http cache module', () => {
         await expect(cache.globalCache.get('route/key')).resolves.toBe('route-cache');
 
         expect(cache.status.available).toBe(true);
+        expect(cache.globalCache.supportsAtomicClaims).toBe(false);
         expect(urls[0]).not.toContain('?refresh=1');
+    });
+
+    it('reports Cloudflare routing errors instead of treating them as cache misses', async () => {
+        setHttpCacheEnv();
+        const { errorSpy } = await spyOnLogger();
+        vi.stubGlobal(
+            'fetch',
+            vi.fn(() => new Response('error code: 1042', { status: 404 }))
+        );
+        const cache = (await import('@/utils/cache/http')).default;
+        cache.init();
+
+        await expect(cache.get('missing')).resolves.toBeNull();
+        expect(errorSpy).toHaveBeenCalledWith('HTTP cache get returned HTTP 404 without a cache miss response.');
     });
 });

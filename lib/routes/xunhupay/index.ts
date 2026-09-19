@@ -1,5 +1,6 @@
 import type { Route } from '@/types';
 import buildData from '@/utils/common-config';
+import { parseDate } from '@/utils/parse-date';
 
 const baseUrl = 'https://www.xunhupay.com';
 
@@ -32,19 +33,18 @@ async function handler() {
     return await buildData({
         link,
         url: link,
-        title: '%title%',
-        description: '%description%',
-        params: {
-            title: '博客',
-            description: '虎皮椒-博客',
-        },
+        title: '博客',
+        description: '虎皮椒-博客',
         item: {
             item: '.blog-post > article',
-            title: `$('h5').text()`,
-            link: `$('a').attr('href')`,
-            description: `$('.content').text()`,
-            pubDate: `parseDate($('.date').text(), 'YYYY-MM-DD')`,
-            guid: Buffer.from(`$('a').attr('href')`).toString('base64'),
+            title: ($) => $('h5').text(),
+            link: ($) => $('a').attr('href'),
+            description: ($) => $('.content').text(),
+            pubDate: ($) => parseDate($('.date').text(), 'YYYY-MM-DD'),
+            guid: ($) => {
+                const href = $('a').attr('href');
+                return href ? Buffer.from(href).toString('base64') : undefined;
+            },
         },
     });
 }

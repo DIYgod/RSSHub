@@ -41,6 +41,15 @@ const fakeDirectories = {
                 handler: (ctx: Context) => ({ title: String(ctx.get('fromOuter')), link: 'https://example.com', item: [], allowEmpty: true }),
             },
         },
+        '/redirect.ts': {
+            route: {
+                path: '/redirect',
+                name: 'Redirect',
+                handler: (ctx: Context) => {
+                    ctx.set('redirect', '/flat/single');
+                },
+            },
+        },
         '/boom.ts': {
             route: {
                 path: '/boom',
@@ -90,13 +99,17 @@ afterAll(() => {
 const buildApp = () => {
     const namespaces: NamespacesType = {};
     const dev = createDevRegistry({ routesDirectory, namespaces });
-    const app = new Hono<{ Variables: { fromOuter: string; data: Data; apiData: { ok: boolean } } }>();
+    const app = new Hono<{ Variables: { fromOuter: string; data: Data; apiData: { ok: boolean }; redirect: string } }>();
     app.use(async (ctx, next) => {
         ctx.set('fromOuter', 'bridged');
         await next();
         const apiData = ctx.get('apiData');
         if (apiData) {
             return ctx.json(apiData);
+        }
+        const redirect = ctx.get('redirect');
+        if (redirect) {
+            return ctx.redirect(redirect, 301);
         }
         const data = ctx.get('data');
         if (data) {
@@ -141,6 +154,13 @@ describe('createDevRegistry', () => {
         const response = await app.request('/flat/outer');
         const body = await response.json();
         expect(body.title).toBe('bridged');
+    });
+
+    it('finalizes handlers that only set a redirect', async () => {
+        const { app } = buildApp();
+        const response = await app.request('/flat/redirect');
+        expect(response.status).toBe(301);
+        expect(response.headers.get('location')).toBe('/flat/single');
     });
 
     it('serves nested namespaces', async () => {

@@ -1,5 +1,8 @@
 import dayjs from 'dayjs';
+import utc from 'dayjs/plugin/utc.js';
 import { renderToString } from 'hono/jsx/dom/server';
+
+dayjs.extend(utc);
 
 type NewsItem = {
     url?: string;
@@ -28,7 +31,7 @@ export const renderDescription = ({ description, news, timeline, rootUrl }: Desc
     renderToString(
         <>
             {description ? <p>{description}</p> : null}
-            {news ? (
+            {news?.length ? (
                 <>
                     <h3>媒体报道</h3>
                     <table cellspacing="8">
@@ -47,7 +50,7 @@ export const renderDescription = ({ description, news, timeline, rootUrl }: Desc
                     </table>
                 </>
             ) : null}
-            {timeline ? (
+            {timeline?.topics?.length ? (
                 <>
                     <h3>事件追踪</h3>
                     <table cellspacing="10">
@@ -55,7 +58,7 @@ export const renderDescription = ({ description, news, timeline, rootUrl }: Desc
                             {timeline.topics?.map((topic, index) => (
                                 <tr key={String(topic.uid ?? topic.title ?? index)}>
                                     <th align="left">
-                                        <small>{topic.publishDate ? dayjs(topic.publishDate).format('YYYY-MM-DD HH:mm:ss') : ''}</small>
+                                        <small>{topic.publishDate ? dayjs(topic.publishDate).utcOffset(8).format('YYYY-MM-DD HH:mm:ss') : ''}</small>
                                     </th>
                                     <td>
                                         <a href={topic.uid ? new URL(`topic/${topic.uid}`, rootUrl).href : undefined}>{topic.title}</a>

@@ -1,11 +1,13 @@
 import { load } from 'cheerio';
 
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import parser from '@/utils/rss-parser';
 import timezone from '@/utils/timezone';
+import { isValidHost } from '@/utils/valid-host';
 
 export const route: Route = {
     path: '/:lang?/:channel?',
@@ -50,6 +52,11 @@ For example, the path for the RSS feed url <https://www.yna.co.kr/rss/economy.xm
 async function handler(ctx) {
     const lang = ctx.req.param('lang') ?? 'ko';
     const channel = ctx.req.param('channel') ?? 'news';
+
+    if (!isValidHost(lang)) {
+        throw new InvalidParameterError('Invalid lang');
+    }
+
     let url;
     switch (lang) {
         case 'ko':

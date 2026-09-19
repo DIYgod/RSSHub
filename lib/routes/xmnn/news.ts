@@ -46,7 +46,7 @@ async function handler(ctx) {
     const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 30;
 
     const rootUrl = 'https://news.xmnn.cn';
-    const currentUrl = new URL(`${category}/`, rootUrl).href;
+    const currentUrl = `${rootUrl}/${category}/`;
 
     const { data: response } = await got(currentUrl);
 

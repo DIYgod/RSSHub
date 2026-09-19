@@ -1,0 +1,9 @@
+{
+    "data": {
+        "self": { "title": "相关事件", "topicTitle": "Topic" },
+        "items": [
+            { "uid": "earlier-1", "title": "Earlier event", "publishDate": "2026-09-05T02:03:04.000Z" },
+            { "uid": "earlier-2", "title": "Another event", "publishDate": "2026-09-04T15:04:05+08:00" }
+        ]
+    }
+}

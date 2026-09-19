@@ -106,7 +106,16 @@ export default {
         }
 
         if (response.status === 404) {
-            return '';
+            try {
+                const data = await response.json();
+                if (data && typeof data === 'object' && 'hit' in data && data.hit === false) {
+                    return '';
+                }
+            } catch {
+                // Cloudflare routing errors can also return 404, without reaching the cache service.
+            }
+            logger.error('HTTP cache get returned HTTP 404 without a cache miss response.');
+            return null;
         }
 
         if (!response.ok) {

@@ -7,11 +7,11 @@ import { convert } from 'html-to-text';
 import markdownit from 'markdown-it';
 import { RE2JS } from 're2js';
 import sanitizeHtml from 'sanitize-html';
-import { simplecc } from 'simplecc-wasm';
 
 import { config } from '@/config';
 import type { Data, DataItem } from '@/types';
 import cache from '@/utils/cache';
+import { isWorker } from '@/utils/is-worker';
 import ofetch from '@/utils/ofetch';
 
 const md = markdownit({
@@ -394,7 +394,8 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
         }
 
         // opencc
-        if (ctx.req.query('opencc')) {
+        if (!isWorker && ctx.req.query('opencc')) {
+            const { simplecc } = await import('simplecc-wasm');
             for (const item of data.item) {
                 item.title = simplecc(item.title ?? item.link, ctx.req.query('opencc')!);
                 item.description = simplecc(item.description ?? item.title ?? item.link, ctx.req.query('opencc')!);

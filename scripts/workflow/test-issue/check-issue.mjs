@@ -44,7 +44,7 @@ async function alreadyCommented(github, issueFacts) {
  * @returns {string}
  */
 function extractText(node) {
-    return node.type === 'text' ? node.value : node.children.map((c) => extractText(c)).join('');
+    return node.type === 'text' ? node.value : (node.children ?? []).map((c) => extractText(c)).join('');
 }
 
 /**

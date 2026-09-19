@@ -1,12 +1,11 @@
-import { JSDOM } from 'jsdom';
-import { JSONPath } from 'jsonpath-plus';
+import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import { ViewType } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
-import { buildContent, extractTokens, getUserId, profileUrl, threadUrl } from './utils';
+import { buildContent, extractThreadItems, parseRouteOptions, profileUrl, threadUrl } from './utils';
 
 export const route: Route = {
     path: '/:user/:routeParams?',
@@ -37,103 +36,36 @@ Specify options (in the format of query string) in parameter \`routeParams\` to 
 
 async function handler(ctx) {
     const { user, routeParams } = ctx.req.param();
-    const { lsd } = await extractTokens(user);
-    const userId = await getUserId(user);
+    const options = parseRouteOptions(new URLSearchParams(routeParams));
 
-    const params = new URLSearchParams(routeParams);
-    const debugJson: any = {
-        params: routeParams,
-        lsd,
-    };
+    const response = await ofetch(profileUrl(user));
+    const $ = load(response);
 
-    const options = {
-        showAuthorInTitle: params.get('showAuthorInTitle') ?? true,
-        showAuthorInDesc: params.get('showAuthorInDesc') ?? true,
-        showAuthorAvatarInDesc: params.get('showAuthorAvatarInDesc') ?? false,
-        showQuotedInTitle: params.get('showQuotedInTitle') ?? true,
-        showQuotedAuthorAvatarInDesc: params.get('showQuotedAuthorAvatarInDesc') ?? false,
-        showEmojiForQuotesAndReply: params.get('showEmojiForQuotesAndReply') ?? true,
-        replies: params.get('replies') ?? false,
-    };
+    const threadsData = extractThreadItems($);
 
-    const response = await ofetch(profileUrl(user), {
-        headers: {
-            'User-Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 16_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.6 Mobile/15E148 Safari/604.1',
-            Accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
-            'Accept-Encoding': 'gzip, br',
-            'Accept-Language': 'zh-CN,zh;q=0.9',
-            'Cache-Control': 'no-cache',
-            Pragma: 'no-cache',
-            'Sec-Fetch-Dest': 'document',
-            'Sec-Fetch-Mode': 'navigate',
-            'Sec-Fetch-Site': 'none',
-            'Sec-Fetch-User': '?1',
-            'Upgrade-Insecure-Requests': '1',
-        },
-    });
-
-    const dom = new JSDOM(response);
-    const { document } = dom.window;
-
-    let threadsData: ThreadItem[] | null = null;
-    for (const el of document.querySelectorAll('script[data-sjs]')) {
-        try {
-            const data = JSONPath<ThreadItem[]>({
-                path: '$..thread_items[0]',
-                json: JSON.parse(el.textContent || ''),
-            });
-
-            if (data?.length > 0) {
-                threadsData = data;
-                break;
-            }
-        } catch {
-            // Skip invalid JSON
-        }
-    }
-
-    if (!threadsData) {
+    if (!threadsData.length) {
         throw new Error('Failed to fetch thread data');
     }
 
-    debugJson.profileId = userId;
-    debugJson.response = { response: threadsData };
-
-    const userData: ThreadUser = threadsData[0]?.post?.user || { username: user, profile_pic_url: '' };
+    ctx.set('json', threadsData);
 
     const items = threadsData
         .filter((item) => user === item.post.user?.username)
-        .map((item) => ({
-            author: user,
-            title: buildContent(item, options).title,
-            description: buildContent(item, options).description,
-            pubDate: parseDate(item.post.taken_at, 'X'),
-            link: threadUrl(item.post.code),
-        }));
-
-    debugJson.items = items;
-    ctx.set('json', debugJson);
+        .map((item) => {
+            const { title, description } = buildContent(item, options);
+            return {
+                author: user,
+                title,
+                description,
+                pubDate: parseDate(item.post.taken_at, 'X'),
+                link: threadUrl(item.post.code),
+            };
+        });
 
     return {
         title: `${user} (@${user}) on Threads`,
         link: profileUrl(user),
-        image: userData?.profile_pic_url,
+        image: threadsData[0].post.user?.profile_pic_url,
         item: items,
-    };
-}
-
-interface ThreadUser {
-    username: string;
-    profile_pic_url: string;
-}
-
-interface ThreadItem {
-    post: {
-        user?: ThreadUser;
-        taken_at: number;
-        code: string;
-        caption?: {
-            text: string;
-        };
     };
 }

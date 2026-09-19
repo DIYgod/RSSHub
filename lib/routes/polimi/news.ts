@@ -2,6 +2,7 @@ import type { Context } from 'hono';
 
 import type { Route } from '@/types';
 import buildData from '@/utils/common-config';
+import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/news/:language?',
@@ -21,15 +22,15 @@ async function handler(ctx: Context) {
         link,
         url: link,
         title: 'Polimi News',
-        params: {
-            homeLink: 'https://www.polimi.it',
-        },
         item: {
             item: '.card--editorial-photo',
-            title: `$('.card-title').text()`,
-            link: `'%homeLink%' + $('.card-footer a').attr('href')`,
-            description: `$('.news-bodytext').html()`,
-            pubDate: `parseDate($('time').attr('datetime'))`,
+            title: ($) => $('.card-title').text(),
+            link: ($) => 'https://www.polimi.it' + $('.card-footer a').attr('href'),
+            description: ($) => $('.news-bodytext').html(),
+            pubDate: ($) => {
+                const datetime = $('time').attr('datetime');
+                return datetime ? parseDate(datetime) : undefined;
+            },
         },
     });
 }

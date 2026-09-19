@@ -11,7 +11,7 @@ const SOURCE_FILES_GLOB = '**/*.?([cm])[jt]s?(x)';
 
 export default defineConfig([
     {
-        ignores: ['**/coverage', '**/.vscode', '**/docker-compose.yml', '!.github', 'assets/build', 'lib/routes-deprecated', 'lib/router.js', 'dist', 'dist-lib', 'dist-worker'],
+        ignores: ['**/coverage', '**/.vscode', '**/docker-compose.yml', '!.github', 'assets/build', 'dist', 'dist-lib', 'dist-worker'],
     },
     {
         files: [SOURCE_FILES_GLOB],

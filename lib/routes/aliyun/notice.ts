@@ -14,10 +14,6 @@ const typeMap = {
     4: '9222707',
 };
 
-/**
- *
- * @param ctx {import('koa').Context}
- */
 export const route: Route = {
     path: '/notice/:type?',
     categories: ['programming'],

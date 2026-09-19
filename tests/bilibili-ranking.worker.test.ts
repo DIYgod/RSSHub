@@ -1,0 +1,1 @@
+import './bilibili-ranking.test';

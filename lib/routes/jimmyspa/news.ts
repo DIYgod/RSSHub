@@ -1,9 +1,11 @@
 import { load } from 'cheerio';
 
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import { ViewType } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { isValidHost } from '@/utils/valid-host';
 
 import { renderDescription } from './templates/description';
 
@@ -39,6 +41,10 @@ export const route: Route = {
 
 async function handler(ctx) {
     const language = ctx.req.param('language');
+    if (!isValidHost(language)) {
+        throw new InvalidParameterError('Invalid language');
+    }
+
     const rootUrl = 'https://www.jimmyspa.com';
 
     const currentUrl = new URL(`/${language}/News/Ajax/changeList?year=&keyword=&categoryId=0&page=1`, rootUrl).href;

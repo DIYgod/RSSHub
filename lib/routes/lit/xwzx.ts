@@ -1,11 +1,13 @@
 import { load } from 'cheerio';
 import type { Context } from 'hono';
 
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
+import { isValidHost } from '@/utils/valid-host';
 
 export const route: Route = {
     path: '/xwzx/:name?',
@@ -31,6 +33,10 @@ const nameProps = {
 
 async function handler(ctx: Context): Promise<Data> {
     const { name = 'all' } = ctx.req.param();
+    if (!isValidHost(name)) {
+        throw new InvalidParameterError('Invalid name');
+    }
+
     const categories = name === 'all' ? Object.keys(nameProps) : [name];
 
     const lists = await Promise.all(

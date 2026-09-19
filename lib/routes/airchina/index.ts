@@ -4,6 +4,7 @@ import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import buildData from '@/utils/common-config';
 import got from '@/utils/got';
+import { parseDate } from '@/utils/parse-date';
 
 const baseUrl = 'https://www.airchina.com.cn';
 
@@ -36,18 +37,17 @@ async function handler() {
     const data = await buildData({
         link,
         url: link,
-        title: '%title%',
-        description: '%description%',
-        params: {
-            title: '国航服务公告',
-            description: '中国国际航空公司服务公告',
-        },
+        title: '国航服务公告',
+        description: '中国国际航空公司服务公告',
         item: {
             item: '.serviceMsg li',
-            title: `$('a').text()`,
-            link: `$('a').attr('href')`,
-            pubDate: `parseDate($('span').text(), 'YYYY-MM-DD')`,
-            guid: Buffer.from(`$('a').attr('href')`).toString('base64'),
+            title: ($) => $('a').text(),
+            link: ($) => $('a').attr('href'),
+            pubDate: ($) => parseDate($('span').text(), 'YYYY-MM-DD'),
+            guid: ($) => {
+                const href = $('a').attr('href');
+                return href ? Buffer.from(href).toString('base64') : undefined;
+            },
         },
     });
 

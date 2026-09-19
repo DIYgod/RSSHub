@@ -1,7 +1,8 @@
-import { JSDOM, VirtualConsole } from 'jsdom';
+import { load } from 'cheerio';
 import queryString from 'query-string';
 
 import cache from '@/utils/cache';
+import { evaluateScriptData } from '@/utils/evaluate-script';
 import { parseDate } from '@/utils/parse-date';
 
 import { maskHeader } from '../../constants';
@@ -22,16 +23,16 @@ export async function getNSFWNovelContent(novelId: string, token: string): Promi
             }),
         });
 
-        const virtualConsole = new VirtualConsole().on('error', () => void 0);
-
-        const { window } = new JSDOM(response.data, {
-            runScripts: 'dangerously',
-            virtualConsole,
-        });
-
-        const novelDetail: NSFWNovelDetail | undefined = window.pixiv?.novel;
-
-        window.close();
+        const $ = load(response.data);
+        const script = $('script')
+            .toArray()
+            .map((element) => $(element).text())
+            .filter((source) => source.includes('pixiv'))
+            .join('\n');
+        if (!script) {
+            throw new Error('No novel data found');
+        }
+        const novelDetail = await evaluateScriptData<NSFWNovelDetail | undefined>(script, 'window.pixiv.novel');
 
         if (!novelDetail) {
             throw new Error('No novel data found');

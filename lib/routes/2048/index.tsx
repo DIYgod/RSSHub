@@ -6,6 +6,8 @@ import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
+import { getForumUrl } from './utils';
+
 export const route: Route = {
     path: '/:id?',
     categories: ['multimedia'],
@@ -64,14 +66,10 @@ async function handler(ctx) {
     const id = ctx.req.param('id') ?? '3';
 
     const rootUrl = 'https://hjd2048.com';
-    // 获取地址发布页指向的 URL
-    const domainInfo = await cache.tryGet('2048:domainInfo', async () => {
+    // Resolve the address page before caching the forum URL.
+    const domainInfo = await cache.tryGet('2048:domainInfo:v2', async () => {
         const response = await ofetch('https://2048.info');
-        const $ = load(response);
-        const onclickValue = $('.button').first().attr('onclick');
-        const targetUrl = onclickValue?.match(/window\.open\('([^']+)'/)?.[1];
-
-        return { url: new URL(targetUrl!, 'https://2048.info').href };
+        return { url: getForumUrl(response) };
     });
     // 获取重定向后的url
     const redirectResponse = await ofetch.raw(domainInfo.url);
@@ -91,7 +89,7 @@ async function handler(ctx) {
         86400, // fixed cookie duration: 24 hours
         false
     );
-    const currentUrl = `${redirected.url}thread.php?fid-${id}.html`;
+    const currentUrl = new URL(`thread.php?fid-${id}.html`, redirected.url).href;
 
     const response = await ofetch.raw(currentUrl, {
         headers: {

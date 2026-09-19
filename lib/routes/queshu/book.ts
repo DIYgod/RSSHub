@@ -23,17 +23,13 @@ async function handler(ctx: Context) {
     return await buildData({
         link,
         url: link,
-        title: '%title%',
-        description: `$('#detail_intro .detail_body').text().trim()`,
+        title: ($) => $('#book_left > #h1').text().trim() + ' - 单品活动信息 - 缺书网',
+        description: ($) => $('#detail_intro .detail_body').text().trim(),
         allowEmpty: true,
-        params: {
-            title: `$('#book_left > #h1').text().trim() + ' - 单品活动信息 - 缺书网'`,
-            host,
-        },
         item: {
             item: '.stacked.right_state > a',
-            title: `$('.right_item .bodycol_258').text()`,
-            link: `'%host%' + $('.right_item').parent().attr('href')`,
+            title: ($) => $('.right_item .bodycol_258').text(),
+            link: ($) => host + $('.right_item').parent().attr('href'),
         },
     });
 }

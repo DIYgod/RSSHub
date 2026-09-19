@@ -43,6 +43,7 @@ updates:
                   - '@opentelemetry/*'
           oxc:
               patterns:
+                  - '@oxc-parser/*'
                   - '@oxlint/*'
                   - 'oxc-parser'
                   - 'oxfmt'
@@ -70,6 +71,10 @@ updates:
       open-pull-requests-limit: 100
       labels:
           - dependencies
+      groups:
+          nix:
+              patterns:
+                  - '*'
 
     - package-ecosystem: 'github-actions'
       directory: '/'

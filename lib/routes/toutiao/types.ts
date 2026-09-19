@@ -1,5 +1,9 @@
 export interface Feed {
     abstract: string;
+    /**
+     * Appears in channel feeds
+     */
+    Abstract: string;
     aggr_type: number;
     article_sub_type: number;
     article_type: number;
@@ -56,6 +60,12 @@ export interface Feed {
     log_pb: LogPb;
     lynx_server: unknown;
     natant_level: number;
+    /**
+     * Appears in channel feeds. JSON string of `{ "Category/Category/Category": confidence }`
+     */
+    optional_data?: {
+        mm_category_three?: string;
+    };
     preload_web: number;
     publish_time: number;
     /**

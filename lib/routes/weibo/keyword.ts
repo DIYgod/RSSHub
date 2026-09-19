@@ -5,8 +5,8 @@ import type { Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
+import { parseDate } from '@/utils/parse-date';
 import { fallback, queryToBoolean } from '@/utils/readable-social';
-import timezone from '@/utils/timezone';
 
 import weiboUtils from './utils';
 
@@ -40,7 +40,7 @@ async function handler(ctx) {
 
     const data = await weiboUtils.tryWithCookies((cookies, verifier) =>
         cache.tryGet(
-            `weibo:keyword:${keyword}`,
+            `weibo:keyword-statuses:${keyword}`,
             async () => {
                 const _r = await got({
                     method: 'get',
@@ -52,7 +52,20 @@ async function handler(ctx) {
                     },
                 });
                 verifier(_r);
-                return _r.data.data.cards;
+                const cards = _r.data?.data?.cards;
+                if (!Array.isArray(cards)) {
+                    throw new TypeError(_r.data?.msg || 'Weibo keyword search returned an invalid response.');
+                }
+                const statuses = cards.filter((card) => card.mblog).map((card) => card.mblog);
+                if (!statuses.length) {
+                    const message = 'Weibo keyword search returned no posts. Please retry later or check the keyword on Weibo.';
+                    if (!config.weibo.cookies) {
+                        // Expired visitor sessions can return ok=1 with only a "no results" card.
+                        throw new weiboUtils.RenewWeiboCookiesError(message);
+                    }
+                    throw new Error(message);
+                }
+                return statuses;
             },
             config.cache.routeExpire,
             false
@@ -65,17 +78,18 @@ async function handler(ctx) {
         title: `又有人在微博提到${keyword}了`,
         link: `http://s.weibo.com/weibo/${encodeURIComponent(keyword)}&b=1&nodup=1`,
         description: `又有人在微博提到${keyword}了`,
-        item: data
-            .filter((i) => i.mblog)
-            .map((item) => {
-                item.mblog.created_at = timezone(item.mblog.created_at, 8);
-                if (item.mblog.retweeted_status && item.mblog.retweeted_status.created_at) {
-                    item.mblog.retweeted_status.created_at = timezone(item.mblog.retweeted_status.created_at, 8);
-                }
-                return weiboUtils.formatExtended(ctx, item.mblog, undefined, {
-                    showAuthorInTitle: fallback(undefined, queryToBoolean(routeParams.showAuthorInTitle), true),
-                    showAuthorInDesc: fallback(undefined, queryToBoolean(routeParams.showAuthorInDesc), true),
-                });
-            }),
+        item: data.map((status) => {
+            const item = structuredClone(status);
+            if (item.created_at) {
+                item.created_at = parseDate(item.created_at);
+            }
+            if (item.retweeted_status?.created_at) {
+                item.retweeted_status.created_at = parseDate(item.retweeted_status.created_at);
+            }
+            return weiboUtils.formatExtended(ctx, item, undefined, {
+                showAuthorInTitle: fallback(undefined, queryToBoolean(routeParams.showAuthorInTitle), true),
+                showAuthorInDesc: fallback(undefined, queryToBoolean(routeParams.showAuthorInDesc), true),
+            });
+        }),
     });
 }

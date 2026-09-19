@@ -1,9 +1,11 @@
 import { load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
 
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Language } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { isValidHost } from '@/utils/valid-host';
 
 const rootUrl = 'https://www.safe.gov.cn';
 
@@ -16,6 +18,10 @@ const zxfkCategoryApis = {
 };
 
 const processZxfkItems = async (site = 'beijing', category = 'ywzx', limit = 3) => {
+    if (!isValidHost(site)) {
+        throw new InvalidParameterError('Invalid site');
+    }
+
     const apiUrl = new URL(`${zxfkCategoryApis[category]}${site}`, rootUrl).href;
     const currentUrl = new URL(`${site}/${category}/index.html`, rootUrl).href;
 

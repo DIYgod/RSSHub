@@ -1,6 +1,7 @@
 import sanitizeHtml from 'sanitize-html';
 
 import { config } from '@/config';
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
@@ -33,7 +34,14 @@ Notes:
     - strip css and possibly class/id
   - if the result is in wikitext, it needs to be converted to html
 
-4. is the fastest and current implementation. */
+4. is the fastest and current implementation.
+
+A daily page's wikitext is shaped as:
+  {{Current events|year=YYYY|month=MM|day=D|top=yes}}
+  <!-- All news items below this line -->
+  ...items, as nested wikitext bullet lists under ''' section headings'''...
+  <!-- All news items above this line -->
+  {{Current events|year=YYYY|month=MM|day=D|bottom=yes}} */
 
 function getCurrentEventsDatePath(date: Date): string {
     const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
@@ -45,20 +53,30 @@ function getCurrentEventsDatePath(date: Date): string {
     return `Portal:Current_events/${year}_${month}_${day}`;
 }
 
+// The day's items sit between a {{Current events|...|top=yes}} and a
+// {{Current events|...|bottom=yes}} call. Neither call nests braces, so [^{}] is enough to bound them.
+const TOP_TEMPLATE = /\{\{\s*Current events\s*\|[^{}]*\btop\s*=\s*yes[^{}]*\}\}/i;
+const BOTTOM_TEMPLATE = /\{\{\s*Current events\s*\|[^{}]*\bbottom\s*=\s*yes[^{}]*\}\}/i;
+
 // Simple MediaWiki template parser for {{Current events}} template
 function parseCurrentEventsTemplate(wikitext: string): string | null {
     if (!wikitext) {
         return null;
     }
 
-    // Look for {{Current events|content=...}} template
-    // The closing }} is always at the end of wikitext
-    const contentMatch = wikitext.match(/\{\{Current events\s*\|[\s\S]*?content(?=(\s*=))\1\s*((?:\S[\s\S]*)?)\}\}$/);
-    if (!contentMatch) {
+    const top = wikitext.match(TOP_TEMPLATE);
+    if (!top) {
         return null;
     }
 
-    let content = contentMatch[2].trim();
+    let content = wikitext.slice(top.index! + top[0].length);
+
+    const bottom = content.match(BOTTOM_TEMPLATE);
+    if (bottom) {
+        content = content.slice(0, bottom.index);
+    }
+
+    content = content.trim();
 
     // Strip comments to detect empty content
     content = stripComments(content);
@@ -405,7 +423,7 @@ async function handler(ctx) {
         throw new Error(`Failed to fetch Wikipedia current events: ${message}`, { cause: error });
     }
 }
-function determineDates(includeToday: any) {
+function determineDates(includeToday: string) {
     const now = new Date();
     const currentHourUTC = now.getUTCHours();
 
@@ -428,14 +446,21 @@ function determineDates(includeToday: any) {
 
             break;
 
-        default:
-            if (/^\d+$/.test(includeToday)) {
-                // Include after specific hour (0-23)
-                const targetHour = Number(includeToday);
-                if (targetHour >= 0 && targetHour <= 23) {
-                    shouldIncludeToday = currentHourUTC >= targetHour;
-                }
+        default: {
+            // Anything else is rejected rather than ignored: silently serving the default feed
+            // makes a mistyped parameter look like it took effect.
+            if (!/^\d+$/.test(includeToday)) {
+                throw new InvalidParameterError(`Invalid includeToday: ${includeToday}. Expected 'auto', 'always', 'never', or a UTC hour 0-23.`);
             }
+
+            // Include after specific hour (0-23). The pattern above already excludes negatives.
+            const targetHour = Number(includeToday);
+            if (targetHour > 23) {
+                throw new InvalidParameterError(`Invalid includeToday hour: ${includeToday}. Expected a UTC hour 0-23.`);
+            }
+
+            shouldIncludeToday = currentHourUTC >= targetHour;
+        }
     }
 
     // Create array of dates for the past 7 days, optionally including today

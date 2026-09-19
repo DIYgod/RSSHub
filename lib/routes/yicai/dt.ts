@@ -1,9 +1,11 @@
 import { load } from 'cheerio';
 
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { isValidHost } from '@/utils/valid-host';
 
 import { renderDescription } from './templates/description';
 
@@ -74,6 +76,10 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { column = 'article', category = '0' } = ctx.req.param();
+    if (!isValidHost(column)) {
+        throw new InvalidParameterError('Invalid column');
+    }
+
     const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 30;
 
     const rootUrl = 'https://dt.yicai.com';

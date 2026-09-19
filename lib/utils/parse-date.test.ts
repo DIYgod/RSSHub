@@ -118,6 +118,23 @@ describe('parseRelativeDate', () => {
             expect(p('周三')).toBe(PREVIOUS_WEDNESDAY);
         });
 
+        it.each([
+            ['Tuesday', '2026-01-27T00:00:00'],
+            ['Tue', '2026-01-27T00:00:00'],
+            ['Thursday', '2026-01-29T00:00:00'],
+            ['Thu', '2026-01-29T00:00:00'],
+            ['Tuesday 3pm', '2026-01-27T15:00:00'],
+            ['Thu 10:00', '2026-01-29T10:00:00'],
+        ])('parses %s as a past weekday instead of tomorrow', (input, expected) => {
+            expect(p(input)).toBe(new Date(expected).getTime());
+        });
+
+        it.each(['Tomorrow', 't'])('preserves %s as tomorrow with optional time', (input) => {
+            expect(p(input)).toBe(TOMORROW_START);
+            expect(p(`${input}3pm`)).toBe(TOMORROW_START + 15 * hour);
+            expect(p(`${input} 10:00`)).toBe(TOMORROW_START + 10 * hour);
+        });
+
         it('handles "Sunday" (Past: Sun is Yesterday -> Feb 01)', () => {
             // Sunday (Feb 01) is strictly before Monday (Feb 02).
             expect(p('Sunday')).toBe(LAST_SUNDAY);

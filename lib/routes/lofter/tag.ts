@@ -1,9 +1,9 @@
 import { load } from 'cheerio';
-import { JSDOM } from 'jsdom';
 
 import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
 import type { Route } from '@/types';
+import { evaluateScriptCallback } from '@/utils/evaluate-script';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
@@ -83,18 +83,7 @@ async function handler(ctx) {
         },
     });
 
-    const dom = new JSDOM(
-        `<script>if (dwr == null) var dwr = {};
-        if (dwr.engine == null) dwr.engine = {};
-        dwr.engine._remoteHandleCallback = function () {
-            this.data = arguments;
-        };
-        ${response.data}</script>`,
-        {
-            runScripts: 'dangerously',
-        }
-    );
-    const data = dom.window.dwr.engine.data[2];
+    const data = await evaluateScriptCallback<any[]>(response.data, 'dwr.engine._remoteHandleCallback');
 
     const title =
         {

@@ -56,9 +56,9 @@ async function handler(ctx) {
             rootUrl,
         }),
         author: item.siteNameDisplay,
-        category: [...(item.entityList.map((c) => c.name) ?? []), ...(item.tagList.map((c) => c.name) ?? [])],
+        category: [...(item.entityList?.map((c) => c.name) ?? []), ...(item.tagList?.map((c) => c.name) ?? [])],
         guid: item.uid,
-        pubDate: parseDate(item.publishDate),
+        pubDate: item.publishDate ? parseDate(item.publishDate) : undefined,
     }));
 
     items = await processItems(items);

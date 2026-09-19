@@ -22,6 +22,24 @@ describe('config', () => {
         delete process.env.BILIBILI_COOKIE_34;
     });
 
+    it('unix socket', async () => {
+        process.env.SOCKET = '/tmp/rsshub.sock';
+
+        const { config } = await import('./config');
+        expect(config.connect.socket).toBe('/tmp/rsshub.sock');
+
+        delete process.env.SOCKET;
+    });
+
+    it('unix socket defaults to undefined', async () => {
+        process.env.SOCKET = '';
+
+        const { config } = await import('./config');
+        expect(config.connect.socket).toBeUndefined();
+
+        delete process.env.SOCKET;
+    });
+
     it('email config', async () => {
         process.env['EMAIL_CONFIG_xx.qq.com'] = 'token1';
         process.env['EMAIL_CONFIG_oo.qq.com'] = 'token2';

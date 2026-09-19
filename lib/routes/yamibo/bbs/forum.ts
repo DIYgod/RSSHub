@@ -7,7 +7,7 @@ import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 
-import { bbsOrigin, fetchThread, generateDescription, getDate } from '../utils';
+import { bbsOrigin, generateDescription, getDate, ThreadFetcher } from '../utils';
 
 export const route: Route = {
     name: 'BBS - 板块',
@@ -22,6 +22,7 @@ export const route: Route = {
     handler,
     features: {
         antiCrawler: true,
+        requirePuppeteer: true,
         requireConfig: [
             {
                 optional: true,
@@ -85,32 +86,37 @@ async function handler(ctx: Context): Promise<Data> {
             };
         });
 
-    items = await pMap(
-        items,
-        async (item) =>
-            await cache.tryGet<DataItem>(item.link!, async () => {
-                let description: string | undefined;
-                const { data } = await fetchThread(item.id!);
-                if (data && !data.startsWith('<script type="text/javascript">')) {
-                    const $ = load(data);
-                    if ($('#postlist>div[id^="post_"]').length) {
-                        const op = $('#postlist>div[id^="post_"]').first();
-                        const postId = op.attr('id')?.match(/\d+/)?.[0];
-                        if (postId) {
-                            description = generateDescription(op, postId);
+    const fetcher = new ThreadFetcher();
+    try {
+        items = await pMap(
+            items,
+            async (item) =>
+                await cache.tryGet<DataItem>(item.link!, async () => {
+                    let description: string | undefined;
+                    const { data } = await fetcher.fetchThread(item.id!);
+                    if (data && !data.startsWith('<script type="text/javascript">')) {
+                        const $ = load(data);
+                        if ($('#postlist>div[id^="post_"]').length) {
+                            const op = $('#postlist>div[id^="post_"]').first();
+                            const postId = op.attr('id')?.match(/\d+/)?.[0];
+                            if (postId) {
+                                description = generateDescription(op, postId);
+                            }
                         }
                     }
-                }
 
-                return {
-                    title: item.title,
-                    link: item.link,
-                    description,
-                    pubDate: item.pubDate,
-                };
-            }),
-        { concurrency: 5 }
-    );
+                    return {
+                        title: item.title,
+                        link: item.link,
+                        description,
+                        pubDate: item.pubDate,
+                    };
+                }),
+            { concurrency: 5 }
+        );
+    } finally {
+        await fetcher.close();
+    }
 
     return {
         title,

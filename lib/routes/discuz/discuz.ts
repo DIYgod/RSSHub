@@ -88,6 +88,9 @@ export const route: Route = {
     },
     name: '通用子版块',
     maintainers: ['junfengP', 'pseudoyu'],
+    features: {
+        requireConfig: [{ name: 'ALLOW_USER_SUPPLY_UNSAFE_DOMAIN', description: 'Allow user supplied domain' }],
+    },
     handler,
     description: `| Discuz X Series | Discuz 7.x Series |
 | --------------- | ----------------- |
@@ -99,6 +102,14 @@ async function handler(ctx) {
     const ver = ctx.req.param('ver') ? ctx.req.param('ver').toUpperCase() : undefined;
     const cid = ctx.req.param('cid');
     link = link.replace(/:\/\//, ':/').replace(/:\//, '://');
+
+    if (!config.feature.allow_user_supply_unsafe_domain) {
+        throw new ConfigNotFoundError(`This RSS is disabled unless 'ALLOW_USER_SUPPLY_UNSAFE_DOMAIN' is set to 'true'.`);
+    }
+
+    if (!/^https?:\/\/[^\s#$./?].\S*$/i.test(link)) {
+        throw new InvalidParameterError('Invalid link');
+    }
 
     const cookie = cid === undefined ? '' : config.discuz.cookies[cid];
     if (cookie === undefined) {

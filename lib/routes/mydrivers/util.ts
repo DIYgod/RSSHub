@@ -75,7 +75,6 @@ const getInfo = (url, range?) =>
  * Process items asynchronously.
  *
  * @param {Array<Object>} items - The array of items to process.
- * @param {function} tryGet - The tryGet function that handles the retrieval process.
  * @returns {Promise<Array<Object>>} Returns a Promise that resolves to an array of processed items.
  */
 const processItems = async (items) =>

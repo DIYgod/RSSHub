@@ -2,14 +2,14 @@ import { load } from 'cheerio';
 import { Cookie, CookieJar } from 'tough-cookie';
 
 import cache from '@/utils/cache';
-import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
 const cookieJar = new CookieJar();
 
 const owner = '中央纪委国家监委网站';
-const rootUrl = 'https://www.ccdi.gov.cn';
+export const rootUrl = 'https://www.ccdi.gov.cn';
 const regex = /(?<key>[A-Z_]+)=(?<value>.*?(?=; max-age)|[\dA-Fa-f]+)/g;
 
 const parseCookie = async (body) => {
@@ -26,9 +26,15 @@ const parseCookie = async (body) => {
     await Promise.all(cookies.map((c) => cookieJar.setCookie(c, rootUrl)));
 };
 
-const parseNewsList = async (url, selector, ctx) => {
-    const response = await got(url, { cookieJar });
-    const data = response.data;
+const fetchPage = async (url: string, attempt = 0): Promise<string> => {
+    const cookie = await cookieJar.getCookieString(url);
+    const response = await ofetch.raw<string>(url, { headers: { cookie }, redirect: 'manual' });
+    await Promise.all(response.headers.getSetCookie().map((c) => cookieJar.setCookie(c, url)));
+    return response.status === 302 && attempt < 2 ? fetchPage(url, attempt + 1) : response._data!;
+};
+
+export const parseNewsList = async (url, selector, ctx) => {
+    const data = await fetchPage(url);
     await parseCookie(data);
 
     const $ = load(data);
@@ -64,11 +70,10 @@ const changeTrCookie = async () => {
     }
 };
 
-const parseArticle = async (item) => {
+export const parseArticle = async (item) => {
     await changeTrCookie();
     return cache.tryGet(item.link, async () => {
-        const response = await got(item.link, { cookieJar });
-        const data = response.data;
+        const data = await fetchPage(item.link);
         await parseCookie(data);
 
         const $ = load(data);
@@ -88,5 +93,3 @@ const parseArticle = async (item) => {
         return item;
     });
 };
-
-export { parseArticle, parseNewsList, rootUrl };

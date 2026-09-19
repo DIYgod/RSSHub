@@ -23,6 +23,7 @@ describe('cache', () => {
         if (!cache.clients.memoryCache || !cache.status.available) {
             throw new Error('Memory cache client error');
         }
+        expect(cache.globalCache.supportsAtomicClaims).toBe(true);
         await cache.set('mock', undefined);
         expect(await cache.get('mock')).toBe('');
         expect(await cache.has('mock')).toBe(true);
@@ -67,6 +68,7 @@ describe('cache', () => {
         if (!cache.clients.redisClient || !cache.status.available) {
             throw new Error('Redis client error');
         }
+        expect(cache.globalCache.supportsAtomicClaims).toBe(true);
         await cache.set('mock1', undefined);
         expect(await cache.get('mock1')).toBe('');
         await cache.set('mock2', '2');
