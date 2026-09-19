@@ -20,7 +20,22 @@ const DETAIL_KEY = '/bukken/detail/';
  * settling, so the page is opened with `commit` and the waiting is done here where it can be reported.
  */
 const NAV_TIMEOUT = 12000;
-const STATE_TIMEOUT = 12000;
+/**
+ * Ceiling for the list page as a whole, measured from the start of the request so that a slow
+ * navigation eats into the wait rather than adding to it. `#serverApp-state` sits about 62% of the
+ * way into a 2.4MB document, so a throttled client needs to receive ~1.5MB before it can appear —
+ * hence a window this wide. Being blocked is detected separately and fails in about a second, so
+ * the width costs a refused client nothing.
+ */
+const LIST_DEADLINE_MS = 26000;
+/**
+ * Only the document is needed. Blocking the page's images, fonts, stylesheets and media leaves the
+ * whole connection to the one response that matters, which is what a bandwidth-starved client is
+ * short of. Scripts are deliberately **not** blocked: the interstitial clears itself with one.
+ */
+const SKIP_RESOURCES = new Set(['image', 'media', 'font', 'stylesheet']);
+/** A detail document is a fraction of the list page's size, so it needs nothing like the same window. */
+const DETAIL_STATE_TIMEOUT = 10000;
 const DEFAULT_LIMIT = 10;
 const PAGE_SIZE = 30;
 /**
@@ -266,27 +281,48 @@ export const handler = async (ctx): Promise<Data> => {
     // optional — the site answers a plain HTTP client for about four requests and then serves it the
     // 認証中 interstitial indefinitely, while a real browser keeps being served normally.
     const startedAt = Date.now();
-    const { page, destroy } = await getPlaywrightPage(listUrl, { gotoConfig: { waitUntil: 'commit', timeout: NAV_TIMEOUT } });
+    const { page, destroy } = await getPlaywrightPage(listUrl, {
+        gotoConfig: { waitUntil: 'commit', timeout: NAV_TIMEOUT },
+        onBeforeLoad: async (p) => {
+            await p.route('**/*', (r) => (SKIP_RESOURCES.has(r.request().resourceType()) ? r.abort() : r.continue()));
+        },
+    });
     const items: DataItem[] = [];
     try {
         let bukken: Bukken[];
         try {
-            await page.waitForSelector('#serverApp-state', { state: 'attached', timeout: STATE_TIMEOUT });
+            // One predicate for both outcomes, so a refused client is reported the moment its title
+            // says 認証中 rather than after the full wait: the interstitial arrives immediately, the
+            // payload does not, and waiting the same time for each would punish only the slow one.
+            const stateTimeout = Math.max(3000, LIST_DEADLINE_MS - (Date.now() - startedAt));
+            let outcome: 'ready' | 'blocked' | 'slow';
+            try {
+                const handle = await page.waitForFunction(() => (document.querySelector('#serverApp-state') ? 'ready' : document.title.includes('認証中') ? 'blocked' : false), { timeout: stateTimeout });
+                outcome = (await handle.jsonValue()) as 'ready' | 'blocked';
+            } catch {
+                // A reload mid-check destroys the execution context; the content check below decides.
+                outcome = 'slow';
+            }
+            if (outcome !== 'ready') {
+                throw new Error(outcome === 'blocked' ? 'interstitial' : `no #serverApp-state within ${stateTimeout}ms`);
+            }
             bukken = listOf(await page.content()).slice(0, limit);
         } catch (error) {
             // Only the list page is fatal: an empty feed is indistinguishable from "no new listings".
             // Say which failure it was — a blocked client and a slow one need different responses.
-            let blocked = false;
-            try {
-                blocked = (await page.content()).includes('認証中');
-            } catch {
-                // The page may already be gone; the message below still names the failure.
+            let blocked = String(error).includes('interstitial');
+            if (!blocked) {
+                try {
+                    blocked = (await page.content()).includes('認証中');
+                } catch {
+                    // The page may already be gone; the message below still names the failure.
+                }
             }
             logger.warn(`athome: ${listUrl} failed after ${Date.now() - startedAt}ms (blocked=${blocked}): ${String(error)}`);
             throw new Error(
                 blocked
                     ? 'athome: the site is serving the 認証中 interstitial instead of the listing page — this client has been rate-limited; poll less often rather than retrying'
-                    : `athome: the listing page did not produce #serverApp-state within ${STATE_TIMEOUT}ms (no interstitial was shown, so the page was merely slow)`,
+                    : `athome: the listing page did not produce #serverApp-state within ${LIST_DEADLINE_MS}ms (no interstitial was shown, so the page was served too slowly rather than refused)`,
                 { cause: error }
             );
         }
@@ -308,7 +344,7 @@ export const handler = async (ctx): Promise<Data> => {
                         // eslint-disable-next-line no-await-in-loop -- same shared tab
                         await page.goto(`${HOST}/rent_store/${b.id}/`, { waitUntil: 'domcontentloaded' });
                         // eslint-disable-next-line no-await-in-loop -- same shared tab
-                        await page.waitForSelector('#serverApp-state', { state: 'attached', timeout: STATE_TIMEOUT });
+                        await page.waitForSelector('#serverApp-state', { state: 'attached', timeout: DETAIL_STATE_TIMEOUT });
                         // eslint-disable-next-line no-await-in-loop -- same shared tab
                         detail = detailOf(await page.content());
                         cache.set(key, JSON.stringify(detail));
@@ -361,7 +397,9 @@ export const route: Route = {
     },
     description: `貸店舗 listings on アットホーム for one 市区町村，newest first.
 
-This route needs a browser, and the browser is not a convenience. The page is Angular Universal SSR behind a JavaScript interstitial, and only the settled page carries the \`#serverApp-state\` payload the route reads. A plain HTTP client is served normally for about four requests and then gets the 「認証中」 interstitial on everything afterwards — pacing the requests 3s apart does not lift it — while a real browser keeps being served throughout. The interstitial reloads itself, which stops a \`domcontentloaded\` navigation from ever settling, so the page is opened with \`commit\` and every wait is bounded here; a blocked client is reported as such rather than as a slow page. **Being blocked is a volume problem, not a retry problem** — poll less often rather than retrying, and keep the cache warm. The route waits for \`#serverApp-state\` on the **list** page and **throws if it never appears**, so an unsettled page surfaces as an error rather than as a silently empty feed.
+This route needs a browser, and the browser is not a convenience. The page is Angular Universal SSR behind a JavaScript interstitial, and only the settled page carries the \`#serverApp-state\` payload the route reads. A plain HTTP client is served normally for about four requests and then gets the 「認証中」 interstitial on everything afterwards, and pacing the requests 3s apart does not lift it. A browser gets a far larger allowance — dozens of navigations — but **is not exempt**: push hard enough and it is refused too, so this is a matter of cadence rather than of using the right client. The interstitial reloads itself, which stops a \`domcontentloaded\` navigation from ever settling, so the page is opened with \`commit\` and every wait is bounded here, against a deadline measured from the start of the request rather than from the navigation.
+
+Being refused and being served slowly are told apart rather than guessed at: one check watches for \`#serverApp-state\` and for the 認証中 title at the same time, so a refused client is reported in about a second while a slow one keeps the full window. That window is wide (26s for the list page) because \`#serverApp-state\` sits roughly 62% of the way into a 2.4MB document — a throttled client has to receive about 1.5MB before it can appear — and the width costs a refused client nothing. For the same reason the page's images, fonts, stylesheets and media are not fetched at all, leaving the connection to the one response that matters; scripts are left alone, since the interstitial needs one to clear itself. **Being blocked is a volume problem, not a retry problem** — poll less often rather than retrying, and keep the cache warm. The route waits for \`#serverApp-state\` on the **list** page and **throws if it never appears**, so an unsettled page surfaces as an error rather than as a silently empty feed.
 
 情報公開日，the coordinates and the fee detail exist only on each listing's own page, so the route visits them — reusing one browser tab rather than opening a browser per listing, and caching per listing so a repeated poll only pays for listings it has not seen before.
 
