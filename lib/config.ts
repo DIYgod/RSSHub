@@ -94,6 +94,8 @@ type ConfigEnvKeys =
     | 'BTBYR_HOST'
     | 'BTBYR_COOKIE'
     | 'BUPT_PORTAL_COOKIE'
+    | 'BUKENAVI_EMAIL'
+    | 'BUKENAVI_PASSWORD'
     | 'CAIXIN_COOKIE'
     | 'CIVITAI_COOKIE'
     | 'DIANPING_COOKIE'
@@ -383,6 +385,10 @@ export type Config = {
     btbyr: {
         host?: string;
         cookies?: string;
+    };
+    bukenavi: {
+        email?: string;
+        password?: string;
     };
     bupt: {
         portal_cookie?: string;
@@ -903,6 +909,10 @@ const calculateValue = () => {
         },
         bupt: {
             portal_cookie: envs.BUPT_PORTAL_COOKIE,
+        },
+        bukenavi: {
+            email: envs.BUKENAVI_EMAIL,
+            password: envs.BUKENAVI_PASSWORD,
         },
         caixin: {
             cookie: envs.CAIXIN_COOKIE,
