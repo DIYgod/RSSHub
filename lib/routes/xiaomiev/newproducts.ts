@@ -1,17 +1,16 @@
+import { renderNewProduct } from '@/routes/mi/templates/newproduct';
 import type { Data, DataItem, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
-import { parseDate } from '@/utils/parse-date';
 
-import { renderNewProduct } from './templates/newproduct';
 import type { NewProductDetailItem, NewProductListItem } from './types';
 import utils from './utils';
 
 export const route: Route = {
     path: '/newproducts',
     categories: ['shopping'],
-    example: '/mi/newproducts',
-    name: '小米上新',
+    example: '/xiaomiev/newproducts',
+    name: '小米汽车上新',
     maintainers: ['nuomi1'],
     handler,
     features: {
@@ -29,7 +28,7 @@ export const route: Route = {
 const getDataItems = (list: NewProductListItem[]): Promise<DataItem[]> =>
     Promise.all(
         list.map((listItem) =>
-            cache.tryGet(`mi:product:dataitem:${listItem.product_id}`, async () => {
+            cache.tryGet(`xiaomiev:product:dataitem:${listItem.itemId}`, async () => {
                 const detailItem = await utils.getNewProductItem(listItem);
                 return getDataItem(listItem, detailItem);
             })
@@ -37,11 +36,10 @@ const getDataItems = (list: NewProductListItem[]): Promise<DataItem[]> =>
     );
 
 const getDataItem = (listItem: NewProductListItem, detailItem: NewProductDetailItem): DataItem => ({
-    title: listItem.product_name,
+    title: listItem.name,
     description: renderNewProduct(utils.toNewProduct(listItem, detailItem)),
-    link: `https://m.mi.com/commodity/detail/${listItem.product_id}`,
-    image: listItem.img,
-    pubDate: parseDate(listItem.start_time, 'X'),
+    link: `https://shop.retail.xiaomiev.com/shop/cltd/product?pid=${listItem.itemId}`,
+    image: listItem.img800s,
     language: 'zh-CN',
 });
 
@@ -50,10 +48,10 @@ async function handler(): Promise<Data> {
     const items = await getDataItems(list);
 
     return {
-        title: '小米上新',
-        link: 'https://m.mi.com/',
+        title: '小米汽车上新',
+        link: 'https://www.xiaomiev.com/',
         item: items,
-        image: 'https://m.mi.com/static/img/icons/apple-touch-icon-152x152.png',
+        image: 'https://s1.xiaomiev.com/mi-car-shop/web-shop/assets/logo.svg',
         language: 'zh-CN',
     };
 }
