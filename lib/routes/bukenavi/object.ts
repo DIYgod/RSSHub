@@ -1,8 +1,9 @@
 import { load } from 'cheerio';
 import pMap from 'p-map';
 
+import { memberCookie } from '@/routes/bukenavi/utils';
 import type { ListingExtra } from '@/routes/temposmart/utils';
-import { clean, normalizeFloor, parseArea, parseCondition, parseHeavyFood, parseJpy, parseWalkMin, parseWard, summarize, tsuboUnit } from '@/routes/temposmart/utils';
+import { clean, normalizeFloor, parseArea, parseCondition, parseHeavyFood, parseJpy, parseMonths, parseWalkMin, parseWard, summarize, tsuboUnit } from '@/routes/temposmart/utils';
 import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import logger from '@/utils/logger';
@@ -50,6 +51,16 @@ interface DetailFields {
     business_types: string | null; // 業種（可能）
     ng_business: string | null; // 不可業態
     note: string | null; // 特記事項
+    /** 会員限定 — all null for a guest. */
+    building: string | null; // 物件名
+    deposit: string | null; // 保証金・敷金
+    key_money: string | null; // 礼金
+    fixtures: string | null; // 造作譲渡金額
+    condition_text: string | null; // 居抜き・スケルトン
+    amortisation: string | null; // 償却
+    common_fee: string | null; // 共益費
+    contract_years: string | null; // 契約年数
+    seats: string | null; // 座席
     lat: string | null; // map pin, per-property
     lng: string | null;
 }
@@ -122,14 +133,25 @@ const parseList = (html: string, region: string): ListCard[] => {
         .filter((c): c is ListCard => c !== null);
 };
 
-/** Detail page: `table.box__property__table tr > th + td`; 住所 is town-level for guests. */
+/**
+ * Detail page: `tr > th + td`. 住所 is town-level for a guest and reaches the 番地 for a member.
+ * Every table is scanned because the member view puts 物件名 and 居抜き・スケルトン in an unclassed
+ * table and the fee rows in `table.condition`; the first match wins and `box__property__table`
+ * comes first, so labels shared with the guest view keep their guest-view shape.
+ */
 const parseDetail = (html: string): DetailFields => {
     const $ = load(html);
-    const cell = (label: string): string | null => {
-        const th = $('table.box__property__table th')
-            .toArray()
-            .find((el) => clean($(el).text()) === label);
-        return th ? clean($(th).next('td').text()) : null;
+    const cell = (...labels: string[]): string | null => {
+        for (const label of labels) {
+            const th = $('table th')
+                .toArray()
+                .find((el) => clean($(el).text()) === label);
+            const v = th ? clean($(th).next('td').text()) : null;
+            if (v !== null && !/^[ー—–－-]+$/.test(v)) {
+                return v;
+            }
+        }
+        return null;
     };
     return {
         address: cell('住所'),
@@ -139,19 +161,36 @@ const parseDetail = (html: string): DetailFields => {
         lng: MAP_CALL.exec(html)?.[2] ?? null,
         prev_business: cell('前の業態'),
         business_types: cell('業種'),
-        ng_business: cell('不可業態'),
+        ng_business: cell('不可業態', '不可業種'),
         note: cell('特記事項'),
+        building: cell('物件名'),
+        deposit: cell('保証金・敷金'),
+        key_money: cell('礼金'),
+        fixtures: cell('造作譲渡金額'),
+        condition_text: cell('居抜き・スケルトン'),
+        amortisation: cell('償却'),
+        common_fee: cell('共益費'),
+        contract_years: cell('契約年数'),
+        seats: cell('座席'),
     };
 };
 
 const mergeDetail = (base: ListingExtra, d: DetailFields): ListingExtra => {
-    const address = clean(d.address?.replace(/※.*$/, '')) ?? null;
+    const full = clean(d.address?.replace(/※.*$/, '')) ?? null;
+    // A member's 住所 ends in the 物件名 ('… 2-9-10 G1ビル'); the building keeps its own field so the
+    // address stays an address.
+    const address = d.building !== null && full?.endsWith(d.building) ? clean(full.slice(0, -d.building.length)) : full;
     const { area_m2 } = parseArea(d.area);
     const limitParts = [d.business_types === null ? null : `可: ${d.business_types}`, d.ng_business === null ? null : `不可: ${d.ng_business}`].filter((p): p is string => p !== null);
     return {
         ...base,
         area_m2: area_m2 ?? base.area_m2,
         line: base.line ?? d.line,
+        // 会員限定, so these stay null for a guest.
+        deposit_months: parseMonths(d.deposit),
+        key_money_months: parseMonths(d.key_money),
+        fixtures_transfer_jpy: parseJpy(d.fixtures),
+        condition: parseCondition(d.condition_text) ?? base.condition,
         prev_business: d.prev_business,
         // Only an explicit 重飲食可 / 不可 counts. An NG list that does not use the word 飲食 is not a
         // yes: '中華・焼肉・焼き鳥・油の多い業態不可' is a heavy-food ban written out in full, and
@@ -160,14 +199,33 @@ const mergeDetail = (base: ListingExtra, d: DetailFields): ListingExtra => {
         business_limit: limitParts.length > 0 ? limitParts.join(' / ') : null,
         ward: parseWard(address),
         address_hint: address,
-        raw: { ...base.raw, address: d.address, line: d.line, area: d.area, prev_business: d.prev_business, business_types: d.business_types, ng_business: d.ng_business, note: d.note, lat: d.lat, lng: d.lng },
+        raw: {
+            ...base.raw,
+            address: d.address,
+            line: d.line,
+            area: d.area,
+            prev_business: d.prev_business,
+            business_types: d.business_types,
+            ng_business: d.ng_business,
+            note: d.note,
+            lat: d.lat,
+            lng: d.lng,
+            building: d.building,
+            deposit: d.deposit,
+            key_money: d.key_money,
+            fixtures: d.fixtures,
+            amortisation: d.amortisation,
+            common_fee: d.common_fee,
+            contract_years: d.contract_years,
+            seats: d.seats,
+        },
     };
 };
 
 /** A failed detail page keeps the list fields instead of breaking the feed. */
-const enrich = async (card: ListCard): Promise<ListingExtra> => {
+const enrich = async (card: ListCard, cookie: string | null): Promise<ListingExtra> => {
     try {
-        return mergeDetail(card.extra, parseDetail(await ofetch(card.link)));
+        return mergeDetail(card.extra, parseDetail(await ofetch(card.link, { responseType: 'text', headers: cookie === null ? undefined : { Cookie: cookie } })));
     } catch (error) {
         logger.warn(`bukenavi: detail fetch failed for ${card.link}: ${String(error)}`);
         return { ...card.extra, raw: { ...card.extra.raw, detail_error: String(error) } };
@@ -203,11 +261,14 @@ export const handler = async (ctx): Promise<Data> => {
     const listUrl = `${HOST}/${region.slug}/object/list?wanted=1${prefCode === undefined ? '' : `&prefecture%5B%5D=${prefCode}`}${city === undefined ? '' : `&city%5B%5D=${city}`}`;
 
     const cards = parseList(await ofetch(listUrl), region.slug);
+    const cookie = await memberCookie();
     const items = await pMap(
         cards,
         (card) =>
-            cache.tryGet(card.link, async (): Promise<DataItem> => {
-                const extra = await enrich(card);
+            // A guest page and a member page of the same listing are different documents, so they
+            // cannot share a cache key.
+            cache.tryGet(`${cookie === null ? 'guest' : 'member'}:${card.link}`, async (): Promise<DataItem> => {
+                const extra = await enrich(card, cookie);
                 return {
                     title: card.title,
                     link: card.link,
@@ -249,14 +310,19 @@ export const route: Route = {
     },
     description: `New 居抜き listings on ぶけなび that are currently 募集中，newest first (first page, 10 listings) — for a region, a prefecture, or one 市区町村 when \`city\` is given. Each item's \`_extra\` carries the structured listing fields (賃料，坪，坪単価，階，最寄駅，前業態，業種制限，…) parsed from the list and detail pages; unknown values are \`null\`. The site does not publish listing dates, so items have no \`pubDate\`.
 
-**The exact location is in \`raw.lat\` / \`raw.lng\`, not in the address.** ぶけなび truncates 住所 to the 町 for guests (「東京都新宿区歌舞伎町 ※詳細はお問い合わせください（住所詳細は会員限定）」), but the page's own map pin does not: \`initMap()\` is called with the listing's coordinates, and five 歌舞伎町 listings carry five different pairs spread over roughly 265m × 440m, so these are per-property positions rather than a geocode of the town. They are finer than the 丁目 the address withholds, and no account is needed for them.
+**With an account it also reads the 会員限定 fields.** Set \`BUKENAVI_EMAIL\` and \`BUKENAVI_PASSWORD\` and 住所 comes through to the 番地 (\`東京都新宿区歌舞伎町 2-9-10\`), plus 物件名，保証金・敷金，礼金，償却，共益費，造作譲渡金額，契約年数，座席 and an explicit 居抜き / スケルトン. Both variables are optional and the route is fully usable without them — it stays a guest and leaves those \`null\`.
+
+**Without an account the exact location is still in \`raw.lat\` / \`raw.lng\`, not in the address.** ぶけなび truncates 住所 to the 町 for guests (「東京都新宿区歌舞伎町 ※詳細はお問い合わせください（住所詳細は会員限定）」), but the page's own map pin does not: \`initMap()\` is called with the listing's coordinates, and five 歌舞伎町 listings carry five different pairs spread over roughly 265m × 440m, so these are per-property positions rather than a geocode of the town. They are finer than the 丁目 the address withholds, and no account is needed for them.
 
 \`city\` is a 5-digit JIS X 0402 code and the site pairs it with the prefecture, so both are required — \`/bukenavi/object/kanto/kanagawa/14104\` is 横浜市中区. A code that does not belong to \`pref\` is rejected rather than sent on.
 
 Note that \`bukenavi.jp/{region}/area/{日本語}\` pages are SEO landing pages carrying no listings; the 市区町村 filter is the \`city[]\` parameter on the list endpoint, which is what this route uses.`,
     categories: ['other'],
     features: {
-        requireConfig: false,
+        requireConfig: [
+            { name: 'BUKENAVI_EMAIL', optional: true, description: 'ぶけなび account e-mail. Optional — without it the route reads the public view.' },
+            { name: 'BUKENAVI_PASSWORD', optional: true, description: 'ぶけなび account password. Optional — without it the route reads the public view.' },
+        ],
         requirePuppeteer: false,
         antiCrawler: false,
         supportRadar: true,
