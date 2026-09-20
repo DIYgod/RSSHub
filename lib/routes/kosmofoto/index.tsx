@@ -21,7 +21,7 @@ const cleanContent = (html: string): string => {
         const $img = $(el);
         const src = $img.attr('src');
         // Jetpack Photon (i0.wp.com) serves a resized variant; without the query string the original is served
-        if (src && URL.canParse(src) && new URL(src).hostname.endsWith('.wp.com')) {
+        if (src && new URL(src).hostname.endsWith('.wp.com')) {
             $img.attr('src', src.split('?', 1)[0]);
         }
         // srcset, sizes and the dimensions all describe the resized variant the rewrite just replaced
