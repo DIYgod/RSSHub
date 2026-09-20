@@ -6,8 +6,6 @@ const imageBase = 'https://cdn.thewirecutter.com/';
 // Presentational or promotional nodes that carry no article content
 const dropTypes = new Set(['adslot', 'shortcode-recirc', 'shortcode-scoop_form_callout']);
 
-// hono/jsx only applies void-element rules to literal tags, so a dynamic <Tag> must be self-closed
-// explicitly: <Tag></Tag> would emit `<br></br>`, which HTML parsers turn into two line breaks
 const voidTags = new Set(['br', 'hr', 'img', 'source']);
 
 const allowedTags = new Set([
@@ -84,6 +82,19 @@ const Nodes: FC<{ nodes?: any[] }> = ({ nodes }) => (
         ))}
     </>
 );
+
+// hono/jsx only applies void-element rules to literal tags, so a dynamic <Tag> has to be self-closed
+// explicitly: <Tag></Tag> would emit `<br></br>`, which HTML parsers turn into two line breaks
+const Element: FC<{ name: string; attributes?: Record<string, unknown>; nodes?: any[] }> = ({ name, attributes, nodes }) => {
+    const Tag = name as unknown as FC;
+    return voidTags.has(name) ? (
+        <Tag {...attributes} />
+    ) : (
+        <Tag {...attributes}>
+            <Nodes nodes={nodes} />
+        </Tag>
+    );
+};
 
 // Text in the document format carries its formatting as marks rather than as parent elements
 const Marked: FC<{ marks?: any[]; children?: any }> = ({ marks, children }) => {
@@ -165,15 +176,7 @@ const Node: FC<{ node: any }> = ({ node }) => {
                 .filter(([key]) => allowedAttributes.has(key))
                 .map(([key, value]) => [key, key === 'src' ? originalImage(String(value)) : value])
         );
-        const Tag = name as unknown as FC;
-
-        return voidTags.has(name) ? (
-            <Tag {...attributes} />
-        ) : (
-            <Tag {...attributes}>
-                <Nodes nodes={node.children} />
-            </Tag>
-        );
+        return <Element name={name} attributes={attributes} nodes={node.children} />;
     }
 
     // The document format, where the node type is the element itself
@@ -196,15 +199,7 @@ const Node: FC<{ node: any }> = ({ node }) => {
     if (!allowedTags.has(type)) {
         throw new Error(`Unsupported node type: ${type}`);
     }
-    const Tag = type as unknown as FC;
-
-    return voidTags.has(type) ? (
-        <Tag />
-    ) : (
-        <Tag>
-            <Nodes nodes={node.content ?? node.children} />
-        </Tag>
-    );
+    return <Element name={type} nodes={node.content ?? node.children} />;
 };
 
 const Post: FC<{ post: any }> = ({ post }) => (
