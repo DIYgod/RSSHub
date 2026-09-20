@@ -20,7 +20,7 @@ export const route: Route = {
     features: {
         requireConfig: false,
         requirePuppeteer: false,
-        antiCrawler: false,
+        antiCrawler: true,
         supportBT: false,
         supportPodcast: false,
         supportScihub: false,
@@ -44,7 +44,14 @@ async function handler() {
             // the feed appends its own tracking parameters
             const link = item.link!.split('?', 1)[0];
             return cache.tryGet(link, async () => {
-                const response = await ofetch(link);
+                const response = await ofetch(link, {
+                    // Article pages sit behind bot detection that turns away a share of requests with a 403,
+                    // a status ofetch does not retry by default. Retrying clears it — only about half the
+                    // articles are refused on a first pass and every one of them answers on a later attempt.
+                    retry: 5,
+                    retryDelay: 3000,
+                    retryStatusCodes: [400, 403, 408, 409, 425, 429, 500, 502, 503, 504],
+                });
                 const $ = load(response);
                 const post = JSON.parse($('script#__NEXT_DATA__').text()).props.pageProps.post;
 

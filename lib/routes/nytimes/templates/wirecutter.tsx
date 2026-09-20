@@ -140,6 +140,12 @@ const Node: FC<{ node: any }> = ({ node }) => {
                 );
             case 'shortcode-callout':
                 return <Callout ribbon={node.dbData?.ribbon} callouts={node.dbData?.callouts} />;
+            case 'shortcode-pullquote':
+                return (
+                    <blockquote>
+                        <Nodes nodes={node.children} />
+                    </blockquote>
+                );
             case 'shortcode-caption':
                 return (
                     <figure>
