@@ -120,7 +120,7 @@
         "patchright": "1.63.0",
         "postal-mime": "3.0.0",
         "query-string": "9.5.1",
-        "rate-limiter-flexible": "11.2.0",
+        "rate-limiter-flexible": "11.2.1",
         "re2js": "2.8.6",
         "rfc4648": "1.5.4",
         "rss-parser": "3.13.0",
