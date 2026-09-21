@@ -55,11 +55,8 @@ async function handler(ctx): Promise<Data> {
     const seriesInfo: SeriesDetail = seriesInfoResponse.data;
 
     // xRestrict: 0=All ages, 1=R18, 2=R18G
-    if (seriesInfo.body.xRestrict > 0) {
-        return await getNSFWSeriesNovels(id, limit);
-    }
     // All-ages: prefer NSFW handler if authenticated
-    if (hasPixivAuth()) {
+    if (seriesInfo.body.xRestrict > 0 || hasPixivAuth()) {
         return await getNSFWSeriesNovels(id, limit);
     }
     return await getSFWSeriesNovels(id, limit);

@@ -96,11 +96,8 @@ async function scrapeFullArticle(url: string, cookie: string): Promise<string | 
         });
         const $ = load(response);
         const article = $('article');
-        if (article.length === 0) {
-            return null;
-        }
         // If paywall CTA present, cookie didn't work — fall back to Ghost preview
-        if (article.find('.gh-post-upgrade-cta').length > 0) {
+        if (article.length === 0 || article.find('.gh-post-upgrade-cta').length > 0) {
             return null;
         }
         return article.html();

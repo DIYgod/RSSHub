@@ -50,10 +50,7 @@ function ExpandInlineBytes(bytes: Buffer) {
 }
 
 function sortThumb(thumb: Api.TypePhotoSize) {
-    if (thumb instanceof Api.PhotoStrippedSize) {
-        return thumb.bytes.length;
-    }
-    if (thumb instanceof Api.PhotoCachedSize) {
+    if (thumb instanceof Api.PhotoStrippedSize || thumb instanceof Api.PhotoCachedSize) {
         return thumb.bytes.length;
     }
     if (thumb instanceof Api.PhotoSize) {
