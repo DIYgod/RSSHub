@@ -392,12 +392,14 @@
                         sp >>>= 0;
                         const id = this.mem.getUint32(sp + 8, true);
                         this._goRefCounts[id]--;
-                        if (this._goRefCounts[id] === 0) {
-                            const v = this._values[id];
-                            this._values[id] = null;
-                            this._ids.delete(v);
-                            this._idPool.push(id);
+                        if (this._goRefCounts[id] !== 0) {
+                            return;
                         }
+
+                        const v = this._values[id];
+                        this._values[id] = null;
+                        this._ids.delete(v);
+                        this._idPool.push(id);
                     },
 
                     // func stringVal(value string) ref

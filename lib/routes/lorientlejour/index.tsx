@@ -161,10 +161,12 @@ async function handler(ctx) {
             article.find('.inlineImage').each((_, el) => {
                 const inlineImageSrc = $(el).attr('src');
                 const inlineAttachment = item.inline_attachments.find((inlineAttachment) => inlineAttachment.url === inlineImageSrc);
-                if (inlineAttachment && inlineAttachment.description) {
-                    $(el).wrap('<figure></figure>');
-                    $(el).after(`<figcaption>${inlineAttachment.description}</figcaption>`);
+                if (!(inlineAttachment && inlineAttachment.description)) {
+                    return;
                 }
+
+                $(el).wrap('<figure></figure>');
+                $(el).after(`<figcaption>${inlineAttachment.description}</figcaption>`);
             });
         }
         item.description = renderToString(

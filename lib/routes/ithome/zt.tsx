@@ -63,10 +63,12 @@ export const handler = async (ctx) => {
 
                     const src = $el.prop('data-original');
 
-                    if (src) {
-                        const alt = $el.prop('alt');
-                        $el.replaceWith(renderToString(<figure>{alt ? <img src={src} alt={alt} /> : <img src={src} />}</figure>));
+                    if (!src) {
+                        return;
                     }
+
+                    const alt = $el.prop('alt');
+                    $el.replaceWith(renderToString(<figure>{alt ? <img src={src} alt={alt} /> : <img src={src} />}</figure>));
                 });
 
                 const title = $$('h1').text();

@@ -21,12 +21,14 @@ async function handler(): Promise<Data> {
     let redirectPath = DEFAULT_REDIRECT_PATH;
     $scripts.each((_, el) => {
         const redirectScript = $entry(el).text();
-        if (redirectScript !== null) {
-            // Get the real index page by JS redirection href. The path may change.
-            const match = redirectScript.match(/window\.location\.href\s*=\s*["']([^"']+)["']/);
-            if (match) {
-                redirectPath = match[1];
-            }
+        if (redirectScript === null) {
+            return;
+        }
+
+        // Get the real index page by JS redirection href. The path may change.
+        const match = redirectScript.match(/window\.location\.href\s*=\s*["']([^"']+)["']/);
+        if (match) {
+            redirectPath = match[1];
         }
     });
     const redirectURL = `${BASE_URL}${redirectPath}`;

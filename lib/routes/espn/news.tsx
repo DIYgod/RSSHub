@@ -119,15 +119,17 @@ export const route: Route = {
                             if (junkPattern.test(name)) {
                                 $(ele).remove();
                             }
-                            if (mediaPattern.test(name)) {
-                                const mediaType = name.match(mediaPattern)![1] === 'photo' ? 'images' : 'video';
-                                const mediaIndex = Number.parseInt(name.match(mediaPattern)![2]) - 1;
-                                const media = article.content[mediaType][mediaIndex];
-                                if (media) {
-                                    $(ele).replaceWith(renderMedia(media));
-                                } else {
-                                    $(ele).remove();
-                                }
+                            if (!mediaPattern.test(name)) {
+                                return;
+                            }
+
+                            const mediaType = name.match(mediaPattern)![1] === 'photo' ? 'images' : 'video';
+                            const mediaIndex = Number.parseInt(name.match(mediaPattern)![2]) - 1;
+                            const media = article.content[mediaType][mediaIndex];
+                            if (media) {
+                                $(ele).replaceWith(renderMedia(media));
+                            } else {
+                                $(ele).remove();
                             }
                         });
 

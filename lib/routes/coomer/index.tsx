@@ -97,10 +97,12 @@ async function handler(ctx) {
             const regex = /downloads.fanbox.cc/;
             $('a').each((_, el) => {
                 const link = $(el).attr('href');
-                if (regex.test(link!)) {
-                    count++;
-                    $(el).replaceWith(coomerFiles[count]);
+                if (!regex.test(link!)) {
+                    return;
                 }
+
+                count++;
+                $(el).replaceWith(coomerFiles[count]);
             });
             desc = (coomerFiles.length > 0 ? coomerFiles[0] : '') + $.html();
             const remainingCoomerFiles = coomerFiles.slice(count + 1);

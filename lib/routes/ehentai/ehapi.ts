@@ -108,36 +108,38 @@ async function parsePage(cache, data, get_bittorrent: string | boolean = false, 
             thumbnail = await ehgot_thumb(cache, thumbnail);
         }
         const description = `<img src='${thumbnail}' alt='thumbnail'>`;
-        if (title && link) {
-            const item: DataItem & { bittorrent_page_url?: string } = {
-                title,
-                description,
-                pubDate,
-                link,
-            };
-            if (get_bittorrent) {
-                const el_down = el.find('div.gldown');
-                const bittorrent_page_url = el_down.find('a').attr('href');
-                if (bittorrent_page_url) {
-                    const bittorrent_url = await getBittorrent(cache, bittorrent_page_url);
-                    if (bittorrent_url) {
-                        item.enclosure_url = bittorrent_url;
-                        item.enclosure_type = 'application/x-bittorrent';
-                        item.bittorrent_page_url = bittorrent_page_url;
-                    }
+        if (!title || !link) {
+            return;
+        }
+
+        const item: DataItem & { bittorrent_page_url?: string } = {
+            title,
+            description,
+            pubDate,
+            link,
+        };
+        if (get_bittorrent) {
+            const el_down = el.find('div.gldown');
+            const bittorrent_page_url = el_down.find('a').attr('href');
+            if (bittorrent_page_url) {
+                const bittorrent_url = await getBittorrent(cache, bittorrent_page_url);
+                if (bittorrent_url) {
+                    item.enclosure_url = bittorrent_url;
+                    item.enclosure_type = 'application/x-bittorrent';
+                    item.bittorrent_page_url = bittorrent_page_url;
                 }
             }
-            if ('le'.includes(layout)) {
-                // artist tags will only show in Compact or Extended layout
-                // get artist names as author
-                item.author = $(el)
-                    .find('div.gt[title^="artist:"]')
-                    .toArray()
-                    .map((tag) => $(tag).text())
-                    .join(' / ');
-            }
-            return item;
         }
+        if ('le'.includes(layout)) {
+            // artist tags will only show in Compact or Extended layout
+            // get artist names as author
+            item.author = $(el)
+                .find('div.gt[title^="artist:"]')
+                .toArray()
+                .map((tag) => $(tag).text())
+                .join(' / ');
+        }
+        return item;
     }
 
     const item_Promises: Array<Promise<any>> = [];

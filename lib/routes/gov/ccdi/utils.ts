@@ -58,16 +58,18 @@ export const parseNewsList = async (url, selector, ctx) => {
 const changeTrCookie = async () => {
     const cookies = await cookieJar.getCookies(rootUrl);
     const c = cookies.find((c) => c.key === 'HOY_TR');
-    if (c) {
-        const value = c.value;
-        const tr_array = value.split(',');
-        const csr = tr_array[0];
-        const cnv = [...tr_array[1]];
-        const otr = [...tr_array[2]];
-        otr[0] = csr.charAt(Number.parseInt(cnv[0], 16));
-        const nc = new Cookie({ key: 'HOY_TR', value: csr + ',' + cnv.join('') + ',' + otr.join('') + ',0' });
-        await cookieJar.setCookie(nc, rootUrl);
+    if (!c) {
+        return;
     }
+
+    const value = c.value;
+    const tr_array = value.split(',');
+    const csr = tr_array[0];
+    const cnv = [...tr_array[1]];
+    const otr = [...tr_array[2]];
+    otr[0] = csr.charAt(Number.parseInt(cnv[0], 16));
+    const nc = new Cookie({ key: 'HOY_TR', value: csr + ',' + cnv.join('') + ',' + otr.join('') + ',0' });
+    await cookieJar.setCookie(nc, rootUrl);
 };
 
 export const parseArticle = async (item) => {

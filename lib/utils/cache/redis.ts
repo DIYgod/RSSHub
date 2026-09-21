@@ -64,13 +64,15 @@ export default {
             return;
         }
         const stored = stringify(value);
-        if (key) {
-            if (maxAge !== config.cache.contentExpire) {
-                // intentionally store the cache ttl if it is not the default value
-                clients.redisClient.set(getCacheTtlKey(key), maxAge, 'EX', maxAge);
-            }
-            return clients.redisClient.set(key, stored, 'EX', maxAge); // setMode: https://redis.io/commands/set
+        if (!key) {
+            return;
         }
+
+        if (maxAge !== config.cache.contentExpire) {
+            // intentionally store the cache ttl if it is not the default value
+            clients.redisClient.set(getCacheTtlKey(key), maxAge, 'EX', maxAge);
+        }
+        return clients.redisClient.set(key, stored, 'EX', maxAge); // setMode: https://redis.io/commands/set
     },
     clients,
     status,

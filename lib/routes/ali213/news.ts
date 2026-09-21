@@ -97,19 +97,21 @@ export const handler = async (ctx: Context): Promise<Data> => {
                                 const mediaUrl: string | undefined = $$el.prop('src');
                                 const mediaType: string | undefined = mediaUrl?.split(/\./).pop();
 
-                                if (mediaType && mediaUrl) {
-                                    media[mediaType] = { url: mediaUrl };
-
-                                    pEl.replaceWith(
-                                        renderDescription({
-                                            images: [
-                                                {
-                                                    src: mediaUrl,
-                                                },
-                                            ],
-                                        })
-                                    );
+                                if (!(mediaType && mediaUrl)) {
+                                    return;
                                 }
+
+                                media[mediaType] = { url: mediaUrl };
+
+                                pEl.replaceWith(
+                                    renderDescription({
+                                        images: [
+                                            {
+                                                src: mediaUrl,
+                                            },
+                                        ],
+                                    })
+                                );
                             });
                         }
 

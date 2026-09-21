@@ -94,10 +94,12 @@ async function handler(ctx) {
                 });
                 article.find('.article-a-attach-body a').each((i, ele) => {
                     const $ele = $(ele);
-                    if ($ele.attr('onclick')?.startsWith("location.href=encodeURI($('#fileDownUrl').val()+'fileDownLoad.do")) {
-                        $ele.attr('href', `${baseUrl}/dqs/cm-s-notice-query/fileDownLoad.do?mode=open&contentId=${item.contentId}&priority=${i}`);
-                        $ele.removeAttr('onclick');
+                    if (!$ele.attr('onclick')?.startsWith("location.href=encodeURI($('#fileDownUrl').val()+'fileDownLoad.do")) {
+                        return;
                     }
+
+                    $ele.attr('href', `${baseUrl}/dqs/cm-s-notice-query/fileDownLoad.do?mode=open&contentId=${item.contentId}&priority=${i}`);
+                    $ele.removeAttr('onclick');
                 });
 
                 item.description = article.html();

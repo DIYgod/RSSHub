@@ -47,9 +47,11 @@ describe('atomic cache backends', () => {
         await cache.globalCache.set('same-request', '0', 60);
         expect(await cache.globalCache.claim('same-request', 60)).toBe(true);
 
-        if (backend === 'redis') {
-            expect(state.eval).toHaveBeenCalledTimes(3);
-            expect(state.eval).toHaveBeenCalledWith(expect.stringContaining("redis.call('GET', KEYS[1])"), 1, 'same-request', 60);
+        if (backend !== 'redis') {
+            return;
         }
+
+        expect(state.eval).toHaveBeenCalledTimes(3);
+        expect(state.eval).toHaveBeenCalledWith(expect.stringContaining("redis.call('GET', KEYS[1])"), 1, 'same-request', 60);
     });
 });

@@ -24,13 +24,15 @@ function generateEnclosureInfo(htmlContent: string): { enclosure_url?: string; e
         const extension = src.replace(/.*\./, '').toLowerCase();
         const mimeType = MIME_TYPE_MAP[extension as keyof typeof MIME_TYPE_MAP];
 
-        if (mimeType) {
-            enclosureInfo = {
-                enclosure_url: src,
-                enclosure_type: mimeType,
-            };
-            return false;
+        if (!mimeType) {
+            return;
         }
+
+        enclosureInfo = {
+            enclosure_url: src,
+            enclosure_type: mimeType,
+        };
+        return false;
     });
 
     return enclosureInfo;
