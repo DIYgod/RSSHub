@@ -89,8 +89,6 @@ async function handler(ctx) {
     const items = await Promise.all(
         list.map((item) =>
             cache.tryGet(item.link, async () => {
-                let media = '';
-
                 if (item.slideOrVideo) {
                     const page = await context.newPage();
                     await page.route('**/*', (route) => {
@@ -105,7 +103,7 @@ async function handler(ctx) {
                     const html = await page.content();
                     const $ = load(html);
 
-                    media = $('.slide-item').length
+                    const media = $('.slide-item').length
                         ? $('.slide-item div:first-of-type')
                               .toArray()
                               .map((item) => {
