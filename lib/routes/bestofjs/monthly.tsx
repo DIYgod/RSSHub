@@ -170,8 +170,8 @@ const getMonthlyRankings = (year: string, month: string): Promise<RankingItem[]>
                 // Additional info (contributors, created date)
                 const additionalInfo = $tr
                     .find('td:nth-child(3) > div')
-                    .toArray()
                     .slice(1)
+                    .toArray()
                     .map((el) => $(el).text().trim())
                     .join('; ');
                 return {

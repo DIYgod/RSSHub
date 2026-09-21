@@ -28,8 +28,8 @@ async function handler(ctx: Context) {
 
     const $ = load(response);
     const list: DataItem[] = $('.release-notes-content__versions li')
-        .toArray()
         .slice(0, 20)
+        .toArray()
         .map((item) => {
             const $item = $(item);
             return {

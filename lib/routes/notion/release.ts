@@ -24,8 +24,8 @@ const handler: Route['handler'] = async () => {
     // archive
     const item = await Promise.all(
         $('div[class^="releasePreviewsSection"] h3 a[href^="/releases/"]')
-            .toArray()
             .slice(0, 5)
+            .toArray()
             .map((item) => {
                 const link = `https://notion.so${item.attribs.href}`;
 

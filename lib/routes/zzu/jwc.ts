@@ -42,8 +42,8 @@ async function handler(ctx) {
 
     // 解析页面内容并提取文章信息
     const list = $('ul.list li')
-        .toArray()
         .slice(0, 15)
+        .toArray()
         .map((element) => {
             const $element = $(element);
             const $link = $element.find('a.tit').first();

@@ -53,8 +53,8 @@ async function handler(ctx: Context) {
 
         list = $('.list-block ul li, .firstCon-r ul li')
             .find('a')
-            .toArray()
             .slice(0, 10)
+            .toArray()
             .map((item) => ({
                 link: `https:${$(item).attr('href')}`,
             }));

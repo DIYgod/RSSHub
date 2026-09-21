@@ -36,8 +36,8 @@ async function handler(ctx) {
         const $ = load(front_data);
         return [
             ...$('a.brSCsc')
-                .toArray()
                 .slice(3) // skip Home, For you and Following
+                .toArray()
                 .map((item) => {
                     const $item = $(item);
                     return {

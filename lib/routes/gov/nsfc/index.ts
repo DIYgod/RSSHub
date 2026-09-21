@@ -112,8 +112,8 @@ async function handler(ctx) {
     return {
         item: items,
         title: `国家自然科学基金委员会 - ${$('#ess_essBREADCRUMB_lblBreadCrumb a.break')
-            .toArray()
             .slice(1)
+            .toArray()
             .map((a) => $(a).text())
             .join(' - ')}`,
         link: currentUrl,

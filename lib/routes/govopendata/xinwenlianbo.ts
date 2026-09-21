@@ -23,8 +23,8 @@ async function handler() {
 
     const $ = load(response);
     const list = $('article.news-card')
-        .toArray()
         .slice(0, 10)
+        .toArray()
         .map((item) => {
             const $item = $(item);
             const a = $item.find('h2.news-title a');

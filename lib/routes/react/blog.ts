@@ -12,8 +12,8 @@ const handler: Route['handler'] = async () => {
 
     const item = await Promise.all(
         $('a[href^="/blog/"]')
-            .toArray()
             .slice(0, 20)
+            .toArray()
             .map((item) => {
                 const link = `https://react.dev${item.attribs.href}`;
 

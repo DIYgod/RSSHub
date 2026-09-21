@@ -63,7 +63,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                     const pubDateStr: string | undefined = $$('div.show01 i')
                         .text()
                         ?.match(/(\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}:\d{2})/)?.[1];
-                    const categoryEls: Element[] = $$('div.mianbao a').toArray().slice(1);
+                    const categoryEls: Element[] = $$('div.mianbao a').slice(1).toArray();
                     const categories: string[] = [...new Set(categoryEls.map((el) => $$(el).text()).filter(Boolean))];
                     const upDatedStr: string | undefined = pubDateStr;
 

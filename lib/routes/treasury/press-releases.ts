@@ -31,8 +31,8 @@ async function handler(ctx: Context) {
     const $ = load(response);
 
     const list = $('.featured-stories__headline a')
-        .toArray()
         .slice(0, 10)
+        .toArray()
         .map((item): DataItem => {
             const $item = $(item);
             return {

@@ -20,8 +20,8 @@ async function handler() {
     const $ = load(response);
 
     const items = $('.areaZslist li')
-        .toArray()
         .slice(0, 10)
+        .toArray()
         .map((item) => {
             const $item = $(item);
             return {

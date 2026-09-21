@@ -31,7 +31,7 @@ export const route: Route = {
         const url = 'https://newyjs.snnu.edu.cn/tzgg1.htm';
         const response = await ofetch(url);
         const $ = load(response);
-        const list = $('.n_bt li').toArray().slice(0, 10);
+        const list = $('.n_bt li').slice(0, 10).toArray();
 
         const items = await Promise.all(
             list.map((item) => {

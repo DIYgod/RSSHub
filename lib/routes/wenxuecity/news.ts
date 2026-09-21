@@ -22,8 +22,8 @@ async function handler() {
     const $ = load(response);
 
     const list = $('div.mainwrap div.block div.wrapper ul li a')
-        .toArray()
         .slice(0, 15)
+        .toArray()
         .map((item): DataItem => {
             const $item = $(item);
             return {

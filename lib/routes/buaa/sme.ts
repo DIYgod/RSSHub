@@ -66,8 +66,8 @@ async function getList(url) {
     const { data } = await got(url);
     const $ = load(data);
     const title = $('.nytit .fr a')
-        .toArray()
         .slice(1)
+        .toArray()
         .map((item) => $(item).text().trim())
         .join(' - ');
     const list = $("div[class='Newslist'] > ul > li")
