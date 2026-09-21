@@ -167,15 +167,17 @@ function getBittorrent(cache, bittorrent_page_url) {
             for (const el_form of el_forms) {
                 const el_a = $(el_form).find('a');
                 const onclick = el_a.attr('onclick');
-                if (onclick) {
-                    const match = onclick.match(/'(.*?)'/);
-                    if (match) {
-                        bittorrent_url = match[1];
-                        const match_p = bittorrent_url.match(/torrent\?p=(.*)$/);
-                        if (match_p) {
-                            p = match_p[1];
-                        }
-                    }
+                if (!onclick) {
+                    continue;
+                }
+                const match = onclick.match(/'(.*?)'/);
+                if (!match) {
+                    continue;
+                }
+                bittorrent_url = match[1];
+                const match_p = bittorrent_url.match(/torrent\?p=(.*)$/);
+                if (match_p) {
+                    p = match_p[1];
                 }
             }
             return bittorrent_url;

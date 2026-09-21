@@ -183,10 +183,11 @@ const ProcessFeed = (ctx, { data = [] }: { data?: any[] }, params: ProcessFeedPa
 
                 img += content;
 
-                if (mediaNumber) {
-                    img += `<p style="text-align:center">${index}/${mediaCount}</p>`;
-                    index++;
+                if (!mediaNumber) {
+                    continue;
                 }
+                img += `<p style="text-align:center">${index}/${mediaCount}</p>`;
+                index++;
             }
         }
 

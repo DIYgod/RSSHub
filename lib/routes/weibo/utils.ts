@@ -612,13 +612,14 @@ const weiboUtils = {
                             if (matches) {
                                 for (const match of matches) {
                                     const hrefMatch = match.match(/href="https:\/\/weibo\.cn\/sinaurl\?u=([^"]+)"/);
-                                    if (hrefMatch) {
-                                        // 获取并解码 href 中的图片 URL
-                                        const imgSrc = decodeURIComponent(hrefMatch[1]);
-                                        const imgTag = `<img src="${imgSrc}" style="width: 1rem; height: 1rem;">`;
-                                        // 用替换后的 img 标签替换原来的 <a> 标签部分
-                                        replyText = replyText.replaceAll(match, () => imgTag);
+                                    if (!hrefMatch) {
+                                        continue;
                                     }
+                                    // 获取并解码 href 中的图片 URL
+                                    const imgSrc = decodeURIComponent(hrefMatch[1]);
+                                    const imgTag = `<img src="${imgSrc}" style="width: 1rem; height: 1rem;">`;
+                                    // 用替换后的 img 标签替换原来的 <a> 标签部分
+                                    replyText = replyText.replaceAll(match, () => imgTag);
                                 }
                             }
                             replyText = formatDescriptionText(replyText, descriptionRenderParams);

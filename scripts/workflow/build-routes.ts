@@ -69,25 +69,26 @@ for (const namespace in namespaces) {
                 const parsedDomain = parse(new URL('https://' + radarItem.source[0]).hostname);
                 const subdomain = parsedDomain.subdomain || '.';
                 const domain = parsedDomain.domain;
-                if (domain) {
-                    if (!Object.hasOwn(radar, domain)) {
-                        radar[domain] = {
-                            _name: namespaceData.name,
-                        };
-                    }
-                    if (!Object.hasOwn(radar[domain], subdomain)) {
-                        radar[domain][subdomain] = [];
-                    }
-                    radar[domain][subdomain].push({
-                        title: radarItem.title || data.name,
-                        docs: `https://docs.rsshub.app/routes/${categories[0]}`,
-                        source: radarItem.source.map((source) => {
-                            const sourceURL = new URL('https://' + source);
-                            return sourceURL.pathname + sourceURL.search + sourceURL.hash;
-                        }),
-                        target: radarItem.target ? `/${namespace}${radarItem.target}` : realPath,
-                    });
+                if (!domain) {
+                    continue;
                 }
+                if (!Object.hasOwn(radar, domain)) {
+                    radar[domain] = {
+                        _name: namespaceData.name,
+                    };
+                }
+                if (!Object.hasOwn(radar[domain], subdomain)) {
+                    radar[domain][subdomain] = [];
+                }
+                radar[domain][subdomain].push({
+                    title: radarItem.title || data.name,
+                    docs: `https://docs.rsshub.app/routes/${categories[0]}`,
+                    source: radarItem.source.map((source) => {
+                        const sourceURL = new URL('https://' + source);
+                        return sourceURL.pathname + sourceURL.search + sourceURL.hash;
+                    }),
+                    target: radarItem.target ? `/${namespace}${radarItem.target}` : realPath,
+                });
             }
         }
         data.module = `() => import('@/routes/${namespace}/${data.location}')`;

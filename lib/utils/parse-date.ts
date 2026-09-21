@@ -181,11 +181,12 @@ const parseDuration = (str: string): plugin.Duration => {
 
     for (const { unit, regExp } of UNIT_PATTERNS) {
         const match = regExp.exec(cleanStr);
-        if (match) {
-            const val = Number(match[1]);
-            if (!Number.isNaN(val)) {
-                totalDuration = totalDuration.add(val, unit);
-            }
+        if (!match) {
+            continue;
+        }
+        const val = Number(match[1]);
+        if (!Number.isNaN(val)) {
+            totalDuration = totalDuration.add(val, unit);
         }
     }
     return totalDuration;

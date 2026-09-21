@@ -295,10 +295,11 @@ const renderEmbedImages = (block: Block, index: number): JSX.Element | null => {
         const rawImageBlock = findBlocksByType(imageBlock.model?.blocks ?? imageBlock.blocks ?? imageBlock.items, 'rawImage')[0];
         const width = rawImageBlock?.model?.width;
 
-        if (width && width > maxWidth) {
-            maxWidth = width;
-            largestImage = imageBlock;
+        if (!(width && width > maxWidth)) {
+            continue;
         }
+        maxWidth = width;
+        largestImage = imageBlock;
     }
 
     if (!largestImage) {
