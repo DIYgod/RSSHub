@@ -100,8 +100,8 @@ async function handler(ctx) {
             return {
                 title: $('caption').text().trim(),
                 items: $('.datalist tr')
-                    .toArray()
                     .slice(1)
+                    .toArray()
                     .map((item): DataItem => {
                         const $item = $(item);
                         const title = $item.find('td').eq(1).text();

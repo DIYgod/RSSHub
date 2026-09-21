@@ -6,11 +6,13 @@ export const parseSearchDate = (value: string, now = new Date()): Date | undefin
     if (/^\d{2}:\d{2}$/.test(value)) {
         return parseDateInTimezone(`${today}T${value}`, 8);
     }
-    if (/^\d{2}-\d{2} \d{2}:\d{2}$/.test(value)) {
-        // Search results omit the year; a later month/day belongs to last year.
-        const year = Number(today.slice(0, 4)) - Number(value.slice(0, 5) > today.slice(5));
-        return parseDateInTimezone(`${year}-${value}`, 8);
+    if (!/^\d{2}-\d{2} \d{2}:\d{2}$/.test(value)) {
+        return;
     }
+
+    // Search results omit the year; a later month/day belongs to last year.
+    const year = Number(today.slice(0, 4)) - Number(value.slice(0, 5) > today.slice(5));
+    return parseDateInTimezone(`${year}-${value}`, 8);
 };
 
 export const getHeaders = () => ({

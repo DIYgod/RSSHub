@@ -39,8 +39,8 @@ async function handler(ctx: Context) {
         link,
         description: $('meta[name="description"]').attr('content') || '重科图书馆公告',
         item: $('div[class="newsList"] li')
-            .toArray()
             .slice(0, 10)
+            .toArray()
             .map((item) => {
                 const $item = $(item);
                 return {

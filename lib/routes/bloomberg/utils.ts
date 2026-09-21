@@ -287,18 +287,20 @@ const processLedeMedia = async (story_json) => {
         }
         return '';
     }
-    if (story_json.type === 'Lede') {
-        const props = story_json.props;
-
-        const media = {
-            kind: props.media,
-            caption: props.caption?.replaceAll(capRegex, '') ?? '',
-            description: props.dek?.replaceAll(capRegex, '') ?? '',
-            credit: props.credit?.replaceAll(capRegex, '') ?? '',
-            src: props.url,
-        };
-        return renderLedeMedia(media);
+    if (story_json.type !== 'Lede') {
+        return;
     }
+
+    const props = story_json.props;
+
+    const media = {
+        kind: props.media,
+        caption: props.caption?.replaceAll(capRegex, '') ?? '',
+        description: props.dek?.replaceAll(capRegex, '') ?? '',
+        credit: props.credit?.replaceAll(capRegex, '') ?? '',
+        src: props.url,
+    };
+    return renderLedeMedia(media);
 };
 
 const processBody = async (body_html, story_json) => {

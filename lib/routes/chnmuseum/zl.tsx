@@ -111,19 +111,21 @@ const fetchTargetElements = async (cleanType: string, subtype: string | undefine
 
         for (const el of pageElements) {
             const $item = $(el).closest('li');
-            if ($item.length > 0) {
-                const rawLink = $(el).attr('href') || '';
-                const rawZtzl = $(el).attr('ztzlurl') || ''; // some exhibition links have a separate detailed page, use ztzlurl to get the detailed exhibition link if available
-
-                // Use exhibitionLink to remove the repeat ones
-                const itemLink = buildItemLink(rawLink, contextUrl, baseUrl);
-                const exhibitionLink = buildExhibitionLink(rawZtzl, itemLink, baseUrl);
-
-                if (exhibitionLink && !seenLinks.has(exhibitionLink)) {
-                    seenLinks.add(exhibitionLink);
-                    items.push({ $item, contextUrl, itemLink, exhibitionLink, rawZtzl });
-                }
+            if ($item.length === 0) {
+                continue;
             }
+            const rawLink = $(el).attr('href') || '';
+            const rawZtzl = $(el).attr('ztzlurl') || ''; // some exhibition links have a separate detailed page, use ztzlurl to get the detailed exhibition link if available
+
+            // Use exhibitionLink to remove the repeat ones
+            const itemLink = buildItemLink(rawLink, contextUrl, baseUrl);
+            const exhibitionLink = buildExhibitionLink(rawZtzl, itemLink, baseUrl);
+
+            if (!exhibitionLink || seenLinks.has(exhibitionLink)) {
+                continue;
+            }
+            seenLinks.add(exhibitionLink);
+            items.push({ $item, contextUrl, itemLink, exhibitionLink, rawZtzl });
         }
     };
 

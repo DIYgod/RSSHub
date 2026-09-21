@@ -39,8 +39,8 @@ async function handler(ctx: Context) {
     const title = navTitle === '' ? '全部創新' : `創新「${navTitle}」`;
 
     const list: DataItem[] = $('div.inner_news_list > ul > li.clearfix')
-        .toArray()
         .slice(0, 4)
+        .toArray()
         .map((elem) => {
             const $elem = $(elem);
             return {

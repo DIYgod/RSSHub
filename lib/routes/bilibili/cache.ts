@@ -28,10 +28,11 @@ const getConfiguredCookie = () => {
     // Update b_lsid in cookies
     for (const key of Object.keys(config.bilibili.cookies)) {
         const cookie = config.bilibili.cookies[key];
-        if (cookie) {
-            const updatedCookie = cookie.replace(/b_lsid=[0-9A-F]+_[0-9A-F]+/, () => `b_lsid=${utils.lsid()}`);
-            config.bilibili.cookies[key] = updatedCookie;
+        if (!cookie) {
+            continue;
         }
+        const updatedCookie = cookie.replace(/b_lsid=[0-9A-F]+_[0-9A-F]+/, () => `b_lsid=${utils.lsid()}`);
+        config.bilibili.cookies[key] = updatedCookie;
     }
 
     return config.bilibili.cookies[Object.keys(config.bilibili.cookies)[Math.floor(Math.random() * Object.keys(config.bilibili.cookies).length)]] || '';

@@ -64,11 +64,13 @@ async function loadContent(itemLink, charset, header) {
     // fix lazyload image
     post.find('img').each((_, img) => {
         const $img = $(img);
-        if ($img.attr('src')?.endsWith('none.gif') && $img.attr('file')) {
-            $img.attr('src', $img.attr('file') || $img.attr('zoomfile'));
-            $img.removeAttr('file');
-            $img.removeAttr('zoomfile');
+        if (!($img.attr('src')?.endsWith('none.gif') && $img.attr('file'))) {
+            return;
         }
+
+        $img.attr('src', $img.attr('file') || $img.attr('zoomfile'));
+        $img.removeAttr('file');
+        $img.removeAttr('zoomfile');
     });
 
     // 只抓取论坛1楼消息

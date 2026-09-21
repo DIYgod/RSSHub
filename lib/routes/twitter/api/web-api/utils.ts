@@ -313,13 +313,14 @@ export function gatherLegacyFromData(entries: any[], filterNested?: string[], us
     const filteredEntries: any[] = [];
     for (const entry of entries) {
         const entryId = entry.entryId;
-        if (entryId) {
-            if (entryId.startsWith('tweet-') || entryId.startsWith('profile-grid-0-tweet-')) {
-                filteredEntries.push(entry);
-            }
-            if (filterNested && filterNested.some((f) => entryId.startsWith(f))) {
-                filteredEntries.push(...entry.content.items);
-            }
+        if (!entryId) {
+            continue;
+        }
+        if (entryId.startsWith('tweet-') || entryId.startsWith('profile-grid-0-tweet-')) {
+            filteredEntries.push(entry);
+        }
+        if (filterNested && filterNested.some((f) => entryId.startsWith(f))) {
+            filteredEntries.push(...entry.content.items);
         }
     }
     for (const entry of filteredEntries) {
@@ -354,37 +355,40 @@ export function gatherLegacyFromData(entries: any[], filterNested?: string[], us
         if (tweet && tweet.tweet) {
             tweet = tweet.tweet;
         }
-        if (tweet) {
-            const retweet = tweet.legacy?.retweeted_status_result?.result;
-            for (const t of [tweet, retweet]) {
-                if (!t?.legacy) {
-                    continue;
-                }
-                hydrateLegacyUser(t.legacy, t);
-                t.legacy.id_str = t.rest_id; // avoid falling back to conversation_id_str elsewhere
-                const quote = t.quoted_status_result?.result?.tweet || t.quoted_status_result?.result;
-                if (quote?.legacy) {
-                    t.legacy.quoted_status = quote.legacy;
-                    hydrateLegacyUser(t.legacy.quoted_status, quote);
-                }
-                if (t.note_tweet) {
-                    const tmp = t.note_tweet.note_tweet_results.result;
-                    t.legacy.entities.hashtags = tmp.entity_set.hashtags;
-                    t.legacy.entities.symbols = tmp.entity_set.symbols;
-                    t.legacy.entities.urls = tmp.entity_set.urls;
-                    t.legacy.entities.user_mentions = tmp.entity_set.user_mentions;
-                    t.legacy.full_text = tmp.text;
-                }
+        if (!tweet) {
+            continue;
+        }
+        const retweet = tweet.legacy?.retweeted_status_result?.result;
+        for (const t of [tweet, retweet]) {
+            if (!t?.legacy) {
+                continue;
             }
-            const legacy = tweet.legacy;
-            if (legacy) {
-                if (retweet) {
-                    legacy.retweeted_status = retweet.legacy;
-                }
-                if (userId === undefined || legacy.user_id_str === userId + '') {
-                    tweets.push(legacy);
-                }
+            hydrateLegacyUser(t.legacy, t);
+            t.legacy.id_str = t.rest_id; // avoid falling back to conversation_id_str elsewhere
+            const quote = t.quoted_status_result?.result?.tweet || t.quoted_status_result?.result;
+            if (quote?.legacy) {
+                t.legacy.quoted_status = quote.legacy;
+                hydrateLegacyUser(t.legacy.quoted_status, quote);
             }
+            if (!t.note_tweet) {
+                continue;
+            }
+            const tmp = t.note_tweet.note_tweet_results.result;
+            t.legacy.entities.hashtags = tmp.entity_set.hashtags;
+            t.legacy.entities.symbols = tmp.entity_set.symbols;
+            t.legacy.entities.urls = tmp.entity_set.urls;
+            t.legacy.entities.user_mentions = tmp.entity_set.user_mentions;
+            t.legacy.full_text = tmp.text;
+        }
+        const legacy = tweet.legacy;
+        if (!legacy) {
+            continue;
+        }
+        if (retweet) {
+            legacy.retweeted_status = retweet.legacy;
+        }
+        if (userId === undefined || legacy.user_id_str === userId + '') {
+            tweets.push(legacy);
         }
     }
 

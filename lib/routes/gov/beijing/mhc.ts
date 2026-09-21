@@ -53,8 +53,8 @@ async function handler(ctx: Context) {
     const $ = load(response);
 
     const list = $('div.weinei_left_con div.weinei_left_con_line')
-        .toArray()
         .slice(0, 10)
+        .toArray()
         .map((item): DataItem => {
             const $item = $(item);
             const a = $item.find('a[title]');

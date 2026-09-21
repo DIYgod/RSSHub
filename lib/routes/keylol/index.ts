@@ -192,11 +192,13 @@ function getDescription($) {
     // handle lazyload image
     descriptionEl.find('img').each((_, img) => {
         const $img = $(img);
-        if ($img.attr('src')?.endsWith('none.gif') && $img.attr('file')) {
-            $img.attr('src', $img.attr('file'));
-            $img.removeAttr('file');
-            $img.removeAttr('zoomfile');
+        if (!($img.attr('src')?.endsWith('none.gif') && $img.attr('file'))) {
+            return;
         }
+
+        $img.attr('src', $img.attr('file'));
+        $img.removeAttr('file');
+        $img.removeAttr('zoomfile');
     });
 
     return descriptionEl.length > 0 ? descriptionEl.html() : $('div.alert_info').html();

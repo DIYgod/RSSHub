@@ -25,14 +25,16 @@ export const processImage = (content: string) => {
 
     $('a').each((_, elem) => {
         const href = $(elem).attr('href');
-        if (href?.startsWith('http://link.zhihu.com/?target=') || href?.startsWith('https://link.zhihu.com/?target=')) {
-            const url = new URL(href);
-            const target = url.searchParams.get('target') || '';
-            try {
-                $(elem).attr('href', decodeURIComponent(target));
-            } catch {
-                // sometimes the target is not a valid url
-            }
+        if (!href?.startsWith('http://link.zhihu.com/?target=') && !href?.startsWith('https://link.zhihu.com/?target=')) {
+            return;
+        }
+
+        const url = new URL(href);
+        const target = url.searchParams.get('target') || '';
+        try {
+            $(elem).attr('href', decodeURIComponent(target));
+        } catch {
+            // sometimes the target is not a valid url
         }
     });
 

@@ -55,11 +55,13 @@ async function handler(ctx): Promise<Data> {
 
         $('.c-lazy-image__img').each((_, img) => {
             const $img = $(img);
-            if ($img.attr('data-lazy-src')) {
-                $img.attr('src', $img.attr('data-lazy-src')!.split('?', 1)[0]);
-                $img.removeAttr('data-lazy-src');
-                $img.removeAttr('data-lazy-srcset');
+            if (!$img.attr('data-lazy-src')) {
+                return;
             }
+
+            $img.attr('src', $img.attr('data-lazy-src')!.split('?', 1)[0]);
+            $img.removeAttr('data-lazy-src');
+            $img.removeAttr('data-lazy-srcset');
         });
         $('[class^="lrv-a-crop-"]').contents().unwrap();
 

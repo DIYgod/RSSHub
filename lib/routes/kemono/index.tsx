@@ -164,13 +164,15 @@ function generateEnclosureInfo(htmlContent: string): { enclosure_url?: string; e
         const extension = extractFileExtension(src);
         const mimeType = MIME_TYPE_MAP[extension as keyof typeof MIME_TYPE_MAP];
 
-        if (mimeType) {
-            enclosureInfo = {
-                enclosure_url: new URL(src, KEMONO_ROOT_URL).href,
-                enclosure_type: mimeType,
-            };
-            return false;
+        if (!mimeType) {
+            return;
         }
+
+        enclosureInfo = {
+            enclosure_url: new URL(src, KEMONO_ROOT_URL).href,
+            enclosure_type: mimeType,
+        };
+        return false;
     });
 
     return enclosureInfo;
@@ -332,10 +334,12 @@ function processPosts(posts: KemonoPost[], authorName: string, limit: number) {
             const fanboxRegex = /downloads\.fanbox\.cc/;
             $('a').each((_, el) => {
                 const link = $(el).attr('href');
-                if (link && fanboxRegex.test(link)) {
-                    $(el).replaceWith(kemonoFileElements[replacementCount] || '');
-                    replacementCount++;
+                if (!(link && fanboxRegex.test(link))) {
+                    return;
                 }
+
+                $(el).replaceWith(kemonoFileElements[replacementCount] || '');
+                replacementCount++;
             });
 
             description = (kemonoFileElements[0] || '') + $.html();

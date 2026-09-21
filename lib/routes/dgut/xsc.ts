@@ -40,8 +40,8 @@ async function handler(ctx: Context) {
         link: `${host}${urlType}/index.shtml`,
         description: `东莞理工学院 ${name} ${info}`,
         item: $('#paging > ul li')
-            .toArray()
             .slice(0, 10)
+            .toArray()
             .map((item) => {
                 const $item = $(item);
                 return {

@@ -24,10 +24,12 @@ const fixImages = ($) => {
 
 const hdImage = (img) => {
     img.attribs.src = img.attribs.src.replace('_thm', '').replace('_small', '');
-    if (img.parentNode.name === 'a' && img.parentNode.attribs['data-width'] && img.parentNode.attribs['data-height']) {
-        img.attribs.width = img.parentNode.attribs['data-width'];
-        img.attribs.height = img.parentNode.attribs['data-height'];
+    if (!(img.parentNode.name === 'a' && img.parentNode.attribs['data-width'] && img.parentNode.attribs['data-height'])) {
+        return;
     }
+
+    img.attribs.width = img.parentNode.attribs['data-width'];
+    img.attribs.height = img.parentNode.attribs['data-height'];
 };
 const removeFigureStyle = (f) => {
     delete f.attribs.style;

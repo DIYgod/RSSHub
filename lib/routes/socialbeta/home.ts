@@ -29,7 +29,7 @@ async function handler() {
                 link: a.attr('href')!,
             };
         });
-    const uniqueList = new Map(list.map((item) => [item.link, item])).values().toArray().slice(0, 15);
+    const uniqueList = new Map(list.map((item) => [item.link, item])).values().take(15).toArray();
 
     const items = await Promise.all(
         uniqueList.map((item) =>

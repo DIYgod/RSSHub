@@ -174,22 +174,24 @@ export function registerRssRoutes(app: Hono, namespaces: NamespacesType): void {
         for (const [path, routeData] of sortedRoutes) {
             const wrappedHandler: Handler = async (ctx) => {
                 logger.debug(`Matched route: ${routePath(ctx)}`);
-                if (!ctx.get('data')) {
-                    if (!routeData.handler) {
-                        if (process.env.NODE_ENV === 'test') {
-                            const { route } = await import(`./routes/${namespace}/${routeData.location}`);
-                            routeData.handler = route.handler;
-                        } else if (routeData.module) {
-                            const { route } = await routeData.module();
-                            routeData.handler = route.handler;
-                        }
-                    }
-                    const response = await routeData.handler(ctx);
-                    if (response instanceof Response) {
-                        return response;
-                    }
-                    ctx.set('data', response);
+                if (ctx.get('data')) {
+                    return;
                 }
+
+                if (!routeData.handler) {
+                    if (process.env.NODE_ENV === 'test') {
+                        const { route } = await import(`./routes/${namespace}/${routeData.location}`);
+                        routeData.handler = route.handler;
+                    } else if (routeData.module) {
+                        const { route } = await routeData.module();
+                        routeData.handler = route.handler;
+                    }
+                }
+                const response = await routeData.handler(ctx);
+                if (response instanceof Response) {
+                    return response;
+                }
+                ctx.set('data', response);
             };
             subApp.get(path, wrappedHandler);
         }

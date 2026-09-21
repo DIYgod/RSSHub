@@ -353,16 +353,18 @@ const readScriptData = async <T>(source: string, target: string[], argumentIndex
         if (value instanceof ScriptDataError) {
             throw value;
         }
-        if (isObject(value)) {
-            if (ancestors.has(value)) {
-                throw new ScriptDataError('Cyclic script data is not supported');
-            }
-            ancestors.add(value);
-            for (const child of Object.values(value)) {
-                validate(child, ancestors, depth + 1);
-            }
-            ancestors.delete(value);
+        if (!isObject(value)) {
+            return;
         }
+
+        if (ancestors.has(value)) {
+            throw new ScriptDataError('Cyclic script data is not supported');
+        }
+        ancestors.add(value);
+        for (const child of Object.values(value)) {
+            validate(child, ancestors, depth + 1);
+        }
+        ancestors.delete(value);
     };
 
     if (source.length > maxScriptLength) {

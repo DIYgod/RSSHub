@@ -60,8 +60,8 @@ async function handler() {
                 };
             });
         const paperTable = $('tbody tr')
-            .toArray()
             .slice(1) // skip table header
+            .toArray()
             .map((item) => {
                 const $item = $(item);
                 const title = $item.find('td').eq(0).text().trim();

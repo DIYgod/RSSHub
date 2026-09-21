@@ -50,11 +50,8 @@ export const parseJpy = (text: string | null): number | null => {
     if (/無償|なし|無し/.test(s)) {
         return 0;
     }
-    if (isUnknown(s)) {
-        return null;
-    }
     // Without 円 / 万 only a bare number is accepted ('3ヶ月' is not an amount).
-    if (!/[円万億]/.test(s) && !/^\d+(?:\.\d+)?$/.test(s)) {
+    if (isUnknown(s) || (!/[円万億]/.test(s) && !/^\d+(?:\.\d+)?$/.test(s))) {
         return null;
     }
     const oku = s.match(/^(\d+(?:\.\d+)?)億(?:(\d+(?:\.\d+)?)万)?/);

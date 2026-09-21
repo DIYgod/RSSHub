@@ -14,10 +14,7 @@ const getOriginalImg = (url) => {
     }
     if ((m = url.match(/^(https?:\/\/\w+\.twimg\.com\/[^?]+)(\?.+)$/i))) {
         const pars = getQueryParams(url);
-        if (!pars.format || !pars.name) {
-            return url;
-        }
-        if (pars.name === 'orig') {
+        if (!pars.format || !pars.name || pars.name === 'orig') {
             return url;
         }
         return m[1] + '?format=' + pars.format + '&name=orig';
@@ -186,10 +183,11 @@ const ProcessFeed = (ctx, { data = [] }: { data?: any[] }, params: ProcessFeedPa
 
                 img += content;
 
-                if (mediaNumber) {
-                    img += `<p style="text-align:center">${index}/${mediaCount}</p>`;
-                    index++;
+                if (!mediaNumber) {
+                    continue;
                 }
+                img += `<p style="text-align:center">${index}/${mediaCount}</p>`;
+                index++;
             }
         }
 

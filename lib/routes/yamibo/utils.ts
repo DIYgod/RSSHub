@@ -95,16 +95,18 @@ export class ThreadFetcher {
         } catch {
             // Article failures have already been reported to their callers.
         }
-        if (this.browser) {
-            let browser: BrowserPage;
-            try {
-                browser = await this.browser;
-            } catch {
-                // openBrowser cleans up failed initialization before rejecting.
-                return;
-            }
-            await browser.destroy();
+        if (!this.browser) {
+            return;
         }
+
+        let browser: BrowserPage;
+        try {
+            browser = await this.browser;
+        } catch {
+            // openBrowser cleans up failed initialization before rejecting.
+            return;
+        }
+        await browser.destroy();
     }
 }
 

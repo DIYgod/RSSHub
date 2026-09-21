@@ -57,16 +57,18 @@ export default {
             return;
         }
         const stored = stringify(value);
-        if (key) {
-            const promises: Array<Promise<void>> = [kvNamespace.put(key, stored, { expirationTtl: maxAge })];
-
-            if (maxAge !== config.cache.contentExpire) {
-                // Store the cache ttl if it is not the default value
-                promises.push(kvNamespace.put(getCacheTtlKey(key), String(maxAge), { expirationTtl: maxAge }));
-            }
-
-            await Promise.all(promises);
+        if (!key) {
+            return;
         }
+
+        const promises: Array<Promise<void>> = [kvNamespace.put(key, stored, { expirationTtl: maxAge })];
+
+        if (maxAge !== config.cache.contentExpire) {
+            // Store the cache ttl if it is not the default value
+            promises.push(kvNamespace.put(getCacheTtlKey(key), String(maxAge), { expirationTtl: maxAge }));
+        }
+
+        await Promise.all(promises);
     },
     clients: {},
     status,

@@ -23,8 +23,8 @@ async function handler() {
     $('.cg-pic').parent().remove();
 
     const list = $('.cg-title h3')
-        .toArray()
         .slice(0, 15)
+        .toArray()
         .map((item): DataItem => {
             const a = $(item).find('a');
             return {

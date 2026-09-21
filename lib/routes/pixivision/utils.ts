@@ -58,25 +58,29 @@ export function processContent($: CheerioAPI, lang: string): string {
         const $link = $elem.find('blockquote > a');
         const href = $link.attr('href');
 
-        if (href) {
-            const match = href.match(/\/status\/(\d+)/);
-            if (match) {
-                const tweetId = match[1];
-                $elem.html(`
-                <iframe
-                    scrolling="no"
-                    frameborder="0"
-                    allowtransparency="true"
-                    allowfullscreen="true"
-                    class=""
-                    style="position: static; visibility: visible; display: block; width: 550px; height: 1000px; flex-grow: 1;"
-                    title="X Post"
-                    src="https://platform.twitter.com/embed/Tweet.html?id=${tweetId}"
-                ></iframe>
-            `);
-                $elem.find('blockquote').remove();
-            }
+        if (!href) {
+            return;
         }
+
+        const match = href.match(/\/status\/(\d+)/);
+        if (!match) {
+            return;
+        }
+
+        const tweetId = match[1];
+        $elem.html(`
+        <iframe
+            scrolling="no"
+            frameborder="0"
+            allowtransparency="true"
+            allowfullscreen="true"
+            class=""
+            style="position: static; visibility: visible; display: block; width: 550px; height: 1000px; flex-grow: 1;"
+            title="X Post"
+            src="https://platform.twitter.com/embed/Tweet.html?id=${tweetId}"
+        ></iframe>
+    `);
+        $elem.find('blockquote').remove();
     });
 
     return (

@@ -195,6 +195,7 @@
         "unicorn-js/no-array-sort-for-min-max": "error",
         "unicorn-js/no-array-splice": "error",
         "unicorn-js/no-async-promise-finally": "error",
+        "unicorn-js/no-async-iterator-callback": "error",
         // "unicorn/no-await-expression-member": "error",
         "unicorn/no-await-in-promise-methods": "error",
         // "unicorn-js/no-blob-to-file": "error", // unused
@@ -292,7 +293,8 @@
         "unicorn-js/no-unsafe-property-key": "error",
         // "unicorn-js/no-unsafe-sqlite-interpolation": "error", // unused
         "unicorn-js/no-unsafe-string-replacement": "error",
-        "unicorn-js/no-unused-array-method-return": "error",
+        "unicorn-js/no-unused-builtin-method-return": "error",
+        "unicorn-js/no-unused-iterator-helper": "error",
         "unicorn-js/no-useless-boolean-cast": "error",
         "unicorn-js/no-useless-coercion": "error",
         "unicorn/no-useless-collection-argument": "error",
@@ -311,9 +313,11 @@
         "unicorn-js/no-useless-re-export": "error",
         // "unicorn-js/no-useless-recursion": "error", unopinionated
         "unicorn/no-useless-spread": "error",
+        "unicorn-js/no-useless-set-construction": "error",
         // "unicorn/no-useless-switch-case": "error",
         "unicorn-js/no-useless-template-literals": "error",
         // "unicorn/no-useless-undefined": "error",
+        "unicorn-js/no-using-resource-escape": "error",
         "unicorn-js/no-xor-as-exponentiation": "error",
         "unicorn/no-zero-fractions": "error",
         // "unicorn/number-literal-case": "error",
@@ -342,6 +346,7 @@
         "unicorn-js/prefer-block-statement-over-iife": "error",
         "unicorn-js/prefer-boolean-return": "error",
         "unicorn/prefer-class-fields": "error",
+        "unicorn-js/prefer-combined-guards": "error",
         // "unicorn/prefer-classlist-toggle": "error", // unused
         // "unicorn/prefer-code-point": "error",
         "unicorn-js/prefer-continue": "error",
@@ -372,6 +377,7 @@
         "unicorn-js/prefer-iterable-in-constructor": "error",
         "unicorn-js/prefer-iterator-helpers": "error",
         "unicorn-js/prefer-iterator-to-array": "error",
+        "unicorn-js/prefer-iterator-zip": "error",
         // "unicorn-js/prefer-iterator-to-array-at-end": "error",
         // "unicorn/prefer-keyboard-event-key": "error", // unused
         "unicorn-js/prefer-location-assign": "error",
@@ -431,6 +437,7 @@
         // "unicorn/prefer-string-starts-ends-with": "error", use typescript/prefer-string-starts-ends-with
         "unicorn/prefer-string-trim-start-end": "error",
         "unicorn/prefer-structured-clone": "error",
+        "unicorn-js/prefer-temporal-conversion": "error",
         // "unicorn/prefer-switch": "error",
         "unicorn/prefer-ternary": "error",
         "unicorn-js/prefer-then-catch": "error",

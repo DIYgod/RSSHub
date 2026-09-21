@@ -34,13 +34,15 @@ async function loadContent(link) {
                 const $video = $(video);
                 const dataSrc = $video.attr('data-src');
 
-                if (!$video.attr('src') && dataSrc) {
-                    $video.attr('src', dataSrc);
-                    $video.removeAttr('data-src');
-                    $video.removeAttr('data-video-small');
-                    $video.removeAttr('data-video-medium');
-                    $video.removeAttr('data-video-large');
+                if ($video.attr('src') || !dataSrc) {
+                    return;
                 }
+
+                $video.attr('src', dataSrc);
+                $video.removeAttr('data-src');
+                $video.removeAttr('data-video-small');
+                $video.removeAttr('data-video-medium');
+                $video.removeAttr('data-video-large');
             });
             object.find('img').each((_, img) => {
                 const $img = $(img);

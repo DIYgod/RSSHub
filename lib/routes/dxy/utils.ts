@@ -63,10 +63,12 @@ const getPost = (item) =>
                 $img.attr('src', hsrc);
                 $img.removeAttr('data-hsrc');
             }
-            if (osrc) {
-                $img.attr('src', osrc);
-                $img.removeAttr('data-osrc');
+            if (!osrc) {
+                return;
             }
+
+            $img.attr('src', osrc);
+            $img.removeAttr('data-osrc');
         });
 
         item.description = $.html();

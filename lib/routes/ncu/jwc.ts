@@ -74,10 +74,12 @@ async function handler(): Promise<Data> {
                     attachments.each((_, el) => {
                         const href = $detail(el).attr('href');
                         const text = $detail(el).text().trim();
-                        if (href && text) {
-                            const absoluteHref = href.startsWith('http') ? href : new URL(href, baseUrl).href;
-                            description += `<li><a href="${absoluteHref}">${text}</a></li>`;
+                        if (!href || !text) {
+                            return;
                         }
+
+                        const absoluteHref = href.startsWith('http') ? href : new URL(href, baseUrl).href;
+                        description += `<li><a href="${absoluteHref}">${text}</a></li>`;
                     });
                     description += '</ul>';
                 }

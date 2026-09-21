@@ -58,7 +58,7 @@ export const route: Route = {
         const configTarget = urlMap[type] || urlMap.tzgg;
         const response = await ofetch(configTarget.url);
         const $ = load(response);
-        const list = $('.lunwen dl dd').toArray().slice(0, 10);
+        const list = $('.lunwen dl dd').slice(0, 10).toArray();
 
         const items = await Promise.all(
             list.map((item) => {

@@ -23,8 +23,8 @@ async function handler() {
 
     const list = $('div.article-list')
         .find('h3.article-title')
-        .toArray()
         .slice(0, 20)
+        .toArray()
         .map((item): DataItem & { link: string } => {
             const a = $(item).find('a');
             return {

@@ -138,16 +138,9 @@ export const getVideoUrl = (id: string) => `https://www.youtube-nocookie.com/emb
 
 // Get the appropriate playlist ID with or without shorts
 export const getPlaylistWithShortsFilter = (id: string, filterShorts = true): string => {
-    // If filtering shorts is enabled
-    if (filterShorts) {
-        if (id.startsWith('UC')) {
-            // For channel IDs (UC...), convert to playlist format without shorts (UULF...)
-            return 'UULF' + id.slice(2);
-        }
-        if (id.startsWith('UU')) {
-            // For playlist IDs (UU...), convert to playlist format without shorts (UULF...)
-            return 'UULF' + id.slice(2);
-        }
+    // If filtering shorts is enabled, convert channel IDs (UC...) and playlist IDs (UU...) to playlist format without shorts (UULF...)
+    if (filterShorts && (id.startsWith('UC') || id.startsWith('UU'))) {
+        return 'UULF' + id.slice(2);
     }
     // If filterShorts is false or the ID format doesn't match known patterns, return original ID
     return id;
