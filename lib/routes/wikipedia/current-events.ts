@@ -1,3 +1,4 @@
+import { decodeXML } from 'entities';
 import sanitizeHtml from 'sanitize-html';
 
 import { config } from '@/config';
@@ -95,23 +96,18 @@ function stripTemplates(wikitext: string): string {
     return wikitext.replaceAll(/\{\{([^}]+)\}\}/g, '$1');
 }
 
-// sanitizeHtml runs on the wikitext before any tag is built, so & and < reach this point already
-// encoded. Decode them before assembling a URL, or the entity text ends up inside the link. &amp;
-// must go last so that &amp;lt; does not decode all the way to <.
-function decodeSanitizedEntities(text: string): string {
-    return text.replaceAll('&lt;', '<').replaceAll('&gt;', '>').replaceAll('&quot;', '"').replaceAll('&amp;', '&');
-}
-
 // Link targets come from the wikitext, so they are attacker-controlled and land in an href
-// attribute. encodeURI percent-encodes the " that would otherwise close the attribute and let the
-// rest of a crafted target through as markup, and it fixes the spaces that made the URLs invalid.
+// attribute. sanitizeHtml runs on the wikitext before any tag is built, so & and < reach this
+// point already encoded; decodeXML reverses that (and any numeric character reference, which can
+// introduce whitespace the trim below must still catch) before encodeURI percent-encodes the "
+// that would otherwise close the attribute and fixes the spaces that made the URLs invalid.
 function wikiUrl(target: string): string {
-    return `https://en.wikipedia.org/wiki/${encodeURI(decodeSanitizedEntities(target).trim().replaceAll(' ', '_'))}`;
+    return `https://en.wikipedia.org/wiki/${encodeURI(decodeXML(target).trim().replaceAll(' ', '_'))}`;
 }
 
 // Anything that is not http(s) — javascript:, data: — is left as plain text rather than linked.
 function externalUrl(url: string): string | null {
-    const decoded = decodeSanitizedEntities(url).trim();
+    const decoded = decodeXML(url).trim();
     return /^https?:\/\//i.test(decoded) ? encodeURI(decoded) : null;
 }
 
