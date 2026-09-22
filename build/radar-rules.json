@@ -44307,6 +44307,14 @@
         "target": "/xueqiu/hots"
       },
       {
+        "title": "动态详情",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/:uid/:id"
+        ],
+        "target": "/xueqiu/status/:uid/:id"
+      },
+      {
         "title": "股票信息",
         "docs": "https://docs.rsshub.app/routes/finance",
         "source": [

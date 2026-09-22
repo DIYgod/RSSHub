@@ -9341,6 +9341,9 @@
   "/xueqiu/hots": [
     "hillerliao"
   ],
+  "/xueqiu/status/:uid/:id": [
+    "ruesin"
+  ],
   "/xueqiu/stock_info/:id/:type?": [
     "YuYang"
   ],
