@@ -21920,6 +21920,28 @@
       }
     ]
   },
+  "fraenkelgallery.com": {
+    "_name": "Fraenkel Gallery",
+    ".": [
+      {
+        "title": "Exhibitions & Conversations",
+        "docs": "https://docs.rsshub.app/routes/picture",
+        "source": [
+          "/exhibitions",
+          "/"
+        ],
+        "target": "/fraenkelgallery/exhibitions"
+      },
+      {
+        "title": "Exhibitions & Conversations",
+        "docs": "https://docs.rsshub.app/routes/picture",
+        "source": [
+          "/conversations"
+        ],
+        "target": "/fraenkelgallery/posts"
+      }
+    ]
+  },
   "freecomputerbooks.com": {
     "_name": "Free Computer Books",
     ".": [

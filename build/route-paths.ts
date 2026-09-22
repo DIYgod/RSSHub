@@ -1192,6 +1192,7 @@ export type RoutePath =
   | `/forwardfuture/daily`
   | `/forwardfuture/originals`
   | `/fosshub/:id`
+  | `/fraenkelgallery/:type?`
   | `/free/`
   | `/freebuf/articles/:type`
   | `/freecomputerbooks/:category?`

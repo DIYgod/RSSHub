@@ -63439,6 +63439,59 @@
     "url": "fosshub.com",
     "lang": "en"
   },
+  "fraenkelgallery": {
+    "routes": {
+      "/:type?": {
+        "path": "/:type?",
+        "categories": [
+          "picture"
+        ],
+        "view": 2,
+        "example": "/fraenkelgallery/exhibitions",
+        "parameters": {
+          "type": "`exhibitions` (default) or `posts` (the Conversations blog)"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "fraenkelgallery.com/exhibitions",
+              "fraenkelgallery.com/"
+            ],
+            "target": "/exhibitions"
+          },
+          {
+            "source": [
+              "fraenkelgallery.com/conversations"
+            ],
+            "target": "/posts"
+          }
+        ],
+        "name": "Exhibitions & Conversations",
+        "maintainers": [
+          "IvanWng97"
+        ],
+        "description": "Exhibitions come with artist, year, type and status as categories and the full exhibition page including all images.",
+        "location": "index.tsx",
+        "module": "() => import('@/routes/fraenkelgallery/index.tsx')"
+      }
+    },
+    "apiRoutes": {},
+    "name": "Fraenkel Gallery",
+    "url": "fraenkelgallery.com",
+    "categories": [
+      "picture"
+    ],
+    "description": "Photography gallery in San Francisco: exhibitions and conversations.",
+    "lang": "en"
+  },
   "freecomputerbooks": {
     "routes": {
       "/:category?": {

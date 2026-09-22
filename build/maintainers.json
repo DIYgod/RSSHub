@@ -4676,6 +4676,9 @@
   "/fosshub/:id": [
     "nczitzk"
   ],
+  "/fraenkelgallery/:type?": [
+    "IvanWng97"
+  ],
   "/freecomputerbooks/:category?": [
     "cubroe"
   ],
