@@ -1,7 +1,7 @@
 import type { CheerioAPI } from 'cheerio';
 import { load } from 'cheerio';
 import type { Element } from 'domhandler';
-import * as entities from 'entities';
+import { decodeHTMLStrict } from 'entities';
 import type { MiddlewareHandler } from 'hono';
 import { convert } from 'html-to-text';
 import markdownit from 'markdown-it';
@@ -76,8 +76,8 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
         data.item ||= [];
 
         // decode HTML entities
-        data.title &&= entities.decodeXML(data.title + '');
-        data.description &&= entities.decodeXML(data.description + '');
+        data.title &&= decodeHTMLStrict(data.title + '');
+        data.description &&= decodeHTMLStrict(data.description + '');
 
         // sort items
         if (ctx.req.query('sorted') !== 'false') {
@@ -85,7 +85,7 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
         }
 
         const handleItem = (item: DataItem) => {
-            item.title &&= entities.decodeXML(item.title + '');
+            item.title &&= decodeHTMLStrict(item.title + '');
             item.description ||= item.content?.html;
 
             // handle pubDate
@@ -323,7 +323,7 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
                 });
 
                 item.author = author || parsed_result?.author;
-                item.description = parsed_result && parsed_result.content.length > 40 ? entities.decodeXML(parsed_result.content) : description;
+                item.description = parsed_result && parsed_result.content.length > 40 ? decodeHTMLStrict(parsed_result.content) : description;
             });
             await Promise.all(tasks);
         }
