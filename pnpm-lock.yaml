@@ -26,9 +26,9 @@ patchedDependencies:
   rss-parser@3.13.0:
     hash: afac79a31a3db94c953d49680bc5528468f051957d461e913d2e2dbf5cd22a8d
     path: patches/rss-parser@3.13.0.patch
-  teleproto@1.228.5:
+  teleproto@1.229.0:
     hash: baf8f5b95e8b538edf2947f8c9abf87378af4bb4b95f644086d01f219559631a
-    path: patches/teleproto@1.228.5.patch
+    path: patches/teleproto@1.229.0.patch
 
 importers:
 
@@ -242,8 +242,8 @@ importers:
         specifier: 0.8.0
         version: 0.8.0
       teleproto:
-        specifier: 1.228.5
-        version: 1.228.5(patch_hash=baf8f5b95e8b538edf2947f8c9abf87378af4bb4b95f644086d01f219559631a)
+        specifier: 1.229.0
+        version: 1.229.0(patch_hash=baf8f5b95e8b538edf2947f8c9abf87378af4bb4b95f644086d01f219559631a)
       title:
         specifier: 4.0.1
         version: 4.0.1
@@ -5738,8 +5738,8 @@ packages:
     resolution: {integrity: sha512-MFO/QzvtAOmJbkhOaCTvbGcFN9L9b+JunIsDwaKljSOdcLMea3NJ1k9Usz/rjdfSXTq4dfzfeS7W4p4YOAAHeA==}
     engines: {node: '>=18'}
 
-  teleproto@1.228.5:
-    resolution: {integrity: sha512-NMBFB4oB+0mjJIPVqdLd3wAaU7kf5dw7frrYdnnXM38DSdbnN36Dao6Ae1xNZR9NICiefbfJqM8yDijOPqE8MA==}
+  teleproto@1.229.0:
+    resolution: {integrity: sha512-aEKx22ZS76SYy26eWR+2oV5XM4+orbq/2ZINvSKoV2SZERn6yqq9mw5lNK22nCax7lTnC0gcz8uqP26gaUxEqA==}
     engines: {node: '>=18'}
 
   text-hex@1.0.0:
@@ -11408,12 +11408,12 @@ snapshots:
       minizlib: 3.1.0
       yallist: 5.0.0
 
-  teleproto@1.228.5(patch_hash=baf8f5b95e8b538edf2947f8c9abf87378af4bb4b95f644086d01f219559631a):
+  teleproto@1.229.0(patch_hash=baf8f5b95e8b538edf2947f8c9abf87378af4bb4b95f644086d01f219559631a):
     dependencies:
       big-integer: 1.6.52
       mime: 3.0.0
       node-localstorage: 2.2.1
-      socks: 2.8.9
+      socks: 2.8.10
       store2: 2.14.4
 
   text-hex@1.0.0: {}

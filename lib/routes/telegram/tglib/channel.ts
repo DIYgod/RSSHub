@@ -182,8 +182,8 @@ export default async function handler(ctx: Context) {
         if (message.replyMarkup instanceof Api.ReplyInlineMarkup) {
             for (const buttonRow of message.replyMarkup.rows) {
                 for (const button of buttonRow.buttons) {
-                    if (button instanceof Api.KeyboardButtonUrl) {
-                        attachments.push(`<div><a href="${button.url}" target="_blank">${button.text}</a></div>`);
+                    if (button.type instanceof Api.InlineButtonTypeUrl) {
+                        attachments.push(`<div><a href="${button.type.url}" target="_blank">${button.text}</a></div>`);
                     }
                 }
             }
