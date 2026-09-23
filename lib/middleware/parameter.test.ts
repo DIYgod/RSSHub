@@ -648,3 +648,19 @@ describe('filter-engine', () => {
         expect(await response.text()).toMatch(/somethingelse/);
     });
 });
+
+describe('entities', () => {
+    it('decodes HTML entities', async () => {
+        const data = await runMiddleware(
+            {
+                title: 'Feed&nbsp;Title &amp; More',
+                description: 'Feed&hellip;',
+                item: [{ title: 'Item&rsquo;s &#8217; &notify ?a=1&lt=2' }],
+            },
+            {}
+        );
+        expect(data.title).toBe('Feed\u{A0}Title & More');
+        expect(data.description).toBe('Feed…');
+        expect(data.item[0].title).toBe('Item’s ’ &notify ?a=1&lt=2');
+    });
+});
