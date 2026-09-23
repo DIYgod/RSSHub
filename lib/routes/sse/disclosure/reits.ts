@@ -7,7 +7,7 @@ import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
 export const handler = async (ctx: Context): Promise<Data> => {
-    const limit = Math.trunc(Number(ctx.req.query('limit') ?? '50'));
+    const limit = ctx.req.query('limit') ?? '50';
 
     const pageUrl = 'https://www.sse.com.cn/reits/';
     const pdfHost = 'https://www.sse.com.cn';
@@ -22,7 +22,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
             fundCode: '',
             startDate: start,
             endDate: end,
-            'pageHelp.pageSize': String(limit),
+            'pageHelp.pageSize': limit,
             'pageHelp.pageNo': '1',
             'pageHelp.beginPage': '1',
             'pageHelp.endPage': '5',
