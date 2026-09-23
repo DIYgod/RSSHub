@@ -105,7 +105,7 @@ async function handler(ctx): Promise<Data> {
                 // The site serves the cover over plain http, which readers may refuse to load.
                 const coverHtml = cover ? `<img src="${new URL(cover, rootUrl).href.replace(/^http:/, 'https:')}">` : '';
 
-                const abstract = content('div.abstract-pic-left').text().trim();
+                const abstract = content('div.abstract-pic-left').html();
                 const abstractHtml = abstract ? `<blockquote>${abstract}</blockquote>` : '';
 
                 item.description = coverHtml + abstractHtml + content('#select-main').html()!.replaceAll('<p><br></p>', '');
