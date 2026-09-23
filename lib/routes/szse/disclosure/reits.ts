@@ -7,7 +7,7 @@ import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
 export const handler = async (ctx: Context): Promise<Data> => {
-    const limit = Math.trunc(Number(ctx.req.query('limit') ?? '50'));
+    const limit = ctx.req.query('limit') ?? '50';
 
     const baseUrl = 'https://reits.szse.cn';
     const staticBaseUrl = 'https://disc.static.szse.cn';
@@ -18,7 +18,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
         method: 'GET',
         query: {
             type: '4',
-            pageSize: String(limit),
+            pageSize: limit,
             pageNum: '1',
             plateFlag: 'szse',
         },
@@ -32,7 +32,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
         const linkUrl = `disclosure/notice/index.html?${item.id}`;
         const categories: string[] = [item.secCode, item.secName].filter(Boolean);
         const guid = `szse-reits-${item.id}`;
-        const updated: number | string = item.publishTime;
+        const updated: string = item.publishTime;
 
         const processedItem: DataItem = {
             title,
@@ -46,7 +46,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
         };
 
         const enclosureUrl: string = new URL(item.attachPath, staticBaseUrl).href;
-        const enclosureType = `application/${String(item.attachFormat).toLowerCase()}`;
+        const enclosureType = `application/${item.attachFormat.toLowerCase()}`;
 
         return {
             ...processedItem,
