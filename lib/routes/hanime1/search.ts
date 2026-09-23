@@ -1,64 +1,38 @@
 import { load } from 'cheerio';
 
-import { config } from '@/config';
 import type { Route } from '@/types';
-import ofetch from '@/utils/ofetch';
+
+import { baseUrl, fetchListing, parseSearchListing, resolvePubDate } from './utils';
 
 async function handler(ctx) {
     const { params } = ctx.req.param();
-    const baseUrl = 'https://hanime1.me';
+    const searchParams = new URLSearchParams(params || '');
+    const link = `${baseUrl}/search${searchParams.toString() ? `?${searchParams}` : ''}`;
 
-    // 提取参数
-    const searchParams = new URLSearchParams(params);
     const query = searchParams.get('query') || '';
     const genre = searchParams.get('genre') || '';
-    const broad = searchParams.get('broad') || '';
-    const tags = searchParams.getAll('tags[]');
-    const sort = searchParams.get('sort') || '';
-    const year = searchParams.get('year') || '';
-    const month = searchParams.get('month') || '';
+    const date = searchParams.get('date') || '';
+    const requestedDate = /(\d{4})\s*年\s*(\d{1,2})\s*月/.exec(date);
 
-    let link = `${baseUrl}/search?query=${query}&genre=${genre}&broad=${broad}&sort=${sort}&year=${year}&month=${month}`;
-    for (const tag of tags) {
-        link += `&tags[]=${tag}`;
+    const { html, status } = await fetchListing(link);
+    if (status >= 400) {
+        throw new Error(`Hanime1 responded with HTTP ${status}, unable to load the search result: ${link}`);
     }
 
-    const response = await ofetch(link, {
-        headers: {
-            referer: baseUrl,
-            'user-agent': config.trueUA,
-        },
-    });
-    const $ = load(response);
+    const $ = load(html);
+    const item = parseSearchListing($).map((entry) => ({
+        title: entry.title,
+        link: entry.link,
+        description: entry.description,
+        pubDate: resolvePubDate(entry.dateText, requestedDate ? Number(requestedDate[1]) : undefined, requestedDate ? Number(requestedDate[2]) : undefined),
+    }));
 
-    const target = '.content-padding-new .row.no-gutter';
-
-    const items = $(target)
-        .find('.search-doujin-videos.hidden-xs') // 过滤掉重复的元素
-        .toArray()
-        .map((item) => {
-            const element = $(item);
-            const title = element.attr('title');
-            const videoLink = element.find('a.overlay').attr('href');
-            const imageSrc = element.find('img[style*="object-fit: cover"]').attr('src'); // 选择缩略图
-
-            return {
-                title: title!,
-                link: videoLink,
-                description: `<img src="${imageSrc}">`,
-            };
-        });
-
-    // 最多显示三个标签
-    const maxTagsToShow = 3;
-    const displayedTags = tags.slice(0, maxTagsToShow).join(', ') + (tags.length > maxTagsToShow ? ', ...' : '');
-
-    const feedTitle = 'Hanime1 搜索结果' + (genre ? ` | 类型: ${genre}` : '') + (query ? ` | 关键词: ${query}` : '') + (tags.length ? ` | 标签: ${displayedTags}` : '');
+    const feedTitle = ['Hanime1 搜索结果', genre && `类型: ${genre}`, query && `关键词: ${query}`, date && `时间: ${date}`].filter(Boolean).join(' | ');
 
     return {
         title: feedTitle,
         link,
-        item: items,
+        item,
     };
 }
 
@@ -66,29 +40,33 @@ export const route: Route = {
     path: '/search/:params',
     name: '搜索结果',
     maintainers: ['kjasn'],
-    example: '/hanime1/search/tags%5B%5D=%E7%B4%94%E6%84%9B&',
+    example: '/hanime1/search/genre=%E6%96%B0%E7%95%AA%E9%A0%90%E5%91%8A',
     categories: ['anime'],
     parameters: {
         params: {
             description: `
-| 参数                | 说明                              | 示例或可选值                                                                                                          |
-| ------------------- | --------------------------------- | --------------------------------------------------------------------------------------------------------------------- |
-| \`query\`           | 搜索框输入的内容                  | 任意值都可以，例如：\`辣妹\`                                                                                          |
-| \`genre\`           | 番剧类型，默认为\`全部\`          | 可选值有：\`全部\` / \`裏番\` / \`泡麵番\` / \`Motion+Anime\` / \`3D動畫\` / \`同人作品\` / \`MMD\` / \`Cosplay\`     |
-| \`tags[]\`          | 标签                              | 可选值过多，不一一列举，详细请查看原网址。例如：\`tags[]=純愛&tags[]=中文字幕\`                                       |
-| \`broad\`           | 标签模糊匹配，默认为 \`off\`      | \`on\`（模糊匹配，包含任一标签） / \`off\`（精确匹配，包含全部标签）                                                  |
-| \`sort\`            | 搜索结果排序，默认 \`最新上市\`   | \`最新上市\` / \`最新上傳\` / \`本日排行\` / \`本週排行\` / \`本月排行\` / \`觀看次數\` / \`讚好比例\` / \`他們在看\` |
-| \`year\`, \`month\` | 筛选发布时间，默认为 \`全部时间\` | 例如：\`year=2025&month=5\`                                                                                           |
+把原网址 \`/search?\` 后面的部分原样接在路由后面即可，参数名与原网址一致。
+
+| 参数       | 说明         | 示例或可选值                                                          |
+| ---------- | ------------ | --------------------------------------------------------------------- |
+| \`query\`  | 搜索关键词   | \`辣妹\`                                                              |
+| \`genre\`  | 番剧类型     | \`裏番\` / \`泡麵番\` / \`Motion+Anime\` / \`3D動畫\` / \`新番預告\` 等 |
+| \`type\`   | 内容类型     | \`artist\` 等，见原网址                                               |
+| \`tags[]\` | 标签，可重复 | \`tags[]=純愛&tags[]=中文字幕\`                                       |
+| \`sort\`   | 排序         | \`最新上市\` / \`最新上傳\` / \`本日排行\` 等                          |
+| \`date\`   | 发布时间筛选 | \`2026 年 9 月\`                                                      |
+| \`duration\` | 时长筛选   | 见原网址                                                              |
 
 ::: tip
-如果你不确定标签或类型的具体名字，可以直接去原网址选好筛选条件后，把网址中的参数复制过来使用。例如： \`https://hanime1.me/search?query=&genre=裏番&broad=on&sort=最新上市&tags[]=純愛&tags[]=中文字幕\`，\`/search?\`后面的部分就是参数了,最后得到**类似**这样的路由 \`https://rsshub.app/hanime1/search/query=&genre=裏番&broad=on&sort=最新上市&tags[]=純愛&tags[]=中文字幕\`
+在原网址选好筛选条件后，把网址中 \`/search?\` 之后的部分复制过来即可，例如
+\`https://rsshub.app/hanime1/search/genre=%E6%96%B0%E7%95%AA%E9%A0%90%E5%91%8A&date=2026%20%E5%B9%B4%209%20%E6%9C%88\`
 :::
 `,
         },
     },
     features: {
         requireConfig: false,
-        requirePuppeteer: false,
+        requirePuppeteer: true,
         antiCrawler: false,
         supportBT: false,
         supportPodcast: false,
