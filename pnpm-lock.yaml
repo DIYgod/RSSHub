@@ -12,8 +12,8 @@ overrides:
   google-play-scraper>tough-cookie: ^6.0.0
   hasown: npm:@nolyfill/hasown@^1
   is-core-module: npm:@nolyfill/is-core-module@^1
-  request>form-data: ^2.5.5
-  rss-parser@3.13.0>entities: ^7.0.0
+  request>form-data: ^4.0.6
+  rss-parser@3.13.0>entities: ^8.1.0
   rss-parser@3.13.0>xml2js: ^0.6.2
   safe-buffer: npm:@nolyfill/safe-buffer@^1
   safer-buffer: npm:@nolyfill/safer-buffer@^1
@@ -11075,7 +11075,7 @@ snapshots:
       combined-stream: 1.0.8
       extend: 3.0.2
       forever-agent: 0.6.1
-      form-data: 2.5.6
+      form-data: 4.0.6
       har-validator: 5.1.5
       http-signature: 1.2.0
       is-typedarray: 1.0.0
@@ -11188,7 +11188,7 @@ snapshots:
 
   rss-parser@3.13.0(patch_hash=afac79a31a3db94c953d49680bc5528468f051957d461e913d2e2dbf5cd22a8d):
     dependencies:
-      entities: 7.0.1
+      entities: 8.1.0
       xml2js: 0.6.2
 
   rxjs@6.6.7:
