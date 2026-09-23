@@ -81,6 +81,10 @@ export const twitterGot = async (
     params,
     options?: {
         allowNoAuth?: boolean;
+        // Some GraphQL operations (e.g. SearchTimeline) only accept POST and
+        // return 404 for GET requests.
+        method?: 'GET' | 'POST';
+        queryId?: string;
     }
 ) => {
     const auth = await getAuth(30);
@@ -89,7 +93,8 @@ export const twitterGot = async (
         throw new ConfigNotFoundError('No valid Twitter token found');
     }
 
-    const requestUrl = `${url}?${queryString.stringify(params)}`;
+    const usePost = options?.method === 'POST';
+    const requestUrl = usePost ? url : `${url}?${queryString.stringify(params)}`;
 
     const cookie = await token2Cookie(auth?.token);
     // if (!cookie && auth) {
@@ -170,6 +175,14 @@ export const twitterGot = async (
                   }),
         },
         dispatcher: dispatchers?.agent,
+        ...(usePost && {
+            method: 'POST',
+            body: JSON.stringify({
+                variables: JSON.parse(params.variables),
+                features: JSON.parse(params.features),
+                queryId: options?.queryId,
+            }),
+        }),
     });
 
     let responseData: any;
@@ -243,6 +256,10 @@ export const twitterGot = async (
     return responseData;
 };
 
+// Endpoints that X serves over POST only. A GET request to these returns 404
+// with an empty body, which is easy to mistake for a stale query id.
+const POST_ENDPOINTS = new Set(['SearchTimeline']);
+
 export const paginationTweets = async (endpoint: string, userId: number | undefined, variables: ApiParams, path?: string[]) => {
     const params = {
         variables: JSON.stringify({ ...variables, userId }),
@@ -260,7 +277,8 @@ export const paginationTweets = async (endpoint: string, userId: number | undefi
             });
             return data;
         }
-        const { data } = await twitterGot(baseUrl + gqlMap[endpoint], params);
+        const options = POST_ENDPOINTS.has(endpoint) ? { method: 'POST' as const, queryId: gqlMap[endpoint].split('/', 3)[2] } : undefined;
+        const { data } = await twitterGot(baseUrl + gqlMap[endpoint], params, options);
         return data;
     };
 
