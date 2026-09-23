@@ -129,7 +129,7 @@
         "sm-crypto-v2": "1.15.1",
         "socks-proxy-agent": "10.1.0",
         "source-map": "0.8.0",
-        "teleproto": "1.228.5",
+        "teleproto": "1.229.0",
         "title": "4.0.1",
         "tldts": "7.4.13",
         "tosource": "2.0.0-alpha.3",
@@ -180,7 +180,7 @@
         "eslint-plugin-n": "18.3.0",
         "eslint-plugin-regexp": "3.3.1",
         "eslint-plugin-simple-import-sort": "14.0.0",
-        "eslint-plugin-unicorn": "75.0.0",
+        "eslint-plugin-unicorn": "76.0.0",
         "eslint-plugin-yml": "3.8.1",
         "fast-string-width": "3.0.2",
         "fs-extra": "11.4.0",
@@ -257,8 +257,8 @@
             "google-play-scraper>tough-cookie": "^6.0.0",
             "hasown": "npm:@nolyfill/hasown@^1",
             "is-core-module": "npm:@nolyfill/is-core-module@^1",
-            "request>form-data": "^2.5.5",
-            "rss-parser@3.13.0>entities": "^7.0.0",
+            "request>form-data": "^4.0.6",
+            "rss-parser@3.13.0>entities": "^8.1.0",
             "rss-parser@3.13.0>xml2js": "^0.6.2",
             "safe-buffer": "npm:@nolyfill/safe-buffer@^1",
             "safer-buffer": "npm:@nolyfill/safer-buffer@^1",
@@ -267,7 +267,7 @@
         "patchedDependencies": {
             "@mswjs/interceptors@0.41.9": "patches/@mswjs__interceptors@0.41.9.patch",
             "rss-parser@3.13.0": "patches/rss-parser@3.13.0.patch",
-            "teleproto@1.228.5": "patches/teleproto@1.228.5.patch"
+            "teleproto@1.229.0": "patches/teleproto@1.229.0.patch"
         }
     }
 }
