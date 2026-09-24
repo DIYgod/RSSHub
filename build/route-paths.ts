@@ -1993,6 +1993,7 @@ export type RoutePath =
   | `/kmust/job/careers/:type?`
   | `/kmust/job/jobfairs`
   | `/kmust/jwc/:type?`
+  | `/komica/:host/:board/:category?`
   | `/komiic/comic/:id`
   | `/konachan/post/popular_recent/:period?`
   | `/konachan/sfw/post/popular_recent/:period?`

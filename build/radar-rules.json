@@ -27130,6 +27130,19 @@
       }
     ]
   },
+  "komica1.org": {
+    "_name": "Komica",
+    ".": [
+      {
+        "title": "討論板",
+        "docs": "https://docs.rsshub.app/routes/bbs",
+        "source": [
+          "/:board/"
+        ],
+        "target": "/komica/:host/:board"
+      }
+    ]
+  },
   "konghq.com": {
     "_name": "Kong API 网关平台",
     ".": [

@@ -79074,6 +79074,45 @@ export default {
     ],
     "lang": "zh-CN"
   },
+  "komica": {
+    "routes": {
+      "/:host/:board/:category?": {
+        "path": "/:host/:board/:category?",
+        "name": "討論板",
+        "url": "komica1.org",
+        "maintainers": [
+          "TonyRL"
+        ],
+        "example": "/komica/gita/00b/動畫",
+        "parameters": {
+          "host": "子網域，即討論板網址中 `*.komica1.org` 的第一段，如 `gita`",
+          "board": "討論板路徑，如 `00b`",
+          "category": "類別（列表模式），如 `動畫`、`漫畫`、`掛圖`、`新番捏他`、`新番實況`、`模型`、`軍武`；留空為整個版面"
+        },
+        "description": "例如綜合避難所 <https://gita.komica1.org/00b/> 對應 `/komica/gita/00b`，其「動畫」列表對應 `/komica/gita/00b/動畫`。",
+        "categories": [
+          "bbs"
+        ],
+        "radar": [
+          {
+            "source": [
+              "komica1.org/:board/"
+            ],
+            "target": "/:host/:board"
+          }
+        ],
+        "location": "index.ts",
+        "module": () => import('@/routes/komica/index.ts')
+      }
+    },
+    "apiRoutes": {},
+    "name": "Komica",
+    "url": "komica1.org",
+    "categories": [
+      "bbs"
+    ],
+    "lang": "zh-TW"
+  },
   "kongfz": {
     "routes": {
       "/people/:id": {

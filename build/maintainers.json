@@ -5885,6 +5885,9 @@
   "/kmust/jwc/:type?": [
     "geekrainy"
   ],
+  "/komica/:host/:board/:category?": [
+    "TonyRL"
+  ],
   "/kongfz/people/:id": [
     "nczitzk"
   ],
