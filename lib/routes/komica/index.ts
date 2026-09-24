@@ -38,43 +38,31 @@ const handler = async (ctx: Context): Promise<Data> => {
     if (!isValidHost(host)) {
         throw new InvalidParameterError('Invalid host');
     }
-    const limit = Number(ctx.req.query('limit') ?? '20');
+    const limit = Number(ctx.req.query('limit') ?? '30');
     const baseUrl = `https://${host}.komica1.org/${board}/`;
 
-    let items: DataItem[];
-    let pageTitle: string;
+    const listUrl = `${baseUrl}pixmicat.php?mode=module&load=mod_threadlist${category ? `&c=${encodeURIComponent(category)}` : ''}`;
+    const html = await ofetch(listUrl);
+    const $ = load(html);
 
-    if (category) {
-        const listUrl = `${baseUrl}pixmicat.php?mode=module&load=mod_threadlist&c=${encodeURIComponent(category)}`;
-        const html = await ofetch(listUrl);
-        const $ = load(html);
-        pageTitle = `${$('h1').text()} - ${category}`;
-        const links = $('tr[class^="ListRow"] a[href^="pixmicat.php?res="]')
-            .toArray()
-            .map((a) => new URL($(a).attr('href')!, baseUrl).href)
-            .slice(0, limit);
-        items = await Promise.all(
-            links.map((link) =>
-                cache.tryGet(link, async () => {
-                    const threadHtml = await ofetch(link);
-                    const $ = load(threadHtml);
-                    return parsePost($, $('.threadpost'), baseUrl);
-                })
-            )
-        );
-    } else {
-        const html = await ofetch(`${baseUrl}index.htm`);
-        const $ = load(html);
-        pageTitle = $('h1').text();
-        items = $('.threadpost')
-            .toArray()
-            .slice(0, limit)
-            .map((el) => parsePost($, $(el), baseUrl));
-    }
+    const links = $('tr[class^="ListRow"] a[href^="pixmicat.php?res="]')
+        .toArray()
+        .map((a) => new URL($(a).attr('href')!, baseUrl).href)
+        .slice(0, limit);
+
+    const items = await Promise.all(
+        links.map((link) =>
+            cache.tryGet(link, async () => {
+                const threadHtml = await ofetch(link);
+                const $$ = load(threadHtml);
+                return parsePost($$, $$('.threadpost'), baseUrl);
+            })
+        )
+    );
 
     return {
-        title: `Komica - ${pageTitle}`,
-        link: category ? `${baseUrl}pixmicat.php?mode=module&load=mod_threadlist&c=${encodeURIComponent(category)}` : baseUrl,
+        title: `Komica - ${$('h1').text()}${category ? ` - ${category}` : ''}`,
+        link: listUrl,
         language: 'zh-TW',
         item: items,
     };
