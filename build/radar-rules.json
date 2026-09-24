@@ -54346,6 +54346,27 @@
       }
     ]
   },
+  "fortnite.com": {
+    "_name": "Fortnite",
+    "www": [
+      {
+        "title": "News",
+        "docs": "https://docs.rsshub.app/routes/game",
+        "source": [
+          "/news"
+        ],
+        "target": "/fortnite/news"
+      },
+      {
+        "title": "News",
+        "docs": "https://docs.rsshub.app/routes/game",
+        "source": [
+          "/news/tag/:tag"
+        ],
+        "target": "/fortnite/news/tag=:tag"
+      }
+    ]
+  },
   "pixiv.net": {
     "_name": "pixiv",
     "www": [

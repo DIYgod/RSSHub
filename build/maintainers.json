@@ -1040,9 +1040,6 @@
   "/fantia/user/:id": [
     "nczitzk"
   ],
-  "/fortnite/news/:options?": [
-    "lyqluis"
-  ],
   "/gamer520/:category?/:order?": [
     "xzzpig"
   ],
@@ -12360,6 +12357,9 @@
   ],
   "/finology/tag/:topic": [
     "Rjnishant530"
+  ],
+  "/fortnite/news/:options?": [
+    "lyqluis"
   ],
   "/pixiv/user/bookmarks/:id": [
     "EYHN"
