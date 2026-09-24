@@ -1,5 +1,6 @@
 import { load } from 'cheerio';
 
+import { config } from '@/config';
 import type { Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
@@ -32,6 +33,9 @@ async function handler(ctx) {
     const response = await got({
         method: 'get',
         url: pageUrl,
+        headers: {
+            'user-agent': config.ua,
+        },
     });
 
     const $ = load(response.data);
@@ -46,6 +50,9 @@ async function handler(ctx) {
                 const response = await got({
                     method: 'get',
                     url: link,
+                    headers: {
+                        'user-agent': config.ua,
+                    },
                 });
 
                 const $ = load(response.data);
