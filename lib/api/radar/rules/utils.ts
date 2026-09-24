@@ -34,7 +34,7 @@ export const getRadarRules = async (): Promise<Record<string, RadarDomain>> => {
                     }
                     rules[domain][subdomain].push({
                         title: radarItem.title || data.name,
-                        docs: `https://docs.rsshub.app/routes/${data.categories?.[0] || 'other'}`,
+                        docs: `https://docs.rsshub.app/routes/${namespace}`,
                         source: radarItem.source.map((source) => {
                             const sourceURL = new URL('https://' + source);
                             return sourceURL.pathname + sourceURL.search + sourceURL.hash;
