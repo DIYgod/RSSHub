@@ -464,9 +464,6 @@
   "/rebase/geekdaily": [
     "gaoyifan"
   ],
-  "/rockstargames/socialclub/events/:game?": [
-    "kookxiang"
-  ],
   "/rss3/:account/:network?/:tag?": [
     "DIYgod",
     "pseudoyu"
@@ -1173,6 +1170,12 @@
   "/qutoutiao/category/:cid": [
     "alphardex",
     "LogicJake"
+  ],
+  "/rockstargames/socialclub/events/:game?": [
+    "kookxiang"
+  ],
+  "/rockstargames/newswire": [
+    "dapexyz"
   ],
   "/skebetter/illust/:type": [
     "SnowAgar25"

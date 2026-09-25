@@ -2846,6 +2846,7 @@ export type RoutePath =
   | `/rfi/:path{.+}?`
   | `/right/forum/:id?`
   | `/rmlt/idea`
+  | `/rockstargames/newswire`
   | `/rockstargames/socialclub/events/:game?`
   | `/rockthejvm/articles`
   | `/rodong/news/:language?`

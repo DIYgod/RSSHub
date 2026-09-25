@@ -6622,34 +6622,6 @@ export default {
     "url": "rebase.network",
     "lang": "en"
   },
-  "rockstargames": {
-    "routes": {
-      "/socialclub/events/:game?": {
-        "path": "/socialclub/events/:game?",
-        "categories": [
-          "game"
-        ],
-        "example": "/rockstargames/socialclub/events/GTAV",
-        "parameters": {
-          "game": "游戏代码（默认所有）"
-        },
-        "name": "在线活动",
-        "maintainers": [
-          "kookxiang"
-        ],
-        "description": "| 游戏代码 | 游戏名称     |\n| -------- | ------------ |\n| GTAV     | 侠盗猎车手 5 |\n| RDR2     | 荒野大镖客 2 |",
-        "location": "events.ts",
-        "module": () => import('@/routes/rockstargames/events.ts')
-      }
-    },
-    "apiRoutes": {},
-    "name": "Rockstar Games",
-    "url": "www.rockstargames.com",
-    "categories": [
-      "game"
-    ],
-    "lang": "zh-CN"
-  },
   "rss3": {
     "routes": {
       "/:account/:network?/:tag?": {
@@ -14960,6 +14932,55 @@ export default {
     "url": "home.qutoutiao.net",
     "categories": [
       "new-media"
+    ],
+    "lang": "zh-CN"
+  },
+  "rockstargames": {
+    "routes": {
+      "/socialclub/events/:game?": {
+        "path": "/socialclub/events/:game?",
+        "categories": [
+          "game"
+        ],
+        "example": "/rockstargames/socialclub/events/GTAV",
+        "parameters": {
+          "game": "游戏代码（默认所有）"
+        },
+        "name": "在线活动",
+        "maintainers": [
+          "kookxiang"
+        ],
+        "description": "| 游戏代码 | 游戏名称     |\n| -------- | ------------ |\n| GTAV     | 侠盗猎车手 5 |\n| RDR2     | 荒野大镖客 2 |",
+        "location": "events.ts",
+        "module": () => import('@/routes/rockstargames/events.ts')
+      },
+      "/newswire": {
+        "path": "/newswire",
+        "categories": [
+          "game"
+        ],
+        "example": "/rockstargames/newswire",
+        "url": "www.rockstargames.com/newswire",
+        "radar": [
+          {
+            "source": [
+              "www.rockstargames.com/newswire"
+            ]
+          }
+        ],
+        "name": "Newswire",
+        "maintainers": [
+          "dapexyz"
+        ],
+        "location": "newswire.ts",
+        "module": () => import('@/routes/rockstargames/newswire.ts')
+      }
+    },
+    "apiRoutes": {},
+    "name": "Rockstar Games",
+    "url": "www.rockstargames.com",
+    "categories": [
+      "game"
     ],
     "lang": "zh-CN"
   },

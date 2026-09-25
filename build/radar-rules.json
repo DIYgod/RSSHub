@@ -4143,6 +4143,19 @@
       }
     ]
   },
+  "rockstargames.com": {
+    "_name": "Rockstar Games",
+    "www": [
+      {
+        "title": "Newswire",
+        "docs": "https://docs.rsshub.app/routes/game",
+        "source": [
+          "/newswire"
+        ],
+        "target": "/rockstargames/newswire"
+      }
+    ]
+  },
   "skebetter.com": {
     "_name": "Skebetter",
     ".": [
