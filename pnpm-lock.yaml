@@ -47,8 +47,8 @@ importers:
         specifier: 39.0.0
         version: 39.0.0
       '@honeybadger-io/js':
-        specifier: 6.16.3
-        version: 6.16.3
+        specifier: 6.16.4
+        version: 6.16.4
       '@hono/node-server':
         specifier: 2.1.1
         version: 2.1.1(hono@4.13.8)
@@ -1240,8 +1240,8 @@ packages:
     resolution: {integrity: sha512-ojVk6q2GUXqW80szrk/zp2XC1YQFJWQvGHdNNyc1RPGTekguSMpa7Pp9jKitHpdYIsbmEnj1wPTyZassOfSLeg==}
     engines: {node: '>=14'}
 
-  '@honeybadger-io/js@6.16.3':
-    resolution: {integrity: sha512-AsQaFji3Qu9z7r7RAhkCzkaveWvqGglA+ytaVOUnAsIYihojrnV1D3t0T34/gRHsjme23VWop4X3buSXPq8jzw==}
+  '@honeybadger-io/js@6.16.4':
+    resolution: {integrity: sha512-7ZHUVpU7/BeR16fGGzJKa70Q9JB266qBEAno+kvJs22PbSqcAge8DiI8ge701n9FtI7olXIRHOehfOIhmXX0iQ==}
     engines: {node: '>=14'}
     hasBin: true
     peerDependencies:
@@ -2744,8 +2744,8 @@ packages:
   '@tybys/wasm-util@0.10.3':
     resolution: {integrity: sha512-F3fo1MYrRJYL3zER0OUOmkutjr1Vp23m7OsSgp7nq4SP6OqX6C/56XFIPAl5bt3zaBRjmW7SGz3u/6LwFpYcOg==}
 
-  '@types/aws-lambda@8.10.162':
-    resolution: {integrity: sha512-Fn658grtLOci1oxi1391vvDWJRKNGWRSqfxRkmN/Iy3c0tQH1USMKEXcPYHLvope+ZgTFocx9FRQJx1muBL6qw==}
+  '@types/aws-lambda@8.10.163':
+    resolution: {integrity: sha512-+4zuoEB3S8RIhimtOFT7zAEk2SbpwrKjjGl9CyYnQR6k08uynxfauIIB0pDU1ssr05F8oyGiETwpn+8eXZMqPw==}
 
   '@types/bluebird@3.5.42':
     resolution: {integrity: sha512-Jhy+MWRlro6UjVi578V/4ZGNfeCOcNCp0YaFNIUGFKlImowqwb1O/22wDVk3FDGMLqxdpOV3qQHD5fPEH4hK6A==}
@@ -6954,10 +6954,10 @@ snapshots:
       json-nd: 1.0.0
       stacktrace-parser: 0.1.11
 
-  '@honeybadger-io/js@6.16.3':
+  '@honeybadger-io/js@6.16.4':
     dependencies:
       '@honeybadger-io/core': 6.11.1
-      '@types/aws-lambda': 8.10.162
+      '@types/aws-lambda': 8.10.163
       '@types/express': 5.0.6
 
   '@hono/node-server@2.1.1(hono@4.13.8)':
@@ -8041,7 +8041,7 @@ snapshots:
     dependencies:
       tslib: 2.8.1
 
-  '@types/aws-lambda@8.10.162': {}
+  '@types/aws-lambda@8.10.163': {}
 
   '@types/bluebird@3.5.42': {}
 
