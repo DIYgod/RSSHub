@@ -131550,31 +131550,6 @@
         "location": "mall-new.ts",
         "module": "() => import('@/routes/bilibili/mall-new.ts')"
       },
-      "/readlist/:listid": {
-        "path": "/readlist/:listid",
-        "categories": [
-          "social-media"
-        ],
-        "view": 0,
-        "example": "/bilibili/readlist/25611",
-        "parameters": {
-          "listid": "文集 id, 可在专栏文集 URL 中找到"
-        },
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "name": "专栏文集",
-        "maintainers": [
-          "hoilc"
-        ],
-        "location": "readlist.ts",
-        "module": "() => import('@/routes/bilibili/readlist.ts')"
-      },
       "/manga/update/:comicid": {
         "path": "/manga/update/:comicid",
         "categories": [
@@ -131605,6 +131580,31 @@
         ],
         "location": "manga-update.ts",
         "module": "() => import('@/routes/bilibili/manga-update.ts')"
+      },
+      "/readlist/:listid": {
+        "path": "/readlist/:listid",
+        "categories": [
+          "social-media"
+        ],
+        "view": 0,
+        "example": "/bilibili/readlist/25611",
+        "parameters": {
+          "listid": "文集 id, 可在专栏文集 URL 中找到"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "name": "专栏文集",
+        "maintainers": [
+          "hoilc"
+        ],
+        "location": "readlist.ts",
+        "module": "() => import('@/routes/bilibili/readlist.ts')"
       },
       "/bangumi/media/:mediaid/:embed?": {
         "path": "/bangumi/media/:mediaid/:embed?",
