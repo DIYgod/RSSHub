@@ -94,7 +94,7 @@ async function handler(ctx) {
             lsd: server.LSD.token,
             // jazoest: '',
             __spin_r: String(server.SiteData.__spin_r || ''),
-            __spin_b: String(server.SiteData.__spin_b || 'trunk'),
+            __spin_b: server.SiteData.__spin_b || 'trunk',
             __spin_t: spinT,
             fb_api_caller_class: 'RelayModern',
             fb_api_req_friendly_name: 'MetaAIBlogRecentPostSearchQuery',

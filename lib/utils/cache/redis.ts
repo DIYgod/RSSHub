@@ -35,7 +35,8 @@ export default {
     get: async (key: string, refresh = true) => {
         if (key && status.available && clients.redisClient) {
             const cacheTtlKey = getCacheTtlKey(key);
-            let [value, cacheTtl] = await clients.redisClient.mget(key, cacheTtlKey);
+            const [value, cacheTtlValue] = await clients.redisClient.mget(key, cacheTtlKey);
+            let cacheTtl = cacheTtlValue;
             if (value && refresh) {
                 if (cacheTtl) {
                     clients.redisClient.expire(cacheTtlKey, cacheTtl);
@@ -46,7 +47,6 @@ export default {
                     // redisClient.set(cacheTtlKey, cacheTtl, 'EX', cacheTtl);
                 }
                 clients.redisClient.expire(key, cacheTtl);
-                value += '';
             }
             return value || '';
         }

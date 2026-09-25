@@ -76,7 +76,9 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
         data.item ||= [];
 
         // decode HTML entities
+        // oxlint-disable-next-line @typescript-eslint/no-unnecessary-type-conversion -- routes may return non-string values at runtime
         data.title &&= decodeHTMLStrict(data.title + '');
+        // oxlint-disable-next-line @typescript-eslint/no-unnecessary-type-conversion -- routes may return non-string values at runtime
         data.description &&= decodeHTMLStrict(data.description + '');
 
         // sort items
@@ -85,6 +87,7 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
         }
 
         const handleItem = (item: DataItem) => {
+            // oxlint-disable-next-line @typescript-eslint/no-unnecessary-type-conversion -- routes may return non-string values at runtime
             item.title &&= decodeHTMLStrict(item.title + '');
             item.description ||= item.content?.html;
 
@@ -173,7 +176,7 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
             if (item.category) {
                 // convert single string to array, and filter only string type category
                 Array.isArray(item.category) || (item.category = [item.category]);
-                item.category = item.category.filter((e) => String(e) === e);
+                item.category = item.category.filter((e) => typeof e === 'string');
             }
             return item;
         };
@@ -223,15 +226,15 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
 
                 if (ctx.req.query('filter_title')) {
                     const titleRegex = makeRegex(ctx.req.query('filter_title')!);
-                    isFilter = titleRegex instanceof RE2JS ? titleRegex.matcher(title).find() : !!titleRegex.test(title);
+                    isFilter = titleRegex instanceof RE2JS ? titleRegex.matcher(title).find() : titleRegex.test(title);
                 }
                 if (ctx.req.query('filter_description')) {
                     const descriptionRegex = makeRegex(ctx.req.query('filter_description')!);
-                    isFilter &&= descriptionRegex instanceof RE2JS ? descriptionRegex.matcher(description).find() : !!descriptionRegex.test(description);
+                    isFilter &&= descriptionRegex instanceof RE2JS ? descriptionRegex.matcher(description).find() : descriptionRegex.test(description);
                 }
                 if (ctx.req.query('filter_author')) {
                     const authorRegex = makeRegex(ctx.req.query('filter_author')!);
-                    isFilter &&= authorRegex instanceof RE2JS ? authorRegex.matcher(author).find() : !!authorRegex.test(author);
+                    isFilter &&= authorRegex instanceof RE2JS ? authorRegex.matcher(author).find() : authorRegex.test(author);
                 }
                 if (ctx.req.query('filter_category')) {
                     const categoryRegex = makeRegex(ctx.req.query('filter_category')!);
