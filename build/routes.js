@@ -141668,27 +141668,31 @@ export default {
           "ladeng07",
           "nczitzk"
         ],
-        "example": "/gov/mot/jiaotongyaowen",
+        "example": "/gov/mot/xinwen/jiaotongyaowen",
         "parameters": {
           "category": {
-            "description": "分类，默认为 `jiaotongyaowen`，即交通要闻，可在对应分类页 URL 中找到",
+            "description": "分类，默认为 `xinwen/jiaotongyaowen`，即交通要闻，可在对应分类页 URL 中找到",
             "options": [
               {
                 "label": "交通要闻",
-                "value": "jiaotongyaowen"
+                "value": "xinwen/jiaotongyaowen"
               },
               {
                 "label": "时政要闻",
-                "value": "shizhengyaowen"
+                "value": "xinwen/shizhengyaowen"
               },
               {
-                "label": "重要会议",
-                "value": "zhongyaohuiyi"
+                "label": "政策解读",
+                "value": "gongkai/zcjd"
+              },
+              {
+                "label": "预警提示",
+                "value": "fuwu/yujingtishi"
               }
             ]
           }
         },
-        "description": "::: tip\n若订阅 [重要会议](https://www.mot.gov.cn/zhongyaohuiyi/)，网址为 `https://www.mot.gov.cn/zhongyaohuiyi/`，请截取 `https://www.mot.gov.cn/` 到末尾 `/` 的部分 `zhongyaohuiyi` 作为 `category` 参数填入，此时目标路由为 [`/gov/mot/zhongyaohuiyi`](https://rsshub.app/gov/mot/zhongyaohuiyi)。\n:::",
+        "description": "::: tip\n若订阅 [政策解读](https://www.mot.gov.cn/gongkai/zcjd/)，网址为 `https://www.mot.gov.cn/gongkai/zcjd/`，请截取 `https://www.mot.gov.cn/` 到末尾 `/` 的部分 `gongkai/zcjd` 作为 `category` 参数填入，此时目标路由为 [`/gov/mot/gongkai/zcjd`](https://rsshub.app/gov/mot/gongkai/zcjd)。\n:::",
         "categories": [
           "government"
         ],
@@ -141703,30 +141707,32 @@ export default {
         },
         "radar": [
           {
-            "source": [
-              "www.mot.gov.cn/:category"
-            ]
-          },
-          {
             "title": "交通要闻",
             "source": [
-              "www.mot.gov.cn/jiaotongyaowen/"
+              "www.mot.gov.cn/xinwen/jiaotongyaowen/"
             ],
-            "target": "/jiaotongyaowen"
+            "target": "/xinwen/jiaotongyaowen"
           },
           {
             "title": "时政要闻",
             "source": [
-              "www.mot.gov.cn/shizhengyaowen/"
+              "www.mot.gov.cn/xinwen/shizhengyaowen/"
             ],
-            "target": "/shizhengyaowen"
+            "target": "/xinwen/shizhengyaowen"
           },
           {
-            "title": "重要会议",
+            "title": "政策解读",
             "source": [
-              "www.mot.gov.cn/zhongyaohuiyi/"
+              "www.mot.gov.cn/gongkai/zcjd/"
             ],
-            "target": "/zhongyaohuiyi"
+            "target": "/gongkai/zcjd"
+          },
+          {
+            "title": "预警提示",
+            "source": [
+              "www.mot.gov.cn/fuwu/yujingtishi/"
+            ],
+            "target": "/fuwu/yujingtishi"
           }
         ],
         "view": 0,
