@@ -30,29 +30,41 @@ const mediaUrl = 'https://media-rockstargames-com.akamaized.net';
 const apiUrl = 'https://graph.rockstargames.com/';
 const locale = 'en_us';
 
-const listQuery = `
-fragment postFields on RockstarGames_Newswire_Model_Entity_Post_o {
-    id: id_hash
-    url
-    title
-    created
-    primary_tags { name }
-    secondary_tags { name }
-}
-query NewswireList($locale: String!, $page: Int!, $limit: Int, $metaUrl: String!) {
-    meta: metaUrl(url: $metaUrl, domain: "www", locale: $locale) { title }
-    posts(page: $page, locale: $locale, limit: $limit) {
-        results { ...postFields }
+const listQuery = /* GraphQL */ `
+    fragment postFields on RockstarGames_Newswire_Model_Entity_Post_o {
+        id: id_hash
+        url
+        title
+        created
+        primary_tags {
+            name
+        }
+        secondary_tags {
+            name
+        }
     }
-}`;
+    query NewswireList($locale: String!, $page: Int!, $limit: Int, $metaUrl: String!) {
+        meta: metaUrl(url: $metaUrl, domain: "www", locale: $locale) {
+            title
+        }
+        posts(page: $page, locale: $locale, limit: $limit) {
+            results {
+                ...postFields
+            }
+        }
+    }
+`;
 
-const postQuery = `
-query NewswirePost($id_hash: String!, $locale: String!) {
-    post(id_hash: $id_hash, locale: $locale) {
-        subtitle
-        tina { payload }
+const postQuery = /* GraphQL */ `
+    query NewswirePost($id_hash: String!, $locale: String!) {
+        post(id_hash: $id_hash, locale: $locale) {
+            subtitle
+            tina {
+                payload
+            }
+        }
     }
-}`;
+`;
 
 // graphql reports failures with http 200 and a null `data`, so errors have to be checked explicitly
 const graphql = async (query: string, variables: Record<string, unknown>) => {
@@ -93,24 +105,22 @@ async function handler() {
     const data = await graphql(listQuery, { locale, page: 1, limit: 20, metaUrl: '/newswire' });
 
     const item = await Promise.all(
-        data.posts.results.map(async (post) => {
+        data.posts.results.map((post) => {
             const link = `${baseUrl}${post.url}`;
 
-            const description = await cache.tryGet(link, async () => {
+            return cache.tryGet(link, async () => {
                 const { post: article } = await graphql(postQuery, { id_hash: post.id, locale });
                 const { subtitle, tina } = article ?? {};
 
-                return (subtitle ? `<p><em>${subtitle}</em></p>` : '') + renderBlocks(tina?.payload?.content);
+                return {
+                    title: post.title,
+                    link,
+                    // timestamps carry no timezone and are always rockstar's local time (new york), regardless of locale
+                    pubDate: dayjs(parseDate(post.created, 'M/D/YY, h:mm A')).tz('America/New_York', true).toDate(),
+                    category: [...(post.primary_tags ?? []), ...(post.secondary_tags ?? [])].map((tag) => tag.name),
+                    description: (subtitle ? `<p><em>${subtitle}</em></p>` : '') + renderBlocks(tina?.payload?.content),
+                };
             });
-
-            return {
-                title: post.title,
-                link,
-                // timestamps carry no timezone and are always rockstar's local time (new york), regardless of locale
-                pubDate: dayjs(parseDate(post.created, 'M/D/YY, h:mm A')).tz('America/New_York', true).toDate(),
-                category: [...(post.primary_tags ?? []), ...(post.secondary_tags ?? [])].map((tag) => tag.name),
-                description,
-            };
         })
     );
 
