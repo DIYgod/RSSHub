@@ -12310,9 +12310,6 @@
   "/zhihu/xhu/zhuanlan/:id": [
     "JimenezLi"
   ],
-  "/zhihu/zhuanlan/:id": [
-    "DIYgod"
-  ],
   "/zhihu/people/activities/:id": [
     "DIYgod"
   ],
@@ -12348,6 +12345,9 @@
   ],
   "/zhihu/xhu/topic/:topicId": [
     "JimenezLi"
+  ],
+  "/zhihu/zhuanlan/:id": [
+    "DIYgod"
   ],
   "/finology/bullets": [
     "Rjnishant530"

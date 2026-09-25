@@ -160809,42 +160809,6 @@ export default {
         "location": "xhu/zhuanlan.ts",
         "module": () => import('@/routes/zhihu/xhu/zhuanlan.ts')
       },
-      "/zhuanlan/:id": {
-        "path": "/zhuanlan/:id",
-        "categories": [
-          "social-media"
-        ],
-        "example": "/zhihu/zhuanlan/googledevelopers",
-        "parameters": {
-          "id": "专栏 id，可在专栏主页 URL 中找到"
-        },
-        "features": {
-          "requireConfig": [
-            {
-              "name": "ZHIHU_COOKIES",
-              "description": "A complete d_c0 and __zse_ck cookie pair skips session initialization. Otherwise Workers use a Playwright browser session; Docker and Vercel generate credentials with JSDOM."
-            }
-          ],
-          "requirePuppeteer": false,
-          "antiCrawler": true,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "radar": [
-          {
-            "source": [
-              "zhuanlan.zhihu.com/:id"
-            ]
-          }
-        ],
-        "name": "专栏",
-        "maintainers": [
-          "DIYgod"
-        ],
-        "location": "zhuanlan.ts",
-        "module": () => import('@/routes/zhihu/zhuanlan.ts')
-      },
       "/people/activities/:id": {
         "path": "/people/activities/:id",
         "categories": [
@@ -161234,6 +161198,37 @@ export default {
         ],
         "location": "xhu/topic.ts",
         "module": () => import('@/routes/zhihu/xhu/topic.ts')
+      },
+      "/zhuanlan/:id": {
+        "path": "/zhuanlan/:id",
+        "categories": [
+          "social-media"
+        ],
+        "example": "/zhihu/zhuanlan/googledevelopers",
+        "parameters": {
+          "id": "专栏 id，可在专栏主页 URL 中找到"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": true,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "zhuanlan.zhihu.com/:id"
+            ]
+          }
+        ],
+        "name": "专栏",
+        "maintainers": [
+          "DIYgod"
+        ],
+        "location": "zhuanlan.ts",
+        "module": () => import('@/routes/zhihu/zhuanlan.ts')
       }
     },
     "apiRoutes": {
