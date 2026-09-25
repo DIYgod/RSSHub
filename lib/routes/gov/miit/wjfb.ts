@@ -34,9 +34,8 @@ async function handler(ctx) {
     const ministry = ctx.req.param('ministry');
     const url = `${rootUrl}/jgsj/${ministry}/wjfb/index.html`;
 
-    const cookieResponse = await got(url);
-    const cookie = cookieResponse.headers['set-cookie'][0].split(';', 1)[0];
-    const indexContent = load(cookieResponse.data);
+    const indexResponse = await got(url);
+    const indexContent = load(indexResponse.data);
     const title = indexContent('div.dqwz > a:nth-child(4)').text();
     const dataRequestUrl = indexContent('div.lmy_main_rb > script:nth-child(2)')
         .toArray()
@@ -51,9 +50,6 @@ async function handler(ctx) {
     const response = await got({
         method: 'get',
         url: dataUrl,
-        headers: {
-            Cookie: cookie,
-        },
     });
     const $ = load(response.data.data.html);
     const list = $('ul > li')
