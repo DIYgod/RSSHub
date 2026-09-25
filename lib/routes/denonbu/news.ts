@@ -126,7 +126,7 @@ async function getToken(): Promise<string> {
     if (!token) {
         throw new Error('Failed to get token');
     }
-    cache.set(CACHE_TOKEN_KEY, token, expires ? expires - Number(Date.now()) / 1000 - 1 : 3600);
+    cache.set(CACHE_TOKEN_KEY, token, expires ? expires - Date.now() / 1000 - 1 : 3600);
     return token;
 }
 

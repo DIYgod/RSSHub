@@ -14,7 +14,7 @@ export function formatEventDescription(event: Event): string {
 
     return `
         ${event.description ? `<p>${event.description}</p>` : ''}
-        <p><strong>Volume:</strong> $${Number(event.volume || 0).toLocaleString()}</p>
+        <p><strong>Volume:</strong> $${(event.volume || 0).toLocaleString()}</p>
         ${marketsHtml ? `<h4>Markets:</h4><ul>${marketsHtml}</ul>` : ''}
         ${event.image ? `<img src="${event.image}" alt="${event.title}" style="max-width: 100%;">` : ''}
     `;

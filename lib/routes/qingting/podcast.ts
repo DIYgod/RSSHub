@@ -37,7 +37,7 @@ export const route: Route = {
 
 function getMediaUrl(channelId: string, mediaId: string) {
     const path = `/audiostream/redirect/${channelId}/${mediaId}?access_token=&device_id=MOBILESITE&qingting_id=${qingtingId}&t=${Date.now()}`;
-    const sign = crypto.createHmac('md5', 'fpMn12&38f_2e').update(path).digest('hex').toString();
+    const sign = crypto.createHmac('md5', 'fpMn12&38f_2e').update(path).digest('hex');
     return `https://audio.qingting.fm${path}&sign=${sign}`;
 }
 

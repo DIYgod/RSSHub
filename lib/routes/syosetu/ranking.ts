@@ -255,7 +255,7 @@ async function handler(ctx: Context): Promise<Data> {
 
     const items = result.values.map((novel, index) => ({
         title: `#${index + 1} ${novel.title}`,
-        link: `https://ncode.syosetu.com/${String(novel.ncode).toLowerCase()}`,
+        link: `https://ncode.syosetu.com/${novel.ncode.toLowerCase()}`,
         description: renderDescription({ novel }),
         author: novel.writer,
         category: novel.keyword.split(/[\s/\u{FF0F}]/u).filter(Boolean),

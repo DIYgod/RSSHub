@@ -61,7 +61,7 @@ async function handler(ctx) {
             const image = $$('a.news_card .card_img img').prop('src') || '';
             const link = $$('a.news_card').prop('data-route');
             const itemdate = $$('a.news_card div.date').html() || '';
-            const pubDate = convertHtmlDateToStandardFormat(itemdate.toString());
+            const pubDate = convertHtmlDateToStandardFormat(itemdate);
 
             const description = renderDescription({
                 images: image

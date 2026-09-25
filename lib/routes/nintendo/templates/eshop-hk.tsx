@@ -252,7 +252,7 @@ export const renderEshopHkDescription = ({ host, attributes, description, galler
                         </>
                     ) : null}
                     {jsonData?.copyright_text ? <>{jsonData.copyright_text}</> : null}
-                    {jsonData?.screenshots ? jsonData.screenshots.map((screen, screenIndex) => screen.images?.map((image, imageIndex) => <img src={image.url} key={String(image.url ?? `${screenIndex}-${imageIndex}`)} />)) : null}
+                    {jsonData?.screenshots ? jsonData.screenshots.map((screen, screenIndex) => screen.images?.map((image, imageIndex) => <img src={image.url} key={image.url ?? `${screenIndex}-${imageIndex}`} />)) : null}
                 </>
             ) : null}
         </>

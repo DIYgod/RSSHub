@@ -59,11 +59,11 @@ async function handler(ctx) {
         title: pos.title || `Position #${pos.conditionId.slice(0, 8)}`,
         description: `
             <p><strong>Outcome:</strong> ${pos.outcome || `#${pos.outcomeIndex}`}</p>
-            <p><strong>Size:</strong> ${Number(pos.size).toLocaleString()}</p>
-            <p><strong>Avg Price:</strong> $${Number(pos.avgPrice).toFixed(4)}</p>
-            <p><strong>Current Price:</strong> $${Number(pos.curPrice).toFixed(4)}</p>
-            <p><strong>Current Value:</strong> $${Number(pos.currentValue).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
-            <p><strong>PnL:</strong> ${pos.cashPnl >= 0 ? '+' : ''}$${Number(pos.cashPnl).toFixed(2)} (${pos.percentPnl >= 0 ? '+' : ''}${Number(pos.percentPnl).toFixed(1)}%)</p>
+            <p><strong>Size:</strong> ${pos.size.toLocaleString()}</p>
+            <p><strong>Avg Price:</strong> $${pos.avgPrice.toFixed(4)}</p>
+            <p><strong>Current Price:</strong> $${pos.curPrice.toFixed(4)}</p>
+            <p><strong>Current Value:</strong> $${pos.currentValue.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
+            <p><strong>PnL:</strong> ${pos.cashPnl >= 0 ? '+' : ''}$${pos.cashPnl.toFixed(2)} (${pos.percentPnl >= 0 ? '+' : ''}${pos.percentPnl.toFixed(1)}%)</p>
             <img src="${pos.icon}" alt="${pos.title || 'Position'}" style="max-width: 100%;">
         `,
         link: pos.eventSlug ? `https://polymarket.com/event/${pos.eventSlug}` : pos.slug ? `https://polymarket.com/event/${pos.slug}` : 'https://polymarket.com',

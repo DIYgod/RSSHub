@@ -53,7 +53,7 @@ async function handler() {
     let link = '';
     for (let i = 0, l = response.length; i < l; i++) {
         // if (response[i].day === Number('10')) {
-        if (response[i].day === Number(day)) {
+        if (response[i].day === day) {
             link = response[i].Items[0].link;
         }
     }

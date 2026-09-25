@@ -22,9 +22,7 @@ export const ProcessItem = (item) =>
                 CryptoJS.AES.decrypt(cipherTextList[1], key, {
                     mode: CryptoJS.mode.ECB,
                     padding: CryptoJS.pad.Pkcs7,
-                })
-                    .toString(CryptoJS.enc.Utf8)
-                    .toString()
+                }).toString(CryptoJS.enc.Utf8)
             ).articleDetail.articleDetailData.data;
             item.description = content.widgetContent;
         }

@@ -1166,12 +1166,12 @@ const calculateValue = () => {
         telegram: {
             token: envs.TELEGRAM_TOKEN,
             session: envs.TELEGRAM_SESSION,
-            apiId: envs.TELEGRAM_API_ID,
+            apiId: toInt(envs.TELEGRAM_API_ID),
             apiHash: envs.TELEGRAM_API_HASH,
-            maxConcurrentDownloads: envs.TELEGRAM_MAX_CONCURRENT_DOWNLOADS,
+            maxConcurrentDownloads: toInt(envs.TELEGRAM_MAX_CONCURRENT_DOWNLOADS),
             proxy: {
                 host: envs.TELEGRAM_PROXY_HOST,
-                port: envs.TELEGRAM_PROXY_PORT,
+                port: toInt(envs.TELEGRAM_PROXY_PORT),
                 secret: envs.TELEGRAM_PROXY_SECRET,
             },
         },
