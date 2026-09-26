@@ -160752,6 +160752,37 @@ export default {
         "location": "pin/people.ts",
         "module": () => import('@/routes/zhihu/pin/people.ts')
       },
+      "/daily": {
+        "path": "/daily",
+        "categories": [
+          "social-media"
+        ],
+        "example": "/zhihu/daily",
+        "parameters": {},
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "daily.zhihu.com/*"
+            ]
+          }
+        ],
+        "name": "知乎日报",
+        "maintainers": [
+          "DHPO",
+          "pseudoyu"
+        ],
+        "url": "daily.zhihu.com/*",
+        "location": "daily.ts",
+        "module": () => import('@/routes/zhihu/daily.ts')
+      },
       "/xhu/people/answers/:hexId": {
         "path": "/xhu/people/answers/:hexId",
         "categories": [
@@ -160878,37 +160909,6 @@ export default {
         ],
         "location": "collection.ts",
         "module": () => import('@/routes/zhihu/collection.ts')
-      },
-      "/daily": {
-        "path": "/daily",
-        "categories": [
-          "social-media"
-        ],
-        "example": "/zhihu/daily",
-        "parameters": {},
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": true,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "radar": [
-          {
-            "source": [
-              "daily.zhihu.com/*"
-            ]
-          }
-        ],
-        "name": "知乎日报",
-        "maintainers": [
-          "DHPO",
-          "pseudoyu"
-        ],
-        "url": "daily.zhihu.com/*",
-        "location": "daily.ts",
-        "module": () => import('@/routes/zhihu/daily.ts')
       },
       "/weekly": {
         "path": "/weekly",

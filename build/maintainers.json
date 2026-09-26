@@ -12299,6 +12299,10 @@
   "/zhihu/people/pins/:id": [
     "xyqfer"
   ],
+  "/zhihu/daily": [
+    "DHPO",
+    "pseudoyu"
+  ],
   "/zhihu/xhu/people/answers/:hexId": [
     "JimenezLi"
   ],
@@ -12312,10 +12316,6 @@
     "huruji",
     "Colin-XKL",
     "Fatpandac"
-  ],
-  "/zhihu/daily": [
-    "DHPO",
-    "pseudoyu"
   ],
   "/zhihu/weekly": [
     "LogicJake"
