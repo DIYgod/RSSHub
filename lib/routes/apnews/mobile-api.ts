@@ -5,7 +5,7 @@ import { ViewType } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
-import { fetchArticle } from './utils';
+import { fetchArticle, removeDuplicateByKey } from './utils';
 
 export const route: Route = {
     path: '/mobile/:path{.+}?',
