@@ -53,11 +53,17 @@ const createDispatcherForProxy = (uri: string, proxyObj: Config['proxy']): Proxy
             token: proxyObj?.auth ? `Basic ${proxyObj.auth}` : undefined,
             requestTls: {
                 rejectUnauthorized: process.env.NODE_TLS_REJECT_UNAUTHORIZED !== '0',
+                preferH2: true,
             },
         });
     }
     if (uri.startsWith('socks')) {
-        return new ProxyAgent({ uri });
+        return new ProxyAgent({
+            uri,
+            requestTls: {
+                ALPNProtocols: ['h2', 'http/1.1'],
+            },
+        });
     }
     return null;
 };

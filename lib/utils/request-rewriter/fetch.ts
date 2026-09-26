@@ -19,6 +19,12 @@ const limiterQueue = new RateLimiterQueue(limiter, {
     maxQueueSize: 4800,
 });
 
+undici.setGlobalDispatcher(
+    new undici.Agent({
+        connect: { preferH2: true },
+    })
+);
+
 export const useCustomHeader = (headers: Iterable<[string, string]>) => {
     process.env.NODE_ENV === 'dev' &&
         useRegisterRequest((req) => {
