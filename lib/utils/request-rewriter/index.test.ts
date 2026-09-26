@@ -205,6 +205,29 @@ describe('request-rewriter', () => {
         expect(headers.get('user-agent')).toBe(userAgent);
     });
 
+    it('ofetch allowH2: false forces HTTP/1.1 on the dispatcher in use', async () => {
+        const fetchSpy = vi.spyOn(undici, 'fetch').mockImplementation(() => Promise.resolve(createJsonResponse()));
+        const base = new undici.Agent();
+        const dispatchSpy = vi.spyOn(base, 'dispatch').mockImplementation(() => true);
+
+        try {
+            await ofetch('http://rsshub.test/h1', { retry: 0, dispatcher: base, allowH2: false });
+        } catch {
+            // ignore
+        }
+
+        const options = fetchSpy.mock.lastCall?.[1];
+        options?.dispatcher?.dispatch({ origin: 'http://rsshub.test', path: '/h1', method: 'GET' }, {});
+        expect(dispatchSpy).toHaveBeenCalledWith(expect.objectContaining({ allowH2: false }), expect.anything());
+
+        try {
+            await ofetch('http://rsshub.test/h2', { retry: 0, dispatcher: base });
+        } catch {
+            // ignore
+        }
+        expect(fetchSpy.mock.lastCall?.[1]?.dispatcher).toBeUndefined();
+    });
+
     it('ofetch header preset', async () => {
         const fetchSpy = vi.spyOn(undici, 'fetch').mockImplementation(() => Promise.resolve(createJsonResponse()));
 
