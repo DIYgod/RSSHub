@@ -68,8 +68,8 @@ const makeItem = (item: ContentItem, isDm: boolean, creatorId?: string, creatorN
 const handler: Route['handler'] = async (ctx) => {
     const { service, id, type } = ctx.req.param();
     const isGlobal = !service || service === 'posts' || service === 'dms';
-    if (isGlobal ? id || type : !['onlyfans', 'fansly'].includes(service) || !id || (type && type !== 'dms')) {
-        throw new InvalidParameterError('Use /onlyheaven/posts, /onlyheaven/dms, or /onlyheaven/:service/:id[/dms] (service: onlyfans or fansly).');
+    if (isGlobal ? id || type : !['onlyfans', 'fansly', 'patreon'].includes(service) || !id || (type && type !== 'dms')) {
+        throw new InvalidParameterError('Use /onlyheaven/posts, /onlyheaven/dms, or /onlyheaven/:service/:id[/dms] (service: onlyfans, fansly, or patreon).');
     }
 
     const isDm = service === 'dms' || type === 'dms';
@@ -94,7 +94,7 @@ export const route: Route = {
     categories: ['multimedia'],
     example: '/onlyheaven/posts',
     parameters: {
-        service: 'Platform (`onlyfans` or `fansly`), or `posts` / `dms` for the latest posts / DMs across all creators (defaults to `posts`)',
+        service: 'Platform (`onlyfans`, `fansly`, or `patreon`), or `posts` / `dms` for the latest posts / DMs across all creators (defaults to `posts`)',
         id: 'Creator ID from the creator URL; required when a platform is specified',
         type: 'Use `dms` for the creator’s DMs; defaults to posts',
     },
@@ -110,11 +110,11 @@ export const route: Route = {
     handler,
     description: `Sources
 
-| Latest posts | Latest DMs | OnlyFans creator | Fansly creator |
-| ------------ | ---------- | ---------------- | -------------- |
-| posts        | dms        | onlyfans         | fansly         |
+| Latest posts | Latest DMs | OnlyFans creator | Fansly creator | Patreon creator |
+| ------------ | ---------- | ---------------- | -------------- | --------------- |
+| posts        | dms        | onlyfans         | fansly         | patreon         |
 
 ::: tip
-When **service** is \`posts\` or \`dms\`, **id** is not used. For a creator, use \`/onlyheaven/onlyfans/CREATOR_ID\` for posts or \`/onlyheaven/onlyfans/CREATOR_ID/dms\` for DMs. Replace \`onlyfans\` with \`fansly\` for Fansly creators. Available images are included in the feed entries.
+When **service** is \`posts\` or \`dms\`, **id** is not used. For a creator, use \`/onlyheaven/onlyfans/CREATOR_ID\` for posts or \`/onlyheaven/onlyfans/CREATOR_ID/dms\` for DMs. Replace \`onlyfans\` with \`fansly\` or \`patreon\` for other creators. Available images are included in the feed entries.
 :::`,
 };

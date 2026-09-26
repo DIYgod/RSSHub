@@ -95,6 +95,27 @@ describe('onlyheaven route', () => {
         });
     });
 
+    it.each(['posts', 'dms'])('supports Patreon creator %s', async (kind) => {
+        vi.mocked(ofetch).mockImplementation((url) =>
+            Promise.resolve(
+                String(url).endsWith('/profile')
+                    ? { name: 'example-patreon', displayName: 'Patreon Creator' }
+                    : kind === 'posts'
+                      ? { posts: [{ id: '200002', service: 'patreon', title: 'Example post', captionHtml: '<p>Example content</p>', published: 1_750_000_000 }] }
+                      : { dms: [{ id: '300002', service: 'patreon', contentHtml: '<p>Example DM</p>' }] }
+            )
+        );
+
+        const feed = await route.handler(ctx({ service: 'patreon', id: '100004', ...(kind === 'dms' && { type: 'dms' }) }));
+
+        expect(ofetch).toHaveBeenCalledWith(`https://cum.st/api/v1/patreon/user/100004/${kind}`);
+        expect(ofetch).toHaveBeenCalledWith('https://cum.st/api/v1/patreon/user/100004/profile');
+        expect(feed).toMatchObject({
+            link: `https://cum.st/creators/patreon/100004${kind === 'dms' ? '/dms' : ''}`,
+            item: [{ link: `https://cum.st/creators/patreon/100004/${kind === 'dms' ? 'dm/300002' : 'post/200002'}`, author: 'Patreon Creator' }],
+        });
+    });
+
     it('rejects incomplete or unsupported paths before requesting the API', async () => {
         await expect(route.handler(ctx({ service: 'onlyfans' }))).rejects.toThrow('Use /onlyheaven/posts');
         await expect(route.handler(ctx({ service: 'posts', id: '100001' }))).rejects.toThrow('Use /onlyheaven/posts');
