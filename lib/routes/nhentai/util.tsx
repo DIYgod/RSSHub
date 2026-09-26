@@ -3,7 +3,6 @@ import { renderToString } from 'hono/jsx/dom/server';
 
 import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
-import got from '@/utils/got';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import { getPlaywrightPage } from '@/utils/playwright';
@@ -24,25 +23,29 @@ const getCookie = async (username, password, cache) => {
         }
     }
 
-    const { data, headers } = await got(loginUrl);
-    const csrfTokenMiddleware = data.match(/name="csrfmiddlewaretoken" value="(.*?)"/)[1];
-    const csrfTokenCookie = headers['set-cookie'].map((c) => c.split(';', 1)[0]).join('; ');
+    const loginPage = await ofetch.raw(loginUrl);
+    const csrfTokenMiddleware = loginPage._data.match(/name="csrfmiddlewaretoken" value="(.*?)"/)[1];
+    const csrfTokenCookie = loginPage.headers
+        .getSetCookie()
+        .map((c) => c.split(';', 1)[0])
+        .join('; ');
 
-    const login = await got.post(loginUrl, {
+    const login = await ofetch.raw(loginUrl, {
+        method: 'POST',
         headers: {
             referer: loginUrl,
             cookie: csrfTokenCookie,
         },
-        form: {
+        body: new URLSearchParams({
             csrfmiddlewaretoken: csrfTokenMiddleware,
             username_or_email: username,
             password,
             next: '',
-        },
-        followRedirect: false,
+        }),
+        redirect: 'manual',
     });
 
-    if (login.statusCode !== 302) {
+    if (login.status !== 302) {
         cache.set(
             cacheKey,
             JSON.stringify({
@@ -53,7 +56,10 @@ const getCookie = async (username, password, cache) => {
         return '';
     }
 
-    const userTokenCookie = login.headers['set-cookie'].map((c) => c.split(';', 1)[0]).join('; ');
+    const userTokenCookie = login.headers
+        .getSetCookie()
+        .map((c) => c.split(';', 1)[0])
+        .join('; ');
 
     cache.set(
         cacheKey,

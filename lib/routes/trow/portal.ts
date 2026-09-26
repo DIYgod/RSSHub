@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 
 import type { Route } from '@/types';
-import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
@@ -30,20 +30,20 @@ export const route: Route = {
 };
 
 async function handler() {
-    let data;
-    const response = await got.extend({ followRedirect: false }).get({
-        url: 'https://trow.cc',
+    const response = await ofetch.raw('https://trow.cc', {
+        redirect: 'manual',
     });
-    if (response.statusCode === 302) {
-        const response2 = await got.extend({ followRedirect: false }).get({
-            url: 'https://trow.cc',
+    let data = response._data;
+    if (response.status === 302) {
+        data = await ofetch('https://trow.cc', {
             headers: {
-                cookie: response.headers['set-cookie'],
+                cookie: response.headers
+                    .getSetCookie()
+                    .map((cookie) => cookie.split(';', 1)[0])
+                    .join('; '),
             },
+            redirect: 'manual',
         });
-        data = response2.data;
-    } else {
-        data = response.data;
     }
 
     const $ = load(data);
