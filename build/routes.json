@@ -118316,16 +118316,52 @@
   },
   "uber": {
     "routes": {
-      "/blog/:compat?": {
-        "path": "/blog/:compat?",
+      "/blog/:category?": {
+        "path": "/blog/:category?",
         "categories": [
           "blog"
         ],
         "example": "/uber/blog",
+        "parameters": {
+          "category": {
+            "description": "Category slug from `/blog/engineering/:category`. Defaults to all engineering articles.",
+            "options": [
+              {
+                "value": "uber-ai",
+                "label": "AI / ML"
+              },
+              {
+                "value": "backend",
+                "label": "Backend"
+              },
+              {
+                "value": "culture",
+                "label": "Culture"
+              },
+              {
+                "value": "data",
+                "label": "Data"
+              },
+              {
+                "value": "mobile",
+                "label": "Mobile"
+              },
+              {
+                "value": "security",
+                "label": "Security"
+              },
+              {
+                "value": "web",
+                "label": "Web"
+              }
+            ]
+          }
+        },
         "features": {
           "requireConfig": false,
           "requirePuppeteer": false,
           "antiCrawler": false,
+          "supportRadar": true,
           "supportBT": false,
           "supportPodcast": false,
           "supportScihub": false
@@ -118333,19 +118369,27 @@
         "radar": [
           {
             "source": [
-              "www.uber.com/:language/blog/engineering"
+              "eng.uber.com/",
+              "www.uber.com/:country/:language/blog/engineering"
             ],
             "target": "/blog"
+          },
+          {
+            "source": [
+              "www.uber.com/:country/:language/blog/engineering/:category"
+            ],
+            "target": "/blog/:category"
           }
         ],
         "name": "Engineering",
         "maintainers": [
-          "hulb"
+          "hulb",
+          "zhsama"
         ],
-        "url": "www.uber.com/en-HK/blog/engineering",
-        "description": "The English blog on any of Uber's regional sites (e.g., [www.uber.com/en-JP/blog](http://www.uber.com/en-JP/blog)) is the same engineering blog provided by this route, so language selection is not supported. This route is not for the public news blog on specific regional sites (e.g., [www.uber.com/ja-JP/blog](http://www.uber.com/ja-JP/blog)).",
+        "url": "www.uber.com/us/en/blog/engineering",
+        "description": "The optional category parameter uses the slug from an Uber Engineering category URL. Deprecated numeric `maxPage` values remain accepted and return the overview feed.",
         "zh": {
-          "description": "uber 的任何区域站点的英文 blog（例如 [www.uber.com/en-JP/blog](http://www.uber.com/en-JP/blog)）都是相同的内容，正是本路由提供的 engineering blog，因此本路由不提供语言选择；本路由不是 uber 在特定区域站点的公开新闻 blog（例如 [www.uber.com/ja-JP/blog](http://www.uber.com/ja-JP/blog)）"
+          "description": "可选的分类参数使用 Uber Engineering 分类 URL 中的 slug。已弃用的数字 `maxPage` 参数仍然兼容，并返回全部文章。"
         },
         "location": "blog.ts",
         "module": "() => import('@/routes/uber/blog.ts')"
@@ -162725,6 +162769,39 @@
         ],
         "location": "playlist.ts",
         "module": "() => import('@/routes/youtube/playlist.ts')"
+      },
+      "/streams/:handle/:routeParams?": {
+        "path": "/streams/:handle/:routeParams?",
+        "categories": [
+          "live"
+        ],
+        "view": 3,
+        "example": "/youtube/streams/@GawrGura",
+        "parameters": {
+          "handle": "YouTube handle or channel id",
+          "routeParams": "Extra parameters, see the table below"
+        },
+        "radar": [
+          {
+            "source": [
+              "www.youtube.com/@:handle/streams"
+            ],
+            "target": "/streams/@:handle"
+          },
+          {
+            "source": [
+              "www.youtube.com/channel/:handle/streams"
+            ],
+            "target": "/streams/:handle"
+          }
+        ],
+        "name": "Live Streams",
+        "maintainers": [
+          "ouuan"
+        ],
+        "description": "::: tip Parameter\n\n| Name               | Description                                                                                 | Default |\n| ------------------ | ------------------------------------------------------------------------------------------- | ------- |\n| embed              | Whether to embed the video, fill in any value to disable embedding                          | embed   |\n| includeDescription | Whether to include the description of each stream, fill in any truthy value to include them | false   |\n\n:::\n\n::: tip\nUnlike [Live](#youtube-live), this route reads the channel's Live tab, so it also covers scheduled and finished streams, and it does not require an API key.\n\nEvery stream is categorized as `live`, `upcoming` or `completed`, so a single state can be picked out with the `filter_category` and `filterout_category` [common parameters](https://docs.rsshub.app/guide/parameters#filtering). For example, `/youtube/streams/@GawrGura?filterout_category=completed` only tracks streams that are live or about to start.\n\nThe Live tab does not carry the stream descriptions, so `includeDescription` costs one extra request per stream and is off by default.\n:::",
+        "location": "streams.ts",
+        "module": "() => import('@/routes/youtube/streams.ts')"
       },
       "/user/:username/:routeParams?": {
         "path": "/user/:username/:routeParams?",

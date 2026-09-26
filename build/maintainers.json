@@ -8754,8 +8754,9 @@
   "/u9a9/search/:keyword/:preview?": [
     "TonyRL"
   ],
-  "/uber/blog/:compat?": [
-    "hulb"
+  "/uber/blog/:category?": [
+    "hulb",
+    "zhsama"
   ],
   "/ucas/ai": [
     "shengmaosu"
@@ -12480,6 +12481,9 @@
   ],
   "/youtube/playlist/:id/:embed?": [
     "HenryQW"
+  ],
+  "/youtube/streams/:handle/:routeParams?": [
+    "ouuan"
   ],
   "/youtube/user/:username/:routeParams?": [
     "DIYgod",
