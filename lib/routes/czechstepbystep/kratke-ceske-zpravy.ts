@@ -24,20 +24,16 @@ interface Worksheet {
     enclosureType?: string;
 }
 
-const extractYouTubeId = ($: CheerioAPI, link: string): string => {
+const extractYouTubeId = ($: CheerioAPI): string | undefined => {
     const iframeEl = $('.entry-text iframe');
     const iframeSrc = iframeEl.attr('data-src') || iframeEl.attr('src');
-    const videoId = iframeSrc?.match(/(?:embed\/|v=|youtu\.be\/)([^?&]+)/)?.[1];
-    if (!videoId) {
-        throw new Error(`Failed to extract YouTube video id from article: ${link}`);
-    }
-    return videoId;
+    return iframeSrc?.match(/(?:embed\/|v=|youtu\.be\/)([^?&]+)/)?.[1];
 };
 
 const extractTranscript = ($: CheerioAPI): string | undefined => {
     const paragraphs = $('.entry-text p');
     const nodes = paragraphs.toArray();
-    const startIdx = nodes.findIndex((p) => $(p).text() === 'Text zprávy:');
+    const startIdx = nodes.findIndex((p) => $(p).text().trim() === 'Text zprávy:');
     const endIdx = nodes.findIndex((p) => $(p).text().includes('Krátké české zprávy můžete sledovat'));
     if (startIdx === -1 || endIdx === -1) {
         return undefined;
@@ -73,7 +69,7 @@ const parseArticle = async (item: ArticleListItem) => {
     const html = await ofetch(item.link);
     const $ = load(html);
 
-    const videoId = extractYouTubeId($, item.link);
+    const videoId = extractYouTubeId($);
     const transcriptHtml = extractTranscript($);
     const exerciseHref = extractExerciseHref($);
     const worksheet = extractWorksheet($);
@@ -124,7 +120,20 @@ const handler: Route['handler'] = async (ctx) => {
         })
         .filter((item) => item.link);
 
-    const items = await Promise.all(list.map((item) => cache.tryGet(item.link, () => parseArticle(item))));
+    const items = await Promise.all(
+        list.map(async (item) => {
+            try {
+                return await cache.tryGet(item.link, () => parseArticle(item));
+            } catch {
+                // Don't let one unreachable article reject the whole feed.
+                return {
+                    title: item.title,
+                    link: item.link,
+                    pubDate: item.pubDate,
+                };
+            }
+        })
+    );
 
     return {
         title: 'Krátké české zprávy - CzechStepByStep',
