@@ -49,7 +49,7 @@ async function handler(ctx) {
 
     const screen = res.data.Screen;
 
-    const list = [...screen.main.filter((e) => e.__typename === 'ColumnContainer').flatMap((_) => _.columns), ...screen.main.filter((e) => e.__typename !== 'ColumnContainer')]
+    const list = [...(new Map([...screen.main.filter((e) => e.__typename === 'ColumnContainer').flatMap((_) => _.columns), ...screen.main.filter((e) => e.__typename !== 'ColumnContainer')]
         .filter((e) => e.__typename !== 'GoogleDfPAdModule')
         .flatMap((e) => {
             switch (e.__typename) {
@@ -84,6 +84,8 @@ async function handler(ctx) {
             return;
         })
         .filter(Boolean)
+        .map((e) => [e?.link, e]))
+        .values())]
         .toSorted((a, b) => Number(b!.pubDate) - Number(a!.pubDate))
         .slice(0, ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 20);
 
