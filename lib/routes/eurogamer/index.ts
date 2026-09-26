@@ -35,6 +35,8 @@ const cleanArticleContent = ($: CheerioAPI): string | undefined => {
         return;
     }
 
+    content.prepend($('.headline_image_wrapper'));
+
     content.find('.gallery').each((_, el) => {
         const gallery = $(el);
         const thumbnails = gallery.find('.thumbnail');
@@ -61,6 +63,14 @@ const cleanArticleContent = ($: CheerioAPI): string | undefined => {
             '.injection_placeholder, .advert_container, .poll_wrapper, .pagination--hoverable, .loading.spinner, template, .primis_wrapper, .embed_placeholder, .details_overlay, .gallery .details, .gallery .thumbnails-wrapper, .gallery .fullscreen_info, .gallery .button-wrapper'
         )
         .remove();
+
+    content.find('.video-facade').each((_, el) => {
+        const facade = $(el).removeAttr('onclick');
+        const videoUrl = facade.closest('figure').find('a.video').attr('href');
+        if (videoUrl) {
+            facade.attr('href', videoUrl);
+        }
+    });
 
     content.find('.review_rating').each((_, el) => {
         const $el = $(el);
