@@ -1,127 +1,151 @@
 import { load } from 'cheerio';
+import type { Context } from 'hono';
 
-import type { Route } from '@/types';
+import InvalidParameterError from '@/errors/types/invalid-parameter';
+import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
-const rootURL = 'https://www.uber.com';
+const baseUrl = 'https://www.uber.com';
+const engineeringUrl = `${baseUrl}/us/en/blog/engineering`;
+const categoryLabels = {
+    'uber-ai': 'AI / ML',
+    backend: 'Backend',
+    culture: 'Culture',
+    data: 'Data',
+    mobile: 'Mobile',
+    security: 'Security',
+    web: 'Web',
+} as const;
+const categoryOptions = Object.entries(categoryLabels).map(([value, label]) => ({ value, label }));
+
+type Category = keyof typeof categoryLabels;
+type ArticleSummary = {
+    title: string;
+    link: string;
+};
 
 export const route: Route = {
-    // `compat` is a never used parameter
-    // just for backward compatibility with the deprecated `:maxPage` parameter
-    path: '/blog/:compat?',
+    path: '/blog/:category?',
     categories: ['blog'],
     example: '/uber/blog',
+    parameters: {
+        category: {
+            description: 'Category slug from `/blog/engineering/:category`. Defaults to all engineering articles.',
+            options: categoryOptions,
+        },
+    },
     features: {
         requireConfig: false,
         requirePuppeteer: false,
         antiCrawler: false,
+        supportRadar: true,
         supportBT: false,
         supportPodcast: false,
         supportScihub: false,
     },
     radar: [
         {
-            source: ['www.uber.com/:language/blog/engineering'],
+            source: ['eng.uber.com/', 'www.uber.com/:country/:language/blog/engineering'],
             target: '/blog',
+        },
+        {
+            source: ['www.uber.com/:country/:language/blog/engineering/:category'],
+            target: '/blog/:category',
         },
     ],
     name: 'Engineering',
-    maintainers: ['hulb'],
+    maintainers: ['hulb', 'zhsama'],
     handler,
-    url: 'www.uber.com/en-HK/blog/engineering',
-    description: `The English blog on any of Uber's regional sites (e.g., [www.uber.com/en-JP/blog](http://www.uber.com/en-JP/blog)) is the same engineering blog provided by this route, so language selection is not supported. This route is not for the public news blog on specific regional sites (e.g., [www.uber.com/ja-JP/blog](http://www.uber.com/ja-JP/blog)).`,
+    url: 'www.uber.com/us/en/blog/engineering',
+    description: 'The optional category parameter uses the slug from an Uber Engineering category URL. Deprecated numeric `maxPage` values remain accepted and return the overview feed.',
     zh: {
-        description:
-            'uber 的任何区域站点的英文 blog（例如 [www.uber.com/en-JP/blog](http://www.uber.com/en-JP/blog)）都是相同的内容，正是本路由提供的 engineering blog，因此本路由不提供语言选择；本路由不是 uber 在特定区域站点的公开新闻 blog（例如 [www.uber.com/ja-JP/blog](http://www.uber.com/ja-JP/blog)）',
+        description: '可选的分类参数使用 Uber Engineering 分类 URL 中的 slug。已弃用的数字 `maxPage` 参数仍然兼容，并返回全部文章。',
     },
 };
 
-async function handler() {
-    const response = await ofetch(`${rootURL}/en-HK/blog/engineering/rss/`, {
-        // The source site is misconfigured or intentionally blocking requests without a specific accept header
-        // Without this header, it will return an HTTP 406 error
-        // Note that the accept type must be 'text/html'; 'application/xml' or similar will get HTTP 404 error
-        headers: {
-            accept: 'text/html',
-        },
-        // Without this, ofetch will parse the response as a blob instead of text, which cannot be loaded by cheerio
-        parseResponse: (txt) => txt,
-    });
-    const $ = load(response, { xmlMode: true });
+async function handler(ctx: Context): Promise<Data> {
+    const category = resolveCategory(ctx.req.param('category'));
+    const limit = Number(ctx.req.query('limit') || 20);
+    const link = category ? `${engineeringUrl}/${category}/` : `${engineeringUrl}/`;
 
-    const result = await Promise.all(
-        $('item')
-            .toArray()
-            .map((el) =>
-                cache.tryGet($(el).find('link').text(), async () => {
-                    const detailResponse = await ofetch($(el).find('link').text(), {
-                        headers: {
-                            accept: 'text/html',
-                        },
-                    });
-                    const detail = load(detailResponse);
+    const response = await ofetch(link);
+    const $ = load(response);
 
-                    const scriptText = detail('script#__REDUX_STATE__').text().trim();
-                    // The json in the script element is over-encoded
-                    // It needs to be decoded this way before it can be parsed by JSON.parse
-                    const jsonText = decodeURIComponent(JSON.parse(`"${scriptText}"`));
-                    // Traverse the JSON to find the content node, which is more robust against format changes.
-                    const contentHtml = findNode(JSON.parse(jsonText), { idKey: 'id', idValue: 'BlogArticleContent', siblingKey: 'props', childKey: 'content' }).replaceAll(String.raw`\n`, '');
+    const list = $('[data-testid="newsroom-article-feed-card"]')
+        .toArray()
+        .map((element) => {
+            const $title = $(element)
+                .find('a[href*="/blog/"]')
+                .filter((_, link) => /\S/.test($(link).text()));
+            const href = $title.attr('href');
 
-                    return {
-                        link: $(el).find('link').text(),
-                        title: $(el).find('title').text(),
-                        description: contentHtml,
-                        pubDate: parseDate($(el).find('pubDate').text()),
-                        category: $(el)
-                            .find('category')
-                            .toArray()
-                            .map((item) => $(item).text()),
-                    };
-                })
-            )
-    );
+            if (!href) {
+                return;
+            }
+
+            return {
+                title: $title.text(),
+                link: new URL(href, baseUrl).href,
+            } satisfies ArticleSummary;
+        })
+        .filter((item) => item !== undefined)
+        .slice(0, limit);
+
+    const items = await Promise.all(list.map((item) => getArticle(item)));
 
     return {
-        title: 'Uber Engineering Blog',
-        link: rootURL + '/blog/engineering',
-        description: 'The technology behind Uber Engineering',
-        item: result,
+        title: category ? `Uber Engineering Blog - ${categoryLabels[category]}` : 'Uber Engineering Blog',
+        link,
+        description: $('meta[name="description"]').attr('content'),
+        image: $('meta[property="og:image"]').attr('content'),
+        language: 'en-us',
+        item: items,
     };
 }
 
-function findNode(
-    json: any,
-    options: {
-        idKey?: string;
-        idValue: string;
-        siblingKey: string;
-        childKey: string;
+function getArticle(item: ArticleSummary): Promise<DataItem> {
+    return cache.tryGet(item.link, async () => {
+        const response = await ofetch(item.link);
+        const $ = load(response);
+        const $header = $('[data-block-id="ArticleHeader"]');
+        const $content = $('[data-block-id="LongFormContent"] [data-testid="content"]');
+        // The header contains duplicate publication labels for responsive layouts.
+        const published = $header.find('[data-baseweb="typo-labellarge"]').first().text();
+        const authors = [
+            ...new Set(
+                $('[data-block-id="ArticleAuthor"] [data-testid="authors-grid"] [role="img"][aria-label]')
+                    .toArray()
+                    .map((author) => $(author).attr('aria-label'))
+                    .filter((author): author is string => Boolean(author))
+            ),
+        ];
+        const categories = $('[data-block-id="ArticleCategories"] [data-baseweb="tag"] [title]')
+            .toArray()
+            .map((tag) => $(tag).attr('title'))
+            .filter((category): category is string => Boolean(category));
+
+        return {
+            ...item,
+            title: $header.find('h1').text() || item.title,
+            description: $content.html() ?? $('meta[name="description"]').attr('content'),
+            pubDate: published ? parseDate(published) : undefined,
+            author: authors.join(', ') || undefined,
+            category: categories.length > 0 ? categories : undefined,
+            image: $('meta[property="og:image"]').attr('content'),
+        };
+    });
+}
+
+function resolveCategory(category: string | undefined): Category | undefined {
+    if (!category || /^\d+$/.test(category)) {
+        return undefined;
     }
-): any {
-    const { idKey = 'id', idValue, siblingKey, childKey } = options;
 
-    if (Array.isArray(json)) {
-        for (const item of json) {
-            const result = findNode(item, options);
-            if (result !== undefined) {
-                return result;
-            }
-        }
-    } else if (json instanceof Object) {
-        if (json[idKey] === idValue) {
-            return json[siblingKey]?.[childKey];
-        }
-
-        for (const key in json) {
-            const result = findNode(json[key], options);
-            if (result !== undefined) {
-                return result;
-            }
-        }
+    if (!Object.hasOwn(categoryLabels, category)) {
+        throw new InvalidParameterError(`Invalid category: ${category}. Valid categories are: ${Object.keys(categoryLabels).join(', ')}`);
     }
 
-    return undefined;
+    return category as Category;
 }
