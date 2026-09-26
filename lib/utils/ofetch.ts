@@ -8,6 +8,8 @@ import logger from '@/utils/logger';
 declare module 'ofetch' {
     interface FetchOptions {
         headerGeneratorOptions?: Partial<HeaderGeneratorOptions>;
+        /** Set to false to disable undici 8's HTTP/2 */
+        allowH2?: boolean;
     }
 }
 

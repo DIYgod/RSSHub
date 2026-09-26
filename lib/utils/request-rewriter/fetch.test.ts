@@ -105,6 +105,12 @@ describe('wrappedFetch', () => {
 
         fetchSpy.mockRestore();
     });
+
+    test('installs a global dispatcher that prefers h2 in ALPN', () => {
+        const dispatcher = undici.getGlobalDispatcher();
+        const optionsKey = Object.getOwnPropertySymbols(dispatcher).find((s) => s.description === 'options')!;
+        expect(dispatcher[optionsKey].connect.preferH2).toBe(true);
+    });
 });
 
 const buildProxyState = (): ProxyState[] => [

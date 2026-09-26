@@ -1,7 +1,7 @@
 import type { HeaderGeneratorOptions } from 'header-generator';
 import { useRegisterRequest } from 'node-network-devtools';
 import { RateLimiterMemory, RateLimiterQueue } from 'rate-limiter-flexible';
-import type { RequestInfo, RequestInit, Response } from 'undici';
+import type { Dispatcher, RequestInfo, RequestInit, Response } from 'undici';
 import undici, { Request } from 'undici';
 
 import { config } from '@/config';
@@ -19,6 +19,14 @@ const limiterQueue = new RateLimiterQueue(limiter, {
     maxQueueSize: 4800,
 });
 
+undici.setGlobalDispatcher(
+    new undici.Agent({
+        connect: { preferH2: true },
+    })
+);
+
+const http1Only: Dispatcher.DispatcherComposeInterceptor = (dispatch) => (opts, handler) => dispatch({ ...opts, allowH2: false } as Dispatcher.DispatchOptions, handler);
+
 export const useCustomHeader = (headers: Iterable<[string, string]>) => {
     process.env.NODE_ENV === 'dev' &&
         useRegisterRequest((req) => {
@@ -29,7 +37,7 @@ export const useCustomHeader = (headers: Iterable<[string, string]>) => {
         });
 };
 
-const wrappedFetch: typeof undici.fetch = async (input: RequestInfo, init?: RequestInit & { headerGeneratorOptions?: Partial<HeaderGeneratorOptions> }) => {
+const wrappedFetch: typeof undici.fetch = async (input: RequestInfo, init?: RequestInit & { headerGeneratorOptions?: Partial<HeaderGeneratorOptions>; allowH2?: boolean }) => {
     const request = new Request(input, init);
     const options: RequestInit = {};
 
@@ -99,6 +107,12 @@ const wrappedFetch: typeof undici.fetch = async (input: RequestInfo, init?: Requ
 
     const attemptRequest = async (attempt: number): Promise<Response> => {
         try {
+            if (init?.allowH2 === false) {
+                return await undici.fetch(request, {
+                    ...options,
+                    dispatcher: (options.dispatcher ?? init.dispatcher ?? undici.getGlobalDispatcher()).compose(http1Only),
+                });
+            }
             return await undici.fetch(request, options);
         } catch (error) {
             if (options.dispatcher && proxy.multiProxy && attempt < maxRetries - 1) {

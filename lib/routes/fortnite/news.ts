@@ -1,6 +1,5 @@
 import { escapeText } from 'entities';
 import type { Context } from 'hono';
-import { Agent } from 'undici';
 
 import { renderYoutube } from '@/routes/youtube/utils';
 import type { DataItem, Language, Route } from '@/types';
@@ -64,7 +63,6 @@ export const route: Route = {
 const fetchData = async (path: string, lang: string) => {
     const values = await ofetch(`https://www.fortnite.com${path}.data`, {
         query: { lang },
-        dispatcher: new Agent({ connect: { minVersion: 'TLSv1.3' } }),
         responseType: 'json',
     });
     const get = (i: number) => {

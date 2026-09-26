@@ -11,6 +11,8 @@ const loadProxy = async (env: Record<string, string>) => {
     return (await import('@/utils/proxy')).default;
 };
 
+const requestTlsOf = (dispatcher: ProxyAgent) => dispatcher[Object.getOwnPropertySymbols(dispatcher).find((s) => s.description === 'request tls settings')!];
+
 describe('proxy', () => {
     afterEach(() => {
         vi.clearAllTimers();
@@ -75,6 +77,18 @@ describe('proxy', () => {
         expect(proxy.agent).toBeInstanceOf(SocksProxyAgent);
         expect(proxy.dispatcher).toBeInstanceOf(ProxyAgent);
         expect(proxy.getCurrentProxy()?.uri).toBe('socks5://proxy.local:1080');
+        expect(requestTlsOf(proxy.dispatcher!).ALPNProtocols).toEqual(['h2', 'http/1.1']);
+    });
+
+    it('prefers h2 on the http proxy dispatcher', async () => {
+        const proxy = await loadProxy({
+            PROXY_URI: 'http://proxy.local:8080',
+            PROXY_URIS: '',
+            PAC_URI: '',
+        });
+
+        expect(proxy.dispatcher).toBeInstanceOf(ProxyAgent);
+        expect(requestTlsOf(proxy.dispatcher!).preferH2).toBe(true);
     });
 
     it('returns null agent for unsupported proxy protocol', async () => {
