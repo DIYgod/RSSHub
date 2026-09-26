@@ -153,11 +153,16 @@ describe('Twitter web user lookup', () => {
         expect(cached.size).toBe(0);
     });
 
-    it('passes a verified user ID to the existing tweet cache and mapper', async () => {
+    it.each([
+        { name: 'user timeline', getTweets: api.getUserTweets, operation: 'UserTweets', params: undefined, count: 20 },
+        { name: 'user timeline', getTweets: api.getUserTweets, operation: 'UserTweets', params: { count: 50 }, count: 50 },
+        { name: 'replies timeline', getTweets: api.getUserTweetsAndReplies, operation: 'UserTweetsAndReplies', params: undefined, count: 20 },
+        { name: 'replies timeline', getTweets: api.getUserTweetsAndReplies, operation: 'UserTweetsAndReplies', params: { count: 50 }, count: 50 },
+    ])('passes a verified user ID and count $count to the $name', async ({ getTweets, operation, params, count }) => {
         vi.mocked(paginationTweets).mockResolvedValueOnce({ tweets: 'upstream result' });
         vi.mocked(gatherLegacyFromData).mockReturnValueOnce([{ id_str: 'tweet-1' }]);
-        expect(await api.getUserTweets('example')).toEqual([{ id_str: 'tweet-1' }]);
-        expect(paginationTweets).toHaveBeenCalledWith('UserTweets', '123', expect.objectContaining({ count: 20 }));
+        expect(await getTweets('example', params)).toEqual([{ id_str: 'tweet-1' }]);
+        expect(paginationTweets).toHaveBeenCalledWith(operation, '123', expect.objectContaining({ count }));
         expect(cache.tryGet).toHaveBeenCalledWith('tweet-cache', expect.any(Function), 300, false);
     });
 });
