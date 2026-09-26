@@ -36174,6 +36174,20 @@
       }
     ]
   },
+  "petapixel.com": {
+    "_name": "PetaPixel",
+    ".": [
+      {
+        "title": "Posts",
+        "docs": "https://docs.rsshub.app/routes/picture",
+        "source": [
+          "/topic/:category",
+          "/"
+        ],
+        "target": "/petapixel/:category?"
+      }
+    ]
+  },
   "peterwunder.de": {
     "_name": "Peter Wunder",
     "projects": [

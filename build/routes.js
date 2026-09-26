@@ -99218,6 +99218,52 @@ export default {
     "description": "Perplexity - AI-powered search and discovery engine",
     "lang": "en"
   },
+  "petapixel": {
+    "routes": {
+      "/:category?": {
+        "path": "/:category?",
+        "categories": [
+          "picture"
+        ],
+        "view": 0,
+        "example": "/petapixel/news",
+        "parameters": {
+          "category": "Category slug, see the table below or the URL of a topic page. All posts by default"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "petapixel.com/topic/:category",
+              "petapixel.com/"
+            ]
+          }
+        ],
+        "name": "Posts",
+        "maintainers": [
+          "IvanWng97"
+        ],
+        "description": "The official feed only carries excerpts; this route returns the full post with all images.\n\n| Category    | Slug           |\n| ----------- | -------------- |\n| News        | `news`         |\n| Equipment   | `equipment`    |\n| Culture     | `culture`      |\n| Inspiration | `inspiration`  |\n| Spotlight   | `spotlight`    |\n| Finds       | `finds`        |\n| Technology  | `technology-2` |\n| Industry    | `industry`     |\n| Software    | `software`     |\n| Educational | `educational`  |\n| Tips        | `tips`         |\n| Ideas       | `ideas`        |\n| Editorial   | `editorial`    |\n| Mobile      | `mobile`       |",
+        "location": "index.tsx",
+        "module": () => import('@/routes/petapixel/index.tsx')
+      }
+    },
+    "apiRoutes": {},
+    "name": "PetaPixel",
+    "url": "petapixel.com",
+    "categories": [
+      "picture"
+    ],
+    "description": "Photography and camera news, reviews and inspiration.",
+    "lang": "en"
+  },
   "peterwunder": {
     "routes": {
       "/achievements": {

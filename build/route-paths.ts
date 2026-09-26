@@ -2633,6 +2633,7 @@ export type RoutePath =
   | `/peopo/topic/:topicId?`
   | `/perplexity/blog`
   | `/perplexity/changelog`
+  | `/petapixel/:category?`
   | `/peterwunder/achievements`
   | `/phoronix/:category?/:topic?`
   | `/phrack/`

@@ -7185,6 +7185,9 @@
   "/perplexity/changelog": [
     "xbot"
   ],
+  "/petapixel/:category?": [
+    "IvanWng97"
+  ],
   "/peterwunder/achievements": [
     "LinxHex"
   ],
