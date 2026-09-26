@@ -83,8 +83,7 @@ async function handler(ctx) {
             }
             return;
         })
-        .filter(Boolean)
-        .map((e) => [e?.link, e]), 'link')
+        .filter(Boolean), 'link')
         .toSorted((a, b) => Number(b!.pubDate) - Number(a!.pubDate))
         .slice(0, ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 20);
 
