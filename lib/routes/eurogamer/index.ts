@@ -2,7 +2,6 @@ import type { CheerioAPI } from 'cheerio';
 import { load } from 'cheerio';
 import type { Context } from 'hono';
 
-import { config } from '@/config';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Data, DataItem, Route } from '@/types';
 import { ViewType } from '@/types';
@@ -17,37 +16,45 @@ const CATEGORIES = ['blogs', 'competitions', 'deals', 'features', 'guides', 'int
 
 const categorySet = new Set<string>(CATEGORIES);
 
-const requestHeaders = {
-    'user-agent': config.trueUA,
-};
-
-const fetchHtml = (url: string) =>
-    ofetch(url, {
-        headers: requestHeaders,
-    });
-
 const extractListItems = ($: CheerioAPI, itemSelector: string, linkSelector: string): DataItem[] =>
     $(itemSelector)
+        .find(linkSelector)
         .toArray()
-        .flatMap((el) => {
-            const a = $(el).find(linkSelector);
-            const href = a.attr('href');
-            if (!href) {
-                return [];
-            }
-            return [
-                {
-                    title: a.text(),
-                    link: new URL(href, BASE_URL).href,
-                },
-            ];
+        .filter((el) => $(el).attr('href'))
+        .map((el) => {
+            const a = $(el);
+            return {
+                title: a.text(),
+                link: new URL(a.attr('href')!, BASE_URL).href,
+            };
         });
 
 const cleanArticleContent = ($: CheerioAPI): string | undefined => {
-    const content = $('.article_body_content').clone();
+    const content = $('.article_body_content');
     if (content.length === 0) {
         return;
     }
+
+    content.find('.gallery').each((_, el) => {
+        const gallery = $(el);
+        const thumbnails = gallery.find('.thumbnail');
+        if (!thumbnails.length) {
+            return;
+        }
+        const figures = thumbnails.toArray().map((thumbnail) => {
+            const $thumbnail = $(thumbnail);
+            const image = $thumbnail.find('img[data-uri]').removeAttr('style');
+            const caption = $thumbnail.attr('data-caption');
+            const attribution = $thumbnail.attr('data-attribution');
+            const figure = $('<figure>').append(image);
+            const description = [caption, attribution ? `Image credit: ${attribution}` : undefined].filter(Boolean).join(' | ');
+            if (description) {
+                figure.append($('<figcaption>').text(description));
+            }
+            return figure;
+        });
+        gallery.empty().append(...figures);
+    });
 
     content
         .find(
@@ -68,11 +75,9 @@ const cleanArticleContent = ($: CheerioAPI): string | undefined => {
         if ($img.attr('src')) {
             return;
         }
-        const noscriptSrc = $img.prev('noscript').find('img').attr('src');
         const uri = $img.attr('data-uri');
-        const src = noscriptSrc ?? (uri ? `${ASSET_HOST}${uri}?width=1280&quality=85&format=jpg&auto=webp` : undefined);
-        if (src) {
-            $img.attr('src', src);
+        if (uri) {
+            $img.attr('src', `${ASSET_HOST}${uri}?width=1280&quality=85&format=jpg&auto=webp`);
         }
     });
     content.find('noscript').remove();
@@ -81,13 +86,6 @@ const cleanArticleContent = ($: CheerioAPI): string | undefined => {
         const $iframe = $(el);
         if (!$iframe.attr('src')) {
             $iframe.attr('src', $iframe.attr('data-src'));
-        }
-    });
-
-    content.find('a[href^="/"]').each((_, el) => {
-        const href = $(el).attr('href');
-        if (href) {
-            $(el).attr('href', new URL(href, BASE_URL).href);
         }
     });
 
@@ -100,11 +98,11 @@ const parseArticle = async (item: DataItem): Promise<DataItem> => {
     }
 
     return await cache.tryGet(item.link, async () => {
-        const html = await fetchHtml(item.link!);
+        const html = await ofetch(item.link!);
         const $ = load(html);
 
         const pubDateStr = $('meta[property="article:published_time"]').attr('content') ?? $('time[datetime]').first().attr('datetime');
-        const author = $('.byline .author a').first().text() || undefined;
+        const author = $('.byline .author a').text() || undefined;
         const categories = [
             ...new Set(
                 [
@@ -141,7 +139,7 @@ const handler = async (ctx: Context): Promise<Data> => {
     const currentUrl = isLatest ? `${BASE_URL}/latest` : `${BASE_URL}/${category}`;
     const limit = Number(ctx.req.query('limit') ?? 25);
 
-    const html = await fetchHtml(currentUrl);
+    const html = await ofetch(currentUrl);
     const $ = load(html);
 
     const list = extractListItems($, isLatest ? '.blog__item .summary' : 'article.archive__item', isLatest ? 'p.title a' : 'h2.archive__title a').slice(0, limit);
