@@ -1,5 +1,6 @@
 import cache from '@/utils/cache';
 import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
 
 const wwwid_key = 'kuaidi100-wwwid';
 const csrf_key = 'kuaidi100-csrf';
@@ -20,42 +21,37 @@ async function getCookie() {
     let dasddocReferrer = await cache.get(dasddocReferrer_key);
     let dasddocHref = await cache.get(dasddocHref_key);
     if (!wwwid || !csrf || !dasddocTitl || !dasddocReferrer || !dasddocHref) {
-        const indexResponse = await got({
-            method: 'get',
-            url: 'https://www.kuaidi100.com/?from=appstore',
+        const indexResponse = await ofetch.raw('https://www.kuaidi100.com/?from=appstore', {
             headers: {
                 // App store
                 Referer: 'https://apps.apple.com/cn/app/%E5%BF%AB%E9%80%92100-%E5%8F%8C11%E5%AF%84%E4%BB%B6%E9%80%80%E8%B4%A7-%E4%B8%8A%E5%BF%AB%E9%80%92100/id458270120',
             },
         });
-        const set_cookie = indexResponse.headers['set-cookie'];
-        if (set_cookie) {
-            for (const e of set_cookie) {
-                switch (0) {
-                    case e.indexOf('WWWID'):
-                        wwwid = e.split(';', 1)[0];
+        for (const e of indexResponse.headers.getSetCookie()) {
+            switch (0) {
+                case e.indexOf('WWWID'):
+                    wwwid = e.split(';', 1)[0];
 
-                        break;
+                    break;
 
-                    case e.indexOf('csrftoken'):
-                        csrf = e.split(';', 1)[0];
+                case e.indexOf('csrftoken'):
+                    csrf = e.split(';', 1)[0];
 
-                        break;
+                    break;
 
-                    case e.indexOf('globacsrftoken'):
-                        globacsrftoken = e.split(';', 1)[0];
+                case e.indexOf('globacsrftoken'):
+                    globacsrftoken = e.split(';', 1)[0];
 
-                        break;
+                    break;
 
-                    default:
-                        if (e.includes('dasddocTitle')) {
-                            dasddocTitl = e.split(';', 1)[0];
-                        } else if (e.includes('dasddocReferrer')) {
-                            dasddocReferrer = e.split(';', 1)[0];
-                        } else if (e.includes('dasddocHref')) {
-                            dasddocHref = e.split(';', 1)[0];
-                        }
-                }
+                default:
+                    if (e.includes('dasddocTitle')) {
+                        dasddocTitl = e.split(';', 1)[0];
+                    } else if (e.includes('dasddocReferrer')) {
+                        dasddocReferrer = e.split(';', 1)[0];
+                    } else if (e.includes('dasddocHref')) {
+                        dasddocHref = e.split(';', 1)[0];
+                    }
             }
         }
 

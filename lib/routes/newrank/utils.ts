@@ -1,7 +1,7 @@
 import { config } from '@/config';
 import cache from '@/utils/cache';
-import got from '@/utils/got';
 import md5 from '@/utils/md5';
+import ofetch from '@/utils/ofetch';
 
 const newrank_cookie_token = 'newrank_cookie_token';
 const query_count = 'newrank_cookie_count';
@@ -88,23 +88,19 @@ async function getCookie() {
     const nonce = random_nonce(9);
     const xyz = decrypt_login_xyz(username, password, nonce);
     if (!token) {
-        const indexResponse = await got({
-            method: 'post',
-            url: 'https://www.newrank.cn/nr/user/login/loginByAccount',
-            form: {
+        const indexResponse = await ofetch.raw('https://www.newrank.cn/nr/user/login/loginByAccount', {
+            method: 'POST',
+            body: new URLSearchParams({
                 account: username,
                 password,
-                state: 1,
+                state: '1',
                 nonce,
                 xyz,
-            },
+            }),
         });
-        const set_cookie = indexResponse.headers['set-cookie'];
-        if (set_cookie) {
-            for (const e of set_cookie) {
-                if (e.indexOf('token') === 0) {
-                    token = e.split(';', 1)[0];
-                }
+        for (const e of indexResponse.headers.getSetCookie()) {
+            if (e.startsWith('token')) {
+                token = e.split(';', 1)[0];
             }
         }
         cache.set(newrank_cookie_token, token ?? '', 600);

@@ -6,6 +6,7 @@ import { config } from '@/config';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
 const rootUrl = 'https://pubsonline.informs.org';
@@ -36,12 +37,14 @@ async function handler(ctx) {
         cache.tryGet(cateUrl, async () => {
             const setCookiesUrl = `${cateUrl}?cookieSet=1`;
 
-            const response = await got.extend({ followRedirect: false }).get(setCookiesUrl, {
+            const response = await ofetch.raw(setCookiesUrl, {
                 headers: {
                     Referer: cateUrl,
                 },
+                redirect: 'manual',
             });
-            const cookie = response.headers['set-cookie']
+            const cookie = response.headers
+                .getSetCookie()
                 .slice(1)
                 .map((item) => item.split(';', 1)[0])
                 .join('; ');

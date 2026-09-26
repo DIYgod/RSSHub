@@ -24,7 +24,7 @@ async function handler(ctx) {
 
     const { token, secret } = await getTokenAndSecret();
     const headers = {
-        cookie: token ? `t=${token}; r=${secret - 100}` : undefined,
+        cookie: token ? `t=${token}; r=${Number(secret) - 100}` : undefined,
     };
     const { data: response } = await got(url, {
         headers,
