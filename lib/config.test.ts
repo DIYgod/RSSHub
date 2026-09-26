@@ -132,7 +132,21 @@ describe('config', () => {
 
         const { config } = await import('./config');
         expect(config.kemono.rootUrl).toBe('https://kemono.example.com');
+        expect(config.kemono.assetsUrl).toBe('https://img.kemono.example.com');
         expect(config.coomer.rootUrl).toBe('https://coomer.example.com');
+        expect(config.coomer.assetsUrl).toBe('https://img.coomer.example.com');
+
+        delete process.env.KEMONO_ROOT_URL;
+        delete process.env.COOMER_ROOT_URL;
+    });
+
+    it('Kemono and Coomer inferred asset URLs preserve root paths', async () => {
+        process.env.KEMONO_ROOT_URL = 'https://kemono.example.com/mirror/';
+        process.env.COOMER_ROOT_URL = 'https://coomer.example.com/mirror///';
+
+        const { config } = await import('./config');
+        expect(config.kemono.assetsUrl).toBe('https://img.kemono.example.com/mirror');
+        expect(config.coomer.assetsUrl).toBe('https://img.coomer.example.com/mirror');
 
         delete process.env.KEMONO_ROOT_URL;
         delete process.env.COOMER_ROOT_URL;

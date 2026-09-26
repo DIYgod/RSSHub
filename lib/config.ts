@@ -764,6 +764,16 @@ const toBoolean = (value: string | undefined, defaultValue: boolean) => {
 
 const toInt = (value: string | undefined, defaultValue?: number) => (value === undefined ? defaultValue : Number.parseInt(value));
 
+const getAssetsUrl = (rootUrl: string, assetsUrl?: string) => {
+    if (assetsUrl) {
+        return assetsUrl.replace(/\/+$/, '');
+    }
+
+    const url = new URL(rootUrl);
+    url.hostname = `img.${url.hostname}`;
+    return url.href.replace(/\/+$/, '');
+};
+
 const calculateValue = () => {
     const bilibili_cookies: Record<string, string | undefined> = {};
     const email_config: Record<string, string | undefined> = {};
@@ -933,7 +943,7 @@ const calculateValue = () => {
             cookie: envs.CIVITAI_COOKIE,
         },
         coomer: {
-            assetsUrl: (envs.COOMER_ASSETS_URL || 'https://img.coomer.st').replace(/\/+$/, ''),
+            assetsUrl: getAssetsUrl(envs.COOMER_ROOT_URL || 'https://coomer.st', envs.COOMER_ASSETS_URL),
             rootUrl: (envs.COOMER_ROOT_URL || 'https://coomer.st').replace(/\/+$/, ''),
         },
         dianping: {
@@ -1039,7 +1049,7 @@ const calculateValue = () => {
             cookie: envs.KEYLOL_COOKIE,
         },
         kemono: {
-            assetsUrl: (envs.KEMONO_ASSETS_URL || 'https://img.kemono.cr').replace(/\/+$/, ''),
+            assetsUrl: getAssetsUrl(envs.KEMONO_ROOT_URL || 'https://kemono.cr', envs.KEMONO_ASSETS_URL),
             rootUrl: (envs.KEMONO_ROOT_URL || 'https://kemono.cr').replace(/\/+$/, ''),
         },
         lastfm: {

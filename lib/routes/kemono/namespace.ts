@@ -4,7 +4,7 @@ export const namespace: Namespace = {
     name: 'Kemono',
     url: 'kemono.cr',
     description: `::: tip
-The route uses \`https://kemono.cr\` and \`https://img.kemono.cr\` by default. Self-hosted instances can override them with the \`KEMONO_ROOT_URL\` and \`KEMONO_ASSETS_URL\` environment variables.
+The route uses \`https://kemono.cr\` and \`https://img.kemono.cr\` by default. Self-hosted instances can override them with the \`KEMONO_ROOT_URL\` and \`KEMONO_ASSETS_URL\` environment variables. If only \`KEMONO_ROOT_URL\` is set, the asset URL is inferred by adding the \`img.\` subdomain.
 :::`,
     lang: 'en',
 };
