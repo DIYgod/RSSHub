@@ -1,6 +1,8 @@
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 
+import { renderYoutube } from '@/routes/youtube/utils';
+
 interface DescriptionData {
     videoId?: string;
     transcriptHtml?: string;
@@ -11,12 +13,7 @@ interface DescriptionData {
 
 const CzechStepByStepDescription = ({ videoId, transcriptHtml, exerciseHref, worksheetHref, worksheetExt }: DescriptionData) => (
     <div>
-        {videoId && (
-            <>
-                <iframe id="ytplayer" type="text/html" width="640" height="360" src={`https://www.youtube-nocookie.com/embed/${videoId}`} frameborder="0" allowfullscreen />
-                <br />
-            </>
-        )}
+        {videoId && raw(renderYoutube(true, videoId, undefined, undefined))}
 
         {transcriptHtml && (
             <>
