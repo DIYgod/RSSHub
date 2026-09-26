@@ -11,6 +11,9 @@ let kvNamespace: KVNamespace | null = null;
 
 const status = { available: false };
 
+// Cloudflare Workers KV rejects any expirationTtl below 60 seconds
+const KV_MIN_TTL = 60;
+
 const getCacheTtlKey = (key: string) => {
     if (key.startsWith('rsshub:cacheTtl:')) {
         throw new Error('"rsshub:cacheTtl:" prefix is reserved for the internal usage, please change your cache key');
@@ -35,7 +38,7 @@ export default {
             const [value, cacheTtl] = await Promise.all([kvNamespace.get(key), kvNamespace.get(cacheTtlKey)]);
 
             if (value && refresh) {
-                const ttl = cacheTtl ? Number(cacheTtl) : config.cache.contentExpire;
+                const ttl = Math.max(cacheTtl ? Number(cacheTtl) : config.cache.contentExpire, KV_MIN_TTL);
                 // Refresh TTL by re-setting the value
                 // KV doesn't have a native expire refresh, so we need to re-put
                 // Use waitUntil pattern in production for non-blocking refresh
@@ -60,6 +63,7 @@ export default {
         if (!key) {
             return;
         }
+        maxAge = Math.max(maxAge, KV_MIN_TTL);
 
         const promises: Array<Promise<void>> = [kvNamespace.put(key, stored, { expirationTtl: maxAge })];
 
