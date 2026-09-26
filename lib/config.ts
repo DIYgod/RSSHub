@@ -143,9 +143,9 @@ type ConfigEnvKeys =
     | 'IWARA_PASSWORD'
     | 'JAVDB_SESSION'
     | 'JUMEILI_COOKIE'
-    | 'KEYLOL_COOKIE'
     | 'KEMONO_ASSETS_URL'
     | 'KEMONO_ROOT_URL'
+    | 'KEYLOL_COOKIE'
     | 'LASTFM_API_KEY'
     | 'LOCALS_SESSION'
     | 'LOFTER_COOKIE'
@@ -506,12 +506,12 @@ export type Config = {
     jumeili: {
         cookie?: string;
     };
-    keylol: {
-        cookie?: string;
-    };
     kemono: {
         assetsUrl: string;
         rootUrl: string;
+    };
+    keylol: {
+        cookie?: string;
     };
     lastfm: {
         api_key?: string;
@@ -1045,12 +1045,12 @@ const calculateValue = () => {
         jumeili: {
             cookie: envs.JUMEILI_COOKIE,
         },
-        keylol: {
-            cookie: envs.KEYLOL_COOKIE,
-        },
         kemono: {
             assetsUrl: getAssetsUrl(envs.KEMONO_ROOT_URL || 'https://kemono.cr', envs.KEMONO_ASSETS_URL),
             rootUrl: (envs.KEMONO_ROOT_URL || 'https://kemono.cr').replace(/\/+$/, ''),
+        },
+        keylol: {
+            cookie: envs.KEYLOL_COOKIE,
         },
         lastfm: {
             api_key: envs.LASTFM_API_KEY,
