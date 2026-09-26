@@ -37,6 +37,12 @@ const getWrappedGet = <T extends Get>(origin: T): T => {
             }
         } else {
             options = args[0];
+            // CONNECT is a proxy tunnel handshake (e.g. tunnel-agent used by `request`): `path` is the
+            // `host:port` of the tunnel target, not a URL path, so hand it to node untouched
+            if (typeof options.method === 'string' && options.method.toUpperCase() === 'CONNECT') {
+                logger.debug(`Outgoing request: CONNECT ${options.path} via ${options.hostname || options.host}:${options.port}`);
+                return origin.apply(this, args);
+            }
             try {
                 url = new URL(options.href || `${options.protocol || 'http:'}//${options.hostname || options.host}${options.path}${options.search || (options.query ? `?${options.query}` : '')}`);
             } catch {
