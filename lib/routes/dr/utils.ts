@@ -3,8 +3,8 @@ import { load } from 'cheerio';
 import { config } from '@/config';
 import type { Data, DataItem } from '@/types';
 import cache from '@/utils/cache';
-import got from '@/utils/got';
 import logger from '@/utils/logger';
+import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import parser from '@/utils/rss-parser';
 
@@ -31,6 +31,40 @@ const renderInline = (nodes: any[] = []): string =>
         })
         .join('');
 
+const renderImage = (image: any, { credit = false }: { credit?: boolean } = {}): string => {
+    if (!image?.url) {
+        return '';
+    }
+    const alt = image.altText ?? image.description ?? '';
+    let caption = image.description ? escapeHtml(image.description) : '';
+    if (credit) {
+        const attribution = [image.photographer, image.copyright].filter(Boolean).join(' / ');
+        if (attribution) {
+            caption += `${caption ? ' ' : ''}<small>${escapeHtml(attribution)}</small>`;
+        }
+    }
+    const figcaption = caption ? `<figcaption>${caption}</figcaption>` : '';
+    return `<figure><img src="${escapeHtml(image.url)}" alt="${escapeHtml(alt)}">${figcaption}</figure>`;
+};
+
+// FactBox bodies use lowercase block node types (Paragraph, UnorderedList, ...) instead of the
+// *Component types used in the article body.
+const renderFactBoxBody = (nodes: any[] = []): string =>
+    nodes
+        .map((node) => {
+            switch (node.type) {
+                case 'Paragraph':
+                    return `<p>${renderInline(node.body)}</p>`;
+                case 'UnorderedList':
+                    return `<ul>${(node.items ?? []).map((item) => `<li>${renderFactBoxBody(item.body)}</li>`).join('')}</ul>`;
+                case 'OrderedList':
+                    return `<ol>${(node.items ?? []).map((item) => `<li>${renderFactBoxBody(item.body)}</li>`).join('')}</ol>`;
+                default:
+                    return '';
+            }
+        })
+        .join('');
+
 const renderBody = (components: any[] = []): string =>
     components
         .map((component) => {
@@ -44,15 +78,8 @@ const renderBody = (components: any[] = []): string =>
                     const citation = component.citation ? `<footer>${escapeHtml(component.citation)}</footer>` : '';
                     return `<blockquote>${quote}${citation}</blockquote>`;
                 }
-                case 'ImageComponent': {
-                    const image = component.image?.default;
-                    if (!image?.url) {
-                        return '';
-                    }
-                    const alt = image.altText ?? image.description ?? '';
-                    const caption = image.description ? `<figcaption>${escapeHtml(image.description)}</figcaption>` : '';
-                    return `<figure><img src="${escapeHtml(image.url)}" alt="${escapeHtml(alt)}">${caption}</figure>`;
-                }
+                case 'ImageComponent':
+                    return renderImage(component.image?.default);
                 case 'MediaComponent': {
                     const poster = component.resource?.imageUri ?? component.resource?.image?.managedUrl;
                     if (!poster) {
@@ -60,6 +87,18 @@ const renderBody = (components: any[] = []): string =>
                     }
                     const caption = component.caption ? `<figcaption>${escapeHtml(component.caption)}</figcaption>` : '';
                     return `<figure><img src="${escapeHtml(poster)}" alt="${escapeHtml(component.caption ?? '')}">${caption}</figure>`;
+                }
+                case 'ImageCollectionComponent':
+                    return (component.images ?? [])
+                        .map((entry: any) => renderImage(entry?.default, { credit: true }))
+                        .filter(Boolean)
+                        .join('');
+                case 'FactBoxComponent': {
+                    const expression = component.expression ?? {};
+                    const image = renderImage(expression.image?.default, { credit: true });
+                    const title = expression.title ? `<h3>${escapeHtml(expression.title)}</h3>` : '';
+                    const body = renderFactBoxBody(expression.body);
+                    return image || title || body ? `<aside>${image}${title}${body}</aside>` : '';
                 }
                 case 'EmphasizedListComponent':
                     return `<ul>${(component.items ?? []).map((item) => `<li>${renderBody(item.body)}</li>`).join('')}</ul>`;
@@ -95,24 +134,32 @@ export const extractDRArticle = (html: string) => {
         author: author || undefined,
         category: resource.site?.title,
         image: image ?? undefined,
-        pubDate: (resource.startDate ?? resource.published) ? parseDate(resource.startDate ?? resource.published) : undefined,
+        // `resource.published` is a boolean, so only `startDate` can be parsed as a date.
+        pubDate: resource.startDate ? parseDate(resource.startDate) : undefined,
     };
 };
 
-const fetchDRArticle = (link: string) =>
-    cache.tryGet(`dr:article:${link}`, async () => {
-        try {
-            const { data: html } = await got(link, {
+const fetchDRArticle = async (link: string) => {
+    try {
+        return await cache.tryGet(`dr:article:${link}`, async () => {
+            const html = await ofetch(link, {
                 headers: {
                     'User-Agent': config.trueUA,
                 },
             });
-            return extractDRArticle(html);
-        } catch (error) {
-            logger.error(`Failed to fetch DR article ${link}: ${error}`);
-            return null;
-        }
-    });
+            const article = extractDRArticle(html);
+            if (!article) {
+                throw new Error(`Unable to extract the full article from ${link}`);
+            }
+            return article;
+        });
+    } catch (error) {
+        // Throwing inside the cache callback keeps the RSS summary fallback out of the cache,
+        // so a temporary DR outage does not poison the cached article.
+        logger.error(`Failed to fetch DR article ${link}: ${error}`);
+        return null;
+    }
+};
 
 export const getNews = async (slug: string): Promise<Data> => {
     const feed = await parser.parseURL(feedUrl(slug));
@@ -131,6 +178,7 @@ export const getNews = async (slug: string): Promise<Data> => {
             if (article?.content) {
                 return {
                     ...base,
+                    pubDate: article.pubDate ?? base.pubDate,
                     description: article.content,
                     author: article.author,
                     category: article.category ?? item.category,
