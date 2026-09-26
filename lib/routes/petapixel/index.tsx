@@ -1,5 +1,4 @@
 import { load } from 'cheerio';
-import { decodeHTML } from 'entities';
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 
@@ -93,7 +92,7 @@ async function handler(ctx) {
               if (data.length === 0) {
                   throw new InvalidParameterError(`Category "${categorySlug}" not found`);
               }
-              return { id: data[0].id, name: decodeHTML(data[0].name), link: data[0].link };
+              return { id: data[0].id, name: data[0].name, link: data[0].link };
           })
         : undefined;
 
@@ -107,7 +106,7 @@ async function handler(ctx) {
         const image = featured?.source_url;
 
         return {
-            title: decodeHTML(post.title.rendered),
+            title: post.title.rendered,
             link: post.link,
             // WordPress returns *_gmt without a timezone designator
             pubDate: parseDate(`${post.date_gmt}Z`),
@@ -117,7 +116,7 @@ async function handler(ctx) {
             category: (post._embedded?.['wp:term'] ?? [])
                 .filter((group) => Array.isArray(group))
                 .flat()
-                .map((term) => decodeHTML(term.name)),
+                .map((term) => term.name),
             description: renderToString(
                 <>
                     {image ? (
