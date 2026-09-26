@@ -12482,9 +12482,6 @@
   "/youtube/playlist/:id/:embed?": [
     "HenryQW"
   ],
-  "/youtube/streams/:handle/:routeParams?": [
-    "ouuan"
-  ],
   "/youtube/user/:username/:routeParams?": [
     "DIYgod",
     "pseudoyu"
