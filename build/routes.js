@@ -71452,6 +71452,23 @@ export default {
   },
   "huggingface": {
     "routes": {
+      "/datasets/:author": {
+        "path": "/datasets/:author",
+        "name": "Datasets by author",
+        "categories": [
+          "programming"
+        ],
+        "example": "/huggingface/datasets/HuggingFaceFW",
+        "parameters": {
+          "author": "Hugging Face username or organization name"
+        },
+        "maintainers": [
+          "Cod1doc"
+        ],
+        "description": "The 20 most recently created datasets from a Hugging Face user or organization.",
+        "location": "datasets.ts",
+        "module": () => import('@/routes/huggingface/datasets.ts')
+      },
       "/activity/:user/likes": {
         "path": "/activity/:user/likes",
         "categories": [
@@ -124500,6 +124517,35 @@ export default {
     "url": "xmanhua.com",
     "lang": "zh-CN"
   },
+  "xmlcom": {
+    "routes": {
+      "/": {
+        "path": "/",
+        "categories": [
+          "programming"
+        ],
+        "example": "/xmlcom",
+        "name": "Articles and News",
+        "maintainers": [
+          "AboutRSS"
+        ],
+        "radar": [
+          {
+            "source": [
+              "www.xml.com/"
+            ]
+          }
+        ],
+        "description": "The official Atom feed (/feed/all/) truncates every entry to a 128 character summary and carries no category tags. This route fetches the full body from each detail page and extracts the tags of that page into category.",
+        "location": "index.ts",
+        "module": () => import('@/routes/xmlcom/index.ts')
+      }
+    },
+    "apiRoutes": {},
+    "name": "XML.com",
+    "url": "www.xml.com",
+    "lang": "en"
+  },
   "xmnn": {
     "routes": {
       "/epaper/:id?": {
@@ -162769,6 +162815,39 @@ export default {
         ],
         "location": "playlist.ts",
         "module": () => import('@/routes/youtube/playlist.ts')
+      },
+      "/streams/:handle/:routeParams?": {
+        "path": "/streams/:handle/:routeParams?",
+        "categories": [
+          "live"
+        ],
+        "view": 3,
+        "example": "/youtube/streams/@GawrGura",
+        "parameters": {
+          "handle": "YouTube handle or channel id",
+          "routeParams": "Extra parameters, see the table below"
+        },
+        "radar": [
+          {
+            "source": [
+              "www.youtube.com/@:handle/streams"
+            ],
+            "target": "/streams/@:handle"
+          },
+          {
+            "source": [
+              "www.youtube.com/channel/:handle/streams"
+            ],
+            "target": "/streams/:handle"
+          }
+        ],
+        "name": "Live Streams",
+        "maintainers": [
+          "ouuan"
+        ],
+        "description": "::: tip Parameter\n\n| Name               | Description                                                                                 | Default |\n| ------------------ | ------------------------------------------------------------------------------------------- | ------- |\n| embed              | Whether to embed the video, fill in any value to disable embedding                          | embed   |\n| includeDescription | Whether to include the description of each stream, fill in any truthy value to include them | false   |\n\n:::\n\n::: tip\nUnlike [Live](#youtube-live), this route reads the channel's Live tab, so it also covers scheduled and finished streams, and it does not require an API key.\n\nEvery stream is categorized as `live`, `upcoming` or `completed`, so a single state can be picked out with the `filter_category` and `filterout_category` [common parameters](https://docs.rsshub.app/guide/parameters#filtering). For example, `/youtube/streams/@GawrGura?filterout_category=completed` only tracks streams that are live or about to start.\n\nThe Live tab does not carry the stream descriptions, so `includeDescription` costs one extra request per stream and is off by default.\n:::",
+        "location": "streams.ts",
+        "module": () => import('@/routes/youtube/streams.ts')
       },
       "/user/:username/:routeParams?": {
         "path": "/user/:username/:routeParams?",

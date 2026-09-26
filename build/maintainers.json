@@ -5335,6 +5335,9 @@
   "/hubu/zhxy/:category{.+}?": [
     "nczitzk"
   ],
+  "/huggingface/datasets/:author": [
+    "Cod1doc"
+  ],
   "/huggingface/activity/:user/likes": [
     "dotwee"
   ],
@@ -9307,6 +9310,9 @@
   "/xmanhua/:uid": [
     "Ye11"
   ],
+  "/xmlcom/": [
+    "AboutRSS"
+  ],
   "/xmnn/epaper/:id?": [
     "nczitzk"
   ],
@@ -12481,6 +12487,9 @@
   ],
   "/youtube/playlist/:id/:embed?": [
     "HenryQW"
+  ],
+  "/youtube/streams/:handle/:routeParams?": [
+    "ouuan"
   ],
   "/youtube/user/:username/:routeParams?": [
     "DIYgod",

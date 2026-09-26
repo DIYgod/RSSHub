@@ -1694,6 +1694,7 @@ export type RoutePath =
   | `/huggingface/blog-community/:sort?`
   | `/huggingface/blog-zh`
   | `/huggingface/daily-papers/:cycle?/:voteFliter?`
+  | `/huggingface/datasets/:author`
   | `/huggingface/models/:group`
   | `/huijin-inv/news`
   | `/huitun/xiaohongshu/:user_id`
@@ -3685,6 +3686,7 @@ export type RoutePath =
   | `/xkb/:channel`
   | `/xmanhua/:uid`
   | `/xmind/mindmap/:lang?`
+  | `/xmlcom/`
   | `/xmnn/epaper/:id?`
   | `/xmnn/news/:category{.+}?`
   | `/xmu/aero/:type`
@@ -3781,6 +3783,7 @@ export type RoutePath =
   | `/youtube/community/:handle`
   | `/youtube/live/:username/:embed?`
   | `/youtube/playlist/:id/:embed?`
+  | `/youtube/streams/:handle/:routeParams?`
   | `/youtube/subscriptions/:embed?`
   | `/youtube/user/:username/:routeParams?`
   | `/youzan/goods/:id`

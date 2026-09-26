@@ -44307,6 +44307,19 @@
       }
     ]
   },
+  "xml.com": {
+    "_name": "XML.com",
+    "www": [
+      {
+        "title": "Articles and News",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/"
+        ],
+        "target": "/xmlcom/"
+      }
+    ]
+  },
   "xmnn.cn": {
     "_name": "厦门网",
     "epaper": [
@@ -54624,6 +54637,22 @@
           "/channel/:id"
         ],
         "target": "/youtube/channel/:id"
+      },
+      {
+        "title": "Live Streams",
+        "docs": "https://docs.rsshub.app/routes/live",
+        "source": [
+          "/@:handle/streams"
+        ],
+        "target": "/youtube/streams/@:handle"
+      },
+      {
+        "title": "Live Streams",
+        "docs": "https://docs.rsshub.app/routes/live",
+        "source": [
+          "/channel/:handle/streams"
+        ],
+        "target": "/youtube/streams/:handle"
       },
       {
         "title": "Channel with user handle",
