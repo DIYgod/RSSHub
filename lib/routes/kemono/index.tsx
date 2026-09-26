@@ -6,7 +6,7 @@ import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
-import { KEMONO_API_URL, KEMONO_ROOT_URL, MIME_TYPE_MAP } from './const';
+import { KEMONO_API_URL, KEMONO_ASSETS_URL, KEMONO_ROOT_URL, MIME_TYPE_MAP } from './const';
 import type { DiscordMessage, KemonoFile, KemonoPost } from './types';
 
 const headers = { Accept: 'text/css' };
@@ -181,7 +181,7 @@ const renderDiscordMessage = (message: DiscordMessage) =>
         <>
             {message.content ? <p>{message.content}</p> : null}
             {message.attachments?.map((attachment) => (
-                <img src={`https://img.kemono.cr/thumbnail/data${attachment.path}`} />
+                <img src={`${KEMONO_ASSETS_URL}/thumbnail/data${attachment.path}`} />
             ))}
             {message.embeds?.map((embed) => {
                 if (embed.type === 'image') {
@@ -211,25 +211,26 @@ const renderPostFiles = (post: KemonoPost & { files?: KemonoFile[] }) =>
             {post.files?.map((file) => {
                 const extension = file.extension;
                 const typeSuffix = file.extension ?? '';
+                const mediaUrl = `${KEMONO_ASSETS_URL}${file.path}`;
 
                 if (['jpg', 'png', 'webp', 'jpeg', 'jfif'].includes(extension)) {
-                    return <img src={file.path} />;
+                    return <img src={mediaUrl} />;
                 }
                 if (['m4a', 'mp3', 'ogg'].includes(extension)) {
                     return (
                         <audio controls>
-                            <source src={file.path} type={`audio/${typeSuffix}`} />
+                            <source src={mediaUrl} type={`audio/${typeSuffix}`} />
                         </audio>
                     );
                 }
                 if (['mp4', 'webm'].includes(extension)) {
                     return (
                         <video controls>
-                            <source src={file.path} type={`video/${typeSuffix}`} />
+                            <source src={mediaUrl} type={`video/${typeSuffix}`} />
                         </video>
                     );
                 }
-                return <a href={file.path}>{file.name}</a>;
+                return <a href={mediaUrl}>{file.name}</a>;
             })}
             {post.embed ? (
                 post.embed.type === 'image' ? (
@@ -373,7 +374,7 @@ async function handler(ctx) {
 
         const authorName = isPostsMode || isDiscordMode || !userId ? '' : await fetchUserProfile(source, userId);
 
-        const iconUrl = isPostsMode || isDiscordMode ? `${KEMONO_ROOT_URL}/favicon.ico` : `https://img.kemono.cr/icons/${source}/${userId}`;
+        const iconUrl = isPostsMode || isDiscordMode ? `${KEMONO_ROOT_URL}/favicon.ico` : `${KEMONO_ASSETS_URL}/icons/${source}/${userId}`;
 
         let items: any[];
         let title: string;

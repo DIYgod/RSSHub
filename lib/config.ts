@@ -98,6 +98,7 @@ type ConfigEnvKeys =
     | 'BUKENAVI_PASSWORD'
     | 'CAIXIN_COOKIE'
     | 'CIVITAI_COOKIE'
+    | 'COOMER_ASSETS_URL'
     | 'COOMER_ROOT_URL'
     | 'DIANPING_COOKIE'
     | 'DIDA365_USERNAME'
@@ -143,6 +144,7 @@ type ConfigEnvKeys =
     | 'JAVDB_SESSION'
     | 'JUMEILI_COOKIE'
     | 'KEYLOL_COOKIE'
+    | 'KEMONO_ASSETS_URL'
     | 'KEMONO_ROOT_URL'
     | 'LASTFM_API_KEY'
     | 'LOCALS_SESSION'
@@ -402,6 +404,7 @@ export type Config = {
         cookie?: string;
     };
     coomer: {
+        assetsUrl: string;
         rootUrl: string;
     };
     dianping: {
@@ -507,6 +510,7 @@ export type Config = {
         cookie?: string;
     };
     kemono: {
+        assetsUrl: string;
         rootUrl: string;
     };
     lastfm: {
@@ -929,7 +933,8 @@ const calculateValue = () => {
             cookie: envs.CIVITAI_COOKIE,
         },
         coomer: {
-            rootUrl: envs.COOMER_ROOT_URL || 'https://coomer.st',
+            assetsUrl: (envs.COOMER_ASSETS_URL || 'https://img.coomer.st').replace(/\/+$/, ''),
+            rootUrl: (envs.COOMER_ROOT_URL || 'https://coomer.st').replace(/\/+$/, ''),
         },
         dianping: {
             cookie: envs.DIANPING_COOKIE,
@@ -1034,7 +1039,8 @@ const calculateValue = () => {
             cookie: envs.KEYLOL_COOKIE,
         },
         kemono: {
-            rootUrl: envs.KEMONO_ROOT_URL || 'https://kemono.cr',
+            assetsUrl: (envs.KEMONO_ASSETS_URL || 'https://img.kemono.cr').replace(/\/+$/, ''),
+            rootUrl: (envs.KEMONO_ROOT_URL || 'https://kemono.cr').replace(/\/+$/, ''),
         },
         lastfm: {
             api_key: envs.LASTFM_API_KEY,

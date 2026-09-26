@@ -127,8 +127,8 @@ describe('config', () => {
     });
 
     it('Kemono and Coomer root URLs', async () => {
-        process.env.KEMONO_ROOT_URL = 'https://kemono.example.com';
-        process.env.COOMER_ROOT_URL = 'https://coomer.example.com';
+        process.env.KEMONO_ROOT_URL = 'https://kemono.example.com/';
+        process.env.COOMER_ROOT_URL = 'https://coomer.example.com///';
 
         const { config } = await import('./config');
         expect(config.kemono.rootUrl).toBe('https://kemono.example.com');
@@ -136,6 +136,30 @@ describe('config', () => {
 
         delete process.env.KEMONO_ROOT_URL;
         delete process.env.COOMER_ROOT_URL;
+    });
+
+    it('Kemono and Coomer asset URL subdomains', async () => {
+        process.env.KEMONO_ASSETS_URL = 'https://assets.kemono.example.com/';
+        process.env.COOMER_ASSETS_URL = 'https://assets.coomer.example.com///';
+
+        const { config } = await import('./config');
+        expect(config.kemono.assetsUrl).toBe('https://assets.kemono.example.com');
+        expect(config.coomer.assetsUrl).toBe('https://assets.coomer.example.com');
+
+        delete process.env.KEMONO_ASSETS_URL;
+        delete process.env.COOMER_ASSETS_URL;
+    });
+
+    it('Kemono and Coomer asset URL path prefixes', async () => {
+        process.env.KEMONO_ASSETS_URL = 'https://kemono.example.com/assets/';
+        process.env.COOMER_ASSETS_URL = 'https://coomer.example.com/assets///';
+
+        const { config } = await import('./config');
+        expect(config.kemono.assetsUrl).toBe('https://kemono.example.com/assets');
+        expect(config.coomer.assetsUrl).toBe('https://coomer.example.com/assets');
+
+        delete process.env.KEMONO_ASSETS_URL;
+        delete process.env.COOMER_ASSETS_URL;
     });
 
     it('remote config', async () => {
