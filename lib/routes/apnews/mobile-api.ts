@@ -1,6 +1,6 @@
 import pMap from 'p-map';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import { ViewType } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -83,7 +83,7 @@ async function handler(ctx) {
             }
             return;
         })
-        .filter(Boolean), 'link')
+        .filter(Boolean), 'link') as DataItem[]
         .toSorted((a, b) => Number(b!.pubDate) - Number(a!.pubDate))
         .slice(0, ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 20);
 
