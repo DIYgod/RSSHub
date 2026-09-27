@@ -46621,6 +46621,67 @@
       }
     ]
   },
+  "dr.dk": {
+    "_name": "DR (Danmarks Radio)",
+    "www": [
+      {
+        "title": "Nyheder",
+        "docs": "https://docs.rsshub.app/routes/traditional-media",
+        "source": [
+          "/nyheder"
+        ],
+        "target": "/dr/senestenyt"
+      },
+      {
+        "title": "Nyheder",
+        "docs": "https://docs.rsshub.app/routes/traditional-media",
+        "source": [
+          "/nyheder/indland"
+        ],
+        "target": "/dr/indland"
+      },
+      {
+        "title": "Nyheder",
+        "docs": "https://docs.rsshub.app/routes/traditional-media",
+        "source": [
+          "/nyheder/udland"
+        ],
+        "target": "/dr/udland"
+      },
+      {
+        "title": "Nyheder",
+        "docs": "https://docs.rsshub.app/routes/traditional-media",
+        "source": [
+          "/nyheder/penge"
+        ],
+        "target": "/dr/penge"
+      },
+      {
+        "title": "Nyheder",
+        "docs": "https://docs.rsshub.app/routes/traditional-media",
+        "source": [
+          "/nyheder/politik"
+        ],
+        "target": "/dr/politik"
+      },
+      {
+        "title": "Nyheder",
+        "docs": "https://docs.rsshub.app/routes/traditional-media",
+        "source": [
+          "/sporten"
+        ],
+        "target": "/dr/sporten"
+      },
+      {
+        "title": "Nyheder",
+        "docs": "https://docs.rsshub.app/routes/traditional-media",
+        "source": [
+          "/nyheder/viden"
+        ],
+        "target": "/dr/viden"
+      }
+    ]
+  },
   "dribbble.com": {
     "_name": "Dribbble",
     ".": [

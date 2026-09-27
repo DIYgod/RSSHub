@@ -135402,6 +135402,115 @@ export default {
     "description": "::: tip\n\n- 可以通过头条新闻 + 参数过滤的形式获得早报、专题等内容。\n\n:::",
     "lang": "zh-CN"
   },
+  "dr": {
+    "routes": {
+      "/:category?": {
+        "path": "/:category?",
+        "categories": [
+          "traditional-media"
+        ],
+        "example": "/dr/senestenyt",
+        "parameters": {
+          "category": {
+            "description": "DR-sektion, se tabellen nedenfor. Standarden er `senestenyt` (Kort nyt)",
+            "options": [
+              {
+                "value": "senestenyt",
+                "label": "Seneste nyt (Kort nyt)"
+              },
+              {
+                "value": "indland",
+                "label": "Indland"
+              },
+              {
+                "value": "udland",
+                "label": "Udland"
+              },
+              {
+                "value": "penge",
+                "label": "Penge"
+              },
+              {
+                "value": "politik",
+                "label": "Politik"
+              },
+              {
+                "value": "sporten",
+                "label": "Sport"
+              },
+              {
+                "value": "viden",
+                "label": "Viden"
+              }
+            ]
+          }
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "www.dr.dk/nyheder"
+            ],
+            "target": "/senestenyt"
+          },
+          {
+            "source": [
+              "www.dr.dk/nyheder/indland"
+            ],
+            "target": "/indland"
+          },
+          {
+            "source": [
+              "www.dr.dk/nyheder/udland"
+            ],
+            "target": "/udland"
+          },
+          {
+            "source": [
+              "www.dr.dk/nyheder/penge"
+            ],
+            "target": "/penge"
+          },
+          {
+            "source": [
+              "www.dr.dk/nyheder/politik"
+            ],
+            "target": "/politik"
+          },
+          {
+            "source": [
+              "www.dr.dk/sporten"
+            ],
+            "target": "/sporten"
+          },
+          {
+            "source": [
+              "www.dr.dk/nyheder/viden"
+            ],
+            "target": "/viden"
+          }
+        ],
+        "name": "Nyheder",
+        "maintainers": [
+          "cufezhusy"
+        ],
+        "description": "DRs nyheder, baseret på de officielle RSS-feeds. RSSHub forsøger at hente den fulde artikeltekst fra dr.dk. Hvis den fulde tekst ikke kan hentes, bruges beskrivelsen fra den officielle RSS-feed.\n\n| Kategori   | Beskrivelse            |\n| ---------- | ---------------------- |\n| senestenyt | Seneste nyt (Kort nyt) |\n| indland    | Indland                |\n| udland     | Udland                 |\n| penge      | Penge                  |\n| politik    | Politik                |\n| sporten    | Sport                  |\n| viden      | Viden                  |",
+        "location": "index.ts",
+        "module": () => import('@/routes/dr/index.ts')
+      }
+    },
+    "apiRoutes": {},
+    "name": "DR (Danmarks Radio)",
+    "url": "dr.dk",
+    "lang": "da"
+  },
   "dribbble": {
     "routes": {
       "/keyword/:keyword": {
