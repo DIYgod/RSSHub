@@ -59,6 +59,15 @@ describe('worker cache with KV binding', () => {
         expect(await env.CACHE.get('rsshub:cacheTtl:worker:default-ttl')).toBeNull();
     });
 
+    it('accepts expiry below the KV minimum of 60 seconds', async () => {
+        await kv.set('worker:short-ttl', 'v', 1);
+        expect(await kv.get('worker:short-ttl')).toBe('v');
+        expect(await env.CACHE.get('rsshub:cacheTtl:worker:short-ttl')).toBe('1');
+
+        await cache.globalCache.set('worker:global-short-ttl', 'v', 1);
+        expect(await cache.globalCache.get('worker:global-short-ttl')).toBe('v');
+    });
+
     it('rejects keys using the reserved ttl prefix', async () => {
         await expect(kv.get('rsshub:cacheTtl:foo')).rejects.toThrow('reserved');
     });
