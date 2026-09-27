@@ -206,6 +206,8 @@ const Node: FC<{ node: any }> = ({ node }) => {
 const Post: FC<{ post: any }> = ({ post }) => (
     <>
         {post.heroImage ? <Image src={post.heroImage.source} alt={post.heroImage.alt} caption={post.heroImage.caption} /> : null}
+        {/* the opening paragraphs that come before the first chapter */}
+        <Nodes nodes={post.structuredLede} />
         {(post.chapters ?? []).map((chapter) => (
             <>
                 {chapter.title ? <h2>{chapter.title}</h2> : null}
