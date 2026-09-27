@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import { ViewType } from '@/types';
@@ -39,32 +40,39 @@ export const route: Route = {
 async function handler() {
     const feed = await parser.parseURL(feedUrl);
 
-    const items = await Promise.all(
-        feed.items.map((item) => {
+    const items = await pMap(
+        feed.items,
+        async (item) => {
             // the feed appends its own tracking parameters
             const link = item.link!.split('?', 1)[0];
-            return cache.tryGet(link, async () => {
-                const response = await ofetch(link, {
-                    // Article pages sit behind bot detection that turns away a share of requests with a 403,
-                    // a status ofetch does not retry by default. Retrying clears it — only about half the
-                    // articles are refused on a first pass and every one of them answers on a later attempt.
-                    retry: 5,
-                    retryDelay: 3000,
-                    retryStatusCodes: [400, 403, 408, 409, 425, 429, 500, 502, 503, 504],
-                });
-                const $ = load(response);
-                const post = JSON.parse($('script#__NEXT_DATA__').text()).props.pageProps.post;
+            try {
+                return await cache.tryGet(link, async () => {
+                    const response = await ofetch(link);
+                    const $ = load(response);
+                    const post = JSON.parse($('script#__NEXT_DATA__').text()).props.pageProps.post;
 
+                    return {
+                        title: post.title,
+                        link,
+                        description: renderPost(post),
+                        author: post.authors.map((a) => a.displayName).join(', '),
+                        pubDate: parseDate(item.pubDate!),
+                        category: [post.primarySection?.name, post.auxiliarySection?.name].filter(Boolean),
+                    } as DataItem;
+                });
+            } catch {
+                // Article pages sit behind DataDome, which turns away a share of requests with a 403.
+                // Fall back to the opening paragraphs the feed carries; nothing is cached, so the next run tries again.
                 return {
-                    title: post.title,
+                    title: item.title!,
                     link,
-                    description: renderPost(post),
-                    author: post.authors.map((a) => a.displayName).join(', '),
+                    description: item['content:encoded'] ?? item.content,
+                    author: item.creator,
                     pubDate: parseDate(item.pubDate!),
-                    category: [post.primarySection?.name, ...(post.primaryTerms ?? [])].filter(Boolean),
                 } as DataItem;
-            });
-        })
+            }
+        },
+        { concurrency: 2 }
     );
 
     return {
