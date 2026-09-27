@@ -6,6 +6,7 @@ export interface NewProductListItem {
     img800s: string;
     itemId: number;
     name: string;
+    startTime: number;
 }
 
 export type NewProductListResponse = DataResponse<{
@@ -19,6 +20,7 @@ export type NewProductListResponse = DataResponse<{
             }>;
         }>;
         moduleKey: string;
+        startTime: number;
     }>;
 }>;
 

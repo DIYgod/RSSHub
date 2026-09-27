@@ -33,9 +33,13 @@ export const getNewProductList = async (): Promise<NewProductListItem[]> => {
         const blocks = floor.dynamicData ?? [];
         for (const block of blocks) {
             for (const item of block.list) {
-                if (item.type === 'goods' && !map.has(item.value.goods.itemId)) {
-                    map.set(item.value.goods.itemId, item.value.goods);
+                if (item.type !== 'goods' || map.has(item.value.goods.itemId)) {
+                    continue;
                 }
+                if (!item.value.goods.startTime) {
+                    item.value.goods.startTime = floor.startTime;
+                }
+                map.set(item.value.goods.itemId, item.value.goods);
             }
         }
     }

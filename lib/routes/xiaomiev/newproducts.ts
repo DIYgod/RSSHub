@@ -2,6 +2,7 @@ import { renderNewProduct } from '@/routes/mi/templates/newproduct';
 import type { Data, DataItem, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
+import { parseDate } from '@/utils/parse-date';
 
 import type { NewProductDetailItem, NewProductListItem } from './types';
 import utils from './utils';
@@ -40,6 +41,7 @@ const getDataItem = (listItem: NewProductListItem, detailItem: NewProductDetailI
     description: renderNewProduct(utils.toNewProduct(listItem, detailItem)),
     link: `https://shop.retail.xiaomiev.com/shop/cltd/product?pid=${listItem.itemId}`,
     image: listItem.img800s,
+    pubDate: parseDate(listItem.startTime, 'X'),
     language: 'zh-CN',
 });
 
