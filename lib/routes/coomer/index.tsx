@@ -1,6 +1,7 @@
 import { load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
 
+import { config } from '@/config';
 import type { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -52,7 +53,8 @@ async function handler(ctx) {
     const id = ctx.req.param('id');
     const isPosts = source === 'posts';
 
-    const rootUrl = 'https://coomer.st';
+    const rootUrl = config.coomer.rootUrl;
+    const assetsUrl = config.coomer.assetsUrl;
     const apiUrl = `${rootUrl}/api/v1`;
     const currentUrl = isPosts ? `${apiUrl}/posts` : `${apiUrl}/${source}/user/${id}/posts`;
 
@@ -65,7 +67,7 @@ async function handler(ctx) {
 
     const author = isPosts ? '' : await getAuthor(`${apiUrl}/${source}/user/${id}`);
     const title = isPosts ? 'Coomer Posts' : `Posts of ${author} from ${source} | Coomer`;
-    const image = isPosts ? `${rootUrl}/favicon.ico` : `https://img.coomer.st/icons/${source}/${id}`;
+    const image = isPosts ? `${rootUrl}/favicon.ico` : `${assetsUrl}/icons/${source}/${id}`;
     const items = responseData
         .filter((i) => i.content || i.attachments)
         .slice(0, limit)
@@ -153,14 +155,15 @@ const renderSource = (item): string =>
     renderToString(
         <>
             {item.files?.map((file, index) => {
+                const mediaUrl = `${config.coomer.assetsUrl}${file.path}`;
                 if (['jpg', 'png', 'webp', 'jpeg', 'jfif'].includes(file.extension)) {
-                    return <img key={`image-${index}`} src={file.path} />;
+                    return <img key={`image-${index}`} src={mediaUrl} />;
                 }
 
                 if (['m4a', 'mp3', 'ogg'].includes(file.extension)) {
                     return (
                         <audio key={`audio-${index}`} controls>
-                            <source src={file.path} type={`audio/${file.extention}`} />
+                            <source src={mediaUrl} type={`audio/${file.extention}`} />
                         </audio>
                     );
                 }
@@ -168,13 +171,13 @@ const renderSource = (item): string =>
                 if (['mp4', 'webm'].includes(file.extension)) {
                     return (
                         <video key={`video-${index}`} controls>
-                            <source src={file.path} type={`video/${file.extention}`} />
+                            <source src={mediaUrl} type={`video/${file.extention}`} />
                         </video>
                     );
                 }
 
                 return (
-                    <a key={`file-${index}`} href={file.path}>
+                    <a key={`file-${index}`} href={mediaUrl}>
                         {file.name}
                     </a>
                 );
