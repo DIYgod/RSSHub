@@ -127,10 +127,7 @@ const Node: FC<{ node: any }> = ({ node }) => {
     if (type === 'text') {
         return <Marked marks={node.marks}>{node.text ?? node.data ?? ''}</Marked>;
     }
-    if (type === 'comment') {
-        return null;
-    }
-    if (dropTypes.has(type)) {
+    if (type === 'comment' || dropTypes.has(type)) {
         return null;
     }
 
