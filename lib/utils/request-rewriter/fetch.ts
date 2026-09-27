@@ -1,7 +1,9 @@
+import type { SecureVersion } from 'node:tls';
+
 import type { HeaderGeneratorOptions } from 'header-generator';
 import { useRegisterRequest } from 'node-network-devtools';
 import { RateLimiterMemory, RateLimiterQueue } from 'rate-limiter-flexible';
-import type { Dispatcher, RequestInfo, RequestInit, Response } from 'undici';
+import type { Agent, Dispatcher, RequestInfo, RequestInit, Response } from 'undici';
 import undici, { Request } from 'undici';
 
 import { config } from '@/config';
@@ -27,6 +29,16 @@ undici.setGlobalDispatcher(
 
 const http1Only: Dispatcher.DispatcherComposeInterceptor = (dispatch) => (opts, handler) => dispatch({ ...opts, allowH2: false } as Dispatcher.DispatchOptions, handler);
 
+const tlsAgents = new Map<SecureVersion, Agent>();
+const getTlsAgent = (minVersion: SecureVersion) => {
+    let agent = tlsAgents.get(minVersion);
+    if (!agent) {
+        agent = new undici.Agent({ connect: { preferH2: true, minVersion } });
+        tlsAgents.set(minVersion, agent);
+    }
+    return agent;
+};
+
 export const useCustomHeader = (headers: Iterable<[string, string]>) => {
     process.env.NODE_ENV === 'dev' &&
         useRegisterRequest((req) => {
@@ -37,7 +49,7 @@ export const useCustomHeader = (headers: Iterable<[string, string]>) => {
         });
 };
 
-const wrappedFetch: typeof undici.fetch = async (input: RequestInfo, init?: RequestInit & { headerGeneratorOptions?: Partial<HeaderGeneratorOptions>; allowH2?: boolean }) => {
+const wrappedFetch: typeof undici.fetch = async (input: RequestInfo, init?: RequestInit & { headerGeneratorOptions?: Partial<HeaderGeneratorOptions>; allowH2?: boolean; minVersion?: SecureVersion }) => {
     const request = new Request(input, init);
     const options: RequestInit = {};
 
@@ -92,13 +104,17 @@ const wrappedFetch: typeof undici.fetch = async (input: RequestInfo, init?: Requ
         if (proxyRegex.test(request.url) && request.url.startsWith('http') && !(urlHandler && urlHandler.host === proxy.proxyUrlHandler?.host)) {
             const currentProxy = proxy.getCurrentProxy();
             if (currentProxy) {
-                const dispatcher = proxy.getDispatcherForProxy(currentProxy);
+                const dispatcher = proxy.getDispatcherForProxy(currentProxy, init?.minVersion);
                 if (dispatcher) {
                     options.dispatcher = dispatcher;
                     logger.debug(`Proxying request via ${currentProxy.uri}: ${request.url}`);
                 }
             }
         }
+    }
+
+    if (init?.minVersion && !options.dispatcher && !init.dispatcher) {
+        options.dispatcher = getTlsAgent(init.minVersion);
     }
 
     await limiterQueue.removeTokens(1);
@@ -123,7 +139,7 @@ const wrappedFetch: typeof undici.fetch = async (input: RequestInfo, init?: Requ
 
                     const nextProxy = proxy.getCurrentProxy();
                     if (nextProxy && nextProxy.uri !== currentProxy.uri) {
-                        const nextDispatcher = proxy.getDispatcherForProxy(nextProxy);
+                        const nextDispatcher = proxy.getDispatcherForProxy(nextProxy, init?.minVersion);
                         if (nextDispatcher) {
                             options.dispatcher = nextDispatcher;
                         }
@@ -131,7 +147,7 @@ const wrappedFetch: typeof undici.fetch = async (input: RequestInfo, init?: Requ
                         return attemptRequest(attempt + 1);
                     }
                     logger.warn('No more proxies available, trying without proxy');
-                    delete options.dispatcher;
+                    options.dispatcher = init?.minVersion ? getTlsAgent(init.minVersion) : undefined;
                     return attemptRequest(attempt + 1);
                 }
             }

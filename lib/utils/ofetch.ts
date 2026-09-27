@@ -1,3 +1,5 @@
+import type { SecureVersion } from 'node:tls';
+
 import type { HeaderGeneratorOptions } from 'header-generator';
 import { register } from 'node-network-devtools';
 import { createFetch } from 'ofetch';
@@ -8,8 +10,16 @@ import logger from '@/utils/logger';
 declare module 'ofetch' {
     interface FetchOptions {
         headerGeneratorOptions?: Partial<HeaderGeneratorOptions>;
-        /** Set to false to disable undici 8's HTTP/2 */
+        /**
+         * Set to false to disable undici 8's HTTP/2
+         * @default true
+         */
         allowH2?: boolean;
+        /**
+         * Minimum TLS version of the connection
+         * @default tls.DEFAULT_MIN_VERSION ('TLSv1.2')
+         */
+        minVersion?: SecureVersion;
     }
 }
 

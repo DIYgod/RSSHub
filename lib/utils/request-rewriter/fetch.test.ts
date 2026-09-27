@@ -179,7 +179,7 @@ describe('request-rewriter fetch retry', () => {
         expect(response).toBeInstanceOf(undici.Response);
         expect(fetchSpy).toHaveBeenCalledTimes(2);
         expect(markProxyFailedSpy).toHaveBeenCalledWith('http://proxy1.test');
-        expect(getDispatcherForProxySpy).toHaveBeenCalledWith(proxies[1]);
+        expect(getDispatcherForProxySpy).toHaveBeenCalledWith(proxies[1], undefined);
 
         const requestArg = fetchSpy.mock.calls[0][0];
         if (!(requestArg instanceof Request)) {
