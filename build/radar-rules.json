@@ -41991,6 +41991,19 @@
       }
     ]
   },
+  "threads.com": {
+    "_name": "Threads",
+    "www": [
+      {
+        "title": "Post & Replies",
+        "docs": "https://docs.rsshub.app/routes/social-media",
+        "source": [
+          "/:user/post/:id"
+        ],
+        "target": "/threads/:user/post/:id"
+      }
+    ]
+  },
   "tidb.net": {
     "_name": "TiDB 社区",
     ".": [

@@ -115522,6 +115522,33 @@ export default {
         "location": "index.ts",
         "module": () => import('@/routes/threads/index.ts')
       },
+      "/:user/post/:id/:routeParams?": {
+        "path": "/:user/post/:id/:routeParams?",
+        "categories": [
+          "social-media"
+        ],
+        "view": 1,
+        "example": "/threads/@zuck/post/Ddt7cL5EfUG",
+        "parameters": {
+          "user": "Username",
+          "id": "Post ID, the last segment of the post URL",
+          "routeParams": "Extra parameters, in the format of query string. Accepts the same options as User timeline"
+        },
+        "radar": [
+          {
+            "source": [
+              "www.threads.com/:user/post/:id"
+            ],
+            "target": "/:user/post/:id"
+          }
+        ],
+        "name": "Post & Replies",
+        "maintainers": [
+          "TonyRL"
+        ],
+        "location": "post.ts",
+        "module": () => import('@/routes/threads/post.ts')
+      },
       "/search/:keyword/:routeParams?": {
         "path": "/search/:keyword/:routeParams?",
         "categories": [

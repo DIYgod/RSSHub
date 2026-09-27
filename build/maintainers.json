@@ -8490,6 +8490,9 @@
     "ninboy",
     "pseudoyu"
   ],
+  "/threads/:user/post/:id/:routeParams?": [
+    "TonyRL"
+  ],
   "/threads/search/:keyword/:routeParams?": [
     "TonyRL"
   ],
