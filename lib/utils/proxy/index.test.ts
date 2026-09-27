@@ -91,6 +91,18 @@ describe('proxy', () => {
         expect(requestTlsOf(proxy.dispatcher!).preferH2).toBe(true);
     });
 
+    it('applies minVersion to the proxy dispatcher request tls', async () => {
+        const proxy = await loadProxy({
+            PROXY_URI: 'http://proxy.local:8080',
+            PROXY_URIS: '',
+            PAC_URI: '',
+        });
+
+        const dispatcher = proxy.getDispatcherForProxy(proxy.getCurrentProxy()!, 'TLSv1.3')!;
+        expect(requestTlsOf(dispatcher).minVersion).toBe('TLSv1.3');
+        expect(requestTlsOf(proxy.dispatcher!).minVersion).toBeUndefined();
+    });
+
     it('returns null agent for unsupported proxy protocol', async () => {
         const proxy = await loadProxy({
             PROXY_URI: '',

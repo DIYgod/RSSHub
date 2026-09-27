@@ -1,3 +1,5 @@
+import type { SecureVersion } from 'node:tls';
+
 import { HttpsProxyAgent } from 'https-proxy-agent';
 import { PacProxyAgent } from 'pac-proxy-agent';
 import { SocksProxyAgent } from 'socks-proxy-agent';
@@ -24,7 +26,7 @@ interface ProxyExport {
     getCurrentProxy: () => ProxyState | null;
     markProxyFailed: (proxyUri: string) => void;
     getAgentForProxy: (proxyState: ProxyState) => any;
-    getDispatcherForProxy: (proxyState: ProxyState) => ProxyAgent | null;
+    getDispatcherForProxy: (proxyState: ProxyState, minVersion?: SecureVersion) => ProxyAgent | null;
 }
 
 let proxyUri: string | undefined;
@@ -46,7 +48,7 @@ const createAgentForProxy = (uri: string, proxyObj: Config['proxy']): any => {
     return null;
 };
 
-const createDispatcherForProxy = (uri: string, proxyObj: Config['proxy']): ProxyAgent | null => {
+const createDispatcherForProxy = (uri: string, proxyObj: Config['proxy'], minVersion?: SecureVersion): ProxyAgent | null => {
     if (uri.startsWith('http')) {
         return new ProxyAgent({
             uri,
@@ -54,6 +56,7 @@ const createDispatcherForProxy = (uri: string, proxyObj: Config['proxy']): Proxy
             requestTls: {
                 rejectUnauthorized: process.env.NODE_TLS_REJECT_UNAUTHORIZED !== '0',
                 preferH2: true,
+                minVersion,
             },
         });
     }
@@ -62,6 +65,7 @@ const createDispatcherForProxy = (uri: string, proxyObj: Config['proxy']): Proxy
             uri,
             requestTls: {
                 ALPNProtocols: ['h2', 'http/1.1'],
+                minVersion,
             },
         });
     }
@@ -136,7 +140,7 @@ const markProxyFailed = (failedProxyUri: string) => {
 
 const getAgentForProxy = (proxyState: ProxyState) => createAgentForProxy(proxyState.uri, proxyObj);
 
-const getDispatcherForProxy = (proxyState: ProxyState) => createDispatcherForProxy(proxyState.uri, proxyObj);
+const getDispatcherForProxy = (proxyState: ProxyState, minVersion?: SecureVersion) => createDispatcherForProxy(proxyState.uri, proxyObj, minVersion);
 
 const proxyExport: ProxyExport = {
     agent,
