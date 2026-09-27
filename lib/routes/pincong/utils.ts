@@ -1,21 +1,6 @@
-import playwright from '@/utils/playwright';
+import cache from '@/utils/cache';
+import ofetch from '@/utils/ofetch';
 
-const baseUrl = 'https://pincong.rocks';
+export const baseUrl = 'https://pincong.rocks';
 
-const playwrightGet = (url, cache) =>
-    cache.tryGet(url, async () => {
-        const context = await playwright();
-        const page = await context.newPage();
-        await page.route('**/*', (route) => {
-            const request = route.request();
-            request.resourceType() === 'document' ? route.continue() : route.abort();
-        });
-        await page.goto(url, {
-            waitUntil: 'domcontentloaded',
-        });
-        const html = await page.evaluate(() => document.documentElement.getHTML());
-        await context.close();
-        return html;
-    });
-
-export { baseUrl, playwrightGet };
+export const get = (url: string) => cache.tryGet(url, () => ofetch<string>(url, { minVersion: 'TLSv1.3' }));

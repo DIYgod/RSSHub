@@ -1,12 +1,12 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
 import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
-import logger from '@/utils/logger';
+import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
-import { getPlaywrightPage } from '@/utils/playwright';
 
 const allowDomain = new Set(['javdb.com', 'javdb571.com', 'javdb36.com', 'javdb007.com', 'javdb521.com']);
 
@@ -19,26 +19,8 @@ const ProcessItems = async (ctx, currentUrl, title) => {
 
     const rootUrl = `https://${domain}`;
 
-    const { page, destroy, context } = await getPlaywrightPage(url.href, {
-        onBeforeLoad: async (page) => {
-            if (config.javdb.session) {
-                await page.context().addCookies([
-                    {
-                        name: '_jdb_session',
-                        value: config.javdb.session,
-                        domain,
-                        path: '/',
-                    },
-                ]);
-            }
-            await page.route('**/*', (route) => {
-                const request = route.request();
-                request.resourceType() === 'document' ? route.continue() : route.abort();
-            });
-        },
-    });
-    const response = await page.content();
-    await page.close();
+    const headers = config.javdb.session ? { cookie: `_jdb_session=${config.javdb.session}` } : undefined;
+    const response = await ofetch(url.href, { headers });
 
     const $ = load(response);
 
@@ -56,19 +38,11 @@ const ProcessItems = async (ctx, currentUrl, title) => {
             };
         });
 
-    items = await Promise.all(
-        items.map((item) =>
+    items = await pMap(
+        items,
+        (item) =>
             cache.tryGet(item.link!, async () => {
-                const page = await context.newPage();
-                await page.route('**/*', (route) => {
-                    const request = route.request();
-                    request.resourceType() === 'document' ? route.continue() : route.abort();
-                });
-                logger.http(`Requesting ${item.link}`);
-                await page.goto(item.link!, {
-                    waitUntil: 'domcontentloaded',
-                });
-                const detailResponse = await page.content();
+                const detailResponse = await ofetch(item.link!, { headers });
 
                 const content = load(detailResponse);
 
@@ -90,17 +64,13 @@ const ProcessItems = async (ctx, currentUrl, title) => {
                 item.author = content('.panel-block .value').last().parent().find('.value a').first().text();
                 item.description = content('.cover-container, .column-video-cover').html()! + content('.movie-panel-info').html()! + content('#magnets-content').html() + content('.preview-images').html();
 
-                await page.close();
-
                 return item;
-            })
-        )
+            }),
+        { concurrency: 2 }
     );
 
     const htmlTitle = $('title').text();
     const subject = htmlTitle.includes('|') ? htmlTitle.split('|', 1)[0] : '';
-
-    await destroy();
 
     return {
         title: subject === '' ? title : `${subject} - ${title}`,

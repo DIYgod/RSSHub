@@ -1,10 +1,9 @@
 import { load } from 'cheerio';
 
 import type { Route } from '@/types';
-import cache from '@/utils/cache';
 import { parseDate } from '@/utils/parse-date';
 
-import { baseUrl, playwrightGet } from './utils';
+import { baseUrl, get } from './utils';
 
 export const route: Route = {
     path: '/topic/:topic',
@@ -13,7 +12,7 @@ export const route: Route = {
     parameters: { topic: '话题，可在官网获取' },
     features: {
         requireConfig: false,
-        requirePuppeteer: true,
+        requirePuppeteer: false,
         antiCrawler: true,
         supportBT: false,
         supportPodcast: false,
@@ -32,8 +31,7 @@ export const route: Route = {
 async function handler(ctx) {
     const url = `${baseUrl}/topic/${ctx.req.param('topic')}`;
 
-    // use Playwright due to the obstacle by cloudflare challenge
-    const html = await playwrightGet(url, cache);
+    const html = await get(url);
 
     const $ = load(html);
     const list = $('div.aw-item');

@@ -246,7 +246,6 @@ type ConfigEnvKeys =
     | 'XIAOHONGSHU_PROXY'
     | 'XIMALAYA_TOKEN'
     | 'XSIJISHE_COOKIE'
-    | 'XSIJISHE_USER_AGENT'
     | 'XUEQIU_COOKIES'
     | 'YAMIBO_SALT'
     | 'YAMIBO_AUTH'
@@ -718,7 +717,6 @@ export type Config = {
     };
     xsijishe: {
         cookie?: string;
-        userAgent?: string;
     };
     xueqiu: {
         cookies?: string;
@@ -1257,7 +1255,6 @@ const calculateValue = () => {
         },
         xsijishe: {
             cookie: envs.XSIJISHE_COOKIE,
-            user_agent: envs.XSIJISHE_USER_AGENT,
         },
         xueqiu: {
             cookies: envs.XUEQIU_COOKIES,

@@ -4,9 +4,9 @@ import { config } from '@/config';
 import type { Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
-import logger from '@/utils/logger';
+import { PRESETS } from '@/utils/header-generator';
+import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
-import playwright from '@/utils/playwright';
 
 export const route: Route = {
     path: '/user/:id',
@@ -17,7 +17,7 @@ export const route: Route = {
     },
     features: {
         requireConfig: false,
-        requirePuppeteer: true,
+        requirePuppeteer: false,
         antiCrawler: true,
         supportBT: false,
         supportPodcast: false,
@@ -60,24 +60,11 @@ async function handler(ctx) {
 
     const data = await cache.tryGet(
         `sotwe:user:${id}`,
-        async () => {
-            const context = await playwright();
-            const page = await context.newPage();
-            await page.route('**/*', (route) => {
-                const request = route.request();
-                ['document', 'script', 'xhr', 'fetch'].includes(request.resourceType()) ? route.continue() : route.abort();
-            });
-            const apiUrl = `${baseUrl}/api/v3/user/${id}/`;
-            logger.http(`Requesting ${apiUrl}`);
-            await page.goto(apiUrl, {
-                waitUntil: 'domcontentloaded',
-            });
-            const response = await page.evaluate(() => document.documentElement.textContent);
-            await page.close();
-            await context.close();
-
-            return JSON.parse(response || '{}');
-        },
+        () =>
+            ofetch(`${baseUrl}/api/v3/user/${id}/`, {
+                headerGeneratorOptions: PRESETS.MODERN_WINDOWS_CHROME,
+                headers: { accept: 'application/json' },
+            }),
         config.cache.routeExpire,
         false
     );

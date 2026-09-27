@@ -1,10 +1,9 @@
 import { load } from 'cheerio';
 
 import type { Route } from '@/types';
-import cache from '@/utils/cache';
 import { parseDate } from '@/utils/parse-date';
 
-import { baseUrl, playwrightGet } from './utils';
+import { baseUrl, get } from './utils';
 
 export const route: Route = {
     path: '/category/:category?/:sort?',
@@ -13,7 +12,7 @@ export const route: Route = {
     parameters: { category: '分类，与官网分类 URL `category-` 后的数字对应，默认为全部', sort: '排序方式，参数可见下表，默认为推荐' },
     features: {
         requireConfig: false,
-        requirePuppeteer: true,
+        requirePuppeteer: false,
         antiCrawler: true,
         supportBT: false,
         supportPodcast: false,
@@ -39,8 +38,7 @@ async function handler(ctx) {
     url += (ctx.req.param('sort') && sortMap[ctx.req.param('sort')]) || 'recommend-1';
     url += ctx.req.param('category') ? '__category-' + ctx.req.param('category') : '';
 
-    // use Playwright due to the obstacle by cloudflare challenge
-    const html = await playwrightGet(url, cache);
+    const html = await get(url);
 
     const $ = load(html);
     const list = $('div.aw-item');

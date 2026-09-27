@@ -72,7 +72,7 @@ async function handler(ctx) {
     const functionalFlag = ctx.req.param('functionalFlag') ?? '1';
     const useIframe = functionalFlag !== '0';
 
-    const baseUrl = 'https://www.picuki.com';
+    const baseUrl = 'https://www.tikvib.com';
     const profileUrl = `${baseUrl}/${type === 'story' ? 'story' : 'profile'}/${id}`;
 
     const data = (await cache.tryGet(`picuki:${type}:${id}`, async () => {
