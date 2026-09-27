@@ -161410,6 +161410,47 @@ export default {
     "description": "::: tip\n自 2024 年 7 月，未登录状态下大部分路由[无法获取全文](https://github.com/DIYgod/RSSHub/issues/16260)。若有需要请在登陆知乎后寻找并添加包含`z_c0`的 Cookies 至环境变量`ZHIHU_COOKIES`。\n:::",
     "lang": "zh-CN"
   },
+  "czechstepbystep": {
+    "routes": {
+      "/kratke-ceske-zpravy": {
+        "path": "/kratke-ceske-zpravy",
+        "categories": [
+          "study"
+        ],
+        "example": "/czechstepbystep/kratke-ceske-zpravy",
+        "parameters": {},
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportRadar": true,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "www.czechstepbystep.cz/kategorie/kratke-ceske-zpravy"
+            ],
+            "target": "/kratke-ceske-zpravy"
+          }
+        ],
+        "name": "Krátké české zprávy",
+        "maintainers": [
+          "cmp0xff"
+        ],
+        "url": "www.czechstepbystep.cz/kategorie/kratke-ceske-zpravy",
+        "description": "Short Czech news (Krátké české zprávy) from CzechStepByStep including video, full transcript, online exercises, and worksheets.",
+        "location": "kratke-ceske-zpravy.ts",
+        "module": () => import('@/routes/czechstepbystep/kratke-ceske-zpravy.ts')
+      }
+    },
+    "apiRoutes": {},
+    "name": "CzechStepByStep",
+    "url": "www.czechstepbystep.cz",
+    "lang": "cs"
+  },
   "finology": {
     "routes": {
       "/bullets": {

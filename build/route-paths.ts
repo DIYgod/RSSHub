@@ -825,6 +825,7 @@ export type RoutePath =
   | `/cyzone/:id?`
   | `/cyzone/author/:id`
   | `/cyzone/label/:name`
+  | `/czechstepbystep/kratke-ceske-zpravy`
   | `/cztv/zjxwlb`
   | `/cztv/zjxwlb/daily`
   | `/dahecube/:type?`

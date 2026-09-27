@@ -54373,6 +54373,19 @@
       }
     ]
   },
+  "czechstepbystep.cz": {
+    "_name": "CzechStepByStep",
+    "www": [
+      {
+        "title": "Krátké české zprávy",
+        "docs": "https://docs.rsshub.app/routes/study",
+        "source": [
+          "/kategorie/kratke-ceske-zpravy"
+        ],
+        "target": "/czechstepbystep/kratke-ceske-zpravy"
+      }
+    ]
+  },
   "finology.in": {
     "_name": "Finology Insider",
     "insider": [
