@@ -11,7 +11,7 @@ export const route: Route = {
     path: '/newproducts',
     categories: ['shopping'],
     example: '/mi/newproducts',
-    name: '小米上新',
+    name: '上新',
     maintainers: ['nuomi1'],
     handler,
     features: {

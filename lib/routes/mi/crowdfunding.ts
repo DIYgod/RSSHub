@@ -11,7 +11,7 @@ export const route: Route = {
     path: '/crowdfunding',
     categories: ['shopping'],
     example: '/mi/crowdfunding',
-    name: '小米众筹',
+    name: '众筹',
     maintainers: ['DIYgod', 'nuomi1'],
     handler,
     features: {
