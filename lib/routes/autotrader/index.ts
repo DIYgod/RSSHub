@@ -1,7 +1,7 @@
 import type { Context } from 'hono';
 
 import type { DataItem, Route } from '@/types';
-import { getPlaywrightPage } from '@/utils/playwright';
+import ofetch from '@/utils/ofetch';
 
 export const route: Route = {
     path: '/:query',
@@ -9,7 +9,7 @@ export const route: Route = {
     example: '/autotrader/radius=50&postcode=sw1a1aa&price-to=9000&year-from=2012&body-type=Hatchback&transmission=Automatic&exclude-writeoff-categories=on',
     parameters: { query: 'the search query' },
     features: {
-        requirePuppeteer: true,
+        requirePuppeteer: false,
     },
     description: `1. Conduct a search with desired filters on AutoTrader
 2. Copy everything in the URL after \`?\`, for example: \`https://www.autotrader.co.uk/car-search?radius=50&postcode=sw1a1aa&price-to=9000&year-from=2012&body-type=Hatchback&transmission=Automatic&exclude-writeoff-categories=on\` will produce \`radius=50&postcode=sw1a1aa&price-to=9000&year-from=2012&body-type=Hatchback&transmission=Automatic&exclude-writeoff-categories=on\``,
@@ -78,45 +78,26 @@ async function handler(ctx: Context) {
     }
 
     const link = `${rootUrl}/car-search?${query}`;
-    const { page, destroy } = await getPlaywrightPage(link);
-
-    let listings: Listing[];
-    try {
-        listings = await page.evaluate(
-            async ({ gqlQuery, filters, page, sortBy }) => {
-                const response = await fetch('/at-gateway?opname=SearchResultsListingsGridQuery', {
-                    method: 'POST',
-                    headers: {
-                        'content-type': 'application/json',
-                        'x-sauron-app-name': 'sauron-search-results-app',
-                    },
-                    body: JSON.stringify([
-                        {
-                            operationName: 'SearchResultsListingsGridQuery',
-                            variables: {
-                                filters,
-                                channel: 'cars',
-                                page,
-                                sortBy,
-                                searchId: '00000000-0000-0000-0000-000000000000',
-                            },
-                            query: gqlQuery,
-                        },
-                    ]),
-                });
-                const data = await response.json();
-                return data[0].data.searchResults.listings;
-            },
+    const response = await ofetch(`${rootUrl}/at-gateway?opname=SearchResultsListingsGridQuery`, {
+        method: 'POST',
+        headers: {
+            'x-sauron-app-name': 'sauron-search-results-app',
+        },
+        body: [
             {
-                gqlQuery,
-                filters,
-                page: Number(searchParams.get('page')) || 1,
-                sortBy: searchParams.get('sort') ?? 'relevance',
-            }
-        );
-    } finally {
-        await destroy();
-    }
+                operationName: 'SearchResultsListingsGridQuery',
+                variables: {
+                    filters,
+                    channel: 'cars',
+                    page: Number(searchParams.get('page')) || 1,
+                    sortBy: searchParams.get('sort') ?? 'relevance',
+                    searchId: '00000000-0000-0000-0000-000000000000',
+                },
+                query: gqlQuery,
+            },
+        ],
+    });
+    const listings: Listing[] = response[0].data.searchResults.listings;
 
     const items: DataItem[] = listings
         .filter((listing) => listing.advertId)

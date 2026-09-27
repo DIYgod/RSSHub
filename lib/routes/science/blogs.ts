@@ -1,10 +1,8 @@
 import { load } from 'cheerio';
 
-import { config } from '@/config';
 import type { Route } from '@/types';
-import cache from '@/utils/cache';
+import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
-import playwright from '@/utils/playwright';
 
 import { baseUrl } from './utils';
 
@@ -15,7 +13,7 @@ export const route: Route = {
     parameters: { name: 'Short name for the blog, get this from the url. Defaults to pipeline' },
     features: {
         requireConfig: false,
-        requirePuppeteer: true,
+        requirePuppeteer: false,
         antiCrawler: true,
         supportBT: false,
         supportPodcast: false,
@@ -37,29 +35,7 @@ async function handler(ctx) {
     const { name = 'pipeline' } = ctx.req.param();
     const link = `${baseUrl}/blogs/${name}/feed`;
 
-    const response = await cache.tryGet(
-        link,
-        async () => {
-            const context = await playwright();
-            const page = await context.newPage();
-            await page.route('**/*', (route) => {
-                const request = route.request();
-                request.resourceType() === 'document' ? route.continue() : route.abort();
-            });
-
-            await page.goto(link, {
-                waitUntil: 'domcontentloaded',
-            });
-
-            const response = await page.content();
-
-            await page.close();
-            await context.close();
-            return response;
-        },
-        config.cache.routeExpire,
-        false
-    );
+    const response = await ofetch(link);
 
     const $ = load(response, { xmlMode: true });
     const items = $('item')

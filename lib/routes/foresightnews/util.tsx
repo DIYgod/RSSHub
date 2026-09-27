@@ -3,9 +3,8 @@ import zlib from 'node:zlib';
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 
+import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
-import type { Page } from '@/utils/playwright';
-import { getPlaywrightPage } from '@/utils/playwright';
 
 const constants = {
     labelHot: '热门',
@@ -46,23 +45,7 @@ const processItems = async (apiUrl, limit, ...parameters) => {
         requestUrl.searchParams.set(key, String(value));
     }
 
-    // Cloudflare fingerprints the HTTP client, so browser-like headers alone are insufficient.
-    let responsePromise: ReturnType<Page['waitForResponse']> | undefined;
-    const { destroy } = await getPlaywrightPage(requestUrl.href, {
-        onBeforeLoad: async (page) => {
-            await page.route('**/*', (route) => {
-                route.request().resourceType() === 'document' ? route.continue() : route.abort();
-            });
-            responsePromise = page.waitForResponse(requestUrl.href);
-        },
-    });
-    let response;
-    try {
-        const apiResponse = await responsePromise!;
-        response = await apiResponse.json();
-    } finally {
-        await destroy();
-    }
+    const response = await ofetch(requestUrl.href);
 
     const buffer = Buffer.from(response.data?.list ?? response.data, 'base64');
     let items = JSON.parse(String(zlib.inflateSync(buffer)));

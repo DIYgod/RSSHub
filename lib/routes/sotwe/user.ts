@@ -4,7 +4,9 @@ import { config } from '@/config';
 import type { Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
+import { PRESETS } from '@/utils/header-generator';
 import logger from '@/utils/logger';
+import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import playwright from '@/utils/playwright';
 
@@ -61,13 +63,22 @@ async function handler(ctx) {
     const data = await cache.tryGet(
         `sotwe:user:${id}`,
         async () => {
+            const apiUrl = `${baseUrl}/api/v3/user/${id}/`;
+            try {
+                return await ofetch(apiUrl, {
+                    headerGeneratorOptions: PRESETS.MODERN_WINDOWS_CHROME,
+                    headers: { accept: 'application/json' },
+                    retry: 0,
+                });
+            } catch {
+                //
+            }
             const context = await playwright();
             const page = await context.newPage();
             await page.route('**/*', (route) => {
                 const request = route.request();
                 ['document', 'script', 'xhr', 'fetch'].includes(request.resourceType()) ? route.continue() : route.abort();
             });
-            const apiUrl = `${baseUrl}/api/v3/user/${id}/`;
             logger.http(`Requesting ${apiUrl}`);
             await page.goto(apiUrl, {
                 waitUntil: 'domcontentloaded',

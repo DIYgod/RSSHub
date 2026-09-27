@@ -1,6 +1,7 @@
 import { load } from 'cheerio';
 
 import { config } from '@/config';
+import ConfigNotFoundError from '@/errors/types/config-not-found';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
@@ -17,10 +18,6 @@ export const route: Route = {
         requireConfig: [
             {
                 name: 'XSIJISHE_COOKIE',
-                description: '',
-            },
-            {
-                name: 'XSIJISHE_USER_AGENT',
                 description: '',
             },
         ],
@@ -43,15 +40,15 @@ async function handler(ctx) {
     const fid = ctx.req.param('fid');
     const url = `${baseUrl}/forum-${fid}-1.html`;
     const headers = {
-        'Accept-Encoding': 'gzip, deflate, br',
-        'Accept-Language': 'zh-CN,zh;q=0.9,en;q=0.8',
         Cookie: config.xsijishe.cookie,
-        'User-Agent': config.xsijishe.userAgent,
     };
     const resp = await got(url, {
         headers,
     });
     const $ = load(resp.data);
+    if ($('#messagelogin').length) {
+        throw new ConfigNotFoundError(`This RSS is disabled unless 'XSIJISHE_COOKIE' is set.`);
+    }
     const forumCategory = $('.nex_bkinterls_top .nex_bkinterls_ls a').text();
     let items = $('[id^="normalthread"]')
         .toArray()
@@ -76,8 +73,11 @@ async function handler(ctx) {
                     headers,
                 });
                 const $ = load(resp.data);
-                const firstViewBox = $('.t_f').first();
+                const post = $('[id^="post_"]').first();
+                const firstViewBox = post.find('.t_f');
 
+                firstViewBox.find('.jammer, [style*="display:none"]').remove();
+                firstViewBox.append(post.find('.pattl img[zoomfile]'));
                 firstViewBox.find('img').each((_, img) => {
                     const $img = $(img);
                     if ($img.attr('zoomfile')) {
