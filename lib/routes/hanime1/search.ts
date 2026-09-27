@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 
-import { baseUrl, fetchListing, parseSearchListing, resolvePubDate } from './utils';
+import { baseUrl, fetchSearchListing, parseSearchListing, resolvePubDate } from './utils';
 
 async function handler(ctx) {
     const { params } = ctx.req.param();
@@ -14,7 +14,7 @@ async function handler(ctx) {
     const date = searchParams.get('date') || '';
     const requestedDate = /(\d{4})\s*年\s*(\d{1,2})\s*月/.exec(date);
 
-    const { html, status } = await fetchListing(link);
+    const { html, status } = await fetchSearchListing(link);
     if (status >= 400) {
         throw new Error(`Hanime1 responded with HTTP ${status}, unable to load the search result: ${link}`);
     }

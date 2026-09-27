@@ -1,7 +1,9 @@
 import type { CheerioAPI } from 'cheerio';
 
 import { config } from '@/config';
+import { parseDate } from '@/utils/parse-date';
 import { getPlaywrightPage } from '@/utils/playwright';
+import timezone from '@/utils/timezone';
 
 export const baseUrl = 'https://hanime1.me';
 
@@ -19,8 +21,8 @@ export type ListingItem = {
 };
 
 /** Requests without a browser TLS fingerprint are rejected, so everything goes through Playwright. */
-export const fetchListing = async (url: string) => {
-    const { page, destroy } = await getPlaywrightPage(url, {
+export const createListingPage = (url: string) =>
+    getPlaywrightPage(url, {
         closeTimeout: 0,
         noGoto: true,
         onBeforeLoad: async (page) => {
@@ -28,12 +30,18 @@ export const fetchListing = async (url: string) => {
         },
     });
 
+export const fetchListing = async (url: string, page: Awaited<ReturnType<typeof createListingPage>>['page']) => {
+    const response = await page.goto(url, { timeout: config.requestTimeout || 30000, waitUntil: 'domcontentloaded' });
+    return {
+        html: await page.content(),
+        status: response ? response.status() : 0,
+    };
+};
+
+export const fetchSearchListing = async (url: string) => {
+    const { page, destroy } = await createListingPage(url);
     try {
-        const response = await page.goto(url, { timeout: config.requestTimeout || 30000, waitUntil: 'domcontentloaded' });
-        return {
-            html: await page.content(),
-            status: response ? response.status() : 0,
-        };
+        return await fetchListing(url, page);
     } finally {
         await destroy();
     }
@@ -78,7 +86,7 @@ export const parsePreviewsListing = ($: CheerioAPI): ListingItem[] => {
         const image = row.find('.preview-info-cover img').attr('src');
         const modalSelector = row.find('.trailer-modal-trigger').attr('data-target') || '';
         const video = modalSelector ? $(`${modalSelector} video source`).attr('src') || '' : '';
-        const description = [image && `<img src="${image}">`, video && `<video controls width="100%" poster="${image || ''}"><source src="${video}" type="video/mp4"></video>`].filter(Boolean).join('\n');
+        const description = video ? `<video controls width="100%" poster="${image || ''}"><source src="${video}" type="video/mp4"></video>` : image ? `<img src="${image}">` : '';
 
         items.push({
             description,
@@ -107,5 +115,5 @@ export const resolvePubDate = (dateText: string | undefined, year?: number, mont
         return;
     }
 
-    return new Date(Date.UTC(resolvedYear, cardMonth - 1, day));
+    return timezone(parseDate(`${resolvedYear}-${cardMonth}-${day}`, 'YYYY-M-D'), 8);
 };
