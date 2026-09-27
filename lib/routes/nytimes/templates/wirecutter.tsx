@@ -3,8 +3,8 @@ import { renderToString } from 'hono/jsx/dom/server';
 
 const imageBase = 'https://cdn.thewirecutter.com/';
 
-// Presentational or promotional nodes that carry no article content
-const dropTypes = new Set(['adslot', 'shortcode-recirc', 'shortcode-scoop_form_callout']);
+// Presentational or promotional nodes that carry no article content, and code whose text must not leak into the body
+const dropTypes = new Set(['adslot', 'shortcode-recirc', 'shortcode-scoop_form_callout', 'script', 'style']);
 
 const voidTags = new Set(['br', 'hr', 'img', 'source']);
 
@@ -167,8 +167,9 @@ const Node: FC<{ node: any }> = ({ node }) => {
             default:
                 break;
         }
+        // an unknown wrapper still holds article text, so keep its content without the element
         if (!allowedTags.has(name)) {
-            throw new Error(`Unsupported tag: ${name}`);
+            return <Nodes nodes={node.children} />;
         }
 
         const attributes = Object.fromEntries(
@@ -197,7 +198,7 @@ const Node: FC<{ node: any }> = ({ node }) => {
             break;
     }
     if (!allowedTags.has(type)) {
-        throw new Error(`Unsupported node type: ${type}`);
+        return <Nodes nodes={node.content ?? node.children} />;
     }
     return <Element name={type} nodes={node.content ?? node.children} />;
 };
