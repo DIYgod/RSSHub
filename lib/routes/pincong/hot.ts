@@ -1,6 +1,7 @@
 import { load } from 'cheerio';
 
 import type { Route } from '@/types';
+import cache from '@/utils/cache';
 import { parseDate } from '@/utils/parse-date';
 
 import { baseUrl, get } from './utils';
@@ -12,7 +13,7 @@ export const route: Route = {
     parameters: { category: '分类，与官网分类 URL `category-` 后的数字对应，默认为全部' },
     features: {
         requireConfig: false,
-        requirePuppeteer: false,
+        requirePuppeteer: true,
         antiCrawler: true,
         supportBT: false,
         supportPodcast: false,
@@ -28,7 +29,7 @@ async function handler(ctx) {
 
     const url = `${baseUrl}/hot/list/category-${category}`;
 
-    const html = await get(url);
+    const html = await get(url, cache);
 
     const $ = load(html);
     const list = $('div.aw-item');

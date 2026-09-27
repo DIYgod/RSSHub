@@ -1,6 +1,7 @@
 import { load } from 'cheerio';
 
 import type { Route } from '@/types';
+import cache from '@/utils/cache';
 import { parseDate } from '@/utils/parse-date';
 
 import { baseUrl, get } from './utils';
@@ -12,7 +13,7 @@ export const route: Route = {
     parameters: { topic: '话题，可在官网获取' },
     features: {
         requireConfig: false,
-        requirePuppeteer: false,
+        requirePuppeteer: true,
         antiCrawler: true,
         supportBT: false,
         supportPodcast: false,
@@ -31,7 +32,7 @@ export const route: Route = {
 async function handler(ctx) {
     const url = `${baseUrl}/topic/${ctx.req.param('topic')}`;
 
-    const html = await get(url);
+    const html = await get(url, cache);
 
     const $ = load(html);
     const list = $('div.aw-item');
