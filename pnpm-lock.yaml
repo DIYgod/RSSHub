@@ -278,8 +278,8 @@ importers:
         specifier: 3.19.0
         version: 3.19.0
       x-client-transaction-id:
-        specifier: 0.3.1
-        version: 0.3.1
+        specifier: 0.3.2
+        version: 0.3.2
       xxhash-wasm:
         specifier: 1.1.0
         version: 1.1.0
@@ -6359,8 +6359,8 @@ packages:
   wuzzy@0.1.8:
     resolution: {integrity: sha512-FUzKQepFSTnANsDYwxpIzGJ/dIJaqxuMre6tzzbvWwFAiUHPsI1nVQVCLK4Xqr67KO7oYAK0kaCcI/+WYj/7JA==}
 
-  x-client-transaction-id@0.3.1:
-    resolution: {integrity: sha512-fD9YtDswTL3VyG/z7FbZUfMu5CUsvGmKk33fM3b9eOXe0Wnmj8W55UKLPA5Z/cuq6WrWTxXQhLcV3GGCD6mKaQ==}
+  x-client-transaction-id@0.3.2:
+    resolution: {integrity: sha512-DpX8C4wF8S54cSE9X1MJkJbNElhSg5337iW0UMFDJVAVCj+cHePCvS6tj2EQw85UGVf1ywBSTGVckncBONUdDg==}
 
   xml-name-validator@5.0.0:
     resolution: {integrity: sha512-EvGK8EJ3DhaHfbRlETOWAS5pO9MZITeauHKJyb8wyajUfQUenkIg2MvLDTZ4T/TgIcm3HU0TFBgWWboAZ30UHg==}
@@ -12017,7 +12017,7 @@ snapshots:
     dependencies:
       lodash: 4.18.1
 
-  x-client-transaction-id@0.3.1:
+  x-client-transaction-id@0.3.2:
     dependencies:
       linkedom: 0.18.13
     transitivePeerDependencies:
