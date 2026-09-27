@@ -149,7 +149,7 @@ export const twitterGot = async (
     // `onResponse` callback, the rate-limit and auth error handling that was
     // previously in `onResponse` is now inlined below.
     const pathname = new URL(url).pathname;
-    const clientTransactionId = pathname.endsWith('/UserTweetsAndReplies') ? await getClientTransactionId('GET', pathname) : undefined;
+    const clientTransactionId = /\/(?:UserTweetsAndReplies|SearchTimeline)$/.test(pathname) ? await getClientTransactionId('GET', pathname) : undefined;
     const response = await undici.fetch(requestUrl, {
         headers: {
             authority: 'x.com',
