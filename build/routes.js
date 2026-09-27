@@ -1065,6 +1065,37 @@ export default {
     "description": "News from the official site of men's professional tennis.",
     "lang": "en"
   },
+  "autotrader": {
+    "routes": {
+      "/:query": {
+        "path": "/:query",
+        "categories": [
+          "other"
+        ],
+        "example": "/autotrader/radius=50&postcode=sw1a1aa&price-to=9000&year-from=2012&body-type=Hatchback&transmission=Automatic&exclude-writeoff-categories=on",
+        "parameters": {
+          "query": "the search query"
+        },
+        "features": {
+          "requirePuppeteer": false
+        },
+        "description": "1. Conduct a search with desired filters on AutoTrader\n2. Copy everything in the URL after `?`, for example: `https://www.autotrader.co.uk/car-search?radius=50&postcode=sw1a1aa&price-to=9000&year-from=2012&body-type=Hatchback&transmission=Automatic&exclude-writeoff-categories=on` will produce `radius=50&postcode=sw1a1aa&price-to=9000&year-from=2012&body-type=Hatchback&transmission=Automatic&exclude-writeoff-categories=on`",
+        "name": "Search",
+        "maintainers": [
+          "HenryQW"
+        ],
+        "location": "index.ts",
+        "module": () => import('@/routes/autotrader/index.ts')
+      }
+    },
+    "apiRoutes": {},
+    "name": "AutoTrader",
+    "url": "www.autotrader.co.uk",
+    "categories": [
+      "other"
+    ],
+    "lang": "en"
+  },
   "azurlane": {
     "routes": {
       "/news/:server/:type?": {
@@ -11709,37 +11740,6 @@ export default {
     "name": "zyw",
     "url": "hot.zyw.asia",
     "lang": "zh-CN"
-  },
-  "autotrader": {
-    "routes": {
-      "/:query": {
-        "path": "/:query",
-        "categories": [
-          "other"
-        ],
-        "example": "/autotrader/radius=50&postcode=sw1a1aa&price-to=9000&year-from=2012&body-type=Hatchback&transmission=Automatic&exclude-writeoff-categories=on",
-        "parameters": {
-          "query": "the search query"
-        },
-        "features": {
-          "requirePuppeteer": true
-        },
-        "description": "1. Conduct a search with desired filters on AutoTrader\n2. Copy everything in the URL after `?`, for example: `https://www.autotrader.co.uk/car-search?radius=50&postcode=sw1a1aa&price-to=9000&year-from=2012&body-type=Hatchback&transmission=Automatic&exclude-writeoff-categories=on` will produce `radius=50&postcode=sw1a1aa&price-to=9000&year-from=2012&body-type=Hatchback&transmission=Automatic&exclude-writeoff-categories=on`",
-        "name": "Search",
-        "maintainers": [
-          "HenryQW"
-        ],
-        "location": "index.ts",
-        "module": () => import('@/routes/autotrader/index.ts')
-      }
-    },
-    "apiRoutes": {},
-    "name": "AutoTrader",
-    "url": "www.autotrader.co.uk",
-    "categories": [
-      "other"
-    ],
-    "lang": "en"
   },
   "bt0": {
     "routes": {
@@ -22572,7 +22572,7 @@ export default {
               "optional": true
             }
           ],
-          "requirePuppeteer": true,
+          "requirePuppeteer": false,
           "nsfw": true
         },
         "location": "index.ts",
@@ -22738,7 +22738,7 @@ export default {
         "parameters": {},
         "features": {
           "requireConfig": false,
-          "requirePuppeteer": true,
+          "requirePuppeteer": false,
           "antiCrawler": false,
           "supportBT": false,
           "supportPodcast": false,
@@ -22770,7 +22770,7 @@ export default {
         },
         "features": {
           "requireConfig": false,
-          "requirePuppeteer": true,
+          "requirePuppeteer": false,
           "antiCrawler": false,
           "supportBT": false,
           "supportPodcast": false,
@@ -22808,7 +22808,7 @@ export default {
         ],
         "features": {
           "requireConfig": false,
-          "requirePuppeteer": true,
+          "requirePuppeteer": false,
           "antiCrawler": false,
           "supportBT": false,
           "supportPodcast": false,
@@ -22831,7 +22831,7 @@ export default {
         "parameters": {},
         "features": {
           "requireConfig": false,
-          "requirePuppeteer": true,
+          "requirePuppeteer": false,
           "antiCrawler": false,
           "supportBT": false,
           "supportPodcast": false,
@@ -23644,7 +23644,7 @@ export default {
           "CaoMeiYouRen233"
         ],
         "features": {
-          "requirePuppeteer": true,
+          "requirePuppeteer": false,
           "nsfw": true
         },
         "radar": [
@@ -26235,7 +26235,7 @@ export default {
         "url": "javtrailers.com/casts",
         "features": {
           "nsfw": true,
-          "requirePuppeteer": true
+          "requirePuppeteer": false
         },
         "location": "casts.ts",
         "module": () => import('@/routes/javtrailers/casts.ts')
@@ -26245,7 +26245,7 @@ export default {
         "categories": [
           "multimedia"
         ],
-        "example": "/javtrailers/categories/50001755",
+        "example": "/javtrailers/categories/hi-def",
         "parameters": {
           "category": "Category name, can be found in the URL of the category page"
         },
@@ -26263,7 +26263,7 @@ export default {
         "url": "javtrailers.com/categories",
         "features": {
           "nsfw": true,
-          "requirePuppeteer": true
+          "requirePuppeteer": false
         },
         "location": "categories.ts",
         "module": () => import('@/routes/javtrailers/categories.ts')
@@ -26290,7 +26290,7 @@ export default {
         ],
         "features": {
           "nsfw": true,
-          "requirePuppeteer": true
+          "requirePuppeteer": false
         },
         "location": "studios.ts",
         "module": () => import('@/routes/javtrailers/studios.ts')
@@ -34730,7 +34730,7 @@ export default {
           "order": "Ordering, `newest`, `famous` or `picks`, `newest` by default"
         },
         "features": {
-          "requirePuppeteer": true,
+          "requirePuppeteer": false,
           "antiCrawler": true
         },
         "name": "Poems",
@@ -34848,7 +34848,7 @@ export default {
         },
         "features": {
           "requireConfig": false,
-          "requirePuppeteer": true,
+          "requirePuppeteer": false,
           "antiCrawler": true,
           "supportBT": false,
           "supportPodcast": false,
@@ -34882,7 +34882,7 @@ export default {
         },
         "features": {
           "requireConfig": false,
-          "requirePuppeteer": true,
+          "requirePuppeteer": false,
           "antiCrawler": true,
           "supportBT": false,
           "supportPodcast": false,
@@ -69264,7 +69264,7 @@ export default {
           }
         ],
         "features": {
-          "requirePuppeteer": true
+          "requirePuppeteer": false
         },
         "description": "| 缺省   | all  | closed | disclosed | patching |\n| ------ | ---- | ------ | --------- | -------- |\n| 活動中 | 全部 | 關閉   | 公開      | 修補中   |",
         "location": "zeroday.tsx",
@@ -70179,7 +70179,7 @@ export default {
         ],
         "url": "hottoys.com.hk/",
         "features": {
-          "requirePuppeteer": true
+          "requirePuppeteer": false
         },
         "location": "index.ts",
         "module": () => import('@/routes/hottoys/index.ts')
@@ -85517,7 +85517,7 @@ export default {
         "example": "/missav/new",
         "features": {
           "requireConfig": false,
-          "requirePuppeteer": true,
+          "requirePuppeteer": false,
           "antiCrawler": false,
           "supportBT": false,
           "supportPodcast": false,
@@ -85527,14 +85527,14 @@ export default {
         "radar": [
           {
             "source": [
-              "missav.ws/dm514/new",
+              "missav.ws/dm539/new",
               "missav.ws/new",
               "missav.ws/"
             ]
           },
           {
             "source": [
-              "missav.ai/dm514/new",
+              "missav.ai/dm539/new",
               "missav.ai/new",
               "missav.ai/"
             ]
@@ -100998,7 +100998,7 @@ export default {
         "example": "/publico/ciencias",
         "features": {
           "requireConfig": false,
-          "requirePuppeteer": true,
+          "requirePuppeteer": false,
           "antiCrawler": false,
           "supportBT": false,
           "supportPodcast": false,
@@ -101032,7 +101032,7 @@ export default {
         "example": "/publico/culturas",
         "features": {
           "requireConfig": false,
-          "requirePuppeteer": true,
+          "requirePuppeteer": false,
           "antiCrawler": false,
           "supportBT": false,
           "supportPodcast": false,
@@ -101066,7 +101066,7 @@ export default {
         "example": "/publico/economia",
         "features": {
           "requireConfig": false,
-          "requirePuppeteer": true,
+          "requirePuppeteer": false,
           "antiCrawler": false,
           "supportBT": false,
           "supportPodcast": false,
@@ -101100,7 +101100,7 @@ export default {
         "example": "/publico/internacional",
         "features": {
           "requireConfig": false,
-          "requirePuppeteer": true,
+          "requirePuppeteer": false,
           "antiCrawler": false,
           "supportBT": false,
           "supportPodcast": false,
@@ -101134,7 +101134,7 @@ export default {
         "example": "/publico/mujer",
         "features": {
           "requireConfig": false,
-          "requirePuppeteer": true,
+          "requirePuppeteer": false,
           "antiCrawler": false,
           "supportBT": false,
           "supportPodcast": false,
@@ -101168,7 +101168,7 @@ export default {
         "example": "/publico/opinion",
         "features": {
           "requireConfig": false,
-          "requirePuppeteer": true,
+          "requirePuppeteer": false,
           "antiCrawler": false,
           "supportBT": false,
           "supportPodcast": false,
@@ -101202,7 +101202,7 @@ export default {
         "example": "/publico/politica",
         "features": {
           "requireConfig": false,
-          "requirePuppeteer": true,
+          "requirePuppeteer": false,
           "antiCrawler": false,
           "supportBT": false,
           "supportPodcast": false,
@@ -101231,7 +101231,7 @@ export default {
         "example": "/publico/public",
         "features": {
           "requireConfig": false,
-          "requirePuppeteer": true,
+          "requirePuppeteer": false,
           "antiCrawler": false,
           "supportBT": false,
           "supportPodcast": false,
@@ -101265,7 +101265,7 @@ export default {
         "example": "/publico/sociedad",
         "features": {
           "requireConfig": false,
-          "requirePuppeteer": true,
+          "requirePuppeteer": false,
           "antiCrawler": false,
           "supportBT": false,
           "supportPodcast": false,
@@ -101294,7 +101294,7 @@ export default {
         "example": "/publico/tremending",
         "features": {
           "requireConfig": false,
-          "requirePuppeteer": true,
+          "requirePuppeteer": false,
           "antiCrawler": false,
           "supportBT": false,
           "supportPodcast": false,
@@ -104934,7 +104934,7 @@ export default {
         },
         "features": {
           "requireConfig": false,
-          "requirePuppeteer": true,
+          "requirePuppeteer": false,
           "antiCrawler": true,
           "supportBT": false,
           "supportPodcast": false,
@@ -124416,10 +124416,6 @@ export default {
             {
               "name": "XSIJISHE_COOKIE",
               "description": ""
-            },
-            {
-              "name": "XSIJISHE_USER_AGENT",
-              "description": ""
             }
           ],
           "requirePuppeteer": false,
@@ -124463,13 +124459,9 @@ export default {
             {
               "name": "XSIJISHE_COOKIE",
               "description": ""
-            },
-            {
-              "name": "XSIJISHE_USER_AGENT",
-              "description": ""
             }
           ],
-          "requirePuppeteer": true,
+          "requirePuppeteer": false,
           "antiCrawler": true,
           "supportBT": false,
           "supportPodcast": false,
@@ -125236,7 +125228,7 @@ export default {
         ],
         "features": {
           "antiCrawler": true,
-          "requirePuppeteer": true,
+          "requirePuppeteer": false,
           "requireConfig": [
             {
               "optional": true,
@@ -125269,7 +125261,7 @@ export default {
         ],
         "features": {
           "antiCrawler": true,
-          "requirePuppeteer": true,
+          "requirePuppeteer": false,
           "requireConfig": [
             {
               "optional": true,
@@ -134407,7 +134399,7 @@ export default {
         },
         "features": {
           "requireConfig": false,
-          "requirePuppeteer": true,
+          "requirePuppeteer": false,
           "antiCrawler": true,
           "supportBT": false,
           "supportPodcast": false,
@@ -134438,7 +134430,7 @@ export default {
         },
         "features": {
           "requireConfig": false,
-          "requirePuppeteer": true,
+          "requirePuppeteer": false,
           "antiCrawler": false,
           "supportBT": false,
           "supportPodcast": false,
@@ -134463,7 +134455,7 @@ export default {
         },
         "features": {
           "requireConfig": false,
-          "requirePuppeteer": true,
+          "requirePuppeteer": false,
           "antiCrawler": true,
           "supportBT": false,
           "supportPodcast": false,
@@ -134485,7 +134477,7 @@ export default {
         "parameters": {},
         "features": {
           "requireConfig": false,
-          "requirePuppeteer": true,
+          "requirePuppeteer": false,
           "antiCrawler": false,
           "supportBT": false,
           "supportPodcast": false,
@@ -146301,7 +146293,8 @@ export default {
         "description": "分类\n\n| 有碼     | 無碼       | 歐美    |\n| -------- | ---------- | ------- |\n| censored | uncensored | western |\n\n排序\n\n| 发布日期排序 | 磁鏈更新排序 |\n| ------------ | ------------ |\n| 1            | 2            |\n\n过滤\n\n| 全部 | 可下载 | 含字幕 | 含短評 |\n| ---- | ------ | ------ | ------ |\n| 0    | 1      | 2      | 3      |",
         "features": {
           "nsfw": true,
-          "requirePuppeteer": true
+          "requirePuppeteer": false,
+          "antiCrawler": true
         },
         "location": "index.ts",
         "module": () => import('@/routes/javdb/index.ts')
@@ -162400,7 +162393,7 @@ export default {
         },
         "features": {
           "requireConfig": false,
-          "requirePuppeteer": true,
+          "requirePuppeteer": false,
           "antiCrawler": false,
           "supportBT": false,
           "supportPodcast": false,

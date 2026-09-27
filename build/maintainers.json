@@ -93,6 +93,9 @@
   "/atptour/news/:lang?": [
     "LM1207"
   ],
+  "/autotrader/:query": [
+    "HenryQW"
+  ],
   "/azurlane/news/:server/:type?": [
     "AnitsuriW"
   ],
@@ -899,9 +902,6 @@
   ],
   "/zyw/hot/:site?": [
     "nczitzk"
-  ],
-  "/autotrader/:query": [
-    "HenryQW"
   ],
   "/bt0/mv/:number/:domain?": [
     "miemieYaho"
