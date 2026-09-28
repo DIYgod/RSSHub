@@ -1,19 +1,25 @@
 {
-    "$schema": "https://openapi.vercel.sh/vercel.json",
-    "framework": "hono",
-    "outputDirectory": "src",
-    "functions": {
-        "src/server.mjs": {
-            "includeFiles": "node_modules/.pnpm/patchright-core@1.63.0/node_modules/patchright-core/**"
-        }
-    },
-    "rewrites": [
-        {
-            "source": "/favicon.ico",
-            "destination": "/favicon.png"
-        }
-    ],
-    "github": {
-        "silent": true
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": "hono",
+  "outputDirectory": "src",
+  "env": {
+    "PLAYWRIGHT_BROWSERS_PATH": "./node_modules/.cache/ms-playwright"
+  },
+  "functions": {
+    "src/server.mjs": {
+      "includeFiles": [
+        "node_modules/.pnpm/patchright-core@1.63.0/node_modules/patchright-core/**",
+        "node_modules/.cache/ms-playwright/**"
+      ]
     }
+  },
+  "rewrites": [
+    {
+      "source": "/favicon.ico",
+      "destination": "/favicon.png"
+    }
+  ],
+  "github": {
+    "silent": true
+  }
 }
