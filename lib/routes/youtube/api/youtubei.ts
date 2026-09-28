@@ -50,12 +50,12 @@ const getStreamState = (video: YTNodes.LockupView): StreamState => {
 
 // The lockup of a video only carries its title, so the description takes one player request per video
 const getVideoInfo = (videoId: string) =>
-    cache.tryGet<{ description: string; startTimestamp: string }>(
+    cache.tryGet<{ description: string; startTimestamp?: string }>(
         `youtube:getVideoInfo:${videoId}`,
         async () => {
             const innertube = await getInnertube();
             const info = await innertube.getBasicInfo(videoId);
-            return { description: info.basic_info.short_description ?? '', startTimestamp: info.basic_info.start_timestamp!.toISOString() };
+            return { description: info.basic_info.short_description ?? '', startTimestamp: info.basic_info.start_timestamp?.toISOString() };
         },
         config.cache.contentExpire,
         // The expiration is not renewed on a hit, so an edited description still shows up in a steadily polled feed
@@ -134,11 +134,15 @@ export const getStreamsByChannelId = async ({ channelId, embed }: { channelId: s
         description: channel.metadata.description,
 
         // The state is exposed as a category so that a single state can be picked out with the common `filter_category` parameter
-        item: videos.map((video, index) => ({
-            ...lockupViewToItem(video, embed, infos[index].description),
-            pubDate: parseDate(infos[index].startTimestamp),
-            category: [getStreamState(video)],
-        })),
+        item: videos.map((video, index) => {
+            const { description, startTimestamp } = infos[index];
+            const item = lockupViewToItem(video, embed, description);
+            return {
+                ...item,
+                pubDate: startTimestamp ? parseDate(startTimestamp) : item.pubDate,
+                category: [getStreamState(video)],
+            };
+        }),
     };
 };
 
