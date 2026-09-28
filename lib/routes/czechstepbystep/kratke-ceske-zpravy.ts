@@ -169,4 +169,8 @@ export const route: Route = {
     handler,
     url: 'www.czechstepbystep.cz/kategorie/kratke-ceske-zpravy',
     description: 'Short Czech news (Krátké české zprávy) from CzechStepByStep including video, full transcript, online exercises, and worksheets.',
+    zh: {
+        name: '捷克语短新闻',
+        description: '来自 CzechStepByStep 的捷克语短新闻（Krátké české zprávy），包含视频、完整文字记录、在线练习和工作表。',
+    },
 };
