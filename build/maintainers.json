@@ -12440,9 +12440,6 @@
   "/youtube/c/:username/:embed?": [
     "TonyRL"
   ],
-  "/youtube/live/:username/:embed?": [
-    "sussurr127"
-  ],
   "/youtube/charts/:category?/:country?/:embed?": [
     "TonyRL"
   ],
@@ -12453,11 +12450,12 @@
     "DIYgod",
     "pseudoyu"
   ],
+  "/youtube/live/:username/:embed?": [
+    "sussurr127",
+    "ouuan"
+  ],
   "/youtube/playlist/:id/:embed?": [
     "HenryQW"
-  ],
-  "/youtube/streams/:handle/:routeParams?": [
-    "ouuan"
   ],
   "/youtube/user/:username/:routeParams?": [
     "DIYgod",

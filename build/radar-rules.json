@@ -54673,20 +54673,20 @@
         "target": "/youtube/channel/:id"
       },
       {
-        "title": "Live Streams",
+        "title": "Live",
         "docs": "https://docs.rsshub.app/routes/live",
         "source": [
-          "/@:handle/streams"
+          "/@:username/streams"
         ],
-        "target": "/youtube/streams/@:handle"
+        "target": "/youtube/live/@:username"
       },
       {
-        "title": "Live Streams",
+        "title": "Live",
         "docs": "https://docs.rsshub.app/routes/live",
         "source": [
-          "/channel/:handle/streams"
+          "/channel/:username/streams"
         ],
-        "target": "/youtube/streams/:handle"
+        "target": "/youtube/live/:username"
       },
       {
         "title": "Channel with user handle",
