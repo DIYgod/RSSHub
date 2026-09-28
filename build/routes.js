@@ -161227,6 +161227,10 @@ export default {
         ],
         "url": "www.czechstepbystep.cz/kategorie/kratke-ceske-zpravy",
         "description": "Short Czech news (Krátké české zprávy) from CzechStepByStep including video, full transcript, online exercises, and worksheets.",
+        "zh": {
+          "name": "捷克语短新闻",
+          "description": "来自 CzechStepByStep 的捷克语短新闻（Krátké české zprávy），包含视频、完整文字记录、在线练习和工作表。"
+        },
         "location": "kratke-ceske-zpravy.ts",
         "module": () => import('@/routes/czechstepbystep/kratke-ceske-zpravy.ts')
       }
@@ -161234,7 +161238,11 @@ export default {
     "apiRoutes": {},
     "name": "CzechStepByStep",
     "url": "www.czechstepbystep.cz",
-    "lang": "cs"
+    "lang": "cs",
+    "zh": {
+      "name": "捷克语学习",
+      "description": "捷克语学习网站，提供短新闻、在线练习与工作表。"
+    }
   },
   "finology": {
     "routes": {
