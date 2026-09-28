@@ -3,53 +3,9 @@ import { renderToString } from 'hono/jsx/dom/server';
 import type { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { parseDateRange } from '@/utils/parse-date-range';
 
 import { namespace } from './namespace';
-
-// format the date to YYYY-MM-DD and handle missing year or month
-const extractDates = (durationStr: string) => {
-    let startDate: string | undefined;
-    let endDate: string | undefined;
-
-    if (!durationStr) {
-        return { startDate, endDate };
-    }
-
-    const parts = durationStr.split(/-+/).map((p) => p.trim()); // currently - is used
-    const startStr = parts[0];
-    const endStr = parts[1];
-
-    let startYear: string | undefined;
-    let startMonth: string | undefined;
-
-    const startRegex = /(\d{4})[年.](\d{1,2})(?:[月.](\d{1,2}))?/; // matches formats like "2024年5月10日", "2024.5.10"
-    const startMatch = startStr.match(startRegex);
-
-    if (startMatch) {
-        startYear = startMatch[1];
-        startMonth = startMatch[2].padStart(2, '0');
-        const startDay = startMatch[3] ? startMatch[3].padStart(2, '0') : '01'; // use 1st day of month if day is missing
-        startDate = `${startYear}-${startMonth}-${startDay}`;
-    }
-
-    if (endStr && startDate) {
-        const endRegex = /(?:(\d{4})[年.])?(\d{1,2})(?:[月.](\d{1,2}))?/;
-        const endMatch = endStr.match(endRegex);
-
-        if (endMatch) {
-            const matchYear = endMatch[1];
-            const matchMonth: string | undefined = endMatch[2];
-            const matchDay: string | undefined = endMatch[3];
-
-            const finalEndYear = matchYear || startYear;
-            const finalEndMonth = matchMonth ? matchMonth.padStart(2, '0') : startMonth;
-            const finalEndDay = matchDay ? matchDay.padStart(2, '0') : '01';
-            endDate = `${finalEndYear}-${finalEndMonth}-${finalEndDay}`;
-        }
-    }
-
-    return { startDate, endDate };
-};
 
 interface ExhibitType {
     modular: string;
@@ -130,7 +86,7 @@ export const route: Route = {
             const imgUrl = `${resourceUrl}${imgPath}`;
             const location = item.position;
             const fullDuration = item.timedesc;
-            const { startDate, endDate } = extractDates(fullDuration);
+            const { startDate, endDate } = parseDateRange(fullDuration);
             const pubDate = startDate ? parseDate(startDate) : undefined; // use start date as publication date if publication date is notavailable
 
             const description = renderToString(
