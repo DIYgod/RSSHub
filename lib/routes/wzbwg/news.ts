@@ -3,6 +3,7 @@ import { load } from 'cheerio';
 import type { DataItem, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 import { namespace } from './namespace';
 
@@ -33,16 +34,14 @@ export const route: Route = {
         // use first() to avoid matching the repeat link
         const categoryName = $(`a[href="/news/${type}"]`).first().text();
 
-        const list = $('div.slide.wow.fadeInUp')
+        const list = $('div.slide.wow.fadeInUp a[href^="/newsinfo/"]')
             .toArray()
-            .filter((item) => $(item).find('a[href^="/newsinfo/"]'))
             .map((item): DataItem => {
-                const $item = $(item);
-                const a = $item.find('a[href^="/newsinfo/"]');
+                const a = $(item);
                 const title = a.attr('title') ?? '';
                 const link = new URL(a.attr('href')!, baseUrl).href;
                 const dateRaw =
-                    $item
+                    a
                         .find('.c3')
                         .text()
                         .match(/\[(.+?)\]/)?.[1] || '';
@@ -50,7 +49,7 @@ export const route: Route = {
                 return {
                     title,
                     link,
-                    pubDate: parseDate(dateRaw),
+                    pubDate: timezone(parseDate(dateRaw), 8),
                 };
             });
 

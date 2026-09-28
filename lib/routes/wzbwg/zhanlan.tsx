@@ -5,6 +5,7 @@ import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 import { namespace } from './namespace';
 
@@ -40,13 +41,13 @@ const extractExhibitionMeta = ($detail: CheerioAPI) => {
 };
 
 export const route: Route = {
-    path: '/zhanlan/73',
+    path: '/zhanlan/specialexhibition',
     categories: ['travel'],
-    example: '/wzbwg/zhanlan/73',
+    example: '/wzbwg/zhanlan/specialexhibition',
     radar: [
         {
             source: ['www.wzbwg.com/zhanlan/73/image'],
-            target: '/zhanlan/73',
+            target: '/zhanlan/specialexhibition',
         },
     ],
     name: '最新展览',
@@ -59,16 +60,14 @@ export const route: Route = {
         const response = await ofetch(listUrl);
         const $ = load(response);
 
-        const list = $('div.imglist div.slide')
+        const list = $('div.imglist div.slide a[href^="/zhanlaninfo/"]')
             .toArray()
-            .filter((item) => $(item).find('a[href^="/zhanlaninfo/"]'))
             .map((item) => {
-                const $item = $(item);
-                const a = $item.find('a[href^="/zhanlaninfo/"]');
+                const a = $(item);
                 return {
                     title: a.attr('title') ?? '',
                     link: new URL(a.attr('href')!, baseUrl).href,
-                    imgUrl: $item.find('div.imgbox img').attr('src') ?? '',
+                    imgUrl: a.find('div.imgbox img').attr('src') ?? '',
                 };
             });
 
@@ -85,7 +84,7 @@ export const route: Route = {
                         $detail('div.n2')
                             .text()
                             .match(/\[(.+?)\]/)?.[1] || '';
-                    const pubDate = parseDate(dateRaw);
+                    const pubDate = timezone(parseDate(dateRaw), 8);
 
                     const description = renderToString(
                         <div>
