@@ -184,7 +184,7 @@
         "eslint-plugin-unicorn": "76.0.0",
         "eslint-plugin-yml": "3.8.1",
         "fast-string-width": "3.0.2",
-        "fs-extra": "11.4.0",
+        "fs-extra": "11.4.1",
         "globals": "17.12.0",
         "husky": "9.1.7",
         "js-beautify": "2.0.3",
