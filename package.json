@@ -118,7 +118,7 @@
         "p-map": "7.0.8",
         "pac-proxy-agent": "9.1.0",
         "patchright": "1.63.0",
-        "postal-mime": "3.0.0",
+        "postal-mime": "3.0.1",
         "query-string": "9.5.1",
         "rate-limiter-flexible": "11.2.1",
         "re2js": "2.8.6",
