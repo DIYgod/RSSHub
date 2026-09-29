@@ -6,6 +6,30 @@ import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
+const columns: Array<{ value: string; label: string }> = [
+    { value: '0', label: '全部' },
+    { value: '1', label: '孟岩专栏' },
+    { value: '2', label: '知行黑板报' },
+    { value: '3', label: '知行读书会' },
+    { value: '4', label: '知行小酒馆' },
+    { value: '5', label: '保险专栏' },
+    { value: '6', label: '知行头条' },
+    { value: '7', label: '精选文章' },
+    { value: '8', label: '一周新知' },
+    { value: '9', label: '一周好想法' },
+    { value: '10', label: '无人知晓' },
+    { value: '11', label: '你好同路人' },
+    { value: '13', label: '知行周报' },
+    { value: '14', label: '有理有据' },
+    { value: '15', label: 'Ta 的投资故事' },
+    { value: '16', label: '投资 ABC' },
+    { value: '17', label: '海外投资Blog' },
+    { value: '18', label: '中国大类资产投资年报' },
+    { value: '19', label: '夸下海口' },
+];
+
+const columnNames = Object.fromEntries(columns.map(({ value, label }) => [value, label])) as Record<string, string>;
+
 export const route: Route = {
     path: '/materials/:id?',
     categories: ['finance'],
@@ -14,15 +38,7 @@ export const route: Route = {
     parameters: {
         id: {
             description: '分类',
-            options: [
-                { value: '0', label: '全部' },
-                { value: '4', label: '知行小酒馆' },
-                { value: '2', label: '知行黑板报' },
-                { value: '10', label: '无人知晓' },
-                { value: '1', label: '孟岩专栏' },
-                { value: '3', label: '知行读书会' },
-                { value: '11', label: '你好，同路人' },
-            ],
+            options: columns,
             default: '0',
         },
     },
@@ -44,9 +60,7 @@ export const route: Route = {
     maintainers: ['broven', 'Fatpandac', 'nczitzk'],
     handler,
     url: 'youzhiyouxing.cn/materials',
-    description: `| 全部 | 知行小酒馆 | 知行黑板报 | 无人知晓 | 孟岩专栏 | 知行读书会 | 你好，同路人 |
-| :--: | :--------: | :--------: | :------: | :------: | :--------: | :----------: |
-|   0  |      4     |      2     |    10    |     1    |      3     |      11      |`,
+    description: ['| 编号 | 栏目 |', '| :--: | :--- |', ...columns.map(({ value, label }) => `| ${value} | ${label} |`)].join('\n'),
 };
 
 async function handler(ctx) {
@@ -62,15 +76,16 @@ async function handler(ctx) {
 
     const $ = load(response.data);
 
-    let items = $('li[id*="material"]')
+    let items = $('a.article-card[id^="material-"]')
         .toArray()
         .map((item): DataItem => {
             const $item = $(item);
 
             return {
-                title: $item.text(),
-                link: `${rootUrl}${$item.find('a').attr('href')}`,
-                pubDate: parseDate($item.find('.tw-text-t-muted').text(), ['YYYY年M月D日', 'M月D日']),
+                title: $item.find('h3').text(),
+                link: `${rootUrl}${$item.attr('href')}`,
+                author: $item.find('.article-column').text(),
+                pubDate: parseDate($item.find('.article-meta time').text(), ['YYYY年M月D日', 'M月D日']),
             };
         });
 
@@ -84,7 +99,6 @@ async function handler(ctx) {
 
                 const content = load(detailResponse.data);
 
-                item.author = content('.tw-inline').text().replace('·', '');
                 item.description = content('#zx-material-marker-root')
                     .html()!
                     .replaceAll(/(<img.*?) src(=.*?>)/g, '$1 data$2')
@@ -95,8 +109,11 @@ async function handler(ctx) {
         )
     );
 
+    const columnId = id === '' ? '0' : id;
+    const columnName = $(`button[phx-value-column_id="${columnId}"]`).text() || columnNames[columnId];
+
     return {
-        title: `有知有行 - ${$(`a[phx-value-column_id="${id === '' ? 0 : id}"]`).text()}`,
+        title: `有知有行 - ${columnName}`,
         link: currentUrl,
         item: items,
     };
