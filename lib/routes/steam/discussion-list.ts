@@ -22,7 +22,7 @@ export const route: Route = {
             default: '0',
         },
     },
-    description: `This route enriches the 15 topics on Steam's first, most-recently-active page with their full original posts and original publication times, then sorts that sample by publication time. It is a best-effort new-topic feed: recently created topics that have already fallen beyond the first activity page may be missed. Pagination is not supported.`,
+    description: `This best-effort new-topic feed enriches up to 15 topics from Steam's first, most-recently-active page with their full original posts and publication times when available. RSSHub sorts items by publication time by default; use \`?sorted=false\` to retain Steam's activity order. Recently created topics beyond that page may be missed. Pagination is not supported.`,
     categories: ['game'],
     features: {
         requirePuppeteer: false,
@@ -46,11 +46,8 @@ export const route: Route = {
 
 type ResolvedTopic = {
     item: DataItem;
-    sourceIndex: number;
     isEnriched: boolean;
 };
-
-const getPublicationTime = (item: DataItem): number => (item.pubDate ? new Date(item.pubDate).getTime() : 0);
 
 const buildFallbackItem = (topic: DiscussionListTopic): DataItem => ({
     title: topic.title,
@@ -82,14 +79,12 @@ async function handler(ctx: Context): Promise<Data> {
                 const item = await cache.tryGet(buildDiscussionTopicCacheKey(identity), async () => parseDiscussionTopicPage(await fetchSteamDiscussionPage(topic.link), identity).originalPost, config.cache.contentExpire, false);
                 return {
                     item,
-                    sourceIndex: topic.sourceIndex,
                     isEnriched: true,
                 };
             } catch (error) {
                 logger.warn(`steam/discussions: failed to enrich ${topic.link}: ${String(error)}`);
                 return {
                     item: buildFallbackItem(topic),
-                    sourceIndex: topic.sourceIndex,
                     isEnriched: false,
                 };
             }
@@ -101,19 +96,9 @@ async function handler(ctx: Context): Promise<Data> {
         throw new Error(`Steam returned no readable topic details for app ${appId}, feature ${feature}`);
     }
 
-    const sortedTopics = resolvedTopics.toSorted((first, second) => {
-        if (first.isEnriched !== second.isEnriched) {
-            return first.isEnriched ? -1 : 1;
-        }
-        if (!first.isEnriched) {
-            return first.sourceIndex - second.sourceIndex;
-        }
-        return getPublicationTime(second.item) - getPublicationTime(first.item);
-    });
-
     return {
         title: `${page.appName} - ${page.forumName}`,
         link: currentUrl,
-        item: sortedTopics.map((topic) => topic.item),
+        item: resolvedTopics.map((topic) => topic.item),
     };
 }

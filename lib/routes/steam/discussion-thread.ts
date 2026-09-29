@@ -1,6 +1,6 @@
 import type { Context } from 'hono';
 
-import type { Data, DataItem, Route } from '@/types';
+import type { Data, Route } from '@/types';
 
 import { buildDiscussionTopicUrl, type DiscussionThreadPagination, fetchSteamDiscussionPage, parseAppId, parseDiscussionThreadPage, parseFeature, parseTopicId } from './_discussion';
 
@@ -29,8 +29,6 @@ export const route: Route = {
         },
     ],
 };
-
-const getPublicationTime = ({ pubDate }: DataItem): number => (pubDate ? new Date(pubDate).getTime() : 0);
 
 const getPageCount = ({ replyCount, pageSize }: DiscussionThreadPagination): number => Math.max(1, Math.ceil(replyCount / pageSize));
 
@@ -73,11 +71,9 @@ async function handler(ctx: Context): Promise<Data> {
         }
     }
 
-    const sortedItems = [firstPage.originalPost, ...repliesByGuid.values()].toSorted((first, second) => getPublicationTime(second) - getPublicationTime(first));
-
     return {
         title: `${firstPage.title} - ${firstPage.appName}`,
         link: currentUrl,
-        item: sortedItems,
+        item: [firstPage.originalPost, ...repliesByGuid.values()],
     };
 }

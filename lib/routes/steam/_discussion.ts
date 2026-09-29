@@ -35,7 +35,6 @@ export type DiscussionListTopic = TopicIdentity & {
     link: string;
     preview?: string;
     authorName?: string;
-    sourceIndex: number;
 };
 
 export type DiscussionListPage = {
@@ -347,7 +346,7 @@ export const parseDiscussionListPage = (html: string, identity: DiscussionIdenti
     const topics = $('.forum_topic[data-gidforumtopic]')
         .slice(0, topicPageSize)
         .toArray()
-        .map((element, sourceIndex): DiscussionListTopic => {
+        .map((element) => {
             const topic = $(element);
             const topicId = parseTopicId(topic.attr('data-gidforumtopic'));
             const title = topic.find('.forum_topic_name').first().text();
@@ -368,7 +367,6 @@ export const parseDiscussionListPage = (html: string, identity: DiscussionIdenti
                 link: expectedLink,
                 preview: parsePreview(topic.attr('data-tooltip-forum')),
                 ...(authorName && { authorName }),
-                sourceIndex,
             };
         });
 
