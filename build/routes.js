@@ -162649,12 +162649,7 @@ export default {
         "radar": [
           {
             "source": [
-              "www.youtube.com/@:username/streams"
-            ],
-            "target": "/live/@:username"
-          },
-          {
-            "source": [
+              "www.youtube.com/:username/streams",
               "www.youtube.com/channel/:username/streams"
             ],
             "target": "/live/:username"
@@ -162700,6 +162695,31 @@ export default {
         ],
         "location": "playlist.ts",
         "module": () => import('@/routes/youtube/playlist.ts')
+      },
+      "/shows/:username": {
+        "path": "/shows/:username",
+        "categories": [
+          "social-media"
+        ],
+        "example": "/youtube/shows/@LinusTechTips",
+        "parameters": {
+          "username": "YouTube handle or channel id"
+        },
+        "radar": [
+          {
+            "source": [
+              "www.youtube.com/:username/shows",
+              "www.youtube.com/channel/:username/shows"
+            ],
+            "target": "/shows/:username"
+          }
+        ],
+        "name": "Shows",
+        "maintainers": [
+          "TonyRL"
+        ],
+        "location": "shows.ts",
+        "module": () => import('@/routes/youtube/shows.ts')
       },
       "/user/:username/:routeParams?": {
         "path": "/user/:username/:routeParams?",

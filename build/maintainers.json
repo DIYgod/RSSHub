@@ -12460,6 +12460,9 @@
   "/youtube/playlist/:id/:embed?": [
     "HenryQW"
   ],
+  "/youtube/shows/:username": [
+    "TonyRL"
+  ],
   "/youtube/user/:username/:routeParams?": [
     "DIYgod",
     "pseudoyu"

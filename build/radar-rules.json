@@ -54691,17 +54691,19 @@
         "title": "Live",
         "docs": "https://docs.rsshub.app/routes/live",
         "source": [
-          "/@:username/streams"
-        ],
-        "target": "/youtube/live/@:username"
-      },
-      {
-        "title": "Live",
-        "docs": "https://docs.rsshub.app/routes/live",
-        "source": [
+          "/:username/streams",
           "/channel/:username/streams"
         ],
         "target": "/youtube/live/:username"
+      },
+      {
+        "title": "Shows",
+        "docs": "https://docs.rsshub.app/routes/social-media",
+        "source": [
+          "/:username/shows",
+          "/channel/:username/shows"
+        ],
+        "target": "/youtube/shows/:username"
       },
       {
         "title": "Channel with user handle",

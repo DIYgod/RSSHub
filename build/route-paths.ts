@@ -3787,6 +3787,7 @@ export type RoutePath =
   | `/youtube/community/:handle`
   | `/youtube/live/:username/:embed?`
   | `/youtube/playlist/:id/:embed?`
+  | `/youtube/shows/:username`
   | `/youtube/subscriptions/:embed?`
   | `/youtube/user/:username/:routeParams?`
   | `/youzan/goods/:id`
