@@ -5,6 +5,8 @@ import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
+import { namespace } from './namespace';
+
 const UA = 'Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.0 Mobile/15E148 Safari/604.1';
 
 export const route: Route = {
@@ -40,13 +42,15 @@ async function handler(ctx): Promise<Data> {
     const $ = load(html);
 
     // 全书无逐章时间戳，站点唯一提供的时间是书页的「更新：…」行（东八区）
-    const updateText = $('.block_txt2 p')
-        .toArray()
-        .map((p) => $(p).text())
-        .find((text) => text.includes('更新'));
-    const pubDate = timezone(parseDate(updateText?.match(/更新：([0-9/]+ [0-9:]+)/)?.[1] ?? '', 'YYYY/M/D H:mm:ss'), 8);
+    const block = $('.block_txt2');
+    const updatedAt = block
+        .find('p:contains("更新")')
+        .first()
+        .text()
+        .match(/更新：([0-9/]+ [0-9:]+)/)?.[1];
+    const pubDate = timezone(parseDate(updatedAt ?? '', 'YYYY/M/D H:mm:ss'), 8);
 
-    // 书页内嵌「最新章節預覽」10 条，完整目录需翻 /page-N(-1).html
+    // 书页内嵌「最新章节预览」10 条，完整目录需翻 /page-N(-1).html
     const items = $('.chapter li a')
         .toArray()
         .map((el) => {
@@ -59,7 +63,7 @@ async function handler(ctx): Promise<Data> {
         });
 
     return {
-        title: `${$('.block_txt2 h2').first().text().trim()} - 台灣小說網`,
+        title: `${block.find('h2').first().text().trim()} - ${namespace.name}`,
         link,
         item: items,
     };
