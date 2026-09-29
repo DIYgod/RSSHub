@@ -126065,28 +126065,76 @@ export default {
                 "label": "全部"
               },
               {
-                "value": "4",
-                "label": "知行小酒馆"
+                "value": "1",
+                "label": "孟岩专栏"
               },
               {
                 "value": "2",
                 "label": "知行黑板报"
               },
               {
-                "value": "10",
-                "label": "无人知晓"
-              },
-              {
-                "value": "1",
-                "label": "孟岩专栏"
-              },
-              {
                 "value": "3",
                 "label": "知行读书会"
               },
               {
+                "value": "4",
+                "label": "知行小酒馆"
+              },
+              {
+                "value": "5",
+                "label": "保险专栏"
+              },
+              {
+                "value": "6",
+                "label": "知行头条"
+              },
+              {
+                "value": "7",
+                "label": "精选文章"
+              },
+              {
+                "value": "8",
+                "label": "一周新知"
+              },
+              {
+                "value": "9",
+                "label": "一周好想法"
+              },
+              {
+                "value": "10",
+                "label": "无人知晓"
+              },
+              {
                 "value": "11",
-                "label": "你好，同路人"
+                "label": "你好同路人"
+              },
+              {
+                "value": "13",
+                "label": "知行周报"
+              },
+              {
+                "value": "14",
+                "label": "有理有据"
+              },
+              {
+                "value": "15",
+                "label": "Ta 的投资故事"
+              },
+              {
+                "value": "16",
+                "label": "投资 ABC"
+              },
+              {
+                "value": "17",
+                "label": "海外投资Blog"
+              },
+              {
+                "value": "18",
+                "label": "中国大类资产投资年报"
+              },
+              {
+                "value": "19",
+                "label": "夸下海口"
               }
             ],
             "default": "0"
@@ -126115,7 +126163,7 @@ export default {
           "nczitzk"
         ],
         "url": "youzhiyouxing.cn/materials",
-        "description": "| 全部 | 知行小酒馆 | 知行黑板报 | 无人知晓 | 孟岩专栏 | 知行读书会 | 你好，同路人 |\n| :--: | :--------: | :--------: | :------: | :------: | :--------: | :----------: |\n|   0  |      4     |      2     |    10    |     1    |      3     |      11      |",
+        "description": "| 编号 | 栏目 |\n| :--: | :--- |\n| 0 | 全部 |\n| 1 | 孟岩专栏 |\n| 2 | 知行黑板报 |\n| 3 | 知行读书会 |\n| 4 | 知行小酒馆 |\n| 5 | 保险专栏 |\n| 6 | 知行头条 |\n| 7 | 精选文章 |\n| 8 | 一周新知 |\n| 9 | 一周好想法 |\n| 10 | 无人知晓 |\n| 11 | 你好同路人 |\n| 13 | 知行周报 |\n| 14 | 有理有据 |\n| 15 | Ta 的投资故事 |\n| 16 | 投资 ABC |\n| 17 | 海外投资Blog |\n| 18 | 中国大类资产投资年报 |\n| 19 | 夸下海口 |",
         "location": "materials.ts",
         "module": () => import('@/routes/youzhiyouxing/materials.ts')
       }
