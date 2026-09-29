@@ -2004,6 +2004,7 @@ export type RoutePath =
   | `/kongfz/shop/:id/:cat?`
   | `/konghq/blog-posts`
   | `/koreaherald/:category{.+}?`
+  | `/kosmofoto/:category?`
   | `/kovidgoyal/kitty/changelog`
   | `/koyso/:category?/:sort?`
   | `/kpmg/insights/:lang?`

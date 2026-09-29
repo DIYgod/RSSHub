@@ -5865,6 +5865,9 @@
   "/koreaherald/:category{.+}?": [
     "quiniapiezoelectricity"
   ],
+  "/kosmofoto/:category?": [
+    "IvanWng97"
+  ],
   "/kovidgoyal/kitty/changelog": [
     "xbot"
   ],

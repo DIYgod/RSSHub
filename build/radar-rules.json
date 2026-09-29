@@ -27129,6 +27129,21 @@
       }
     ]
   },
+  "kosmofoto.com": {
+    "_name": "Kosmo Foto",
+    ".": [
+      {
+        "title": "Posts",
+        "docs": "https://docs.rsshub.app/routes/picture",
+        "source": [
+          "/category/:category",
+          "/category/:parent/:category",
+          "/"
+        ],
+        "target": "/kosmofoto/:category?"
+      }
+    ]
+  },
   "kovidgoyal.net": {
     "_name": "Kovid's software projects",
     "sw": [

@@ -78930,6 +78930,53 @@ export default {
     "name": "The Korea Herald",
     "url": "koreaherald.com"
   },
+  "kosmofoto": {
+    "routes": {
+      "/:category?": {
+        "path": "/:category?",
+        "categories": [
+          "picture"
+        ],
+        "view": 0,
+        "example": "/kosmofoto/news",
+        "parameters": {
+          "category": "Category slug, see the table below or the URL of a category page. All posts by default"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "kosmofoto.com/category/:category",
+              "kosmofoto.com/category/:parent/:category",
+              "kosmofoto.com/"
+            ]
+          }
+        ],
+        "name": "Posts",
+        "maintainers": [
+          "IvanWng97"
+        ],
+        "description": "The official feed only carries excerpts; this route returns the full post with all images.\n\n| Category           | Slug                   |\n| ------------------ | ---------------------- |\n| News               | `news`                 |\n| Film               | `film-2`               |\n| Featured           | `featured`             |\n| Analogue lifestyle | `analogue-lifestyle-2` |\n| Analogue Culture   | `analogue-culture`     |\n| Analogue History   | `analogue-history`     |\n| Camera reviews     | `camera-review-2`      |\n| Classic cameras    | `classic-cameras`      |\n| Vintage cameras    | `vintage-cameras`      |\n| Soviet cameras     | `soviet-cameras`       |\n| Lomography         | `lomography`           |\n| Kosmo Foto Mono    | `kosmo-foto-mono`      |",
+        "location": "index.tsx",
+        "module": () => import('@/routes/kosmofoto/index.tsx')
+      }
+    },
+    "apiRoutes": {},
+    "name": "Kosmo Foto",
+    "url": "kosmofoto.com",
+    "categories": [
+      "picture"
+    ],
+    "description": "Film photography news, camera reviews and analogue culture.",
+    "lang": "en"
+  },
   "kovidgoyal": {
     "routes": {
       "/kitty/changelog": {
