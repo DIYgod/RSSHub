@@ -160,3 +160,30 @@ export const getDataByPlaylistId = async ({ playlistId, embed }: { playlistId: s
         item: videos.filter((video) => video instanceof YTNodes.LockupView).map((video) => lockupViewToItem(video, embed)),
     };
 };
+
+export const getShowsByChannelId = async (channelId: string): Promise<Data> => {
+    const innertube = await getInnertube();
+    const channel = await innertube.getChannel(channelId);
+    const shows = await channel.getShows();
+
+    return {
+        title: `${channel.metadata.title || channelId} - Shows - YouTube`,
+        link: `https://www.youtube.com/channel/${channelId}/shows`,
+        image: channel.metadata.avatar?.[0].url,
+        description: channel.metadata.description,
+
+        item: shows.playlists
+            .filter((show) => show instanceof YTNodes.GridShow)
+            .map((show) => {
+                const img = show.thumbnail_renderer?.thumbnail[0]?.url.replace(/\/hqdefault\.jpg\?.*$/, '/maxresdefault.jpg');
+                const episodes = show.thumbnail_overlays[0]?.text?.text;
+                return {
+                    title: show.title.toString(),
+                    description: `${img ? `<img src="${img}"><br>` : ''}${episodes ?? ''}`,
+                    link: new URL(show.endpoint.metadata.url!, 'https://www.youtube.com').href,
+                    author: show.author.name,
+                    image: img,
+                };
+            }),
+    };
+};

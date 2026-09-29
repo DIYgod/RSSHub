@@ -15,11 +15,7 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['www.youtube.com/@:username/streams'],
-            target: '/live/@:username',
-        },
-        {
-            source: ['www.youtube.com/channel/:username/streams'],
+            source: ['www.youtube.com/:username/streams', 'www.youtube.com/channel/:username/streams'],
             target: '/live/:username',
         },
     ],
