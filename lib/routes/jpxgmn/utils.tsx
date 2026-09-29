@@ -9,7 +9,7 @@ const indexUrl = 'http://mei8.vip/';
 
 const getOriginUrl = async () =>
     await cache.tryGet('jpxgmn:originUrl', async () => {
-        // 发布页（mei8.vip）已改为 301 直跳源站：发生跨站重定向时最终地址即源站（Fixes #23202）
+        // The publish page now 301-redirects to the source site, so use the final origin
         const response = await ofetch.raw(indexUrl);
         if (new URL(response.url).host !== new URL(indexUrl).host) {
             return new URL(response.url).origin;
@@ -17,7 +17,7 @@ const getOriginUrl = async () =>
         const $ = load(response._data);
         const entries = $('ul > li > span');
         if (!entries.length) {
-            throw new Error('无法从发布页解析源站地址');
+            throw new Error('Unable to find the source site URL on the jpxgmn publish page');
         }
         return 'http://' + $(entries[Math.floor(Math.random() * entries.length)]).text();
     });
