@@ -51,10 +51,10 @@ importers:
         version: 6.16.4
       '@hono/node-server':
         specifier: 2.1.1
-        version: 2.1.1(hono@4.13.8)
+        version: 2.1.1(hono@4.13.9)
       '@hono/zod-openapi':
         specifier: 1.6.3
-        version: 1.6.3(hono@4.13.8)(zod@4.6.5)
+        version: 1.6.3(hono@4.13.9)(zod@4.6.5)
       '@jocmp/mercury-parser':
         specifier: 3.1.0
         version: 3.1.0
@@ -89,8 +89,8 @@ importers:
         specifier: 0.0.25
         version: 0.0.25
       '@scalar/hono-api-reference':
-        specifier: 0.12.3
-        version: 0.12.3(hono@4.13.8)
+        specifier: 0.12.6
+        version: 0.12.6(hono@4.13.9)
       '@sentry/node':
         specifier: 10.75.1
         version: 10.75.1(@opentelemetry/core@2.11.0(@opentelemetry/api@1.9.1))(@opentelemetry/exporter-trace-otlp-http@0.222.0(@opentelemetry/api@1.9.1))
@@ -134,8 +134,8 @@ importers:
         specifier: 2.1.88
         version: 2.1.88
       hono:
-        specifier: 4.13.8
-        version: 4.13.8
+        specifier: 4.13.9
+        version: 4.13.9
       html-to-text:
         specifier: 10.0.1
         version: 10.0.1
@@ -2642,30 +2642,30 @@ packages:
   '@rss3/sdk@0.0.25':
     resolution: {integrity: sha512-jyXT4YTwefxxRZ0tt5xjbnw8e7zPg2OGdo/0xb+h/7qWnMNhLtWpc95DsYs/1C/I0rIyiDpZBhLI2DieQ9y+tw==}
 
-  '@scalar/client-side-rendering@0.4.2':
-    resolution: {integrity: sha512-64bpJgq3TVfN7RsMJzOrY9yrhB1RnV+ys693RfSgXSr9VbrKEfU7bkyXLAsL2MFIv4cqBibn78/E4VwoWR554w==}
+  '@scalar/client-side-rendering@0.4.5':
+    resolution: {integrity: sha512-6dhBKaRecrrk2WyVLxrA8oyTiY+4zzhwf5OUjUyuyQXZHt/751QDf/TvW14p2osEaNELfY/gjtN8meX+UslFQw==}
     engines: {node: '>=22'}
 
-  '@scalar/helpers@0.12.0':
-    resolution: {integrity: sha512-rcX0rFLiWWc0VBr/E+HkatubL0I0ZzxASQkd3032NWEMAEfNd2TiJ9kH46HwbSAOOl696ghxymWegjpjjvxwzA==}
+  '@scalar/helpers@0.15.0':
+    resolution: {integrity: sha512-eUnaVQ1EE2YFIVrPOQxVaUiVYZjM6Yg2Oh0yUI87pyI0ilH6jOLA6wIJVWP/AXLv5WnhsfJW33xlZcztozEZ2A==}
     engines: {node: '>=22'}
 
-  '@scalar/hono-api-reference@0.12.3':
-    resolution: {integrity: sha512-e/NFmU/udvHILjbU+Wgu9432/nJ62lNqLvcCTwpHTNQ2H0xL5eH74SDYNscwjeagtUCFP09CgwJ7GiyMNWy2Hg==}
+  '@scalar/hono-api-reference@0.12.6':
+    resolution: {integrity: sha512-u5CXaHTz8K9OZP5Yk/HungHJc4sqtQ1Y4Hf3NdY1EYsrUrgtCKdDn8G2xLKP2u+8+FICeUHx6IjPjEn3BkCCKg==}
     engines: {node: '>=22'}
     peerDependencies:
       hono: ^4.12.5
 
-  '@scalar/schemas@0.10.0':
-    resolution: {integrity: sha512-jFqfd+oqqlTfs87V+QkIrR9DiRv+/h1x3GzSGbGe1qrM6togeXwvVG4aurn+LZ+Ej9of54/6FmoI8DPuLOKx7A==}
+  '@scalar/schemas@0.12.1':
+    resolution: {integrity: sha512-D/1h/ek2mCwZFOBHQQ8gqD/pQ6Dz5xwur3s6aCwA71AnDF8/Wh+nwUNyIz+H4iquYIq5AUQD02mRyhUE/nIqtg==}
     engines: {node: '>=22'}
 
-  '@scalar/types@0.20.1':
-    resolution: {integrity: sha512-gJVEwx2e3o5xJGZqFjZSH8dNqKt9x6wu19AdMGyws1hMGrEXcEMJQ3pCzeUdU+nDxg0StapCF90ZdSOrtzRRqQ==}
+  '@scalar/types@0.22.1':
+    resolution: {integrity: sha512-h8/oe1tG1UIPoAKETiOBtYpyoH7GW3mp4Yu3Znl1RWa2iYLWl7ZtnqJ2A+n5s7MvZEDAb33pt4W/eswB3VVr6Q==}
     engines: {node: '>=22'}
 
-  '@scalar/validation@0.6.3':
-    resolution: {integrity: sha512-j3s9XPv8Wo1EG5/naBi4XGF0uXYQ2A3QZNI0NKWgCMxRHVrDJGlZEYymcHDHY7fquRm73P8U3c8xqJqB5yad6w==}
+  '@scalar/validation@0.6.5':
+    resolution: {integrity: sha512-t/dtbqesbOLsTusFI2kXfiFEQOiZC7+oAY+jZnE82Y64xLamo/1KrZpta8GkuAfIHyeOHOx5bDFid04eO13MIg==}
     engines: {node: '>=20'}
 
   '@scure/base@2.3.0':
@@ -4281,8 +4281,8 @@ packages:
   hmacsha1@1.0.0:
     resolution: {integrity: sha512-4FP6J0oI8jqb6gLLl9tSwVdosWJ/AKSGJ+HwYf6Ixe4MUcEkst4uWzpVQrNOCin0fzTRQbXV8ePheU8WiiDYBw==}
 
-  hono@4.13.8:
-    resolution: {integrity: sha512-/Gng7NfoykZl2pjukW5Z6+8Yxm3BPRf86GTbQnt0SbySkvax4fyL4H3HhY1cCpBGmiW9XDRFzRV+CXK2W8QudQ==}
+  hono@4.13.9:
+    resolution: {integrity: sha512-7dMkQmZoC4E6F7AtaQSPhlWAdnBti+j7rreMZl8QB4jFiEhP9TWbGWUMi8WYzBCgmgulxuvLQupKqo+Co6Omyg==}
     engines: {node: '>=16.9.0'}
 
   hookable@6.1.1:
@@ -7003,21 +7003,21 @@ snapshots:
       '@types/aws-lambda': 8.10.163
       '@types/express': 5.0.6
 
-  '@hono/node-server@2.1.1(hono@4.13.8)':
+  '@hono/node-server@2.1.1(hono@4.13.9)':
     dependencies:
-      hono: 4.13.8
+      hono: 4.13.9
 
-  '@hono/zod-openapi@1.6.3(hono@4.13.8)(zod@4.6.5)':
+  '@hono/zod-openapi@1.6.3(hono@4.13.9)(zod@4.6.5)':
     dependencies:
       '@asteasolutions/zod-to-openapi': 9.1.0(zod@4.6.5)
-      '@hono/zod-validator': 0.9.1(hono@4.13.8)(zod@4.6.5)
-      hono: 4.13.8
+      '@hono/zod-validator': 0.9.1(hono@4.13.9)(zod@4.6.5)
+      hono: 4.13.9
       openapi3-ts: 4.6.1
       zod: 4.6.5
 
-  '@hono/zod-validator@0.9.1(hono@4.13.8)(zod@4.6.5)':
+  '@hono/zod-validator@0.9.1(hono@4.13.9)(zod@4.6.5)':
     dependencies:
-      hono: 4.13.8
+      hono: 4.13.9
       zod: 4.6.5
 
   '@humanfs/core@0.19.2':
@@ -7974,32 +7974,33 @@ snapshots:
       '@rss3/api-core': 0.0.25
       '@rss3/api-utils': 0.0.25
 
-  '@scalar/client-side-rendering@0.4.2':
+  '@scalar/client-side-rendering@0.4.5':
     dependencies:
-      '@scalar/schemas': 0.10.0
-      '@scalar/types': 0.20.1
-      '@scalar/validation': 0.6.3
+      '@scalar/helpers': 0.15.0
+      '@scalar/schemas': 0.12.1
+      '@scalar/types': 0.22.1
+      '@scalar/validation': 0.6.5
 
-  '@scalar/helpers@0.12.0': {}
+  '@scalar/helpers@0.15.0': {}
 
-  '@scalar/hono-api-reference@0.12.3(hono@4.13.8)':
+  '@scalar/hono-api-reference@0.12.6(hono@4.13.9)':
     dependencies:
-      '@scalar/client-side-rendering': 0.4.2
-      hono: 4.13.8
+      '@scalar/client-side-rendering': 0.4.5
+      hono: 4.13.9
 
-  '@scalar/schemas@0.10.0':
+  '@scalar/schemas@0.12.1':
     dependencies:
-      '@scalar/helpers': 0.12.0
-      '@scalar/validation': 0.6.3
+      '@scalar/helpers': 0.15.0
+      '@scalar/validation': 0.6.5
 
-  '@scalar/types@0.20.1':
+  '@scalar/types@0.22.1':
     dependencies:
-      '@scalar/helpers': 0.12.0
+      '@scalar/helpers': 0.15.0
       nanoid: 5.1.16
       type-fest: 5.10.0
       zod: 4.6.5
 
-  '@scalar/validation@0.6.3': {}
+  '@scalar/validation@0.6.5': {}
 
   '@scure/base@2.3.0': {}
 
@@ -9666,7 +9667,7 @@ snapshots:
 
   hmacsha1@1.0.0: {}
 
-  hono@4.13.8: {}
+  hono@4.13.9: {}
 
   hookable@6.1.1: {}
 
