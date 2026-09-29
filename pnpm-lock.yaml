@@ -44,8 +44,8 @@ importers:
         specifier: 4.4.1
         version: 4.4.1
       '@googleapis/youtube':
-        specifier: 39.0.0
-        version: 39.0.0
+        specifier: 39.0.1
+        version: 39.0.1
       '@honeybadger-io/js':
         specifier: 6.16.4
         version: 6.16.4
@@ -1235,8 +1235,8 @@ packages:
       '@noble/hashes':
         optional: true
 
-  '@googleapis/youtube@39.0.0':
-    resolution: {integrity: sha512-ROGXvKLwOWOS4dSEexWS4ZF061ZGaTmGzkdOiTB6OvpimzmbnVyMioRRi0q+/sZ6C1CwffOb8+WYo5SPiZlTag==}
+  '@googleapis/youtube@39.0.1':
+    resolution: {integrity: sha512-k6G0U/EeCrhzC18tguCLL9xMiEM/Z/xOOsOha+BC9oo30njyX6TaODZEHjz93DdYa1ouW32QZSybqvZadxYDiw==}
     engines: {node: '>=22.0.0'}
 
   '@honeybadger-io/core@6.11.1':
@@ -4166,8 +4166,8 @@ packages:
     resolution: {integrity: sha512-kB3rzJV7d9juLZh8/56QTXCwQfxyhdOMdyYk1HdQKFtF8TJTDTZQJtixWIwXdE9Jji91mC41DUNpjleo4L4eAQ==}
     engines: {node: '>=18'}
 
-  gcp-metadata@9.0.3:
-    resolution: {integrity: sha512-2YYnIlHaKBGT2IPg3G2M57hia9Galz15zsEOvw9T3oRf0lSn6KN6VcHQLqby7x8ksYKnjXvp3rp2KJyLCN6zfQ==}
+  gcp-metadata@9.0.4:
+    resolution: {integrity: sha512-p6WvbXOhfwnVtv/MyPq5kBiVhfV/qglMIxwwTVNEI1Ha1HmOgz5uHYHtYO6SfGckFaXe8blA11IJJ3wqXmvmBA==}
     engines: {node: '>=22'}
 
   generative-bayesian-network@2.1.88:
@@ -4218,8 +4218,8 @@ packages:
   globrex@0.1.2:
     resolution: {integrity: sha512-uHJgbwAMwNFf5mLst7IWLNg14x1CkeqglJb/K3doi4dw6q2IvAAmM/Y81kevy83wP+Sst+nutFTYOGg3d1lsxg==}
 
-  google-auth-library@11.0.2:
-    resolution: {integrity: sha512-vzpgPutxrghPsnjrjpzLX2bdv8IOL719Rh0oEjGnQu8YCIbnbMuTTQ5zU9LcKvLdOPgCxBwppbvnhgW90Qna5Q==}
+  google-auth-library@11.1.0:
+    resolution: {integrity: sha512-YIBq5KNoHQrZ9PM4PeodDBqqBGlSTIxh1zibN8u3zNIO9UJg8gvKuCpdKV7fWXhsZ2zRkU6FhGrgKNgLJ2IRgw==}
     engines: {node: '>=22'}
 
   google-logging-utils@2.0.1:
@@ -4229,8 +4229,8 @@ packages:
   google-play-scraper@10.1.3:
     resolution: {integrity: sha512-T5zkrPqTvDoKx8jHGx8ZRca2viJQS0KpfFNMMMAR5Q/4/8Wl8GBG9HxuvfqtnKAZ8TzufnLN1N+8ShvHpSt6+g==}
 
-  googleapis-common@9.0.4:
-    resolution: {integrity: sha512-fcI5bm1gN+9MNb+gvANRPFsxaJ07h/ZYvKCh6H3RoDJBUTwp5ySaCpCqnmX8gnGJUD/9bKmkacivRJT1g+xXyg==}
+  googleapis-common@9.1.0:
+    resolution: {integrity: sha512-UJBElspYPJb0+fI8q0LxARw1hPnwd9yd5NqhKqEUPxjhnB1jdsRP7rlRTBp69JS5Vo10bCiRE9+ISsIG2A+Ttg==}
     engines: {node: '>=22'}
 
   got@14.6.6:
@@ -6983,9 +6983,9 @@ snapshots:
     optionalDependencies:
       '@noble/hashes': 2.3.0
 
-  '@googleapis/youtube@39.0.0':
+  '@googleapis/youtube@39.0.1':
     dependencies:
-      googleapis-common: 9.0.4
+      googleapis-common: 9.1.0
     transitivePeerDependencies:
       - supports-color
 
@@ -9519,7 +9519,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  gcp-metadata@9.0.3:
+  gcp-metadata@9.0.4:
     dependencies:
       gaxios: 7.3.1
       google-logging-utils: 2.0.1
@@ -9577,12 +9577,12 @@ snapshots:
 
   globrex@0.1.2: {}
 
-  google-auth-library@11.0.2:
+  google-auth-library@11.1.0:
     dependencies:
       base64-js: 1.5.1
       ecdsa-sig-formatter: 1.0.11
       gaxios: 7.3.1
-      gcp-metadata: 9.0.3
+      gcp-metadata: 9.0.4
       google-logging-utils: 2.0.1
       jws: 4.0.1
     transitivePeerDependencies:
@@ -9601,11 +9601,11 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  googleapis-common@9.0.4:
+  googleapis-common@9.1.0:
     dependencies:
       extend: 3.0.2
       gaxios: 7.3.1
-      google-auth-library: 11.0.2
+      google-auth-library: 11.1.0
       google-logging-utils: 2.0.1
       qs: 6.16.0
       url-template: 2.0.8
