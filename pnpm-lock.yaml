@@ -317,6 +317,9 @@ importers:
       '@eslint/js':
         specifier: 10.0.1
         version: 10.0.1(eslint@10.11.0(jiti@2.7.0))
+      '@j178/prek':
+        specifier: 0.5.4
+        version: 0.5.4
       '@oxlint/plugins':
         specifier: 1.85.0
         version: 1.85.0
@@ -407,15 +410,9 @@ importers:
       globals:
         specifier: 17.12.0
         version: 17.12.0
-      husky:
-        specifier: 9.1.7
-        version: 9.1.7
       js-beautify:
         specifier: 2.0.3
         version: 2.0.3
-      lint-staged:
-        specifier: 17.6.0
-        version: 17.6.0
       mockdate:
         specifier: 3.0.5
         version: 3.0.5
@@ -1598,6 +1595,69 @@ packages:
   '@isaacs/fs-minipass@4.0.1':
     resolution: {integrity: sha512-wgm9Ehl2jpeqP3zw/7mo3kRHFp5MEDhqAdwy1fTGkHAwnkGOVsgpvQhL8B5n1qlb01jV3n/bI0ZfZp5lWA1k4w==}
     engines: {node: '>=18.0.0'}
+
+  '@j178/prek-android-arm64@0.5.4':
+    resolution: {integrity: sha512-K2kVaCpRmuQjr0sntQEMdTrAP2qTweWWYybyZyDwdIw0AC96Woo4zG7Tho0sJlSJcfcMVFWE34rgfhHB2NaRgA==}
+    engines: {node: '>=18'}
+    cpu: [arm64]
+    os: [android]
+
+  '@j178/prek-darwin-arm64@0.5.4':
+    resolution: {integrity: sha512-/dzoIpm/Zno+ZNRo4X6crvH5xmTZBieU+8yjXPkBFsiGSqZeN3HfoERQFAZ41C2k0OJnHdzOpnHKlBgAvHD5pg==}
+    engines: {node: '>=18'}
+    cpu: [arm64]
+    os: [darwin]
+
+  '@j178/prek-darwin-x64@0.5.4':
+    resolution: {integrity: sha512-k1j1CSXxG9MJtPW1IvJONoyLVlv2EKCVnJk73tvqnkKd3mkDq+x1cAiSbbEoGAtwMqhd7T9bnj5pGQENAaR/5A==}
+    engines: {node: '>=18'}
+    cpu: [x64]
+    os: [darwin]
+
+  '@j178/prek-linux-arm64-gnu@0.5.4':
+    resolution: {integrity: sha512-fgB19MdxpBeVzRya/dBj0zpDhCtvjiCm/BDMPhpu7FhSFbOJ18bTu9jUgKAclfRik1dkXLLeLA/2e+kGrmfBfw==}
+    engines: {node: '>=18'}
+    cpu: [arm64]
+    os: [linux]
+    libc: [glibc]
+
+  '@j178/prek-linux-arm64-musl@0.5.4':
+    resolution: {integrity: sha512-IhaFnZPXlOYqBayCv/75sn7THBDamvi/b+o0IiceQEb9qvcDwmfVwZufC6kDpRWoL2ESXJPjYXoQsl+Lr55ZEw==}
+    engines: {node: '>=18'}
+    cpu: [arm64]
+    os: [linux]
+    libc: [musl]
+
+  '@j178/prek-linux-x64-gnu@0.5.4':
+    resolution: {integrity: sha512-srSCqoDuq/dTs6sg+B193PmRqPsbT4ibY66KE/pkaAWOzWc6dSpECtsJQkymH172ewI4Gs9G5ZR8m7KCtqFiZA==}
+    engines: {node: '>=18'}
+    cpu: [x64]
+    os: [linux]
+    libc: [glibc]
+
+  '@j178/prek-linux-x64-musl@0.5.4':
+    resolution: {integrity: sha512-nbJod1QxtJls9O+FLpwItrXm0aL8LGJlz0itdDgwvCem0IhSHnOikuyy16R1x/WA5AOVMA0EMbHcbivym+a7Mg==}
+    engines: {node: '>=18'}
+    cpu: [x64]
+    os: [linux]
+    libc: [musl]
+
+  '@j178/prek-win32-arm64-msvc@0.5.4':
+    resolution: {integrity: sha512-BqBWp6iBhxcPX+o5+v31xh1l6LYMqq/YomNd/LYvyX+QCL1Xptd2FgG5K0Zq2FG0C7y6isANFMifVdnoA3oKsg==}
+    engines: {node: '>=18'}
+    cpu: [arm64]
+    os: [win32]
+
+  '@j178/prek-win32-x64-msvc@0.5.4':
+    resolution: {integrity: sha512-p/1rouJZGcLq+MMHQ9PbfEvXT9r2iav2yB6anlH0FofbSbO5gzJUEsxVsuSF0yHvk5a6jnHiuS0IK5TDXdNKGA==}
+    engines: {node: '>=18'}
+    cpu: [x64]
+    os: [win32]
+
+  '@j178/prek@0.5.4':
+    resolution: {integrity: sha512-QalDi4SSAJ78p8kJvHi3/hwG63WfuE8oHpj6+SlRWgs3eVpgTOMjawe3bq0C2vPVFvxfwI8YVRx8PCWBfrcc5A==}
+    engines: {node: '>=18'}
+    hasBin: true
 
   '@jocmp/mercury-parser@3.1.1':
     resolution: {integrity: sha512-L8x89TB9a586vXa5tnHcwXp+vpXP9DHV/uxpEMTa2tihFBePNko5WaFlQ101k/WKa7mQsxGUnGp+s8JXbNx+mw==}
@@ -4531,11 +4591,6 @@ packages:
     resolution: {integrity: sha512-AXcZb6vzzrFAUE61HnN4mpLqd/cSIwNQjtNWR0euPm6y0iqx3G4gOXaIDdtdDwZmhwe82LA6+zinmW4UBWVePQ==}
     engines: {node: '>=16.17.0'}
 
-  husky@9.1.7:
-    resolution: {integrity: sha512-5gs5ytaNjBrh5Ow3zrvdUUY+0VxIuWVL4i9irt6friV+BqdCfmV11CQTWMiBYWHbXhco+J1kHfTOUkePhCDvMA==}
-    engines: {node: '>=18'}
-    hasBin: true
-
   iconv-lite@0.6.3:
     resolution: {integrity: sha512-4fCk79wshMdzMp2rH06qWrJE4iolqLhCUH+OiuIgU++RB0+94NlDL81atO7GX55uUKueo0txHNtvEyI6D7WdMw==}
     engines: {node: '>=0.10.0'}
@@ -4916,11 +4971,6 @@ packages:
 
   linkify-it@6.1.0:
     resolution: {integrity: sha512-wJ/TwpSDTLepCrQoYWYIExIKg5Zchex2Nn5yk2mFnB+6PtdkHtyLx742md9csRjjOnGkKIS/RrbY7l8D6gT9Vw==}
-
-  lint-staged@17.6.0:
-    resolution: {integrity: sha512-nOhBfYkZEwkFtNzD5pK9s9LkcWoxJ+whLzEnhqi9nl7zTB5n7tg8+9iYgMGx2Wm3VlLu8cbNj0RACzY+nWi5iQ==}
-    engines: {node: '>=22.22.1'}
-    hasBin: true
 
   locate-path@6.0.0:
     resolution: {integrity: sha512-iPZK6eYjbxRu3uB4/WZ3EsEIMJFMqAoopl3R+zuq0UjcAm/MO6KCweDgPfP3elTztoKP3KtnVHxTn2NHBSDVUw==}
@@ -5911,10 +5961,6 @@ packages:
 
   strict-event-emitter@0.5.1:
     resolution: {integrity: sha512-vMgjE/GGEPEFnhFub6pa4FmJBRBVOLpIII2hvCZ8Kzb7K0hlHo7mQv6xYrBvCL2LtAIBwFUK8wvuJgTVSQ5MFQ==}
-
-  string-argv@0.3.2:
-    resolution: {integrity: sha512-aqD2Q0144Z+/RqG52NeHEkZauTAUWJO8c6yTftGJKO3Tja5tUgIfmIl6kExvhtxSDP7fXB6DvzkfMpCd/F3G+Q==}
-    engines: {node: '>=0.6.19'}
 
   string-direction@0.1.2:
     resolution: {integrity: sha512-NJHQRg6GlOEMLA6jEAlSy21KaXvJDNoAid/v6fBAJbqdvOEIiPpCrIPTHnl4636wUF/IGyktX5A9eddmETb1Cw==}
@@ -7500,6 +7546,45 @@ snapshots:
   '@isaacs/fs-minipass@4.0.1':
     dependencies:
       minipass: 7.1.3
+
+  '@j178/prek-android-arm64@0.5.4':
+    optional: true
+
+  '@j178/prek-darwin-arm64@0.5.4':
+    optional: true
+
+  '@j178/prek-darwin-x64@0.5.4':
+    optional: true
+
+  '@j178/prek-linux-arm64-gnu@0.5.4':
+    optional: true
+
+  '@j178/prek-linux-arm64-musl@0.5.4':
+    optional: true
+
+  '@j178/prek-linux-x64-gnu@0.5.4':
+    optional: true
+
+  '@j178/prek-linux-x64-musl@0.5.4':
+    optional: true
+
+  '@j178/prek-win32-arm64-msvc@0.5.4':
+    optional: true
+
+  '@j178/prek-win32-x64-msvc@0.5.4':
+    optional: true
+
+  '@j178/prek@0.5.4':
+    optionalDependencies:
+      '@j178/prek-android-arm64': 0.5.4
+      '@j178/prek-darwin-arm64': 0.5.4
+      '@j178/prek-darwin-x64': 0.5.4
+      '@j178/prek-linux-arm64-gnu': 0.5.4
+      '@j178/prek-linux-arm64-musl': 0.5.4
+      '@j178/prek-linux-x64-gnu': 0.5.4
+      '@j178/prek-linux-x64-musl': 0.5.4
+      '@j178/prek-win32-arm64-msvc': 0.5.4
+      '@j178/prek-win32-x64-msvc': 0.5.4
 
   '@jocmp/mercury-parser@3.1.1':
     dependencies:
@@ -10109,8 +10194,6 @@ snapshots:
 
   human-signals@5.0.0: {}
 
-  husky@9.1.7: {}
-
   iconv-lite@0.6.3:
     dependencies:
       safer-buffer: '@nolyfill/safer-buffer@1.0.44'
@@ -10466,14 +10549,6 @@ snapshots:
   linkify-it@6.1.0:
     dependencies:
       uc.micro: 3.0.0
-
-  lint-staged@17.6.0:
-    dependencies:
-      picomatch: 4.0.7
-      string-argv: 0.3.2
-      tinyexec: 1.3.1
-    optionalDependencies:
-      yaml: 2.9.1
 
   locate-path@6.0.0:
     dependencies:
@@ -11807,8 +11882,6 @@ snapshots:
       bluebird: 2.11.0
 
   strict-event-emitter@0.5.1: {}
-
-  string-argv@0.3.2: {}
 
   string-direction@0.1.2: {}
 

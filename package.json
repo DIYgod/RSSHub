@@ -40,9 +40,9 @@
         "format": "oxlint --type-aware --fix . && oxfmt .",
         "format:check": "oxlint --type-aware . && oxfmt . --check",
         "format:description": "tsx scripts/workflow/format-description.ts",
-        "format:staged": "lint-staged",
+        "format:staged": "prek run",
         "lint": "oxlint --type-aware .",
-        "prepare": "husky || true",
+        "prepare": "prek install || true",
         "prepublishOnly": "npm run build:lib",
         "profiling": "cross-env NODE_ENV=production tsx --prof lib/index.ts",
         "start": "cross-env NODE_ENV=production NODE_OPTIONS='--max-http-header-size=32768' node dist/index.mjs",
@@ -156,6 +156,7 @@
         "@cloudflare/vitest-plugin": "1.2.8",
         "@cloudflare/workers-types": "5.20260927.1",
         "@eslint/js": "10.0.1",
+        "@j178/prek": "0.5.4",
         "@oxlint/plugins": "1.85.0",
         "@stylistic/eslint-plugin": "5.10.0",
         "@types/crypto-js": "4.2.2",
@@ -186,9 +187,7 @@
         "fast-string-width": "3.0.2",
         "fs-extra": "11.4.1",
         "globals": "17.12.0",
-        "husky": "9.1.7",
         "js-beautify": "2.0.3",
-        "lint-staged": "17.6.0",
         "mockdate": "3.0.5",
         "msw": "2.15.0",
         "node-network-devtools": "1.0.30",
@@ -210,21 +209,6 @@
         "vitest": "4.1.11",
         "wrangler": "4.141.0",
         "yaml-eslint-parser": "2.1.0"
-    },
-    "lint-staged": {
-        "!(*.ts|*.tsx|*.js|*.cjs|*.mjs|*.yml)": [
-            "oxfmt --no-error-on-unmatched-pattern"
-        ],
-        "*.{ts,tsx,js,cjs,mjs}": [
-            "tsx scripts/workflow/format-description.ts",
-            "oxlint --type-aware --fix",
-            "eslint --cache --fix --concurrency auto",
-            "oxfmt --no-error-on-unmatched-pattern"
-        ],
-        "*.yml": [
-            "eslint --cache --fix --concurrency auto",
-            "oxfmt --no-error-on-unmatched-pattern"
-        ]
     },
     "engines": {
         "node": "^22.22.2 || ^24.15.0"
