@@ -1,9 +1,9 @@
 import { parseDate } from '@/utils/parse-date';
 
-import { renderImages } from './templates/images';
-import { renderVideo } from './templates/video';
+import { renderImages } from './images';
+import { renderVideo } from './video';
 
-const renderItems = (items) =>
+export const renderItems = (items) =>
     items.map((item) => {
         const productType = item.product_type; // carousel_container, feed, clips, igtv
         // Content
@@ -57,5 +57,3 @@ const renderItems = (items) =>
             description,
         };
     });
-
-export { renderItems };
