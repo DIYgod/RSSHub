@@ -384,8 +384,8 @@ importers:
         specifier: 9.1.1
         version: 9.1.1(@types/node@26.6.3)(eslint@10.11.0(jiti@2.7.0))
       eslint-plugin-n:
-        specifier: 18.3.0
-        version: 18.3.0(@typescript/typescript6@6.0.2)(eslint@10.11.0(jiti@2.7.0))
+        specifier: 18.4.0
+        version: 18.4.0(@typescript/typescript6@6.0.2)(eslint@10.11.0(jiti@2.7.0))
       eslint-plugin-regexp:
         specifier: 3.3.1
         version: 3.3.1(eslint@10.11.0(jiti@2.7.0))
@@ -3462,6 +3462,9 @@ packages:
   arg@5.0.2:
     resolution: {integrity: sha512-PYjyFOLKQ9y57JvQ6QLo8dAgNqswh8M1RMJYdQduT6xbWSgK36P/Z/v+p888pM69jMMfS8Xd8F6I1kQ/I9HUGg==}
 
+  argparse@2.0.1:
+    resolution: {integrity: sha512-8+9WqebbFzpX9OR+Wa6O29asIogeRMzcGtAINdpMHHyAg10f05aSFVBbcEqGf/PXw1EjAZ+q2/bEBg3DvurK3Q==}
+
   argparse@3.0.0:
     resolution: {integrity: sha512-BOp5NMrHqKxmq/OLr+clzzrRxgOKSLkcjmkWuChp7Irqwn4s74WjOBPIgWfA/HMcBnVkZ5XEuf9uUqzlpfCQ6A==}
 
@@ -4018,8 +4021,8 @@ packages:
   endpoint@0.4.5:
     resolution: {integrity: sha512-oA2ALUF+d4Y0I8/WMV/0BuAZGHxfIdAygr9ZXP4rfzmp5zpYZmYKHKAbqRQnrE1YGdPhVg4D24CQkyx2qYEoHg==}
 
-  enhanced-resolve@5.24.5:
-    resolution: {integrity: sha512-L1l8TNvomm6UVW5B253AGxQagSQr+vGwhMlrrfRS2qmhx46AMpMVJKQYLvWYbysTMY8VoicOvzHzoHMbyzB+4A==}
+  enhanced-resolve@5.25.1:
+    resolution: {integrity: sha512-nGXts5znJzmWPu+mIE9izCOzdg63oJca2mDzGWWTth7sr4aCToKcoyFVBQwN75Ij5Pf6p510EwkTqViTRzDV+w==}
     engines: {node: '>=10.13.0'}
 
   entities@4.5.0:
@@ -4119,8 +4122,8 @@ packages:
     peerDependencies:
       eslint: '>=8'
 
-  eslint-plugin-n@18.3.0:
-    resolution: {integrity: sha512-cPVguuDe6DrIPb/qUXHf8P89MaVTUmiYWwpt5gX5AILsvRIiZAxMFXcFR6QHYBksqKJpjfUBlL/RleCJUWcD7w==}
+  eslint-plugin-n@18.4.0:
+    resolution: {integrity: sha512-TEm6Nqn9+l7EWfJXOL6pmrEdpiM2ZTgo4fNMRDvBTM70jeQ7x3X3Akcx+sRCIRfpcSVwMypH3ZAA33PLyNKmYw==}
     engines: {node: ^20.19.0 || ^22.13.0 || >=24}
     peerDependencies:
       eslint: '>=8.57.1'
@@ -4368,8 +4371,8 @@ packages:
     resolution: {integrity: sha512-kVCxPF3vQM/N0B1PmoqVUqgHP+EeVjmZSQn+1oCRPxd2P21P2F19lIgbR3HBosbB1PUhOAoctJnfEn2GbN2eZA==}
     engines: {node: '>=18'}
 
-  get-tsconfig@4.14.1:
-    resolution: {integrity: sha512-Dz/6HxkrxgNehhxLVeyv8sad9UzF2xBVeaKBQNDfJ5XiSXmp2gTR0eO0RWiT2NCKS5aGP9jjkOMggTN90qU50A==}
+  get-tsconfig@4.14.3:
+    resolution: {integrity: sha512-++QEw4DIY7WGoukz+/+A/8dGYPT9l9yIadnmSgZ8Rjr3YVSVDipQSO9CdnJo9ePqFqUUqh+wk9uIaoiAwsiPkA==}
 
   get-tsconfig@5.0.0-beta.6:
     resolution: {integrity: sha512-X6fBC0pmImC70gvX2zm56go9hx0MyoGVdG0tUCkg/D+Xnh5TJsOZ7iDbOdI3PvmtrDxnu1YdDufpK2QJX1Meqw==}
@@ -4738,6 +4741,10 @@ packages:
 
   js-tokens@4.0.0:
     resolution: {integrity: sha512-RdJUflcE3cUzKiMqQgsCu06FPu9UdIJO0beYbPhHN4k6apgJtifcoCtT9bcxOpYBtpD2kCM6Sbzg4CausW/PKQ==}
+
+  js-yaml@5.4.2:
+    resolution: {integrity: sha512-m+aqu+LwO1O6sIopafj8HUVl5aawITwZQe/yHpMCKjaWBaA/d07B/QdMb3529REftiU+RMMHL3Vlsw3hON7vWg==}
+    hasBin: true
 
   jsbn@0.1.1:
     resolution: {integrity: sha512-UVU9dibq2JcFWxQPA6KCqj5O42VOmAY3zQUfEKxU0KpTGXwNoCjkX1e13eHNvw/xPynt6pU0rZ1htjWTNTSXsg==}
@@ -8920,6 +8927,8 @@ snapshots:
 
   arg@5.0.2: {}
 
+  argparse@2.0.1: {}
+
   argparse@3.0.0: {}
 
   asn1@0.2.6:
@@ -9414,7 +9423,7 @@ snapshots:
     dependencies:
       inherits: 2.0.4
 
-  enhanced-resolve@5.24.5:
+  enhanced-resolve@5.25.1:
     dependencies:
       graceful-fs: 4.2.11
       tapable: 2.3.3
@@ -9590,16 +9599,17 @@ snapshots:
       eslint: 10.11.0(jiti@2.7.0)
       eslint-compat-utils: 0.5.1(eslint@10.11.0(jiti@2.7.0))
 
-  eslint-plugin-n@18.3.0(@typescript/typescript6@6.0.2)(eslint@10.11.0(jiti@2.7.0)):
+  eslint-plugin-n@18.4.0(@typescript/typescript6@6.0.2)(eslint@10.11.0(jiti@2.7.0)):
     dependencies:
       '@eslint-community/eslint-utils': 4.10.1(eslint@10.11.0(jiti@2.7.0))
-      enhanced-resolve: 5.24.5
+      enhanced-resolve: 5.25.1
       eslint: 10.11.0(jiti@2.7.0)
       eslint-plugin-es-x: 7.8.0(eslint@10.11.0(jiti@2.7.0))
-      get-tsconfig: 4.14.1
+      get-tsconfig: 4.14.3
       globals: 15.15.0
       globrex: 0.1.2
       ignore: 5.3.2
+      js-yaml: 5.4.2
       semver: 7.8.5
     optionalDependencies:
       typescript: '@typescript/typescript6@6.0.2'
@@ -9903,7 +9913,7 @@ snapshots:
       '@sec-ant/readable-stream': 0.4.1
       is-stream: 4.0.1
 
-  get-tsconfig@4.14.1:
+  get-tsconfig@4.14.3:
     dependencies:
       resolve-pkg-maps: 1.0.0
 
@@ -10297,6 +10307,10 @@ snapshots:
   js-tokens@10.0.0: {}
 
   js-tokens@4.0.0: {}
+
+  js-yaml@5.4.2:
+    dependencies:
+      argparse: 2.0.1
 
   jsbn@0.1.1: {}
 
