@@ -1808,7 +1808,6 @@ export type RoutePath =
   | `/inspirehep/authors/:id`
   | `/inspirehep/literature/:q`
   | `/instagram/:category/:key`
-  | `/instagram/2/:category/:key`
   | `/instructables/projects/:category?`
   | `/inuki-ichiba/rent/:pref?`
   | `/investor/:id{.+}?`

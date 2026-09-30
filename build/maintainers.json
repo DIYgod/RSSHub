@@ -2071,13 +2071,6 @@
     "Max-Tortoise",
     "Rongronggg9"
   ],
-  "/instagram/:category/:key": [
-    "oppilate",
-    "DIYgod"
-  ],
-  "/instagram/2/:category/:key": [
-    "TonyRL"
-  ],
   "/javtrailers/casts/:cast": [
     "TonyRL"
   ],
@@ -11088,6 +11081,9 @@
     "KarasuShin",
     "ranpox",
     "xyqfer"
+  ],
+  "/instagram/:category/:key": [
+    "TonyRL"
   ],
   "/jandan/": [
     "lonelykid",
