@@ -3,6 +3,7 @@ import type { CookieJar } from 'tough-cookie';
 
 import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
+import NotFoundError from '@/errors/types/not-found';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 
@@ -11,6 +12,8 @@ export const baseUrl = 'https://www.instagram.com';
 const docIds = {
     PolarisProfilePageContentQuery: '28036671149327607',
     PolarisProfilePostsQuery: '28570182382647478',
+    PolarisProfileStoryHighlightsTrayContentQuery: '26970053832668570',
+    PolarisStoriesV3ReelPageStandaloneQuery: '29184890191114309',
 };
 
 const getCSRFTokenFromJar = async (cookieJar: CookieJar) => {
@@ -45,7 +48,13 @@ export const checkLogin = async (cookieJar: CookieJar) => {
 };
 
 type User = {
+    id: string;
     username: string;
+    is_private: boolean;
+    /**
+     * absent for guests
+     */
+    friendship_status?: { following: boolean };
     full_name: string;
     biography?: string;
     profile_pic_url: string;
@@ -115,13 +124,17 @@ export const getPage = async (username: string, cookieJar: CookieJar) => {
     await Promise.all(page.headers.getSetCookie().map((c) => cookieJar.setCookie(c, baseUrl)));
 
     const html = page._data as string;
+    const profileId = html.match(/"profile_id":"(\d+)"/)?.[1];
+    if (!profileId) {
+        throw new NotFoundError(`Instagram user @${username} not found`);
+    }
     return {
         html,
         tokens: {
             lsd: html.match(/"LSD",\[\],\{"token":"([^"]+)"/)?.[1] as string,
             dtsg: html.match(/"DTSGInitialData",\[\],\{"token":"([^"]+)"/)?.[1],
         },
-        profileId: html.match(/"profile_id":"(\d+)"/)?.[1],
+        profileId,
     };
 };
 
@@ -167,6 +180,41 @@ export const getUserFeed = (username: string, cookieJar: CookieJar, page: () => 
                 cookieJar
             );
             return posts.xdt_api__v1__feed__user_timeline_graphql_connection.edges.map((edge) => edge.node);
+        },
+        config.cache.routeExpire,
+        false
+    );
+
+export const getReelsMedia = (reelIds: string[], isHighlight: boolean, cookieJar: CookieJar, page: () => ReturnType<typeof getPage>) =>
+    cache.tryGet(
+        `instagram:reels:${reelIds.join(',')}`,
+        async () => {
+            const { tokens } = await page();
+            const data = await graphql(
+                'PolarisStoriesV3ReelPageStandaloneQuery',
+                {
+                    reel_ids_arr: reelIds,
+                    is_highlight: isHighlight,
+                    media_id: null,
+                    __relay_internal__pv__PolarisCommunityNoteStoriesLabelEnabledrelayprovider: false,
+                },
+                tokens,
+                cookieJar
+            );
+
+            return data.xdt_api__v1__feed__reels_media.reels_media.map((reel) => ({ ...reel, items: reel.items.map((item) => ({ ...item, user: reel.user })) }));
+        },
+        config.cache.routeExpire,
+        false
+    );
+
+export const getHighlightIds = (userId: string, cookieJar: CookieJar, page: () => ReturnType<typeof getPage>): Promise<string[]> =>
+    cache.tryGet(
+        `instagram:highlights:${userId}`,
+        async () => {
+            const { tokens } = await page();
+            const tray = await graphql('PolarisProfileStoryHighlightsTrayContentQuery', { user_id: userId, first: 12 }, tokens, cookieJar);
+            return tray.highlights.edges.map((edge) => edge.node.id);
         },
         config.cache.routeExpire,
         false
