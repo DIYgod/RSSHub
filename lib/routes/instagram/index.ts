@@ -29,12 +29,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    name: 'User Profile / Hashtag',
+    name: 'User',
     maintainers: ['TonyRL'],
     handler,
-    description: `| User timeline | Current stories | Highlighted stories | Hashtag |
-| ------------- | --------------- | ------------------- | ------- |
-| user          | stories         | highlights          | tags    |
+    description: `| User Posts | Current stories | Highlighted stories | Hashtag |
+| ---------- | --------------- | ------------------- | ------- |
+| user       | stories         | highlights          | tags    |
 
 Stories, highlights and hashtags require a cookie.`,
 };
