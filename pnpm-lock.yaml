@@ -56,8 +56,8 @@ importers:
         specifier: 1.6.3
         version: 1.6.3(hono@4.13.9)(zod@4.6.5)
       '@jocmp/mercury-parser':
-        specifier: 3.1.0
-        version: 3.1.0
+        specifier: 3.1.1
+        version: 3.1.1
       '@notionhq/client':
         specifier: 5.26.0
         version: 5.26.0
@@ -572,10 +572,6 @@ packages:
     resolution: {integrity: sha512-CjXrNHTnvqBVqHgdBysY3vk2T8tpJHb5/RMeHJBTyVa9xgugCB0CJTx/3oO8RV2QRQP391RWpB7D6hLjm8V9uA==}
     engines: {node: '>=6.0.0'}
     hasBin: true
-
-  '@babel/runtime-corejs2@7.29.7':
-    resolution: {integrity: sha512-5GidEBf/rOQlv4sUknPRgboZEvzt/je7CpbkCZ2o7ojs9JbldxdXJinGLYE0sYR9mfPpRz3Q3D7rP+oSCal70g==}
-    engines: {node: '>=6.9.0'}
 
   '@babel/template@7.29.7':
     resolution: {integrity: sha512-puq+Gf35oI24FeN11LkoUQFqv9uwNeWpxXZi/Ji3rRIoKAzKnxRaZ+Gkj0vKS9ZCiTESfng1N9LyOyXvo+m+Gg==}
@@ -1603,8 +1599,8 @@ packages:
     resolution: {integrity: sha512-wgm9Ehl2jpeqP3zw/7mo3kRHFp5MEDhqAdwy1fTGkHAwnkGOVsgpvQhL8B5n1qlb01jV3n/bI0ZfZp5lWA1k4w==}
     engines: {node: '>=18.0.0'}
 
-  '@jocmp/mercury-parser@3.1.0':
-    resolution: {integrity: sha512-ide0l75g2HwEbC6dNW/D+jNZX7/ISgzQ/QJuIenLzQNR7am/VuwS1vsYDDb+88EkhqoLgcbe4VegunDQIm3bvg==}
+  '@jocmp/mercury-parser@3.1.1':
+    resolution: {integrity: sha512-L8x89TB9a586vXa5tnHcwXp+vpXP9DHV/uxpEMTa2tihFBePNko5WaFlQ101k/WKa7mQsxGUnGp+s8JXbNx+mw==}
     engines: {node: '>=22'}
     hasBin: true
     bundledDependencies:
@@ -3759,10 +3755,6 @@ packages:
     resolution: {integrity: sha512-XGpFGbMLHwSt74YLTKho7Ib242qi6O8MSX+sRokV4oz7iKXvQWGYZthjIhjRGMxjzVkAubBO512dKGYcefmX3Q==}
     engines: {node: '>=6.4.0'}
 
-  core-js@2.6.12:
-    resolution: {integrity: sha512-Kb2wC0fvsWfQrgk8HU5lW6U/Lcs8+9aaYcy4ZFc6DDlo4nZ7n70dEgE5rtR0oG6ufKDUnrwfWL1mXR5ljDatrQ==}
-    deprecated: core-js@<3.23.3 is no longer maintained and not recommended for usage due to the number of issues. Because of the V8 engine whims, feature detection in old core-js versions could cause a slowdown up to 100x even if nothing is polyfilled. Some versions have web compatibility issues. Please, upgrade your dependencies to the actual version of core-js.
-
   core-util-is@1.0.2:
     resolution: {integrity: sha512-3lqz5YjWTYnW6dlDa5TLaTCcShfar1e40rmcJVwCBJC6mWlFuj0eCHIElmG1g5kyuJ/GD+8Wn4FFCcz4gJPfaQ==}
 
@@ -4543,10 +4535,6 @@ packages:
 
   iconv-lite@0.6.3:
     resolution: {integrity: sha512-4fCk79wshMdzMp2rH06qWrJE4iolqLhCUH+OiuIgU++RB0+94NlDL81atO7GX55uUKueo0txHNtvEyI6D7WdMw==}
-    engines: {node: '>=0.10.0'}
-
-  iconv-lite@0.7.2:
-    resolution: {integrity: sha512-im9DjEDQ55s9fL4EYzOAv0yMqmMBSZp6G0VvFyTMPKWxiSBHUj9NW/qqLmXUwXrrM7AvqSlTCfvqRb0cM8yYqw==}
     engines: {node: '>=0.10.0'}
 
   iconv-lite@0.7.3:
@@ -6792,10 +6780,6 @@ snapshots:
     dependencies:
       '@babel/types': 7.29.8
 
-  '@babel/runtime-corejs2@7.29.7':
-    dependencies:
-      core-js: 2.6.12
-
   '@babel/template@7.29.7':
     dependencies:
       '@babel/code-frame': 7.29.7
@@ -7509,13 +7493,12 @@ snapshots:
     dependencies:
       minipass: 7.1.3
 
-  '@jocmp/mercury-parser@3.1.0':
+  '@jocmp/mercury-parser@3.1.1':
     dependencies:
-      '@babel/runtime-corejs2': 7.29.7
       cheerio: 1.2.0
       dayjs: 1.11.23
       difflib: https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed
-      iconv-lite: 0.7.2
+      iconv-lite: 0.7.3
       postman-request: 2.88.1-postman.49
       string-direction: 0.1.2
       turndown: 7.2.4
@@ -9187,8 +9170,6 @@ snapshots:
     dependencies:
       browserslist: 4.29.0
 
-  core-js@2.6.12: {}
-
   core-util-is@1.0.2: {}
 
   cross-env@10.1.0:
@@ -10120,10 +10101,6 @@ snapshots:
   husky@9.1.7: {}
 
   iconv-lite@0.6.3:
-    dependencies:
-      safer-buffer: '@nolyfill/safer-buffer@1.0.44'
-
-  iconv-lite@0.7.2:
     dependencies:
       safer-buffer: '@nolyfill/safer-buffer@1.0.44'
 
