@@ -125,12 +125,18 @@ const visitorId = () => {
     return parts.join('-');
 };
 
+const isString = (value: unknown): value is string => typeof value === 'string';
+
 const buildCookies = (c: Challenge, encStr: string) => {
-    const cfg = JSON.parse(aes(encStr.slice(0, 4) + c.salt).decrypt(encStr.slice(4))) as Record<string, unknown>;
-    const serverTime = Object.values(cfg).find((v) => typeof v === 'string' && /^\d{10}$/.test(v)) as string | undefined;
-    const envKey = cfg[c.envKey];
-    const queryKey = cfg[c.queryKey];
-    if (!serverTime || typeof envKey !== 'string' || typeof queryKey !== 'string') {
+    const decrypted = aes(encStr.slice(0, 4) + c.salt).decrypt(encStr.slice(4));
+    const cfg = new Map<string, unknown>(Object.entries(JSON.parse(decrypted)));
+    const serverTime = cfg
+        .values()
+        .filter((v) => isString(v))
+        .find((v) => /^\d{10}$/.test(v));
+    const envKey = cfg.get(c.envKey);
+    const queryKey = cfg.get(c.queryKey);
+    if (!serverTime || !isString(envKey) || !isString(queryKey)) {
         throw new Error('CT2-WAAP: challenge config changed');
     }
     const last2 = serverTime.slice(-2);

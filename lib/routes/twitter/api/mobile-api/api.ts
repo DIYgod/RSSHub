@@ -238,7 +238,7 @@ const getUser = async (id) => {
     return (userData.data?.user || userData.data?.user_result)?.result?.legacy;
 };
 
-const cacheTryGet = async (_id, params, func) => {
+const cacheTryGet = async <T>(_id, params, func: (id, params) => Promise<T>) => {
     const id = await getUserID(_id);
     if (id === undefined) {
         throw new InvalidParameterError('User not found');
@@ -263,7 +263,7 @@ const getUserTweets = async (id, params = {}) => {
         [_getUserTweets, getUserTweetsAndReplies, getUserMedia].map(async (func) => {
             try {
                 const result = await func(id, params);
-                tweets.push(...(result as any[]));
+                tweets.push(...result);
             } catch (error) {
                 logger.warn(`Failed to get tweets for ${id} with ${func.name}: ${error}`);
             }

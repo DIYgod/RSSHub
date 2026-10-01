@@ -1,23 +1,18 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
+import { config } from '@/config';
+
 import { getPlaywrightPage, setBrowserBinding } from './playwright.worker';
 
-const mocks = vi.hoisted(() => ({ endpoint: undefined as string | undefined, launch: vi.fn(), newContext: vi.fn(), newPage: vi.fn(), goto: vi.fn(), close: vi.fn(), contextClose: vi.fn(), connect: vi.fn() }));
+const { playwrightWSEndpoint } = config;
+const mocks = vi.hoisted(() => ({ launch: vi.fn(), newContext: vi.fn(), newPage: vi.fn(), goto: vi.fn(), close: vi.fn(), contextClose: vi.fn(), connect: vi.fn() }));
 vi.mock('@cloudflare/playwright', () => ({ launch: mocks.launch }));
 vi.mock('./playwright-remote.worker', () => ({ connectRemotePlaywright: mocks.connect, setPlaywrightServiceBinding: vi.fn() }));
-vi.mock('@/config', () => ({
-    config: {
-        get playwrightWSEndpoint() {
-            return mocks.endpoint;
-        },
-    },
-}));
-vi.mock('./logger', () => ({ default: { debug: vi.fn(), error: vi.fn(), warn: vi.fn() } }));
 
 beforeEach(() => {
     vi.useFakeTimers();
     vi.clearAllMocks();
-    mocks.endpoint = undefined;
+    config.playwrightWSEndpoint = undefined;
     mocks.goto.mockResolvedValue(undefined);
     mocks.newPage.mockResolvedValue({ goto: mocks.goto });
     mocks.newContext.mockResolvedValue({ newPage: mocks.newPage, close: mocks.contextClose });
@@ -28,13 +23,14 @@ beforeEach(() => {
 
 afterEach(() => {
     vi.useRealTimers();
+    config.playwrightWSEndpoint = playwrightWSEndpoint;
 });
 
 describe('Worker browser lifecycle', () => {
     it('prefers the configured ordinary WebSocket server over BROWSER', async () => {
-        mocks.endpoint = 'wss://browser.example/playwright?token=test';
+        config.playwrightWSEndpoint = 'wss://browser.example/playwright?token=test';
         const { destroy } = await getPlaywrightPage('about:blank', { noGoto: true, javaScriptEnabled: false });
-        expect(mocks.connect).toHaveBeenCalledWith(mocks.endpoint);
+        expect(mocks.connect).toHaveBeenCalledWith(config.playwrightWSEndpoint);
         expect(mocks.launch).not.toHaveBeenCalled();
         expect(mocks.newContext).toHaveBeenCalledWith({ ignoreHTTPSErrors: true, javaScriptEnabled: false });
         await Promise.all([destroy(), destroy()]);
@@ -48,7 +44,7 @@ describe('Worker browser lifecycle', () => {
     });
 
     it('does not silently switch to BROWSER when the configured endpoint fails', async () => {
-        mocks.endpoint = 'wss://browser.example/playwright';
+        config.playwrightWSEndpoint = 'wss://browser.example/playwright';
         mocks.connect.mockRejectedValueOnce(new Error('Connection refused'));
         await expect(getPlaywrightPage('about:blank')).rejects.toThrow('Connection refused');
         expect(mocks.launch).not.toHaveBeenCalled();

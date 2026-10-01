@@ -170,7 +170,7 @@ export async function postsToItems(posts: GhostPost[]) {
 
             // For paid articles with truncated content, scrape full text if cookie available
             if (!post.access && memberCookie) {
-                const fullHtml = (await cache.tryGet(`theinitium:full:${post.slug}`, () => scrapeFullArticle(post.url, memberCookie) as Promise<string>, config.cache.contentExpire)) as string | null;
+                const fullHtml = await cache.tryGet(`theinitium:full:${post.slug}`, () => scrapeFullArticle(post.url, memberCookie), config.cache.contentExpire);
                 if (fullHtml) {
                     description = cleanGhostHtml(fullHtml);
                 }

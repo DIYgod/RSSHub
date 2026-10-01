@@ -50,7 +50,7 @@ export const route: Route = {
                     },
                 },
             });
-            return (response.data?.data as ExhibitItem[]) || [];
+            return response.data?.data || [];
         };
 
         let rawItems: ExhibitItem[] = [];

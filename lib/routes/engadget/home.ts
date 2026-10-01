@@ -31,7 +31,7 @@ async function handler() {
                 const article = $('article');
                 article.find('ul.breadcrumbs, .title-gallery, .subtitle, .byline-container').remove();
                 article.find('img.lazyload').each((_, el) => {
-                    $(el).attr('src', $(el).data('lazy-src') as string);
+                    $(el).attr('src', $(el).attr('data-lazy-src'));
                 });
 
                 return {

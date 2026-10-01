@@ -15,7 +15,7 @@ const OPERATOR = '小田急電鉄';
  *   駅名 (th) | 人 | 増減率（パーセント） | 順位
  * Other sections (輸送人員の推移 …) are images, not tables.
  */
-const parsePage = (html: string): { fiscalYear: number; items: Array<ReturnType<typeof ridershipItem>> } => {
+const parsePage = (html: string) => {
     const $ = load(html);
     const fiscalYear = parseFiscalYear($('p.note').text());
     if (fiscalYear === null) {
@@ -40,7 +40,7 @@ const parsePage = (html: string): { fiscalYear: number; items: Array<ReturnType<
                 .slice(1)
                 .toArray()
                 .map((tr) => {
-                    const station = cellText($(tr).find('th').first().text());
+                    const station = cellText($(tr).find('th').text());
                     const [count = '', yoy = '', rank = ''] = $(tr)
                         .find('td')
                         .toArray()
@@ -70,7 +70,7 @@ const parsePage = (html: string): { fiscalYear: number; items: Array<ReturnType<
 };
 
 export const handler = async (): Promise<Data> => {
-    const page = (await cache.tryGet(LINK, async () => parsePage(await ofetch(LINK)))) as ReturnType<typeof parsePage>;
+    const page = await cache.tryGet(LINK, async () => parsePage(await ofetch(LINK)));
     return {
         title: `小田急電鉄 ${page.fiscalYear}年度 1日平均駅別乗降人員`,
         link: LINK,

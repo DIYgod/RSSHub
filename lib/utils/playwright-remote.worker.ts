@@ -1,7 +1,7 @@
 import type { BrowserType } from 'patchright';
 
 import { getPlaywrightCore } from '../../assets/build/playwright-worker.mjs';
-import { installNativeTransport, type TransportFetch, type TransportServer, withTransportFetch } from './playwright-transport.worker';
+import { installNativeTransport, type TransportFetch, withTransportFetch } from './playwright-transport.worker';
 
 export type PlaywrightService = { fetch: TransportFetch };
 let playwrightService: PlaywrightService | undefined;
@@ -16,7 +16,7 @@ export const setPlaywrightServiceBinding = (binding?: PlaywrightService, origin?
 const getClient = () =>
     (clientPromise ??= (async () => {
         const core = await getPlaywrightCore();
-        installNativeTransport(core.server as unknown as TransportServer);
+        installNativeTransport(core.server);
         return core.inprocess.playwright.chromium;
     })());
 

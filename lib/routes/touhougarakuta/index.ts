@@ -83,7 +83,9 @@ async function handler(ctx: Context) {
                         description = uncategorized(article, language);
                 }
             } catch (error) {
-                (error as Error).message += `(at article ${i}: ${article.title})`;
+                if (error instanceof Error) {
+                    error.message += `(at article ${i}: ${article.title})`;
+                }
                 throw error;
             }
             return {

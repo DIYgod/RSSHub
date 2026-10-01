@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 import iconv from 'iconv-lite';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
@@ -51,7 +51,7 @@ async function handler(ctx) {
 
     let items = $('tr[itemprop="chapter"]')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem & { link: string; isVip?: boolean; isLock: boolean } => {
             const $item = $(item);
 
             const chapterId = $item.find('td').first().text().trim();
@@ -107,7 +107,7 @@ async function handler(ctx) {
                           });
                       }
 
-                      delete (item as { isVip?: unknown }).isVip;
+                      delete item.isVip;
 
                       return item;
                   })

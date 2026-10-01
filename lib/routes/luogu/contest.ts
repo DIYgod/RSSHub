@@ -98,7 +98,7 @@ async function handler() {
                     link: `${baseUrl}/contest/${item.id}`,
                     author: item.host.name,
                     pubDate: parseDate(item.startTime, 'X'),
-                    category: [item.rated ? 'Rated' : null, typeMap.ruleType[item.ruleType], typeMap.visibilityType[item.visibilityType]].filter(Boolean) as string[],
+                    category: [item.rated ? 'Rated' : null, typeMap.ruleType[item.ruleType], typeMap.visibilityType[item.visibilityType]].filter((c): c is string => Boolean(c)),
                 };
             }),
         { concurrency: 4 }

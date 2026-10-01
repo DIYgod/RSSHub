@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { DataItem, Route } from '@/types';
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import { parseDate } from '@/utils/parse-date';
 import playwright from '@/utils/playwright';
@@ -45,12 +45,17 @@ async function handler() {
         .toArray()
         .map((item) => {
             const $item = $(item);
+            const title = $item.attr('title');
+            if (title === undefined) {
+                return null;
+            }
             return {
-                title: $item.attr('title'),
+                title,
                 link: new URL($item.attr('href')!, baseUrl).href,
                 pubDate: timezone(parseDate($item.find('i').text()), 8),
             };
-        }) as DataItem[];
+        })
+        .filter((item) => item !== null);
 
     const out = await Promise.all(
         list.map((item) =>
@@ -59,9 +64,11 @@ async function handler() {
                 const detail = await response.text();
                 const $ = load(detail);
                 $('.v_news_content style').remove();
-                item.description = $('.v_news_content').html();
-                item.author = $('.bbt span:contains("作者：")').text().replace('作者：', '');
-                return item;
+                return {
+                    ...item,
+                    description: $('.v_news_content').html(),
+                    author: $('.bbt span:contains("作者：")').text().replace('作者：', ''),
+                };
             })
         )
     );

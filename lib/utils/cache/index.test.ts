@@ -99,6 +99,7 @@ describe('cache', () => {
         expect(await cache.get('mock2')).toBe(null);
         expect(await cache.has('mock2')).toBe(false);
         cache.clients.redisClient?.disconnect();
+        delete process.env.REDIS_URL;
     });
 
     it('no cache', async () => {
@@ -123,6 +124,37 @@ describe('cache', () => {
             expect(error.message).toContain('reserved for the internal usage');
         } finally {
             await cache.clients.redisClient?.quit();
+        }
+    });
+});
+
+describe('atomic cache backends', () => {
+    it.each(['memory', 'redis'])('retains atomic claims and release for %s', async (backend) => {
+        process.env.CACHE_TYPE = backend;
+        const cache = (await import('@/utils/cache')).default;
+        const key = `rsshub-test:atomic-claim:${backend}`;
+        const { redisClient } = cache.clients;
+        if (redisClient) {
+            await vi.waitFor(() => expect(cache.status.available).toBe(true));
+            await redisClient.del(key);
+        }
+        const evalSpy = redisClient && vi.spyOn(redisClient, 'eval');
+
+        try {
+            expect(cache.globalCache.supportsAtomicClaims).toBe(true);
+            expect(await Promise.all([cache.globalCache.claim(key, 60), cache.globalCache.claim(key, 60)])).toEqual([true, false]);
+            await cache.globalCache.set(key, '0', 60);
+            expect(await cache.globalCache.claim(key, 60)).toBe(true);
+
+            if (!evalSpy) {
+                return;
+            }
+
+            expect(evalSpy).toHaveBeenCalledTimes(3);
+            expect(evalSpy).toHaveBeenCalledWith(expect.stringContaining("redis.call('GET', KEYS[1])"), 1, key, 60);
+        } finally {
+            await redisClient?.del(key);
+            await redisClient?.quit();
         }
     });
 });

@@ -1,13 +1,13 @@
-import type fs from 'node:fs';
+import fs from 'node:fs';
 import path from 'node:path';
 
 import { Hono } from 'hono';
-import { afterEach, describe, expect, it, vi } from 'vitest';
+import { afterEach, assert, describe, expect, it, vi } from 'vitest';
 
 import app from '@/app';
 import { config } from '@/config';
 import registryApp, { collectNamespaceRoots, namespaces, resolveModuleNamespace, sortRoutes } from '@/registry';
-import type { Data, Route } from '@/types';
+import type { Data } from '@/types';
 
 // The dev registry lists lib/routes at startup; expose the fixture directory names there
 const fakeTopDirectories = vi.hoisted(() => {
@@ -15,16 +15,13 @@ const fakeTopDirectories = vi.hoisted(() => {
     return { names };
 });
 
-vi.mock('node:fs', async (importOriginal) => {
-    const actual = await importOriginal<typeof fs>();
-    const readdirSync = ((...args: Parameters<typeof actual.readdirSync>) => {
-        if (fakeTopDirectories.names.length > 0 && String(args[0]).endsWith(path.join('lib', 'routes'))) {
-            return fakeTopDirectories.names.map((name) => ({ name, isDirectory: () => true }));
-        }
-        return actual.readdirSync(...args);
-    }) as typeof actual.readdirSync;
-    return { ...actual, readdirSync, default: { ...actual, readdirSync } };
-});
+const fsReaddirSync = fs.readdirSync;
+vi.spyOn(fs, 'readdirSync').mockImplementation(((...args: Parameters<typeof fs.readdirSync>) => {
+    if (fakeTopDirectories.names.length > 0 && String(args[0]).endsWith(path.join('lib', 'routes'))) {
+        return fakeTopDirectories.names.map((name) => ({ name, isDirectory: () => true }));
+    }
+    return fsReaddirSync(...args);
+}) as typeof fs.readdirSync);
 
 describe('registry', () => {
     // root
@@ -138,7 +135,8 @@ describe('nested namespace mounting', () => {
         const keys = Object.keys(namespaces).filter((key) => Object.keys(namespaces[key].routes ?? {}).length > 0);
         const byDepth = keys.toSorted((a, b) => b.split('/').length - a.split('/').length);
         const deep = byDepth[0];
-        const shallow = byDepth.at(-1) as string;
+        const shallow = byDepth.at(-1);
+        assert(shallow);
         expect(deep.split('/').length).toBeGreaterThan(shallow.split('/').length);
 
         const paths = registryApp.routes.map((r) => r.path);
@@ -150,7 +148,7 @@ describe('nested namespace mounting', () => {
     });
 });
 
-const sortPaths = (paths: string[]) => sortRoutes(Object.fromEntries(paths.map((path) => [path, {} as Route & { location: string }]))).map(([path]) => path);
+const sortPaths = (paths: string[]) => sortRoutes(Object.fromEntries(paths.map((path) => [path, { path, name: path, maintainers: [], example: path, handler: () => null, location: path }]))).map(([path]) => path);
 const permutations = (items: string[]): string[][] => (items.length <= 1 ? [items] : items.flatMap((item, i) => permutations(items.toSpliced(i, 1)).map((rest) => [item, ...rest])));
 
 describe('sortRoutes', () => {

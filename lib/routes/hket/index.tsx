@@ -143,7 +143,10 @@ async function handler(ctx) {
         .toArray()
         .map((item) => {
             const $item = $(item);
-            const url = $item.parent().parent().find('.share-button').data('url') as string;
+            const url = $item.parent().parent().find('.share-button').attr('data-url');
+            if (!url) {
+                throw new Error(`Missing share URL for "${$item.text().trim()}"`);
+            }
             return {
                 title: $item.text().trim(),
                 link: url.startsWith('http') ? url : baseUrl + url,

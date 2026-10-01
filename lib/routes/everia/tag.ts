@@ -38,12 +38,12 @@ async function handler(ctx) {
     const tag = ctx.req.param('tag');
     const tagUrl = `${SUB_URL}tag/${tag}/`;
 
-    const tagId = await cache.tryGet(`everia:tag:${tag}`, async () => {
+    const tagId = await cache.tryGet(`everia:tag:${tag}`, async (): Promise<number> => {
         const { data: tags } = await got(`${SUB_URL}wp-json/wp/v2/tags?slug=${tag}`);
         if (!tags.length) {
             throw new InvalidParameterError(`Tag not found: ${tag}`);
         }
-        return tags[0].id as number;
+        return tags[0].id;
     });
     const { data: posts } = await got(`${SUB_URL}wp-json/wp/v2/posts?tags=${tagId}&per_page=${limit}&_embed`);
 

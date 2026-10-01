@@ -1,6 +1,6 @@
-import { type OxcError, parseSync, type Program, rawTransferSupported } from 'oxc-parser';
+import { parseSync, rawTransferSupported } from 'oxc-parser';
 
-export const parseScriptSource = (source: string): { program: Program; errors: OxcError[] } => {
+export const parseScriptSource = (source: string) => {
     const { program, errors } = parseSync('script.js', source, {
         lang: 'js',
         sourceType: 'script',

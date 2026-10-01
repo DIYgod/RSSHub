@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { DataItem, Route } from '@/types';
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -24,12 +24,17 @@ async function handler() {
         .toArray()
         .map((item) => {
             const a = $(item);
+            const title = a.attr('title');
+            if (title === undefined) {
+                return null;
+            }
             return {
-                title: a.attr('title'),
+                title,
                 link: new URL(a.attr('href')!, 'https://jwc.ahut.edu.cn/').href,
                 pubDate: timezone(parseDate(a.closest('tr').find('.timestyle16974').text().trim(), 'YYYY/MM/DD'), 8),
             };
-        }) as DataItem[];
+        })
+        .filter((item) => item !== null);
 
     const out = await Promise.all(
         list.map((item) => {

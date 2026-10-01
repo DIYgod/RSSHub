@@ -2,6 +2,7 @@ import type { CheerioAPI } from 'cheerio';
 import { load } from 'cheerio';
 import type { Context } from 'hono';
 
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
@@ -16,6 +17,8 @@ type PageDataItem = {
 };
 
 type PostType = 'home' | 'gold' | 'threadsearch' | 'search';
+
+const isPostType = (type: string): type is PostType => ['home', 'gold', 'threadsearch', 'search'].includes(type);
 
 export const route: Route = {
     path: '/:id?/:type?/:keyword?',
@@ -215,7 +218,10 @@ async function fetchArticleDetail(item: DataItem): Promise<DataItem> {
  */
 async function handler(ctx: Context) {
     const { id = 'bbs4', type = 'home', keyword } = ctx.req.param();
-    const postType = type as PostType;
+    if (!isPostType(type)) {
+        throw new InvalidParameterError(`Invalid type: ${type}. Use home, gold, threadsearch or search.`);
+    }
+    const postType = type;
     const isGlobal = id === 'global';
 
     const rootUrl = isGlobal ? 'https://www.cool18.com' : `https://www.cool18.com/${id}/index.php`;

@@ -5,7 +5,6 @@ import { afterEach, describe, expect, it, vi } from 'vitest';
 process.env.OPENAI_API_KEY = 'sk-1234567890';
 process.env.OPENAI_API_ENDPOINT = 'https://api.openai.mock/v1';
 
-vi.mock('@/utils/request-rewriter', () => ({ default: null }));
 const { config } = await import('@/config');
 const { default: app } = await import('@/app');
 const { default: parameter } = await import('@/middleware/parameter');

@@ -46,9 +46,13 @@ async function handler() {
         .map((item) => {
             const $item = $(item);
             const title = $item.find('.text-secondary');
-            const poster = new URL($item.find('img').data('src') as string);
+            const posterSrc = $item.find('img').attr('data-src');
+            const video = $item.find('video').attr('data-src');
+            if (!posterSrc || !video) {
+                return null;
+            }
+            const poster = new URL(posterSrc);
             poster.searchParams.set('class', 'normal');
-            const video = $item.find('video').data('src') as string;
             return {
                 title: title.text().trim(),
                 link: title.attr('href'),
@@ -58,7 +62,8 @@ async function handler() {
                     </video>
                 ),
             };
-        });
+        })
+        .filter((item) => item !== null);
 
     return {
         title: $('head title').text(),

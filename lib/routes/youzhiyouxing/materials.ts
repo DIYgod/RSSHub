@@ -28,7 +28,7 @@ const columns: Array<{ value: string; label: string }> = [
     { value: '19', label: '夸下海口' },
 ];
 
-const columnNames = Object.fromEntries(columns.map(({ value, label }) => [value, label])) as Record<string, string>;
+const columnNames: Record<string, string> = Object.fromEntries(columns.map(({ value, label }) => [value, label]));
 
 export const route: Route = {
     path: '/materials/:id?',

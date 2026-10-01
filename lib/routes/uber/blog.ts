@@ -138,14 +138,16 @@ function getArticle(item: ArticleSummary): Promise<DataItem> {
     });
 }
 
+const isCategory = (category: string): category is Category => Object.hasOwn(categoryLabels, category);
+
 function resolveCategory(category: string | undefined): Category | undefined {
     if (!category || /^\d+$/.test(category)) {
         return undefined;
     }
 
-    if (!Object.hasOwn(categoryLabels, category)) {
+    if (!isCategory(category)) {
         throw new InvalidParameterError(`Invalid category: ${category}. Valid categories are: ${Object.keys(categoryLabels).join(', ')}`);
     }
 
-    return category as Category;
+    return category;
 }

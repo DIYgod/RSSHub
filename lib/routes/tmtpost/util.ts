@@ -63,12 +63,13 @@ const processItems = async (limit: number, query: Record<string, string>, apiUrl
     items = (
         await Promise.all(
             items.map((item) => {
-                if (!item.link) {
+                const itemGuid = item.guid;
+                if (!item.link || !itemGuid) {
                     return item;
                 }
 
                 return cache.tryGet(item.link, async (): Promise<DataItem> => {
-                    const detailApiUrl: string = new URL(item.guid as string, postApiUrl).href;
+                    const detailApiUrl: string = new URL(itemGuid, postApiUrl).href;
 
                     const detailResponse = await ofetch(detailApiUrl, {
                         query: {

@@ -55,7 +55,7 @@ async function handler(): Promise<Data> {
     const html = await ofetch(currentUrl);
     const $ = load(html);
 
-    const language = ($('html').attr('lang') || 'zh-TW') as Language;
+    const language = ($('html').attr('lang') ?? 'zh-TW') as Language;
     const articleNodes = $('div.kf-diagramtext-list > div.kf-diagramtext-col').toArray();
 
     const items: DataItem[] = articleNodes

@@ -82,14 +82,15 @@ export type ZhihuClient = {
 let isUnreachableRuntimeErrorGuarded = false;
 const pendingZseCredentials = new Map<string, Promise<{ dc0: string; zseCk: string; ua: string }>>();
 
+const hasNameAndMessage = (reason: unknown): reason is { name: unknown; message: unknown } => typeof reason === 'object' && reason !== null && 'name' in reason && 'message' in reason;
+
 const preventUnreachableRuntimeError = () => {
     if (isUnreachableRuntimeErrorGuarded) {
         return;
     }
     isUnreachableRuntimeErrorGuarded = true;
     process.on('unhandledRejection', (reason) => {
-        const error = reason as { name?: string; message?: string } | undefined;
-        if (error?.name === 'RuntimeError' && error.message === 'unreachable') {
+        if (hasNameAndMessage(reason) && reason.name === 'RuntimeError' && reason.message === 'unreachable') {
             return;
         }
         throw reason;
@@ -155,7 +156,7 @@ const generateZseCk = async (url: string, apiPath: string, configuredDc0: string
         webdriver: { value: false, configurable: true },
     });
     window.TextEncoder = TextEncoder;
-    window.TextDecoder = TextDecoder as typeof window.TextDecoder;
+    window.TextDecoder = TextDecoder;
     window.atob = (value: string) => Buffer.from(value, 'base64').toString('binary');
     window.btoa = (value: string) => Buffer.from(value, 'binary').toString('base64');
     Object.assign(window, { __g: {} });

@@ -1,23 +1,7 @@
 import { env } from 'cloudflare:workers';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
-import type * as WorkerCache from '../lib/utils/cache/index.worker';
-
-vi.mock('../lib/config', () => ({
-    config: {
-        cache: {
-            type: 'http',
-            routeExpire: 300,
-            contentExpire: 600,
-        },
-        httpCache: {
-            url: 'https://cache.example.com/',
-            token: 'worker-cache-token',
-        },
-        requestTimeout: 1000,
-        loggerLevel: 'error',
-    },
-}));
+import type * as WorkerCache from './index.worker';
 
 type StoredValue = { ttl: number; value: string };
 
@@ -48,14 +32,22 @@ beforeEach(async () => {
     values.clear();
     fetchMock.mockReset().mockImplementation(handleCacheRequest);
     vi.stubGlobal('fetch', fetchMock);
+    vi.stubEnv('CACHE_TYPE', 'http');
+    vi.stubEnv('CACHE_EXPIRE', '300');
+    vi.stubEnv('CACHE_CONTENT_EXPIRE', '600');
+    vi.stubEnv('CACHE_HTTP_URL', 'https://cache.example.com/');
+    vi.stubEnv('CACHE_HTTP_TOKEN', 'worker-cache-token');
+    vi.stubEnv('REQUEST_TIMEOUT', '1000');
+    vi.stubEnv('LOGGER_LEVEL', 'error');
 
-    const module = await import('../lib/utils/cache/index.worker');
+    const module = await import('./index.worker');
     cache = module.default;
     setKVNamespace = module.setKVNamespace;
 });
 
 afterEach(() => {
     vi.unstubAllGlobals();
+    vi.unstubAllEnvs();
     vi.restoreAllMocks();
 });
 

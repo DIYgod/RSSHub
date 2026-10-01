@@ -21,8 +21,9 @@ export async function getRelativeUrlList(url: string, selector: string) {
         .map((element) => {
             const itemRelativeUrl = $(element).attr('href');
             const cardTitle = $(element).find('span').text();
-            return { url: itemRelativeUrl as string, cardTitle };
-        });
+            return { url: itemRelativeUrl, cardTitle };
+        })
+        .filter((item): item is PostLink => item.url !== undefined);
     return { heading, urls };
 }
 
@@ -50,7 +51,7 @@ export async function getPostContent({ url, cardTitle }: PostLink): Promise<Data
     const updateDate = dateDiv.find('dl:last-child > dd:has(span):not(:last-child)').text();
     const description = $('main > article').html();
     return {
-        title,
+        title: title ?? cardTitle,
         description,
         author,
         pubDate: processDate(pubDate),
@@ -58,7 +59,7 @@ export async function getPostContent({ url, cardTitle }: PostLink): Promise<Data
         link: `${rootUrl}${url}`,
         content: { html: description, text: summary },
         category: [tag],
-    } as DataItem;
+    };
 }
 
 function processDate(date: string) {

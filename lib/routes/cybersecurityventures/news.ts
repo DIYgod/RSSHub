@@ -47,6 +47,8 @@ const categories = {
     },
 };
 
+const isCategory = (key: string): key is keyof typeof categories => Object.hasOwn(categories, key);
+
 export const route: Route = {
     name: 'News',
     categories: ['programming'],
@@ -81,11 +83,11 @@ async function handler(ctx: Context): Promise<Data> {
     const category = ctx.req.param('category') ?? 'today';
     const limit = ctx.req.query('limit') ?? 20;
 
-    if (!Object.hasOwn(categories, category)) {
+    if (!isCategory(category)) {
         throw new InvalidParameterError('Invalid category');
     }
 
-    const { scene, view, label } = categories[category as keyof typeof categories];
+    const { scene, view, label } = categories[category];
 
     const data = await ofetch<{
         records: RawRecord[];

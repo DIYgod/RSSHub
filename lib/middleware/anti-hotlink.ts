@@ -10,6 +10,7 @@ const templateRegex = /\$\{([^{}]+)\}/g;
 const urlProperties = ['hash', 'host', 'hostname', 'href', 'origin', 'password', 'pathname', 'port', 'protocol', 'search', 'searchParams', 'username'] as const;
 type UrlProperty = (typeof urlProperties)[number];
 const allowedUrlProperties = new Set<string>(urlProperties);
+const isUrlProperty = (prop: string): prop is UrlProperty => allowedUrlProperties.has(prop);
 
 // match path or sub-path
 const matchPath = (path: string, paths: string[]) => {
@@ -36,7 +37,10 @@ const interpolate = (str: string, url: URL) =>
             prop = prop.slice(0, -3);
             needEncode = true;
         }
-        const value = String(url[prop as UrlProperty]);
+        if (!isUrlProperty(prop)) {
+            throw new Error(`Invalid URL property: ${prop}`);
+        }
+        const value = String(url[prop]);
         return needEncode ? encodeURIComponent(value) : value;
     });
 const parseUrl = (str: string) => {

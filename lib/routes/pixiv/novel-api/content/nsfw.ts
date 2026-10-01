@@ -11,7 +11,7 @@ import type { NovelContent, NSFWNovelDetail } from './types';
 import { parseNovelContent } from './utils';
 
 export async function getNSFWNovelContent(novelId: string, token: string): Promise<NovelContent> {
-    return (await cache.tryGet(`https://app-api.pixiv.net/webview/v2/novel:${novelId}`, async () => {
+    return await cache.tryGet(`https://app-api.pixiv.net/webview/v2/novel:${novelId}`, async () => {
         const response = await got('https://app-api.pixiv.net/webview/v2/novel', {
             headers: {
                 ...maskHeader,
@@ -72,5 +72,5 @@ export async function getNSFWNovelContent(novelId: string, token: string): Promi
             seriesId: novelDetail.seriesId || null,
             seriesTitle: novelDetail.seriesTitle || null,
         };
-    })) as NovelContent;
+    });
 }

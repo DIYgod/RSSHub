@@ -48,7 +48,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                     avatar: undefined,
                 };
             });
-            const doi: string = $el.attr('id') as string;
+            const doi: string | undefined = $el.attr('id');
             const guid = `papers.cool-${doi}`;
             const upDatedStr: string | undefined = pubDateStr;
 
