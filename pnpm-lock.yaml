@@ -45,8 +45,8 @@ importers:
         specifier: 39.0.1
         version: 39.0.1
       '@honeybadger-io/js':
-        specifier: 6.16.4
-        version: 6.16.4
+        specifier: 6.16.5
+        version: 6.16.5
       '@hono/node-server':
         specifier: 2.1.1
         version: 2.1.1(hono@4.13.9)
@@ -1282,8 +1282,8 @@ packages:
     resolution: {integrity: sha512-ojVk6q2GUXqW80szrk/zp2XC1YQFJWQvGHdNNyc1RPGTekguSMpa7Pp9jKitHpdYIsbmEnj1wPTyZassOfSLeg==}
     engines: {node: '>=14'}
 
-  '@honeybadger-io/js@6.16.4':
-    resolution: {integrity: sha512-7ZHUVpU7/BeR16fGGzJKa70Q9JB266qBEAno+kvJs22PbSqcAge8DiI8ge701n9FtI7olXIRHOehfOIhmXX0iQ==}
+  '@honeybadger-io/js@6.16.5':
+    resolution: {integrity: sha512-Zfz5+qf3a2acet76fQvnKOB6B4MuegNYvIfRcWadrLKHmbAcqXG+/TS5GmxYxGkqbs9/R61sEfsZaHkrwIBoVQ==}
     engines: {node: '>=14'}
     hasBin: true
     peerDependencies:
@@ -7158,7 +7158,7 @@ snapshots:
       json-nd: 1.0.0
       stacktrace-parser: 0.1.11
 
-  '@honeybadger-io/js@6.16.4':
+  '@honeybadger-io/js@6.16.5':
     dependencies:
       '@honeybadger-io/core': 6.11.1
       '@types/aws-lambda': 8.10.163
