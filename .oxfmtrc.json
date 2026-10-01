@@ -5,7 +5,7 @@
     "singleQuote": true,
     "trailingComma": "es5",
     "arrowParens": "always",
-    "ignorePatterns": ["scripts/docker/minify-docker.js", "dist", "pnpm-lock.yaml"],
+    "ignorePatterns": ["scripts/docker/minify-docker.js", "dist", "pnpm-lock.yaml", "eslint-plugins/anti-slop"],
     "sortPackageJson": {
         "sortScripts": true
     },

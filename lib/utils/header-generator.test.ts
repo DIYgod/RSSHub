@@ -1,12 +1,14 @@
+import '@/utils/request-rewriter';
+
 import { afterEach, describe, expect, it, vi } from 'vitest';
 
 import { generateHeaders, PRESETS } from '@/utils/header-generator';
 import ofetch from '@/utils/ofetch';
 
 describe('header-generator', () => {
-    it('should has no ua', async () => {
+    it('should use generated ua', async () => {
         const response = await ofetch('http://rsshub.test/headers');
-        expect(response['user-agent']).toBeUndefined();
+        expect(response['user-agent']).toMatch(/Macintosh.*Chrome/);
     });
 
     it('should match ua configurated', async () => {
