@@ -61250,6 +61250,113 @@
     ],
     "lang": "ko"
   },
+  "eurogamer": {
+    "routes": {
+      "/:category?": {
+        "path": "/:category?",
+        "name": "Articles",
+        "url": "www.eurogamer.net/latest",
+        "maintainers": [
+          "mcdp-adk"
+        ],
+        "example": "/eurogamer",
+        "parameters": {
+          "category": {
+            "description": "Article type. Omit or use `latest` for the latest mix.",
+            "default": "",
+            "options": [
+              {
+                "value": "latest",
+                "label": "Latest"
+              },
+              {
+                "value": "blogs",
+                "label": "blogs"
+              },
+              {
+                "value": "competitions",
+                "label": "competitions"
+              },
+              {
+                "value": "deals",
+                "label": "deals"
+              },
+              {
+                "value": "features",
+                "label": "features"
+              },
+              {
+                "value": "guides",
+                "label": "guides"
+              },
+              {
+                "value": "interviews",
+                "label": "interviews"
+              },
+              {
+                "value": "news",
+                "label": "news"
+              },
+              {
+                "value": "opinions",
+                "label": "opinions"
+              },
+              {
+                "value": "podcasts",
+                "label": "podcasts"
+              },
+              {
+                "value": "previews",
+                "label": "previews"
+              },
+              {
+                "value": "reviews",
+                "label": "reviews"
+              },
+              {
+                "value": "videos",
+                "label": "videos"
+              }
+            ]
+          }
+        },
+        "description": "Eurogamer's official RSS feeds only include excerpts. This route fetches the full article body from each article page.",
+        "categories": [
+          "game"
+        ],
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportRadar": true,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "www.eurogamer.net/latest"
+            ],
+            "target": "/"
+          },
+          {
+            "source": [
+              "www.eurogamer.net/:category"
+            ],
+            "target": "/:category"
+          }
+        ],
+        "view": 0,
+        "location": "index.ts",
+        "module": "() => import('@/routes/eurogamer/index.ts')"
+      }
+    },
+    "apiRoutes": {},
+    "name": "Eurogamer",
+    "url": "www.eurogamer.net",
+    "lang": "en"
+  },
   "europapress": {
     "routes": {
       "/:category?": {

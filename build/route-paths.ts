@@ -1107,6 +1107,7 @@ export type RoutePath =
   | `/esquirehk/tag/:id?`
   | `/etherscan/transactions/:address`
   | `/etoland/:bo_table`
+  | `/eurogamer/:category?`
   | `/europapress/:category?`
   | `/europechinese/latest`
   | `/eventbrite/:region/:eventType?/:includePromoted?`

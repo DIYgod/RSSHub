@@ -4501,6 +4501,9 @@
   "/etoland/:bo_table": [
     "mengx8"
   ],
+  "/eurogamer/:category?": [
+    "mcdp-adk"
+  ],
   "/europapress/:category?": [
     "nczitzk"
   ],

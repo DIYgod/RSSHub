@@ -21276,6 +21276,27 @@
       }
     ]
   },
+  "eurogamer.net": {
+    "_name": "Eurogamer",
+    "www": [
+      {
+        "title": "Articles",
+        "docs": "https://docs.rsshub.app/routes/game",
+        "source": [
+          "/latest"
+        ],
+        "target": "/eurogamer/"
+      },
+      {
+        "title": "Articles",
+        "docs": "https://docs.rsshub.app/routes/game",
+        "source": [
+          "/:category"
+        ],
+        "target": "/eurogamer/:category"
+      }
+    ]
+  },
   "blogspot.com": {
     "_name": "歐洲動態（國際）",
     "europechinese": [
