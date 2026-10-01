@@ -87,7 +87,7 @@ const cleanArticleContent = ($: CheerioAPI): string | undefined => {
         }
         const uri = $img.attr('data-uri');
         if (uri) {
-            $img.attr('src', `${ASSET_HOST}${uri}?width=1280&quality=85&format=jpg&auto=webp`);
+            $img.attr('src', `${ASSET_HOST}${uri}`);
         }
     });
     content.find('noscript').remove();
