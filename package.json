@@ -98,7 +98,7 @@
         "http-cookie-agent": "8.0.0",
         "https-proxy-agent": "9.1.0",
         "iconv-lite": "0.7.3",
-        "imapflow": "2.0.8",
+        "imapflow": "2.1.0",
         "ioredis": "6.0.0",
         "ip-regex": "5.0.0",
         "jsdom": "30.1.1",
