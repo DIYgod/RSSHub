@@ -1,7 +1,6 @@
 import type { SecureVersion } from 'node:tls';
 
 import type { HeaderGeneratorOptions } from 'header-generator';
-import { useRegisterRequest } from 'node-network-devtools';
 import { RateLimiterMemory, RateLimiterQueue } from 'rate-limiter-flexible';
 import type { Agent, Dispatcher, RequestInfo, RequestInit, Response } from 'undici';
 import undici, { Request } from 'undici';
@@ -39,14 +38,17 @@ const getTlsAgent = (minVersion: SecureVersion) => {
     return agent;
 };
 
-export const useCustomHeader = (headers: Iterable<[string, string]>) => {
-    process.env.NODE_ENV === 'dev' &&
-        useRegisterRequest((req) => {
-            for (const [key, value] of headers) {
-                req.requestHeaders[key] = value;
-            }
-            return req;
-        });
+export const useCustomHeader = async (headers: Iterable<[string, string]>) => {
+    if (process.env.NODE_ENV !== 'dev') {
+        return;
+    }
+    const { useRegisterRequest } = await import('node-network-devtools');
+    useRegisterRequest((req) => {
+        for (const [key, value] of headers) {
+            req.requestHeaders[key] = value;
+        }
+        return req;
+    });
 };
 
 const wrappedFetch: typeof undici.fetch = async (input: RequestInfo, init?: RequestInit & { headerGeneratorOptions?: Partial<HeaderGeneratorOptions>; allowH2?: boolean; minVersion?: SecureVersion }) => {
@@ -89,7 +91,9 @@ const wrappedFetch: typeof undici.fetch = async (input: RequestInfo, init?: Requ
         request.headers.delete('x-prefer-proxy');
     }
 
-    config.enableRemoteDebugging && useCustomHeader(request.headers);
+    if (config.enableRemoteDebugging) {
+        await useCustomHeader(request.headers);
+    }
 
     // proxy
     if (!init?.dispatcher && (proxy.proxyObj.strategy !== 'on_retry' || isRetry)) {

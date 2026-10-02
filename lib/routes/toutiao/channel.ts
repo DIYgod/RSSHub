@@ -9,7 +9,7 @@ import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
 import { generate_a_bogus } from './a-bogus';
-import type { Feed, UserInfoCell32 } from './types';
+import type { Feed } from './types';
 
 const channels = {
     recommend: { id: '0', name: '推荐' },
@@ -84,7 +84,7 @@ async function handler(ctx: Context) {
             const categories = [...new Set(Object.keys(JSON.parse(item.optional_data?.mm_category_three ?? '{}')).flatMap((key) => key.split('/')))];
             if (item.cell_type === 32) {
                 // microblog post
-                const user = item.user as UserInfoCell32 | undefined;
+                const user = item.user && 'name' in item.user ? item.user : undefined;
                 return {
                     title: item.content.split('\n', 1)[0],
                     description: item.rich_content + (item.large_image_list ?? []).map((image) => `<img src="${image.url}">`).join(''),

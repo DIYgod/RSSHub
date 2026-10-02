@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
 
-import type { DataItem, Route } from '@/types';
+import type { Route } from '@/types';
 import got from '@/utils/got';
 
 import utils from './utils';
@@ -44,11 +44,9 @@ async function handler(ctx) {
     const $ = load(res.data);
 
     const items = $('.lczj_box tbody tr')
+        .slice(2)
         .toArray()
-        .map((e, i) => {
-            if (i < 2) {
-                return null;
-            }
+        .map((e) => {
             const c = load(e);
             return {
                 title: c('td:nth-child(1)').text(),
@@ -63,7 +61,7 @@ async function handler(ctx) {
         title: '中国光大银行',
         description: `中国光大银行 外汇牌价 ${TYPE[type].name}`,
         link: `https://www.cebbank.com/site/ygzx/whpj/rmbwhpjlspj/index.html?currcode=${TYPE[type].id}`,
-        item: items as DataItem[],
+        item: items,
     };
     ctx.set('json', ret);
     return ret;

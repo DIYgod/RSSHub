@@ -57,9 +57,9 @@ const handler: Route['handler'] = async (ctx) => {
         description: NEWS_TYPES[category].description,
         link: BASE_URL,
         image: 'https://www.catticenter.com/img/applogo.png',
-        item: (await Promise.all(
+        item: await Promise.all(
             contentLinkList.map((item) =>
-                cache.tryGet(item.link, async () => {
+                cache.tryGet(item.link, async (): Promise<DataItem> => {
                     const CONTENT_SELECTOR = 'div.ui-article-cont';
                     const { data: contentResponse } = await got(item.link);
                     const contentPage = load(contentResponse);
@@ -73,13 +73,13 @@ const handler: Route['handler'] = async (ctx) => {
                         guid: item.link,
                         id: item.link,
                         image: 'https://www.catticenter.com/img/applogo.png',
-                        content,
+                        content: { html: content },
                         updated: item.date,
                         language: 'zh-CN',
                     };
                 })
             )
-        )) as DataItem[],
+        ),
         allowEmpty: true,
         language: 'zh-CN',
         feedLink: 'https://rsshub.app/ruankao/news',

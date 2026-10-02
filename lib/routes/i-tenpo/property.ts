@@ -28,7 +28,7 @@ const parseList = (html: string): DataItem[] => {
         .toArray()
         .map((el): DataItem | null => {
             const $el = $(el);
-            const a = $el.find('.c-propertyList__item__headline__ttl__txt a').first();
+            const a = $el.find('.c-propertyList__item__headline__ttl__txt a');
             const href = a.attr('href');
             const title = clean(a.text());
             const id = $el.find('input.js-propertyCheck').attr('value');
@@ -102,7 +102,7 @@ const parseList = (html: string): DataItem[] => {
                 link,
                 guid: link,
                 description: summarize(extra),
-                image: image || undefined,
+                image,
                 _extra: extra,
             };
         })
@@ -111,7 +111,7 @@ const parseList = (html: string): DataItem[] => {
 
 /** The h1 names the area the site actually resolved ('新宿区で…' / '東京都で…'), which is how a bad slug is caught. */
 const resolvedArea = (html: string): string | null => {
-    const h1 = clean(load(html)('h1').first().text());
+    const h1 = clean(load(html)('h1').text());
     const name = h1?.split('で', 1)[0];
     return name !== undefined && name !== h1 ? name : null;
 };
@@ -128,7 +128,7 @@ export const handler = async (ctx): Promise<Data> => {
     }
     const listUrl = `${HOST}/${pref}/${city}/${type === undefined ? '' : `${type}/`}`;
 
-    const html: string = await ofetch(listUrl, { responseType: 'text' });
+    const html: string = await ofetch(listUrl);
     // An unknown 市区町村 slug is answered with the whole prefecture at HTTP 200 rather than a 404, which would
     // look like a working ward feed. A real 市区町村 always ends in 区/市/町/村, so a 都道府県 here means it fell back.
     const area = resolvedArea(html);

@@ -1,5 +1,6 @@
 import { load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
+import { FetchError } from 'ofetch';
 
 import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
@@ -77,8 +78,7 @@ const fetchPage = async (url: string): Promise<string> => {
     try {
         return await ofetch(url);
     } catch (error: unknown) {
-        const { status, statusCode } = error as { status?: number; statusCode?: number };
-        if ((status ?? statusCode) === 403) {
+        if (error instanceof FetchError && error.statusCode === 403) {
             const { page, destroy } = await getPlaywrightPage(url, {
                 onBeforeLoad: async (page) => {
                     const allowedTypes = new Set(['document', 'script', 'xhr', 'fetch']);

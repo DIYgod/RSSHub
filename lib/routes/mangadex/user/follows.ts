@@ -1,4 +1,5 @@
 import { config } from '@/config';
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
@@ -18,6 +19,8 @@ const statusMap = {
     're-reading': 're_reading',
     dropped: 'dropped',
 } satisfies Record<FollowType, StatusType>;
+
+const isFollowType = (s: string): s is FollowType => Object.hasOwn(statusMap, s);
 
 const labelMap = {
     reading: 'Reading',
@@ -95,7 +98,10 @@ async function handler(ctx) {
 
     const { type } = ctx.req.param();
 
-    const followType = (type || 'reading') as FollowType;
+    const followType = type || 'reading';
+    if (!isFollowType(followType)) {
+        throw new InvalidParameterError(`Unknown follow type "${followType}", expected one of ${Object.keys(statusMap).join(', ')}`);
+    }
 
     const accessToken = await getToken();
 

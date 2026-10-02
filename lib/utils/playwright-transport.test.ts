@@ -1,7 +1,7 @@
 // oxlint-disable unicorn/prefer-add-event-listener -- Playwright transports expose protocol callbacks, not EventTarget methods.
 import { afterEach, describe, expect, it, vi } from 'vitest';
 
-import { installNativeTransport, type TransportFetch, type TransportServer, withTransportFetch } from '../lib/utils/playwright-transport.worker';
+import { installNativeTransport, type TransportFetch, type TransportServer, withTransportFetch } from './playwright-transport.worker';
 
 type SocketEvent = { data?: string | ArrayBuffer };
 
@@ -26,7 +26,11 @@ class FakeSocket {
 }
 
 const progress = { race: <T>(promise: Promise<T>) => promise };
-const responseFor = (socket: FakeSocket) => ({ status: 101, headers: new Headers({ 'x-playwright-test': 'ready' }), webSocket: socket }) as Awaited<ReturnType<TransportFetch>>;
+const responseFor = (socket: FakeSocket): Awaited<ReturnType<TransportFetch>> => {
+    const response = new Response(null, { headers: { 'x-playwright-test': 'ready' } });
+    Object.defineProperty(response, 'status', { value: 101 });
+    return Object.assign(response, { webSocket: socket });
+};
 
 function createServer(fetchImpl: TransportFetch, handshakeTimeoutMs = 20000) {
     const server: TransportServer = { WebSocketTransport: { connect: vi.fn() } };
@@ -61,8 +65,9 @@ describe('Worker Playwright WebSocket transport', () => {
     });
 
     it.each([302, 428])('rejects HTTP %i without forwarding or exposing the response body', async (status) => {
-        const cancel = vi.fn().mockResolvedValue(undefined);
-        const fetchImpl = vi.fn<TransportFetch>().mockResolvedValue({ status, headers: new Headers(), body: { cancel } } as unknown as Awaited<ReturnType<TransportFetch>>);
+        const response = new Response('upstream body', { status });
+        const cancel = vi.spyOn(response.body!, 'cancel');
+        const fetchImpl = vi.fn<TransportFetch>().mockResolvedValue(response);
         const server = createServer(fetchImpl);
         await expect(server.WebSocketTransport.connect(progress, 'wss://browser.example/playwright?token=test-token')).rejects.toThrow(`Remote Playwright WebSocket upgrade failed with HTTP ${status}`);
         expect(fetchImpl).toHaveBeenCalledOnce();

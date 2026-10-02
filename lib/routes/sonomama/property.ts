@@ -13,17 +13,17 @@ const DETAIL_CONCURRENCY = 2;
 const PAGE_SIZE = 20;
 
 /** `pref[]` values (JIS X 0401 codes without zero padding); any code 1–47 is passed through. */
-const PREFECTURES: Record<string, string> = {
-    tokyo: '13',
-    kanagawa: '14',
-    saitama: '11',
-    chiba: '12',
-    osaka: '27',
-    kyoto: '26',
-    hyogo: '28',
-    aichi: '23',
-    fukuoka: '40',
-};
+const PREFECTURES = new Map([
+    ['tokyo', '13'],
+    ['kanagawa', '14'],
+    ['saitama', '11'],
+    ['chiba', '12'],
+    ['osaka', '27'],
+    ['kyoto', '26'],
+    ['hyogo', '28'],
+    ['aichi', '23'],
+    ['fukuoka', '40'],
+]);
 
 /** Values that mean "not published" in the site's cells. */
 const isBlank = (text: string | null): boolean => text === null || /^[-−－]$/.test(text);
@@ -142,7 +142,7 @@ const parseDetail = (html: string): DetailFields => {
         key_money: cell('礼金'),
         business_limit: cell('業種制限'),
         shop_status: cell('店舗の状態'),
-        description: clean($('div.detail_body div.shop_text p').first().text()),
+        description: clean($('div.detail_body div.shop_text p').text()),
     };
 };
 
@@ -174,9 +174,9 @@ const enrich = async (card: ListCard): Promise<ListingExtra> => {
 
 export const handler = async (ctx): Promise<Data> => {
     const pref: string | undefined = ctx.req.param('pref');
-    const prefCode = pref === undefined ? undefined : (PREFECTURES[pref] ?? pref);
+    const prefCode = pref === undefined ? undefined : (PREFECTURES.get(pref) ?? pref);
     if (prefCode !== undefined && !/^(?:[1-9]|[1-3]\d|4[0-7])$/.test(prefCode)) {
-        throw new Error(`Unknown prefecture "${pref}", expected a slug (${Object.keys(PREFECTURES).join(', ')}) or a JIS X 0401 code`);
+        throw new Error(`Unknown prefecture "${pref}", expected a slug (${PREFECTURES.keys().toArray().join(', ')}) or a JIS X 0401 code`);
     }
     const limit = Math.min(ctx.req.query('limit') ? Number(ctx.req.query('limit')) : PAGE_SIZE, PAGE_SIZE);
     // The prefecture filter is only honoured together with the submit-button parameters.
@@ -185,7 +185,7 @@ export const handler = async (ctx): Promise<Data> => {
             ? `${HOST}/app/?action=public_property_list_search&view=1&page_index=0&page_num=${PAGE_SIZE}&sort_id=0&sort_type=1`
             : `${HOST}/app/?action=public_property_list_search&Btn_start.x=1&Btn_start.y=1&pref%5B%5D=${prefCode}`;
 
-    const html: string = await ofetch(listUrl, { responseType: 'text' });
+    const html: string = await ofetch(listUrl);
     // The site takes itself down daily for maintenance (published as 03:00–06:30 JST) and redirects every
     // page to a notice. Failing loudly matters here: an empty feed is indistinguishable from "no new
     // listings", which would read as a genuine zero in anything counting 新着 over time.
@@ -207,7 +207,7 @@ export const handler = async (ctx): Promise<Data> => {
                     image: card.image,
                     _extra: extra,
                 };
-            }) as Promise<DataItem>,
+            }),
         { concurrency: DETAIL_CONCURRENCY }
     );
 
@@ -227,7 +227,7 @@ export const route: Route = {
     handler,
     example: '/sonomama/property/tokyo',
     parameters: {
-        pref: `Prefecture slug (${Object.keys(PREFECTURES).join(', ')}) or JIS X 0401 code; omit for nationwide`,
+        pref: `Prefecture slug (${PREFECTURES.keys().toArray().join(', ')}) or JIS X 0401 code; omit for nationwide`,
     },
     description: `New listings on 店舗そのままオークション，newest first (first page, 20 listings). Each item's \`_extra\` carries the structured listing fields (賃料，坪，階，最寄駅，敷金・保証金，造作価格，業態，業種制限，…) parsed from the list and detail pages; unknown values are \`null\`. The site does not publish listing dates, so items have no \`pubDate\`.
 

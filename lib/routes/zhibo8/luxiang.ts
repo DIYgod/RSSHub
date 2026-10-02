@@ -1,5 +1,4 @@
 import { load } from 'cheerio';
-import type { Text } from 'domhandler';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
@@ -43,7 +42,10 @@ async function handler(ctx) {
                 .toArray()
                 .map((item) => {
                     const href = $(item).attr('href');
-                    const timeText = item.previousSibling as Text;
+                    const timeText = item.previousSibling;
+                    if (timeText?.nodeType !== 3) {
+                        throw new Error(`zhibo8: no time text before ${href}`);
+                    }
                     return {
                         title: `${timeText.data.replace(' | ', '')} ${$(item).text()}`,
                         link: `${rootUrl}${href}`,

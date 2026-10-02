@@ -91,20 +91,31 @@ interface Bukken {
  * The state keeps the whole HTTP response the SSR pass made (`G.text.…` keys), so the payload is three
  * layers down: the response envelope, its `body` — held as text, not an object — and that payload's `data`.
  */
-const payloadOf = (html: string, keyPart: string): Record<string, unknown> | null => {
+interface Payload {
+    bukkenData?: { bukkenList?: Bukken[] };
+    propertyData?: PropertyData;
+}
+
+interface ResponseEnvelope {
+    body: string;
+}
+
+interface ResponseBody {
+    data?: Payload;
+}
+
+const payloadOf = (html: string, keyPart: string): Payload | null => {
     const raw = load(html)('#serverApp-state').text();
     if (!raw) {
         throw new Error('athome: #serverApp-state is missing from the settled page');
     }
-    const state: Record<string, unknown> = JSON.parse(raw);
+    const state: Record<string, ResponseEnvelope> = JSON.parse(raw);
     const key = Object.keys(state).find((k) => k.includes(keyPart));
     if (key === undefined) {
         return null;
     }
-    const envelope = state[key] as { body?: unknown } | null;
-    const body = envelope?.body ?? envelope;
-    const parsed = typeof body === 'string' ? JSON.parse(body) : body;
-    return ((parsed as { data?: unknown } | null)?.data ?? parsed) as Record<string, unknown> | null;
+    const body: ResponseBody = JSON.parse(state[key].body);
+    return body.data ?? null;
 };
 
 const listOf = (html: string): Bukken[] => {
@@ -112,7 +123,7 @@ const listOf = (html: string): Bukken[] => {
     if (payload === null) {
         throw new Error('athome: the SSR state holds no listing response; the internal API may have been renamed');
     }
-    const list = (payload as { bukkenData?: { bukkenList?: Bukken[] } }).bukkenData?.bukkenList;
+    const list = payload.bukkenData?.bukkenList;
     return Array.isArray(list) ? list : [];
 };
 
@@ -144,7 +155,7 @@ const names = (list: Array<{ flagName?: string; name?: string } | null> | undefi
 
 /** 情報公開日, the coordinates and the fee/feature detail exist only on the detail page's own SSR payload. */
 const detailOf = (html: string): Detail => {
-    const p = ((payloadOf(html, DETAIL_KEY) as { propertyData?: PropertyData } | null)?.propertyData ?? {}) as PropertyData;
+    const p: PropertyData = payloadOf(html, DETAIL_KEY)?.propertyData ?? {};
     return {
         listed_at: value(p.kokaiDate),
         next_update: value(p.kokaiKoshinDate),
@@ -171,7 +182,7 @@ const occupiedFloor = (kaidateKai: string | undefined): string | null => {
     return clean(parts.length > 1 ? parts.at(-1) : parts[0]);
 };
 
-const toItem = (b: Bukken, d: Detail | null): DataItem | null => {
+const toItem = (b: Bukken, d: Detail | null): (DataItem & { _extra: ListingExtra }) | null => {
     const id = b.id === undefined ? null : String(b.id);
     const title = clean(b.title) ?? clean(b.tatemonoNm);
     if (id === null || title === null) {
@@ -287,7 +298,7 @@ export const handler = async (ctx): Promise<Data> => {
             await p.route('**/*', (r) => (SKIP_RESOURCES.has(r.request().resourceType()) ? r.abort() : r.continue()));
         },
     });
-    const items: DataItem[] = [];
+    const items: Array<DataItem & { _extra: ListingExtra }> = [];
     try {
         let bukken: Bukken[];
         try {
@@ -370,7 +381,7 @@ export const handler = async (ctx): Promise<Data> => {
 
     // The site's default order is not chronological, so the feed is sorted by 情報公開日 itself, newest
     // first. With `detail=0` nothing carries a date and the site's own order is kept.
-    items.sort((a, b) => ((b._extra as ListingExtra).listed_at ?? '').localeCompare((a._extra as ListingExtra).listed_at ?? ''));
+    items.sort((a, b) => (b._extra.listed_at ?? '').localeCompare(a._extra.listed_at ?? ''));
 
     return {
         title: `アットホーム 貸店舗 (${city})`,

@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Data, DataItem, Route } from '@/types';
+import type { Data, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -21,8 +21,9 @@ async function handler(): Promise<Data> {
     const feedResponse = await ofetch(`${rootUrl}/list/feed/rss`);
     const feed = await parser.parseString(feedResponse);
 
+    const titledItems = feed.items.filter((item): item is typeof item & { title: string } => item.title !== undefined);
     const items = await Promise.all(
-        feed.items.map((item) =>
+        titledItems.map((item) =>
             cache.tryGet(item.link!, async () => {
                 const response = await ofetch(item.link!);
                 const $ = load(response);
@@ -45,6 +46,6 @@ async function handler(): Promise<Data> {
         link: rootUrl,
         description: feed.description,
         language: 'ja',
-        item: items as DataItem[],
+        item: items,
     };
 }

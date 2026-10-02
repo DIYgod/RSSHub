@@ -49,7 +49,8 @@ async function handler(ctx) {
 
                 // 捕获等号右侧的 JSON（最小匹配直到紧随的分号）
                 const m = code.match(/xplGlobal\.document\.metadata\s*=\s*(\{[\s\S]*?\})\s*;/);
-                item.abstract = m ? ((JSON.parse(m[1]) as { abstract?: string }).abstract ?? ' ') : ' ';
+                const metadata: { abstract?: string } = m ? JSON.parse(m[1]) : {};
+                item.abstract = metadata.abstract ?? ' ';
                 item.description = renderDescription(item);
 
                 return item;

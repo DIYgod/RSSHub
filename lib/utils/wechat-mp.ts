@@ -334,6 +334,8 @@ const genVideoSrc = (videoId: string) => {
     return `https://v.qq.com/txp/iframe/player.html?${newSearchParams.toString()}`;
 };
 
+const isHtmlString = (html?: string | Cheerio<Element>): html is string => typeof html === 'string';
+
 /**
  * Articles from WeChat MP have weird formats, this function is used to fix them.
  *
@@ -346,7 +348,7 @@ const genVideoSrc = (videoId: string) => {
  * @return {string} - The fixed html, a string.
  */
 const fixArticleContent = (html?: string | Cheerio<Element>, skipImg = false): string => {
-    const htmlResult = (typeof html === 'string' ? html : html?.html()) || '';
+    const htmlResult = (isHtmlString(html) ? html : html?.html()) || '';
     if (!htmlResult) {
         return '';
     }

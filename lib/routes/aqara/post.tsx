@@ -99,7 +99,7 @@ async function handler(ctx) {
         title: `${title}${filterName ? ` - ${filterName}` : ''}`,
         link: currentUrl,
         description: $('meta[property="og:title"]').prop('content'),
-        language: $('meta[property="og:locale"]').prop('content') as Language,
+        language: $('meta[property="og:locale"]').prop('content')?.replace('_', '-') as Language,
         image: $('meta[name="msapplication-TileImage"]').prop('content'),
         icon,
         logo: icon,

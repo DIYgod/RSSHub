@@ -25,12 +25,12 @@ const permitKey = (no: string): [number, number] | null => {
 };
 
 const toNumber = (v: string | null | undefined): number | null => {
-    const n = v ? Number(v.trim()) : NaN;
+    const n = v ? Number(v) : NaN;
     return Number.isFinite(n) ? n : null;
 };
 
 /** The publisher's 経度 / 緯度 columns have been swapped in past releases, so the pair is ordered by value (in Japan lon > lat). */
-const coords = (raw: Row): { lat: number | null; lon: number | null } => {
+const coords = (raw: Row) => {
     const a = toNumber(raw['緯度']);
     const b = toNumber(raw['経度']);
     if (a === null || b === null) {
@@ -40,7 +40,7 @@ const coords = (raw: Row): { lat: number | null; lon: number | null } => {
 };
 
 const fetchRows = async (): Promise<Row[]> => {
-    const html: string = await ofetch(PAGE, { responseType: 'text' });
+    const html: string = await ofetch(PAGE);
     const $ = load(html);
     const href = $('a[href$=".csv"]')
         .toArray()
@@ -54,10 +54,10 @@ const fetchRows = async (): Promise<Row[]> => {
 };
 
 const toItem = (raw: Row): DataItem & { _extra: PermitExtra } => {
-    const permitNo = raw['指令番号']!.trim();
+    const permitNo = raw['指令番号']!;
     const name = raw['屋号']?.trim() || '(名称なし)';
-    const address = raw['営業所所在地']?.trim() || null;
-    const businessType = raw['業種分類']?.trim() || null;
+    const address = raw['営業所所在地'] || null;
+    const businessType = raw['業種分類'] || null;
     const ward = /^(\S+?区)/.exec(address ?? '')?.[1] ?? '大阪市';
     const { lat, lon } = coords(raw);
     return {
@@ -89,7 +89,7 @@ const toItem = (raw: Row): DataItem & { _extra: PermitExtra } => {
 const fetchItems = async (limit: number): Promise<Array<DataItem & { _extra: PermitExtra }>> => {
     const rows = await fetchRows();
     return rows
-        .filter((r) => (r['指令番号'] ?? '').trim() !== '' && (r['申請区分'] ?? '新規') === '新規')
+        .filter((r) => (r['指令番号'] ?? '') !== '' && (r['申請区分'] ?? '新規') === '新規')
         .map((raw) => ({ raw, key: permitKey(raw['指令番号']!) }))
         .filter((r): r is { raw: Row; key: [number, number] } => r.key !== null)
         .toSorted((a, b) => b.key[0] - a.key[0] || b.key[1] - a.key[1])
@@ -99,7 +99,7 @@ const fetchItems = async (limit: number): Promise<Array<DataItem & { _extra: Per
 
 export const handler = async (ctx): Promise<Data> => {
     const limit = Math.min(ctx.req.query('limit') ? Number(ctx.req.query('limit')) : DEFAULT_LIMIT, MAX_LIMIT);
-    const items = (await cache.tryGet(`lg/osaka/food-permit:${limit}`, () => fetchItems(limit))) as Array<DataItem & { _extra: PermitExtra }>;
+    const items = await cache.tryGet(`lg/osaka/food-permit:${limit}`, () => fetchItems(limit));
     return {
         title: '大阪市 食品営業許可 新規',
         link: PAGE,

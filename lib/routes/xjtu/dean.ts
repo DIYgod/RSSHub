@@ -83,6 +83,6 @@ async function handler(ctx) {
     return {
         title: `西安交大教务处 - ${subName}`,
         link: url,
-        item: out.filter((item) => (item as DataItem | string) !== ''),
+        item: out,
     } satisfies Data;
 }

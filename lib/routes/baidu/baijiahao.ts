@@ -73,6 +73,8 @@ const fingerprint = {
 
 const sha1 = () => createHash('sha1').update(randomUUID()).digest('hex');
 
+const isImageUrl = (image: string | { src: string }): image is string => typeof image === 'string';
+
 export const route: Route = {
     path: '/baijiahao/:id/:tab?',
     categories: ['new-media'],
@@ -158,7 +160,7 @@ async function handler(ctx: Context) {
         .filter((item) => item.itemData.url)
         .map((item) => {
             const { title, url, imgSrc, vertical_cover: cover, rmb_videoInfoExt: videoInfo } = item.itemData;
-            const images = [imgSrc ?? cover ?? []].flat().map((image) => (typeof image === 'string' ? image : image.src));
+            const images = [imgSrc ?? cover ?? []].flat().map((image) => (isImageUrl(image) ? image : image.src));
             const video = videoInfo ? JSON.parse(videoInfo) : undefined;
             const quality = video && ['1080p', 'sc', 'hd', 'default', '360p'].find((name) => video[name]);
             const source = quality && (video[quality][`${quality}UrlHttps`] ?? video[quality][`${quality}UrlHttp`])?.replace('http://', 'https://');

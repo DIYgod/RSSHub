@@ -69,7 +69,7 @@ async function handler(ctx: Context) {
     const response = await ofetch(link);
     const $ = load(response);
     const nextData = JSON.parse($('script#__NEXT_DATA__').text());
-    const chartTitles = nextData.props.pageProps.pageData.chartTitles as ChartTitleSearchConnection;
+    const chartTitles: ChartTitleSearchConnection = nextData.props.pageProps.pageData.chartTitles;
 
     const items = chartTitles.edges.map(({ currentRank, node }) => ({
         title: `${currentRank}. ${node.titleText.text} (${node.releaseYear.year}${node.releaseYear.endYear ? `-${node.releaseYear.endYear}` : ''})`,

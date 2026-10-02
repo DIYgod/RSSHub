@@ -46,14 +46,13 @@ const parseCsv = (text: string): string[][] => {
     return rows;
 };
 
-/** CSV text → records keyed by the (trimmed) header row; a missing cell is `null`. */
+/** CSV text → records keyed by the header row; a missing cell is `null`. */
 export const csvRecords = (text: string): Array<Record<string, string | null>> => {
     const [header, ...rows] = parseCsv(text);
     if (!header) {
         return [];
     }
-    const keys = header.map((h) => h.trim());
-    return rows.filter((r) => r.length > 1).map((r) => Object.fromEntries(keys.map((k, i) => [k, r[i] ?? null])));
+    return rows.filter((r) => r.length > 1).map((r) => Object.fromEntries(header.map((k, i) => [k, r[i] ?? null])));
 };
 
 export type Row = Record<string, string | null>;
@@ -76,20 +75,22 @@ export interface PermitExtra {
     raw: Row;
 }
 
-const ERA_BASE: Record<string, number> = { 令和: 2018, 平成: 1988, 昭和: 1925 };
+const ERA_BASE = { 令和: 2018, 平成: 1988, 昭和: 1925 } as const;
+type Era = keyof typeof ERA_BASE;
+const isEra = (s: string): s is Era => Object.hasOwn(ERA_BASE, s);
 
 /** `2024-04-08` / `2026/8/7` / `令和8年8月7日` → `YYYY-MM-DD`; anything else → null. */
 export const isoDate = (raw: string | null): string | null => {
     if (raw === null) {
         return null;
     }
-    const s = raw.normalize('NFKC').trim();
+    const s = raw.normalize('NFKC');
     const m = /^(\d{4})[-/](\d{1,2})[-/](\d{1,2})/.exec(s);
     if (m) {
         return `${m[1]}-${m[2].padStart(2, '0')}-${m[3].padStart(2, '0')}`;
     }
     const w = /^(令和|平成|昭和)(元|\d{1,2})年(\d{1,2})月(\d{1,2})日/.exec(s);
-    if (!w) {
+    if (!w || !isEra(w[1])) {
         return null;
     }
     const year = ERA_BASE[w[1]] + (w[2] === '元' ? 1 : Number(w[2]));
@@ -108,5 +109,5 @@ export const decodeText = (buf: ArrayBuffer): string => {
 /** Sort key for `令和8年7月分`-style labels (full-width digits allowed): `2026-07`; null when absent. */
 export const warekiMonth = (label: string): string | null => {
     const m = /(令和|平成)(元|\d{1,2})年(\d{1,2})月/.exec(label.normalize('NFKC'));
-    return m ? `${ERA_BASE[m[1]] + (m[2] === '元' ? 1 : Number(m[2]))}-${m[3].padStart(2, '0')}` : null;
+    return m && isEra(m[1]) ? `${ERA_BASE[m[1]] + (m[2] === '元' ? 1 : Number(m[2]))}-${m[3].padStart(2, '0')}` : null;
 };

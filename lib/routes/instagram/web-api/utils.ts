@@ -22,13 +22,13 @@ const getCSRFTokenFromJar = async (cookieJar: CookieJar) => {
 };
 
 const getHeaders = async (cookieJar: CookieJar) => {
-    const csrfToken = (await getCSRFTokenFromJar(cookieJar)) as string;
+    const csrfToken = await getCSRFTokenFromJar(cookieJar);
     return {
         'sec-fetch-dest': 'empty',
         'sec-fetch-mode': 'cors',
         'sec-fetch-site': 'same-origin',
         'x-asbd-id': '359341',
-        'x-csrftoken': csrfToken,
+        ...(csrfToken && { 'x-csrftoken': csrfToken }),
         'x-ig-app-id': '936619743392459',
         'x-ig-www-claim': '0',
     };
@@ -61,16 +61,21 @@ type User = {
     hd_profile_pic_url_info?: { url: string };
 };
 
-const graphql = async (friendlyName: keyof typeof docIds, variables: object, tokens: { lsd: string; dtsg?: string }, cookieJar: CookieJar) => {
+type JsonValue = string | number | boolean | null | JsonValue[] | JsonObject;
+type JsonObject = { [key: string]: JsonValue };
+
+const isJsonContainer = (value: JsonValue): value is JsonValue[] | JsonObject => value !== null && typeof value === 'object';
+
+const graphql = async (friendlyName: keyof typeof docIds, variables: JsonObject, tokens: { lsd?: string; dtsg?: string }, cookieJar: CookieJar) => {
     const text = await ofetch(`${baseUrl}/graphql/query`, {
         method: 'POST',
         headers: {
             cookie: await cookieJar.getCookieString(baseUrl),
             ...(await getHeaders(cookieJar)),
-            'x-fb-lsd': tokens.lsd,
+            ...(tokens.lsd && { 'x-fb-lsd': tokens.lsd }),
         },
         body: new URLSearchParams({
-            lsd: tokens.lsd,
+            ...(tokens.lsd && { lsd: tokens.lsd }),
             ...(tokens.dtsg && { fb_dtsg: tokens.dtsg }),
             fb_api_req_friendly_name: friendlyName,
             variables: JSON.stringify(variables),
@@ -88,8 +93,8 @@ const graphql = async (friendlyName: keyof typeof docIds, variables: object, tok
     return response.data;
 };
 
-const findKey = (obj: unknown, key: string): any => {
-    if (!obj || typeof obj !== 'object') {
+const findKey = (obj: JsonValue, key: string): any => {
+    if (!isJsonContainer(obj)) {
         return;
     }
     if (Object.hasOwn(obj, key)) {
@@ -123,7 +128,7 @@ export const getPage = async (username: string, cookieJar: CookieJar) => {
 
     await Promise.all(page.headers.getSetCookie().map((c) => cookieJar.setCookie(c, baseUrl)));
 
-    const html = page._data as string;
+    const html: string = page._data;
     const profileId = html.match(/"profile_id":"(\d+)"/)?.[1];
     if (!profileId) {
         throw new NotFoundError(`Instagram user @${username} not found`);
@@ -131,7 +136,7 @@ export const getPage = async (username: string, cookieJar: CookieJar) => {
     return {
         html,
         tokens: {
-            lsd: html.match(/"LSD",\[\],\{"token":"([^"]+)"/)?.[1] as string,
+            lsd: html.match(/"LSD",\[\],\{"token":"([^"]+)"/)?.[1],
             dtsg: html.match(/"DTSGInitialData",\[\],\{"token":"([^"]+)"/)?.[1],
         },
         profileId,

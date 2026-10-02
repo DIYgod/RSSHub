@@ -65,7 +65,7 @@ async function handler(ctx) {
                 item.author = detailResponse.data.match(/"editorName":"(.*?)",/)[1];
                 item.category = detailResponse.data.match(/\},"keywords":"(.*?)",/)[1].split(',');
                 const image = item.description;
-                const contentList = JSON.parse(detailResponse.data.match(/"contentList":(\[.*?\]),/)[1]) as Array<{ data: string | ContentAttachment }>;
+                const contentList: Array<{ data: string | ContentAttachment }> = JSON.parse(detailResponse.data.match(/"contentList":(\[.*?\]),/)[1]);
                 const description = contentList.map((content) => content.data);
                 item.description = renderToString(
                     <>

@@ -30,14 +30,21 @@ export const route: Route = {
     name: 'Cookbook',
 };
 
+type AstroScalar = string | number | boolean | null;
+type AstroSerializedObject = { [key: string]: AstroSerialized };
+type AstroSerialized = AstroScalar | [0, AstroSerialized] | [1, AstroSerialized[]] | AstroSerializedObject;
+type AstroValue = AstroScalar | AstroValue[] | { [key: string]: AstroValue };
+
+const isAstroObject = (val: AstroScalar | AstroSerializedObject): val is AstroSerializedObject => val !== null && typeof val === 'object';
+
 // Recursively decode Astro component props serialization.
 // [0, value] is a scalar; [1, [...]] is an array.
-function decodeAstroValue(val: unknown): unknown {
+function decodeAstroValue(val: AstroSerialized): AstroValue {
     if (Array.isArray(val)) {
         return val[0] === 0 ? decodeAstroValue(val[1]) : val[1].map((item) => decodeAstroValue(item));
     }
-    if (val !== null && typeof val === 'object') {
-        const result: Record<string, unknown> = {};
+    if (isAstroObject(val)) {
+        const result: { [key: string]: AstroValue } = {};
         for (const [key, value] of Object.entries(val)) {
             result[key] = decodeAstroValue(value);
         }
@@ -72,7 +79,7 @@ async function handler() {
     }
 
     // Parse the astro-island props JSON.
-    const props = JSON.parse(propsRaw) as { entries: [number, unknown[]] };
+    const props: { entries: [number, AstroSerialized[]] } = JSON.parse(propsRaw);
     const entriesArray = props.entries[1];
 
     if (!Array.isArray(entriesArray)) {
@@ -80,8 +87,8 @@ async function handler() {
     }
 
     const articles = entriesArray
-        .map((item) => decodeAstroValue(item) as CookbookEntry | null)
-        .filter((item): item is CookbookEntry => item !== null && typeof item === 'object' && 'title' in item)
+        .map((item) => decodeAstroValue(item))
+        .filter((item): item is AstroValue & CookbookEntry => item !== null && typeof item === 'object' && 'title' in item)
         .filter((item) => !item.archived)
         .toSorted((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 

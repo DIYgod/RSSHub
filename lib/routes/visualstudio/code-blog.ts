@@ -35,10 +35,16 @@ export const route: Route = {
 
 async function handler(): Promise<Data> {
     const feed = await parser.parseURL('https://code.visualstudio.com/feed.xml');
+    if (!feed.title) {
+        throw new Error('VS Code blog feed has no title');
+    }
 
     const items = await Promise.all(
         feed.items.map((item) => {
-            const link = item.link as string;
+            const { link, title } = item;
+            if (!link || !title) {
+                throw new Error('VS Code blog feed item has no link or title');
+            }
             return cache.tryGet(link, async (): Promise<DataItem> => {
                 const data = await ofetch(link);
                 const $ = load(data);
@@ -48,7 +54,7 @@ async function handler(): Promise<Data> {
                 $('main p').first().remove();
 
                 return {
-                    title: item.title as string,
+                    title,
                     link,
                     description: $('main').html(),
                     pubDate: item.pubDate,
@@ -59,7 +65,7 @@ async function handler(): Promise<Data> {
     );
 
     return {
-        title: feed.title as string,
+        title: feed.title,
         link: feed.link,
         description: feed.description,
         item: items,

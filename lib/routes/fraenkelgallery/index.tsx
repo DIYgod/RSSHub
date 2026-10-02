@@ -65,7 +65,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const type = ctx.req.param('type') ?? 'exhibitions';
-    const config = types[type as keyof typeof types];
+    const config = Object.entries(types).find(([key]) => key === type)?.[1];
     if (!config) {
         throw new InvalidParameterError(`Unknown type "${type}", expected one of ${Object.keys(types).join(', ')}`);
     }

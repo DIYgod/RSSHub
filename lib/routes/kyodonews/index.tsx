@@ -1,6 +1,7 @@
 import { load } from 'cheerio';
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
+import { FetchError } from 'ofetch';
 
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
@@ -57,8 +58,7 @@ async function handler(ctx) {
     try {
         response = await got(currentUrl);
     } catch (error) {
-        const err = error as { response?: { statusCode: number } };
-        throw err.response && err.response.statusCode === 404 ? new InvalidParameterError('Invalid keyword') : error;
+        throw error instanceof FetchError && error.statusCode === 404 ? new InvalidParameterError('Invalid keyword') : error;
     }
 
     const $ = load(response.data, { xmlMode: keyword === 'rss' });

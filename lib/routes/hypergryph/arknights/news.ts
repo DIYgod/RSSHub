@@ -78,7 +78,7 @@ async function handler(ctx) {
 
     const initialData: InitialData = await cache.tryGet(
         'hypergryph:arknights:news',
-        async () => {
+        async (): Promise<InitialData> => {
             const response = await ofetch('https://ak.hypergryph.com/news');
             const $ = load(response);
             const renderData = JSON.parse(
@@ -87,7 +87,7 @@ async function handler(ctx) {
                     .text()
                     .match(/self\.__next_f\.push\((.+)\)/)?.[1] ?? ''
             );
-            return JSON.parse(renderData[1].slice(2))[3].initialData as InitialData;
+            return JSON.parse(renderData[1].slice(2))[3].initialData;
         },
         config.cache.routeExpire,
         false

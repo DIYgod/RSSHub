@@ -1,5 +1,7 @@
 import { webcrypto } from 'node:crypto';
 
+import { FetchError } from 'ofetch';
+
 import { config } from '@/config';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
@@ -166,7 +168,7 @@ async function handler(ctx) {
     const cacheKey = `douban:tv:coming:${requestCount}`;
     const data = await cache.tryGet(
         cacheKey,
-        async () => {
+        async (): Promise<ComingSoonResponse> => {
             try {
                 const response = await got({
                     method: 'get',
@@ -177,9 +179,9 @@ async function handler(ctx) {
                         'User-Agent': apiClientUa,
                     },
                 });
-                return response.data as ComingSoonResponse;
+                return response.data;
             } catch (error) {
-                throw buildFetchError(error as UpstreamError);
+                throw buildFetchError(error instanceof FetchError ? error : {});
             }
         },
         config.cache.routeExpire,

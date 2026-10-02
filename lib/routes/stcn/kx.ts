@@ -74,7 +74,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                     const title: string = $$('div.detail-title').text();
                     const description = $$('div.detail-content').html();
                     const pubDateStr: string | undefined = $$('div.detail-info span').last().text();
-                    const categories: string[] = [...new Set([...(item.category as string[]), ...($$('meta[name="keywords"]').attr('content')?.split(/,/) ?? [])])];
+                    const categories: string[] = [...new Set([...[item.category ?? []].flat(), ...($$('meta[name="keywords"]').attr('content')?.split(/,/) ?? [])])];
                     const authors: DataItem['author'] = $$('div.detail-info span').first().text().split(/：/).pop();
                     const upDatedStr: string | undefined = pubDateStr;
 

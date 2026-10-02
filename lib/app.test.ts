@@ -23,8 +23,11 @@ describe('request-rewriter', () => {
         await app.request('/test/httperror');
 
         // headers
-        const request = fetchSpy.mock.lastCall?.[0] as Request | undefined;
-        expect(request?.headers.get('user-agent')).toMatch(/Chrome/);
+        const request = fetchSpy.mock.lastCall?.[0];
+        if (!(request instanceof undici.Request)) {
+            throw new TypeError('the rewriter did not call undici fetch with a Request');
+        }
+        expect(request.headers.get('user-agent')).toMatch(/Chrome/);
     });
 });
 

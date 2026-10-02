@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Data, Route } from '@/types';
+import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -39,14 +39,10 @@ async function handler(ctx): Promise<Data> {
 
     const items = await Promise.all(
         feed.items
-            .filter((item) => item && item.link && !item.link.includes('/videos'))
+            .filter((item): item is (typeof feed.items)[number] & { link: string } => item && !!item.link && !item.link.includes('/videos'))
             .slice(0, limit)
             .map((item) =>
-                cache.tryGet(`decrypt:article:${item.link}`, async () => {
-                    if (!item.link) {
-                        return {};
-                    }
-
+                cache.tryGet(`decrypt:article:${item.link}`, async (): Promise<DataItem> => {
                     const result = await extractFullText(item.link);
                     return {
                         title: item.title || 'Untitled',
@@ -69,7 +65,7 @@ async function handler(ctx): Promise<Data> {
         item: items,
         language: feed.language || 'en',
         image: feed.image?.url,
-    } as Data;
+    };
 }
 
 async function extractFullText(url: string): Promise<{ fullText: string; featuredImage: string; tags: string[] } | null> {

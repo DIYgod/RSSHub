@@ -87,8 +87,7 @@ const parseArticle = (item) =>
                     res = await redirectGot(apiUrl);
                 } catch (error) {
                     // fallback
-                    const err = error as Error;
-                    if (err.name && ['HTTPError', 'RequestError', 'FetchError'].includes(err.name)) {
+                    if (error instanceof Error && ['HTTPError', 'RequestError', 'FetchError'].includes(error.name)) {
                         try {
                             res = await redirectGot(item.link);
                         } catch {
@@ -215,8 +214,7 @@ const parseReactRendererPage = async (res, api, item) => {
         return await parseStoryJson(res._data, item);
     } catch (error) {
         // fallback
-        const err = error as Error;
-        if (err.name && ['HTTPError', 'RequestError', 'FetchError'].includes(err.name)) {
+        if (error instanceof Error && ['HTTPError', 'RequestError', 'FetchError'].includes(error.name)) {
             return {
                 title: item.title,
                 link: item.link,

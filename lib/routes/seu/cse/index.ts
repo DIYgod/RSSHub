@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import { FetchError } from 'ofetch';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
@@ -69,7 +70,7 @@ async function handler(ctx) {
                     response = await got(item.link);
                 } catch (error) {
                     // intranet
-                    if ((error as { response: { url: string } }).response.url.startsWith('https://newids.seu.edu.cn/')) {
+                    if (error instanceof FetchError && error.response?.url.startsWith('https://newids.seu.edu.cn/')) {
                         return item;
                     }
                     throw error;
