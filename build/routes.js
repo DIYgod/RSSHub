@@ -123109,6 +123109,61 @@ export default {
     "url": "www.wzbc.edu.cn",
     "lang": "zh-CN"
   },
+  "wzbwg": {
+    "routes": {
+      "/news/:type": {
+        "path": "/news/:type",
+        "categories": [
+          "travel"
+        ],
+        "example": "/wzbwg/news/24",
+        "parameters": {
+          "type": "News Type, supported values: 24（重要资讯）, 23（通知公告）, 25（工作动态）"
+        },
+        "radar": [
+          {
+            "source": [
+              "www.wzbwg.com/news/:type"
+            ],
+            "target": "/news/:type"
+          }
+        ],
+        "name": "资讯",
+        "maintainers": [
+          "magazian"
+        ],
+        "location": "news.ts",
+        "module": () => import('@/routes/wzbwg/news.ts')
+      },
+      "/zhanlan/specialexhibition": {
+        "path": "/zhanlan/specialexhibition",
+        "categories": [
+          "travel"
+        ],
+        "example": "/wzbwg/zhanlan/specialexhibition",
+        "radar": [
+          {
+            "source": [
+              "www.wzbwg.com/zhanlan/73/image"
+            ],
+            "target": "/zhanlan/specialexhibition"
+          }
+        ],
+        "name": "最新展览",
+        "maintainers": [
+          "magazian"
+        ],
+        "location": "zhanlan.tsx",
+        "module": () => import('@/routes/wzbwg/zhanlan.tsx')
+      }
+    },
+    "apiRoutes": {},
+    "name": "National Museum of Chinese Writing",
+    "url": "www.wzbwg.com",
+    "zh": {
+      "name": "中国文字博物馆"
+    }
+  },
   "wzu": {
     "routes": {
       "/news/:type?": {

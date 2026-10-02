@@ -9155,6 +9155,12 @@
   "/wzbc/:type?": [
     "howel52"
   ],
+  "/wzbwg/news/:type": [
+    "magazian"
+  ],
+  "/wzbwg/zhanlan/specialexhibition": [
+    "magazian"
+  ],
   "/wzu/news/:type?": [
     "Chandler-Lu"
   ],
