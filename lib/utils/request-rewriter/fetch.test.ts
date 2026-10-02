@@ -36,7 +36,7 @@ describe('useCustomHeader', () => {
         process.env.NODE_ENV = originalEnv;
     });
 
-    test('should register request with custom headers in dev environment', () => {
+    test('should register request with custom headers in dev environment', async () => {
         process.env.NODE_ENV = Env.dev;
 
         const headers = new Headers();
@@ -51,7 +51,7 @@ describe('useCustomHeader', () => {
             isAborted: false,
         });
 
-        useCustomHeader(headers);
+        await useCustomHeader(headers);
 
         const cell = getCurrentCell();
         expect(cell).toBeDefined();
@@ -66,7 +66,7 @@ describe('useCustomHeader', () => {
         expect(request.requestHeaders[headerText]).toEqual(headerValue);
     });
 
-    test('should not register request in non-dev environment', () => {
+    test('should not register request in non-dev environment', async () => {
         process.env.NODE_ENV = Env.production;
 
         const headers = new Headers();
@@ -81,7 +81,7 @@ describe('useCustomHeader', () => {
             pipes: [],
             isAborted: false,
         });
-        useCustomHeader(headers);
+        await useCustomHeader(headers);
 
         const cell = getCurrentCell();
         expect(cell).toBeDefined();
