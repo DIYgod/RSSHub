@@ -13,6 +13,7 @@ on:
 
 permissions:
     checks: write
+    code-quality: write
 
 jobs:
     vitest:
@@ -57,6 +58,14 @@ jobs:
               uses: codecov/codecov-action@303a32d7a59b442fa8d48b6a1cc6825c09c847a5 # v7.1.1
               with:
                   token: ${{ secrets.CODECOV_TOKEN }} # not required for public repos as documented, but seems broken
+            - name: Upload coverage to GitHub
+              if: ${{ matrix.node-version == 'lts/*' }}
+              uses: actions/upload-code-coverage@2b21a77928be8d5168c2b9581a67f2adbebacc52 # v1.4.4
+              with:
+                  file: coverage/cobertura-coverage.xml
+                  language: TypeScript
+                  label: code-coverage/vitest
+                  fail-on-error: false
 
     playwright:
         runs-on: ubuntu-latest
