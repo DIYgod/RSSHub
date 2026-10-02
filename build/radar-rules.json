@@ -40,14 +40,6 @@
     ],
     "music": [
       {
-        "title": "电台节目",
-        "docs": "https://docs.rsshub.app/routes/multimedia",
-        "source": [
-          "/djradio"
-        ],
-        "target": "/163/music/djradio/:id"
-      },
-      {
         "title": "用户动态",
         "docs": "https://docs.rsshub.app/routes/multimedia",
         "source": [
@@ -86,6 +78,14 @@
           "/playlist"
         ],
         "target": "/163/music/playlist/:id"
+      },
+      {
+        "title": "电台节目",
+        "docs": "https://docs.rsshub.app/routes/multimedia",
+        "source": [
+          "/djradio"
+        ],
+        "target": "/163/music/djradio/:id"
       }
     ],
     "3g": [
@@ -2409,6 +2409,27 @@
       }
     ]
   },
+  "zsxq.com": {
+    "_name": "知识星球",
+    "wx": [
+      {
+        "title": "星球",
+        "docs": "https://docs.rsshub.app/routes/social-media",
+        "source": [
+          "/dweb2/index/group/:id"
+        ],
+        "target": "/zsxq/group/:id/:scope?"
+      },
+      {
+        "title": "用户足迹",
+        "docs": "https://docs.rsshub.app/routes/social-media",
+        "source": [
+          "/dweb2/index/footprint/:id"
+        ],
+        "target": "/zsxq/user/:id"
+      }
+    ]
+  },
   "abmedia.io": {
     "_name": "链新闻 ABMedia",
     "www": [
@@ -2490,6 +2511,32 @@
       }
     ]
   },
+  "asmr-200.com": {
+    "_name": "ASMR Online",
+    ".": [
+      {
+        "title": "最新收录",
+        "docs": "https://docs.rsshub.app/routes/multimedia",
+        "source": [
+          "/"
+        ],
+        "target": "/asmr-200asmr-200/works"
+      }
+    ]
+  },
+  "bangumi.online": {
+    "_name": "アニメ新番組",
+    ".": [
+      {
+        "title": "當季新番",
+        "docs": "https://docs.rsshub.app/routes/anime",
+        "source": [
+          "/"
+        ],
+        "target": "/bangumi.online/"
+      }
+    ]
+  },
   "baselang.com": {
     "_name": "BaseLang",
     ".": [
@@ -2501,6 +2548,19 @@
           "/blog/:category"
         ],
         "target": "/baselang/blog/:category"
+      }
+    ]
+  },
+  "bc3ts.net": {
+    "_name": "爆料公社",
+    "web": [
+      {
+        "title": "動態",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/"
+        ],
+        "target": "/bc3ts/post/list/:sort?"
       }
     ]
   },
@@ -2615,6 +2675,94 @@
       }
     ]
   },
+  "cngal.org": {
+    "_name": "CnGal",
+    "www": [
+      {
+        "title": "制作者 / 游戏新闻",
+        "docs": "https://docs.rsshub.app/routes/anime",
+        "source": [
+          "/entries/index/:id"
+        ],
+        "target": "/cngal/entry/:id"
+      },
+      {
+        "title": "每周速报",
+        "docs": "https://docs.rsshub.app/routes/anime",
+        "source": [
+          "/",
+          "/weeklynews"
+        ],
+        "target": "/cngal/weekly"
+      }
+    ]
+  },
+  "cctv.com": {
+    "_name": "CNTV",
+    "navi": [
+      {
+        "title": "栏目",
+        "docs": "https://docs.rsshub.app/routes/multimedia",
+        "source": [
+          "/"
+        ],
+        "target": "/cntv/:column"
+      }
+    ],
+    "photo": [
+      {
+        "title": "央视网图片《镜象》",
+        "docs": "https://docs.rsshub.app/routes/traditional-media",
+        "source": [
+          "/jx",
+          "/"
+        ],
+        "target": "/cctv/photo/jx"
+      }
+    ],
+    "news": [
+      {
+        "title": "栏目",
+        "docs": "https://docs.rsshub.app/routes/traditional-media",
+        "source": [
+          "/:category"
+        ],
+        "target": "/cctv/:category"
+      },
+      {
+        "title": "专题",
+        "docs": "https://docs.rsshub.app/routes/traditional-media",
+        "source": [
+          "/:category"
+        ],
+        "target": "/cctv/:category"
+      }
+    ],
+    "tv": [
+      {
+        "title": "新闻联播",
+        "docs": "https://docs.rsshub.app/routes/traditional-media",
+        "source": [
+          "/lm/xwlb",
+          "/"
+        ],
+        "target": "/cctv/:site/:category/:name"
+      }
+    ]
+  },
+  "commonhealth.com.tw": {
+    "_name": "康健",
+    "www": [
+      {
+        "title": "最新內容",
+        "docs": "https://docs.rsshub.app/routes/traditional-media",
+        "source": [
+          "/"
+        ],
+        "target": "/commonhealth/"
+      }
+    ]
+  },
   "crossbell.io": {
     "_name": "Crossbell",
     ".": [
@@ -2654,6 +2802,45 @@
           "/:id"
         ],
         "target": "/curiouscat/user/:id"
+      }
+    ]
+  },
+  "curius.app": {
+    "_name": "Curius",
+    ".": [
+      {
+        "title": "User",
+        "docs": "https://docs.rsshub.app/routes/social-media",
+        "source": [
+          "/:name"
+        ],
+        "target": "/curius/links/:name"
+      }
+    ]
+  },
+  "diershoubing.com": {
+    "_name": "二柄 APP",
+    ".": [
+      {
+        "title": "新闻",
+        "docs": "https://docs.rsshub.app/routes/game",
+        "source": [
+          "/"
+        ],
+        "target": "/diershoubing/news"
+      }
+    ]
+  },
+  "duozhuayu.com": {
+    "_name": "多抓鱼",
+    ".": [
+      {
+        "title": "搜索结果",
+        "docs": "https://docs.rsshub.app/routes/shopping",
+        "source": [
+          "/search/book/:wd"
+        ],
+        "target": "/duozhuayu/search/:wd"
       }
     ]
   },
@@ -2703,6 +2890,19 @@
           "/news/flash"
         ],
         "target": "/egsea/flash"
+      }
+    ]
+  },
+  "epicgames.com": {
+    "_name": "Epic Games Store",
+    "store": [
+      {
+        "title": "Free games",
+        "docs": "https://docs.rsshub.app/routes/game",
+        "source": [
+          "/:locale/free-games"
+        ],
+        "target": "/epicgames/freegames/:locale"
       }
     ]
   },
@@ -2769,6 +2969,19 @@
           "/"
         ],
         "target": "/geocaching/blogs/:language?"
+      }
+    ]
+  },
+  "gettr.com": {
+    "_name": "GETTR",
+    ".": [
+      {
+        "title": "User timeline",
+        "docs": "https://docs.rsshub.app/routes/social-media",
+        "source": [
+          "/user/:id"
+        ],
+        "target": "/gettr/user/:id"
       }
     ]
   },
@@ -2841,6 +3054,32 @@
       }
     ]
   },
+  "hashnode.dev": {
+    "_name": "hashnode",
+    ".": [
+      {
+        "title": "用户博客",
+        "docs": "https://docs.rsshub.app/routes/blog",
+        "source": [
+          "/"
+        ],
+        "target": "/hashnode/blog/:username"
+      }
+    ]
+  },
+  "hiring.cafe": {
+    "_name": "HiringCafe",
+    ".": [
+      {
+        "title": "Jobs",
+        "docs": "https://docs.rsshub.app/routes/other",
+        "source": [
+          "/"
+        ],
+        "target": "/hiring.cafe/jobs/:keywords"
+      }
+    ]
+  },
   "edu.cnundefined": {
     "_name": "湖南大学",
     "scc.hnu": [
@@ -2851,6 +3090,59 @@
           "/"
         ],
         "target": "/hnu/careers"
+      }
+    ]
+  },
+  "houxu.app": {
+    "_name": "后续",
+    ".": [
+      {
+        "title": "专栏",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/events",
+          "/"
+        ],
+        "target": "/houxu/events"
+      },
+      {
+        "title": "热点",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/"
+        ],
+        "target": "/houxu/"
+      },
+      {
+        "title": "Live",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/lives/:id",
+          "/"
+        ],
+        "target": "/houxu/lives/:id"
+      },
+      {
+        "title": "跟踪",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/memory",
+          "/"
+        ],
+        "target": "/houxu/memory"
+      }
+    ]
+  },
+  "hyperdash.info": {
+    "_name": "HyperDash",
+    ".": [
+      {
+        "title": "Top Traders",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/"
+        ],
+        "target": "/hyperdash/top-traders"
       }
     ]
   },
@@ -2943,6 +3235,19 @@
       }
     ]
   },
+  "jiuyangongshe.com": {
+    "_name": "韭研公社",
+    "www": [
+      {
+        "title": "社群",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/"
+        ],
+        "target": "/jiuyangongshe/community"
+      }
+    ]
+  },
   "kaopu.news": {
     "_name": "靠谱新闻",
     ".": [
@@ -2966,6 +3271,19 @@
           "/researchResults"
         ],
         "target": "/ke/researchResults"
+      }
+    ]
+  },
+  "gotokeep.com": {
+    "_name": "Keep",
+    ".": [
+      {
+        "title": "运动日记",
+        "docs": "https://docs.rsshub.app/routes/social-media",
+        "source": [
+          "/users/:id"
+        ],
+        "target": "/keep/user/:id"
       }
     ]
   },
@@ -3024,6 +3342,32 @@
       }
     ]
   },
+  "lang.live": {
+    "_name": "浪 Play 直播",
+    ".": [
+      {
+        "title": "直播间开播",
+        "docs": "https://docs.rsshub.app/routes/live",
+        "source": [
+          "/room/:id"
+        ],
+        "target": "/lang/live/room/:id"
+      }
+    ]
+  },
+  "lenovo.com.cn": {
+    "_name": "联想",
+    ".": [
+      {
+        "title": "驱动",
+        "docs": "https://docs.rsshub.app/routes/program-update",
+        "source": [
+          "/"
+        ],
+        "target": "/lenovo/drive/:selName"
+      }
+    ]
+  },
   "hey.xyz": {
     "_name": "Lens",
     ".": [
@@ -3034,6 +3378,40 @@
           "/u/:handle"
         ],
         "target": "/lens/profile/:handle"
+      }
+    ]
+  },
+  "lmu.de": {
+    "_name": "Ludwig Maximilian University of Munich",
+    "www": [
+      {
+        "title": "Job Openings",
+        "docs": "https://docs.rsshub.app/routes/university",
+        "source": [
+          "/en/about-lmu/working-at-lmu/job-portal/academic-staff/"
+        ],
+        "target": "/lmu/lmu/jobs"
+      }
+    ]
+  },
+  "lnmuseum.com.cn": {
+    "_name": "Liaoning Provincial Museum",
+    "www": [
+      {
+        "title": "Information",
+        "docs": "https://docs.rsshub.app/routes/travel",
+        "source": [
+          "/"
+        ],
+        "target": "/lnmuseum/information"
+      },
+      {
+        "title": "Temporary Exhibition",
+        "docs": "https://docs.rsshub.app/routes/travel",
+        "source": [
+          "/"
+        ],
+        "target": "/lnmuseum/exhibition/temporary"
       }
     ]
   },
@@ -3060,6 +3438,29 @@
           "/"
         ],
         "target": "/luxiangdong/archive"
+      }
+    ]
+  },
+  "lxixsxa.com": {
+    "_name": "LiSA",
+    "www": [
+      {
+        "title": "Latest Discography",
+        "docs": "https://docs.rsshub.app/routes/live",
+        "source": [
+          "/",
+          "/discography"
+        ],
+        "target": "/lxixsxa/disco"
+      },
+      {
+        "title": "News",
+        "docs": "https://docs.rsshub.app/routes/live",
+        "source": [
+          "/",
+          "/info"
+        ],
+        "target": "/lxixsxa/info"
       }
     ]
   },
@@ -3173,6 +3574,30 @@
       }
     ]
   },
+  "modrinth.com": {
+    "_name": "Modrinth",
+    ".": [
+      {
+        "title": "Project versions",
+        "docs": "https://docs.rsshub.app/routes/game",
+        "source": [
+          "/mod/:id/*",
+          "/plugin/:id/*",
+          "/datapack/:id/*",
+          "/shader/:id/*",
+          "/resourcepack/:id/*",
+          "/modpack/:id/*",
+          "/mod/:id",
+          "/plugin/:id",
+          "/datapack/:id",
+          "/shader/:id",
+          "/resourcepack/:id",
+          "/modpack/:id"
+        ],
+        "target": "/modrinth/project/:id/versions"
+      }
+    ]
+  },
   "moodysmismicrosite.com": {
     "_name": "穆迪评级",
     "www": [
@@ -3200,6 +3625,19 @@
       }
     ]
   },
+  "njmuseum.com": {
+    "_name": "Nanjing Museum",
+    "www": [
+      {
+        "title": "Exhibitions",
+        "docs": "https://docs.rsshub.app/routes/travel",
+        "source": [
+          "/zh/exhibitionIndex"
+        ],
+        "target": "/njmuseum/exhibitionIndex"
+      }
+    ]
+  },
   "nogizaka46.com": {
     "_name": "Sakamichi Series 坂道系列官网资讯",
     "blog": [
@@ -3220,6 +3658,32 @@
           "/s/n46/news/list"
         ],
         "target": "/nogizaka46/news"
+      }
+    ]
+  },
+  "notefolio.net": {
+    "_name": "Notefolio",
+    ".": [
+      {
+        "title": "Works",
+        "docs": "https://docs.rsshub.app/routes/design",
+        "source": [
+          "/search"
+        ],
+        "target": "/notefolio/search/:category?/:order?/:time?/:query?"
+      }
+    ]
+  },
+  "npmjs.com": {
+    "_name": "NPM",
+    "www": [
+      {
+        "title": "Package",
+        "docs": "https://docs.rsshub.app/routes/program-update",
+        "source": [
+          "/package/:name"
+        ],
+        "target": "/npm/package/:name{(@[a-z0-9-~][a-z0-9-._~]*/)?[a-z0-9-~][a-z0-9-._~]*}"
       }
     ]
   },
@@ -3303,6 +3767,53 @@
       }
     ]
   },
+  "scmuseum.cn": {
+    "_name": "Sichuan Museum",
+    "www": [
+      {
+        "title": "Exhibition",
+        "docs": "https://docs.rsshub.app/routes/travel",
+        "source": [
+          "/Visit/Exhibition"
+        ],
+        "target": "/scmuseum/exhibition"
+      }
+    ]
+  },
+  "shanghaimuseum.cn": {
+    "_name": "Shanghai Museum",
+    "www": [
+      {
+        "title": "News & Announcements",
+        "docs": "https://docs.rsshub.app/routes/travel",
+        "source": [
+          "/mu/frontend/pg/infomation/news"
+        ],
+        "target": "/shanghaimuseum/information/news"
+      },
+      {
+        "title": "Special Exhibitions",
+        "docs": "https://docs.rsshub.app/routes/travel",
+        "source": [
+          "/mu/frontend/pg/display/offline-exhibit"
+        ],
+        "target": "/shanghaimuseum/display/offline-exhibit"
+      }
+    ]
+  },
+  "shanximuseum.com.cn": {
+    "_name": "Shanxi Museum",
+    "www": [
+      {
+        "title": "Temporary Exhibitions",
+        "docs": "https://docs.rsshub.app/routes/travel",
+        "source": [
+          "/sx/exhibition/temporary.html"
+        ],
+        "target": "/shanximuseum/exhibition/temporary"
+      }
+    ]
+  },
   "smartlink.bio": {
     "_name": "SmartLink",
     ".": [
@@ -3343,6 +3854,41 @@
       }
     ]
   },
+  "tqyb.com.cn": {
+    "_name": "广东天气",
+    "www": [
+      {
+        "title": "广东省内城市预警信号",
+        "docs": "https://docs.rsshub.app/routes/forecast",
+        "source": [
+          "/gz/weatherAlarm/otherCity/"
+        ],
+        "target": "/tqyb/sncsyjxh"
+      },
+      {
+        "title": "突发性天气提示",
+        "docs": "https://docs.rsshub.app/routes/forecast",
+        "source": [
+          "/gz/weatherAlarm/suddenWeather/"
+        ],
+        "target": "/tqyb/tfxtq"
+      }
+    ]
+  },
+  "tvb.com": {
+    "_name": "无线新闻",
+    ".": [
+      {
+        "title": "新闻",
+        "docs": "https://docs.rsshub.app/routes/traditional-media",
+        "source": [
+          "/:language/:category",
+          "/"
+        ],
+        "target": "/tvb/news/:category?/:language?"
+      }
+    ]
+  },
   "twitch.tv": {
     "_name": "Twitch",
     "www": [
@@ -3377,6 +3923,33 @@
       }
     ]
   },
+  "uptimerobot.com": {
+    "_name": "Uptime Robot",
+    "rss": [
+      {
+        "title": "RSS",
+        "docs": "https://docs.rsshub.app/routes/forecast",
+        "source": [
+          "/:id"
+        ],
+        "target": "/uptimerobot/rss/:id"
+      }
+    ]
+  },
+  "urbandictionary.com": {
+    "_name": "Urban Dictionary",
+    ".": [
+      {
+        "title": "Random words",
+        "docs": "https://docs.rsshub.app/routes/other",
+        "source": [
+          "/random.php",
+          "/"
+        ],
+        "target": "/urbandictionary/random"
+      }
+    ]
+  },
   "v2rayshare.com": {
     "_name": "V2rayShare",
     ".": [
@@ -3387,6 +3960,20 @@
           "/"
         ],
         "target": "/v2rayshare/"
+      }
+    ]
+  },
+  "wallpaperhub.app": {
+    "_name": "WallpaperHub",
+    ".": [
+      {
+        "title": "Wallpapers",
+        "docs": "https://docs.rsshub.app/routes/picture",
+        "source": [
+          "/wallpaperhub",
+          "/"
+        ],
+        "target": "/wallpaperhub/"
       }
     ]
   },
@@ -3414,6 +4001,19 @@
           "/"
         ],
         "target": "/wfdf/news"
+      }
+    ]
+  },
+  "wuzhongmuseum.com": {
+    "_name": "Museum of Wu",
+    "www": [
+      {
+        "title": "Exhibition",
+        "docs": "https://docs.rsshub.app/routes/travel",
+        "source": [
+          "/portal/exhibition"
+        ],
+        "target": "/wuzhongmuseum/exhibition"
       }
     ]
   },
@@ -3456,6 +4056,59 @@
       }
     ]
   },
+  "yinxubwg.cn": {
+    "_name": "Yinxu Museum",
+    "www": [
+      {
+        "title": "Notice",
+        "docs": "https://docs.rsshub.app/routes/travel",
+        "source": [
+          "/yxgw/notice"
+        ],
+        "target": "/yinxubwg/notice"
+      },
+      {
+        "title": "Exhibition Information",
+        "docs": "https://docs.rsshub.app/routes/travel",
+        "source": [
+          "/yxgw/exhibitionIndex"
+        ],
+        "target": "/yinxubwg/exhibitionIndex/:type"
+      }
+    ]
+  },
+  "yoasobi-music.jp": {
+    "_name": "Yoasobi Official",
+    "www": [
+      {
+        "title": "News & Biography",
+        "docs": "https://docs.rsshub.app/routes/live",
+        "source": [
+          "/",
+          "/:category"
+        ],
+        "target": "/yoasobi-music/info/:category"
+      },
+      {
+        "title": "Live",
+        "docs": "https://docs.rsshub.app/routes/live",
+        "source": [
+          "/",
+          "/live"
+        ],
+        "target": "/yoasobi-music/live"
+      },
+      {
+        "title": "Media",
+        "docs": "https://docs.rsshub.app/routes/live",
+        "source": [
+          "/",
+          "/media"
+        ],
+        "target": "/yoasobi-music/media"
+      }
+    ]
+  },
   "zaozao.run": {
     "_name": "前端早早聊",
     "www": [
@@ -3482,24 +4135,67 @@
       }
     ]
   },
-  "zsxq.com": {
-    "_name": "知识星球",
-    "wx": [
+  "zjmuseum.com.cn": {
+    "_name": "Zhejiang Provincial Museum",
+    "www": [
       {
-        "title": "星球",
-        "docs": "https://docs.rsshub.app/routes/social-media",
+        "title": "Temporary Exhibition",
+        "docs": "https://docs.rsshub.app/routes/travel",
         "source": [
-          "/dweb2/index/group/:id"
+          "/cn/"
         ],
-        "target": "/zsxq/group/:id/:scope?"
+        "target": "/zjmuseum/exhibition/:type?"
+      }
+    ]
+  },
+  "4chan.org": {
+    "_name": "4chan",
+    "boards": [
+      {
+        "title": "Board's catalog",
+        "docs": "https://docs.rsshub.app/routes/bbs",
+        "source": [
+          "/:board/"
+        ],
+        "target": "/4chan/:board/catalog"
+      }
+    ]
+  },
+  "aicaijing.com": {
+    "_name": "AI 财经社",
+    "www": [
+      {
+        "title": "最新文章",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/"
+        ],
+        "target": "/aicaijing/latest"
       },
       {
-        "title": "用户足迹",
-        "docs": "https://docs.rsshub.app/routes/social-media",
+        "title": "封面文章",
+        "docs": "https://docs.rsshub.app/routes/finance",
         "source": [
-          "/dweb2/index/footprint/:id"
+          "/"
         ],
-        "target": "/zsxq/user/:id"
+        "target": "/aicaijing/cover"
+      },
+      {
+        "title": "热点 & 深度",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/information/:id",
+          "/"
+        ],
+        "target": "/aicaijing/information/:id?"
+      },
+      {
+        "title": "推荐资讯",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/"
+        ],
+        "target": "/aicaijing/recommend"
       }
     ]
   },
@@ -3521,6 +4217,128 @@
           "/tlist/"
         ],
         "target": "/bt0/tlist/:sc/:domain?"
+      }
+    ]
+  },
+  "douyu.com": {
+    "_name": "斗鱼直播",
+    "www": [
+      {
+        "title": "直播间开播",
+        "docs": "https://docs.rsshub.app/routes/live",
+        "source": [
+          "/:id",
+          "/"
+        ],
+        "target": "/douyu/room/:id"
+      }
+    ],
+    "yuba": [
+      {
+        "title": "鱼吧帖子",
+        "docs": "https://docs.rsshub.app/routes/bbs",
+        "source": [
+          "/group/:id",
+          "/group/newself/:id",
+          "/group/newall/:id",
+          "/"
+        ],
+        "target": "/douyu/group/:id"
+      },
+      {
+        "title": "鱼吧跟帖",
+        "docs": "https://docs.rsshub.app/routes/bbs",
+        "source": [
+          "/p/:id",
+          "/"
+        ],
+        "target": "/douyu/post/:id"
+      }
+    ]
+  },
+  "sdo.com": {
+    "_name": "FINAL FANTASY XIV",
+    "ff.web": [
+      {
+        "title": "最终幻想 14 国服",
+        "docs": "https://docs.rsshub.app/routes/game",
+        "source": [
+          "/web8/index.html"
+        ],
+        "target": "/ff14/zh"
+      }
+    ]
+  },
+  "foresightnews.pro": {
+    "_name": "Foresight News",
+    ".": [
+      {
+        "title": "文章",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/"
+        ],
+        "target": "/foresightnews/article"
+      },
+      {
+        "title": "专栏",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/column/detail/:id",
+          "/"
+        ],
+        "target": "/foresightnews/column/:id"
+      },
+      {
+        "title": "精选资讯",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/"
+        ],
+        "target": "/foresightnews/"
+      },
+      {
+        "title": "快讯",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/news",
+          "/"
+        ],
+        "target": "/foresightnews/news"
+      }
+    ]
+  },
+  "gelbooru.com": {
+    "_name": "Gelbooru",
+    ".": [
+      {
+        "title": "标签查询",
+        "docs": "https://docs.rsshub.app/routes/picture",
+        "source": [
+          "/index.php"
+        ],
+        "target": "/gelbooru/post/:tags?/:quality?"
+      }
+    ]
+  },
+  "kpopping.com": {
+    "_name": "kpopping",
+    ".": [
+      {
+        "title": "Community",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/community"
+        ],
+        "target": "/kpopping/community"
+      },
+      {
+        "title": "Pics",
+        "docs": "https://docs.rsshub.app/routes/picture",
+        "source": [
+          "/kpics"
+        ],
+        "target": "/kpopping/kpics"
       }
     ]
   },
@@ -3576,6 +4394,83 @@
       }
     ]
   },
+  "newslaundry.com": {
+    "_name": "Newslaundry",
+    ".": [
+      {
+        "title": "Explainer",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/explainer"
+        ],
+        "target": "/newslaundry/explainer"
+      },
+      {
+        "title": "Explains",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/collection/nl-cheatsheet"
+        ],
+        "target": "/newslaundry/nl-cheatsheet"
+      },
+      {
+        "title": "NL Collaboration",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/nl-collaborations"
+        ],
+        "target": "/newslaundry/nl-collaborations"
+      },
+      {
+        "title": "Podcast",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/podcast"
+        ],
+        "target": "/newslaundry/podcast"
+      },
+      {
+        "title": "Podcast",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/collection/nl-hafta-podcast"
+        ],
+        "target": "/newslaundry/podcast/nl-hafta"
+      },
+      {
+        "title": "Podcast",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/podcast/whats-your-ism"
+        ],
+        "target": "/newslaundry/podcast/whats-your-ism"
+      },
+      {
+        "title": "Reports",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/reports"
+        ],
+        "target": "/newslaundry/reports"
+      },
+      {
+        "title": "Shot",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/shot"
+        ],
+        "target": "/newslaundry/shot"
+      },
+      {
+        "title": "Subscriber Only",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/subscriber-only"
+        ],
+        "target": "/newslaundry/subscriber-only"
+      }
+    ]
+  },
   "showstart.com": {
     "_name": "秀动网",
     "www": [
@@ -3605,6 +4500,27 @@
       }
     ]
   },
+  "thewirehindi.com": {
+    "_name": "The Wire Hindi",
+    ".": [
+      {
+        "title": "Category",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/category/*"
+        ],
+        "target": "/thewirehindi/category/:category"
+      },
+      {
+        "title": "Latest News",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/"
+        ],
+        "target": "/thewirehindi/"
+      }
+    ]
+  },
   "aliresearch.com": {
     "_name": "阿里研究院",
     ".": [
@@ -3619,6 +4535,33 @@
       }
     ]
   },
+  "appcenter.ms": {
+    "_name": "App Center",
+    "install": [
+      {
+        "title": "Release",
+        "docs": "https://docs.rsshub.app/routes/program-update",
+        "source": [
+          "/users/:user/apps/:app/distribution_groups/:distribution_group",
+          "/orgs/:user/apps/:app/distribution_groups/:distribution_group"
+        ],
+        "target": "/app-center/release/:user/:app/:distribution_group"
+      }
+    ]
+  },
+  "artstation.com": {
+    "_name": "ArtStation",
+    "www": [
+      {
+        "title": "Artist Profolio",
+        "docs": "https://docs.rsshub.app/routes/picture",
+        "source": [
+          "/:handle"
+        ],
+        "target": "/artstation/:handle"
+      }
+    ]
+  },
   "bangumi.moe": {
     "_name": "萌番组",
     ".": [
@@ -3629,6 +4572,19 @@
           "/"
         ],
         "target": "/bangumi.moe/:tags{.+}?"
+      }
+    ]
+  },
+  "cahkms.org": {
+    "_name": "全国港澳研究会",
+    ".": [
+      {
+        "title": "分类",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/"
+        ],
+        "target": "/cahkms/:category?"
       }
     ]
   },
@@ -3663,6 +4619,19 @@
           "/"
         ],
         "target": "/chaping/banner"
+      }
+    ]
+  },
+  "creative-comic.tw": {
+    "_name": "CCC 創作集",
+    ".": [
+      {
+        "title": "漫畫",
+        "docs": "https://docs.rsshub.app/routes/anime",
+        "source": [
+          "/book/:id/*"
+        ],
+        "target": "/creative-comic/:id"
       }
     ]
   },
@@ -3808,6 +4777,50 @@
       }
     ]
   },
+  "digg.com": {
+    "_name": "Digg",
+    ".": [
+      {
+        "title": "Community Posts",
+        "docs": "https://docs.rsshub.app/routes/social-media",
+        "source": [
+          "/:community"
+        ],
+        "target": "/digg/community/:community"
+      }
+    ]
+  },
+  "douyin.com": {
+    "_name": "抖音直播",
+    ".": [
+      {
+        "title": "标签",
+        "docs": "https://docs.rsshub.app/routes/social-media",
+        "source": [
+          "/hashtag/:cid"
+        ],
+        "target": "/douyin/hashtag/:cid"
+      },
+      {
+        "title": "博主",
+        "docs": "https://docs.rsshub.app/routes/social-media",
+        "source": [
+          "/user/:uid"
+        ],
+        "target": "/douyin/user/:uid"
+      }
+    ],
+    "live": [
+      {
+        "title": "直播间开播",
+        "docs": "https://docs.rsshub.app/routes/live",
+        "source": [
+          "/:rid"
+        ],
+        "target": "/douyin/live/:rid"
+      }
+    ]
+  },
   "eleduck.com": {
     "_name": "电鸭社区",
     ".": [
@@ -3861,6 +4874,34 @@
           "/fanclubs/:id"
         ],
         "target": "/fantia/user/:id"
+      }
+    ]
+  },
+  "fffdm.com": {
+    "_name": "风之动漫",
+    "www": [
+      {
+        "title": "在线漫画",
+        "docs": "https://docs.rsshub.app/routes/anime",
+        "source": [
+          "/manhua/:id",
+          "/:id"
+        ],
+        "target": "/fffdm/manhua/:id"
+      }
+    ]
+  },
+  "gamebase.com.tw": {
+    "_name": "遊戲基地 Gamebase",
+    "news": [
+      {
+        "title": "新聞",
+        "docs": "https://docs.rsshub.app/routes/game",
+        "source": [
+          "/news",
+          "/news/:type"
+        ],
+        "target": "/gamebase(params,url)=>{const type=params.type;const urlObj=new URL(url);const category=urlObj.searchParams.get(\"type\")??void 0;return`/gamebase/news${type?`/${type}${category?`/${category}`:\"\"}`:\"\"}`}"
       }
     ]
   },
@@ -3952,1019 +4993,6 @@
       }
     ]
   },
-  "hakkatv.org.tw": {
-    "_name": "客家電視台",
-    ".": [
-      {
-        "title": "新聞首頁",
-        "docs": "https://docs.rsshub.app/routes/traditional-media",
-        "source": [
-          "/news"
-        ],
-        "target": "/hakkatv/news"
-      }
-    ]
-  },
-  "inspirehep.net": {
-    "_name": "INSPIRE",
-    ".": [
-      {
-        "title": "Literature Search",
-        "docs": "https://docs.rsshub.app/routes/journal",
-        "source": [
-          "/literature"
-        ],
-        "target": "/inspirehep(_params,url)=>`/inspirehep/literature/${new URL(url).searchParams.get(\"q\")}`"
-      },
-      {
-        "title": "Author Search",
-        "docs": "https://docs.rsshub.app/routes/journal",
-        "source": [
-          "/authors/:id"
-        ],
-        "target": "/inspirehep/authors/:id"
-      }
-    ]
-  },
-  "jingzhengu.com": {
-    "_name": "精真估",
-    "www": [
-      {
-        "title": "资讯",
-        "docs": "https://docs.rsshub.app/routes/other",
-        "source": [
-          "/"
-        ],
-        "target": "/jingzhengu/news"
-      }
-    ]
-  },
-  "lifeweek.com.cn": {
-    "_name": "三联生活周刊",
-    ".": [
-      {
-        "title": "栏目",
-        "docs": "https://docs.rsshub.app/routes/traditional-media",
-        "source": [
-          "/column/:channel"
-        ],
-        "target": "/lifeweek/channel/:channel"
-      },
-      {
-        "title": "标签",
-        "docs": "https://docs.rsshub.app/routes/traditional-media",
-        "source": [
-          "/articleList/:tag"
-        ],
-        "target": "/lifeweek/tag/:tag"
-      }
-    ]
-  },
-  "locals.com": {
-    "_name": "Locals",
-    ".": [
-      {
-        "title": "Content Feed",
-        "docs": "https://docs.rsshub.app/routes/social-media",
-        "source": [
-          "/:community/feed"
-        ],
-        "target": "/locals/content/:community"
-      }
-    ]
-  },
-  "malaysiakini.com": {
-    "_name": "Malaysiakini",
-    ".": [
-      {
-        "title": "News",
-        "docs": "https://docs.rsshub.app/routes/new-media",
-        "source": [
-          "/"
-        ],
-        "target": "/malaysiakini/en"
-      },
-      {
-        "title": "News",
-        "docs": "https://docs.rsshub.app/routes/new-media",
-        "source": [
-          "/:lang"
-        ],
-        "target": "/malaysiakini/:lang"
-      }
-    ],
-    "www": [
-      {
-        "title": "News",
-        "docs": "https://docs.rsshub.app/routes/new-media",
-        "source": [
-          "/:lang/latest/:category"
-        ],
-        "target": "/malaysiakini/:lang/:category"
-      }
-    ]
-  },
-  "manus.im": {
-    "_name": "Manus",
-    "www": [
-      {
-        "title": "Blog",
-        "docs": "https://docs.rsshub.app/routes/programming",
-        "source": [
-          "/"
-        ],
-        "target": "/manus/blog"
-      }
-    ]
-  },
-  "nanhua.net": {
-    "_name": "南华期货",
-    "mall": [
-      {
-        "title": "研报",
-        "docs": "https://docs.rsshub.app/routes/finance",
-        "source": [
-          "/mall/r/w/reportNew/report-list.html"
-        ],
-        "target": "/nanhua(_,url)=>{const params=new URL(url).searchParams;const type1=params.get(\"type1\");const type2=params.get(\"type2\");return type1&&type2?`/nanhua/report/${encodeURIComponent(type1)}/${encodeURIComponent(type2)}`:\"\"}"
-      }
-    ]
-  },
-  "onlyfans.com": {
-    "_name": "OnlyFans",
-    ".": [
-      {
-        "title": "Creator Posts",
-        "docs": "https://docs.rsshub.app/routes/social-media",
-        "source": [
-          "/:username"
-        ],
-        "target": "/onlyfans/:username"
-      }
-    ]
-  },
-  "openalex.org": {
-    "_name": "OpenAlex",
-    ".": [
-      {
-        "title": "Works",
-        "docs": "https://docs.rsshub.app/routes/journal",
-        "source": [
-          "/works"
-        ],
-        "target": "/openalex/:journals/:type?/:ids?"
-      }
-    ]
-  },
-  "pinterest.com": {
-    "_name": "Pinterest",
-    "www": [
-      {
-        "title": "User",
-        "docs": "https://docs.rsshub.app/routes/picture",
-        "source": [
-          "/:id/:type",
-          "/:id"
-        ],
-        "target": "/pinterest/user/:id/:type?"
-      }
-    ]
-  },
-  "qingting.fm": {
-    "_name": "蜻蜓 FM",
-    ".": [
-      {
-        "title": "播客",
-        "docs": "https://docs.rsshub.app/routes/multimedia",
-        "source": [
-          "/channels/:id"
-        ],
-        "target": "/qingting/podcast/:id"
-      }
-    ]
-  },
-  "rockstargames.com": {
-    "_name": "Rockstar Games",
-    "www": [
-      {
-        "title": "Newswire",
-        "docs": "https://docs.rsshub.app/routes/game",
-        "source": [
-          "/newswire"
-        ],
-        "target": "/rockstargames/newswire"
-      }
-    ]
-  },
-  "skebetter.com": {
-    "_name": "Skebetter",
-    ".": [
-      {
-        "title": "Illust - Hot",
-        "docs": "https://docs.rsshub.app/routes/anime",
-        "source": [
-          "/illust"
-        ],
-        "target": "/skebetter/illust/hot"
-      },
-      {
-        "title": "Illust - Week",
-        "docs": "https://docs.rsshub.app/routes/anime",
-        "source": [
-          "/illust"
-        ],
-        "target": "/skebetter/illust/week"
-      },
-      {
-        "title": "Illust - Month",
-        "docs": "https://docs.rsshub.app/routes/anime",
-        "source": [
-          "/illust"
-        ],
-        "target": "/skebetter/illust/month"
-      },
-      {
-        "title": "Illust - Latest",
-        "docs": "https://docs.rsshub.app/routes/anime",
-        "source": [
-          "/illust"
-        ],
-        "target": "/skebetter/illust/latest"
-      },
-      {
-        "title": "Skebetter - Hot",
-        "docs": "https://docs.rsshub.app/routes/anime",
-        "source": [
-          "/"
-        ],
-        "target": "/skebetter/hot"
-      },
-      {
-        "title": "Skebetter - Week",
-        "docs": "https://docs.rsshub.app/routes/anime",
-        "source": [
-          "/"
-        ],
-        "target": "/skebetter/week"
-      },
-      {
-        "title": "Skebetter - Month",
-        "docs": "https://docs.rsshub.app/routes/anime",
-        "source": [
-          "/"
-        ],
-        "target": "/skebetter/month"
-      },
-      {
-        "title": "Skebetter - Latest",
-        "docs": "https://docs.rsshub.app/routes/anime",
-        "source": [
-          "/"
-        ],
-        "target": "/skebetter/latest"
-      },
-      {
-        "title": "Manga - Latest",
-        "docs": "https://docs.rsshub.app/routes/anime",
-        "source": [
-          "/series"
-        ],
-        "target": "/skebetter/manga/1"
-      },
-      {
-        "title": "Manga - Hot",
-        "docs": "https://docs.rsshub.app/routes/anime",
-        "source": [
-          "/series"
-        ],
-        "target": "/skebetter/manga/2"
-      }
-    ]
-  },
-  "sotwe.com": {
-    "_name": "X (Twitter)",
-    "www": [
-      {
-        "title": "User timeline - Sotwe",
-        "docs": "https://docs.rsshub.app/routes/social-media",
-        "source": [
-          "/:id"
-        ],
-        "target": "/sotwe/user/:id"
-      }
-    ]
-  },
-  "soundon.fm": {
-    "_name": "SoundOn",
-    "player": [
-      {
-        "title": "Podcast",
-        "docs": "https://docs.rsshub.app/routes/multimedia",
-        "source": [
-          "/p/:id"
-        ],
-        "target": "/soundon/p/:id"
-      }
-    ]
-  },
-  "stockedge.com": {
-    "_name": "Stock Edge",
-    "web": [
-      {
-        "title": "Daily Updates News",
-        "docs": "https://docs.rsshub.app/routes/finance",
-        "source": [
-          "/daily-updates/news"
-        ],
-        "target": "/stockedge/daily-updates/news"
-      }
-    ]
-  },
-  "stream-capital.com": {
-    "_name": "远川研究所",
-    "www": [
-      {
-        "title": "最新",
-        "docs": "https://docs.rsshub.app/routes/finance",
-        "source": [
-          "/search"
-        ],
-        "target": "/stream-capital/search"
-      }
-    ]
-  },
-  "supercell.com": {
-    "_name": "Supercell",
-    ".": [
-      {
-        "title": "Game Blog",
-        "docs": "https://docs.rsshub.app/routes/game",
-        "source": [
-          "/en/games/:game/:locale/blog"
-        ],
-        "target": "/supercell/:game/blog/:locale"
-      }
-    ]
-  },
-  "technologyreview.com": {
-    "_name": "MIT Technology Review",
-    "www": [
-      {
-        "title": "Index",
-        "docs": "https://docs.rsshub.app/routes/journal",
-        "source": [
-          "/"
-        ],
-        "target": "/technologyreview/"
-      },
-      {
-        "title": "Topics",
-        "docs": "https://docs.rsshub.app/routes/journal",
-        "source": [
-          "/topic/:category_name"
-        ],
-        "target": "/technologyreview/:category_name"
-      }
-    ]
-  },
-  "thepetcity.co": {
-    "_name": "PetCity 毛孩日常",
-    ".": [
-      {
-        "title": "Pet Staff 毛孩好物",
-        "docs": "https://docs.rsshub.app/routes/new-media",
-        "source": [
-          "/category/cute-item",
-          "/"
-        ],
-        "target": "/thepetcity/1"
-      },
-      {
-        "title": "Funny News毛孩趣聞",
-        "docs": "https://docs.rsshub.app/routes/new-media",
-        "source": [
-          "/category/funny-news",
-          "/"
-        ],
-        "target": "/thepetcity/2"
-      },
-      {
-        "title": "Knowledge飼養大全",
-        "docs": "https://docs.rsshub.app/routes/new-media",
-        "source": [
-          "/category/knowledge",
-          "/"
-        ],
-        "target": "/thepetcity/3"
-      },
-      {
-        "title": "Hot Spot 毛孩打卡點",
-        "docs": "https://docs.rsshub.app/routes/new-media",
-        "source": [
-          "/category/hot-spot",
-          "/"
-        ],
-        "target": "/thepetcity/4"
-      },
-      {
-        "title": "Raise Pets 養寵物新手",
-        "docs": "https://docs.rsshub.app/routes/new-media",
-        "source": [
-          "/category/raise-cats",
-          "/"
-        ],
-        "target": "/thepetcity/5"
-      },
-      {
-        "title": "PetCity 毛孩日常 | 飼養竉物、竉物用品、萌寵趣聞",
-        "docs": "https://docs.rsshub.app/routes/new-media",
-        "source": [
-          "/"
-        ],
-        "target": "/thepetcity/:term?"
-      }
-    ]
-  },
-  "tkww.hk": {
-    "_name": "大公文匯網",
-    "www": [
-      {
-        "title": "新聞",
-        "docs": "https://docs.rsshub.app/routes/traditional-media",
-        "source": [
-          "/:column"
-        ],
-        "target": "/tkww/:column"
-      }
-    ]
-  },
-  "metro.tokyo.jp": {
-    "_name": "Toei Transportation",
-    "www.kotsu": [
-      {
-        "title": "都営地下鉄 各駅乗降人員",
-        "docs": "https://docs.rsshub.app/routes/other",
-        "source": [
-          "/subway/kanren/passengers.html",
-          "/dataset/t000018d0000000030"
-        ],
-        "target": "/toei/ridership"
-      }
-    ]
-  },
-  "topbook.cc": {
-    "_name": "Topbook",
-    ".": [
-      {
-        "title": "文章",
-        "docs": "https://docs.rsshub.app/routes/new-media",
-        "source": [
-          "/content",
-          "/"
-        ],
-        "target": "/topbook/:id"
-      }
-    ]
-  },
-  "trakt.tv": {
-    "_name": "Trakt.tv",
-    "app": [
-      {
-        "title": "User Collection",
-        "docs": "https://docs.rsshub.app/routes/multimedia",
-        "source": [
-          "/profile/:username"
-        ],
-        "target": "/trakt/collection/:username"
-      }
-    ]
-  },
-  "vgnlab.com.cn": {
-    "_name": "VGN",
-    "www": [
-      {
-        "title": "新闻中心",
-        "docs": "https://docs.rsshub.app/routes/game",
-        "source": [
-          "/web/news"
-        ],
-        "target": "/vgnlab/"
-      }
-    ]
-  },
-  "voronoiapp.com": {
-    "_name": "Voronoi",
-    "www": [
-      {
-        "title": "Editor's Pick Posts",
-        "docs": "https://docs.rsshub.app/routes/picture",
-        "source": [
-          "/posts/editors-pick"
-        ],
-        "target": "/voronoiapp/editors-pick"
-      },
-      {
-        "title": "Home Posts",
-        "docs": "https://docs.rsshub.app/routes/picture",
-        "source": [
-          "/",
-          "/posts/voronoi"
-        ],
-        "target": "/voronoiapp/home"
-      },
-      {
-        "title": "Latest Posts",
-        "docs": "https://docs.rsshub.app/routes/picture",
-        "source": [
-          "/posts/latest"
-        ],
-        "target": "/voronoiapp/latest"
-      },
-      {
-        "title": "Most Liked Posts",
-        "docs": "https://docs.rsshub.app/routes/picture",
-        "source": [
-          "/posts/most-popular"
-        ],
-        "target": "/voronoiapp/popular/most-popular"
-      },
-      {
-        "title": "Most Discussed Posts",
-        "docs": "https://docs.rsshub.app/routes/picture",
-        "source": [
-          "/posts/most-discussed"
-        ],
-        "target": "/voronoiapp/popular/most-discussed"
-      },
-      {
-        "title": "Most Viewed Posts",
-        "docs": "https://docs.rsshub.app/routes/picture",
-        "source": [
-          "/posts/most-viewed"
-        ],
-        "target": "/voronoiapp/popular/most-viewed"
-      },
-      {
-        "title": "Search Keyword Posts",
-        "docs": "https://docs.rsshub.app/routes/picture",
-        "source": [
-          "/explore"
-        ],
-        "target": "/voronoiapp(_,url)=>{const parsedURL=new URL(url);const keyword=parsedURL.searchParams.get(\"search\");return`/voronoiapp/search/${keyword}`}"
-      },
-      {
-        "title": "Author Posts",
-        "docs": "https://docs.rsshub.app/routes/picture",
-        "source": [
-          "/author/:username"
-        ],
-        "target": "/voronoiapp/author/:username"
-      }
-    ]
-  },
-  "washingtonpost.com": {
-    "_name": "The Washington Post",
-    "www": [
-      {
-        "title": "App",
-        "docs": "https://docs.rsshub.app/routes/traditional-media",
-        "source": [
-          "/:category"
-        ],
-        "target": "/washingtonpost/app/:category"
-      }
-    ]
-  },
-  "wikipedia.org": {
-    "_name": "Wikipedia",
-    "en": [
-      {
-        "title": "Current Events",
-        "docs": "https://docs.rsshub.app/routes/new-media",
-        "source": [
-          "/wiki/Portal:Current_events"
-        ],
-        "target": "/wikipedia/wikipedia/current-events"
-      }
-    ]
-  },
-  "xuetangx.com": {
-    "_name": "学堂在线",
-    "www": [
-      {
-        "title": "课程列表",
-        "docs": "https://docs.rsshub.app/routes/study",
-        "source": [
-          "/search"
-        ],
-        "target": "/xuetangx/course/list"
-      },
-      {
-        "title": "课程信息",
-        "docs": "https://docs.rsshub.app/routes/study",
-        "source": [
-          "/course/:sign"
-        ],
-        "target": "/xuetangx/course/:sign"
-      }
-    ]
-  },
-  "yuancheng.work": {
-    "_name": "远程.work",
-    ".": [
-      {
-        "title": "Remote.work Job Information",
-        "docs": "https://docs.rsshub.app/routes/other",
-        "source": [
-          "/:caty"
-        ],
-        "target": "/yuancheng.work(_,url)=>url?`/yuancheng.work/${/\\w+-(\\w+)-\\w+/.exec(url)[1]}`:\"/yuancheng.work\""
-      }
-    ]
-  },
-  "8kcosplay.com": {
-    "_name": "8KCosplay",
-    ".": [
-      {
-        "title": "分类",
-        "docs": "https://docs.rsshub.app/routes/picture",
-        "source": [
-          "/category/:mainCategory/:cat/",
-          "/category/:cat/"
-        ],
-        "target": "/8kcos/cat/:cat"
-      },
-      {
-        "title": "最新",
-        "docs": "https://docs.rsshub.app/routes/picture",
-        "source": [
-          "/"
-        ],
-        "target": "/8kcos/"
-      },
-      {
-        "title": "标签",
-        "docs": "https://docs.rsshub.app/routes/picture",
-        "source": [
-          "/tag/:tag"
-        ],
-        "target": "/8kcos/tag/:tag"
-      }
-    ]
-  },
-  "ainvest.com": {
-    "_name": "AInvest",
-    "www": [
-      {
-        "title": "Latest Article",
-        "docs": "https://docs.rsshub.app/routes/finance",
-        "source": [
-          "/news/articles-latest/",
-          "/"
-        ],
-        "target": "/ainvest/article"
-      },
-      {
-        "title": "Latest News",
-        "docs": "https://docs.rsshub.app/routes/finance",
-        "source": [
-          "/news/"
-        ],
-        "target": "/ainvest/news"
-      }
-    ]
-  },
-  "appcenter.ms": {
-    "_name": "App Center",
-    "install": [
-      {
-        "title": "Release",
-        "docs": "https://docs.rsshub.app/routes/program-update",
-        "source": [
-          "/users/:user/apps/:app/distribution_groups/:distribution_group",
-          "/orgs/:user/apps/:app/distribution_groups/:distribution_group"
-        ],
-        "target": "/app-center/release/:user/:app/:distribution_group"
-      }
-    ]
-  },
-  "asmr-200.com": {
-    "_name": "ASMR Online",
-    ".": [
-      {
-        "title": "最新收录",
-        "docs": "https://docs.rsshub.app/routes/multimedia",
-        "source": [
-          "/"
-        ],
-        "target": "/asmr-200asmr-200/works"
-      }
-    ]
-  },
-  "av01.media": {
-    "_name": "AV01",
-    "www": [
-      {
-        "title": "演员",
-        "docs": "https://docs.rsshub.app/routes/multimedia",
-        "source": [
-          "/:language/actress/:name/:unusedName",
-          "/:language/actress/:name"
-        ],
-        "target": "/av01/actor/:name"
-      },
-      {
-        "title": "分类",
-        "docs": "https://docs.rsshub.app/routes/multimedia",
-        "source": [
-          "/:language/tag/:name/:unusedName",
-          "/:language/tag/:name"
-        ],
-        "target": "/av01/tag/:name"
-      }
-    ]
-  },
-  "bangumi.online": {
-    "_name": "アニメ新番組",
-    ".": [
-      {
-        "title": "當季新番",
-        "docs": "https://docs.rsshub.app/routes/anime",
-        "source": [
-          "/"
-        ],
-        "target": "/bangumi.online/"
-      }
-    ]
-  },
-  "bc3ts.net": {
-    "_name": "爆料公社",
-    "web": [
-      {
-        "title": "動態",
-        "docs": "https://docs.rsshub.app/routes/new-media",
-        "source": [
-          "/"
-        ],
-        "target": "/bc3ts/post/list/:sort?"
-      }
-    ]
-  },
-  "cahkms.org": {
-    "_name": "全国港澳研究会",
-    ".": [
-      {
-        "title": "分类",
-        "docs": "https://docs.rsshub.app/routes/new-media",
-        "source": [
-          "/"
-        ],
-        "target": "/cahkms/:category?"
-      }
-    ]
-  },
-  "cngal.org": {
-    "_name": "CnGal",
-    "www": [
-      {
-        "title": "制作者 / 游戏新闻",
-        "docs": "https://docs.rsshub.app/routes/anime",
-        "source": [
-          "/entries/index/:id"
-        ],
-        "target": "/cngal/entry/:id"
-      },
-      {
-        "title": "每周速报",
-        "docs": "https://docs.rsshub.app/routes/anime",
-        "source": [
-          "/",
-          "/weeklynews"
-        ],
-        "target": "/cngal/weekly"
-      }
-    ]
-  },
-  "cctv.com": {
-    "_name": "CNTV",
-    "navi": [
-      {
-        "title": "栏目",
-        "docs": "https://docs.rsshub.app/routes/multimedia",
-        "source": [
-          "/"
-        ],
-        "target": "/cntv/:column"
-      }
-    ],
-    "photo": [
-      {
-        "title": "央视网图片《镜象》",
-        "docs": "https://docs.rsshub.app/routes/traditional-media",
-        "source": [
-          "/jx",
-          "/"
-        ],
-        "target": "/cctv/photo/jx"
-      }
-    ],
-    "news": [
-      {
-        "title": "栏目",
-        "docs": "https://docs.rsshub.app/routes/traditional-media",
-        "source": [
-          "/:category"
-        ],
-        "target": "/cctv/:category"
-      },
-      {
-        "title": "专题",
-        "docs": "https://docs.rsshub.app/routes/traditional-media",
-        "source": [
-          "/:category"
-        ],
-        "target": "/cctv/:category"
-      }
-    ],
-    "tv": [
-      {
-        "title": "新闻联播",
-        "docs": "https://docs.rsshub.app/routes/traditional-media",
-        "source": [
-          "/lm/xwlb",
-          "/"
-        ],
-        "target": "/cctv/:site/:category/:name"
-      }
-    ]
-  },
-  "commonhealth.com.tw": {
-    "_name": "康健",
-    "www": [
-      {
-        "title": "最新內容",
-        "docs": "https://docs.rsshub.app/routes/traditional-media",
-        "source": [
-          "/"
-        ],
-        "target": "/commonhealth/"
-      }
-    ]
-  },
-  "creative-comic.tw": {
-    "_name": "CCC 創作集",
-    ".": [
-      {
-        "title": "漫畫",
-        "docs": "https://docs.rsshub.app/routes/anime",
-        "source": [
-          "/book/:id/*"
-        ],
-        "target": "/creative-comic/:id"
-      }
-    ]
-  },
-  "curius.app": {
-    "_name": "Curius",
-    ".": [
-      {
-        "title": "User",
-        "docs": "https://docs.rsshub.app/routes/social-media",
-        "source": [
-          "/:name"
-        ],
-        "target": "/curius/links/:name"
-      }
-    ]
-  },
-  "diershoubing.com": {
-    "_name": "二柄 APP",
-    ".": [
-      {
-        "title": "新闻",
-        "docs": "https://docs.rsshub.app/routes/game",
-        "source": [
-          "/"
-        ],
-        "target": "/diershoubing/news"
-      }
-    ]
-  },
-  "digg.com": {
-    "_name": "Digg",
-    ".": [
-      {
-        "title": "Community Posts",
-        "docs": "https://docs.rsshub.app/routes/social-media",
-        "source": [
-          "/:community"
-        ],
-        "target": "/digg/community/:community"
-      }
-    ]
-  },
-  "duozhuayu.com": {
-    "_name": "多抓鱼",
-    ".": [
-      {
-        "title": "搜索结果",
-        "docs": "https://docs.rsshub.app/routes/shopping",
-        "source": [
-          "/search/book/:wd"
-        ],
-        "target": "/duozhuayu/search/:wd"
-      }
-    ]
-  },
-  "epicgames.com": {
-    "_name": "Epic Games Store",
-    "store": [
-      {
-        "title": "Free games",
-        "docs": "https://docs.rsshub.app/routes/game",
-        "source": [
-          "/:locale/free-games"
-        ],
-        "target": "/epicgames/freegames/:locale"
-      }
-    ]
-  },
-  "feng.com": {
-    "_name": "威锋",
-    ".": [
-      {
-        "title": "社区",
-        "docs": "https://docs.rsshub.app/routes/bbs",
-        "source": [
-          "/forum/photo/:id",
-          "/forum/:id"
-        ],
-        "target": "/feng/forum/:id"
-      }
-    ]
-  },
-  "fffdm.com": {
-    "_name": "风之动漫",
-    "www": [
-      {
-        "title": "在线漫画",
-        "docs": "https://docs.rsshub.app/routes/anime",
-        "source": [
-          "/manhua/:id",
-          "/:id"
-        ],
-        "target": "/fffdm/manhua/:id"
-      }
-    ]
-  },
-  "foodtalks.cn": {
-    "_name": "FoodTalks全球食品资讯网",
-    "www": [
-      {
-        "title": "最新资讯",
-        "docs": "https://docs.rsshub.app/routes/new-media",
-        "source": [
-          "/"
-        ],
-        "target": "/foodtalks/"
-      },
-      {
-        "title": "标签",
-        "docs": "https://docs.rsshub.app/routes/new-media",
-        "source": [
-          "/news/tag/:tagId"
-        ],
-        "target": "/foodtalks/news/tag/:tagId"
-      }
-    ]
-  },
-  "gamebase.com.tw": {
-    "_name": "遊戲基地 Gamebase",
-    "news": [
-      {
-        "title": "新聞",
-        "docs": "https://docs.rsshub.app/routes/game",
-        "source": [
-          "/news",
-          "/news/:type"
-        ],
-        "target": "/gamebase(params,url)=>{const type=params.type;const urlObj=new URL(url);const category=urlObj.searchParams.get(\"type\")??void 0;return`/gamebase/news${type?`/${type}${category?`/${category}`:\"\"}`:\"\"}`}"
-      }
-    ]
-  },
-  "gettr.com": {
-    "_name": "GETTR",
-    ".": [
-      {
-        "title": "User timeline",
-        "docs": "https://docs.rsshub.app/routes/social-media",
-        "source": [
-          "/user/:id"
-        ],
-        "target": "/gettr/user/:id"
-      }
-    ]
-  },
   "guduodata.com": {
     "_name": "骨朵数据",
     ".": [
@@ -4978,82 +5006,16 @@
       }
     ]
   },
-  "hashnode.dev": {
-    "_name": "hashnode",
+  "hakkatv.org.tw": {
+    "_name": "客家電視台",
     ".": [
       {
-        "title": "用户博客",
-        "docs": "https://docs.rsshub.app/routes/blog",
+        "title": "新聞首頁",
+        "docs": "https://docs.rsshub.app/routes/traditional-media",
         "source": [
-          "/"
+          "/news"
         ],
-        "target": "/hashnode/blog/:username"
-      }
-    ]
-  },
-  "hiring.cafe": {
-    "_name": "HiringCafe",
-    ".": [
-      {
-        "title": "Jobs",
-        "docs": "https://docs.rsshub.app/routes/other",
-        "source": [
-          "/"
-        ],
-        "target": "/hiring.cafe/jobs/:keywords"
-      }
-    ]
-  },
-  "houxu.app": {
-    "_name": "后续",
-    ".": [
-      {
-        "title": "Live",
-        "docs": "https://docs.rsshub.app/routes/new-media",
-        "source": [
-          "/lives/:id",
-          "/"
-        ],
-        "target": "/houxu/lives/:id"
-      },
-      {
-        "title": "专栏",
-        "docs": "https://docs.rsshub.app/routes/new-media",
-        "source": [
-          "/events",
-          "/"
-        ],
-        "target": "/houxu/events"
-      },
-      {
-        "title": "热点",
-        "docs": "https://docs.rsshub.app/routes/new-media",
-        "source": [
-          "/"
-        ],
-        "target": "/houxu/"
-      },
-      {
-        "title": "跟踪",
-        "docs": "https://docs.rsshub.app/routes/new-media",
-        "source": [
-          "/memory",
-          "/"
-        ],
-        "target": "/houxu/memory"
-      }
-    ]
-  },
-  "hyperdash.info": {
-    "_name": "HyperDash",
-    ".": [
-      {
-        "title": "Top Traders",
-        "docs": "https://docs.rsshub.app/routes/finance",
-        "source": [
-          "/"
-        ],
-        "target": "/hyperdash/top-traders"
+        "target": "/hakkatv/news"
       }
     ]
   },
@@ -5078,1049 +5040,24 @@
       }
     ]
   },
-  "jiuyangongshe.com": {
-    "_name": "韭研公社",
-    "www": [
-      {
-        "title": "社群",
-        "docs": "https://docs.rsshub.app/routes/finance",
-        "source": [
-          "/"
-        ],
-        "target": "/jiuyangongshe/community"
-      }
-    ]
-  },
-  "gotokeep.com": {
-    "_name": "Keep",
+  "inspirehep.net": {
+    "_name": "INSPIRE",
     ".": [
       {
-        "title": "运动日记",
-        "docs": "https://docs.rsshub.app/routes/social-media",
+        "title": "Literature Search",
+        "docs": "https://docs.rsshub.app/routes/journal",
         "source": [
-          "/users/:id"
+          "/literature"
         ],
-        "target": "/keep/user/:id"
-      }
-    ]
-  },
-  "kepu.net.cn": {
-    "_name": "中国科普博览",
-    "live": [
-      {
-        "title": "直播回看",
-        "docs": "https://docs.rsshub.app/routes/new-media",
-        "source": [
-          "/replay/index"
-        ],
-        "target": "/kepu/live"
-      }
-    ]
-  },
-  "kuaidi100.com": {
-    "_name": "快递 100",
-    ".": [
-      {
-        "title": "支持的快递公司列表",
-        "docs": "https://docs.rsshub.app/routes/other",
-        "source": [
-          "/"
-        ],
-        "target": "/kuaidi100/company"
-      }
-    ]
-  },
-  "landiannews.com": {
-    "_name": "蓝点网",
-    "www": [
-      {
-        "title": "分类",
-        "docs": "https://docs.rsshub.app/routes/new-media",
-        "source": [
-          "/:slug"
-        ],
-        "target": "/landiannews/category/:slug"
+        "target": "/inspirehep(_params,url)=>`/inspirehep/literature/${new URL(url).searchParams.get(\"q\")}`"
       },
       {
-        "title": "首页",
-        "docs": "https://docs.rsshub.app/routes/new-media",
+        "title": "Author Search",
+        "docs": "https://docs.rsshub.app/routes/journal",
         "source": [
-          "/"
+          "/authors/:id"
         ],
-        "target": "/landiannews/"
-      },
-      {
-        "title": "标签",
-        "docs": "https://docs.rsshub.app/routes/new-media",
-        "source": [
-          "/archives/tag/:slug"
-        ],
-        "target": "/landiannews/tag/:slug"
-      }
-    ]
-  },
-  "lang.live": {
-    "_name": "浪 Play 直播",
-    ".": [
-      {
-        "title": "直播间开播",
-        "docs": "https://docs.rsshub.app/routes/live",
-        "source": [
-          "/room/:id"
-        ],
-        "target": "/lang/live/room/:id"
-      }
-    ]
-  },
-  "lenovo.com.cn": {
-    "_name": "联想",
-    ".": [
-      {
-        "title": "驱动",
-        "docs": "https://docs.rsshub.app/routes/program-update",
-        "source": [
-          "/"
-        ],
-        "target": "/lenovo/drive/:selName"
-      }
-    ]
-  },
-  "lmu.de": {
-    "_name": "Ludwig Maximilian University of Munich",
-    "www": [
-      {
-        "title": "Job Openings",
-        "docs": "https://docs.rsshub.app/routes/university",
-        "source": [
-          "/en/about-lmu/working-at-lmu/job-portal/academic-staff/"
-        ],
-        "target": "/lmu/lmu/jobs"
-      }
-    ]
-  },
-  "lnmuseum.com.cn": {
-    "_name": "Liaoning Provincial Museum",
-    "www": [
-      {
-        "title": "Information",
-        "docs": "https://docs.rsshub.app/routes/travel",
-        "source": [
-          "/"
-        ],
-        "target": "/lnmuseum/information"
-      },
-      {
-        "title": "Temporary Exhibition",
-        "docs": "https://docs.rsshub.app/routes/travel",
-        "source": [
-          "/"
-        ],
-        "target": "/lnmuseum/exhibition/temporary"
-      }
-    ]
-  },
-  "lxixsxa.com": {
-    "_name": "LiSA",
-    "www": [
-      {
-        "title": "Latest Discography",
-        "docs": "https://docs.rsshub.app/routes/live",
-        "source": [
-          "/",
-          "/discography"
-        ],
-        "target": "/lxixsxa/disco"
-      },
-      {
-        "title": "News",
-        "docs": "https://docs.rsshub.app/routes/live",
-        "source": [
-          "/",
-          "/info"
-        ],
-        "target": "/lxixsxa/info"
-      }
-    ]
-  },
-  "mangadex.org": {
-    "_name": "MangaDex",
-    ".": [
-      {
-        "title": "MDList Feed",
-        "docs": "https://docs.rsshub.app/routes/anime",
-        "source": [
-          "/list/:id/:suffix"
-        ],
-        "target": "/mangadex/mdlist/:id"
-      },
-      {
-        "title": " Follows Feed",
-        "docs": "https://docs.rsshub.app/routes/anime",
-        "source": [
-          "/titles/feed"
-        ],
-        "target": "/mangadex/user/feed/follow"
-      },
-      {
-        "title": "Logged User's Followed Mangas Feed",
-        "docs": "https://docs.rsshub.app/routes/anime",
-        "source": [
-          "/titles/follows"
-        ],
-        "target": "/mangadex/user/follow/reading"
-      },
-      {
-        "title": "Single Manga Feed",
-        "docs": "https://docs.rsshub.app/routes/anime",
-        "source": [
-          "/title/:id/:suffix",
-          "/title/:id"
-        ],
-        "target": "/mangadex/manga/:id"
-      }
-    ]
-  },
-  "manyvids.com": {
-    "_name": "ManyVids",
-    "www": [
-      {
-        "title": "Creator Videos",
-        "docs": "https://docs.rsshub.app/routes/multimedia",
-        "source": [
-          "/Profile/:uid/:handle/Store/*",
-          "/Profile/:uid/:handle/Store"
-        ],
-        "target": "/manyvids/profile/vids/:uid"
-      }
-    ]
-  },
-  "modrinth.com": {
-    "_name": "Modrinth",
-    ".": [
-      {
-        "title": "Project versions",
-        "docs": "https://docs.rsshub.app/routes/game",
-        "source": [
-          "/mod/:id/*",
-          "/plugin/:id/*",
-          "/datapack/:id/*",
-          "/shader/:id/*",
-          "/resourcepack/:id/*",
-          "/modpack/:id/*",
-          "/mod/:id",
-          "/plugin/:id",
-          "/datapack/:id",
-          "/shader/:id",
-          "/resourcepack/:id",
-          "/modpack/:id"
-        ],
-        "target": "/modrinth/project/:id/versions"
-      }
-    ]
-  },
-  "myfans.jp": {
-    "_name": "myfans",
-    ".": [
-      {
-        "title": "User Posts",
-        "docs": "https://docs.rsshub.app/routes/multimedia",
-        "source": [
-          "/:username",
-          "/:language/:username"
-        ],
-        "target": "/myfans/user/:username"
-      }
-    ]
-  },
-  "mymusicfive.com": {
-    "_name": "mymusic5 (MyMusicSheet)",
-    ".": [
-      {
-        "title": "User Sheets",
-        "docs": "https://docs.rsshub.app/routes/shopping",
-        "source": [
-          "/:username/*",
-          "/:username"
-        ],
-        "target": "/mymusicsheet/user/sheets/:username"
-      }
-    ]
-  },
-  "njmuseum.com": {
-    "_name": "Nanjing Museum",
-    "www": [
-      {
-        "title": "Exhibitions",
-        "docs": "https://docs.rsshub.app/routes/travel",
-        "source": [
-          "/zh/exhibitionIndex"
-        ],
-        "target": "/njmuseum/exhibitionIndex"
-      }
-    ]
-  },
-  "notefolio.net": {
-    "_name": "Notefolio",
-    ".": [
-      {
-        "title": "Works",
-        "docs": "https://docs.rsshub.app/routes/design",
-        "source": [
-          "/search"
-        ],
-        "target": "/notefolio/search/:category?/:order?/:time?/:query?"
-      }
-    ]
-  },
-  "npmjs.com": {
-    "_name": "NPM",
-    "www": [
-      {
-        "title": "Package",
-        "docs": "https://docs.rsshub.app/routes/program-update",
-        "source": [
-          "/package/:name"
-        ],
-        "target": "/npm/package/:name{(@[a-z0-9-~][a-z0-9-._~]*/)?[a-z0-9-~][a-z0-9-._~]*}"
-      }
-    ]
-  },
-  "pixabay.com": {
-    "_name": "Pixabay",
-    ".": [
-      {
-        "title": "Search",
-        "docs": "https://docs.rsshub.app/routes/picture",
-        "source": [
-          "/:searchType/search/:q"
-        ],
-        "target": "/pixabay/search/:q"
-      }
-    ]
-  },
-  "rattibha.com": {
-    "_name": "Rattibha",
-    ".": [
-      {
-        "title": "User Threads",
-        "docs": "https://docs.rsshub.app/routes/social-media",
-        "source": [
-          "/:user"
-        ],
-        "target": "/rattibha/user/:user"
-      }
-    ]
-  },
-  "scmuseum.cn": {
-    "_name": "Sichuan Museum",
-    "www": [
-      {
-        "title": "Exhibition",
-        "docs": "https://docs.rsshub.app/routes/travel",
-        "source": [
-          "/Visit/Exhibition"
-        ],
-        "target": "/scmuseum/exhibition"
-      }
-    ]
-  },
-  "seekingalpha.com": {
-    "_name": "Seeking Alpha",
-    ".": [
-      {
-        "title": "Summary",
-        "docs": "https://docs.rsshub.app/routes/finance",
-        "source": [
-          "/symbol/:symbol/:category",
-          "/symbol/:symbol/earnings/:category"
-        ],
-        "target": "/seekingalpha/:symbol/:category"
-      }
-    ]
-  },
-  "95598.cn": {
-    "_name": "国家电网",
-    "www": [
-      {
-        "title": "停电通知",
-        "docs": "https://docs.rsshub.app/routes/forecast",
-        "source": [
-          "/osgweb/blackoutNotice"
-        ],
-        "target": "/sgcc/95598/blackoutNotice/:adcode"
-      }
-    ]
-  },
-  "shanghaimuseum.cn": {
-    "_name": "Shanghai Museum",
-    "www": [
-      {
-        "title": "News & Announcements",
-        "docs": "https://docs.rsshub.app/routes/travel",
-        "source": [
-          "/mu/frontend/pg/infomation/news"
-        ],
-        "target": "/shanghaimuseum/information/news"
-      },
-      {
-        "title": "Special Exhibitions",
-        "docs": "https://docs.rsshub.app/routes/travel",
-        "source": [
-          "/mu/frontend/pg/display/offline-exhibit"
-        ],
-        "target": "/shanghaimuseum/display/offline-exhibit"
-      }
-    ]
-  },
-  "shanximuseum.com.cn": {
-    "_name": "Shanxi Museum",
-    "www": [
-      {
-        "title": "Temporary Exhibitions",
-        "docs": "https://docs.rsshub.app/routes/travel",
-        "source": [
-          "/sx/exhibition/temporary.html"
-        ],
-        "target": "/shanximuseum/exhibition/temporary"
-      }
-    ]
-  },
-  "shoac.com.cn": {
-    "_name": "上海东方艺术中心",
-    ".": [
-      {
-        "title": "演出月历",
-        "docs": "https://docs.rsshub.app/routes/shopping",
-        "source": [
-          "/"
-        ],
-        "target": "/shoac/recent-show"
-      }
-    ]
-  },
-  "straitstimes.com": {
-    "_name": "The Strait Times",
-    "www": [
-      {
-        "title": "News",
-        "docs": "https://docs.rsshub.app/routes/traditional-media",
-        "source": [
-          "/:category"
-        ],
-        "target": "/straitstimes/:category"
-      },
-      {
-        "title": "News",
-        "docs": "https://docs.rsshub.app/routes/traditional-media",
-        "source": [
-          "/"
-        ],
-        "target": "/straitstimes/"
-      }
-    ]
-  },
-  "techflowpost.com": {
-    "_name": "深潮 TechFlow",
-    ".": [
-      {
-        "title": "快讯",
-        "docs": "https://docs.rsshub.app/routes/finance",
-        "source": [
-          "/zh-CN/newsletter"
-        ],
-        "target": "/techflowpost/express"
-      },
-      {
-        "title": "精选",
-        "docs": "https://docs.rsshub.app/routes/finance",
-        "source": [
-          "/zh-CN/article"
-        ],
-        "target": "/techflowpost/featured/:category?"
-      },
-      {
-        "title": "首页",
-        "docs": "https://docs.rsshub.app/routes/finance",
-        "source": [
-          "/zh-CN"
-        ],
-        "target": "/techflowpost/"
-      }
-    ]
-  },
-  "tingtingfm.com": {
-    "_name": "听听 FM",
-    "mobile": [
-      {
-        "title": "节目",
-        "docs": "https://docs.rsshub.app/routes/multimedia",
-        "source": [
-          "/v3/program/:programId"
-        ],
-        "target": "/tingtingfm/program/:programId"
-      }
-    ]
-  },
-  "tqyb.com.cn": {
-    "_name": "广东天气",
-    "www": [
-      {
-        "title": "广东省内城市预警信号",
-        "docs": "https://docs.rsshub.app/routes/forecast",
-        "source": [
-          "/gz/weatherAlarm/otherCity/"
-        ],
-        "target": "/tqyb/sncsyjxh"
-      },
-      {
-        "title": "突发性天气提示",
-        "docs": "https://docs.rsshub.app/routes/forecast",
-        "source": [
-          "/gz/weatherAlarm/suddenWeather/"
-        ],
-        "target": "/tqyb/tfxtq"
-      }
-    ]
-  },
-  "tvb.com": {
-    "_name": "无线新闻",
-    ".": [
-      {
-        "title": "新闻",
-        "docs": "https://docs.rsshub.app/routes/traditional-media",
-        "source": [
-          "/:language/:category",
-          "/"
-        ],
-        "target": "/tvb/news/:category?/:language?"
-      }
-    ]
-  },
-  "uptimerobot.com": {
-    "_name": "Uptime Robot",
-    "rss": [
-      {
-        "title": "RSS",
-        "docs": "https://docs.rsshub.app/routes/forecast",
-        "source": [
-          "/:id"
-        ],
-        "target": "/uptimerobot/rss/:id"
-      }
-    ]
-  },
-  "urbandictionary.com": {
-    "_name": "Urban Dictionary",
-    ".": [
-      {
-        "title": "Random words",
-        "docs": "https://docs.rsshub.app/routes/other",
-        "source": [
-          "/random.php",
-          "/"
-        ],
-        "target": "/urbandictionary/random"
-      }
-    ]
-  },
-  "wallpaperhub.app": {
-    "_name": "WallpaperHub",
-    ".": [
-      {
-        "title": "Wallpapers",
-        "docs": "https://docs.rsshub.app/routes/picture",
-        "source": [
-          "/wallpaperhub",
-          "/"
-        ],
-        "target": "/wallpaperhub/"
-      }
-    ]
-  },
-  "wallstreetcn.com": {
-    "_name": "华尔街见闻",
-    ".": [
-      {
-        "title": "财经日历",
-        "docs": "https://docs.rsshub.app/routes/finance",
-        "source": [
-          "/calendar"
-        ],
-        "target": "/wallstreetcn/calendar/:section?"
-      },
-      {
-        "title": "最热文章",
-        "docs": "https://docs.rsshub.app/routes/finance",
-        "source": [
-          "/"
-        ],
-        "target": "/wallstreetcn/hot/:period?"
-      },
-      {
-        "title": "资讯",
-        "docs": "https://docs.rsshub.app/routes/finance",
-        "source": [
-          "/news/:category",
-          "/"
-        ],
-        "target": "/wallstreetcn/news/:category?"
-      },
-      {
-        "title": "实时快讯",
-        "docs": "https://docs.rsshub.app/routes/finance",
-        "source": [
-          "/live/:category",
-          "/"
-        ],
-        "target": "/wallstreetcn/live/:category?"
-      }
-    ]
-  },
-  "wellcee.com": {
-    "_name": "Wellcee 唯心所寓",
-    "www": [
-      {
-        "title": "支持的城市",
-        "docs": "https://docs.rsshub.app/routes/other",
-        "source": [
-          "/"
-        ],
-        "target": "/wellcee/support-city"
-      }
-    ]
-  },
-  "wuzhongmuseum.com": {
-    "_name": "Museum of Wu",
-    "www": [
-      {
-        "title": "Exhibition",
-        "docs": "https://docs.rsshub.app/routes/travel",
-        "source": [
-          "/portal/exhibition"
-        ],
-        "target": "/wuzhongmuseum/exhibition"
-      }
-    ]
-  },
-  "yinxubwg.cn": {
-    "_name": "Yinxu Museum",
-    "www": [
-      {
-        "title": "Notice",
-        "docs": "https://docs.rsshub.app/routes/travel",
-        "source": [
-          "/yxgw/notice"
-        ],
-        "target": "/yinxubwg/notice"
-      },
-      {
-        "title": "Exhibition Information",
-        "docs": "https://docs.rsshub.app/routes/travel",
-        "source": [
-          "/yxgw/exhibitionIndex"
-        ],
-        "target": "/yinxubwg/exhibitionIndex/:type"
-      }
-    ]
-  },
-  "yoasobi-music.jp": {
-    "_name": "Yoasobi Official",
-    "www": [
-      {
-        "title": "News & Biography",
-        "docs": "https://docs.rsshub.app/routes/live",
-        "source": [
-          "/",
-          "/:category"
-        ],
-        "target": "/yoasobi-music/info/:category"
-      },
-      {
-        "title": "Live",
-        "docs": "https://docs.rsshub.app/routes/live",
-        "source": [
-          "/",
-          "/live"
-        ],
-        "target": "/yoasobi-music/live"
-      },
-      {
-        "title": "Media",
-        "docs": "https://docs.rsshub.app/routes/live",
-        "source": [
-          "/",
-          "/media"
-        ],
-        "target": "/yoasobi-music/media"
-      }
-    ]
-  },
-  "zhiy.cc": {
-    "_name": "知园",
-    ".": [
-      {
-        "title": "Newsletter",
-        "docs": "https://docs.rsshub.app/routes/new-media",
-        "source": [
-          "/:author"
-        ],
-        "target": "/zhiy/letters/:author"
-      },
-      {
-        "title": "笔记",
-        "docs": "https://docs.rsshub.app/routes/new-media",
-        "source": [
-          "/:author"
-        ],
-        "target": "/zhiy/posts/:author"
-      }
-    ]
-  },
-  "zjmuseum.com.cn": {
-    "_name": "Zhejiang Provincial Museum",
-    "www": [
-      {
-        "title": "Temporary Exhibition",
-        "docs": "https://docs.rsshub.app/routes/travel",
-        "source": [
-          "/cn/"
-        ],
-        "target": "/zjmuseum/exhibition/:type?"
-      }
-    ]
-  },
-  "4chan.org": {
-    "_name": "4chan",
-    "boards": [
-      {
-        "title": "Board's catalog",
-        "docs": "https://docs.rsshub.app/routes/bbs",
-        "source": [
-          "/:board/"
-        ],
-        "target": "/4chan/:board/catalog"
-      }
-    ]
-  },
-  "aicaijing.com": {
-    "_name": "AI 财经社",
-    "www": [
-      {
-        "title": "最新文章",
-        "docs": "https://docs.rsshub.app/routes/finance",
-        "source": [
-          "/"
-        ],
-        "target": "/aicaijing/latest"
-      },
-      {
-        "title": "封面文章",
-        "docs": "https://docs.rsshub.app/routes/finance",
-        "source": [
-          "/"
-        ],
-        "target": "/aicaijing/cover"
-      },
-      {
-        "title": "热点 & 深度",
-        "docs": "https://docs.rsshub.app/routes/finance",
-        "source": [
-          "/information/:id",
-          "/"
-        ],
-        "target": "/aicaijing/information/:id?"
-      },
-      {
-        "title": "推荐资讯",
-        "docs": "https://docs.rsshub.app/routes/finance",
-        "source": [
-          "/"
-        ],
-        "target": "/aicaijing/recommend"
-      }
-    ]
-  },
-  "artstation.com": {
-    "_name": "ArtStation",
-    "www": [
-      {
-        "title": "Artist Profolio",
-        "docs": "https://docs.rsshub.app/routes/picture",
-        "source": [
-          "/:handle"
-        ],
-        "target": "/artstation/:handle"
-      }
-    ]
-  },
-  "bsky.app": {
-    "_name": "Bluesky (bsky)",
-    ".": [
-      {
-        "title": "Post",
-        "docs": "https://docs.rsshub.app/routes/social-media",
-        "source": [
-          "/profile/:handle"
-        ],
-        "target": "/bsky/profile/:handle/:routeParams?"
-      }
-    ]
-  },
-  "daily.dev": {
-    "_name": "Daily.dev",
-    "app": [
-      {
-        "title": "Most Discussed",
-        "docs": "https://docs.rsshub.app/routes/social-media",
-        "source": [
-          "/discussed"
-        ],
-        "target": "/daily/discussed/:period?/:dateSort?"
-      },
-      {
-        "title": "Popular",
-        "docs": "https://docs.rsshub.app/routes/social-media",
-        "source": [
-          "/popular"
-        ],
-        "target": "/daily/popular/:dateSort?"
-      },
-      {
-        "title": "Source Posts",
-        "docs": "https://docs.rsshub.app/routes/social-media",
-        "source": [
-          "/sources/:sourceId"
-        ],
-        "target": "/daily/source/:sourceId"
-      },
-      {
-        "title": "Squads",
-        "docs": "https://docs.rsshub.app/routes/social-media",
-        "source": [
-          "/squads/:squads"
-        ],
-        "target": "/daily/squads/:squads"
-      },
-      {
-        "title": "Most upvoted",
-        "docs": "https://docs.rsshub.app/routes/social-media",
-        "source": [
-          "/upvoted"
-        ],
-        "target": "/daily/upvoted/:period?/:dateSort?"
-      },
-      {
-        "title": "User Posts",
-        "docs": "https://docs.rsshub.app/routes/social-media",
-        "source": [
-          "/:userId/posts",
-          "/:userId"
-        ],
-        "target": "/daily/user/:userId"
-      }
-    ]
-  },
-  "discord.com": {
-    "_name": "Discord",
-    ".": [
-      {
-        "title": "Quests",
-        "docs": "https://docs.rsshub.app/routes/social-media",
-        "source": [
-          "/quest-home"
-        ],
-        "target": "/discord/quests"
-      },
-      {
-        "title": "Channel Messages",
-        "docs": "https://docs.rsshub.app/routes/social-media",
-        "source": [
-          "/channels/:guildId/:channelId/:messageID",
-          "/channels/:guildId/:channelId"
-        ],
-        "target": "/discord/channel/:channelId"
-      }
-    ]
-  },
-  "douyu.com": {
-    "_name": "斗鱼直播",
-    "www": [
-      {
-        "title": "直播间开播",
-        "docs": "https://docs.rsshub.app/routes/live",
-        "source": [
-          "/:id",
-          "/"
-        ],
-        "target": "/douyu/room/:id"
-      }
-    ],
-    "yuba": [
-      {
-        "title": "鱼吧帖子",
-        "docs": "https://docs.rsshub.app/routes/bbs",
-        "source": [
-          "/group/:id",
-          "/group/newself/:id",
-          "/group/newall/:id",
-          "/"
-        ],
-        "target": "/douyu/group/:id"
-      },
-      {
-        "title": "鱼吧跟帖",
-        "docs": "https://docs.rsshub.app/routes/bbs",
-        "source": [
-          "/p/:id",
-          "/"
-        ],
-        "target": "/douyu/post/:id"
-      }
-    ]
-  },
-  "fansly.com": {
-    "_name": "Fansly",
-    ".": [
-      {
-        "title": "User Timeline",
-        "docs": "https://docs.rsshub.app/routes/social-media",
-        "source": [
-          "/:username/posts",
-          "/:username/media"
-        ],
-        "target": "/fansly/user/:username"
-      },
-      {
-        "title": "Hashtag",
-        "docs": "https://docs.rsshub.app/routes/social-media",
-        "source": [
-          "/explore/tag/:tag"
-        ],
-        "target": "/fansly/tag/:tag"
-      }
-    ]
-  },
-  "sdo.com": {
-    "_name": "FINAL FANTASY XIV",
-    "ff.web": [
-      {
-        "title": "最终幻想 14 国服",
-        "docs": "https://docs.rsshub.app/routes/game",
-        "source": [
-          "/web8/index.html"
-        ],
-        "target": "/ff14/zh"
-      }
-    ]
-  },
-  "foresightnews.pro": {
-    "_name": "Foresight News",
-    ".": [
-      {
-        "title": "文章",
-        "docs": "https://docs.rsshub.app/routes/new-media",
-        "source": [
-          "/"
-        ],
-        "target": "/foresightnews/article"
-      },
-      {
-        "title": "专栏",
-        "docs": "https://docs.rsshub.app/routes/new-media",
-        "source": [
-          "/column/detail/:id",
-          "/"
-        ],
-        "target": "/foresightnews/column/:id"
-      },
-      {
-        "title": "精选资讯",
-        "docs": "https://docs.rsshub.app/routes/new-media",
-        "source": [
-          "/"
-        ],
-        "target": "/foresightnews/"
-      },
-      {
-        "title": "快讯",
-        "docs": "https://docs.rsshub.app/routes/new-media",
-        "source": [
-          "/news",
-          "/"
-        ],
-        "target": "/foresightnews/news"
-      }
-    ]
-  },
-  "gelbooru.com": {
-    "_name": "Gelbooru",
-    ".": [
-      {
-        "title": "标签查询",
-        "docs": "https://docs.rsshub.app/routes/picture",
-        "source": [
-          "/index.php"
-        ],
-        "target": "/gelbooru/post/:tags?/:quality?"
-      }
-    ]
-  },
-  "hk01.com": {
-    "_name": "香港 01",
-    ".": [
-      {
-        "title": "子栏目",
-        "docs": "https://docs.rsshub.app/routes/new-media",
-        "source": [
-          "/channel/:id",
-          "/"
-        ],
-        "target": "/hk01/channel/:id?"
-      },
-      {
-        "title": "热门",
-        "docs": "https://docs.rsshub.app/routes/new-media",
-        "source": [
-          "/hot",
-          "/"
-        ],
-        "target": "/hk01/hot"
-      },
-      {
-        "title": "专题",
-        "docs": "https://docs.rsshub.app/routes/new-media",
-        "source": [
-          "/issue/:id",
-          "/"
-        ],
-        "target": "/hk01/issue/:id?"
-      },
-      {
-        "title": "即時",
-        "docs": "https://docs.rsshub.app/routes/new-media",
-        "source": [
-          "/latest",
-          "/"
-        ],
-        "target": "/hk01/latest"
-      },
-      {
-        "title": "标签",
-        "docs": "https://docs.rsshub.app/routes/new-media",
-        "source": [
-          "/tag/:id",
-          "/"
-        ],
-        "target": "/hk01/tag/:id?"
-      },
-      {
-        "title": "栏目",
-        "docs": "https://docs.rsshub.app/routes/new-media",
-        "source": [
-          "/zone/:id",
-          "/"
-        ],
-        "target": "/hk01/zone/:id?"
+        "target": "/inspirehep/authors/:id"
       }
     ]
   },
@@ -6472,18 +5409,37 @@
       }
     ]
   },
+  "javtrailers.com": {
+    "_name": "JavTrailers",
+    ".": [
+      {
+        "title": "Casts",
+        "docs": "https://docs.rsshub.app/routes/multimedia",
+        "source": [
+          "/casts/:category"
+        ],
+        "target": "/javtrailers/casts/:cast"
+      },
+      {
+        "title": "Categories",
+        "docs": "https://docs.rsshub.app/routes/multimedia",
+        "source": [
+          "/categories/:category"
+        ],
+        "target": "/javtrailers/categories/:category"
+      },
+      {
+        "title": "Studios",
+        "docs": "https://docs.rsshub.app/routes/multimedia",
+        "source": [
+          "/studios/:category"
+        ],
+        "target": "/javtrailers/studios/:studio"
+      }
+    ]
+  },
   "jin10.com": {
     "_name": "金十数据",
-    "xnews": [
-      {
-        "title": "主题文章",
-        "docs": "https://docs.rsshub.app/routes/finance",
-        "source": [
-          "/topic/:id"
-        ],
-        "target": "/jin10/topic/:id"
-      }
-    ],
     ".": [
       {
         "title": "外汇",
@@ -6501,32 +5457,55 @@
         ],
         "target": "/jin10/:important?"
       }
+    ],
+    "xnews": [
+      {
+        "title": "主题文章",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/topic/:id"
+        ],
+        "target": "/jin10/topic/:id"
+      }
     ]
   },
-  "kpopping.com": {
-    "_name": "kpopping",
-    ".": [
+  "jingzhengu.com": {
+    "_name": "精真估",
+    "www": [
       {
-        "title": "Community",
+        "title": "资讯",
+        "docs": "https://docs.rsshub.app/routes/other",
+        "source": [
+          "/"
+        ],
+        "target": "/jingzhengu/news"
+      }
+    ]
+  },
+  "kepu.net.cn": {
+    "_name": "中国科普博览",
+    "live": [
+      {
+        "title": "直播回看",
         "docs": "https://docs.rsshub.app/routes/new-media",
         "source": [
-          "/community"
+          "/replay/index"
         ],
-        "target": "/kpopping/community"
-      },
-      {
-        "title": "Pics",
-        "docs": "https://docs.rsshub.app/routes/picture",
-        "source": [
-          "/kpics"
-        ],
-        "target": "/kpopping/kpics"
+        "target": "/kepu/live"
       }
     ]
   },
   "lanqiao.cn": {
     "_name": "蓝桥云课",
     ".": [
+      {
+        "title": "作者发布的课程",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/users/:uid"
+        ],
+        "target": "/lanqiao/author/:uid"
+      },
       {
         "title": "技术社区",
         "docs": "https://docs.rsshub.app/routes/programming",
@@ -6535,14 +5514,27 @@
           "/questions/topics/:id"
         ],
         "target": "/lanqiao/questions/:id"
+      }
+    ]
+  },
+  "lifeweek.com.cn": {
+    "_name": "三联生活周刊",
+    ".": [
+      {
+        "title": "栏目",
+        "docs": "https://docs.rsshub.app/routes/traditional-media",
+        "source": [
+          "/column/:channel"
+        ],
+        "target": "/lifeweek/channel/:channel"
       },
       {
-        "title": "作者发布的课程",
-        "docs": "https://docs.rsshub.app/routes/programming",
+        "title": "标签",
+        "docs": "https://docs.rsshub.app/routes/traditional-media",
         "source": [
-          "/users/:uid"
+          "/articleList/:tag"
         ],
-        "target": "/lanqiao/author/:uid"
+        "target": "/lifeweek/tag/:tag"
       }
     ]
   },
@@ -6569,6 +5561,77 @@
       }
     ]
   },
+  "locals.com": {
+    "_name": "Locals",
+    ".": [
+      {
+        "title": "Content Feed",
+        "docs": "https://docs.rsshub.app/routes/social-media",
+        "source": [
+          "/:community/feed"
+        ],
+        "target": "/locals/content/:community"
+      }
+    ]
+  },
+  "malaysiakini.com": {
+    "_name": "Malaysiakini",
+    ".": [
+      {
+        "title": "News",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/"
+        ],
+        "target": "/malaysiakini/en"
+      },
+      {
+        "title": "News",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/:lang"
+        ],
+        "target": "/malaysiakini/:lang"
+      }
+    ],
+    "www": [
+      {
+        "title": "News",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/:lang/latest/:category"
+        ],
+        "target": "/malaysiakini/:lang/:category"
+      }
+    ]
+  },
+  "manus.im": {
+    "_name": "Manus",
+    "www": [
+      {
+        "title": "Blog",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/"
+        ],
+        "target": "/manus/blog"
+      }
+    ]
+  },
+  "manyvids.com": {
+    "_name": "ManyVids",
+    "www": [
+      {
+        "title": "Creator Videos",
+        "docs": "https://docs.rsshub.app/routes/multimedia",
+        "source": [
+          "/Profile/:uid/:handle/Store/*",
+          "/Profile/:uid/:handle/Store"
+        ],
+        "target": "/manyvids/profile/vids/:uid"
+      }
+    ]
+  },
   "mi.com": {
     "_name": "小米",
     "m": [
@@ -6579,6 +5642,1225 @@
           "/crowdfunding/home"
         ],
         "target": "/mi/crowdfunding"
+      }
+    ]
+  },
+  "mymusicfive.com": {
+    "_name": "mymusic5 (MyMusicSheet)",
+    ".": [
+      {
+        "title": "User Sheets",
+        "docs": "https://docs.rsshub.app/routes/shopping",
+        "source": [
+          "/:username/*",
+          "/:username"
+        ],
+        "target": "/mymusicsheet/user/sheets/:username"
+      }
+    ]
+  },
+  "nanhua.net": {
+    "_name": "南华期货",
+    "mall": [
+      {
+        "title": "研报",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/mall/r/w/reportNew/report-list.html"
+        ],
+        "target": "/nanhua(_,url)=>{const params=new URL(url).searchParams;const type1=params.get(\"type1\");const type2=params.get(\"type2\");return type1&&type2?`/nanhua/report/${encodeURIComponent(type1)}/${encodeURIComponent(type2)}`:\"\"}"
+      }
+    ]
+  },
+  "onlyfans.com": {
+    "_name": "OnlyFans",
+    ".": [
+      {
+        "title": "Creator Posts",
+        "docs": "https://docs.rsshub.app/routes/social-media",
+        "source": [
+          "/:username"
+        ],
+        "target": "/onlyfans/:username"
+      }
+    ]
+  },
+  "openalex.org": {
+    "_name": "OpenAlex",
+    ".": [
+      {
+        "title": "Works",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/works"
+        ],
+        "target": "/openalex/:journals/:type?/:ids?"
+      }
+    ]
+  },
+  "pinterest.com": {
+    "_name": "Pinterest",
+    "www": [
+      {
+        "title": "User",
+        "docs": "https://docs.rsshub.app/routes/picture",
+        "source": [
+          "/:id/:type",
+          "/:id"
+        ],
+        "target": "/pinterest/user/:id/:type?"
+      }
+    ]
+  },
+  "pixabay.com": {
+    "_name": "Pixabay",
+    ".": [
+      {
+        "title": "Search",
+        "docs": "https://docs.rsshub.app/routes/picture",
+        "source": [
+          "/:searchType/search/:q"
+        ],
+        "target": "/pixabay/search/:q"
+      }
+    ]
+  },
+  "qingting.fm": {
+    "_name": "蜻蜓 FM",
+    ".": [
+      {
+        "title": "播客",
+        "docs": "https://docs.rsshub.app/routes/multimedia",
+        "source": [
+          "/channels/:id"
+        ],
+        "target": "/qingting/podcast/:id"
+      }
+    ]
+  },
+  "rattibha.com": {
+    "_name": "Rattibha",
+    ".": [
+      {
+        "title": "User Threads",
+        "docs": "https://docs.rsshub.app/routes/social-media",
+        "source": [
+          "/:user"
+        ],
+        "target": "/rattibha/user/:user"
+      }
+    ]
+  },
+  "rockstargames.com": {
+    "_name": "Rockstar Games",
+    "www": [
+      {
+        "title": "Newswire",
+        "docs": "https://docs.rsshub.app/routes/game",
+        "source": [
+          "/newswire"
+        ],
+        "target": "/rockstargames/newswire"
+      }
+    ]
+  },
+  "seekingalpha.com": {
+    "_name": "Seeking Alpha",
+    ".": [
+      {
+        "title": "Summary",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/symbol/:symbol/:category",
+          "/symbol/:symbol/earnings/:category"
+        ],
+        "target": "/seekingalpha/:symbol/:category"
+      }
+    ]
+  },
+  "shoac.com.cn": {
+    "_name": "上海东方艺术中心",
+    ".": [
+      {
+        "title": "演出月历",
+        "docs": "https://docs.rsshub.app/routes/shopping",
+        "source": [
+          "/"
+        ],
+        "target": "/shoac/recent-show"
+      }
+    ]
+  },
+  "skebetter.com": {
+    "_name": "Skebetter",
+    ".": [
+      {
+        "title": "Illust - Hot",
+        "docs": "https://docs.rsshub.app/routes/anime",
+        "source": [
+          "/illust"
+        ],
+        "target": "/skebetter/illust/hot"
+      },
+      {
+        "title": "Illust - Week",
+        "docs": "https://docs.rsshub.app/routes/anime",
+        "source": [
+          "/illust"
+        ],
+        "target": "/skebetter/illust/week"
+      },
+      {
+        "title": "Illust - Month",
+        "docs": "https://docs.rsshub.app/routes/anime",
+        "source": [
+          "/illust"
+        ],
+        "target": "/skebetter/illust/month"
+      },
+      {
+        "title": "Illust - Latest",
+        "docs": "https://docs.rsshub.app/routes/anime",
+        "source": [
+          "/illust"
+        ],
+        "target": "/skebetter/illust/latest"
+      },
+      {
+        "title": "Skebetter - Hot",
+        "docs": "https://docs.rsshub.app/routes/anime",
+        "source": [
+          "/"
+        ],
+        "target": "/skebetter/hot"
+      },
+      {
+        "title": "Skebetter - Week",
+        "docs": "https://docs.rsshub.app/routes/anime",
+        "source": [
+          "/"
+        ],
+        "target": "/skebetter/week"
+      },
+      {
+        "title": "Skebetter - Month",
+        "docs": "https://docs.rsshub.app/routes/anime",
+        "source": [
+          "/"
+        ],
+        "target": "/skebetter/month"
+      },
+      {
+        "title": "Skebetter - Latest",
+        "docs": "https://docs.rsshub.app/routes/anime",
+        "source": [
+          "/"
+        ],
+        "target": "/skebetter/latest"
+      },
+      {
+        "title": "Manga - Latest",
+        "docs": "https://docs.rsshub.app/routes/anime",
+        "source": [
+          "/series"
+        ],
+        "target": "/skebetter/manga/1"
+      },
+      {
+        "title": "Manga - Hot",
+        "docs": "https://docs.rsshub.app/routes/anime",
+        "source": [
+          "/series"
+        ],
+        "target": "/skebetter/manga/2"
+      }
+    ]
+  },
+  "sotwe.com": {
+    "_name": "X (Twitter)",
+    "www": [
+      {
+        "title": "User timeline - Sotwe",
+        "docs": "https://docs.rsshub.app/routes/social-media",
+        "source": [
+          "/:id"
+        ],
+        "target": "/sotwe/user/:id"
+      }
+    ]
+  },
+  "soundon.fm": {
+    "_name": "SoundOn",
+    "player": [
+      {
+        "title": "Podcast",
+        "docs": "https://docs.rsshub.app/routes/multimedia",
+        "source": [
+          "/p/:id"
+        ],
+        "target": "/soundon/p/:id"
+      }
+    ]
+  },
+  "stockedge.com": {
+    "_name": "Stock Edge",
+    "web": [
+      {
+        "title": "Daily Updates News",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/daily-updates/news"
+        ],
+        "target": "/stockedge/daily-updates/news"
+      }
+    ]
+  },
+  "straitstimes.com": {
+    "_name": "The Strait Times",
+    "www": [
+      {
+        "title": "News",
+        "docs": "https://docs.rsshub.app/routes/traditional-media",
+        "source": [
+          "/:category"
+        ],
+        "target": "/straitstimes/:category"
+      },
+      {
+        "title": "News",
+        "docs": "https://docs.rsshub.app/routes/traditional-media",
+        "source": [
+          "/"
+        ],
+        "target": "/straitstimes/"
+      }
+    ]
+  },
+  "stream-capital.com": {
+    "_name": "远川研究所",
+    "www": [
+      {
+        "title": "最新",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/search"
+        ],
+        "target": "/stream-capital/search"
+      }
+    ]
+  },
+  "supercell.com": {
+    "_name": "Supercell",
+    ".": [
+      {
+        "title": "Game Blog",
+        "docs": "https://docs.rsshub.app/routes/game",
+        "source": [
+          "/en/games/:game/:locale/blog"
+        ],
+        "target": "/supercell/:game/blog/:locale"
+      }
+    ]
+  },
+  "technologyreview.com": {
+    "_name": "MIT Technology Review",
+    "www": [
+      {
+        "title": "Index",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/"
+        ],
+        "target": "/technologyreview/"
+      },
+      {
+        "title": "Topics",
+        "docs": "https://docs.rsshub.app/routes/journal",
+        "source": [
+          "/topic/:category_name"
+        ],
+        "target": "/technologyreview/:category_name"
+      }
+    ]
+  },
+  "thepetcity.co": {
+    "_name": "PetCity 毛孩日常",
+    ".": [
+      {
+        "title": "Pet Staff 毛孩好物",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/category/cute-item",
+          "/"
+        ],
+        "target": "/thepetcity/1"
+      },
+      {
+        "title": "Funny News毛孩趣聞",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/category/funny-news",
+          "/"
+        ],
+        "target": "/thepetcity/2"
+      },
+      {
+        "title": "Knowledge飼養大全",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/category/knowledge",
+          "/"
+        ],
+        "target": "/thepetcity/3"
+      },
+      {
+        "title": "Hot Spot 毛孩打卡點",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/category/hot-spot",
+          "/"
+        ],
+        "target": "/thepetcity/4"
+      },
+      {
+        "title": "Raise Pets 養寵物新手",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/category/raise-cats",
+          "/"
+        ],
+        "target": "/thepetcity/5"
+      },
+      {
+        "title": "PetCity 毛孩日常 | 飼養竉物、竉物用品、萌寵趣聞",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/"
+        ],
+        "target": "/thepetcity/:term?"
+      }
+    ]
+  },
+  "tingtingfm.com": {
+    "_name": "听听 FM",
+    "mobile": [
+      {
+        "title": "节目",
+        "docs": "https://docs.rsshub.app/routes/multimedia",
+        "source": [
+          "/v3/program/:programId"
+        ],
+        "target": "/tingtingfm/program/:programId"
+      }
+    ]
+  },
+  "tkww.hk": {
+    "_name": "大公文匯網",
+    "www": [
+      {
+        "title": "新聞",
+        "docs": "https://docs.rsshub.app/routes/traditional-media",
+        "source": [
+          "/:column"
+        ],
+        "target": "/tkww/:column"
+      }
+    ]
+  },
+  "metro.tokyo.jp": {
+    "_name": "Toei Transportation",
+    "www.kotsu": [
+      {
+        "title": "都営地下鉄 各駅乗降人員",
+        "docs": "https://docs.rsshub.app/routes/other",
+        "source": [
+          "/subway/kanren/passengers.html",
+          "/dataset/t000018d0000000030"
+        ],
+        "target": "/toei/ridership"
+      }
+    ]
+  },
+  "topbook.cc": {
+    "_name": "Topbook",
+    ".": [
+      {
+        "title": "文章",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/content",
+          "/"
+        ],
+        "target": "/topbook/:id"
+      }
+    ]
+  },
+  "trakt.tv": {
+    "_name": "Trakt.tv",
+    "app": [
+      {
+        "title": "User Collection",
+        "docs": "https://docs.rsshub.app/routes/multimedia",
+        "source": [
+          "/profile/:username"
+        ],
+        "target": "/trakt/collection/:username"
+      }
+    ]
+  },
+  "twreporter.org": {
+    "_name": "報導者",
+    ".": [
+      {
+        "title": "分類",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/:category"
+        ],
+        "target": "/twreporter/category/:category"
+      },
+      {
+        "title": "最新",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/"
+        ],
+        "target": "/twreporter/newest"
+      }
+    ]
+  },
+  "vcb-s.com": {
+    "_name": "VCB-Studio",
+    ".": [
+      {
+        "title": "最新文章",
+        "docs": "https://docs.rsshub.app/routes/anime",
+        "source": [
+          "/"
+        ],
+        "target": "/vcb-s/"
+      },
+      {
+        "title": "分类文章",
+        "docs": "https://docs.rsshub.app/routes/anime",
+        "source": [
+          "/archives/category/:cate"
+        ],
+        "target": "/vcb-s/category/:cate"
+      }
+    ]
+  },
+  "vgnlab.com.cn": {
+    "_name": "VGN",
+    "www": [
+      {
+        "title": "新闻中心",
+        "docs": "https://docs.rsshub.app/routes/game",
+        "source": [
+          "/web/news"
+        ],
+        "target": "/vgnlab/"
+      }
+    ]
+  },
+  "voronoiapp.com": {
+    "_name": "Voronoi",
+    "www": [
+      {
+        "title": "Editor's Pick Posts",
+        "docs": "https://docs.rsshub.app/routes/picture",
+        "source": [
+          "/posts/editors-pick"
+        ],
+        "target": "/voronoiapp/editors-pick"
+      },
+      {
+        "title": "Home Posts",
+        "docs": "https://docs.rsshub.app/routes/picture",
+        "source": [
+          "/",
+          "/posts/voronoi"
+        ],
+        "target": "/voronoiapp/home"
+      },
+      {
+        "title": "Latest Posts",
+        "docs": "https://docs.rsshub.app/routes/picture",
+        "source": [
+          "/posts/latest"
+        ],
+        "target": "/voronoiapp/latest"
+      },
+      {
+        "title": "Most Liked Posts",
+        "docs": "https://docs.rsshub.app/routes/picture",
+        "source": [
+          "/posts/most-popular"
+        ],
+        "target": "/voronoiapp/popular/most-popular"
+      },
+      {
+        "title": "Most Discussed Posts",
+        "docs": "https://docs.rsshub.app/routes/picture",
+        "source": [
+          "/posts/most-discussed"
+        ],
+        "target": "/voronoiapp/popular/most-discussed"
+      },
+      {
+        "title": "Most Viewed Posts",
+        "docs": "https://docs.rsshub.app/routes/picture",
+        "source": [
+          "/posts/most-viewed"
+        ],
+        "target": "/voronoiapp/popular/most-viewed"
+      },
+      {
+        "title": "Search Keyword Posts",
+        "docs": "https://docs.rsshub.app/routes/picture",
+        "source": [
+          "/explore"
+        ],
+        "target": "/voronoiapp(_,url)=>{const parsedURL=new URL(url);const keyword=parsedURL.searchParams.get(\"search\");return`/voronoiapp/search/${keyword}`}"
+      },
+      {
+        "title": "Author Posts",
+        "docs": "https://docs.rsshub.app/routes/picture",
+        "source": [
+          "/author/:username"
+        ],
+        "target": "/voronoiapp/author/:username"
+      }
+    ]
+  },
+  "wallstreetcn.com": {
+    "_name": "华尔街见闻",
+    ".": [
+      {
+        "title": "财经日历",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/calendar"
+        ],
+        "target": "/wallstreetcn/calendar/:section?"
+      },
+      {
+        "title": "实时快讯",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/live/:category",
+          "/"
+        ],
+        "target": "/wallstreetcn/live/:category?"
+      },
+      {
+        "title": "最热文章",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/"
+        ],
+        "target": "/wallstreetcn/hot/:period?"
+      },
+      {
+        "title": "资讯",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/news/:category",
+          "/"
+        ],
+        "target": "/wallstreetcn/news/:category?"
+      }
+    ]
+  },
+  "washingtonpost.com": {
+    "_name": "The Washington Post",
+    "www": [
+      {
+        "title": "App",
+        "docs": "https://docs.rsshub.app/routes/traditional-media",
+        "source": [
+          "/:category"
+        ],
+        "target": "/washingtonpost/app/:category"
+      }
+    ]
+  },
+  "wikipedia.org": {
+    "_name": "Wikipedia",
+    "en": [
+      {
+        "title": "Current Events",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/wiki/Portal:Current_events"
+        ],
+        "target": "/wikipedia/wikipedia/current-events"
+      }
+    ]
+  },
+  "xiaomiyoupin.com": {
+    "_name": "小米有品",
+    ".": [
+      {
+        "title": "小米有品众筹",
+        "docs": "https://docs.rsshub.app/routes/shopping",
+        "source": [
+          "/"
+        ],
+        "target": "/xiaomiyoupin/crowdfunding"
+      },
+      {
+        "title": "小米有品每日上新",
+        "docs": "https://docs.rsshub.app/routes/shopping",
+        "source": [
+          "/"
+        ],
+        "target": "/xiaomiyoupin/latest"
+      }
+    ]
+  },
+  "xuetangx.com": {
+    "_name": "学堂在线",
+    "www": [
+      {
+        "title": "课程列表",
+        "docs": "https://docs.rsshub.app/routes/study",
+        "source": [
+          "/search"
+        ],
+        "target": "/xuetangx/course/list"
+      },
+      {
+        "title": "课程信息",
+        "docs": "https://docs.rsshub.app/routes/study",
+        "source": [
+          "/course/:sign"
+        ],
+        "target": "/xuetangx/course/:sign"
+      }
+    ]
+  },
+  "yuancheng.work": {
+    "_name": "远程.work",
+    ".": [
+      {
+        "title": "Remote.work Job Information",
+        "docs": "https://docs.rsshub.app/routes/other",
+        "source": [
+          "/:caty"
+        ],
+        "target": "/yuancheng.work(_,url)=>url?`/yuancheng.work/${/\\w+-(\\w+)-\\w+/.exec(url)[1]}`:\"/yuancheng.work\""
+      }
+    ]
+  },
+  "zaimanhua.com": {
+    "_name": "再漫画",
+    "manhua": [
+      {
+        "title": "漫画更新",
+        "docs": "https://docs.rsshub.app/routes/anime",
+        "source": [
+          "/details",
+          "/details/:id"
+        ],
+        "target": "/zaimanhua/comic/:id"
+      },
+      {
+        "title": "最近更新",
+        "docs": "https://docs.rsshub.app/routes/anime",
+        "source": [
+          "/update"
+        ],
+        "target": "/zaimanhua/update"
+      }
+    ]
+  },
+  "zhiy.cc": {
+    "_name": "知园",
+    ".": [
+      {
+        "title": "Newsletter",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/:author"
+        ],
+        "target": "/zhiy/letters/:author"
+      },
+      {
+        "title": "笔记",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/:author"
+        ],
+        "target": "/zhiy/posts/:author"
+      }
+    ]
+  },
+  "4gamers.com.tw": {
+    "_name": "4Gamers",
+    "www": [
+      {
+        "title": "分类",
+        "docs": "https://docs.rsshub.app/routes/game",
+        "source": [
+          "/news/category/:category/:categoryName"
+        ],
+        "target": "/4gamers/category/:category"
+      },
+      {
+        "title": "标签",
+        "docs": "https://docs.rsshub.app/routes/game",
+        "source": [
+          "/news/tag/:tag"
+        ],
+        "target": "/4gamers/tag/:tag"
+      },
+      {
+        "title": "主題",
+        "docs": "https://docs.rsshub.app/routes/game",
+        "source": [
+          "/news/option-cfg/:topic"
+        ],
+        "target": "/4gamers/topic/:topic"
+      },
+      {
+        "title": "最新消息",
+        "docs": "https://docs.rsshub.app/routes/game",
+        "source": [
+          "/news",
+          "/"
+        ],
+        "target": "/4gamers/"
+      }
+    ]
+  },
+  "8kcosplay.com": {
+    "_name": "8KCosplay",
+    ".": [
+      {
+        "title": "分类",
+        "docs": "https://docs.rsshub.app/routes/picture",
+        "source": [
+          "/category/:mainCategory/:cat/",
+          "/category/:cat/"
+        ],
+        "target": "/8kcos/cat/:cat"
+      },
+      {
+        "title": "最新",
+        "docs": "https://docs.rsshub.app/routes/picture",
+        "source": [
+          "/"
+        ],
+        "target": "/8kcos/"
+      },
+      {
+        "title": "标签",
+        "docs": "https://docs.rsshub.app/routes/picture",
+        "source": [
+          "/tag/:tag"
+        ],
+        "target": "/8kcos/tag/:tag"
+      }
+    ]
+  },
+  "ainvest.com": {
+    "_name": "AInvest",
+    "www": [
+      {
+        "title": "Latest Article",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/news/articles-latest/",
+          "/"
+        ],
+        "target": "/ainvest/article"
+      },
+      {
+        "title": "Latest News",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/news/"
+        ],
+        "target": "/ainvest/news"
+      }
+    ]
+  },
+  "av01.media": {
+    "_name": "AV01",
+    "www": [
+      {
+        "title": "演员",
+        "docs": "https://docs.rsshub.app/routes/multimedia",
+        "source": [
+          "/:language/actress/:name/:unusedName",
+          "/:language/actress/:name"
+        ],
+        "target": "/av01/actor/:name"
+      },
+      {
+        "title": "分类",
+        "docs": "https://docs.rsshub.app/routes/multimedia",
+        "source": [
+          "/:language/tag/:name/:unusedName",
+          "/:language/tag/:name"
+        ],
+        "target": "/av01/tag/:name"
+      }
+    ]
+  },
+  "bsky.app": {
+    "_name": "Bluesky (bsky)",
+    ".": [
+      {
+        "title": "Post",
+        "docs": "https://docs.rsshub.app/routes/social-media",
+        "source": [
+          "/profile/:handle"
+        ],
+        "target": "/bsky/profile/:handle/:routeParams?"
+      }
+    ]
+  },
+  "daily.dev": {
+    "_name": "Daily.dev",
+    "app": [
+      {
+        "title": "Source Posts",
+        "docs": "https://docs.rsshub.app/routes/social-media",
+        "source": [
+          "/sources/:sourceId"
+        ],
+        "target": "/daily/source/:sourceId"
+      },
+      {
+        "title": "User Posts",
+        "docs": "https://docs.rsshub.app/routes/social-media",
+        "source": [
+          "/:userId/posts",
+          "/:userId"
+        ],
+        "target": "/daily/user/:userId"
+      },
+      {
+        "title": "Most Discussed",
+        "docs": "https://docs.rsshub.app/routes/social-media",
+        "source": [
+          "/discussed"
+        ],
+        "target": "/daily/discussed/:period?/:dateSort?"
+      },
+      {
+        "title": "Popular",
+        "docs": "https://docs.rsshub.app/routes/social-media",
+        "source": [
+          "/popular"
+        ],
+        "target": "/daily/popular/:dateSort?"
+      },
+      {
+        "title": "Squads",
+        "docs": "https://docs.rsshub.app/routes/social-media",
+        "source": [
+          "/squads/:squads"
+        ],
+        "target": "/daily/squads/:squads"
+      },
+      {
+        "title": "Most upvoted",
+        "docs": "https://docs.rsshub.app/routes/social-media",
+        "source": [
+          "/upvoted"
+        ],
+        "target": "/daily/upvoted/:period?/:dateSort?"
+      }
+    ]
+  },
+  "discord.com": {
+    "_name": "Discord",
+    ".": [
+      {
+        "title": "Channel Messages",
+        "docs": "https://docs.rsshub.app/routes/social-media",
+        "source": [
+          "/channels/:guildId/:channelId/:messageID",
+          "/channels/:guildId/:channelId"
+        ],
+        "target": "/discord/channel/:channelId"
+      },
+      {
+        "title": "Quests",
+        "docs": "https://docs.rsshub.app/routes/social-media",
+        "source": [
+          "/quest-home"
+        ],
+        "target": "/discord/quests"
+      }
+    ]
+  },
+  "fansly.com": {
+    "_name": "Fansly",
+    ".": [
+      {
+        "title": "User Timeline",
+        "docs": "https://docs.rsshub.app/routes/social-media",
+        "source": [
+          "/:username/posts",
+          "/:username/media"
+        ],
+        "target": "/fansly/user/:username"
+      },
+      {
+        "title": "Hashtag",
+        "docs": "https://docs.rsshub.app/routes/social-media",
+        "source": [
+          "/explore/tag/:tag"
+        ],
+        "target": "/fansly/tag/:tag"
+      }
+    ]
+  },
+  "feng.com": {
+    "_name": "威锋",
+    ".": [
+      {
+        "title": "社区",
+        "docs": "https://docs.rsshub.app/routes/bbs",
+        "source": [
+          "/forum/photo/:id",
+          "/forum/:id"
+        ],
+        "target": "/feng/forum/:id"
+      }
+    ]
+  },
+  "foodtalks.cn": {
+    "_name": "FoodTalks全球食品资讯网",
+    "www": [
+      {
+        "title": "最新资讯",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/"
+        ],
+        "target": "/foodtalks/"
+      },
+      {
+        "title": "标签",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/news/tag/:tagId"
+        ],
+        "target": "/foodtalks/news/tag/:tagId"
+      }
+    ]
+  },
+  "hk01.com": {
+    "_name": "香港 01",
+    ".": [
+      {
+        "title": "子栏目",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/channel/:id",
+          "/"
+        ],
+        "target": "/hk01/channel/:id?"
+      },
+      {
+        "title": "热门",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/hot",
+          "/"
+        ],
+        "target": "/hk01/hot"
+      },
+      {
+        "title": "专题",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/issue/:id",
+          "/"
+        ],
+        "target": "/hk01/issue/:id?"
+      },
+      {
+        "title": "即時",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/latest",
+          "/"
+        ],
+        "target": "/hk01/latest"
+      },
+      {
+        "title": "标签",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/tag/:id",
+          "/"
+        ],
+        "target": "/hk01/tag/:id?"
+      },
+      {
+        "title": "栏目",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/zone/:id",
+          "/"
+        ],
+        "target": "/hk01/zone/:id?"
+      }
+    ]
+  },
+  "kuaidi100.com": {
+    "_name": "快递 100",
+    ".": [
+      {
+        "title": "支持的快递公司列表",
+        "docs": "https://docs.rsshub.app/routes/other",
+        "source": [
+          "/"
+        ],
+        "target": "/kuaidi100/company"
+      }
+    ]
+  },
+  "landiannews.com": {
+    "_name": "蓝点网",
+    "www": [
+      {
+        "title": "分类",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/:slug"
+        ],
+        "target": "/landiannews/category/:slug"
+      },
+      {
+        "title": "首页",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/"
+        ],
+        "target": "/landiannews/"
+      },
+      {
+        "title": "标签",
+        "docs": "https://docs.rsshub.app/routes/new-media",
+        "source": [
+          "/archives/tag/:slug"
+        ],
+        "target": "/landiannews/tag/:slug"
+      }
+    ]
+  },
+  "mangadex.org": {
+    "_name": "MangaDex",
+    ".": [
+      {
+        "title": "MDList Feed",
+        "docs": "https://docs.rsshub.app/routes/anime",
+        "source": [
+          "/list/:id/:suffix"
+        ],
+        "target": "/mangadex/mdlist/:id"
+      },
+      {
+        "title": " Follows Feed",
+        "docs": "https://docs.rsshub.app/routes/anime",
+        "source": [
+          "/titles/feed"
+        ],
+        "target": "/mangadex/user/feed/follow"
+      },
+      {
+        "title": "Logged User's Followed Mangas Feed",
+        "docs": "https://docs.rsshub.app/routes/anime",
+        "source": [
+          "/titles/follows"
+        ],
+        "target": "/mangadex/user/follow/reading"
+      },
+      {
+        "title": "Single Manga Feed",
+        "docs": "https://docs.rsshub.app/routes/anime",
+        "source": [
+          "/title/:id/:suffix",
+          "/title/:id"
+        ],
+        "target": "/mangadex/manga/:id"
+      }
+    ]
+  },
+  "meteor.today": {
+    "_name": "Meteor",
+    ".": [
+      {
+        "title": "看板列表",
+        "docs": "https://docs.rsshub.app/routes/bbs",
+        "source": [
+          "/"
+        ],
+        "target": "/meteor/boards"
+      }
+    ]
+  },
+  "mihoyo.com": {
+    "_name": "米哈游",
+    "sr": [
+      {
+        "title": "崩坏：星穹铁道",
+        "docs": "https://docs.rsshub.app/routes/game",
+        "source": [
+          "/news"
+        ],
+        "target": "/mihoyo/sr"
+      }
+    ],
+    "zzz": [
+      {
+        "title": "绝区零",
+        "docs": "https://docs.rsshub.app/routes/game",
+        "source": [
+          "/news"
+        ],
+        "target": "/mihoyo/zzz"
+      }
+    ]
+  },
+  "hoyoverse.com": {
+    "_name": "米哈游",
+    "genshin": [
+      {
+        "title": "原神",
+        "docs": "https://docs.rsshub.app/routes/game",
+        "source": [
+          "/:location/news"
+        ],
+        "target": "/mihoyo/ys/:location"
+      }
+    ]
+  },
+  "miyoushe.com": {
+    "_name": "米哈游",
+    ".": [
+      {
+        "title": "米游社 - 同人榜",
+        "docs": "https://docs.rsshub.app/routes/game",
+        "source": [
+          "/:game/imgRanking/:forum_id/:ranking_id/:cate_id"
+        ],
+        "target": "/mihoyo/bbs/img-ranking/:game"
+      },
+      {
+        "title": "米游社 - 用户关注动态",
+        "docs": "https://docs.rsshub.app/routes/game",
+        "source": [
+          "/:game/timeline"
+        ],
+        "target": "/mihoyo/bbs/timeline"
       }
     ]
   },
@@ -6595,80 +6877,17 @@
       }
     ]
   },
-  "newslaundry.com": {
-    "_name": "Newslaundry",
+  "myfans.jp": {
+    "_name": "myfans",
     ".": [
       {
-        "title": "Explainer",
-        "docs": "https://docs.rsshub.app/routes/new-media",
+        "title": "User Posts",
+        "docs": "https://docs.rsshub.app/routes/multimedia",
         "source": [
-          "/explainer"
+          "/:username",
+          "/:language/:username"
         ],
-        "target": "/newslaundry/explainer"
-      },
-      {
-        "title": "Explains",
-        "docs": "https://docs.rsshub.app/routes/new-media",
-        "source": [
-          "/collection/nl-cheatsheet"
-        ],
-        "target": "/newslaundry/nl-cheatsheet"
-      },
-      {
-        "title": "NL Collaboration",
-        "docs": "https://docs.rsshub.app/routes/new-media",
-        "source": [
-          "/nl-collaborations"
-        ],
-        "target": "/newslaundry/nl-collaborations"
-      },
-      {
-        "title": "Podcast",
-        "docs": "https://docs.rsshub.app/routes/new-media",
-        "source": [
-          "/podcast"
-        ],
-        "target": "/newslaundry/podcast"
-      },
-      {
-        "title": "Podcast",
-        "docs": "https://docs.rsshub.app/routes/new-media",
-        "source": [
-          "/collection/nl-hafta-podcast"
-        ],
-        "target": "/newslaundry/podcast/nl-hafta"
-      },
-      {
-        "title": "Podcast",
-        "docs": "https://docs.rsshub.app/routes/new-media",
-        "source": [
-          "/podcast/whats-your-ism"
-        ],
-        "target": "/newslaundry/podcast/whats-your-ism"
-      },
-      {
-        "title": "Reports",
-        "docs": "https://docs.rsshub.app/routes/new-media",
-        "source": [
-          "/reports"
-        ],
-        "target": "/newslaundry/reports"
-      },
-      {
-        "title": "Shot",
-        "docs": "https://docs.rsshub.app/routes/new-media",
-        "source": [
-          "/shot"
-        ],
-        "target": "/newslaundry/shot"
-      },
-      {
-        "title": "Subscriber Only",
-        "docs": "https://docs.rsshub.app/routes/new-media",
-        "source": [
-          "/subscriber-only"
-        ],
-        "target": "/newslaundry/subscriber-only"
+        "target": "/myfans/user/:username"
       }
     ]
   },
@@ -6725,33 +6944,22 @@
       }
     ]
   },
+  "95598.cn": {
+    "_name": "国家电网",
+    "www": [
+      {
+        "title": "停电通知",
+        "docs": "https://docs.rsshub.app/routes/forecast",
+        "source": [
+          "/osgweb/blackoutNotice"
+        ],
+        "target": "/sgcc/95598/blackoutNotice/:adcode"
+      }
+    ]
+  },
   "skeb.jp": {
     "_name": "Skeb",
     ".": [
-      {
-        "title": "Following Creators",
-        "docs": "https://docs.rsshub.app/routes/picture",
-        "source": [
-          "/:username"
-        ],
-        "target": "/skeb/following_creators/:username"
-      },
-      {
-        "title": "Following Works",
-        "docs": "https://docs.rsshub.app/routes/picture",
-        "source": [
-          "/:username"
-        ],
-        "target": "/skeb/following_works/:username"
-      },
-      {
-        "title": "Friend Works",
-        "docs": "https://docs.rsshub.app/routes/picture",
-        "source": [
-          "/:username"
-        ],
-        "target": "/skeb/friend_works/:username"
-      },
       {
         "title": "新着作品 (Illust)",
         "docs": "https://docs.rsshub.app/routes/picture",
@@ -6839,27 +7047,59 @@
           "/:username"
         ],
         "target": "/skeb/works/:username"
+      },
+      {
+        "title": "Following Creators",
+        "docs": "https://docs.rsshub.app/routes/picture",
+        "source": [
+          "/:username"
+        ],
+        "target": "/skeb/following_creators/:username"
+      },
+      {
+        "title": "Following Works",
+        "docs": "https://docs.rsshub.app/routes/picture",
+        "source": [
+          "/:username"
+        ],
+        "target": "/skeb/following_works/:username"
+      },
+      {
+        "title": "Friend Works",
+        "docs": "https://docs.rsshub.app/routes/picture",
+        "source": [
+          "/:username"
+        ],
+        "target": "/skeb/friend_works/:username"
       }
     ]
   },
-  "thewirehindi.com": {
-    "_name": "The Wire Hindi",
+  "techflowpost.com": {
+    "_name": "深潮 TechFlow",
     ".": [
       {
-        "title": "Category",
-        "docs": "https://docs.rsshub.app/routes/new-media",
+        "title": "快讯",
+        "docs": "https://docs.rsshub.app/routes/finance",
         "source": [
-          "/category/*"
+          "/zh-CN/newsletter"
         ],
-        "target": "/thewirehindi/category/:category"
+        "target": "/techflowpost/express"
       },
       {
-        "title": "Latest News",
-        "docs": "https://docs.rsshub.app/routes/new-media",
+        "title": "精选",
+        "docs": "https://docs.rsshub.app/routes/finance",
         "source": [
-          "/"
+          "/zh-CN/article"
         ],
-        "target": "/thewirehindi/"
+        "target": "/techflowpost/featured/:category?"
+      },
+      {
+        "title": "首页",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/zh-CN"
+        ],
+        "target": "/techflowpost/"
       }
     ]
   },
@@ -6894,256 +7134,16 @@
       }
     ]
   },
-  "vcb-s.com": {
-    "_name": "VCB-Studio",
-    ".": [
-      {
-        "title": "分类文章",
-        "docs": "https://docs.rsshub.app/routes/anime",
-        "source": [
-          "/archives/category/:cate"
-        ],
-        "target": "/vcb-s/category/:cate"
-      },
-      {
-        "title": "最新文章",
-        "docs": "https://docs.rsshub.app/routes/anime",
-        "source": [
-          "/"
-        ],
-        "target": "/vcb-s/"
-      }
-    ]
-  },
-  "zaimanhua.com": {
-    "_name": "再漫画",
-    "manhua": [
-      {
-        "title": "漫画更新",
-        "docs": "https://docs.rsshub.app/routes/anime",
-        "source": [
-          "/details",
-          "/details/:id"
-        ],
-        "target": "/zaimanhua/comic/:id"
-      },
-      {
-        "title": "最近更新",
-        "docs": "https://docs.rsshub.app/routes/anime",
-        "source": [
-          "/update"
-        ],
-        "target": "/zaimanhua/update"
-      }
-    ]
-  },
-  "4gamers.com.tw": {
-    "_name": "4Gamers",
+  "wellcee.com": {
+    "_name": "Wellcee 唯心所寓",
     "www": [
       {
-        "title": "分类",
-        "docs": "https://docs.rsshub.app/routes/game",
-        "source": [
-          "/news/category/:category/:categoryName"
-        ],
-        "target": "/4gamers/category/:category"
-      },
-      {
-        "title": "标签",
-        "docs": "https://docs.rsshub.app/routes/game",
-        "source": [
-          "/news/tag/:tag"
-        ],
-        "target": "/4gamers/tag/:tag"
-      },
-      {
-        "title": "主題",
-        "docs": "https://docs.rsshub.app/routes/game",
-        "source": [
-          "/news/option-cfg/:topic"
-        ],
-        "target": "/4gamers/topic/:topic"
-      },
-      {
-        "title": "最新消息",
-        "docs": "https://docs.rsshub.app/routes/game",
-        "source": [
-          "/news",
-          "/"
-        ],
-        "target": "/4gamers/"
-      }
-    ]
-  },
-  "douyin.com": {
-    "_name": "抖音直播",
-    ".": [
-      {
-        "title": "标签",
-        "docs": "https://docs.rsshub.app/routes/social-media",
-        "source": [
-          "/hashtag/:cid"
-        ],
-        "target": "/douyin/hashtag/:cid"
-      },
-      {
-        "title": "博主",
-        "docs": "https://docs.rsshub.app/routes/social-media",
-        "source": [
-          "/user/:uid"
-        ],
-        "target": "/douyin/user/:uid"
-      }
-    ],
-    "live": [
-      {
-        "title": "直播间开播",
-        "docs": "https://docs.rsshub.app/routes/live",
-        "source": [
-          "/:rid"
-        ],
-        "target": "/douyin/live/:rid"
-      }
-    ]
-  },
-  "javtrailers.com": {
-    "_name": "JavTrailers",
-    ".": [
-      {
-        "title": "Casts",
-        "docs": "https://docs.rsshub.app/routes/multimedia",
-        "source": [
-          "/casts/:category"
-        ],
-        "target": "/javtrailers/casts/:cast"
-      },
-      {
-        "title": "Categories",
-        "docs": "https://docs.rsshub.app/routes/multimedia",
-        "source": [
-          "/categories/:category"
-        ],
-        "target": "/javtrailers/categories/:category"
-      },
-      {
-        "title": "Studios",
-        "docs": "https://docs.rsshub.app/routes/multimedia",
-        "source": [
-          "/studios/:category"
-        ],
-        "target": "/javtrailers/studios/:studio"
-      }
-    ]
-  },
-  "meteor.today": {
-    "_name": "Meteor",
-    ".": [
-      {
-        "title": "看板列表",
-        "docs": "https://docs.rsshub.app/routes/bbs",
+        "title": "支持的城市",
+        "docs": "https://docs.rsshub.app/routes/other",
         "source": [
           "/"
         ],
-        "target": "/meteor/boards"
-      }
-    ]
-  },
-  "mihoyo.com": {
-    "_name": "米哈游",
-    "sr": [
-      {
-        "title": "崩坏：星穹铁道",
-        "docs": "https://docs.rsshub.app/routes/game",
-        "source": [
-          "/news"
-        ],
-        "target": "/mihoyo/sr"
-      }
-    ],
-    "zzz": [
-      {
-        "title": "绝区零",
-        "docs": "https://docs.rsshub.app/routes/game",
-        "source": [
-          "/news"
-        ],
-        "target": "/mihoyo/zzz"
-      }
-    ]
-  },
-  "hoyoverse.com": {
-    "_name": "米哈游",
-    "genshin": [
-      {
-        "title": "原神",
-        "docs": "https://docs.rsshub.app/routes/game",
-        "source": [
-          "/:location/news"
-        ],
-        "target": "/mihoyo/ys/:location"
-      }
-    ]
-  },
-  "miyoushe.com": {
-    "_name": "米哈游",
-    ".": [
-      {
-        "title": "米游社 - 同人榜",
-        "docs": "https://docs.rsshub.app/routes/game",
-        "source": [
-          "/:game/imgRanking/:forum_id/:ranking_id/:cate_id"
-        ],
-        "target": "/mihoyo/bbs/img-ranking/:game"
-      },
-      {
-        "title": "米游社 - 用户关注动态",
-        "docs": "https://docs.rsshub.app/routes/game",
-        "source": [
-          "/:game/timeline"
-        ],
-        "target": "/mihoyo/bbs/timeline"
-      }
-    ]
-  },
-  "twreporter.org": {
-    "_name": "報導者",
-    ".": [
-      {
-        "title": "分類",
-        "docs": "https://docs.rsshub.app/routes/new-media",
-        "source": [
-          "/:category"
-        ],
-        "target": "/twreporter/category/:category"
-      },
-      {
-        "title": "最新",
-        "docs": "https://docs.rsshub.app/routes/new-media",
-        "source": [
-          "/"
-        ],
-        "target": "/twreporter/newest"
-      }
-    ]
-  },
-  "xiaomiyoupin.com": {
-    "_name": "小米有品",
-    ".": [
-      {
-        "title": "小米有品众筹",
-        "docs": "https://docs.rsshub.app/routes/shopping",
-        "source": [
-          "/"
-        ],
-        "target": "/xiaomiyoupin/crowdfunding"
-      },
-      {
-        "title": "小米有品每日上新",
-        "docs": "https://docs.rsshub.app/routes/shopping",
-        "source": [
-          "/"
-        ],
-        "target": "/xiaomiyoupin/latest"
+        "target": "/wellcee/support-city"
       }
     ]
   },
@@ -7406,6 +7406,16 @@
   },
   "1point3acres.com": {
     "_name": "一亩三分地",
+    "offer": [
+      {
+        "title": "录取结果",
+        "docs": "https://docs.rsshub.app/routes/bbs",
+        "source": [
+          "/"
+        ],
+        "target": "/1point3acres/offer"
+      }
+    ],
     "instant": [
       {
         "title": "用户回帖",
@@ -7442,16 +7452,6 @@
           "/"
         ],
         "target": "/1point3acres/section/:id?/:type?/:order?"
-      }
-    ],
-    "offer": [
-      {
-        "title": "录取结果",
-        "docs": "https://docs.rsshub.app/routes/bbs",
-        "source": [
-          "/"
-        ],
-        "target": "/1point3acres/offer"
       }
     ],
     "blog": [
@@ -30931,20 +30931,20 @@
     ],
     ".": [
       {
-        "title": "模型库",
-        "docs": "https://docs.rsshub.app/routes/programming",
-        "source": [
-          "/models"
-        ],
-        "target": "/modelscope/models"
-      },
-      {
         "title": "数据集",
         "docs": "https://docs.rsshub.app/routes/programming",
         "source": [
           "/datasets"
         ],
         "target": "/modelscope/datasets"
+      },
+      {
+        "title": "模型库",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/models"
+        ],
+        "target": "/modelscope/models"
       },
       {
         "title": "创空间",
@@ -40608,6 +40608,14 @@
     "_name": "Steam",
     ".": [
       {
+        "title": "Community Hub",
+        "docs": "https://docs.rsshub.app/routes/game",
+        "source": [
+          "/app/:appid"
+        ],
+        "target": "/steam/appcommunityfeed/:appid"
+      },
+      {
         "title": "News",
         "docs": "https://docs.rsshub.app/routes/game",
         "source": [
@@ -40617,14 +40625,6 @@
           "/app/:appid/news"
         ],
         "target": "/steam/news/:appid"
-      },
-      {
-        "title": "Community Hub",
-        "docs": "https://docs.rsshub.app/routes/game",
-        "source": [
-          "/app/:appid"
-        ],
-        "target": "/steam/appcommunityfeed/:appid"
       },
       {
         "title": "Sharefile Changelog",
@@ -41607,19 +41607,6 @@
       }
     ]
   },
-  "tencent.com": {
-    "_name": "腾讯",
-    "cloud": [
-      {
-        "title": "腾讯云开发者社区专栏",
-        "docs": "https://docs.rsshub.app/routes/programming",
-        "source": [
-          "/developer/column"
-        ],
-        "target": "/tencent/cloud/developer/column/:categoryId?"
-      }
-    ]
-  },
   "qq.com": {
     "_name": "腾讯",
     "new": [
@@ -41783,6 +41770,19 @@
           "/cgi-bin/announce"
         ],
         "target": "/wechat/announce"
+      }
+    ]
+  },
+  "tencent.com": {
+    "_name": "腾讯",
+    "cloud": [
+      {
+        "title": "腾讯云开发者社区专栏",
+        "docs": "https://docs.rsshub.app/routes/programming",
+        "source": [
+          "/developer/column"
+        ],
+        "target": "/tencent/cloud/developer/column/:categoryId?"
       }
     ]
   },
@@ -42144,6 +42144,19 @@
       }
     ]
   },
+  "sz-water.com.cn": {
+    "_name": "停水通知",
+    ".": [
+      {
+        "title": "深圳市",
+        "docs": "https://docs.rsshub.app/routes/forecast",
+        "source": [
+          "/*"
+        ],
+        "target": "/tingshuitz/shenzhen"
+      }
+    ]
+  },
   "whwater.com": {
     "_name": "停水通知",
     ".": [
@@ -42155,19 +42168,6 @@
           "/"
         ],
         "target": "/tingshuitz/wuhan"
-      }
-    ]
-  },
-  "sz-water.com.cn": {
-    "_name": "停水通知",
-    ".": [
-      {
-        "title": "深圳市",
-        "docs": "https://docs.rsshub.app/routes/forecast",
-        "source": [
-          "/*"
-        ],
-        "target": "/tingshuitz/shenzhen"
       }
     ]
   },
@@ -45974,14 +45974,6 @@
     "_name": "Bangumi 番组计划",
     ".": [
       {
-        "title": "放送列表",
-        "docs": "https://docs.rsshub.app/routes/anime",
-        "source": [
-          "/calendar"
-        ],
-        "target": "/bangumi.tv/calendar/today"
-      },
-      {
         "title": "Bangumi 用户收藏列表",
         "docs": "https://docs.rsshub.app/routes/anime",
         "source": [
@@ -45996,6 +45988,14 @@
           "/anime/list/:id/wish"
         ],
         "target": "/bangumi.tv/bangumi.tv/user/collections/:id/2/1"
+      },
+      {
+        "title": "放送列表",
+        "docs": "https://docs.rsshub.app/routes/anime",
+        "source": [
+          "/calendar"
+        ],
+        "target": "/bangumi.tv/calendar/today"
       },
       {
         "title": "小组话题的新回复",
