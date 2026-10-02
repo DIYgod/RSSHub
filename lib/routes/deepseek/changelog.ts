@@ -18,6 +18,7 @@ export const extractChangelogItems = ($: CheerioAPI, updatesUrl: string): DataIt
             const $heading = $(heading);
             const date = $heading.text().match(/\d{4}-\d{2}-\d{2}/)?.[0];
             const $content = $heading.nextUntil('hr, h2');
+            $content.find('.hash-link').remove();
             const $title = $content.filter('h3').first();
             const anchor = $title.attr('id') ?? $heading.attr('id');
 
@@ -27,7 +28,7 @@ export const extractChangelogItems = ($: CheerioAPI, updatesUrl: string): DataIt
                 ...(date && { pubDate: parseDate(date) }),
                 description:
                     $content
-                        .not('h3')
+                        .not($title)
                         .toArray()
                         .map((element) => $.html(element))
                         .join('') || undefined,
