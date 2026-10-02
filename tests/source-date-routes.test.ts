@@ -4,13 +4,15 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { route as eastmoney } from '../lib/routes/eastmoney/report';
 import { route as hellogithub } from '../lib/routes/hellogithub';
 import { route as iCable } from '../lib/routes/i-cable/news';
+import { route as iandaily } from '../lib/routes/iandaily';
 import { route as javbus } from '../lib/routes/javbus';
 import { route as smzdm } from '../lib/routes/smzdm/keyword';
 import { parseSearchDate } from '../lib/routes/smzdm/utils';
 import type { Data, Route } from '../lib/types';
 
-const mocks = vi.hoisted(() => ({ request: vi.fn(), tryGet: vi.fn() }));
+const mocks = vi.hoisted(() => ({ fetch: vi.fn(), request: vi.fn(), tryGet: vi.fn() }));
 vi.mock('../lib/utils/got', () => ({ default: mocks.request }));
+vi.mock('../lib/utils/ofetch', () => ({ default: mocks.fetch }));
 vi.mock('../lib/utils/cache', () => ({ default: { tryGet: mocks.tryGet } }));
 vi.mock('../lib/config', () => ({ config: { smzdm: { cookie: 'test-only-cookie' }, feature: { allow_user_supply_unsafe_domain: false }, cache: { routeExpire: 900 } } }));
 
@@ -19,6 +21,7 @@ const invoke = async (route: Route, path: string, params: Record<string, string>
 
 beforeEach(() => {
     vi.resetAllMocks();
+    mocks.fetch.mockRejectedValue(new Error('Unexpected upstream fetch'));
     mocks.request.mockRejectedValue(new Error('Unexpected upstream request'));
     mocks.tryGet.mockImplementation(async (_key, callback) => await callback());
     vi.stubGlobal('fetch', vi.fn().mockRejectedValue(new Error('External network access is disabled')));
@@ -100,5 +103,53 @@ describe('explicit source dates', () => {
     it('leaves unknown SMZDM dates absent instead of inventing the current time', () => {
         expect(parseSearchDate('')).toBeUndefined();
         expect(parseSearchDate('unknown')).toBeUndefined();
+    });
+
+    it('preserves date-only iandaily editions and renders every source column', async () => {
+        const columnIds = ['ai', 'indie', 'product', 'taste', 'marketing', 'collab'];
+        const dates = ['2026-09-10', '2026-09-09', '2026-09-08', '2026-09-07', '2026-09-06'];
+        const editions = dates.map((date, editionIndex) => ({
+            editionVersion: 2,
+            date,
+            overview: `Overview ${editionIndex}`,
+            highlights: [`Highlight ${editionIndex}`],
+            columns: Object.fromEntries(
+                columnIds.map((columnId) => [
+                    columnId,
+                    [
+                        {
+                            title: `${columnId} title ${editionIndex}`,
+                            judgment: `${columnId} judgment ${editionIndex}`,
+                            url: `https://example.com/${columnId}/${editionIndex}`,
+                            ...(columnId === 'ai' && { media: { image: '/digest/cover.jpg' } }),
+                        },
+                    ],
+                ])
+            ),
+        }));
+        const homepage = '<meta name="description" content="Daily description"><script type="module" src="/assets/index-test.js"></script>';
+        const bundle = `const editionVersion=1,unrelated=JSON.parse('{"editionVersion":"metadata"}'),editions=JSON.parse(\`${JSON.stringify(editions)}\`);`;
+        mocks.fetch.mockResolvedValueOnce(homepage).mockResolvedValueOnce(bundle);
+
+        const result = await invoke(iandaily, '/iandaily');
+        const items = result.item ?? [];
+        expect(items).toHaveLength(5);
+        expect(new Set(items.map((item) => item.guid)).size).toBe(5);
+        expect(items[0]).toMatchObject({
+            title: '伊恩日刊 · 2026-09-10',
+            link: 'https://iandaily.xyz/d/2026-09-10',
+            guid: 'https://iandaily.xyz/d/2026-09-10',
+            author: '伊恩',
+            category: ['AI 资讯', '一人公司', '产品设计', '审美提升', '产品营销', 'AI 协作'],
+            image: 'https://iandaily.xyz/digest/cover.jpg',
+            pubDate: new Date('2026-09-10T00:00:00.000Z'),
+        });
+        for (const columnId of columnIds) {
+            expect(items[0].description).toContain(`${columnId} title 0`);
+            expect(items[0].description).toContain(`https://example.com/${columnId}/0`);
+        }
+        expect(result).toMatchObject({ title: '伊恩日刊', description: 'Daily description', link: 'https://iandaily.xyz/' });
+        expect(mocks.fetch).toHaveBeenNthCalledWith(1, 'https://iandaily.xyz/', { responseType: 'text' });
+        expect(mocks.fetch).toHaveBeenNthCalledWith(2, 'https://iandaily.xyz/assets/index-test.js', { responseType: 'text' });
     });
 });
