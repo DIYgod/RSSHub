@@ -169,7 +169,7 @@
         "@types/jsrsasign": "10.5.15",
         "@types/module-alias": "2.0.4",
         "@types/node": "26.6.3",
-        "@types/sanitize-html": "2.16.1",
+        "@types/sanitize-html": "2.16.2",
         "@typescript-eslint/eslint-plugin": "8.70.1",
         "@typescript-eslint/parser": "8.70.1",
         "@vercel/nft": "1.11.0",
