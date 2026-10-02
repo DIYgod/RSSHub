@@ -35,10 +35,16 @@ export const route: Route = {
 
 async function handler() {
     const feed = await parser.parseURL('https://zed.dev/blog.rss');
+    if (!feed.title) {
+        throw new Error('Zed blog feed has no title');
+    }
 
     const items = await Promise.all(
         feed.items.map((item) => {
-            const { link, title } = item as { link: string; title: string };
+            const { link, title } = item;
+            if (!link || !title) {
+                throw new Error('Zed blog feed item has no link or title');
+            }
             return cache.tryGet(link, async () => {
                 const data = await ofetch(link);
                 const $ = load(data);
@@ -71,5 +77,5 @@ async function handler() {
         description: feed.description,
         item: items,
         language: 'en',
-    } as Data;
+    } satisfies Data;
 }

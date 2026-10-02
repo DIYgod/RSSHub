@@ -17,7 +17,7 @@ const OPERATOR = '東京メトロ';
  *   直通連絡駅・共用駅:    線名 | 駅名 | 人員 | 前年比   (no rank — these stations are counted by the partner railway)
  * The third table (総駅数) is not station data. 前年比 uses ▲ for a decrease.
  */
-const parsePage = (html: string, link: string): { fiscalYear: number; items: Array<ReturnType<typeof ridershipItem>>; years: Record<string, string> } => {
+const parsePage = (html: string, link: string) => {
     const $ = load(html);
     const fiscalYear = parseFiscalYear($('h3').first().text());
     if (fiscalYear === null) {
@@ -88,7 +88,10 @@ const parsePage = (html: string, link: string): { fiscalYear: number; items: Arr
 export const handler = async (ctx): Promise<Data> => {
     const year: string | undefined = ctx.req.param('year');
     const indexLink = `${BASE}index.html`;
-    const latest = (await cache.tryGet(indexLink, async () => parsePage(await ofetch(indexLink), indexLink))) as ReturnType<typeof parsePage>;
+    const latest = await cache.tryGet(indexLink, async () => {
+        const html = await ofetch(indexLink);
+        return parsePage(html, indexLink);
+    });
 
     let page = latest;
     let link = indexLink;
@@ -98,7 +101,10 @@ export const handler = async (ctx): Promise<Data> => {
             throw new Error(`tokyometro: FY${year} is not published; available: ${Object.keys(latest.years).join(', ')}`);
         }
         link = new URL(href, BASE).href;
-        page = (await cache.tryGet(link, async () => parsePage(await ofetch(link), link))) as ReturnType<typeof parsePage>;
+        page = await cache.tryGet(link, async () => {
+            const html = await ofetch(link);
+            return parsePage(html, link);
+        });
     }
 
     return {

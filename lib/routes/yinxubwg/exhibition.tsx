@@ -28,12 +28,12 @@ export const route = {
         const apiBaseUrl = 'https://guc.yinxubwg.cn';
         const museumName = namespace.zh?.name || namespace.name;
 
-        const typeName: Record<number, string> = {
-            1: '常设展览',
-            2: '临时展览',
-            3: '展览回眸',
-        };
-        const feedTitle = typeName[exhibitionType];
+        const typeName = new Map([
+            [1, '常设展览'],
+            [2, '临时展览'],
+            [3, '展览回眸'],
+        ]);
+        const feedTitle = typeName.get(exhibitionType);
 
         const response = await ofetch(`${apiBaseUrl}/gwebapi/exhibition/list`, {
             query: {

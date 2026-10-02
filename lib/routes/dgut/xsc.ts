@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 import type { Context } from 'hono';
 
-import type { DataItem, Route } from '@/types';
+import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
@@ -42,14 +42,18 @@ async function handler(ctx: Context) {
         item: $('#paging > ul li')
             .slice(0, 10)
             .toArray()
-            .map((item) => {
+            .flatMap((item) => {
                 const $item = $(item);
+                const title = $item.find('a').attr('title');
+                if (!title) {
+                    return [];
+                }
                 return {
-                    title: $item.find('a').attr('title'),
+                    title,
                     description: $item.find('a').text(),
                     pubDate: timezone(parseDate($item.find('.time').text()), 8),
                     link: host + $item.find('a').attr('href')!.slice(1),
                 };
-            }) as DataItem[],
+            }),
     };
 }

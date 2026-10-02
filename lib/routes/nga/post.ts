@@ -1,4 +1,5 @@
 import bbobHTML from '@bbob/html';
+import { isTagNode } from '@bbob/plugin-helper';
 import presetHTML5 from '@bbob/preset-html5';
 import type { BBobCoreTagNodeTree, NodeContent, PresetFactory, TagNodeObject } from '@bbob/types';
 import { load } from 'cheerio';
@@ -40,7 +41,7 @@ const customPreset: PresetFactory = presetHTML5.extend((tags) => ({
 
 const linkMention = (tree: BBobCoreTagNodeTree) =>
     tree.walk((node) => {
-        const tag = (node as TagNodeObject<string> | null)?.tag;
+        const tag: string | undefined = isTagNode(node) ? node.tag : undefined;
         if (tag?.startsWith('@')) {
             const username = tag.slice(1);
             return { tag: 'a', attrs: { href: `https://nga.178.com/nuke.php?func=ucp&username=${username}` }, content: [`@${username}`] };

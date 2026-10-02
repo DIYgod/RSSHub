@@ -1,4 +1,3 @@
-import pMap from 'p-map';
 import { Innertube, YTNodes } from 'youtubei.js';
 
 import { config } from '@/config';
@@ -28,11 +27,6 @@ const getInnertube = () => {
     return innertubePromise;
 };
 
-// A duration is grouped for readability once it reaches a thousand hours, e.g. `20,772:51:34`
-const DURATION_BADGE_REGEX = /^[\d,]+(?::\d+)+$/;
-const UPCOMING_BADGE_TEXT = 'Upcoming';
-const SCHEDULED_PREFIX = 'Scheduled for ';
-
 const getThumbnailBadges = (video: YTNodes.LockupView) => {
     const thumbnail = video.content_image?.is(YTNodes.ThumbnailView) ? video.content_image : undefined;
     return thumbnail?.overlays.filter((overlay) => overlay.is(YTNodes.ThumbnailBottomOverlayView)).flatMap((overlay) => overlay.badges ?? []) ?? [];
@@ -48,49 +42,33 @@ const getStreamState = (video: YTNodes.LockupView): StreamState => {
     if (badges.some((badge) => badge.badge_style === 'THUMBNAIL_OVERLAY_BADGE_STYLE_LIVE')) {
         return 'live';
     }
-    if (badges.some((badge) => badge.text === UPCOMING_BADGE_TEXT) || getMetadataTexts(video).some((text) => text?.startsWith(SCHEDULED_PREFIX))) {
+    if (badges.some((badge) => badge.text === 'Upcoming') || getMetadataTexts(video).some((text) => text?.startsWith('Scheduled for '))) {
         return 'upcoming';
     }
     return 'completed';
 };
 
-const getPubDate = (metadataTexts: Array<string | undefined>) => {
-    const publishedText = metadataTexts.findLast((text) => text?.endsWith('ago'));
-    if (publishedText) {
-        return parseRelativeDate(publishedText);
-    }
-    // A stream that hasn't started has no publish date, only the time it is scheduled to start at
-    const scheduledText = metadataTexts.find((text) => text?.startsWith(SCHEDULED_PREFIX));
-    return scheduledText ? parseDate(scheduledText.slice(SCHEDULED_PREFIX.length), 'M/D/YY, h:mm A') : undefined;
-};
-
 // The lockup of a video only carries its title, so the description takes one player request per video
-const getVideoDescription = async (videoId: string) => {
-    try {
-        // The value is wrapped in an object because an empty string does not survive a cache round trip
-        const { description } = await cache.tryGet<{ description: string }>(
-            `youtube:getVideoDescription:${videoId}`,
-            async () => {
-                const innertube = await getInnertube();
-                const info = await innertube.getBasicInfo(videoId);
-                return { description: info.basic_info.short_description ?? '' };
-            },
-            config.cache.contentExpire,
-            // The expiration is not renewed on a hit, so an edited description still shows up in a steadily polled feed
-            false
-        );
-        return description;
-    } catch {
-        // A stream can be unplayable, e.g. a members-only one, which should not take the whole feed down
-        return '';
-    }
-};
+const getVideoInfo = (videoId: string) =>
+    cache.tryGet<{ description: string; startTimestamp?: string }>(
+        `youtube:getVideoInfo:${videoId}`,
+        async () => {
+            const innertube = await getInnertube();
+            const info = await innertube.getBasicInfo(videoId);
+            return { description: info.basic_info.short_description ?? '', startTimestamp: info.basic_info.start_timestamp?.toISOString() };
+        },
+        config.cache.contentExpire,
+        // The expiration is not renewed on a hit, so an edited description still shows up in a steadily polled feed
+        false
+    );
 
 const lockupViewToItem = (video: YTNodes.LockupView, embed: boolean, description = ''): DataItem => {
     const videoId = video.content_id;
     const img = `https://i.ytimg.com/vi/${videoId}/maxresdefault.jpg`;
-    const metadataRows = video.metadata?.metadata?.metadata_rows ?? [];
-    const durationText = getThumbnailBadges(video).find((badge) => DURATION_BADGE_REGEX.test(badge.text))?.text;
+    const metadataRows = (video.metadata?.metadata?.metadata_rows ?? []).filter((row) => row.metadata_parts?.length);
+    const publishedText = getMetadataTexts(video).findLast((text) => text?.endsWith('ago'));
+    // A duration is grouped for readability once it reaches a thousand hours, e.g. `20,772:51:34`
+    const durationText = getThumbnailBadges(video).find((badge) => /^[\d,]+(?::\d+)+$/.test(badge.text))?.text;
 
     return {
         title: video.metadata?.title?.text || `YouTube Video ${videoId}`,
@@ -98,7 +76,7 @@ const lockupViewToItem = (video: YTNodes.LockupView, embed: boolean, description
         link: `https://www.youtube.com/watch?v=${videoId}`,
         author: metadataRows.length > 1 ? metadataRows[0].metadata_parts?.[0]?.text?.text : undefined,
         image: img,
-        pubDate: getPubDate(getMetadataTexts(video)),
+        pubDate: publishedText ? parseRelativeDate(publishedText) : undefined,
         attachments: [
             {
                 url: getVideoUrl(videoId),
@@ -142,13 +120,12 @@ export const getDataByChannelId = async ({ channelId, embed, isJsonFeed }: { cha
     };
 };
 
-export const getStreamsByChannelId = async ({ channelId, embed, includeDescription }: { channelId: string; embed: boolean; includeDescription: boolean }): Promise<Data> => {
+export const getStreamsByChannelId = async ({ channelId, embed }: { channelId: string; embed: boolean }): Promise<Data> => {
     const innertube = await getInnertube();
     const channel = await innertube.getChannel(channelId);
     const streams = await channel.getLiveStreams();
     const videos = streams.videos.filter((video) => video instanceof YTNodes.LockupView);
-    // pMap keeps the results in the order of the input, so a description matches the stream at the same index
-    const descriptions = includeDescription ? await pMap(videos, (video) => getVideoDescription(video.content_id), { concurrency: 5 }) : [];
+    const infos = await Promise.all(videos.map((video) => getVideoInfo(video.content_id)));
 
     return {
         title: `${channel.metadata.title || channelId} - Live - YouTube`,
@@ -157,7 +134,15 @@ export const getStreamsByChannelId = async ({ channelId, embed, includeDescripti
         description: channel.metadata.description,
 
         // The state is exposed as a category so that a single state can be picked out with the common `filter_category` parameter
-        item: videos.map((video, index) => ({ ...lockupViewToItem(video, embed, descriptions[index]), category: [getStreamState(video)] })),
+        item: videos.map((video, index) => {
+            const { description, startTimestamp } = infos[index];
+            const item = lockupViewToItem(video, embed, description);
+            return {
+                ...item,
+                pubDate: startTimestamp ? parseDate(startTimestamp) : item.pubDate,
+                category: [getStreamState(video)],
+            };
+        }),
     };
 };
 
@@ -173,5 +158,32 @@ export const getDataByPlaylistId = async ({ playlistId, embed }: { playlistId: s
         description: playlist.info.description || `${playlist.info.title} by ${playlist.info.author.name}`,
 
         item: videos.filter((video) => video instanceof YTNodes.LockupView).map((video) => lockupViewToItem(video, embed)),
+    };
+};
+
+export const getShowsByChannelId = async (channelId: string): Promise<Data> => {
+    const innertube = await getInnertube();
+    const channel = await innertube.getChannel(channelId);
+    const shows = await channel.getShows();
+
+    return {
+        title: `${channel.metadata.title || channelId} - Shows - YouTube`,
+        link: `https://www.youtube.com/channel/${channelId}/shows`,
+        image: channel.metadata.avatar?.[0].url,
+        description: channel.metadata.description,
+
+        item: shows.playlists
+            .filter((show) => show instanceof YTNodes.GridShow)
+            .map((show) => {
+                const img = show.thumbnail_renderer?.thumbnail[0]?.url.replace(/\/hqdefault\.jpg\?.*$/, '/maxresdefault.jpg');
+                const episodes = show.thumbnail_overlays[0]?.text?.text;
+                return {
+                    title: show.title.toString(),
+                    description: `${img ? `<img src="${img}"><br>` : ''}${episodes ?? ''}`,
+                    link: new URL(show.endpoint.metadata.url!, 'https://www.youtube.com').href,
+                    author: show.author.name,
+                    image: img,
+                };
+            }),
     };
 };

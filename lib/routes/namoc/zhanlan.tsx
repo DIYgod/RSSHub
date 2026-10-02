@@ -60,7 +60,7 @@ export const route: Route = {
                     const endDate = dateParts[1] || undefined;
 
                     const scriptText = $li.find('p.image script').text();
-                    const images = JSON.parse(scriptText.match(/var\s+jsonImageStr\s*=\s*'(\[.*?\])'/s)![1]) as Array<{ savepath: string }>;
+                    const images: Array<{ savepath: string }> = JSON.parse(scriptText.match(/var\s+jsonImageStr\s*=\s*'(\[.*?\])'/s)![1]);
                     const imgUrl = new URL(images[0].savepath, baseUrl).href;
 
                     return cache.tryGet(link, async (): Promise<DataItem> => {

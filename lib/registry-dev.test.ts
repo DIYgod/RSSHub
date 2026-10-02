@@ -83,8 +83,8 @@ const fakeDirectories = {
 };
 
 const mockImplementation = ({ targetDirectoryPath }: { targetDirectoryPath: string }) => {
-    const name = path.basename(targetDirectoryPath) as keyof typeof fakeDirectories;
-    return Promise.resolve(fakeDirectories[name]);
+    const name = path.basename(targetDirectoryPath);
+    return Promise.resolve(new Map(Object.entries(fakeDirectories)).get(name));
 };
 
 // The registry lists real directories at startup; module contents come from the mocked importer

@@ -37,7 +37,7 @@ async function handler(ctx): Promise<Data> {
             Referer: link,
         },
     });
-    const data = response.data as ContentsResponse;
+    const data: ContentsResponse = response.data;
 
     const resultItem = await fetchArticles(data.data.contents);
 

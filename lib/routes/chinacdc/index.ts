@@ -47,6 +47,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 intro: $item.find('p.zy').text(),
             });
 
+            const href = aEl.prop('href');
             const imageSrc: string | undefined = $item.find('img').prop('src');
             const imageType: string | undefined = imageSrc?.split(/\./).pop();
             const image: string | undefined = imageSrc ? new URL(imageSrc, targetUrl).href : undefined;
@@ -60,7 +61,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 title: cleanTitle,
                 description,
                 pubDate,
-                link: new URL(aEl.prop('href') as string, targetUrl).href,
+                link: href ? new URL(href, targetUrl).href : undefined,
                 content: {
                     html: description,
                     text: $item.find('p.zy').text(),
@@ -112,7 +113,8 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
     const author: string = $('title').text();
     const title: string = $('div.erjiCurNav').text();
-    const feedImage: string = new URL($('img.logo').prop('src') as string, targetUrl).href;
+    const logoSrc = $('img.logo').prop('src');
+    const feedImage = logoSrc ? new URL(logoSrc, targetUrl).href : undefined;
 
     return {
         title: `${author} - ${title}`,

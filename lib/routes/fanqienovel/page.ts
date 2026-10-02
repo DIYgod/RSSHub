@@ -79,7 +79,7 @@ async function handler(ctx: Context): Promise<Data> {
             .match(/window\.__INITIAL_STATE__\s*=\s*(\S.*);/)?.[1] ?? '{}'
     );
 
-    const page = initialState.page as Page;
+    const page: Page = initialState.page;
     const items = page.chapterListWithVolume.flatMap((volume) =>
         volume.map((chapter) => ({
             title: chapter.title,

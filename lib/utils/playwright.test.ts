@@ -68,12 +68,6 @@ const loadPlaywright = async () => {
     vi.doMock('@/utils/proxy', () => ({
         default: proxyMock,
     }));
-    vi.doMock('@/utils/logger', () => ({
-        default: {
-            warn: vi.fn(),
-            debug: vi.fn(),
-        },
-    }));
     const mod = await import('@/utils/playwright');
     return mod.getPlaywrightPage;
 };
@@ -109,7 +103,6 @@ afterEach(async () => {
     vi.doUnmock('dotenv/config');
     vi.doUnmock('patchright');
     vi.doUnmock('@/utils/proxy');
-    vi.doUnmock('@/utils/logger');
 
     vi.resetModules();
 });

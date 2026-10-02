@@ -25,16 +25,16 @@ const REGIONS = [
 ];
 
 /** JIS X 0401 codes accepted as `prefecture[]`; any two-digit code is passed through. */
-const PREFECTURES: Record<string, string> = {
-    tokyo: '13',
-    kanagawa: '14',
-    saitama: '11',
-    chiba: '12',
-    osaka: '27',
-    kyoto: '26',
-    hyogo: '28',
-    aichi: '23',
-};
+const PREFECTURES = new Map([
+    ['tokyo', '13'],
+    ['kanagawa', '14'],
+    ['saitama', '11'],
+    ['chiba', '12'],
+    ['osaka', '27'],
+    ['kyoto', '26'],
+    ['hyogo', '28'],
+    ['aichi', '23'],
+]);
 
 interface ListCard {
     title: string;
@@ -225,7 +225,7 @@ const mergeDetail = (base: ListingExtra, d: DetailFields): ListingExtra => {
 /** A failed detail page keeps the list fields instead of breaking the feed. */
 const enrich = async (card: ListCard, cookie: string | null): Promise<ListingExtra> => {
     try {
-        return mergeDetail(card.extra, parseDetail(await ofetch(card.link, { responseType: 'text', headers: cookie === null ? undefined : { Cookie: cookie } })));
+        return mergeDetail(card.extra, parseDetail(await ofetch(card.link, { headers: cookie === null ? undefined : { Cookie: cookie } })));
     } catch (error) {
         logger.warn(`bukenavi: detail fetch failed for ${card.link}: ${String(error)}`);
         return { ...card.extra, raw: { ...card.extra.raw, detail_error: String(error) } };
@@ -239,9 +239,9 @@ export const handler = async (ctx): Promise<Data> => {
         throw new Error(`Unknown region "${regionSlug}", expected one of ${REGIONS.map((r) => r.slug).join(', ')}`);
     }
     const pref: string | undefined = ctx.req.param('pref');
-    const prefCode = pref === undefined ? undefined : (PREFECTURES[pref] ?? pref);
+    const prefCode = pref === undefined ? undefined : (PREFECTURES.get(pref) ?? pref);
     if (prefCode !== undefined && !/^\d{2}$/.test(prefCode)) {
-        throw new Error(`Unknown prefecture "${pref}", expected a slug (${Object.keys(PREFECTURES).join(', ')}) or a two-digit JIS code`);
+        throw new Error(`Unknown prefecture "${pref}", expected a slug (${PREFECTURES.keys().toArray().join(', ')}) or a two-digit JIS code`);
     }
     // 市区町村 codes are the prefecture's two digits plus three more (横浜市中区 = 14104), and the site pairs
     // them with prefecture[], so both are required and the pair is checked rather than trusted.
@@ -278,7 +278,7 @@ export const handler = async (ctx): Promise<Data> => {
                     image: card.image,
                     _extra: extra,
                 };
-            }) as Promise<DataItem>,
+            }),
         { concurrency: DETAIL_CONCURRENCY }
     );
 
@@ -320,8 +320,8 @@ Note that \`bukenavi.jp/{region}/area/{日本語}\` pages are SEO landing pages 
     categories: ['other'],
     features: {
         requireConfig: [
-            { name: 'BUKENAVI_EMAIL', optional: true, description: 'ぶけなび account e-mail. Optional — without it the route reads the public view.' },
-            { name: 'BUKENAVI_PASSWORD', optional: true, description: 'ぶけなび account password. Optional — without it the route reads the public view.' },
+            { name: 'BUKENAVI_EMAIL', optional: true, description: 'ぶけなび account e-mail. Without it the route reads the public view.' },
+            { name: 'BUKENAVI_PASSWORD', optional: true, description: 'ぶけなび account password. Without it the route reads the public view.' },
         ],
         requirePuppeteer: false,
         antiCrawler: false,

@@ -1,5 +1,4 @@
 import { load } from 'cheerio';
-import pMap from 'p-map';
 
 import type { RidershipExtra } from '@/routes/tokyometro/utils';
 import { cellText, parseCount, parseFiscalYear, parsePct, ridershipItem } from '@/routes/tokyometro/utils';
@@ -22,7 +21,7 @@ const BROWSER_HEADERS = {
     'sec-fetch-user': '?1',
 };
 
-const fetchPage = (url: string): Promise<string> => ofetch(url, { headers: BROWSER_HEADERS, responseType: 'text' });
+const fetchPage = (url: string): Promise<string> => ofetch(url, { headers: BROWSER_HEADERS });
 
 /** null on 404 (the 101位以下 sequence and older-year URLs end that way). */
 const fetchOptional = async (url: string): Promise<string | null> => {
@@ -74,7 +73,7 @@ const parseStations = (html: string, fiscalYear: number, firstRank: number): Arr
 };
 
 const fetchYear = async (indexHtml: string, indexUrl: string) => {
-    const heading = load(indexHtml)('h1').first().text();
+    const heading = load(indexHtml)('h1').text();
     const fiscalYear = parseFiscalYear(heading);
     if (fiscalYear === null) {
         throw new Error('jreast: fiscal year not found in the page heading');
@@ -83,11 +82,7 @@ const fetchYear = async (indexHtml: string, indexUrl: string) => {
     const items = parseStations(indexHtml, fiscalYear, 1);
     // 101位以下: {year}_01.html … in the same directory; a missing page (404) or an empty one ends the sequence.
     const dir = indexUrl.slice(0, indexUrl.lastIndexOf('/') + 1);
-    const subpages = await pMap(
-        Array.from({ length: MAX_SUBPAGES }, (_, i) => `${dir}${year}_${String(i + 1).padStart(2, '0')}.html`),
-        (url) => fetchOptional(url),
-        { concurrency: 2 }
-    );
+    const subpages = await Promise.all(Array.from({ length: MAX_SUBPAGES }, (_, i) => fetchOptional(`${dir}${year}_${String(i + 1).padStart(2, '0')}.html`)));
     for (const html of subpages) {
         const page = html === null ? [] : parseStations(html, fiscalYear, items.length + 1);
         if (page.length === 0) {
@@ -113,10 +108,10 @@ const resolveYearPage = async (year: string | undefined): Promise<{ link: string
 
 export const handler = async (ctx): Promise<Data> => {
     const yearParam: string | undefined = ctx.req.param('year');
-    const page = (await cache.tryGet(`jreast/ridership:${yearParam ?? 'latest'}`, async () => {
+    const page = await cache.tryGet(`jreast/ridership:${yearParam ?? 'latest'}`, async () => {
         const { link, html } = await resolveYearPage(yearParam);
         return { link, ...(await fetchYear(html, link)) };
-    })) as { link: string; fiscalYear: number; items: Array<ReturnType<typeof ridershipItem>> };
+    });
     const link = page.link;
 
     return {

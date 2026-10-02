@@ -1,13 +1,10 @@
 import { afterEach, expect, it, vi } from 'vitest';
 
-import { route } from '../lib/routes/gov/zhengce/zhengceku';
-import type { Data, Route } from '../lib/types';
-import buildData from '../lib/utils/common-config';
+import { route } from '@/routes/gov/zhengce/zhengceku';
 
-// These unused network/devtools exports are tree-shaken in the production bundle.
-vi.mock('undici', () => ({}));
+import buildData from './common-config';
+
 vi.mock('node-network-devtools', () => ({ register: vi.fn() }));
-vi.mock('../lib/config', () => ({ config: { requestRetry: 0, loggerLevel: 'error' } }));
 
 afterEach(() => vi.unstubAllGlobals());
 
@@ -21,7 +18,10 @@ it('extracts the policy library in workerd with page/item callbacks and dates', 
         )
     );
     vi.stubGlobal('fetch', fetchMock);
-    const data = (await (route.handler as Exclude<Route['handler'], string>)({ req: { param: () => 'bmwj' } } as never)) as Data;
+    const data = await route.handler({ req: { param: () => 'bmwj' } } as never);
+    if (!data || data instanceof Response) {
+        throw new TypeError('expected the route to return feed data');
+    }
     expect(data.title).toBe('部门文件 - 政府文件库');
     expect(data.item).toEqual([{ title: '政策', link: '/policy', pubDate: new Date('2025-01-01T00:00:00Z'), description: undefined, guid: undefined }]);
     expect(fetchMock).toHaveBeenCalledTimes(1);

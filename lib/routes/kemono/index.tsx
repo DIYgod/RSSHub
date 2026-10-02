@@ -162,7 +162,7 @@ function generateEnclosureInfo(htmlContent: string): { enclosure_url?: string; e
         }
 
         const extension = extractFileExtension(src);
-        const mimeType = MIME_TYPE_MAP[extension as keyof typeof MIME_TYPE_MAP];
+        const mimeType = Object.entries(MIME_TYPE_MAP).find(([ext]) => ext === extension)?.[1];
 
         if (!mimeType) {
             return;

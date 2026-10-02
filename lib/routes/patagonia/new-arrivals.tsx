@@ -55,7 +55,11 @@ async function handler(ctx) {
     const list = $('.product')
         .toArray()
         .map((element) => {
-            const tealium = $(element).find('.product-tile').data('tealium') as { product_name: string[] };
+            const tealiumRaw = $(element).find('.product-tile').attr('data-tealium');
+            if (!tealiumRaw) {
+                return null;
+            }
+            const tealium: { product_name: string[] } = JSON.parse(tealiumRaw);
             const data = {
                 title: tealium.product_name[0],
                 link: host + '/' + $(element).find('[itemprop="url"]').attr('href'),
@@ -74,7 +78,8 @@ async function handler(ctx) {
                     </div>
                 );
             return data;
-        });
+        })
+        .filter((item) => item !== null);
     return {
         title: `Patagonia - New Arrivals - ${category.toUpperCase()}`,
         link: `${host}/shop/${categoryMap[category][1]}`,

@@ -3,7 +3,7 @@ import dayjs from 'dayjs';
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 
-import type { DataItem, Route } from '@/types';
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 
@@ -137,7 +137,7 @@ async function handler(ctx) {
                 });
             })
         )
-    ).filter((item) => Object.keys(item).length > 0) as DataItem[];
+    ).filter((item) => item.title !== undefined);
 
     return {
         title: `Daily Torrents Statistics in ${country} - iknownwhatyoudownload`,

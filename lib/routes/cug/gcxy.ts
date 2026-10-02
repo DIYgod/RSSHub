@@ -32,8 +32,9 @@ async function handler(ctx: Context) {
         yjsjy: '/index/yjsjy.htm',
     };
 
-    const type = ctx.req.param('type') as keyof typeof typeUrl | undefined;
-    if (type && !Object.hasOwn(typeUrl, type)) {
+    const isType = (key: string): key is keyof typeof typeUrl => Object.hasOwn(typeUrl, key);
+    const type = ctx.req.param('type');
+    if (type && !isType(type)) {
         throw new Error('Invalid type');
     }
 

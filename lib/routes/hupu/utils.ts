@@ -13,7 +13,7 @@ export function extractNextData<T = unknown>(html: string, url?: string): T {
     }
 
     try {
-        return JSON.parse(scriptMatch[1]) as T;
+        return JSON.parse(scriptMatch[1]);
     } catch (error) {
         throw new Error(`Failed to parse __NEXT_DATA__ JSON: ${error instanceof Error ? error.message : String(error)}`, { cause: error });
     }

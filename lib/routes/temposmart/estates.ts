@@ -1,9 +1,7 @@
 import { load } from 'cheerio';
-import pMap from 'p-map';
 
 import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
-import logger from '@/utils/logger';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
@@ -12,7 +10,6 @@ import type { ListingExtra } from './utils';
 import { bracketNotes, clean, normalizeFloor, parseArea, parseCondition, parseHeavyFood, parseJpy, parseMonths, parseMonthsSum, parseWalkMin, parseWard, parseYmd, sumKnown, summarize, tsuboUnit } from './utils';
 
 const HOST = 'https://www.temposmart.jp';
-const DETAIL_CONCURRENCY = 2;
 const DEFAULT_LIMIT = 30;
 const PAGE_SIZE = 50;
 
@@ -35,7 +32,7 @@ interface ListCard {
 
 /** The list page's h1 reads '新宿区の居抜き物件…' / '東京都の居抜き物件…', so the area name is whatever precedes 「の居抜き物件」. */
 const areaLabel = (html: string, fallback: string): string => {
-    const h1 = clean(load(html)('h1').first().text());
+    const h1 = clean(load(html)('h1').text());
     const name = h1?.split('の居抜き物件', 1)[0];
     return name !== undefined && name !== h1 ? name : fallback;
 };
@@ -70,7 +67,7 @@ const parseList = (html: string): ListCard[] => {
         .toArray()
         .map((el) => {
             const $el = $(el);
-            const a = $el.find('.estateItem__estateTitle a').first();
+            const a = $el.find('.estateItem__estateTitle a');
             const href = a.attr('href');
             const title = clean(a.text());
             const id = clean($el.find('.estateItem__estateId--value').text());
@@ -84,7 +81,7 @@ const parseList = (html: string): ListCard[] => {
                 station: clean($el.find('.stationInfo__name').text()),
                 walk: clean($el.find('.stationInfo__near--value').text()),
                 line: clean($el.find('.stationInfo__route').text()),
-                address: clean($el.find('.estateItem__estateAddress--link').first().text()),
+                address: clean($el.find('.estateItem__estateAddress--link').text()),
                 floor: clean($el.find('.estateItem__estateFloor').text()),
                 deposit: clean($el.find('.estateItem__estateDeposit').text()),
                 area: clean($el.find('.estateItem__estateArea').text()),
@@ -165,7 +162,7 @@ const parseDetail = (html: string): DetailFields => {
         contract_kind: cell('契約種別'),
         contract_term: cell('契約期間'),
         purpose: cell('現況'),
-        available_purpose: clean($('.availablePurpose__text').first().text()),
+        available_purpose: clean($('.availablePurpose__text').text()),
         note: clean($('.estateTable__note--content').text()),
     };
 };
@@ -204,14 +201,9 @@ const mergeDetail = (base: ListingExtra, d: DetailFields): ListingExtra => {
     };
 };
 
-/** A failed detail page (e.g. delisted 404) keeps the list fields instead of breaking the feed. */
 const enrich = async (card: ListCard): Promise<ListingExtra> => {
-    try {
-        return mergeDetail(card.extra, parseDetail(await ofetch(card.link)));
-    } catch (error) {
-        logger.warn(`temposmart: detail fetch failed for ${card.link}: ${String(error)}`);
-        return { ...card.extra, raw: { ...card.extra.raw, detail_error: String(error) } };
-    }
+    const html = await ofetch(card.link);
+    return mergeDetail(card.extra, parseDetail(html));
 };
 
 export const handler = async (ctx): Promise<Data> => {
@@ -238,9 +230,8 @@ export const handler = async (ctx): Promise<Data> => {
     const html: string = await ofetch(listUrl);
     const cards = parseList(html).slice(0, limit);
 
-    const items = await pMap(
-        cards,
-        (card) =>
+    const items = await Promise.all(
+        cards.map((card) =>
             cache.tryGet(card.link, async (): Promise<DataItem> => {
                 const extra = await enrich(card);
                 return {
@@ -251,8 +242,8 @@ export const handler = async (ctx): Promise<Data> => {
                     description: summarize(extra),
                     _extra: extra,
                 };
-            }) as Promise<DataItem>,
-        { concurrency: DETAIL_CONCURRENCY }
+            })
+        )
     );
 
     return {

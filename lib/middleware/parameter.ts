@@ -176,7 +176,7 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
             if (item.category) {
                 // convert single string to array, and filter only string type category
                 Array.isArray(item.category) || (item.category = [item.category]);
-                item.category = item.category.filter((e) => typeof e === 'string');
+                item.category = item.category.filter((e: unknown): e is string => typeof e === 'string');
             }
             return item;
         };

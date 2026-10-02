@@ -13,7 +13,7 @@ export async function customFetch<T extends BasicResponse<ResponseData>>(path: s
             cookie: `zsxq_access_token=${config.zsxq.accessToken};`,
         },
     });
-    const { succeeded, code, resp_data } = response.data as T;
+    const { succeeded, code, resp_data }: T = response.data;
     if (succeeded) {
         return resp_data;
     }

@@ -135,10 +135,8 @@ type ConfigEnvKeys =
     | 'HUITUN_COOKIE'
     | 'INFZM_COOKIE'
     | 'INITIUM_MEMBER_COOKIE'
-    | 'IG_USERNAME'
-    | 'IG_PASSWORD'
-    | 'IG_PROXY'
     | 'IG_COOKIE'
+    | 'INSTAGRAM_COOKIE'
     | 'IWARA_USERNAME'
     | 'IWARA_PASSWORD'
     | 'JAVDB_SESSION'
@@ -490,9 +488,6 @@ export type Config = {
         memberCookie?: string;
     };
     instagram: {
-        username?: string;
-        password?: string;
-        proxy?: string;
         cookie?: string;
     };
     iwara: {
@@ -1028,10 +1023,7 @@ const calculateValue = () => {
             memberCookie: envs.INITIUM_MEMBER_COOKIE,
         },
         instagram: {
-            username: envs.IG_USERNAME,
-            password: envs.IG_PASSWORD,
-            proxy: envs.IG_PROXY,
-            cookie: envs.IG_COOKIE,
+            cookie: envs.INSTAGRAM_COOKIE ?? envs.IG_COOKIE,
         },
         iwara: {
             username: envs.IWARA_USERNAME,

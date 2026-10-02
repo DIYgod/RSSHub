@@ -194,7 +194,7 @@ async function fetchVideoListFromBrowser(uid: string): Promise<VideoListData> {
 
     try {
         const response = await waitForVideoListResponseFromVideoPage(page, videoUrl);
-        const data = (await response.json()) as VideoListResponse;
+        const data: VideoListResponse = await response.json();
         if (data.code) {
             logger.error(JSON.stringify(data.data));
             throw new Error(`Got error code ${data.code} while fetching in browser mode: ${data.message}`);

@@ -16,6 +16,7 @@ const CATEGORIES = {
     power: { name: '电力', newsPath: '/news/' },
     huanbao: { name: '环保', newsPath: '/policy/' },
 };
+const isCategory = (s: string): s is keyof typeof CATEGORIES => Object.hasOwn(CATEGORIES, s);
 
 export const route: Route = {
     path: '/news/:type',
@@ -47,10 +48,10 @@ export const route: Route = {
 
     async handler(ctx) {
         const type = ctx.req.param('type')!;
-        const cat = CATEGORIES[type as keyof typeof CATEGORIES];
-        if (!cat) {
+        if (!isCategory(type)) {
             throw new Error(`Unknown channel type: ${type}. Valid values: ${Object.keys(CATEGORIES).join(', ')}`);
         }
+        const cat = CATEGORIES[type];
 
         const baseUrl = `https://${type}.in-en.com`;
         const listUrl = `${baseUrl}${cat.newsPath}`;

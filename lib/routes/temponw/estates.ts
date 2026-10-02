@@ -1,15 +1,12 @@
 import { load } from 'cheerio';
-import pMap from 'p-map';
 
 import type { ListingExtra } from '@/routes/temposmart/utils';
 import { clean, normalizeFloor, parseArea, parseCondition, parseHeavyFood, parseJpy, parseMonths, parseWalkMin, parseWard, summarize, tsuboUnit } from '@/routes/temposmart/utils';
 import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
-import logger from '@/utils/logger';
 import ofetch from '@/utils/ofetch';
 
 const HOST = 'https://www.temponw.com';
-const DETAIL_CONCURRENCY = 2;
 const PAGES = 2; // 10 cards per page
 
 /** Tokyo 23 wards as the site's `cities[]` codes (101 千代田区 … 123 江戸川区). */
@@ -46,8 +43,8 @@ const parseList = (html: string): ListCard[] => {
         .toArray()
         .map((el): ListCard | null => {
             const $el = $(el);
-            const source = $el.find('input[name="source_system_code"]').first().attr('value');
-            const itemNo = $el.find('input[name="item_no"]').first().attr('value');
+            const source = $el.find('input[name="source_system_code"]').attr('value');
+            const itemNo = $el.find('input[name="item_no"]').attr('value');
             const title = clean($el.find('.result-content-title span').text());
             if (!source || !itemNo || !title) {
                 return null;
@@ -83,7 +80,7 @@ const parseList = (html: string): ListCard[] => {
             const [line, station] = (raw.station?.normalize('NFKC') ?? '').split(' ', 2);
             const rentJpy = parseJpy(raw.rent);
             const { tsubo, area_m2 } = parseArea(raw.area);
-            const image = $el.find('.result-content-img img').first().attr('src');
+            const image = $el.find('.result-content-img img').attr('src');
 
             return {
                 title,
@@ -157,14 +154,9 @@ const mergeDetail = (base: ListingExtra, d: DetailFields): ListingExtra => {
     };
 };
 
-/** A failed detail page keeps the list fields instead of breaking the feed. */
 const enrich = async (card: ListCard): Promise<ListingExtra> => {
-    try {
-        return mergeDetail(card.extra, parseDetail(await ofetch(card.link)));
-    } catch (error) {
-        logger.warn(`temponw: detail fetch failed for ${card.link}: ${String(error)}`);
-        return { ...card.extra, raw: { ...card.extra.raw, detail_error: String(error) } };
-    }
+    const html = await ofetch(card.link);
+    return mergeDetail(card.extra, parseDetail(html));
 };
 
 const listUrlFor = (area: string | undefined, page: number): string => {
@@ -187,12 +179,10 @@ export const handler = async (ctx): Promise<Data> => {
         throw new Error(`Unknown area "${area}", expected "tokyo" or none`);
     }
     const pages = await Promise.all(Array.from({ length: PAGES }, (_, i) => ofetch(listUrlFor(area, i + 1))));
-    const seen = new Set<string>();
-    const cards = pages.flatMap((html) => parseList(html)).filter((card) => (seen.has(card.link) ? false : seen.add(card.link)));
+    const cards = pages.flatMap((html) => parseList(html));
 
-    const items = await pMap(
-        cards,
-        (card) =>
+    const items = await Promise.all(
+        cards.map((card) =>
             cache.tryGet(card.link, async (): Promise<DataItem> => {
                 const extra = await enrich(card);
                 return {
@@ -204,8 +194,8 @@ export const handler = async (ctx): Promise<Data> => {
                     image: card.image,
                     _extra: extra,
                 };
-            }) as Promise<DataItem>,
-        { concurrency: DETAIL_CONCURRENCY }
+            })
+        )
     );
 
     return {

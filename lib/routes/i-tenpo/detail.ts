@@ -114,10 +114,10 @@ export const handler = async (ctx): Promise<Data> => {
     }
     const link = `${HOST}/t${id}`;
 
-    const item = (await cache.tryGet(`i-tenpo:detail:${id}`, async () => {
-        const html: string = await ofetch(link, { responseType: 'text' });
+    const item = await cache.tryGet(`i-tenpo:detail:${id}`, async () => {
+        const html: string = await ofetch(link);
         return parseDetail(html, id);
-    })) as DataItem | null;
+    });
 
     if (item === null) {
         throw new Error(`i-tenpo: listing ${id} could not be read; it may have been delisted`);

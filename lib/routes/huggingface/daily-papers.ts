@@ -66,7 +66,11 @@ async function handler(ctx) {
 
     const { body: response } = await got(url);
     const $ = load(response);
-    const papers = $('div[data-target="DailyPapers"]').data('props') as PapersData;
+    const props = $('div[data-target="DailyPapers"]').attr('data-props');
+    if (!props) {
+        throw new Error(`Daily papers data not found on ${url}`);
+    }
+    const papers: PapersData = JSON.parse(props);
 
     const items = papers.dailyPapers
         .filter((item) => item.paper.upvotes >= voteFliter)

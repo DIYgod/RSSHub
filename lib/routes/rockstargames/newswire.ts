@@ -67,7 +67,7 @@ const postQuery = /* GraphQL */ `
 `;
 
 // graphql reports failures with http 200 and a null `data`, so errors have to be checked explicitly
-const graphql = async (query: string, variables: Record<string, unknown>) => {
+const graphql = async (query: string, variables: Record<string, string | number>) => {
     const response = await ofetch(apiUrl, {
         method: 'POST',
         body: { query, variables },
@@ -82,11 +82,20 @@ const graphql = async (query: string, variables: Record<string, unknown>) => {
 
 // the article body is a tree of layout blocks; only HTMLElement and ImageWithBadge carry content,
 // everything else (Grid, NewswireTitle, Rating, ...) just nests further blocks under `content`
+type Block = {
+    _template?: string;
+    _memoq?: { content?: string };
+    image?: { sources?: Record<string, { desktop?: string }> };
+    content?: Block | Block[];
+};
+
+const isBlock = (node: unknown): node is Block => node !== null && typeof node === 'object';
+
 const renderBlocks = (node: any): string => {
     if (Array.isArray(node)) {
         return node.map((child) => renderBlocks(child)).join('');
     }
-    if (!node || typeof node !== 'object') {
+    if (!isBlock(node)) {
         return '';
     }
     switch (node._template) {

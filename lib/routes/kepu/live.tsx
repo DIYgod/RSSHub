@@ -1,6 +1,6 @@
 import { renderToString } from 'hono/jsx/dom/server';
 
-import type { Language, Route } from '@/types';
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -110,7 +110,7 @@ async function handler(ctx) {
         title: `${author} - ${subtitle}`,
         link: currentUrl,
         description: '科学直播(live.kepu.net.cn)',
-        language: 'zh' as Language,
+        language: 'zh' as const,
         icon,
         logo: icon,
         subtitle,

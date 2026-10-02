@@ -32,16 +32,13 @@ const parseRows = (html: string, pref: string): DataItem[] => {
             if (!name || !price) {
                 return null;
             }
-            const raw: RentBenchmarkExtra['raw'] = Object.fromEntries(
-                (
-                    [
-                        ['price', price],
-                        ['price_label', '賃料相場（坪単価）'],
-                        ['search_url', searchUrl ?? null],
-                        ['note', note],
-                    ] as Array<[string, string | null]>
-                ).filter((e): e is [string, string] => e[1] !== null)
-            );
+            const entries: Array<[string, string | null]> = [
+                ['price', price],
+                ['price_label', '賃料相場（坪単価）'],
+                ['search_url', searchUrl ?? null],
+                ['note', note],
+            ];
+            const raw: RentBenchmarkExtra['raw'] = Object.fromEntries(entries.filter((e): e is [string, string] => e[1] !== null));
             const extra: RentBenchmarkExtra = {
                 source: 'abc-tenpo',
                 area_kind: 'ward',

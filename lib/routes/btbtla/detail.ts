@@ -46,7 +46,7 @@ async function handler(ctx) {
             const magnet = await cache.tryGet(`btbtla:magnet:${link}`, async () => {
                 if (link) {
                     const magnetLink = await getMagnet('https://www.btbtla.com' + link);
-                    return magnetLink as string;
+                    return magnetLink;
                 }
                 return '';
             });
@@ -80,10 +80,7 @@ async function getId(name: string) {
     return link;
 }
 
-async function getMagnet(link: string | undefined) {
-    if (!link) {
-        return null;
-    }
+async function getMagnet(link: string) {
     const response = await ofetch(link);
     const $ = load(response);
     const magnet = $('.btn-important').attr('href');

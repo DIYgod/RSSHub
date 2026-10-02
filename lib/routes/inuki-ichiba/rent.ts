@@ -1,9 +1,7 @@
 import { load } from 'cheerio';
-import pMap from 'p-map';
 
 import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
-import logger from '@/utils/logger';
 import ofetch from '@/utils/ofetch';
 
 import type { ListingExtra } from './utils';
@@ -11,7 +9,6 @@ import { clean, normalizeFloor, parseArea, parseCondition, parseHeavyFood, parse
 
 // `www.` 301s to the bare domain.
 const HOST = 'https://inuki-ichiba.jp';
-const DETAIL_CONCURRENCY = 2;
 const PAGE_SIZE = 20;
 
 /** 一都三県 — the only prefectures in the site's search form (`location[<code>][prefecture]`). */
@@ -49,7 +46,7 @@ const parseList = (html: string): ListCard[] => {
         .toArray()
         .map((el) => {
             const $el = $(el);
-            const a = $el.find('h3.title a').first();
+            const a = $el.find('h3.title a');
             const href = a.attr('href');
             const title = clean(a.text());
             const id = href?.match(/\/rent\/(\d+)/)?.[1];
@@ -59,9 +56,9 @@ const parseList = (html: string): ListCard[] => {
 
             const rows = new Map<string, ReturnType<typeof $>>();
             for (const row of $el.find('.detail_box .detail').toArray()) {
-                const head = clean($(row).find('.head').first().text());
+                const head = clean($(row).find('.head').text());
                 if (head) {
-                    rows.set(head, $(row).find('.item').first());
+                    rows.set(head, $(row).find('.item'));
                 }
             }
             const text = (label: string): string | null => clean(rows.get(label)?.text());
@@ -127,7 +124,7 @@ const parseDetail = (html: string): DetailFields => {
         const head = $('.detail .head')
             .toArray()
             .find((el) => clean($(el).text()) === label);
-        return head ? clean($(head).siblings('.item').first().text()) : null;
+        return head ? clean($(head).siblings('.item').text()) : null;
     };
     return {
         deposit: item('敷金・保証金'),
@@ -154,14 +151,9 @@ const mergeDetail = (base: ListingExtra, d: DetailFields): ListingExtra => ({
     },
 });
 
-/** A failed detail page (e.g. delisted 404) keeps the list fields instead of breaking the feed. */
 const enrich = async (card: ListCard): Promise<ListingExtra> => {
-    try {
-        return mergeDetail(card.extra, parseDetail(await ofetch(card.link)));
-    } catch (error) {
-        logger.warn(`inuki-ichiba: detail fetch failed for ${card.link}: ${String(error)}`);
-        return { ...card.extra, raw: { ...card.extra.raw, detail_error: String(error) } };
-    }
+    const html = await ofetch(card.link);
+    return mergeDetail(card.extra, parseDetail(html));
 };
 
 export const handler = async (ctx): Promise<Data> => {
@@ -176,9 +168,8 @@ export const handler = async (ctx): Promise<Data> => {
 
     const cards = parseList(await ofetch(listUrl)).slice(0, limit);
 
-    const items = await pMap(
-        cards,
-        (card) =>
+    const items = await Promise.all(
+        cards.map((card) =>
             cache.tryGet(card.link, async (): Promise<DataItem> => {
                 const extra = await enrich(card);
                 return {
@@ -189,8 +180,8 @@ export const handler = async (ctx): Promise<Data> => {
                     description: summarize(extra),
                     _extra: extra,
                 };
-            }) as Promise<DataItem>,
-        { concurrency: DETAIL_CONCURRENCY }
+            })
+        )
     );
 
     return {

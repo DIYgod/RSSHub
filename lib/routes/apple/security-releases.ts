@@ -23,7 +23,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
     const limit = Number(ctx.req.query('limit') ?? '30');
 
     const baseUrl = 'https://support.apple.com';
-    const targetUrl: string = new URL(`${language}/100100`, baseUrl).href;
+    const targetUrl: string = new URL(`${languageParam}/100100`, baseUrl).href;
 
     const response = await ofetch(targetUrl);
     const $: CheerioAPI = load(response);

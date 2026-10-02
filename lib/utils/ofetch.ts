@@ -1,7 +1,6 @@
 import type { SecureVersion } from 'node:tls';
 
 import type { HeaderGeneratorOptions } from 'header-generator';
-import { register } from 'node-network-devtools';
 import { createFetch } from 'ofetch';
 
 import { config } from '@/config';
@@ -23,7 +22,10 @@ declare module 'ofetch' {
     }
 }
 
-config.enableRemoteDebugging && process.env.NODE_ENV === 'dev' && register();
+if (config.enableRemoteDebugging && process.env.NODE_ENV === 'dev') {
+    const { register } = await import('node-network-devtools');
+    register();
+}
 
 const rofetch = createFetch({ fetch: (input: Parameters<typeof fetch>[0], init?: Parameters<typeof fetch>[1]) => fetch(input, init) }).create({
     retryStatusCodes: [400, 408, 409, 425, 429, 500, 502, 503, 504],

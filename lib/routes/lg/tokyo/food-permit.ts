@@ -2,7 +2,6 @@ import { type CheerioAPI, load } from 'cheerio';
 
 import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
-import logger from '@/utils/logger';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
@@ -54,6 +53,7 @@ const SOURCES: Record<Source, { label: string; link: string }> = {
         link: 'https://data.bodik.jp/dataset/131105_food_business',
     },
 };
+const isSource = (s: string): s is Source => Object.hasOwn(SOURCES, s);
 const MEGURO_API = 'https://data.bodik.jp/api/3/action/package_show?id=131105_food_business';
 const MONTHS_BACK = 2;
 const SHIBUYA_QUERY = 'https://services3.arcgis.com/UtdeFTavkHfI94t2/arcgis/rest/services/131130_food_businesses_list/FeatureServer/0/query';
@@ -79,7 +79,7 @@ const pick = (row: Row, cols: readonly string[]): string | null => {
 };
 
 const toNumber = (v: string | null): number | null => {
-    const n = v === null ? NaN : Number(v.trim());
+    const n = v === null ? NaN : Number(v);
     return Number.isFinite(n) ? n : null;
 };
 
@@ -100,13 +100,17 @@ const shibuyaQueryUrl = (now: Date): string => {
     return `${SHIBUYA_QUERY}?${params.toString()}`;
 };
 
+interface ArcgisFeature {
+    attributes: Record<string, string | number | null>;
+}
+
 const fetchShibuya = async (): Promise<Row[]> => {
     const body = await ofetch(shibuyaQueryUrl(new Date()));
-    const features: Array<{ attributes: Record<string, unknown> }> = body?.features ?? [];
+    const features: ArcgisFeature[] = body?.features ?? [];
     return features.map((f) => Object.fromEntries(Object.entries(f.attributes).map(([k, v]) => [k, v === null || v === undefined ? null : String(v)])));
 };
 
-const fetchMinato = async (): Promise<Row[]> => csvRecords(await ofetch(MINATO_CSV, { responseType: 'text' }));
+const fetchMinato = async (): Promise<Row[]> => csvRecords(await ofetch(MINATO_CSV));
 
 const fetchCsv = async (url: string): Promise<Row[]> => {
     const buf: ArrayBuffer = await ofetch(url, { responseType: 'arrayBuffer' });
@@ -129,7 +133,7 @@ const newestLinks = ($: CheerioAPI, base: string, keyOf: (text: string, href: st
 
 /** 台東区: the 月別 table lists each month as 業種順 + 許可日順 (same rows); the file names are not regular (`2026-07-PER-CSV.csv`, `OPD08_PER.csv`), so rows are taken in table order. */
 const fetchTaito = async (): Promise<Row[]> => {
-    const html: string = await ofetch(SOURCES.taito.link, { responseType: 'text' });
+    const html: string = await ofetch(SOURCES.taito.link);
     const $ = load(html);
     const table = $('table').filter((_, t) => $(t).find('caption').text().includes('月別'));
     const urls = table
@@ -143,14 +147,14 @@ const fetchTaito = async (): Promise<Row[]> => {
 
 /** 品川区: `令和8年7月分許可施設一覧` links (the 令和6〜7年度 yearly file is skipped). */
 const fetchShinagawa = async (): Promise<Row[]> => {
-    const html: string = await ofetch(SOURCES.shinagawa.link, { responseType: 'text' });
+    const html: string = await ofetch(SOURCES.shinagawa.link);
     const $ = load(html);
     return fetchMonthly(newestLinks($, SOURCES.shinagawa.link, (text) => (text.includes('月分') ? warekiMonth(text) : null)));
 };
 
 /** 世田谷区: `例月新規許可施設一覧(R080831)` links, keyed by the R+YYMMDD code (the yearly 全件 file has none). */
 const fetchSetagaya = async (): Promise<Row[]> => {
-    const html: string = await ofetch(SOURCES.setagaya.link, { responseType: 'text' });
+    const html: string = await ofetch(SOURCES.setagaya.link);
     const $ = load(html);
     return fetchMonthly(newestLinks($, SOURCES.setagaya.link, (text) => /例月新規許可施設一覧\(R(\d{6})\)/.exec(text)?.[1] ?? null));
 };
@@ -200,48 +204,30 @@ const toItem = (source: Source, raw: Row): DataItem & { _extra: PermitExtra } =>
     };
 };
 
-/** First item per 許可番号, order kept; called after the date-desc sort, so the surviving row is the one with the latest permit date. */
-const uniqueByPermitNo = <T extends { _extra: PermitExtra }>(items: T[]): T[] => {
-    const seen = new Set<string>();
-    return items.filter((it) => {
-        if (seen.has(it._extra.permit_no)) {
-            return false;
-        }
-        seen.add(it._extra.permit_no);
-        return true;
-    });
-};
-
-/** Newest `limit` 許可 rows of one source; 届出 rows are not an opening signal and are skipped. Publishers may repeat a permit (a file linked twice, or a 変更 row re-listed), so 許可番号 is deduplicated. */
+/** Newest `limit` 許可 rows of one source; 届出 rows are not an opening signal and are skipped. */
 const fetchSource = async (source: Source, limit: number): Promise<Array<DataItem & { _extra: PermitExtra }>> => {
-    try {
-        const rows = await FETCHERS[source]();
-        const items = rows
-            .filter((r) => (r['許可番号'] ?? '') !== '' && (r['許可あるいは届出'] ?? '許可') === '許可')
-            .map((raw) => toItem(source, raw))
-            .filter((it) => it._extra.permit_date !== null)
-            .toSorted((a, b) => b._extra.permit_date!.localeCompare(a._extra.permit_date!));
-        return uniqueByPermitNo(items).slice(0, limit);
-    } catch (error) {
-        // One failing publisher must not take the whole feed down.
-        logger.warn(`lg/tokyo/food-permit: ${source} failed: ${String(error)}`);
-        return [];
-    }
+    const rows = await FETCHERS[source]();
+    const items = rows
+        .filter((r) => (r['許可番号'] ?? '') !== '' && (r['許可あるいは届出'] ?? '許可') === '許可')
+        .map((raw) => toItem(source, raw))
+        .filter((it) => it._extra.permit_date !== null)
+        .toSorted((a, b) => b._extra.permit_date!.localeCompare(a._extra.permit_date!));
+    return items.slice(0, limit);
 };
 
 export const handler = async (ctx): Promise<Data> => {
     const ward: string | undefined = ctx.req.param('ward');
-    const sources: Source[] = ward === undefined ? (Object.keys(SOURCES) as Source[]) : Object.hasOwn(SOURCES, ward) ? [ward as Source] : [];
+    const sources: Source[] = ward === undefined ? Object.keys(SOURCES).filter((s) => isSource(s)) : isSource(ward) ? [ward] : [];
     if (sources.length === 0) {
         throw new Error(`Unknown ward "${ward}", expected one of ${Object.keys(SOURCES).join(', ')}`);
     }
     const limit = Math.min(ctx.req.query('limit') ? Number(ctx.req.query('limit')) : DEFAULT_LIMIT, MAX_LIMIT);
 
-    const lists = await Promise.all(sources.map((s) => cache.tryGet(`lg/tokyo/food-permit:${s}:${limit}`, () => fetchSource(s, limit)) as Promise<Array<DataItem & { _extra: PermitExtra }>>));
+    const lists = await Promise.all(sources.map((s) => cache.tryGet(`lg/tokyo/food-permit:${s}:${limit}`, () => fetchSource(s, limit))));
     const items = lists.flat().toSorted((a, b) => (b._extra.permit_date ?? '').localeCompare(a._extra.permit_date ?? ''));
 
     return {
-        title: `東京都 飲食店営業許可 新規${ward ? ` (${SOURCES[ward as Source].label})` : ''}`,
+        title: `東京都 飲食店営業許可 新規${ward !== undefined && isSource(ward) ? ` (${SOURCES[ward].label})` : ''}`,
         link: 'https://catalog.data.metro.tokyo.lg.jp/',
         language: 'ja',
         item: items,

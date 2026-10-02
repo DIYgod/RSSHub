@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Data, DataItem, Language, Route } from '@/types';
+import type { Data, DataItem, Route } from '@/types';
 import logger from '@/utils/logger';
 import { parseDate } from '@/utils/parse-date';
 import parser from '@/utils/rss-parser';
@@ -72,7 +72,7 @@ async function handler(ctx): Promise<Data> {
         link: feed.link || 'https://cryptoslate.com',
         description: feed.description || 'Latest news from CryptoSlate',
         item: filteredItems,
-        language: (feed.language || 'en') as Language,
+        language: feed.language || 'en',
         image: feed.image?.url,
     };
 }

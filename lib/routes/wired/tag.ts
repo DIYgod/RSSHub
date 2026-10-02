@@ -28,13 +28,20 @@ async function handler(ctx) {
 
     const response = await ofetch(link);
     const $ = load(response);
-    const preloadedState = JSON.parse(
+    const preloadedState: {
+        transformed: {
+            tag: { items: Item[] };
+            'head.title': string;
+            'head.description': string;
+            logo: { sources: { sm: { url: string } } };
+        };
+    } = JSON.parse(
         $('script:contains("window.__PRELOADED_STATE__")')
             .text()
             .match(/window\.__PRELOADED_STATE__ = (.*);/)?.[1] ?? '{}'
     );
 
-    const list = (preloadedState.transformed.tag.items as Item[]).map((item) => ({
+    const list = preloadedState.transformed.tag.items.map((item) => ({
         title: item.dangerousHed,
         description: item.dangerousDek,
         link: `${baseUrl}${item.url}`,

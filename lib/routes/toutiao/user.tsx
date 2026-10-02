@@ -10,7 +10,7 @@ import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
 import { generate_a_bogus } from './a-bogus';
-import type { Feed, UserInfoCell32, UserInfoCell49 } from './types';
+import type { Feed } from './types';
 
 const renderVideo = (url, poster) =>
     renderToString(
@@ -70,7 +70,7 @@ async function handler(ctx) {
             case 0:
             case 49: {
                 const video = item.video.play_addr_list.toSorted((a, b) => b.bitrate - a.bitrate)[0];
-                const user = item.user as UserInfoCell49 | undefined;
+                const user = item.user && 'info' in item.user ? item.user : undefined;
                 return {
                     title: item.title,
                     description: renderVideo(item.video.play_addr_list.toSorted((a, b) => b.bitrate - a.bitrate)[0].play_url_list[0], item.video.origin_cover.url_list[0]),
@@ -90,7 +90,7 @@ async function handler(ctx) {
             // text w/o title
             case 32: {
                 const enclosure = item.large_image_list?.pop();
-                const user = item.user as UserInfoCell32 | undefined;
+                const user = item.user && 'name' in item.user ? item.user : undefined;
                 return {
                     title: item.content?.split('\n', 1)[0],
                     description: item.rich_content,
