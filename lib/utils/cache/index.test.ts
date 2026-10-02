@@ -93,13 +93,13 @@ describe('cache', () => {
 
     it('redis with error', async () => {
         process.env.CACHE_TYPE = 'redis';
-        process.env.REDIS_URL = 'redis://wrongpath:6379';
+        vi.stubEnv('REDIS_URL', 'redis://wrongpath:6379');
         const cache = (await import('@/utils/cache')).default;
         await cache.set('mock2', '2');
         expect(await cache.get('mock2')).toBe(null);
         expect(await cache.has('mock2')).toBe(false);
         cache.clients.redisClient?.disconnect();
-        delete process.env.REDIS_URL;
+        vi.unstubAllEnvs();
     });
 
     it('no cache', async () => {
