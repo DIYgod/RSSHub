@@ -13,15 +13,7 @@ import timezone from '@/utils/timezone';
  * @param {Array} arr - The array to be converted.
  * @returns {Object} - The converted dictionary object.
  */
-const arrayToDictionary = (arr) =>
-    Object.fromEntries(
-        arr.map(({ id, ...rest }) => [
-            id,
-            {
-                ...rest,
-            },
-        ])
-    );
+const arrayToDictionary = (arr) => Object.fromEntries(arr.map(({ id, ...rest }) => [id, rest]));
 
 export const route: Route = {
     path: '/:proma?',

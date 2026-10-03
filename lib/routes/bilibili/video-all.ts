@@ -40,7 +40,7 @@ async function handler(ctx) {
         },
     });
 
-    const vlist = [...response.data.data.list.vlist];
+    const vlist = response.data.data.list.vlist;
     const pageTotal = Math.ceil(response.data.data.page.count / response.data.data.page.ps);
 
     const getPage = async (pageId) => {

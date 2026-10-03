@@ -33,7 +33,7 @@ export const route: Route = {
 async function handler(ctx) {
     const term = ctx.req.param('term');
     const searchParams = term ? { pageId: 977_080_509_047_743, term } : { pageId: 977_080_509_047_743 };
-    const data = await ofetch(`${baseUrl}/node_api/v1/articles/posts`, { query: { ...searchParams } });
+    const data = await ofetch(`${baseUrl}/node_api/v1/articles/posts`, { query: searchParams });
 
     const list = data.data.posts.map((post) => ({
         title: post.title,

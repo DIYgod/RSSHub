@@ -79,7 +79,7 @@ const parseArticle = (item) =>
         if (group) {
             const { page, link } = group;
             if (Object.hasOwn(apiEndpoints, page)) {
-                const api = { ...apiEndpoints[page] };
+                const api = apiEndpoints[page];
                 let res;
 
                 try {

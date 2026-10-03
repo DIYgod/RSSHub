@@ -119,15 +119,7 @@ const tweetDetail = (userId, params) =>
         ['threaded_conversation_with_injections_v2']
     );
 
-const listTweets = (listId, params = {}) =>
-    paginationTweets(
-        gqlMap.ListTimeline,
-        listId,
-        {
-            ...params,
-        },
-        ['list', 'timeline_response', 'timeline']
-    );
+const listTweets = (listId, params = {}) => paginationTweets(gqlMap.ListTimeline, listId, params, ['list', 'timeline_response', 'timeline']);
 
 function gatherLegacyFromData(entries, filterNested?, userId?) {
     const tweets: any[] = [];

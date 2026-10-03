@@ -40,9 +40,7 @@ const getUserInfoFromUsername = (username) =>
 const getUserInfoFromId = (id) =>
     cache.tryGet(`500px:user:indexInfo:${id}`, async () => {
         const data = await ofetch(`${baseUrl}/community/v2/user/indexInfo`, {
-            headers: {
-                ...headers,
-            },
+            headers,
             query: {
                 queriedUserId: id,
             },
@@ -55,9 +53,7 @@ const getUserWorks = (id, limit) =>
         `500px:user:profile:${id}`,
         async () => {
             const data = await ofetch(`${baseUrl}/community/v2/user/profile`, {
-                headers: {
-                    ...headers,
-                },
+                headers,
                 query: {
                     resourceType: '0,2,4',
                     imgsize: 'p1,p2,p3,p4',
@@ -79,9 +75,7 @@ const getTribeDetail = (id) =>
         `500px:tribeDetail:${id}`,
         async () => {
             const data = await ofetch(`${baseUrl}/community/tribe/tribeDetail`, {
-                headers: {
-                    ...headers,
-                },
+                headers,
                 query: {
                     tribeId: id,
                 },
@@ -97,9 +91,7 @@ const getTribeSets = (id, limit) =>
         `500px:tribeSets:${id}`,
         async () => {
             const data = await ofetch(`${baseUrl}/community/tribe/getTribeSetsV2`, {
-                headers: {
-                    ...headers,
-                },
+                headers,
                 query: {
                     tribeId: id,
                     privacy: 1,
