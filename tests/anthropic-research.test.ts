@@ -1,12 +1,12 @@
 import { Hono } from 'hono';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
-import { route } from '@/routes/anthropic/research';
+import { route } from '../lib/routes/anthropic/research';
 
 const { fetchPage } = vi.hoisted(() => ({ fetchPage: vi.fn() }));
 
-vi.mock('@/utils/ofetch', () => ({ default: fetchPage }));
-vi.mock('@/utils/cache', () => ({
+vi.mock('../lib/utils/ofetch', () => ({ default: fetchPage }));
+vi.mock('../lib/utils/cache', () => ({
     default: { tryGet: (_key: string, callback: () => Promise<unknown>) => callback() },
 }));
 
