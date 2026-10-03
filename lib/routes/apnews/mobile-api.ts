@@ -1,11 +1,11 @@
 import pMap from 'p-map';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import { ViewType } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
-import { fetchArticle } from './utils';
+import { fetchArticle, removeDuplicateByKey } from './utils';
 
 export const route: Route = {
     path: '/mobile/:path{.+}?',
@@ -49,43 +49,49 @@ async function handler(ctx) {
 
     const screen = res.data.Screen;
 
-    const list = [...screen.main.filter((e) => e.__typename === 'ColumnContainer').flatMap((_) => _.columns), ...screen.main.filter((e) => e.__typename !== 'ColumnContainer')]
-        .filter((e) => e.__typename !== 'GoogleDfPAdModule')
-        .flatMap((e) => {
-            switch (e.__typename) {
-                case 'PageListModule':
-                    return e.items;
-                case 'VideoPlaylistModule':
-                    return e.playlist;
-                default:
-                    return;
-            }
-        })
-        .filter(Boolean)
-        .map((e) => {
-            if (e.__typename === 'PagePromo') {
-                return {
-                    title: e.title,
-                    link: e.url,
-                    pubDate: parseDate(e.publishDateStamp),
-                    category: e.category,
-                    description: e.description,
-                    guid: e.id,
-                };
-            }
-            if (e.__typename === 'VideoPlaylistItem') {
-                return {
-                    title: e.title,
-                    link: e.url,
-                    description: e.description,
-                    guid: e.contentId,
-                };
-            }
-            return;
-        })
-        .filter(Boolean)
+    const deduplicatedItems = removeDuplicateByKey(
+        [...screen.main.filter((e) => e.__typename === 'ColumnContainer').flatMap((_) => _.columns), ...screen.main.filter((e) => e.__typename !== 'ColumnContainer')]
+            .filter((e) => e.__typename !== 'GoogleDfPAdModule')
+            .flatMap((e) => {
+                switch (e.__typename) {
+                    case 'PageListModule':
+                        return e.items;
+                    case 'VideoPlaylistModule':
+                        return e.playlist;
+                    default:
+                        return;
+                }
+            })
+            .filter(Boolean)
+            .map((e) => {
+                if (e.__typename === 'PagePromo') {
+                    return {
+                        title: e.title,
+                        link: e.url,
+                        pubDate: parseDate(e.publishDateStamp),
+                        category: e.category,
+                        description: e.description,
+                        guid: e.id,
+                    };
+                }
+                if (e.__typename === 'VideoPlaylistItem') {
+                    return {
+                        title: e.title,
+                        link: e.url,
+                        description: e.description,
+                        guid: e.contentId,
+                    };
+                }
+                return;
+            })
+            .filter(Boolean),
+        'link'
+    ) as DataItem[];
+
+    const list = deduplicatedItems
         .toSorted((a, b) => Number(b!.pubDate) - Number(a!.pubDate))
-        .slice(0, ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 20);
+        .slice(0, ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 20)
+        .map((e) => ({ ...e, guid: e.link })); // Drop the original `guid` to avoid duplication
 
     const items = ctx.req.query('fulltext') === 'true' ? await pMap(list, (item) => fetchArticle(item), { concurrency: 10 }) : list;
 
