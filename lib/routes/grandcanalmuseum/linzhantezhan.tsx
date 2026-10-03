@@ -5,43 +5,9 @@ import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { parseDateRange } from '@/utils/parse-date-range';
 
 import { namespace } from './namespace';
-
-const formatExhibitionDate = (dateStr: string): string | undefined => {
-    const normalized = dateStr.replaceAll(/[年月.]/g, '-').replace('日', '');
-    const [y, m, d] = normalized.split('-', 3);
-    if (!y || !m || !d) {
-        return undefined;
-    }
-    return `${y}-${m.padStart(2, '0')}-${d.padStart(2, '0')}`;
-};
-
-// parse date formate for 2026年1月1日—2026年4月6日, 2025.09.30-2026.01.04 or 2025年6月17日-8月17日
-const parseExhibitionDuration = (fullDuration: string) => {
-    if (!fullDuration) {
-        return { startDate: undefined, endDate: undefined };
-    }
-
-    const parts = fullDuration.split(/[—-]/);
-    if (parts.length < 2) {
-        return { startDate: undefined, endDate: undefined };
-    }
-
-    const startRaw = parts[0].trim();
-    let endRaw = parts[1].trim();
-
-    const startDate = formatExhibitionDate(startRaw);
-
-    if (startDate && !/\d{4}/.test(endRaw)) {
-        const startYear = startDate.slice(0, 4);
-        endRaw = `${startYear}年${endRaw}`;
-    }
-
-    const endDate = formatExhibitionDate(endRaw);
-
-    return { startDate, endDate };
-};
 
 export const route: Route = {
     path: '/linzhantezhan',
@@ -94,7 +60,7 @@ export const route: Route = {
                         }
                     });
 
-                    const { startDate, endDate } = parseExhibitionDuration(fullDuration);
+                    const { startDate, endDate } = parseDateRange(fullDuration);
                     const pubDate = startDate ? parseDate(startDate) : undefined;
 
                     const description = renderToString(

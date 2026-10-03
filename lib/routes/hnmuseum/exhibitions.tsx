@@ -6,6 +6,7 @@ import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { parseDateRange } from '@/utils/parse-date-range';
 
 import { namespace } from './namespace';
 
@@ -22,32 +23,6 @@ type ExhibitionConfig = {
     selector: string;
     type: 'permanent' | 'special' | 'temporary';
     extra: ($item: Cheerio<AnyNode>) => Partial<Pick<ExhibitionItem, 'location' | 'fullDuration'>>;
-};
-
-// convert date string like "YYYY年M月D日" to "YYYY-MM-DD"
-const formatStr = (dateStr: string | undefined): string | undefined => {
-    if (!dateStr) {
-        return undefined;
-    }
-
-    const match = dateStr.match(/(\d{4})年\s*(\d{1,2})月\s*(\d{1,2})日/);
-
-    if (match) {
-        const year = match[1];
-        const month = match[2].padStart(2, '0');
-        const day = match[3].padStart(2, '0');
-        return `${year}-${month}-${day}`;
-    }
-    return undefined;
-};
-
-const extractDates = (durationStr?: string) => {
-    if (!durationStr || durationStr.includes('永久')) {
-        return { startDate: undefined, endDate: undefined };
-    }
-    const parts = durationStr.split(/—/);
-
-    return { startDate: formatStr(parts[0]), endDate: formatStr(parts[1]) };
 };
 
 const renderDescription = (imgUrl: string, location?: string, startDate?: string, endDate?: string, fullDuration?: string) =>
@@ -156,7 +131,7 @@ export const route: Route = {
 
                 return cache.tryGet(cacheKey, async (): Promise<DataItem> => {
                     if (item.exhibitionType === 'permanent' || item.exhibitionType === 'special') {
-                        const { startDate, endDate } = extractDates(item.fullDuration);
+                        const { startDate, endDate } = parseDateRange(item.fullDuration);
                         return {
                             title: item.title,
                             link: item.itemLink,
@@ -181,7 +156,7 @@ export const route: Route = {
                         const fullDuration = dateMatch?.[1];
                         const locMatch = jsContent.match(/"(湖南省博物馆[^"]+厅)"/);
                         const location = locMatch?.[1];
-                        const { startDate, endDate } = extractDates(fullDuration);
+                        const { startDate, endDate } = parseDateRange(fullDuration);
 
                         return {
                             title,
