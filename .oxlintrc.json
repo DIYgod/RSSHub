@@ -3,7 +3,7 @@
     "categories": {
         "correctness": "off"
     },
-    "ignorePatterns": ["**/coverage", "**/.vscode", "**/docker-compose.yml", "!.github", "assets/build", "dist", "dist-lib", "dist-worker"],
+    "ignorePatterns": ["**/coverage", "**/.vscode", "**/docker-compose.yml", "!.github", "assets/build", "eslint-plugins/anti-slop/**", "dist", "dist-lib", "dist-worker"],
     "env": {
         "builtin": true,
         "browser": true,
@@ -18,7 +18,8 @@
         "@stylistic/eslint-plugin",
         "eslint-plugin-simple-import-sort",
         { "name": "eslint-js", "specifier": "oxlint-plugin-eslint" },
-        "./eslint-plugins/nsfw-flag.js"
+        "./eslint-plugins/nsfw-flag.js",
+        { "name": "anti-slop", "specifier": "./eslint-plugins/anti-slop/index.ts" }
     ],
     "rules": {
         // #region --- ESLint js/recommended possible problems ---
@@ -782,6 +783,7 @@
         "oxc/erasing-op": "error",
         "oxc/misrefactored-assign-op": "error",
         "oxc/missing-throw": "error",
+        "oxc/no-accumulating-spread": "error",
         "oxc/number-arg-out-of-range": "error",
         "oxc/only-used-in-recursion": "error",
         "oxc/uninvoked-array-callback": "error",
