@@ -73,9 +73,7 @@ async function handler(ctx) {
                 return res;
             })
         );
-        for (const result of results) {
-            item = [...item, ...result];
-        }
+        item = results.flat();
     } else {
         item = await getPage(OutId, OutName);
     }

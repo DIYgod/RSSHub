@@ -46,7 +46,7 @@ async function handler(ctx) {
 
     let pos = 1;
     let hasMore: boolean;
-    let epgs: any[] = [];
+    const epgs: any[] = [];
     do {
         const {
             data: { data },
@@ -60,7 +60,7 @@ async function handler(ctx) {
                 startOrder: pos,
             },
         });
-        epgs = [...epgs, ...data.epg];
+        epgs.push(...data.epg);
         pos = data.pos;
         hasMore = data.hasMore;
     } while (hasMore);

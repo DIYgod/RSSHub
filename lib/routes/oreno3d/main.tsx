@@ -181,10 +181,7 @@ async function handler(ctx) {
         })
     );
     // 拼接多页面item
-    let realItem: any[] = [];
-    for (const data of tempData) {
-        realItem = [...realItem, ...data.items];
-    }
+    const realItem: any[] = tempData.flatMap((data) => data.items);
     // 构造最终data
     const data = {
         title: tempData[0].title,
