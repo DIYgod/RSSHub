@@ -73,17 +73,17 @@ function generateJavas(arch: string, javaType: string, data: RuntimeInManifest[]
 }
 
 function generateArch(arch: string, data: any, javaType: string): DataItem[] {
-    let items: DataItem[] = [];
+    const items: DataItem[] = [];
 
     if (javaType === 'all') {
         for (const k in data) {
             if (!Object.hasOwn(data, k)) {
                 continue;
             }
-            items = [...items, ...generateJavas(arch, k, data[k])];
+            items.push(...generateJavas(arch, k, data[k]));
         }
     } else {
-        items = [...items, ...generateJavas(arch, javaType, data[javaType])];
+        items.push(...generateJavas(arch, javaType, data[javaType]));
     }
     return items;
 }
@@ -102,17 +102,17 @@ async function handler(ctx: Context) {
     const arch = ctx.req.param('arch') ?? 'all';
     const javaType = ctx.req.param('javaType') ?? 'all';
 
-    let items: DataItem[] = [];
+    const items: DataItem[] = [];
 
     if (arch === 'all') {
         for (const k in data) {
             if (!Object.hasOwn(data, k)) {
                 continue;
             }
-            items = [...items, ...generateArch(k, data[k], javaType)];
+            items.push(...generateArch(k, data[k], javaType));
         }
     } else {
-        items = [...items, ...generateArch(arch, data[arch], javaType)];
+        items.push(...generateArch(arch, data[arch], javaType));
     }
 
     const title = 'Minecraft Java运行时';

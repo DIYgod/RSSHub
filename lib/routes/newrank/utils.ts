@@ -9,7 +9,6 @@ const max_query_count = 30;
 
 const random_nonce = (count) => {
     const arr = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'];
-    const shuffled = [...arr];
     let i = arr.length,
         temp,
         index,
@@ -17,7 +16,7 @@ const random_nonce = (count) => {
     const min = i - count;
     while (i-- > min) {
         index = Math.floor((i + 1) * Math.random());
-        temp = shuffled[index];
+        temp = arr[index];
         str += temp;
     }
     return str;

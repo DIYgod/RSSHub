@@ -59,8 +59,7 @@ async function handler(ctx) {
     result.item = topicDataHanding(data, ctx);
     if (id === '553870e8e4b0cafb0a1bef68' || id === '55963702e4b0d84d2c30ce6f') {
         result.item = await Promise.all(
-            result.item.map(async (one) => {
-                const item = { ...one };
+            result.item.map(async (item) => {
                 const regResult = /https:\/\/www\.okjike\.com\/medium\/[\dA-Za-z]*/.exec(item.description);
                 if (regResult) {
                     const newsUrl = regResult[0];
@@ -79,7 +78,7 @@ async function handler(ctx) {
                     });
                 }
                 item.description = item.description.replaceAll(urlRegex, (url) => `<a href="${url}">${url}</a>`);
-                item.title = `${data.topic.content} ${dayjs(one.pubDate).format('MM月DD日')}`;
+                item.title = `${data.topic.content} ${dayjs(item.pubDate).format('MM月DD日')}`;
                 return item;
             })
         );

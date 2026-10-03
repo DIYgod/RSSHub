@@ -103,7 +103,7 @@ const renderShopItemDescription = (detail: ShopItemDetail) =>
                     <td>カテゴリー</td>
                     <td>
                         {' '}
-                        {[...detail.productDetail.categories]
+                        {detail.productDetail.categories
                             .toReversed()
                             .map((item) => item.displayName)
                             .join(' > ')}{' '}

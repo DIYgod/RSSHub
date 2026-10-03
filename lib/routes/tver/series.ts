@@ -55,9 +55,7 @@ async function handler(ctx: Context): Promise<Data> {
 
     const seriesRequest = {
         method: 'GET',
-        headers: {
-            ...commonHeaders,
-        },
+        headers: commonHeaders,
         referer: 'https://tver.jp/',
         credentials: 'omit',
         mode: 'cors',

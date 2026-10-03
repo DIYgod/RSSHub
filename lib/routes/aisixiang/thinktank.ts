@@ -48,7 +48,7 @@ async function handler(ctx) {
     }
 
     for (const l of targetList) {
-        items = [...items, ...$(l).parent().find('ul li a').toArray()];
+        items.push(...$(l).parent().find('ul li a').toArray());
     }
 
     items = items.slice(0, limit).map((item) => {

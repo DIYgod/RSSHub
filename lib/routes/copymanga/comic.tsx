@@ -68,7 +68,7 @@ async function handler(ctx) {
                 }
                 iReqOffSet += iReqLimit;
 
-                chapters = [...chapters, ...results.list];
+                chapters.push(...results.list);
             } while (bHasNextPage);
 
             chapters = chapters

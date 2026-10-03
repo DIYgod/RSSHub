@@ -84,10 +84,7 @@ async function handler(ctx) {
             return items;
         })
     );
-    let result: any[] = [];
-    for (const item of items) {
-        result = [...result, ...item];
-    }
+    let result: any[] = items.flat();
     result = result.toSorted((a, b) => new Date(b.pubDate).getTime() - new Date(a.pubDate).getTime());
 
     return {

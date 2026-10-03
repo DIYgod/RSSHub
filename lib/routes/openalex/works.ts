@@ -100,9 +100,7 @@ export const handler = async (ctx) => {
             seenTitleKeys.add(titleKey);
             return true;
         })
-        .map(({ normalizedTitle: _normalizedTitle, ...item }) => ({
-            ...item,
-        }));
+        .map(({ normalizedTitle: _normalizedTitle, ...item }) => item);
 
     // Get journal and filter type names for title
     const journalIdArray = journals.split('|');

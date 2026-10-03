@@ -26,14 +26,11 @@ const icon = new URL('foresight.ico', rootUrl).href;
 const image = new URL('vertical_logo.png', imgRootUrl).href;
 
 const processItems = async (apiUrl, limit, ...parameters) => {
-    let searchParams = {
+    const searchParams = {
         size: limit,
     };
     for (const param of parameters) {
-        searchParams = {
-            ...searchParams,
-            ...param,
-        };
+        Object.assign(searchParams, param);
     }
 
     const info = {

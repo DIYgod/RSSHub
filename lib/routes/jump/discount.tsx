@@ -132,11 +132,11 @@ const getSinglePageDiscountItem = async (countries, offset, platform, termsId) =
 
 // 防止触发反爬
 const getAllPageDiscountItem = async (countries, platform, termsId, totalNum) => {
-    let allDiscountItem: any[] = [];
+    const allDiscountItem: any[] = [];
     for (let idx = 0; idx <= Math.round(totalNum / 10); idx++) {
         // eslint-disable-next-line no-await-in-loop
         const itemList = await getSinglePageDiscountItem(countries, idx * 10, platform, termsId);
-        allDiscountItem = [...allDiscountItem, ...itemList];
+        allDiscountItem.push(...itemList);
     }
     return allDiscountItem;
 };

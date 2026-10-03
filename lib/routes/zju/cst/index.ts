@@ -68,9 +68,7 @@ async function handler(ctx) {
     if (type === 0) {
         const tasks = Array.from(map.values(), (value) => getPage(value.id));
         const results = await Promise.all(tasks);
-        for (const result of results) {
-            items = [...items, ...result];
-        }
+        items = results.flat();
     } else {
         items = await getPage(map.get(type)!.id);
     }
