@@ -1,76 +1,74 @@
-export interface DataResponse<Data> {
+interface DataResponse<Data> {
     data: Data;
 }
 
-export interface CrowdfundingData {
-    list: CrowdfundingList[];
-}
+// Crowdfunding
 
-interface CrowdfundingList {
-    items: CrowdfundingItem[];
-}
-
-export interface CrowdfundingItem {
+export interface CrowdfundingListItem {
     img_url: string;
     product_market_price: string;
     product_name: string;
     project_id: number;
 }
 
-export interface CrowdfundingDetailData {
-    crowd_funding_info: CrowdfundingDetailInfo;
-}
+export type CrowdfundingListResponse = DataResponse<{
+    list: Array<{
+        items: CrowdfundingListItem[];
+    }>;
+}>;
 
-export interface CrowdfundingDetailInfo {
+export interface CrowdfundingDetailItem {
     big_image: string;
     end_time: number;
     price: string;
     project_desc: string;
     send_info: string;
     start_time: number;
-    support_list: CrowdfundingDetailSupportList[];
+    support_list: Array<{
+        goods_list: Array<{
+            goods_image: string;
+        }>;
+        name: string;
+        price: string;
+        support_desc: string;
+    }>;
 }
 
-interface CrowdfundingDetailSupportList {
-    goods_list: CrowdfundingGoods[];
-    name: string;
-    price: string;
-    support_desc: string;
-}
+export type CrowdfundingDetailResponse = DataResponse<{
+    crowd_funding_info: CrowdfundingDetailItem;
+}>;
 
-interface CrowdfundingGoods {
-    goods_image: string;
-}
+// NewProduct
 
-export interface NewProductListData {
-    date_list: NewProductDateGroup[];
-    history_date_list: NewProductDateGroup[];
-    new_list: NewProductItem[];
-}
-
-interface NewProductDateGroup {
-    product_list: NewProductItem[];
-}
-
-export interface NewProductItem {
+export interface NewProductListItem {
     img: string;
     product_id: number;
     product_name: string;
     start_time: number;
 }
 
-export interface NewProductDetailData {
+export type NewProductListResponse = DataResponse<{
+    date_list: Array<{
+        product_list: NewProductListItem[];
+    }>;
+    history_date_list: Array<{
+        product_list: NewProductListItem[];
+    }>;
+    new_list: NewProductListItem[];
+}>;
+
+export interface NewProductDetailItem {
     goodsInfo: {
         goodsList: NewProductGoods[];
     };
-    product: NewProductDetail;
-    relationBatchedInfo?: {
-        relationBatchedList: NewProductRelationBatched[];
+    product: {
+        sellPointList: string[];
     };
-}
-
-interface NewProductDetail {
-    sellPointList: string[];
+    relationBatchedInfo?: {
+        relationBatchedList: Array<{
+            goodsInfo: NewProductGoods[];
+        }>;
+    };
 }
 
 interface NewProductGoods {
@@ -80,6 +78,4 @@ interface NewProductGoods {
     price: string;
 }
 
-interface NewProductRelationBatched {
-    goodsInfo: NewProductGoods[];
-}
+export type NewProductDetailResponse = DataResponse<NewProductDetailItem>;
