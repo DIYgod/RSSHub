@@ -72,7 +72,7 @@ export type DataItem = {
         size_in_bytes?: number;
         duration_in_seconds?: number;
     }>;
-
+    // oxlint-disable-next-line anti-slop/no-unsafe-dictionary-type
     _extra?: Record<string, any> & {
         links?: Array<{
             url: string;
