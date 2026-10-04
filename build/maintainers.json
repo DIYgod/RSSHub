@@ -4528,6 +4528,9 @@
   "/f95zone/thread/:thread": [
     "wsmbsbbz"
   ],
+  "/facebook/page/:id": [
+    "TonyRL"
+  ],
   "/famitsu/category/:category?": [
     "TonyRL"
   ],

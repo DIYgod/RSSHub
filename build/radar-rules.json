@@ -21495,6 +21495,19 @@
       }
     ]
   },
+  "facebook.com": {
+    "_name": "Facebook",
+    "www": [
+      {
+        "title": "Page",
+        "docs": "https://docs.rsshub.app/routes/social-media",
+        "source": [
+          "/:id"
+        ],
+        "target": "/facebook/page/:id"
+      }
+    ]
+  },
   "famitsu.com": {
     "_name": "ファミ通",
     "www": [

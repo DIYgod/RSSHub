@@ -61820,6 +61820,48 @@ export default {
     "url": "f95zone.to",
     "description": "F95zone is a community for adult games and animations."
   },
+  "facebook": {
+    "routes": {
+      "/page/:id": {
+        "path": "/page/:id",
+        "categories": [
+          "social-media"
+        ],
+        "example": "/facebook/page/NASA",
+        "parameters": {
+          "id": "Page ID"
+        },
+        "features": {
+          "requireConfig": [
+            {
+              "name": "FACEBOOK_COOKIE",
+              "optional": true,
+              "description": "Facebook cookie, only `c_user` and `xs` are required."
+            }
+          ],
+          "antiCrawler": true
+        },
+        "radar": [
+          {
+            "source": [
+              "www.facebook.com/:id"
+            ]
+          }
+        ],
+        "name": "Page",
+        "maintainers": [
+          "TonyRL"
+        ],
+        "url": "www.facebook.com",
+        "location": "page.ts",
+        "module": () => import('@/routes/facebook/page.ts')
+      }
+    },
+    "apiRoutes": {},
+    "name": "Facebook",
+    "url": "www.facebook.com",
+    "lang": "en"
+  },
   "famitsu": {
     "routes": {
       "/category/:category?": {
