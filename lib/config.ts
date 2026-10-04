@@ -117,6 +117,7 @@ type ConfigEnvKeys =
     | `EMAIL_CONFIG_${string}`
     | 'ETHERSCAN_API_KEY'
     | 'F95ZONE_COOKIE'
+    | 'FACEBOOK_COOKIE'
     | 'FANBOX_SESSION_ID'
     | 'FANFOU_CONSUMER_KEY'
     | 'FANFOU_CONSUMER_SECRET'
@@ -441,6 +442,9 @@ export type Config = {
         apiKey?: string;
     };
     f95zone: {
+        cookie?: string;
+    };
+    facebook: {
         cookie?: string;
     };
     fanbox: {
@@ -977,6 +981,9 @@ const calculateValue = () => {
         },
         f95zone: {
             cookie: envs.F95ZONE_COOKIE,
+        },
+        facebook: {
+            cookie: envs.FACEBOOK_COOKIE,
         },
         fanbox: {
             session: envs.FANBOX_SESSION_ID,
