@@ -124362,14 +124362,14 @@ export default {
     "url": "xmanhua.com",
     "lang": "zh-CN"
   },
-  "xmlcom": {
+  "xml": {
     "routes": {
       "/": {
         "path": "/",
         "categories": [
           "programming"
         ],
-        "example": "/xmlcom",
+        "example": "/xml",
         "name": "Articles and News",
         "maintainers": [
           "AboutRSS"
@@ -124383,7 +124383,7 @@ export default {
         ],
         "description": "The official Atom feed (/feed/all/) truncates every entry to a 128 character summary and carries no category tags. This route fetches the full body from each detail page and extracts the tags of that page into category.",
         "location": "index.ts",
-        "module": () => import('@/routes/xmlcom/index.ts')
+        "module": () => import('@/routes/xml/index.ts')
       }
     },
     "apiRoutes": {},

@@ -20266,7 +20266,7 @@
     www:[ { title:"Articles and News",
         docs:"https://docs.rsshub.app/routes/programming",
         source:[ "/" ],
-        target:"/xmlcom/" } ] },
+        target:"/xml/" } ] },
   "xmnn.cn":{ _name:"厦门网",
     epaper:[ { title:"数字媒体",
         docs:"https://docs.rsshub.app/routes/traditional-media",
