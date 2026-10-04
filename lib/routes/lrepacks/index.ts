@@ -56,7 +56,7 @@ export const handler = async (ctx) => {
 
                 const $$ = load(detailResponse);
 
-                const data = JSON.parse($$('script[type="application/ld+json"]').first().text())['@graph']?.[0] ?? undefined;
+                const data = JSON.parse($$('script[type="application/ld+json"]').text())['@graph']?.[0];
 
                 $$('div.entry-content a.highslide[href]').each((_, el) => {
                     const $el = $$(el);
@@ -84,7 +84,7 @@ export const handler = async (ctx) => {
                 item.title = title;
                 item.description = description;
                 item.pubDate = data ? parseDate(data.datePublished) : undefined;
-                item.author = data?.author?.name ?? undefined;
+                item.author = data?.author?.name;
                 item.content = {
                     html: description,
                     text: $$('div.entry-content').text(),

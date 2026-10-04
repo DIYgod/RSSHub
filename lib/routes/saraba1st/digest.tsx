@@ -113,7 +113,6 @@ async function fetchContent(url) {
         img.removeAttr('zoomfile');
         img.removeAttr('file');
         img.removeAttr('onmouseover');
-        img.removeAttr('onclick');
     });
 
     return stubS.html();

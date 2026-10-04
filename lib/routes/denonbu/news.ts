@@ -194,11 +194,8 @@ async function handler(ctx: Context): Promise<Data> {
             pubDate: timezone(parseDate(post_date), 9),
             category: category.map((x) => x.name),
             link: link ?? undefined,
+            image: media?.[0],
         };
-
-        if (media?.[0]) {
-            result.image = media[0];
-        }
 
         return result;
     });

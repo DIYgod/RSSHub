@@ -36,7 +36,7 @@ export const route: Route = {
         const items = await Promise.all(
             list.map((item) => {
                 const $item = $(item);
-                const $link = $item.find('a').first();
+                const $link = $item.find('a');
                 const link = new URL($link.attr('href') || '', url).href;
 
                 const pubDate = parseDate($link.find('em').text());

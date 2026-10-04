@@ -21,6 +21,7 @@ async function handler() {
     const $ = load(response);
 
     const list = $('.list .tit a')
+        .slice(0, 15)
         .toArray()
         .map((item) => {
             const a = $(item);
@@ -29,10 +30,8 @@ async function handler() {
                 link: a.attr('href')!,
             };
         });
-    const uniqueList = new Map(list.map((item) => [item.link, item])).values().take(15).toArray();
-
     const items = await Promise.all(
-        uniqueList.map((item) =>
+        list.map((item) =>
             cache.tryGet(item.link, async () => {
                 const res = await ofetch(item.link);
                 const content = load(res);

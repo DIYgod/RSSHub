@@ -41,7 +41,7 @@ async function handler() {
                 const content = load(detailResponse);
 
                 item.author = content('.news-author-name').text();
-                item.description = content('#cmsMainContent').html() ?? undefined;
+                item.description = content('#cmsMainContent').html();
 
                 return item;
             })

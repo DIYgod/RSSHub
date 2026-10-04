@@ -87,13 +87,11 @@ export const handler = async (ctx: Context): Promise<Data> => {
                     language,
                 };
 
-                const $enclosureEl: Cheerio<Element> = $$('a[sudyfile-attr]')
-                    .filter((_, el) => {
-                        const $el: Cheerio<Element> = $$(el);
+                const $enclosureEl: Cheerio<Element> = $$('a[sudyfile-attr]').filter((_, el) => {
+                    const $el: Cheerio<Element> = $$(el);
 
-                        return !$el.attr('href')?.endsWith('htm');
-                    })
-                    .first();
+                    return !$el.attr('href')?.endsWith('htm');
+                });
 
                 const enclosureUrl: string | undefined = $enclosureEl.attr('href');
 

@@ -115,7 +115,7 @@ async function handler(ctx) {
                         });
                 } else {
                     // http://rail.ally.net.cn/html/2022/InviteTen_0407/4686.html
-                    description = $('div.content div').first().html() ?? '';
+                    description = $('div.content div').html() ?? '';
                 }
 
                 description = description.replace(/\s*<br ?\/?>\s*$/, ''); // trim <br> at the end

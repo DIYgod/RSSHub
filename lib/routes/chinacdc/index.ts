@@ -89,7 +89,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                         description: $$('div.TRS_Editor').html() || undefined,
                     });
 
-                    const detailDate = $$('span.fb em').text().trim();
+                    const detailDate = $$('span.fb em').text();
                     const pubDate = detailDate ? parseDate(detailDate) : item.pubDate;
 
                     return {

@@ -41,7 +41,7 @@ export const handler = async (ctx) => {
                     ),
                     8
                 ),
-                link: $item.find('a').first().prop('href'),
+                link: $item.find('a').prop('href'),
                 author: $item.find('div.editor').contents().first().text(),
                 image,
                 banner: image,
@@ -73,7 +73,7 @@ export const handler = async (ctx) => {
 
                 const title = $$('h1').text();
                 const description = $$('div#paragraph').html();
-                const image = $$('div#paragraph img').first().prop('src');
+                const image = $$('div#paragraph img').prop('src');
 
                 item.title = title;
                 item.description = description;

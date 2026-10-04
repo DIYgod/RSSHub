@@ -46,7 +46,7 @@ async function handler(ctx) {
         .toArray()
         .map((element) => {
             const $element = $(element);
-            const $link = $element.find('a').first();
+            const $link = $element.find('a');
             const link = new URL($link.attr('href')!, typeDict[type][1]).href;
             const title = $link.find('span').text().trim();
 

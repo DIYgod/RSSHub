@@ -47,7 +47,7 @@ const ProcessItems = async (ctx, currentUrl, title) => {
                 const content = load(detailResponse);
 
                 item.enclosure_type = 'application/x-bittorrent';
-                item.enclosure_url = content('#magnets-content button[data-clipboard-text]').first().attr('data-clipboard-text');
+                item.enclosure_url = content('#magnets-content button[data-clipboard-text]').attr('data-clipboard-text');
 
                 content('icon').remove();
                 content('#modal-review-watched, #modal-comment-warning, #modal-save-list').remove();

@@ -83,7 +83,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                         const $$: CheerioAPI = load(detailResponse);
 
                         const title: string = $$('h1.newstit').text();
-                        const image: string | undefined = $$('div#Content img').first().prop('src');
+                        const image: string | undefined = $$('div#Content img').prop('src');
 
                         const mediaContent: Cheerio<Element> = $$('div#Content p span img');
                         const media: Record<string, Record<string, string>> = {};
@@ -139,7 +139,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                             pubDate: timezone(parseDate($$('div.newstag_l').text().split(/\s/, 1)[0]), 8),
                             content: {
                                 html: description,
-                                text: $$('div#Content').html() ?? '',
+                                text: $$('div#Content').html(),
                             },
                             image,
                             banner: image,

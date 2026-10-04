@@ -47,7 +47,7 @@ async function handler(ctx: Context) {
                 const detailResponse = await ofetch(item.link!);
                 const content = load(detailResponse);
 
-                item.description = content('.field--name-field-news-body').html() ?? undefined;
+                item.description = content('.field--name-field-news-body').html();
                 item.pubDate = parseDate(content('time').attr('datetime')!);
 
                 return item;

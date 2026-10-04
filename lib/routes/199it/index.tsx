@@ -112,7 +112,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
                     $$('ul.related_post').parent().remove();
 
-                    const description: string | undefined = $$('div.entry-content').html() ?? undefined;
+                    const description = $$('div.entry-content').html();
 
                     processedItem = {
                         ...processedItem,

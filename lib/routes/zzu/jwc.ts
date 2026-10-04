@@ -51,7 +51,7 @@ async function handler(ctx) {
             const title = $link.text().trim();
 
             // 获取发布时间
-            const pubDateText = $element.find('span').last().text().trim();
+            const pubDateText = $element.find('span').text().trim();
 
             return {
                 title,

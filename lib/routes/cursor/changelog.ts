@@ -34,7 +34,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
         .map((el): DataItem => {
             const $el: Cheerio<Element> = $(el);
 
-            const timeEl = $el.find('time').first();
+            const timeEl = $el.find('time');
             const pubDateStr = timeEl.attr('datetime') || timeEl.text();
             const versionLabel = timeEl.closest('a').find('.label').text();
 

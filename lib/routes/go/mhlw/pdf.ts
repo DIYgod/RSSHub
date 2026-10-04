@@ -30,12 +30,12 @@ export const handler = async (ctx) => {
                 link,
                 language,
                 enclosure_url: link,
-                enclosure_type: link ? 'application/pdf' : undefined,
+                enclosure_type: 'application/pdf',
                 enclosure_title: title,
             };
         });
 
-    const image = new URL($('div.m-headerLogo img').first().prop('src')!, rootUrl).href;
+    const image = new URL($('div.m-headerLogo img').prop('src')!, rootUrl).href;
 
     return {
         title: $('title').text(),

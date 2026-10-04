@@ -41,7 +41,7 @@ async function handler(): Promise<Data> {
                         link,
                         pubDate: pubDate ? parseDate(pubDate) : undefined,
                         author: $page('.lab-hidden-byline-name').text(),
-                        description: $page('.bodytext').html() ?? undefined,
+                        description: $page('.bodytext').html(),
                         image: $page('meta[property="og:image"]').attr('content'),
                     };
                 });

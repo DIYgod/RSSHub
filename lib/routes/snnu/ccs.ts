@@ -63,7 +63,7 @@ export const route: Route = {
         const items = await Promise.all(
             list.map((item) => {
                 const $item = $(item);
-                const $link = $item.find('a').first();
+                const $link = $item.find('a');
                 const link = new URL($link.attr('href') || '', configTarget.url).href;
 
                 const pubDate = parseDate($item.find('.spani').text());

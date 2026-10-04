@@ -49,13 +49,13 @@ export const route: Route = {
 
         const items: DataItem[] = $('ul.exhibition-new li')
             .toArray()
-            .flatMap((el) => {
+            .map((el) => {
                 const $el = $(el);
 
-                const onclickAttr = $el.find('a[onclick]').first().attr('onclick') ?? '';
+                const onclickAttr = $el.find('a[onclick]').attr('onclick') ?? '';
                 const onclickMatch = onclickAttr.match(/f_visitCount\('(\d+)','([^']+)','([^']+)'\)/);
                 if (!onclickMatch) {
-                    return [];
+                    return;
                 }
 
                 const exhibitionId = onclickMatch[1];
@@ -111,22 +111,21 @@ export const route: Route = {
 
                 const guid = `${baseUrl}/Exhibition/Details/xztj?nid=${exhibitionId}`;
 
-                return [
-                    {
-                        title,
-                        link,
-                        guid,
-                        pubDate,
-                        description,
-                        _extra: {
-                            museumName,
-                            location,
-                            startDate,
-                            endDate,
-                        },
+                return {
+                    title,
+                    link,
+                    guid,
+                    pubDate,
+                    description,
+                    _extra: {
+                        museumName,
+                        location,
+                        startDate,
+                        endDate,
                     },
-                ];
-            });
+                };
+            })
+            .filter((item) => item !== undefined);
 
         return {
             title: `${museumName} - 新展推介`,

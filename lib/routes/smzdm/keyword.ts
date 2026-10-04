@@ -63,7 +63,7 @@ async function handler(ctx) {
         link: `https://search.smzdm.com/?c=home&s=${encodeURIComponent(keyword)}&order=time`,
         item: list
             .toArray()
-            .filter((item) => $(item).find('.feed-block-title a').first().attr('href'))
+            .filter((item) => $(item).find('.feed-block-title a').attr('href'))
             .map((item) => {
                 const $item = $(item);
                 return {

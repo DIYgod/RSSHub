@@ -179,7 +179,7 @@ export const route: Route = {
         const list = (
             await Promise.all(
                 itemsToParse.map(({ $item, contextUrl }) => {
-                    const aTag = $item.find('a').first();
+                    const aTag = $item.find('a');
 
                     const rawLink = aTag.attr('href') || '';
                     const itemLink = buildItemLink(rawLink, contextUrl, baseUrl);
@@ -191,7 +191,7 @@ export const route: Route = {
 
                         // title may not have full display on the page, use the img alt information instead
                         const imgTag = $item.find('img');
-                        let title = $item.find('.hide_title').text() || '';
+                        let title = $item.find('.hide_title').text();
 
                         const rawSrc = imgTag.attr('src')!;
                         const imgUrl = new URL(rawSrc, contextUrl).href;

@@ -33,7 +33,7 @@ async function handler(ctx) {
         },
     });
     const $ = load(res);
-    const script = $('script:contains("DTSGInitialData"):first').text();
+    const script = $('script:contains("DTSGInitialData")').text();
     const serverJs = JSON.parse(script.match(/\(new ServerJS\(\)\)\.handle\((\{[\s\S]*?\})\);/)?.[1] || '{}');
 
     type ServerData = {

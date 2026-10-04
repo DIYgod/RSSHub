@@ -104,7 +104,7 @@ async function handler(ctx): Promise<Data> {
                     // PHPWind: <div class="f14" id="read_tpc"> for the first post
                     const contentEl = $detail('#read_tpc');
                     if (contentEl.length > 0) {
-                        item.description = contentEl.html() ?? '';
+                        item.description = contentEl.html();
 
                         // Get the original post date from tiptop area
                         const dateEl = $detail('.tiptop .fl.gray');

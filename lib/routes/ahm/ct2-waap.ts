@@ -148,8 +148,7 @@ const buildCookies = (c: Challenge, encStr: string) => {
 };
 
 export const fetchPage = async (pageUrl: string): Promise<string> => {
-    const first = await ofetch.raw(pageUrl, {
-        responseType: 'text',
+    const first = await ofetch.raw<string>(pageUrl, {
         ignoreResponseError: true,
     });
     const html = first._data ?? '';
@@ -186,9 +185,8 @@ export const fetchPage = async (pageUrl: string): Promise<string> => {
         .map(([k, v]) => `${k}=${v}`)
         .join('; ');
 
-    const second = await ofetch.raw(pageUrl, {
+    const second = await ofetch.raw<string>(pageUrl, {
         headers: { Cookie: cookie },
-        responseType: 'text',
         ignoreResponseError: true,
     });
     if (second.status !== 200) {

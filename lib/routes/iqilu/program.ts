@@ -56,8 +56,8 @@ async function handler(ctx) {
         .map((item): DataItem => {
             const $item = $(item);
 
-            const a = $item.find('a').first();
-            const image = $item.find('img').first();
+            const a = $item.find('a');
+            const image = $item.find('img');
 
             $item.find('dd').last().remove();
 

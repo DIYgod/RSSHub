@@ -43,7 +43,7 @@ export const getArticle = ({ link, title, description }: DataItem) =>
         const dateMatch = authorDate.match(/\d{2}\.\d{2}\.\d{4}/);
         const pubDate = dateMatch ? timezone(parseDate(dateMatch[0], 'DD.MM.YYYY'), 1) : undefined;
         const authorMatch = authorDate.match(/von\s+(\S.*)$/);
-        const author = authorMatch ? authorMatch[1].trim() : undefined;
+        const author = authorMatch ? authorMatch[1] : undefined;
 
         const $article = $('.br-article');
         $article.find('.br-head, .br-audio, .br-textbox, .br-social-footer, .br-comments, .br-footer, script, style, .br-info, .br-credits, .br-social, .br-author-links').remove();

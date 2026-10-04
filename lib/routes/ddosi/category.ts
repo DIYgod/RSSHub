@@ -56,7 +56,7 @@ async function handler(ctx) {
             title,
             description,
             pubDate: date,
-            link: String(href),
+            link: href,
         };
     });
 

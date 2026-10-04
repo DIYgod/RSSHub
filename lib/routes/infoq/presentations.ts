@@ -63,7 +63,7 @@ export const handler = async (ctx) => {
                 author: $item
                     .find('div.card__authors a')
                     .toArray()
-                    .map((a) => $(a).text().trim())
+                    .map((a) => $(a).text())
                     .join('/'),
                 guid,
                 id: guid,
@@ -94,9 +94,9 @@ export const handler = async (ctx) => {
                 const length = $$('div.player__actions span').text() || undefined;
 
                 const script = $$('script[type="text/javascript"]').text();
-                const videoSrc = script.match(/P\.s\s=\s'(.*?)';/)?.[1] ?? undefined;
-                const poster = script.match(/P\.c\(.*?isWideScreen,\s'(.*?)',\s/)?.[1] ?? undefined;
-                const topicsStr = script.match(/var\stopicsInPage\s=\sJSON\.parse\('(.*?)'\);/)?.[1]?.replaceAll('\\', '') ?? undefined;
+                const videoSrc = script.match(/P\.s\s=\s'(.*?)';/)?.[1];
+                const poster = script.match(/P\.c\(.*?isWideScreen,\s'(.*?)',\s/)?.[1];
+                const topicsStr = script.match(/var\stopicsInPage\s=\sJSON\.parse\('(.*?)'\);/)?.[1]?.replaceAll('\\', '');
 
                 if (videoSrc) {
                     $$('div.player').replaceWith(

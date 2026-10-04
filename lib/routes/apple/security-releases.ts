@@ -81,7 +81,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 const detailResponse = await ofetch(item.link!);
                 const $$: CheerioAPI = load(detailResponse);
 
-                const title: string = item.title ?? $$('h1.gb-header').text();
+                const title: string = item.title;
 
                 $$('h1.gb-header').remove();
 

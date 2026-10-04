@@ -32,11 +32,11 @@ export const handler = async (ctx: Context): Promise<Data> => {
         .toArray()
         .map((el) => {
             const $el = $(el);
-            const $link = $el.find('a').first();
+            const $link = $el.find('a');
 
             const title = $link.find('p').first().text();
             const description = $link.find('p').eq(1).text();
-            const pubDate = parseDate($el.find('time').first().text());
+            const pubDate = parseDate($el.find('time').text());
 
             const href = $link.attr('href');
             const link = href ? new URL(href, baseUrl).href : undefined;

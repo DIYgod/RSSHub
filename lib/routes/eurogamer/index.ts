@@ -53,9 +53,9 @@ const cleanArticleContent = ($: CheerioAPI): string | undefined => {
             if (description) {
                 figure.append($('<figcaption>').text(description));
             }
-            return figure;
+            return figure[0];
         });
-        gallery.empty().append(...figures);
+        gallery.replaceWith(figures);
     });
 
     content
@@ -82,13 +82,7 @@ const cleanArticleContent = ($: CheerioAPI): string | undefined => {
 
     content.find('img[data-autosize]').each((_, el) => {
         const $img = $(el);
-        if ($img.attr('src')) {
-            return;
-        }
-        const uri = $img.attr('data-uri');
-        if (uri) {
-            $img.attr('src', `${ASSET_HOST}${uri}`);
-        }
+        $img.attr('src', `${ASSET_HOST}${$img.attr('data-uri')}`);
     });
     content.find('noscript').remove();
 
@@ -111,8 +105,8 @@ const parseArticle = async (item: DataItem): Promise<DataItem> => {
         const html = await ofetch(item.link!);
         const $ = load(html);
 
-        const pubDateStr = $('meta[property="article:published_time"]').attr('content') ?? $('time[datetime]').first().attr('datetime');
-        const author = $('.byline .author a').text() || undefined;
+        const pubDateStr = $('meta[property="article:published_time"]').attr('content') ?? $('time[datetime]').attr('datetime');
+        const author = $('.byline .author a').text();
         const categories = [
             ...new Set(
                 [
@@ -133,7 +127,7 @@ const parseArticle = async (item: DataItem): Promise<DataItem> => {
             description,
             pubDate: pubDateStr ? parseDate(pubDateStr) : undefined,
             author,
-            category: categories.length > 0 ? categories : undefined,
+            category: categories,
         };
     });
 };

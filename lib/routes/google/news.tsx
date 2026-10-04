@@ -91,7 +91,7 @@ async function handler(ctx) {
             description: renderDescription($item.find('img.Quavad').attr('src'), title),
             pubDate: parseDate($item.find('time').attr('datetime')!),
             author: authors,
-            link: new URL($item.find('a.WwrzSb').first().attr('href')!, baseUrl).href,
+            link: new URL($item.find('a.WwrzSb').attr('href')!, baseUrl).href,
         };
     });
 

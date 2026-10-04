@@ -105,7 +105,6 @@ function getCompanyList() {
             method: 'post',
             url: 'https://www.kuaidi100.com/company.do?method=js&t=201701051440',
             headers: {
-                Referer: 'https://www.kuaidi100.com/',
                 Cookie: wwwid,
             },
         });

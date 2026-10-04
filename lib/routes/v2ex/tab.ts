@@ -61,7 +61,7 @@ async function handler(ctx) {
                     .map((item) => {
                         const post = $(item);
                         const content = post.find('.reply_content').html();
-                        const author = post.find('.dark').first().text();
+                        const author = post.find('.dark').text();
                         const no = post.find('.no').text();
                         return `<p><div>#${no}: <i>${author}</i></div><div>${content}</div></p>`;
                     })

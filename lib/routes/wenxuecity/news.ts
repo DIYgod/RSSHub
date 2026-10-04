@@ -42,7 +42,7 @@ async function handler() {
                 });
                 const content = load(detailResponse);
 
-                item.description = content('#articleContent').html() ?? undefined;
+                item.description = content('#articleContent').html();
                 item.pubDate = timezone(parseDate(content('time[itemprop="datePublished"]').text()), 8);
 
                 return item;

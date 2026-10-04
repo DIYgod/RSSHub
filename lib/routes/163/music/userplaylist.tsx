@@ -52,9 +52,6 @@ async function handler(ctx) {
 
     const response = await ofetch.raw('https://music.163.com/api/user/playlist', {
         method: 'POST',
-        headers: {
-            Referer: 'https://music.163.com/',
-        },
         body: new URLSearchParams({
             uid,
             limit: '1000',

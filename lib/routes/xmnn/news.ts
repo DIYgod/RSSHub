@@ -79,7 +79,7 @@ async function handler(ctx) {
                 item.author = content('span.cont-a-src a')
                     .toArray()
                     .map((a) => ({ name: content(a).text() }));
-                item.pubDate = timezone(parseDate(content('span.time, div.pubtime div.w').contents().first().text().trim()), 8);
+                item.pubDate = timezone(parseDate(content('span.time, div.pubtime div.w').text().trim()), 8);
 
                 return item;
             })

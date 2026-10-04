@@ -80,7 +80,7 @@ async function handler(ctx) {
                 content('div.contenttxt').prev().nextAll().remove();
 
                 item.title = content('h1.article-title').text();
-                item.description = content('article.article-content').html() ?? '';
+                item.description = content('article.article-content').html();
                 item.author = content('i.fa-user').parent().text().trim();
                 item.category = content('#mute-category')
                     .toArray()

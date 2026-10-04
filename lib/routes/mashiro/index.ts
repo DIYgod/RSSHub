@@ -31,7 +31,7 @@ export const route: Route = {
             .toArray()
             .map((item): DataItem => {
                 const $item = $(item);
-                const a = $item.find('a').first();
+                const a = $item.find('a');
 
                 const title = a.find('.article-title').text();
                 const link = `${baseUrl}${a.attr('href')}`;

@@ -44,8 +44,8 @@ export const parseNewsList = async (url, selector, ctx) => {
         .map((item) => {
             const $item = $(item);
             return {
-                title: $item.find('a').first().text().trim(),
-                link: new URL($item.find('a').first().attr('href')!, url).href,
+                title: $item.find('a').text().trim(),
+                link: new URL($item.find('a').attr('href')!, url).href,
                 pubDate: parseDate($item.find('.more').text(), 'YYYY-MM-DD'),
             };
         });
@@ -83,14 +83,8 @@ export const parseArticle = async (item) => {
         item.author = title.match(/来源：(.*)发布时间/s)?.[1].trim() ?? owner;
         item.pubDate = timezone(parseDate(title.match(/发布时间：(.*)分享/s)?.[1].trim() ?? item.pubDate), 8);
 
-        // Change the img src from relative to absolute for a better compatibility
-        $('.content, .bom-box')
-            .find('img')
-            .each((_, el) => {
-                $(el).attr('src', new URL($(el).attr('src')!, item.link).href);
-                // oldsrc is causing freshrss imageproxy not to work correctly
-                $(el).removeAttr('oldsrc').removeAttr('alt');
-            });
+        // oldsrc is causing freshrss imageproxy not to work correctly
+        $('.content, .bom-box').find('img').removeAttr('oldsrc').removeAttr('alt');
         item.description = $('.content, .bom-box').html();
         return item;
     });

@@ -35,7 +35,7 @@ async function handler(ctx) {
         .toArray()
         .map((item): DataItem => {
             const $item = $(item);
-            const a = $item.find('a').first();
+            const a = $item.find('a');
             return {
                 title: a.attr('title')!,
                 link: a.attr('href'),

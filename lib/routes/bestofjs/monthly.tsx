@@ -38,7 +38,7 @@ export const route: Route = {
                 return getMonthlyRankings(year, month);
             })
         );
-        const items = allNeededMonthlyRankings.flatMap((oneMonthlyRankings, i) => {
+        const items = allNeededMonthlyRankings.map((oneMonthlyRankings, i) => {
             const [year, month] = targetMonths[i].split('-', 2);
             const description = renderToString(
                 <ul>
@@ -153,7 +153,7 @@ const getMonthlyRankings = (year: string, month: string): Promise<RankingItem[]>
                         .attr('src')
                         ?.replace(/.dark./, '.') || '';
                 // Project name and link
-                const projectLink = $tr.find('td:nth-child(2) a[href^="/projects/"]').first();
+                const projectLink = $tr.find('td:nth-child(2) a[href^="/projects/"]');
                 const projectName = projectLink.text().trim();
                 // GitHub and homepage links
                 const githubLink = $tr.find('td:nth-child(2) a[href*="github.com"]').attr('href') || '';

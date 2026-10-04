@@ -578,35 +578,23 @@
             "error",
             {
                 "selector": "CallExpression[callee.property.name='get'][arguments.length=0]",
-                "message": "Please use .toArray() instead."
+                "message": "Use .toArray() instead."
+            },
+            {
+                "selector": "CallExpression[callee.property.name='clone'][arguments.length=0]:not([callee.object.name=/^(request|response|req|res)$/])",
+                "message": "Usage of .clone() in cheerio is not allowed."
+            },
+            {
+                "selector": "CallExpression[callee.property.name='empty'][arguments.length=0]",
+                "message": "Usage of .empty() in cheerio is not allowed."
             },
             {
                 "selector": "CallExpression[callee.property.name='toArray'] MemberExpression[object.callee.property.name='map']",
-                "message": "Please use .toArray() before .map()."
-            },
-            {
-                "selector": "CallExpression[callee.property.name=\"catch\"] > ArrowFunctionExpression[params.length=0][body.value=null]",
-                "message": "Usage of .catch(() => null) is not allowed. Please handle the error appropriately."
-            },
-            {
-                "selector": "CallExpression[callee.property.name=\"catch\"] > ArrowFunctionExpression[params.length=0][body.type=\"Identifier\"][body.name=\"undefined\"]",
-                "message": "Usage of .catch(() => undefined) is not allowed. Please handle the error appropriately."
-            },
-            {
-                "selector": "CallExpression[callee.property.name=\"catch\"] > ArrowFunctionExpression[params.length=0] > ArrayExpression[elements.length=0]",
-                "message": "Usage of .catch(() => []) is not allowed. Please handle the error appropriately."
-            },
-            {
-                "selector": "CallExpression[callee.property.name=\"catch\"] > ArrowFunctionExpression[params.length=0] > BlockStatement[body.length=0]",
-                "message": "Usage of .catch(() => {}) is not allowed. Please handle the error appropriately."
+                "message": "Use .toArray() before .map()."
             },
             {
                 "selector": "CallExpression[callee.name=\"load\"] AwaitExpression > CallExpression",
                 "message": "Do not use await in call expressions. Extract the result into a variable first."
-            },
-            {
-                "selector": "Identifier[name=\"_ctx\"]",
-                "message": "Usage of `_ctx` is not allowed."
             },
             {
                 "selector": "CallExpression[callee.property.name=\"each\"] > FunctionExpression",
@@ -622,11 +610,31 @@
             },
             {
                 "selector": "TSTypeReference[typeName.name='ReturnType'] TSTypeQuery[exprName.name='load']",
-                "message": "Usage of ReturnType<typeof load> is not allowed. Please use appropriate types from cheerio instead."
+                "message": "Usage of ReturnType<typeof load> is not allowed. Use appropriate types from cheerio instead."
             },
             {
                 "selector": "TSTypeReference[typeName.name='ReturnType'] TSTypeReference[typeName.name='CheerioAPI']",
-                "message": "Usage of ReturnType<CheerioAPI> is not allowed. Please use appropriate types from cheerio and domhandler instead."
+                "message": "Usage of ReturnType<CheerioAPI> is not allowed. Use appropriate types from cheerio and domhandler instead."
+            },
+            {
+                "selector": "CallExpression[callee.property.name=\"catch\"] > ArrowFunctionExpression[params.length=0][body.value=null]",
+                "message": "Usage of .catch(() => null) is not allowed. Handle the error appropriately."
+            },
+            {
+                "selector": "CallExpression[callee.property.name=\"catch\"] > ArrowFunctionExpression[params.length=0][body.type=\"Identifier\"][body.name=\"undefined\"]",
+                "message": "Usage of .catch(() => undefined) is not allowed. Handle the error appropriately."
+            },
+            {
+                "selector": "CallExpression[callee.property.name=\"catch\"] > ArrowFunctionExpression[params.length=0] > ArrayExpression[elements.length=0]",
+                "message": "Usage of .catch(() => []) is not allowed. Handle the error appropriately."
+            },
+            {
+                "selector": "CallExpression[callee.property.name=\"catch\"] > ArrowFunctionExpression[params.length=0] > BlockStatement[body.length=0]",
+                "message": "Usage of .catch(() => {}) is not allowed. Handle the error appropriately."
+            },
+            {
+                "selector": "Identifier[name=\"_ctx\"]",
+                "message": "Usage of `_ctx` is not allowed."
             }
         ],
 

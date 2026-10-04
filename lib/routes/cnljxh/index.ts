@@ -74,7 +74,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                     language,
                 };
 
-                const $enclosureEl: Cheerio<Element> = $$('div.content_div embed').first();
+                const $enclosureEl: Cheerio<Element> = $$('div.content_div embed');
                 const enclosureUrl: string | undefined = $enclosureEl.attr('src');
 
                 if (enclosureUrl) {

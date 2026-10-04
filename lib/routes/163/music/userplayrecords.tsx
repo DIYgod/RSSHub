@@ -6,7 +6,6 @@ import ofetch from '@/utils/ofetch';
 
 const headers = {
     cookie: config.ncm.cookies ?? '',
-    Referer: 'https://music.163.com/',
 };
 
 const renderDescription = (record, song, index) =>

@@ -6,8 +6,6 @@ import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
-import { getForumUrl } from './utils';
-
 export const route: Route = {
     path: '/:id?',
     categories: ['multimedia'],
@@ -69,7 +67,17 @@ async function handler(ctx) {
     // Resolve the address page before caching the forum URL.
     const domainInfo = await cache.tryGet('2048:domainInfo:v2', async () => {
         const response = await ofetch('https://2048.info');
-        return { url: getForumUrl(response) };
+        const $ = load(response);
+        const button = $('.button');
+        const target = button.attr('href') || button.attr('onclick')?.match(/window\.open\(\s*(['"])(.*?)\1/)?.[2];
+        if (!target) {
+            throw new Error('The 2048 address page did not contain a forum link.');
+        }
+        const url = new URL(target, 'https://2048.info');
+        if (!['https:', 'http:'].includes(url.protocol)) {
+            throw new Error('The 2048 address page contained an unsupported forum URL.');
+        }
+        return { url: url.href };
     });
     // 获取重定向后的url
     const redirectResponse = await ofetch.raw(domainInfo.url);
@@ -140,8 +148,8 @@ async function handler(ctx) {
                     content(el).replaceWith(`<img src="${imgSrc}">`);
                 });
 
-                item.author = content('.fl.black').first().text();
-                item.pubDate = timezone(parseDate(content('span.fl.gray').first().attr('title')!), 8);
+                item.author = content('.fl.black').text();
+                item.pubDate = timezone(parseDate(content('span.fl.gray').attr('title')!), 8);
 
                 const readTpc = content('#read_tpc').first();
                 const copyLink = content('#copytext')?.first()?.text();
@@ -149,7 +157,7 @@ async function handler(ctx) {
                 const magnetText = readTpc.find('.magnet-text').first().text().trim();
 
                 // Extract enclosure: rmdown.com (fetch page for magnet) | magnet from 哈希校验 | copyLink
-                const rmdownLink = readTpc.find('a[href*="rmdown.com/link.php"]').first().attr('href');
+                const rmdownLink = readTpc.find('a[href*="rmdown.com/link.php"]').attr('href');
                 const enclosureHref = rmdownLink?.startsWith('http') ? rmdownLink : rmdownLink ? `https://www.rmdown.com/${rmdownLink}` : null;
 
                 if (enclosureHref) {

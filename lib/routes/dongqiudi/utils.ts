@@ -139,8 +139,5 @@ export const processFeedType2 = (item, response) => {
     processHref(articleBody.find('a'));
     processImg(articleBody.find('img'));
     item.description = articleBody.html();
-    const author = $('.article-head__author-name').text();
-    if (author) {
-        item.author = author;
-    }
+    item.author = $('.article-head__author-name').text();
 };

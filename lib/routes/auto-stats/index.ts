@@ -54,7 +54,7 @@ async function handler(ctx) {
             const $item = $(item);
 
             const title = $item.text();
-            const pubDate = title.match(/(\d{4}(?:\/\d{1,2}){2}\s\d{1,2}(?::\d{2}){2})/)?.[1] ?? undefined;
+            const pubDate = title.match(/(\d{4}(?:\/\d{1,2}){2}\s\d{1,2}(?::\d{2}){2})/)?.[1];
 
             return {
                 title: title.replace(/●/, '').split(/（\d+/, 1)[0],

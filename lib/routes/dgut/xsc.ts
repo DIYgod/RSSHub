@@ -42,11 +42,11 @@ async function handler(ctx: Context) {
         item: $('#paging > ul li')
             .slice(0, 10)
             .toArray()
-            .flatMap((item) => {
+            .map((item) => {
                 const $item = $(item);
                 const title = $item.find('a').attr('title');
                 if (!title) {
-                    return [];
+                    return;
                 }
                 return {
                     title,
@@ -54,6 +54,7 @@ async function handler(ctx: Context) {
                     pubDate: timezone(parseDate($item.find('.time').text()), 8),
                     link: host + $item.find('a').attr('href')!.slice(1),
                 };
-            }),
+            })
+            .filter((item) => item !== undefined),
     };
 }

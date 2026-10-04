@@ -103,7 +103,7 @@ async function handler(ctx) {
                 });
 
                 item.description = article.html();
-                item.pubDate = timezone(parseDate($('.AC-l span').text().trim(), 'YYYY-MM-DD HH:mm'), 8);
+                item.pubDate = timezone(parseDate($('.AC-l span').text(), 'YYYY-MM-DD HH:mm'), 8);
 
                 return item;
             })

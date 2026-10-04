@@ -12,7 +12,7 @@ const feedUrl = `${baseUrl}/feed/all/`;
 export const route: Route = {
     path: '/',
     categories: ['programming'],
-    example: '/xmlcom',
+    example: '/xml',
     name: 'Articles and News',
     maintainers: ['AboutRSS'],
     radar: [

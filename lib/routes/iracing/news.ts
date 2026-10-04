@@ -47,7 +47,7 @@ export const route: Route = {
                         link,
                         author: $('.page-header a[rel="author"]').text(),
                         pubDate: parseDate($('.page-header small').text().trim().split(' by', 1)[0], 'MMMM D, YYYY'),
-                        itunes_item_image: $('#page img').first().attr('src'),
+                        itunes_item_image: $('#page img').attr('src'),
                         content: {
                             html: $('#page > div > p')
                                 .toArray()
