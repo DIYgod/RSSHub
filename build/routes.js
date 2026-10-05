@@ -20567,6 +20567,100 @@ export default {
     ],
     "lang": "zh-CN"
   },
+  "romielf": {
+    "routes": {
+      "/news/:tagId?": {
+        "path": "/news/:tagId?",
+        "categories": [
+          "sport"
+        ],
+        "example": "/romielf/news",
+        "parameters": {
+          "tagId": {
+            "description": "导航标签 id，可在 `https://api.romielf.com/index/navitv2` 查看",
+            "default": "1",
+            "options": [
+              {
+                "value": "1",
+                "label": "头条"
+              },
+              {
+                "value": "3",
+                "label": "科普"
+              },
+              {
+                "value": "5",
+                "label": "MotoGP"
+              },
+              {
+                "value": "18",
+                "label": "专栏"
+              },
+              {
+                "value": "19",
+                "label": "视频"
+              },
+              {
+                "value": "52",
+                "label": "FE"
+              },
+              {
+                "value": "57",
+                "label": "达喀尔"
+              },
+              {
+                "value": "64",
+                "label": "新车发布"
+              },
+              {
+                "value": "125",
+                "label": "TCR"
+              },
+              {
+                "value": "126",
+                "label": "纽维自传"
+              },
+              {
+                "value": "127",
+                "label": "TopSpeed最速档"
+              },
+              {
+                "value": "156",
+                "label": "赛会信息"
+              },
+              {
+                "value": "158",
+                "label": "社交媒体"
+              },
+              {
+                "value": "159",
+                "label": "FIA文档"
+              },
+              {
+                "value": "175",
+                "label": "F1运动规则"
+              },
+              {
+                "value": "223",
+                "label": "新闻媒体"
+              }
+            ]
+          }
+        },
+        "name": "新闻",
+        "maintainers": [
+          "TonyRL"
+        ],
+        "url": "www.romielf.com",
+        "location": "news.ts",
+        "module": () => import('@/routes/romielf/news.ts')
+      }
+    },
+    "apiRoutes": {},
+    "name": "每日赛车",
+    "url": "www.romielf.com",
+    "lang": "zh-CN"
+  },
   "sctv": {
     "routes": {
       "/programme/:id?/:limit?/:isFull?": {

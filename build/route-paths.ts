@@ -2856,6 +2856,7 @@ export type RoutePath =
   | `/rockstargames/socialclub/events/:game?`
   | `/rockthejvm/articles`
   | `/rodong/news/:language?`
+  | `/romielf/news/:tagId?`
   | `/routledge/:bookName/book-series/:bookId`
   | `/rsc/journal/:id/:category?`
   | `/rss3/:account/:network?/:tag?`

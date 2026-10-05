@@ -1616,6 +1616,9 @@
   "/rockstargames/newswire": [
     "dapexyz"
   ],
+  "/romielf/news/:tagId?": [
+    "TonyRL"
+  ],
   "/sctv/programme/:id?/:limit?/:isFull?": [
     "nczitzk"
   ],
