@@ -169,7 +169,7 @@
         "@types/json-bigint": "1.0.4",
         "@types/jsrsasign": "10.5.15",
         "@types/module-alias": "2.0.4",
-        "@types/node": "26.6.3",
+        "@types/node": "26.6.4",
         "@types/sanitize-html": "2.16.2",
         "@typescript-eslint/eslint-plugin": "8.71.0",
         "@typescript-eslint/parser": "8.71.0",
