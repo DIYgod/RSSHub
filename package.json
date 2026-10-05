@@ -152,8 +152,8 @@
         "@bbob/types": "4.4.1",
         "@cloudflare/containers": "0.3.7",
         "@cloudflare/playwright": "1.3.6",
-        "@cloudflare/vitest-plugin": "1.3.1",
-        "@cloudflare/workers-types": "5.20260929.1",
+        "@cloudflare/vitest-plugin": "1.3.5",
+        "@cloudflare/workers-types": "5.20261002.1",
         "@eslint/js": "10.0.1",
         "@j178/prek": "0.5.4",
         "@mswjs/interceptors": "0.45.6",
@@ -207,7 +207,7 @@
         "unrun": "0.3.1",
         "vite-tsconfig-paths": "7.0.0-alpha.3",
         "vitest": "4.1.11",
-        "wrangler": "4.143.0",
+        "wrangler": "4.146.0",
         "yaml-eslint-parser": "2.1.0"
     },
     "engines": {
