@@ -403,8 +403,8 @@ importers:
         specifier: 11.4.1
         version: 11.4.1
       globals:
-        specifier: 17.12.0
-        version: 17.12.0
+        specifier: 17.13.0
+        version: 17.13.0
       js-beautify:
         specifier: 2.0.3
         version: 2.0.3
@@ -4450,8 +4450,8 @@ packages:
     resolution: {integrity: sha512-7ACyT3wmyp3I61S4fG682L0VA2RGD9otkqGJIwNUMF1SWUombIIk+af1unuDYgMm082aHYwD+mzJvv9Iu8dsgg==}
     engines: {node: '>=18'}
 
-  globals@17.12.0:
-    resolution: {integrity: sha512-cezEd/DTyyht9cvSSURyygXPfy04GtWO/5e6ZPvH7fCtjKz9PYOmuawphw1Ctd1f6C+5JypXfGD7ahNMXvevBA==}
+  globals@17.13.0:
+    resolution: {integrity: sha512-RwMTC61u7hrG3ZJMkZQOK4JLJrKS8QtoTii63EmWvFXHqycY9FObBJQCbsLxSO8kjKhWE5kV1GC+Vb1g3RI0Zg==}
     engines: {node: '>=18'}
 
   globrex@0.1.2:
@@ -9577,7 +9577,7 @@ snapshots:
       entities: 8.1.0
       eslint: 10.11.0(jiti@2.7.0)
       find-up-simple: 1.0.1
-      globals: 17.12.0
+      globals: 17.13.0
       identifier-regex: 1.1.0
       indent-string: 5.0.0
       is-builtin-module: 5.0.0
@@ -9875,7 +9875,7 @@ snapshots:
 
   globals@15.15.0: {}
 
-  globals@17.12.0: {}
+  globals@17.13.0: {}
 
   globrex@0.1.2: {}
 
