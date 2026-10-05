@@ -186,7 +186,7 @@
         "eslint-plugin-yml": "3.8.1",
         "fast-string-width": "3.0.2",
         "fs-extra": "11.4.1",
-        "globals": "17.12.0",
+        "globals": "17.13.0",
         "js-beautify": "2.0.3",
         "mockdate": "3.0.5",
         "msw": "3.0.1",
