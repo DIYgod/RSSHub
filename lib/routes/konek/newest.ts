@@ -1,6 +1,6 @@
 import MarkdownIt from 'markdown-it';
 
-import type { Route } from '@/types';
+import type { Data, Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
@@ -29,7 +29,7 @@ export const route: Route = {
     handler,
 };
 
-async function handler() {
+async function handler(): Promise<Data> {
     const { data: posts }: { data: Post[] } = await got(`${baseUrl}/contents`, {
         searchParams: {
             siteId: 330,
