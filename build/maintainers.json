@@ -1353,6 +1353,12 @@
     "KTachibanaM",
     "AiraNadih"
   ],
+  "/facebook/group/:id": [
+    "TonyRL"
+  ],
+  "/facebook/page/:id": [
+    "TonyRL"
+  ],
   "/fantia/search/:type?/:caty?/:period?/:order?/:rating?/:keyword?": [
     "nczitzk"
   ],
@@ -4530,9 +4536,6 @@
   ],
   "/f95zone/thread/:thread": [
     "wsmbsbbz"
-  ],
-  "/facebook/page/:id": [
-    "TonyRL"
   ],
   "/famitsu/category/:category?": [
     "TonyRL"

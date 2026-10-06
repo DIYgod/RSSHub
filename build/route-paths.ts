@@ -1122,6 +1122,7 @@ export type RoutePath =
   | `/f-droid/apprelease/:app`
   | `/f95zone/post/:thread/:postId`
   | `/f95zone/thread/:thread`
+  | `/facebook/group/:id`
   | `/facebook/page/:id`
   | `/famitsu/category/:category?`
   | `/fanbox/:creator`

@@ -16993,6 +16993,85 @@ export default {
     "name": "EVERIA.CLUB",
     "url": "everia.club"
   },
+  "facebook": {
+    "routes": {
+      "/group/:id": {
+        "path": "/group/:id",
+        "categories": [
+          "social-media"
+        ],
+        "example": "/facebook/group/613870175328566",
+        "parameters": {
+          "id": "Group ID or group username"
+        },
+        "features": {
+          "requireConfig": [
+            {
+              "name": "FACEBOOK_COOKIE",
+              "optional": true,
+              "description": "Facebook cookie, only `c_user` and `xs` are required. Set this if you see `Rate limit exceeded`."
+            }
+          ],
+          "antiCrawler": true
+        },
+        "radar": [
+          {
+            "source": [
+              "www.facebook.com/groups/:id"
+            ]
+          }
+        ],
+        "name": "Group",
+        "maintainers": [
+          "TonyRL"
+        ],
+        "url": "www.facebook.com",
+        "location": "group.ts",
+        "module": () => import('@/routes/facebook/group.ts')
+      },
+      "/page/:id": {
+        "path": "/page/:id",
+        "categories": [
+          "social-media"
+        ],
+        "example": "/facebook/page/NASA",
+        "parameters": {
+          "id": "Page or profile username, or numeric ID"
+        },
+        "features": {
+          "requireConfig": [
+            {
+              "name": "FACEBOOK_COOKIE",
+              "optional": true,
+              "description": "Facebook cookie, only `c_user` and `xs` are required. Set this if you see `Rate limit exceeded`."
+            }
+          ],
+          "antiCrawler": true
+        },
+        "radar": [
+          {
+            "source": [
+              "www.facebook.com/:id",
+              "www.facebook.com/people/:name/:id"
+            ],
+            "target": "/page/:id"
+          }
+        ],
+        "name": "Page / Profile",
+        "maintainers": [
+          "TonyRL"
+        ],
+        "description": "Works for pages and public personal profiles. Posts behind a login wall require `FACEBOOK_COOKIE`.",
+        "url": "www.facebook.com",
+        "location": "page.ts",
+        "module": () => import('@/routes/facebook/page.ts')
+      }
+    },
+    "apiRoutes": {},
+    "name": "Facebook",
+    "url": "www.facebook.com",
+    "lang": "en"
+  },
   "fantia": {
     "routes": {
       "/search/:type?/:caty?/:period?/:order?/:rating?/:keyword?": {
@@ -61913,48 +61992,6 @@ export default {
     "name": "F95zone",
     "url": "f95zone.to",
     "description": "F95zone is a community for adult games and animations."
-  },
-  "facebook": {
-    "routes": {
-      "/page/:id": {
-        "path": "/page/:id",
-        "categories": [
-          "social-media"
-        ],
-        "example": "/facebook/page/NASA",
-        "parameters": {
-          "id": "Page ID"
-        },
-        "features": {
-          "requireConfig": [
-            {
-              "name": "FACEBOOK_COOKIE",
-              "optional": true,
-              "description": "Facebook cookie, only `c_user` and `xs` are required."
-            }
-          ],
-          "antiCrawler": true
-        },
-        "radar": [
-          {
-            "source": [
-              "www.facebook.com/:id"
-            ]
-          }
-        ],
-        "name": "Page",
-        "maintainers": [
-          "TonyRL"
-        ],
-        "url": "www.facebook.com",
-        "location": "page.ts",
-        "module": () => import('@/routes/facebook/page.ts')
-      }
-    },
-    "apiRoutes": {},
-    "name": "Facebook",
-    "url": "www.facebook.com",
-    "lang": "en"
   },
   "famitsu": {
     "routes": {

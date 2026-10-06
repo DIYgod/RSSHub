@@ -4864,6 +4864,28 @@
       }
     ]
   },
+  "facebook.com": {
+    "_name": "Facebook",
+    "www": [
+      {
+        "title": "Group",
+        "docs": "https://docs.rsshub.app/routes/social-media",
+        "source": [
+          "/groups/:id"
+        ],
+        "target": "/facebook/group/:id"
+      },
+      {
+        "title": "Page / Profile",
+        "docs": "https://docs.rsshub.app/routes/social-media",
+        "source": [
+          "/:id",
+          "/people/:name/:id"
+        ],
+        "target": "/facebook/page/:id"
+      }
+    ]
+  },
   "fantia.jp": {
     "_name": "Fantia",
     ".": [
@@ -21492,19 +21514,6 @@
           "/threads/:thread/*"
         ],
         "target": "/f95zone/thread/:thread"
-      }
-    ]
-  },
-  "facebook.com": {
-    "_name": "Facebook",
-    "www": [
-      {
-        "title": "Page",
-        "docs": "https://docs.rsshub.app/routes/social-media",
-        "source": [
-          "/:id"
-        ],
-        "target": "/facebook/page/:id"
       }
     ]
   },
