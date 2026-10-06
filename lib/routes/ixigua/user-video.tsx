@@ -1,8 +1,8 @@
-import { load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
 
 import type { Route } from '@/types';
-import got from '@/utils/got';
+import cache from '@/utils/cache';
+import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
 const host = 'https://www.ixigua.com';
@@ -22,7 +22,7 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['ixigua.com/home/:uid'],
+            source: ['ixigua.com/home/:uid', 'm.ixigua.com/user/:uid'],
             target: '/user/video/:uid',
         },
     ],
@@ -34,36 +34,34 @@ export const route: Route = {
 async function handler(ctx) {
     const uid = ctx.req.param('uid');
     const disableEmbed = ctx.req.param('disableEmbed');
-    const url = `${host}/home/${uid}/?wid_try=1`;
 
-    const { data } = await got(url);
-    const $ = load(data);
-    const jsData = $('#SSR_HYDRATED_DATA').html();
-
-    if (!jsData) {
-        throw new Error('Failed to find SSR_HYDRATED_DATA');
-    }
-
-    const jsonData = JSON.parse(jsData.match(/var\s+data\s*=\s*(\{.*?\});/s)?.[1].replaceAll('undefined', 'null') || '{}');
-
-    const {
-        AuthorVideoList: { videoList: videoInfos },
-        AuthorDetailInfo: userInfo,
-    } = jsonData;
-
-    if (!videoInfos || !userInfo) {
-        throw new Error('Failed to extract required data from JSON');
-    }
+    const [userInfo, videoList] = await Promise.all([
+        cache.tryGet(`ixigua:user:${uid}`, async () => {
+            const { data } = await ofetch('https://m.ixigua.com/video/app/user/userhome/v8/', {
+                query: { to_user_id: uid },
+            });
+            return data.user_home_info.user_info;
+        }),
+        ofetch('https://m.ixigua.com/video/app/user/videolist_tab/v3/', {
+            query: {
+                to_user_id: uid,
+                orderby: 'publishtime',
+                tab: 1,
+                count: 20,
+            },
+        }),
+    ]);
 
     return {
         title: `${userInfo.name} 的西瓜视频`,
-        link: url,
-        description: userInfo.introduce,
-        item: videoInfos.map((i) => ({
+        link: `${host}/home/${uid}/`,
+        description: userInfo.description,
+        image: userInfo.large_avatar_url,
+        item: videoList.data.map((i) => ({
             title: i.title,
             description: renderToString(<IxiguaVideoDescription i={i} disableEmbed={disableEmbed} />),
-            link: `${host}/${i.groupId}`,
-            pubDate: parseDate(i.publishTime * 1000),
+            link: `${host}/${i.group_id_str}`,
+            pubDate: parseDate(i.publish_time, 'X'),
             author: userInfo.name,
         })),
     };
@@ -73,11 +71,11 @@ const IxiguaVideoDescription = ({ i, disableEmbed }: { i: any; disableEmbed?: st
     <>
         {disableEmbed ? null : (
             <>
-                <iframe width="720" height="405" frameborder="0" allowfullscreen src={`https://www.ixigua.com/iframe/${i.groupId}?autoplay=0`} referrerpolicy="unsafe-url"></iframe>
+                <iframe width="720" height="405" frameborder="0" allowfullscreen src={`${host}/iframe/${i.group_id_str}?autoplay=0`}></iframe>
                 <br />
             </>
         )}
-        <img src={i.coverUrl} />
+        <img src={i.large_image_list[0].url} />
         <p>{i.abstract}</p>
     </>
 );
