@@ -1,7 +1,6 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
-import { config } from '@/config';
-import ConfigNotFoundError from '@/errors/types/config-not-found';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
@@ -10,6 +9,12 @@ import timezone from '@/utils/timezone';
 
 import { getHeaders } from './utils';
 
+const units = {
+    1: '今日热门',
+    7: '周热门',
+    30: '月热门',
+};
+
 export const route: Route = {
     path: '/haowen/:day?',
     categories: ['shopping'],
@@ -17,11 +22,7 @@ export const route: Route = {
     parameters: {
         day: {
             description: '以天为时间跨度，默认为 `1`',
-            options: [
-                { value: '1', label: '今日热门' },
-                { value: '7', label: '周热门' },
-                { value: '30', label: '月热门' },
-            ],
+            options: Object.entries(units).map(([value, label]) => ({ value, label })),
             default: '1',
         },
     },
@@ -29,6 +30,7 @@ export const route: Route = {
         requireConfig: [
             {
                 name: 'SMZDM_COOKIE',
+                optional: true,
                 description: '什么值得买登录后的 Cookie 值',
             },
         ],
@@ -44,35 +46,36 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    if (!config.smzdm.cookie) {
-        throw new ConfigNotFoundError('什么值得买排行榜 is disabled due to the lack of SMZDM_COOKIE');
-    }
-
     const day = ctx.req.param('day') ?? '1';
     const link = `https://post.smzdm.com/hot_${day}/`;
 
-    const response = await ofetch(link, {
-        headers: getHeaders(),
+    const response = await ofetch.raw('https://post.smzdm.com/rank/json_more/', {
+        query: { unit: day },
+        headers: {
+            accept: 'application/json, text/javascript, */*; q=0.01',
+            ...getHeaders(),
+        },
     });
-    const $ = load(response);
-    const title = $('li.filter-tab.active').text();
+    const cookie = getHeaders().cookie || [...response.headers.getSetCookie().map((c) => c.split(';', 1)[0]), `x-waf-captcha-referer=${link}`].join('; ');
 
-    const list = $('li.feed-row-wide')
-        .toArray()
-        .map((item) => {
-            const $item = $(item);
-            return {
-                title: $item.find('h5.z-feed-title a').text(),
-                link: $item.find('h5.z-feed-title a').attr('href'),
-                pubDate: timezone(parseDate($item.find('span.z-publish-time').text()), 8),
-            };
-        });
+    const list: DataItem[] = response._data.data.map((item) => ({
+        title: item.title,
+        link: item.article_url,
+        description: item.content,
+        author: item.nickname,
+        image: item.pic_url,
+        category: item.channel_name,
+        pubDate: timezone(parseDate(item.publish_time), 8),
+    }));
 
-    const out = await Promise.all(
-        list.map((item) =>
+    const out = await pMap(
+        list,
+        (item) =>
             cache.tryGet(item.link ?? '', async () => {
                 const response = await ofetch(item.link ?? '', {
-                    headers: getHeaders(),
+                    headers: {
+                        cookie,
+                    },
                 });
                 const $ = load(response);
                 const content = $('#articleId');
@@ -81,22 +84,18 @@ async function handler(ctx) {
 
                 const releaseDate = $('meta[property="og:release_date"]').attr('content');
 
-                const outItem: DataItem = {
-                    title: item.title,
-                    link: item.link,
-                    description: content.html(),
-                    pubDate: releaseDate ? timezone(parseDate(releaseDate), 8) : item.pubDate,
-                    author: $('meta[property="og:author"]').attr('content') || '',
-                };
+                item.description = content.html() ?? item.description;
+                item.pubDate = releaseDate ? timezone(parseDate(releaseDate), 8) : item.pubDate;
+                item.author = $('meta[property="og:author"]').attr('content') ?? item.author;
 
-                return outItem;
-            })
-        )
+                return item;
+            }),
+        { concurrency: 3 }
     );
 
     return {
-        title: `${title}-什么值得买好文`,
+        title: `${units[day]}-什么值得买好文`,
         link,
-        item: out.filter((item): item is DataItem => item !== null),
+        item: out,
     };
 }

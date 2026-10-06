@@ -15,8 +15,4 @@ export const parseSearchDate = (value: string, now = new Date()): Date | undefin
     return parseDateInTimezone(`${year}-${value}`, 8);
 };
 
-export const getHeaders = () => ({
-    accept: 'application/json, text/javascript, */*; q=0.01',
-    cookie: config.smzdm.cookie!,
-    'x-requested-with': 'XMLHttpRequest',
-});
+export const getHeaders = (): Record<string, string> => (config.smzdm.cookie ? { cookie: config.smzdm.cookie } : {});
