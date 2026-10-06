@@ -109173,6 +109173,7 @@
           "requireConfig": [
             {
               "name": "SMZDM_COOKIE",
+              "optional": true,
               "description": "什么值得买登录后的 Cookie 值"
             }
           ],
@@ -109202,6 +109203,7 @@
           "requireConfig": [
             {
               "name": "SMZDM_COOKIE",
+              "optional": true,
               "description": "什么值得买登录后的 Cookie 值"
             }
           ],
@@ -109238,6 +109240,7 @@
           "requireConfig": [
             {
               "name": "SMZDM_COOKIE",
+              "optional": true,
               "description": "什么值得买登录后的 Cookie 值"
             }
           ],
@@ -109261,20 +109264,20 @@
         "location": "baoliao.ts",
         "module": "() => import('@/routes/smzdm/baoliao.ts')"
       },
-      "/haowen/fenlei/:name/:sort?": {
-        "path": "/haowen/fenlei/:name/:sort?",
+      "/haowen/fenlei/:name": {
+        "path": "/haowen/fenlei/:name",
         "categories": [
           "shopping"
         ],
         "example": "/smzdm/haowen/fenlei/shenghuodianqi",
         "parameters": {
-          "name": "分类名，可在 URL 中查看",
-          "sort": "排序方式，默认为最新"
+          "name": "分类名，可在 URL 中查看"
         },
         "features": {
           "requireConfig": [
             {
               "name": "SMZDM_COOKIE",
+              "optional": true,
               "description": "什么值得买登录后的 Cookie 值"
             }
           ],
@@ -109287,7 +109290,7 @@
         "radar": [
           {
             "source": [
-              "post.smzdm.com/fenlei/:name"
+              "www.smzdm.com/fenlei/:name"
             ],
             "target": "/haowen/fenlei/:name"
           }
@@ -109296,7 +109299,6 @@
         "maintainers": [
           "LogicJake"
         ],
-        "description": "| 最新 | 周排行 | 月排行 |\n| ---- | ------ | ------ |\n| 0    | 7      | 30     |",
         "location": "haowen-fenlei.ts",
         "module": "() => import('@/routes/smzdm/haowen-fenlei.ts')"
       },
@@ -109330,6 +109332,7 @@
           "requireConfig": [
             {
               "name": "SMZDM_COOKIE",
+              "optional": true,
               "description": "什么值得买登录后的 Cookie 值"
             }
           ],
@@ -109361,6 +109364,7 @@
           "requireConfig": [
             {
               "name": "SMZDM_COOKIE",
+              "optional": true,
               "description": "什么值得买登录后的 Cookie 值"
             }
           ],
@@ -109391,6 +109395,7 @@
           "requireConfig": [
             {
               "name": "SMZDM_COOKIE",
+              "optional": true,
               "description": "什么值得买登录后的 Cookie 值"
             }
           ],

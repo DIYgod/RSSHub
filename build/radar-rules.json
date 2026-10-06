@@ -39566,7 +39566,7 @@
         "target": "/smzdm/baoliao/:uid"
       }
     ],
-    "post": [
+    "www": [
       {
         "title": "好文分类",
         "docs": "https://docs.rsshub.app/routes/shopping",

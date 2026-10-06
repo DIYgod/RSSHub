@@ -8012,7 +8012,7 @@
   "/smzdm/baoliao/:uid": [
     "nczitzk"
   ],
-  "/smzdm/haowen/fenlei/:name/:sort?": [
+  "/smzdm/haowen/fenlei/:name": [
     "LogicJake"
   ],
   "/smzdm/haowen/:day?": [

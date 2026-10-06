@@ -3079,7 +3079,7 @@ export type RoutePath =
   | `/smzdm/article/:uid`
   | `/smzdm/baoliao/:uid`
   | `/smzdm/haowen/:day?`
-  | `/smzdm/haowen/fenlei/:name/:sort?`
+  | `/smzdm/haowen/fenlei/:name`
   | `/smzdm/keyword/:keyword`
   | `/smzdm/product/:id`
   | `/smzdm/ranking/:rank_type/:rank_id/:hour`
