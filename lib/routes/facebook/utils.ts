@@ -109,14 +109,26 @@ const renderText = (message: any) => {
     return `<p>${(html + chars.slice(position).join('')).replaceAll('\n', '<br>')}</p>`;
 };
 
-const blockTags: Record<string, string> = { HEADER_ONE: 'h1', HEADER_TWO: 'h2', HEADER_THREE: 'h3', BLOCKQUOTE: 'blockquote', UNORDERED_LIST_ITEM: 'li', ORDERED_LIST_ITEM: 'li' };
-const inlineTags: Record<string, string> = { BOLD: 'b', ITALIC: 'i', UNDERLINE: 'u', STRIKETHROUGH: 's' };
+const blockTags = new Map([
+    ['HEADER_ONE', 'h1'],
+    ['HEADER_TWO', 'h2'],
+    ['HEADER_THREE', 'h3'],
+    ['BLOCKQUOTE', 'blockquote'],
+    ['UNORDERED_LIST_ITEM', 'li'],
+    ['ORDERED_LIST_ITEM', 'li'],
+]);
+const inlineTags = new Map([
+    ['BOLD', 'b'],
+    ['ITALIC', 'i'],
+    ['UNDERLINE', 'u'],
+    ['STRIKETHROUGH', 's'],
+]);
 
 const renderRichBlock = (block: any) => {
     const chars = [...block.text];
     const marks = block.inline_style_ranges
         .flatMap((range: any) => {
-            const tag = inlineTags[range.inline_style];
+            const tag = inlineTags.get(range.inline_style);
             return tag
                 ? [
                       { at: range.offset, html: `<${tag}>` },
@@ -128,7 +140,7 @@ const renderRichBlock = (block: any) => {
     for (const mark of marks) {
         chars.splice(mark.at, 0, mark.html);
     }
-    const tag = blockTags[block.block_type] ?? 'p';
+    const tag = blockTags.get(block.block_type) ?? 'p';
     return `<${tag}>${chars.join('')}</${tag}>`;
 };
 
@@ -140,7 +152,7 @@ const renderStory = (story: any) => {
     return { text: message?.text as string | undefined, html: text + attachments };
 };
 
-export const fetchStories = async (friendlyName: string, docId: string, variables: Record<string, unknown>, limit: number) => {
+export const fetchStories = async (friendlyName: string, docId: string, variables: Record<string, string | number | boolean>, limit: number) => {
     const lsd = randomBytes(16).toString('base64url');
     const jazoest = `2${[...lsd].reduce((sum, char) => sum + char.codePointAt(0)!, 0)}`;
 
