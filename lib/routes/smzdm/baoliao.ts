@@ -1,10 +1,9 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
-import { config } from '@/config';
-import ConfigNotFoundError from '@/errors/types/config-not-found';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
-import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
@@ -19,6 +18,7 @@ export const route: Route = {
         requireConfig: [
             {
                 name: 'SMZDM_COOKIE',
+                optional: true,
                 description: '什么值得买登录后的 Cookie 值',
             },
         ],
@@ -39,16 +39,13 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    if (!config.smzdm.cookie) {
-        throw new ConfigNotFoundError('什么值得买排行榜 is disabled due to the lack of SMZDM_COOKIE');
-    }
-
     const link = `https://zhiyou.smzdm.com/member/${ctx.req.param('uid')}/baoliao/`;
 
-    const response = await got(link, {
+    const response = await ofetch.raw(link, {
         headers: getHeaders(),
     });
-    const $ = load(response.data);
+    const cookie = getHeaders().cookie || [...response.headers.getSetCookie().map((c) => c.split(';', 1)[0]), `x-waf-captcha-referer=${link}`].join('; ');
+    const $ = load(response._data);
     const title = $('.info-stuff-nickname').text();
 
     const list = $('.pandect-content-stuff')
@@ -62,24 +59,29 @@ async function handler(ctx) {
             };
         });
 
-    const out = await Promise.all(
-        list.map((item) =>
+    const out = await pMap(
+        list,
+        (item) =>
             cache.tryGet(item.link!, async () => {
-                const response = await got(item.link, {
-                    headers: getHeaders(),
+                const response = await ofetch(item.link!, {
+                    headers: {
+                        cookie,
+                    },
                 });
-                const $ = load(response.data);
+                const $ = load(response);
                 item.description = $('article.txt-detail').html();
-                item.pubDate = timezone(parseDate($('.time').first().text().trim().replace('更新时间：', '')), 8);
+                item.pubDate = timezone(parseDate($('.time').text().replace('更新时间：', '')), 8);
                 item.author = title;
 
                 return item;
-            })
-        )
+            }),
+        { concurrency: 3 }
     );
 
     return {
         title: `${title}的爆料 - 什么值得买`,
+        description: $('.info-stuff-words div').text(),
+        image: `https:${$('.avatar-img').attr('src')}`,
         link,
         item: out,
     };

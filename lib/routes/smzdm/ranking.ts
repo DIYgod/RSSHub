@@ -1,9 +1,6 @@
-import { config } from '@/config';
-import ConfigNotFoundError from '@/errors/types/config-not-found';
 import type { Route } from '@/types';
 import { ViewType } from '@/types';
 import got from '@/utils/got';
-import timezone from '@/utils/timezone';
 
 import { getHeaders } from './utils';
 
@@ -206,6 +203,7 @@ export const route: Route = {
         requireConfig: [
             {
                 name: 'SMZDM_COOKIE',
+                optional: true,
                 description: '什么值得买登录后的 Cookie 值',
             },
         ],
@@ -221,10 +219,6 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    if (!config.smzdm.cookie) {
-        throw new ConfigNotFoundError('什么值得买排行榜 is disabled due to the lack of SMZDM_COOKIE');
-    }
-
     const { rank_type, rank_id, hour } = ctx.req.param();
 
     // When the hour is 3, some special rank_id require a special hour num
@@ -232,6 +226,7 @@ async function handler(ctx) {
 
     const response = await got('https://www.smzdm.com/top/json_more', {
         headers: {
+            accept: 'application/json, text/javascript, */*; q=0.01',
             Referer: 'https://www.smzdm.com/top',
             ...getHeaders(),
         },
@@ -252,7 +247,6 @@ async function handler(ctx) {
         item: list.map((item) => ({
             title: `${item.article_title} - ${item.article_price}`,
             description: `${item.article_title} - ${item.article_price}<br><img src="${item.article_pic}">`,
-            pubDate: timezone(item.article_pubdate, 8),
             link: item.article_url,
         })),
     };

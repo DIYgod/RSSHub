@@ -21,7 +21,7 @@ const generateWTsfp = (url: string) => {
         loadts: now,
         fingerprint,
         abnormal: '0'.repeat(32),
-        referer: encodeURIComponent('https://www.mafengwo.cn/'),
+        referer: encodeURIComponent(`${new URL(url).origin}/`),
         uri: encodeURIComponent(url),
         checksum: md5(url + fingerprint + salt + now),
     });
