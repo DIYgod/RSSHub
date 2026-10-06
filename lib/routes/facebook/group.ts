@@ -9,7 +9,7 @@ import { baseUrl, fetchStories, storiesToItems } from './utils';
 export const route: Route = {
     path: '/group/:id',
     categories: ['social-media'],
-    example: '/facebook/group/nodejs',
+    example: '/facebook/group/613870175328566',
     parameters: { id: 'Group ID or group username' },
     features: {
         requireConfig: [

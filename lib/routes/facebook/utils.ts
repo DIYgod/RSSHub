@@ -97,7 +97,7 @@ const renderText = (message: any) => {
     const chars = [...message.text];
     let html = '';
     let position = 0;
-    const ranges = message.ranges.toSorted((a: any, b: any) => a.offset - b.offset);
+    const ranges = (message.ranges ?? []).toSorted((a: any, b: any) => a.offset - b.offset);
     for (const range of ranges) {
         const url = range.entity?.external_url ?? range.entity?.url;
         if (!url || range.offset < position) {
@@ -109,10 +109,35 @@ const renderText = (message: any) => {
     return `<p>${(html + chars.slice(position).join('')).replaceAll('\n', '<br>')}</p>`;
 };
 
+const blockTags: Record<string, string> = { HEADER_ONE: 'h1', HEADER_TWO: 'h2', HEADER_THREE: 'h3', BLOCKQUOTE: 'blockquote', UNORDERED_LIST_ITEM: 'li', ORDERED_LIST_ITEM: 'li' };
+const inlineTags: Record<string, string> = { BOLD: 'b', ITALIC: 'i', UNDERLINE: 'u', STRIKETHROUGH: 's' };
+
+const renderRichBlock = (block: any) => {
+    const chars = [...block.text];
+    const marks = block.inline_style_ranges
+        .flatMap((range: any) => {
+            const tag = inlineTags[range.inline_style];
+            return tag
+                ? [
+                      { at: range.offset, html: `<${tag}>` },
+                      { at: range.offset + range.length, html: `</${tag}>` },
+                  ]
+                : [];
+        })
+        .toSorted((a: any, b: any) => b.at - a.at || Number(a.html.startsWith('</')) - Number(b.html.startsWith('</')));
+    for (const mark of marks) {
+        chars.splice(mark.at, 0, mark.html);
+    }
+    const tag = blockTags[block.block_type] ?? 'p';
+    return `<${tag}>${chars.join('')}</${tag}>`;
+};
+
 const renderStory = (story: any) => {
-    const message = story.comet_sections.message?.story.message;
+    const section = story.comet_sections.message;
+    const message = section?.story.message ?? story.message;
+    const text = section?.rich_message ? section.rich_message.map((block: any) => renderRichBlock(block)).join('') : message ? renderText(message) : '';
     const attachments = story.attachments.map((attachment: any) => renderAttachment(attachment.styles.attachment)).join('');
-    return { text: message?.text as string | undefined, html: (message ? renderText(message) : '') + attachments };
+    return { text: message?.text as string | undefined, html: text + attachments };
 };
 
 export const fetchStories = async (friendlyName: string, docId: string, variables: Record<string, unknown>, limit: number) => {
