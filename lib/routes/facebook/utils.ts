@@ -136,25 +136,31 @@ export const fetchStories = async (friendlyName: string, docId: string, variable
     let pageInfo = { has_next_page: true, end_cursor: null as string | null };
     while (pageInfo.has_next_page && stories.length < limit) {
         // oxlint-disable-next-line no-await-in-loop - depends on previous response for cursor
-        const text = await ofetch(`${baseUrl}/api/graphql/`, {
-            method: 'POST',
-            headers: { 'x-fb-lsd': lsd, 'accept-language': 'en-US', ...(cookie && { cookie }) },
-            body: new URLSearchParams({
-                lsd,
-                jazoest,
-                ...(dtsg && { fb_dtsg: dtsg }),
-                fb_api_req_friendly_name: friendlyName,
-                variables: JSON.stringify({
-                    ...providerVariables,
-                    ...variables,
-                    count: 3,
-                    cursor: pageInfo.end_cursor,
-                    scale: 1,
-                    useDefaultActor: false,
+        const text = (await cache.tryGet(
+            `facebook:${friendlyName}:${variables.id}:${pageInfo.end_cursor ?? ''}`,
+            () =>
+                ofetch(`${baseUrl}/api/graphql/`, {
+                    method: 'POST',
+                    headers: { 'x-fb-lsd': lsd, 'accept-language': 'en-US', ...(cookie && { cookie }) },
+                    body: new URLSearchParams({
+                        lsd,
+                        jazoest,
+                        ...(dtsg && { fb_dtsg: dtsg }),
+                        fb_api_req_friendly_name: friendlyName,
+                        variables: JSON.stringify({
+                            ...providerVariables,
+                            ...variables,
+                            count: 3,
+                            cursor: pageInfo.end_cursor,
+                            scale: 1,
+                            useDefaultActor: false,
+                        }),
+                        doc_id: docId,
+                    }),
                 }),
-                doc_id: docId,
-            }),
-        });
+            pageInfo.end_cursor ? config.cache.contentExpire : config.cache.routeExpire,
+            !!pageInfo.end_cursor
+        )) as string;
 
         const lines = text.split('\n');
         let next;
