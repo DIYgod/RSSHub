@@ -18748,6 +18748,50 @@ export default {
     "url": "www.iwara.tv",
     "lang": "en"
   },
+  "ixigua": {
+    "routes": {
+      "/user/video/:uid/:disableEmbed?": {
+        "path": "/user/video/:uid/:disableEmbed?",
+        "categories": [
+          "multimedia"
+        ],
+        "example": "/ixigua/user/video/4234740937",
+        "parameters": {
+          "uid": "用户 id, 可在用户主页中找到",
+          "disableEmbed": "默认为开启内嵌视频, 任意值为关闭"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "ixigua.com/home/:uid",
+              "m.ixigua.com/user/:uid"
+            ],
+            "target": "/user/video/:uid"
+          }
+        ],
+        "name": "用户视频投稿",
+        "maintainers": [
+          "FlashWingShadow",
+          "Fatpandac",
+          "pseudoyu"
+        ],
+        "location": "user-video.tsx",
+        "module": () => import('@/routes/ixigua/user-video.tsx')
+      }
+    },
+    "apiRoutes": {},
+    "name": "西瓜视频",
+    "url": "ixigua.com",
+    "lang": "zh-CN"
+  },
   "javtrailers": {
     "routes": {
       "/casts/:cast": {
@@ -75774,49 +75818,6 @@ export default {
     "categories": [
       "government"
     ]
-  },
-  "ixigua": {
-    "routes": {
-      "/user/video/:uid/:disableEmbed?": {
-        "path": "/user/video/:uid/:disableEmbed?",
-        "categories": [
-          "multimedia"
-        ],
-        "example": "/ixigua/user/video/4234740937",
-        "parameters": {
-          "uid": "用户 id, 可在用户主页中找到",
-          "disableEmbed": "默认为开启内嵌视频, 任意值为关闭"
-        },
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "radar": [
-          {
-            "source": [
-              "ixigua.com/home/:uid"
-            ],
-            "target": "/user/video/:uid"
-          }
-        ],
-        "name": "用户视频投稿",
-        "maintainers": [
-          "FlashWingShadow",
-          "Fatpandac",
-          "pseudoyu"
-        ],
-        "location": "user-video.tsx",
-        "module": () => import('@/routes/ixigua/user-video.tsx')
-      }
-    },
-    "apiRoutes": {},
-    "name": "西瓜视频",
-    "url": "ixigua.com",
-    "lang": "zh-CN"
   },
   "j-test": {
     "routes": {

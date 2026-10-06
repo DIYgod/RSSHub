@@ -5431,6 +5431,20 @@
       }
     ]
   },
+  "ixigua.com": {
+    "_name": "西瓜视频",
+    ".": [
+      {
+        "title": "用户视频投稿",
+        "docs": "https://docs.rsshub.app/routes/multimedia",
+        "source": [
+          "/home/:uid",
+          "/user/:uid"
+        ],
+        "target": "/ixigua/user/video/:uid"
+      }
+    ]
+  },
   "javtrailers.com": {
     "_name": "JavTrailers",
     ".": [
@@ -26265,19 +26279,6 @@
           "/zxxw/"
         ],
         "target": "/itsec/news"
-      }
-    ]
-  },
-  "ixigua.com": {
-    "_name": "西瓜视频",
-    ".": [
-      {
-        "title": "用户视频投稿",
-        "docs": "https://docs.rsshub.app/routes/multimedia",
-        "source": [
-          "/home/:uid"
-        ],
-        "target": "/ixigua/user/video/:uid"
       }
     ]
   },

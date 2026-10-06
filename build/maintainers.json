@@ -1451,6 +1451,11 @@
   "/iwara/subscriptions": [
     "FeCCC"
   ],
+  "/ixigua/user/video/:uid/:disableEmbed?": [
+    "FlashWingShadow",
+    "Fatpandac",
+    "pseudoyu"
+  ],
   "/javtrailers/casts/:cast": [
     "TonyRL"
   ],
@@ -5609,11 +5614,6 @@
   ],
   "/itsec/news": [
     "ch3n4y"
-  ],
-  "/ixigua/user/video/:uid/:disableEmbed?": [
-    "FlashWingShadow",
-    "Fatpandac",
-    "pseudoyu"
   ],
   "/j-test/news": [
     "kuhahku"
