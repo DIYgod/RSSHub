@@ -266,7 +266,7 @@ async function handler(ctx) {
             description_element = '.pre-box .clearfix';
             authorisme = '茂名市人力资源和社会保障局网站';
             pubDate_element = '.pre-box > *:nth-child(3)';
-            pubDate_match = '发布时间:(.*) ';
+            pubDate_match = '发布时间:(.*)\u{A0}';
             break;
         case 'zrzyj':
             list_element = '.ul li a[href*="content"]';
@@ -322,7 +322,7 @@ async function handler(ctx) {
             description_element = '.lien > table > tbody > tr:nth-child(4)';
             authorisme = '茂名市农业农村局';
             pubDate_element = '.lien > table > tbody > tr:nth-child(2)';
-            pubDate_match = '日期：(.*)   点击数';
+            pubDate_match = '日期：(.*)\u{A0}\u{A0}\u{A0}点击数';
             break;
         case 'lyj':
             list_element = path[2] === undefined ? '#main-slide .changeDiv a, .lycneter_all a[href*="content"]' : '.r_text a';
@@ -330,7 +330,7 @@ async function handler(ctx) {
             description_element = '.time_r + div';
             authorisme = '茂名市林业局';
             pubDate_element = '.time_r';
-            pubDate_match = '发布时间：(.*)   文章来源';
+            pubDate_match = '发布时间：(.*)\u{A0}\u{A0}\u{A0}文章来源';
             break;
         case 'mmswj':
             list_element = path[2] === undefined ? 'div[id^="con_three_"] a, .pt6 a[href*="content"]' : '#main21l_main_dk > table a';
@@ -347,7 +347,7 @@ async function handler(ctx) {
             description_element = '.text-body';
             authorisme = '茂名市文化广电旅游体育局';
             pubDate_element = '.text-title p';
-            pubDate_match = '最后更新： (.*)    来源';
+            pubDate_match = '最后更新：\u{2002}(.*)\u{2002}\u{2002}\u{2002}\u{2002}来源';
             break;
         case 'wsjkj':
             list_element = path[2] === undefined ? '.tbv_mn a' : '.news_list a';
@@ -392,7 +392,7 @@ async function handler(ctx) {
             description_element = '#mmhygs';
             authorisme = '茂名市政务服务网';
             pubDate_element = '.HTime';
-            pubDate_match = '发布日期：(.*)   点击率';
+            pubDate_match = '发布日期：(.*)\u{A0}\u{A0}\u{A0}点击率';
             break;
         default:
             throw new Error(`Unknown path[1]: ${path[1]}`);

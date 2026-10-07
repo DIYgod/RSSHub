@@ -67,7 +67,7 @@ async function handler(ctx) {
                         .contents()
                         .filter((_, el) => el.type === 'text')
                         .text()
-                        .split('　');
+                        .split('\u{3000}');
                     item.pubDate = timezone(parseDate(info[0], 'YYYY年MM月DD日 HH:mm'), 8);
                     item.author = info[1] + content('a.source').text();
                 }
