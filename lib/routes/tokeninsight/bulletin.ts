@@ -10,8 +10,7 @@ const title = 'TokenInsight';
 const link = 'https://www.tokeninsight.com/';
 const get_articles = async () => {
     const url = `${baseURL}api/bulletin/selectBulletinList`;
-    const response = (await got.get(url)).data;
-    const { data } = response;
+    const { data } = (await got.get(url)).data;
     return data;
 };
 

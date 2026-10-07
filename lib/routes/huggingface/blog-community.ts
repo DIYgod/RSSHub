@@ -78,9 +78,7 @@ interface CommunityBlogApiResponse {
 
 async function handler(ctx) {
     const { sort = 'trending' } = ctx.req.param();
-    const response = await ofetch<CommunityBlogApiResponse>(`https://huggingface.co/api/blog/community?sort=${sort}`);
-
-    const { posts } = response;
+    const { posts } = await ofetch<CommunityBlogApiResponse>(`https://huggingface.co/api/blog/community?sort=${sort}`);
 
     const lists = posts.map((item) => ({
         title: item.title,

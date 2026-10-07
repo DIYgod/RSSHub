@@ -42,8 +42,7 @@ export const fetchContentItems = async (streamIds, limit) => {
     return Promise.all(
         list.map((item) =>
             cache.tryGet(item.link!, async () => {
-                const response = await ofetch(`${contentPageUrl}/${item.seoKey}`);
-                const { data } = response;
+                const { data } = await ofetch(`${contentPageUrl}/${item.seoKey}`);
 
                 item.description = data.pageInfo.structuredContent.map((c) => c.content).join('');
                 item.image = data.contentInfo.coverImage;

@@ -143,14 +143,13 @@ const generateZseCk = async (url: string, apiPath: string, configuredDc0: string
         headers,
         parseResponse: (text) => text,
     });
-    const dom = new JSDOM(`<!doctype html><html><head><meta id="zh-zse-ck" content="${meta}"><script data-assets-tracker-config='{"appName":"zse_ck"}'></script></head><body></body></html>`, {
+    const { window } = new JSDOM(`<!doctype html><html><head><meta id="zh-zse-ck" content="${meta}"><script data-assets-tracker-config='{"appName":"zse_ck"}'></script></head><body></body></html>`, {
         url,
         referrer: 'https://www.zhihu.com/',
         runScripts: 'outside-only',
         pretendToBeVisual: true,
         virtualConsole: new VirtualConsole(),
     });
-    const { window } = dom;
     Object.defineProperties(window.navigator, {
         userAgent: { value: ua, configurable: true },
         webdriver: { value: false, configurable: true },

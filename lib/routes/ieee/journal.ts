@@ -26,8 +26,7 @@ async function handler(ctx) {
     const publicationNumber = ctx.req.param('punumber');
     const earlyAccess = !!ctx.req.param('earlyAccess');
 
-    const metadata = await fetchMetadata(publicationNumber);
-    const { displayTitle, currentIssue, preprintIssue, coverImagePath } = metadata;
+    const { displayTitle, currentIssue, preprintIssue, coverImagePath } = await fetchMetadata(publicationNumber);
     const { issueNumber, volume } = earlyAccess ? preprintIssue : currentIssue;
 
     const tocData = await fetchTOCData(publicationNumber, issueNumber);

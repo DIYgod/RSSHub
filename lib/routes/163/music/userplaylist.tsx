@@ -63,9 +63,7 @@ async function handler(ctx) {
 
     const playlist = response._data.playlist || [];
 
-    const creator = (playlist[0] || {}).creator;
-
-    const { nickname, signature, avatarUrl } = creator;
+    const { nickname, signature, avatarUrl } = (playlist[0] || {}).creator;
 
     return {
         title: `${nickname} 的所有歌单`,

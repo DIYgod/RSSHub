@@ -117,12 +117,11 @@ async function getToken(): Promise<string> {
         return cacheToken;
     }
 
-    const payload = (
+    const { token, expires } = (
         await ofetch(new URL('auths/token/get', BASE_URL).href, {
             headers: COMMON_HEADERS,
         })
     ).payload;
-    const { token, expires } = payload;
     if (!token) {
         throw new Error('Failed to get token');
     }

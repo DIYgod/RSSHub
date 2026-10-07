@@ -50,9 +50,7 @@ export const route: Route = {
 };
 
 async function handler() {
-    const response = await ofetch<BlogApiResponse>('https://huggingface.co/api/blog');
-
-    const { allBlogs } = response;
+    const { allBlogs } = await ofetch<BlogApiResponse>('https://huggingface.co/api/blog');
 
     const lists = allBlogs.map((blog) => ({
         title: blog.title,
