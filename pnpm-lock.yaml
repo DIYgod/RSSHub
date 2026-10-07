@@ -144,8 +144,8 @@ importers:
         specifier: 0.7.3
         version: 0.7.3
       imapflow:
-        specifier: 2.2.1
-        version: 2.2.1
+        specifier: 2.2.4
+        version: 2.2.4
       ioredis:
         specifier: 6.0.0
         version: 6.0.0
@@ -4474,8 +4474,8 @@ packages:
     resolution: {integrity: sha512-brTTsvFRt5C1gGHtPst/281UjPD5t9fBqbgoMPlVWy11ZLTPfu7HxK4ZYqO9H7o/yC9rSTCI85EaQ4OoY12qYw==}
     engines: {node: '>= 4'}
 
-  imapflow@2.2.1:
-    resolution: {integrity: sha512-d7/sRGEtexA8e0Y71sN0rKfB2yWgZMHY8JqCbk17arRLGicjX1LpBuxPH+wowOIA5sVWs7U//B6S+mKfrBtT6w==}
+  imapflow@2.2.4:
+    resolution: {integrity: sha512-+bPRoCs7qMGys74jVkQW94FmBPiXLflo/AKmArriu0L/MjnrcT4hZNaykiGFuuHACoTg03OyQghRYdgnD+KlGw==}
     engines: {node: '>=20.0.0'}
 
   import-without-cache@0.4.0:
@@ -9867,7 +9867,7 @@ snapshots:
 
   ignore@7.0.9: {}
 
-  imapflow@2.2.1:
+  imapflow@2.2.4:
     dependencies:
       '@zone-eu/mailsplit': 5.4.19
       encoding-japanese: 2.4.0
