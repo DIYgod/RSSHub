@@ -14256,7 +14256,7 @@
         docs:"https://docs.rsshub.app/routes/multimedia",
         source:[ "/en" ],
         target:"/musify/en" },
-      { title:"​​Последняя",
+      { title:"Последняя",
         docs:"https://docs.rsshub.app/routes/multimedia",
         source:[ "/" ],
         target:"/musify/" } ] },

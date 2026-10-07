@@ -86770,7 +86770,7 @@ export default {
             "target": "/en"
           },
           {
-            "title": "​​Последняя",
+            "title": "Последняя",
             "source": [
               "musify.club"
             ],
