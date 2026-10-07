@@ -206,6 +206,7 @@
         // "unicorn-js/no-chained-comparison": "error", off, handled by oxc/bad-comparison-sequence
         // "unicorn-js/no-collection-bracket-access": "error", off, handled by tsc
         "unicorn-js/no-computed-property-existence-check": "error",
+        "unicorn-js/no-conflicting-constraints": "error",
         "unicorn-js/no-confusing-array-splice": "error",
         "unicorn/no-confusing-array-with": "error",
         "unicorn/no-console-spaces": "error",
@@ -224,16 +225,28 @@
         "unicorn-js/no-global-object-property-assignment": "error",
         "unicorn/no-immediate-mutation": "error",
         "unicorn-js/no-impossible-length-comparison": "error",
+        "unicorn-js/no-incomplete-accessor-override": "error",
         "unicorn-js/no-incorrect-query-selector": "error",
         // "unicorn-js/no-incorrect-template-string-interpolation": "error", // unopinionated, too many false positives in v68
+        "unicorn-js/no-ineffective-csp-directives": "error",
         "unicorn/no-instanceof-builtins": "error",
         // "unicorn-js/no-invalid-argument-count": "error", off, handled by tsc
+        "unicorn-js/no-invalid-boolean-attribute-value": "error",
         // "unicorn-js/no-invalid-character-comparison": "error", off, handled by oxc/bad-char-at-comparison
+        "unicorn-js/no-invalid-dom-token": "error",
         "unicorn/no-invalid-fetch-options": "error",
+        "unicorn-js/no-invalid-integrity": "error",
+        "unicorn-js/no-invalid-intl-options": "error",
+        "unicorn-js/no-invalid-property-descriptor": "error",
         "unicorn/no-invalid-remove-event-listener": "error",
+        "unicorn-js/no-invalid-response-options": "error",
+        "unicorn-js/no-invalid-style-set-property": "error",
+        "unicorn-js/no-invalid-temporal-arithmetic": "error",
+        "unicorn-js/no-invalid-url-protocol-comparison": "error",
         "unicorn-js/no-invalid-well-known-symbol-methods": "error",
         "unicorn-js/no-late-current-target-access": "error",
         "unicorn-js/no-late-event-control": "error",
+        "unicorn-js/no-leading-empty-lines": "error",
         "unicorn/no-lonely-if": "error",
         "unicorn-js/no-loop-iterable-mutation": "error",
         "unicorn/no-magic-array-flat-depth": "error",
@@ -256,6 +269,7 @@
         // "unicorn/no-object-as-default-parameter": "error",
         "unicorn-js/no-object-methods-with-collections": "error",
         "unicorn-js/no-optional-chaining-on-undeclared-variable": "error",
+        "unicorn-js/no-prevent-default-in-passive-listener": "error",
         // "unicorn/no-process-exit": "error",
         "unicorn-js/no-redundant-comparison": "error",
         "unicorn-js/no-return-array-push": "error",
@@ -281,6 +295,7 @@
         "unicorn-js/no-unnecessary-fetch-options": "error",
         "unicorn-js/no-unnecessary-global-this": "error",
         "unicorn-js/no-unnecessary-nested-ternary": "error",
+        // "unicorn-js/no-unnecessary-parameters": "error", warn
         "unicorn-js/no-unnecessary-polyfills": "error",
         "unicorn/no-unnecessary-slice-end": "error",
         "unicorn-js/no-unnecessary-splice": "error",
@@ -290,12 +305,14 @@
         "unicorn/no-unreadable-iife": "error",
         "unicorn-js/no-unreadable-object-destructuring": "error",
         "unicorn-js/no-unsafe-buffer-conversion": "error",
+        "unicorn-js/no-unsafe-json-serialization": "error",
         // "unicorn-js/no-unsafe-promise-all-settled-values": "error", off, handled by tsc
         "unicorn-js/no-unsafe-property-key": "error",
         // "unicorn-js/no-unsafe-sqlite-interpolation": "error", // unused
         "unicorn-js/no-unsafe-string-replacement": "error",
         "unicorn-js/no-unused-builtin-method-return": "error",
         "unicorn-js/no-unused-iterator-helper": "error",
+        "unicorn-js/no-url-in-search-params": "error",
         "unicorn-js/no-useless-boolean-cast": "error",
         // "unicorn-js/no-useless-coercion": "error", off, handled by @typescript-eslint/no-unnecessary-type-conversion
         "unicorn/no-useless-collection-argument": "error",
@@ -362,6 +379,7 @@
         "unicorn/prefer-dom-node-text-content": "error",
         "unicorn-js/prefer-early-return": "error",
         "unicorn-js/prefer-else-if": "error",
+        "unicorn-js/prefer-escaped-irregular-whitespace": "error",
         "unicorn/prefer-event-target": "error",
         "unicorn/prefer-export-from": "error",
         "unicorn-js/prefer-flat-math-min-max": "error",
@@ -381,6 +399,7 @@
         "unicorn-js/prefer-iterator-zip": "error",
         // "unicorn-js/prefer-iterator-to-array-at-end": "error",
         // "unicorn/prefer-keyboard-event-key": "error", // unused
+        "unicorn-js/prefer-literal-ascii": "error",
         "unicorn-js/prefer-location-assign": "error",
         "unicorn/prefer-logical-operator-over-ternary": "error",
         "unicorn-js/prefer-map-from-entries": "error",
@@ -406,6 +425,7 @@
         "unicorn/prefer-optional-catch-binding": "error",
         // "unicorn-js/prefer-path2d": "error", // unused
         "unicorn-js/prefer-private-class-fields": "error",
+        "unicorn-js/prefer-promise-static-methods": "error",
         "unicorn-js/prefer-promise-try": "error",
         "unicorn-js/prefer-promise-with-resolvers": "error",
         "unicorn/prefer-prototype-methods": "error",
@@ -419,6 +439,7 @@
         "unicorn-js/prefer-set-methods": "error",
         "unicorn/prefer-set-size": "error",
         "unicorn-js/prefer-short-arrow-method": "warn",
+        "unicorn-js/prefer-short-escape-sequences": "error",
         // "unicorn-js/prefer-simple-condition-first": "error", // unopinionated
         "unicorn-js/prefer-simple-sort-comparator": "error",
         "unicorn-js/prefer-simplified-conditions": "error",
@@ -463,6 +484,7 @@
         "unicorn/require-number-to-fixed-digits-argument": "error",
         "unicorn-js/require-passive-events": "error",
         // "unicorn-js/require-proxy-trap-boolean-return": "error", off, handled by tsc
+        "unicorn-js/require-text-decoder-streaming": "error",
         // "unicorn-js/single-line-block-comment-style": "error",
         // "unicorn/switch-case-braces": "error",
         "unicorn-js/switch-case-break-position": "error",
@@ -722,6 +744,7 @@
         "unicorn/no-null": "off",
         "unicorn/no-object-as-default-parameter": "warn",
         "unicorn/no-process-exit": "off",
+        "unicorn-js/no-unnecessary-parameters": "warn",
         "unicorn/no-useless-iterator-to-array": "off",
         "unicorn/no-useless-switch-case": "off",
 

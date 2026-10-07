@@ -204,8 +204,8 @@ function derDecode(der: Buffer): DerSignature {
     }
 
     return {
-        r: fixBufferLength(r, 32),
-        s: fixBufferLength(s, 32),
+        r: fixBufferLength(r),
+        s: fixBufferLength(s),
     };
 }
 
@@ -226,7 +226,8 @@ function readDerLength(buf: Buffer, offset: number): DerLength {
     return { length, bytesRead: 1 + bytesCount };
 }
 
-function fixBufferLength(buffer: Buffer, length: number): Buffer {
+function fixBufferLength(buffer: Buffer): Buffer {
+    const length = 32;
     if (buffer.length > length) {
         const start = buffer.length - length;
         return buffer.subarray(start);

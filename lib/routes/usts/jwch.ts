@@ -51,7 +51,7 @@ async function handler(ctx) {
 
                 let author: string | null = null;
                 let pubDate: string | null = null;
-                for (const item of content('div.content-title.fl > i').text().split('  ')) {
+                for (const item of content('div.content-title.fl > i').text().split('\u{A0}\u{A0}')) {
                     if (item.includes('作者：')) {
                         author = item.split('：', 2)[1];
                     }

@@ -84,9 +84,9 @@ async function handler(ctx) {
         )
     );
 
-    const resultItems = [];
+    const resultItems: Array<ReturnType<typeof weiboUtils.formatExtended>> = [];
 
-    function handleCard(ctx, card, resultItems) {
+    function handleCard(card) {
         if (card.card_type !== '9' || !('mblog' in card)) {
             return;
         }
@@ -95,12 +95,12 @@ async function handler(ctx) {
     }
     const cards = containerData?.cards ?? [];
     for (const card of cards) {
-        handleCard(ctx, card, resultItems);
+        handleCard(card);
         if (!('card_group' in card)) {
             continue;
         }
         for (const mblogCard of card.card_group!) {
-            handleCard(ctx, mblogCard, resultItems);
+            handleCard(mblogCard);
         }
     }
 

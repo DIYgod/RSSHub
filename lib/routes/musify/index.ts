@@ -128,7 +128,7 @@ To subscribe to [Latest](https://musify.club/en), where the source URL is \`http
             target: '/en',
         },
         {
-            title: '​​Последняя',
+            title: 'Последняя',
             source: ['musify.club'],
             target: '/',
         },
