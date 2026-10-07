@@ -183,7 +183,20 @@ async function handler(ctx) {
                             : undefined
                         : timezone(parseDate(dateMatch[1]), 8);
 
-                const description = content('.all-txt').html() || content('.article-txt-content').html();
+                // `_s.shtml` is the full text on a single page and only exists for multi-page
+                // articles; requesting it for a single-page article redirects to the homepage.
+
+                let description = content('.all-txt').html() || content('.article-txt-content').html();
+
+                if (item.link.endsWith('.shtml') && content('.module-page').length > 0) {
+                    const fullResponse = await got({
+                        method: 'get',
+                        url: `${item.link.replace(/\.shtml$/, '')}_s.shtml`,
+                    });
+
+                    description = load(fullResponse.data)('.all-txt').html() || description;
+                }
+
                 const author = content('.author-intro p a').text() || content('.article-content div div h4 a').text() || content('.editor-intro p a').text() || content('.left-main > div.time.fix > span').eq(2).text();
                 return { description, pubDate, author, link: jumpMatch ? `https://user.guancha.cn/main/content?id=${jumpMatch[1]}&page=0` : item.link };
             });

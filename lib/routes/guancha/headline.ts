@@ -64,8 +64,23 @@ async function handler() {
 
                 const content = load(detailResponse.data);
 
+                // Guancha only serves the `_s.shtml` variant (the full text on a single page) for
+                // multi-page articles. Single-page articles have no such variant, and requesting it
+                // redirects to the homepage.
+
+                let description = content('.all-txt').html();
+
+                if (item.link.endsWith('.shtml') && content('.module-page').length > 0) {
+                    const fullResponse = await got({
+                        method: 'get',
+                        url: `${item.link.replace(/\.shtml$/, '')}_s.shtml`,
+                    });
+
+                    description = load(fullResponse.data)('.all-txt').html() ?? description;
+                }
+
                 return {
-                    description: content('.all-txt').html(),
+                    description,
                     author: content('.author-intro p a').text() || content('.editor-intro p a').text() || undefined,
                 };
             });
