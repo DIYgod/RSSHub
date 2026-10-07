@@ -46,9 +46,7 @@ const getCookie = (disableConfig = false) => {
 
     const key = 'bili-cookie';
     return cache.tryGet(key, async () => {
-        let waitForRequest = new Promise<string>((resolve) => {
-            resolve('');
-        });
+        let waitForRequest = Promise.resolve('');
         const { destroy } = await getPlaywrightPage('https://space.bilibili.com/1/dynamic', {
             onBeforeLoad: (page) => {
                 waitForRequest = new Promise<string>((resolve) => {
