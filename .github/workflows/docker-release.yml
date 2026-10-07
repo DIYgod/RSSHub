@@ -50,7 +50,9 @@ jobs:
               # PERCENT=100 is safe: https://fedoraproject.org/wiki/Changes/Scale_ZRAM_to_full_memory_size
               run: |
                   sudo apt-get update -yq
-                  sudo apt-get install -yq "linux-modules-extra-$(uname -r)" zram-tools
+                  sudo apt-get install -yq zram-tools
+                  # TODO: remove when runner is 26.0
+                  modinfo zram > /dev/null 2>&1 || sudo apt-get install -yq "linux-modules-extra-$(uname -r)"
                   echo -e 'ALGO=zstd\nPERCENT=100' | sudo tee -a /etc/default/zramswap
                   sudo systemctl restart zramswap
                   swapon
