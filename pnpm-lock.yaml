@@ -313,8 +313,8 @@ importers:
         specifier: 0.5.4
         version: 0.5.4
       '@mswjs/interceptors':
-        specifier: 0.45.6
-        version: 0.45.6
+        specifier: 0.45.7
+        version: 0.45.7
       '@oxlint/plugins':
         specifier: 1.86.0
         version: 1.86.0
@@ -1703,8 +1703,8 @@ packages:
   '@msw/url@0.1.2':
     resolution: {integrity: sha512-DdeBLQxQ+ZrtmwEmaj7GQ7lbzPCgbbbyAqOz/I4ulo68hwBpfdNvQJ5bmihJUkAAKOeCmqCIG3OFZGosqFN4mA==}
 
-  '@mswjs/interceptors@0.45.6':
-    resolution: {integrity: sha512-qdBK6aOT5Qjt+cmU/XcobZjjmrIsdiQRR6hA0LP72uB7CRx+XfAjm8Opvgia8nX9kPOKqp+BKHuzMa1IFPTvyg==}
+  '@mswjs/interceptors@0.45.7':
+    resolution: {integrity: sha512-PPZQBiojRuy1jJQoUqbrJhoac47GC1GwRazDrYwwbE70zfqMkOY/5a+Du4hp3vlPUXLt/um4TMcmRabmooAkxw==}
     engines: {node: '>=22'}
 
   '@napi-rs/lzma-linux-x64-gnu@1.5.1':
@@ -7407,7 +7407,7 @@ snapshots:
 
   '@msw/url@0.1.2': {}
 
-  '@mswjs/interceptors@0.45.6':
+  '@mswjs/interceptors@0.45.7':
     dependencies:
       '@open-draft/until': 3.0.1
       '@types/debug': 4.1.13
@@ -10605,7 +10605,7 @@ snapshots:
     dependencies:
       '@inquirer/confirm': 6.3.2(@types/node@26.6.4)
       '@msw/url': 0.1.2
-      '@mswjs/interceptors': 0.45.6
+      '@mswjs/interceptors': 0.45.7
       cookie: 2.0.1
       headers-polyfill: 5.0.1
       is-node-process: 1.2.0
