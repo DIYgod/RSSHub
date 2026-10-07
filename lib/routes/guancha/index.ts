@@ -107,7 +107,7 @@ async function handler(ctx) {
 
                     return {
                         title: $item.text(),
-                        link: `${link!.startsWith('http') ? '' : rootUrl}${link!.replace(/\.shtml/, '_s.shtml')}`,
+                        link: `${link!.startsWith('http') ? '' : rootUrl}${link!}`,
                     };
                 });
 
@@ -128,7 +128,7 @@ async function handler(ctx) {
         redianList = response.data.items
             .map((item) => ({
                 title: item.TITLE,
-                link: `${rootUrl}${item.HTTP_URL.replace(/\.shtml/, '_s.shtml')}`,
+                link: `${rootUrl}${item.HTTP_URL}`,
             }))
             .slice(0, category === 'all' ? total / 3 : total);
     }
@@ -142,7 +142,7 @@ async function handler(ctx) {
         gundongList = response.data.items
             .map((item) => ({
                 title: item.TITLE,
-                link: `${rootUrl}${item.HTTP_URL.replace(/\.shtml/, '_s.shtml')}`,
+                link: `${rootUrl}${item.HTTP_URL}`,
             }))
             .slice(0, category === 'all' ? total / 3 : total);
     }
@@ -177,7 +177,21 @@ async function handler(ctx) {
                         ? parseRelativeDate(content('.time1').text()) // PubDates of posts in 'fengwen' are in an informal format.
                         : timezone(parseDate(dateMatch[1]), 8);
 
-                item.description = content('.all-txt').html() || content('.article-txt-content').html();
+                // `_s.shtml` is the full text on a single page and only exists for multi-page
+                // articles; requesting it for a single-page article redirects to the homepage.
+
+                let body = content('.all-txt').html() || content('.article-txt-content').html();
+
+                if (item.link.endsWith('.shtml') && content('.module-page').length > 0) {
+                    const fullResponse = await got({
+                        method: 'get',
+                        url: `${item.link.replace(/\.shtml$/, '')}_s.shtml`,
+                    });
+
+                    body = load(fullResponse.data)('.all-txt').html() || body;
+                }
+
+                item.description = body ?? '';
                 item.author = content('.author-intro p a').text() || content('.article-content div div h4 a').text() || content('.editor-intro p a').text() || content('.left-main > div.time.fix > span').eq(2).text();
                 return item;
             })
