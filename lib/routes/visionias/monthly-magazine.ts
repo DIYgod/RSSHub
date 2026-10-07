@@ -65,5 +65,5 @@ async function processNews(page) {
     });
     const newsPromises = await Promise.allSettled(linkItems.map((item) => extractNews(item, 'main > div > div.flex.flex-col> div.flex.flex-col.w-full.mt-10')));
 
-    return newsPromises.flatMap((news) => (news.status === 'fulfilled' ? (Array.isArray(news.value) ? news.value : [news.value]) : [{ title: 'Error Parse News' }]));
+    return newsPromises.flatMap((news) => (news.status === 'fulfilled' ? news.value : { title: 'Error Parse News' }));
 }
