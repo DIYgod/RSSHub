@@ -72,7 +72,7 @@ export async function extractNews(item, selector) {
         const items = sections.toArray().map((element) => {
             const mainDiv = $$(element);
             const title = mainDiv.find('a > div > h2').text().trim();
-            const htmlContent = extractArticle(mainDiv.html(), 'div.ck-content');
+            const htmlContent = extractArticle(mainDiv.html());
             const description = renderDescriptionSub({
                 heading: title,
                 articleContent: htmlContent ?? undefined,
@@ -95,10 +95,10 @@ export async function extractNews(item, selector) {
     });
 }
 
-function extractArticle(articleDiv, selectorString: string = 'div.ck-content') {
+function extractArticle(articleDiv) {
     const $ = load(articleDiv, null, false);
     const articleDiv$ = $(articleDiv);
-    const articleContent = articleDiv$.find(selectorString);
+    const articleContent = articleDiv$.find('div.ck-content');
     articleContent.find('figure').each((_, element) => {
         $(element).css('width', '');
     });

@@ -1,10 +1,10 @@
-/* eslint-disable unicorn/prefer-code-point */
+/* oxlint-disable unicorn/prefer-code-point */
 const decodeCFEmail = (encoded) => {
-    const parseHex = (string, position) => Number.parseInt(string.slice(position, position + 2), 16);
+    const parseHex = (position) => Number.parseInt(encoded.slice(position, position + 2), 16);
     let decoded = '';
-    const key = parseHex(encoded, 0);
+    const key = parseHex(0);
     for (let position = 2; position < encoded.length; position += 2) {
-        const byte = parseHex(encoded, position) ^ key;
+        const byte = parseHex(position) ^ key;
         decoded += String.fromCharCode(byte);
     }
     return decoded;

@@ -305,9 +305,9 @@ const testAntiHotlinkExtra = async (path, expectObj, query?: Record<string, stri
     return parsed;
 };
 
-const expectImgOrigin = async (query?: Record<string, string>) => {
-    await testAntiHotlink('/test/complicated', expects.complicated.origin, query);
-    await testAntiHotlinkExtra('/test/complicated', expects.extraComplicated.origin, query);
+const expectImgOrigin = async () => {
+    await testAntiHotlink('/test/complicated', expects.complicated.origin);
+    await testAntiHotlinkExtra('/test/complicated', expects.extraComplicated.origin);
 };
 const expectImgProcessed = async (query?: Record<string, string>) => {
     await testAntiHotlink('/test/complicated', expects.complicated.processed, query);
