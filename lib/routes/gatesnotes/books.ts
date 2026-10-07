@@ -1,5 +1,6 @@
 import type { Context } from 'hono';
 
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Data, DataItem, Language, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 
@@ -17,6 +18,12 @@ export const handler = async (ctx: Context): Promise<Data> => {
     const { category } = ctx.req.param();
     const limit = Number(ctx.req.query('limit') ?? '30');
 
+    const codename = category?.replaceAll('-', '_');
+    const entry = codename ? (await getTaxonomy())[codename] : undefined;
+    if (category && (!entry || entry.parent !== 'books')) {
+        throw new InvalidParameterError(`Unknown Gates Notes book category "${category}". Valid categories are listed on ${siteUrl}/books`);
+    }
+
     const search = new URLSearchParams({
         'system.type': 'article',
         'elements.book_title[neq]': '',
@@ -27,12 +34,6 @@ export const handler = async (ctx: Context): Promise<Data> => {
     });
 
     const response = await ofetch(`${apiUrl}?${search.toString()}`);
-
-    const codename = category?.replaceAll('-', '_');
-    const entry = codename ? (await getTaxonomy())[codename] : undefined;
-    if (category && (!entry || entry.parent !== 'books')) {
-        throw new Error(`Unknown Gates Notes book category "${category}". Valid categories are listed on ${siteUrl}/books`);
-    }
 
     return {
         title: entry ? `Gates Notes - Book Reviews - ${entry.name}` : 'Gates Notes - Book Reviews',

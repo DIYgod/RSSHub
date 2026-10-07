@@ -1,5 +1,6 @@
 import type { Context } from 'hono';
 
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Data, Language, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 
@@ -11,7 +12,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
     const entry = (await getTaxonomy())[topic.replaceAll('-', '_')];
     if (!entry || (entry.parent !== 'work' && entry.parent !== 'meet_bill')) {
-        throw new Error(`Unknown Gates Notes topic "${topic}". Valid topics are listed on ${siteUrl}/work and ${siteUrl}/meet-bill`);
+        throw new InvalidParameterError(`Unknown Gates Notes topic "${topic}". Valid topics are listed on ${siteUrl}/work and ${siteUrl}/meet-bill`);
     }
 
     const response = await ofetch(apiUrl, {

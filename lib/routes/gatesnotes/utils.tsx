@@ -11,9 +11,9 @@ export const apiUrl = 'https://deliver.kontent.ai/12514eb8-7b51-008e-41a9-512542
 
 const taxonomyUrl = apiUrl.replace(/items$/, 'taxonomies/master_taxonomy');
 
-export const articleElements = ['article_title', 'article_subtitle', 'date', 'byline', 'page_meta_set__keywords', 'page_image_set__thumbnail'].join(',');
+export const articleElements = ['article_title', 'article_subtitle', 'date', 'byline', 'page_taxonomy_set__gn_taxonomy', 'page_image_set__thumbnail'].join(',');
 
-export const bookElements = ['article_title', 'article_subtitle', 'date', 'byline', 'book_title', 'book_author', 'page_meta_set__keywords', 'page_image_set__thumbnail'].join(',');
+export const bookElements = ['article_title', 'article_subtitle', 'date', 'byline', 'book_title', 'book_author', 'page_taxonomy_set__gn_taxonomy', 'page_image_set__thumbnail'].join(',');
 
 type ModularContent = Record<string, any>;
 
@@ -158,10 +158,9 @@ export const mapArticle = async (item, lead = ''): Promise<DataItem> => {
     const title: string = elements.article_title?.value || '';
     const subtitle: string | undefined = elements.article_subtitle?.value || undefined;
     const image: string | undefined = elements.page_image_set__thumbnail?.value?.[0]?.url;
-    const keywords: string = elements.page_meta_set__keywords?.value || '';
-    const categories: string[] = keywords
-        .split(',')
-        .map((keyword) => keyword.trim())
+    const taxonomy = await getTaxonomy();
+    const categories = asArray(elements.page_taxonomy_set__gn_taxonomy?.value)
+        .map((codename) => taxonomy[codename]?.name)
         .filter(Boolean);
     const date: string | undefined = elements.date?.value || undefined;
     const byline: string | undefined = elements.byline?.value || undefined;
