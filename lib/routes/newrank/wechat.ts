@@ -4,7 +4,7 @@ import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { finishArticleItem } from '@/utils/wechat-mp';
+import { finishArticleItem, WeChatMpError } from '@/utils/wechat-mp';
 
 import utils from './utils';
 
@@ -80,7 +80,7 @@ async function handler(ctx) {
     const articles = utils.flatten(response.data.value.articles);
     const newArticles = [...realTimeArticles, ...articles];
 
-    const items = newArticles.map((item) => ({
+    let items = newArticles.map((item) => ({
         id: item.id,
         title: item.title,
         description: '',
@@ -89,7 +89,16 @@ async function handler(ctx) {
     }));
 
     // TODO: link is empty
-    await Promise.all(items.map((item) => completeArticle(item)));
+    const results = await Promise.allSettled(items.map((item) => completeArticle(item)));
+    items = results.flatMap((result) => {
+        if (result.status === 'fulfilled') {
+            return [result.value];
+        }
+        if (result.reason instanceof WeChatMpError && result.reason.message.startsWith('wechat-mp: deleted by author:')) {
+            return [];
+        }
+        throw result.reason;
+    });
 
     return {
         title: name + ' - 微信公众号',
