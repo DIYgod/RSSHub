@@ -150,6 +150,8 @@ For backward compatibility reasons, invalid \`routeParams\` will be treated as \
     handler,
     description: `::: tip
 Due to Telegram restrictions, some channels involving pornography, copyright, and politics cannot be subscribed. You can confirm by visiting \`https://t.me/s/:username\`, it's recommended to deploy your own instance with telegram api configs (create your telegram application via \`https://core.telegram.org/api/obtaining_api_id\`, run this command \`node ./lib/routes/telegram/scripts/get-telegram-session.mjs\` to get \`TELEGRAM_SESSION\` and set it as Environment Variable).
+MTProto connections can use a SOCKS4/5 \`PROXY_URI\` (for example, \`socks5://127.0.0.1:1080\`) or the dedicated \`TELEGRAM_PROXY_HOST\`, \`TELEGRAM_PROXY_PORT\`, and \`TELEGRAM_PROXY_SECRET\` MTProxy settings, which take precedence. HTTP proxies only apply to the public web feed; use a SOCKS or MTProxy endpoint for authenticated MTProto feeds.
+
 When a reverse proxy removes a public URL prefix (for example, \`/rss\`), set its \`X-Forwarded-Prefix\` request header to that prefix so Telegram media links include it. Access-control \`key\` and \`code\` parameters are preserved in these media links.
 :::`,
 };
