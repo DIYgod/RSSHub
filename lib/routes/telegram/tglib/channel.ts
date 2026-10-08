@@ -44,9 +44,12 @@ export function withSearchParams(src: string, params: Record<string, string>) {
     return url.href;
 }
 
-export function getMessageMediaUrl(requestUrl: string, username: string, messageId: number) {
+export function getMessageMediaUrl(requestUrl: string, username: string, messageId: number, forwardedPrefix?: string) {
     const request = new URL(requestUrl);
-    const url = new URL(`/telegram/media/${username}/${messageId}`, request.origin);
+    const channelPathIndex = request.pathname.lastIndexOf('/telegram/channel/');
+    const prefix = forwardedPrefix ?? (channelPathIndex === -1 ? '' : request.pathname.slice(0, channelPathIndex));
+    const url = new URL(request.origin);
+    url.pathname = `${prefix.replace(/\/+$/, '')}/telegram/media/${username}/${messageId}`;
     for (const key of ['key', 'code']) {
         const value = request.searchParams.get(key);
         if (value) {
@@ -176,7 +179,7 @@ export default async function handler(ctx: Context) {
             }
             // messages that have no text are shown as if they're one post
             // because in TG only 1 attachment per message is possible
-            const src = getMessageMediaUrl(ctx.req.url, username!, message.id);
+            const src = getMessageMediaUrl(ctx.req.url, username!, message.id, ctx.req.header('x-forwarded-prefix'));
             attachments.push(getMediaLink(src, media));
         }
         if (message.replyMarkup instanceof Api.ReplyInlineMarkup) {
