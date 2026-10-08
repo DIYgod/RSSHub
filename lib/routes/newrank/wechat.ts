@@ -8,6 +8,14 @@ import { finishArticleItem, WeChatMpError } from '@/utils/wechat-mp';
 
 import utils from './utils';
 
+const hasArticleUrl = (item) => {
+    try {
+        return ['http:', 'https:'].includes(new URL(item.url).protocol);
+    } catch {
+        return false;
+    }
+};
+
 const completeArticle = (item) => (new URL(item.link).hostname === 'mp.weixin.qq.com' ? finishArticleItem(item) : item);
 
 export const route: Route = {
@@ -80,7 +88,11 @@ async function handler(ctx) {
     const articles = utils.flatten(response.data.value.articles);
     const newArticles = [...realTimeArticles, ...articles];
 
-    let items = newArticles.map((item) => ({
+    const accessibleArticles = newArticles.filter((item) => hasArticleUrl(item));
+    if (newArticles.length && !accessibleArticles.length) {
+        throw new Error('Newrank returned articles without usable URLs. Check NEWRANK_COOKIE and whether the account can access article links.');
+    }
+    let items = accessibleArticles.map((item) => ({
         id: item.id,
         title: item.title,
         description: '',
@@ -88,7 +100,6 @@ async function handler(ctx) {
         pubDate: item.publicTime,
     }));
 
-    // TODO: link is empty
     const results = await Promise.allSettled(items.map((item) => completeArticle(item)));
     items = results.flatMap((result) => {
         if (result.status === 'fulfilled') {
