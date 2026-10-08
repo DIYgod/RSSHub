@@ -1,4 +1,5 @@
 /* eslint-disable no-await-in-loop */
+/* oxlint-disable no-await-in-loop */
 import type { Context } from 'hono';
 import { Api } from 'teleproto';
 import { HTMLParser } from 'teleproto/extensions/html.js';
@@ -159,15 +160,34 @@ export default async function handler(ctx: Context) {
     for (const message of messages) {
         let text = message.text; // must not be HTML
 
-        if (message.fwdFrom?.fromId) {
-            const fwdFrom = await client.getEntity(message.fwdFrom.fromId);
-            text = `Forwarded From: ${getDisplayName(fwdFrom)}: ${text}`;
+        if (message.fwdFrom) {
+            let fwdName = message.fwdFrom.fromName;
+            if (message.fwdFrom.fromId) {
+                try {
+                    // oxlint-disable-next-line no-await-in-loop
+                    const fwdFrom = await client.getEntity(message.fwdFrom.fromId);
+                    fwdName = getDisplayName(fwdFrom);
+                } catch {
+                    // Private channel or chat that the session cannot access
+                    fwdName ||= 'Private Channel';
+                }
+            }
+            if (fwdName) {
+                text = `Forwarded From: ${fwdName}: ${text}`;
+            }
         }
         const media = await unwrapMedia(message.media, message.peerId);
         if (message.media instanceof Api.MessageMediaStory && media) {
             // if successfully loaded the story
-            const storyFrom = await client.getEntity(message.media.peer);
-            text = `Story From: ${getDisplayName(storyFrom)}: ${text}`;
+            let storyName = 'Private Peer';
+            try {
+                // oxlint-disable-next-line no-await-in-loop
+                const storyFrom = await client.getEntity(message.media.peer);
+                storyName = getDisplayName(storyFrom);
+            } catch {
+                // Story peer is private or inaccessible to the session
+            }
+            text = `Story From: ${storyName}: ${text}`;
         }
         if (media) {
             if (media instanceof Api.MessageMediaPoll) {
