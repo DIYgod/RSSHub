@@ -1,5 +1,7 @@
 import querystring from 'node:querystring';
 
+import type { Context } from 'hono';
+
 import { config } from '@/config';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
@@ -8,6 +10,17 @@ import { parseDate } from '@/utils/parse-date';
 import { fallback, queryToBoolean } from '@/utils/readable-social';
 
 import weiboUtils from './utils';
+
+const getRedirectUrl = (ctx: Context) => config.weibo.redirect_url || `${new URL(ctx.req.url).origin}/weibo/timeline/0`;
+
+const redirectToAuthorize = (ctx: Context, feature: string | number, routeParams?: string) => {
+    const url = new URL('https://api.weibo.com/oauth2/authorize');
+    url.searchParams.set('client_id', config.weibo.app_key || '');
+    url.searchParams.set('redirect_uri', getRedirectUrl(ctx));
+    url.searchParams.set('state', [feature, routeParams].filter((value) => value !== undefined).join('/'));
+    ctx.header('Cache-Control', 'no-cache');
+    return ctx.redirect(url.href);
+};
 
 export const route: Route = {
     path: '/timeline/:uid/:feature?/:routeParams?',
@@ -94,14 +107,7 @@ async function handler(ctx) {
         );
         // 检查token失效
         if (response.error !== undefined) {
-            const { app_key = '', redirect_url = `${new URL(ctx.req.url).origin}/weibo/timeline/0` } = config.weibo;
-
-            ctx.status = 302;
-            ctx.set({
-                'Cache-Control': 'no-cache',
-            });
-            ctx.set('redirect', `https://api.weibo.com/oauth2/authorize?client_id=${app_key}&redirect_uri=${redirect_url}${routeParams ? `&state=${routeParams}` : ''}`);
-            return;
+            return redirectToAuthorize(ctx, feature, routeParams);
         }
         const resultItem = await Promise.all(
             response.statuses.map(async (item) => {
@@ -166,12 +172,14 @@ async function handler(ctx) {
         });
     }
     if (uid === '0' || ctx.req.query('code')) {
-        const { app_key = '', redirect_url = `${new URL(ctx.req.url).origin}/weibo/timeline/0`, app_secret = '' } = config.weibo;
+        const { app_key = '', app_secret = '' } = config.weibo;
 
         const code = ctx.req.query('code');
         const routeParams = ctx.req.query('state');
         if (code) {
-            const rep = await got.post(`https://api.weibo.com/oauth2/access_token?client_id=${app_key}&client_secret=${app_secret}&code=${code}&redirect_uri=${redirect_url}&grant_type=authorization_code`);
+            const rep = await got.post('https://api.weibo.com/oauth2/access_token', {
+                form: { client_id: app_key, client_secret: app_secret, code, redirect_uri: getRedirectUrl(ctx), grant_type: 'authorization_code' },
+            });
             const token = rep.data.access_token;
             const uid = rep.data.uid;
             const expires_in = rep.data.expires_in;
@@ -180,13 +188,6 @@ async function handler(ctx) {
             ctx.header('Cache-Control', 'no-cache');
             return ctx.redirect(`/weibo/timeline/${uid}${routeParams ? `/${routeParams}` : ''}`);
         }
-    } else {
-        const { app_key = '', redirect_url = `${new URL(ctx.req.url).origin}/weibo/timeline/0` } = config.weibo;
-
-        ctx.status = 302;
-        ctx.set({
-            'Cache-Control': 'no-cache',
-        });
-        ctx.set('redirect', `https://api.weibo.com/oauth2/authorize?client_id=${app_key}&redirect_uri=${redirect_url}${routeParams ? `&state=${feature}/${routeParams.replaceAll('&', '%26')}` : ''}`);
     }
+    return redirectToAuthorize(ctx, feature, routeParams);
 }
