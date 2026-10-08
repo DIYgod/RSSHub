@@ -1,7 +1,8 @@
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
+import { parseDate } from '@/utils/parse-date';
 
-import { doGot, genSize } from './util';
+import { genSize, getApiData } from './util';
 
 export const route: Route = {
     path: '/mv/:number/:domain?',
@@ -38,16 +39,17 @@ async function handler(ctx) {
     }
 
     const host = `https://www.${domain}bt0.com`;
-    const _link = `${host}/prod/core/system/getVideoDetail/${number}`;
-
-    const data = (await doGot(0, host, _link)).data;
+    const data = await getApiData(host, 'getVideoDetail', { id: number });
+    if (data.need_vip && Object.values<any[]>(data.ecca).every((resources) => !resources.length)) {
+        throw new Error('BT0 requires a site subscription to list resources for this movie. The public latest-resources route /bt0/tlist/1 is still available.');
+    }
     const items = Object.values<any[]>(data.ecca).flatMap((item) =>
         item.map((i) => ({
             title: i.zname,
-            guid: i.zname,
-            description: `${i.zname}[${i.zsize}]`,
+            guid: `bt0:resource:${i.id}`,
+            description: `文件大小：${i.zsize}`,
             link: `${host}/tr/${i.id}.html`,
-            pubDate: i.ezt,
+            pubDate: i.ezt ? parseDate(i.ezt, 'X') : undefined,
             enclosure_type: 'application/x-bittorrent',
             enclosure_url: i.zlink,
             enclosure_length: genSize(i.zsize),

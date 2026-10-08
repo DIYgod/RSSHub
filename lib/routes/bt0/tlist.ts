@@ -1,8 +1,8 @@
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
-import { parseRelativeDate } from '@/utils/parse-date';
+import { parseDate, parseRelativeDate } from '@/utils/parse-date';
 
-import { doGot, genSize } from './util';
+import { genSize, getApiData } from './util';
 
 const categoryDict = {
     1: '电影',
@@ -46,15 +46,13 @@ async function handler(ctx) {
     }
 
     const host = `https://www.${domain}bt0.com`;
-    const _link = `${host}/prod/core/system/getTList?sc=${sc}`;
-
-    const data = await doGot(0, host, _link);
-    const items = data.data.list.map((item) => ({
+    const data = await getApiData(host, 'getTList', { sc, page: 1 });
+    const items = data.list.map((item) => ({
         title: item.zname,
-        guid: item.zname,
+        guid: `bt0:resource:${item.id}`,
         description: `《${item.title}》  导演: ${item.daoyan}<br>编剧: ${item.bianji}<br>演员: ${item.yanyuan}<br>简介: ${item.conta.trim()}`,
         link: host + item.aurl,
-        pubDate: item.eztime.endsWith('前') ? parseRelativeDate(item.eztime) : item.eztime,
+        pubDate: item.ezt ? parseDate(item.ezt, 'X') : item.eztime.endsWith('前') ? parseRelativeDate(item.eztime) : item.eztime,
         enclosure_type: 'application/x-bittorrent',
         enclosure_url: item.zlink,
         enclosure_length: genSize(item.zsize),
