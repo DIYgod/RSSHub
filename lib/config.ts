@@ -2,6 +2,9 @@ import 'dotenv/config';
 
 import { ofetch } from 'ofetch';
 
+import type { HostRateLimits } from '@/utils/host-rate-limit';
+import { parseHostRateLimits } from '@/utils/host-rate-limit';
+
 type ConfigEnvKeys =
     // App config
     | 'DISALLOW_ROBOT'
@@ -21,6 +24,7 @@ type ConfigEnvKeys =
     | 'REQUEST_RETRY'
     | 'REQUEST_TIMEOUT'
     | 'REQUEST_AUTO_SELECT_FAMILY'
+    | 'REQUEST_RATE_LIMITS'
     | 'WORDPRESS_ALLOWED_DOMAINS'
     | 'UA'
     | 'NO_RANDOM_UA'
@@ -287,6 +291,7 @@ export type Config = {
     requestRetry: number;
     requestTimeout: number;
     requestAutoSelectFamily?: boolean;
+    requestRateLimits: HostRateLimits;
     ua: string;
     isDefaultUA: boolean;
     trueUA: string;
@@ -824,6 +829,7 @@ const calculateValue = () => {
         requestRetry: toInt(envs.REQUEST_RETRY, 2), // 请求失败重试次数
         requestTimeout: toInt(envs.REQUEST_TIMEOUT, 30000), // Milliseconds to wait for the server to end the response before aborting the request
         requestAutoSelectFamily: envs.REQUEST_AUTO_SELECT_FAMILY === undefined ? undefined : toBoolean(envs.REQUEST_AUTO_SELECT_FAMILY, false),
+        requestRateLimits: parseHostRateLimits(envs.REQUEST_RATE_LIMITS),
         ua: envs.UA || (toBoolean(envs.NO_RANDOM_UA, false) ? TRUE_UA : 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36'),
         isDefaultUA: !envs.UA && !toBoolean(envs.NO_RANDOM_UA, false),
         trueUA: TRUE_UA,

@@ -7,6 +7,7 @@ import undici, { Request } from 'undici';
 
 import { config } from '@/config';
 import { generatedHeaders as HEADER_LIST, generateHeaders } from '@/utils/header-generator';
+import { waitForHostRateLimit } from '@/utils/host-rate-limit';
 import logger from '@/utils/logger';
 import proxy from '@/utils/proxy';
 
@@ -126,6 +127,7 @@ const wrappedFetch: typeof undici.fetch = async (input: RequestInfo, init?: Requ
     const maxRetries = proxy.multiProxy?.allProxies.length || 1;
 
     const attemptRequest = async (attempt: number): Promise<Response> => {
+        await waitForHostRateLimit(request.url, config.requestRateLimits, request.signal);
         try {
             if (init?.allowH2 === false) {
                 return await undici.fetch(request, {

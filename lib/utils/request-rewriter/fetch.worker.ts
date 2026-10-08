@@ -1,6 +1,7 @@
 // Worker-compatible fetch wrapper
 // Simplified version without proxy, rate limiting, or header-generator
 import { config } from '@/config';
+import { waitForHostRateLimit } from '@/utils/host-rate-limit';
 import logger from '@/utils/logger';
 import fetchWithPlaywrightRetry from '@/utils/playwright-fetch';
 
@@ -21,7 +22,7 @@ const STATIC_BROWSER_HEADERS = {
 
 const originalFetch = fetch;
 
-const wrappedFetch = (input: RequestInfo | URL, init?: RequestInit): Promise<Response> => {
+const wrappedFetch = async (input: RequestInfo | URL, init?: RequestInit): Promise<Response> => {
     const request = new Request(input, init);
 
     const requestUrl = new URL(request.url);
@@ -58,6 +59,7 @@ const wrappedFetch = (input: RequestInfo | URL, init?: RequestInit): Promise<Res
         request.headers.delete('x-prefer-proxy');
     }
 
+    await waitForHostRateLimit(request.url, config.requestRateLimits, request.signal);
     return fetchWithPlaywrightRetry(request, originalFetch);
 };
 
