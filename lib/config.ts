@@ -21,6 +21,7 @@ type ConfigEnvKeys =
     | 'REQUEST_RETRY'
     | 'REQUEST_TIMEOUT'
     | 'REQUEST_AUTO_SELECT_FAMILY'
+    | 'WORDPRESS_ALLOWED_DOMAINS'
     | 'UA'
     | 'NO_RANDOM_UA'
     | 'ALLOW_ORIGIN'
@@ -707,6 +708,7 @@ export type Config = {
         cookie?: string;
     };
     wordpress: {
+        allowedDomains: string[];
         cdnUrl?: string;
     };
     xiaoyuzhou: {
@@ -1249,6 +1251,10 @@ const calculateValue = () => {
             cookie: envs.WENKU8_COOKIE,
         },
         wordpress: {
+            allowedDomains:
+                envs.WORDPRESS_ALLOWED_DOMAINS?.split(',')
+                    .map((domain) => domain.trim().toLowerCase())
+                    .filter(Boolean) ?? [],
             cdnUrl: envs.WORDPRESS_CDN,
         },
         xiaoyuzhou: {
