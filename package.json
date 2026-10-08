@@ -155,7 +155,7 @@
         "@cloudflare/vitest-plugin": "1.3.6",
         "@cloudflare/workers-types": "5.20261004.1",
         "@eslint/js": "10.0.1",
-        "@j178/prek": "0.5.4",
+        "@j178/prek": "0.5.5",
         "@mswjs/interceptors": "0.45.7",
         "@oxlint/plugins": "1.86.0",
         "@stylistic/eslint-plugin": "5.10.0",
