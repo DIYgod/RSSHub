@@ -3,9 +3,10 @@ import { FetchError } from 'ofetch';
 
 import type { DataItem, Route } from '@/types';
 import logger from '@/utils/logger';
+import md5 from '@/utils/md5';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
-import { finishArticleItem } from '@/utils/wechat-mp';
+import { finishArticleItem, normalizeUrl } from '@/utils/wechat-mp';
 
 const host = 'https://weixin.sogou.com';
 const hardcodedCookie = 'SNUID=78725B470A0EF2C3F97AA5EB0BBF95C1; ABTEST=0|1680917938|v1; SUID=8F7B1C682B83A20A000000006430C5B2; PHPSESSID=le2lak0vghad5c98ijd3t51ls4; IPLOC=USUS5';
@@ -15,6 +16,21 @@ interface SogouItemInternal extends DataItem {
         isWeChatLink: boolean;
     };
 }
+
+const getArticleGuid = (wechatId: string, item: DataItem) => {
+    const url = new URL(item.link!);
+    if (url.hostname === 'mp.weixin.qq.com') {
+        const normalized = normalizeUrl(item.link!);
+        const canonicalUrl = new URL(normalized);
+        if (canonicalUrl.pathname.startsWith('/s/') || ['__biz', 'mid', 'idx', 'sn'].every((key) => canonicalUrl.searchParams.has(key))) {
+            return normalized;
+        }
+    }
+    if (item.pubDate && item.title) {
+        return `wechat:sogou:${wechatId}:${md5(JSON.stringify([item.author, item.title, item.pubDate]))}`;
+    }
+    return item.guid;
+};
 
 async function fetchAndParsePage(wechatId: string): Promise<SogouItemInternal[]> {
     const searchUrl = `${host}/weixin`;
@@ -178,7 +194,7 @@ async function handler(ctx) {
             description: resultItem.description,
             author: resultItem.author,
             pubDate: resultItem.pubDate,
-            guid: resultItem.guid,
+            guid: getArticleGuid(wechatId, resultItem),
             ...(resultItem.content && { content: resultItem.content }),
         };
         return finalItem;
