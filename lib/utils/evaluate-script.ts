@@ -4,7 +4,7 @@ import { parseScriptSource } from './parse-js';
 
 type DataValue = string | number | boolean | null | undefined | DataValue[] | DataObject | ScriptDataError;
 type DataObject = { [key: string]: DataValue };
-type Scope = { values: DataObject; parent?: Scope };
+type Scope = { values: DataObject; declarations?: Set<string>; parent?: Scope };
 type Reference = { object: DataObject; key: string };
 
 const globalNames = new Set(['window', 'globalThis', 'self']);
@@ -12,6 +12,92 @@ const unsafeKeys = new Set(['__proto__', 'prototype', 'constructor']);
 const maxScriptLength = 2_000_000;
 const maxSteps = 10000;
 const maxDepth = 100;
+
+// Reserve lexical bindings and hoisted var bindings without entering nested functions.
+const declarationNames = (nodes: Node[], step: (depth: number) => void): Set<string> => {
+    const names = new Set<string>();
+    const pending = nodes.map((node) => ({ node, direct: true, depth: 0 }));
+    const patterns: Array<{ node: Node; depth: number }> = [];
+    while (pending.length) {
+        const { node, direct, depth } = pending.pop()!;
+        step(depth);
+        let children: Node[] = [];
+        switch (node.type) {
+            case 'VariableDeclaration':
+                if (direct || node.kind === 'var') {
+                    patterns.push(...node.declarations.map((declaration) => ({ node: declaration.id, depth: depth + 1 })));
+                }
+                break;
+            case 'FunctionDeclaration':
+                // Block functions may also create an outer binding under Annex B.
+                if (node.id) {
+                    names.add(node.id.name);
+                }
+                break;
+            case 'ClassDeclaration':
+                if (direct && node.id) {
+                    names.add(node.id.name);
+                }
+                break;
+            case 'BlockStatement':
+                children = node.body;
+                break;
+            case 'IfStatement':
+                children = node.alternate ? [node.consequent, node.alternate] : [node.consequent];
+                break;
+            case 'ForStatement':
+                children = node.init ? [node.init, node.body] : [node.body];
+                break;
+            case 'ForInStatement':
+            case 'ForOfStatement':
+                children = [node.left, node.body];
+                break;
+            case 'WhileStatement':
+            case 'DoWhileStatement':
+            case 'LabeledStatement':
+            case 'WithStatement':
+                children = [node.body];
+                break;
+            case 'SwitchStatement':
+                children = node.cases.flatMap((entry) => entry.consequent);
+                break;
+            case 'TryStatement':
+                children = [node.block, ...(node.handler ? [node.handler.body] : []), ...(node.finalizer ? [node.finalizer] : [])];
+                break;
+            default:
+                break;
+        }
+        pending.push(...children.map((child) => ({ node: child, direct: false, depth: depth + 1 })));
+    }
+    while (patterns.length) {
+        const { node, depth } = patterns.pop()!;
+        step(depth);
+        switch (node.type) {
+            case 'Identifier':
+                names.add(node.name);
+                break;
+            case 'ObjectPattern':
+                patterns.push(...node.properties.map((property) => ({ node: property.type === 'RestElement' ? property.argument : property.value, depth: depth + 1 })));
+                break;
+            case 'ArrayPattern':
+                for (const element of node.elements) {
+                    if (element) {
+                        patterns.push({ node: element, depth: depth + 1 });
+                    }
+                }
+                break;
+            case 'AssignmentPattern':
+                patterns.push({ node: node.left, depth: depth + 1 });
+                break;
+            case 'RestElement':
+                patterns.push({ node: node.argument, depth: depth + 1 });
+                break;
+            default:
+                break;
+        }
+    }
+    return names;
+};
 
 class ScriptDataError extends Error {}
 class UnsafePropertyError extends ScriptDataError {}
@@ -206,6 +292,22 @@ const readScriptData = async <T>(source: string, target: string[], argumentIndex
                 return value;
             }
             case 'CallExpression': {
+                if (node.callee.type === 'Identifier' && node.callee.name === 'Array' && !node.optional && node.arguments.length === 1) {
+                    for (let current: Scope | undefined = scope; current; current = current.parent) {
+                        if (Object.hasOwn(current.values, 'Array') || current.declarations?.has('Array')) {
+                            throw new ScriptDataError('Shadowed Array constructors are not supported in script data');
+                        }
+                    }
+                    const length = evaluate(node.arguments[0], scope, depth + 1);
+                    if (!isNumber(length) || !Number.isSafeInteger(length) || length < 0 || length >= maxSteps) {
+                        throw new ScriptDataError('Script data arrays require bounded integer lengths');
+                    }
+                    steps += length;
+                    step(depth);
+                    const value: DataValue[] = [];
+                    value.length = length;
+                    return value;
+                }
                 if (argumentIndex !== undefined && matchesCallback(node.callee)) {
                     captured = false;
                     callbackValue = undefined;
@@ -222,7 +324,7 @@ const readScriptData = async <T>(source: string, target: string[], argumentIndex
                     break;
                 }
                 const args = node.arguments.map((argument) => evaluate(argument, scope, depth + 1));
-                const local: Scope = { values: Object.create(null), parent: scope };
+                const local: Scope = { values: Object.create(null), declarations: new Set(fn.type === 'FunctionExpression' && fn.id ? [fn.id.name] : []), parent: scope };
                 for (const [index, parameter] of fn.params.entries()) {
                     if (parameter.type !== 'Identifier' || globalNames.has(parameter.name)) {
                         throw new ScriptDataError('Script data IIFEs require simple parameters');
@@ -297,6 +399,11 @@ const readScriptData = async <T>(source: string, target: string[], argumentIndex
     };
 
     const statements = (nodes: Node[], scope: Scope, depth: number, strict: boolean): { value: DataValue } | undefined => {
+        scope.declarations ??= new Set();
+        const declarations = declarationNames(nodes, (extraDepth) => step(depth + extraDepth));
+        for (const name of declarations) {
+            scope.declarations.add(name);
+        }
         for (const node of nodes) {
             step(depth);
             try {
