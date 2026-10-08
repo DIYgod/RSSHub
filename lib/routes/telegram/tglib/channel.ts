@@ -1,4 +1,5 @@
 /* eslint-disable no-await-in-loop */
+/* oxlint-disable no-await-in-loop */
 import type { Context } from 'hono';
 import { Api } from 'teleproto';
 import { HTMLParser } from 'teleproto/extensions/html.js';
@@ -160,14 +161,24 @@ export default async function handler(ctx: Context) {
         let text = message.text; // must not be HTML
 
         if (message.fwdFrom?.fromId) {
-            const fwdFrom = await client.getEntity(message.fwdFrom.fromId);
-            text = `Forwarded From: ${getDisplayName(fwdFrom)}: ${text}`;
+            try {
+                // oxlint-disable-next-line no-await-in-loop
+                const fwdFrom = await client.getEntity(message.fwdFrom.fromId);
+                text = `Forwarded From: ${getDisplayName(fwdFrom)}: ${text}`;
+            } catch {
+                // Ignore if the forwarded channel/chat is private or cannot be resolved
+            }
         }
         const media = await unwrapMedia(message.media, message.peerId);
         if (message.media instanceof Api.MessageMediaStory && media) {
             // if successfully loaded the story
-            const storyFrom = await client.getEntity(message.media.peer);
-            text = `Story From: ${getDisplayName(storyFrom)}: ${text}`;
+            try {
+                // oxlint-disable-next-line no-await-in-loop
+                const storyFrom = await client.getEntity(message.media.peer);
+                text = `Story From: ${getDisplayName(storyFrom)}: ${text}`;
+            } catch {
+                // Ignore if the story peer cannot be resolved
+            }
         }
         if (media) {
             if (media instanceof Api.MessageMediaPoll) {
