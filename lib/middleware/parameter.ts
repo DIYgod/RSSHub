@@ -86,7 +86,29 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
             data.item = data.item.toSorted((a: DataItem, b: DataItem) => +new Date(b.pubDate || 0) - +new Date(a.pubDate || 0));
         }
 
+        const hideImages = ctx.req.query('show_image') === 'false';
+        if (hideImages) {
+            delete data.image;
+        }
+
         const handleItem = (item: DataItem) => {
+            if (hideImages) {
+                delete item.image;
+                delete item.banner;
+                delete item.itunes_item_image;
+                if (item.enclosure_type?.startsWith('image/')) {
+                    delete item.enclosure_url;
+                    delete item.enclosure_type;
+                    delete item.enclosure_length;
+                }
+                if (item.media) {
+                    delete item.media.thumbnail;
+                    if (item.media.content?.type?.startsWith('image/')) {
+                        delete item.media.content;
+                    }
+                }
+                item.attachments = item.attachments?.filter((attachment) => !attachment.mime_type?.startsWith('image/'));
+            }
             // oxlint-disable-next-line @typescript-eslint/no-unnecessary-type-conversion -- routes may return non-string values at runtime
             item.title &&= decodeHTMLStrict(item.title + '');
             item.description ||= item.content?.html;
@@ -116,6 +138,10 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
                 }
 
                 $('script').remove();
+                if (hideImages) {
+                    $('img, picture').remove();
+                    $('video[poster]').removeAttr('poster');
+                }
 
                 $('img').each((_, ele) => {
                     const $ele = $(ele);
