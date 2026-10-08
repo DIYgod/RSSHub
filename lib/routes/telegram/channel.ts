@@ -777,6 +777,7 @@ async function handler(ctx) {
                     description,
                     pubDate,
                     link: $item.find('.tgme_widget_message_date').attr('href'),
+                    guid: $item.find('.tgme_widget_message_date').attr('href'),
                     author: $item.find('.tgme_widget_message_from_author').text(),
 
                     enclosure_url: voiceUrl,
