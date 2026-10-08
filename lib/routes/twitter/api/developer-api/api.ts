@@ -52,6 +52,7 @@ interface LegacyTweet {
     full_text: string;
     text: string;
     created_at?: string;
+    favorite_count?: number;
     entities: {
         urls: Array<{ url: string; expanded_url: string; display_url: string }>;
         hashtags: Array<{ text: string }>;
@@ -211,6 +212,7 @@ const mapTweetToLegacy = (tweet: TweetV2, includes: ApiV2Includes | undefined, c
         full_text: tweet.text,
         text: tweet.text,
         created_at: tweet.created_at,
+        favorite_count: tweet.public_metrics?.like_count,
         entities: {
             urls: mapUrlsToLegacy(tweet.entities?.urls),
             hashtags: mapHashtagsToLegacy(tweet.entities?.hashtags),
@@ -296,7 +298,7 @@ const getUserTimeline = async (id: string, params?: DevApiParams, options: DevAp
     const response = await client.v2.get(`users/${id}/tweets`, {
         max_results: params?.count ?? 20,
         expansions: 'author_id,attachments.media_keys,referenced_tweets.id,referenced_tweets.id.author_id',
-        'tweet.fields': 'created_at,entities,conversation_id,referenced_tweets,author_id,in_reply_to_user_id',
+        'tweet.fields': 'created_at,entities,conversation_id,referenced_tweets,author_id,in_reply_to_user_id,public_metrics',
         'user.fields': 'username,name,profile_image_url,description',
         'media.fields': 'preview_image_url,url,type,width,height,variants',
         ...options,
@@ -320,7 +322,7 @@ const getUserLikes = (id: string, params?: DevApiParams) =>
         const response = await client.v2.get(`users/${id}/liked_tweets`, {
             max_results: params.count ?? 20,
             expansions: 'author_id,attachments.media_keys,referenced_tweets.id,referenced_tweets.id.author_id',
-            'tweet.fields': 'created_at,entities,conversation_id,referenced_tweets,author_id,in_reply_to_user_id',
+            'tweet.fields': 'created_at,entities,conversation_id,referenced_tweets,author_id,in_reply_to_user_id,public_metrics',
             'user.fields': 'username,name,profile_image_url,description',
             'media.fields': 'preview_image_url,url,type,width,height,variants',
         });
@@ -336,7 +338,7 @@ const getUserTweet = (id: string, params?: DevApiParams) =>
         }
         const response = await client.v2.get(`tweets/${tweetId}`, {
             expansions: 'author_id,attachments.media_keys,referenced_tweets.id,referenced_tweets.id.author_id',
-            'tweet.fields': 'created_at,entities,conversation_id,referenced_tweets,author_id,in_reply_to_user_id',
+            'tweet.fields': 'created_at,entities,conversation_id,referenced_tweets,author_id,in_reply_to_user_id,public_metrics',
             'user.fields': 'username,name,profile_image_url,description',
             'media.fields': 'preview_image_url,url,type,width,height,variants',
         });
@@ -352,7 +354,7 @@ const getSearch = (keywords: string, params?: DevApiParams) =>
                 query: keywords,
                 max_results: params?.count ?? 20,
                 expansions: 'author_id,attachments.media_keys,referenced_tweets.id,referenced_tweets.id.author_id',
-                'tweet.fields': 'created_at,entities,conversation_id,referenced_tweets,author_id,in_reply_to_user_id',
+                'tweet.fields': 'created_at,entities,conversation_id,referenced_tweets,author_id,in_reply_to_user_id,public_metrics',
                 'user.fields': 'username,name,profile_image_url,description',
                 'media.fields': 'preview_image_url,url,type,width,height,variants',
             });
@@ -370,7 +372,7 @@ const getList = (id: string, params?: DevApiParams) =>
             const response = await client.v2.get(`lists/${id}/tweets`, {
                 max_results: params?.count ?? 20,
                 expansions: 'author_id,attachments.media_keys,referenced_tweets.id,referenced_tweets.id.author_id',
-                'tweet.fields': 'created_at,entities,conversation_id,referenced_tweets,author_id,in_reply_to_user_id',
+                'tweet.fields': 'created_at,entities,conversation_id,referenced_tweets,author_id,in_reply_to_user_id,public_metrics',
                 'user.fields': 'username,name,profile_image_url,description',
                 'media.fields': 'preview_image_url,url,type,width,height,variants',
             });
@@ -391,7 +393,7 @@ const getHomeTimeline = (_id: string, params?: DevApiParams) =>
             const response = await client.v2.get(`users/${_id}/timelines/reverse_chronological`, {
                 max_results: params?.count ?? 20,
                 expansions: 'author_id,attachments.media_keys,referenced_tweets.id,referenced_tweets.id.author_id',
-                'tweet.fields': 'created_at,entities,conversation_id,referenced_tweets,author_id,in_reply_to_user_id',
+                'tweet.fields': 'created_at,entities,conversation_id,referenced_tweets,author_id,in_reply_to_user_id,public_metrics',
                 'user.fields': 'username,name,profile_image_url,description',
                 'media.fields': 'preview_image_url,url,type,width,height,variants',
             });

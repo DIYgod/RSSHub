@@ -51,6 +51,7 @@ interface ProcessFeedParams {
     showSymbolForRetweetAndReply?: boolean;
     showRetweetTextInTitle?: boolean;
     useRetweetDate?: boolean;
+    showLikesCountInTitle?: boolean;
     addLinkForPics?: boolean;
     showTimestampInDescription?: boolean;
     showQuotedInTitle?: boolean;
@@ -80,6 +81,7 @@ const ProcessFeed = (ctx, { data = [] }: { data?: any[] }, params: ProcessFeedPa
         showSymbolForRetweetAndReply: fallback(params.showSymbolForRetweetAndReply, queryToBoolean(routeParams.get('showSymbolForRetweetAndReply')), true),
         showRetweetTextInTitle: fallback(params.showRetweetTextInTitle, queryToBoolean(routeParams.get('showRetweetTextInTitle')), true),
         useRetweetDate: fallback(params.useRetweetDate, queryToBoolean(routeParams.get('useRetweetDate')), false),
+        showLikesCountInTitle: fallback(params.showLikesCountInTitle, queryToBoolean(routeParams.get('showLikesCountInTitle')), false),
         addLinkForPics: fallback(params.addLinkForPics, queryToBoolean(routeParams.get('addLinkForPics')), false),
         showTimestampInDescription: fallback(params.showTimestampInDescription, queryToBoolean(routeParams.get('showTimestampInDescription')), false),
         showQuotedInTitle: fallback(params.showQuotedInTitle, queryToBoolean(routeParams.get('showQuotedInTitle')), false),
@@ -311,7 +313,7 @@ const ProcessFeed = (ctx, { data = [] }: { data?: any[] }, params: ProcessFeedPa
         }
 
         // Make title
-        let title = '';
+        let title = mergedParams.showLikesCountInTitle && Number.isFinite(item.favorite_count) ? `[${item.favorite_count}] ` : '';
         if (showAuthorInTitle) {
             title += originalItem.user?.name + ': ';
         }
