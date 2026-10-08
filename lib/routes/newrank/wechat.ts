@@ -8,6 +8,8 @@ import { finishArticleItem } from '@/utils/wechat-mp';
 
 import utils from './utils';
 
+const completeArticle = (item) => (new URL(item.link).hostname === 'mp.weixin.qq.com' ? finishArticleItem(item) : item);
+
 export const route: Route = {
     path: '/wechat/:wxid',
     categories: ['social-media'],
@@ -87,7 +89,7 @@ async function handler(ctx) {
     }));
 
     // TODO: link is empty
-    await Promise.all(items.map((item) => finishArticleItem(item)));
+    await Promise.all(items.map((item) => completeArticle(item)));
 
     return {
         title: name + ' - 微信公众号',
