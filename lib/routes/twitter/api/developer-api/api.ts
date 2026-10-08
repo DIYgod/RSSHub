@@ -69,6 +69,7 @@ interface LegacyTweet {
     in_reply_to_screen_name?: string;
     retweeted_status?: LegacyTweet;
     quoted_status?: LegacyTweet;
+    in_reply_to_status?: LegacyTweet;
 }
 
 type DevApiParams = Record<string, string | number | boolean | undefined>;
@@ -249,6 +250,7 @@ const mapTweetToLegacy = (tweet: TweetV2, includes: ApiV2Includes | undefined, c
                 break;
 
             case 'replied_to': {
+                legacy.in_reply_to_status = mappedReferenced;
                 legacy.in_reply_to_status_id_str = reference.id;
                 legacy.in_reply_to_user_id_str = referenced.author_id;
                 const replyUser = users.get(referenced.author_id!);
