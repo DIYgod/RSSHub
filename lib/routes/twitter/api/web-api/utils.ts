@@ -295,10 +295,11 @@ export const paginationTweets = async (endpoint: string, userId: number | undefi
     }
 
     const moduleItems = instructions.find((i) => i.type === 'TimelineAddToModule')?.moduleItems;
-    const entries = instructions.find((i) => i.type === 'TimelineAddEntries')?.entries;
+    const entries = instructions.find((i) => i.type === 'TimelineAddEntries')?.entries ?? [];
     const gridEntries = entries.find((i) => i.entryId === 'profile-grid-0')?.content?.items;
 
-    return gridEntries || moduleItems || entries || [];
+    const pinnedEntries = instructions.filter((instruction) => instruction.type === 'TimelinePinEntry' && instruction.entry).map((instruction) => instruction.entry);
+    return new Map([...pinnedEntries, ...(gridEntries || moduleItems || entries)].map((entry) => [entry.entryId, entry])).values().toArray();
 };
 
 const hydrateLegacyUser = (legacy: any, tweet: any) => {
