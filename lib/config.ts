@@ -12,6 +12,7 @@ type ConfigEnvKeys =
     | 'PUPPETEER_WS_ENDPOINT'
     | 'PLAYWRIGHT_CDP_ENDPOINT'
     | 'CHROMIUM_EXECUTABLE_PATH'
+    | 'CI_EN_COOKIE'
     // Network
     | 'PORT'
     | 'SOCKET'
@@ -399,6 +400,9 @@ export type Config = {
         cookie?: string;
     };
     civitai: {
+        cookie?: string;
+    };
+    ciEn: {
         cookie?: string;
     };
     coomer: {
@@ -938,6 +942,9 @@ const calculateValue = () => {
         },
         civitai: {
             cookie: envs.CIVITAI_COOKIE,
+        },
+        ciEn: {
+            cookie: envs.CI_EN_COOKIE,
         },
         coomer: {
             assetsUrl: getAssetsUrl(envs.COOMER_ROOT_URL || 'https://coomer.st', envs.COOMER_ASSETS_URL),
