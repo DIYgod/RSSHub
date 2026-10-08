@@ -10,6 +10,7 @@ type ConfigEnvKeys =
     | 'DISALLOW_ROBOT'
     | 'ENABLE_CLUSTER'
     | 'IS_PACKAGE'
+    | 'USER_ROUTES_PATH'
     | 'NODE_NAME'
     | 'PLAYWRIGHT_WS_ENDPOINT'
     | 'PUPPETEER_WS_ENDPOINT'
@@ -273,6 +274,7 @@ export type ConfigEnv = Partial<Record<ConfigEnvKeys, string | undefined>>;
 let envs: ConfigEnv = process.env;
 
 export type Config = {
+    userRoutesPath?: string;
     // app config
     disallowRobot: boolean;
     enableCluster?: string;
@@ -815,6 +817,7 @@ const calculateValue = () => {
         disallowRobot: toBoolean(envs.DISALLOW_ROBOT, false),
         enableCluster: toBoolean(envs.ENABLE_CLUSTER, false),
         isPackage: !!envs.IS_PACKAGE,
+        userRoutesPath: envs.USER_ROUTES_PATH,
         nodeName: envs.NODE_NAME,
         playwrightWSEndpoint: envs.PLAYWRIGHT_WS_ENDPOINT ?? envs.PUPPETEER_WS_ENDPOINT,
         playwrightCDPEndpoint: envs.PLAYWRIGHT_CDP_ENDPOINT,

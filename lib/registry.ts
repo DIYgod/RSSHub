@@ -1,3 +1,4 @@
+import { readdir } from 'node:fs/promises';
 import path from 'node:path';
 
 import { serveStatic } from '@hono/node-server/serve-static';
@@ -36,6 +37,7 @@ function safeNamespaces(namespaces: NamespacesType): NamespacesType {
 
 let namespaces: NamespacesType = {};
 let devRegistry: DevRegistry | undefined;
+let userNamespaces: NamespacesType = {};
 
 if (config.isPackage) {
     // @ts-ignore build artifact of pnpm build:routes
@@ -65,6 +67,16 @@ if (config.isPackage) {
     }
 }
 
+if (config.userRoutesPath && !isWorker) {
+    const { loadUserRoutes } = await import('@/user-routes');
+    const reserved = devRegistry ? await readdir(path.join(__dirname, 'routes')) : Object.keys(namespaces);
+    userNamespaces = await loadUserRoutes(config.userRoutesPath, reserved);
+    if (config.feature.disable_nsfw) {
+        userNamespaces = safeNamespaces(userNamespaces);
+    }
+    Object.assign(namespaces, userNamespaces);
+}
+
 if (config.feature.disable_nsfw && !devRegistry) {
     namespaces = safeNamespaces(namespaces);
 }
@@ -75,7 +87,9 @@ export { namespaces };
 
 const app = new Hono();
 
-if (!devRegistry) {
+if (devRegistry) {
+    registerRssRoutes(app, userNamespaces);
+} else {
     registerRssRoutes(app, namespaces);
     registerApiRoutes(app, namespaces);
 }
