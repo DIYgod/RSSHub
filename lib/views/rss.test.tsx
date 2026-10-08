@@ -53,6 +53,9 @@ describe('RSS view', () => {
 
         expect(html).toContain('xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd"');
         expect(html).toContain('xmlns:media="http://search.yahoo.com/mrss/"');
+        expect(html).toContain('xmlns:dc="http://purl.org/dc/elements/1.1/"');
+        expect(html).toContain('<dc:creator>Host</dc:creator>');
+        expect(html).not.toContain('<author>');
         expect(html).toContain('<itunes:author>Podcast Author</itunes:author>');
         expect(html).toContain('itunes:category text="Tech"');
         expect(html).toContain('<itunes:explicit>true</itunes:explicit>');
