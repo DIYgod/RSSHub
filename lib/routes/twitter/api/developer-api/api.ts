@@ -68,6 +68,7 @@ interface LegacyTweet {
     in_reply_to_status_id_str?: string;
     in_reply_to_screen_name?: string;
     retweeted_status?: LegacyTweet;
+    is_quote_status?: boolean;
     quoted_status?: LegacyTweet;
     in_reply_to_status?: LegacyTweet;
 }
@@ -246,6 +247,7 @@ const mapTweetToLegacy = (tweet: TweetV2, includes: ApiV2Includes | undefined, c
                 break;
 
             case 'quoted':
+                legacy.is_quote_status = true;
                 legacy.quoted_status = mappedReferenced;
                 break;
 
