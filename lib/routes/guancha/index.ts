@@ -119,32 +119,29 @@ async function handler(ctx) {
 
     // 'redian' and 'gundong' come from api.
 
-    if (['redian', 'all', 'others'].includes(category)) {
+    // Both endpoints were changed upstream: the JSON keys are now lowercase
+    // (`title`/`httpUrl` instead of `TITLE`/`HTTP_URL`), and the rolling-news
+    // endpoint moved from `/api/gundong.htm` (now 404) to `/api/gundong`.
+    const fetchApiList = async (path: string, limit: number) => {
         const response = await got({
             method: 'get',
-            url: `${rootUrl}/api/redian.htm`,
+            url: `${rootUrl}${path}`,
         });
 
-        redianList = response.data.items
+        return response.data.items
             .map((item) => ({
-                title: item.TITLE,
-                link: `${rootUrl}${item.HTTP_URL}`,
+                title: item.title ?? item.TITLE,
+                link: `${rootUrl}${item.httpUrl ?? item.HTTP_URL}`,
             }))
-            .slice(0, category === 'all' ? total / 3 : total);
+            .slice(0, limit);
+    };
+
+    if (['redian', 'all', 'others'].includes(category)) {
+        redianList = await fetchApiList('/api/redian.htm', category === 'all' ? total / 3 : total);
     }
 
     if (['gundong', 'all', 'others'].includes(category)) {
-        const response = await got({
-            method: 'get',
-            url: `${rootUrl}/api/gundong.htm`,
-        });
-
-        gundongList = response.data.items
-            .map((item) => ({
-                title: item.TITLE,
-                link: `${rootUrl}${item.HTTP_URL}`,
-            }))
-            .slice(0, category === 'all' ? total / 3 : total);
+        gundongList = await fetchApiList('/api/gundong', category === 'all' ? total / 3 : total);
     }
 
     const items = await Promise.all(
