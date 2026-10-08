@@ -42,6 +42,7 @@
         "format:description": "tsx scripts/workflow/format-description.ts",
         "format:staged": "prek run",
         "lint": "oxlint --type-aware .",
+        "new:route": "node scripts/generate-route.mjs",
         "prepare": "prek install || true",
         "prepublishOnly": "npm run build:lib",
         "profiling": "cross-env NODE_ENV=production tsx --prof lib/index.ts",
