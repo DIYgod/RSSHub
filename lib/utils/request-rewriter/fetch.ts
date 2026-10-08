@@ -22,7 +22,7 @@ const limiterQueue = new RateLimiterQueue(limiter, {
 
 undici.setGlobalDispatcher(
     new undici.Agent({
-        connect: { preferH2: true },
+        connect: { preferH2: true, autoSelectFamily: config.requestAutoSelectFamily },
     })
 );
 
@@ -32,7 +32,7 @@ const tlsAgents = new Map<SecureVersion, Agent>();
 const getTlsAgent = (minVersion: SecureVersion) => {
     let agent = tlsAgents.get(minVersion);
     if (!agent) {
-        agent = new undici.Agent({ connect: { preferH2: true, minVersion } });
+        agent = new undici.Agent({ connect: { preferH2: true, minVersion, autoSelectFamily: config.requestAutoSelectFamily } });
         tlsAgents.set(minVersion, agent);
     }
     return agent;
