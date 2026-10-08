@@ -18,7 +18,7 @@ const Description = ({ embed, ugc, ogv, aid, cid, bvid, seasonId, episodeId, img
     <>
         {embed ? (
             <>
-                {ugc ? <iframe width="640" height="360" src={`https://www.bilibili.com/blackboard/html5mobileplayer.html?aid=${aid}&cid=${cid}&bvid=${bvid}`} frameborder="0" allowfullscreen></iframe> : null}
+                {ugc ? <iframe width="640" height="360" src={`https://player.bilibili.com/player.html?aid=${aid}&cid=${cid}&bvid=${bvid}`} frameborder="0" allowfullscreen></iframe> : null}
                 {ogv ? <iframe width="640" height="360" src={`https://www.bilibili.com/blackboard/html5mobileplayer.html?seasonId=${seasonId}&episodeId=${episodeId}`} frameborder="0" allowfullscreen></iframe> : null}
                 <br />
             </>
