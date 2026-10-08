@@ -50,6 +50,7 @@ interface ProcessFeedParams {
     showEmojiForRetweetAndReply?: boolean;
     showSymbolForRetweetAndReply?: boolean;
     showRetweetTextInTitle?: boolean;
+    useRetweetDate?: boolean;
     addLinkForPics?: boolean;
     showTimestampInDescription?: boolean;
     showQuotedInTitle?: boolean;
@@ -78,6 +79,7 @@ const ProcessFeed = (ctx, { data = [] }: { data?: any[] }, params: ProcessFeedPa
         showEmojiForRetweetAndReply: fallback(params.showEmojiForRetweetAndReply, queryToBoolean(routeParams.get('showEmojiForRetweetAndReply')), false),
         showSymbolForRetweetAndReply: fallback(params.showSymbolForRetweetAndReply, queryToBoolean(routeParams.get('showSymbolForRetweetAndReply')), true),
         showRetweetTextInTitle: fallback(params.showRetweetTextInTitle, queryToBoolean(routeParams.get('showRetweetTextInTitle')), true),
+        useRetweetDate: fallback(params.useRetweetDate, queryToBoolean(routeParams.get('useRetweetDate')), false),
         addLinkForPics: fallback(params.addLinkForPics, queryToBoolean(routeParams.get('addLinkForPics')), false),
         showTimestampInDescription: fallback(params.showTimestampInDescription, queryToBoolean(routeParams.get('showTimestampInDescription')), false),
         showQuotedInTitle: fallback(params.showQuotedInTitle, queryToBoolean(routeParams.get('showQuotedInTitle')), false),
@@ -440,7 +442,7 @@ const ProcessFeed = (ctx, { data = [] }: { data?: any[] }, params: ProcessFeedPa
                 },
             ],
             description,
-            pubDate: parseDate(item.created_at),
+            pubDate: parseDate(mergedParams.useRetweetDate ? (originalItem.created_at ?? item.created_at) : item.created_at),
             link,
             guid: link.replace('x.com', 'twitter.com'),
             category,
