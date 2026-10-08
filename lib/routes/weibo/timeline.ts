@@ -3,21 +3,31 @@ import querystring from 'node:querystring';
 import type { Context } from 'hono';
 
 import { config } from '@/config';
+import ConfigNotFoundError from '@/errors/types/config-not-found';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
+import md5 from '@/utils/md5';
 import { parseDate } from '@/utils/parse-date';
 import { fallback, queryToBoolean } from '@/utils/readable-social';
+import { createWeiboOAuthState } from '@/utils/weibo-oauth';
 
 import weiboUtils from './utils';
 
-const getRedirectUrl = (ctx: Context) => config.weibo.redirect_url || `${new URL(ctx.req.url).origin}/weibo/timeline/0`;
+const getRedirectUrl = (ctx: Context) => {
+    const redirectUrl = config.weibo.redirect_url || `${new URL(ctx.req.url).origin}/weibo/timeline/0`;
+    const url = new URL(redirectUrl);
+    if (config.accessKey && (url.searchParams.has('key') || url.searchParams.has('code'))) {
+        throw new ConfigNotFoundError('WEIBO_REDIRECT_URL must not contain RSSHub key or code parameters when ACCESS_KEY is enabled.');
+    }
+    return redirectUrl;
+};
 
-const redirectToAuthorize = (ctx: Context, feature: string | number, routeParams?: string) => {
+const redirectToAuthorize = async (ctx: Context, feature: string | number, routeParams?: string) => {
     const url = new URL('https://api.weibo.com/oauth2/authorize');
     url.searchParams.set('client_id', config.weibo.app_key || '');
     url.searchParams.set('redirect_uri', getRedirectUrl(ctx));
-    url.searchParams.set('state', [feature, routeParams].filter((value) => value !== undefined).join('/'));
+    url.searchParams.set('state', config.accessKey ? await createWeiboOAuthState(ctx, feature, routeParams) : [feature, routeParams].filter((value) => value !== undefined).join('/'));
     ctx.header('Cache-Control', 'no-cache');
     return ctx.redirect(url.href);
 };
@@ -51,7 +61,7 @@ export const route: Route = {
     description: `::: warning
 需要对应用户打开页面进行授权生成 token 才能生成内容
 
-自部署需要申请并配置微博 key，具体见部署文档
+自部署需要申请并配置微博 key，具体见部署文档。开启 ACCESS\\_KEY 时，先使用有效 key/code 打开订阅地址发起授权；回调使用十分钟内有效的一次性 state，要求可用的 memory 或 Redis 缓存。
 :::`,
 };
 
@@ -171,21 +181,29 @@ async function handler(ctx) {
             item: resultItem,
         });
     }
-    if (uid === '0' || ctx.req.query('code')) {
+    if (uid === '0' || (!config.accessKey && ctx.req.query('code'))) {
         const { app_key = '', app_secret = '' } = config.weibo;
 
         const code = ctx.req.query('code');
-        const routeParams = ctx.req.query('state');
-        if (code) {
+        const oauthState = ctx.get('weiboOAuthState');
+        const routeParams = config.accessKey ? [oauthState?.feature, oauthState?.routeParams].filter((value) => value !== undefined).join('/') : ctx.req.query('state');
+        if (code && (!config.accessKey || oauthState)) {
             const rep = await got.post('https://api.weibo.com/oauth2/access_token', {
                 form: { client_id: app_key, client_secret: app_secret, code, redirect_uri: getRedirectUrl(ctx), grant_type: 'authorization_code' },
             });
             const token = rep.data.access_token;
             const uid = rep.data.uid;
             const expires_in = rep.data.expires_in;
+            if (!token || !uid || !Number.isFinite(expires_in) || expires_in <= 0) {
+                throw new Error('Weibo OAuth did not return a valid access token. Start authorization again.');
+            }
             await cache.set('weibotimelineuid' + uid, token, expires_in);
 
             ctx.header('Cache-Control', 'no-cache');
+            if (config.accessKey) {
+                const path = `/weibo/timeline/${encodeURIComponent(uid)}/${encodeURIComponent(oauthState.feature)}${oauthState.routeParams ? `/${encodeURIComponent(oauthState.routeParams)}` : ''}`;
+                return ctx.redirect(`${path}?code=${md5(path + config.accessKey)}`);
+            }
             return ctx.redirect(`/weibo/timeline/${uid}${routeParams ? `/${routeParams}` : ''}`);
         }
     }
