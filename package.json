@@ -129,7 +129,7 @@
         "sm-crypto-v2": "1.15.1",
         "socks-proxy-agent": "10.1.0",
         "source-map": "0.8.0",
-        "teleproto": "1.229.0",
+        "teleproto": "1.230.0",
         "title": "4.0.1",
         "tldts": "7.4.16",
         "tosource": "2.0.0-alpha.3",
@@ -249,7 +249,7 @@
         },
         "patchedDependencies": {
             "rss-parser@3.13.0": "patches/rss-parser@3.13.0.patch",
-            "teleproto@1.229.0": "patches/teleproto@1.229.0.patch"
+            "teleproto@1.230.0": "patches/teleproto@1.230.0.patch"
         }
     }
 }
