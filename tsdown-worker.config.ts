@@ -1,4 +1,5 @@
 import fs from 'node:fs';
+import { createRequire } from 'node:module';
 import path from 'node:path';
 
 import { defineConfig, type TsdownPlugin } from 'tsdown';
@@ -57,6 +58,8 @@ function workerAliasPlugin(): TsdownPlugin {
     };
 }
 
+const cifrante = createRequire(path.resolve('node_modules/teleproto/package.json')).resolve('cifrante');
+
 export default defineConfig({
     entry: ['./lib/worker.ts'],
     outDir: 'dist-worker',
@@ -87,6 +90,7 @@ export default defineConfig({
         typescript: path.resolve('./lib/shims/typescript.ts'),
         jsdom: path.resolve('./lib/shims/jsdom.ts'),
         vm2: path.resolve('./lib/shims/vm2.ts'),
+        cifrante: path.join(path.dirname(cifrante), 'cifrante.mjs'),
         // Routes file with Worker-specific build (match relative import from lib/)
         '../assets/build/routes.js': path.resolve('./assets/build/routes-worker.js'),
         // routes.json is only used in test environment, but rolldown still tries to resolve it
