@@ -1,6 +1,5 @@
 import type { Context } from 'hono';
 
-import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -35,11 +34,7 @@ export const route: Route = {
 };
 
 async function handler(ctx: Context) {
-    const username = ctx.req.param('username') ?? '';
-    if (!/^\w+$/.test(username)) {
-        throw new InvalidParameterError('Use the broadcaster username from https://chaturbate.com/username/.');
-    }
-
+    const { username } = ctx.req.param();
     const link = `https://chaturbate.com/${username}/`;
     const dossier: RoomDossier = await ofetch(`https://chaturbate.com/api/chatvideocontext/${username}/`);
     if (typeof dossier.broadcaster_username !== 'string' || dossier.broadcaster_username.toLowerCase() !== username.toLowerCase() || typeof dossier.room_status !== 'string') {
