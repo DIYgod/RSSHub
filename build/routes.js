@@ -3445,43 +3445,6 @@ export default {
     "url": "www.home-assistant.io",
     "lang": "en"
   },
-  "huawei": {
-    "routes": {
-      "/developer/harmonyos/sample-code": {
-        "path": "/developer/harmonyos/sample-code",
-        "categories": [
-          "programming"
-        ],
-        "example": "/huawei/developer/harmonyos/sample-code",
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "radar": [
-          {
-            "source": [
-              "developer.huawei.com/consumer/cn/samples"
-            ],
-            "target": "/huawei/developer/harmonyos/sample-code"
-          }
-        ],
-        "name": "HarmonyOS 示例代码",
-        "maintainers": [
-          "JiZhi-Error"
-        ],
-        "location": "developer/harmonyos/samplecode.ts",
-        "module": () => import('@/routes/huawei/developer/harmonyos/samplecode.ts')
-      }
-    },
-    "apiRoutes": {},
-    "name": "华为开发者联盟",
-    "url": "developer.huawei.com",
-    "lang": "zh-CN"
-  },
   "hudsonrivertrading": {
     "routes": {
       "/blog/:section?": {
@@ -6009,12 +5972,96 @@ export default {
   "miniflux": {
     "routes": {
       "/entry/:feeds/:parameters?": {
-        "path": "/entry/:feeds/:parameters?",
-        "description": "1. Support to get all content: You can obtain the content of all subscription sources by using keywords such as `/miniflux/all` or `/miniflux/default`.\n2. Support to get the subscription content of a specific subscription source by its ID. Please obtain the subscription source ID on the page where it is located under `Sources` (shortcut keys `g` `f`). The URL for each category (or subscription source) displays its ID information. There are several format options available:\n   1. Support `/miniflux/feed=[feed_id]`, please replace `[feed_id]` with the actual ID of the subscribed feed (note that it should be just a number without brackets).\n   2. Support subscribing to multiple feeds using `/miniflux/feed=[feed1_id]&feed=[feed2_id]` or `/miniflux/feeds=[feed1_id]&[feed2_id]`.\n   3. Additionally, you can use shorthand notation by directly using feed IDs: `/miniflux/[feed1_id]&[feed2_id]`.\n3. Further customization options are available based on your needs:\n   1. All parameters/options provided by MiniFlux are supported ([link](https://miniflux.app/docs/api.html#endpoint-get-feed-entries)). As noted in their documentation, multiple filtering options should be connected with `&`. Except for `status`, only the first occurrence of duplicate filter options will be considered.\n   2. Specifically, this route defaults to sorting entries from new to old (`direction=desc`).\n   3. Moreover, this route supports additional options including:\n      - Using the `feed_name` parameter to control title formatting; setting `feed_name=1` will display each title as \"Article Title | Feed Name,\" while default is set at `0`, showing only article titles.\n      - Utilizing the `mark` parameter to specify actions after fetching subscriptions in RSSHub, such as maintaining unchanged state (`unchanged`, default), marking as read (`read`), removing (`removed`) or marking as unread (`unread`). Note that marking as read should not simply be understood as a means for implementing synchronization services; rather, it functions more like an aid for MiniFlux's automatic cleaning feature.\n      - Future support may include utilizing the `link` parameter to control output URLs (this functionality requires corresponding interfaces from MiniFlux). It could involve generating URLs through MiniFlux entity sharing features or original content links.\n      - The output content quantity can be controlled via the 'limit' parameter; although all matching contents are typically outputted by default, **it is recommended that users set this parameter**.",
+        "path": [
+          "/entry/:feeds/:parameters?",
+          "/all/:parameters?",
+          "/default/:parameters?"
+        ],
+        "description": "1. Support to get all content: You can obtain the content of all subscription sources by using keywords such as `/miniflux/all` or `/miniflux/default`.\n2. Support to get the subscription content of a specific subscription source by its ID. Please obtain the subscription source ID on the page where it is located under `Sources` (shortcut keys `g` `f`). The URL for each category (or subscription source) displays its ID information. There are several format options available:\n   1. Support `/miniflux/entry/feed=[feed_id]`, please replace `[feed_id]` with the actual ID of the subscribed feed (note that it should be just a number without brackets).\n   2. Support subscribing to multiple feeds using `/miniflux/entry/feed=[feed1_id]&feed=[feed2_id]` or `/miniflux/entry/feeds=[feed1_id]&[feed2_id]`.\n   3. Additionally, you can use shorthand notation by directly using feed IDs: `/miniflux/entry/[feed1_id]&[feed2_id]`.\n3. Further customization options are available based on your needs:\n   1. All parameters/options provided by MiniFlux are supported ([link](https://miniflux.app/docs/api.html#endpoint-get-feed-entries)). As noted in their documentation, multiple filtering options should be connected with `&`. Except for `status`, only the first occurrence of duplicate filter options will be considered.\n   2. Specifically, this route defaults to sorting entries from new to old (`direction=desc`).\n   3. Moreover, this route supports additional options including:\n      - Using the `feed_name` parameter to control title formatting; setting `feed_name=1` will display each title as \"Article Title | Feed Name,\" while default is set at `0`, showing only article titles.\n      - Utilizing the `mark` parameter to specify actions after fetching subscriptions in RSSHub, such as maintaining unchanged state (`unchanged`, default), marking as read (`read`), removing (`removed`) or marking as unread (`unread`). Note that marking as read should not simply be understood as a means for implementing synchronization services; rather, it functions more like an aid for MiniFlux's automatic cleaning feature.\n      - Future support may include utilizing the `link` parameter to control output URLs (this functionality requires corresponding interfaces from MiniFlux). It could involve generating URLs through MiniFlux entity sharing features or original content links.\n      - The output content quantity can be controlled via the 'limit' parameter; although all matching contents are typically outputted by default, **it is recommended that users set this parameter**.",
         "categories": [
           "other"
         ],
-        "example": "/miniflux/feeds=1&2&3/mark=read&limit=7&status=unread",
+        "example": "/miniflux/entry/feeds=1&2&3/mark=read&limit=7&status=unread",
+        "parameters": {
+          "feeds": "Subscribe source ID or get all.",
+          "parameters": "Filter and set parameters, use `&` to connect multiple."
+        },
+        "features": {
+          "requireConfig": [
+            {
+              "name": "MINIFLUX_INSTANCE",
+              "description": "The instance used by the user, by default, is the official MiniFlux [paid service address](https://reader.miniflux.app)"
+            },
+            {
+              "name": "MINIFLUX_TOKEN",
+              "description": "User's API key, please log in to the instance used and go to `Settings` -> `API Key` -> `Create a new API key` to obtain."
+            }
+          ],
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "name": "Feed entry",
+        "maintainers": [
+          "emdoe",
+          "DIYgod"
+        ],
+        "location": "entry.ts",
+        "module": () => import('@/routes/miniflux/entry.ts')
+      },
+      "/all/:parameters?": {
+        "path": [
+          "/entry/:feeds/:parameters?",
+          "/all/:parameters?",
+          "/default/:parameters?"
+        ],
+        "description": "1. Support to get all content: You can obtain the content of all subscription sources by using keywords such as `/miniflux/all` or `/miniflux/default`.\n2. Support to get the subscription content of a specific subscription source by its ID. Please obtain the subscription source ID on the page where it is located under `Sources` (shortcut keys `g` `f`). The URL for each category (or subscription source) displays its ID information. There are several format options available:\n   1. Support `/miniflux/entry/feed=[feed_id]`, please replace `[feed_id]` with the actual ID of the subscribed feed (note that it should be just a number without brackets).\n   2. Support subscribing to multiple feeds using `/miniflux/entry/feed=[feed1_id]&feed=[feed2_id]` or `/miniflux/entry/feeds=[feed1_id]&[feed2_id]`.\n   3. Additionally, you can use shorthand notation by directly using feed IDs: `/miniflux/entry/[feed1_id]&[feed2_id]`.\n3. Further customization options are available based on your needs:\n   1. All parameters/options provided by MiniFlux are supported ([link](https://miniflux.app/docs/api.html#endpoint-get-feed-entries)). As noted in their documentation, multiple filtering options should be connected with `&`. Except for `status`, only the first occurrence of duplicate filter options will be considered.\n   2. Specifically, this route defaults to sorting entries from new to old (`direction=desc`).\n   3. Moreover, this route supports additional options including:\n      - Using the `feed_name` parameter to control title formatting; setting `feed_name=1` will display each title as \"Article Title | Feed Name,\" while default is set at `0`, showing only article titles.\n      - Utilizing the `mark` parameter to specify actions after fetching subscriptions in RSSHub, such as maintaining unchanged state (`unchanged`, default), marking as read (`read`), removing (`removed`) or marking as unread (`unread`). Note that marking as read should not simply be understood as a means for implementing synchronization services; rather, it functions more like an aid for MiniFlux's automatic cleaning feature.\n      - Future support may include utilizing the `link` parameter to control output URLs (this functionality requires corresponding interfaces from MiniFlux). It could involve generating URLs through MiniFlux entity sharing features or original content links.\n      - The output content quantity can be controlled via the 'limit' parameter; although all matching contents are typically outputted by default, **it is recommended that users set this parameter**.",
+        "categories": [
+          "other"
+        ],
+        "example": "/miniflux/entry/feeds=1&2&3/mark=read&limit=7&status=unread",
+        "parameters": {
+          "feeds": "Subscribe source ID or get all.",
+          "parameters": "Filter and set parameters, use `&` to connect multiple."
+        },
+        "features": {
+          "requireConfig": [
+            {
+              "name": "MINIFLUX_INSTANCE",
+              "description": "The instance used by the user, by default, is the official MiniFlux [paid service address](https://reader.miniflux.app)"
+            },
+            {
+              "name": "MINIFLUX_TOKEN",
+              "description": "User's API key, please log in to the instance used and go to `Settings` -> `API Key` -> `Create a new API key` to obtain."
+            }
+          ],
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "name": "Feed entry",
+        "maintainers": [
+          "emdoe",
+          "DIYgod"
+        ],
+        "location": "entry.ts",
+        "module": () => import('@/routes/miniflux/entry.ts')
+      },
+      "/default/:parameters?": {
+        "path": [
+          "/entry/:feeds/:parameters?",
+          "/all/:parameters?",
+          "/default/:parameters?"
+        ],
+        "description": "1. Support to get all content: You can obtain the content of all subscription sources by using keywords such as `/miniflux/all` or `/miniflux/default`.\n2. Support to get the subscription content of a specific subscription source by its ID. Please obtain the subscription source ID on the page where it is located under `Sources` (shortcut keys `g` `f`). The URL for each category (or subscription source) displays its ID information. There are several format options available:\n   1. Support `/miniflux/entry/feed=[feed_id]`, please replace `[feed_id]` with the actual ID of the subscribed feed (note that it should be just a number without brackets).\n   2. Support subscribing to multiple feeds using `/miniflux/entry/feed=[feed1_id]&feed=[feed2_id]` or `/miniflux/entry/feeds=[feed1_id]&[feed2_id]`.\n   3. Additionally, you can use shorthand notation by directly using feed IDs: `/miniflux/entry/[feed1_id]&[feed2_id]`.\n3. Further customization options are available based on your needs:\n   1. All parameters/options provided by MiniFlux are supported ([link](https://miniflux.app/docs/api.html#endpoint-get-feed-entries)). As noted in their documentation, multiple filtering options should be connected with `&`. Except for `status`, only the first occurrence of duplicate filter options will be considered.\n   2. Specifically, this route defaults to sorting entries from new to old (`direction=desc`).\n   3. Moreover, this route supports additional options including:\n      - Using the `feed_name` parameter to control title formatting; setting `feed_name=1` will display each title as \"Article Title | Feed Name,\" while default is set at `0`, showing only article titles.\n      - Utilizing the `mark` parameter to specify actions after fetching subscriptions in RSSHub, such as maintaining unchanged state (`unchanged`, default), marking as read (`read`), removing (`removed`) or marking as unread (`unread`). Note that marking as read should not simply be understood as a means for implementing synchronization services; rather, it functions more like an aid for MiniFlux's automatic cleaning feature.\n      - Future support may include utilizing the `link` parameter to control output URLs (this functionality requires corresponding interfaces from MiniFlux). It could involve generating URLs through MiniFlux entity sharing features or original content links.\n      - The output content quantity can be controlled via the 'limit' parameter; although all matching contents are typically outputted by default, **it is recommended that users set this parameter**.",
+        "categories": [
+          "other"
+        ],
+        "example": "/miniflux/entry/feeds=1&2&3/mark=read&limit=7&status=unread",
         "parameters": {
           "feeds": "Subscribe source ID or get all.",
           "parameters": "Filter and set parameters, use `&` to connect multiple."
@@ -6502,6 +6549,39 @@ export default {
     "url": "strategyand.pwc.com",
     "lang": "en"
   },
+  "qqmusic": {
+    "routes": {
+      "/album/:mid": {
+        "path": "/album/:mid",
+        "example": "/qqmusic/album/001N8TFz49WZol",
+        "name": "专辑节目更新",
+        "categories": [
+          "multimedia"
+        ],
+        "maintainers": [
+          "DIYgod"
+        ],
+        "parameters": {
+          "mid": "Album ID from the website URL."
+        },
+        "description": "Lists episodes in the source’s newest-first order. Includes public metadata and episode links; playback follows QQ Music’s access requirements.",
+        "radar": [
+          {
+            "source": [
+              "y.qq.com/n/ryqq/albumDetail/:mid"
+            ],
+            "target": "/album/:mid"
+          }
+        ],
+        "location": "album.ts",
+        "module": () => import('@/routes/qqmusic/album.ts')
+      }
+    },
+    "apiRoutes": {},
+    "name": "QQ 音乐",
+    "url": "y.qq.com",
+    "lang": "zh-CN"
+  },
   "questn": {
     "routes": {
       "/community/:communityUrl": {
@@ -6651,6 +6731,39 @@ export default {
     "apiRoutes": {},
     "name": "Rebase Network",
     "url": "rebase.network",
+    "lang": "en"
+  },
+  "rss": {
+    "routes": {
+      "/:url{.+}": {
+        "path": "/:url{.+}",
+        "categories": [
+          "other"
+        ],
+        "example": "/rss/https%3A%2F%2Fwww.nasa.gov%2Ffeed%2F",
+        "name": "Feed proxy",
+        "maintainers": [
+          "DIYgod"
+        ],
+        "parameters": {
+          "url": "Upstream RSS or Atom URL, encoded with encodeURIComponent."
+        },
+        "features": {
+          "requireConfig": [
+            {
+              "name": "ALLOW_USER_SUPPLY_UNSAFE_DOMAIN",
+              "description": "Must be true to allow fetching user-supplied feed URLs."
+            }
+          ]
+        },
+        "description": "Fetch an existing RSS or Atom feed through your instance. TLS certificates are verified. Common parameters and output formats work as usual.",
+        "location": "feed.ts",
+        "module": () => import('@/routes/rss/feed.ts')
+      }
+    },
+    "apiRoutes": {},
+    "name": "RSS Proxy",
+    "url": "www.rssboard.org",
     "lang": "en"
   },
   "rss3": {
@@ -11333,123 +11446,6 @@ export default {
     "url": "microsoft.com",
     "lang": "en"
   },
-  "minecraft": {
-    "routes": {
-      "/blockedservers": {
-        "path": "/blockedservers",
-        "categories": [
-          "game"
-        ],
-        "example": "/minecraft/blockedservers",
-        "parameters": {},
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "radar": [
-          {
-            "source": [
-              "minecraft.net/"
-            ]
-          }
-        ],
-        "name": "Java Blocked Servers",
-        "maintainers": [
-          "xtexChooser"
-        ],
-        "url": "minecraft.net/",
-        "description": "Java 版中被 Mojang 通过 sessionserver 阻止的服务器域名的 SHA-1 散列",
-        "zh": {
-          "name": "Java版被阻止的服务器域名散列"
-        },
-        "location": "blockedservers.ts",
-        "module": () => import('@/routes/minecraft/blockedservers.ts')
-      },
-      "/java-runtime/:arch?/:javaType?": {
-        "path": "/java-runtime/:arch?/:javaType?",
-        "categories": [
-          "game"
-        ],
-        "example": "/minecraft/java-runtime",
-        "parameters": {
-          "arch": "Arch, `all` by default",
-          "javaType": "Java runtime type, `all` by default"
-        },
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "radar": [
-          {
-            "source": [
-              "minecraft.net/"
-            ]
-          }
-        ],
-        "name": "Java Runtimes",
-        "maintainers": [
-          "xtexChooser"
-        ],
-        "url": "minecraft.net/",
-        "description": "arch:\n\n- gamecore (Currently not used by Mojang)\n- linux\n- linux-i386\n- mac-os\n- mac-os-arm64\n- windows-arm64\n- windows-x64\n- windows-x86\n\njavaType:\n\n- java-runtime-alpha\n- java-runtime-beta\n- java-runtime-delta\n- java-runtime-gamma\n- java-runtime-gamma-snapshot\n- jre-legacy\n- minecraft-java-exe (Only on Windows)",
-        "zh": {
-          "name": "Java运行时"
-        },
-        "location": "java-runtime.ts",
-        "module": () => import('@/routes/minecraft/java-runtime.ts')
-      },
-      "/version/:versionType?/:linkType?": {
-        "path": "/version/:versionType?/:linkType?",
-        "categories": [
-          "game"
-        ],
-        "example": "/minecraft/version",
-        "parameters": {
-          "versionType": "Game version type, `all` by default",
-          "linkType": "Link added to feed, `official` by default"
-        },
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "radar": [
-          {
-            "source": [
-              "minecraft.net/"
-            ]
-          }
-        ],
-        "name": "Java Game Update",
-        "maintainers": [
-          "TheresaQWQ",
-          "xtexChooser"
-        ],
-        "url": "minecraft.net/",
-        "description": "| Version                    | versionType |\n| -------------------------- | ----------- |\n| 正式版                     | release     |\n| 快照                       | snapshot    |\n| Alpha 及更早的版本         | old\\_alpha  |\n| Beta 版                    | old\\_beta   |\n| Target                     | linkType    |\n| -------------------------- | --------    |\n| minecraft.net              | official    |\n| 英文 Minecraft Wiki 版本页 | enwiki      |\n| 中文 Minecraft Wiki 版本页 | zhwiki      |",
-        "zh": {
-          "name": "Java版游戏更新"
-        },
-        "location": "version.ts",
-        "module": () => import('@/routes/minecraft/version.ts')
-      }
-    },
-    "apiRoutes": {},
-    "name": "Minecraft",
-    "url": "minecraft.net",
-    "lang": "en"
-  },
   "mirror": {
     "routes": {
       "/:id": {
@@ -12450,6 +12446,67 @@ export default {
     "apiRoutes": {},
     "name": "RemNote",
     "url": "remnote.com",
+    "lang": "en"
+  },
+  "rottentomatoes": {
+    "routes": {
+      "/browse/:list?": {
+        "path": "/browse/:list?",
+        "categories": [
+          "multimedia"
+        ],
+        "example": "/rottentomatoes/browse",
+        "parameters": {
+          "list": {
+            "description": "Movie or TV list.",
+            "default": "new-in-theaters",
+            "options": [
+              {
+                "value": "new-in-theaters",
+                "label": "New movies in theaters"
+              },
+              {
+                "value": "popular-in-theaters",
+                "label": "Popular movies in theaters"
+              },
+              {
+                "value": "popular-streaming",
+                "label": "Popular streaming movies"
+              },
+              {
+                "value": "certified-fresh",
+                "label": "Certified Fresh movies"
+              },
+              {
+                "value": "popular-tv",
+                "label": "Popular TV shows"
+              },
+              {
+                "value": "new-tv",
+                "label": "New TV shows"
+              }
+            ]
+          }
+        },
+        "name": "Movie and TV lists",
+        "maintainers": [
+          "DIYgod"
+        ],
+        "radar": [
+          {
+            "source": [
+              "rottentomatoes.com/browse"
+            ],
+            "target": "/browse"
+          }
+        ],
+        "location": "browse.tsx",
+        "module": () => import('@/routes/rottentomatoes/browse.tsx')
+      }
+    },
+    "apiRoutes": {},
+    "name": "Rotten Tomatoes",
+    "url": "rottentomatoes.com",
     "lang": "en"
   },
   "runyeah": {
@@ -13830,6 +13887,36 @@ export default {
       "name": "浙江省博物馆"
     }
   },
+  "zread": {
+    "routes": {
+      "/trending": {
+        "path": "/trending",
+        "categories": [
+          "programming"
+        ],
+        "example": "/zread/trending",
+        "name": "热门项目",
+        "maintainers": [
+          "DIYgod"
+        ],
+        "radar": [
+          {
+            "source": [
+              "zread.ai/trending"
+            ],
+            "target": "/trending"
+          }
+        ],
+        "description": "订阅当周的热门 GitHub 项目，优先使用源站提供的中文简介。源站没有提供项目进入榜单的时间，因此条目不设置发布日期。",
+        "location": "trending.tsx",
+        "module": () => import('@/routes/zread/trending.tsx')
+      }
+    },
+    "apiRoutes": {},
+    "name": "Zread",
+    "url": "zread.ai",
+    "lang": "zh-CN"
+  },
   "zyw": {
     "routes": {
       "/hot/:site?": {
@@ -14005,77 +14092,94 @@ export default {
     "url": "www.aicaijing.com",
     "lang": "zh-CN"
   },
-  "bt0": {
+  "cbre": {
     "routes": {
-      "/mv/:number/:domain?": {
-        "path": "/mv/:number/:domain?",
+      "/research/:site?/:section?": {
+        "path": "/research/:site?/:section?",
+        "example": "/cbre/research/cn/insights",
+        "name": "洞见和市场报告",
         "categories": [
-          "multimedia"
+          "finance"
         ],
-        "example": "/bt0/mv/35575567/2",
-        "parameters": {
-          "number": "影视详情id, 网页路径为`/mv/{id}.html`其中的id部分, 一般为8位纯数字",
-          "domain": "数字1-9, 比如1表示请求域名为 1bt0.com, 默认为 2"
-        },
+        "maintainers": [
+          "DIYgod"
+        ],
         "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": true,
-          "supportPodcast": false,
-          "supportScihub": false
+          "requirePuppeteer": true
         },
+        "parameters": {
+          "site": "cn：中国简体（默认）；cn-en：中国英文；hk：香港英文；hk-tc：香港繁体。",
+          "section": "insights：洞见（默认）；markets：市场报告。"
+        },
+        "description": "按官网发布时间返回最新报告摘要及公开 PDF 附件。香港繁体站的市场报告栏目目前提供英文报告，保留官网实际内容。",
         "radar": [
           {
             "source": [
-              "2bt0.com/mv/"
-            ]
-          }
-        ],
-        "name": "影视资源下载列表",
-        "maintainers": [
-          "miemieYaho"
-        ],
-        "location": "mv.ts",
-        "module": () => import('@/routes/bt0/mv.ts')
-      },
-      "/tlist/:sc/:domain?": {
-        "path": "/tlist/:sc/:domain?",
-        "categories": [
-          "multimedia"
-        ],
-        "example": "/bt0/tlist/1",
-        "parameters": {
-          "sc": "分类(1-5), 1:电影, 2:电视剧, 3:近日热门, 4:本周热门, 5:本月热门",
-          "domain": "数字1-9, 比如1表示请求域名为 1bt0.com, 默认为 2"
-        },
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": true,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "radar": [
+              "www.cbre.com.cn/insights"
+            ],
+            "target": "/research/cn"
+          },
           {
             "source": [
-              "2bt0.com/tlist/"
-            ]
+              "www.cbre.com.cn/en/insights"
+            ],
+            "target": "/research/cn-en"
+          },
+          {
+            "source": [
+              "www.cbre.com.hk/insights"
+            ],
+            "target": "/research/hk"
+          },
+          {
+            "source": [
+              "www.cbre.com.hk/zh-hk/insights"
+            ],
+            "target": "/research/hk-tc"
           }
         ],
-        "name": "最新资源列表",
-        "maintainers": [
-          "miemieYaho"
-        ],
-        "location": "tlist.ts",
-        "module": () => import('@/routes/bt0/tlist.ts')
+        "location": "research.ts",
+        "module": () => import('@/routes/cbre/research.ts')
       }
     },
     "apiRoutes": {},
-    "name": "不太灵影视",
-    "url": "2bt0.com",
-    "description": "::: tip\n(1-9) bt0.com 都指向同一个\n:::",
+    "name": "世邦魏理仕 CBRE",
+    "url": "www.cbre.com.cn"
+  },
+  "cspengyuan": {
+    "routes": {
+      "/research/:category?": {
+        "path": "/research/:category?",
+        "example": "/cspengyuan/research/macroSpecialResearch",
+        "name": "信用研究",
+        "categories": [
+          "finance"
+        ],
+        "maintainers": [
+          "DIYgod"
+        ],
+        "features": {
+          "requirePuppeteer": true
+        },
+        "parameters": {
+          "category": "官网信用研究栏目编码，默认 macroSpecialResearch。"
+        },
+        "description": "| 栏目         | 编码                    |\n| ------------ | ----------------------- |\n| 宏观专题     | macroSpecialResearch    |\n| 政策解读     | macroPolicyResearch     |\n| 经济观察     | macroEconomiesResearch  |\n| 大类资产     | macroAssetClassResearch |\n| 宏观周报     | macroWeeklyResearch     |\n| 债市专题研究 | bondSpecial             |\n| 热点分析     | bondHotspot             |\n| 债市周报     | bondWeekly              |\n| 债市观察     | bondMonthly             |\n| 债市年报     | bondYearly              |\n| 行业评论     | industryComment         |\n| 行业展望     | industryOutlook         |\n| 行业专题     | industrySpecial         |",
+        "radar": [
+          {
+            "source": [
+              "www.cspengyuan.com/credit-research/:category"
+            ],
+            "target": "/research/:category"
+          }
+        ],
+        "location": "research.ts",
+        "module": () => import('@/routes/cspengyuan/research.ts')
+      }
+    },
+    "apiRoutes": {},
+    "name": "中证鹏元",
+    "url": "www.cspengyuan.com",
     "lang": "zh-CN"
   },
   "douyu": {
@@ -16860,6 +16964,35 @@ export default {
     "url": "eleduck.com",
     "lang": "zh-CN"
   },
+  "engoo": {
+    "routes": {
+      "/daily-news": {
+        "path": "/daily-news",
+        "example": "/engoo/daily-news",
+        "name": "Daily News",
+        "categories": [
+          "other"
+        ],
+        "maintainers": [
+          "DIYgod"
+        ],
+        "radar": [
+          {
+            "source": [
+              "engoo.com/app/daily-news"
+            ],
+            "target": "/daily-news"
+          }
+        ],
+        "location": "daily-news.ts",
+        "module": () => import('@/routes/engoo/daily-news.ts')
+      }
+    },
+    "apiRoutes": {},
+    "name": "Engoo",
+    "url": "engoo.com",
+    "lang": "en"
+  },
   "everia": {
     "routes": {
       "/": {
@@ -18084,6 +18217,71 @@ export default {
     "url": "www.im2maker.com",
     "lang": "zh-CN"
   },
+  "imf": {
+    "routes": {
+      "/country-reports/:country?": {
+        "path": "/country-reports/:country?",
+        "categories": [
+          "finance"
+        ],
+        "example": "/imf/country-reports/Germany",
+        "name": "Staff Country Reports",
+        "maintainers": [
+          "DIYgod"
+        ],
+        "parameters": {
+          "country": {
+            "description": "Official country name in the Country search filter. Omit to subscribe to all countries.",
+            "options": [
+              {
+                "value": "Germany",
+                "label": "Germany"
+              },
+              {
+                "value": "United Kingdom",
+                "label": "United Kingdom"
+              },
+              {
+                "value": "China, People's Republic of",
+                "label": "China"
+              },
+              {
+                "value": "France",
+                "label": "France"
+              },
+              {
+                "value": "United States",
+                "label": "United States"
+              },
+              {
+                "value": "Japan",
+                "label": "Japan"
+              },
+              {
+                "value": "Hong Kong Special Administrative Region, People's Republic of China",
+                "label": "Hong Kong"
+              }
+            ]
+          }
+        },
+        "description": "Latest Staff Country Reports, including Article IV consultations, Selected Issues, and financial sector assessments. Items contain the official report abstract and link to the publication page.",
+        "radar": [
+          {
+            "source": [
+              "www.imf.org/en/publications/search"
+            ],
+            "target": "/country-reports"
+          }
+        ],
+        "location": "country-reports.ts",
+        "module": () => import('@/routes/imf/country-reports.ts')
+      }
+    },
+    "apiRoutes": {},
+    "name": "International Monetary Fund",
+    "url": "www.imf.org",
+    "lang": "en"
+  },
   "inspirehep": {
     "routes": {
       "/literature/:q": {
@@ -18105,6 +18303,90 @@ export default {
         ],
         "location": "literature.ts",
         "module": () => import('@/routes/inspirehep/literature.ts')
+      },
+      "/:collection{jobs|seminars|conferences|institutions|experiments|journals}/:q?": {
+        "path": "/:collection{jobs|seminars|conferences|institutions|experiments|journals}/:q?",
+        "name": "Collection Search",
+        "categories": [
+          "journal"
+        ],
+        "example": "/inspirehep/jobs",
+        "parameters": {
+          "collection": {
+            "description": "Collection to subscribe to",
+            "options": [
+              {
+                "value": "jobs",
+                "label": "Jobs"
+              },
+              {
+                "value": "seminars",
+                "label": "Seminars"
+              },
+              {
+                "value": "conferences",
+                "label": "Conferences"
+              },
+              {
+                "value": "institutions",
+                "label": "Institutions"
+              },
+              {
+                "value": "experiments",
+                "label": "Experiments"
+              },
+              {
+                "value": "journals",
+                "label": "Journals"
+              }
+            ]
+          },
+          "q": "Optional search query, using the same syntax as the INSPIRE website"
+        },
+        "maintainers": [
+          "DIYgod"
+        ],
+        "radar": [
+          {
+            "source": [
+              "inspirehep.net/jobs"
+            ],
+            "target": "/jobs"
+          },
+          {
+            "source": [
+              "inspirehep.net/seminars"
+            ],
+            "target": "/seminars"
+          },
+          {
+            "source": [
+              "inspirehep.net/conferences"
+            ],
+            "target": "/conferences"
+          },
+          {
+            "source": [
+              "inspirehep.net/institutions"
+            ],
+            "target": "/institutions"
+          },
+          {
+            "source": [
+              "inspirehep.net/experiments"
+            ],
+            "target": "/experiments"
+          },
+          {
+            "source": [
+              "inspirehep.net/journals"
+            ],
+            "target": "/journals"
+          }
+        ],
+        "description": "Jobs use the most recent creation date, conferences and seminars use the most recent event date, and other collections use the publisher's search ordering. Journals and institutions feeds contain directory records; use Literature Search to subscribe to their publications.",
+        "location": "collections.tsx",
+        "module": () => import('@/routes/inspirehep/collections.tsx')
       },
       "/authors/:id": {
         "path": "/authors/:id",
@@ -19654,14 +19936,40 @@ export default {
   },
   "mail": {
     "routes": {
-      "/imap/:email/:folder{.+}?": {
-        "path": "/imap/:email/:folder{.+}?",
+      "/imap/:email/subaddress/:subaddress/:folder{.+}?": {
+        "path": [
+          "/imap/:email/subaddress/:subaddress/:folder{.+}?",
+          "/imap/:email/:folder{.+}?"
+        ],
         "categories": [
           "other"
         ],
         "example": "/mail/imap/rss@rsshub.app",
         "parameters": {
           "email": "Email account",
+          "subaddress": "Optional plus-address tag. For user@example.com and newsletter, select mail addressed to user+newsletter@example.com.",
+          "folder": "Inbox name, `INBOX` by default"
+        },
+        "description": "Only support IMAP protocol, email password and other settings refer to [Route-specific Configurations](https://docs.rsshub.app/deploy/config#route-specific-configurations)",
+        "name": "Inbox",
+        "maintainers": [
+          "kt286"
+        ],
+        "location": "imap.ts",
+        "module": () => import('@/routes/mail/imap.ts')
+      },
+      "/imap/:email/:folder{.+}?": {
+        "path": [
+          "/imap/:email/subaddress/:subaddress/:folder{.+}?",
+          "/imap/:email/:folder{.+}?"
+        ],
+        "categories": [
+          "other"
+        ],
+        "example": "/mail/imap/rss@rsshub.app",
+        "parameters": {
+          "email": "Email account",
+          "subaddress": "Optional plus-address tag. For user@example.com and newsletter, select mail addressed to user+newsletter@example.com.",
           "folder": "Inbox name, `INBOX` by default"
         },
         "description": "Only support IMAP protocol, email password and other settings refer to [Route-specific Configurations](https://docs.rsshub.app/deploy/config#route-specific-configurations)",
@@ -21096,7 +21404,7 @@ export default {
     "apiRoutes": {},
     "name": "X (Twitter)",
     "url": "x.com",
-    "description": "Specify options (in the format of query string) in parameter `routeParams` to control some extra features for Tweets\n\n| Key                               | Description                                                                                                                          | Accepts                | Defaults to                               |\n| --------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------ | ---------------------- | ----------------------------------------- |\n| `readable`                        | Enable readable layout                                                                                                               | `0`/`1`/`true`/`false` | `false`                                   |\n| `authorNameBold`                  | Display author name in bold                                                                                                          | `0`/`1`/`true`/`false` | `false`                                   |\n| `showAuthorInTitle`               | Show author name in title                                                                                                            | `0`/`1`/`true`/`false` | `false` (`true` in `/twitter/followings`) |\n| `showAuthorAsTitleOnly`           | Show only author name as title                                                                                                       | `0`/`1`/`true`/`false` | `false`                                   |\n| `showAuthorInDesc`                | Show author name in description (RSS body)                                                                                           | `0`/`1`/`true`/`false` | `false` (`true` in `/twitter/followings`) |\n| `showQuotedAuthorAvatarInDesc`    | Show avatar of quoted Tweet's author in description (RSS body) (Not recommended if your RSS reader extracts images from description) | `0`/`1`/`true`/`false` | `false`                                   |\n| `showAuthorAvatarInDesc`          | Show avatar of author in description (RSS body) (Not recommended if your RSS reader extracts images from description)                | `0`/`1`/`true`/`false` | `false`                                   |\n| `showEmojiForRetweetAndReply`     | Use \"🔁\" instead of \"RT\", \"↩️\" & \"💬\" instead of \"Re\"                                                                                | `0`/`1`/`true`/`false` | `false`                                   |\n| `showSymbolForRetweetAndReply`    | Use \" RT \" instead of \"\", \" Re \" instead of \"\"                                                                                       | `0`/`1`/`true`/`false` | `true`                                    |\n| `showRetweetTextInTitle`          | Show quote comments in title (if `false`, only the retweeted tweet will be shown in the title)                                       | `0`/`1`/`true`/`false` | `true`                                    |\n| `addLinkForPics`                  | Add clickable links for Tweet pictures                                                                                               | `0`/`1`/`true`/`false` | `false`                                   |\n| `showTimestampInDescription`      | Show timestamp in description                                                                                                        | `0`/`1`/`true`/`false` | `false`                                   |\n| `showQuotedInTitle`               | Show quoted tweet in title                                                                                                           | `0`/`1`/`true`/`false` | `false`                                   |\n| `widthOfPics`                     | Width of Tweet pictures                                                                                                              | Unspecified/Integer    | Unspecified                               |\n| `heightOfPics`                    | Height of Tweet pictures                                                                                                             | Unspecified/Integer    | Unspecified                               |\n| `sizeOfAuthorAvatar`              | Size of author's avatar                                                                                                              | Integer                | `48`                                      |\n| `sizeOfQuotedAuthorAvatar`        | Size of quoted tweet's author's avatar                                                                                               | Integer                | `24`                                      |\n| `includeReplies`                  | Include replies, only available in `/twitter/user`                                                                                   | `0`/`1`/`true`/`false` | `false`                                   |\n| `includeRts`                      | Include retweets, only available in `/twitter/user`                                                                                  | `0`/`1`/`true`/`false` | `true`                                    |\n| `forceWebApi`                     | Force using Web API even if Developer API is configured, only available in `/twitter/user` and `/twitter/keyword`                    | `0`/`1`/`true`/`false` | `false`                                   |\n| `count`                           | `count` parameter passed to Twitter API, only available in `/twitter/user`                                                           | Unspecified/Integer    | Unspecified                               |\n| `onlyMedia`                       | Only get tweets with a media                                                                                                         | `0`/`1`/`true`/`false` | `false`                                   |\n| `mediaNumber `                    | Number the medias                                                                                                                    | `0`/`1`/`true`/`false` | `false`                                   |\n| `showEmojiForSubscriberOnly`      | Use \"🔒\" as prefix for subscriber-only posts                                                                                         | `0`/`1`/`true`/`false` | `false`                                   |\n| `showSymbolForSubscriberOnly`     | Use \"\\[Subscribers Only]\" as prefix for subscriber-only posts                                                                        | `0`/`1`/`true`/`false` | `true`                                    |\n| `showFullPrefixForSubscriberOnly` | Use \"🔒 \\[Subscribers Only]\" as prefix for subscriber-only posts                                                                     | `0`/`1`/`true`/`false` | `false`                                   |\n\nSpecify different option values than default values to improve readability. The URL\n\n```\nhttps://rsshub.app/twitter/user/durov/readable=1&authorNameBold=1&showAuthorInTitle=1&showAuthorInDesc=1&showQuotedAuthorAvatarInDesc=1&showAuthorAvatarInDesc=1&showEmojiForRetweetAndReply=1&showRetweetTextInTitle=0&addLinkForPics=1&showTimestampInDescription=1&showQuotedInTitle=1&heightOfPics=150\n```\n\ngenerates\n\n<img loading=\"lazy\" src=\"/img/readable-twitter.png\" alt=\"Readable Twitter RSS of Durov\" />\n\nCurrently supports two authentication methods:\n\n- Using `TWITTER_AUTH_TOKEN` (recommended): Configure a comma-separated list of `auth_token` cookies of logged-in Twitter Web. RSSHub will use this information to directly access Twitter's web API to obtain data.\n\n~~- Using `TWITTER_USERNAME` `TWITTER_PASSWORD` and `TWITTER_AUTHENTICATION_SECRET`: Configure a comma-separated list of Twitter username and password. RSSHub will use this information to log in to Twitter and obtain data using the mobile API. Please note that if you have not logged in with the current IP address before, it is easy to trigger Twitter's risk control mechanism.~~ This no longer works since mobile client attestation has been implemented in October 2025.\n\n- Using `TWITTER_CONSUMER_KEY` and `TWITTER_CONSUMER_SECRET`: Configure a comma-separated list of Twitter API keys and secrets. RSSHub will use this information to access Twitter's Pay-Per-Use developer API to obtain data.\n- OPTIONAL: Using `TWITTER_ACCESS_TOKEN` and `TWITTER_ACCESS_SECRET`: Configure a comma-separated list of Twitter API access tokens and secrets. RSSHub will use this information to access Twitter's Pay-Per-Use developer API with user authentication to obtain data. If not provided, RSSHub will only use app authentication, which may only access to public information.",
+    "description": "Specify options (in the format of query string) in parameter `routeParams` to control some extra features for Tweets\n\n| Key                               | Description                                                                                                                              | Accepts                | Defaults to                               |\n| --------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- | ---------------------- | ----------------------------------------- |\n| `readable`                        | Enable readable layout                                                                                                                   | `0`/`1`/`true`/`false` | `false`                                   |\n| `authorNameBold`                  | Display author name in bold                                                                                                              | `0`/`1`/`true`/`false` | `false`                                   |\n| `showAuthorInTitle`               | Show author name in title                                                                                                                | `0`/`1`/`true`/`false` | `false` (`true` in `/twitter/followings`) |\n| `showAuthorAsTitleOnly`           | Show only author name as title                                                                                                           | `0`/`1`/`true`/`false` | `false`                                   |\n| `showAuthorInDesc`                | Show author name in description (RSS body)                                                                                               | `0`/`1`/`true`/`false` | `false` (`true` in `/twitter/followings`) |\n| `showQuotedAuthorAvatarInDesc`    | Show avatar of quoted Tweet's author in description (RSS body) (Not recommended if your RSS reader extracts images from description)     | `0`/`1`/`true`/`false` | `false`                                   |\n| `showAuthorAvatarInDesc`          | Show avatar of author in description (RSS body) (Not recommended if your RSS reader extracts images from description)                    | `0`/`1`/`true`/`false` | `false`                                   |\n| `showEmojiForRetweetAndReply`     | Use \"🔁\" instead of \"RT\", \"↩️\" & \"💬\" instead of \"Re\"                                                                                    | `0`/`1`/`true`/`false` | `false`                                   |\n| `showSymbolForRetweetAndReply`    | Use \" RT \" instead of \"\", \" Re \" instead of \"\"                                                                                           | `0`/`1`/`true`/`false` | `true`                                    |\n| `showRetweetTextInTitle`          | Show quote comments in title (if `false`, only the retweeted tweet will be shown in the title)                                           | `0`/`1`/`true`/`false` | `true`                                    |\n| `useRetweetDate`                  | Use the time of the retweet as its publication date, instead of the original tweet's date                                                | `0`/`1`/`true`/`false` | `false`                                   |\n| `showLikesCountInTitle`           | Prefix the title with the tweet's like count when available, for example `[1567] Tweet text`                                             | `0`/`1`/`true`/`false` | `false`                                   |\n| `includeReplyContext`             | Prepend up to five available parent replies from the API response, oldest first; unavailable parents are omitted without extra API calls | `0`/`1`/`true`/`false` | `false`                                   |\n| `addLinkForPics`                  | Add clickable links for Tweet pictures                                                                                                   | `0`/`1`/`true`/`false` | `false`                                   |\n| `showTimestampInDescription`      | Show timestamp in description                                                                                                            | `0`/`1`/`true`/`false` | `false`                                   |\n| `showQuotedInTitle`               | Show quoted tweet in title                                                                                                               | `0`/`1`/`true`/`false` | `false`                                   |\n| `widthOfPics`                     | Width of Tweet pictures                                                                                                                  | Unspecified/Integer    | Unspecified                               |\n| `heightOfPics`                    | Height of Tweet pictures                                                                                                                 | Unspecified/Integer    | Unspecified                               |\n| `sizeOfAuthorAvatar`              | Size of author's avatar                                                                                                                  | Integer                | `48`                                      |\n| `sizeOfQuotedAuthorAvatar`        | Size of quoted tweet's author's avatar                                                                                                   | Integer                | `24`                                      |\n| `includeReplies`                  | Include replies, only available in `/twitter/user`                                                                                       | `0`/`1`/`true`/`false` | `false`                                   |\n| `includeRts`                      | Include retweets, only available in `/twitter/user`                                                                                      | `0`/`1`/`true`/`false` | `true`                                    |\n| `forceWebApi`                     | Force using Web API even if Developer API is configured, only available in `/twitter/user` and `/twitter/keyword`                        | `0`/`1`/`true`/`false` | `false`                                   |\n| `count`                           | `count` parameter passed to Twitter API, only available in `/twitter/user`                                                               | Unspecified/Integer    | Unspecified                               |\n| `onlyMedia`                       | Only get tweets with a media                                                                                                             | `0`/`1`/`true`/`false` | `false`                                   |\n| `mediaNumber `                    | Number the medias                                                                                                                        | `0`/`1`/`true`/`false` | `false`                                   |\n| `showEmojiForSubscriberOnly`      | Use \"🔒\" as prefix for subscriber-only posts                                                                                             | `0`/`1`/`true`/`false` | `false`                                   |\n| `showSymbolForSubscriberOnly`     | Use \"\\[Subscribers Only]\" as prefix for subscriber-only posts                                                                            | `0`/`1`/`true`/`false` | `true`                                    |\n| `showFullPrefixForSubscriberOnly` | Use \"🔒 \\[Subscribers Only]\" as prefix for subscriber-only posts                                                                         | `0`/`1`/`true`/`false` | `false`                                   |\n\nSpecify different option values than default values to improve readability. The URL\n\n```\nhttps://rsshub.app/twitter/user/durov/readable=1&authorNameBold=1&showAuthorInTitle=1&showAuthorInDesc=1&showQuotedAuthorAvatarInDesc=1&showAuthorAvatarInDesc=1&showEmojiForRetweetAndReply=1&showRetweetTextInTitle=0&addLinkForPics=1&showTimestampInDescription=1&showQuotedInTitle=1&heightOfPics=150\n```\n\ngenerates\n\n<img loading=\"lazy\" src=\"/img/readable-twitter.png\" alt=\"Readable Twitter RSS of Durov\" />\n\nCurrently supports two authentication methods:\n\n- Using `TWITTER_AUTH_TOKEN` (recommended): Configure a comma-separated list of `auth_token` cookies of logged-in Twitter Web. RSSHub will use this information to directly access Twitter's web API to obtain data.\n\n~~- Using `TWITTER_USERNAME` `TWITTER_PASSWORD` and `TWITTER_AUTHENTICATION_SECRET`: Configure a comma-separated list of Twitter username and password. RSSHub will use this information to log in to Twitter and obtain data using the mobile API. Please note that if you have not logged in with the current IP address before, it is easy to trigger Twitter's risk control mechanism.~~ This no longer works since mobile client attestation has been implemented in October 2025.\n\n- Using `TWITTER_CONSUMER_KEY` and `TWITTER_CONSUMER_SECRET`: Configure a comma-separated list of Twitter API keys and secrets. RSSHub will use this information to access Twitter's Pay-Per-Use developer API to obtain data.\n- OPTIONAL: Using `TWITTER_ACCESS_TOKEN` and `TWITTER_ACCESS_SECRET`: Configure a comma-separated list of Twitter API access tokens and secrets. RSSHub will use this information to access Twitter's Pay-Per-Use developer API with user authentication to obtain data. If not provided, RSSHub will only use app authentication, which may only access to public information.",
     "lang": "en"
   },
   "soulapp": {
@@ -21213,6 +21521,66 @@ export default {
     "zh": {
       "name": "上海天气预警"
     }
+  },
+  "speedrun": {
+    "routes": {
+      "/games": {
+        "path": "/games",
+        "categories": [
+          "game"
+        ],
+        "example": "/speedrun/games",
+        "name": "New games",
+        "maintainers": [
+          "DIYgod"
+        ],
+        "radar": [
+          {
+            "source": [
+              "speedrun.com/games"
+            ],
+            "target": "/games"
+          }
+        ],
+        "location": "games.tsx",
+        "module": () => import('@/routes/speedrun/games.tsx')
+      },
+      "/runs/:scope?/:name?": {
+        "path": "/runs/:scope?/:name?",
+        "categories": [
+          "game"
+        ],
+        "example": "/speedrun/runs/game/ultrakill",
+        "parameters": {
+          "scope": "Optional game or user scope; omit both parameters for all verified runs.",
+          "name": "Game abbreviation or player username. Required when scope is game or user."
+        },
+        "name": "Verified runs",
+        "maintainers": [
+          "DIYgod"
+        ],
+        "radar": [
+          {
+            "source": [
+              "speedrun.com/users/:name"
+            ],
+            "target": "/runs/user/:name"
+          },
+          {
+            "source": [
+              "speedrun.com/:name"
+            ],
+            "target": "/runs/game/:name"
+          }
+        ],
+        "location": "runs.tsx",
+        "module": () => import('@/routes/speedrun/runs.tsx')
+      }
+    },
+    "apiRoutes": {},
+    "name": "Speedrun.com",
+    "url": "speedrun.com",
+    "lang": "en"
   },
   "stockedge": {
     "routes": {
@@ -25435,6 +25803,61 @@ export default {
         "description": "If the instance address is not `mastodon.social` or `pawoo.net`, then the route requires `ALLOW_USER_SUPPLY_UNSAFE_DOMAIN` to be `true`.",
         "location": "timeline-remote.ts",
         "module": () => import('@/routes/mastodon/timeline-remote.ts')
+      },
+      "/trends/:site/:type?": {
+        "path": "/trends/:site/:type?",
+        "categories": [
+          "social-media"
+        ],
+        "example": "/mastodon/trends/mastodon.social",
+        "parameters": {
+          "site": "Instance domain, without a protocol.",
+          "type": {
+            "description": "Trending content type.",
+            "default": "statuses",
+            "options": [
+              {
+                "value": "statuses",
+                "label": "Posts"
+              },
+              {
+                "value": "tags",
+                "label": "Hashtags"
+              },
+              {
+                "value": "links",
+                "label": "Links"
+              }
+            ]
+          }
+        },
+        "name": "Trending posts, hashtags and links",
+        "maintainers": [
+          "DIYgod"
+        ],
+        "description": "Instances outside the existing Mastodon domain allowlist require `ALLOW_USER_SUPPLY_UNSAFE_DOMAIN=true` or `MASTODON_API_HOST`. Availability depends on the instance enabling public trends.",
+        "radar": [
+          {
+            "source": [
+              "mastodon.social/explore"
+            ],
+            "target": "/trends/mastodon.social/statuses"
+          },
+          {
+            "source": [
+              "mastodon.social/explore/tags"
+            ],
+            "target": "/trends/mastodon.social/tags"
+          },
+          {
+            "source": [
+              "mastodon.social/explore/links"
+            ],
+            "target": "/trends/mastodon.social/links"
+          }
+        ],
+        "location": "trends.tsx",
+        "module": () => import('@/routes/mastodon/trends.tsx')
       }
     },
     "apiRoutes": {},
@@ -31371,7 +31794,7 @@ export default {
         "categories": [
           "traditional-media"
         ],
-        "description": "::: tip\nAll Topics in [Topic Library](https://abc.net.au/news/topics) are supported, you can fill in the field after `topic` in its URL, or fill in the `documentId`.\n\nFor example, the URL for [Computer Science](https://www.abc.net.au/news/topic/computer-science) is `https://www.abc.net.au/news/topic/computer-science`, the `category` is `news/topic/computer-science`, and the `documentId` of the Topic is `2302`, so the route is [/abc/news/topic/computer-science](https://rsshub.app/abc/news/topic/computer-science) and [/abc/2302](https://rsshub.app/abc/2302).\n\nThe supported channels are all listed in the table below. For other channels, please find the `documentId` in the source code of the channel page and fill it in as above.\n:::",
+        "description": "::: tip\nAll Topics in [Topic Library](https://abc.net.au/news/topics) are supported, you can fill in the field after `topic` in its URL, or fill in the `documentId`.\n\nFor example, the URL for [Computer Science](https://www.abc.net.au/news/topic/computer-science) is `https://www.abc.net.au/news/topic/computer-science`, the `category` is `news/topic/computer-science`, and the `documentId` of the Topic is `2302`, so the route is [/abc/news/topic/computer-science](https://rsshub.app/abc/news/topic/computer-science) and [/abc/2302](https://rsshub.app/abc/2302).\n\nChinese news is available at `/abc/news/chinese`. Chinese topics can also use their `documentId`, as described above.\n\nThe supported channels are all listed in the table below. For other channels, please find the `documentId` in the source code of the channel page and fill it in as above.\n:::",
         "maintainers": [
           "nczitzk",
           "pseudoyu"
@@ -31733,6 +32156,38 @@ export default {
       "new-media"
     ],
     "description": "",
+    "lang": "en"
+  },
+  "acea": {
+    "routes": {
+      "/publications/:type?": {
+        "path": "/publications/:type?",
+        "example": "/acea/publications/press-releases",
+        "name": "Publications",
+        "categories": [
+          "finance"
+        ],
+        "maintainers": [
+          "DIYgod"
+        ],
+        "parameters": {
+          "type": "Native content type, e.g. press-releases, facts, figures or publications. Defaults to press-releases."
+        },
+        "radar": [
+          {
+            "source": [
+              "www.acea.auto/nav/"
+            ],
+            "target": "/publications"
+          }
+        ],
+        "location": "publications.ts",
+        "module": () => import('@/routes/acea/publications.ts')
+      }
+    },
+    "apiRoutes": {},
+    "name": "ACEA",
+    "url": "www.acea.auto",
     "lang": "en"
   },
   "acfun": {
@@ -36884,6 +37339,68 @@ export default {
     "url": "arcteryx.com",
     "lang": "zh-CN"
   },
+  "arena": {
+    "routes": {
+      "/leaderboard/:category?": {
+        "path": "/leaderboard/:category?",
+        "categories": [
+          "programming"
+        ],
+        "example": "/arena/leaderboard",
+        "parameters": {
+          "category": {
+            "description": "Text leaderboard category.",
+            "default": "overall",
+            "options": [
+              {
+                "value": "overall",
+                "label": "Overall"
+              },
+              {
+                "value": "coding",
+                "label": "Coding"
+              },
+              {
+                "value": "longer-query",
+                "label": "Longer Query"
+              },
+              {
+                "value": "english",
+                "label": "English"
+              },
+              {
+                "value": "chinese",
+                "label": "Chinese"
+              },
+              {
+                "value": "hard-prompts",
+                "label": "Hard Prompts"
+              }
+            ]
+          }
+        },
+        "name": "Text leaderboard updates",
+        "maintainers": [
+          "DIYgod"
+        ],
+        "description": "Each feed contains one complete leaderboard snapshot. The GUID changes when the rankings or scores change, so readers can notify on leaderboard updates. Uses the current Arena website, which replaced chat.lmsys.org.",
+        "radar": [
+          {
+            "source": [
+              "arena.ai/leaderboard/text"
+            ],
+            "target": "/leaderboard"
+          }
+        ],
+        "location": "leaderboard.tsx",
+        "module": () => import('@/routes/arena/leaderboard.tsx')
+      }
+    },
+    "apiRoutes": {},
+    "name": "Arena (formerly LMSYS Chatbot Arena)",
+    "url": "arena.ai",
+    "lang": "en"
+  },
   "arxiv": {
     "routes": {
       "/:query": {
@@ -39972,6 +40489,35 @@ export default {
     "url": "bbcnewslabs.co.uk",
     "lang": "en"
   },
+  "bcg": {
+    "routes": {
+      "/infrastructure": {
+        "path": "/infrastructure",
+        "categories": [
+          "new-media"
+        ],
+        "example": "/bcg/infrastructure",
+        "name": "Infrastructure insights",
+        "maintainers": [
+          "DIYgod"
+        ],
+        "radar": [
+          {
+            "source": [
+              "bcg.com/industries/urban-planning/infrastructure"
+            ],
+            "target": "/infrastructure"
+          }
+        ],
+        "location": "infrastructure.ts",
+        "module": () => import('@/routes/bcg/infrastructure.ts')
+      }
+    },
+    "apiRoutes": {},
+    "name": "Boston Consulting Group",
+    "url": "bcg.com",
+    "lang": "en"
+  },
   "bdys": {
     "routes": {
       "/:caty?/:type?/:area?/:year?/:order?": {
@@ -42057,6 +42603,41 @@ export default {
     "name": "Brave",
     "url": "brave.com",
     "lang": "en"
+  },
+  "brookings": {
+    "routes": {
+      "/region/:region{.+}?": {
+        "path": "/region/:region{.+}?",
+        "example": "/brookings/region/asia-the-pacific/china",
+        "parameters": {
+          "region": "Region path after /regions/ in the website URL, defaults to asia-the-pacific/china"
+        },
+        "categories": [
+          "finance"
+        ],
+        "radar": [
+          {
+            "source": [
+              "www.brookings.edu/regions/:region+"
+            ],
+            "target": "/region/:region"
+          }
+        ],
+        "name": "Regional research",
+        "maintainers": [
+          "DIYgod"
+        ],
+        "description": "Includes the article excerpts supplied by the official regional research search index.",
+        "location": "region.ts",
+        "module": () => import('@/routes/brookings/region.ts')
+      }
+    },
+    "apiRoutes": {},
+    "name": "Brookings Institution",
+    "url": "www.brookings.edu",
+    "categories": [
+      "finance"
+    ]
   },
   "btbtla": {
     "routes": {
@@ -47853,6 +48434,58 @@ export default {
     "description": "",
     "lang": "zh-CN"
   },
+  "chinanzxh": {
+    "routes": {
+      "/data/:category?": {
+        "path": "/data/:category?",
+        "categories": [
+          "finance"
+        ],
+        "example": "/chinanzxh/data/price-indices",
+        "name": "化肥价格指数与分析",
+        "maintainers": [
+          "DIYgod"
+        ],
+        "parameters": {
+          "category": {
+            "description": "数据中心栏目。",
+            "default": "price-indices",
+            "options": [
+              {
+                "value": "price-indices",
+                "label": "价格指数"
+              },
+              {
+                "value": "index-analysis",
+                "label": "指数分析"
+              }
+            ]
+          }
+        },
+        "description": "收录各类化肥的价格指数周报与市场分析全文。指数分析文章来自微信公众号；若微信临时限制访问，订阅会报错，请稍后重试。",
+        "radar": [
+          {
+            "source": [
+              "www.chinanzxh.com/data/price-indices/index.html"
+            ],
+            "target": "/data/price-indices"
+          },
+          {
+            "source": [
+              "www.chinanzxh.com/data/index-analysis/index.html"
+            ],
+            "target": "/data/index-analysis"
+          }
+        ],
+        "location": "data.ts",
+        "module": () => import('@/routes/chinanzxh/data.ts')
+      }
+    },
+    "apiRoutes": {},
+    "name": "中国农资流通协会",
+    "url": "www.chinanzxh.com",
+    "lang": "zh-CN"
+  },
   "chinaratings": {
     "routes": {
       "/CreditResearch/:category{.+}?": {
@@ -49043,6 +49676,30 @@ export default {
         ],
         "location": "chapter.ts",
         "module": () => import('@/routes/ciweimao/chapter.ts')
+      },
+      "/recommendations/:section?": {
+        "path": "/recommendations/:section?",
+        "example": "/ciweimao/recommendations/hot",
+        "parameters": {
+          "section": "首页栏目：recommended（重磅推荐）、hot（最热连载小说）、featured（精选强推），默认 recommended"
+        },
+        "categories": [
+          "reading"
+        ],
+        "name": "小说推荐",
+        "maintainers": [
+          "DIYgod"
+        ],
+        "radar": [
+          {
+            "source": [
+              "wap.ciweimao.com/"
+            ],
+            "target": "/recommendations"
+          }
+        ],
+        "location": "recommendations.ts",
+        "module": () => import('@/routes/ciweimao/recommendations.ts')
       }
     },
     "apiRoutes": {},
@@ -51471,6 +52128,30 @@ export default {
         },
         "location": "index.ts",
         "module": () => import('@/routes/cool18/index.ts')
+      },
+      "/original": {
+        "path": "/original",
+        "example": "/cool18/original",
+        "name": "热门泛原创",
+        "categories": [
+          "bbs"
+        ],
+        "maintainers": [
+          "DIYgod"
+        ],
+        "features": {
+          "nsfw": true
+        },
+        "radar": [
+          {
+            "source": [
+              "cool18.com/indexorgposts.php"
+            ],
+            "target": "/original"
+          }
+        ],
+        "location": "original.ts",
+        "module": () => import('@/routes/cool18/original.ts')
       }
     },
     "apiRoutes": {},
@@ -51630,6 +52311,69 @@ export default {
   },
   "coomer": {
     "routes": {
+      "/posts/popular/:period?": {
+        "path": "/posts/popular/:period?",
+        "categories": [
+          "multimedia"
+        ],
+        "example": "/coomer/posts/popular/1d",
+        "parameters": {
+          "period": {
+            "description": "Popular ranking period.",
+            "default": "1d",
+            "options": [
+              {
+                "value": "1d",
+                "label": "1d"
+              },
+              {
+                "value": "1w",
+                "label": "1w"
+              },
+              {
+                "value": "1m",
+                "label": "1m"
+              }
+            ]
+          }
+        },
+        "name": "Popular posts",
+        "maintainers": [
+          "DIYgod"
+        ],
+        "features": {
+          "nsfw": true
+        },
+        "radar": [
+          {
+            "source": [
+              "coomer.st/posts/popular"
+            ],
+            "target": "/posts/popular"
+          }
+        ],
+        "location": "popular.ts",
+        "module": () => import('@/routes/coomer/popular.ts')
+      },
+      "/posts/:query": {
+        "path": "/posts/:query",
+        "categories": [
+          "multimedia"
+        ],
+        "example": "/coomer/posts/dance",
+        "parameters": {
+          "query": "Post search query."
+        },
+        "name": "Search posts",
+        "maintainers": [
+          "DIYgod"
+        ],
+        "features": {
+          "nsfw": true
+        },
+        "location": "search.ts",
+        "module": () => import('@/routes/coomer/search.ts')
+      },
       "/:source?/:id?": {
         "path": "/:source?/:id?",
         "categories": [
@@ -59962,6 +60706,47 @@ export default {
     "name": "東森新聞",
     "url": "ebc.net.tw"
   },
+  "ebrun": {
+    "routes": {
+      "/news/:section?": {
+        "path": "/news/:section?",
+        "example": "/ebrun/news/information",
+        "name": "最新资讯和快讯",
+        "categories": [
+          "new-media"
+        ],
+        "maintainers": [
+          "DIYgod"
+        ],
+        "features": {
+          "requirePuppeteer": true
+        },
+        "parameters": {
+          "section": "information：最新资讯（默认）；newest：快讯。"
+        },
+        "radar": [
+          {
+            "source": [
+              "www.ebrun.com/information"
+            ],
+            "target": "/news/information"
+          },
+          {
+            "source": [
+              "www.ebrun.com/newest"
+            ],
+            "target": "/news/newest"
+          }
+        ],
+        "location": "news.ts",
+        "module": () => import('@/routes/ebrun/news.ts')
+      }
+    },
+    "apiRoutes": {},
+    "name": "亿邦动力",
+    "url": "www.ebrun.com",
+    "lang": "zh-CN"
+  },
   "ecnu": {
     "routes": {
       "/art": {
@@ -61105,6 +61890,36 @@ export default {
     "name": "电子发烧友",
     "url": "www.elecfans.com",
     "lang": "zh-CN"
+  },
+  "elpais": {
+    "routes": {
+      "/news": {
+        "path": "/news",
+        "categories": [
+          "new-media"
+        ],
+        "example": "/elpais/news",
+        "name": "News",
+        "maintainers": [
+          "DIYgod"
+        ],
+        "description": "Includes full text for articles marked publicly accessible by El País. Subscription articles retain their official RSS summary.",
+        "radar": [
+          {
+            "source": [
+              "elpais.com"
+            ],
+            "target": "/news"
+          }
+        ],
+        "location": "news.ts",
+        "module": () => import('@/routes/elpais/news.ts')
+      }
+    },
+    "apiRoutes": {},
+    "name": "El País",
+    "url": "elpais.com",
+    "lang": "es"
   },
   "elsevier": {
     "routes": {
@@ -63538,6 +64353,39 @@ export default {
     ],
     "lang": "zh-CN"
   },
+  "fruitdatakings": {
+    "routes": {
+      "/news/:product?": {
+        "path": "/news/:product?",
+        "example": "/fruitdatakings/news/cherry",
+        "name": "Product news",
+        "categories": [
+          "traditional-media"
+        ],
+        "maintainers": [
+          "DIYgod"
+        ],
+        "parameters": {
+          "product": "Product selected in the website’s news form, defaults to cherry. For example: cherry or kiwi."
+        },
+        "description": "Includes news headlines and links from the public product-news form. Source headlines may be shortened; full articles are hosted by external publishers. Paid market charts are not part of this feed.",
+        "radar": [
+          {
+            "source": [
+              "www.fruitdatakings.com/rss_category/"
+            ],
+            "target": "/news"
+          }
+        ],
+        "location": "news.ts",
+        "module": () => import('@/routes/fruitdatakings/news.ts')
+      }
+    },
+    "apiRoutes": {},
+    "name": "Fruit Data Kings",
+    "url": "www.fruitdatakings.com",
+    "lang": "en"
+  },
   "ft": {
     "routes": {
       "/myft/:key": {
@@ -63836,6 +64684,43 @@ export default {
     "name": "FX Markets",
     "url": "fx-markets.com",
     "lang": "en"
+  },
+  "fx57": {
+    "routes": {
+      "/series/:path{.+}": {
+        "path": "/series/:path{.+}",
+        "example": "/fx57/series/fx57/film/animation/2020-10-18/346.html",
+        "name": "剧集下载更新",
+        "categories": [
+          "multimedia"
+        ],
+        "maintainers": [
+          "DIYgod"
+        ],
+        "features": {
+          "supportBT": true
+        },
+        "parameters": {
+          "path": "剧集详情 URL 中的完整路径，例如 fx57/film/animation/2020-10-18/346.html。"
+        },
+        "description": "Each unique magnetic link is a separate item with a BitTorrent enclosure. Subscribe to a specific series page; use common RSSHub filters to select release names or resolutions.",
+        "radar": [
+          {
+            "source": [
+              "fx57.cn/fx57/:section/:path*",
+              "www.fx57.cn/fx57/:section/:path*"
+            ],
+            "target": "/series/fx57/:section/:path*"
+          }
+        ],
+        "location": "series.ts",
+        "module": () => import('@/routes/fx57/series.ts')
+      }
+    },
+    "apiRoutes": {},
+    "name": "枫叶网",
+    "url": "www.fx57.cn",
+    "lang": "zh-CN"
   },
   "fx678": {
     "routes": {
@@ -71159,6 +72044,68 @@ export default {
     "url": "huanqiu.com",
     "lang": "zh-CN"
   },
+  "huawei": {
+    "routes": {
+      "/developer/harmonyos/sample-code": {
+        "path": "/developer/harmonyos/sample-code",
+        "categories": [
+          "programming"
+        ],
+        "example": "/huawei/developer/harmonyos/sample-code",
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "developer.huawei.com/consumer/cn/samples"
+            ],
+            "target": "/huawei/developer/harmonyos/sample-code"
+          }
+        ],
+        "name": "HarmonyOS 示例代码",
+        "maintainers": [
+          "JiZhi-Error"
+        ],
+        "location": "developer/harmonyos/samplecode.ts",
+        "module": () => import('@/routes/huawei/developer/harmonyos/samplecode.ts')
+      },
+      "/community/user/:uid?": {
+        "path": "/community/user/:uid?",
+        "example": "/huawei/community/user/1000014645695",
+        "name": "花粉俱乐部用户帖子",
+        "categories": [
+          "program-update"
+        ],
+        "maintainers": [
+          "DIYgod"
+        ],
+        "parameters": {
+          "uid": "User ID from the public profile URL. Defaults to the official Mate/P software maintenance account (1000014645695)."
+        },
+        "description": "Includes public posts and their complete update notes. The default official account publishes device models, software versions, and release details.",
+        "radar": [
+          {
+            "source": [
+              "cn.club.vmall.com/mhw/consumer/cn/community/mhwnews/bluevstore/id_:uid"
+            ],
+            "target": "/community/user/:uid"
+          }
+        ],
+        "location": "community/user.ts",
+        "module": () => import('@/routes/huawei/community/user.ts')
+      }
+    },
+    "apiRoutes": {},
+    "name": "华为",
+    "url": "developer.huawei.com",
+    "lang": "zh-CN"
+  },
   "hubu": {
     "routes": {
       "/www/:category{.+}?": {
@@ -73628,6 +74575,54 @@ export default {
     "url": "ifi-audio.com",
     "lang": "en"
   },
+  "ifs": {
+    "routes": {
+      "/research/:section?": {
+        "path": "/research/:section?",
+        "example": "/ifs/research/reports",
+        "name": "Research and analysis",
+        "categories": [
+          "finance"
+        ],
+        "maintainers": [
+          "DIYgod"
+        ],
+        "features": {
+          "requirePuppeteer": true
+        },
+        "parameters": {
+          "section": "reports (default), press-releases or explainers."
+        },
+        "description": "Includes the article content available on the website and a PDF attachment when provided. Some reports publish an executive summary online and the complete report as a PDF.",
+        "radar": [
+          {
+            "source": [
+              "ifs.org.uk/research-and-analysis/reports"
+            ],
+            "target": "/research/reports"
+          },
+          {
+            "source": [
+              "ifs.org.uk/research-and-analysis/press-releases"
+            ],
+            "target": "/research/press-releases"
+          },
+          {
+            "source": [
+              "ifs.org.uk/explainers"
+            ],
+            "target": "/research/explainers"
+          }
+        ],
+        "location": "research.ts",
+        "module": () => import('@/routes/ifs/research.ts')
+      }
+    },
+    "apiRoutes": {},
+    "name": "Institute for Fiscal Studies",
+    "url": "ifs.org.uk",
+    "lang": "en"
+  },
   "iguoguo": {
     "routes": {
       "/html5": {
@@ -75515,6 +76510,40 @@ export default {
     "name": "iRacing",
     "url": "iracing.com",
     "description": ""
+  },
+  "ireader": {
+    "routes": {
+      "/new-books/:category?": {
+        "path": "/new-books/:category?",
+        "example": "/ireader/new-books/320",
+        "name": "新书上架",
+        "categories": [
+          "reading"
+        ],
+        "maintainers": [
+          "DIYgod"
+        ],
+        "parameters": {
+          "category": "分类 ID，对应网站 cid 参数，默认 320（计算机）。"
+        },
+        "description": "Uses the website’s newest-first new-book selection (order=update, status=4). Select a native book category using its cid value.",
+        "radar": [
+          {
+            "source": [
+              "pweb.d.ireader.com/index.php",
+              "www.ireader.com/index.php"
+            ],
+            "target": "/new-books/320"
+          }
+        ],
+        "location": "new-books.ts",
+        "module": () => import('@/routes/ireader/new-books.ts')
+      }
+    },
+    "apiRoutes": {},
+    "name": "掌阅 iReader",
+    "url": "pweb.d.ireader.com",
+    "lang": "zh-CN"
   },
   "iri-search": {
     "routes": {
@@ -78614,6 +79643,97 @@ export default {
   },
   "kemono": {
     "routes": {
+      "/:source/:id/dms": {
+        "path": "/:source/:id/dms",
+        "categories": [
+          "anime"
+        ],
+        "example": "/kemono/patreon/123870346/dms",
+        "parameters": {
+          "source": "Source from the website URL, such as patreon.",
+          "id": "Creator ID from the website URL."
+        },
+        "name": "Creator direct messages",
+        "maintainers": [
+          "DIYgod"
+        ],
+        "features": {
+          "nsfw": true
+        },
+        "radar": [
+          {
+            "source": [
+              "kemono.cr/:source/user/:id/dms"
+            ],
+            "target": "/:source/:id/dms"
+          }
+        ],
+        "location": "dms.ts",
+        "module": () => import('@/routes/kemono/dms.ts')
+      },
+      "/posts/popular/:period?": {
+        "path": "/posts/popular/:period?",
+        "categories": [
+          "anime"
+        ],
+        "example": "/kemono/posts/popular/1d",
+        "parameters": {
+          "period": {
+            "description": "Popular ranking period.",
+            "default": "1d",
+            "options": [
+              {
+                "value": "1d",
+                "label": "1d"
+              },
+              {
+                "value": "1w",
+                "label": "1w"
+              },
+              {
+                "value": "1m",
+                "label": "1m"
+              }
+            ]
+          }
+        },
+        "name": "Popular posts",
+        "maintainers": [
+          "DIYgod"
+        ],
+        "features": {
+          "nsfw": true
+        },
+        "radar": [
+          {
+            "source": [
+              "kemono.cr/posts/popular"
+            ],
+            "target": "/posts/popular"
+          }
+        ],
+        "location": "popular.ts",
+        "module": () => import('@/routes/kemono/popular.ts')
+      },
+      "/posts/:query": {
+        "path": "/posts/:query",
+        "categories": [
+          "anime"
+        ],
+        "example": "/kemono/posts/music",
+        "parameters": {
+          "query": "Post search query."
+        },
+        "name": "Search posts",
+        "maintainers": [
+          "DIYgod"
+        ],
+        "features": {
+          "nsfw": true
+        },
+        "location": "search.ts",
+        "module": () => import('@/routes/kemono/search.ts')
+      },
       "/:source?/:id?/:type?": {
         "path": "/:source?/:id?/:type?",
         "categories": [
@@ -83085,6 +84205,59 @@ export default {
     "url": "www.mcmod.cn",
     "lang": "zh-CN"
   },
+  "mcp": {
+    "routes": {
+      "/feed/:type?": {
+        "path": "/feed/:type?",
+        "categories": [
+          "programming"
+        ],
+        "example": "/mcp/feed",
+        "parameters": {
+          "type": {
+            "description": "Submission type.",
+            "default": "all",
+            "options": [
+              {
+                "value": "all",
+                "label": "All submissions"
+              },
+              {
+                "value": "servers",
+                "label": "Servers"
+              },
+              {
+                "value": "remote-servers",
+                "label": "Remote servers"
+              },
+              {
+                "value": "clients",
+                "label": "Clients"
+              }
+            ]
+          }
+        },
+        "name": "New submissions",
+        "maintainers": [
+          "DIYgod"
+        ],
+        "radar": [
+          {
+            "source": [
+              "mcp.so/feed"
+            ],
+            "target": "/feed"
+          }
+        ],
+        "location": "feed.ts",
+        "module": () => import('@/routes/mcp/feed.ts')
+      }
+    },
+    "apiRoutes": {},
+    "name": "MCP.so",
+    "url": "mcp.so",
+    "lang": "en"
+  },
   "mdpi": {
     "routes": {
       "/:journal": {
@@ -85714,6 +86887,144 @@ export default {
     "url": "mindmeister.com",
     "lang": "en"
   },
+  "minecraft": {
+    "routes": {
+      "/blockedservers": {
+        "path": "/blockedservers",
+        "categories": [
+          "game"
+        ],
+        "example": "/minecraft/blockedservers",
+        "parameters": {},
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "minecraft.net/"
+            ]
+          }
+        ],
+        "name": "Java Blocked Servers",
+        "maintainers": [
+          "xtexChooser"
+        ],
+        "url": "minecraft.net/",
+        "description": "Java 版中被 Mojang 通过 sessionserver 阻止的服务器域名的 SHA-1 散列",
+        "zh": {
+          "name": "Java版被阻止的服务器域名散列"
+        },
+        "location": "blockedservers.ts",
+        "module": () => import('@/routes/minecraft/blockedservers.ts')
+      },
+      "/java-runtime/:arch?/:javaType?": {
+        "path": "/java-runtime/:arch?/:javaType?",
+        "categories": [
+          "game"
+        ],
+        "example": "/minecraft/java-runtime",
+        "parameters": {
+          "arch": "Arch, `all` by default",
+          "javaType": "Java runtime type, `all` by default"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "minecraft.net/"
+            ]
+          }
+        ],
+        "name": "Java Runtimes",
+        "maintainers": [
+          "xtexChooser"
+        ],
+        "url": "minecraft.net/",
+        "description": "arch:\n\n- gamecore (Currently not used by Mojang)\n- linux\n- linux-i386\n- mac-os\n- mac-os-arm64\n- windows-arm64\n- windows-x64\n- windows-x86\n\njavaType:\n\n- java-runtime-alpha\n- java-runtime-beta\n- java-runtime-delta\n- java-runtime-gamma\n- java-runtime-gamma-snapshot\n- jre-legacy\n- minecraft-java-exe (Only on Windows)",
+        "zh": {
+          "name": "Java运行时"
+        },
+        "location": "java-runtime.ts",
+        "module": () => import('@/routes/minecraft/java-runtime.ts')
+      },
+      "/version/:versionType?/:linkType?": {
+        "path": "/version/:versionType?/:linkType?",
+        "categories": [
+          "game"
+        ],
+        "example": "/minecraft/version",
+        "parameters": {
+          "versionType": "Game version type, `all` by default",
+          "linkType": "Link added to feed, `official` by default"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "minecraft.net/"
+            ]
+          }
+        ],
+        "name": "Java Game Update",
+        "maintainers": [
+          "TheresaQWQ",
+          "xtexChooser"
+        ],
+        "url": "minecraft.net/",
+        "description": "| Version                    | versionType |\n| -------------------------- | ----------- |\n| 正式版                     | release     |\n| 快照                       | snapshot    |\n| Alpha 及更早的版本         | old\\_alpha  |\n| Beta 版                    | old\\_beta   |\n| Target                     | linkType    |\n| -------------------------- | --------    |\n| minecraft.net              | official    |\n| 英文 Minecraft Wiki 版本页 | enwiki      |\n| 中文 Minecraft Wiki 版本页 | zhwiki      |",
+        "zh": {
+          "name": "Java版游戏更新"
+        },
+        "location": "version.ts",
+        "module": () => import('@/routes/minecraft/version.ts')
+      },
+      "/bedrock/preview": {
+        "path": "/bedrock/preview",
+        "categories": [
+          "game"
+        ],
+        "example": "/minecraft/bedrock/preview",
+        "name": "Bedrock Beta and Preview changelogs",
+        "maintainers": [
+          "DIYgod"
+        ],
+        "radar": [
+          {
+            "source": [
+              "feedback.minecraft.net/hc/en-us/sections/360001185332-Beta-and-Preview-Information-and-Changelogs"
+            ],
+            "target": "/bedrock/preview"
+          }
+        ],
+        "location": "bedrock-preview.ts",
+        "module": () => import('@/routes/minecraft/bedrock-preview.ts')
+      }
+    },
+    "apiRoutes": {},
+    "name": "Minecraft",
+    "url": "minecraft.net",
+    "lang": "en"
+  },
   "mingpao": {
     "routes": {
       "/:type?/:category?": {
@@ -86484,6 +87795,39 @@ export default {
     ],
     "lang": "zh-CN"
   },
+  "moyukik": {
+    "routes": {
+      "/event/:id": {
+        "path": "/event/:id",
+        "example": "/moyukik/event/65512562447749138",
+        "name": "事件追踪",
+        "categories": [
+          "new-media"
+        ],
+        "maintainers": [
+          "DIYgod"
+        ],
+        "parameters": {
+          "id": "Event ID from the share URL."
+        },
+        "description": "Includes the latest entries on the public share page and their complete public article content.",
+        "radar": [
+          {
+            "source": [
+              "h5-ol.sns.sohu.com/hy-moyukik-h5/share/event/:id"
+            ],
+            "target": "/event/:id"
+          }
+        ],
+        "location": "event.ts",
+        "module": () => import('@/routes/moyukik/event.ts')
+      }
+    },
+    "apiRoutes": {},
+    "name": "摸鱼 kik",
+    "url": "h5-ol.sns.sohu.com/hy-moyukik-h5",
+    "lang": "zh-CN"
+  },
   "mpaypass": {
     "routes": {
       "/main/:type?": {
@@ -86546,6 +87890,60 @@ export default {
     "name": "移动支付网",
     "url": "mpaypass.com.cn",
     "lang": "zh-CN"
+  },
+  "mplus": {
+    "routes": {
+      "/collection": {
+        "path": "/collection",
+        "example": "/mplus/collection",
+        "name": "藏品",
+        "categories": [
+          "travel"
+        ],
+        "maintainers": [
+          "DIYgod"
+        ],
+        "description": "訂閱公開藏品目錄首頁，保留穩定藏品連結；作品創作年份不作為發布日期。",
+        "radar": [
+          {
+            "source": [
+              "www.mplus.org.hk/tc/collection/"
+            ],
+            "target": "/collection"
+          }
+        ],
+        "location": "collection.ts",
+        "module": () => import('@/routes/mplus/collection.ts')
+      },
+      "/content/:section?": {
+        "path": "/content/:section?",
+        "example": "/mplus/content/magazine",
+        "name": "雜誌、展覽與今日呈獻",
+        "categories": [
+          "travel"
+        ],
+        "maintainers": [
+          "DIYgod"
+        ],
+        "parameters": {
+          "section": "magazine（雜誌，預設）、exhibitions（展覽）或 today（今日呈獻）。"
+        },
+        "radar": [
+          {
+            "source": [
+              "www.mplus.org.hk/tc/:section"
+            ],
+            "target": "/content/:section"
+          }
+        ],
+        "location": "content.ts",
+        "module": () => import('@/routes/mplus/content.ts')
+      }
+    },
+    "apiRoutes": {},
+    "name": "M+博物館",
+    "url": "www.mplus.org.hk",
+    "lang": "zh-TW"
   },
   "mrdx": {
     "routes": {
@@ -92449,6 +93847,31 @@ export default {
   },
   "notion": {
     "routes": {
+      "/site/:domain": {
+        "path": "/site/:domain",
+        "categories": [
+          "blog"
+        ],
+        "example": "/notion/site/notion",
+        "parameters": {
+          "domain": "Subdomain in <domain>.notion.site."
+        },
+        "name": "Public site pages",
+        "maintainers": [
+          "DIYgod"
+        ],
+        "description": "Lists direct child pages and their public top-level text. No Notion token is required. Private pages and database collections are not included.",
+        "radar": [
+          {
+            "source": [
+              "notion.notion.site"
+            ],
+            "target": "/site/notion"
+          }
+        ],
+        "location": "site.tsx",
+        "module": () => import('@/routes/notion/site.tsx')
+      },
       "/database/:databaseId": {
         "path": "/database/:databaseId",
         "categories": [
@@ -92828,6 +94251,43 @@ export default {
     "name": "NPR (National Public Radio)",
     "url": "npr.org",
     "lang": "en"
+  },
+  "nsmc": {
+    "routes": {
+      "/cloud/:product?/:hours?": {
+        "path": "/cloud/:product?/:hours?",
+        "example": "/nsmc/cloud/geos-col-irx/24",
+        "parameters": {
+          "product": "产品：geos-col-irx、geos-mos-irx、fy4b-gclr 或 fy4b-swci，默认 geos-col-irx",
+          "hours": "视频覆盖的小时数：24、48、72 或 168，默认 24"
+        },
+        "categories": [
+          "forecast"
+        ],
+        "name": "卫星云图视频",
+        "maintainers": [
+          "DIYgod"
+        ],
+        "radar": [
+          {
+            "source": [
+              "www.nsmc.org.cn/nsmc/cn/image/video.html",
+              "www.nsmc.org.cn/nsmc/cn/image/"
+            ]
+          }
+        ],
+        "description": "订阅卫星云图视频更新。发布时间来自官方 XML 云图列表；视频文件由源站持续更新，条目标识包含观测时间。",
+        "location": "cloud.ts",
+        "module": () => import('@/routes/nsmc/cloud.ts')
+      }
+    },
+    "apiRoutes": {},
+    "name": "国家卫星气象中心",
+    "url": "www.nsmc.org.cn",
+    "categories": [
+      "forecast"
+    ],
+    "lang": "zh-CN"
   },
   "ntdm": {
     "routes": {
@@ -100341,6 +101801,35 @@ export default {
     },
     "lang": "en"
   },
+  "popyard": {
+    "routes": {
+      "/news": {
+        "path": "/news",
+        "example": "/popyard/news",
+        "name": "即时快递",
+        "categories": [
+          "traditional-media"
+        ],
+        "maintainers": [
+          "DIYgod"
+        ],
+        "radar": [
+          {
+            "source": [
+              "cn.popyard.space/"
+            ],
+            "target": "/news"
+          }
+        ],
+        "location": "news.ts",
+        "module": () => import('@/routes/popyard/news.ts')
+      }
+    },
+    "apiRoutes": {},
+    "name": "八阕",
+    "url": "cn.popyard.space",
+    "lang": "zh-CN"
+  },
   "pornhub": {
     "routes": {
       "/search/:keyword/:img?": {
@@ -100852,6 +102341,35 @@ export default {
     "name": "PornHub",
     "url": "pornhub.com",
     "lang": "en"
+  },
+  "poxiao": {
+    "routes": {
+      "/latest": {
+        "path": "/latest",
+        "example": "/poxiao/latest",
+        "name": "最近更新",
+        "categories": [
+          "multimedia"
+        ],
+        "maintainers": [
+          "DIYgod"
+        ],
+        "radar": [
+          {
+            "source": [
+              "www.poxiao.com/"
+            ],
+            "target": "/latest"
+          }
+        ],
+        "location": "latest.ts",
+        "module": () => import('@/routes/poxiao/latest.ts')
+      }
+    },
+    "apiRoutes": {},
+    "name": "破晓电影",
+    "url": "www.poxiao.com",
+    "lang": "zh-CN"
   },
   "priconne-redive": {
     "routes": {
@@ -105103,6 +106621,53 @@ export default {
     "url": "gs.sass.org.cn",
     "lang": "zh-CN"
   },
+  "savills": {
+    "routes": {
+      "/research/:site?": {
+        "path": "/research/:site?",
+        "example": "/savills/research/cn",
+        "name": "市场研究",
+        "categories": [
+          "finance"
+        ],
+        "maintainers": [
+          "DIYgod"
+        ],
+        "features": {
+          "requirePuppeteer": true
+        },
+        "parameters": {
+          "site": "cn：中国简体中文（默认）；hk：香港英文；hk-tc：香港繁体中文。"
+        },
+        "description": "返回官网最新研究报告的摘要，以及源站提供的 PDF 附件。英文中国站目前返回错误页面；香港英文站也会发布亚太区域研究。",
+        "radar": [
+          {
+            "source": [
+              "www.savills.com.cn/insight-and-opinion/research.aspx"
+            ],
+            "target": "/research/cn"
+          },
+          {
+            "source": [
+              "www.savills.com.hk/insight-and-opinion/research.aspx"
+            ],
+            "target": "/research/hk"
+          },
+          {
+            "source": [
+              "tc.savills.com.hk/insight-and-opinion/research.aspx"
+            ],
+            "target": "/research/hk-tc"
+          }
+        ],
+        "location": "research.ts",
+        "module": () => import('@/routes/savills/research.ts')
+      }
+    },
+    "apiRoutes": {},
+    "name": "第一太平戴维斯 Savills",
+    "url": "www.savills.com.cn"
+  },
   "scau": {
     "routes": {
       "/yzb": {
@@ -108000,6 +109565,32 @@ export default {
   },
   "shopback": {
     "routes": {
+      "/cashback/:store/:market?": {
+        "path": "/cashback/:store/:market?",
+        "example": "/shopback/cashback/agoda/tw",
+        "name": "Merchant cashback rates",
+        "categories": [
+          "shopping"
+        ],
+        "maintainers": [
+          "DIYgod"
+        ],
+        "parameters": {
+          "store": "Merchant slug from its ShopBack URL.",
+          "market": "tw (default), my, sg, th, kr, au, id, or ph."
+        },
+        "description": "Includes the merchant’s current cashback rates. Each distinct product-and-rate combination has a separate GUID. A return to a previously seen rate reuses its earlier GUID. The former product/search and store/search endpoints are no longer available.",
+        "radar": [
+          {
+            "source": [
+              "www.shopback.com.tw/:store"
+            ],
+            "target": "/cashback/:store/tw"
+          }
+        ],
+        "location": "cashback.ts",
+        "module": () => import('@/routes/shopback/cashback.ts')
+      },
       "/:store": {
         "path": "/:store",
         "categories": [
@@ -113935,6 +115526,34 @@ export default {
         "description": "::: tip\n帖子 id 查找办法:\n\n打开想跟踪的帖子，比如：`https://t66y.com/htm_data/20/1811/3286088.html` 其中 `3286088` 就是帖子 id。\n:::",
         "location": "post.ts",
         "module": () => import('@/routes/t66y/post.ts')
+      },
+      "/user/:username": {
+        "path": "/user/:username",
+        "categories": [
+          "bbs"
+        ],
+        "example": "/t66y/user/金小妹",
+        "parameters": {
+          "username": "用户名，与源站 /@用户名 页面一致"
+        },
+        "radar": [
+          {
+            "source": [
+              "t66y.com/@:username",
+              "www.t66y.com/@:username"
+            ],
+            "target": "/user/:username"
+          }
+        ],
+        "features": {
+          "nsfw": true
+        },
+        "name": "用户主题",
+        "maintainers": [
+          "DIYgod"
+        ],
+        "location": "user.ts",
+        "module": () => import('@/routes/t66y/user.ts')
       }
     },
     "apiRoutes": {},
@@ -114009,6 +115628,38 @@ export default {
     "apiRoutes": {},
     "name": "Taiwan News",
     "url": "taiwannews.com.tw",
+    "lang": "en"
+  },
+  "taiwanplus": {
+    "routes": {
+      "/news/:category{.+}?": {
+        "path": "/news/:category{.+}?",
+        "example": "/taiwanplus/news/taiwan-news",
+        "name": "News",
+        "categories": [
+          "traditional-media"
+        ],
+        "maintainers": [
+          "DIYgod"
+        ],
+        "parameters": {
+          "category": "News category path from the website URL, defaults to taiwan-news."
+        },
+        "radar": [
+          {
+            "source": [
+              "www.taiwanplus.com/news/:category*"
+            ],
+            "target": "/news/:category"
+          }
+        ],
+        "location": "news.ts",
+        "module": () => import('@/routes/taiwanplus/news.ts')
+      }
+    },
+    "apiRoutes": {},
+    "name": "TaiwanPlus",
+    "url": "www.taiwanplus.com",
     "lang": "en"
   },
   "tangshufang": {
@@ -114253,6 +115904,44 @@ export default {
     "name": "TCTMD",
     "url": "www.tctmd.com",
     "description": "Cardiovascular news, education, and clinical trial coverage from the Cardiovascular Research Foundation",
+    "lang": "en"
+  },
+  "teamblind": {
+    "routes": {
+      "/posts/:channel?": {
+        "path": "/posts/:channel?",
+        "categories": [
+          "social-media"
+        ],
+        "example": "/teamblind/posts/tech",
+        "parameters": {
+          "channel": "Channel slug from /channels/:channel. Omit for the popular homepage feed."
+        },
+        "name": "Popular and channel posts",
+        "maintainers": [
+          "DIYgod"
+        ],
+        "radar": [
+          {
+            "source": [
+              "teamblind.com/channels/:channel"
+            ],
+            "target": "/posts/:channel"
+          },
+          {
+            "source": [
+              "teamblind.com"
+            ],
+            "target": "/posts"
+          }
+        ],
+        "location": "posts.tsx",
+        "module": () => import('@/routes/teamblind/posts.tsx')
+      }
+    },
+    "apiRoutes": {},
+    "name": "Blind",
+    "url": "www.teamblind.com",
     "lang": "en"
   },
   "techcrunch": {
@@ -114620,7 +116309,7 @@ export default {
         "example": "/telegram/channel/awesomeRSSHub",
         "parameters": {
           "username": "channel username",
-          "routeParams": "extra parameters, see the table below\n| Key                    | Description                                                           | Accepts                                            | Defaults to  |\n| :--------------------: | :-------------------------------------------------------------------: | :------------------------------------------------: | :----------: |\n| showLinkPreview        | Show the link preview from Telegram                                   | 0/1/true/false                                     | true         |\n| showViaBot             | For messages sent via bot, show the bot                               | 0/1/true/false                                     | true         |\n| showReplyTo            | For reply messages, show the target of the reply                      | 0/1/true/false                                     | true         |\n| showFwdFrom            | For forwarded messages, show the forwarding source                    | 0/1/true/false                                     | true         |\n| showFwdFromAuthor      | For forwarded messages, show the author of the forwarding source      | 0/1/true/false                                     | true         |\n| showInlineButtons      | Show inline buttons                                                   | 0/1/true/false                                     | false        |\n| showMediaTagInTitle    | Show media tags in the title                                          | 0/1/true/false                                     | true         |\n| showMediaTagAsEmoji    | Show media tags as emoji                                              | 0/1/true/false                                     | true         |\n| showHashtagAsHyperlink | Show hashtags as hyperlinks (`https://t.me/s/channel?q=%23hashtag`) | 0/1/true/false                                     | true         |\n| includeFwd             | Include forwarded messages                                            | 0/1/true/false                                     | true         |\n| includeReply           | Include reply messages                                                | 0/1/true/false                                     | true         |\n| includeServiceMsg      | Include service messages (e.g. message pinned, channel photo updated) | 0/1/true/false                                     | true         |\n| includeUnsupportedMsg  | Include messages unsupported by t.me                                  | 0/1/true/false                                     | false        |\n| searchQuery            | search query                                                          | keywords; replace `#hashtag` with `%23hashtag` | (no keyword) |\n\nSpecify different option values than default values can meet different needs, URL\n\n```\nhttps://rsshub.app/telegram/channel/NewlearnerChannel/showLinkPreview=0&showViaBot=0&showReplyTo=0&showFwdFrom=0&showFwdFromAuthor=0&showInlineButtons=0&showMediaTagInTitle=1&showMediaTagAsEmoji=1&includeFwd=0&includeReply=1&includeServiceMsg=0&includeUnsupportedMsg=0\n```\n\ngenerates an RSS without any link previews and annoying metadata, with emoji media tags in the title, without forwarded messages (but with reply messages), and without messages you don't care about (service messages and unsupported messages), for people who prefer pure subscriptions.\n\nFor backward compatibility reasons, invalid `routeParams` will be treated as `searchQuery` .\n"
+          "routeParams": "extra parameters, see the table below\n| Key                    | Description                                                           | Accepts                                            | Defaults to  |\n| :--------------------: | :-------------------------------------------------------------------: | :------------------------------------------------: | :----------: |\n| showLinkPreview        | Show the link preview from Telegram                                   | 0/1/true/false                                     | true         |\n| showViaBot             | For messages sent via bot, show the bot                               | 0/1/true/false                                     | true         |\n| showReplyTo            | For reply messages, show the target of the reply                      | 0/1/true/false                                     | true         |\n| showFwdFrom            | For forwarded messages, show the forwarding source                    | 0/1/true/false                                     | true         |\n| showFwdFromAuthor      | For forwarded messages, show the author of the forwarding source      | 0/1/true/false                                     | true         |\n| includeTelegraph       | Expand public telegra.ph article links into their full content          | 0/1/true/false                                     | false        |\n| showInlineButtons      | Show inline buttons                                                   | 0/1/true/false                                     | false        |\n| showMediaTagInTitle    | Show media tags in the title                                          | 0/1/true/false                                     | true         |\n| showMediaTagAsEmoji    | Show media tags as emoji                                              | 0/1/true/false                                     | true         |\n| showHashtagAsHyperlink | Show hashtags as hyperlinks (`https://t.me/s/channel?q=%23hashtag`) | 0/1/true/false                                     | true         |\n| includeFwd             | Include forwarded messages                                            | 0/1/true/false                                     | true         |\n| includeReply           | Include reply messages                                                | 0/1/true/false                                     | true         |\n| includeServiceMsg      | Include service messages (e.g. message pinned, channel photo updated) | 0/1/true/false                                     | true         |\n| includeUnsupportedMsg  | Include messages unsupported by t.me                                  | 0/1/true/false                                     | false        |\n| searchQuery            | search query                                                          | keywords; replace `#hashtag` with `%23hashtag` | (no keyword) |\n\nSpecify different option values than default values can meet different needs, URL\n\n```\nhttps://rsshub.app/telegram/channel/NewlearnerChannel/showLinkPreview=0&showViaBot=0&showReplyTo=0&showFwdFrom=0&showFwdFromAuthor=0&showInlineButtons=0&showMediaTagInTitle=1&showMediaTagAsEmoji=1&includeFwd=0&includeReply=1&includeServiceMsg=0&includeUnsupportedMsg=0\n```\n\ngenerates an RSS without any link previews and annoying metadata, with emoji media tags in the title, without forwarded messages (but with reply messages), and without messages you don't care about (service messages and unsupported messages), for people who prefer pure subscriptions.\n\nFor backward compatibility reasons, invalid `routeParams` will be treated as `searchQuery` .\n"
         },
         "features": {
           "requireConfig": [
@@ -114681,7 +116370,7 @@ export default {
           "synchrone",
           "pseudoyu"
         ],
-        "description": "::: tip\nDue to Telegram restrictions, some channels involving pornography, copyright, and politics cannot be subscribed. You can confirm by visiting `https://t.me/s/:username`, it's recommended to deploy your own instance with telegram api configs (create your telegram application via `https://core.telegram.org/api/obtaining_api_id`, run this command `node ./lib/routes/telegram/scripts/get-telegram-session.mjs` to get `TELEGRAM_SESSION` and set it as Environment Variable).\n:::",
+        "description": "::: tip\nDue to Telegram restrictions, some channels involving pornography, copyright, and politics cannot be subscribed. You can confirm by visiting `https://t.me/s/:username`, it's recommended to deploy your own instance with telegram api configs (create your telegram application via `https://core.telegram.org/api/obtaining_api_id`, run this command `node ./lib/routes/telegram/scripts/get-telegram-session.mjs` to get `TELEGRAM_SESSION` and set it as Environment Variable).\nMTProto connections can use a SOCKS4/5 `PROXY_URI` (for example, `socks5://127.0.0.1:1080`) or the dedicated `TELEGRAM_PROXY_HOST`, `TELEGRAM_PROXY_PORT`, and `TELEGRAM_PROXY_SECRET` MTProxy settings, which take precedence. HTTP proxies only apply to the public web feed; use a SOCKS or MTProxy endpoint for authenticated MTProto feeds.\n\nWhen a reverse proxy removes a public URL prefix (for example, `/rss`), set its `X-Forwarded-Prefix` request header to that prefix so Telegram media links include it. Access-control `key` and `code` parameters are preserved in these media links.\n:::",
         "location": "channel.ts",
         "module": () => import('@/routes/telegram/channel.ts')
       }
@@ -115179,6 +116868,39 @@ export default {
     "name": "TesterHome",
     "url": "testerhome.com",
     "lang": "zh-CN"
+  },
+  "testflight": {
+    "routes": {
+      "/status/:id": {
+        "path": "/status/:id",
+        "example": "/testflight/status/tLcYLZJV",
+        "name": "Beta availability",
+        "categories": [
+          "program-update"
+        ],
+        "maintainers": [
+          "DIYgod"
+        ],
+        "parameters": {
+          "id": "Public invitation ID from https://testflight.apple.com/join/ID."
+        },
+        "radar": [
+          {
+            "source": [
+              "testflight.apple.com/join/:id"
+            ],
+            "target": "/status/:id"
+          }
+        ],
+        "description": "Reports the current public beta availability. The item GUID changes when the status changes. Apple does not expose the exact number of remaining slots.",
+        "location": "status.ts",
+        "module": () => import('@/routes/testflight/status.ts')
+      }
+    },
+    "apiRoutes": {},
+    "name": "TestFlight",
+    "url": "testflight.apple.com",
+    "lang": "en"
   },
   "tgbus": {
     "routes": {
@@ -117483,6 +119205,75 @@ export default {
       "government"
     ],
     "lang": "en"
+  },
+  "treccani": {
+    "routes": {
+      "/magazine/:section?": {
+        "path": "/magazine/:section?",
+        "categories": [
+          "new-media"
+        ],
+        "example": "/treccani/magazine/atlante",
+        "parameters": {
+          "section": {
+            "description": "Magazine section. Omit for the homepage.",
+            "options": [
+              {
+                "value": "agenda",
+                "label": "agenda"
+              },
+              {
+                "value": "atlante",
+                "label": "atlante"
+              },
+              {
+                "value": "faro",
+                "label": "faro"
+              },
+              {
+                "value": "chiasmo",
+                "label": "chiasmo"
+              },
+              {
+                "value": "diritto",
+                "label": "diritto"
+              },
+              {
+                "value": "lingua_italiana",
+                "label": "lingua_italiana"
+              },
+              {
+                "value": "parolevalgono",
+                "label": "parolevalgono"
+              },
+              {
+                "value": "webtv",
+                "label": "webtv"
+              }
+            ]
+          }
+        },
+        "name": "Magazine articles",
+        "maintainers": [
+          "DIYgod"
+        ],
+        "description": "Includes public article summaries. Il Tascabile has its own native feed at <https://www.iltascabile.com/feed/>.",
+        "radar": [
+          {
+            "source": [
+              "treccani.it/magazine/:section"
+            ],
+            "target": "/magazine/:section"
+          }
+        ],
+        "location": "magazine.tsx",
+        "module": () => import('@/routes/treccani/magazine.tsx')
+      }
+    },
+    "apiRoutes": {},
+    "name": "Treccani",
+    "url": "www.treccani.it",
+    "lang": "it"
   },
   "trendforce": {
     "routes": {
@@ -121895,6 +123686,71 @@ export default {
     "url": "desktop.webcatalog.io",
     "lang": "en"
   },
+  "webnovel": {
+    "routes": {
+      "/ranking/:type?": {
+        "path": "/ranking/:type?",
+        "categories": [
+          "reading"
+        ],
+        "example": "/webnovel/ranking",
+        "parameters": {
+          "type": {
+            "description": "Novel ranking type.",
+            "default": "power",
+            "options": [
+              {
+                "value": "power",
+                "label": "power"
+              },
+              {
+                "value": "trending",
+                "label": "trending"
+              },
+              {
+                "value": "collect",
+                "label": "collect"
+              },
+              {
+                "value": "popular",
+                "label": "popular"
+              },
+              {
+                "value": "update",
+                "label": "update"
+              },
+              {
+                "value": "active",
+                "label": "active"
+              },
+              {
+                "value": "fandom",
+                "label": "fandom"
+              }
+            ]
+          }
+        },
+        "name": "Novel rankings",
+        "maintainers": [
+          "DIYgod"
+        ],
+        "radar": [
+          {
+            "source": [
+              "webnovel.com/ranking"
+            ],
+            "target": "/ranking"
+          }
+        ],
+        "location": "ranking.tsx",
+        "module": () => import('@/routes/webnovel/ranking.tsx')
+      }
+    },
+    "apiRoutes": {},
+    "name": "WebNovel",
+    "url": "webnovel.com",
+    "lang": "en"
+  },
   "webtoons": {
     "routes": {
       "/:lang/:category/:name/:id": {
@@ -122820,8 +124676,8 @@ export default {
   },
   "wkjyqh": {
     "routes": {
-      "/research": {
-        "path": "/research",
+      "/research/:variety?/:type?": {
+        "path": "/research/:variety?/:type?",
         "categories": [
           "finance"
         ],
@@ -122835,6 +124691,11 @@ export default {
           }
         ],
         "name": "研究报告",
+        "parameters": {
+          "variety": "官网交易品种编码，0 或省略为全部；宏观金融为 1、农产品为 5、贵金属为 7。",
+          "type": "官网报告类型编码，0 或省略为全部，2 为周报。"
+        },
+        "description": "例如农产品周报使用 `/wkjyqh/research/5/2`，全部品种周报使用 `/wkjyqh/research/0/2`。参数对应官网原生研究报告栏目，不请求后续页面。",
         "maintainers": [
           "TonyRL"
         ],
@@ -122964,8 +124825,13 @@ export default {
           "requireConfig": [
             {
               "name": "ALLOW_USER_SUPPLY_UNSAFE_DOMAIN",
-              "description": "This RSS is disabled unless 'ALLOW_USER_SUPPLY_UNSAFE_DOMAIN' is set to 'true'.",
-              "optional": false
+              "description": "Enable requests to any WordPress domain. Alternatively, use WORDPRESS_ALLOWED_DOMAINS to permit specific domains.",
+              "optional": true
+            },
+            {
+              "name": "WORDPRESS_ALLOWED_DOMAINS",
+              "description": "Comma-separated hostnames allowed without ALLOW_USER_SUPPLY_UNSAFE_DOMAIN, for example wordpress.org,blog.example.com.",
+              "optional": true
             }
           ],
           "requirePuppeteer": false,
@@ -123965,6 +125831,39 @@ export default {
         "description": "::: warning\n小宇宙的 api 需要验证 `x-jike-device-id`、`x-jike-access-token` 和 `x-jike-refresh-token` 。必要时需要自行配置，具体见部署文档。\n:::",
         "location": "pickup.ts",
         "module": () => import('@/routes/xiaoyuzhou/pickup.ts')
+      },
+      "/comments/:id": {
+        "path": "/comments/:id",
+        "categories": [
+          "multimedia"
+        ],
+        "example": "/xiaoyuzhou/comments/5f573de183c34e85ddce9c8b",
+        "parameters": {
+          "id": "单集 id，可在单集页面 URL 中找到"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "xiaoyuzhoufm.com/episode/:id"
+            ],
+            "target": "/comments/:id"
+          }
+        ],
+        "name": "单集热门评论",
+        "maintainers": [
+          "DIYgod"
+        ],
+        "description": "订阅单集公开网页展示的热门评论。网页只展示部分热门评论，无法保证包含全部评论或每条最新评论。",
+        "location": "comments.tsx",
+        "module": () => import('@/routes/xiaoyuzhou/comments.tsx')
       },
       "/podcast/:id": {
         "path": "/podcast/:id",
@@ -131914,15 +133813,16 @@ export default {
         "location": "fav.ts",
         "module": () => import('@/routes/bilibili/fav.ts')
       },
-      "/video/page/:bvid/:embed?": {
-        "path": "/video/page/:bvid/:embed?",
+      "/video/page/:bvid/:embed?/:sort?": {
+        "path": "/video/page/:bvid/:embed?/:sort?",
         "categories": [
           "social-media"
         ],
         "example": "/bilibili/video/page/BV1i7411M7N9",
         "parameters": {
           "bvid": "可在视频页 URL 中找到",
-          "embed": "默认为开启内嵌视频, 任意值为关闭"
+          "embed": "默认为开启内嵌视频, 任意值为关闭",
+          "sort": "选集排序：desc（默认，降序）或 asc（升序）"
         },
         "features": {
           "requireConfig": false,
@@ -131936,6 +133836,7 @@ export default {
         "maintainers": [
           "sxzz"
         ],
+        "description": "默认返回最近 10 个分 P，可使用通用参数 `limit` 增加条数。使用 `/:embed/asc` 可按选集顺序升序输出。",
         "location": "page.ts",
         "module": () => import('@/routes/bilibili/page.ts')
       },
@@ -133305,6 +135206,79 @@ export default {
     "url": "www.brooklynmuseum.org",
     "lang": "en"
   },
+  "bt0": {
+    "routes": {
+      "/mv/:number/:domain?": {
+        "path": "/mv/:number/:domain?",
+        "categories": [
+          "multimedia"
+        ],
+        "example": "/bt0/mv/35575567/2",
+        "parameters": {
+          "number": "影视详情id, 网页路径为`/mv/{id}.html`其中的id部分, 一般为8位纯数字",
+          "domain": "数字1-9, 比如1表示请求域名为 1bt0.com, 默认为 2"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": true,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "2bt0.com/mv/"
+            ]
+          }
+        ],
+        "name": "影视资源下载列表",
+        "maintainers": [
+          "miemieYaho"
+        ],
+        "location": "mv.ts",
+        "module": () => import('@/routes/bt0/mv.ts')
+      },
+      "/tlist/:sc/:domain?": {
+        "path": "/tlist/:sc/:domain?",
+        "categories": [
+          "multimedia"
+        ],
+        "example": "/bt0/tlist/1",
+        "parameters": {
+          "sc": "分类(1-5), 1:电影, 2:电视剧, 3:近日热门, 4:本周热门, 5:本月热门",
+          "domain": "数字1-9, 比如1表示请求域名为 1bt0.com, 默认为 2"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": true,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "2bt0.com/tlist/"
+            ]
+          }
+        ],
+        "name": "最新资源列表",
+        "maintainers": [
+          "miemieYaho"
+        ],
+        "location": "tlist.ts",
+        "module": () => import('@/routes/bt0/tlist.ts')
+      }
+    },
+    "apiRoutes": {},
+    "name": "不太灵影视",
+    "url": "2bt0.com",
+    "description": "::: tip\n(1-9) bt0.com 都指向同一个\n:::",
+    "lang": "zh-CN"
+  },
   "caareviews": {
     "routes": {
       "/book": {
@@ -133744,6 +135718,64 @@ export default {
     "apiRoutes": {},
     "name": "Cara",
     "url": "cara.app",
+    "lang": "en"
+  },
+  "carnegieendowment": {
+    "routes": {
+      "/expert/:expert{.+}?": {
+        "path": "/expert/:expert{.+}?",
+        "example": "/carnegieendowment/expert/china/people/michael-pettis",
+        "name": "Expert research",
+        "categories": [
+          "finance"
+        ],
+        "maintainers": [
+          "DIYgod"
+        ],
+        "parameters": {
+          "expert": "Expert profile path from the website URL, defaults to china/people/michael-pettis."
+        },
+        "description": "Carnegie articles include their full text; external publications include the source-provided excerpt.",
+        "radar": [
+          {
+            "source": [
+              "carnegieendowment.org/:center/people/:expert"
+            ],
+            "target": "/expert/:center/people/:expert"
+          }
+        ],
+        "location": "expert.ts",
+        "module": () => import('@/routes/carnegieendowment/expert.ts')
+      },
+      "/region/:region?": {
+        "path": "/region/:region?",
+        "example": "/carnegieendowment/region/china",
+        "name": "Regional research",
+        "categories": [
+          "finance"
+        ],
+        "maintainers": [
+          "DIYgod"
+        ],
+        "parameters": {
+          "region": "Region slug from the website URL, defaults to china."
+        },
+        "description": "Includes research, commentary, and media appearances listed by the website. Carnegie articles include their full text; external publications include the source-provided excerpt.",
+        "radar": [
+          {
+            "source": [
+              "carnegieendowment.org/regions/:region"
+            ],
+            "target": "/region/:region"
+          }
+        ],
+        "location": "region.ts",
+        "module": () => import('@/routes/carnegieendowment/region.ts')
+      }
+    },
+    "apiRoutes": {},
+    "name": "Carnegie Endowment for International Peace",
+    "url": "carnegieendowment.org",
     "lang": "en"
   },
   "cctv": {
@@ -135148,7 +137180,13 @@ export default {
           "id": "Creator id, can be found in URL"
         },
         "features": {
-          "requireConfig": false,
+          "requireConfig": [
+            {
+              "name": "CI_EN_COOKIE",
+              "optional": true,
+              "description": "Cookie of a signed-in Ci-en account with access to the desired articles"
+            }
+          ],
           "requirePuppeteer": false,
           "antiCrawler": false,
           "supportBT": false,
@@ -135168,6 +137206,7 @@ export default {
         "maintainers": [
           "nczitzk"
         ],
+        "description": "Set `CI_EN_COOKIE` on a self-hosted instance to retrieve articles available to your account and subscribed plans.",
         "location": "ci-en/article.ts",
         "module": () => import('@/routes/dlsite/ci-en/article.ts')
       },
@@ -138436,6 +140475,41 @@ export default {
     ],
     "lang": "zh-CN"
   },
+  "gov/chengdu": {
+    "routes": {
+      "/news": {
+        "path": "/news",
+        "example": "/gov/chengdu/news",
+        "name": "政务要闻 - 市委市政府",
+        "categories": [
+          "government"
+        ],
+        "maintainers": [
+          "DIYgod"
+        ],
+        "features": {
+          "requirePuppeteer": true
+        },
+        "radar": [
+          {
+            "source": [
+              "www.chengdu.gov.cn/cdsrmzf/c169603/list.shtml"
+            ],
+            "target": "/news"
+          }
+        ],
+        "location": "news.ts",
+        "module": () => import('@/routes/gov/chengdu/news.ts')
+      }
+    },
+    "apiRoutes": {},
+    "name": "成都市人民政府",
+    "url": "www.chengdu.gov.cn",
+    "categories": [
+      "government"
+    ],
+    "lang": "zh-CN"
+  },
   "gov/chinamine-safety": {
     "routes": {
       "/xw/:category{.+}?": {
@@ -141143,6 +143217,30 @@ export default {
         "description": "| 时政要闻 | 环境要闻 | 地方快讯 | 新闻发布 | 视频新闻 | 公示公告 |\n| :------: | :------: | :------: | :------: | :------: | :------: |\n|   szyw   | hjywnews |  dfnews  |   xwfb   |   spxw   |   gsgg   |",
         "location": "ywdt.ts",
         "module": () => import('@/routes/gov/mee/ywdt.ts')
+      },
+      "/zcwj/:category?": {
+        "path": "/zcwj/:category?",
+        "categories": [
+          "government"
+        ],
+        "example": "/gov/mee/zcwj",
+        "parameters": {
+          "category": "栏目路径：zyygwj、gwywj、bwj、bgtwj、xzspwj、haqjwj 或 qt，默认合并政策文件首页的各栏目"
+        },
+        "radar": [
+          {
+            "source": [
+              "www.mee.gov.cn/zcwj/:category?"
+            ],
+            "target": "/zcwj/:category?"
+          }
+        ],
+        "name": "政策文件",
+        "maintainers": [
+          "DIYgod"
+        ],
+        "location": "zcwj.ts",
+        "module": () => import('@/routes/gov/mee/zcwj.ts')
       }
     },
     "apiRoutes": {},
@@ -142082,6 +144180,50 @@ export default {
     "apiRoutes": {},
     "name": "中华人民共和国交通运输部",
     "url": "www.mot.gov.cn",
+    "categories": [
+      "government"
+    ],
+    "lang": "zh-CN"
+  },
+  "gov/mps": {
+    "routes": {
+      "/policy/:section?": {
+        "path": "/policy/:section?",
+        "example": "/gov/mps/policy/documents",
+        "name": "政策文件与解读",
+        "categories": [
+          "government"
+        ],
+        "maintainers": [
+          "DIYgod"
+        ],
+        "features": {
+          "requirePuppeteer": true
+        },
+        "parameters": {
+          "section": "documents（政策文件，默认）或 interpretations（政策解读）"
+        },
+        "radar": [
+          {
+            "source": [
+              "www.mps.gov.cn/n6557558/index.html"
+            ],
+            "target": "/policy/documents"
+          },
+          {
+            "source": [
+              "www.mps.gov.cn/n6557563/index.html"
+            ],
+            "target": "/policy/interpretations"
+          }
+        ],
+        "location": "policy.ts",
+        "module": () => import('@/routes/gov/mps/policy.ts')
+      }
+    },
+    "apiRoutes": {},
+    "name": "中华人民共和国公安部",
+    "url": "www.mps.gov.cn",
     "categories": [
       "government"
     ],
@@ -149490,6 +151632,84 @@ export default {
     "apiRoutes": {},
     "name": "MakerWorld",
     "url": "makerworld.com",
+    "lang": "en"
+  },
+  "manybooks": {
+    "routes": {
+      "/books/:list?": {
+        "path": "/books/:list?",
+        "categories": [
+          "reading"
+        ],
+        "example": "/manybooks/books/trending",
+        "parameters": {
+          "list": {
+            "description": "Homepage book list.",
+            "default": "free",
+            "options": [
+              {
+                "value": "free",
+                "label": "Free ebooks and deals"
+              },
+              {
+                "value": "editor",
+                "label": "Editor's choice"
+              },
+              {
+                "value": "trending",
+                "label": "Trending books"
+              },
+              {
+                "value": "classics",
+                "label": "Popular classics"
+              }
+            ]
+          }
+        },
+        "name": "Book lists",
+        "maintainers": [
+          "DIYgod"
+        ],
+        "description": "For the ManyBooks blog, use the native feed at <https://manybooks.net/rss.xml>.",
+        "radar": [
+          {
+            "source": [
+              "manybooks.net"
+            ],
+            "target": "/books"
+          }
+        ],
+        "location": "books.tsx",
+        "module": () => import('@/routes/manybooks/books.tsx')
+      },
+      "/genre/:genre": {
+        "path": "/genre/:genre",
+        "categories": [
+          "reading"
+        ],
+        "example": "/manybooks/genre/romance",
+        "parameters": {
+          "genre": "Genre slug from a ManyBooks /genres/ page, such as romance or science-fiction."
+        },
+        "name": "Books by genre",
+        "maintainers": [
+          "DIYgod"
+        ],
+        "radar": [
+          {
+            "source": [
+              "manybooks.net/genres/:genre"
+            ],
+            "target": "/genre/:genre"
+          }
+        ],
+        "location": "genre.ts",
+        "module": () => import('@/routes/manybooks/genre.ts')
+      }
+    },
+    "apiRoutes": {},
+    "name": "ManyBooks",
+    "url": "manybooks.net",
     "lang": "en"
   },
   "medium": {
@@ -159546,7 +161766,7 @@ export default {
           "DIYgod",
           "Rongronggg9"
         ],
-        "description": "::: warning\n需要对应用户打开页面进行授权生成 token 才能生成内容\n\n自部署需要申请并配置微博 key，具体见部署文档\n:::",
+        "description": "::: warning\n需要对应用户打开页面进行授权生成 token 才能生成内容\n\n自部署需要申请并配置微博 key，具体见部署文档。开启 ACCESS\\_KEY 时，先使用有效 key/code 打开订阅地址发起授权；回调使用十分钟内有效的一次性 state，要求可用的 memory 或 Redis 缓存。\n:::",
         "location": "timeline.ts",
         "module": () => import('@/routes/weibo/timeline.ts')
       },
@@ -160180,6 +162400,75 @@ export default {
         "location": "author.ts",
         "module": () => import('@/routes/yahoo/author.ts')
       },
+      "/finance/:topic?": {
+        "path": "/finance/:topic?",
+        "example": "/yahoo/finance/latest-news",
+        "name": "Finance news",
+        "categories": [
+          "finance"
+        ],
+        "maintainers": [
+          "DIYgod"
+        ],
+        "parameters": {
+          "topic": "Topic slug from the Yahoo Finance URL, defaults to latest-news."
+        },
+        "radar": [
+          {
+            "source": [
+              "finance.yahoo.com/topic/:topic"
+            ],
+            "target": "/finance/:topic"
+          }
+        ],
+        "location": "finance.ts",
+        "module": () => import('@/routes/yahoo/finance.ts')
+      },
+      "/gaming": {
+        "path": "/gaming",
+        "categories": [
+          "game"
+        ],
+        "example": "/yahoo/gaming",
+        "name": "Gaming news",
+        "maintainers": [
+          "DIYgod"
+        ],
+        "radar": [
+          {
+            "source": [
+              "tech.yahoo.com/gaming"
+            ],
+            "target": "/gaming"
+          }
+        ],
+        "location": "gaming.ts",
+        "module": () => import('@/routes/yahoo/gaming.ts')
+      },
+      "/news/publisher/:publisher": {
+        "path": "/news/publisher/:publisher",
+        "categories": [
+          "new-media"
+        ],
+        "example": "/yahoo/news/publisher/reuters",
+        "parameters": {
+          "publisher": "Publisher slug from profiles.yahoo.com/brands/:publisher/ (for example reuters, cnn or afp)."
+        },
+        "name": "Publisher profiles",
+        "maintainers": [
+          "DIYgod"
+        ],
+        "radar": [
+          {
+            "source": [
+              "profiles.yahoo.com/brands/:publisher"
+            ],
+            "target": "/news/publisher/:publisher"
+          }
+        ],
+        "location": "news/publisher.tsx",
+        "module": () => import('@/routes/yahoo/news/publisher.tsx')
+      },
       "/news/:region/:category?": {
         "path": "/news/:region/:category?",
         "categories": [
@@ -160750,6 +163039,31 @@ export default {
   },
   "zaobao": {
     "routes": {
+      "/popular/:period?": {
+        "path": "/popular/:period?",
+        "example": "/zaobao/popular/daily",
+        "name": "热门新闻",
+        "categories": [
+          "traditional-media"
+        ],
+        "maintainers": [
+          "DIYgod"
+        ],
+        "parameters": {
+          "period": "daily（单日，默认）或 weekly（一周）。"
+        },
+        "description": "Includes the source’s ranked headlines, summaries, and images. Complete articles may require a Zaobao subscription.",
+        "radar": [
+          {
+            "source": [
+              "zaobao.com.sg/news"
+            ],
+            "target": "/popular/daily"
+          }
+        ],
+        "location": "popular.ts",
+        "module": () => import('@/routes/zaobao/popular.ts')
+      },
       "/interactive-graphics": {
         "path": "/interactive-graphics",
         "categories": [
@@ -162580,6 +164894,27 @@ export default {
         "location": "alerts.ts",
         "module": () => import('@/routes/google/alerts.ts')
       },
+      "/arts-and-culture": {
+        "path": "/arts-and-culture",
+        "categories": [
+          "design"
+        ],
+        "example": "/google/arts-and-culture",
+        "name": "Arts & Culture featured stories",
+        "maintainers": [
+          "DIYgod"
+        ],
+        "radar": [
+          {
+            "source": [
+              "artsandculture.google.com"
+            ],
+            "target": "/arts-and-culture"
+          }
+        ],
+        "location": "arts-and-culture.tsx",
+        "module": () => import('@/routes/google/arts-and-culture.tsx')
+      },
       "/citations/:id": {
         "path": "/citations/:id",
         "categories": [
@@ -163506,7 +165841,7 @@ export default {
     "apiRoutes": {},
     "name": "X (Twitter)",
     "url": "x.com",
-    "description": "Specify options (in the format of query string) in parameter `routeParams` to control some extra features for Tweets\n\n| Key                               | Description                                                                                                                          | Accepts                | Defaults to                               |\n| --------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------ | ---------------------- | ----------------------------------------- |\n| `readable`                        | Enable readable layout                                                                                                               | `0`/`1`/`true`/`false` | `false`                                   |\n| `authorNameBold`                  | Display author name in bold                                                                                                          | `0`/`1`/`true`/`false` | `false`                                   |\n| `showAuthorInTitle`               | Show author name in title                                                                                                            | `0`/`1`/`true`/`false` | `false` (`true` in `/twitter/followings`) |\n| `showAuthorAsTitleOnly`           | Show only author name as title                                                                                                       | `0`/`1`/`true`/`false` | `false`                                   |\n| `showAuthorInDesc`                | Show author name in description (RSS body)                                                                                           | `0`/`1`/`true`/`false` | `false` (`true` in `/twitter/followings`) |\n| `showQuotedAuthorAvatarInDesc`    | Show avatar of quoted Tweet's author in description (RSS body) (Not recommended if your RSS reader extracts images from description) | `0`/`1`/`true`/`false` | `false`                                   |\n| `showAuthorAvatarInDesc`          | Show avatar of author in description (RSS body) (Not recommended if your RSS reader extracts images from description)                | `0`/`1`/`true`/`false` | `false`                                   |\n| `showEmojiForRetweetAndReply`     | Use \"🔁\" instead of \"RT\", \"↩️\" & \"💬\" instead of \"Re\"                                                                                | `0`/`1`/`true`/`false` | `false`                                   |\n| `showSymbolForRetweetAndReply`    | Use \" RT \" instead of \"\", \" Re \" instead of \"\"                                                                                       | `0`/`1`/`true`/`false` | `true`                                    |\n| `showRetweetTextInTitle`          | Show quote comments in title (if `false`, only the retweeted tweet will be shown in the title)                                       | `0`/`1`/`true`/`false` | `true`                                    |\n| `addLinkForPics`                  | Add clickable links for Tweet pictures                                                                                               | `0`/`1`/`true`/`false` | `false`                                   |\n| `showTimestampInDescription`      | Show timestamp in description                                                                                                        | `0`/`1`/`true`/`false` | `false`                                   |\n| `showQuotedInTitle`               | Show quoted tweet in title                                                                                                           | `0`/`1`/`true`/`false` | `false`                                   |\n| `widthOfPics`                     | Width of Tweet pictures                                                                                                              | Unspecified/Integer    | Unspecified                               |\n| `heightOfPics`                    | Height of Tweet pictures                                                                                                             | Unspecified/Integer    | Unspecified                               |\n| `sizeOfAuthorAvatar`              | Size of author's avatar                                                                                                              | Integer                | `48`                                      |\n| `sizeOfQuotedAuthorAvatar`        | Size of quoted tweet's author's avatar                                                                                               | Integer                | `24`                                      |\n| `includeReplies`                  | Include replies, only available in `/twitter/user`                                                                                   | `0`/`1`/`true`/`false` | `false`                                   |\n| `includeRts`                      | Include retweets, only available in `/twitter/user`                                                                                  | `0`/`1`/`true`/`false` | `true`                                    |\n| `forceWebApi`                     | Force using Web API even if Developer API is configured, only available in `/twitter/user` and `/twitter/keyword`                    | `0`/`1`/`true`/`false` | `false`                                   |\n| `count`                           | `count` parameter passed to Twitter API, only available in `/twitter/user`                                                           | Unspecified/Integer    | Unspecified                               |\n| `onlyMedia`                       | Only get tweets with a media                                                                                                         | `0`/`1`/`true`/`false` | `false`                                   |\n| `mediaNumber `                    | Number the medias                                                                                                                    | `0`/`1`/`true`/`false` | `false`                                   |\n| `showEmojiForSubscriberOnly`      | Use \"🔒\" as prefix for subscriber-only posts                                                                                         | `0`/`1`/`true`/`false` | `false`                                   |\n| `showSymbolForSubscriberOnly`     | Use \"\\[Subscribers Only]\" as prefix for subscriber-only posts                                                                        | `0`/`1`/`true`/`false` | `true`                                    |\n| `showFullPrefixForSubscriberOnly` | Use \"🔒 \\[Subscribers Only]\" as prefix for subscriber-only posts                                                                     | `0`/`1`/`true`/`false` | `false`                                   |\n\nSpecify different option values than default values to improve readability. The URL\n\n```\nhttps://rsshub.app/twitter/user/durov/readable=1&authorNameBold=1&showAuthorInTitle=1&showAuthorInDesc=1&showQuotedAuthorAvatarInDesc=1&showAuthorAvatarInDesc=1&showEmojiForRetweetAndReply=1&showRetweetTextInTitle=0&addLinkForPics=1&showTimestampInDescription=1&showQuotedInTitle=1&heightOfPics=150\n```\n\ngenerates\n\n<img loading=\"lazy\" src=\"/img/readable-twitter.png\" alt=\"Readable Twitter RSS of Durov\" />\n\nCurrently supports two authentication methods:\n\n- Using `TWITTER_AUTH_TOKEN` (recommended): Configure a comma-separated list of `auth_token` cookies of logged-in Twitter Web. RSSHub will use this information to directly access Twitter's web API to obtain data.\n\n~~- Using `TWITTER_USERNAME` `TWITTER_PASSWORD` and `TWITTER_AUTHENTICATION_SECRET`: Configure a comma-separated list of Twitter username and password. RSSHub will use this information to log in to Twitter and obtain data using the mobile API. Please note that if you have not logged in with the current IP address before, it is easy to trigger Twitter's risk control mechanism.~~ This no longer works since mobile client attestation has been implemented in October 2025.\n\n- Using `TWITTER_CONSUMER_KEY` and `TWITTER_CONSUMER_SECRET`: Configure a comma-separated list of Twitter API keys and secrets. RSSHub will use this information to access Twitter's Pay-Per-Use developer API to obtain data.\n- OPTIONAL: Using `TWITTER_ACCESS_TOKEN` and `TWITTER_ACCESS_SECRET`: Configure a comma-separated list of Twitter API access tokens and secrets. RSSHub will use this information to access Twitter's Pay-Per-Use developer API with user authentication to obtain data. If not provided, RSSHub will only use app authentication, which may only access to public information.",
+    "description": "Specify options (in the format of query string) in parameter `routeParams` to control some extra features for Tweets\n\n| Key                               | Description                                                                                                                              | Accepts                | Defaults to                               |\n| --------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- | ---------------------- | ----------------------------------------- |\n| `readable`                        | Enable readable layout                                                                                                                   | `0`/`1`/`true`/`false` | `false`                                   |\n| `authorNameBold`                  | Display author name in bold                                                                                                              | `0`/`1`/`true`/`false` | `false`                                   |\n| `showAuthorInTitle`               | Show author name in title                                                                                                                | `0`/`1`/`true`/`false` | `false` (`true` in `/twitter/followings`) |\n| `showAuthorAsTitleOnly`           | Show only author name as title                                                                                                           | `0`/`1`/`true`/`false` | `false`                                   |\n| `showAuthorInDesc`                | Show author name in description (RSS body)                                                                                               | `0`/`1`/`true`/`false` | `false` (`true` in `/twitter/followings`) |\n| `showQuotedAuthorAvatarInDesc`    | Show avatar of quoted Tweet's author in description (RSS body) (Not recommended if your RSS reader extracts images from description)     | `0`/`1`/`true`/`false` | `false`                                   |\n| `showAuthorAvatarInDesc`          | Show avatar of author in description (RSS body) (Not recommended if your RSS reader extracts images from description)                    | `0`/`1`/`true`/`false` | `false`                                   |\n| `showEmojiForRetweetAndReply`     | Use \"🔁\" instead of \"RT\", \"↩️\" & \"💬\" instead of \"Re\"                                                                                    | `0`/`1`/`true`/`false` | `false`                                   |\n| `showSymbolForRetweetAndReply`    | Use \" RT \" instead of \"\", \" Re \" instead of \"\"                                                                                           | `0`/`1`/`true`/`false` | `true`                                    |\n| `showRetweetTextInTitle`          | Show quote comments in title (if `false`, only the retweeted tweet will be shown in the title)                                           | `0`/`1`/`true`/`false` | `true`                                    |\n| `useRetweetDate`                  | Use the time of the retweet as its publication date, instead of the original tweet's date                                                | `0`/`1`/`true`/`false` | `false`                                   |\n| `showLikesCountInTitle`           | Prefix the title with the tweet's like count when available, for example `[1567] Tweet text`                                             | `0`/`1`/`true`/`false` | `false`                                   |\n| `includeReplyContext`             | Prepend up to five available parent replies from the API response, oldest first; unavailable parents are omitted without extra API calls | `0`/`1`/`true`/`false` | `false`                                   |\n| `addLinkForPics`                  | Add clickable links for Tweet pictures                                                                                                   | `0`/`1`/`true`/`false` | `false`                                   |\n| `showTimestampInDescription`      | Show timestamp in description                                                                                                            | `0`/`1`/`true`/`false` | `false`                                   |\n| `showQuotedInTitle`               | Show quoted tweet in title                                                                                                               | `0`/`1`/`true`/`false` | `false`                                   |\n| `widthOfPics`                     | Width of Tweet pictures                                                                                                                  | Unspecified/Integer    | Unspecified                               |\n| `heightOfPics`                    | Height of Tweet pictures                                                                                                                 | Unspecified/Integer    | Unspecified                               |\n| `sizeOfAuthorAvatar`              | Size of author's avatar                                                                                                                  | Integer                | `48`                                      |\n| `sizeOfQuotedAuthorAvatar`        | Size of quoted tweet's author's avatar                                                                                                   | Integer                | `24`                                      |\n| `includeReplies`                  | Include replies, only available in `/twitter/user`                                                                                       | `0`/`1`/`true`/`false` | `false`                                   |\n| `includeRts`                      | Include retweets, only available in `/twitter/user`                                                                                      | `0`/`1`/`true`/`false` | `true`                                    |\n| `forceWebApi`                     | Force using Web API even if Developer API is configured, only available in `/twitter/user` and `/twitter/keyword`                        | `0`/`1`/`true`/`false` | `false`                                   |\n| `count`                           | `count` parameter passed to Twitter API, only available in `/twitter/user`                                                               | Unspecified/Integer    | Unspecified                               |\n| `onlyMedia`                       | Only get tweets with a media                                                                                                             | `0`/`1`/`true`/`false` | `false`                                   |\n| `mediaNumber `                    | Number the medias                                                                                                                        | `0`/`1`/`true`/`false` | `false`                                   |\n| `showEmojiForSubscriberOnly`      | Use \"🔒\" as prefix for subscriber-only posts                                                                                             | `0`/`1`/`true`/`false` | `false`                                   |\n| `showSymbolForSubscriberOnly`     | Use \"\\[Subscribers Only]\" as prefix for subscriber-only posts                                                                            | `0`/`1`/`true`/`false` | `true`                                    |\n| `showFullPrefixForSubscriberOnly` | Use \"🔒 \\[Subscribers Only]\" as prefix for subscriber-only posts                                                                         | `0`/`1`/`true`/`false` | `false`                                   |\n\nSpecify different option values than default values to improve readability. The URL\n\n```\nhttps://rsshub.app/twitter/user/durov/readable=1&authorNameBold=1&showAuthorInTitle=1&showAuthorInDesc=1&showQuotedAuthorAvatarInDesc=1&showAuthorAvatarInDesc=1&showEmojiForRetweetAndReply=1&showRetweetTextInTitle=0&addLinkForPics=1&showTimestampInDescription=1&showQuotedInTitle=1&heightOfPics=150\n```\n\ngenerates\n\n<img loading=\"lazy\" src=\"/img/readable-twitter.png\" alt=\"Readable Twitter RSS of Durov\" />\n\nCurrently supports two authentication methods:\n\n- Using `TWITTER_AUTH_TOKEN` (recommended): Configure a comma-separated list of `auth_token` cookies of logged-in Twitter Web. RSSHub will use this information to directly access Twitter's web API to obtain data.\n\n~~- Using `TWITTER_USERNAME` `TWITTER_PASSWORD` and `TWITTER_AUTHENTICATION_SECRET`: Configure a comma-separated list of Twitter username and password. RSSHub will use this information to log in to Twitter and obtain data using the mobile API. Please note that if you have not logged in with the current IP address before, it is easy to trigger Twitter's risk control mechanism.~~ This no longer works since mobile client attestation has been implemented in October 2025.\n\n- Using `TWITTER_CONSUMER_KEY` and `TWITTER_CONSUMER_SECRET`: Configure a comma-separated list of Twitter API keys and secrets. RSSHub will use this information to access Twitter's Pay-Per-Use developer API to obtain data.\n- OPTIONAL: Using `TWITTER_ACCESS_TOKEN` and `TWITTER_ACCESS_SECRET`: Configure a comma-separated list of Twitter API access tokens and secrets. RSSHub will use this information to access Twitter's Pay-Per-Use developer API with user authentication to obtain data. If not provided, RSSHub will only use app authentication, which may only access to public information.",
     "lang": "en"
   },
   "economist": {
