@@ -1,4 +1,5 @@
 /* eslint-disable no-await-in-loop */
+/* oxlint-disable no-await-in-loop */
 import type { Context } from 'hono';
 import { Api } from 'teleproto';
 import { HTMLParser } from 'teleproto/extensions/html.js';
@@ -154,63 +155,111 @@ export default async function handler(ctx: Context) {
 
     const entity = await client.getEntity(peer);
 
-    let attachments: string[] = [];
     const messages = await client.getMessages(peer, { limit: 50 });
 
-    let i = 0;
-    const item: DataItem[] = [];
-    for (const message of messages) {
-        let text = message.text; // must not be HTML
+    // Group contiguous messages by groupedId (Telegram media groups / albums)
+    const groups: (typeof messages[number])[][] = [];
+    const groupMap = new Map<string, (typeof messages[number])[]>();
 
-        if (message.fwdFrom?.fromId) {
-            const fwdFrom = await client.getEntity(message.fwdFrom.fromId);
-            text = `Forwarded From: ${getDisplayName(fwdFrom)}: ${text}`;
-        }
-        const media = await unwrapMedia(message.media, message.peerId);
-        if (message.media instanceof Api.MessageMediaStory && media) {
-            // if successfully loaded the story
-            const storyFrom = await client.getEntity(message.media.peer);
-            text = `Story From: ${getDisplayName(storyFrom)}: ${text}`;
-        }
-        if (media) {
-            if (media instanceof Api.MessageMediaPoll) {
-                attachments.push(await getPollResults(client, message, media));
+    for (const message of messages) {
+        const gid = message.groupedId ? String(message.groupedId) : null;
+        if (gid) {
+            const existing = groupMap.get(gid);
+            if (existing) {
+                existing.push(message);
                 continue;
             }
-            // messages that have no text are shown as if they're one post
-            // because in TG only 1 attachment per message is possible
-            const src = getMessageMediaUrl(ctx.req.url, username!, message.id, ctx.req.header('x-forwarded-prefix'));
-            attachments.push(getMediaLink(src, media));
+            const g = [message];
+            groupMap.set(gid, g);
+            groups.push(g);
+        } else {
+            groups.push([message]);
         }
-        if (message.replyMarkup instanceof Api.ReplyInlineMarkup) {
-            for (const buttonRow of message.replyMarkup.rows) {
-                for (const button of buttonRow.buttons) {
-                    if (button.type instanceof Api.InlineButtonTypeUrl) {
-                        attachments.push(`<div><a href="${button.type.url}" target="_blank">${button.text}</a></div>`);
+    }
+
+    const item: DataItem[] = [];
+    for (const msgs of groups) {
+        // Sort album messages by ID ascending to preserve original media order
+        msgs.sort((a, b) => a.id - b.id);
+        const primaryMsg = msgs[0];
+        const textMsg = msgs.find((m) => m.text) || primaryMsg;
+
+        let fwdPrefix = '';
+        const fwdMsg = msgs.find((m) => m.fwdFrom);
+        if (fwdMsg?.fwdFrom) {
+            let fwdName = fwdMsg.fwdFrom.fromName;
+            if (fwdMsg.fwdFrom.fromId) {
+                try {
+                    const fwdFrom = await client.getEntity(fwdMsg.fwdFrom.fromId);
+                    fwdName = getDisplayName(fwdFrom);
+                } catch {
+                    fwdName ||= 'Private Channel';
+                }
+            }
+            if (fwdName) {
+                fwdPrefix = `<p>Forwarded From <b>${fwdName}</b></p>`;
+            }
+        }
+
+        let storyPrefix = '';
+        const storyMsg = msgs.find((m) => m.media instanceof Api.MessageMediaStory);
+        if (storyMsg && storyMsg.media instanceof Api.MessageMediaStory) {
+            let storyName = 'Private Peer';
+            try {
+                const storyFrom = await client.getEntity(storyMsg.media.peer);
+                storyName = getDisplayName(storyFrom);
+            } catch {
+                // Inaccessible story peer
+            }
+            storyPrefix = `<p>Story From <b>${storyName}</b></p>`;
+        }
+
+        const attachments: string[] = [];
+        for (const message of msgs) {
+            const media = await unwrapMedia(message.media, message.peerId);
+            if (media) {
+                if (media instanceof Api.MessageMediaPoll) {
+                    attachments.push(await getPollResults(client, message, media));
+                    continue;
+                }
+                const src = getMessageMediaUrl(ctx.req.url, username!, message.id, ctx.req.header('x-forwarded-prefix'));
+                attachments.push(getMediaLink(src, media));
+            }
+            if (message.replyMarkup instanceof Api.ReplyInlineMarkup) {
+                for (const buttonRow of message.replyMarkup.rows) {
+                    for (const button of buttonRow.buttons) {
+                        if (button.type instanceof Api.InlineButtonTypeUrl) {
+                            attachments.push(`<div><a href="${button.type.url}" target="_blank">${button.text}</a></div>`);
+                        }
                     }
                 }
             }
         }
-        if (text === '' && ++i !== messages.length - 1) {
-            continue;
-        }
+
         let description = attachments.join('<br/>\n');
-        attachments = []; // emitting these, buffer other ones
-
-        if (text) {
-            description += `<p>${HTMLParser.unparse(message.message, message.entities).replaceAll('\n', '<br/>')}</p>`;
+        if (fwdPrefix) {
+            description += fwdPrefix;
+        }
+        if (storyPrefix) {
+            description += storyPrefix;
+        }
+        if (textMsg.text) {
+            description += `<p>${HTMLParser.unparse(textMsg.message, textMsg.entities).replaceAll('\n', '<br/>')}</p>`;
         }
 
-        const title = message.text ? message.text.slice(0, 80) + (message.text.length > 80 ? '...' : '') : new Date(message.date * 1000).toUTCString();
+        const titleText = textMsg.text || '';
+        const title = titleText ? titleText.slice(0, 80) + (titleText.length > 80 ? '...' : '') : new Date(primaryMsg.date * 1000).toUTCString();
+        const postLink = `https://t.me/${username}/${primaryMsg.id}`;
+
         item.push({
             title,
             description,
-            pubDate: new Date(message.date * 1000).toUTCString(),
-            link: `https://t.me/s/${username}/${message.id}`,
-            author: getDisplayName(message.sender ?? entity),
+            pubDate: new Date(primaryMsg.date * 1000).toUTCString(),
+            link: postLink,
+            guid: postLink,
+            author: getDisplayName(textMsg.sender ?? entity),
         });
     }
-
     return {
         title: getDisplayName(entity),
         link: `https://t.me/${username}`,
