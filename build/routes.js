@@ -1555,6 +1555,44 @@ export default {
     "url": "caus.com",
     "lang": "zh-CN"
   },
+  "chaturbate": {
+    "routes": {
+      "/live/:username": {
+        "path": "/live/:username",
+        "name": "Live status",
+        "categories": [
+          "live"
+        ],
+        "example": "/chaturbate/live/nakedbakers",
+        "parameters": {
+          "username": "The broadcaster username from the room URL."
+        },
+        "features": {
+          "nsfw": true
+        },
+        "maintainers": [
+          "DIYgod"
+        ],
+        "radar": [
+          {
+            "source": [
+              "chaturbate.com/:username"
+            ]
+          }
+        ],
+        "description": "Reports public live streams using the actual broadcast start time as the entry ID and publication date. When the room is offline or not public, it returns a status entry with a fixed ID and no publication date, so polling does not create new notifications. Only stream status and viewer counts are included.",
+        "location": "live.ts",
+        "module": () => import('@/routes/chaturbate/live.ts')
+      }
+    },
+    "apiRoutes": {},
+    "name": "Chaturbate",
+    "url": "chaturbate.com",
+    "categories": [
+      "live"
+    ],
+    "lang": "en"
+  },
   "chlinlearn": {
     "routes": {
       "/daily-blog": {
@@ -14146,6 +14184,49 @@ export default {
     "name": "世邦魏理仕 CBRE",
     "url": "www.cbre.com.cn"
   },
+  "coze": {
+    "routes": {
+      "/store/:type?": {
+        "path": "/store/:type?",
+        "name": "商店更新",
+        "categories": [
+          "programming"
+        ],
+        "maintainers": [
+          "DIYgod"
+        ],
+        "example": "/coze/store/project",
+        "parameters": {
+          "type": "内容类型：project（项目，默认）、agent（智能体）或 template（模板）。"
+        },
+        "description": "订阅扣子中国站公开商店按上架时间排列的首屏内容。商品版本变化时会生成新的 GUID。模板包括智能体、工作流和项目模板。",
+        "location": "store.ts",
+        "module": () => import('@/routes/coze/store.ts')
+      },
+      "/user/:id/:type?": {
+        "path": "/user/:id/:type?",
+        "name": "创作者上架内容",
+        "categories": [
+          "programming"
+        ],
+        "maintainers": [
+          "DIYgod"
+        ],
+        "example": "/coze/user/4223666036440905/template",
+        "parameters": {
+          "id": "创作者公开主页 /user/ 后的数字 ID。",
+          "type": "内容类型：agent（智能体，默认）、project（项目）或 template（模板）。"
+        },
+        "description": "订阅创作者公开上架内容的首屏更新，包括选定类型的智能体、项目或模板。商品版本变化时会生成新的 GUID。",
+        "location": "user.ts",
+        "module": () => import('@/routes/coze/user.ts')
+      }
+    },
+    "apiRoutes": {},
+    "name": "扣子",
+    "url": "www.coze.cn",
+    "lang": "zh-CN"
+  },
   "cspengyuan": {
     "routes": {
       "/research/:category?": {
@@ -16729,113 +16810,6 @@ export default {
     "name": "Discourse",
     "description": "::: warning\nYou need to set the environment variable `DISCOURSE_CONFIG_{id}` before using it. Please refer to Configuration section in the Deploy page of the documentation.\n:::",
     "lang": "en"
-  },
-  "douyin": {
-    "routes": {
-      "/hashtag/:cid/:routeParams?": {
-        "path": "/hashtag/:cid/:routeParams?",
-        "categories": [
-          "social-media"
-        ],
-        "example": "/douyin/hashtag/1592824105719812",
-        "parameters": {
-          "cid": "标签 ID，可在标签页面 URL 中找到",
-          "routeParams": "额外参数，query string 格式，请参阅上面的表格"
-        },
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": true,
-          "antiCrawler": true,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "radar": [
-          {
-            "source": [
-              "douyin.com/hashtag/:cid"
-            ],
-            "target": "/hashtag/:cid"
-          }
-        ],
-        "name": "标签",
-        "maintainers": [
-          "TonyRL"
-        ],
-        "location": "hashtag.ts",
-        "module": () => import('@/routes/douyin/hashtag.ts')
-      },
-      "/live/:rid": {
-        "path": "/live/:rid",
-        "categories": [
-          "live"
-        ],
-        "example": "/douyin/live/685317364746",
-        "parameters": {
-          "rid": "直播间 id, 可在主播直播间页 URL 中找到"
-        },
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": true,
-          "antiCrawler": true,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "radar": [
-          {
-            "source": [
-              "live.douyin.com/:rid"
-            ]
-          }
-        ],
-        "name": "直播间开播",
-        "maintainers": [
-          "TonyRL"
-        ],
-        "location": "live.ts",
-        "module": () => import('@/routes/douyin/live.ts')
-      },
-      "/user/:uid/:routeParams?": {
-        "path": "/user/:uid/:routeParams?",
-        "categories": [
-          "social-media"
-        ],
-        "example": "/douyin/user/MS4wLjABAAAARcAHmmF9mAG3JEixq_CdP72APhBlGlLVbN-1eBcPqao",
-        "parameters": {
-          "uid": "uid，可在用户页面 URL 中找到",
-          "routeParams": "额外参数，query string 格式，请参阅上面的表格"
-        },
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": true,
-          "antiCrawler": true,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "radar": [
-          {
-            "source": [
-              "douyin.com/user/:uid"
-            ],
-            "target": "/user/:uid"
-          }
-        ],
-        "name": "博主",
-        "maintainers": [
-          "Max-Tortoise",
-          "Rongronggg9"
-        ],
-        "location": "user.ts",
-        "module": () => import('@/routes/douyin/user.ts')
-      }
-    },
-    "apiRoutes": {},
-    "name": "抖音直播",
-    "url": "douyin.com",
-    "description": "::: warning\n反爬严格，需要启用 Playwright。抖音的视频 CDN 会验证 Referer，意味着许多阅读器都无法直接播放内嵌视频，以下是一些变通解决方案：\n\n1. 启用内嵌视频 (`embed=1`), 参考 [通用参数 -> 多媒体处理](/parameter#多媒体处理) 配置 `multimedia_hotlink_template` **或** `wrap_multimedia_in_iframe`。\n2. 关闭内嵌视频 (`embed=0`)，手动点击 `视频直链` 超链接，一般情况下均可成功播放视频。若仍然出现 HTTP 403，请复制 URL 以后到浏览器打开。\n3. 点击原文链接打开抖音网页版的视频详情页播放视频。\n\n:::\n\n额外参数\n\n| 键      | 含义             | 值                     | 默认值  |\n| ------- | ---------------- | ---------------------- | ------- |\n| `embed` | 是否启用内嵌视频 | `0`/`1`/`true`/`false` | `false` |",
-    "lang": "zh-CN"
   },
   "ea": {
     "routes": {
@@ -58765,456 +58739,142 @@ export default {
     "url": "dorohedoro.net",
     "lang": "ja"
   },
-  "douban": {
+  "douyin": {
     "routes": {
-      "/book/latest/:type?": {
-        "path": "/book/latest/:type?",
+      "/hashtag/:cid/:routeParams?": {
+        "path": "/hashtag/:cid/:routeParams?",
         "categories": [
           "social-media"
         ],
-        "example": "/douban/book/latest/fiction",
+        "example": "/douyin/hashtag/1592824105719812",
         "parameters": {
-          "type": "专题分类，可选，默认为 `all`"
+          "cid": "标签 ID，可在标签页面 URL 中找到",
+          "routeParams": "额外参数，query string 格式，请参阅上面的表格"
         },
         "features": {
           "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
+          "requirePuppeteer": true,
+          "antiCrawler": true,
           "supportBT": false,
           "supportPodcast": false,
           "supportScihub": false
         },
-        "name": "新书速递",
-        "maintainers": [
-          "fengkx",
-          "lyqluis"
-        ],
-        "description": "| 文学          | 小说    | 历史文化 | 社会纪实  | 科学新知 | 艺术设计 | 商业经管 | 绘本漫画 |\n| ------------- | ------- | -------- | --------- | -------- | -------- | -------- | -------- |\n| prose\\_poetry | fiction | history  | biography | science  | art      | business | comics   |",
-        "location": "book/latest.ts",
-        "module": () => import('@/routes/douban/book/latest.ts')
-      },
-      "/book/rank/:type?": {
-        "path": "/book/rank/:type?",
-        "categories": [
-          "social-media"
-        ],
-        "example": "/douban/book/rank/fiction",
-        "parameters": {
-          "type": "图书类型，默认合并列表"
-        },
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "name": "热门图书排行",
-        "maintainers": [
-          "xyqfer",
-          "queensferryme"
-        ],
-        "description": "| 全部 | 虚构    | 非虚构     |\n| ---- | ------- | ---------- |\n|      | fiction | nonfiction |",
-        "location": "book/rank.ts",
-        "module": () => import('@/routes/douban/book/rank.ts')
-      },
-      "/channel/:id/subject/:nav": {
-        "path": "/channel/:id/subject/:nav",
-        "categories": [
-          "social-media"
-        ],
-        "example": "/douban/channel/30168934/subject/0",
-        "parameters": {
-          "id": "频道id",
-          "nav": "书影音分类"
-        },
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "name": "频道书影音",
-        "maintainers": [
-          "umm233"
-        ],
-        "description": "| 电影 | 电视剧 | 图书 | 唱片 |\n| ---- | ------ | ---- | ---- |\n| 0    | 1      | 2    | 3    |",
-        "location": "channel/subject.ts",
-        "module": () => import('@/routes/douban/channel/subject.ts')
-      },
-      "/channel/:id/:nav?": {
-        "path": "/channel/:id/:nav?",
-        "categories": [
-          "social-media"
-        ],
-        "example": "/douban/channel/30168934/hot",
-        "parameters": {
-          "id": "频道id",
-          "nav": "专题分类，可选，默认为 default"
-        },
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "name": "频道专题",
-        "maintainers": [
-          "umm233"
-        ],
-        "description": "| 默认    | 热门 | 最新 |\n| ------- | ---- | ---- |\n| default | hot  | new  |",
-        "location": "channel/topic.ts",
-        "module": () => import('@/routes/douban/channel/topic.ts')
-      },
-      "/event/hot/:locationId": {
-        "path": "/event/hot/:locationId",
-        "categories": [
-          "social-media"
-        ],
-        "example": "/douban/event/hot/118172",
-        "parameters": {
-          "locationId": "位置 id, [同城首页](https://www.douban.com/location)打开控制台执行 `window.__loc_id__` 获取"
-        },
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "name": "热门同城活动",
-        "maintainers": [
-          "xyqfer"
-        ],
-        "location": "event/hot.ts",
-        "module": () => import('@/routes/douban/event/hot.ts')
-      },
-      "/movie/coming": {
-        "path": "/movie/coming",
-        "categories": [
-          "social-media"
-        ],
-        "example": "/douban/movie/coming",
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "name": "电影即将上映",
-        "maintainers": [
-          "reonokiy"
-        ],
         "radar": [
           {
-            "title": "豆瓣电影-即将上映",
             "source": [
-              "movie.douban.com/coming"
+              "douyin.com/hashtag/:cid"
             ],
-            "target": "/movie/coming"
+            "target": "/hashtag/:cid"
           }
         ],
-        "location": "movie/coming.tsx",
-        "module": () => import('@/routes/douban/movie/coming.tsx')
-      },
-      "/bookstore": {
-        "path": "/bookstore",
-        "categories": [
-          "social-media"
-        ],
-        "example": "/douban/bookstore",
-        "parameters": {},
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "name": "豆瓣书店",
+        "name": "标签",
         "maintainers": [
-          "xyqfer"
+          "TonyRL"
         ],
-        "location": "other/bookstore.ts",
-        "module": () => import('@/routes/douban/other/bookstore.ts')
+        "location": "hashtag.ts",
+        "module": () => import('@/routes/douyin/hashtag.ts')
       },
-      "/movie/classification/:sort?/:score?/:tags?": {
-        "path": "/movie/classification/:sort?/:score?/:tags?",
+      "/user/:uid/:routeParams?": {
+        "path": "/user/:uid/:routeParams?",
         "categories": [
           "social-media"
         ],
-        "example": "/douban/movie/classification/R/7.5/Netflix,2020",
+        "example": "/douyin/user/MS4wLjABAAAARcAHmmF9mAG3JEixq_CdP72APhBlGlLVbN-1eBcPqao",
         "parameters": {
-          "sort": "排序方式，默认为U",
-          "score": "最低评分，默认不限制",
-          "tags": "分类标签，多个标签之间用英文逗号分隔，常见的标签到豆瓣电影的分类页面查看，支持自定义标签"
+          "uid": "uid，可在用户页面 URL 中找到",
+          "routeParams": "额外参数，query string 格式，请参阅上面的表格"
         },
         "features": {
           "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
+          "requirePuppeteer": true,
+          "antiCrawler": true,
           "supportBT": false,
           "supportPodcast": false,
           "supportScihub": false
         },
-        "name": "豆瓣电影分类",
-        "maintainers": [
-          "zzwab"
+        "radar": [
+          {
+            "source": [
+              "douyin.com/user/:uid"
+            ],
+            "target": "/user/:uid"
+          }
         ],
-        "description": "排序方式可选值如下\n\n| 近期热门 | 标记最多 | 评分最高 | 最近上映 |\n| -------- | -------- | -------- | -------- |\n| U        | T        | S        | R        |",
-        "location": "other/classification.ts",
-        "module": () => import('@/routes/douban/other/classification.ts')
+        "name": "博主",
+        "maintainers": [
+          "Max-Tortoise",
+          "Rongronggg9"
+        ],
+        "location": "user.ts",
+        "module": () => import('@/routes/douyin/user.ts')
       },
-      "/movie/ustop": {
-        "path": "/movie/ustop",
+      "/collection": {
+        "path": "/collection",
+        "name": "收藏的视频",
+        "example": "/douyin/collection",
         "categories": [
           "social-media"
         ],
-        "example": "/douban/movie/ustop",
-        "parameters": {},
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "name": "北美票房榜",
         "maintainers": [
           "DIYgod"
         ],
-        "location": "other/ustop.ts",
-        "module": () => import('@/routes/douban/other/ustop.ts')
+        "features": {
+          "requirePuppeteer": true,
+          "antiCrawler": true,
+          "requireConfig": [
+            {
+              "name": "DOUYIN_COOKIE",
+              "description": "对应允许用于订阅的本人账号。"
+            }
+          ]
+        },
+        "description": "订阅 DOUYIN_COOKIE 对应账号收藏的视频首屏。收藏夹、音乐、合集和短剧不在此路由范围内。发布时间为视频原始发布时间，收藏时间没有公开提供。",
+        "location": "collection.ts",
+        "module": () => import('@/routes/douyin/collection.ts')
       },
-      "/movie/weekly/:type?": {
-        "path": "/movie/weekly/:type?",
+      "/likes/:uid": {
+        "path": "/likes/:uid",
+        "name": "喜欢的视频",
+        "example": "/douyin/likes/self",
         "categories": [
           "social-media"
         ],
-        "example": "/douban/movie/weekly",
+        "maintainers": [
+          "DIYgod"
+        ],
         "parameters": {
-          "type": "分类，可在榜单页 URL 中找到，默认为一周口碑电影榜"
+          "uid": "用户页面 URL 中的 sec_user_id，或者 self 表示 DOUYIN_COOKIE 对应的登录账号。"
         },
         "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
+          "requirePuppeteer": true,
+          "antiCrawler": true,
+          "requireConfig": [
+            {
+              "name": "DOUYIN_COOKIE",
+              "optional": true,
+              "description": "订阅自己的喜欢列表时必须配置；其他用户的列表须对当前账号公开。"
+            }
+          ]
         },
-        "name": "一周口碑榜",
-        "maintainers": [
-          "numm233",
-          "nczitzk"
-        ],
-        "description": "| 一周口碑电影榜      | 华语口碑剧集榜            |\n| ------------------- | ------------------------- |\n| movie\\_weekly\\_best | tv\\_chinese\\_best\\_weekly |",
-        "location": "other/weekly-best.tsx",
-        "module": () => import('@/routes/douban/other/weekly-best.tsx')
+        "description": "只读取喜欢列表的首屏。设为私密的列表仅对应账号能够访问。发布时间为视频原始发布时间，点赞时间没有公开提供。",
+        "location": "likes.ts",
+        "module": () => import('@/routes/douyin/likes.ts')
       },
-      "/list/:type?/:routeParams?": {
-        "path": "/list/:type?/:routeParams?",
+      "/live/:rid/:showTime?": {
+        "path": "/live/:rid/:showTime?",
         "categories": [
-          "social-media"
+          "live"
         ],
-        "example": "/douban/list/subject_real_time_hotest",
+        "example": "/douyin/live/685317364746",
         "parameters": {
-          "type": "榜单类型，见下表。默认为实时热门书影音",
-          "routeParams": "额外参数；请参阅以下说明和表格"
+          "rid": "直播间 id, 可在主播直播间页 URL 中找到",
+          "showTime": "是否在标题后添加本场首次检测时间，0/1/true/false，默认 false。"
         },
+        "description": "优先读取公开页面中的直播状态，必要时使用 Playwright 读取页面或直播间接口。showTime 开启时，标题后显示 RSSHub 本场首次检测时间（UTC+8），并非源站实际开播时刻，也不会作为 pubDate。时间按本场真实 room ID 缓存 30 天，重复读取不会延长有效期。内存缓存重启或清除缓存会重置记录，建议使用 Redis 保持记录稳定。",
         "features": {
           "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "radar": [
-          {
-            "source": [
-              "www.douban.com/subject_collection/:type"
-            ],
-            "target": "/list/:type"
-          }
-        ],
-        "name": "豆瓣榜单与集合",
-        "maintainers": [
-          "5upernova-heng",
-          "honue"
-        ],
-        "description": "| 榜单 / 集合        | 路由                          |\n| ------------------ | ----------------------------- |\n| 实时热门书影音     | subject\\_real\\_time\\_hotest   |\n| 影院热映           | movie\\_showing                |\n| 实时热门电影       | movie\\_real\\_time\\_hotest     |\n| 实时热门电视       | tv\\_real\\_time\\_hotest        |\n| 一周口碑电影榜     | movie\\_weekly\\_best           |\n| 华语口碑剧集榜     | tv\\_chinese\\_best\\_weekly     |\n| 全球口碑剧集榜     | tv\\_global\\_best\\_weekly      |\n| 国内口碑综艺榜     | show\\_chinese\\_best\\_weekly   |\n| 国外口碑综艺榜     | show\\_global\\_best\\_weekly    |\n| 热播新剧国产剧     | tv\\_domestic                  |\n| 热播新剧欧美剧     | tv\\_american                  |\n| 热播新剧日剧       | tv\\_japanese                  |\n| 热播新剧韩剧       | tv\\_korean                    |\n| 热播新剧动画       | tv\\_animation                 |\n| 虚构类小说热门榜   | book\\_fiction\\_hot\\_weekly    |\n| 非虚构类小说热门榜 | book\\_nonfiction\\_hot\\_weekly |\n| 热门单曲榜         | music\\_single                 |\n| 华语新碟榜         | music\\_chinese                |\n| ...                | ...                           |\n\n| 额外参数 | 含义                   | 接受的值 | 默认值 |\n| -------- | ---------------------- | -------- | ------ |\n| playable | 仅看有可播放片源的影片 | 0/1      | 0      |\n| score    | 筛选评分               | 0.0-10.0 | 0      |\n\n用例：`/douban/list/tv_korean/playable=1&score=8`\n\n> 上面的榜单 / 集合并没有列举完整。\n>\n> 如何找到榜单对应的路由参数：\n> 在豆瓣手机 APP 中，对应地榜单页面右上角，点击分享链接。链接路径 `subject_collection` 后的路径就是路由参数 `type`。\n> 如：小说热门榜的分享链接为：`https://m.douban.com/subject_collection/ECDIHUN4A`，其对应本 RSS 路由的 `type` 为 `ECDIHUN4A`，对应的订阅链接路由：[`/douban/list/ECDIHUN4A`](https://rsshub.app/douban/list/ECDIHUN4A)",
-        "location": "other/list.ts",
-        "module": () => import('@/routes/douban/other/list.ts')
-      },
-      "/recommended/:type?/:routeParams?": {
-        "path": "/recommended/:type?/:routeParams?",
-        "categories": [
-          "social-media"
-        ],
-        "example": "/douban/recommended/tv",
-        "parameters": {
-          "type": "片单类型剧集/电影，tv或movie，默认为tv",
-          "routeParams": "额外参数；请参阅以下说明和表格"
-        },
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "name": "豆瓣每月推荐片单",
-        "maintainers": [
-          "honue"
-        ],
-        "description": "| 额外参数 | 含义                   | 接受的值 | 默认值 |\n| -------- | ---------------------- | -------- | ------ |\n| playable | 仅看有可播放片源的影片 | 0/1      | 0      |\n| score    | 筛选评分               | 0-10     | 0      |\n\n用例：`/douban/recommended/tv/playable=0&score=8`\n\n::: tip\n整合了 /douban/list/ 路由，省去每月手动更新 id 参数，因为当月推荐剧集片单中，会有还未播出 / 开评分剧集、海外平台播出剧集，请自行考虑是否使用额外参数。\n:::",
-        "location": "other/recommended.ts",
-        "module": () => import('@/routes/douban/other/recommended.ts')
-      },
-      "/topic/:id/:sort?": {
-        "path": "/topic/:id/:sort?",
-        "categories": [
-          "social-media"
-        ],
-        "example": "/douban/topic/48823",
-        "parameters": {
-          "id": "话题id",
-          "sort": "排序方式，hot或new，默认为new"
-        },
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "name": "话题",
-        "maintainers": [
-          "LogicJake",
-          "pseudoyu",
-          "haowenwu"
-        ],
-        "location": "other/topic.ts",
-        "module": () => import('@/routes/douban/other/topic.ts')
-      },
-      "/people/:userid/status/:routeParams?": {
-        "path": "/people/:userid/status/:routeParams?",
-        "categories": [
-          "social-media"
-        ],
-        "view": 1,
-        "example": "/douban/people/75118396/status",
-        "parameters": {
-          "userid": "整数型用户 id",
-          "routeParams": "额外参数；见下"
-        },
-        "name": "用户广播",
-        "maintainers": [
-          "alfredcai"
-        ],
-        "description": "::: tip\n\n- **目前只支持整数型 id**\n- 字母型的 id，可以通过头像图片链接来找到其整数型 id，图片命名规则`ul[userid]-*.jpg`或`u[userid]-*.jpg`，即取文件名中间的数字\n- 例如：用户 id: `MovieL`他的头像图片链接：`https://img1.doubanio.com/icon/ul1128221-98.jpg`他的整数型 id: `1128221`\n\n:::\n\n对于豆瓣用户广播内容，在 `routeParams` 参数中以 query string 格式设置如下选项可以控制输出的样式\n\n| 键                         | 含义                                                           | 接受的值       | 默认值 |\n| -------------------------- | -------------------------------------------------------------- | -------------- | ------ |\n| readable                   | 是否开启细节排版可读性优化                                     | 0/1/true/false | false  |\n| authorNameBold             | 是否加粗作者名字                                               | 0/1/true/false | false  |\n| showAuthorInTitle          | 是否在标题处显示作者                                           | 0/1/true/false | true   |\n| showAuthorInDesc           | 是否在正文处显示作者                                           | 0/1/true/false | false  |\n| showAuthorAvatarInDesc     | 是否在正文处显示作者头像（若阅读器会提取正文图片，不建议开启） | 0/1/true/false | false  |\n| showEmojiForRetweet        | 显示 “🔁” 取代 “Fw”（转发）                                    | 0/1/true/false | false  |\n| showRetweetTextInTitle     | 在标题出显示转发评论（置为 false 则在标题只显示被转发的广播）  | 0/1/true/false | false  |\n| addLinkForPics             | 为图片添加可点击的链接                                         | 0/1/true/false | false  |\n| showTimestampInDescription | 在正文处显示广播的时间戳                                       | 0/1/true/false | false  |\n| showComments               | 在正文处显示评论                                               | 0/1/true/false | false  |\n| widthOfPics                | 广播配图宽（生效取决于阅读器）                                 | 不指定 / 数字  | 不指定 |\n| heightOfPics               | 广播配图高（生效取决于阅读器）                                 | 不指定 / 数字  | 不指定 |\n| sizeOfAuthorAvatar         | 作者头像大小                                                   | 数字           | 48     |\n\n指定更多与默认值不同的参数选项可以改善 RSS 的可读性，如\n\n<https://rsshub.app/douban/people/113894409/status/readable=1&authorNameBold=1&showAuthorInTitle=1&showAuthorInDesc=1&showAuthorAvatarInDesc=1&showEmojiForRetweet=1&showRetweetTextInTitle=1&addLinkForPics=1&showTimestampInDescription=1&showComments=1&widthOfPics=100>\n\n的效果为\n\n  <img loading=\"lazy\" src=\"/img/readable-douban.png\" alt=\"豆瓣读书的可读豆瓣广播 RSS\" />",
-        "location": "people/status.ts",
-        "module": () => import('@/routes/douban/people/status.ts')
-      },
-      "/tv/coming/:sortBy?/:count?": {
-        "path": "/tv/coming/:sortBy?/:count?",
-        "categories": [
-          "social-media"
-        ],
-        "example": "/douban/tv/coming",
-        "parameters": {
-          "sortBy": "排序方式，可选，支持 `hot` 或 `time`，默认 `hot`",
-          "count": "请求上游返回数量，可选，正整数，默认 `10`"
-        },
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "name": "即将播出的剧集",
-        "maintainers": [
-          "honue"
-        ],
-        "description": "| 路径参数 | 含义             | 接受的值 | 默认值 |\n| -------- | ---------------- | -------- | ------ |\n| sortBy   | 排序方式         | hot/time | hot    |\n| count    | 请求上游返回数量 | 正整数   | 10     |\n\n用例：`/douban/tv/coming/hot/10`\n\n::: tip\n服务端请求固定使用 `sortby=hot` 拉取数据，再按 `sortBy` 参数在本地重排；条目数量可通过 `count` 调整，仍可叠加 RSSHub 通用参数 `limit`。\n:::",
-        "location": "tv/coming.ts",
-        "module": () => import('@/routes/douban/tv/coming.ts')
-      },
-      "/commercialpress/latest": {
-        "path": "/commercialpress/latest",
-        "categories": [
-          "social-media"
-        ],
-        "example": "/douban/commercialpress/latest",
-        "parameters": {},
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "name": "商务印书馆新书速递",
-        "maintainers": [
-          "xyqfer"
-        ],
-        "location": "commercialpress/latest.ts",
-        "module": () => import('@/routes/douban/commercialpress/latest.ts')
-      },
-      "/celebrity/:id/:sort?": {
-        "path": "/celebrity/:id/:sort?",
-        "categories": [
-          "social-media"
-        ],
-        "example": "/douban/celebrity/1274261",
-        "parameters": {
-          "id": "电影人 id",
-          "sort": "排序方式，缺省为 `time`（时间排序），可为 `vote` （评价排序）"
-        },
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "name": "豆瓣电影人",
-        "maintainers": [
-          "minimalistrojan"
-        ],
-        "location": "other/celebrity.ts",
-        "module": () => import('@/routes/douban/other/celebrity.ts')
-      },
-      "/:id/discussion": {
-        "path": "/:id/discussion",
-        "categories": [
-          "social-media"
-        ],
-        "example": "/douban/36328704/discussion",
-        "parameters": {
-          "id": "书本id;默认论坛文章使用\"按回应时间排序\",仅第一页文章"
-        },
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
+          "requirePuppeteer": true,
+          "antiCrawler": true,
           "supportBT": false,
           "supportPodcast": false,
           "supportScihub": false
@@ -59222,330 +58882,22 @@ export default {
         "radar": [
           {
             "source": [
-              "book.douban.com/:id/discussion"
+              "live.douyin.com/:rid"
             ]
           }
         ],
-        "name": "豆瓣读书论坛",
+        "name": "直播间开播",
         "maintainers": [
-          "nightmare-mio"
+          "TonyRL"
         ],
-        "location": "other/discussion.ts",
-        "module": () => import('@/routes/douban/other/discussion.ts')
-      },
-      "/doulist/:id": {
-        "path": "/doulist/:id",
-        "categories": [
-          "social-media"
-        ],
-        "example": "/douban/doulist/37716774",
-        "parameters": {
-          "id": "豆列id"
-        },
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "name": "豆瓣豆列",
-        "maintainers": [
-          "LogicJake",
-          "honue"
-        ],
-        "location": "other/doulist.ts",
-        "module": () => import('@/routes/douban/other/doulist.ts')
-      },
-      "/explore/column/:id": {
-        "path": "/explore/column/:id",
-        "categories": [
-          "social-media"
-        ],
-        "example": "/douban/explore/column/2",
-        "parameters": {
-          "id": "分栏目id"
-        },
-        "name": "浏览发现分栏目",
-        "maintainers": [
-          "LogicJake"
-        ],
-        "location": "other/explore-column.ts",
-        "module": () => import('@/routes/douban/other/explore-column.ts')
-      },
-      "/explore": {
-        "path": "/explore",
-        "categories": [
-          "social-media"
-        ],
-        "example": "/douban/explore",
-        "parameters": {},
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "name": "浏览发现",
-        "maintainers": [
-          "clarkzsd"
-        ],
-        "location": "other/explore.tsx",
-        "module": () => import('@/routes/douban/other/explore.tsx')
-      },
-      "/group/:groupid/:type?": {
-        "path": "/group/:groupid/:type?",
-        "categories": [
-          "social-media"
-        ],
-        "view": 1,
-        "example": "/douban/group/648102",
-        "parameters": {
-          "groupid": "豆瓣小组的 id",
-          "type": {
-            "description": "类型",
-            "default": "latest",
-            "options": [
-              {
-                "label": "最新",
-                "value": "latest"
-              },
-              {
-                "label": "最热",
-                "value": "essence"
-              },
-              {
-                "label": "精华",
-                "value": "elite"
-              }
-            ]
-          }
-        },
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "radar": [
-          {
-            "source": [
-              "www.douban.com/group/:groupid"
-            ],
-            "target": "/group/:groupid"
-          }
-        ],
-        "name": "豆瓣小组",
-        "maintainers": [
-          "DIYgod"
-        ],
-        "location": "other/group.ts",
-        "module": () => import('@/routes/douban/other/group.ts')
-      },
-      "/jobs/:type": {
-        "path": "/jobs/:type",
-        "categories": [
-          "social-media"
-        ],
-        "example": "/douban/jobs/campus",
-        "parameters": {
-          "type": "招聘类型，见下表"
-        },
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "name": "豆瓣招聘",
-        "maintainers": [
-          "Fatpandac"
-        ],
-        "description": "| 社会招聘 | 校园招聘 | 实习生招聘 |\n| :------: | :------: | :--------: |\n|  social  |  campus  |   intern   |",
-        "location": "other/jobs.ts",
-        "module": () => import('@/routes/douban/other/jobs.ts')
-      },
-      "/movie/later": {
-        "path": "/movie/later",
-        "categories": [
-          "social-media"
-        ],
-        "example": "/douban/movie/later",
-        "parameters": {},
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "name": "即将上映的电影",
-        "maintainers": [
-          "DIYgod"
-        ],
-        "location": "other/later.ts",
-        "module": () => import('@/routes/douban/other/later.ts')
-      },
-      "/music/latest/:area?": {
-        "path": "/music/latest/:area?",
-        "categories": [
-          "social-media"
-        ],
-        "example": "/douban/music/latest/chinese",
-        "parameters": {
-          "area": "区域类型，默认全部"
-        },
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "name": "最新增加的音乐",
-        "maintainers": [
-          "fengkx",
-          "xyqfer"
-        ],
-        "description": "| 华语    | 欧美    | 日韩        |\n| ------- | ------- | ----------- |\n| chinese | western | japankorean |",
-        "location": "other/latest-music.ts",
-        "module": () => import('@/routes/douban/other/latest-music.ts')
-      },
-      "/movie/playing": {
-        "path": [
-          "/movie/playing",
-          "/movie/playing/:score"
-        ],
-        "categories": [
-          "social-media"
-        ],
-        "example": "/douban/movie/playing",
-        "parameters": {},
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "name": "正在上映的电影",
-        "maintainers": [
-          "DIYgod"
-        ],
-        "location": "other/playing.ts",
-        "module": () => import('@/routes/douban/other/playing.ts')
-      },
-      "/movie/playing/:score": {
-        "path": [
-          "/movie/playing",
-          "/movie/playing/:score"
-        ],
-        "categories": [
-          "social-media"
-        ],
-        "example": "/douban/movie/playing",
-        "parameters": {},
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "name": "正在上映的电影",
-        "maintainers": [
-          "DIYgod"
-        ],
-        "location": "other/playing.ts",
-        "module": () => import('@/routes/douban/other/playing.ts')
-      },
-      "/replied/:uid": {
-        "path": "/replied/:uid",
-        "categories": [
-          "social-media"
-        ],
-        "example": "/douban/replied/xiaoyaxiaoya",
-        "parameters": {
-          "uid": "用户id，可在用户日记页 URL 中找到"
-        },
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "name": "最新回应过的日记",
-        "maintainers": [
-          "nczitzk"
-        ],
-        "location": "other/replied.ts",
-        "module": () => import('@/routes/douban/other/replied.ts')
-      },
-      "/replies/:uid": {
-        "path": "/replies/:uid",
-        "categories": [
-          "social-media"
-        ],
-        "example": "/douban/replies/xiaoyaxiaoya",
-        "parameters": {
-          "uid": "用户id，可在用户日记页 URL 中找到"
-        },
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "name": "日记最新回应",
-        "maintainers": [
-          "nczitzk"
-        ],
-        "location": "other/replies.ts",
-        "module": () => import('@/routes/douban/other/replies.ts')
-      },
-      "/people/:userid/wish": {
-        "path": "/people/:userid/wish",
-        "categories": [
-          "social-media"
-        ],
-        "example": "/douban/people/exherb/wish",
-        "parameters": {
-          "userid": "用户id"
-        },
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "name": "用户想看",
-        "maintainers": [
-          "exherb"
-        ],
-        "location": "people/wish.ts",
-        "module": () => import('@/routes/douban/people/wish.ts')
+        "location": "live.ts",
+        "module": () => import('@/routes/douyin/live.ts')
       }
     },
     "apiRoutes": {},
-    "name": "豆瓣",
-    "url": "www.douban.com",
+    "name": "抖音直播",
+    "url": "douyin.com",
+    "description": "::: warning\n反爬严格，需要启用 Playwright。抖音的视频 CDN 会验证 Referer，意味着许多阅读器都无法直接播放内嵌视频，以下是一些变通解决方案：\n\n1. 启用内嵌视频 (`embed=1`), 参考 [通用参数 -> 多媒体处理](/parameter#多媒体处理) 配置 `multimedia_hotlink_template` **或** `wrap_multimedia_in_iframe`。\n2. 关闭内嵌视频 (`embed=0`)，手动点击 `视频直链` 超链接，一般情况下均可成功播放视频。若仍然出现 HTTP 403，请复制 URL 以后到浏览器打开。\n3. 点击原文链接打开抖音网页版的视频详情页播放视频。\n\n:::\n\n额外参数\n\n| 键      | 含义             | 值                     | 默认值  |\n| ------- | ---------------- | ---------------------- | ------- |\n| `embed` | 是否启用内嵌视频 | `0`/`1`/`true`/`false` | `false` |",
     "lang": "zh-CN"
   },
   "dpm": {
@@ -64472,6 +63824,40 @@ export default {
     "url": "fudan.edu.cn",
     "categories": [
       "university"
+    ],
+    "lang": "zh-CN"
+  },
+  "funresearch": {
+    "routes": {
+      "/grants": {
+        "path": "/grants",
+        "name": "项目申报",
+        "categories": [
+          "study"
+        ],
+        "example": "/funresearch/grants",
+        "maintainers": [
+          "DIYgod"
+        ],
+        "description": "订阅公众版项目申报列表的首屏公告，提供标题、发布机构、官方发布日期，以及申报状态和资助区域分类。正文、原文链接及附件需要在源站使用自己的账号查看。可使用通用过滤参数筛选标题、发布机构或分类。",
+        "radar": [
+          {
+            "source": [
+              "www.funresearch.cn/grant/index",
+              "www.funresearch.cn/grant/search"
+            ],
+            "target": "/grants"
+          }
+        ],
+        "location": "grants.ts",
+        "module": () => import('@/routes/funresearch/grants.ts')
+      }
+    },
+    "apiRoutes": {},
+    "name": "泛研网",
+    "url": "www.funresearch.cn",
+    "categories": [
+      "study"
     ],
     "lang": "zh-CN"
   },
@@ -77005,6 +76391,7 @@ export default {
             "description": "Any path of list page on javbus"
           }
         },
+        "description": "The item title receives a [中字] prefix and the 中文字幕 category when the magnet selected as the enclosure has a subtitle badge. The existing magnet selection order is preserved.",
         "features": {
           "nsfw": true
         },
@@ -104908,6 +104295,31 @@ export default {
     ],
     "lang": "en"
   },
+  "re3data": {
+    "routes": {
+      "/subject/:subject": {
+        "path": "/subject/:subject",
+        "name": "Repositories by subject",
+        "categories": [
+          "study"
+        ],
+        "maintainers": [
+          "DIYgod"
+        ],
+        "example": "/re3data/subject/223",
+        "parameters": {
+          "subject": "DFG subject code from the subjects[] parameter of a re3data search URL, for example 21 (Biology) or 223 (Neurosciences)."
+        },
+        "description": "Subscribe to research repository records in a subject, using the registry's last-update dates. Each item represents a repository record, rather than papers or datasets within that repository. Updated records receive a new GUID. Subject codes are listed at [Browse by subject](https://www.re3data.org/browse/by-subject/).",
+        "location": "subject.tsx",
+        "module": () => import('@/routes/re3data/subject.tsx')
+      }
+    },
+    "apiRoutes": {},
+    "name": "re3data",
+    "url": "www.re3data.org",
+    "lang": "en"
+  },
   "react": {
     "routes": {
       "/blog": {
@@ -126795,38 +126207,6 @@ export default {
         "location": "fund.ts",
         "module": () => import('@/routes/xueqiu/fund.ts')
       },
-      "/snb/:id": {
-        "path": "/snb/:id",
-        "categories": [
-          "finance"
-        ],
-        "example": "/xueqiu/snb/ZH1288184",
-        "parameters": {
-          "id": "组合代码, 可在组合主页 URL 中找到."
-        },
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "radar": [
-          {
-            "source": [
-              "xueqiu.com/P/:id",
-              "xueqiu.com/p/:id"
-            ]
-          }
-        ],
-        "name": "组合最新调仓信息",
-        "maintainers": [
-          "ZhishanZhang"
-        ],
-        "location": "snb.ts",
-        "module": () => import('@/routes/xueqiu/snb.ts')
-      },
       "/timeline/:usergroup_id?": {
         "path": "/timeline/:usergroup_id?",
         "categories": [
@@ -127032,7 +126412,13 @@ export default {
           "id": "用户 id, 可在用户主页 URL 中找到"
         },
         "features": {
-          "requireConfig": false,
+          "requireConfig": [
+            {
+              "name": "XUEQIU_COOKIES",
+              "optional": true,
+              "description": "需要登录才能访问的专栏请配置雪球登录 Cookie。"
+            }
+          ],
           "requirePuppeteer": false,
           "antiCrawler": true,
           "supportBT": false,
@@ -127053,6 +126439,44 @@ export default {
         ],
         "location": "column.ts",
         "module": () => import('@/routes/xueqiu/column.ts')
+      },
+      "/snb/:id": {
+        "path": "/snb/:id",
+        "categories": [
+          "finance"
+        ],
+        "example": "/xueqiu/snb/ZH1288184",
+        "parameters": {
+          "id": "组合代码, 可在组合主页 URL 中找到."
+        },
+        "features": {
+          "requireConfig": [
+            {
+              "name": "XUEQIU_COOKIES",
+              "optional": true,
+              "description": "需要登录才能访问的组合请配置雪球登录 Cookie。"
+            }
+          ],
+          "requirePuppeteer": false,
+          "antiCrawler": true,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "xueqiu.com/P/:id",
+              "xueqiu.com/p/:id"
+            ]
+          }
+        ],
+        "name": "组合最新调仓信息",
+        "maintainers": [
+          "ZhishanZhang"
+        ],
+        "location": "snb.ts",
+        "module": () => import('@/routes/xueqiu/snb.ts')
       },
       "/stock_comments/:id": {
         "path": "/stock_comments/:id",
@@ -130396,6 +129820,31 @@ export default {
     "apiRoutes": {},
     "name": "中南财经政法大学",
     "url": "wap.zuel.edu.cn",
+    "lang": "zh-CN"
+  },
+  "zuiyou": {
+    "routes": {
+      "/user/:mid": {
+        "path": "/user/:mid",
+        "name": "用户动态",
+        "categories": [
+          "social-media"
+        ],
+        "maintainers": [
+          "DIYgod"
+        ],
+        "example": "/zuiyou/user/298793092",
+        "parameters": {
+          "mid": "用户 ID，即最右分享主页链接中 `mid` 参数的值。"
+        },
+        "description": "订阅用户公开分享主页首屏中的动态，包括文字、图片和视频。",
+        "location": "user.tsx",
+        "module": () => import('@/routes/zuiyou/user.tsx')
+      }
+    },
+    "apiRoutes": {},
+    "name": "最右",
+    "url": "www.izuiyou.com",
     "lang": "zh-CN"
   },
   "zxcs": {
@@ -137512,6 +136961,854 @@ export default {
       "sport"
     ],
     "description": "::: tip\n\n- 可以通过头条新闻 + 参数过滤的形式获得早报、专题等内容。\n\n:::",
+    "lang": "zh-CN"
+  },
+  "douban": {
+    "routes": {
+      "/book/latest/:type?": {
+        "path": "/book/latest/:type?",
+        "categories": [
+          "social-media"
+        ],
+        "example": "/douban/book/latest/fiction",
+        "parameters": {
+          "type": "专题分类，可选，默认为 `all`"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "name": "新书速递",
+        "maintainers": [
+          "fengkx",
+          "lyqluis"
+        ],
+        "description": "| 文学          | 小说    | 历史文化 | 社会纪实  | 科学新知 | 艺术设计 | 商业经管 | 绘本漫画 |\n| ------------- | ------- | -------- | --------- | -------- | -------- | -------- | -------- |\n| prose\\_poetry | fiction | history  | biography | science  | art      | business | comics   |",
+        "location": "book/latest.ts",
+        "module": () => import('@/routes/douban/book/latest.ts')
+      },
+      "/book/rank/:type?": {
+        "path": "/book/rank/:type?",
+        "categories": [
+          "social-media"
+        ],
+        "example": "/douban/book/rank/fiction",
+        "parameters": {
+          "type": "图书类型，默认合并列表"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "name": "热门图书排行",
+        "maintainers": [
+          "xyqfer",
+          "queensferryme"
+        ],
+        "description": "| 全部 | 虚构    | 非虚构     |\n| ---- | ------- | ---------- |\n|      | fiction | nonfiction |",
+        "location": "book/rank.ts",
+        "module": () => import('@/routes/douban/book/rank.ts')
+      },
+      "/channel/:id/subject/:nav": {
+        "path": "/channel/:id/subject/:nav",
+        "categories": [
+          "social-media"
+        ],
+        "example": "/douban/channel/30168934/subject/0",
+        "parameters": {
+          "id": "频道id",
+          "nav": "书影音分类"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "name": "频道书影音",
+        "maintainers": [
+          "umm233"
+        ],
+        "description": "| 电影 | 电视剧 | 图书 | 唱片 |\n| ---- | ------ | ---- | ---- |\n| 0    | 1      | 2    | 3    |",
+        "location": "channel/subject.ts",
+        "module": () => import('@/routes/douban/channel/subject.ts')
+      },
+      "/channel/:id/:nav?": {
+        "path": "/channel/:id/:nav?",
+        "categories": [
+          "social-media"
+        ],
+        "example": "/douban/channel/30168934/hot",
+        "parameters": {
+          "id": "频道id",
+          "nav": "专题分类，可选，默认为 default"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "name": "频道专题",
+        "maintainers": [
+          "umm233"
+        ],
+        "description": "| 默认    | 热门 | 最新 |\n| ------- | ---- | ---- |\n| default | hot  | new  |",
+        "location": "channel/topic.ts",
+        "module": () => import('@/routes/douban/channel/topic.ts')
+      },
+      "/event/hot/:locationId": {
+        "path": "/event/hot/:locationId",
+        "categories": [
+          "social-media"
+        ],
+        "example": "/douban/event/hot/118172",
+        "parameters": {
+          "locationId": "位置 id, [同城首页](https://www.douban.com/location)打开控制台执行 `window.__loc_id__` 获取"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "name": "热门同城活动",
+        "maintainers": [
+          "xyqfer"
+        ],
+        "location": "event/hot.ts",
+        "module": () => import('@/routes/douban/event/hot.ts')
+      },
+      "/movie/coming": {
+        "path": "/movie/coming",
+        "categories": [
+          "social-media"
+        ],
+        "example": "/douban/movie/coming",
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "name": "电影即将上映",
+        "maintainers": [
+          "reonokiy"
+        ],
+        "radar": [
+          {
+            "title": "豆瓣电影-即将上映",
+            "source": [
+              "movie.douban.com/coming"
+            ],
+            "target": "/movie/coming"
+          }
+        ],
+        "location": "movie/coming.tsx",
+        "module": () => import('@/routes/douban/movie/coming.tsx')
+      },
+      "/bookstore": {
+        "path": "/bookstore",
+        "categories": [
+          "social-media"
+        ],
+        "example": "/douban/bookstore",
+        "parameters": {},
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "name": "豆瓣书店",
+        "maintainers": [
+          "xyqfer"
+        ],
+        "location": "other/bookstore.ts",
+        "module": () => import('@/routes/douban/other/bookstore.ts')
+      },
+      "/movie/classification/:sort?/:score?/:tags?": {
+        "path": "/movie/classification/:sort?/:score?/:tags?",
+        "categories": [
+          "social-media"
+        ],
+        "example": "/douban/movie/classification/R/7.5/Netflix,2020",
+        "parameters": {
+          "sort": "排序方式，默认为U",
+          "score": "最低评分，默认不限制",
+          "tags": "分类标签，多个标签之间用英文逗号分隔，常见的标签到豆瓣电影的分类页面查看，支持自定义标签"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "name": "豆瓣电影分类",
+        "maintainers": [
+          "zzwab"
+        ],
+        "description": "排序方式可选值如下\n\n| 近期热门 | 标记最多 | 评分最高 | 最近上映 |\n| -------- | -------- | -------- | -------- |\n| U        | T        | S        | R        |",
+        "location": "other/classification.ts",
+        "module": () => import('@/routes/douban/other/classification.ts')
+      },
+      "/movie/ustop": {
+        "path": "/movie/ustop",
+        "categories": [
+          "social-media"
+        ],
+        "example": "/douban/movie/ustop",
+        "parameters": {},
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "name": "北美票房榜",
+        "maintainers": [
+          "DIYgod"
+        ],
+        "location": "other/ustop.ts",
+        "module": () => import('@/routes/douban/other/ustop.ts')
+      },
+      "/movie/weekly/:type?": {
+        "path": "/movie/weekly/:type?",
+        "categories": [
+          "social-media"
+        ],
+        "example": "/douban/movie/weekly",
+        "parameters": {
+          "type": "分类，可在榜单页 URL 中找到，默认为一周口碑电影榜"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "name": "一周口碑榜",
+        "maintainers": [
+          "numm233",
+          "nczitzk"
+        ],
+        "description": "| 一周口碑电影榜      | 华语口碑剧集榜            |\n| ------------------- | ------------------------- |\n| movie\\_weekly\\_best | tv\\_chinese\\_best\\_weekly |",
+        "location": "other/weekly-best.tsx",
+        "module": () => import('@/routes/douban/other/weekly-best.tsx')
+      },
+      "/list/:type?/:routeParams?": {
+        "path": "/list/:type?/:routeParams?",
+        "categories": [
+          "social-media"
+        ],
+        "example": "/douban/list/subject_real_time_hotest",
+        "parameters": {
+          "type": "榜单类型，见下表。默认为实时热门书影音",
+          "routeParams": "额外参数；请参阅以下说明和表格"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "www.douban.com/subject_collection/:type"
+            ],
+            "target": "/list/:type"
+          }
+        ],
+        "name": "豆瓣榜单与集合",
+        "maintainers": [
+          "5upernova-heng",
+          "honue"
+        ],
+        "description": "| 榜单 / 集合        | 路由                          |\n| ------------------ | ----------------------------- |\n| 实时热门书影音     | subject\\_real\\_time\\_hotest   |\n| 影院热映           | movie\\_showing                |\n| 实时热门电影       | movie\\_real\\_time\\_hotest     |\n| 实时热门电视       | tv\\_real\\_time\\_hotest        |\n| 一周口碑电影榜     | movie\\_weekly\\_best           |\n| 华语口碑剧集榜     | tv\\_chinese\\_best\\_weekly     |\n| 全球口碑剧集榜     | tv\\_global\\_best\\_weekly      |\n| 国内口碑综艺榜     | show\\_chinese\\_best\\_weekly   |\n| 国外口碑综艺榜     | show\\_global\\_best\\_weekly    |\n| 热播新剧国产剧     | tv\\_domestic                  |\n| 热播新剧欧美剧     | tv\\_american                  |\n| 热播新剧日剧       | tv\\_japanese                  |\n| 热播新剧韩剧       | tv\\_korean                    |\n| 热播新剧动画       | tv\\_animation                 |\n| 虚构类小说热门榜   | book\\_fiction\\_hot\\_weekly    |\n| 非虚构类小说热门榜 | book\\_nonfiction\\_hot\\_weekly |\n| 热门单曲榜         | music\\_single                 |\n| 华语新碟榜         | music\\_chinese                |\n| ...                | ...                           |\n\n| 额外参数 | 含义                   | 接受的值 | 默认值 |\n| -------- | ---------------------- | -------- | ------ |\n| playable | 仅看有可播放片源的影片 | 0/1      | 0      |\n| score    | 筛选评分               | 0.0-10.0 | 0      |\n\n用例：`/douban/list/tv_korean/playable=1&score=8`\n\n> 上面的榜单 / 集合并没有列举完整。\n>\n> 如何找到榜单对应的路由参数：\n> 在豆瓣手机 APP 中，对应地榜单页面右上角，点击分享链接。链接路径 `subject_collection` 后的路径就是路由参数 `type`。\n> 如：小说热门榜的分享链接为：`https://m.douban.com/subject_collection/ECDIHUN4A`，其对应本 RSS 路由的 `type` 为 `ECDIHUN4A`，对应的订阅链接路由：[`/douban/list/ECDIHUN4A`](https://rsshub.app/douban/list/ECDIHUN4A)",
+        "location": "other/list.ts",
+        "module": () => import('@/routes/douban/other/list.ts')
+      },
+      "/recommended/:type?/:routeParams?": {
+        "path": "/recommended/:type?/:routeParams?",
+        "categories": [
+          "social-media"
+        ],
+        "example": "/douban/recommended/tv",
+        "parameters": {
+          "type": "片单类型剧集/电影，tv或movie，默认为tv",
+          "routeParams": "额外参数；请参阅以下说明和表格"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "name": "豆瓣每月推荐片单",
+        "maintainers": [
+          "honue"
+        ],
+        "description": "| 额外参数 | 含义                   | 接受的值 | 默认值 |\n| -------- | ---------------------- | -------- | ------ |\n| playable | 仅看有可播放片源的影片 | 0/1      | 0      |\n| score    | 筛选评分               | 0-10     | 0      |\n\n用例：`/douban/recommended/tv/playable=0&score=8`\n\n::: tip\n整合了 /douban/list/ 路由，省去每月手动更新 id 参数，因为当月推荐剧集片单中，会有还未播出 / 开评分剧集、海外平台播出剧集，请自行考虑是否使用额外参数。\n:::",
+        "location": "other/recommended.ts",
+        "module": () => import('@/routes/douban/other/recommended.ts')
+      },
+      "/tv/coming/:sortBy?/:count?": {
+        "path": "/tv/coming/:sortBy?/:count?",
+        "categories": [
+          "social-media"
+        ],
+        "example": "/douban/tv/coming",
+        "parameters": {
+          "sortBy": "排序方式，可选，支持 `hot` 或 `time`，默认 `hot`",
+          "count": "请求上游返回数量，可选，正整数，默认 `10`"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "name": "即将播出的剧集",
+        "maintainers": [
+          "honue"
+        ],
+        "description": "| 路径参数 | 含义             | 接受的值 | 默认值 |\n| -------- | ---------------- | -------- | ------ |\n| sortBy   | 排序方式         | hot/time | hot    |\n| count    | 请求上游返回数量 | 正整数   | 10     |\n\n用例：`/douban/tv/coming/hot/10`\n\n::: tip\n服务端请求固定使用 `sortby=hot` 拉取数据，再按 `sortBy` 参数在本地重排；条目数量可通过 `count` 调整，仍可叠加 RSSHub 通用参数 `limit`。\n:::",
+        "location": "tv/coming.ts",
+        "module": () => import('@/routes/douban/tv/coming.ts')
+      },
+      "/commercialpress/latest": {
+        "path": "/commercialpress/latest",
+        "categories": [
+          "social-media"
+        ],
+        "example": "/douban/commercialpress/latest",
+        "parameters": {},
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "name": "商务印书馆新书速递",
+        "maintainers": [
+          "xyqfer"
+        ],
+        "location": "commercialpress/latest.ts",
+        "module": () => import('@/routes/douban/commercialpress/latest.ts')
+      },
+      "/celebrity/:id/:sort?": {
+        "path": "/celebrity/:id/:sort?",
+        "categories": [
+          "social-media"
+        ],
+        "example": "/douban/celebrity/1274261",
+        "parameters": {
+          "id": "电影人 id",
+          "sort": "排序方式，缺省为 `time`（时间排序），可为 `vote` （评价排序）"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "name": "豆瓣电影人",
+        "maintainers": [
+          "minimalistrojan"
+        ],
+        "location": "other/celebrity.ts",
+        "module": () => import('@/routes/douban/other/celebrity.ts')
+      },
+      "/:id/discussion": {
+        "path": "/:id/discussion",
+        "categories": [
+          "social-media"
+        ],
+        "example": "/douban/36328704/discussion",
+        "parameters": {
+          "id": "书本id;默认论坛文章使用\"按回应时间排序\",仅第一页文章"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "book.douban.com/:id/discussion"
+            ]
+          }
+        ],
+        "name": "豆瓣读书论坛",
+        "maintainers": [
+          "nightmare-mio"
+        ],
+        "location": "other/discussion.ts",
+        "module": () => import('@/routes/douban/other/discussion.ts')
+      },
+      "/doulist/:id": {
+        "path": "/doulist/:id",
+        "categories": [
+          "social-media"
+        ],
+        "example": "/douban/doulist/37716774",
+        "parameters": {
+          "id": "豆列id"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "name": "豆瓣豆列",
+        "maintainers": [
+          "LogicJake",
+          "honue"
+        ],
+        "location": "other/doulist.ts",
+        "module": () => import('@/routes/douban/other/doulist.ts')
+      },
+      "/explore/column/:id": {
+        "path": "/explore/column/:id",
+        "categories": [
+          "social-media"
+        ],
+        "example": "/douban/explore/column/2",
+        "parameters": {
+          "id": "分栏目id"
+        },
+        "name": "浏览发现分栏目",
+        "maintainers": [
+          "LogicJake"
+        ],
+        "location": "other/explore-column.ts",
+        "module": () => import('@/routes/douban/other/explore-column.ts')
+      },
+      "/explore": {
+        "path": "/explore",
+        "categories": [
+          "social-media"
+        ],
+        "example": "/douban/explore",
+        "parameters": {},
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "name": "浏览发现",
+        "maintainers": [
+          "clarkzsd"
+        ],
+        "location": "other/explore.tsx",
+        "module": () => import('@/routes/douban/other/explore.tsx')
+      },
+      "/group/topic/:id/:author?": {
+        "path": "/group/topic/:id/:author?",
+        "name": "小组帖子更新",
+        "example": "/douban/group/topic/309838592",
+        "categories": [
+          "social-media"
+        ],
+        "maintainers": [
+          "DIYgod"
+        ],
+        "parameters": {
+          "id": "小组帖子 URL 中的数字 ID。",
+          "author": {
+            "description": "回帖范围。",
+            "default": "all",
+            "options": [
+              {
+                "value": "all",
+                "label": "全部"
+              },
+              {
+                "value": "author",
+                "label": "只看楼主"
+              }
+            ]
+          }
+        },
+        "features": {
+          "antiCrawler": true,
+          "requireConfig": [
+            {
+              "name": "DOUBAN_COOKIE",
+              "optional": true,
+              "description": "需要登录才能查看的帖子请配置本人豆瓣 Cookie。"
+            }
+          ]
+        },
+        "radar": [
+          {
+            "source": [
+              "www.douban.com/group/topic/:id"
+            ],
+            "target": "/group/topic/:id"
+          }
+        ],
+        "description": "订阅主帖正文和源页面首屏回帖。主帖标题或正文改变时产生新 GUID，以供阅读器识别更新。只看楼主使用源站的 author=1 页面。源站回帖按从早到晚排序，因此长帖尾页的新回复尚不在本路由范围内。日期保留源站创建时间，不冒充最后更新时间。",
+        "location": "other/group-topic.ts",
+        "module": () => import('@/routes/douban/other/group-topic.ts')
+      },
+      "/group/:groupid/:type?": {
+        "path": "/group/:groupid/:type?",
+        "categories": [
+          "social-media"
+        ],
+        "view": 1,
+        "example": "/douban/group/648102",
+        "parameters": {
+          "groupid": "豆瓣小组的 id",
+          "type": {
+            "description": "类型",
+            "default": "latest",
+            "options": [
+              {
+                "label": "最新",
+                "value": "latest"
+              },
+              {
+                "label": "最热",
+                "value": "essence"
+              },
+              {
+                "label": "精华",
+                "value": "elite"
+              }
+            ]
+          }
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "www.douban.com/group/:groupid"
+            ],
+            "target": "/group/:groupid"
+          }
+        ],
+        "name": "豆瓣小组",
+        "maintainers": [
+          "DIYgod"
+        ],
+        "location": "other/group.ts",
+        "module": () => import('@/routes/douban/other/group.ts')
+      },
+      "/jobs/:type": {
+        "path": "/jobs/:type",
+        "categories": [
+          "social-media"
+        ],
+        "example": "/douban/jobs/campus",
+        "parameters": {
+          "type": "招聘类型，见下表"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "name": "豆瓣招聘",
+        "maintainers": [
+          "Fatpandac"
+        ],
+        "description": "| 社会招聘 | 校园招聘 | 实习生招聘 |\n| :------: | :------: | :--------: |\n|  social  |  campus  |   intern   |",
+        "location": "other/jobs.ts",
+        "module": () => import('@/routes/douban/other/jobs.ts')
+      },
+      "/movie/later": {
+        "path": "/movie/later",
+        "categories": [
+          "social-media"
+        ],
+        "example": "/douban/movie/later",
+        "parameters": {},
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "name": "即将上映的电影",
+        "maintainers": [
+          "DIYgod"
+        ],
+        "location": "other/later.ts",
+        "module": () => import('@/routes/douban/other/later.ts')
+      },
+      "/music/latest/:area?": {
+        "path": "/music/latest/:area?",
+        "categories": [
+          "social-media"
+        ],
+        "example": "/douban/music/latest/chinese",
+        "parameters": {
+          "area": "区域类型，默认全部"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "name": "最新增加的音乐",
+        "maintainers": [
+          "fengkx",
+          "xyqfer"
+        ],
+        "description": "| 华语    | 欧美    | 日韩        |\n| ------- | ------- | ----------- |\n| chinese | western | japankorean |",
+        "location": "other/latest-music.ts",
+        "module": () => import('@/routes/douban/other/latest-music.ts')
+      },
+      "/movie/playing": {
+        "path": [
+          "/movie/playing",
+          "/movie/playing/:score"
+        ],
+        "categories": [
+          "social-media"
+        ],
+        "example": "/douban/movie/playing",
+        "parameters": {},
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "name": "正在上映的电影",
+        "maintainers": [
+          "DIYgod"
+        ],
+        "location": "other/playing.ts",
+        "module": () => import('@/routes/douban/other/playing.ts')
+      },
+      "/movie/playing/:score": {
+        "path": [
+          "/movie/playing",
+          "/movie/playing/:score"
+        ],
+        "categories": [
+          "social-media"
+        ],
+        "example": "/douban/movie/playing",
+        "parameters": {},
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "name": "正在上映的电影",
+        "maintainers": [
+          "DIYgod"
+        ],
+        "location": "other/playing.ts",
+        "module": () => import('@/routes/douban/other/playing.ts')
+      },
+      "/replied/:uid": {
+        "path": "/replied/:uid",
+        "categories": [
+          "social-media"
+        ],
+        "example": "/douban/replied/xiaoyaxiaoya",
+        "parameters": {
+          "uid": "用户id，可在用户日记页 URL 中找到"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "name": "最新回应过的日记",
+        "maintainers": [
+          "nczitzk"
+        ],
+        "location": "other/replied.ts",
+        "module": () => import('@/routes/douban/other/replied.ts')
+      },
+      "/replies/:uid": {
+        "path": "/replies/:uid",
+        "categories": [
+          "social-media"
+        ],
+        "example": "/douban/replies/xiaoyaxiaoya",
+        "parameters": {
+          "uid": "用户id，可在用户日记页 URL 中找到"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "name": "日记最新回应",
+        "maintainers": [
+          "nczitzk"
+        ],
+        "location": "other/replies.ts",
+        "module": () => import('@/routes/douban/other/replies.ts')
+      },
+      "/people/:userid/wish": {
+        "path": "/people/:userid/wish",
+        "categories": [
+          "social-media"
+        ],
+        "example": "/douban/people/exherb/wish",
+        "parameters": {
+          "userid": "用户id"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "name": "用户想看",
+        "maintainers": [
+          "exherb"
+        ],
+        "location": "people/wish.ts",
+        "module": () => import('@/routes/douban/people/wish.ts')
+      },
+      "/topic/:id/:sort?": {
+        "path": "/topic/:id/:sort?",
+        "categories": [
+          "social-media"
+        ],
+        "example": "/douban/topic/48823",
+        "parameters": {
+          "id": "话题id",
+          "sort": "排序方式，hot或new，默认为new"
+        },
+        "features": {
+          "requireConfig": [
+            {
+              "name": "DOUBAN_COOKIE",
+              "optional": true,
+              "description": "仅登录可见的话题或IP属地详情需要本人豆瓣 Cookie。"
+            }
+          ],
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "name": "话题",
+        "maintainers": [
+          "LogicJake",
+          "pseudoyu",
+          "haowenwu"
+        ],
+        "description": "源详情页明确显示的作者 IP 属地和首屏回帖 IP 属地分别放入 IP属地：… 和 回帖IP属地：… 分类，可使用通用过滤参数。不以作者个人资料所在地替代 IP。需要登录才能查看的内容请配置 DOUBAN_COOKIE。",
+        "location": "other/topic.ts",
+        "module": () => import('@/routes/douban/other/topic.ts')
+      },
+      "/people/:userid/status/:routeParams?": {
+        "path": "/people/:userid/status/:routeParams?",
+        "categories": [
+          "social-media"
+        ],
+        "view": 1,
+        "example": "/douban/people/75118396/status",
+        "parameters": {
+          "userid": "整数型用户 id",
+          "routeParams": "额外参数；见下"
+        },
+        "name": "用户广播",
+        "maintainers": [
+          "alfredcai"
+        ],
+        "features": {
+          "requireConfig": [
+            {
+              "name": "DOUBAN_COOKIE",
+              "optional": true,
+              "description": "仅登录可见的广播或IP属地详情需要本人豆瓣 Cookie。"
+            }
+          ]
+        },
+        "description": "::: tip\n\n- **目前只支持整数型 id**\n- 源详情页显示的作者 IP 属地和首屏回帖 IP 属地分别放入 `IP属地：…` 和 `回帖IP属地：…` 分类，可使用通用过滤参数。没有提供该字段的广播不添加；个人资料所在地不作为 IP。\n- 字母型的 id，可以通过头像图片链接来找到其整数型 id，图片命名规则`ul[userid]-*.jpg`或`u[userid]-*.jpg`，即取文件名中间的数字\n- 例如：用户 id: `MovieL`他的头像图片链接：`https://img1.doubanio.com/icon/ul1128221-98.jpg`他的整数型 id: `1128221`\n\n:::\n\n对于豆瓣用户广播内容，在 `routeParams` 参数中以 query string 格式设置如下选项可以控制输出的样式\n\n| 键                         | 含义                                                           | 接受的值       | 默认值 |\n| -------------------------- | -------------------------------------------------------------- | -------------- | ------ |\n| readable                   | 是否开启细节排版可读性优化                                     | 0/1/true/false | false  |\n| authorNameBold             | 是否加粗作者名字                                               | 0/1/true/false | false  |\n| showAuthorInTitle          | 是否在标题处显示作者                                           | 0/1/true/false | true   |\n| showAuthorInDesc           | 是否在正文处显示作者                                           | 0/1/true/false | false  |\n| showAuthorAvatarInDesc     | 是否在正文处显示作者头像（若阅读器会提取正文图片，不建议开启） | 0/1/true/false | false  |\n| showEmojiForRetweet        | 显示 “🔁” 取代 “Fw”（转发）                                    | 0/1/true/false | false  |\n| showRetweetTextInTitle     | 在标题出显示转发评论（置为 false 则在标题只显示被转发的广播）  | 0/1/true/false | false  |\n| addLinkForPics             | 为图片添加可点击的链接                                         | 0/1/true/false | false  |\n| showTimestampInDescription | 在正文处显示广播的时间戳                                       | 0/1/true/false | false  |\n| showComments               | 在正文处显示评论                                               | 0/1/true/false | false  |\n| widthOfPics                | 广播配图宽（生效取决于阅读器）                                 | 不指定 / 数字  | 不指定 |\n| heightOfPics               | 广播配图高（生效取决于阅读器）                                 | 不指定 / 数字  | 不指定 |\n| sizeOfAuthorAvatar         | 作者头像大小                                                   | 数字           | 48     |\n\n指定更多与默认值不同的参数选项可以改善 RSS 的可读性，如\n\n<https://rsshub.app/douban/people/113894409/status/readable=1&authorNameBold=1&showAuthorInTitle=1&showAuthorInDesc=1&showAuthorAvatarInDesc=1&showEmojiForRetweet=1&showRetweetTextInTitle=1&addLinkForPics=1&showTimestampInDescription=1&showComments=1&widthOfPics=100>\n\n的效果为\n\n  <img loading=\"lazy\" src=\"/img/readable-douban.png\" alt=\"豆瓣读书的可读豆瓣广播 RSS\" />",
+        "location": "people/status.ts",
+        "module": () => import('@/routes/douban/people/status.ts')
+      }
+    },
+    "apiRoutes": {},
+    "name": "豆瓣",
+    "url": "www.douban.com",
     "lang": "zh-CN"
   },
   "dr": {
@@ -161507,6 +161804,42 @@ export default {
   },
   "weibo": {
     "routes": {
+      "/fresh/:id": {
+        "path": "/fresh/:id",
+        "name": "新鲜事",
+        "example": "/weibo/fresh/7574046780235777_1",
+        "categories": [
+          "social-media"
+        ],
+        "maintainers": [
+          "DIYgod"
+        ],
+        "parameters": {
+          "id": "新鲜事页面 URL 中的标识，例如 7574046780235777_1 或 60e8c3bf5b9c0e70_0。保留末尾的栏目类型。"
+        },
+        "features": {
+          "requirePuppeteer": true,
+          "antiCrawler": true,
+          "requireConfig": [
+            {
+              "name": "WEIBO_COOKIES",
+              "optional": true,
+              "description": "仅登录可见的新鲜事需要配置。"
+            }
+          ]
+        },
+        "radar": [
+          {
+            "source": [
+              "weibo.com/a/hot/:id.html"
+            ],
+            "target": "/fresh/:id"
+          }
+        ],
+        "description": "订阅源页面首屏的精选内容或全部微博。保留新鲜事本身的栏目与顺序；正文为源页面提供的摘要及配图。",
+        "location": "fresh.ts",
+        "module": () => import('@/routes/weibo/fresh.ts')
+      },
       "/search/hot/:fulltext?": {
         "path": "/search/hot/:fulltext?",
         "categories": [
@@ -165523,6 +165856,39 @@ export default {
         ],
         "location": "trends.ts",
         "module": () => import('@/routes/twitter/trends.ts')
+      },
+      "/spaces/:username": {
+        "path": "/spaces/:username",
+        "name": "Space speaking status",
+        "categories": [
+          "social-media"
+        ],
+        "example": "/twitter/spaces/_RSSHub",
+        "parameters": {
+          "username": "The X username, without @."
+        },
+        "features": {
+          "requireConfig": [
+            {
+              "name": "TWITTER_AUTH_TOKEN",
+              "description": "An authorized login session for the X web API. Developer API keys and third-party timeline providers are not used by this route."
+            }
+          ]
+        },
+        "maintainers": [
+          "DIYgod"
+        ],
+        "description": "Reports a user speaking in a live Space, including Spaces hosted by other users. Hosts and co-hosts are also included; listeners are excluded. Each user/Space pair has a stable entry ID and uses the actual Space start time. When the user is not speaking in a live Space, a status entry has a fixed ID and no publication date. This does not join or listen to a Space. Requires your own authorized TWITTER_AUTH_TOKEN on a self-hosted instance.",
+        "radar": [
+          {
+            "source": [
+              "x.com/:username"
+            ],
+            "target": "/spaces/:username"
+          }
+        ],
+        "location": "spaces.ts",
+        "module": () => import('@/routes/twitter/spaces.ts')
       },
       "/home_latest/:routeParams?": {
         "path": "/home_latest/:routeParams?",

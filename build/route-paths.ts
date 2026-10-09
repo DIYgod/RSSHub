@@ -606,6 +606,7 @@ export type RoutePath =
   | `/chaping/banner`
   | `/chaping/news/:caty?`
   | `/chaping/newsflash`
+  | `/chaturbate/live/:username`
   | `/checkee/:dispdate`
   | `/checkra.in/releases`
   | `/cherrytimes/market`
@@ -765,6 +766,8 @@ export type RoutePath =
   | `/costar/press-releases/:filter{.+}?`
   | `/counter-strike/news/:category?/:language?`
   | `/cowlevel/element/:id`
+  | `/coze/store/:type?`
+  | `/coze/user/:id/:type?`
   | `/cpcaauto/news/:type?/:id?`
   | `/cpcey/:type?`
   | `/cpta/:category`
@@ -988,6 +991,7 @@ export type RoutePath =
   | `/douban/explore`
   | `/douban/explore/column/:id`
   | `/douban/group/:groupid/:type?`
+  | `/douban/group/topic/:id/:author?`
   | `/douban/jobs/:type`
   | `/douban/list/:type?/:routeParams?`
   | `/douban/movie/classification/:sort?/:score?/:tags?`
@@ -1005,8 +1009,10 @@ export type RoutePath =
   | `/douban/replies/:uid`
   | `/douban/topic/:id/:sort?`
   | `/douban/tv/coming/:sortBy?/:count?`
+  | `/douyin/collection`
   | `/douyin/hashtag/:cid/:routeParams?`
-  | `/douyin/live/:rid`
+  | `/douyin/likes/:uid`
+  | `/douyin/live/:rid/:showTime?`
   | `/douyin/user/:uid/:routeParams?`
   | `/douyu/group/:id/:sort?`
   | `/douyu/post/:id`
@@ -1226,6 +1232,7 @@ export type RoutePath =
   | `/ftm/`
   | `/fudan/cce`
   | `/fuliba/latest`
+  | `/funresearch/grants`
   | `/furaffinity/art/:folder/:username/:mode?`
   | `/furaffinity/browse/:mode?`
   | `/furaffinity/commissions/:username`
@@ -2880,6 +2887,7 @@ export type RoutePath =
   | `/rattibha/user/:user`
   | `/rawkuma/manga/:id`
   | `/raycast/changelog`
+  | `/re3data/subject/:subject`
   | `/react/blog`
   | `/reactiflux/transcripts`
   | `/reactnativenewsletter/`
@@ -3476,6 +3484,7 @@ export type RoutePath =
   | `/twitter/likes/:id/:routeParams?`
   | `/twitter/list/:id/:routeParams?`
   | `/twitter/media/:id/:routeParams?`
+  | `/twitter/spaces/:username`
   | `/twitter/trends/:woeid?`
   | `/twitter/tweet/:id/status/:status/:original?`
   | `/twitter/user/:id/:routeParams?`
@@ -3631,6 +3640,7 @@ export type RoutePath =
   | `/weekendhk/`
   | `/wegene/column/:type/:category`
   | `/wegene/newest`
+  | `/weibo/fresh/:id`
   | `/weibo/friends/:routeParams?`
   | `/weibo/group/:gid/:gname?/:routeParams?`
   | `/weibo/keyword/:keyword/:routeParams?`
@@ -3966,6 +3976,7 @@ export type RoutePath =
   | `/zsxq/group/:id/:scope?`
   | `/zsxq/user/:id`
   | `/zuel/notice`
+  | `/zuiyou/user/:mid`
   | `/zuvio/student5/:board?`
   | `/zuvio/student5/boards`
   | `/zxcs/novel/:type`

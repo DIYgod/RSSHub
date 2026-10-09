@@ -130,6 +130,9 @@
     "nczitzk",
     "pseudoyu"
   ],
+  "/chaturbate/live/:username": [
+    "DIYgod"
+  ],
   "/chlinlearn/daily-blog": [
     "huyyi"
   ],
@@ -1106,6 +1109,12 @@
   "/cbre/research/:site?/:section?": [
     "DIYgod"
   ],
+  "/coze/store/:type?": [
+    "DIYgod"
+  ],
+  "/coze/user/:id/:type?": [
+    "DIYgod"
+  ],
   "/cspengyuan/research/:category?": [
     "DIYgod"
   ],
@@ -1324,16 +1333,6 @@
   ],
   "/discourse/:configId/notifications/:fulltext?": [
     "dzx-dzx"
-  ],
-  "/douyin/hashtag/:cid/:routeParams?": [
-    "TonyRL"
-  ],
-  "/douyin/live/:rid": [
-    "TonyRL"
-  ],
-  "/douyin/user/:uid/:routeParams?": [
-    "Max-Tortoise",
-    "Rongronggg9"
   ],
   "/ea/apex-news/:lang?/:type?": [
     "IceChestnut"
@@ -4180,103 +4179,21 @@
   "/dorohedoro/news": [
     "nczitzk"
   ],
-  "/douban/book/latest/:type?": [
-    "fengkx",
-    "lyqluis"
+  "/douyin/hashtag/:cid/:routeParams?": [
+    "TonyRL"
   ],
-  "/douban/book/rank/:type?": [
-    "xyqfer",
-    "queensferryme"
+  "/douyin/user/:uid/:routeParams?": [
+    "Max-Tortoise",
+    "Rongronggg9"
   ],
-  "/douban/channel/:id/subject/:nav": [
-    "umm233"
-  ],
-  "/douban/channel/:id/:nav?": [
-    "umm233"
-  ],
-  "/douban/event/hot/:locationId": [
-    "xyqfer"
-  ],
-  "/douban/movie/coming": [
-    "reonokiy"
-  ],
-  "/douban/bookstore": [
-    "xyqfer"
-  ],
-  "/douban/movie/classification/:sort?/:score?/:tags?": [
-    "zzwab"
-  ],
-  "/douban/movie/ustop": [
+  "/douyin/collection": [
     "DIYgod"
   ],
-  "/douban/movie/weekly/:type?": [
-    "numm233",
-    "nczitzk"
-  ],
-  "/douban/list/:type?/:routeParams?": [
-    "5upernova-heng",
-    "honue"
-  ],
-  "/douban/recommended/:type?/:routeParams?": [
-    "honue"
-  ],
-  "/douban/topic/:id/:sort?": [
-    "LogicJake",
-    "pseudoyu",
-    "haowenwu"
-  ],
-  "/douban/people/:userid/status/:routeParams?": [
-    "alfredcai"
-  ],
-  "/douban/tv/coming/:sortBy?/:count?": [
-    "honue"
-  ],
-  "/douban/commercialpress/latest": [
-    "xyqfer"
-  ],
-  "/douban/celebrity/:id/:sort?": [
-    "minimalistrojan"
-  ],
-  "/douban/:id/discussion": [
-    "nightmare-mio"
-  ],
-  "/douban/doulist/:id": [
-    "LogicJake",
-    "honue"
-  ],
-  "/douban/explore/column/:id": [
-    "LogicJake"
-  ],
-  "/douban/explore": [
-    "clarkzsd"
-  ],
-  "/douban/group/:groupid/:type?": [
+  "/douyin/likes/:uid": [
     "DIYgod"
   ],
-  "/douban/jobs/:type": [
-    "Fatpandac"
-  ],
-  "/douban/movie/later": [
-    "DIYgod"
-  ],
-  "/douban/music/latest/:area?": [
-    "fengkx",
-    "xyqfer"
-  ],
-  "/douban/movie/playing": [
-    "DIYgod"
-  ],
-  "/douban/movie/playing/:score": [
-    "DIYgod"
-  ],
-  "/douban/replied/:uid": [
-    "nczitzk"
-  ],
-  "/douban/replies/:uid": [
-    "nczitzk"
-  ],
-  "/douban/people/:userid/wish": [
-    "exherb"
+  "/douyin/live/:rid/:showTime?": [
+    "TonyRL"
   ],
   "/dpm/exhibitions/:type?": [
     "magazian"
@@ -4732,6 +4649,9 @@
   ],
   "/fudan/cce": [
     "mrbruce516"
+  ],
+  "/funresearch/grants": [
+    "DIYgod"
   ],
   "/futunn/live/:lang?": [
     "kennyfong19931"
@@ -7644,6 +7564,9 @@
   "/raycast/changelog": [
     "equt"
   ],
+  "/re3data/subject/:subject": [
+    "DIYgod"
+  ],
   "/react/blog": [
     "equt"
   ],
@@ -9476,9 +9399,6 @@
     "HenryQW",
     "NathanDai"
   ],
-  "/xueqiu/snb/:id": [
-    "ZhishanZhang"
-  ],
   "/xueqiu/timeline/:usergroup_id?": [
     "ErnestDong"
   ],
@@ -9500,6 +9420,9 @@
   "/xueqiu/column/:id": [
     "TonyRL",
     "pseudoyu"
+  ],
+  "/xueqiu/snb/:id": [
+    "ZhishanZhang"
   ],
   "/xueqiu/stock_comments/:id": [
     "zytomorrow"
@@ -9805,6 +9728,9 @@
   ],
   "/zuel/notice": [
     "nczitzk"
+  ],
+  "/zuiyou/user/:mid": [
+    "DIYgod"
   ],
   "/zxcs/novel/:type": [
     "liaochuan"
@@ -10455,6 +10381,107 @@
   ],
   "/dongqiudi/top_news/:id?": [
     "HendricksZheng"
+  ],
+  "/douban/book/latest/:type?": [
+    "fengkx",
+    "lyqluis"
+  ],
+  "/douban/book/rank/:type?": [
+    "xyqfer",
+    "queensferryme"
+  ],
+  "/douban/channel/:id/subject/:nav": [
+    "umm233"
+  ],
+  "/douban/channel/:id/:nav?": [
+    "umm233"
+  ],
+  "/douban/event/hot/:locationId": [
+    "xyqfer"
+  ],
+  "/douban/movie/coming": [
+    "reonokiy"
+  ],
+  "/douban/bookstore": [
+    "xyqfer"
+  ],
+  "/douban/movie/classification/:sort?/:score?/:tags?": [
+    "zzwab"
+  ],
+  "/douban/movie/ustop": [
+    "DIYgod"
+  ],
+  "/douban/movie/weekly/:type?": [
+    "numm233",
+    "nczitzk"
+  ],
+  "/douban/list/:type?/:routeParams?": [
+    "5upernova-heng",
+    "honue"
+  ],
+  "/douban/recommended/:type?/:routeParams?": [
+    "honue"
+  ],
+  "/douban/tv/coming/:sortBy?/:count?": [
+    "honue"
+  ],
+  "/douban/commercialpress/latest": [
+    "xyqfer"
+  ],
+  "/douban/celebrity/:id/:sort?": [
+    "minimalistrojan"
+  ],
+  "/douban/:id/discussion": [
+    "nightmare-mio"
+  ],
+  "/douban/doulist/:id": [
+    "LogicJake",
+    "honue"
+  ],
+  "/douban/explore/column/:id": [
+    "LogicJake"
+  ],
+  "/douban/explore": [
+    "clarkzsd"
+  ],
+  "/douban/group/topic/:id/:author?": [
+    "DIYgod"
+  ],
+  "/douban/group/:groupid/:type?": [
+    "DIYgod"
+  ],
+  "/douban/jobs/:type": [
+    "Fatpandac"
+  ],
+  "/douban/movie/later": [
+    "DIYgod"
+  ],
+  "/douban/music/latest/:area?": [
+    "fengkx",
+    "xyqfer"
+  ],
+  "/douban/movie/playing": [
+    "DIYgod"
+  ],
+  "/douban/movie/playing/:score": [
+    "DIYgod"
+  ],
+  "/douban/replied/:uid": [
+    "nczitzk"
+  ],
+  "/douban/replies/:uid": [
+    "nczitzk"
+  ],
+  "/douban/people/:userid/wish": [
+    "exherb"
+  ],
+  "/douban/topic/:id/:sort?": [
+    "LogicJake",
+    "pseudoyu",
+    "haowenwu"
+  ],
+  "/douban/people/:userid/status/:routeParams?": [
+    "alfredcai"
   ],
   "/dr/:category?": [
     "cufezhusy"
@@ -12289,6 +12316,9 @@
   "/wechat/uread/:userid": [
     "kt286"
   ],
+  "/weibo/fresh/:id": [
+    "DIYgod"
+  ],
   "/weibo/search/hot/:fulltext?": [
     "xyqfer",
     "shinemoon"
@@ -12680,6 +12710,9 @@
   ],
   "/twitter/trends/:woeid?": [
     "sakamossan"
+  ],
+  "/twitter/spaces/:username": [
+    "DIYgod"
   ],
   "/twitter/home_latest/:routeParams?": [
     "DIYgod",
