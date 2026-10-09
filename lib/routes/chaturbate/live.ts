@@ -21,6 +21,7 @@ export const route: Route = {
     },
     features: {
         nsfw: true,
+        antiCrawler: true,
     },
     maintainers: ['DIYgod'],
     radar: [
