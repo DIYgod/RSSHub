@@ -1,6 +1,5 @@
 import type { Context } from 'hono';
 
-import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -12,8 +11,6 @@ interface RoomDossier {
     num_viewers?: number;
 }
 
-const dossierPattern = /window\.initialRoomDossier\s*=\s*("(?:[^"\\]|\\.)*")\s*;/;
-
 export const route: Route = {
     path: '/live/:username',
     name: 'Live status',
@@ -24,6 +21,7 @@ export const route: Route = {
     },
     features: {
         nsfw: true,
+        antiCrawler: true,
     },
     maintainers: ['DIYgod'],
     radar: [
@@ -37,19 +35,9 @@ export const route: Route = {
 };
 
 async function handler(ctx: Context) {
-    const username = ctx.req.param('username') ?? '';
-    if (!/^\w+$/.test(username)) {
-        throw new InvalidParameterError('Use the broadcaster username from https://chaturbate.com/username/.');
-    }
-
+    const { username } = ctx.req.param();
     const link = `https://chaturbate.com/${username}/`;
-    const response = await ofetch(link, { responseType: 'text' });
-    const match = response.match(dossierPattern);
-    if (!match) {
-        throw new Error('Chaturbate did not provide public room metadata. Check the username and whether the room is accessible from this instance.');
-    }
-
-    const dossier = JSON.parse(JSON.parse(match[1])) as RoomDossier;
+    const dossier: RoomDossier = await ofetch(`https://chaturbate.com/api/chatvideocontext/${username}/`);
     if (typeof dossier.broadcaster_username !== 'string' || dossier.broadcaster_username.toLowerCase() !== username.toLowerCase() || typeof dossier.room_status !== 'string') {
         throw new Error('Chaturbate returned unexpected room metadata. Check the broadcaster username.');
     }
