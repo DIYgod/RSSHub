@@ -141,8 +141,10 @@ jobs:
               run: pnpm build
 
             - name: Start RSSHub
+              id: rsshub
               if: env.TEST_CONTINUE
-              run: pnpm start &
+              run: pnpm start
+              background: true
               env:
                   ALLOW_USER_HOTLINK_TEMPLATE: true
                   ALLOW_USER_SUPPLY_UNSAFE_DOMAIN: true
@@ -166,6 +168,9 @@ jobs:
                       core.info(`${link}, ${routes}, ${number}`)
                       const { default: test } = await import('${{ github.workspace }}/scripts/workflow/test-route/test.mjs')
                       await test({ github, context, core }, link, routes, number)
+
+            - name: Stop RSSHub
+              cancel: rsshub
 
             - name: Print logs
               if: env.TEST_CONTINUE

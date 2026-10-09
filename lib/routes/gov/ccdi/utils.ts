@@ -2,14 +2,14 @@ import { load } from 'cheerio';
 import { Cookie, CookieJar } from 'tough-cookie';
 
 import cache from '@/utils/cache';
-import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
 const cookieJar = new CookieJar();
 
 const owner = '中央纪委国家监委网站';
-const rootUrl = 'https://www.ccdi.gov.cn';
+export const rootUrl = 'https://www.ccdi.gov.cn';
 const regex = /(?<key>[A-Z_]+)=(?<value>.*?(?=; max-age)|[\dA-Fa-f]+)/g;
 
 const parseCookie = async (body) => {
@@ -26,9 +26,15 @@ const parseCookie = async (body) => {
     await Promise.all(cookies.map((c) => cookieJar.setCookie(c, rootUrl)));
 };
 
-const parseNewsList = async (url, selector, ctx) => {
-    const response = await got(url, { cookieJar });
-    const data = response.data;
+const fetchPage = async (url: string, attempt = 0): Promise<string> => {
+    const cookie = await cookieJar.getCookieString(url);
+    const response = await ofetch.raw<string>(url, { headers: { cookie }, redirect: 'manual' });
+    await Promise.all(response.headers.getSetCookie().map((c) => cookieJar.setCookie(c, url)));
+    return response.status === 302 && attempt < 2 ? fetchPage(url, attempt + 1) : response._data!;
+};
+
+export const parseNewsList = async (url, selector, ctx) => {
+    const data = await fetchPage(url);
     await parseCookie(data);
 
     const $ = load(data);
@@ -38,8 +44,8 @@ const parseNewsList = async (url, selector, ctx) => {
         .map((item) => {
             const $item = $(item);
             return {
-                title: $item.find('a').first().text().trim(),
-                link: new URL($item.find('a').first().attr('href')!, url).href,
+                title: $item.find('a').text().trim(),
+                link: new URL($item.find('a').attr('href')!, url).href,
                 pubDate: parseDate($item.find('.more').text(), 'YYYY-MM-DD'),
             };
         });
@@ -52,23 +58,24 @@ const parseNewsList = async (url, selector, ctx) => {
 const changeTrCookie = async () => {
     const cookies = await cookieJar.getCookies(rootUrl);
     const c = cookies.find((c) => c.key === 'HOY_TR');
-    if (c) {
-        const value = c.value;
-        const tr_array = value.split(',');
-        const csr = tr_array[0];
-        const cnv = [...tr_array[1]];
-        const otr = [...tr_array[2]];
-        otr[0] = csr.charAt(Number.parseInt(cnv[0], 16));
-        const nc = new Cookie({ key: 'HOY_TR', value: csr + ',' + cnv.join('') + ',' + otr.join('') + ',0' });
-        await cookieJar.setCookie(nc, rootUrl);
+    if (!c) {
+        return;
     }
+
+    const value = c.value;
+    const tr_array = value.split(',');
+    const csr = tr_array[0];
+    const cnv = [...tr_array[1]];
+    const otr = [...tr_array[2]];
+    otr[0] = csr.charAt(Number.parseInt(cnv[0], 16));
+    const nc = new Cookie({ key: 'HOY_TR', value: csr + ',' + cnv.join('') + ',' + otr.join('') + ',0' });
+    await cookieJar.setCookie(nc, rootUrl);
 };
 
-const parseArticle = async (item) => {
+export const parseArticle = async (item) => {
     await changeTrCookie();
     return cache.tryGet(item.link, async () => {
-        const response = await got(item.link, { cookieJar });
-        const data = response.data;
+        const data = await fetchPage(item.link);
         await parseCookie(data);
 
         const $ = load(data);
@@ -76,17 +83,9 @@ const parseArticle = async (item) => {
         item.author = title.match(/来源：(.*)发布时间/s)?.[1].trim() ?? owner;
         item.pubDate = timezone(parseDate(title.match(/发布时间：(.*)分享/s)?.[1].trim() ?? item.pubDate), 8);
 
-        // Change the img src from relative to absolute for a better compatibility
-        $('.content, .bom-box')
-            .find('img')
-            .each((_, el) => {
-                $(el).attr('src', new URL($(el).attr('src')!, item.link).href);
-                // oldsrc is causing freshrss imageproxy not to work correctly
-                $(el).removeAttr('oldsrc').removeAttr('alt');
-            });
+        // oldsrc is causing freshrss imageproxy not to work correctly
+        $('.content, .bom-box').find('img').removeAttr('oldsrc').removeAttr('alt');
         item.description = $('.content, .bom-box').html();
         return item;
     });
 };
-
-export { parseArticle, parseNewsList, rootUrl };

@@ -23,8 +23,8 @@ async function handler() {
     $('.cg-pic').parent().remove();
 
     const list = $('.cg-title h3')
-        .toArray()
         .slice(0, 15)
+        .toArray()
         .map((item): DataItem => {
             const a = $(item).find('a');
             return {
@@ -41,7 +41,7 @@ async function handler() {
                 const content = load(detailResponse);
 
                 item.author = content('.news-author-name').text();
-                item.description = content('#cmsMainContent').html() ?? undefined;
+                item.description = content('#cmsMainContent').html();
 
                 return item;
             })

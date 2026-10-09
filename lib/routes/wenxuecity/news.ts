@@ -22,8 +22,8 @@ async function handler() {
     const $ = load(response);
 
     const list = $('div.mainwrap div.block div.wrapper ul li a')
-        .toArray()
         .slice(0, 15)
+        .toArray()
         .map((item): DataItem => {
             const $item = $(item);
             return {
@@ -42,7 +42,7 @@ async function handler() {
                 });
                 const content = load(detailResponse);
 
-                item.description = content('#articleContent').html() ?? undefined;
+                item.description = content('#articleContent').html();
                 item.pubDate = timezone(parseDate(content('time[itemprop="datePublished"]').text()), 8);
 
                 return item;

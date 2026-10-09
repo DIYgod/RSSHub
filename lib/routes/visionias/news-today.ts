@@ -87,5 +87,5 @@ async function processCurrentNews(currentUrl) {
             };
         });
     const newsPromises = await Promise.allSettled(items.map((item) => extractNews(item, 'main > div > div.mt-6 > div.flex > div.flex.mt-6')));
-    return newsPromises.flatMap((news) => (news.status === 'fulfilled' ? (Array.isArray(news.value) ? news.value : [news.value]) : [{ title: 'Error Parse News' }]));
+    return newsPromises.flatMap((news) => (news.status === 'fulfilled' ? news.value : { title: 'Error Parse News' }));
 }

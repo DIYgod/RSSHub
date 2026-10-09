@@ -1,6 +1,6 @@
 import { config } from '@/config';
 import type { Route } from '@/types';
-import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
 
 export const route: Route = {
     path: '/contributors/:user/:repo/:order?/:anon?',
@@ -33,42 +33,33 @@ async function handler(ctx) {
     const url = `https://api.github.com/repos/${user}/${repo}/contributors?` + (anon ? 'anon=1' : '');
 
     // Use token if available
-    const headers = config.github && config.github.access_token ? { Authorization: `token ${config.github.access_token}` } : {};
+    const headers: Record<string, string> = config.github && config.github.access_token ? { Authorization: `token ${config.github.access_token}` } : {};
 
     // First page
-    const response = await got({
-        method: 'get',
-        url,
+    const response = await ofetch.raw(url, {
         headers,
     });
-    let data = response.data;
+    let data = response._data;
 
-    try {
-        // Get total page number
-        const last_page_link = response.headers.link.split(',').find((elem) => elem.includes('"last"'));
-        const url_base = last_page_link.match(/<(.*)page=\d*/)[1];
-        const page_count = Number(last_page_link.match(/page=(\d*)/)[1]);
+    // Get total page number, the link header is absent if there is only one page
+    const lastPageLink = response.headers
+        .get('link')
+        ?.split(',')
+        .find((elem) => elem.includes('"last"'));
 
-        const generate_array = (n) => Array.from({ length: n - 1 }, (_, index) => index + 2);
-        const page_array = generate_array(page_count);
+    if (lastPageLink) {
+        const urlBase = lastPageLink.match(/<(.*)page=\d*/)?.[1];
+        const pageCount = Number(lastPageLink.match(/page=(\d*)/)?.[1]);
+        const pages = Array.from({ length: pageCount - 1 }, (_, index) => index + 2);
 
-        // Get everypage
-        const tasks = page_array.map(async (page) => {
-            const response = await got({
-                method: 'get',
-                url: `${url_base}page=${page}`,
+        // Get every page
+        const tasks = pages.map(async (page) => {
+            const pageData = await ofetch(`${urlBase}page=${page}`, {
                 headers,
             });
-            data = [...data, ...response.data];
+            data = [...data, ...pageData];
         });
         await Promise.all(tasks);
-    } catch (error) {
-        // If only one page
-
-        // Other errors
-        if (!(error instanceof TypeError)) {
-            throw error;
-        }
     }
 
     // Sort by commits

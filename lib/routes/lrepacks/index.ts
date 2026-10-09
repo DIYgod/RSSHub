@@ -1,14 +1,20 @@
 import { load } from 'cheerio';
 
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { isValidHost } from '@/utils/valid-host';
 
 import { renderDescription } from './templates/description';
 
 export const handler = async (ctx) => {
     const { category = '' } = ctx.req.param();
+    if (category && !isValidHost(category)) {
+        throw new InvalidParameterError('Invalid category');
+    }
+
     const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 12;
 
     const rootUrl = 'https://lrepacks.net';
@@ -50,7 +56,7 @@ export const handler = async (ctx) => {
 
                 const $$ = load(detailResponse);
 
-                const data = JSON.parse($$('script[type="application/ld+json"]').first().text())['@graph']?.[0] ?? undefined;
+                const data = JSON.parse($$('script[type="application/ld+json"]').text())['@graph']?.[0];
 
                 $$('div.entry-content a.highslide[href]').each((_, el) => {
                     const $el = $$(el);
@@ -78,7 +84,7 @@ export const handler = async (ctx) => {
                 item.title = title;
                 item.description = description;
                 item.pubDate = data ? parseDate(data.datePublished) : undefined;
-                item.author = data?.author?.name ?? undefined;
+                item.author = data?.author?.name;
                 item.content = {
                     html: description,
                     text: $$('div.entry-content').text(),

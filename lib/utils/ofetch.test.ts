@@ -4,6 +4,8 @@ import type { AddressInfo } from 'node:net';
 import { http as mswHttp, HttpResponse } from 'msw';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 
+const isAddressInfo = (address: string | AddressInfo | null): address is AddressInfo => typeof address === 'object' && address !== null;
+
 const loadOfetchWithLogger = async () => {
     vi.resetModules();
     const { default: logger } = await import('@/utils/logger');
@@ -62,7 +64,11 @@ describe('ofetch', () => {
         });
 
         await new Promise<void>((resolve) => server.listen(0, resolve));
-        const { port } = server.address() as AddressInfo;
+        const address = server.address();
+        if (!isAddressInfo(address)) {
+            throw new TypeError('expected the test server to listen on a TCP port');
+        }
+        const { port } = address;
 
         try {
             await ofetch(`http://127.0.0.1:${port}/redirect`);

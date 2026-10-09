@@ -52,10 +52,12 @@ async function handler(ctx: Context) {
 
                 content('div.story-cover img, div.content-body img').each((_, img) => {
                     const src = content(img).attr('src');
-                    if (src?.startsWith('https://s.yimg.com/lo/mysterio/')) {
-                        content(img).attr('src', decodeURIComponent(src.split('/').at(-1)!));
-                        content(img).siblings('source').remove();
+                    if (!src?.startsWith('https://s.yimg.com/lo/mysterio/')) {
+                        return;
                     }
+
+                    content(img).attr('src', decodeURIComponent(src.split('/').at(-1)!));
+                    content(img).siblings('source').remove();
                 });
 
                 return {

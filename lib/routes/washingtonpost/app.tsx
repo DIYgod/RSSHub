@@ -84,7 +84,10 @@ async function handler(ctx) {
     const feed = handleDuplicates(list);
     const items = await Promise.all(
         feed.map((item) => {
-            const itemLink = item.link as string;
+            const itemLink = item.link;
+            if (!itemLink) {
+                throw new Error(`Washington Post item ${item.id} has no link`);
+            }
             return cache.tryGet(itemLink, async (): Promise<DataItem> => {
                 let response;
                 try {

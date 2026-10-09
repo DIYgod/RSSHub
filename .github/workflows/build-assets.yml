@@ -44,7 +44,7 @@ jobs:
 
             # docs
             - name: Build docs
-              run: pnpm build:docs
+              run: pnpm exec tsx scripts/workflow/build-docs.ts
             - id: check-docs-env
               env:
                   DOCS_API_TOKEN: ${{ secrets.DOCS_API_TOKEN }}

@@ -117,7 +117,7 @@ export async function handler(ctx) {
 
     if (platforms.length || networks.length) {
         const labels = {};
-        const labelPattern = String.raw`\{label:"([^"]+)",value:(\d+),href:a,meta:\{mcDisplayWeight`;
+        const labelPattern = String.raw`\{"label":\d+,"value":\d+,"meta":\d+\},"([^"]+)",(\d+),`;
 
         const matches = currentResponse.match(new RegExp(labelPattern, 'g'));
         for (const m of matches) {
@@ -176,7 +176,7 @@ export async function handler(ctx) {
 
     const $ = load(currentResponse);
 
-    const icon = new URL($('meta[data-hid="msapplication-task-metacritic"]').prop('content').split('icon-uri=').pop()!, rootUrl).href;
+    const icon = $('link[rel="icon"]').prop('href');
 
     return {
         item: items,
@@ -184,7 +184,7 @@ export async function handler(ctx) {
         link: currentUrl,
         description: $('meta[name="description"]').prop('content'),
         language: $('html').prop('lang') as Language,
-        image: $('link[rel="icon"]').prop('content'),
+        image: icon,
         icon,
         logo: icon,
         subtitle: $('meta[name="msapplication-tooltip"]').prop('content'),

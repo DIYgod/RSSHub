@@ -1,5 +1,6 @@
 import type { CheerioAPI } from 'cheerio';
 import { load } from 'cheerio';
+import { escapeUTF8 } from 'entities';
 import type { Context } from 'hono';
 
 import type { Data, DataItem, Language, Route } from '@/types';
@@ -8,15 +9,13 @@ import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
-const escapeHtml = (text: string): string => text?.replaceAll('&', '&amp;')?.replaceAll('<', '&lt;')?.replaceAll('>', '&gt;')?.replaceAll('"', '&quot;')?.replaceAll("'", '&#039;') ?? text;
-
-const parseTextChildren = (children: any[]): string => children.map((child: any) => escapeHtml(child.text)).join('');
+const parseTextChildren = (children: any[]): string => children.map((child: any) => escapeUTF8(child.text)).join('');
 
 const parseImageNode = (node: any): string => {
-    const titleAttr = node.title ? ` title="${escapeHtml(node.title)}"` : '';
-    const altAttr = node.alt ? ` alt="${escapeHtml(node.alt)}"` : '';
+    const titleAttr = node.title ? ` title="${escapeUTF8(node.title)}"` : '';
+    const altAttr = node.alt ? ` alt="${escapeUTF8(node.alt)}"` : '';
     const styleAttr = node.size ? ` style="width:${node.size.width}px;height:${node.size.height}px;"` : '';
-    return `<img src="${escapeHtml(node.url)}"${titleAttr}${altAttr}${styleAttr}>`;
+    return `<img src="${escapeUTF8(node.url)}"${titleAttr}${altAttr}${styleAttr}>`;
 };
 
 const parseListItemNode = (listItem: any): string => `<li>${parseContentToHtml(listItem.children)}</li>`;
@@ -32,7 +31,7 @@ const parseParagraphChildren = (children: any[]): string =>
     children
         .map((child: any) => {
             if (child.text !== undefined) {
-                return escapeHtml(child.text);
+                return escapeUTF8(child.text);
             }
             if (child.type === 'image') {
                 return parseImageNode(child);

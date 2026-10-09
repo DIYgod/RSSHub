@@ -10,7 +10,7 @@ const baseUrl = 'https://www.pixiv.net';
 
 export async function getSFWNovelContent(novelId: string): Promise<NovelContent> {
     const url = `${baseUrl}/ajax/novel/${novelId}`;
-    return (await cache.tryGet(url, async () => {
+    return await cache.tryGet(url, async () => {
         const response = await got(url, {
             headers: {
                 referer: `${baseUrl}/novel/show.php?id=${novelId}`,
@@ -60,5 +60,5 @@ export async function getSFWNovelContent(novelId: string): Promise<NovelContent>
             seriesId: body.seriesNavData?.seriesId?.toString() || null,
             seriesTitle: body.seriesNavData?.title || null,
         };
-    })) as NovelContent;
+    });
 }

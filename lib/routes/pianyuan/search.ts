@@ -30,7 +30,7 @@ async function handler(ctx) {
     const link = link_base + `search?q=${searchKey}`;
 
     const response = await utils.request(link, cache);
-    const $ = load(response.data);
+    const $ = load(response._data);
     // 只获取第一页的搜索结果
     const searchLinks = $('.nomt > a')
         .toArray()
@@ -46,7 +46,7 @@ async function handler(ctx) {
             const link = new URL(e!, link_base).href;
             const single = await cache.tryGet(link, async (): Promise<any> => {
                 const res = await utils.request(link, cache);
-                const content = load(res.data);
+                const content = load(res._data);
                 detailLinks.push(
                     ...content('.ico.ico_bt')
                         .toArray()

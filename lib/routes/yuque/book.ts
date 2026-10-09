@@ -99,15 +99,16 @@ async function handler(ctx) {
                 for await (const v of $('video').toArray()) {
                     const $v = $(v);
                     const src = $v.attr('src');
-                    if (src!.startsWith('inputs')) {
-                        const { data } = await got(`${baseUrl}/api/video`, {
-                            searchParams: {
-                                video_id: src,
-                            },
-                        });
-                        const { info } = data.data;
-                        $v.replaceWith(`<video controls preload='none' poster='${info.cover}'><source src='${info.url}' type='video/mp4'></video>`);
+                    if (!src!.startsWith('inputs')) {
+                        continue;
                     }
+                    const { data } = await got(`${baseUrl}/api/video`, {
+                        searchParams: {
+                            video_id: src,
+                        },
+                    });
+                    const { info } = data.data;
+                    $v.replaceWith(`<video controls preload='none' poster='${info.cover}'><source src='${info.url}' type='video/mp4'></video>`);
                 }
 
                 item.description = $.html();

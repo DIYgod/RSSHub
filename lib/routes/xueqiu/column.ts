@@ -2,9 +2,9 @@ import { load } from 'cheerio';
 import { CookieJar } from 'tough-cookie';
 
 import type { Route } from '@/types';
+import { evaluateScriptData } from '@/utils/evaluate-script';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-import { parseScriptData } from '@/utils/parse-script-data';
 
 const cookieJar = new CookieJar();
 const baseUrl = 'https://xueqiu.com';
@@ -50,7 +50,7 @@ async function handler(ctx) {
         .map((element) => $(element).text())
         .filter((source) => source.includes('SNOWMAN_TARGET'))
         .join('\n');
-    const snowmanTarget = parseScriptData<{ screen_name: string; description: string }>(script, 'SNOWMAN_TARGET');
+    const snowmanTarget = await evaluateScriptData<{ screen_name: string; description: string }>(script, 'SNOWMAN_TARGET');
 
     const { data } = await got(`${baseUrl}/statuses/original/timeline.json`, {
         cookieJar,

@@ -78,16 +78,18 @@ const cleanHtml = (htmlString) => {
         const bvid = $(e)
             .attr('src')!
             .match(/bvid=(.*?)&/)![1];
-        if (bvid) {
-            const url = `https://www.bilibili.com/video/${bvid}`;
-            $(e).after(
-                renderToString(
-                    <p>
-                        <a href={url}>{url}</a>
-                    </p>
-                )
-            );
+        if (!bvid) {
+            return;
         }
+
+        const url = `https://www.bilibili.com/video/${bvid}`;
+        $(e).after(
+            renderToString(
+                <p>
+                    <a href={url}>{url}</a>
+                </p>
+            )
+        );
     });
 
     // 用户头像

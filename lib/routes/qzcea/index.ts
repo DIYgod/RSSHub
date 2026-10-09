@@ -32,8 +32,8 @@ async function handler(ctx: Context) {
     $('a.news-more').remove();
 
     const list = $('li.clearfix div.news-right a')
-        .toArray()
         .slice(0, 10)
+        .toArray()
         .map((item): DataItem => {
             const $item = $(item);
             return {

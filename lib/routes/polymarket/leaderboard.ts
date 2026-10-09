@@ -49,8 +49,8 @@ async function handler(ctx) {
         title: `#${entry.rank} ${entry.userName || entry.proxyWallet}`,
         description: `
             <p><strong>Rank:</strong> #${entry.rank}</p>
-            <p><strong>PnL:</strong> $${Number(entry.pnl).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
-            <p><strong>Volume:</strong> $${Number(entry.vol).toLocaleString()}</p>
+            <p><strong>PnL:</strong> $${entry.pnl.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
+            <p><strong>Volume:</strong> $${entry.vol.toLocaleString()}</p>
             ${entry.xUsername ? `<p><strong>X:</strong> @${entry.xUsername}</p>` : ''}
             ${entry.verifiedBadge ? '<p>✅ Verified</p>' : ''}
             ${entry.profileImage ? `<img src="${entry.profileImage}" alt="${entry.userName || 'Trader'}" style="max-width: 100px; border-radius: 50%;">` : ''}

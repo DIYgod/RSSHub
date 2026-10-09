@@ -82,8 +82,7 @@ export const handler = async (ctx) => {
         .replaceAll("'", '"');
     const tinyData = resString.replaceAll(/[\n\r]/g, '');
     const dataString = tinyData.replaceAll(',}', '}');
-    const data = JSON.parse(dataString || '');
-    const { articleList } = data;
+    const { articleList } = JSON.parse(dataString || '');
     const list = articleList.map((item: Item) => ({
         id: item.id,
         title: item.title,

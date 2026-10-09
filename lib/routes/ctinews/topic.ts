@@ -63,11 +63,15 @@ async function handler(ctx): Promise<Data> {
             }),
         ...$('.news-section .news-link.absolute')
             .toArray()
-            .map((item) => {
+            .flatMap((item) => {
                 const $item = $(item);
+                const title = $item.attr('title');
+                if (!title) {
+                    return [];
+                }
                 const href = $item.attr('href');
                 return {
-                    title: $item.attr('title')?.replace('點擊觀看', '') as string,
+                    title: title.replace('點擊觀看', ''),
                     link: href?.startsWith('http') ? href : baseUrl + href,
                 };
             }),

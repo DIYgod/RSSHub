@@ -2,6 +2,7 @@ import { load } from 'cheerio';
 import type { Context } from 'hono';
 import iconv from 'iconv-lite';
 
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
@@ -38,6 +39,8 @@ const typeMap = {
     },
 };
 
+const isNoticeType = (type: string): type is keyof typeof typeMap => Object.hasOwn(typeMap, type);
+
 export const route: Route = {
     path: '/notice/:type?',
     categories: ['study'],
@@ -65,7 +68,10 @@ export const route: Route = {
 async function handler(ctx: Context): Promise<Data> {
     const { type = 'lxtz' } = ctx.req.param();
     const limit = Number(ctx.req.query('limit') ?? 10);
-    const link = baseUrl + typeMap[type as keyof typeof typeMap].url;
+    if (!isNoticeType(type)) {
+        throw new InvalidParameterError(`Invalid type: ${type}. Use one of ${Object.keys(typeMap).join(', ')}.`);
+    }
+    const link = baseUrl + typeMap[type].url;
     const { page, destroy } = await getPlaywrightPage(link, {
         onBeforeLoad: async (page) => {
             await page.route('**/*', (route) => (['document', 'script'].includes(route.request().resourceType()) ? route.continue() : route.abort()));

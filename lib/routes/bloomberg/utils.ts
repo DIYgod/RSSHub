@@ -79,7 +79,7 @@ const parseArticle = (item) =>
         if (group) {
             const { page, link } = group;
             if (Object.hasOwn(apiEndpoints, page)) {
-                const api = { ...apiEndpoints[page] };
+                const api = apiEndpoints[page];
                 let res;
 
                 try {
@@ -87,8 +87,7 @@ const parseArticle = (item) =>
                     res = await redirectGot(apiUrl);
                 } catch (error) {
                     // fallback
-                    const err = error as Error;
-                    if (err.name && ['HTTPError', 'RequestError', 'FetchError'].includes(err.name)) {
+                    if (error instanceof Error && ['HTTPError', 'RequestError', 'FetchError'].includes(error.name)) {
                         try {
                             res = await redirectGot(item.link);
                         } catch {
@@ -215,8 +214,7 @@ const parseReactRendererPage = async (res, api, item) => {
         return await parseStoryJson(res._data, item);
     } catch (error) {
         // fallback
-        const err = error as Error;
-        if (err.name && ['HTTPError', 'RequestError', 'FetchError'].includes(err.name)) {
+        if (error instanceof Error && ['HTTPError', 'RequestError', 'FetchError'].includes(error.name)) {
             return {
                 title: item.title,
                 link: item.link,
@@ -287,18 +285,20 @@ const processLedeMedia = async (story_json) => {
         }
         return '';
     }
-    if (story_json.type === 'Lede') {
-        const props = story_json.props;
-
-        const media = {
-            kind: props.media,
-            caption: props.caption?.replaceAll(capRegex, '') ?? '',
-            description: props.dek?.replaceAll(capRegex, '') ?? '',
-            credit: props.credit?.replaceAll(capRegex, '') ?? '',
-            src: props.url,
-        };
-        return renderLedeMedia(media);
+    if (story_json.type !== 'Lede') {
+        return;
     }
+
+    const props = story_json.props;
+
+    const media = {
+        kind: props.media,
+        caption: props.caption?.replaceAll(capRegex, '') ?? '',
+        description: props.dek?.replaceAll(capRegex, '') ?? '',
+        credit: props.credit?.replaceAll(capRegex, '') ?? '',
+        src: props.url,
+    };
+    return renderLedeMedia(media);
 };
 
 const processBody = async (body_html, story_json) => {

@@ -28,7 +28,7 @@ export const handler = async (ctx) => {
     const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 20;
 
     const rootUrl = 'https://fgw.sh.gov.cn';
-    const currentUrl = new URL(`${category}/index.html`, rootUrl).href;
+    const currentUrl = `${rootUrl}/${category}/index.html`;
 
     const { data: response } = await got(currentUrl);
 
@@ -66,7 +66,7 @@ export const handler = async (ctx) => {
                 const $$ = load(detailResponse);
 
                 const title = $$('meta[name="ArticleTitle"]').prop('content');
-                const image = $$('div.pdf-content img').first().prop('src');
+                const image = $$('div.pdf-content img').prop('src');
                 const description = renderDescription({
                     images: image
                         ? [
@@ -92,7 +92,7 @@ export const handler = async (ctx) => {
                 item.banner = image;
                 item.language = language;
 
-                const enclosureUrl = $$('div.pdf-content a, div.xgfj a').first().prop('href');
+                const enclosureUrl = $$('div.pdf-content a, div.xgfj a').prop('href');
 
                 item.enclosure_url = enclosureUrl ? new URL(enclosureUrl, rootUrl).href : undefined;
                 item.enclosure_type = enclosureUrl ? `application/${enclosureUrl.split(/\./).pop()}` : undefined;

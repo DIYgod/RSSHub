@@ -23,7 +23,7 @@ export async function fetchArticles(path) {
         .map(async (element) => {
             const $element = $(element);
             const link = baseUrl + $element.attr('href');
-            return await cache.tryGet(link, async () => {
+            return await cache.tryGet(link, async (): Promise<DataItem> => {
                 const title = $element.find('h3').text().trim();
                 const author = $element
                     .find(String.raw`div.text-[16px]`)
@@ -98,14 +98,18 @@ export async function fetchArticles(path) {
                     // Remove srcset attribute
                     $img.removeAttr('srcset');
 
-                    if (src && src.startsWith('/_next/image')) {
-                        // Extract the original URL from the Next.js image URL
-                        const urlMatch = src.match(/url=([^&]+)/);
-                        if (urlMatch && urlMatch[1]) {
-                            const originalUrl = decodeURIComponent(urlMatch[1]);
-                            $img.attr('src', originalUrl);
-                        }
+                    if (!src?.startsWith('/_next/image')) {
+                        return;
                     }
+
+                    // Extract the original URL from the Next.js image URL
+                    const urlMatch = src.match(/url=([^&]+)/);
+                    if (!urlMatch?.[1]) {
+                        return;
+                    }
+
+                    const originalUrl = decodeURIComponent(urlMatch[1]);
+                    $img.attr('src', originalUrl);
                 });
                 return {
                     title,
@@ -116,10 +120,10 @@ export async function fetchArticles(path) {
                     itunes_item_image: podcastData?.image || decodedImageUrl,
                     category: tags,
                     pubDate,
-                    enclosure_url: podcastData?.mediaUrl || null,
-                    itunes_duration: podcastData?.itunes_duration || null,
-                    enclosure_type: podcastData?.mediaUrl ? 'audio/mpeg' : null,
-                } as DataItem;
+                    enclosure_url: podcastData?.mediaUrl,
+                    itunes_duration: podcastData?.itunes_duration,
+                    enclosure_type: podcastData?.mediaUrl ? 'audio/mpeg' : undefined,
+                };
             });
         });
 

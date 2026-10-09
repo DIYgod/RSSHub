@@ -17,7 +17,7 @@ function rc4_encrypt(plaintext: string, key: string): string {
 
 // SM3 digest as a byte array; accepts a string or a byte array (for double hashing)
 function sm3Sum(message: string | number[]): number[] {
-    const hex = sm3(typeof message === 'string' ? message : Uint8Array.from(message));
+    const hex = sm3(Array.isArray(message) ? Uint8Array.from(message) : message);
     const bytes: number[] = [];
     for (let i = 0; i < hex.length; i += 2) {
         bytes.push(Number.parseInt(hex.slice(i, i + 2), 16));

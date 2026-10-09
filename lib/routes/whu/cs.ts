@@ -72,9 +72,9 @@ async function handler(ctx) {
             };
         });
 
-    const results = (await Promise.all(
+    const results = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async (): Promise<any> => {
+            cache.tryGet(item.link, async (): Promise<DataItem | null> => {
                 let response;
                 try {
                     // 实测发现有些链接无法访问
@@ -93,12 +93,14 @@ async function handler(ctx) {
 
                 content.find('img').each((_, e) => {
                     const $e = $(e);
-                    if ($e.attr('orisrc')) {
-                        const newUrl = new URL($e.attr('orisrc')!, 'https://cs.whu.edu.cn');
-                        $e.attr('src', newUrl.href);
-                        $e.removeAttr('orisrc');
-                        $e.removeAttr('vurl');
+                    if (!$e.attr('orisrc')) {
+                        return;
                     }
+
+                    const newUrl = new URL($e.attr('orisrc')!, 'https://cs.whu.edu.cn');
+                    $e.attr('src', newUrl.href);
+                    $e.removeAttr('orisrc');
+                    $e.removeAttr('vurl');
                 });
 
                 item.description = content.html();
@@ -107,7 +109,7 @@ async function handler(ctx) {
                 return item;
             })
         )
-    )) as Array<DataItem | null>;
+    );
     const items = results.filter((item) => item !== null);
 
     return {

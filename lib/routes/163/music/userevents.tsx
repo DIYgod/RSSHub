@@ -41,9 +41,7 @@ export const route: Route = {
 async function handler(ctx) {
     const id = ctx.req.param('id');
 
-    const response = await got(`https://music.163.com/api/event/get/${id}`);
-
-    const { data } = response;
+    const { data } = await got(`https://music.163.com/api/event/get/${id}`);
     const { nickname, signature, avatarUrl } = data.events[0].user;
 
     return {

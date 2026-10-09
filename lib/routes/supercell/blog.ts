@@ -252,6 +252,6 @@ async function handler(ctx: Context) {
         title: `${GAME_NAMES[game]} Blog${locale ? ` (${locale})` : ''}`,
         link: currentUrl,
         item: items,
-        language: (locale || 'en') as Language,
+        language: (locale ?? 'en') as Language,
     };
 }

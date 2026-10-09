@@ -21,25 +21,26 @@ export const getRadarRules = async (): Promise<Record<string, RadarDomain>> => {
                     const parsedDomain = parse(new URL('https://' + radarItem.source[0]).hostname);
                     const subdomain = parsedDomain.subdomain || '.';
                     const domain = parsedDomain.domain;
-                    if (domain) {
-                        if (!Object.hasOwn(rules, domain)) {
-                            rules[domain] = {
-                                _name: namespaces[namespace].name,
-                            } as RadarDomain;
-                        }
-                        if (!Object.hasOwn(rules[domain], subdomain)) {
-                            rules[domain][subdomain] = [];
-                        }
-                        rules[domain][subdomain].push({
-                            title: radarItem.title || data.name,
-                            docs: `https://docs.rsshub.app/routes/${data.categories?.[0] || 'other'}`,
-                            source: radarItem.source.map((source) => {
-                                const sourceURL = new URL('https://' + source);
-                                return sourceURL.pathname + sourceURL.search + sourceURL.hash;
-                            }),
-                            target: radarItem.target ? `/${namespace}${radarItem.target}` : realPath,
-                        });
+                    if (!domain) {
+                        continue;
                     }
+                    if (!Object.hasOwn(rules, domain)) {
+                        rules[domain] = {
+                            _name: namespaces[namespace].name,
+                        } as RadarDomain;
+                    }
+                    if (!Object.hasOwn(rules[domain], subdomain)) {
+                        rules[domain][subdomain] = [];
+                    }
+                    rules[domain][subdomain].push({
+                        title: radarItem.title || data.name,
+                        docs: `https://docs.rsshub.app/routes/${namespace}`,
+                        source: radarItem.source.map((source) => {
+                            const sourceURL = new URL('https://' + source);
+                            return sourceURL.pathname + sourceURL.search + sourceURL.hash;
+                        }),
+                        target: radarItem.target ? `/${namespace}${radarItem.target}` : realPath,
+                    });
                 }
             }
         }

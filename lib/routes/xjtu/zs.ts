@@ -15,7 +15,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
     const limit = Number(ctx.req.query('limit') ?? '30');
 
     const baseUrl = 'https://zs.xjtu.edu.cn';
-    const targetUrl: string = new URL(`${category}.htm`, baseUrl).href;
+    const targetUrl = `${baseUrl}/${category}.htm`;
 
     const response = await ofetch(targetUrl);
     const $: CheerioAPI = load(response);
@@ -63,7 +63,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                     const pubDateStr: string | undefined = $$('div.show01 i')
                         .text()
                         ?.match(/(\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}:\d{2})/)?.[1];
-                    const categoryEls: Element[] = $$('div.mianbao a').toArray().slice(1);
+                    const categoryEls: Element[] = $$('div.mianbao a').slice(1).toArray();
                     const categories: string[] = [...new Set(categoryEls.map((el) => $$(el).text()).filter(Boolean))];
                     const upDatedStr: string | undefined = pubDateStr;
 

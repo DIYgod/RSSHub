@@ -30,7 +30,7 @@ async function handler(ctx) {
         author_match: undefined,
         authorisme: '茂名市高新技术产业开发局政务网',
         pubDate_element: 'td[background="/global/rlyelen_line04.gif"] > table:nth-child(1) > tbody > tr:nth-child(3) > td > table > tbody > tr > td',
-        pubDate_match: '发表时间：(.*)       信息来源',
+        pubDate_match: '发表时间：(.*)\u{A0}\u{A0}\u{A0}\u{A0}\u{A0}\u{A0}\u{A0}信息来源',
         pubDate_format: undefined,
     };
     return await gdgov(info, ctx);

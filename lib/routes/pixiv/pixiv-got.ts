@@ -47,17 +47,19 @@ const pixivGot = got.extend({
                         logger.warn(`No IPv4 address resolved from ${config.pixiv.bypassCdnHostname}`);
                     }
                 }
-                if (hostname) {
-                    const actualHost = options.url.host;
-                    options.headers = {
-                        ...options.headers,
-                        host: actualHost,
-                    };
-                    options.url.hostname = hostname;
-                    options.checkServerIdentity = function (host, certificate) {
-                        return tls.checkServerIdentity(actualHost, certificate);
-                    };
+                if (!hostname) {
+                    return;
                 }
+
+                const actualHost = options.url.host;
+                options.headers = {
+                    ...options.headers,
+                    host: actualHost,
+                };
+                options.url.hostname = hostname;
+                options.checkServerIdentity = function (host, certificate) {
+                    return tls.checkServerIdentity(actualHost, certificate);
+                };
             },
         ],
     },

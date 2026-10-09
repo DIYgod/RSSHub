@@ -44,7 +44,7 @@ async function handler(ctx) {
     const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 30;
 
     const rootUrl = 'http://v.iqilu.com';
-    const currentUrl = new URL(category, rootUrl).href;
+    const currentUrl = `${rootUrl}/${category}`;
 
     const { data: response } = await got(currentUrl);
 
@@ -56,8 +56,8 @@ async function handler(ctx) {
         .map((item): DataItem => {
             const $item = $(item);
 
-            const a = $item.find('a').first();
-            const image = $item.find('img').first();
+            const a = $item.find('a');
+            const image = $item.find('img');
 
             $item.find('dd').last().remove();
 

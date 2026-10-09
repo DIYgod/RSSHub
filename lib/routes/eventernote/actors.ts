@@ -73,7 +73,7 @@ async function handler(ctx: Context) {
 
                 // extract event time
                 const timeString = $('div.event > div.place > span.s', event).text();
-                let eventTimeObj = {
+                const eventTimeObj = {
                     openHr: null,
                     openMin: null,
                     startHr: null,
@@ -86,10 +86,7 @@ async function handler(ctx: Context) {
                     if (m === null) {
                         continue;
                     }
-                    eventTimeObj = {
-                        ...eventTimeObj,
-                        ...m.groups,
-                    };
+                    Object.assign(eventTimeObj, m.groups);
                 }
 
                 // extract event link

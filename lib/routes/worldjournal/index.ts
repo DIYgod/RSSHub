@@ -35,7 +35,7 @@ async function handler(ctx) {
         .toArray()
         .map((item): DataItem => {
             const $item = $(item);
-            const url = $item.find('a').first().attr('href');
+            const url = $item.find('a').attr('href');
             return {
                 title: $item.find('h3').text(),
                 description: $item.find('p').html(),
@@ -57,10 +57,12 @@ async function handler(ctx) {
                         return;
                     }
                     const url = new URL(img.attribs['data-src']);
-                    if (url.pathname === '/gw/photo.php') {
-                        img.attribs.src = url.searchParams.get('u') ?? '';
-                        delete img.attribs['data-src'];
+                    if (url.pathname !== '/gw/photo.php') {
+                        return;
                     }
+
+                    img.attribs.src = url.searchParams.get('u') ?? '';
+                    delete img.attribs['data-src'];
                 });
 
                 item.description = $('.article-content__paragraph').html();

@@ -51,7 +51,7 @@ async function handler(ctx: Context) {
                 .match(/^self\.__next_f\.push\(\[1,(".*")\]\)$/s)
         )
         .filter(Boolean)
-        .map((m) => JSON.parse(m![1]) as string)
+        .map((m): string => JSON.parse(m![1]))
         .join('');
 
     const cardsRow = flight.split('\n').find((row) => row.includes('"cards":['));
@@ -127,7 +127,7 @@ async function handler(ctx: Context) {
 
                 const metaProps = JSON.parse(rows.values().find((row) => row.includes('"og:title"'))!)
                     .filter((element) => element[1] === 'meta')
-                    .map((element) => element[3] as Record<string, string>);
+                    .map((element): Record<string, string> => element[3]);
                 const meta = (property: string) => metaProps.find((props) => props.property === property)?.content;
 
                 const title = meta('og:title')!;

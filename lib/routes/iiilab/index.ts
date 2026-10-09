@@ -30,7 +30,7 @@ async function handler() {
         item: {
             item: '.aw-common-list > div',
             title: ($) => $('a').first().text(),
-            link: ($) => $('a').first().attr('href'),
+            link: ($) => $('a').attr('href'),
             description: ($) => $('.markitup-box').text(),
             pubDate: ($) => parseDate($('.text-color-999').first().text(), 'YYYY-MM-DD HH:mm'),
             guid: ($) => {

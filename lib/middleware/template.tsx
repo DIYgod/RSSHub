@@ -79,17 +79,18 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
                         Math.floor(item.itunes_duration / 3600) + ':' + (Math.floor((item.itunes_duration % 3600) / 60) / 100).toFixed(2).slice(-2) + ':' + (((item.itunes_duration % 3600) % 60) / 100).toFixed(2).slice(-2);
                 }
 
-                if (outputType !== 'rss') {
-                    try {
-                        item.pubDate &&= convertDateToISO8601(item.pubDate) || '';
-                    } catch {
-                        item.pubDate = '';
-                    }
-                    try {
-                        item.updated &&= convertDateToISO8601(item.updated) || '';
-                    } catch {
-                        item.updated = '';
-                    }
+                if (outputType === 'rss') {
+                    continue;
+                }
+                try {
+                    item.pubDate &&= convertDateToISO8601(item.pubDate) || '';
+                } catch {
+                    item.pubDate = '';
+                }
+                try {
+                    item.updated &&= convertDateToISO8601(item.updated) || '';
+                } catch {
+                    item.updated = '';
                 }
             }
         }

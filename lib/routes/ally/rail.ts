@@ -42,7 +42,7 @@ async function handler(ctx) {
     const response = await got.get(pageUrl);
     const $ = load(response.data);
     let title = '';
-    const titleLinks = $('.container .regsiter a').toArray().slice(1); // what a typo... drop "首页"
+    const titleLinks = $('.container .regsiter a').slice(1).toArray(); // what a typo... drop "首页"
     for (const link of titleLinks) {
         const linkText = $(link).text();
         title = title ? `${title} - ${linkText}` : linkText;
@@ -115,7 +115,7 @@ async function handler(ctx) {
                         });
                 } else {
                     // http://rail.ally.net.cn/html/2022/InviteTen_0407/4686.html
-                    description = $('div.content div').first().html() ?? '';
+                    description = $('div.content div').html() ?? '';
                 }
 
                 description = description.replace(/\s*<br ?\/?>\s*$/, ''); // trim <br> at the end

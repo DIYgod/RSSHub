@@ -170,11 +170,7 @@ function extractGenericItem(segment: string, templateId: string) {
         bodyText = cleanText(bodyMatch[1]);
     }
 
-    if (!title || !link) {
-        return null;
-    }
-
-    if (['더보기', '관련도순', '최신순'].includes(title)) {
+    if (!title || !link || ['더보기', '관련도순', '최신순'].includes(title)) {
         return null;
     }
 
@@ -213,10 +209,9 @@ function extractCafeItems(html: string) {
             const titleEl = $el.find('.title_link');
             const title = titleEl.text().trim();
             const link = titleEl.attr('href') || '';
-            const author = $el.find('.name').first().text().trim();
-            const timeText = $el.find('.sub').first().text().trim();
-            const descEl = $el.find('.dsc_link');
-            const description = descEl.length ? descEl.text().trim() : '';
+            const author = $el.find('.name').text().trim();
+            const timeText = $el.find('.sub').text().trim();
+            const description = $el.find('.dsc_link').text().trim();
 
             if (!title || !link) {
                 return null;
@@ -252,11 +247,7 @@ function parseKoreanRelativeTime(timeText: string): Date | undefined {
     }
 
     const match = timeText.match(/(\d+)\s*(시간|[분일주]) 전|(\d+)분 이내|(\d+)시간 이내|방금/);
-    if (!match) {
-        return;
-    }
-
-    if (match[0] === '방금') {
+    if (!match || match[0] === '방금') {
         return;
     }
 

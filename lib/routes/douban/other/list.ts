@@ -69,7 +69,7 @@ async function handler(ctx) {
     const score = fallback(undefined, queryToFloat(routeParams.score), 0);
     let start = 0;
     const count = 50;
-    let items: any[] = [];
+    const items: any[] = [];
     let title = '';
     let description = '';
     let total = null;
@@ -109,7 +109,7 @@ async function handler(ctx) {
                     description,
                 };
             });
-        items = [...items, ...newItems];
+        items.push(...newItems);
         start += count;
     }
 

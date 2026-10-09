@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import type { Context } from 'hono';
 
 import { config } from '@/config';
 import type { DataItem, Route } from '@/types';
@@ -43,11 +44,12 @@ const typeToText = {
     OS: '短篇',
 };
 
-async function handler(ctx) {
-    const tag = ctx.req.param('tag');
-    const type = ctx.req.param('type') as Type;
+const isType = (value: string): value is Type => Object.hasOwn(typeToText, value);
 
-    if (!type || !['L', 'N', 'O', 'C', 'OS'].includes(type)) {
+async function handler(ctx: Context) {
+    const { tag, type } = ctx.req.param();
+
+    if (!isType(type)) {
         throw new Error('无效的排序类型');
     }
     const link = `https://www.asianfanfics.com/browse/tag/${tag}/${type}`;

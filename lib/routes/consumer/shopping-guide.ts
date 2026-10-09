@@ -66,10 +66,12 @@ async function handler(ctx) {
                 const header = $('.article-img-blk');
                 header.find('img').each((_, ele) => {
                     const $ele = $(ele);
-                    if ($ele.attr('src') && $ele.attr('srcset')) {
-                        $ele.removeAttr('srcset');
-                        $ele.attr('src', $ele.attr('src')!.replace(/\/\d+c\d+\//, '/0p0/'));
+                    if (!($ele.attr('src') && $ele.attr('srcset'))) {
+                        return;
                     }
+
+                    $ele.removeAttr('srcset');
+                    $ele.attr('src', $ele.attr('src')!.replace(/\/\d+c\d+\//, '/0p0/'));
                 });
 
                 item.description = header.html()! + $('article .ckec').html()!;

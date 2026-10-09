@@ -62,10 +62,10 @@ interface SearchParams {
 }
 
 const validateSearchParams = ({ keywords, page = 0, size = CONFIG.DEFAULT_PAGE_SIZE }: SearchParams): SearchParams => {
-    const normalizedSize = Math.floor(Number(size));
+    const normalizedSize = Math.floor(size);
     return {
         keywords: keywords.trim(),
-        page: Math.max(0, Math.floor(Number(page))),
+        page: Math.max(0, Math.floor(page)),
         size: Math.min(Math.max(1, normalizedSize), CONFIG.MAX_PAGE_SIZE),
     };
 };

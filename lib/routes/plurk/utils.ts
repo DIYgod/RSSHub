@@ -32,10 +32,12 @@ const getPlurk = (plurkGuid, item, author) => {
     $('img').each((_, e) => {
         const $e = $(e);
         $e.removeAttr('height').removeAttr('width');
-        if ($e.attr('alt') && $e.attr('alt')!.startsWith('http')) {
-            $e.attr('src', $e.attr('alt'));
-            $e.removeAttr('alt');
+        if (!($e.attr('alt') && $e.attr('alt')!.startsWith('http'))) {
+            return;
         }
+
+        $e.attr('src', $e.attr('alt'));
+        $e.removeAttr('alt');
     });
 
     return {

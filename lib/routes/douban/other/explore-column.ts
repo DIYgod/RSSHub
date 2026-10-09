@@ -1,7 +1,9 @@
 import { load } from 'cheerio';
 
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import got from '@/utils/got';
+import { isValidHost } from '@/utils/valid-host';
 
 const host = 'https://www.douban.com/explore/column/';
 export const route: Route = {
@@ -16,6 +18,10 @@ export const route: Route = {
 
 async function handler(ctx) {
     const id = ctx.req.param('id');
+    if (!isValidHost(id)) {
+        throw new InvalidParameterError('Invalid id');
+    }
+
     const link = new URL(id, host).href;
     const response = await got.get(link);
     const $ = load(response.data);

@@ -3,7 +3,7 @@ import { load } from 'cheerio';
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 
-import type { Data, DataItem } from '@/types';
+import type { Data, DataItem, Language } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -125,7 +125,7 @@ export const feedMeta = ($: CheerioAPI, currentUrl: string) => {
         title,
         link: currentUrl,
         description: $('meta[name="description"]').prop('content'),
-        language: $('html').prop('lang') as Data['language'],
+        language: $('html').prop('lang') as Language,
         image,
         icon: image,
         logo: image,

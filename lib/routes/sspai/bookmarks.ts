@@ -39,7 +39,7 @@ async function handler(ctx) {
         })
     ).data.data;
 
-    const user = (
+    const { nickname } = (
         await got({
             method: 'get',
             url: `https://sspai.com/api/v1/user/slug/info/get?slug=${slug}`,
@@ -48,8 +48,6 @@ async function handler(ctx) {
             },
         })
     ).data.data;
-
-    const { nickname } = user;
     return {
         title: `${nickname} 的全部收藏 - 少数派`,
         link,

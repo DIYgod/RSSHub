@@ -68,13 +68,15 @@ async function handler() {
                     const text = span.html();
                     span.remove();
 
-                    if (spanClass !== undefined) {
-                        const type = spanClass.split(' ', 2)[1];
-                        if (type === 'empty') {
-                            $li.wrap('<ul></ul>');
-                        } else {
-                            $li.prepend(`<b style='color:${textColor[type]}'>${text}: </b>`);
-                        }
+                    if (spanClass === undefined) {
+                        return;
+                    }
+
+                    const type = spanClass.split(' ', 2)[1];
+                    if (type === 'empty') {
+                        $li.wrap('<ul></ul>');
+                    } else {
+                        $li.prepend(`<b style='color:${textColor[type]}'>${text}: </b>`);
                     }
                 });
 

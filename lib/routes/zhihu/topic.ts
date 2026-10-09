@@ -1,6 +1,5 @@
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
-import { isWorker } from '@/utils/is-worker';
 import { parseDate } from '@/utils/parse-date';
 
 import { processImage, withZhihuClient } from './utils';
@@ -17,7 +16,7 @@ export const route: Route = {
                 description: 'A complete d_c0 and __zse_ck cookie pair skips session initialization. Otherwise Workers use a Playwright browser session; Docker and Vercel generate credentials with JSDOM.',
             },
         ],
-        requirePuppeteer: isWorker || process.env.WORKER_BUILD === 'true',
+        requirePuppeteer: false,
         antiCrawler: true,
         supportBT: false,
         supportPodcast: false,

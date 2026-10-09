@@ -2,12 +2,14 @@ import { load } from 'cheerio';
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import md5 from '@/utils/md5';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
+import { isValidHost } from '@/utils/valid-host';
 
 const renderDescription = ({ images, title, keys, details, description, info, links }) =>
     renderToString(
@@ -79,6 +81,10 @@ function stringtoHex(acSTR) {
 
 async function handler(ctx) {
     const { id = '4k-uhd-1' } = ctx.req.param();
+    if (!isValidHost(id)) {
+        throw new InvalidParameterError('Invalid id');
+    }
+
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 25;
 
     const rootUrl = 'https://www.4ksj.com';

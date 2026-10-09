@@ -1,16 +1,17 @@
+import type { MockInstance } from 'vitest';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
+import { config } from '@/config';
+import logger from '@/utils/logger';
+
+import type { PausedRequest } from './playwright-fetch';
 import fetchWithPlaywrightRetry from './playwright-fetch';
 
-const { settings, getPage, warn } = vi.hoisted(() => ({
-    settings: { playwrightWSEndpoint: 'wss://browser.test/playwright?token=endpoint-fixture', requestTimeout: 30000 },
-    getPage: vi.fn(),
-    warn: vi.fn(),
-}));
+const { getPage } = vi.hoisted(() => ({ getPage: vi.fn() }));
+const { playwrightWSEndpoint, requestTimeout } = config;
+let warn: MockInstance<typeof logger.warn>;
 
-vi.mock('@/config', () => ({ config: settings }));
 vi.mock('@/utils/playwright', () => ({ getPlaywrightPage: getPage }));
-vi.mock('@/utils/logger', () => ({ default: { warn } }));
 
 const biliUrl = 'https://api.bilibili.com/x/web-interface/popular?ps=20&pn=1';
 const rankingUrl = 'https://app-api.pixiv.net/v1/illust/ranking?mode=week_r18&filter=for_ios';
@@ -30,7 +31,7 @@ function makeBrowser(url: string, body = '{"items":[{"id":1}]}', status = 200) {
         }),
         send: vi.fn((method: string, _params?: any) => Promise.resolve(method === 'Page.getFrameTree' ? { frameTree: { frame: { id: 'main-frame' } } } : {})),
     };
-    const emit = (overrides: Record<string, unknown> = {}) => paused({ requestId: 'original', request: { url }, frameId: 'main-frame', resourceType: 'Document', ...overrides });
+    const emit = (overrides: Partial<PausedRequest> = {}) => paused({ requestId: 'original', request: { url }, frameId: 'main-frame', resourceType: 'Document', ...overrides });
     const response = {
         url: () => url,
         body: vi.fn(() => Promise.resolve(Buffer.from(body))),
@@ -65,18 +66,21 @@ function oauthRequest(body = form) {
 }
 
 beforeEach(() => {
-    settings.playwrightWSEndpoint = 'wss://browser.test/playwright?token=endpoint-fixture';
-    settings.requestTimeout = 30000;
+    config.playwrightWSEndpoint = 'wss://browser.test/playwright?token=endpoint-fixture';
+    config.requestTimeout = 30000;
     getPage.mockReset();
-    warn.mockReset();
+    warn = vi.spyOn(logger, 'warn').mockImplementation(() => logger);
 });
 
 afterEach(() => {
     vi.useRealTimers();
+    warn.mockRestore();
+    config.playwrightWSEndpoint = playwrightWSEndpoint;
+    config.requestTimeout = requestTimeout;
 });
 
 describe('targeted Playwright fetch retry', () => {
-    it.each([
+    it.each<[string, string, number]>([
         [biliUrl, 'GET', 200],
         [biliUrl, 'GET', 403],
         [biliUrl, 'POST', 412],
@@ -99,9 +103,9 @@ describe('targeted Playwright fetch retry', () => {
         [oauthUrl, 'POST', 403],
         ['https://oauth.secure.pixiv.net/auth/other', 'POST', 403],
     ])('does not replay %s %s status %s', async (url, method, status) => {
-        const response = new Response('original', { status: status as number });
+        const response = new Response('original', { status });
         const native = vi.fn(() => Promise.resolve(response));
-        const request = new Request(url as string, { method: method as string });
+        const request = new Request(url, { method });
 
         expect(await fetchWithPlaywrightRetry(request, native)).toBe(response);
         expect(getPage).not.toHaveBeenCalled();
@@ -110,7 +114,7 @@ describe('targeted Playwright fetch retry', () => {
     });
 
     it('preserves native behavior when no WS endpoint is configured', async () => {
-        settings.playwrightWSEndpoint = '';
+        config.playwrightWSEndpoint = '';
         const request = oauthRequest();
         const response = new Response('original', { status: 403 });
         const native = vi.fn(() => Promise.resolve(response));
@@ -121,7 +125,7 @@ describe('targeted Playwright fetch retry', () => {
         expect(getPage).not.toHaveBeenCalled();
     });
 
-    it.each([
+    it.each<[string, number]>([
         [biliUrl, 412],
         [rankingUrl, 403],
         [dynamicUrl, 412],
@@ -130,9 +134,9 @@ describe('targeted Playwright fetch retry', () => {
         [searchUrl, 403],
         [popularSearchUrl, 403],
     ])('replays one allowlisted GET and preserves response data for %s', async (url, status) => {
-        const { instance, session } = makeBrowser(url as string);
-        const request = new Request(url as string, { headers: { authorization: 'Bearer fixture', cookie: 'SESSDATA=cookie-fixture', 'user-agent': 'upstream-client', referer: 'https://source.test/' } });
-        const native = vi.fn(() => Promise.resolve(new Response('denied', { status: status as number })));
+        const { instance, session } = makeBrowser(url);
+        const request = new Request(url, { headers: { authorization: 'Bearer fixture', cookie: 'SESSDATA=cookie-fixture', 'user-agent': 'upstream-client', referer: 'https://source.test/' } });
+        const native = vi.fn(() => Promise.resolve(new Response('denied', { status })));
 
         const response = await fetchWithPlaywrightRetry(request, native);
 

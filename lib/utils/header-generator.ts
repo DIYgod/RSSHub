@@ -14,13 +14,17 @@ const isValidHeader = (headers: Record<string, string>, browser: string): boolea
     browser = browser.toLowerCase();
     const userAgent = headers['user-agent'];
 
-    if (browser === 'chrome') {
-        if (userAgent.includes('Chrome-Lighthouse') || userAgent.includes('Gener8') || userAgent.includes('HeadlessChrome') || userAgent.includes('SMTBot') || userAgent.includes('Electron') || userAgent.includes('Code')) {
-            return false;
-        }
-        if (!(headers['sec-ch-ua'] && headers['sec-ch-ua-mobile'] && headers['sec-ch-ua-platform'])) {
-            return false;
-        }
+    if (
+        browser === 'chrome' &&
+        (userAgent.includes('Chrome-Lighthouse') ||
+            userAgent.includes('Gener8') ||
+            userAgent.includes('HeadlessChrome') ||
+            userAgent.includes('SMTBot') ||
+            userAgent.includes('Electron') ||
+            userAgent.includes('Code') ||
+            !(headers['sec-ch-ua'] && headers['sec-ch-ua-mobile'] && headers['sec-ch-ua-platform']))
+    ) {
+        return false;
     }
 
     return !(browser === 'safari' && userAgent.includes('Applebot'));

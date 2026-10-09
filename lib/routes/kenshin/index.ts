@@ -63,8 +63,8 @@ async function handler(ctx: Context) {
     const $ = load(response);
 
     const list = $('.entry-title a')
-        .toArray()
         .slice(0, 10)
+        .toArray()
         .map((item): DataItem & { link: string } => {
             const $item = $(item);
             return {

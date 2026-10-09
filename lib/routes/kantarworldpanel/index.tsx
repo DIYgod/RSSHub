@@ -92,7 +92,7 @@ async function handler(ctx) {
     const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 30;
 
     const rootUrl = 'https://www.kantarworldpanel.com/';
-    const currentUrl = new URL(`${region}/${category}`, rootUrl).href;
+    const currentUrl = `${rootUrl}${region}/${category}`;
 
     const { data: response } = await got(currentUrl);
 

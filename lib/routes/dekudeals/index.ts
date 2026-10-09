@@ -1,8 +1,10 @@
 import { load } from 'cheerio';
 import type { Context } from 'hono';
 
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
+import { isValidHost } from '@/utils/valid-host';
 
 export const route: Route = {
     path: '/:type',
@@ -16,6 +18,9 @@ export const route: Route = {
 
 async function handler(ctx: Context) {
     const { type } = ctx.req.param();
+    if (!isValidHost(type)) {
+        throw new InvalidParameterError('Invalid type');
+    }
 
     const host = 'https://www.dekudeals.com/';
     const link = new URL(type, host).href;

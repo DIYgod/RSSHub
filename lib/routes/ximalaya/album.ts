@@ -130,9 +130,7 @@ async function handler(ctx) {
             );
         }
         const responses = await Promise.all(promises);
-        for (const j of responses) {
-            playList = [...playList, ...j.data.list];
-        }
+        playList = [...playList, ...responses.flatMap((j) => j.data.list)];
     }
 
     await Promise.all(

@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { DataItem, Route } from '@/types';
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import parser from '@/utils/rss-parser';
@@ -39,6 +39,6 @@ async function handler() {
         title: feed.title!,
         link: feed.link,
         description: feed.description,
-        item: items as DataItem[],
+        item: items.filter((item): item is typeof item & { title: string } => item.title !== undefined),
     };
 }

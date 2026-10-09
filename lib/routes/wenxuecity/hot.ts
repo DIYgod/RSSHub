@@ -23,8 +23,8 @@ async function handler(ctx: Context) {
     const $ = load(response);
 
     const list = $('div.item')
-        .toArray()
         .slice(0, 10)
+        .toArray()
         .map((item) => {
             const $item = $(item);
             return {

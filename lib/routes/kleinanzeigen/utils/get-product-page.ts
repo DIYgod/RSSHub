@@ -58,8 +58,8 @@ export const getProductPage = (url: string): Promise<DataItem> =>
 
         const category = [
             ...$('.breadcrump .breadcrump-link')
-                .toArray()
                 .slice(1)
+                .toArray()
                 .map((x) => $(x).text().trim()),
             product
                 .find('.addetailslist--detail')

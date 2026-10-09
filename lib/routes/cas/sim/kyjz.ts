@@ -59,7 +59,7 @@ async function handler() {
                 const reg = /文章来源：(.*?)\|/;
 
                 item.title = $('p.wztitle').text().trim();
-                item.author = reg.exec(author)![1].toString().trim();
+                item.author = reg.exec(author)![1].trim();
                 item.description = $('.TRS_Editor').html();
                 item.pubDate = parseDate(item.pubDate!);
                 return item;

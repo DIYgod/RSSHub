@@ -50,7 +50,7 @@ export async function handler(ctx) {
     const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 20;
 
     const rootUrl = 'https://www.liulinblog.com';
-    const currentUrl = subPath === '/' ? rootUrl : new URL(subPath, rootUrl).href;
+    const currentUrl = subPath === '/' ? rootUrl : `${rootUrl}${subPath}`;
 
     const { data: response } = await got(currentUrl);
 

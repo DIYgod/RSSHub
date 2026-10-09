@@ -1,5 +1,4 @@
 import { load } from 'cheerio';
-import type { Element } from 'domhandler';
 import { renderToString } from 'hono/jsx/dom/server';
 
 import type { Route } from '@/types';
@@ -115,19 +114,24 @@ export const route: Route = {
 
                         const $ = load(article.content.story, null, false);
                         $('*').each((_, ele) => {
-                            const { name } = ele as Element;
+                            if (ele.nodeType !== 1) {
+                                return;
+                            }
+                            const { name } = ele;
                             if (junkPattern.test(name)) {
                                 $(ele).remove();
                             }
-                            if (mediaPattern.test(name)) {
-                                const mediaType = name.match(mediaPattern)![1] === 'photo' ? 'images' : 'video';
-                                const mediaIndex = Number.parseInt(name.match(mediaPattern)![2]) - 1;
-                                const media = article.content[mediaType][mediaIndex];
-                                if (media) {
-                                    $(ele).replaceWith(renderMedia(media));
-                                } else {
-                                    $(ele).remove();
-                                }
+                            if (!mediaPattern.test(name)) {
+                                return;
+                            }
+
+                            const mediaType = name.match(mediaPattern)![1] === 'photo' ? 'images' : 'video';
+                            const mediaIndex = Number.parseInt(name.match(mediaPattern)![2]) - 1;
+                            const media = article.content[mediaType][mediaIndex];
+                            if (media) {
+                                $(ele).replaceWith(renderMedia(media));
+                            } else {
+                                $(ele).remove();
                             }
                         });
 

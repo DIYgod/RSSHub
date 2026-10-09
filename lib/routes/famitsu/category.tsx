@@ -103,6 +103,9 @@ function renderJSON(c) {
         case 'LINK':
         case 'LINK_TAB':
             return `<a href="${c.url}">${c.content}</a><br>`;
+        case 'ARTICLE_AD':
+        case 'ARTICLE_2ND_BANNER':
+            return '';
         default:
             throw new Error(`Unhandle type: ${c.type}`);
     }

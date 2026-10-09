@@ -122,8 +122,8 @@ async function handler(ctx) {
     });
     const $ = load(response);
     const list = $('tr')
-        .toArray()
         .slice(1)
+        .toArray()
         .map((item) => {
             const title = $(item).find('a.fz14').text();
             const filename = $(item).find('a.icon-collect').attr('data-filename');

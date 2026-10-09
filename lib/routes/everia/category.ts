@@ -38,12 +38,12 @@ async function handler(ctx) {
     const category = ctx.req.param('category');
     const categoryUrl = `${SUB_URL}category/${category}/`;
 
-    const categoryId = await cache.tryGet(`everia:category:${category}`, async () => {
+    const categoryId = await cache.tryGet(`everia:category:${category}`, async (): Promise<number> => {
         const { data: categories } = await got(`${SUB_URL}wp-json/wp/v2/categories?slug=${category}`);
         if (!categories.length) {
             throw new InvalidParameterError(`Category not found: ${category}`);
         }
-        return categories[0].id as number;
+        return categories[0].id;
     });
     const { data: posts } = await got(`${SUB_URL}wp-json/wp/v2/posts?categories=${categoryId}&per_page=${limit}&_embed`);
 

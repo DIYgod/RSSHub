@@ -182,7 +182,7 @@ async function handler(ctx) {
 
                             return {
                                 title: td.first().text().trim(),
-                                link: td.first().attr('href'),
+                                link: td.attr('href'),
                                 size: td.eq(1).text().trim(),
                                 date: td.last().text().trim(),
                                 score: content(tr).find('a').length ** 8 * toSize(td.eq(1).text().trim()),

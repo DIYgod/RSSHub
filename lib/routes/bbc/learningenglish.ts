@@ -54,8 +54,8 @@ async function handler(ctx: Context) {
 
     // get rest ul article links
     const restItems: DataItem[] = $('.threecol li')
-        .toArray()
         .slice(0, 10)
+        .toArray()
         .map((article) => {
             const $article = load(article);
 

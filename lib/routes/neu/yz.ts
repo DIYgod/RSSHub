@@ -120,20 +120,22 @@ const cleanEntryContent = ($) => {
     entry.find('.wp_video_player').each((_, el) => {
         const div = $(el);
         const src = div.attr('sudy-wp-src');
-        if (src) {
-            const videoUrl = BASE_URL + src;
-            const widthMatch = div.attr('style')?.match(/width:\s*(\d+)px/);
-            const width = widthMatch && widthMatch[1] ? widthMatch[1] : '600';
-            const heightMatch = div.attr('style')?.match(/height:\s*(\d+)px/);
-            const height = heightMatch && heightMatch[1] ? heightMatch[1] : '400';
-            const videoTag = `
-                <video controls width="${width}" height="${height}" style="max-width: 100%;margin-left: auto;margin-right: auto;">
-                    <source src="${videoUrl}" type="video/mp4">
-                    您的浏览器不支持 video 标签。
-                </video>
-            `;
-            div.replaceWith(videoTag);
+        if (!src) {
+            return;
         }
+
+        const videoUrl = BASE_URL + src;
+        const widthMatch = div.attr('style')?.match(/width:\s*(\d+)px/);
+        const width = widthMatch && widthMatch[1] ? widthMatch[1] : '600';
+        const heightMatch = div.attr('style')?.match(/height:\s*(\d+)px/);
+        const height = heightMatch && heightMatch[1] ? heightMatch[1] : '400';
+        const videoTag = `
+            <video controls width="${width}" height="${height}" style="max-width: 100%;margin-left: auto;margin-right: auto;">
+                <source src="${videoUrl}" type="video/mp4">
+                您的浏览器不支持 video 标签。
+            </video>
+        `;
+        div.replaceWith(videoTag);
     });
     return entry.html();
 };

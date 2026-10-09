@@ -31,8 +31,8 @@ async function handler(ctx: Context) {
     const $ = load(response);
 
     const list = $('.featured-stories__headline a')
-        .toArray()
         .slice(0, 10)
+        .toArray()
         .map((item): DataItem => {
             const $item = $(item);
             return {
@@ -47,7 +47,7 @@ async function handler(ctx: Context) {
                 const detailResponse = await ofetch(item.link!);
                 const content = load(detailResponse);
 
-                item.description = content('.field--name-field-news-body').html() ?? undefined;
+                item.description = content('.field--name-field-news-body').html();
                 item.pubDate = parseDate(content('time').attr('datetime')!);
 
                 return item;

@@ -29,8 +29,8 @@ async function handler(ctx: Context) {
     const $ = load(response);
 
     const list: DataItem[] = $('h2[itemprop="headline"] a, .post-header .archive__article__title a')
-        .toArray()
         .slice(0, 15)
+        .toArray()
         .map((item) => {
             const $item = $(item);
             return {

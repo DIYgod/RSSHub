@@ -12,8 +12,8 @@ const handler: Route['handler'] = async () => {
 
     const item = await Promise.all(
         $('article')
-            .toArray()
             .slice(0, 20)
+            .toArray()
             .map((item) => {
                 const $ = load(item);
                 const link = `https://nextjs.org${$('a[href^="/blog"]').attr('href')}`;

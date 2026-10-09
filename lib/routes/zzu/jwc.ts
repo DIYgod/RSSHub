@@ -42,8 +42,8 @@ async function handler(ctx) {
 
     // 解析页面内容并提取文章信息
     const list = $('ul.list li')
-        .toArray()
         .slice(0, 15)
+        .toArray()
         .map((element) => {
             const $element = $(element);
             const $link = $element.find('a.tit').first();
@@ -51,7 +51,7 @@ async function handler(ctx) {
             const title = $link.text().trim();
 
             // 获取发布时间
-            const pubDateText = $element.find('span').last().text().trim();
+            const pubDateText = $element.find('span').text().trim();
 
             return {
                 title,

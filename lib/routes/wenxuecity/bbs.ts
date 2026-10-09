@@ -33,8 +33,8 @@ async function handler(ctx: Context) {
     const response = await ofetch(baseUrl);
     const $ = load(response);
     const list = $('div.odd,div.even')
-        .toArray()
         .slice(0, 10)
+        .toArray()
         .map((item) => {
             const $item = $(item);
             return {

@@ -45,14 +45,11 @@ const getInfo = (url) =>
  */
 const processItems = async (apiUrl, limit, ...params) => {
     // Merge search parameters
-    let searchParams = {
+    const searchParams = {
         size: limit,
     };
     for (const param of params) {
-        searchParams = {
-            ...searchParams,
-            ...param,
-        };
+        Object.assign(searchParams, param);
     }
 
     const { data: response } = await got(apiUrl, {

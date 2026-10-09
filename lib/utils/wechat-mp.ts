@@ -334,6 +334,8 @@ const genVideoSrc = (videoId: string) => {
     return `https://v.qq.com/txp/iframe/player.html?${newSearchParams.toString()}`;
 };
 
+const isHtmlString = (html?: string | Cheerio<Element>): html is string => typeof html === 'string';
+
 /**
  * Articles from WeChat MP have weird formats, this function is used to fix them.
  *
@@ -346,7 +348,7 @@ const genVideoSrc = (videoId: string) => {
  * @return {string} - The fixed html, a string.
  */
 const fixArticleContent = (html?: string | Cheerio<Element>, skipImg = false): string => {
-    const htmlResult = (typeof html === 'string' ? html : html?.html()) || '';
+    const htmlResult = (isHtmlString(html) ? html : html?.html()) || '';
     if (!htmlResult) {
         return '';
     }
@@ -356,20 +358,24 @@ const fixArticleContent = (html?: string | Cheerio<Element>, skipImg = false): s
         $('img[data-src]').each((_, img) => {
             const $img = $(img);
             const realSrc = $img.attr('data-src');
-            if (realSrc) {
-                $img.attr('src', realSrc);
-                $img.removeAttr('data-src');
+            if (!realSrc) {
+                return;
             }
+
+            $img.attr('src', realSrc);
+            $img.removeAttr('data-src');
         });
     }
     // fix audio: https://mp.weixin.qq.com/s/FnjcMXZ1xdS-d6n-pUUyyw
     $('mpvoice[voice_encode_fileid]').each((_, voice) => {
         const $voice = $(voice);
         const voiceId = $voice.attr('voice_encode_fileid');
-        if (voiceId) {
-            const title = $voice.attr('name') || 'Audio';
-            $voice.replaceWith(genAudioTag(genAudioSrc(voiceId), title));
+        if (!voiceId) {
+            return;
         }
+
+        const title = $voice.attr('name') || 'Audio';
+        $voice.replaceWith(genAudioTag(genAudioSrc(voiceId), title));
     });
     // fix iframe: https://mp.weixin.qq.com/s/FnjcMXZ1xdS-d6n-pUUyyw
     $('iframe.video_iframe[data-src]').each((_, iframe) => {
@@ -380,18 +386,22 @@ const fixArticleContent = (html?: string | Cheerio<Element>, skipImg = false): s
         }
         const srcUrlObj = new URL(dataSrc);
         const vid = srcUrlObj.searchParams.get('vid');
-        if (srcUrlObj.host === 'v.qq.com' && vid !== null) {
-            const newSrc = genVideoSrc(vid);
-            $iframe.attr('src', newSrc);
-            $iframe.removeAttr('data-src');
-            const width = $iframe.attr('data-w');
-            const ratio = $iframe.attr('data-ratio');
-            if (width && ratio) {
-                const width_ = Math.min(Number.parseInt(width), 677);
-                $iframe.attr('width', width_.toString());
-                $iframe.attr('height', (width_ / Number(ratio)).toString());
-            }
-        } // else {} FIXME: https://mp.weixin.qq.com/s?__biz=Mzg5Mjk3MzE4OQ==&mid=2247549515&idx=2&sn=a608fca597f0589c1aebd6d0b82ff6e9
+        if (srcUrlObj.host !== 'v.qq.com' || vid === null) {
+            // FIXME: https://mp.weixin.qq.com/s?__biz=Mzg5Mjk3MzE4OQ==&mid=2247549515&idx=2&sn=a608fca597f0589c1aebd6d0b82ff6e9
+            return;
+        }
+        const newSrc = genVideoSrc(vid);
+        $iframe.attr('src', newSrc);
+        $iframe.removeAttr('data-src');
+        const width = $iframe.attr('data-w');
+        const ratio = $iframe.attr('data-ratio');
+        if (!width || !ratio) {
+            return;
+        }
+
+        const width_ = Math.min(Number.parseInt(width), 677);
+        $iframe.attr('width', width_.toString());
+        $iframe.attr('height', (width_ / Number(ratio)).toString());
     });
     // fix section
     $('section').each((_, section) => {

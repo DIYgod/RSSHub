@@ -82,10 +82,12 @@ function findArticleLink($: CheerioAPI, block: Cheerio<Element>): string | undef
         const hasTitle = $el.find('h3').length > 0;
         const isMainImage = $el.hasClass('u-block') && $el.find('.graf-image').length > 0;
 
-        if (hasTitle || isMainImage) {
-            link = href;
-            return false;
+        if (!(hasTitle || isMainImage)) {
+            return;
         }
+
+        link = href;
+        return false;
     });
 
     return link;

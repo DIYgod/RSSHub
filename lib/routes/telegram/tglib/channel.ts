@@ -182,29 +182,30 @@ export default async function handler(ctx: Context) {
         if (message.replyMarkup instanceof Api.ReplyInlineMarkup) {
             for (const buttonRow of message.replyMarkup.rows) {
                 for (const button of buttonRow.buttons) {
-                    if (button instanceof Api.KeyboardButtonUrl) {
-                        attachments.push(`<div><a href="${button.url}" target="_blank">${button.text}</a></div>`);
+                    if (button.type instanceof Api.InlineButtonTypeUrl) {
+                        attachments.push(`<div><a href="${button.type.url}" target="_blank">${button.text}</a></div>`);
                     }
                 }
             }
         }
-        if (text !== '' || ++i === messages.length - 1) {
-            let description = attachments.join('<br/>\n');
-            attachments = []; // emitting these, buffer other ones
-
-            if (text) {
-                description += `<p>${HTMLParser.unparse(message.message, message.entities).replaceAll('\n', '<br/>')}</p>`;
-            }
-
-            const title = message.text ? message.text.slice(0, 80) + (message.text.length > 80 ? '...' : '') : new Date(message.date * 1000).toUTCString();
-            item.push({
-                title,
-                description,
-                pubDate: new Date(message.date * 1000).toUTCString(),
-                link: `https://t.me/s/${username}/${message.id}`,
-                author: getDisplayName(message.sender ?? entity),
-            });
+        if (text === '' && ++i !== messages.length - 1) {
+            continue;
         }
+        let description = attachments.join('<br/>\n');
+        attachments = []; // emitting these, buffer other ones
+
+        if (text) {
+            description += `<p>${HTMLParser.unparse(message.message, message.entities).replaceAll('\n', '<br/>')}</p>`;
+        }
+
+        const title = message.text ? message.text.slice(0, 80) + (message.text.length > 80 ? '...' : '') : new Date(message.date * 1000).toUTCString();
+        item.push({
+            title,
+            description,
+            pubDate: new Date(message.date * 1000).toUTCString(),
+            link: `https://t.me/s/${username}/${message.id}`,
+            author: getDisplayName(message.sender ?? entity),
+        });
     }
 
     return {

@@ -1,5 +1,4 @@
 import type { Language, Route } from '@/types';
-import playwright from '@/utils/playwright';
 
 import { baseUrl, parsePage } from './utils';
 
@@ -10,7 +9,7 @@ export const route: Route = {
     parameters: { channel: '主頻道 ID，可在 URL 中找到' },
     features: {
         requireConfig: false,
-        requirePuppeteer: true,
+        requirePuppeteer: false,
         antiCrawler: false,
         supportBT: false,
         supportPodcast: false,
@@ -37,11 +36,7 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const context = await playwright();
-
-    const { $, items } = await parsePage('master', context, ctx);
-
-    await context.close();
+    const { $, items } = await parsePage('master', ctx);
 
     return {
         title: $('head title').text(),

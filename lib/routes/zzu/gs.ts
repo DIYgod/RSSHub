@@ -42,11 +42,11 @@ async function handler(ctx) {
 
     // 解析页面内容并提取文章信息
     const list = $('.r_list ul li')
-        .toArray()
         .slice(0, 20)
+        .toArray()
         .map((element) => {
             const $element = $(element);
-            const $link = $element.find('a').first();
+            const $link = $element.find('a');
             const link = new URL($link.attr('href')!, typeDict[type][1]).href;
             const title = $link.text().trim();
 

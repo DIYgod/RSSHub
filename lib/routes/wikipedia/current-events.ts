@@ -297,16 +297,17 @@ async function fetchMultipleWikiContent(pageNames: string[]): Promise<Record<str
                 // Parse the Current events template content
                 const content = parseCurrentEventsTemplate(wikitext);
 
-                if (content) {
-                    // Convert wiki markup to HTML
-                    const html = wikiToHtml(content);
-
-                    // Use the page title as the key
-                    const pageTitle = page.title;
-                    // Convert back to the format we expect: "Portal:Current_events/2025_September_18"
-                    const normalizedTitle = pageTitle.replace(/Portal:Current events\/(\d{4}) (\w+) (\d+)/, 'Portal:Current_events/$1_$2_$3');
-                    results[normalizedTitle] = html;
+                if (!content) {
+                    continue;
                 }
+                // Convert wiki markup to HTML
+                const html = wikiToHtml(content);
+
+                // Use the page title as the key
+                const pageTitle = page.title;
+                // Convert back to the format we expect: "Portal:Current_events/2025_September_18"
+                const normalizedTitle = pageTitle.replace(/Portal:Current events\/(\d{4}) (\w+) (\d+)/, 'Portal:Current_events/$1_$2_$3');
+                results[normalizedTitle] = html;
             }
         }
 

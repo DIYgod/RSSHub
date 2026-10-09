@@ -53,9 +53,7 @@ async function handler(ctx) {
     const collectionID = ctx.req.param('collectionID');
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : '50';
 
-    const response = await cache.tryGet(collectionID, () => fetchCollection(collectionID, Number(limit)), config.cache.routeExpire, false);
-
-    const { title, link, description, items } = response;
+    const { title, link, description, items } = await cache.tryGet(collectionID, () => fetchCollection(collectionID, Number(limit)), config.cache.routeExpire, false);
 
     const itemsArray = items.map((item) => ({
         title: item.post.title || item.post.noticeLinkTitle,

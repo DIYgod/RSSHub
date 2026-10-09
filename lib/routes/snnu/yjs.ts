@@ -31,12 +31,12 @@ export const route: Route = {
         const url = 'https://newyjs.snnu.edu.cn/tzgg1.htm';
         const response = await ofetch(url);
         const $ = load(response);
-        const list = $('.n_bt li').toArray().slice(0, 10);
+        const list = $('.n_bt li').slice(0, 10).toArray();
 
         const items = await Promise.all(
             list.map((item) => {
                 const $item = $(item);
-                const $link = $item.find('a').first();
+                const $link = $item.find('a');
                 const link = new URL($link.attr('href') || '', url).href;
 
                 const pubDate = parseDate($link.find('em').text());

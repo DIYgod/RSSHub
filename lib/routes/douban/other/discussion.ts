@@ -41,11 +41,11 @@ async function handler(ctx) {
     const $ = load(response);
     // 列表
     const list = $('#posts-table>tbody>tr')
-        .toArray()
         .slice(1)
+        .toArray()
         .map((item): DataItem => {
             const $item = $(item);
-            const a = $item.find('a').first();
+            const a = $item.find('a');
             return {
                 title: a.attr('title')!,
                 link: a.attr('href'),

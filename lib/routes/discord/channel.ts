@@ -1,7 +1,6 @@
-import type { APITextChannel } from 'discord-api-types/v10';
-
 import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { DataItem, Route } from '@/types';
 import { parseDate } from '@/utils/parse-date';
 
@@ -45,7 +44,11 @@ async function handler(ctx) {
 
     const channelInfo = await getChannel(channelId, authorization);
     const messagesRaw = await getChannelMessages(channelId, authorization, ctx.req.query('limit') ?? 100);
-    const { name: channelName, topic: channelTopic, guild_id: guildId } = channelInfo as APITextChannel;
+    if (!('guild_id' in channelInfo) || !channelInfo.guild_id) {
+        throw new InvalidParameterError('Channel is not in a guild');
+    }
+    const { name: channelName, guild_id: guildId } = channelInfo;
+    const channelTopic = 'topic' in channelInfo ? channelInfo.topic : undefined;
 
     const guildInfo = await getGuild(guildId, authorization);
     const { name: guildName, icon: guidIcon } = guildInfo;

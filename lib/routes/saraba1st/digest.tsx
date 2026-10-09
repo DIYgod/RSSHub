@@ -105,13 +105,14 @@ async function fetchContent(url) {
     stubS.find('img').each((_, el) => {
         const img = subind(el);
         const file = img.attr('file');
-        if (file) {
-            img.attr('src', file);
-            img.removeAttr('zoomfile');
-            img.removeAttr('file');
-            img.removeAttr('onmouseover');
-            img.removeAttr('onclick');
+        if (!file) {
+            return;
         }
+
+        img.attr('src', file);
+        img.removeAttr('zoomfile');
+        img.removeAttr('file');
+        img.removeAttr('onmouseover');
     });
 
     return stubS.html();

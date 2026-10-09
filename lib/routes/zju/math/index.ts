@@ -124,7 +124,7 @@ async function handler(ctx: Context) {
     const categoryInfo = categoryMap.get(type);
 
     if (!categoryInfo) {
-        const validTypes = [...categoryMap.keys().toArray()].join(', ');
+        const validTypes = categoryMap.keys().toArray().join(', ');
         throw new Error(`Invalid type: ${type}. Valid types are: ${validTypes}`);
     }
 

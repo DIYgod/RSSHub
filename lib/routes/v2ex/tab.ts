@@ -1,5 +1,6 @@
 import { load } from 'cheerio';
 
+import { config } from '@/config';
 import type { Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
@@ -32,6 +33,9 @@ async function handler(ctx) {
     const response = await got({
         method: 'get',
         url: pageUrl,
+        headers: {
+            'user-agent': config.ua,
+        },
     });
 
     const $ = load(response.data);
@@ -46,6 +50,9 @@ async function handler(ctx) {
                 const response = await got({
                     method: 'get',
                     url: link,
+                    headers: {
+                        'user-agent': config.ua,
+                    },
                 });
 
                 const $ = load(response.data);
@@ -54,7 +61,7 @@ async function handler(ctx) {
                     .map((item) => {
                         const post = $(item);
                         const content = post.find('.reply_content').html();
-                        const author = post.find('.dark').first().text();
+                        const author = post.find('.dark').text();
                         const no = post.find('.no').text();
                         return `<p><div>#${no}: <i>${author}</i></div><div>${content}</div></p>`;
                     })

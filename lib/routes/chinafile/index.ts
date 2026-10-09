@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 import type { Context } from 'hono';
 import Parser from 'rss-parser';
 
-import type { DataItem, Language, Route } from '@/types';
+import type { Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -34,51 +34,54 @@ async function handler(ctx: Context) {
     const feed = await parser.parseURL(rssUrl);
 
     const items = await Promise.all(
-        feed.items.map((item) =>
-            cache.tryGet(item.link!, async () => {
-                const response = await ofetch(item.link!);
-                const $ = load(response);
-                const content = $('article');
+        feed.items
+            .filter((item): item is (typeof feed.items)[number] & { title: string } => item.title !== undefined)
+            .map((item) =>
+                cache.tryGet(item.link!, async () => {
+                    const response = await ofetch(item.link!);
+                    const $ = load(response);
+                    const content = $('article');
 
-                // Cover
-                const cover = $('.view-featured-photo');
-                if (cover.length > 0) {
-                    cover.insertBefore(content[0].childNodes[0]);
-                    cover.remove();
-                }
+                    // Cover
+                    const cover = $('.view-featured-photo');
+                    if (cover.length > 0) {
+                        cover.insertBefore(content[0].childNodes[0]);
+                        cover.remove();
+                    }
 
-                // Summary
-                const summary = $('meta[name="description"]').attr('content');
-                const updatedAt = $('meta[property="og:updated_time"]').attr('content');
+                    // Summary
+                    const summary = $('meta[name="description"]').attr('content');
+                    const updatedAt = $('meta[property="og:updated_time"]').attr('content');
 
-                const categories = $('meta[property="article:tag"]')
-                    .toArray()
-                    .map((el) => $(el).attr('content'));
+                    const categories = $('meta[property="article:tag"]')
+                        .toArray()
+                        .map((el) => $(el).attr('content'))
+                        .filter((tag) => tag !== undefined);
 
-                const url = $('link[rel="canonical"]').attr('href');
+                    const url = $('link[rel="canonical"]').attr('href');
 
-                return {
-                    title: item.title,
-                    id: item.guid,
-                    pubDate: parseDate(item.pubDate!.replace(' - ', ' ').replace('am', ' am').replace('pm', ' pm')),
-                    updated: updatedAt,
-                    author: item.creator,
-                    link: url,
-                    summary,
-                    description: content.html(),
-                    category: categories,
-                    icon,
-                    logo,
-                };
-            })
-        )
+                    return {
+                        title: item.title,
+                        id: item.guid,
+                        pubDate: parseDate(item.pubDate!.replace(' - ', ' ').replace('am', ' am').replace('pm', ' pm')),
+                        updated: updatedAt,
+                        author: item.creator,
+                        link: url,
+                        summary,
+                        description: content.html(),
+                        category: categories,
+                        icon,
+                        logo,
+                    };
+                })
+            )
     );
 
     return {
         title: feed.title!,
         link: feed.link,
         description: feed.description,
-        item: items as DataItem[],
+        item: items,
         language,
         icon,
         logo,

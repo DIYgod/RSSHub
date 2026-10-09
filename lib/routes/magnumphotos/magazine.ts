@@ -38,8 +38,12 @@ async function handler() {
     const items = await Promise.all(
         feed.items.map((item) => {
             const link = item.link!;
+            const title = item.title;
+            if (!title) {
+                return null;
+            }
 
-            return cache.tryGet(link, async () => {
+            return cache.tryGet(link, async (): Promise<DataItem> => {
                 const data = await ofetch(link);
                 const $ = load(data);
                 const description = $('#content');
@@ -47,7 +51,7 @@ async function handler() {
                 description.find('h1').remove();
 
                 return {
-                    title: item.title,
+                    title,
                     pubDate: item.pubDate,
                     link,
                     category: item.categories,
@@ -61,6 +65,6 @@ async function handler() {
         title: 'Magnum Photos',
         link: host,
         description: 'Magnum is a community of thought, a shared human quality, a curiosity about what is going on in the world, a respect for what is going on and a desire to transcribe it visually',
-        item: items as DataItem[],
+        item: items.filter((item) => item !== null),
     };
 }

@@ -27,11 +27,11 @@ export const route: Route = {
         const response = await ofetch(targetLink);
         const $ = load(response);
         const links = $('.archives-group article')
-            .toArray()
             .slice(0, 10)
+            .toArray()
             .map((item): DataItem => {
                 const $item = $(item);
-                const a = $item.find('a').first();
+                const a = $item.find('a');
 
                 const title = a.find('.article-title').text();
                 const link = `${baseUrl}${a.attr('href')}`;

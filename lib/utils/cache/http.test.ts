@@ -48,10 +48,7 @@ describe('http cache module', () => {
                 url: input.toString(),
             });
 
-            if (init?.method === 'PUT') {
-                return new Response(null, { status: 204 });
-            }
-            if (init?.method === 'HEAD') {
+            if (init?.method === 'PUT' || init?.method === 'HEAD') {
                 return new Response(null, { status: 204 });
             }
 

@@ -29,21 +29,23 @@ jobs:
             - run: pnpm i
             - name: Install oxlint to SARIF converter
               run: pnpm i -g oxlint-json-to-sarif
-            - name: Typecheck
-              run: pnpm typecheck
-            - name: Lint
-              run: pnpm exec oxlint --type-aware --config=.oxlintrc.ci.json
-                  --format=json | oxlint-json-to-sarif > oxlint-results.sarif
-              continue-on-error: true
-            - name: Upload analysis results to GitHub
-              uses: github/codeql-action/upload-sarif@v4
-              with:
-                  sarif_file: oxlint-results.sarif
-                  wait-for-processing: true
-            - name: Upload Artifact
-              uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
-              with:
-                  path: oxlint-results.sarif
+            - parallel:
+                  - name: Typecheck
+                    run: pnpm typecheck
+                  - name: Lint
+                    run: pnpm exec oxlint --type-aware --config=.oxlintrc.ci.json
+                        --format=json | oxlint-json-to-sarif > oxlint-results.sarif
+                    continue-on-error: true
+            - parallel:
+                  - name: Upload analysis results to GitHub
+                    uses: github/codeql-action/upload-sarif@v4
+                    with:
+                        sarif_file: oxlint-results.sarif
+                        wait-for-processing: true
+                  - name: Upload Artifact
+                    uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+                    with:
+                        path: oxlint-results.sarif
 
     # https://github.com/amannn/action-semantic-pull-request
     title-lint:
@@ -100,6 +102,7 @@ jobs:
 
     agentscan:
         name: AgentScan
+        needs: labeler
         if: ${{ github.event_name == 'pull_request_target' && github.event.action == 'opened' && github.repository == 'DIYgod/RSSHub' }}
         permissions:
             contents: read
@@ -122,6 +125,7 @@ jobs:
 
     anti-slop:
         name: Anti Slop
+        needs: labeler
         if: ${{ github.event_name == 'pull_request_target' && github.event.action == 'opened' && github.repository == 'DIYgod/RSSHub' }}
         runs-on: ubuntu-slim
         permissions:

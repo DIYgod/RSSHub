@@ -25,7 +25,7 @@ async function handler(ctx): Promise<Data> {
     const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 10;
 
     const rootUrl = 'https://dongke.yangtzeu.edu.cn';
-    const currentUrl = new URL(`/${ctx.req.param('path') ?? 'yqzl/xyxw'}.htm`, rootUrl).href;
+    const currentUrl = `${rootUrl}/${ctx.req.param('path') ?? 'yqzl/xyxw'}.htm`;
 
     const { data: response } = await got(currentUrl);
 
@@ -52,15 +52,11 @@ async function handler(ctx): Promise<Data> {
 
                 item.title = content('title').text();
                 item.description = content('div.v_news_content').html();
-                item.category = content('meta[name="keywords"]').prop('content').split(',');
-                item.pubDate = timezone(
-                    parseDate(
-                        content('p.content-info')
-                            .text()
-                            .match(/\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}/)![0]
-                    ),
-                    8
-                );
+                item.category = content('meta[name="keywords"]').prop('content')?.split(',');
+                const pubDate = content('p.content-info')
+                    .text()
+                    .match(/\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}/)?.[0];
+                item.pubDate = pubDate ? timezone(parseDate(pubDate), 8) : undefined;
 
                 return item;
             })

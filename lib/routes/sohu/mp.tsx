@@ -89,10 +89,12 @@ function fetchArticle(item) {
             });
             article.find('img').each((_, e) => {
                 const $e = $(e);
-                if ($e.attr('data-src') && !$e.attr('src')) {
-                    $e.attr('src', decryptImageUrl($e.attr('data-src')));
-                    $e.removeAttr('data-src');
+                if (!$e.attr('data-src') || $e.attr('src')) {
+                    return;
                 }
+
+                $e.attr('src', decryptImageUrl($e.attr('data-src')));
+                $e.removeAttr('data-src');
             });
 
             item.description = article.html();

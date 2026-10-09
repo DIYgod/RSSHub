@@ -164,34 +164,38 @@ const parseItem = (item) =>
             const $ele = $(ele);
             let dataSrc = $ele.attr('data-src');
 
-            if (dataSrc) {
-                const match = dataSrc.match(/.*--\/.*--\/(.*)/);
-                if (match?.[1]) {
-                    dataSrc = match?.[1];
-                }
-                $ele.attr('src', dataSrc);
-                $ele.removeAttr('data-src');
+            if (!dataSrc) {
+                return;
             }
+
+            const match = dataSrc.match(/.*--\/.*--\/(.*)/);
+            if (match?.[1]) {
+                dataSrc = match?.[1];
+            }
+            $ele.attr('src', dataSrc);
+            $ele.removeAttr('data-src');
         });
         // fix blockquote iframe
         body.find('.caas-iframe').each((_, ele) => {
             const $ele = $(ele);
-            if ($ele.data('type') === 'youtube') {
-                const blockquoteSrc = $ele.find('blockquote').attr('data-src')!;
-                $ele.replaceWith(
-                    renderToString(
-                        <iframe
-                            width="560"
-                            height="315"
-                            src={`https://www.youtube-nocookie.com/embed/${blockquoteSrc.split('/').pop()?.split('?', 1)?.[0]}`}
-                            frameborder="0"
-                            allow="encrypted-media; picture-in-picture; web-share"
-                            allowfullscreen
-                            referrerpolicy="strict-origin-when-cross-origin"
-                        ></iframe>
-                    )
-                );
+            if ($ele.data('type') !== 'youtube') {
+                return;
             }
+
+            const blockquoteSrc = $ele.find('blockquote').attr('data-src')!;
+            $ele.replaceWith(
+                renderToString(
+                    <iframe
+                        width="560"
+                        height="315"
+                        src={`https://www.youtube-nocookie.com/embed/${blockquoteSrc.split('/').pop()?.split('?', 1)?.[0]}`}
+                        frameborder="0"
+                        allow="encrypted-media; picture-in-picture; web-share"
+                        allowfullscreen
+                        referrerpolicy="strict-origin-when-cross-origin"
+                    ></iframe>
+                )
+            );
         });
 
         item.description = body

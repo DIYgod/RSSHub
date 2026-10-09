@@ -96,7 +96,7 @@ async function handler(ctx) {
     );
 
     return {
-        title: String(isStatus ? `${$(`#contest-table-${rated} h3`).text()} - AtCoder` : $('title').text()),
+        title: isStatus ? `${$(`#contest-table-${rated} h3`).text()} - AtCoder` : $('title').text(),
         link: currentUrl,
         item: items,
         allowEmpty: true,

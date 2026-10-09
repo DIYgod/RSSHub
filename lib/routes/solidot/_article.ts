@@ -5,9 +5,8 @@ import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
 export default async function get_article(url) {
-    const domain = 'https://www.solidot.org';
-
     if (/^\/.*$/.test(url)) {
+        const domain = 'https://www.solidot.org';
         url = domain + url;
     }
     const response = await got({

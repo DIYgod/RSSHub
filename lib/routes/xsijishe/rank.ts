@@ -3,9 +3,7 @@ import { load } from 'cheerio';
 import { config } from '@/config';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
-import playwright from '@/utils/playwright';
-
-import { playwrightGet } from './utils';
+import ofetch from '@/utils/ofetch';
 
 const baseUrl = 'https://xsijishe.com';
 
@@ -28,12 +26,8 @@ export const route: Route = {
                 name: 'XSIJISHE_COOKIE',
                 description: '',
             },
-            {
-                name: 'XSIJISHE_USER_AGENT',
-                description: '',
-            },
         ],
-        requirePuppeteer: true,
+        requirePuppeteer: false,
         antiCrawler: true,
         supportBT: false,
         supportPodcast: false,
@@ -60,43 +54,39 @@ async function handler(ctx) {
         throw new InvalidParameterError('Invalid rank type');
     }
 
-    const context = await playwright();
     const url = `${baseUrl}/portal.php`;
-    try {
-        const data = await playwrightGet(url, context, '.nex_recon_lists', {
-            cookie: config.xsijishe.cookie,
-            userAgent: config.xsijishe.userAgent,
-        });
-        const $ = load(data);
-        const items = $('.nex_recon_lists ul li')
-            .eq(index)
-            .find('.nex_recons_demens dl dd')
-            .toArray()
-            .map((item) => {
-                const $item = $(item);
-                const title = $item.find('h5').text().trim();
-                const link = $item.find('a').attr('href');
-                const description = $item.find('img').prop('outerHTML') ?? '';
+    const data = await ofetch(url, {
+        headers: {
+            ...(config.xsijishe.cookie && { Cookie: config.xsijishe.cookie }),
+        },
+    });
+    const $ = load(data);
+    const items = $('.nex_recon_lists ul li')
+        .eq(index)
+        .find('.nex_recons_demens dl dd')
+        .toArray()
+        .map((item) => {
+            const $item = $(item);
+            const title = $item.find('h5').text().trim();
+            const link = $item.find('a').attr('href');
+            const description = $item.find('img').prop('outerHTML') ?? '';
 
-                if (!title || !link) {
-                    return;
-                }
+            if (!title || !link) {
+                return;
+            }
 
-                return {
-                    title,
-                    link: new URL(link, `${baseUrl}/`).href,
-                    description,
-                };
-            })
-            .filter((item) => item !== undefined);
+            return {
+                title,
+                link: new URL(link, `${baseUrl}/`).href,
+                description,
+            };
+        })
+        .filter((item) => item !== undefined);
 
-        return {
-            title,
-            link: url,
-            description: title,
-            item: items,
-        };
-    } finally {
-        await context.close();
-    }
+    return {
+        title,
+        link: url,
+        description: title,
+        item: items,
+    };
 }

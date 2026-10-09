@@ -1,5 +1,4 @@
 import { load } from 'cheerio';
-import type { Text } from 'domhandler';
 import type { Context } from 'hono';
 import { renderToString } from 'hono/jsx/dom/server';
 
@@ -90,7 +89,11 @@ async function handler(ctx: Context): Promise<Data> {
             const $item = $(item);
             const title = $item.find('.showname a').text().trim();
             const category = $item.find('.showtype').text().trim();
-            const pubDate = ($item.find('.showdate').contents()[0] as Text).data.trim();
+            const dateNode = $item.find('.showdate').contents()[0];
+            if (dateNode?.nodeType !== 3) {
+                throw new Error(`3kns: no release date text found for "${title}"`);
+            }
+            const pubDate = dateNode.data.trim();
             return {
                 title,
                 link: baseUrl + $item.find('.entry-media a').attr('href')!,

@@ -63,15 +63,20 @@ async function handler(ctx: Context) {
     const items = $('.pg-list>ul>li')
         .slice(0, 10)
         .toArray()
-        .map((elem) => {
+        .map((elem): DataItem | null => {
+            const title = $('a', elem).attr('title');
+            if (!title) {
+                return null;
+            }
             const foodTime = $('span.food-time', elem).text();
             const pubDate = timezone(parseDate(`${date.getFullYear()}-${foodTime}`), 8);
             return {
                 link: new URL($('a', elem).attr('href')!, link).href,
-                title: $('a', elem).attr('title'),
+                title,
                 pubDate: pubDate > date ? timezone(parseDate(`${date.getFullYear() - 1}-${foodTime}`), 8) : pubDate,
             };
-        }) as DataItem[];
+        })
+        .filter((item) => item !== null);
 
     return {
         link,

@@ -3,21 +3,27 @@ import { load } from 'cheerio';
 import type { Element } from 'domhandler';
 import type { Context } from 'hono';
 
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Data, DataItem, Language, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { isValidHost } from '@/utils/valid-host';
 
 import { renderDescription } from './templates/security-releases';
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { language: languageParam = 'en-us' } = ctx.req.param();
+    if (!isValidHost(languageParam)) {
+        throw new InvalidParameterError('Invalid language');
+    }
+
     const language = languageParam as Language;
     const limit = Number(ctx.req.query('limit') ?? '30');
 
     const baseUrl = 'https://support.apple.com';
-    const targetUrl: string = new URL(`${language}/100100`, baseUrl).href;
+    const targetUrl: string = new URL(`${languageParam}/100100`, baseUrl).href;
 
     const response = await ofetch(targetUrl);
     const $: CheerioAPI = load(response);
@@ -75,7 +81,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 const detailResponse = await ofetch(item.link!);
                 const $$: CheerioAPI = load(detailResponse);
 
-                const title: string = item.title ?? $$('h1.gb-header').text();
+                const title: string = item.title;
 
                 $$('h1.gb-header').remove();
 

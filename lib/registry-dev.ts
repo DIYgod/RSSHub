@@ -37,16 +37,16 @@ export function createDevRegistry({ routesDirectory, namespaces }: { routesDirec
         const outer = outerContexts.get(ctx.req.raw);
         if (outer) {
             for (const [key, value] of Object.entries(outer.var)) {
-                ctx.set(key as never, value as never);
+                ctx.set(key, value);
             }
         }
         await next();
         if (outer) {
             for (const [key, value] of Object.entries(ctx.var)) {
-                outer.set(key as never, value as never);
+                outer.set(key, value);
             }
         }
-        if (!ctx.finalized && (ctx.get('data') || ctx.get('apiData'))) {
+        if (!ctx.finalized && (ctx.get('data') || ctx.get('apiData') || ctx.get('redirect') || ctx.get('no-content'))) {
             // Data-producing handlers return undefined (the outer template middleware renders the
             // bridged vars); finalize so Hono does not raise "Context is not finalized".
             ctx.res = new Response(null, { status: 204 });
@@ -54,10 +54,10 @@ export function createDevRegistry({ routesDirectory, namespaces }: { routesDirec
     };
 
     const loadTopDirectory = async (name: string): Promise<Hono> => {
-        const modules = (await directoryImport({
+        const modules = await directoryImport<ModulesType[string]>({
             targetDirectoryPath: path.join(routesDirectory, name),
             importPattern: /\.tsx?$/,
-        })) as ModulesType;
+        });
 
         // directoryImport keys are relative to the imported directory; restore the lib/routes-relative form
         const prefixed: ModulesType = {};
@@ -104,7 +104,7 @@ export function createDevRegistry({ routesDirectory, namespaces }: { routesDirec
         outerContexts.set(ctx.req.raw, ctx);
         try {
             const response = await subApp.fetch(ctx.req.raw);
-            if (ctx.get('data') || ctx.get('apiData')) {
+            if (ctx.get('data') || ctx.get('apiData') || ctx.get('redirect') || ctx.get('no-content')) {
                 // The upstream template middleware renders from the bridged vars
                 return;
             }

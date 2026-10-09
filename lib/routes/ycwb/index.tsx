@@ -119,7 +119,7 @@ async function handler(ctx) {
 
     return {
         title: `羊城晚报金羊网 - ${nodeName}`,
-        link: String(nodeLink === '' ? 'https://www.ycwb.com/' : nodeLink),
+        link: nodeLink === '' ? 'https://www.ycwb.com/' : nodeLink,
         item: items,
     };
 }

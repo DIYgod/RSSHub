@@ -5,6 +5,7 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
 
 const rootUrl = 'https://kyfw.12306.cn';
 
@@ -50,16 +51,17 @@ const renderTrainDescription = (trainInfo) =>
     );
 
 async function getJSESSIONID(linkUrl) {
-    const res = await got({
-        method: 'get',
-        url: linkUrl,
+    const res = await ofetch.raw(linkUrl, {
         headers: {
             UserAgent: config.ua,
             Referer: 'https://www.12306.cn/index/index.html',
         },
     });
 
-    return res.headers['set-cookie'].join(',').match(/JSESSIONID=([^;]+);/)[0];
+    return res.headers
+        .getSetCookie()
+        .join(',')
+        .match(/JSESSIONID=([^;]+);/)![0];
 }
 
 function getStationInfo(stationName) {

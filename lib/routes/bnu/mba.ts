@@ -10,7 +10,7 @@ export const handler = async (ctx) => {
     const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 20;
 
     const rootUrl = 'https://mba.bnu.edu.cn';
-    const currentUrl = new URL(`${category.replace(/\/$/, '')}/`, rootUrl).href;
+    const currentUrl = `${rootUrl}/${category.replace(/\/$/, '')}/`;
 
     const { data: response } = await got(currentUrl);
 
@@ -44,7 +44,7 @@ export const handler = async (ctx) => {
 
                 const title = $$('div.connewst').text();
                 const description = $$('div.concrczw').html();
-                const image = $$('div.concrczw img').first().prop('src');
+                const image = $$('div.concrczw img').prop('src');
 
                 item.title = title;
                 item.description = description;

@@ -42,8 +42,8 @@ async function handler(ctx) {
     let currentUrl: string;
     let documentId;
 
-    if (Number.isNaN(category)) {
-        currentUrl = new URL(category, rootUrl).href;
+    if (Number.isNaN(Number(category))) {
+        currentUrl = `${rootUrl}/${category}`;
     } else {
         documentId = category;
         const feedUrl = new URL(`news/feed/${documentId}/rss.xml`, rootUrl).href;
@@ -56,7 +56,7 @@ async function handler(ctx) {
 
     const $ = load(currentResponse);
 
-    documentId ??= $('div[data-uri^="coremedia://collection/"]').first().prop('data-uri').split(/\//).pop();
+    documentId ??= $('div[data-uri^="coremedia://collection/"]').prop('data-uri').split(/\//).pop();
 
     const response = await ofetch(apiUrl, {
         query: {
@@ -78,7 +78,7 @@ async function handler(ctx) {
                       }
                     : undefined,
             }),
-            author: i.newsBylineProps?.authors?.map((a) => a.name).join('/') ?? undefined,
+            author: i.newsBylineProps?.authors?.map((a) => a.name).join('/'),
             guid: `abc-${i.id}`,
             pubDate: parseDate(i.dates.firstPublished),
             updated: i.dates.lastUpdated ? parseDate(i.dates.lastUpdated) : undefined,
@@ -86,7 +86,7 @@ async function handler(ctx) {
 
         if (i.mediaIndicator) {
             item.enclosure_type = 'audio/mpeg';
-            item.itunes_item_image = i.image?.imgSrc.split(/\?/, 1)[0] ?? undefined;
+            item.itunes_item_image = i.image?.imgSrc.split(/\?/, 1)[0];
             item.itunes_duration = i.mediaIndicator.duration;
         }
 
@@ -175,7 +175,7 @@ async function handler(ctx) {
 
     return {
         item: items,
-        title: $('title').first().text(),
+        title: $('title').text(),
         link: currentUrl,
         description: $('meta[property="og:description"]').prop('content'),
         language: $('html').prop('lang') as Language,

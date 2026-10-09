@@ -1,12 +1,8 @@
 import { load } from 'cheerio';
-import type { BrowserContext } from 'patchright';
 
 import cache from '@/utils/cache';
-import logger from '@/utils/logger';
+import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
-import { getCookies, setCookies } from '@/utils/playwright-utils';
-
-let cookie;
 
 const baseUrl = 'https://www.cw.com.tw';
 
@@ -29,48 +25,14 @@ const pathMap = {
     },
 };
 
-const getCookie = async (context) => {
-    if (!cookie) {
-        cookie = await cache.tryGet('cw:cookie', async () => {
-            const page = await context.newPage();
-            await page.route('**/*', (route) => {
-                const request = route.request();
-                request.resourceType() === 'document' || request.resourceType() === 'script' ? route.continue() : route.abort();
-            });
-            logger.http(`Requesting ${baseUrl}/user/get/cookie-bar`);
-            await page.goto(`${baseUrl}/user/get/cookie-bar`, {
-                waitUntil: 'domcontentloaded',
-            });
-            cookie = await getCookies(page);
-            await page.close();
-            return cookie;
-        });
-    }
-    return cookie;
-};
-
-const parsePage = async (path, context: BrowserContext, ctx) => {
+const parsePage = async (path, ctx) => {
     const pageUrl = `${baseUrl}${pathMap[path].pageUrl(ctx.req.param('channel'))}`;
 
-    const cookie = await getCookie(context);
-    const page = await context.newPage();
-    await page.route('**/*', (route) => {
-        const request = route.request();
-        request.resourceType() === 'document' || request.resourceType() === 'script' ? route.continue() : route.abort();
-    });
-    await setCookies(page, cookie, 'cw.com.tw');
-    logger.http(`Requesting ${pageUrl}`);
-    await page.goto(pageUrl, {
-        waitUntil: 'domcontentloaded',
-    });
-
-    await page.waitForSelector('.caption');
-    const response = await page.evaluate(() => document.documentElement.getHTML());
-    await page.close();
+    const response = await ofetch(pageUrl);
     const $ = load(response);
 
     const list = parseList($, ctx.req.query('limit') ? Number(ctx.req.query('limit')) : pathMap[path].limit);
-    const items = await parseItems(list, context);
+    const items = await parseItems(list);
 
     return { $, items };
 };
@@ -88,20 +50,11 @@ const parseList = ($, limit) =>
         })
         .slice(0, limit);
 
-const parseItems = (list, context: BrowserContext) =>
+const parseItems = (list) =>
     Promise.all(
         list.map((item) =>
             cache.tryGet(item.link, async () => {
-                const page = await context.newPage();
-                await page.route('**/*', (route) => {
-                    const request = route.request();
-                    request.resourceType() === 'document' || request.resourceType() === 'script' ? route.continue() : route.abort();
-                });
-                await page.goto(item.link, {
-                    waitUntil: 'domcontentloaded',
-                });
-                const response = await page.evaluate(() => document.documentElement.getHTML());
-                await page.close();
+                const response = await ofetch(item.link);
                 const $ = load(response);
 
                 const meta = JSON.parse($('head script[type="application/ld+json"]:contains("NewsArticle")').first().text());
@@ -126,6 +79,4 @@ const parseItems = (list, context: BrowserContext) =>
         )
     );
 
-export { baseUrl, getCookie, parseItems, parseList, parsePage, pathMap };
-
-export { setCookies } from '@/utils/playwright-utils';
+export { baseUrl, parseItems, parseList, parsePage, pathMap };

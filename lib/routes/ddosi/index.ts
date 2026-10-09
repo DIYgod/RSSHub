@@ -39,10 +39,10 @@ async function handler() {
         const date = parseDate(item.find('.meta-date a time').attr('datetime')!);
 
         return {
-            title: String(title),
-            description: String(description),
+            title,
+            description,
             pubDate: date,
-            link: String(href),
+            link: href,
         };
     });
 

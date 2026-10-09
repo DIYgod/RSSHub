@@ -36,11 +36,13 @@ async function handler(ctx: Context) {
         $('script').each((_, el) => {
             const text = $(el).text();
             const match = text.match(/\\"appID\\":\\"(\w+)\\",\\"apiKey\\":\\"(\w+)\\"/);
-            if (match) {
-                appId = match[1];
-                apiKey = match[2];
-                return false;
+            if (!match) {
+                return;
             }
+
+            appId = match[1];
+            apiKey = match[2];
+            return false;
         });
         if (!appId || !apiKey) {
             throw new Error('Failed to extract Algolia credentials from iapp.org');

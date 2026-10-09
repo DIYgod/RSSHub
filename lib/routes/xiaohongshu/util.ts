@@ -237,14 +237,15 @@ async function getFullNote(link, displayLivePhoto) {
             const streamTypes = ['av1', 'h264', 'h265', 'h266'];
             for (const type of streamTypes) {
                 const streams = note.video?.media?.stream?.[type];
-                if (streams?.length > 0) {
-                    const stream = streams[0];
-                    if (stream.masterUrl) {
-                        videoUrls.push(stream.masterUrl);
-                    }
-                    if (stream.backupUrls?.length) {
-                        videoUrls.push(...stream.backupUrls);
-                    }
+                if (!streams?.length) {
+                    continue;
+                }
+                const stream = streams[0];
+                if (stream.masterUrl) {
+                    videoUrls.push(stream.masterUrl);
+                }
+                if (stream.backupUrls?.length) {
+                    videoUrls.push(...stream.backupUrls);
                 }
             }
 
@@ -264,13 +265,14 @@ async function getFullNote(link, displayLivePhoto) {
                         const streamTypes = ['av1', 'h264', 'h265', 'h266'];
                         for (const type of streamTypes) {
                             const streams = image.stream?.[type];
-                            if (streams?.length > 0) {
-                                if (streams[0].masterUrl) {
-                                    videoUrls.push(streams[0].masterUrl);
-                                }
-                                if (streams[0].backupUrls?.length) {
-                                    videoUrls.push(...streams[0].backupUrls);
-                                }
+                            if (!streams?.length) {
+                                continue;
+                            }
+                            if (streams[0].masterUrl) {
+                                videoUrls.push(streams[0].masterUrl);
+                            }
+                            if (streams[0].backupUrls?.length) {
+                                videoUrls.push(...streams[0].backupUrls);
                             }
                         }
 

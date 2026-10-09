@@ -21,7 +21,11 @@ async function handler() {
         .toArray()
         .map((e) => {
             const $e = $(e);
-            const data = $e.data('rn-track-value') as { title: string; kiji_id_raw: string };
+            const trackValue = $e.attr('data-rn-track-value');
+            if (!trackValue) {
+                return null;
+            }
+            const data: { title: string; kiji_id_raw: string } = JSON.parse(trackValue);
             const title = data.title;
             const link = `${url}/article/${data.kiji_id_raw}/`;
 
@@ -37,7 +41,8 @@ async function handler() {
                 description: desc,
                 link,
             };
-        });
+        })
+        .filter((item) => item !== null);
 
     return {
         title: '日本経済新聞',

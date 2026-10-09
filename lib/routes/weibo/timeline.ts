@@ -22,7 +22,8 @@ export const route: Route = {
             },
             {
                 name: 'WEIBO_REDIRECT_URL',
-                description: '',
+                optional: true,
+                description: "OAuth callback URL. Defaults to `<request origin>/weibo/timeline/0`. Set it when the auto-composed URL doesn't work",
             },
         ],
         requirePuppeteer: false,
@@ -93,7 +94,7 @@ async function handler(ctx) {
         );
         // 检查token失效
         if (response.error !== undefined) {
-            const { app_key = '', redirect_url = ctx.req.origin + '/weibo/timeline/0' } = config.weibo;
+            const { app_key = '', redirect_url = `${new URL(ctx.req.url).origin}/weibo/timeline/0` } = config.weibo;
 
             ctx.status = 302;
             ctx.set({
@@ -164,8 +165,8 @@ async function handler(ctx) {
             item: resultItem,
         });
     }
-    if (uid === '0' || ctx.req.query()) {
-        const { app_key = '', redirect_url = ctx.req.origin + '/weibo/timeline/0', app_secret = '' } = config.weibo;
+    if (uid === '0' || ctx.req.query('code')) {
+        const { app_key = '', redirect_url = `${new URL(ctx.req.url).origin}/weibo/timeline/0`, app_secret = '' } = config.weibo;
 
         const code = ctx.req.query('code');
         const routeParams = ctx.req.query('state');
@@ -176,14 +177,11 @@ async function handler(ctx) {
             const expires_in = rep.data.expires_in;
             await cache.set('weibotimelineuid' + uid, token, expires_in);
 
-            ctx.set({
-                'Content-Type': 'text/html; charset=UTF-8',
-                'Cache-Control': 'no-cache',
-            });
-            ctx.html(`<script>window.location = '/weibo/timeline/${uid}${routeParams ? `/${routeParams}` : ''}'</script>`);
+            ctx.header('Cache-Control', 'no-cache');
+            return ctx.redirect(`/weibo/timeline/${uid}${routeParams ? `/${routeParams}` : ''}`);
         }
     } else {
-        const { app_key = '', redirect_url = ctx.req.origin + '/weibo/timeline/0' } = config.weibo;
+        const { app_key = '', redirect_url = `${new URL(ctx.req.url).origin}/weibo/timeline/0` } = config.weibo;
 
         ctx.status = 302;
         ctx.set({

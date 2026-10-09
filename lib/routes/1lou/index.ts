@@ -18,7 +18,7 @@ export const handler = async (ctx: Context) => {
         .map(([key, value]) => `${encodeURIComponent(key)}=${encodeURIComponent(value)}`)
         .join('&');
 
-    const currentUrl = new URL(`${params && params.endsWith('.htm') ? params : `${params}.htm`}${queryString ? `?${queryString}` : ''}`, rootUrl).href;
+    const currentUrl = `${rootUrl}/${params && params.endsWith('.htm') ? params : `${params}.htm`}${queryString ? `?${queryString}` : ''}`;
 
     const { data: response } = await got(currentUrl);
 

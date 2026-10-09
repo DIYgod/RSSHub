@@ -95,7 +95,7 @@ async function handler(ctx) {
     const items = await Promise.all(list.map((item) => cache.tryGet(item.link, () => ProcessItem(item))));
 
     return {
-        title: String(title),
+        title,
         link: journalUrl,
         item: items,
     };

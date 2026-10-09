@@ -64,7 +64,7 @@ const createItem = (url: string) =>
         };
     });
 
-const get = async (url: string, encoding = 'gbk') => new TextDecoder(encoding).decode(await ofetch(url, { responseType: 'arrayBuffer' }));
+const get = async (url: string) => new TextDecoder('gbk').decode(await ofetch(url, { responseType: 'arrayBuffer' }));
 
 const parseObject = (reg: RegExp, str: string) => {
     const obj: Record<string, string> = {};

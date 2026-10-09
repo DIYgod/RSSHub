@@ -50,10 +50,7 @@ function ExpandInlineBytes(bytes: Buffer) {
 }
 
 function sortThumb(thumb: Api.TypePhotoSize) {
-    if (thumb instanceof Api.PhotoStrippedSize) {
-        return thumb.bytes.length;
-    }
-    if (thumb instanceof Api.PhotoCachedSize) {
+    if (thumb instanceof Api.PhotoStrippedSize || thumb instanceof Api.PhotoCachedSize) {
         return thumb.bytes.length;
     }
     if (thumb instanceof Api.PhotoSize) {
@@ -66,7 +63,7 @@ function sortThumb(thumb: Api.TypePhotoSize) {
 }
 
 function chooseLargestThumb(thumbs: Api.TypePhotoSize[]) {
-    thumbs = [...thumbs].toSorted((a, b) => sortThumb(a) - sortThumb(b));
+    thumbs = thumbs.toSorted((a, b) => sortThumb(a) - sortThumb(b));
     return thumbs.pop();
 }
 

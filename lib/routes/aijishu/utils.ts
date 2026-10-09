@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import { FetchError } from 'ofetch';
 
 import cache from '@/utils/cache';
 import got from '@/utils/got';
@@ -16,7 +17,7 @@ const parseArticle = (item) => {
             const $ = load(resp.data);
             desc = $('article.fmt').html();
         } catch (error) {
-            if ((error as { response: { status: number } }).response.status === 403) {
+            if (error instanceof FetchError && error.response?.status === 403) {
                 // skip it
             } else {
                 throw error;

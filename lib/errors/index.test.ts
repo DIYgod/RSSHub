@@ -152,7 +152,7 @@ describe('error handler sentry', () => {
             dsn: 'https://public@sentry.example.test/1',
             beforeSend,
             defaultIntegrations: false,
-            skipOpenTelemetrySetup: true,
+            enableOpenTelemetrySetup: false,
         });
 
         const { default: logger } = await import('@/utils/logger');

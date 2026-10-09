@@ -42,7 +42,7 @@ async function handler(): Promise<Data> {
         .toArray()
         .map((item) => {
             const el = $(item);
-            const linkEl = el.find('a').first();
+            const linkEl = el.find('a');
 
             const title = linkEl.find('span.text-gray-700').text().trim() || linkEl.text().trim();
             const rawLink = linkEl.attr('href');
@@ -74,10 +74,11 @@ async function handler(): Promise<Data> {
                     attachments.each((_, el) => {
                         const href = $detail(el).attr('href');
                         const text = $detail(el).text().trim();
-                        if (href && text) {
-                            const absoluteHref = href.startsWith('http') ? href : new URL(href, baseUrl).href;
-                            description += `<li><a href="${absoluteHref}">${text}</a></li>`;
+                        if (!href || !text) {
+                            return;
                         }
+
+                        description += `<li><a href="${href}">${text}</a></li>`;
                     });
                     description += '</ul>';
                 }

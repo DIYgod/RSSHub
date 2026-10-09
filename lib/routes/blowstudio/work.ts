@@ -17,7 +17,7 @@ async function handler() {
     const rootUrl = 'https://www.blowstudio.es';
     const response = await ofetch(`${rootUrl}/work/`);
     const $ = load(response);
-    const list = $('.portfolios.normal > ul > li').toArray().slice(0, 10);
+    const list = $('.portfolios.normal > ul > li').slice(0, 10).toArray();
 
     const videostyle = 'width="640" height="360"';
     const imgstyle = 'style="max-width: 650px; height: auto; object-fit: contain; flex: 0 0 auto;"';

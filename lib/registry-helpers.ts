@@ -123,6 +123,22 @@ export function applyModulesToNamespaces(modules: ModulesType, namespaces: Names
     }
 }
 
+// Literal segments (anything not starting with `:`) rank before regex-constrained params, which rank before plain params
+const segmentRank = (segment: string) => {
+    if (!segment.startsWith(':')) {
+        return 0;
+    }
+    return segment.includes('{') ? 1 : 2;
+};
+
+/**
+ * The first registered route wins, so more specific paths are registered first. Paths are compared by segment
+ * rank, position by position, and the first difference decides; literal values are ignored, so `/articles` and
+ * `/radios` tie and keep their original order. If one path runs out of segments first, it goes first (an exact
+ * route beats an omitted optional segment) unless it ends with a regex param, which may span several segments
+ * (e.g. `/:link{.+}`) and would shadow the longer path. This is a lexicographic order on segment ranks plus an
+ * end marker (lowest, or highest after a regex param), so it is transitive as `toSorted` requires.
+ */
 export const sortRoutes = (
     routes: Record<
         string,
@@ -135,26 +151,18 @@ export const sortRoutes = (
     Object.entries(routes).toSorted(([pathA], [pathB]) => {
         const segmentsA = pathA.split('/');
         const segmentsB = pathB.split('/');
-        const lenA = segmentsA.length;
-        const lenB = segmentsB.length;
-        const minLen = Math.min(lenA, lenB);
+        const minLen = Math.min(segmentsA.length, segmentsB.length);
 
         for (let i = 0; i < minLen; i++) {
-            const segmentA = segmentsA[i];
-            const segmentB = segmentsB[i];
-
-            // Literal segments have priority over parameter segments
-            if (segmentA.startsWith(':') !== segmentB.startsWith(':')) {
-                return segmentA.startsWith(':') ? 1 : -1;
-            }
-
-            // Regex-constrained parameters have priority over plain parameters
-            if (segmentA.startsWith(':') && segmentA.includes('{') !== segmentB.includes('{')) {
-                return segmentA.includes('{') ? -1 : 1;
+            const rankDiff = segmentRank(segmentsA[i]) - segmentRank(segmentsB[i]);
+            if (rankDiff !== 0) {
+                return rankDiff;
             }
         }
 
-        return 0;
+        // Both paths have the same rank at minLen - 1, the last segment of the shorter one
+        const endsWithRegexParam = segmentRank(segmentsA[minLen - 1]) === 1;
+        return endsWithRegexParam ? segmentsB.length - segmentsA.length : segmentsA.length - segmentsB.length;
     });
 
 // Deeper namespaces register first so a parent's param routes cannot shadow them
@@ -174,22 +182,24 @@ export function registerRssRoutes(app: Hono, namespaces: NamespacesType): void {
         for (const [path, routeData] of sortedRoutes) {
             const wrappedHandler: Handler = async (ctx) => {
                 logger.debug(`Matched route: ${routePath(ctx)}`);
-                if (!ctx.get('data')) {
-                    if (!routeData.handler) {
-                        if (process.env.NODE_ENV === 'test') {
-                            const { route } = await import(`./routes/${namespace}/${routeData.location}`);
-                            routeData.handler = route.handler;
-                        } else if (routeData.module) {
-                            const { route } = await routeData.module();
-                            routeData.handler = route.handler;
-                        }
-                    }
-                    const response = await routeData.handler(ctx);
-                    if (response instanceof Response) {
-                        return response;
-                    }
-                    ctx.set('data', response);
+                if (ctx.get('data')) {
+                    return;
                 }
+
+                if (!routeData.handler) {
+                    if (process.env.NODE_ENV === 'test') {
+                        const { route } = await import(`./routes/${namespace}/${routeData.location}`);
+                        routeData.handler = route.handler;
+                    } else if (routeData.module) {
+                        const { route } = await routeData.module();
+                        routeData.handler = route.handler;
+                    }
+                }
+                const response = await routeData.handler(ctx);
+                if (response instanceof Response) {
+                    return response;
+                }
+                ctx.set('data', response);
             };
             subApp.get(path, wrappedHandler);
         }

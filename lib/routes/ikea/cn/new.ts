@@ -43,8 +43,7 @@ async function handler() {
     const allProductSummaries: any[] = [];
 
     const loadMoreRequest = async ({ moreToken }: { moreToken?: string }) => {
-        const response = await request({ moreToken });
-        const { data } = response;
+        const { data } = await request({ moreToken });
         allProductSummaries.push(data.productSummaries);
         if (data.moreToken) {
             await loadMoreRequest({ moreToken: data.moreToken });

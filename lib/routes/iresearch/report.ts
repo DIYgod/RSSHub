@@ -214,7 +214,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
     const idObj = idOptions.find((option) => option.label === paramId || option.value === paramId);
 
     const type: number = typeObj.value;
-    const id: string | undefined = idObj ? String(idObj.value) : undefined;
+    const id: string | undefined = idObj?.value;
 
     const baseUrl = 'https://www.iresearch.com.cn';
     const imageBaseUrl = 'https://pic.iresearch.cn';

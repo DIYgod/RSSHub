@@ -5,7 +5,6 @@ import { afterEach, describe, expect, it, vi } from 'vitest';
 process.env.OPENAI_API_KEY = 'sk-1234567890';
 process.env.OPENAI_API_ENDPOINT = 'https://api.openai.mock/v1';
 
-vi.mock('@/utils/request-rewriter', () => ({ default: null }));
 const { config } = await import('@/config');
 const { default: app } = await import('@/app');
 const { default: parameter } = await import('@/middleware/parameter');
@@ -646,5 +645,21 @@ describe('filter-engine', () => {
         const response = await freshApp.request('/test/1?filter=abc(%3F%3Ddef)');
         expect(response.status).toBe(503);
         expect(await response.text()).toMatch(/somethingelse/);
+    });
+});
+
+describe('entities', () => {
+    it('decodes HTML entities', async () => {
+        const data = await runMiddleware(
+            {
+                title: 'Feed&nbsp;Title &amp; More',
+                description: 'Feed&hellip;',
+                item: [{ title: 'Item&rsquo;s &#8217; &notify ?a=1&lt=2' }],
+            },
+            {}
+        );
+        expect(data.title).toBe('Feed\u{A0}Title & More');
+        expect(data.description).toBe('Feed…');
+        expect(data.item[0].title).toBe('Item’s ’ &notify ?a=1&lt=2');
     });
 });

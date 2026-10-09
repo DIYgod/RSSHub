@@ -49,7 +49,7 @@ async function handler(ctx) {
         list.map((item) =>
             cache.tryGet(item.link, async () => {
                 const { data: response } = await got(item.link);
-                processFeedType2(item, response);
+                await processFeedType2(item, response);
                 return item;
             })
         )

@@ -10,17 +10,17 @@ import { renderDescription } from './templates/description';
 /**
  * Parses a tree array and returns an array of objects containing the key-value pairs.
  * @param {Array} tree - The tree to parse.
- * @param {Array} result - The result array to store the parsed key-value pairs. Default is an empty array.
  *
  * @returns {Array} - An array of objects containing the key-value pairs.
  */
-const parseTree = (tree, result: Array<{ key: any; value: any }> = []) => {
+const parseTree = (tree) => {
+    const result: Array<{ key: any; value: any }> = [];
     for (const obj of tree) {
         const { key, value, children } = obj;
         result.push({ key, value });
 
         if (children && children.length > 0) {
-            parseTree(children, result);
+            result.push(...parseTree(children));
         }
     }
 

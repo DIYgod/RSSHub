@@ -35,7 +35,8 @@ Specify options (in the format of query string) in parameter \`routeParams\` to 
 };
 
 async function handler(ctx) {
-    const { user, routeParams } = ctx.req.param();
+    const { user: rawUser, routeParams } = ctx.req.param();
+    const user = rawUser.startsWith('@') ? rawUser.slice(1) : rawUser;
     const options = parseRouteOptions(new URLSearchParams(routeParams));
 
     const response = await ofetch(profileUrl(user));

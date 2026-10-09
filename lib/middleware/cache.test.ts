@@ -1,6 +1,6 @@
 import { Context } from 'hono';
 import Parser from 'rss-parser';
-import { afterEach, describe, expect, it, vi } from 'vitest';
+import { afterAll, afterEach, beforeAll, beforeEach, describe, expect, it, vi } from 'vitest';
 
 import wait from '@/utils/wait';
 
@@ -208,5 +208,189 @@ describe('cache middleware error handling', () => {
 
         expect(setSpy.mock.calls.some(([key, value]) => key.startsWith('rsshub:path-requested:') && value === '0')).toBe(true);
         setSpy.mockRestore();
+    });
+});
+
+const coordinationContext = () => new Context(new Request('https://rsshub.example/test/cache'), { env: {}, path: '/test/cache' });
+const isControlKey = (key: string) => key.startsWith('rsshub:path-requested:');
+const loadCoordination = async () => {
+    // Pin the config values asserted below before the middleware loads the config.
+    vi.stubEnv('CACHE_TYPE', 'memory');
+    vi.stubEnv('FORMAT', 'rss');
+    vi.stubEnv('CACHE_REQUEST_TIMEOUT', '60');
+    vi.stubEnv('CACHE_EXPIRE', '300');
+    vi.resetModules();
+    const { default: middleware } = await import('./cache');
+    const { default: cacheModule } = await import('@/utils/cache/index');
+    const { globalCache } = cacheModule;
+    return {
+        middleware,
+        cacheModule,
+        globalCache,
+        cache: {
+            get: vi.spyOn(globalCache, 'get'),
+            set: vi.spyOn(globalCache, 'set'),
+            claim: vi.spyOn(globalCache, 'claim'),
+        },
+    };
+};
+type Loaded = Awaited<ReturnType<typeof loadCoordination>>;
+
+describe('cache coordination capabilities', () => {
+    let middleware: Loaded['middleware'];
+    let cacheModule: Loaded['cacheModule'];
+    let globalCache: Loaded['globalCache'];
+    let cache: Loaded['cache'];
+    let originalSupportsAtomicClaims: boolean;
+
+    const feed = { title: 'Feed', link: 'https://example.com', item: [{ title: 'Entry', link: 'https://example.com/entry' }] };
+
+    beforeAll(async () => {
+        ({ middleware, cacheModule, globalCache, cache } = await loadCoordination());
+        originalSupportsAtomicClaims = globalCache.supportsAtomicClaims;
+    });
+
+    beforeEach(() => {
+        vi.resetAllMocks();
+        cache.set.mockReturnValue(undefined);
+        vi.useFakeTimers();
+        globalCache.supportsAtomicClaims = false;
+        // Model a stale remote control key, including after the prior writer finished.
+        cache.get.mockImplementation((key: string) => (isControlKey(key) ? '1' : null));
+        cache.claim.mockResolvedValue(false);
+    });
+
+    afterEach(() => {
+        vi.useRealTimers();
+    });
+
+    afterAll(() => {
+        globalCache.supportsAtomicClaims = originalSupportsAtomicClaims;
+        vi.restoreAllMocks();
+        vi.unstubAllEnvs();
+    });
+
+    it('serves an HTTP/KV feed hit without touching a stale remote lock', async () => {
+        cache.get.mockImplementation((key: string) => (isControlKey(key) ? '1' : JSON.stringify(feed)));
+        const ctx = coordinationContext();
+
+        await middleware(ctx, vi.fn());
+
+        expect(ctx.get('data')).toEqual(feed);
+        expect(ctx.res.headers.get('RSSHub-Cache-Status')).toBe('HIT');
+        expect(cache.get).toHaveBeenCalledTimes(1);
+        expect(cache.claim).not.toHaveBeenCalled();
+        expect(cache.set).not.toHaveBeenCalled();
+        expect(vi.getTimerCount()).toBe(0);
+    });
+
+    it('fetches and caches HTTP/KV misses without waiting on or writing control keys', async () => {
+        const ctx = coordinationContext();
+        const next = vi.fn(() => {
+            ctx.set('data', structuredClone(feed));
+            return Promise.resolve();
+        });
+
+        await middleware(ctx, next);
+
+        expect(next).toHaveBeenCalledOnce();
+        expect(cache.get.mock.calls.every(([key]) => !isControlKey(key))).toBe(true);
+        expect(cache.claim).not.toHaveBeenCalled();
+        expect(cache.set).toHaveBeenCalledExactlyOnceWith(expect.stringMatching(/^rsshub:koa-redis-cache:/), expect.any(String), 300);
+        expect(JSON.parse(String(cache.set.mock.calls[0][1]))).toMatchObject(feed);
+        expect(ctx.get('cacheControlKey')).toBeUndefined();
+        expect(vi.getTimerCount()).toBe(0);
+    });
+
+    it('allows concurrent HTTP/KV cold misses even when remote reads remain stale', async () => {
+        const contexts = [coordinationContext(), coordinationContext()];
+        const fetcher = vi.fn((ctx: Context) => {
+            ctx.set('data', structuredClone(feed));
+            return Promise.resolve();
+        });
+
+        await Promise.all(contexts.map((ctx) => middleware(ctx, () => fetcher(ctx))));
+
+        expect(fetcher).toHaveBeenCalledTimes(2);
+        expect(cache.claim).not.toHaveBeenCalled();
+        expect(cache.get.mock.calls.every(([key]) => !isControlKey(key))).toBe(true);
+        expect(cache.set.mock.calls.every(([key]) => !isControlKey(key))).toBe(true);
+        expect(vi.getTimerCount()).toBe(0);
+    });
+
+    it('does not release a remote control key when an HTTP/KV route fails', async () => {
+        await expect(middleware(coordinationContext(), () => Promise.reject(new Error('route failed')))).rejects.toThrow('route failed');
+        expect(cache.set).not.toHaveBeenCalled();
+        expect(cache.claim).not.toHaveBeenCalled();
+    });
+
+    it('keeps atomic backends single-flight and serves the waiting request from the completed feed', async () => {
+        // Use the real memory backend, which claims atomically.
+        globalCache.supportsAtomicClaims = true;
+        cacheModule.clients.memoryCache?.clear();
+        cache.get.mockReset();
+        cache.set.mockReset();
+        cache.claim.mockReset();
+        const { promise: producerReady, resolve: markReady } = Promise.withResolvers<void>();
+        const { promise: releaseProducer, resolve: release } = Promise.withResolvers<void>();
+        const first = coordinationContext();
+        const second = coordinationContext();
+        const fetcher = vi.fn(async (ctx: Context) => {
+            if (ctx.get('data')) {
+                return;
+            }
+            markReady();
+            await releaseProducer;
+            ctx.set('data', structuredClone(feed));
+        });
+        const producer = middleware(first, () => fetcher(first));
+        await producerReady;
+        const waiter = middleware(second, () => fetcher(second));
+        await vi.advanceTimersByTimeAsync(0);
+        expect(cache.claim).toHaveBeenCalledTimes(2);
+        release();
+        await producer;
+        await vi.advanceTimersByTimeAsync(6000);
+        await waiter;
+
+        expect(second.res.headers.get('RSSHub-Cache-Status')).toBe('HIT');
+        expect(second.get('data')).toMatchObject(feed);
+        expect(cache.set.mock.calls.filter(([key]) => !isControlKey(key))).toHaveLength(1);
+        expect(cache.set.mock.calls.filter(([key, value]) => isControlKey(key) && value === '0')).toHaveLength(1);
+    });
+
+    it.each(['route', 'cache write'])('releases an owned atomic claim when the %s fails', async (failure) => {
+        globalCache.supportsAtomicClaims = true;
+        cache.claim.mockResolvedValue(true);
+        cache.set.mockImplementation((key: string) => {
+            if (!isControlKey(key)) {
+                throw new Error('cache write failed');
+            }
+        });
+        const ctx = coordinationContext();
+        const next = () => {
+            if (failure === 'route') {
+                return Promise.reject(new Error('route failed'));
+            }
+            ctx.set('data', structuredClone(feed));
+            return Promise.resolve();
+        };
+
+        await expect(middleware(ctx, next)).rejects.toThrow(`${failure} failed`);
+        expect(cache.set).toHaveBeenCalledWith(expect.stringMatching(/^rsshub:path-requested:/), '0', 60);
+    });
+
+    it('does not overwrite or release a competing atomic claim during takeover', async () => {
+        globalCache.supportsAtomicClaims = true;
+        cache.get.mockResolvedValue(null);
+        cache.claim.mockResolvedValue(false);
+        const next = vi.fn();
+        const result = expect(middleware(coordinationContext(), next)).rejects.toThrow('This path is currently fetching');
+        await vi.advanceTimersByTimeAsync(6000);
+        await result;
+
+        expect(cache.claim).toHaveBeenCalledTimes(2);
+        expect(cache.set).not.toHaveBeenCalled();
+        expect(next).not.toHaveBeenCalled();
     });
 });

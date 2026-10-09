@@ -3,7 +3,7 @@ import type { ParsedQuery } from 'query-string';
 import queryString from 'query-string';
 
 import { config } from '@/config';
-import type { DataItem, Language, Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate, parseRelativeDate } from '@/utils/parse-date';
@@ -177,7 +177,7 @@ async function handler(ctx) {
         title: $('title').text(),
         link: currentUrl,
         description: $('meta[name="description"]').prop('content'),
-        language: 'zh-CN' as Language,
+        language: 'zh-CN' as const,
         icon,
         logo: icon,
         subtitle: $('meta[name="application-name"]').prop('content'),
@@ -192,11 +192,13 @@ function getDescription($) {
     // handle lazyload image
     descriptionEl.find('img').each((_, img) => {
         const $img = $(img);
-        if ($img.attr('src')?.endsWith('none.gif') && $img.attr('file')) {
-            $img.attr('src', $img.attr('file'));
-            $img.removeAttr('file');
-            $img.removeAttr('zoomfile');
+        if (!($img.attr('src')?.endsWith('none.gif') && $img.attr('file'))) {
+            return;
         }
+
+        $img.attr('src', $img.attr('file'));
+        $img.removeAttr('file');
+        $img.removeAttr('zoomfile');
     });
 
     return descriptionEl.length > 0 ? descriptionEl.html() : $('div.alert_info').html();

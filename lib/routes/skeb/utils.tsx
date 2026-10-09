@@ -56,7 +56,7 @@ interface Creator {
 }
 
 export function processWork(work: Work): DataItem | null {
-    if (!work || work.private === true) {
+    if (!work || work.private) {
         return null;
     }
 

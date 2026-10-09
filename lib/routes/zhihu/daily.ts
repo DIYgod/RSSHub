@@ -1,10 +1,9 @@
-import { load } from 'cheerio';
-
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import logger from '@/utils/logger';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/daily',
@@ -14,7 +13,7 @@ export const route: Route = {
     features: {
         requireConfig: false,
         requirePuppeteer: false,
-        antiCrawler: true,
+        antiCrawler: false,
         supportBT: false,
         supportPodcast: false,
         supportScihub: false,
@@ -31,37 +30,31 @@ export const route: Route = {
 };
 
 async function handler() {
-    const response = await ofetch('https://daily.zhihu.com/');
-
-    const $ = load(response);
+    const latest = await ofetch('https://daily.zhihu.com/api/4/stories/latest');
 
     const items = (
         await Promise.all(
-            $('.box')
-                .toArray()
-                .map(async (item) => {
-                    const $item = $(item);
-                    const linkElem = $item.find('.link-button');
-                    const storyUrl = 'https://daily.zhihu.com/api/4' + linkElem.attr('href');
+            latest.stories.map(async (story) => {
+                const storyUrl = `https://daily.zhihu.com/api/4/story/${story.id}`;
 
-                    try {
-                        const storyJson = await cache.tryGet(storyUrl, async () => {
-                            const response = await ofetch(storyUrl);
-                            return response;
-                        });
+                try {
+                    const storyJson = await cache.tryGet(storyUrl, async () => {
+                        const response = await ofetch(storyUrl);
+                        return response;
+                    });
 
-                        return {
-                            title: storyJson.title,
-                            description: storyJson.body,
-                            link: storyJson.url,
-                            image: storyJson.image,
-                            pubDate: storyJson.publish_time ? parseDate(storyJson.publish_time, 'X') : undefined,
-                        };
-                    } catch (error) {
-                        logger.debug(`Failed to fetch story detail: ${storyUrl} - ${error instanceof Error ? error.message : String(error)}`);
-                        return null;
-                    }
-                })
+                    return {
+                        title: storyJson.title,
+                        description: storyJson.body,
+                        link: storyJson.url,
+                        image: storyJson.image,
+                        pubDate: storyJson.publish_time ? parseDate(storyJson.publish_time, 'X') : timezone(parseDate(latest.date, 'YYYYMMDD'), 8),
+                    };
+                } catch (error) {
+                    logger.debug(`Failed to fetch story detail: ${storyUrl} - ${error instanceof Error ? error.message : String(error)}`);
+                    return null;
+                }
+            })
         )
     ).filter((item) => item !== null);
 

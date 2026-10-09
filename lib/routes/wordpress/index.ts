@@ -128,7 +128,7 @@ async function handler(ctx) {
             allowEmpty: true,
             image: feed.image?.url,
             language: feed.language,
-        } as Data;
+        } satisfies Data;
     }
 }
 

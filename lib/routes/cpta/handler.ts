@@ -1,6 +1,7 @@
 import { load } from 'cheerio';
 import pMap from 'p-map';
 
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
@@ -26,8 +27,13 @@ const NEWS_TYPES = {
     },
 } satisfies Record<string, NewsCategory>;
 
+const isNewsType = (category: string): category is keyof typeof NEWS_TYPES => Object.hasOwn(NEWS_TYPES, category);
+
 const handler: Route['handler'] = async (ctx) => {
-    const category = ctx.req.param('category') as keyof typeof NEWS_TYPES;
+    const category = ctx.req.param('category');
+    if (!category || !isNewsType(category)) {
+        throw new InvalidParameterError(`Invalid category: ${category}. Use notice or performance.`);
+    }
     const BASE_URL = NEWS_TYPES[category].baseUrl;
     // Fetch the index page
     const { data: listResponse } = await got(BASE_URL);

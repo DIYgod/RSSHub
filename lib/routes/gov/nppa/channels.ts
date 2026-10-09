@@ -33,21 +33,22 @@ async function handler(ctx: Context): Promise<Data> {
                 link: new URL(a.attr('href')!, link).href,
                 pubDate: timezone(parseDate($item.find('span').text().replaceAll(/[[\]]/g, '')), 8),
             };
-        }) as DataItem[];
+        });
 
     return {
         title: `国家新闻出版署 - ${$('.m2nRt').text().trim()}`,
         link,
         item: await Promise.all(
             list.map((item) =>
-                cache.tryGet(item.link!, async () => {
-                    const response = await ofetch(item.link!);
+                cache.tryGet(item.link, async (): Promise<DataItem> => {
+                    const response = await ofetch(item.link);
                     const $ = load(response);
 
-                    item.title = $('.m3page_t').text().trim() || $('head title').text();
-                    item.description = $('.m3pageEdit').html();
-
-                    return item;
+                    return {
+                        ...item,
+                        title: $('.m3page_t').text().trim() || $('head title').text(),
+                        description: $('.m3pageEdit').html(),
+                    };
                 })
             )
         ),

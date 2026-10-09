@@ -27,7 +27,7 @@ async function handler() {
                 '：' +
                 $('.news_sale_title a').text() +
                 '<br>' +
-                $('.news_sale_detail .sale_time_end').first().text() +
+                $('.news_sale_detail .sale_time_end').text() +
                 '<br>' +
                 '发布时间：' +
                 $('.news_sale_detail .sale_time_end.inline_right').text(),

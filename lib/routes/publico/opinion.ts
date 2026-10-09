@@ -16,7 +16,7 @@ export const route: Route = {
     example: '/publico/opinion',
     features: {
         requireConfig: false,
-        requirePuppeteer: true,
+        requirePuppeteer: false,
         antiCrawler: false,
         supportBT: false,
         supportPodcast: false,

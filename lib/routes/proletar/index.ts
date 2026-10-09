@@ -29,8 +29,8 @@ async function handler(ctx: Context) {
     const $ = load(response);
 
     const list: DataItem[] = $('.archive-item-link')
-        .toArray()
         .slice(0, 15)
+        .toArray()
         .map((item) => {
             const $item = $(item);
             return {

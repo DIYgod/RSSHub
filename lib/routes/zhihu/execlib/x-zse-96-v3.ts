@@ -115,10 +115,11 @@ export const encrypt = (md5Str) => {
 
         current |= e;
 
-        if (i_mod_3 === 2) {
-            resultStr += encode(current);
-            current = 0;
+        if (i_mod_3 !== 2) {
+            continue;
         }
+        resultStr += encode(current);
+        current = 0;
     }
     return resultStr;
 };

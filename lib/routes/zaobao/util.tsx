@@ -39,12 +39,18 @@ export const parseList = async (
     }
     const origin = new URL(pageResponse.url).origin;
 
-    const title = $('meta[property="og:title"]').attr('content') as string;
+    const title = $('meta[property="og:title"]').attr('content');
+    if (!title) {
+        throw new Error(`zaobao: no og:title on ${sectionUrl}`);
+    }
 
     const resultList = await Promise.all(
         data.toArray().map((item) => {
             const $item = $(item);
-            const href = $item.attr('href') as string;
+            const href = $item.attr('href');
+            if (!href) {
+                throw new Error(`zaobao: article link without href on ${sectionUrl}`);
+            }
             const link = baseUrl + href;
 
             return cache.tryGet(link, async () => {

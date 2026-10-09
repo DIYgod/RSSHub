@@ -13,6 +13,7 @@ on:
 
 permissions:
     checks: write
+    code-quality: write
 
 jobs:
     vitest:
@@ -40,23 +41,31 @@ jobs:
               run: pnpm i
             - name: Run postinstall script for dependencies
               run: pnpm rb && pnpm exec patchright install chromium
-            - name: Build routes
-              run: pnpm build
-            - name: Build worker routes
-              run: WORKER_BUILD=true pnpm build:routes
-            - name: Build worker
-              run: pnpm worker-build
+            - parallel:
+                  - name: Build routes
+                    run: pnpm build
+                  - name: Build worker
+                    run: pnpm worker-build
             - name: Test all and generate coverage
               run: pnpm run vitest:coverage --reporter=github-actions
               env:
                   REDIS_URL: redis://localhost:${{ job.services.redis.ports['6379'] }}/
             - name: Test worker runtime (workerd)
               run: pnpm run vitest:workerd
-            - name: Upload coverage to Codecov
-              if: ${{ matrix.node-version == 'lts/*' }}
-              uses: codecov/codecov-action@fb8b3582c8e4def4969c97caa2f19720cb33a72f # v7.0.0
-              with:
-                  token: ${{ secrets.CODECOV_TOKEN }} # not required for public repos as documented, but seems broken
+            - parallel:
+                  - name: Upload coverage to Codecov
+                    if: ${{ matrix.node-version == 'lts/*' }}
+                    uses: codecov/codecov-action@303a32d7a59b442fa8d48b6a1cc6825c09c847a5 # v7.1.1
+                    with:
+                        token: ${{ secrets.CODECOV_TOKEN }} # not required for public repos as documented, but seems broken
+                  - name: Upload coverage to GitHub
+                    if: ${{ matrix.node-version == 'lts/*' }}
+                    uses: actions/upload-code-coverage@2b21a77928be8d5168c2b9581a67f2adbebacc52 # v1.4.4
+                    with:
+                        file: coverage/cobertura-coverage.xml
+                        language: TypeScript
+                        label: code-coverage/vitest
+                        fail-on-error: false
 
     playwright:
         runs-on: ubuntu-latest
@@ -88,25 +97,26 @@ jobs:
               env: ${{ fromJSON(matrix.chromium.environment) }}
             - name: Run postinstall script for dependencies
               run: pnpm rb
-            - name: Build routes
-              run: pnpm build
-            - name: Install bundled Chromium
-              if: ${{ matrix.chromium.dependency == '' }}
-              run: pnpm exec patchright install chromium
-            - name: Install Chromium
-              if: ${{ matrix.chromium.dependency != '' }}
-              # 'chromium-browser' from Ubuntu APT repo is a dummy package. Its version (85.0.4183.83) means
-              # nothing since it calls Snap (disgusting!) to install Chromium, which should be up-to-date.
-              # That's not really a problem since the Chromium-bundled Docker image is based on Debian trixie,
-              # which provides up-to-date native packages.
-              run: |
-                  set -eux
-                  curl -s "https://dl.google.com/linux/linux_signing_key.pub" | gpg --dearmor |
-                    sudo tee /etc/apt/trusted.gpg.d/google-chrome.gpg > /dev/null
-                  echo "deb [arch=amd64] https://dl.google.com/linux/chrome/deb/ stable main" |
-                    sudo tee /etc/apt/sources.list.d/google-chrome.list > /dev/null
-                  sudo apt-get update
-                  sudo apt-get install -yq --no-install-recommends ${{ matrix.chromium.dependency }}
+            - parallel:
+                  - name: Build routes
+                    run: pnpm build
+                  - name: Install bundled Chromium
+                    if: ${{ matrix.chromium.dependency == '' }}
+                    run: pnpm exec patchright install chromium
+                  - name: Install Chromium
+                    if: ${{ matrix.chromium.dependency != '' }}
+                    # 'chromium-browser' from Ubuntu APT repo is a dummy package. Its version (85.0.4183.83) means
+                    # nothing since it calls Snap (disgusting!) to install Chromium, which should be up-to-date.
+                    # That's not really a problem since the Chromium-bundled Docker image is based on Debian trixie,
+                    # which provides up-to-date native packages.
+                    run: |
+                        set -eux
+                        curl -s "https://dl.google.com/linux/linux_signing_key.pub" | gpg --dearmor |
+                          sudo tee /etc/apt/trusted.gpg.d/google-chrome.gpg > /dev/null
+                        echo "deb [arch=amd64] https://dl.google.com/linux/chrome/deb/ stable main" |
+                          sudo tee /etc/apt/sources.list.d/google-chrome.list > /dev/null
+                        sudo apt-get update
+                        sudo apt-get install -yq --no-install-recommends ${{ matrix.chromium.dependency }}
             - name: Test Playwright
               run: |
                   set -eux

@@ -55,8 +55,8 @@ async function handler(ctx) {
 
 function parseXyxwList($, typeDict, type) {
     return $('section.n_titu ul li')
-        .toArray()
         .slice(0, 6)
+        .toArray()
         .map((element) => {
             const $element = $(element);
             const $link = $element.find('a');
@@ -79,8 +79,8 @@ function parseXyxwList($, typeDict, type) {
 
 function parseOtherList($, typeDict, type) {
     return $('.n_notice ul.ul li')
-        .toArray()
         .slice(0, 16)
+        .toArray()
         .map((element) => {
             const $element = $(element);
             const $link = $element.find('a');

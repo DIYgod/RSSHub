@@ -18,7 +18,7 @@ export async function getClient(authParams?: UserAuthParams, session?: string) {
     if (client) {
         return client;
     }
-    const apiId = Number(config.telegram.apiId ?? 4);
+    const apiId = config.telegram.apiId ?? 4;
     const apiHash = config.telegram.apiHash ?? '014b35b6184100b085b0d0572f9b5103';
 
     const stringSession = new StringSession(session ?? config.telegram.session);
@@ -26,12 +26,12 @@ export async function getClient(authParams?: UserAuthParams, session?: string) {
         connectionRetries: Infinity,
         autoReconnect: true,
         retryDelay: 3000,
-        maxConcurrentDownloads: Number(config.telegram.maxConcurrentDownloads ?? 10),
+        maxConcurrentDownloads: config.telegram.maxConcurrentDownloads ?? 10,
         proxy:
             config.telegram.proxy?.host && config.telegram.proxy.port && config.telegram.proxy.secret
                 ? {
                       ip: config.telegram.proxy.host,
-                      port: Number(config.telegram.proxy.port),
+                      port: config.telegram.proxy.port,
                       MTProxy: true,
                       secret: config.telegram.proxy.secret,
                   }

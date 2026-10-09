@@ -23,7 +23,10 @@ const handler = async (ctx: Context): Promise<Data | null> => {
         .map((li): DataItem & { link: string } => {
             const a = $(li).find('a');
             const pubDate = $(li).find('span').text();
-            const href = a.prop('href') as string;
+            const href = a.prop('href');
+            if (!href) {
+                throw new Error(`Missing link in list item on ${currentUrl}`);
+            }
             const link = href.startsWith('http') ? href : new URL(href, currentUrl).href;
             return {
                 title: a.prop('title') as string,

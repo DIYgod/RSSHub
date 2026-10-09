@@ -81,10 +81,7 @@ const appClients: ClientWrapper[] = [];
 let index = -1;
 
 const init = () => {
-    if (appClients.length) {
-        return;
-    }
-    if (!config.twitter.consumerKey || !config.twitter.consumerSecret) {
+    if (appClients.length || !config.twitter.consumerKey || !config.twitter.consumerSecret) {
         return;
     }
 

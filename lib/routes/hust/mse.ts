@@ -11,7 +11,7 @@ export const handler = async (ctx) => {
 
     const domain = 'mse.hust.edu.cn';
     const rootUrl = `https://${domain}`;
-    const currentUrl = new URL(`${category}.htm`, rootUrl).href;
+    const currentUrl = `${rootUrl}/${category}.htm`;
 
     const { data: response } = await got(currentUrl);
 
