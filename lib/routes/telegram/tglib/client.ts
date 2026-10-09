@@ -1,11 +1,38 @@
 import { Api, TelegramClient } from 'teleproto';
 import type { UserAuthParams } from 'teleproto/client/auth';
+import type { ProxyInterface } from 'teleproto/network/connection/TCPMTProxy';
 import { StringSession } from 'teleproto/sessions/index.js';
 
 import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 
 let client: TelegramClient | undefined;
+
+const getProxy = (): ProxyInterface | undefined => {
+    const telegramProxy = config.telegram.proxy;
+    if (telegramProxy?.host && telegramProxy.port && telegramProxy.secret) {
+        return { ip: telegramProxy.host, port: telegramProxy.port, MTProxy: true, secret: telegramProxy.secret };
+    }
+    if (!config.proxyUri?.startsWith('socks')) {
+        return;
+    }
+    try {
+        const url = new URL(config.proxyUri);
+        if (!['socks:', 'socks4:', 'socks4a:', 'socks5:', 'socks5h:'].includes(url.protocol)) {
+            throw new Error('Unsupported SOCKS version');
+        }
+        return {
+            ip: url.hostname.startsWith('[') ? url.hostname.slice(1, -1) : url.hostname,
+            port: Number(url.port || 1080),
+            socksType: url.protocol.startsWith('socks4') ? 4 : 5,
+            username: url.username ? decodeURIComponent(url.username) : undefined,
+            password: url.password ? decodeURIComponent(url.password) : undefined,
+        };
+    } catch {
+        throw new InvalidParameterError('Telegram requires a valid SOCKS4 or SOCKS5 proxy URL in PROXY_URI.');
+    }
+};
 
 const onError = (err: Error) => {
     throw new Error('Cannot start TG: ' + err);
@@ -27,15 +54,7 @@ export async function getClient(authParams?: UserAuthParams, session?: string) {
         autoReconnect: true,
         retryDelay: 3000,
         maxConcurrentDownloads: config.telegram.maxConcurrentDownloads ?? 10,
-        proxy:
-            config.telegram.proxy?.host && config.telegram.proxy.port && config.telegram.proxy.secret
-                ? {
-                      ip: config.telegram.proxy.host,
-                      port: config.telegram.proxy.port,
-                      MTProxy: true,
-                      secret: config.telegram.proxy.secret,
-                  }
-                : undefined,
+        proxy: getProxy(),
     });
 
     await client.start({ ...authParams, onError } as UserAuthParams);

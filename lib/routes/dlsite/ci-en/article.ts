@@ -1,9 +1,11 @@
 import { load } from 'cheerio';
 
+import { config } from '@/config';
 import type { DataItem, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
+import md5 from '@/utils/md5';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
@@ -14,7 +16,7 @@ export const route: Route = {
     example: '/dlsite/ci-en/7400/article',
     parameters: { id: 'Creator id, can be found in URL' },
     features: {
-        requireConfig: false,
+        requireConfig: [{ name: 'CI_EN_COOKIE', optional: true, description: 'Cookie of a signed-in Ci-en account with access to the desired articles' }],
         requirePuppeteer: false,
         antiCrawler: false,
         supportBT: false,
@@ -29,6 +31,7 @@ export const route: Route = {
     ],
     name: "Ci-en Creators' Article",
     maintainers: ['nczitzk'],
+    description: 'Set `CI_EN_COOKIE` on a self-hosted instance to retrieve articles available to your account and subscribed plans.',
     handler,
 };
 
@@ -38,32 +41,37 @@ async function handler(ctx) {
 
     const rootUrl = 'https://ci-en.dlsite.com';
     const currentUrl = `${rootUrl}/creator/${id}/article?mode=list`;
+    const cookie = config.ciEn.cookie;
+    const cacheScope = cookie ? md5(cookie) : 'public';
+    const headers = cookie ? { Cookie: cookie } : {};
 
     const response = await got({
         method: 'get',
         url: currentUrl,
+        headers,
     });
 
     const $ = load(response.data);
 
-    let items = $('.c-postedArticle-info a')
+    let items = $('.c-postedArticle .c-cardLink, .c-postedArticle-info a')
         .slice(0, limit)
         .toArray()
         .map((item): DataItem => {
             const $item = $(item);
 
             return {
-                title: $item.text(),
-                link: $item.attr('href'),
+                title: $item.find('.e-title').text() || $item.text(),
+                link: new URL($item.attr('href')!, rootUrl).href,
             };
         });
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link!, async () => {
+            cache.tryGet(`dlsite:ci-en:${cacheScope}:${item.link}`, async () => {
                 const detailResponse = await got({
                     method: 'get',
                     url: item.link,
+                    headers,
                 });
 
                 const content = load(detailResponse.data);

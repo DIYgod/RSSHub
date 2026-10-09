@@ -286,10 +286,11 @@ export const paginationTweets = async (endpoint: string, userId: number | undefi
     }
 
     const moduleItems = instructions.find((i) => i.type === 'TimelineAddToModule')?.moduleItems;
-    const entries = instructions.find((i) => i.type === 'TimelineAddEntries')?.entries;
+    const entries = instructions.find((i) => i.type === 'TimelineAddEntries')?.entries ?? [];
     const gridEntries = entries.find((i) => i.entryId === 'profile-grid-0')?.content?.items;
 
-    return gridEntries || moduleItems || entries || [];
+    const pinnedEntries = instructions.filter((instruction) => instruction.type === 'TimelinePinEntry' && instruction.entry).map((instruction) => instruction.entry);
+    return new Map([...pinnedEntries, ...(gridEntries || moduleItems || entries)].map((entry) => [entry.entryId, entry])).values().toArray();
 };
 
 const hydrateLegacyUser = (legacy: any, tweet: any) => {
@@ -307,6 +308,7 @@ const hydrateLegacyUser = (legacy: any, tweet: any) => {
 
 export function gatherLegacyFromData(entries: any[], filterNested?: string[], userId?: number | string) {
     const tweets: any[] = [];
+    const contextTweets = new Map<string, any>();
     const filteredEntries: any[] = [];
     for (const entry of entries) {
         const entryId = entry.entryId;
@@ -362,6 +364,7 @@ export function gatherLegacyFromData(entries: any[], filterNested?: string[], us
             }
             hydrateLegacyUser(t.legacy, t);
             t.legacy.id_str = t.rest_id; // avoid falling back to conversation_id_str elsewhere
+            contextTweets.set(t.rest_id, t.legacy);
             const quote = t.quoted_status_result?.result?.tweet || t.quoted_status_result?.result;
             if (quote?.legacy) {
                 t.legacy.quoted_status = quote.legacy;
@@ -389,5 +392,11 @@ export function gatherLegacyFromData(entries: any[], filterNested?: string[], us
         }
     }
 
+    for (const tweet of contextTweets.values()) {
+        const parent = contextTweets.get(tweet.in_reply_to_status_id_str);
+        if (parent && parent !== tweet) {
+            tweet.in_reply_to_status = parent;
+        }
+    }
     return tweets;
 }

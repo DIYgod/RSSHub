@@ -4,12 +4,12 @@ import type { Data, DataItem, Route } from '@/types';
 import got from '@/utils/got';
 
 export const route: Route = {
-    path: '/entry/:feeds/:parameters?',
+    path: ['/entry/:feeds/:parameters?', '/all/:parameters?', '/default/:parameters?'],
     description: `1. Support to get all content: You can obtain the content of all subscription sources by using keywords such as \`/miniflux/all\` or \`/miniflux/default\`.
 2. Support to get the subscription content of a specific subscription source by its ID. Please obtain the subscription source ID on the page where it is located under \`Sources\` (shortcut keys \`g\` \`f\`). The URL for each category (or subscription source) displays its ID information. There are several format options available:
-   1. Support \`/miniflux/feed=[feed_id]\`, please replace \`[feed_id]\` with the actual ID of the subscribed feed (note that it should be just a number without brackets).
-   2. Support subscribing to multiple feeds using \`/miniflux/feed=[feed1_id]&feed=[feed2_id]\` or \`/miniflux/feeds=[feed1_id]&[feed2_id]\`.
-   3. Additionally, you can use shorthand notation by directly using feed IDs: \`/miniflux/[feed1_id]&[feed2_id]\`.
+   1. Support \`/miniflux/entry/feed=[feed_id]\`, please replace \`[feed_id]\` with the actual ID of the subscribed feed (note that it should be just a number without brackets).
+   2. Support subscribing to multiple feeds using \`/miniflux/entry/feed=[feed1_id]&feed=[feed2_id]\` or \`/miniflux/entry/feeds=[feed1_id]&[feed2_id]\`.
+   3. Additionally, you can use shorthand notation by directly using feed IDs: \`/miniflux/entry/[feed1_id]&[feed2_id]\`.
 3. Further customization options are available based on your needs:
    1. All parameters/options provided by MiniFlux are supported ([link](https://miniflux.app/docs/api.html#endpoint-get-feed-entries)). As noted in their documentation, multiple filtering options should be connected with \`&\`. Except for \`status\`, only the first occurrence of duplicate filter options will be considered.
    2. Specifically, this route defaults to sorting entries from new to old (\`direction=desc\`).
@@ -19,7 +19,7 @@ export const route: Route = {
       - Future support may include utilizing the \`link\` parameter to control output URLs (this functionality requires corresponding interfaces from MiniFlux). It could involve generating URLs through MiniFlux entity sharing features or original content links.
       - The output content quantity can be controlled via the 'limit' parameter; although all matching contents are typically outputted by default, **it is recommended that users set this parameter**.`,
     categories: ['other'],
-    example: '/miniflux/feeds=1&2&3/mark=read&limit=7&status=unread',
+    example: '/miniflux/entry/feeds=1&2&3/mark=read&limit=7&status=unread',
     parameters: {
         feeds: 'Subscribe source ID or get all.',
         parameters: 'Filter and set parameters, use `&` to connect multiple.',
@@ -139,9 +139,9 @@ async function handler(ctx) {
     const setMark: number[] = [];
     const setFeedName: number[] = [];
 
-    const feeds = ctx.req.param('feeds');
+    const feeds = ctx.req.param('feeds') ?? 'all';
 
-    let parameters = ctx.req.param('parameters');
+    let parameters = ctx.req.param('parameters') ?? '';
     // Set default direction
     if (parameters.search('direction=') === -1) {
         parameters += '&direction=desc';

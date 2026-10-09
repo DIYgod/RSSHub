@@ -1,0 +1,20 @@
+diff --git a/network/connection/TCPMTProxy.js b/network/connection/TCPMTProxy.js
+index 21b0e24..4b7241e 100644
+--- a/network/connection/TCPMTProxy.js
++++ b/network/connection/TCPMTProxy.js
+@@ -123,6 +123,7 @@ const TLS_RECORD_HANDSHAKE = 0x16;
+ const TLS_RECORD_CHANGE_CIPHER_SPEC = 0x14;
+ const TLS_RECORD_APPLICATION_DATA = 0x17;
+ const TLS_APP_DATA_PREFIX = Buffer.from([0x17, 0x03, 0x03]);
++const CLIENT_CHANGE_CIPHER_SPEC = Buffer.from([0x14, 0x03, 0x03, 0x00, 0x01, 0x01]);
+ const FAKE_TLS_HELLO_SIZE = 517;
+ const FAKE_TLS_HELLO_RANDOM_OFFSET = 11;
+ const FAKE_TLS_HELLO_RANDOM_LEN = 32;
+@@ -291,6 +292,7 @@ class FakeTlsSocket {
+         const hello = this.sendClientHello();
+         this.inner.write(hello);
+         await this.readAndVerifyServerHandshake();
++        this.inner.write(CLIENT_CHANGE_CIPHER_SPEC);
+     }
+     write(data) {
+         for (let off = 0; off < data.length; off += TLS_RECORD_MAX_PAYLOAD) {
