@@ -67,4 +67,45 @@ describe('RSS view', () => {
         expect(html).toContain('<category>Podcast</category>');
         expect(html).toContain('<category>News</category>');
     });
+
+    it('uses the first attachment when no explicit enclosure is provided', () => {
+        const html = renderToString(
+            <RSS
+                data={{
+                    title: 'Attachments',
+                    item: [
+                        {
+                            title: 'Post',
+                            image: 'https://example.com/cover.png',
+                            attachments: [
+                                { url: 'https://example.com/audio.mp3', mime_type: 'audio/mpeg' },
+                                { url: 'https://example.com/cover.png', mime_type: 'image/png' },
+                            ],
+                        },
+                    ],
+                }}
+            />
+        );
+        expect(html.match(/<enclosure /g)).toHaveLength(1);
+        expect(html).toContain('<enclosure url="https://example.com/audio.mp3" length="0" type="audio/mpeg"');
+    });
+
+    it('emits a single enclosure when the thumbnail is also an attachment', () => {
+        const html = renderToString(
+            <RSS
+                data={{
+                    title: 'Image attachment',
+                    item: [
+                        {
+                            title: 'Post',
+                            image: 'https://example.com/cover.png',
+                            attachments: [{ url: 'https://example.com/cover.png', mime_type: 'image/png' }],
+                        },
+                    ],
+                }}
+            />
+        );
+        expect(html.match(/<enclosure /g)).toHaveLength(1);
+        expect(html).toContain('<enclosure url="https://example.com/cover.png" length="0" type="image/png"');
+    });
 });

@@ -10,6 +10,7 @@ import sanitizeHtml from 'sanitize-html';
 
 import { config } from '@/config';
 import type { Data, DataItem } from '@/types';
+import { extractAttachments } from '@/utils/attachments';
 import cache from '@/utils/cache';
 import { isWorker } from '@/utils/is-worker';
 import ofetch from '@/utils/ofetch';
@@ -87,6 +88,7 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
         }
 
         const hideImages = ctx.req.query('show_image') === 'false';
+        const extractEnclosures = ctx.req.query('enclosure') === 'true';
         if (hideImages) {
             delete data.image;
         }
@@ -187,6 +189,10 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
                         $(elem).attr('referrerpolicy', 'no-referrer');
                     }
                 });
+
+                if (extractEnclosures) {
+                    item.attachments = extractAttachments($, item, hideImages);
+                }
 
                 item.description = $('body').html() + '' + (config.suffix || '');
 
@@ -353,6 +359,9 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
 
                 item.author = author || parsed_result?.author;
                 item.description = parsed_result && parsed_result.content.length > 40 ? decodeHTMLStrict(parsed_result.content) : description;
+                if (extractEnclosures && parsed_result?.content.length > 40 && item.description) {
+                    item.attachments = extractAttachments(load(item.description), item, hideImages);
+                }
             });
             await Promise.all(tasks);
         }

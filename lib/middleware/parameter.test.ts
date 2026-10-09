@@ -707,3 +707,38 @@ describe('show_image', () => {
         expect(data.item[0].image).toBe('https://example.com/a.png');
     });
 });
+
+describe('enclosure', () => {
+    it('extracts direct media and downloads, preserving metadata and rejecting unsafe or untyped links', async () => {
+        const data = await runMiddleware(
+            {
+                item: [
+                    {
+                        title: 'Media',
+                        link: 'https://example.com/posts/one',
+                        enclosure_url: 'https://example.com/audio.mp3',
+                        enclosure_type: 'audio/mpeg',
+                        enclosure_length: 123,
+                        description:
+                            '<img src="/cover.png"><video><source src="/stream?id=1" type="video/mp4"></video><audio src="/audio.mp3"></audio><a href="/report.pdf">Report</a><img data-src="/cover.png"><a href="/article">Article</a><video src="javascript:alert(1)" type="video/mp4"></video><img src="data:image/png;base64,abc"><a href="/constructor">Unknown</a>',
+                    },
+                ],
+            },
+            { enclosure: 'true' }
+        );
+        expect(data.item[0].attachments).toEqual([
+            expect.objectContaining({ url: 'https://example.com/audio.mp3', mime_type: 'audio/mpeg', size_in_bytes: 123 }),
+            { url: 'https://example.com/stream?id=1', mime_type: 'video/mp4' },
+            { url: 'https://example.com/cover.png', mime_type: 'image/png' },
+            { url: 'https://example.com/report.pdf', mime_type: 'application/pdf' },
+        ]);
+        expect(data.item[0].description).toContain('<video>');
+    });
+
+    it('keeps automatic extraction opt-in and respects hidden images', async () => {
+        const original = await runMiddleware(makeImageData(), {});
+        expect(original.item[0].attachments).toHaveLength(2);
+        const extracted = await runMiddleware(makeImageData(), { enclosure: 'true', show_image: 'false' });
+        expect(extracted.item[0].attachments.map((attachment) => attachment.mime_type)).toEqual(['audio/mpeg', 'video/mp4']);
+    });
+});
