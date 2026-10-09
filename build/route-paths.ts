@@ -875,6 +875,7 @@ export type RoutePath =
   | `/deepl/blog/:lang?`
   | `/deeplearning/the-batch/:tag{.+}?`
   | `/deepmind/blog`
+  | `/deepseek/changelog/:language?`
   | `/deepseek/news`
   | `/dehenglaw/:language?/:category?`
   | `/dekudeals/:type`

@@ -19761,8 +19761,24 @@
     ]
   },
   "deepseek.com": {
-    "_name": "Deepseek",
+    "_name": "DeepSeek",
     "api-docs": [
+      {
+        "title": "Change Log",
+        "docs": "https://docs.rsshub.app/routes/program-update",
+        "source": [
+          "/updates"
+        ],
+        "target": "/deepseek/changelog/en"
+      },
+      {
+        "title": "Change Log",
+        "docs": "https://docs.rsshub.app/routes/program-update",
+        "source": [
+          "/zh-cn/updates"
+        ],
+        "target": "/deepseek/changelog"
+      },
       {
         "title": "新闻",
         "docs": "https://docs.rsshub.app/routes/programming",
