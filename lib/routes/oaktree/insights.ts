@@ -18,6 +18,7 @@ type Insight = {
     PosterImageSourceUrl: string;
     MoreLink: string;
     CategoryText: string;
+    CssClassType: string;
 };
 
 const getArticleContent = ($: CheerioAPI): string | undefined => {
@@ -44,7 +45,7 @@ const parseItem = async (item: Insight): Promise<DataItem> => {
         link,
         pubDate: parseDate(item.InsightDate || item.IsoDate),
         image: item.PosterImageSourceUrl,
-        category: [item.CategoryText],
+        category: [item.CategoryText, item.CssClassType],
     };
 
     // press mentions point to external websites and PDFs cannot be rendered inline
@@ -90,7 +91,7 @@ export const route: Route = {
     handler,
     example: '/oaktree/insights',
     description:
-        'Includes Howard Marks memos, market commentary, education and press mentions. The full text of each insight is fetched from its detail page, while press items link to external websites. The latest 30 entries are returned by default, use the `limit` parameter for more.',
+        'Includes Howard Marks memos, market commentary, education and press mentions. Items are categorised by content type (`memos`, `press`, ...) and media type (`article`, `audio`, `video`), so both can be filtered with the common `filter_category` / `filterout_category` parameters. Full text is fetched from each insight page, while press items link to external websites. The latest 30 entries are returned by default, use the `limit` parameter for more.',
     categories: ['finance'],
     radar: [
         {
