@@ -1,12 +1,19 @@
-import { load } from 'cheerio';
-import pMap from 'p-map';
+import { decodeHTML } from 'entities';
+import type { Context } from 'hono';
 
 import type { Route } from '@/types';
-import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
 const baseUrl = 'https://www.acea.auto';
+
+const types = {
+    'press-releases': 'Press releases',
+    news: 'News',
+    facts: 'Facts',
+    figures: 'Figures',
+    publications: 'Publications',
+};
 
 export const route: Route = {
     path: '/publications/:type?',
@@ -14,28 +21,18 @@ export const route: Route = {
     name: 'Publications',
     categories: ['finance'],
     maintainers: ['DIYgod'],
-    parameters: { type: 'Native content type, e.g. press-releases, facts, figures or publications. Defaults to press-releases.' },
+    parameters: {
+        type: {
+            description: 'Native content type',
+            options: Object.entries(types).map(([value, label]) => ({ value, label })),
+            default: 'press-releases',
+        },
+    },
     radar: [{ source: ['www.acea.auto/nav/'], target: '/publications' }],
     handler,
 };
 
-function getItem(post) {
-    return cache.tryGet(post.permalink, async () => {
-        const response = await ofetch(post.permalink);
-        const $ = load(response);
-        const content = $('main.site-main');
-        content.find('h1, .meta-before, .post-categories, script, style, .share-buttons, .related-posts, .abtpc, .abt-i').remove();
-        return {
-            title: post.title,
-            link: post.permalink,
-            pubDate: parseDate(post.date, 'D MMMM YYYY'),
-            category: post.tag?.map((tag) => tag.name),
-            description: content.html() || post.excerpt,
-        };
-    });
-}
-
-async function handler(ctx) {
+async function handler(ctx: Context) {
     const type = ctx.req.param('type') ?? 'press-releases';
     const response = await ofetch(`${baseUrl}/wp-admin/admin-ajax.php`, {
         method: 'POST',
@@ -43,10 +40,32 @@ async function handler(ctx) {
         body: new URLSearchParams({ action: 'load_results', 'filters[content][]': type, 'filters[pageNumber]': '1', 'filters[orderby]': 'date' }),
     });
     const limit = Number(ctx.req.query('limit')) || 20;
+    const posts = response.posts.slice(0, limit);
+
+    const details = await ofetch(`${baseUrl}/wp-json/wp/v2/allpt`, {
+        query: {
+            include: posts.map((post) => post.ID).join(','),
+            per_page: posts.length,
+            _fields: 'id,date_gmt,content',
+        },
+    });
+
+    const items = posts.map((post) => {
+        const detail = details.find((detail) => detail.id === post.ID);
+        return {
+            title: decodeHTML(post.title),
+            link: post.permalink,
+            description: detail.content.rendered,
+            pubDate: parseDate(`${detail.date_gmt}Z`),
+            category: post.tag.map((tag) => decodeHTML(tag.name)),
+            image: post.thumb?.url,
+        };
+    });
+
     return {
-        title: `ACEA - ${type}`,
+        title: `${types[type]} | ACEA - European Automobile Manufacturers' Association`,
         link: `${baseUrl}/nav/?content=${encodeURIComponent(type)}`,
         language: 'en' as const,
-        item: await pMap(response.posts.slice(0, limit), getItem, { concurrency: 3 }),
+        item: items,
     };
 }
