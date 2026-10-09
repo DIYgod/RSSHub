@@ -13827,14 +13827,14 @@
   },
   "bcg.com": {
     "_name": "Boston Consulting Group",
-    ".": [
+    "www": [
       {
-        "title": "Infrastructure insights",
+        "title": "Search",
         "docs": "https://docs.rsshub.app/routes/new-media",
         "source": [
-          "/industries/urban-planning/infrastructure"
+          "/search"
         ],
-        "target": "/bcg/infrastructure"
+        "target": "/bcg/search/:params?"
       }
     ]
   },

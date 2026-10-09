@@ -2872,7 +2872,7 @@
   "/bbcnewslabs/news": [
     "elxy"
   ],
-  "/bcg/infrastructure": [
+  "/bcg/search/:params?": [
     "DIYgod"
   ],
   "/bdys/:caty?/:type?/:area?/:year?/:order?": [

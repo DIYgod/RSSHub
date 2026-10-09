@@ -339,7 +339,7 @@ export type RoutePath =
   | `/bbc/zhongwen/topics/:topic/:variant?`
   | `/bbcnewslabs/news`
   | `/bc3ts/post/list/:sort?`
-  | `/bcg/infrastructure`
+  | `/bcg/search/:params?`
   | `/bdys/:caty?/:type?/:area?/:year?/:order?`
   | `/behance/:user/:type?`
   | `/beijingprice/:category{.+}?`
