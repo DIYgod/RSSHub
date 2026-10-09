@@ -1226,6 +1226,7 @@ export type RoutePath =
   | `/freecomputerbooks/:category?`
   | `/freewechat/profile/:id`
   | `/freexcomic/book/:id`
+  | `/freshplaza/search/:keyword`
   | `/fruitdatakings/news/:product?`
   | `/ft/myft/:key`
   | `/ftchinese/:language/:channel?`

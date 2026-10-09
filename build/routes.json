@@ -63708,6 +63708,31 @@
     ],
     "lang": "zh-CN"
   },
+  "freshplaza": {
+    "routes": {
+      "/search/:keyword": {
+        "path": "/search/:keyword",
+        "categories": [
+          "new-media"
+        ],
+        "example": "/freshplaza/search/durian",
+        "parameters": {
+          "keyword": "Search keyword"
+        },
+        "name": "Search",
+        "maintainers": [
+          "TonyRL"
+        ],
+        "url": "www.freshplaza.com/asia/",
+        "location": "search.ts",
+        "module": "() => import('@/routes/freshplaza/search.ts')"
+      }
+    },
+    "apiRoutes": {},
+    "name": "FreshPlaza",
+    "url": "www.freshplaza.com",
+    "lang": "en"
+  },
   "fruitdatakings": {
     "routes": {
       "/news/:product?": {

@@ -4638,6 +4638,9 @@
   "/freexcomic/book/:id": [
     "junfengP"
   ],
+  "/freshplaza/search/:keyword": [
+    "TonyRL"
+  ],
   "/fruitdatakings/news/:product?": [
     "DIYgod"
   ],
