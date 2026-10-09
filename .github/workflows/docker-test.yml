@@ -65,6 +65,12 @@ jobs:
                           issue_number: ${{ github.event.pull_request.number }},
                           labels: ['auto: DO NOT merge'],
                       })
+                      await github.rest.issues.removeLabel({
+                          owner: context.repo.owner,
+                          repo: context.repo.repo,
+                          issue_number: ${{ github.event.pull_request.number }},
+                          name: 'auto: ready to review',
+                      }).catch((error) => core.warning(error))
 
             - name: Test Docker image
               run: bash scripts/docker/test-docker.sh
