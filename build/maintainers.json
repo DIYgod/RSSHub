@@ -84,6 +84,9 @@
   "/7gogo/user/:username": [
     "hoilc"
   ],
+  "/acea/publications/:type?": [
+    "DIYgod"
+  ],
   "/alipan/files/:share_id/:parent_file_id?": [
     "DIYgod"
   ],
@@ -2395,9 +2398,6 @@
   ],
   "/accessbriefing/:category{.+}?": [
     "nczitzk"
-  ],
-  "/acea/publications/:type?": [
-    "DIYgod"
   ],
   "/acfun/bangumi/:id/:embed?": [
     "xyqfer"

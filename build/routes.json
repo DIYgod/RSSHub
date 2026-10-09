@@ -954,6 +954,63 @@
     ],
     "lang": "ja"
   },
+  "acea": {
+    "routes": {
+      "/publications/:type?": {
+        "path": "/publications/:type?",
+        "example": "/acea/publications/press-releases",
+        "name": "Publications",
+        "categories": [
+          "finance"
+        ],
+        "maintainers": [
+          "DIYgod"
+        ],
+        "parameters": {
+          "type": {
+            "description": "Native content type",
+            "options": [
+              {
+                "value": "press-releases",
+                "label": "Press releases"
+              },
+              {
+                "value": "news",
+                "label": "News"
+              },
+              {
+                "value": "facts",
+                "label": "Facts"
+              },
+              {
+                "value": "figures",
+                "label": "Figures"
+              },
+              {
+                "value": "publications",
+                "label": "Publications"
+              }
+            ],
+            "default": "press-releases"
+          }
+        },
+        "radar": [
+          {
+            "source": [
+              "www.acea.auto/nav/"
+            ],
+            "target": "/publications"
+          }
+        ],
+        "location": "publications.ts",
+        "module": "() => import('@/routes/acea/publications.ts')"
+      }
+    },
+    "apiRoutes": {},
+    "name": "ACEA",
+    "url": "www.acea.auto",
+    "lang": "en"
+  },
   "alipan": {
     "routes": {
       "/files/:share_id/:parent_file_id?": {
@@ -32131,38 +32188,6 @@
       "new-media"
     ],
     "description": "",
-    "lang": "en"
-  },
-  "acea": {
-    "routes": {
-      "/publications/:type?": {
-        "path": "/publications/:type?",
-        "example": "/acea/publications/press-releases",
-        "name": "Publications",
-        "categories": [
-          "finance"
-        ],
-        "maintainers": [
-          "DIYgod"
-        ],
-        "parameters": {
-          "type": "Native content type, e.g. press-releases, facts, figures or publications. Defaults to press-releases."
-        },
-        "radar": [
-          {
-            "source": [
-              "www.acea.auto/nav/"
-            ],
-            "target": "/publications"
-          }
-        ],
-        "location": "publications.ts",
-        "module": "() => import('@/routes/acea/publications.ts')"
-      }
-    },
-    "apiRoutes": {},
-    "name": "ACEA",
-    "url": "www.acea.auto",
     "lang": "en"
   },
   "acfun": {

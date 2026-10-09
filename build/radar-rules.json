@@ -198,6 +198,19 @@
       }
     ]
   },
+  "acea.auto": {
+    "_name": "ACEA",
+    "www": [
+      {
+        "title": "Publications",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/nav/"
+        ],
+        "target": "/acea/publications"
+      }
+    ]
+  },
   "alipan.com": {
     "_name": "阿里云盘",
     "www": [
@@ -10157,19 +10170,6 @@
           "/insight/videos-and-podcasts"
         ],
         "target": "/accessbriefing/insight/videos-and-podcasts"
-      }
-    ]
-  },
-  "acea.auto": {
-    "_name": "ACEA",
-    "www": [
-      {
-        "title": "Publications",
-        "docs": "https://docs.rsshub.app/routes/finance",
-        "source": [
-          "/nav/"
-        ],
-        "target": "/acea/publications"
       }
     ]
   },
