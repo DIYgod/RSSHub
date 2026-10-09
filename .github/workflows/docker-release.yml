@@ -274,23 +274,19 @@ jobs:
                       $(printf '${{ vars.DOCKER_USERNAME }}/${{ needs.release.outputs.repo-name }}@sha256:%s ' *)
 
     github-release:
-        runs-on: ubuntu-latest
+        runs-on: ubuntu-slim
         needs: [release, merge]
         timeout-minutes: 5
         permissions:
             contents: write
         steps:
-            - name: Create a source release for the published images
+            - name: Prepare release notes
+              id: notes
               env:
-                  GH_TOKEN: ${{ github.token }}
                   IMAGE_REPOSITORY: ${{ needs.release.outputs.repo-name }}
                   DOCKER_USERNAME: ${{ vars.DOCKER_USERNAME }}
               run: |
-                  set -euo pipefail
-                  release_tag="v$(date -u +%Y.%m.%d)-${GITHUB_SHA:0:7}"
-                  if gh release view "$release_tag" --repo "$GITHUB_REPOSITORY" > /dev/null 2>&1; then
-                      exit 0
-                  fi
+                  echo "tag=v$(date -u +%Y.%m.%d)-${GITHUB_SHA:0:7}" >> "$GITHUB_OUTPUT"
                   image_repository="${GITHUB_REPOSITORY,,}"
                   cat > "$RUNNER_TEMP/release-notes.md" <<EOF
                   Source commit: $GITHUB_SHA
@@ -303,8 +299,14 @@ jobs:
 
                   Use these commit-specific image tags to reproduce this release. Daily Docker tags may be updated by subsequent builds.
                   EOF
-                  gh release create "$release_tag" --repo "$GITHUB_REPOSITORY" --target "$GITHUB_SHA" \
-                      --title "$release_tag" --notes-file "$RUNNER_TEMP/release-notes.md"
+
+            - name: Create a source release for the published images
+              uses: softprops/action-gh-release@efb35369e0ad2afab669f228072c1b0d510eae64 # v3.0.3
+              with:
+                  tag_name: ${{ steps.notes.outputs.tag }}
+                  name: ${{ steps.notes.outputs.tag }}
+                  target_commitish: ${{ github.sha }}
+                  body_path: ${{ runner.temp }}/release-notes.md
 
     description:
         runs-on: ubuntu-slim
