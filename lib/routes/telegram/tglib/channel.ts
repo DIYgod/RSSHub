@@ -140,26 +140,9 @@ export function humanDuration(seconds: number) {
     return `0:${paddedSeconds}`; // Show only seconds
 }
 
-export default async function handler(ctx: Context) {
-    const client = await getClient();
-    const username = ctx.req.param('username');
-
-    let peerCache = await cache.get(`telegram:inputEntity:${username}`);
-    if (!peerCache) {
-        const p = await client.getInputEntity(username!);
-        peerCache = JSON.stringify(p.toJSON());
-        await cache.set(`telegram:inputEntity:${username}`, peerCache);
-    }
-    const peerData = JSON.parse(peerCache, (k, v) => (k === 'channelId' || k === 'accessHash' ? returnBigInt(v) : v));
-    const peer = new Api.InputPeerChannel(peerData);
-
-    const entity = await client.getEntity(peer);
-
-    const messages = await client.getMessages(peer, { limit: 50 });
-
-    // Group contiguous messages by groupedId (Telegram media groups / albums)
-    const groups: (typeof messages[number])[][] = [];
-    const groupMap = new Map<string, (typeof messages[number])[]>();
+function groupMessages(messages: Api.Message[]): Api.Message[][] {
+    const groups: Api.Message[][] = [];
+    const groupMap = new Map<string, Api.Message[]>();
 
     for (const message of messages) {
         const gid = message.groupedId ? String(message.groupedId) : null;
@@ -176,6 +159,83 @@ export default async function handler(ctx: Context) {
             groups.push([message]);
         }
     }
+    return groups;
+}
+
+async function getForwardPrefix(client: any, msgs: Api.Message[]) {
+    const fwdMsg = msgs.find((m) => m.fwdFrom);
+    if (!fwdMsg?.fwdFrom) {
+        return '';
+    }
+    let fwdName = fwdMsg.fwdFrom.fromName;
+    if (fwdMsg.fwdFrom.fromId) {
+        try {
+            const fwdFrom = await client.getEntity(fwdMsg.fwdFrom.fromId);
+            fwdName = getDisplayName(fwdFrom);
+        } catch {
+            fwdName ||= 'Private Channel';
+        }
+    }
+    return fwdName ? `<p>Forwarded From <b>${fwdName}</b></p>` : '';
+}
+
+async function getStoryPrefix(client: any, msgs: Api.Message[]) {
+    const storyMsg = msgs.find((m) => m.media instanceof Api.MessageMediaStory);
+    if (!storyMsg || !(storyMsg.media instanceof Api.MessageMediaStory)) {
+        return '';
+    }
+    let storyName = 'Private Peer';
+    try {
+        const storyFrom = await client.getEntity(storyMsg.media.peer);
+        storyName = getDisplayName(storyFrom);
+    } catch {
+        // Inaccessible story peer
+    }
+    return `<p>Story From <b>${storyName}</b></p>`;
+}
+
+async function getMessageAttachments(client: any, ctx: Context, username: string, msgs: Api.Message[]) {
+    const attachments: string[] = [];
+    for (const message of msgs) {
+        const media = await unwrapMedia(message.media, message.peerId);
+        if (media) {
+            if (media instanceof Api.MessageMediaPoll) {
+                attachments.push(await getPollResults(client, message, media));
+                continue;
+            }
+            const src = getMessageMediaUrl(ctx.req.url, username, message.id, ctx.req.header('x-forwarded-prefix'));
+            attachments.push(getMediaLink(src, media));
+        }
+        if (message.replyMarkup instanceof Api.ReplyInlineMarkup) {
+            for (const buttonRow of message.replyMarkup.rows) {
+                for (const button of buttonRow.buttons) {
+                    if (button.type instanceof Api.InlineButtonTypeUrl) {
+                        attachments.push(`<div><a href="${button.type.url}" target="_blank">${button.text}</a></div>`);
+                    }
+                }
+            }
+        }
+    }
+    return attachments;
+}
+
+export default async function handler(ctx: Context) {
+    const client = await getClient();
+    const username = ctx.req.param('username');
+
+    let peerCache = await cache.get(`telegram:inputEntity:${username}`);
+    if (!peerCache) {
+        const p = await client.getInputEntity(username!);
+        peerCache = JSON.stringify(p.toJSON());
+        await cache.set(`telegram:inputEntity:${username}`, peerCache);
+    }
+    const peerData = JSON.parse(peerCache, (k, v) => (k === 'channelId' || k === 'accessHash' ? returnBigInt(v) : v));
+    const peer = new Api.InputPeerChannel(peerData);
+
+    const entity = await client.getEntity(peer);
+
+    const messages = await client.getMessages(peer, { limit: 50 });
+    const groups = groupMessages(messages);
 
     const item: DataItem[] = [];
     for (const msgs of groups) {
@@ -184,57 +244,9 @@ export default async function handler(ctx: Context) {
         const primaryMsg = msgs[0];
         const textMsg = msgs.find((m) => m.text) || primaryMsg;
 
-        let fwdPrefix = '';
-        const fwdMsg = msgs.find((m) => m.fwdFrom);
-        if (fwdMsg?.fwdFrom) {
-            let fwdName = fwdMsg.fwdFrom.fromName;
-            if (fwdMsg.fwdFrom.fromId) {
-                try {
-                    const fwdFrom = await client.getEntity(fwdMsg.fwdFrom.fromId);
-                    fwdName = getDisplayName(fwdFrom);
-                } catch {
-                    fwdName ||= 'Private Channel';
-                }
-            }
-            if (fwdName) {
-                fwdPrefix = `<p>Forwarded From <b>${fwdName}</b></p>`;
-            }
-        }
-
-        let storyPrefix = '';
-        const storyMsg = msgs.find((m) => m.media instanceof Api.MessageMediaStory);
-        if (storyMsg && storyMsg.media instanceof Api.MessageMediaStory) {
-            let storyName = 'Private Peer';
-            try {
-                const storyFrom = await client.getEntity(storyMsg.media.peer);
-                storyName = getDisplayName(storyFrom);
-            } catch {
-                // Inaccessible story peer
-            }
-            storyPrefix = `<p>Story From <b>${storyName}</b></p>`;
-        }
-
-        const attachments: string[] = [];
-        for (const message of msgs) {
-            const media = await unwrapMedia(message.media, message.peerId);
-            if (media) {
-                if (media instanceof Api.MessageMediaPoll) {
-                    attachments.push(await getPollResults(client, message, media));
-                    continue;
-                }
-                const src = getMessageMediaUrl(ctx.req.url, username!, message.id, ctx.req.header('x-forwarded-prefix'));
-                attachments.push(getMediaLink(src, media));
-            }
-            if (message.replyMarkup instanceof Api.ReplyInlineMarkup) {
-                for (const buttonRow of message.replyMarkup.rows) {
-                    for (const button of buttonRow.buttons) {
-                        if (button.type instanceof Api.InlineButtonTypeUrl) {
-                            attachments.push(`<div><a href="${button.type.url}" target="_blank">${button.text}</a></div>`);
-                        }
-                    }
-                }
-            }
-        }
+        const fwdPrefix = await getForwardPrefix(client, msgs);
+        const storyPrefix = await getStoryPrefix(client, msgs);
+        const attachments = await getMessageAttachments(client, ctx, username!, msgs);
 
         let description = attachments.join('<br/>\n');
         if (fwdPrefix) {
@@ -260,6 +272,7 @@ export default async function handler(ctx: Context) {
             author: getDisplayName(textMsg.sender ?? entity),
         });
     }
+
     return {
         title: getDisplayName(entity),
         link: `https://t.me/${username}`,
