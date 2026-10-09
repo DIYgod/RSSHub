@@ -179,11 +179,10 @@ async function handler(ctx) {
         })
     );
 
-    out.reverse();
     return {
         title: mpName || $('.tgme_channel_info_header_title').text(),
         link: `https://t.me/s/${id}`,
-        item: out.filter(Boolean),
+        item: out.toReversed().filter(Boolean),
         allowEmpty: !!mpName,
     };
 }

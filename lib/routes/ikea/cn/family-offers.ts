@@ -80,8 +80,8 @@ async function handler() {
 
     await familyPriceProductsLoadMore({ pageIndex: 1 });
 
-    while (familyPriceProductIds.length) {
-        productRequests.push(productRequest(familyPriceProductIds.splice(0, 25)));
+    for (let i = 0; i < familyPriceProductIds.length; i += 25) {
+        productRequests.push(productRequest(familyPriceProductIds.slice(i, i + 25)));
     }
 
     const productResponses = await Promise.all(productRequests);

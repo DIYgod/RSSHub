@@ -84,7 +84,7 @@ async function handler(ctx) {
     const context = await playwright();
     const feed = await parser.parseURL(rssUrl);
     const items = await Promise.all(
-        feed.items.splice(0, 10).map(async (item) => {
+        feed.items.slice(0, 10).map(async (item) => {
             let link = item.link;
 
             let response,

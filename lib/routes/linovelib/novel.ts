@@ -40,8 +40,8 @@ async function handler(ctx) {
             author,
             description: $(item).text(),
             link: `https://www.linovelib.com${$(item).attr('href')}`,
-        }));
-    items.reverse();
+        }))
+        .toReversed();
 
     return {
         title: `哩哔轻小说 - ${title}`,
