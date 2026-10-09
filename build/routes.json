@@ -1568,7 +1568,8 @@
           "username": "The broadcaster username from the room URL."
         },
         "features": {
-          "nsfw": true
+          "nsfw": true,
+          "antiCrawler": true
         },
         "maintainers": [
           "DIYgod"
