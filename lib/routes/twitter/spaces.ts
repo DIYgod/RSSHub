@@ -75,7 +75,7 @@ export const route: Route = {
     },
     maintainers: ['DIYgod'],
     description:
-        'Reports a user speaking in a live Space, including Spaces hosted by other users. Hosts and co-hosts are also included; listeners are excluded. Each user/Space pair has a stable entry ID and uses the actual Space start time. When the user is not speaking in a live Space, a status entry has a fixed ID and no publication date. This does not join or listen to a Space. Requires your own authorized TWITTER_AUTH_TOKEN on a self-hosted instance.',
+        'Reports a user speaking in a live Space, including Spaces hosted by other users. Hosts and co-hosts are also included; listeners are excluded. Each user/Space pair has a stable entry ID and uses the actual Space start time. When the user is not speaking in a live Space, a status entry has a fixed ID and no publication date. This does not join or listen to a Space. Requires your own authorized TWITTER\\_AUTH\\_TOKEN on a self-hosted instance.',
     radar: [{ source: ['x.com/:username'], target: '/spaces/:username' }],
     handler,
 };

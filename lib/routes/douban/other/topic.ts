@@ -24,7 +24,7 @@ export const route: Route = {
     },
     name: '话题',
     maintainers: ['LogicJake', 'pseudoyu', 'haowenwu'],
-    description: '源详情页明确显示的作者 IP 属地和首屏回帖 IP 属地分别放入 IP属地：… 和 回帖IP属地：… 分类，可使用通用过滤参数。不以作者个人资料所在地替代 IP。需要登录才能查看的内容请配置 DOUBAN_COOKIE。',
+    description: '源详情页明确显示的作者 IP 属地和首屏回帖 IP 属地分别放入 IP 属地：… 和 回帖 IP 属地：… 分类，可使用通用过滤参数。不以作者个人资料所在地替代 IP。需要登录才能查看的内容请配置 DOUBAN\\_COOKIE。',
     handler,
 };
 

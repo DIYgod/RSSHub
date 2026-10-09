@@ -67,7 +67,7 @@ export const route: Route = {
             description: 'Any path of list page on javbus',
         },
     },
-    description: 'The item title receives a [中字] prefix and the 中文字幕 category when the magnet selected as the enclosure has a subtitle badge. The existing magnet selection order is preserved.',
+    description: 'The item title receives a \\[中字] prefix and the 中文字幕 category when the magnet selected as the enclosure has a subtitle badge. The existing magnet selection order is preserved.',
     features: {
         nsfw: true,
     },
