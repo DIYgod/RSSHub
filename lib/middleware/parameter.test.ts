@@ -663,3 +663,82 @@ describe('entities', () => {
         expect(data.item[0].title).toBe('Item’s ’ &notify ?a=1&lt=2');
     });
 });
+
+const makeImageData = () => ({
+    image: 'https://example.com/logo.png',
+    item: [
+        {
+            title: 'Post',
+            link: 'https://example.com/post',
+            description:
+                '<p>Text</p><picture><source srcset="https://example.com/a.webp"><img src="https://example.com/a.png"></picture><video src="https://example.com/a.mp4" poster="https://example.com/a.jpg"></video><audio src="https://example.com/a.mp3"></audio>',
+            image: 'https://example.com/a.png',
+            banner: 'https://example.com/banner.png',
+            itunes_item_image: 'https://example.com/art.png',
+            enclosure_url: 'https://example.com/a.png',
+            enclosure_type: 'image/png',
+            enclosure_length: 10,
+            attachments: [
+                { url: 'https://example.com/a.png', mime_type: 'image/png' },
+                { url: 'https://example.com/a.mp3', mime_type: 'audio/mpeg' },
+            ],
+            media: { thumbnail: { url: 'https://example.com/a.png' } },
+        },
+    ],
+});
+
+describe('show_image', () => {
+    it('removes pictures and artwork while retaining text, video and audio', async () => {
+        const data = await runMiddleware(makeImageData(), { show_image: 'false' });
+        expect(data.image).toBeUndefined();
+        expect(data.item[0].description).not.toMatch(/<img|<picture|poster=/);
+        expect(data.item[0].description).toContain('<p>Text</p>');
+        expect(data.item[0].description).toContain('a.mp4');
+        expect(data.item[0].image).toBeUndefined();
+        expect(data.item[0].itunes_item_image).toBeUndefined();
+        expect(data.item[0].enclosure_url).toBeUndefined();
+        expect(data.item[0].attachments).toHaveLength(1);
+        expect(data.item[0].attachments[0].mime_type).toBe('audio/mpeg');
+        expect(data.item[0].media.thumbnail).toBeUndefined();
+    });
+    it('keeps images by default', async () => {
+        const data = await runMiddleware(makeImageData(), {});
+        expect(data.item[0].description).toContain('<img');
+        expect(data.item[0].image).toBe('https://example.com/a.png');
+    });
+});
+
+describe('enclosure', () => {
+    it('extracts direct media and downloads, preserving metadata and rejecting unsafe or untyped links', async () => {
+        const data = await runMiddleware(
+            {
+                item: [
+                    {
+                        title: 'Media',
+                        link: 'https://example.com/posts/one',
+                        enclosure_url: 'https://example.com/audio.mp3',
+                        enclosure_type: 'audio/mpeg',
+                        enclosure_length: 123,
+                        description:
+                            '<img src="/cover.png"><video><source src="/stream?id=1" type="video/mp4"></video><audio src="/audio.mp3"></audio><a href="/report.pdf">Report</a><img data-src="/cover.png"><a href="/article">Article</a><video src="javascript:alert(1)" type="video/mp4"></video><img src="data:image/png;base64,abc"><a href="/constructor">Unknown</a>',
+                    },
+                ],
+            },
+            { enclosure: 'true' }
+        );
+        expect(data.item[0].attachments).toEqual([
+            expect.objectContaining({ url: 'https://example.com/audio.mp3', mime_type: 'audio/mpeg', size_in_bytes: 123 }),
+            { url: 'https://example.com/stream?id=1', mime_type: 'video/mp4' },
+            { url: 'https://example.com/cover.png', mime_type: 'image/png' },
+            { url: 'https://example.com/report.pdf', mime_type: 'application/pdf' },
+        ]);
+        expect(data.item[0].description).toContain('<video>');
+    });
+
+    it('keeps automatic extraction opt-in and respects hidden images', async () => {
+        const original = await runMiddleware(makeImageData(), {});
+        expect(original.item[0].attachments).toHaveLength(2);
+        const extracted = await runMiddleware(makeImageData(), { enclosure: 'true', show_image: 'false' });
+        expect(extracted.item[0].attachments.map((attachment) => attachment.mime_type)).toEqual(['audio/mpeg', 'video/mp4']);
+    });
+});

@@ -85,6 +85,8 @@ const resetMocks = () => {
     delete process.env.PLAYWRIGHT_CDP_ENDPOINT;
 };
 
+const initialProxyEnv = Object.fromEntries(['PROXY_URI', 'PROXY_PROTOCOL', 'PROXY_HOST', 'PROXY_PORT', 'PROXY_AUTH', 'PROXY_URL_REGEX'].map((key) => [key, process.env[key]]));
+
 let context: BrowserContext | null = null;
 
 afterEach(async () => {
@@ -93,12 +95,13 @@ afterEach(async () => {
         context = null;
     }
 
-    delete process.env.PROXY_URI;
-    delete process.env.PROXY_PROTOCOL;
-    delete process.env.PROXY_HOST;
-    delete process.env.PROXY_PORT;
-    delete process.env.PROXY_AUTH;
-    delete process.env.PROXY_URL_REGEX;
+    for (const [key, value] of Object.entries(initialProxyEnv)) {
+        if (value === undefined) {
+            delete process.env[key];
+        } else {
+            process.env[key] = value;
+        }
+    }
 
     vi.doUnmock('dotenv/config');
     vi.doUnmock('patchright');
@@ -199,7 +202,7 @@ describe('getPlaywrightPage (mocked)', () => {
         proxyMock.getCurrentProxy.mockReturnValue(null);
 
         const getPlaywrightPage = await loadPlaywright();
-        const result = await getPlaywrightPage('https://example.com', { noGoto: true });
+        const result = await getPlaywrightPage('https://example.com', { noGoto: true, useConfiguredEndpoint: true });
 
         const endpoint = connect.mock.calls[0][0];
         const launchOptions = JSON.parse(new URL(endpoint).searchParams.get('launch') || '{}');
@@ -267,7 +270,7 @@ describe('getPlaywrightPage (mocked)', () => {
         proxyMock.getCurrentProxy.mockReturnValue({ uri: proxyUri, urlHandler: new URL(proxyUri) });
 
         const getPlaywrightPage = await loadPlaywright();
-        const result = await getPlaywrightPage('https://example.com', { noGoto: true });
+        const result = await getPlaywrightPage('https://example.com', { noGoto: true, useConfiguredEndpoint: true });
 
         const connectMock = route === 'cdp' ? connectOverCDP : connect;
         const endpointUrl = connectMock.mock.calls[0][0];
@@ -289,7 +292,7 @@ describe('getPlaywrightPage (mocked)', () => {
         proxyMock.getCurrentProxy.mockReturnValue(null);
 
         const getPlaywrightPage = await loadPlaywright();
-        const result = await getPlaywrightPage('https://example.com', { noGoto: true });
+        const result = await getPlaywrightPage('https://example.com', { noGoto: true, useConfiguredEndpoint: true });
 
         expect(connectOverCDP).toHaveBeenCalled();
         expect(connect).not.toHaveBeenCalled();

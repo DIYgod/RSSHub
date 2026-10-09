@@ -47,7 +47,7 @@ async function handler(ctx) {
     const items = parseLiterature(response.hits.hits);
 
     return {
-        title: `${authorInfo.metadata.name.preferred_name} - INSPIRE`,
+        title: `${authorInfo.metadata.name.preferred_name || authorInfo.metadata.name.value} - INSPIRE`,
         link: `${baseUrl}/authors/${id}`,
         item: items,
     };

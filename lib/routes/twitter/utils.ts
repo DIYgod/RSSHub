@@ -1,3 +1,6 @@
+import { createElement } from 'hono/jsx';
+import { renderToString } from 'hono/jsx/dom/server';
+
 import { parseDate } from '@/utils/parse-date';
 import { fallback, queryToBoolean, queryToInteger } from '@/utils/readable-social';
 
@@ -50,6 +53,9 @@ interface ProcessFeedParams {
     showEmojiForRetweetAndReply?: boolean;
     showSymbolForRetweetAndReply?: boolean;
     showRetweetTextInTitle?: boolean;
+    useRetweetDate?: boolean;
+    showLikesCountInTitle?: boolean;
+    includeReplyContext?: boolean;
     addLinkForPics?: boolean;
     showTimestampInDescription?: boolean;
     showQuotedInTitle?: boolean;
@@ -62,6 +68,36 @@ interface ProcessFeedParams {
     showSymbolForSubscriberOnly?: boolean;
     showFullPrefixForSubscriberOnly?: boolean;
 }
+
+const renderReplyContext = (tweet) => {
+    const parents: any[] = [];
+    const seen = new Set([tweet.id_str]);
+    let parent = tweet.in_reply_to_status;
+    while (parent?.id_str && !seen.has(parent.id_str) && parents.length < 5) {
+        seen.add(parent.id_str);
+        parents.unshift(parent);
+        parent = parent.in_reply_to_status;
+    }
+    if (!parents.length) {
+        return '';
+    }
+    return renderToString(
+        createElement(
+            'div',
+            { class: 'rsshub-reply-context' },
+            ...parents.map((parent) =>
+                createElement(
+                    'blockquote',
+                    {},
+                    parent.user?.screen_name
+                        ? createElement('a', { href: `https://x.com/${encodeURIComponent(parent.user.screen_name)}/status/${encodeURIComponent(parent.id_str)}` }, parent.user.name || parent.user.screen_name)
+                        : undefined,
+                    createElement('p', { style: 'white-space: pre-wrap' }, parent.full_text || parent.text || '')
+                )
+            )
+        )
+    );
+};
 
 const ProcessFeed = (ctx, { data = [] }: { data?: any[] }, params: ProcessFeedParams = {}) => {
     // undefined and strings like "exclude_rts_replies" is also safely parsed, so no if branch is needed
@@ -78,6 +114,9 @@ const ProcessFeed = (ctx, { data = [] }: { data?: any[] }, params: ProcessFeedPa
         showEmojiForRetweetAndReply: fallback(params.showEmojiForRetweetAndReply, queryToBoolean(routeParams.get('showEmojiForRetweetAndReply')), false),
         showSymbolForRetweetAndReply: fallback(params.showSymbolForRetweetAndReply, queryToBoolean(routeParams.get('showSymbolForRetweetAndReply')), true),
         showRetweetTextInTitle: fallback(params.showRetweetTextInTitle, queryToBoolean(routeParams.get('showRetweetTextInTitle')), true),
+        useRetweetDate: fallback(params.useRetweetDate, queryToBoolean(routeParams.get('useRetweetDate')), false),
+        showLikesCountInTitle: fallback(params.showLikesCountInTitle, queryToBoolean(routeParams.get('showLikesCountInTitle')), false),
+        includeReplyContext: fallback(params.includeReplyContext, queryToBoolean(routeParams.get('includeReplyContext')), false),
         addLinkForPics: fallback(params.addLinkForPics, queryToBoolean(routeParams.get('addLinkForPics')), false),
         showTimestampInDescription: fallback(params.showTimestampInDescription, queryToBoolean(routeParams.get('showTimestampInDescription')), false),
         showQuotedInTitle: fallback(params.showQuotedInTitle, queryToBoolean(routeParams.get('showQuotedInTitle')), false),
@@ -309,7 +348,7 @@ const ProcessFeed = (ctx, { data = [] }: { data?: any[] }, params: ProcessFeedPa
         }
 
         // Make title
-        let title = '';
+        let title = mergedParams.showLikesCountInTitle && Number.isFinite(item.favorite_count) ? `[${item.favorite_count}] ` : '';
         if (showAuthorInTitle) {
             title += originalItem.user?.name + ': ';
         }
@@ -439,8 +478,8 @@ const ProcessFeed = (ctx, { data = [] }: { data?: any[] }, params: ProcessFeedPa
                     avatar: originalItem.user?.profile_image_url_https,
                 },
             ],
-            description,
-            pubDate: parseDate(item.created_at),
+            description: (mergedParams.includeReplyContext ? renderReplyContext(item) : '') + description,
+            pubDate: parseDate(mergedParams.useRetweetDate ? (originalItem.created_at ?? item.created_at) : item.created_at),
             link,
             guid: link.replace('x.com', 'twitter.com'),
             category,

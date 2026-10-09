@@ -2,6 +2,11 @@
     "$schema": "https://openapi.vercel.sh/vercel.json",
     "framework": "hono",
     "outputDirectory": "src",
+    "functions": {
+        "src/server.mjs": {
+            "includeFiles": "node_modules/.pnpm/patchright-core@*/node_modules/patchright-core/**"
+        }
+    },
     "rewrites": [
         {
             "source": "/favicon.ico",

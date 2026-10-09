@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
@@ -25,6 +26,8 @@ export const route: Route = {
 All Topics in [Topic Library](https://abc.net.au/news/topics) are supported, you can fill in the field after \`topic\` in its URL, or fill in the \`documentId\`.
 
 For example, the URL for [Computer Science](https://www.abc.net.au/news/topic/computer-science) is \`https://www.abc.net.au/news/topic/computer-science\`, the \`category\` is \`news/topic/computer-science\`, and the \`documentId\` of the Topic is \`2302\`, so the route is [/abc/news/topic/computer-science](https://rsshub.app/abc/news/topic/computer-science) and [/abc/2302](https://rsshub.app/abc/2302).
+
+Chinese news is available at \`/abc/news/chinese\`. Chinese topics can also use their \`documentId\`, as described above.
 
 The supported channels are all listed in the table below. For other channels, please find the \`documentId\` in the source code of the channel page and fill it in as above.
 :::`,
@@ -66,7 +69,7 @@ async function handler(ctx) {
         },
     });
 
-    let items = response.collection.slice(0, limit).map((i) => {
+    let items: DataItem[] = response.collection.slice(0, limit).map((i) => {
         const item: DataItem = {
             title: i.title.children ?? i.title,
             link: i.link.startsWith('https://') ? i.link : new URL(i.link, rootUrl).href,
@@ -93,11 +96,12 @@ async function handler(ctx) {
         return item;
     });
 
-    items = await Promise.all(
-        items.map((item) =>
-            cache.tryGet(item.link, async () => {
+    items = await pMap(
+        items,
+        (item) =>
+            cache.tryGet(item.link!, async () => {
                 try {
-                    const detailResponse = await ofetch(item.link);
+                    const detailResponse = await ofetch(item.link!);
 
                     const content = load(detailResponse);
 
@@ -148,7 +152,9 @@ async function handler(ctx) {
 
                     item.description =
                         renderDescription({
-                            description: (content('div[data-component="FeatureMedia"]').html() || '') + (content('#body div[data-component="LayoutContainer"] div').first().html() || ''),
+                            description:
+                                (content('div[data-component="FeatureMedia"]').html() || '') +
+                                (content('#body div[data-component="LayoutContainer"] div').first().html() || content('[class*="ArticleRender_article"]').first().html() || ''),
                         }) + item.description;
 
                     item.category = content('meta[property="article:tag"]')
@@ -167,8 +173,8 @@ async function handler(ctx) {
                 }
 
                 return item;
-            })
-        )
+            }),
+        { concurrency: 3 }
     );
 
     const icon = new URL($('link[rel="apple-touch-icon"]').prop('href') || '', rootUrl).href;

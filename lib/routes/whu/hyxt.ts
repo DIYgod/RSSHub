@@ -67,18 +67,19 @@ async function handler(ctx) {
 
     const $ = load(response);
 
-    let items = $('tr.content-title')
+    let items = $('tr.content-title, li:has(.date):has(a[href])')
         .slice(0, limit)
         .toArray()
         .map((item) => {
             const $item = $(item);
 
-            const a = $item.find('td a');
+            const a = $item.find('a[href]').first();
+            const date = $item.find('.date');
 
             return {
-                title: a.text(),
+                title: a.attr('title') || a.find('h3').text() || a.text(),
                 link: new URL(a.prop('href')!, rootUrl).href,
-                pubDate: parseDate($item.find('td').last().text()),
+                pubDate: parseDate(date.length ? `${date.find('.year').text()}-${date.find('.day').text()}` : $item.find('td').last().text()),
             };
         });
 
@@ -96,9 +97,8 @@ async function handler(ctx) {
         link: currentUrl,
         description: getMeta(meta, 'ColumnKeywords'),
         language,
-        image: new URL($('div.top-logo img').prop('src')!, rootUrl).href,
+        image: new URL($('div.top-logo img, .logo img').first().prop('src') || '/favicon.ico', rootUrl).href,
         subtitle: columnName,
         author: siteName,
-        allowEmpty: true,
     };
 }

@@ -13,12 +13,12 @@ async function handler(ctx) {
     const { url = 'https://wordpress.org/news', filter } = ctx.req.param();
     const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 50;
 
-    if (!config.feature.allow_user_supply_unsafe_domain) {
-        throw new ConfigNotFoundError(`This RSS is disabled unless 'ALLOW_USER_SUPPLY_UNSAFE_DOMAIN' is set to 'true'.`);
-    }
-
     if (!/^https?:\/\/[^\s#$./?].\S*$/i.test(url)) {
         throw new Error('Invalid URL');
+    }
+
+    if (!config.feature.allow_user_supply_unsafe_domain && !config.wordpress.allowedDomains.includes(new URL(url).hostname.toLowerCase())) {
+        throw new ConfigNotFoundError('Set WORDPRESS_ALLOWED_DOMAINS to a comma-separated list of permitted hostnames, or set ALLOW_USER_SUPPLY_UNSAFE_DOMAIN=true.');
     }
 
     const cdn = config.wordpress.cdnUrl;
@@ -157,8 +157,13 @@ You can also search for keywords. \`/search/Blog\` to search for the keyword "Bl
         requireConfig: [
             {
                 name: 'ALLOW_USER_SUPPLY_UNSAFE_DOMAIN',
-                description: `This RSS is disabled unless 'ALLOW_USER_SUPPLY_UNSAFE_DOMAIN' is set to 'true'.`,
-                optional: false,
+                description: 'Enable requests to any WordPress domain. Alternatively, use WORDPRESS_ALLOWED_DOMAINS to permit specific domains.',
+                optional: true,
+            },
+            {
+                name: 'WORDPRESS_ALLOWED_DOMAINS',
+                description: 'Comma-separated hostnames allowed without ALLOW_USER_SUPPLY_UNSAFE_DOMAIN, for example wordpress.org,blog.example.com.',
+                optional: true,
             },
         ],
         requirePuppeteer: false,

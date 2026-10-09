@@ -273,6 +273,39 @@ jobs:
                   docker buildx imagetools create $(jq -cr '.tags | map("-t " + .) | join(" ")' <<< "$DOCKER_METADATA_OUTPUT_JSON") \
                       $(printf '${{ vars.DOCKER_USERNAME }}/${{ needs.release.outputs.repo-name }}@sha256:%s ' *)
 
+    github-release:
+        runs-on: ubuntu-latest
+        needs: [release, merge]
+        timeout-minutes: 5
+        permissions:
+            contents: write
+        steps:
+            - name: Create a source release for the published images
+              env:
+                  GH_TOKEN: ${{ github.token }}
+                  IMAGE_REPOSITORY: ${{ needs.release.outputs.repo-name }}
+                  DOCKER_USERNAME: ${{ vars.DOCKER_USERNAME }}
+              run: |
+                  set -euo pipefail
+                  release_tag="v$(date -u +%Y.%m.%d)-${GITHUB_SHA:0:7}"
+                  if gh release view "$release_tag" --repo "$GITHUB_REPOSITORY" > /dev/null 2>&1; then
+                      exit 0
+                  fi
+                  image_repository="${GITHUB_REPOSITORY,,}"
+                  cat > "$RUNNER_TEMP/release-notes.md" <<EOF
+                  Source commit: $GITHUB_SHA
+
+                  Published multi-platform images:
+                  - ghcr.io/$image_repository:$GITHUB_SHA
+                  - ghcr.io/$image_repository:chromium-bundled-$GITHUB_SHA
+                  - $DOCKER_USERNAME/$IMAGE_REPOSITORY:$GITHUB_SHA
+                  - $DOCKER_USERNAME/$IMAGE_REPOSITORY:chromium-bundled-$GITHUB_SHA
+
+                  Use these commit-specific image tags to reproduce this release. Daily Docker tags may be updated by subsequent builds.
+                  EOF
+                  gh release create "$release_tag" --repo "$GITHUB_REPOSITORY" --target "$GITHUB_SHA" \
+                      --title "$release_tag" --notes-file "$RUNNER_TEMP/release-notes.md"
+
     description:
         runs-on: ubuntu-slim
         needs: [check-env, release]

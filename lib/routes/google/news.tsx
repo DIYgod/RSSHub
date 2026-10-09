@@ -8,6 +8,25 @@ import { parseDate } from '@/utils/parse-date';
 
 const baseUrl = 'https://news.google.com';
 
+const getPublisherUrl = (metadata: string | undefined, fallback: string) => {
+    const encoded = metadata?.match(/(?:^|;)\s*5:\s*([^;]+)/)?.[1];
+    if (!encoded) {
+        return fallback;
+    }
+    try {
+        const values: unknown = JSON.parse(Buffer.from(encoded, 'base64').toString('utf8'));
+        if (Array.isArray(values)) {
+            const url = values.find((value) => typeof value === 'string' && /^https?:\/\//.test(value));
+            if (url && new URL(url).hostname !== 'news.google.com') {
+                return url as string;
+            }
+        }
+    } catch {
+        // Google may change click metadata; preserve the working News link.
+    }
+    return fallback;
+};
+
 export const route: Route = {
     path: '/news/:category/:locale',
     categories: ['new-media'],
@@ -56,7 +75,7 @@ async function handler(ctx) {
                 }),
         ];
     });
-    const categoryUrl = categoryUrls.find((item) => item.category === category)!.url;
+    const categoryUrl = categoryUrls.find((item) => item.category === category || (category === 'Top stories' && item.category === 'Home'))!.url;
 
     const data = await ofetch(categoryUrl);
     const $ = load(data);
@@ -67,6 +86,8 @@ async function handler(ctx) {
         const $item = $(item);
 
         const title = $item.find('.gPFEn').text();
+        const anchor = $item.find('a.WwrzSb').first();
+        const newsUrl = new URL(anchor.attr('href')!, baseUrl).href;
 
         const authorText = $item.find('.bInasb span').text();
         const authors = authorText
@@ -91,7 +112,8 @@ async function handler(ctx) {
             description: renderDescription($item.find('img.Quavad').attr('src'), title),
             pubDate: parseDate($item.find('time').attr('datetime')!),
             author: authors,
-            link: new URL($item.find('a.WwrzSb').attr('href')!, baseUrl).href,
+            link: getPublisherUrl(anchor.attr('jslog'), newsUrl),
+            guid: newsUrl,
         };
     });
 

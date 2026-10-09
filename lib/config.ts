@@ -2,16 +2,21 @@ import 'dotenv/config';
 
 import { ofetch } from 'ofetch';
 
+import type { HostRateLimits } from '@/utils/host-rate-limit';
+import { parseHostRateLimits } from '@/utils/host-rate-limit';
+
 type ConfigEnvKeys =
     // App config
     | 'DISALLOW_ROBOT'
     | 'ENABLE_CLUSTER'
     | 'IS_PACKAGE'
+    | 'USER_ROUTES_PATH'
     | 'NODE_NAME'
     | 'PLAYWRIGHT_WS_ENDPOINT'
     | 'PUPPETEER_WS_ENDPOINT'
     | 'PLAYWRIGHT_CDP_ENDPOINT'
     | 'CHROMIUM_EXECUTABLE_PATH'
+    | 'CI_EN_COOKIE'
     // Network
     | 'PORT'
     | 'SOCKET'
@@ -19,6 +24,9 @@ type ConfigEnvKeys =
     | 'DISABLE_IPV6'
     | 'REQUEST_RETRY'
     | 'REQUEST_TIMEOUT'
+    | 'REQUEST_AUTO_SELECT_FAMILY'
+    | 'REQUEST_RATE_LIMITS'
+    | 'WORDPRESS_ALLOWED_DOMAINS'
     | 'UA'
     | 'NO_RANDOM_UA'
     | 'ALLOW_ORIGIN'
@@ -108,6 +116,7 @@ type ConfigEnvKeys =
     | `DISCUZ_COOKIE_${string}`
     | 'DISQUS_API_KEY'
     | 'DOUBAN_COOKIE'
+    | 'DOUYIN_COOKIE'
     | 'EH_IPB_MEMBER_ID'
     | 'EH_IPB_PASS_HASH'
     | 'EH_SK'
@@ -266,6 +275,7 @@ export type ConfigEnv = Partial<Record<ConfigEnvKeys, string | undefined>>;
 let envs: ConfigEnv = process.env;
 
 export type Config = {
+    userRoutesPath?: string;
     // app config
     disallowRobot: boolean;
     enableCluster?: string;
@@ -283,6 +293,8 @@ export type Config = {
     disableIPv6: boolean;
     requestRetry: number;
     requestTimeout: number;
+    requestAutoSelectFamily?: boolean;
+    requestRateLimits: HostRateLimits;
     ua: string;
     isDefaultUA: boolean;
     trueUA: string;
@@ -401,6 +413,9 @@ export type Config = {
     civitai: {
         cookie?: string;
     };
+    ciEn: {
+        cookie?: string;
+    };
     coomer: {
         assetsUrl: string;
         rootUrl: string;
@@ -425,6 +440,9 @@ export type Config = {
         api_key?: string;
     };
     douban: {
+        cookie?: string;
+    };
+    douyin: {
         cookie?: string;
     };
     ehentai: {
@@ -701,6 +719,7 @@ export type Config = {
         cookie?: string;
     };
     wordpress: {
+        allowedDomains: string[];
         cdnUrl?: string;
     };
     xiaoyuzhou: {
@@ -802,6 +821,7 @@ const calculateValue = () => {
         disallowRobot: toBoolean(envs.DISALLOW_ROBOT, false),
         enableCluster: toBoolean(envs.ENABLE_CLUSTER, false),
         isPackage: !!envs.IS_PACKAGE,
+        userRoutesPath: envs.USER_ROUTES_PATH,
         nodeName: envs.NODE_NAME,
         playwrightWSEndpoint: envs.PLAYWRIGHT_WS_ENDPOINT ?? envs.PUPPETEER_WS_ENDPOINT,
         playwrightCDPEndpoint: envs.PLAYWRIGHT_CDP_ENDPOINT,
@@ -815,6 +835,8 @@ const calculateValue = () => {
         disableIPv6: toBoolean(envs.DISABLE_IPV6, false),
         requestRetry: toInt(envs.REQUEST_RETRY, 2), // 请求失败重试次数
         requestTimeout: toInt(envs.REQUEST_TIMEOUT, 30000), // Milliseconds to wait for the server to end the response before aborting the request
+        requestAutoSelectFamily: envs.REQUEST_AUTO_SELECT_FAMILY === undefined ? undefined : toBoolean(envs.REQUEST_AUTO_SELECT_FAMILY, false),
+        requestRateLimits: parseHostRateLimits(envs.REQUEST_RATE_LIMITS),
         ua: envs.UA || (toBoolean(envs.NO_RANDOM_UA, false) ? TRUE_UA : 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36'),
         isDefaultUA: !envs.UA && !toBoolean(envs.NO_RANDOM_UA, false),
         trueUA: TRUE_UA,
@@ -939,6 +961,9 @@ const calculateValue = () => {
         civitai: {
             cookie: envs.CIVITAI_COOKIE,
         },
+        ciEn: {
+            cookie: envs.CI_EN_COOKIE,
+        },
         coomer: {
             assetsUrl: getAssetsUrl(envs.COOMER_ROOT_URL || 'https://coomer.st', envs.COOMER_ASSETS_URL),
             rootUrl: (envs.COOMER_ROOT_URL || 'https://coomer.st').replace(/\/+$/, ''),
@@ -964,6 +989,9 @@ const calculateValue = () => {
         },
         douban: {
             cookie: envs.DOUBAN_COOKIE,
+        },
+        douyin: {
+            cookie: envs.DOUYIN_COOKIE,
         },
         ehentai: {
             ipb_member_id: envs.EH_IPB_MEMBER_ID,
@@ -1239,6 +1267,10 @@ const calculateValue = () => {
             cookie: envs.WENKU8_COOKIE,
         },
         wordpress: {
+            allowedDomains:
+                envs.WORDPRESS_ALLOWED_DOMAINS?.split(',')
+                    .map((domain) => domain.trim().toLowerCase())
+                    .filter(Boolean) ?? [],
             cdnUrl: envs.WORDPRESS_CDN,
         },
         xiaoyuzhou: {

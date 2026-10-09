@@ -10,6 +10,37 @@ import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
+const getResolution = (text: string): number => {
+    const resolutions = text
+        .matchAll(/(?:^|\D)(4320|2160|1440|1080|720|576|480)[pi]?(?!\d)/gi)
+        .toArray()
+        .map((match) => Number(match[1]));
+    if (/\b8k\b/i.test(text)) {
+        resolutions.push(4320);
+    }
+    if (/\b4k\b/i.test(text)) {
+        resolutions.push(2160);
+    }
+    return Math.max(0, ...resolutions);
+};
+
+const getBestMagnet = ($: CheerioAPI): Cheerio<Element> => {
+    const magnets = $('td a[href^="magnet"]');
+    let best: Element | undefined;
+    let bestResolution = 0;
+    for (const element of magnets.toArray()) {
+        const $element = $(element);
+        const fileName = new URL($element.attr('href')!).searchParams.get('dn') ?? '';
+        const resolution = getResolution(`${$element.text()} ${fileName}`);
+        if (resolution < bestResolution) {
+            continue;
+        }
+        best = element;
+        bestResolution = resolution;
+    }
+    return best ? $(best) : magnets;
+};
+
 export const handler = async (ctx: Context): Promise<Data> => {
     const { category = 'dy' } = ctx.req.param();
     const limit = Number(ctx.req.query('limit') ?? '25');
@@ -95,7 +126,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                     language,
                 };
 
-                const $enclosureEl: Cheerio<Element> = $$('td a[href^="magnet"]').last();
+                const $enclosureEl = getBestMagnet($$);
                 const enclosureUrl: string | undefined = $enclosureEl.attr('href');
 
                 if (enclosureUrl) {

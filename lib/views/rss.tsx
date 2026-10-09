@@ -8,7 +8,13 @@ const RSS: FC<{ data: Data }> = ({ data }) => {
     const isTelegramLink = data.link?.startsWith('https://t.me/s/');
 
     return (
-        <rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:itunes={hasItunes ? 'http://www.itunes.com/dtds/podcast-1.0.dtd' : undefined} xmlns:media={hasMedia ? 'http://search.yahoo.com/mrss/' : undefined} version="2.0">
+        <rss
+            xmlns:atom="http://www.w3.org/2005/Atom"
+            xmlns:dc="http://purl.org/dc/elements/1.1/"
+            xmlns:itunes={hasItunes ? 'http://www.itunes.com/dtds/podcast-1.0.dtd' : undefined}
+            xmlns:media={hasMedia ? 'http://search.yahoo.com/mrss/' : undefined}
+            version="2.0"
+        >
             <channel>
                 <title>{data.title || 'RSSHub'}</title>
                 <link>{data.link || 'https://docs.rsshub.app'}</link>
@@ -42,10 +48,11 @@ const RSS: FC<{ data: Data }> = ({ data }) => {
                         <link>{item.link}</link>
                         <guid isPermaLink="false">{item.guid || item.link || item.title}</guid>
                         {item.pubDate && <pubDate>{item.pubDate}</pubDate>}
-                        {item.author && <author>{item.author}</author>}
-                        {item.image && <enclosure url={item.image} type="image/jpeg" />}
+                        {item.author && <dc:creator>{item.author}</dc:creator>}
+                        {item.image && (item.enclosure_url || !item.attachments?.length) && <enclosure url={item.image} type="image/jpeg" />}
                         {item.itunes_item_image && <itunes:image href={item.itunes_item_image} />}
                         {item.enclosure_url && <enclosure url={item.enclosure_url} length={item.enclosure_length} type={item.enclosure_type} />}
+                        {!item.enclosure_url && item.attachments?.slice(0, 1).map((attachment) => <enclosure url={attachment.url} length={attachment.size_in_bytes ?? 0} type={attachment.mime_type} />)}
                         {item.itunes_duration && <itunes:duration>{item.itunes_duration}</itunes:duration>}
                         {item.category !== undefined && (Array.isArray(item.category) ? item.category : [item.category]).map((c) => <category>{c}</category>)}
                         {item.media &&

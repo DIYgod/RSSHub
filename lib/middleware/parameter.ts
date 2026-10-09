@@ -10,6 +10,7 @@ import sanitizeHtml from 'sanitize-html';
 
 import { config } from '@/config';
 import type { Data, DataItem } from '@/types';
+import { extractAttachments } from '@/utils/attachments';
 import cache from '@/utils/cache';
 import { isWorker } from '@/utils/is-worker';
 import ofetch from '@/utils/ofetch';
@@ -86,7 +87,30 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
             data.item = data.item.toSorted((a: DataItem, b: DataItem) => +new Date(b.pubDate || 0) - +new Date(a.pubDate || 0));
         }
 
+        const hideImages = ctx.req.query('show_image') === 'false';
+        const extractEnclosures = ctx.req.query('enclosure') === 'true';
+        if (hideImages) {
+            delete data.image;
+        }
+
         const handleItem = (item: DataItem) => {
+            if (hideImages) {
+                delete item.image;
+                delete item.banner;
+                delete item.itunes_item_image;
+                if (item.enclosure_type?.startsWith('image/')) {
+                    delete item.enclosure_url;
+                    delete item.enclosure_type;
+                    delete item.enclosure_length;
+                }
+                if (item.media) {
+                    delete item.media.thumbnail;
+                    if (item.media.content?.type?.startsWith('image/')) {
+                        delete item.media.content;
+                    }
+                }
+                item.attachments = item.attachments?.filter((attachment) => !attachment.mime_type?.startsWith('image/'));
+            }
             // oxlint-disable-next-line @typescript-eslint/no-unnecessary-type-conversion -- routes may return non-string values at runtime
             item.title &&= decodeHTMLStrict(item.title + '');
             item.description ||= item.content?.html;
@@ -116,6 +140,10 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
                 }
 
                 $('script').remove();
+                if (hideImages) {
+                    $('img, picture').remove();
+                    $('video[poster]').removeAttr('poster');
+                }
 
                 $('img').each((_, ele) => {
                     const $ele = $(ele);
@@ -161,6 +189,10 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
                         $(elem).attr('referrerpolicy', 'no-referrer');
                     }
                 });
+
+                if (extractEnclosures) {
+                    item.attachments = extractAttachments($, item, hideImages);
+                }
 
                 item.description = $('body').html() + '' + (config.suffix || '');
 
@@ -327,6 +359,9 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
 
                 item.author = author || parsed_result?.author;
                 item.description = parsed_result && parsed_result.content.length > 40 ? decodeHTMLStrict(parsed_result.content) : description;
+                if (extractEnclosures && parsed_result?.content.length > 40 && item.description) {
+                    item.attachments = extractAttachments(load(item.description), item, hideImages);
+                }
             });
             await Promise.all(tasks);
         }
