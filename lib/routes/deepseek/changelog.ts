@@ -6,13 +6,8 @@ import type { Data, DataItem, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
-const ROOT_URL = 'https://api-docs.deepseek.com';
-const ARTICLE_CONTENT_SELECTOR = '.theme-doc-markdown > div > div';
-
-const getUpdatesUrl = (language: string | undefined) => `${ROOT_URL}${language === 'en' ? '' : '/zh-cn'}/updates/`;
-
 export const extractChangelogItems = ($: CheerioAPI, updatesUrl: string): DataItem[] =>
-    $(`${ARTICLE_CONTENT_SELECTOR} > h2`)
+    $('.theme-doc-markdown > div > div > h2')
         .toArray()
         .map((heading) => {
             const $heading = $(heading);
@@ -38,7 +33,7 @@ export const extractChangelogItems = ($: CheerioAPI, updatesUrl: string): DataIt
 
 const handler = async (ctx: Context): Promise<Data> => {
     const language = ctx.req.param('language');
-    const updatesUrl = getUpdatesUrl(language);
+    const updatesUrl = `https://api-docs.deepseek.com${language === 'en' ? '' : '/zh-cn'}/updates/`;
     const response = await ofetch(updatesUrl);
     const $ = load(response);
 
