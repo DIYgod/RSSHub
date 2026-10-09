@@ -67,6 +67,7 @@ export const route: Route = {
             description: 'Any path of list page on javbus',
         },
     },
+    description: 'The item title receives a [中字] prefix and the 中文字幕 category when the magnet selected as the enclosure has a subtitle badge. The existing magnet selection order is preserved.',
     features: {
         nsfw: true,
     },
@@ -152,6 +153,7 @@ async function handler(ctx) {
                 };
 
                 let magnets;
+                let selectedHasSubtitles = false;
 
                 // To fetch magnets.
 
@@ -178,28 +180,32 @@ async function handler(ctx) {
                     magnets = content('tr')
                         .toArray()
                         .map((tr) => {
-                            const td = content(tr).find('a[href]');
+                            const row = content(tr);
+                            const td = row.find('a[href]');
 
                             return {
                                 title: td.first().text().trim(),
                                 link: td.attr('href'),
                                 size: td.eq(1).text().trim(),
                                 date: td.last().text().trim(),
-                                score: content(tr).find('a').length ** 8 * toSize(td.eq(1).text().trim()),
+                                score: row.find('a').length ** 8 * toSize(td.eq(1).text().trim()),
+                                hasSubtitles: row.find('a[title="包含字幕的磁力連結"]').length > 0,
                             };
                         });
 
-                    if (magnets) {
-                        item.enclosure_url = magnets.toSorted((a, b) => b.score - a.score)[0].link;
+                    const selectedMagnet = magnets.toSorted((a, b) => b.score - a.score)[0];
+                    if (selectedMagnet) {
+                        item.enclosure_url = selectedMagnet.link;
                         item.enclosure_type = 'application/x-bittorrent';
+                        selectedHasSubtitles = selectedMagnet.hasSubtitles;
                     }
                 } catch {
                     // no-empty
                 }
 
                 item.author = cacheIn.author;
-                item.title = cacheIn.title;
-                item.category = cacheIn.category;
+                item.title = `${selectedHasSubtitles ? '[中字] ' : ''}${cacheIn.title}`;
+                item.category = selectedHasSubtitles ? [...new Set([...cacheIn.category, '中文字幕'])] : cacheIn.category;
                 item.description = renderDescription({
                     info: cacheIn.info,
                     thumbs: cacheIn.thumbs,
