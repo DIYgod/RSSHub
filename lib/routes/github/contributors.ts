@@ -65,7 +65,7 @@ async function handler(ctx) {
     // Sort by commits
     data.sort((a, b) => a.contributions - b.contributions);
     if (order !== 'asc') {
-        data.reverse();
+        data = data.toReversed();
     }
 
     const items = data.map((item) =>

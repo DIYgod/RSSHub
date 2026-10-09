@@ -191,7 +191,7 @@
         "unicorn-js/no-array-from-fill": "error",
         "unicorn/no-array-method-this-argument": "error",
         // "unicorn/no-array-reduce": "error",
-        "unicorn/no-array-reverse": "error",
+        // "unicorn/no-array-reverse": "error",
         // "unicorn/no-array-sort": "error",
         "unicorn-js/no-array-sort-for-min-max": "error",
         "unicorn-js/no-array-splice": "error",
@@ -734,7 +734,7 @@
 
         "unicorn/no-array-callback-reference": "warn",
         "unicorn/no-array-reduce": "warn",
-
+        "unicorn/no-array-reverse": ["error", { "allowExpressionStatement": false }],
         "unicorn/no-array-sort": ["warn", { "allowAfterSpread": true }],
 
         "unicorn/no-await-expression-member": "off",

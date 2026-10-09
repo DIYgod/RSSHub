@@ -136,9 +136,8 @@ const parseAttr = (description) => {
         const p = new TreeNode(q);
         const w = q.start;
         while (0 < n.length && n.at(-1)!.attr.start >= w) {
-            p.children.push(n.pop());
+            p.children.unshift(n.pop());
         }
-        p.children.reverse();
         n.push(p);
     }
 

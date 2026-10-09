@@ -104,8 +104,7 @@ const gdgov = async (info, ctx) => {
     let pubDate_match = info.pubDate_match;
     let pubDate_format = info.pubDate_format;
 
-    path.splice(0, 2 + pathstartat);
-    let pathname = path.join('/');
+    let pathname = path.slice(2 + pathstartat).join('/');
     pathname = pathname === '' ? defaultPath : pathname.endsWith('/') ? pathname : pathname + '/';
     const currentUrl = `${rootUrl}/${pathname}`;
 

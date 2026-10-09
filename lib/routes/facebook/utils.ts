@@ -125,7 +125,7 @@ const inlineTags = new Map([
 ]);
 
 const renderRichBlock = (block: any) => {
-    const chars = [...block.text];
+    let chars = [...block.text];
     const marks = block.inline_style_ranges
         .flatMap((range: any) => {
             const tag = inlineTags.get(range.inline_style);
@@ -138,7 +138,7 @@ const renderRichBlock = (block: any) => {
         })
         .toSorted((a: any, b: any) => b.at - a.at || Number(a.html.startsWith('</')) - Number(b.html.startsWith('</')));
     for (const mark of marks) {
-        chars.splice(mark.at, 0, mark.html);
+        chars = chars.toSpliced(mark.at, 0, mark.html);
     }
     const tag = blockTags.get(block.block_type) ?? 'p';
     return `<${tag}>${chars.join('')}</${tag}>`;

@@ -54,7 +54,7 @@ async function handler(ctx) {
     const data = response.data;
 
     const chapter_detail = await Promise.all(
-        data.mhlist.splice(0, count).map((item) => {
+        data.mhlist.slice(0, count).map((item) => {
             const url = `${host}/api/manhua/${id}/${item.url}`;
             return cache.tryGet(url, async () => {
                 const picContent = await get_pic(url);

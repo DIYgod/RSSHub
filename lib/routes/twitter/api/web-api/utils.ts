@@ -212,21 +212,12 @@ export const twitterGot = async (
             //     await cache.set(`twitter:cookie:${auth.token}`, newCookie, config.cache.contentExpire);
             //     await cache.set(`${lockPrefix}${auth.token}`, '', 1);
             // } else {
-            const tokenIndex = config.twitter.authToken?.indexOf(auth.token);
-            if (tokenIndex !== undefined && tokenIndex !== -1) {
-                config.twitter.authToken?.splice(tokenIndex, 1);
-            }
+            config.twitter.authToken = config.twitter.authToken?.filter((token) => token !== auth.token);
             // if (auth.username) {
-            //     const usernameIndex = config.twitter.username?.indexOf(auth.username);
-            //     if (usernameIndex !== undefined && usernameIndex !== -1) {
-            //         config.twitter.username?.splice(usernameIndex, 1);
-            //     }
+            //     config.twitter.username = config.twitter.username?.filter((username) => username !== auth.username);
             // }
             // if (auth.password) {
-            //     const passwordIndex = config.twitter.password?.indexOf(auth.password);
-            //     if (passwordIndex !== undefined && passwordIndex !== -1) {
-            //         config.twitter.password?.splice(passwordIndex, 1);
-            //     }
+            //     config.twitter.password = config.twitter.password?.filter((password) => password !== auth.password);
             // }
             logger.debug(`twitter debug: delete twitter cookie for token ${auth.token} with status ${response.status}, remaining tokens: ${config.twitter.authToken?.length}`);
             await cache.set(`${lockPrefix}${auth.token}`, '1', 3600);

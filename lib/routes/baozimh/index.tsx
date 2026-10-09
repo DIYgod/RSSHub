@@ -66,8 +66,7 @@ async function handler(ctx) {
             };
         });
 
-    const combinedList = [...list, ...otherList];
-    combinedList.reverse();
+    const combinedList = [...list, ...otherList].toReversed();
 
     const items = await Promise.all(
         combinedList.map((item) =>

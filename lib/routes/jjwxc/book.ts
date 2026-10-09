@@ -86,32 +86,33 @@ async function handler(ctx) {
             };
         });
 
-    items.reverse();
-
     items = await Promise.all(
-        items.slice(0, limit).map((item) =>
-            item.isLock
-                ? Promise.resolve(item)
-                : cache.tryGet(item.link, async () => {
-                      if (!item.isVip) {
-                          const { data: detailResponse } = await got(item.link, {
-                              responseType: 'buffer',
-                          });
+        items
+            .toReversed()
+            .slice(0, limit)
+            .map((item) =>
+                item.isLock
+                    ? Promise.resolve(item)
+                    : cache.tryGet(item.link, async () => {
+                          if (!item.isVip) {
+                              const { data: detailResponse } = await got(item.link, {
+                                  responseType: 'buffer',
+                              });
 
-                          const content = load(iconv.decode(detailResponse, 'gbk'));
+                              const content = load(iconv.decode(detailResponse, 'gbk'));
 
-                          content('span.favorite_novel').parent().remove();
+                              content('span.favorite_novel').parent().remove();
 
-                          item.description += renderBookDescription({
-                              description: content('div.novelbody').html() || undefined,
-                          });
-                      }
+                              item.description += renderBookDescription({
+                                  description: content('div.novelbody').html() || undefined,
+                              });
+                          }
 
-                      delete item.isVip;
+                          delete item.isVip;
 
-                      return item;
-                  })
-        )
+                          return item;
+                      })
+            )
     );
 
     const logoEl = $('div.logo a img');

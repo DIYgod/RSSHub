@@ -60,9 +60,7 @@ async function handler(ctx) {
         const author = contents?.[3] ?? undefined;
         const isStar = (contents?.[5] && contents[5] === 'star') ?? false;
 
-        if (isStar) {
-            contents.splice(5, 1);
-        }
+        const body = isStar ? contents.toSpliced(5, 1) : contents;
 
         return {
             title: `${isStar ? '[STAR] ' : ''}${title}`,
@@ -70,7 +68,7 @@ async function handler(ctx) {
             description: renderToString(
                 <>
                     {item.resourceList.map((resource) => (resource.externalLink ? <figure>{resource.filename ? <img src={resource.externalLink} alt={resource.filename} /> : <img src={resource.externalLink} />}</figure> : null))}
-                    {raw(md.render(contents?.join('\n\n') ?? ''))}
+                    {raw(md.render(body.join('\n\n')))}
                 </>
             ),
             author,
