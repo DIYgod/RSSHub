@@ -116,6 +116,7 @@ type ConfigEnvKeys =
     | `DISCUZ_COOKIE_${string}`
     | 'DISQUS_API_KEY'
     | 'DOUBAN_COOKIE'
+    | 'DOUYIN_COOKIE'
     | 'EH_IPB_MEMBER_ID'
     | 'EH_IPB_PASS_HASH'
     | 'EH_SK'
@@ -439,6 +440,9 @@ export type Config = {
         api_key?: string;
     };
     douban: {
+        cookie?: string;
+    };
+    douyin: {
         cookie?: string;
     };
     ehentai: {
@@ -985,6 +989,9 @@ const calculateValue = () => {
         },
         douban: {
             cookie: envs.DOUBAN_COOKIE,
+        },
+        douyin: {
+            cookie: envs.DOUYIN_COOKIE,
         },
         ehentai: {
             ipb_member_id: envs.EH_IPB_MEMBER_ID,
