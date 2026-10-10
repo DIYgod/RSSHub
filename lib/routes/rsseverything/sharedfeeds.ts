@@ -7,13 +7,12 @@ import ofetch from '@/utils/ofetch';
 const baseUrl = 'https://rsseverything.com';
 
 export const route: Route = {
-    path: ['/sharedfeeds', '/:language/sharedfeeds'],
+    path: '/:language/sharedfeeds',
     categories: ['other'],
     example: '/rsseverything/zh/sharedfeeds',
     parameters: {
         language: {
             description: 'Language of the page, and of the feed addresses it links to. One of `de`, `en`, `es`, `fr`, `it`, `ja`, `ko`, `pt`, `ru`, `zh`, `zh-Hant`',
-            default: 'en',
         },
     },
     features: {
@@ -26,10 +25,6 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['rsseverything.com/sharedfeeds'],
-            target: '/sharedfeeds',
-        },
-        {
             source: ['rsseverything.com/:language/sharedfeeds'],
             target: '/:language/sharedfeeds',
         },
@@ -40,7 +35,7 @@ export const route: Route = {
 };
 
 async function handler(ctx: Context): Promise<Data> {
-    const language = ctx.req.param('language') ?? 'en';
+    const language = ctx.req.param('language');
 
     const response = await ofetch(`${baseUrl}/${language}/sharedfeeds`);
     const $ = load(response);
