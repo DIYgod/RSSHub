@@ -41390,76 +41390,6 @@
       }
     ]
   },
-  "steamcommunity.com": {
-    "_name": "Steam",
-    ".": [
-      {
-        "title": "Community Hub",
-        "docs": "https://docs.rsshub.app/routes/game",
-        "source": [
-          "/app/:appid"
-        ],
-        "target": "/steam/appcommunityfeed/:appid"
-      },
-      {
-        "title": "News",
-        "docs": "https://docs.rsshub.app/routes/game",
-        "source": [
-          "/app/:appid",
-          "/app/:appid/allnews",
-          "/app/:appid/announcements",
-          "/app/:appid/news"
-        ],
-        "target": "/steam/news/:appid"
-      },
-      {
-        "title": "Sharefile Changelog",
-        "docs": "https://docs.rsshub.app/routes/game",
-        "source": [
-          "/sharedfiles/filedetails/changelog/:sharefileID"
-        ],
-        "target": "/steam/sharefile-changelog/:sharefileID"
-      },
-      {
-        "title": "Workshop Search Results",
-        "docs": "https://docs.rsshub.app/routes/game",
-        "source": [
-          "/app/:appid/workshop/"
-        ],
-        "target": "/steam/workshopsearch/:appid"
-      }
-    ]
-  },
-  "steampowered.com": {
-    "_name": "Steam",
-    "store": [
-      {
-        "title": "Community Hub",
-        "docs": "https://docs.rsshub.app/routes/game",
-        "source": [
-          "/app/:appid/*/"
-        ],
-        "target": "/steam/appcommunityfeed/:appid"
-      },
-      {
-        "title": "Latest Curator Reviews",
-        "docs": "https://docs.rsshub.app/routes/game",
-        "source": [
-          "/curator/:id"
-        ],
-        "target": "/steam/curator/:id"
-      },
-      {
-        "title": "Store Search",
-        "docs": "https://docs.rsshub.app/routes/game",
-        "source": [
-          "/",
-          "/search/:params"
-        ],
-        "target": "/steam/search/:params"
-      }
-    ]
-  },
   "stheadline.com": {
     "_name": "星島日報",
     "www": [
@@ -53647,6 +53577,108 @@
           "/books/tag/:tag"
         ],
         "target": "/sobooks/tag/:tag"
+      }
+    ]
+  },
+  "steamcommunity.com": {
+    "_name": "Steam",
+    ".": [
+      {
+        "title": "Community Hub",
+        "docs": "https://docs.rsshub.app/routes/game",
+        "source": [
+          "/app/:appid"
+        ],
+        "target": "/steam/appcommunityfeed/:appid"
+      },
+      {
+        "title": "News",
+        "docs": "https://docs.rsshub.app/routes/game",
+        "source": [
+          "/app/:appid",
+          "/app/:appid/allnews",
+          "/app/:appid/announcements",
+          "/app/:appid/news"
+        ],
+        "target": "/steam/news/:appid"
+      },
+      {
+        "title": "Sharefile Changelog",
+        "docs": "https://docs.rsshub.app/routes/game",
+        "source": [
+          "/sharedfiles/filedetails/changelog/:sharefileID"
+        ],
+        "target": "/steam/sharefile-changelog/:sharefileID"
+      },
+      {
+        "title": "Workshop Search Results",
+        "docs": "https://docs.rsshub.app/routes/game",
+        "source": [
+          "/app/:appid/workshop/"
+        ],
+        "target": "/steam/workshopsearch/:appid"
+      },
+      {
+        "title": "Discussion List",
+        "docs": "https://docs.rsshub.app/routes/game",
+        "source": [
+          "/app/:appid/discussions"
+        ],
+        "target": "/steam/discussions/:appid"
+      },
+      {
+        "title": "Discussion List",
+        "docs": "https://docs.rsshub.app/routes/game",
+        "source": [
+          "/app/:appid/discussions/:feature"
+        ],
+        "target": "/steam/discussions/:appid/:feature"
+      },
+      {
+        "title": "Discussion List",
+        "docs": "https://docs.rsshub.app/routes/game",
+        "source": [
+          "/app/:appid/discussions/:feature/:topicId"
+        ],
+        "target": "/steam/discussions/:appid/:feature"
+      },
+      {
+        "title": "Discussion Thread",
+        "docs": "https://docs.rsshub.app/routes/game",
+        "source": [
+          "/app/:appid/discussions/:feature/:topicId"
+        ],
+        "target": "/steam/discussion/:appid/:feature/:topicId"
+      }
+    ]
+  },
+  "steampowered.com": {
+    "_name": "Steam",
+    "store": [
+      {
+        "title": "Community Hub",
+        "docs": "https://docs.rsshub.app/routes/game",
+        "source": [
+          "/app/:appid/*/"
+        ],
+        "target": "/steam/appcommunityfeed/:appid"
+      },
+      {
+        "title": "Latest Curator Reviews",
+        "docs": "https://docs.rsshub.app/routes/game",
+        "source": [
+          "/curator/:id"
+        ],
+        "target": "/steam/curator/:id"
+      },
+      {
+        "title": "Store Search",
+        "docs": "https://docs.rsshub.app/routes/game",
+        "source": [
+          "/",
+          "/search/:params"
+        ],
+        "target": "/steam/search/:params"
       }
     ]
   },

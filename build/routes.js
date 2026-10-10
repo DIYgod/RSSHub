@@ -112977,196 +112977,6 @@ export default {
     "url": "epaper.stdaily.com",
     "lang": "zh-CN"
   },
-  "steam": {
-    "routes": {
-      "/appcommunityfeed/:appid/:routeParams?": {
-        "path": "/appcommunityfeed/:appid/:routeParams?",
-        "categories": [
-          "game"
-        ],
-        "example": "/steam/appcommunityfeed/730",
-        "parameters": {
-          "appid": "Steam appid, can be found on the community hub page or store page URL.",
-          "routeParams": "Query parameters."
-        },
-        "radar": [
-          {
-            "title": "Community Hub",
-            "source": [
-              "steamcommunity.com/app/:appid"
-            ],
-            "target": "/appcommunityfeed/:appid"
-          },
-          {
-            "title": "Community Hub",
-            "source": [
-              "store.steampowered.com/app/:appid/*/"
-            ],
-            "target": "/appcommunityfeed/:appid"
-          }
-        ],
-        "description": "Query Parameters:\n\n| Name                   | Type   | Description             |\n| ---------------------- | ------ | ----------------------- |\n| p                      | string | p                       |\n| rgSections\\[]          | string | rgSections              |\n| filterLanguage         | string | Filter Language         |\n| languageTag            | string | Language Tag            |\n| nMaxInappropriateScore | string | Max Inappropriate Score |\n\nExample:\n\n- `/appcommunityfeed/730/p=1&rgSections[]=2&rgSections[]=4&filterLanguage=english&languageTag=english&nMaxInappropriateScore=1` for CS2 Screenshot and Artwork contents.\n- `/appcommunityfeed/730/rgSections[]=6` for CS2 Workshop contents only.\n- `/appcommunityfeed/570/rgSections[]=3&rgSections[]=9` for Dota2 Video and Guides contents.\n\n::: tip\nIt can also access community hub contents that require a logged-in account.\n:::",
-        "name": "Steam Community Hub Feeds",
-        "maintainers": [
-          "NyaaaDoge"
-        ],
-        "location": "appcommunityfeed.tsx",
-        "module": () => import('@/routes/steam/appcommunityfeed.tsx')
-      },
-      "/news/:appid/:language?": {
-        "path": "/news/:appid/:language?",
-        "name": "News",
-        "url": "steamcommunity.com",
-        "maintainers": [
-          "keocheung"
-        ],
-        "example": "/steam/news/958260/english",
-        "parameters": {
-          "appid": "Game App ID, all digits, can be found in the URL",
-          "language": "Language, english by default, see below for more languages"
-        },
-        "description": "<details>\n<summary>More languages</summary>\n\n| 语言代码                                          | 语言名称   |\n| ------------------------------------------------- | ---------- |\n| English                                           | english    |\n| Español - España (Spanish - Spain)                | spanish    |\n| Français (French)                                 | french     |\n| Italiano (Italian)                                | italian    |\n| Deutsch (German)                                  | german     |\n| Ελληνικά (Greek)                                  | greek      |\n| 한국어 (Korean)                                   | koreana    |\n| 简体中文 (Simplified Chinese)                     | schinese   |\n| 繁體中文 (Traditional Chinese)                    | tchinese   |\n| Русский (Russian)                                 | russian    |\n| ไทย (Thai)                                        | thai       |\n| 日本語 (Japanese)                                 | japanese   |\n| Português (Portuguese)                            | portuguese |\n| Português - Brasil (Portuguese - Brazil)          | brazilian  |\n| Polski (Polish)                                   | polish     |\n| Dansk (Danish)                                    | danish     |\n| Nederlands (Dutch)                                | dutch      |\n| Suomi (Finnish)                                   | finnish    |\n| Norsk (Norwegian)                                 | norwegian  |\n| Svenska (Swedish)                                 | swedish    |\n| Čeština (Czech)                                   | czech      |\n| Magyar (Hungarian)                                | hungarian  |\n| Română (Romanian)                                 | romanian   |\n| Български (Bulgarian)                             | bulgarian  |\n| Türkçe (Turkish)                                  | turkish    |\n| Українська (Ukrainian)                            | ukrainian  |\n| Tiếng Việt (Vietnamese)                           | vietnamese |\n| Español - Latinoamérica (Spanish - Latin America) | latam      |\n\n</details>",
-        "categories": [
-          "game"
-        ],
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportRadar": true,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "radar": [
-          {
-            "title": "News",
-            "source": [
-              "steamcommunity.com/app/:appid",
-              "steamcommunity.com/app/:appid/allnews",
-              "steamcommunity.com/app/:appid/announcements",
-              "steamcommunity.com/app/:appid/news"
-            ],
-            "target": "/news/:appid"
-          }
-        ],
-        "location": "news.ts",
-        "module": () => import('@/routes/steam/news.ts')
-      },
-      "/curator/:id/:routeParams?": {
-        "path": "/curator/:id/:routeParams?",
-        "categories": [
-          "game"
-        ],
-        "example": "/steam/curator/34646096-80-Days",
-        "parameters": {
-          "id": "Steam curator id. It usually consists of a series of numbers and the curator's name.",
-          "routeParams": {
-            "description": "Extra parameters to filter the reviews. The following parameters are supported:\n| Key             | Description                                                                                   | Accepts                                    | Defaults to |\n| --------------- | --------------------------------------------------------------------------------------------- | ------------------------------------------ | ----------- |\n| `curations`   | Review type to filter by. `0`: Recommended, `1`: Not Recommended, `2`: Informational    | `0`/`1`/`2`/`0,1`/`0,2`/`1,2`  |             |\n| `tagids`      | Tag to filter by. Details are provided below.                                                 | use comma to separate multiple tagid       |             |\n\nNote: There is a [‘Popular Tags’](https://store.steampowered.com/tag/browse) page where you can find many but not all of the tags. The tag’s ID is in the `data-tagid` attribute of the element.Steam does not currently provide a page that comprehensively lists all tags, and you may need to explore alternative ways to find them.\n\nExamples:\n* `/steam/curator/34646096-80-Days/curations=&tagids=`\n* `/steam/curator/34646096-80-Days/curations=0&tagids=19`\n* `/steam/curator/34646096-80-Days/curations=0,2&tagids=19,21`\n"
-          }
-        },
-        "radar": [
-          {
-            "title": "Latest Curator Reviews",
-            "source": [
-              "store.steampowered.com/curator/:id"
-            ],
-            "target": "/curator/:id"
-          }
-        ],
-        "description": "The Latest reviews from a Steam Curator.",
-        "name": "Latest Curator Reviews",
-        "maintainers": [
-          "naremloa",
-          "fenxer"
-        ],
-        "location": "curator.tsx",
-        "module": () => import('@/routes/steam/curator.tsx')
-      },
-      "/search/:params": {
-        "path": "/search/:params",
-        "categories": [
-          "game"
-        ],
-        "example": "/steam/search/sort_by=Released_DESC&tags=492&category1=10&os=linux",
-        "parameters": {
-          "params": "Query parameters for a Steam Store search."
-        },
-        "radar": [
-          {
-            "source": [
-              "store.steampowered.com",
-              "store.steampowered.com/search/:params"
-            ]
-          }
-        ],
-        "name": "Store Search",
-        "maintainers": [
-          "moppman"
-        ],
-        "location": "search.ts",
-        "module": () => import('@/routes/steam/search.ts')
-      },
-      "/sharefile-changelog/:sharefileID/:routeParams?": {
-        "path": "/sharefile-changelog/:sharefileID/:routeParams?",
-        "categories": [
-          "game"
-        ],
-        "example": "/steam/sharefile-changelog/2851063440/l=schinese",
-        "parameters": {
-          "sharefileID": "Steam community sharefile id. Usually refers to a workshop item.",
-          "routeParams": "Route parameters."
-        },
-        "radar": [
-          {
-            "title": "Sharefile Changelog",
-            "source": [
-              "steamcommunity.com/sharedfiles/filedetails/changelog/:sharefileID"
-            ],
-            "target": "/sharefile-changelog/:sharefileID"
-          }
-        ],
-        "description": "Steam Community Sharefile's Changelog. Primary used for a workshop item.\nHelpful route parameters:\n\n- `l=` language parameter, change the language of description.\n- `p=` page parameter, change the results page. p=1 by default.",
-        "name": "Sharefile Changelog",
-        "maintainers": [
-          "NyaaaDoge"
-        ],
-        "location": "sharefile-changelog.ts",
-        "module": () => import('@/routes/steam/sharefile-changelog.ts')
-      },
-      "/workshopsearch/:appid?/:routeParams?": {
-        "path": "/workshopsearch/:appid?/:routeParams?",
-        "categories": [
-          "game"
-        ],
-        "example": "/steam/workshopsearch/730",
-        "parameters": {
-          "appid": "Steam appid, can be found on the community hub page or store page URL, 730 by default.",
-          "routeParams": "Route parameters, can be found on the search result page URL. Route parameters located after the appid."
-        },
-        "radar": [
-          {
-            "title": "Workshop Search Results",
-            "source": [
-              "steamcommunity.com/app/:appid/workshop/"
-            ],
-            "target": "/workshopsearch/:appid"
-          }
-        ],
-        "description": "Steam Community Workshop Search Results.\nThe parameter 'l=language' changes the language of search results(if possible).\nFor example, route `/workshopsearch/730/l=schinese` will display the simplified Chinese descriptions of the entry.\n\nLanguage Parameter:\n\n| English | 简体中文 | 繁體中文 | 日本語   | 한국어  | ภาษาไทย | български | čeština | dansk  | Deutsch | español | latam | ελληνικά | français | italiano | Bahasa Indonesia | magyar    | Nederlands | norsk     | polski | português  | brasileiro | română   | русский | suomi   | svenska | Türkçe  | Tiếng Việt | українська |\n| ------- | -------- | -------- | -------- | ------- | ------- | --------- | ------- | ------ | ------- | ------- | ----- | -------- | -------- | -------- | ---------------- | --------- | ---------- | --------- | ------ | ---------- | ---------- | -------- | ------- | ------- | ------- | ------- | ---------- | ---------- |\n| english | schinese | tchinese | japanese | koreana | thai    | bulgarian | czech   | danish | german  | spanish | latam | greek    | french   | italian  | indonesian       | hungarian | dutch      | norwegian | polish | portuguese | brazilian  | romanian | russian | finnish | swedish | turkish | vietnamese | ukrainian  |",
-        "name": "Community Workshop Search",
-        "maintainers": [
-          "NyaaaDoge"
-        ],
-        "location": "workshop-search.tsx",
-        "module": () => import('@/routes/steam/workshop-search.tsx')
-      }
-    },
-    "apiRoutes": {},
-    "name": "Steam",
-    "url": "store.steampowered.com",
-    "lang": "en"
-  },
   "stheadline": {
     "routes": {
       "/std/:category{.+}?": {
@@ -156655,6 +156465,274 @@ export default {
     "name": "南方网",
     "url": "nfapp.southcn.com",
     "lang": "zh-CN"
+  },
+  "steam": {
+    "routes": {
+      "/appcommunityfeed/:appid/:routeParams?": {
+        "path": "/appcommunityfeed/:appid/:routeParams?",
+        "categories": [
+          "game"
+        ],
+        "example": "/steam/appcommunityfeed/730",
+        "parameters": {
+          "appid": "Steam appid, can be found on the community hub page or store page URL.",
+          "routeParams": "Query parameters."
+        },
+        "radar": [
+          {
+            "title": "Community Hub",
+            "source": [
+              "steamcommunity.com/app/:appid"
+            ],
+            "target": "/appcommunityfeed/:appid"
+          },
+          {
+            "title": "Community Hub",
+            "source": [
+              "store.steampowered.com/app/:appid/*/"
+            ],
+            "target": "/appcommunityfeed/:appid"
+          }
+        ],
+        "description": "Query Parameters:\n\n| Name                   | Type   | Description             |\n| ---------------------- | ------ | ----------------------- |\n| p                      | string | p                       |\n| rgSections\\[]          | string | rgSections              |\n| filterLanguage         | string | Filter Language         |\n| languageTag            | string | Language Tag            |\n| nMaxInappropriateScore | string | Max Inappropriate Score |\n\nExample:\n\n- `/appcommunityfeed/730/p=1&rgSections[]=2&rgSections[]=4&filterLanguage=english&languageTag=english&nMaxInappropriateScore=1` for CS2 Screenshot and Artwork contents.\n- `/appcommunityfeed/730/rgSections[]=6` for CS2 Workshop contents only.\n- `/appcommunityfeed/570/rgSections[]=3&rgSections[]=9` for Dota2 Video and Guides contents.\n\n::: tip\nIt can also access community hub contents that require a logged-in account.\n:::",
+        "name": "Steam Community Hub Feeds",
+        "maintainers": [
+          "NyaaaDoge"
+        ],
+        "location": "appcommunityfeed.tsx",
+        "module": () => import('@/routes/steam/appcommunityfeed.tsx')
+      },
+      "/news/:appid/:language?": {
+        "path": "/news/:appid/:language?",
+        "name": "News",
+        "url": "steamcommunity.com",
+        "maintainers": [
+          "keocheung"
+        ],
+        "example": "/steam/news/958260/english",
+        "parameters": {
+          "appid": "Game App ID, all digits, can be found in the URL",
+          "language": "Language, english by default, see below for more languages"
+        },
+        "description": "<details>\n<summary>More languages</summary>\n\n| 语言代码                                          | 语言名称   |\n| ------------------------------------------------- | ---------- |\n| English                                           | english    |\n| Español - España (Spanish - Spain)                | spanish    |\n| Français (French)                                 | french     |\n| Italiano (Italian)                                | italian    |\n| Deutsch (German)                                  | german     |\n| Ελληνικά (Greek)                                  | greek      |\n| 한국어 (Korean)                                   | koreana    |\n| 简体中文 (Simplified Chinese)                     | schinese   |\n| 繁體中文 (Traditional Chinese)                    | tchinese   |\n| Русский (Russian)                                 | russian    |\n| ไทย (Thai)                                        | thai       |\n| 日本語 (Japanese)                                 | japanese   |\n| Português (Portuguese)                            | portuguese |\n| Português - Brasil (Portuguese - Brazil)          | brazilian  |\n| Polski (Polish)                                   | polish     |\n| Dansk (Danish)                                    | danish     |\n| Nederlands (Dutch)                                | dutch      |\n| Suomi (Finnish)                                   | finnish    |\n| Norsk (Norwegian)                                 | norwegian  |\n| Svenska (Swedish)                                 | swedish    |\n| Čeština (Czech)                                   | czech      |\n| Magyar (Hungarian)                                | hungarian  |\n| Română (Romanian)                                 | romanian   |\n| Български (Bulgarian)                             | bulgarian  |\n| Türkçe (Turkish)                                  | turkish    |\n| Українська (Ukrainian)                            | ukrainian  |\n| Tiếng Việt (Vietnamese)                           | vietnamese |\n| Español - Latinoamérica (Spanish - Latin America) | latam      |\n\n</details>",
+        "categories": [
+          "game"
+        ],
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportRadar": true,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "title": "News",
+            "source": [
+              "steamcommunity.com/app/:appid",
+              "steamcommunity.com/app/:appid/allnews",
+              "steamcommunity.com/app/:appid/announcements",
+              "steamcommunity.com/app/:appid/news"
+            ],
+            "target": "/news/:appid"
+          }
+        ],
+        "location": "news.ts",
+        "module": () => import('@/routes/steam/news.ts')
+      },
+      "/curator/:id/:routeParams?": {
+        "path": "/curator/:id/:routeParams?",
+        "categories": [
+          "game"
+        ],
+        "example": "/steam/curator/34646096-80-Days",
+        "parameters": {
+          "id": "Steam curator id. It usually consists of a series of numbers and the curator's name.",
+          "routeParams": {
+            "description": "Extra parameters to filter the reviews. The following parameters are supported:\n| Key             | Description                                                                                   | Accepts                                    | Defaults to |\n| --------------- | --------------------------------------------------------------------------------------------- | ------------------------------------------ | ----------- |\n| `curations`   | Review type to filter by. `0`: Recommended, `1`: Not Recommended, `2`: Informational    | `0`/`1`/`2`/`0,1`/`0,2`/`1,2`  |             |\n| `tagids`      | Tag to filter by. Details are provided below.                                                 | use comma to separate multiple tagid       |             |\n\nNote: There is a [‘Popular Tags’](https://store.steampowered.com/tag/browse) page where you can find many but not all of the tags. The tag’s ID is in the `data-tagid` attribute of the element.Steam does not currently provide a page that comprehensively lists all tags, and you may need to explore alternative ways to find them.\n\nExamples:\n* `/steam/curator/34646096-80-Days/curations=&tagids=`\n* `/steam/curator/34646096-80-Days/curations=0&tagids=19`\n* `/steam/curator/34646096-80-Days/curations=0,2&tagids=19,21`\n"
+          }
+        },
+        "radar": [
+          {
+            "title": "Latest Curator Reviews",
+            "source": [
+              "store.steampowered.com/curator/:id"
+            ],
+            "target": "/curator/:id"
+          }
+        ],
+        "description": "The Latest reviews from a Steam Curator.",
+        "name": "Latest Curator Reviews",
+        "maintainers": [
+          "naremloa",
+          "fenxer"
+        ],
+        "location": "curator.tsx",
+        "module": () => import('@/routes/steam/curator.tsx')
+      },
+      "/search/:params": {
+        "path": "/search/:params",
+        "categories": [
+          "game"
+        ],
+        "example": "/steam/search/sort_by=Released_DESC&tags=492&category1=10&os=linux",
+        "parameters": {
+          "params": "Query parameters for a Steam Store search."
+        },
+        "radar": [
+          {
+            "source": [
+              "store.steampowered.com",
+              "store.steampowered.com/search/:params"
+            ]
+          }
+        ],
+        "name": "Store Search",
+        "maintainers": [
+          "moppman"
+        ],
+        "location": "search.ts",
+        "module": () => import('@/routes/steam/search.ts')
+      },
+      "/sharefile-changelog/:sharefileID/:routeParams?": {
+        "path": "/sharefile-changelog/:sharefileID/:routeParams?",
+        "categories": [
+          "game"
+        ],
+        "example": "/steam/sharefile-changelog/2851063440/l=schinese",
+        "parameters": {
+          "sharefileID": "Steam community sharefile id. Usually refers to a workshop item.",
+          "routeParams": "Route parameters."
+        },
+        "radar": [
+          {
+            "title": "Sharefile Changelog",
+            "source": [
+              "steamcommunity.com/sharedfiles/filedetails/changelog/:sharefileID"
+            ],
+            "target": "/sharefile-changelog/:sharefileID"
+          }
+        ],
+        "description": "Steam Community Sharefile's Changelog. Primary used for a workshop item.\nHelpful route parameters:\n\n- `l=` language parameter, change the language of description.\n- `p=` page parameter, change the results page. p=1 by default.",
+        "name": "Sharefile Changelog",
+        "maintainers": [
+          "NyaaaDoge"
+        ],
+        "location": "sharefile-changelog.ts",
+        "module": () => import('@/routes/steam/sharefile-changelog.ts')
+      },
+      "/workshopsearch/:appid?/:routeParams?": {
+        "path": "/workshopsearch/:appid?/:routeParams?",
+        "categories": [
+          "game"
+        ],
+        "example": "/steam/workshopsearch/730",
+        "parameters": {
+          "appid": "Steam appid, can be found on the community hub page or store page URL, 730 by default.",
+          "routeParams": "Route parameters, can be found on the search result page URL. Route parameters located after the appid."
+        },
+        "radar": [
+          {
+            "title": "Workshop Search Results",
+            "source": [
+              "steamcommunity.com/app/:appid/workshop/"
+            ],
+            "target": "/workshopsearch/:appid"
+          }
+        ],
+        "description": "Steam Community Workshop Search Results.\nThe parameter 'l=language' changes the language of search results(if possible).\nFor example, route `/workshopsearch/730/l=schinese` will display the simplified Chinese descriptions of the entry.\n\nLanguage Parameter:\n\n| English | 简体中文 | 繁體中文 | 日本語   | 한국어  | ภาษาไทย | български | čeština | dansk  | Deutsch | español | latam | ελληνικά | français | italiano | Bahasa Indonesia | magyar    | Nederlands | norsk     | polski | português  | brasileiro | română   | русский | suomi   | svenska | Türkçe  | Tiếng Việt | українська |\n| ------- | -------- | -------- | -------- | ------- | ------- | --------- | ------- | ------ | ------- | ------- | ----- | -------- | -------- | -------- | ---------------- | --------- | ---------- | --------- | ------ | ---------- | ---------- | -------- | ------- | ------- | ------- | ------- | ---------- | ---------- |\n| english | schinese | tchinese | japanese | koreana | thai    | bulgarian | czech   | danish | german  | spanish | latam | greek    | french   | italian  | indonesian       | hungarian | dutch      | norwegian | polish | portuguese | brazilian  | romanian | russian | finnish | swedish | turkish | vietnamese | ukrainian  |",
+        "name": "Community Workshop Search",
+        "maintainers": [
+          "NyaaaDoge"
+        ],
+        "location": "workshop-search.tsx",
+        "module": () => import('@/routes/steam/workshop-search.tsx')
+      },
+      "/discussions/:appid/:feature?": {
+        "path": "/discussions/:appid/:feature?",
+        "name": "Discussion List",
+        "url": "steamcommunity.com",
+        "maintainers": [
+          "NekoAria"
+        ],
+        "example": "/steam/discussions/730",
+        "parameters": {
+          "appid": "App ID, found in the Steam Community URL",
+          "feature": {
+            "description": "App-local discussion subforum slot, found in the Steam Community URL",
+            "default": "0"
+          }
+        },
+        "description": "This new-topic feed enriches up to 15 topics from Steam's first, most-recently-active page with their full original posts and publication times. RSSHub sorts items by publication time by default; use `?sorted=false` to retain Steam's activity order. Recently created topics beyond that page may be missed. Pagination is not supported.",
+        "categories": [
+          "game"
+        ],
+        "features": {
+          "requirePuppeteer": false,
+          "supportRadar": true
+        },
+        "radar": [
+          {
+            "source": [
+              "steamcommunity.com/app/:appid/discussions"
+            ],
+            "target": "/discussions/:appid"
+          },
+          {
+            "source": [
+              "steamcommunity.com/app/:appid/discussions/:feature"
+            ],
+            "target": "/discussions/:appid/:feature"
+          },
+          {
+            "source": [
+              "steamcommunity.com/app/:appid/discussions/:feature/:topicId"
+            ],
+            "target": "/discussions/:appid/:feature"
+          }
+        ],
+        "location": "discussion-list.ts",
+        "module": () => import('@/routes/steam/discussion-list.ts')
+      },
+      "/discussion/:appid/:feature/:topicId": {
+        "path": "/discussion/:appid/:feature/:topicId",
+        "name": "Discussion Thread",
+        "url": "steamcommunity.com",
+        "maintainers": [
+          "NekoAria"
+        ],
+        "example": "/steam/discussion/730/0/563667940587817948",
+        "parameters": {
+          "appid": "App ID, found in the Steam Community URL",
+          "feature": "App-local discussion subforum slot, found in the Steam Community URL",
+          "topicId": "Discussion topic ID, found in the Steam Community URL"
+        },
+        "description": "This route contains the original post and up to 15 replies from each of the first and current last pages. Replies on intervening pages are not included, and pagination is not supported.",
+        "categories": [
+          "game"
+        ],
+        "features": {
+          "requirePuppeteer": false,
+          "supportRadar": true
+        },
+        "radar": [
+          {
+            "source": [
+              "steamcommunity.com/app/:appid/discussions/:feature/:topicId"
+            ],
+            "target": "/discussion/:appid/:feature/:topicId"
+          }
+        ],
+        "location": "discussion-thread.ts",
+        "module": () => import('@/routes/steam/discussion-thread.ts')
+      }
+    },
+    "apiRoutes": {},
+    "name": "Steam",
+    "url": "store.steampowered.com",
+    "lang": "en"
   },
   "stratechery": {
     "routes": {

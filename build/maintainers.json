@@ -8249,25 +8249,6 @@
     "lyqluis",
     "KarasuShin"
   ],
-  "/steam/appcommunityfeed/:appid/:routeParams?": [
-    "NyaaaDoge"
-  ],
-  "/steam/news/:appid/:language?": [
-    "keocheung"
-  ],
-  "/steam/curator/:id/:routeParams?": [
-    "naremloa",
-    "fenxer"
-  ],
-  "/steam/search/:params": [
-    "moppman"
-  ],
-  "/steam/sharefile-changelog/:sharefileID/:routeParams?": [
-    "NyaaaDoge"
-  ],
-  "/steam/workshopsearch/:appid?/:routeParams?": [
-    "NyaaaDoge"
-  ],
   "/stheadline/std/:category{.+}?": [
     "TonyRL"
   ],
@@ -12094,6 +12075,31 @@
   ],
   "/southcn/nfapp/reporter/:reporter": [
     "TimWu007"
+  ],
+  "/steam/appcommunityfeed/:appid/:routeParams?": [
+    "NyaaaDoge"
+  ],
+  "/steam/news/:appid/:language?": [
+    "keocheung"
+  ],
+  "/steam/curator/:id/:routeParams?": [
+    "naremloa",
+    "fenxer"
+  ],
+  "/steam/search/:params": [
+    "moppman"
+  ],
+  "/steam/sharefile-changelog/:sharefileID/:routeParams?": [
+    "NyaaaDoge"
+  ],
+  "/steam/workshopsearch/:appid?/:routeParams?": [
+    "NyaaaDoge"
+  ],
+  "/steam/discussions/:appid/:feature?": [
+    "NekoAria"
+  ],
+  "/steam/discussion/:appid/:feature/:topicId": [
+    "NekoAria"
   ],
   "/stratechery/": [
     "chazeon"
