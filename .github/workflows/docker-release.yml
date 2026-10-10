@@ -291,7 +291,7 @@ jobs:
                   IMAGE_REPOSITORY: ${{ needs.release.outputs.repo-name }}
                   DOCKER_USERNAME: ${{ vars.DOCKER_USERNAME }}
               run: |
-                  echo "tag=v$(date -u +%Y.%m.%d)-${GITHUB_SHA:0:7}" >> "$GITHUB_OUTPUT"
+                  echo "tag=v$(date -u +%Y.%m.%d)-${GITHUB_RUN_NUMBER}.${GITHUB_SHA:0:7}" >> "$GITHUB_OUTPUT"
                   image_repository="${GITHUB_REPOSITORY,,}"
                   cat > "$RUNNER_TEMP/release-notes.md" <<EOF
                   Source commit: $GITHUB_SHA
