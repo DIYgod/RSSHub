@@ -40,6 +40,8 @@ async function handler(ctx: Context): Promise<Data> {
     const response = await ofetch(`${baseUrl}/${language}/sharedfeeds`);
     const $ = load(response);
 
+    // The page lists the oldest shared feed first, so the newest one always sits at the very end.
+    // Reversing keeps the newest-first order readers expect from a feed.
     const items: DataItem[] = $('.feed-item')
         .toArray()
         .map((element) => {
@@ -51,11 +53,8 @@ async function handler(ctx: Context): Promise<Data> {
                 link: $title.attr('href'),
                 description: $item.find('.card-text').text().trim(),
             };
-        });
-
-    // The page lists the oldest shared feed first, so the newest one always sits at the very end.
-    // Reversing keeps the newest-first order readers expect from a feed.
-    items.reverse();
+        })
+        .toReversed();
 
     return {
         title: 'Shared Feeds - RssEverything',
