@@ -5,6 +5,7 @@ import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { parseDateRange } from '@/utils/parse-date-range';
 import timezone from '@/utils/timezone';
 
 import { namespace } from './namespace';
@@ -54,10 +55,7 @@ export const route: Route = {
                         .text()
                         .replace('展览场地：', '');
 
-                    // Parse startDate and endDate from "YYYY-MM-DD至YYYY-MM-DD"
-                    const dateParts = fullDuration.split('至');
-                    const startDate = dateParts[0] || undefined;
-                    const endDate = dateParts[1] || undefined;
+                    const { startDate, endDate } = parseDateRange(fullDuration);
 
                     const scriptText = $li.find('p.image script').text();
                     const images: Array<{ savepath: string }> = JSON.parse(scriptText.match(/var\s+jsonImageStr\s*=\s*'(\[.*?\])'/s)![1]);

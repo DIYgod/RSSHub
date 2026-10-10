@@ -1,5 +1,4 @@
 import { load } from 'cheerio';
-import dayjs from 'dayjs';
 import type { Context } from 'hono';
 import { renderToString } from 'hono/jsx/dom/server';
 
@@ -7,6 +6,7 @@ import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { parseDateRange } from '@/utils/parse-date-range';
 
 import { namespace } from './namespace';
 
@@ -22,57 +22,6 @@ const titleTagMap = new Map<string, string>([
     ['gjzl', '国家展览'],
     ['gbxz', '国博巡展'],
 ]);
-
-// Formatting Function: Returns YYYY-MM-DD when there are 3 valid numeric segments that are formatted by parseExhibitionDate; otherwise, returns undefined.
-const formatExhibitionDate = (dateStr: string | undefined): string | undefined => {
-    if (!dateStr) {
-        return undefined;
-    }
-    const normalized = dateStr.replaceAll(/[年月/.]/g, '-').replaceAll('日', '');
-    const d = dayjs(normalized);
-    return d.format('YYYY-MM-DD');
-};
-
-const parseExhibitionDuration = (duration: string) => {
-    if (!duration) {
-        return { startDate: undefined, endDate: undefined };
-    }
-
-    // Remove all spaces and parentheses to prevent regex matching from breaking
-    const cleanStr = duration.replaceAll(/\s+/g, '').replaceAll(/（[^）]*）/g, '');
-
-    // Match YYYY-MM-DD or MM-DD
-    const dateRegex = /(\d{4}[./年-]\d{1,2}[./月-]\d{1,2}日?)|(\d{1,2}[./月-]\d{1,2}日?)/g;
-    const allDates = cleanStr.match(dateRegex) || [];
-
-    let startDateRaw: string | undefined;
-    let endDateRaw: string | undefined;
-
-    if (allDates.length >= 2) {
-        startDateRaw = allDates[0];
-        let rawEnd = allDates[1];
-        // Logic to complete the year
-        if (!/\d{4}/.test(rawEnd) && startDateRaw) {
-            const startYear = startDateRaw.match(/^\d{4}/);
-            if (startYear?.[0]) {
-                rawEnd = `${startYear[0]}${startDateRaw[4]}${rawEnd}`;
-            }
-        }
-        endDateRaw = rawEnd;
-    } else if (allDates.length === 1) {
-        if (cleanStr.includes('闭展')) {
-            // e.g. "2025年2月16日闭展"
-            endDateRaw = allDates[0];
-        } else {
-            startDateRaw = allDates[0];
-        }
-    }
-
-    return {
-        startDate: formatExhibitionDate(startDateRaw),
-        endDate: formatExhibitionDate(endDateRaw),
-    };
-};
 
 // to identify the route config and titletag based on type and subtype, this function is used in both route handler and radar to ensure consistency
 const resolveRouteConfig = (type: string | undefined, subtype: string | undefined, baseUrl: string) => {
@@ -230,7 +179,7 @@ export const route: Route = {
                             }
                         }
 
-                        const { startDate, endDate } = parseExhibitionDuration(fullDuration);
+                        const { startDate, endDate } = parseDateRange(fullDuration);
 
                         // CHN museum didnot have pubDate on the page, use exhibition startDate instead.
                         const pubDate = startDate ? parseDate(startDate) : undefined;

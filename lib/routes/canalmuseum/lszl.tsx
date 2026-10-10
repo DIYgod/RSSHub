@@ -4,20 +4,9 @@ import { renderToString } from 'hono/jsx/dom/server';
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { parseDateRange } from '@/utils/parse-date-range';
 
 import { namespace } from './namespace';
-
-// Converts "YYYY年M月D日" to "YYYY-MM-DD"
-const formatExhibitionDate = (dateStr: string): string | undefined => {
-    const m = dateStr.trim().match(/^(\d{4})年(\d{1,2})月(\d{1,2})日$/);
-    return m ? `${m[1]}-${m[2].padStart(2, '0')}-${m[3].padStart(2, '0')}` : undefined;
-};
-
-// Parses "YYYY年M月D日—YYYY年M月D日"
-const parseExhibitionDuration = (fullDuration: string) => {
-    const [startRaw, endRaw] = fullDuration.split('—', 2);
-    return { startDate: formatExhibitionDate(startRaw), endDate: formatExhibitionDate(endRaw) };
-};
 
 export const route: Route = {
     path: '/lszl',
@@ -56,7 +45,7 @@ export const route: Route = {
                 const fullDuration = liItems.find((t) => t.startsWith('时间：'))?.replace('时间：', '') ?? '';
                 const location = liItems.find((t) => t.startsWith('地点：'))?.replace('地点：', '') ?? '';
 
-                const { startDate, endDate } = parseExhibitionDuration(fullDuration);
+                const { startDate, endDate } = parseDateRange(fullDuration);
                 const pubDate = startDate ? parseDate(startDate) : undefined;
 
                 const description = renderToString(

@@ -1,11 +1,11 @@
 import { load } from 'cheerio';
-import dayjs from 'dayjs';
 import { renderToString } from 'hono/jsx/dom/server';
 import { Agent, buildConnector } from 'undici';
 
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { parseDateRange } from '@/utils/parse-date-range';
 
 import { namespace } from './namespace';
 
@@ -75,24 +75,7 @@ export const route: Route = {
                 let endDate;
 
                 if (fullDuration) {
-                    const times = fullDuration.split('-');
-                    const startStr = times[0]
-                        .replaceAll(/（.*?）/g, '')
-                        .trim()
-                        .replaceAll(/[年月/.]/g, '-')
-                        .replace('日', '');
-                    let endStr = times[1]
-                        .replaceAll(/（.*?）/g, '')
-                        .trim()
-                        .replaceAll(/[年月/.]/g, '-')
-                        .replace('日', '');
-
-                    if (startStr && endStr.split('-').length === 2) {
-                        endStr = `${startStr.split('-', 1)[0]}-${endStr}`;
-                    }
-
-                    startDate = dayjs(startStr).format('YYYY-MM-DD');
-                    endDate = dayjs(endStr).format('YYYY-MM-DD');
+                    ({ startDate, endDate } = parseDateRange(fullDuration));
                 }
 
                 const pubDate = startDate ? parseDate(startDate) : undefined;
