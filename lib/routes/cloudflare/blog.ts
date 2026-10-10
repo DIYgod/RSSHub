@@ -21,7 +21,11 @@ export const route: Route = {
     example: '/cloudflare/blog',
     categories: ['programming'],
     maintainers: ['ljh12138164'],
-    description: 'Uses the official RSS feed for article metadata and fetches full articles, including inline images, code blocks, and copyable prompts.',
+    description:
+        'Uses the [official RSS feed](https://blog.cloudflare.com/rss/) for article metadata and fetches full articles from [Cloudflare Blog](https://blog.cloudflare.com/), including inline images, code blocks, and copyable prompts.',
+    zh: {
+        description: '来源：[Cloudflare Blog](https://blog.cloudflare.com/)。使用[官方 RSS](https://blog.cloudflare.com/rss/)获取文章列表、作者、日期和标签，再抓取并缓存网页正文，补齐图片、代码块和可复制的提示词。',
+    },
     features: {
         requireConfig: false,
         requirePuppeteer: false,
