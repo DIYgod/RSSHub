@@ -79,11 +79,3 @@ export const memberCookie = async (): Promise<string | null> => {
     }
     return cookie;
 };
-
-/** Drops the cached session so the next call signs in again. */
-export const forgetSession = (): void => {
-    cache.set(SESSION_KEY, '', 1);
-};
-
-/** A page fetched as a member says so in its header; a guest page does not. */
-export const isSignedIn = (html: string): boolean => html.includes('ログアウト');

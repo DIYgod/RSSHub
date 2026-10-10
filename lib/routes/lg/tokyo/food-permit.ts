@@ -8,8 +8,6 @@ import timezone from '@/utils/timezone';
 
 import { csvRecords, decodeText, isoDate, type PermitExtra, type Row, warekiMonth } from '../utils';
 
-export type { PermitExtra } from '../utils';
-
 /**
  * 飲食店営業許可 (food business permits) newly granted in Tokyo wards, from each ward's CC BY open data.
  *

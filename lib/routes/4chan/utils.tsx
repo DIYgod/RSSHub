@@ -140,5 +140,5 @@ interface ChanPost {
     last_replies?: ChanPost[];
 }
 
-export type { CatalogApiReturn, ChanPost, ViewOptions };
-export { parseParams, processCatalog, renderPost };
+export type { CatalogApiReturn };
+export { parseParams, processCatalog };

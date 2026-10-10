@@ -1,6 +1,6 @@
 import crypto from 'node:crypto';
 
-import type { RESTGetAPIChannelMessagesQuery, RESTGetAPIChannelMessagesResult, RESTGetAPIChannelResult, RESTGetAPIGuildChannelsResult, RESTGetAPIGuildResult } from 'discord-api-types/rest/v10';
+import type { RESTGetAPIChannelMessagesQuery, RESTGetAPIChannelMessagesResult, RESTGetAPIChannelResult, RESTGetAPIGuildResult } from 'discord-api-types/rest/v10';
 import type { APIMessage } from 'discord-api-types/v10';
 
 import { config } from '@/config';
@@ -15,15 +15,6 @@ const apiUrl = `${baseUrl}/api/v10`;
 export const getGuild = (guildId, authorization) =>
     cache.tryGet(`discord:guilds:${guildId}`, () =>
         ofetch<RESTGetAPIGuildResult>(`${apiUrl}/guilds/${guildId}`, {
-            headers: {
-                authorization,
-            },
-        })
-    );
-
-export const getGuildChannels = (guildId, authorization) =>
-    cache.tryGet(`discord:guilds:${guildId}:channels`, () =>
-        ofetch<RESTGetAPIGuildChannelsResult>(`${apiUrl}/guilds/${guildId}/channels`, {
             headers: {
                 authorization,
             },

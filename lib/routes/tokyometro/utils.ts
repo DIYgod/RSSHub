@@ -9,10 +9,10 @@
 
 import type { DataItem } from '@/types';
 
-export type RidershipSource = 'tokyometro' | 'tokyu' | 'odakyu' | 'keio' | 'jreast' | 'toei' | 'toukei-tokyo';
+type RidershipSource = 'tokyometro' | 'tokyu' | 'odakyu' | 'keio' | 'jreast' | 'toei' | 'toukei-tokyo';
 
 /** What the operator counts: JR東日本 publishes 乗車 (boarding) only, the others 乗降 (boarding + alighting). */
-export type RidershipMeasure = 'boarding' | 'boarding_alighting';
+type RidershipMeasure = 'boarding' | 'boarding_alighting';
 
 export interface RidershipExtra {
     source: RidershipSource;

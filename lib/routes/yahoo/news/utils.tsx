@@ -70,22 +70,6 @@ const getList = async (region, listId) => {
     return response;
 };
 
-const getCategories = (region) =>
-    cache.tryGet(`yahoo:${region}:categoryMap`, async () => {
-        const { PageStore } = await getStores(region);
-
-        const { Col1: col1 } = PageStore.pagesConfigRaw.base.section.regions;
-        const { categoryMap } = col1.find((c) => c.name === 'ArchiveFilterBar').props;
-        for (const [key, value] of Object.entries(categoryMap)) {
-            categoryMap[key] = {
-                name: value,
-                yctMap: col1.find((c) => c.name === 'StreamContainerArchive').props.yctMap[key],
-            };
-        }
-
-        return categoryMap;
-    });
-
 const getProviderList = async (region) => {
     const stores = await getStores(region);
     return stores.providerList.map((provider) => ({
@@ -210,4 +194,4 @@ const parseItem = (item) =>
         return item;
     });
 
-export { getArchive, getCategories, getList, getProviderList, getStores, parseItem, parseList, regionConfig };
+export { getArchive, getList, getProviderList, parseItem, parseList, regionConfig };

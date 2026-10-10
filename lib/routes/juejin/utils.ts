@@ -46,12 +46,7 @@ export const solveWafChallenge = (cs: string) => {
     return Buffer.from(JSON.stringify(c)).toString('base64');
 };
 
-export const generateUuid = () => {
-    const e = (t?) => (t ? (t ^ ((16 * 0.5) >> (t / 4))).toString(10) : '10000000-1000-4000-8000-100000000000'.replaceAll(/[018]/g, (c) => e(c)));
-    return e().replaceAll('-', '').slice(0, 19);
-};
-
-export const getArticle = async (link) => {
+const getArticle = async (link) => {
     let response = await ofetch(link);
     let $ = load(response);
     if ($('script').text().includes('_wafchallengeid')) {

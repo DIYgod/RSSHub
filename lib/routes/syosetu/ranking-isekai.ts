@@ -9,7 +9,7 @@ import { IsekaiCategory, isekaiCategoryToJapanese, NovelType, novelTypeToJapanes
 
 type Join<T extends string | number> = `${T}-${T}` | `${T}`;
 
-export function parseIsekaiRankingType(type: string) {
+function parseIsekaiRankingType(type: string) {
     const [periodStr, categoryStr, novelTypeStr = NovelType.TOTAL] = type.split('_', 3);
 
     const period = Object.values(RankingPeriod).find((value) => value === periodStr);

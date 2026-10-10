@@ -17,7 +17,7 @@ export type UnsafeDictionary = {
     readonly unsafeValue: 'any' | 'empty-object' | 'object' | 'union' | 'unknown';
 };
 
-export type WideningTargetKind = 'anonymous object' | 'generic container' | 'object' | 'open dictionary' | 'unknown';
+type WideningTargetKind = 'anonymous object' | 'generic container' | 'object' | 'open dictionary' | 'unknown';
 
 export type WideningTarget = {
     readonly kind: WideningTargetKind;
@@ -301,7 +301,7 @@ function classifyAliasBroadTarget(type: ESTree.TSType, environment: TypeEnvironm
     return classifyAliasBroadTarget(alias.typeAnnotation, environment, nextSubstitutions, nextResolving);
 }
 
-export function isPopulatedObjectExpression(expression: ESTree.Expression): boolean {
+function isPopulatedObjectExpression(expression: ESTree.Expression): boolean {
     let current = expression;
     while (current.type === 'ParenthesizedExpression' || current.type === 'TSAsExpression' || current.type === 'TSTypeAssertion' || current.type === 'TSNonNullExpression') {
         current = current.expression;

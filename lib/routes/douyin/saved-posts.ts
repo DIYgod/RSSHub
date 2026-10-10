@@ -102,7 +102,7 @@ export async function getSavedPosts(type: SavedPostsType, uid: string) {
     };
 }
 
-export function renderSavedPosts(posts: PostData['aweme_list']): DataItem[] {
+function renderSavedPosts(posts: PostData['aweme_list']): DataItem[] {
     return posts.map((post) => {
         const video = post.video;
         const videoList = video?.bit_rate?.map((item) => resolveUrl(item.play_addr.url_list.at(-1))).filter(Boolean) || [];

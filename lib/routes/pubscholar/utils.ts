@@ -7,7 +7,7 @@ const key = CryptoJS.enc.Utf8.parse('eRtYuIoPaSdFgHqW');
 const iv = CryptoJS.enc.Utf8.parse('Nmc09JkLzX8765Vb');
 
 export const baseUrl = 'https://pubscholar.cn';
-export const sha1 = (str: string) => crypto.createHash('sha1').update(str).digest('hex');
+const sha1 = (str: string) => crypto.createHash('sha1').update(str).digest('hex');
 export const uuidv4 = () => crypto.randomUUID();
 
 const generateNonce = (length: number): string => {

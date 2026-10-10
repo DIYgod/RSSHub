@@ -17,7 +17,7 @@ function toSrtTime(seconds: number): string {
     return `${pad(hours)}:${pad(minutes)}:${pad(secs)},${pad(millis, 3)}`;
 }
 
-export type Subtitle = {
+type Subtitle = {
     start: string;
     dur: string;
     text: string;
@@ -36,7 +36,7 @@ ${seg.text}
         .join('\n');
 }
 
-export const getSubtitlesByVideoId = (videoId: string) => {
+const getSubtitlesByVideoId = (videoId: string) => {
     // Subtitle extraction can exceed the Workers memory limit.
     if (isWorker) {
         return Promise.resolve('');
@@ -69,15 +69,6 @@ function createSrtAttachmentFromSrt(srt: string): Array<{ url: string; mime_type
         },
     ];
 }
-
-export const getSrtAttachment = async (videoId: string): Promise<Array<{ url: string; mime_type: string; title: string }>> => {
-    try {
-        const srt = await getSubtitlesByVideoId(videoId);
-        return createSrtAttachmentFromSrt(srt);
-    } catch {
-        return [];
-    }
-};
 
 export const getSrtAttachmentBatch = async (videoIds: string[]) => {
     if (isWorker) {

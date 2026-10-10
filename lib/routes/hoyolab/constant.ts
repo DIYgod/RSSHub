@@ -1,7 +1,5 @@
 // 域名
 const HOST = 'https://bbs-api-os.hoyolab.com';
-// 活动列接口
-const EVENT_LIST = '/community/community_contribution/wapi/event/list';
 // 活动详情接口
 const POST_FULL = '/community/post/wapi/getPostFull';
 // 公告和资讯接口
@@ -25,4 +23,4 @@ const OFFICIAL_PAGE_TYPE = {
     5: 43,
 };
 
-export { EVENT_LIST, HOST, LINK, NEW_LIST, OFFICIAL_PAGE_TYPE, POST_FULL, PRIVATE_IMG, PUBLIC_IMG };
+export { HOST, LINK, NEW_LIST, OFFICIAL_PAGE_TYPE, POST_FULL, PRIVATE_IMG, PUBLIC_IMG };

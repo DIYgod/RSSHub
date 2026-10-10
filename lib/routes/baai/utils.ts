@@ -40,4 +40,4 @@ const parseEventDetail = async (item) => {
     return data.data.ac_desc + data.data.ac_desc_two;
 };
 
-export { apiHost, baseUrl, eventUrl, getTagsData, parseEventDetail, parseItem };
+export { apiHost, baseUrl, getTagsData, parseEventDetail, parseItem };

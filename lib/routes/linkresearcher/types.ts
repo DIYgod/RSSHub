@@ -6,11 +6,11 @@ interface BaseItem {
     cover: string;
 }
 
-export interface InformationItem extends BaseItem {
+interface InformationItem extends BaseItem {
     summary: string;
 }
 
-export interface ThesesItem extends BaseItem {
+interface ThesesItem extends BaseItem {
     authors: string[];
     content: string;
     journals: string[];
@@ -22,7 +22,7 @@ export interface ThesesItem extends BaseItem {
     thesisTitle: string;
 }
 
-export interface ArticleItem extends BaseItem {
+interface ArticleItem extends BaseItem {
     columns: string[];
     source: {
         logo: string;
@@ -36,7 +36,7 @@ export interface ArticleItem extends BaseItem {
 
 export type SearchResultItem = InformationItem | ThesesItem | ArticleItem;
 
-export interface ThesesDetailResponse {
+interface ThesesDetailResponse {
     columns: string[];
     content: string;
     cover: string;
@@ -77,7 +77,7 @@ export interface ThesesDetailResponse {
     zhTextList?: string[];
 }
 
-export interface InformationDetailResponse {
+interface InformationDetailResponse {
     columns: string[];
     content: string;
     cover: string;

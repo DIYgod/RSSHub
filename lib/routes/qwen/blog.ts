@@ -4,7 +4,7 @@ import type { Data, DataItem, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
-export const buildBlogItem = (item: any, base: string): DataItem => {
+const buildBlogItem = (item: any, base: string): DataItem => {
     const $ = load(item.content || item.extra.introduction || '');
     const content = $('.post-content').html() ?? (item.extra.introduction || '');
 

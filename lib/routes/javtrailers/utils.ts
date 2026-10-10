@@ -9,7 +9,7 @@ export const headers = {
     Authorization: 'AELAbPQCh_fifd93wMvf_kxMD_fqkUAVf@BVgb2!md@TNW8bUEopFExyGCoKRcZX',
 };
 
-export const hdGallery = (gallery) =>
+const hdGallery = (gallery) =>
     gallery.map((item) => {
         if (item.startsWith('https://pics.dmm.co.jp/')) {
             return item.replace(/-(\d+)\.jpg$/, 'jp-$1.jpg');

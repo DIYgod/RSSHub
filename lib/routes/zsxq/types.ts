@@ -46,7 +46,7 @@ interface TalkTopic extends BasicTopic {
     };
 }
 
-export interface QATopic extends BasicTopic {
+interface QATopic extends BasicTopic {
     type: 'q&a';
     answer?: {
         owner: {

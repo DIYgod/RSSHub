@@ -32,7 +32,7 @@ export interface SFWNovelsResponse {
     };
 }
 
-export interface SFWNovelWork {
+interface SFWNovelWork {
     id: string;
     title: string;
     genre: string;
@@ -82,7 +82,7 @@ export interface NSFWNovelsResponse {
     };
 }
 
-export interface NSFWNovelWork {
+interface NSFWNovelWork {
     id: string;
     title: string;
     caption: string;

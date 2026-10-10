@@ -5,7 +5,7 @@ import { sm2, sm3, sm4 } from 'sm-crypto-v2';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 
-export const baseUrl = 'https://www.95598.cn';
+const baseUrl = 'https://www.95598.cn';
 export const link = `${baseUrl}/osgweb/blackoutNotice`;
 
 const appKey = '7e5b5e84ddad4994b0ebc68dedca4962';

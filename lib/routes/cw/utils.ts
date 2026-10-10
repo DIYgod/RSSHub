@@ -79,4 +79,4 @@ const parseItems = (list) =>
         )
     );
 
-export { baseUrl, parseItems, parseList, parsePage, pathMap };
+export { baseUrl, parsePage };

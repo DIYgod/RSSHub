@@ -108,7 +108,7 @@ const renderBody = (components: any[] = []): string =>
         .filter(Boolean)
         .join('\n');
 
-export const extractDRArticle = (html: string) => {
+const extractDRArticle = (html: string) => {
     const $ = load(html);
     const nextData = JSON.parse($('script#__NEXT_DATA__').text() || '{}');
     const viewProps = nextData.props?.pageProps?.viewProps;

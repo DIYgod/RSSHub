@@ -1,6 +1,5 @@
 import { load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
-import { base32 } from 'rfc4648';
 
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
@@ -123,36 +122,6 @@ export const parseList = async (
         title,
         resultList,
     };
-};
-
-export const orderContent = (parent) => {
-    const sortedChildren = parent
-        .children()
-        .toArray()
-        .toSorted((a, b) => {
-            const index = Buffer.from(base32.parse('GM======')).toString(); // substring(3)
-            a = Buffer.from(
-                base32.parse(
-                    parent
-                        .find((element) => a(element))
-                        .data('s')
-                        .slice(index)
-                )
-            ).toString();
-            b = Buffer.from(
-                base32.parse(
-                    parent
-                        .find((element) => b(element))
-                        .data('s')
-                        .slice(index)
-                )
-            ).toString();
-            return a - b;
-        });
-    for (const [i, e] of sortedChildren.entries()) {
-        parent.find((element) => e(element)).attr('s', i);
-        parent.append(e);
-    }
 };
 
 export interface ImageData {

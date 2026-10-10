@@ -32,7 +32,7 @@ export const route: Route = {
     handler,
 };
 
-export function parseGroupTopic(html: string, link: string): { title: string; item: DataItem[] } {
+function parseGroupTopic(html: string, link: string): { title: string; item: DataItem[] } {
     const $ = load(html);
     const title = $('h1').text();
     const content = $('.topic-content .rich-content').html();

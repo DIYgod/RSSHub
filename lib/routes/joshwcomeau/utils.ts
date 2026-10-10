@@ -32,7 +32,7 @@ export async function processList(list: PostLink[]): Promise<DataItem[]> {
     return listPromise.map((item, index) => (item.status === 'fulfilled' ? item.value : { title: 'Error Reading Item', link: `${rootUrl}${list[index]?.url}` }));
 }
 
-export async function getPostContent({ url, cardTitle }: PostLink): Promise<DataItem> {
+async function getPostContent({ url, cardTitle }: PostLink): Promise<DataItem> {
     if (url.startsWith('https')) {
         return {
             title: cardTitle ?? 'External Content',

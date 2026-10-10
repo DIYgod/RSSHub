@@ -28,7 +28,7 @@ export const TYPE_NAMES = {
     playlist: 'Playlist',
 };
 
-export const CLOUDCAST_FIELDS = `
+const CLOUDCAST_FIELDS = `
   id
   slug
   name

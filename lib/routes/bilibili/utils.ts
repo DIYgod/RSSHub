@@ -205,7 +205,7 @@ const bvidTime = 1_589_990_400;
  * @param cache - 缓存 module。
  * @returns {Promise<MediaResult>} 番剧信息。
  */
-export const getBangumi = (id: string, cache: typeof cacheModule): Promise<MediaResult> =>
+const getBangumi = (id: string, cache: typeof cacheModule): Promise<MediaResult> =>
     cache.tryGet(
         `bilibili:getBangumi:${id}`,
         async () => {
@@ -231,7 +231,7 @@ export const getBangumi = (id: string, cache: typeof cacheModule): Promise<Media
  * @param cache - 缓存 module。
  * @returns {Promise<SeasonResult>} 番剧分集信息。
  */
-export const getBangumiItems = (id: string, cache: typeof cacheModule): Promise<SeasonResult> =>
+const getBangumiItems = (id: string, cache: typeof cacheModule): Promise<SeasonResult> =>
     cache.tryGet(
         `bilibili:getBangumiItems:${id}`,
         async () => {
@@ -259,7 +259,7 @@ export const getBangumiItems = (id: string, cache: typeof cacheModule): Promise<
  *
  * @see https://player.bilibili.com/ for details.
  */
-export const renderUGCDescription = (embed: boolean, img: string, description: string, aid?: string, cid?: string, bvid?: string): string => {
+const renderUGCDescription = (embed: boolean, img: string, description: string, aid?: string, cid?: string, bvid?: string): string => {
     // docs: https://player.bilibili.com/
     const rendered = renderDescription({
         embed,
@@ -285,7 +285,7 @@ export const renderUGCDescription = (embed: boolean, img: string, description: s
  *
  * @see https://player.bilibili.com/ for details.
  */
-export const renderOGVDescription = (embed: boolean, img: string, description: string, seasonId?: string, episodeId?: string): string => {
+const renderOGVDescription = (embed: boolean, img: string, description: string, seasonId?: string, episodeId?: string): string => {
     // docs: https://player.bilibili.com/
     const rendered = renderDescription({
         embed,

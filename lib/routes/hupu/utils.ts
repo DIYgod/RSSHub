@@ -163,7 +163,7 @@ function generateTeamCompareItem(leftValue: number, rightValue: number, label: s
     return `<div class="team-compare"><div class="team-item-data"><span class="left">${leftValue}</span><span class="center">${label}</span><span class="right">${rightValue}</span></div><div class="compare-item"><div class="item left"><span class="" style="width: ${leftPercent.toFixed(4)}%; background-color: ${leftColor}"></span></div><div class="item right"><span class="gray" style="width: ${rightPercent.toFixed(4)}%"></span></div></div></div>`;
 }
 
-export function generateGameStatusHtml(result: GameStatusResult): string {
+function generateGameStatusHtml(result: GameStatusResult): string {
     const { playerStats, matchStats, teamStats } = result;
 
     // Player data section
@@ -190,7 +190,7 @@ export function generateGameStatusHtml(result: GameStatusResult): string {
     return `<div class="match-post">${playerDataHtml}${teamDataHtml}</div>`;
 }
 
-export async function getGameStatus(matchID: string): Promise<string | null> {
+async function getGameStatus(matchID: string): Promise<string | null> {
     const res = await got({
         method: 'get',
         url: 'https://games.mobileapi.hupu.com/1/7.4.4/basketballapi/matchCompletedAutoPostContent',

@@ -19,7 +19,7 @@ export const route: Route = {
     handler,
 };
 
-export const getAuthorById = (id: string) =>
+const getAuthorById = (id: string) =>
     cache.tryGet(`inspirehep:author:${id}`, () =>
         ofetch<AuthorResponse>(`${baseUrl}/api/authors/${id}`, {
             headers: {

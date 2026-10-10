@@ -148,7 +148,7 @@ const renderTipGoal = (tipGoalId, tipGoals) => {
     return renderToString(<FanslyTipGoal label={goal.label} currentPercentage={goal.currentPercentage} currentAmount={goal.currentAmount} goalAmount={goal.goalAmount} />);
 };
 
-export { baseUrl, findAccountById, getAccountByUsername, getTagId, getTagSuggestion, getTimelineByAccountId, icon, parseAttachments, parseDescription, parseMedia, renderMedia, renderPoll, renderTipGoal };
+export { baseUrl, findAccountById, getAccountByUsername, getTagId, getTagSuggestion, getTimelineByAccountId, icon, parseDescription };
 
 const FanslyMedia = ({ poster, src }: { poster?: { location?: string } | null; src?: { location?: string } }) => (
     <>

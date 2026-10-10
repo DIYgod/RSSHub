@@ -134,30 +134,11 @@ export interface HupuApiResponse {
 }
 
 /**
- * 用于区分不同页面类型的类型守卫
- */
-export function isHomePageProps(pageProps: HomePageProps | CategoryPageProps): pageProps is HomePageProps {
-    return 'res' in pageProps;
-}
-
-export function isBasketballPageProps(pageProps: CategoryPageProps): pageProps is BasketballPageProps {
-    return 'newsData' in pageProps && 'leagueType' in pageProps;
-}
-
-export function isSoccerPageProps(pageProps: CategoryPageProps): pageProps is SoccerPageProps {
-    return 'news' in pageProps && 'schedules' in pageProps;
-}
-
-/**
  * 用于区分不同数据项类型的类型守卫
  */
 export function isHomePostItem(item: HomePostItem | NewsDataItem): item is HomePostItem {
     return 'url' in item && 'isNews' in item;
 }
 
-export function isNewsDataItem(item: HomePostItem | NewsDataItem): item is NewsDataItem {
-    return 'nid' in item && 'link' in item && 'publishTime' in item;
-}
-
 // 导出具体类型以供外部使用
-export type { ApiResponseProps, Badge, BasketballPageProps, CategoryPageProps, HomePageProps, HomePostItem, NewsDataItem, RecommendMatch, SoccerPageProps };
+export type { HomePostItem, NewsDataItem };

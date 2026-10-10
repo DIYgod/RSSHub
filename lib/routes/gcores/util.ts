@@ -168,4 +168,4 @@ const processItems = async (limit: number, query: any, apiUrl: string, targetUrl
     };
 };
 
-export { audioBaseUrl, baseUrl, imageBaseUrl, processItems };
+export { baseUrl, imageBaseUrl, processItems };

@@ -52,5 +52,4 @@ const getFilteredLanguages = async (ingoreConfigNotFountError: boolean = true) =
     }
 };
 
-export default getSetting;
 export { getFilteredLanguages };

@@ -3,7 +3,7 @@ import { load } from 'cheerio';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
-export const renderHTML = (node) => {
+const renderHTML = (node) => {
     if (!node) {
         return '';
     }

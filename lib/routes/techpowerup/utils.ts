@@ -76,4 +76,4 @@ const parseReviews = async ($, item) => {
     item.description = content.html();
 };
 
-export { baseUrl, fixImages, hdImage, headers, parseReviews, removeFigureStyle, removeResponsiveStyle };
+export { baseUrl, fixImages, headers, parseReviews };

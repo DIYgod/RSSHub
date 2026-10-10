@@ -1,7 +1,7 @@
 import type { DataItem } from '@/types';
 import ofetch from '@/utils/ofetch';
 
-export interface MediaUrl {
+interface MediaUrl {
     h: number;
     w: number;
     sh: number;

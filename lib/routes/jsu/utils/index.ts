@@ -1,19 +1,6 @@
 import { load } from 'cheerio'; // 可以使用类似 jQuery 的 API HTML 解析器
 
-import got from '@/utils/got'; // 自订的 got
-
-/**
- * 获取页面内容
- * @param selector 正文CSS选择器
- * @param pageUrl 页面URL
- * @returns {Promise<string|string>} 页面内容，为符合RSS规范的HTML
- */
-async function getPageItem(selector, pageUrl) {
-    const response = await got(pageUrl);
-    const $ = load(response.data);
-    const page = $(selector);
-    return page ? page.html() : '无法获取内容';
-}
+import got from '@/utils/got';
 
 /**
  * 获取页面内容、标题、日期
@@ -40,4 +27,4 @@ async function getPageDetails(selector, pageUrl, titleSelector, dateSelector, da
 }
 const getPageItemAndDate = getPageDetails;
 
-export { getPageItem, getPageItemAndDate };
+export { getPageItemAndDate };

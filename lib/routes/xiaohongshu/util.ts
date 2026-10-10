@@ -164,22 +164,6 @@ const getBoard = (url, cache) =>
         false
     );
 
-const formatText = (text) => text.replaceAll(/(\r\n|\r|\n)/g, '<br>').replaceAll('\t', '&emsp;');
-
-// tag_list.id has nothing to do with its url
-const formatTagList = (tagList) => tagList.map((item) => `#${item.name} `).join('');
-
-const formatImageList = (imageList) => imageList.map((item) => `<img src="${item.url}"><br>`).join('');
-
-const formatNote = (url, note) => ({
-    title: note.title,
-    link: url + '/' + note.noteId,
-    description: formatText(note.desc) + '<br><br>' + formatTagList(note.tagList) + '<br><br>' + formatImageList(note.imageList),
-    author: note.user.nickname,
-    pubDate: parseDate(note.time, 'x'),
-    updated: parseDate(note.lastUpdateTime, 'x'),
-});
-
 async function renderNotesFulltext(notes, urlPrex, displayLivePhoto) {
     const data: Array<{
         title: string;
@@ -358,4 +342,4 @@ async function checkCookie() {
     return res.code === 0 && !!res.data.user_id;
 }
 
-export { checkCookie, formatNote, formatText, getBoard, getFullNote, getUser, getUserWithCookie, renderNotesFulltext };
+export { checkCookie, getBoard, getUser, getUserWithCookie, renderNotesFulltext };

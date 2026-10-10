@@ -19,7 +19,7 @@ dayjs.extend(utc);
  *
  * @returns {Promise<CrowdfundingItem[]>} The merged crowdfunding project list.
  */
-export const getCrowdfundingList = async (): Promise<CrowdfundingItem[]> => {
+const getCrowdfundingList = async (): Promise<CrowdfundingItem[]> => {
     // oxlint-disable-next-line unicorn/consistent-function-scoping
     const fetch = (query?: Record<string, number>) =>
         ofetch<DataResponse<CrowdfundingData>>('https://m.mi.com/v1/crowd/crowd_home', {
@@ -50,7 +50,7 @@ export const getCrowdfundingList = async (): Promise<CrowdfundingItem[]> => {
  * @param {CrowdfundingItem} item - Crowdfunding item.
  * @returns {Promise<CrowdfundingDetailInfo>} Crowdfunding item details.
  */
-export const getCrowdfundingItem = async (item: CrowdfundingItem): Promise<CrowdfundingDetailInfo> => {
+const getCrowdfundingItem = async (item: CrowdfundingItem): Promise<CrowdfundingDetailInfo> => {
     const response = await ofetch<DataResponse<CrowdfundingDetailData>>('https://m.mi.com/v1/crowd/crowd_detail', {
         method: 'POST',
         query: {
@@ -65,7 +65,7 @@ export const getCrowdfundingItem = async (item: CrowdfundingItem): Promise<Crowd
  *
  * @returns {Promise<NewProductItem[]>} The merged new product list.
  */
-export const getNewProductList = async (): Promise<NewProductItem[]> => {
+const getNewProductList = async (): Promise<NewProductItem[]> => {
     const response = await ofetch<DataResponse<NewProductListData>>('https://api.m.mi.com/v1/home/product_channel_get_list', {
         method: 'POST',
     });
@@ -93,7 +93,7 @@ export const getNewProductList = async (): Promise<NewProductItem[]> => {
  * @param {NewProductItem} item - New product list item.
  * @returns {Promise<NewProductDetailData>} New product details.
  */
-export const getNewProductItem = async (item: NewProductItem): Promise<NewProductDetailData> => {
+const getNewProductItem = async (item: NewProductItem): Promise<NewProductDetailData> => {
     const response = await ofetch<DataResponse<NewProductDetailData>>('https://m.mi.com/mtop/xiaomishop/product/info', {
         body: [{}, { productId: item.product_id }],
         method: 'POST',
@@ -145,7 +145,7 @@ const CrowdfundingDescription = ({ listItem, detail }: { listItem: CrowdfundingI
  * @param {CrowdfundingDetailInfo} detail - Crowdfunding item details.
  * @returns {string} Rendered description HTML.
  */
-export const renderCrowdfunding = (listItem: CrowdfundingItem, detail: CrowdfundingDetailInfo): string => renderToString(<CrowdfundingDescription listItem={listItem} detail={detail} />);
+const renderCrowdfunding = (listItem: CrowdfundingItem, detail: CrowdfundingDetailInfo): string => renderToString(<CrowdfundingDescription listItem={listItem} detail={detail} />);
 
 const NewProductDescription = ({ listItem, detail }: { listItem: NewProductItem; detail: NewProductDetailData }) => (
     <>
@@ -189,7 +189,7 @@ const NewProductDescription = ({ listItem, detail }: { listItem: NewProductItem;
  * @param {NewProductDetailData} detail - New product details.
  * @returns {string} Rendered description HTML.
  */
-export const renderNewProduct = (listItem: NewProductItem, detail: NewProductDetailData): string => renderToString(<NewProductDescription listItem={listItem} detail={detail} />);
+const renderNewProduct = (listItem: NewProductItem, detail: NewProductDetailData): string => renderToString(<NewProductDescription listItem={listItem} detail={detail} />);
 
 const formatDate = (timestamp: number): string => dayjs.unix(timestamp).tz('Asia/Shanghai').locale('zh-cn').format('lll');
 

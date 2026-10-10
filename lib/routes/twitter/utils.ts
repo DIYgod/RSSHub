@@ -549,7 +549,7 @@ const parseRouteParams = (routeParams) => {
     return { count, include_replies, include_rts, force_web_api, only_media };
 };
 
-export const excludeRetweet = function (tweets) {
+const excludeRetweet = function (tweets) {
     const excluded: any[] = [];
     for (const t of tweets) {
         if (t.retweeted_status) {
@@ -560,7 +560,7 @@ export const excludeRetweet = function (tweets) {
     return excluded;
 };
 
-export const keepOnlyMedia = function (tweets) {
+const keepOnlyMedia = function (tweets) {
     const excluded = tweets.filter((t) => t.extended_entities && t.extended_entities.media);
     return excluded;
 };

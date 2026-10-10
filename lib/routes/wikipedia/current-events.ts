@@ -244,7 +244,7 @@ function stripComments(html: string): string {
 }
 
 // Wiki markup to HTML converter with proper list handling
-export function wikiToHtml(wikitext: string): string {
+function wikiToHtml(wikitext: string): string {
     let html = wikitext;
 
     // Apply transformations in order
