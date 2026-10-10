@@ -1,12 +1,9 @@
 import type { Context } from 'hono';
-import pMap from 'p-map';
 
-import { config } from '@/config';
-import type { Data, DataItem, Route } from '@/types';
+import type { Data, Route } from '@/types';
 import cache from '@/utils/cache';
-import logger from '@/utils/logger';
 
-import { buildDiscussionListUrl, buildDiscussionTopicCacheKey, type DiscussionListTopic, fetchSteamDiscussionPage, parseAppId, parseDiscussionListPage, parseDiscussionTopicPage, parseFeature } from './_discussion';
+import { fetchSteamDiscussionPage, parseDiscussionListPage, parseDiscussionTopicPage, steamCommunityUrl } from './_discussion';
 
 export const route: Route = {
     path: '/discussions/:appid/:feature?',
@@ -22,7 +19,7 @@ export const route: Route = {
             default: '0',
         },
     },
-    description: `This best-effort new-topic feed enriches up to 15 topics from Steam's first, most-recently-active page with their full original posts and publication times when available. RSSHub sorts items by publication time by default; use \`?sorted=false\` to retain Steam's activity order. Recently created topics beyond that page may be missed. Pagination is not supported.`,
+    description: `This new-topic feed enriches up to 15 topics from Steam's first, most-recently-active page with their full original posts and publication times. RSSHub sorts items by publication time by default; use \`?sorted=false\` to retain Steam's activity order. Recently created topics beyond that page may be missed. Pagination is not supported.`,
     categories: ['game'],
     features: {
         requirePuppeteer: false,
@@ -44,61 +41,16 @@ export const route: Route = {
     ],
 };
 
-type ResolvedTopic = {
-    item: DataItem;
-    isEnriched: boolean;
-};
-
-const buildFallbackItem = (topic: DiscussionListTopic): DataItem => ({
-    title: topic.title,
-    link: topic.link,
-    guid: topic.link,
-    ...(topic.authorName && {
-        author: [{ name: topic.authorName }],
-    }),
-    ...(topic.preview && { description: topic.preview }),
-});
-
 async function handler(ctx: Context): Promise<Data> {
-    const { appid: appIdParameter, feature: featureParameter } = ctx.req.param();
-    const appId = parseAppId(appIdParameter);
-    const feature = parseFeature(featureParameter);
-    const currentUrl = buildDiscussionListUrl(appId, featureParameter === undefined ? undefined : feature);
-    const page = parseDiscussionListPage(await fetchSteamDiscussionPage(currentUrl), { appId, feature });
+    const { appid, feature } = ctx.req.param();
+    const currentUrl = `${steamCommunityUrl}/app/${appid}/discussions/${feature ? `${feature}/` : ''}`;
+    const page = parseDiscussionListPage(await fetchSteamDiscussionPage(currentUrl), currentUrl);
 
-    const resolvedTopics = await pMap(
-        page.topics,
-        async (topic): Promise<ResolvedTopic> => {
-            const identity = {
-                appId,
-                feature,
-                topicId: topic.topicId,
-            };
-
-            try {
-                const item = await cache.tryGet(buildDiscussionTopicCacheKey(identity), async () => parseDiscussionTopicPage(await fetchSteamDiscussionPage(topic.link), identity).originalPost, config.cache.contentExpire, false);
-                return {
-                    item,
-                    isEnriched: true,
-                };
-            } catch (error) {
-                logger.warn(`steam/discussions: failed to enrich ${topic.link}: ${String(error)}`);
-                return {
-                    item: buildFallbackItem(topic),
-                    isEnriched: false,
-                };
-            }
-        },
-        { concurrency: 3 }
-    );
-
-    if (resolvedTopics.length > 0 && resolvedTopics.every((topic) => !topic.isEnriched)) {
-        throw new Error(`Steam returned no readable topic details for app ${appId}, feature ${feature}`);
-    }
+    const items = await Promise.all(page.topicLinks.map((link) => cache.tryGet(link, async () => parseDiscussionTopicPage(await fetchSteamDiscussionPage(link), link).originalPost)));
 
     return {
         title: `${page.appName} - ${page.forumName}`,
         link: currentUrl,
-        item: resolvedTopics.map((topic) => topic.item),
+        item: items,
     };
 }

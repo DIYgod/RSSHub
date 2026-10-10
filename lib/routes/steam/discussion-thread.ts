@@ -2,7 +2,7 @@ import type { Context } from 'hono';
 
 import type { Data, Route } from '@/types';
 
-import { buildDiscussionTopicUrl, type DiscussionThreadPagination, fetchSteamDiscussionPage, parseAppId, parseDiscussionThreadPage, parseFeature, parseTopicId } from './_discussion';
+import { fetchSteamDiscussionPage, parseDiscussionTopicPage, steamCommunityUrl } from './_discussion';
 
 export const route: Route = {
     path: '/discussion/:appid/:feature/:topicId',
@@ -30,50 +30,21 @@ export const route: Route = {
     ],
 };
 
-const getPageCount = ({ replyCount, pageSize }: DiscussionThreadPagination): number => Math.max(1, Math.ceil(replyCount / pageSize));
-
-const buildDiscussionThreadPageUrl = (topicUrl: string, pageNumber: number): string => {
-    const pageUrl = new URL(topicUrl);
-    pageUrl.searchParams.set('ctp', String(pageNumber));
-    return pageUrl.href;
-};
-
 async function handler(ctx: Context): Promise<Data> {
-    const { appid: appIdParameter, feature: featureParameter, topicId: topicIdParameter } = ctx.req.param();
-    const identity = {
-        appId: parseAppId(appIdParameter),
-        feature: parseFeature(featureParameter),
-        topicId: parseTopicId(topicIdParameter),
-    };
-    const currentUrl = buildDiscussionTopicUrl(identity);
-    const firstPage = parseDiscussionThreadPage(await fetchSteamDiscussionPage(currentUrl), identity);
-    const { pagination: firstPagePagination } = firstPage;
-    if (firstPagePagination.start !== 0) {
-        throw new Error(`Steam returned an unexpected first reply page for discussion topic ${identity.topicId}`);
-    }
+    const { appid, feature, topicId } = ctx.req.param();
+    const currentUrl = `${steamCommunityUrl}/app/${appid}/discussions/${feature}/${topicId}/`;
+    const firstPage = parseDiscussionTopicPage(await fetchSteamDiscussionPage(currentUrl), currentUrl);
+    const items = [firstPage.originalPost, ...firstPage.replies];
 
-    const lastPageNumber = getPageCount(firstPagePagination);
-    const repliesByGuid = new Map(firstPage.replies.map((reply) => [reply.guid, reply]));
-
+    const lastPageNumber = Math.ceil(firstPage.replyCount / 15);
     if (lastPageNumber > 1) {
-        const lastPageUrl = buildDiscussionThreadPageUrl(currentUrl, lastPageNumber);
-        const lastPage = parseDiscussionThreadPage(await fetchSteamDiscussionPage(lastPageUrl), identity);
-        const { pagination: lastPagePagination } = lastPage;
-        const expectedStart = (lastPageNumber - 1) * firstPagePagination.pageSize;
-        const hasExpectedPagination = lastPagePagination.pageSize === firstPagePagination.pageSize && lastPagePagination.start === expectedStart && getPageCount(lastPagePagination) === lastPageNumber;
-
-        if (!hasExpectedPagination) {
-            throw new Error(`Steam discussion topic ${identity.topicId} changed while loading its last reply page; retry the request`);
-        }
-
-        for (const reply of lastPage.replies) {
-            repliesByGuid.set(reply.guid, reply);
-        }
+        const lastPage = parseDiscussionTopicPage(await fetchSteamDiscussionPage(`${currentUrl}?ctp=${lastPageNumber}`), currentUrl);
+        items.push(...lastPage.replies);
     }
 
     return {
         title: `${firstPage.title} - ${firstPage.appName}`,
         link: currentUrl,
-        item: [firstPage.originalPost, ...repliesByGuid.values()],
+        item: items,
     };
 }
