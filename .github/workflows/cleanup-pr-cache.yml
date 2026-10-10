@@ -1,7 +1,7 @@
 name: Clean up PR cache
 
 on:
-    pull_request:
+    pull_request_target:
         types:
             - closed
     workflow_dispatch:
@@ -11,13 +11,12 @@ on:
                 required: true
                 type: number
 
-permissions:
-    actions: write
-
 jobs:
     cleanup:
         runs-on: ubuntu-slim
         timeout-minutes: 5
+        permissions:
+            actions: write
         steps:
             - name: Delete caches of the PR
               run: gh cache delete --all --repo "$REPO" --ref "$REF" --succeed-on-no-caches
@@ -25,3 +24,11 @@ jobs:
                   GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
                   REPO: ${{ github.repository }}
                   REF: refs/pull/${{ github.event.pull_request.number || inputs.pr_number }}/merge
+
+            - name: Delete caches of the PR branch
+              if: github.event_name == 'pull_request_target' && github.event.pull_request.head.repo.full_name == github.repository
+              run: gh cache delete --all --repo "$REPO" --ref "$REF" --succeed-on-no-caches
+              env:
+                  GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                  REPO: ${{ github.repository }}
+                  REF: refs/heads/${{ github.event.pull_request.head.ref }}
