@@ -2919,6 +2919,7 @@ export type RoutePath =
   | `/rsc/journal/:id/:category?`
   | `/rss/:url{.+}`
   | `/rss3/:account/:network?/:tag?`
+  | `/rsseverything/:language/sharedfeeds`
   | `/rsshub/routes/:lang?`
   | `/rsshub/transform/html/:url/:routeParams`
   | `/rsshub/transform/json/:url/:routeParams`

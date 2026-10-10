@@ -7639,6 +7639,9 @@
   "/rsc/journal/:id/:category?": [
     "nczitzk"
   ],
+  "/rsseverything/:language/sharedfeeds": [
+    "AboutRSS"
+  ],
   "/rsshub/routes/:lang?": [
     "DIYgod"
   ],

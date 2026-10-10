@@ -38530,6 +38530,19 @@
       }
     ]
   },
+  "rsseverything.com": {
+    "_name": "RssEverything",
+    ".": [
+      {
+        "title": "Shared Feeds",
+        "docs": "https://docs.rsshub.app/routes/other",
+        "source": [
+          "/:language/sharedfeeds"
+        ],
+        "target": "/rsseverything/:language/sharedfeeds"
+      }
+    ]
+  },
   "rsshub.app": {
     "_name": "RSSHub",
     "docs": [

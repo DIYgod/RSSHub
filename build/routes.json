@@ -105085,6 +105085,48 @@
     "url": "pubs.rsc.org",
     "lang": "en"
   },
+  "rsseverything": {
+    "routes": {
+      "/:language/sharedfeeds": {
+        "path": "/:language/sharedfeeds",
+        "categories": [
+          "other"
+        ],
+        "example": "/rsseverything/zh/sharedfeeds",
+        "parameters": {
+          "language": {
+            "description": "Language of the page, and of the feed addresses it links to. One of `de`, `en`, `es`, `fr`, `it`, `ja`, `ko`, `pt`, `ru`, `zh`, `zh-Hant`"
+          }
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "rsseverything.com/:language/sharedfeeds"
+            ],
+            "target": "/:language/sharedfeeds"
+          }
+        ],
+        "name": "Shared Feeds",
+        "maintainers": [
+          "AboutRSS"
+        ],
+        "location": "sharedfeeds.ts",
+        "module": "() => import('@/routes/rsseverything/sharedfeeds.ts')"
+      }
+    },
+    "apiRoutes": {},
+    "name": "RssEverything",
+    "url": "rsseverything.com",
+    "lang": "en"
+  },
   "rsshub": {
     "routes": {
       "/routes/:lang?": {
