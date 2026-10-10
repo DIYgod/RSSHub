@@ -25,25 +25,14 @@ export const getNewProductList = async (): Promise<NewProductListItem[]> => {
         ],
         method: 'POST',
     });
-    const map = new Map<number, NewProductListItem>();
-    for (const floor of response.data.floors) {
-        if (floor.moduleKey !== 'car_product_list') {
-            continue;
-        }
-        const blocks = floor.dynamicData ?? [];
-        for (const block of blocks) {
-            for (const item of block.list) {
-                if (item.type !== 'goods' || map.has(item.value.goods.itemId)) {
-                    continue;
-                }
-                if (!item.value.goods.startTime) {
-                    item.value.goods.startTime = floor.startTime;
-                }
-                map.set(item.value.goods.itemId, item.value.goods);
-            }
-        }
-    }
-    return map.values().toArray();
+    const items = response.data.floors
+        .filter((floor) => floor.moduleKey === 'car_product_list')
+        .flatMap((floor) => (floor.dynamicData ?? []).flatMap((block) => block.list.filter((item) => item.type === 'goods').map((item) => ({ ...item.value.goods, startTime: item.value.goods.startTime || floor.startTime }))));
+    const list = Map.groupBy(items, (item) => item.itemId)
+        .values()
+        .toArray()
+        .map((group) => group[0]);
+    return list;
 };
 
 /**

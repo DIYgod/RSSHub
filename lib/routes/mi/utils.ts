@@ -18,21 +18,12 @@ export const getCrowdfundingList = async (): Promise<CrowdfundingListItem[]> => 
             query,
         });
     const [response, historyResponse] = await Promise.all([fetch(), fetch({ status: 1 })]);
-    const map = new Map<number, CrowdfundingListItem>();
-    const setIfNeeded = (items: CrowdfundingListItem[]) => {
-        for (const item of items) {
-            if (!map.has(item.project_id)) {
-                map.set(item.project_id, item);
-            }
-        }
-    };
-    for (const group of response.data.list) {
-        setIfNeeded(group.items);
-    }
-    for (const group of historyResponse.data.list) {
-        setIfNeeded(group.items);
-    }
-    return map.values().toArray();
+    const items = [...response.data.list, ...historyResponse.data.list].flatMap((group) => group.items);
+    const list = Map.groupBy(items, (item) => item.project_id)
+        .values()
+        .toArray()
+        .map((group) => group[0]);
+    return list;
 };
 
 /**
@@ -60,22 +51,12 @@ export const getNewProductList = async (): Promise<NewProductListItem[]> => {
     const response = await ofetch<NewProductListResponse>('https://api.m.mi.com/v1/home/product_channel_get_list', {
         method: 'POST',
     });
-    const map = new Map<number, NewProductListItem>();
-    const setIfNeeded = (items: NewProductListItem[]) => {
-        for (const item of items) {
-            if (!map.has(item.product_id)) {
-                map.set(item.product_id, item);
-            }
-        }
-    };
-    for (const group of response.data.date_list) {
-        setIfNeeded(group.product_list);
-    }
-    for (const group of response.data.history_date_list) {
-        setIfNeeded(group.product_list);
-    }
-    setIfNeeded(response.data.new_list);
-    return map.values().toArray();
+    const items = [...response.data.date_list.flatMap((group) => group.product_list), ...response.data.history_date_list.flatMap((group) => group.product_list), ...response.data.new_list];
+    const list = Map.groupBy(items, (item) => item.product_id)
+        .values()
+        .toArray()
+        .map((group) => group[0]);
+    return list;
 };
 
 /**
