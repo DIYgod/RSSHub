@@ -156,10 +156,31 @@ When a reverse proxy removes a public URL prefix (for example, \`/rss\`), set it
 :::`,
 };
 
+let telegramFloodWaitUntil = 0;
+
+async function tryTglibChannel(ctx) {
+    if (Date.now() < telegramFloodWaitUntil) {
+        return null;
+    }
+    try {
+        return await tglibchannel(ctx);
+    } catch (error) {
+        const message = error instanceof Error ? error.message : String(error);
+        const match = message.match(/wait of (\d+) seconds/i) || message.match(/floodwait.*?(\d+)/i);
+        if (match) {
+            const waitSeconds = Math.trunc(Number(match[1])) || 60;
+            telegramFloodWaitUntil = Date.now() + waitSeconds * 1000;
+        }
+        return null;
+    }
+}
+
 async function handler(ctx) {
-    const useWeb = ctx.req.param('routeParams') || !config.telegram.session;
-    if (!useWeb) {
-        return tglibchannel(ctx);
+    if (!ctx.req.param('routeParams') && config.telegram.session) {
+        const data = await tryTglibChannel(ctx);
+        if (data) {
+            return data;
+        }
     }
 
     const username = ctx.req.param('username');
@@ -767,6 +788,7 @@ async function handler(ctx) {
                     description,
                     pubDate,
                     link: $item.find('.tgme_widget_message_date').attr('href'),
+                    guid: $item.find('.tgme_widget_message_date').attr('href'),
                     author: $item.find('.tgme_widget_message_from_author').text(),
 
                     enclosure_url: voiceUrl,
