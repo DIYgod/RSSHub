@@ -35,7 +35,7 @@ async function handler(ctx) {
     const rootUrl = 'https://science.nasa.gov/apod/archive/';
     const response = await ofetch('https://science.nasa.gov/feed/apod-basic/', { responseType: 'text' });
     const $ = load(response, { xml: true });
-    const imageStyle = 'display: block; width: auto; max-width: 100%; height: auto; margin: 0 auto;';
+    const imageStyle = 'display: block; width: auto; max-width: 100%; height: auto; object-fit: scale-down; margin: 0 auto;';
 
     const items = $('channel > item')
         .slice(0, limit)
@@ -47,7 +47,8 @@ async function handler(ctx) {
             const hdUrl = item.find(String.raw`apod\:hdurl`).text();
 
             if (media.is('img')) {
-                media.removeAttr('width').removeAttr('height').attr('style', imageStyle);
+                // Keep a responsive HTML fallback for readers that strip inline CSS.
+                media.removeAttr('height').attr({ width: '100%', style: imageStyle });
             }
 
             let mediaHtml = media.prop('outerHTML') || '';
@@ -60,7 +61,7 @@ async function handler(ctx) {
             if (!mediaHtml && hdUrl) {
                 mediaHtml = content('<a>')
                     .attr('href', hdUrl)
-                    .append(content('<img>').attr({ src: hdUrl, alt: item.find(String.raw`apod\:alt`).text(), style: imageStyle }))
+                    .append(content('<img>').attr({ src: hdUrl, alt: item.find(String.raw`apod\:alt`).text(), width: '100%', style: imageStyle }))
                     .prop('outerHTML')!;
             }
 
