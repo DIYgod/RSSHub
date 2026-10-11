@@ -1,0 +1,59 @@
+import { renderNewProduct } from '@/routes/mi/templates/newproduct';
+import type { Data, DataItem, Route } from '@/types';
+import { ViewType } from '@/types';
+import cache from '@/utils/cache';
+import { parseDate } from '@/utils/parse-date';
+
+import type { NewProductDetailItem, NewProductListItem } from './types';
+import utils from './utils';
+
+export const route: Route = {
+    path: '/newproducts',
+    categories: ['shopping'],
+    example: '/xiaomiev/newproducts',
+    name: '上新',
+    maintainers: ['nuomi1'],
+    handler,
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportRadar: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    view: ViewType.Notifications,
+};
+
+const getDataItems = (list: NewProductListItem[]): Promise<DataItem[]> =>
+    Promise.all(
+        list.map((listItem) =>
+            cache.tryGet(`xiaomiev:product:dataitem:${listItem.itemId}`, async () => {
+                const detailItem = await utils.getNewProductItem(listItem);
+                return getDataItem(listItem, detailItem);
+            })
+        )
+    );
+
+const getDataItem = (listItem: NewProductListItem, detailItem: NewProductDetailItem): DataItem => ({
+    title: listItem.name,
+    description: renderNewProduct(utils.toNewProduct(listItem, detailItem)),
+    link: `https://shop.retail.xiaomiev.com/shop/cltd/product?pid=${listItem.itemId}`,
+    image: listItem.img800s,
+    pubDate: parseDate(listItem.startTime, 'X'),
+    language: 'zh-CN',
+});
+
+async function handler(): Promise<Data> {
+    const list = await utils.getNewProductList();
+    const items = await getDataItems(list);
+
+    return {
+        title: '小米汽车上新',
+        link: 'https://www.xiaomiev.com/',
+        item: items,
+        image: 'https://s1.xiaomiev.com/mi-car-shop/web-shop/assets/logo.svg',
+        language: 'zh-CN',
+    };
+}
