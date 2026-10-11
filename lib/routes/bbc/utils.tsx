@@ -390,6 +390,8 @@ const extractArticleWithInitialData = ($: CheerioAPI, item) => {
 export const fetchBbcContent = async (link: string, item) => {
     const response = await ofetch.raw(link, {
         retryStatusCodes: [403],
+        // BBC may reject HTTP/2 requests that succeed over HTTP/1.1.
+        allowH2: false,
     });
     const $ = load(response._data);
     const { hostname, pathname } = new URL(response.url);
