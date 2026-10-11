@@ -3740,6 +3740,7 @@ export type RoutePath =
   | `/xiaohongshu/board/:board_id`
   | `/xiaohongshu/user/:user_id/:category/:routeParams?`
   | `/xiaomi.eu/releases`
+  | `/xiaomiev/newproducts`
   | `/xiaomiyoupin/crowdfunding`
   | `/xiaomiyoupin/latest`
   | `/xiaote/news`

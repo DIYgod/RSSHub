@@ -2625,7 +2625,7 @@
           "/Profile/:uid/:handle/Store" ],
         target:"/manyvids/profile/vids/:uid" } ] },
   "mi.com":{ _name:"小米",
-    m:[ { title:"小米众筹",
+    m:[ { title:"众筹",
         docs:"https://docs.rsshub.app/routes/shopping",
         source:[ "/crowdfunding/home" ],
         target:"/mi/crowdfunding" } ] },

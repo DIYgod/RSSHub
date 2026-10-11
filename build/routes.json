@@ -20341,7 +20341,7 @@
           "shopping"
         ],
         "example": "/mi/crowdfunding",
-        "name": "小米众筹",
+        "name": "众筹",
         "maintainers": [
           "DIYgod",
           "nuomi1"
@@ -20373,7 +20373,7 @@
           "shopping"
         ],
         "example": "/mi/newproducts",
-        "name": "小米上新",
+        "name": "上新",
         "maintainers": [
           "nuomi1"
         ],
@@ -23308,6 +23308,37 @@
     "apiRoutes": {},
     "name": "小黑盒",
     "url": "xiaoheihe.cn",
+    "lang": "zh-CN"
+  },
+  "xiaomiev": {
+    "routes": {
+      "/newproducts": {
+        "path": "/newproducts",
+        "categories": [
+          "shopping"
+        ],
+        "example": "/xiaomiev/newproducts",
+        "name": "上新",
+        "maintainers": [
+          "nuomi1"
+        ],
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportRadar": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "view": 5,
+        "location": "newproducts.ts",
+        "module": "() => import('@/routes/xiaomiev/newproducts.ts')"
+      }
+    },
+    "apiRoutes": {},
+    "name": "小米汽车",
+    "url": "xiaomiev.com",
     "lang": "zh-CN"
   },
   "xiaomiyoupin": {

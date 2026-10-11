@@ -1796,6 +1796,9 @@
   "/xiaoheihe/user/:id": [
     "tssujt"
   ],
+  "/xiaomiev/newproducts": [
+    "nuomi1"
+  ],
   "/xiaomiyoupin/crowdfunding": [
     "bigfei"
   ],
