@@ -71,7 +71,6 @@ async function handler(ctx) {
                         pubDate: parseDate(e.publishDateStamp),
                         category: e.category,
                         description: e.description,
-                        guid: e.id,
                     };
                 }
                 if (e.__typename === 'VideoPlaylistItem') {
@@ -79,7 +78,6 @@ async function handler(ctx) {
                         title: e.title,
                         link: e.url,
                         description: e.description,
-                        guid: e.contentId,
                     };
                 }
                 return;
@@ -88,10 +86,7 @@ async function handler(ctx) {
         'link'
     ) as DataItem[];
 
-    const list = deduplicatedItems
-        .toSorted((a, b) => Number(b!.pubDate) - Number(a!.pubDate))
-        .slice(0, ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 20)
-        .map((e) => ({ ...e, guid: e.link })); // Drop the original `guid` to avoid duplication
+    const list = deduplicatedItems.toSorted((a, b) => Number(b!.pubDate) - Number(a!.pubDate)).slice(0, ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 20);
 
     const items = ctx.req.query('fulltext') === 'true' ? await pMap(list, (item) => fetchArticle(item), { concurrency: 10 }) : list;
 
