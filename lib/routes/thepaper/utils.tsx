@@ -25,7 +25,7 @@ export default {
             // external link
             return defaultRssItem(item);
         }
-        const itemUrl = `https://m.thepaper.cn/${item.cornerLabelDesc && item.cornerLabelDesc === '短剧' ? 'series' : 'detail'}/${item.contId}`;
+        const itemUrl = item.cornerLabelDesc === '短剧' ? `https://m.thepaper.cn/series/${item.contId}` : `https://www.thepaper.cn/newsDetail_forward_${item.contId}`;
         return cache.tryGet(`${itemUrl}${useOldMode ? ':old' : ''}`, async () => {
             const res = await ofetch(itemUrl);
             const $ = load(res);
