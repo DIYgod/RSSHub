@@ -2,10 +2,8 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import { ViewType } from '@/types';
-import cache from '@/utils/cache';
-import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/apod',
@@ -23,54 +21,61 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['apod.nasa.govundefined'],
+            source: ['science.nasa.gov/apod/*', 'apod.nasa.gov/apod/*'],
         },
     ],
     name: 'Astronomy Picture of the Day',
     maintainers: ['nczitzk', 'williamgateszhao'],
     handler,
-    url: 'apod.nasa.govundefined',
+    url: 'science.nasa.gov/apod/',
 };
 
 async function handler(ctx) {
     const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 10;
-    const rootUrl = 'https://apod.nasa.gov/apod/archivepix.html';
-    const response = await got({
-        method: 'get',
-        url: rootUrl,
-    });
-    const $ = load(response.data);
+    const rootUrl = 'https://science.nasa.gov/apod/archive/';
+    const response = await ofetch('https://science.nasa.gov/feed/apod-basic/', { responseType: 'text' });
+    const $ = load(response, { xml: true });
+    const imageStyle = 'display: block; width: auto; max-width: 100%; height: auto; object-fit: scale-down; margin: 0 auto;';
 
-    const list = $('body > b > a')
+    const items = $('channel > item')
         .slice(0, limit)
         .toArray()
-        .map((el) => ({
-            title: $(el).text(),
-            link: `https://apod.nasa.gov/apod/${$(el).attr('href')}`,
-        }));
+        .map((el) => {
+            const item = $(el);
+            const content = load(item.find(String.raw`content\:encoded`).text());
+            const media = content('body img, body video, body iframe').first();
+            const hdUrl = item.find(String.raw`apod\:hdurl`).text();
 
-    const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link, async () => {
-                const detailResponse = await got({
-                    method: 'get',
-                    url: item.link,
-                });
-                const content = load(detailResponse.data);
+            if (media.is('img')) {
+                // Keep a responsive HTML fallback for readers that strip inline CSS.
+                media.removeAttr('height').attr({ width: '100%', style: imageStyle });
+            }
 
-                const description = `<img src="${content('img').attr('src')}"> <br> ${content('body > center').eq(1).html()} <br> ${content('body > p').eq(0).html()}`;
-                const pubDate = timezone(parseDate(item.link.slice(-11, -5), 'YYMMDD'), -5);
+            let mediaHtml = media.prop('outerHTML') || '';
 
-                const single = {
-                    title: item.title,
-                    description,
-                    pubDate,
-                    link: item.link,
-                };
-                return single;
-            })
-        )
-    );
+            if (media.is('img') && media.parent().is('a')) {
+                mediaHtml = media.parent().prop('outerHTML') || mediaHtml;
+            }
+
+            // Some entries omit the image from their HTML but provide its URL.
+            if (!mediaHtml && hdUrl) {
+                mediaHtml = content('<a>')
+                    .attr('href', hdUrl)
+                    .append(content('<img>').attr({ src: hdUrl, alt: item.find(String.raw`apod\:alt`).text(), width: '100%', style: imageStyle }))
+                    .prop('outerHTML')!;
+            }
+
+            const explanation = item.find(String.raw`apod\:explanation`).text() || item.find('description').text();
+            const credit = item.find(String.raw`apod\:credit`).text() || item.find(String.raw`apod\:copyright`).text();
+            const pubDate = item.find('pubDate').text();
+
+            return {
+                title: item.find('title').text(),
+                link: item.find('link').text(),
+                description: `${mediaHtml}<p>${explanation}</p>${credit ? `<p><strong>Credit:</strong> ${credit}</p>` : ''}`,
+                pubDate: pubDate ? parseDate(pubDate) : undefined,
+            };
+        });
 
     return {
         title: 'NASA Astronomy Picture of the Day',
