@@ -4,29 +4,23 @@ import ofetch from '@/utils/ofetch';
 import type { NewProductDetailItem, NewProductDetailResponse, NewProductListItem, NewProductListResponse } from './types';
 
 /**
- * Fetch the list of new products, extracting goods from every `car_product_list` floor.
+ * Fetch the list of new products, extracting goods from every `car_product_list_new` floor.
  *
  * @returns {Promise<NewProductListItem[]>} The new product list.
  */
 export const getNewProductList = async (): Promise<NewProductListItem[]> => {
-    const response = await ofetch<NewProductListResponse>('https://carshop-api.retail.xiaomiev.com/mtop/carlife/home/index', {
+    const response = await ofetch<NewProductListResponse>('https://carshop-api.retail.xiaomiev.com/mtop/carlife/home/index/v2', {
         body: [
-            {},
             {
                 isPreview: false,
-                needDataPage: true,
-                needEquity: true,
-                needExtendedWarranty: true,
-                needPackage: true,
-                pageId: '16850',
-                pageVersion: 3,
-                supportRepurchaseTab: true,
+                pageId: '19573',
+                vehicleSeries: 'ALL',
             },
         ],
         method: 'POST',
     });
     const items = response.data.floors
-        .filter((floor) => floor.moduleKey === 'car_product_list')
+        .filter((floor) => floor.moduleKey === 'car_product_list_new')
         .flatMap((floor) => (floor.dynamicData ?? []).flatMap((block) => block.list.filter((item) => item.type === 'goods').map((item) => ({ ...item.value.goods, startTime: item.value.goods.startTime || floor.startTime }))));
     const list = Map.groupBy(items, (item) => item.itemId)
         .values()
@@ -42,7 +36,7 @@ export const getNewProductList = async (): Promise<NewProductListItem[]> => {
  * @returns {Promise<NewProductDetailItem>} New product details.
  */
 export const getNewProductItem = async (item: NewProductListItem): Promise<NewProductDetailItem> => {
-    const response = await ofetch<NewProductDetailResponse>('https://carshop-api.retail.xiaomiev.com/mtop/carlife/product/info', {
+    const response = await ofetch<NewProductDetailResponse>('https://carshop-api.retail.xiaomiev.com/mtop/carlife/product/info/v2', {
         body: [
             {},
             {
