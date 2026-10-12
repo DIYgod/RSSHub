@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import type { Context } from 'hono';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
@@ -15,7 +16,7 @@ export const route: Route = {
     categories: ['finance'],
     example: '/reinet/publications',
     maintainers: ['pentaoa'],
-    description: 'Published reports, publication announcements, and columns from the Japan Real Estate Institute, including links to public PDF reports.',
+    description: 'The latest 20 published reports, publication announcements, and columns from the Japan Real Estate Institute, including links to public PDF reports. Use the common limit parameter to change the number of entries.',
     radar: [
         {
             source: ['www.reinet.or.jp/publications/', 'www.reinet.or.jp/visitors-report.html'],
@@ -25,11 +26,13 @@ export const route: Route = {
     handler,
 };
 
-async function handler() {
+async function handler(ctx: Context) {
+    const limit = Number(ctx.req.query('limit')) || 20;
     const response = await ofetch<string>(link);
     const $ = load(response);
     const items = $('.archive__past .dl-tableList02 dd')
         .toArray()
+        .slice(0, limit)
         .map((element) => {
             const entry = $(element);
             const anchor = entry.find('a');
