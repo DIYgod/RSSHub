@@ -2898,6 +2898,7 @@ export type RoutePath =
   | `/readsomethingwonderful/`
   | `/readwise/list/:routeParams?`
   | `/rebase/geekdaily`
+  | `/reinet/publications`
   | `/remnote/changelog`
   | `/rescuetime/release-notes/:os?`
   | `/researchgate/publications/:id`

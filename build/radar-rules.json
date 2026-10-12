@@ -38433,6 +38433,20 @@
       }
     ]
   },
+  "reinet.or.jp": {
+    "_name": "日本不動産研究所",
+    "www": [
+      {
+        "title": "公表資料・刊行物",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/publications/",
+          "/visitors-report.html"
+        ],
+        "target": "/reinet/publications"
+      }
+    ]
+  },
   "researchgate.net": {
     "_name": "ResearchGate",
     ".": [

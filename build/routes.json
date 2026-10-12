@@ -104599,6 +104599,37 @@
     "url": "readhub.cn",
     "lang": "zh-CN"
   },
+  "reinet": {
+    "routes": {
+      "/publications": {
+        "path": "/publications",
+        "name": "公表資料・刊行物",
+        "categories": [
+          "finance"
+        ],
+        "example": "/reinet/publications",
+        "maintainers": [
+          "pentaoa"
+        ],
+        "description": "The latest 20 published reports, publication announcements, and columns from the Japan Real Estate Institute, including links to public PDF reports. Use the common limit parameter to change the number of entries.",
+        "radar": [
+          {
+            "source": [
+              "www.reinet.or.jp/publications/",
+              "www.reinet.or.jp/visitors-report.html"
+            ],
+            "target": "/publications"
+          }
+        ],
+        "location": "publications.ts",
+        "module": "() => import('@/routes/reinet/publications.ts')"
+      }
+    },
+    "apiRoutes": {},
+    "name": "日本不動産研究所",
+    "url": "www.reinet.or.jp",
+    "lang": "ja"
+  },
   "rescuetime": {
     "routes": {
       "/release-notes/:os?": {
