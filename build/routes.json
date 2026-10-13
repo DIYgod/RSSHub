@@ -134143,6 +134143,14 @@
           "supportPodcast": false,
           "supportScihub": false
         },
+        "radar": [
+          {
+            "source": [
+              "space.bilibili.com/:uid/lists/:sid"
+            ],
+            "target": "/user/channel/:uid/:sid"
+          }
+        ],
         "name": "UP 主频道的视频列表",
         "maintainers": [
           "weirongxu"
@@ -134171,6 +134179,14 @@
           "supportPodcast": false,
           "supportScihub": false
         },
+        "radar": [
+          {
+            "source": [
+              "space.bilibili.com/:uid/lists/:sid"
+            ],
+            "target": "/user/collection/:uid/:sid"
+          }
+        ],
         "name": "UP 主频道的合集",
         "maintainers": [
           "shininome",
@@ -162969,30 +162985,6 @@
         "location": "author.ts",
         "module": "() => import('@/routes/yahoo/author.ts')"
       },
-      "/finance/:topic?": {
-        "path": "/finance/:topic?",
-        "example": "/yahoo/finance/latest-news",
-        "name": "Finance news",
-        "categories": [
-          "finance"
-        ],
-        "maintainers": [
-          "DIYgod"
-        ],
-        "parameters": {
-          "topic": "Topic slug from the Yahoo Finance URL, defaults to latest-news."
-        },
-        "radar": [
-          {
-            "source": [
-              "finance.yahoo.com/topic/:topic"
-            ],
-            "target": "/finance/:topic"
-          }
-        ],
-        "location": "finance.ts",
-        "module": "() => import('@/routes/yahoo/finance.ts')"
-      },
       "/gaming": {
         "path": "/gaming",
         "categories": [
@@ -163037,6 +163029,54 @@
         ],
         "location": "news/publisher.tsx",
         "module": "() => import('@/routes/yahoo/news/publisher.tsx')"
+      },
+      "/finance/hk/:topic?": {
+        "path": "/finance/hk/:topic?",
+        "example": "/yahoo/finance/hk/latest-news",
+        "name": "Finance news (Hong Kong)",
+        "categories": [
+          "finance"
+        ],
+        "maintainers": [
+          "pseudoyu"
+        ],
+        "parameters": {
+          "topic": "Topic slug from the Yahoo Finance Hong Kong URL, defaults to latest-news."
+        },
+        "radar": [
+          {
+            "source": [
+              "hk.finance.yahoo.com/topic/:topic"
+            ],
+            "target": "/finance/hk/:topic"
+          }
+        ],
+        "location": "finance-hk.ts",
+        "module": "() => import('@/routes/yahoo/finance-hk.ts')"
+      },
+      "/finance/:topic?": {
+        "path": "/finance/:topic?",
+        "example": "/yahoo/finance/latest-news",
+        "name": "Finance news",
+        "categories": [
+          "finance"
+        ],
+        "maintainers": [
+          "DIYgod"
+        ],
+        "parameters": {
+          "topic": "Topic slug from the Yahoo Finance URL, defaults to latest-news."
+        },
+        "radar": [
+          {
+            "source": [
+              "finance.yahoo.com/topic/:topic"
+            ],
+            "target": "/finance/:topic"
+          }
+        ],
+        "location": "finance.ts",
+        "module": "() => import('@/routes/yahoo/finance.ts')"
       },
       "/news/:region/:category?": {
         "path": "/news/:region/:category?",

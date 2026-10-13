@@ -3810,6 +3810,7 @@ export type RoutePath =
   | `/xyzrank/new-podcasts`
   | `/yahoo/author/:author`
   | `/yahoo/finance/:topic?`
+  | `/yahoo/finance/hk/:topic?`
   | `/yahoo/gaming`
   | `/yahoo/news/:region/:category?`
   | `/yahoo/news/list/:region/:listId`

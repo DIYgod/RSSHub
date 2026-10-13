@@ -12428,13 +12428,16 @@
   "/yahoo/author/:author": [
     "loganrockmore"
   ],
-  "/yahoo/finance/:topic?": [
-    "DIYgod"
-  ],
   "/yahoo/gaming": [
     "DIYgod"
   ],
   "/yahoo/news/publisher/:publisher": [
+    "DIYgod"
+  ],
+  "/yahoo/finance/hk/:topic?": [
+    "pseudoyu"
+  ],
+  "/yahoo/finance/:topic?": [
     "DIYgod"
   ],
   "/yahoo/news/:region/:category?": [
