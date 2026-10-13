@@ -29,6 +29,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
+    radar: [
+        {
+            source: ['space.bilibili.com/:uid/lists/:sid'],
+            target: '/user/collection/:uid/:sid',
+        },
+    ],
     name: 'UP 主频道的合集',
     maintainers: ['shininome', 'cscnk52'],
     handler,
@@ -53,7 +59,8 @@ async function handler(ctx) {
     });
 
     const data = response.data.data;
-    if (!data.archives) {
+    // The API ignores `mid`, so a series id may resolve to another user's season
+    if (!data.archives || data.meta?.mid !== uid) {
         return notFoundData;
     }
 

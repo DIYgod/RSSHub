@@ -23,6 +23,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
+    radar: [
+        {
+            source: ['space.bilibili.com/:uid/lists/:sid'],
+            target: '/user/channel/:uid/:sid',
+        },
+    ],
     name: 'UP 主频道的视频列表',
     maintainers: ['weirongxu'],
     handler,
@@ -48,7 +54,7 @@ async function handler(ctx) {
         return response.data.data;
     });
 
-    if (!channelInfo) {
+    if (!channelInfo || channelInfo.meta?.mid !== uid) {
         return notFoundData;
     }
     const [username, face] = await cacheIn.getUsernameAndFaceFromUID(uid);
