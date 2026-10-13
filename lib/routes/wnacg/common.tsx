@@ -27,6 +27,8 @@ const categories = {
     20: '韓漫 漢化',
     21: '韓漫 生肉',
     22: '同人誌 3D漫畫',
+    37: 'AI圖集',
+    38: '合集',
 };
 
 const baseUrl = 'https://www.wnacg.com';
