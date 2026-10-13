@@ -43868,6 +43868,19 @@
       }
     ]
   },
+  "vb-audio.com": {
+    "_name": "VB-Audio",
+    "forum": [
+      {
+        "title": "Voicemeeter Version History",
+        "docs": "https://docs.rsshub.app/routes/program-update",
+        "source": [
+          "/viewtopic.php"
+        ],
+        "target": "/vb-audio/voicemeeter/changelog"
+      }
+    ]
+  },
   "baden-wuerttemberg.de": {
     "_name": "Constitutional Court of Baden-Württemberg (Germany)",
     "verfgh": [

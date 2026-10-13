@@ -3578,6 +3578,7 @@ export type RoutePath =
   | `/v2ex/topics/:type`
   | `/v2ex/xna`
   | `/v2rayshare/`
+  | `/vb-audio/voicemeeter/changelog`
   | `/vcb-s/`
   | `/vcb-s/category/:cate`
   | `/verfghbw/press`

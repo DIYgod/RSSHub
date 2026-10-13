@@ -121506,6 +121506,35 @@
     "url": "v2ex.com",
     "lang": "zh-CN"
   },
+  "vb-audio": {
+    "routes": {
+      "/voicemeeter/changelog": {
+        "path": "/voicemeeter/changelog",
+        "categories": [
+          "program-update"
+        ],
+        "example": "/vb-audio/voicemeeter/changelog",
+        "radar": [
+          {
+            "source": [
+              "forum.vb-audio.com/viewtopic.php"
+            ]
+          }
+        ],
+        "name": "Voicemeeter Version History",
+        "maintainers": [
+          "TonyRL"
+        ],
+        "url": "forum.vb-audio.com/viewtopic.php?t=498",
+        "location": "voicemeeter-changelog.ts",
+        "module": "() => import('@/routes/vb-audio/voicemeeter-changelog.ts')"
+      }
+    },
+    "apiRoutes": {},
+    "name": "VB-Audio",
+    "url": "forum.vb-audio.com",
+    "lang": "en"
+  },
   "verfghbw": {
     "routes": {
       "/press": {
