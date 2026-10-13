@@ -107,7 +107,7 @@ async function handler(ctx) {
 
                     return {
                         title: $item.text(),
-                        link: `${link!.startsWith('http') ? '' : rootUrl}${link!.replace(/\.shtml/, '_s.shtml')}`,
+                        link: `${link!.startsWith('http') ? '' : rootUrl}${link!}`,
                     };
                 });
 
@@ -119,32 +119,29 @@ async function handler(ctx) {
 
     // 'redian' and 'gundong' come from api.
 
-    if (['redian', 'all', 'others'].includes(category)) {
+    // Both endpoints were changed upstream: the JSON keys are now lowercase
+    // (`title`/`httpUrl` instead of `TITLE`/`HTTP_URL`), and the rolling-news
+    // endpoint moved from `/api/gundong.htm` (now 404) to `/api/gundong`.
+    const fetchApiList = async (path: string, limit: number) => {
         const response = await got({
             method: 'get',
-            url: `${rootUrl}/api/redian.htm`,
+            url: `${rootUrl}${path}`,
         });
 
-        redianList = response.data.items
+        return response.data.items
             .map((item) => ({
-                title: item.TITLE,
-                link: `${rootUrl}${item.HTTP_URL.replace(/\.shtml/, '_s.shtml')}`,
+                title: item.title ?? item.TITLE,
+                link: `${rootUrl}${item.httpUrl ?? item.HTTP_URL}`,
             }))
-            .slice(0, category === 'all' ? total / 3 : total);
+            .slice(0, limit);
+    };
+
+    if (['redian', 'all', 'others'].includes(category)) {
+        redianList = await fetchApiList('/api/redian.htm', category === 'all' ? total / 3 : total);
     }
 
     if (['gundong', 'all', 'others'].includes(category)) {
-        const response = await got({
-            method: 'get',
-            url: `${rootUrl}/api/gundong.htm`,
-        });
-
-        gundongList = response.data.items
-            .map((item) => ({
-                title: item.TITLE,
-                link: `${rootUrl}${item.HTTP_URL.replace(/\.shtml/, '_s.shtml')}`,
-            }))
-            .slice(0, category === 'all' ? total / 3 : total);
+        gundongList = await fetchApiList('/api/gundong', category === 'all' ? total / 3 : total);
     }
 
     const items = await Promise.all(
@@ -177,7 +174,21 @@ async function handler(ctx) {
                         ? parseRelativeDate(content('.time1').text()) // PubDates of posts in 'fengwen' are in an informal format.
                         : timezone(parseDate(dateMatch[1]), 8);
 
-                item.description = content('.all-txt').html() || content('.article-txt-content').html();
+                // `_s.shtml` is the full text on a single page and only exists for multi-page
+                // articles; requesting it for a single-page article redirects to the homepage.
+
+                let body = content('.all-txt').html() || content('.article-txt-content').html();
+
+                if (item.link.endsWith('.shtml') && content('.module-page').length > 0) {
+                    const fullResponse = await got({
+                        method: 'get',
+                        url: `${item.link.replace(/\.shtml$/, '')}_s.shtml`,
+                    });
+
+                    body = load(fullResponse.data)('.all-txt').html() || body;
+                }
+
+                item.description = body ?? '';
                 item.author = content('.author-intro p a').text() || content('.article-content div div h4 a').text() || content('.editor-intro p a').text() || content('.left-main > div.time.fix > span').eq(2).text();
                 return item;
             })

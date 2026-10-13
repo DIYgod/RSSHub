@@ -48,7 +48,7 @@ async function handler() {
             return {
                 title: $item.text(),
                 description: $item.parent().next().html(),
-                link: `${rootUrl}${$item.attr('href')!.replace(/\.shtml$/, '_s.shtml')}`,
+                link: `${rootUrl}${$item.attr('href')!}`,
                 pubDate: timezone(parseDate($item.parents('div').first().find('span').text()), 8),
             };
         });
@@ -63,7 +63,24 @@ async function handler() {
 
                 const content = load(detailResponse.data);
 
-                item.description! += content('.all-txt').html()!;
+                // Guancha only serves the `_s.shtml` variant (the full text on a single page) for
+                // multi-page articles. Single-page articles have no such variant, and requesting it
+                // redirects to the homepage, which used to make the article body unavailable.
+
+                let body = content('.all-txt').html();
+
+                if (item.link.endsWith('.shtml') && content('.module-page').length > 0) {
+                    const fullResponse = await got({
+                        method: 'get',
+                        url: `${item.link.replace(/\.shtml$/, '')}_s.shtml`,
+                    });
+
+                    body = load(fullResponse.data)('.all-txt').html() ?? body;
+                }
+
+                if (body) {
+                    item.description = `${item.description ?? ''}${body}`;
+                }
 
                 return item;
             })
