@@ -5,6 +5,8 @@ import type { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
+const rootUrl = 'https://www.141jav.com';
+
 export const route: Route = {
     path: '/:type/:keyword{.+}?',
     categories: ['multimedia'],
@@ -48,11 +50,11 @@ export const route: Route = {
   \`date\` 类型的关键词必须填写 **日期 (年 / 月 / 日)**`,
     features: {
         nsfw: true,
+        supportBT: true,
     },
 };
 
 async function handler(ctx) {
-    const rootUrl = 'https://www.141jav.com';
     const type = ctx.req.param('type');
     const keyword = ctx.req.param('keyword') ?? '';
 
@@ -83,7 +85,8 @@ async function handler(ctx) {
                 .toArray()
                 .map((t) => $(t).text().trim());
             const magnet = $item.find('a[title="Magnet torrent"]').attr('href');
-            const link = $item.find('a[title="Download .torrent"]').attr('href');
+            const torrentPath = $item.find('a[title="Download .torrent"]').attr('href');
+            const link = torrentPath ? new URL(torrentPath, rootUrl).href : undefined;
             const image = $item.find('.image').attr('src');
 
             return {
@@ -94,7 +97,7 @@ async function handler(ctx) {
                 author: actresses.join(', '),
                 category: [...tags, ...actresses],
                 enclosure_type: 'application/x-bittorrent',
-                enclosure_url: magnet,
+                enclosure_url: link,
             };
         });
 
@@ -151,7 +154,7 @@ const JavDescription = ({
                     <td>
                         {actresses.map((actress) => (
                             <>
-                                <a href={`/actress/${actress}`}>{actress}</a>&nbsp;
+                                <a href={`${rootUrl}/actress/${encodeURIComponent(actress)}`}>{actress}</a>&nbsp;
                             </>
                         ))}
                     </td>
@@ -161,7 +164,7 @@ const JavDescription = ({
                     <td>
                         {tags.map((tag) => (
                             <>
-                                <a href={`/tag/${tag}`}>{tag}</a>&nbsp;
+                                <a href={`${rootUrl}/tag/${encodeURIComponent(tag)}`}>{tag}</a>&nbsp;
                             </>
                         ))}
                     </td>
