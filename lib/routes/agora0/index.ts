@@ -4,6 +4,7 @@ import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
 export const route: Route = {
     path: '/:category?',
@@ -46,7 +47,7 @@ async function handler(ctx) {
     const $ = load(response.data);
 
     let items = $('.card span:not(.comments) a')
-        .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 50)
+        .slice(0, getRouteLimit(ctx, 50))
         .toArray()
         .map((item): DataItem => {
             const $item = $(item);
