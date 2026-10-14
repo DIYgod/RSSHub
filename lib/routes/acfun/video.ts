@@ -11,8 +11,8 @@ export const route: Route = {
     path: '/user/video/:uid/:embed?',
     radar: [
         {
-            source: ['www.acfun.cn/u/:id'],
-            target: '/user/video/:id',
+            source: ['www.acfun.cn/u/:uid'],
+            target: '/user/video/:uid',
         },
     ],
     name: '用户投稿',
