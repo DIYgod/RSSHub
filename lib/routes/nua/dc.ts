@@ -18,7 +18,8 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['dc.nua.edu.cn/:type/list.htm'],
+            source: ['dc.nua.edu.cn/'],
+            target: '/dc/news',
         },
     ],
     name: 'School of Design',
