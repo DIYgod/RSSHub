@@ -1,4 +1,5 @@
 import type { Route } from '@/types';
+import { getRouteLimit } from '@/utils/route-limit';
 
 import { getPosts, SUB_NAME_PREFIX, SUB_URL } from './utils';
 
@@ -28,7 +29,7 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const limit = Number(ctx.req.query('limit') ?? 10);
+    const limit = getRouteLimit(ctx, 10);
     const items = await getPosts(limit);
     return {
         title: `${SUB_NAME_PREFIX}-最新`,
