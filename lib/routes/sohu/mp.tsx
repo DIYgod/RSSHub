@@ -1,12 +1,13 @@
 import { load } from 'cheerio';
 import CryptoJS from 'crypto-js';
 import { renderToString } from 'hono/jsx/dom/server';
+import pMap from 'p-map';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
 
 export const route: Route = {
     path: '/mp/:xpt',
@@ -54,14 +55,16 @@ function createAuthToken() {
     return 'v1' + t + CryptoJS.HmacSHA1(e, '439642a904ef43d092d45509cdc4391c').toString();
 }
 
-function fetchArticle(item) {
-    return cache.tryGet(item.link, async () => {
+async function fetchArticle(item) {
+    const detail = await cache.tryGet(item.link, async () => {
+        const article: Pick<DataItem, 'description' | 'pubDate' | 'author'> = {};
         const response = await ofetch(item.link);
         const $ = load(response);
 
         $('.original-title, .lookall-box').remove();
-        item.author ||= $('span[data-role="original-link"] a').text();
-        item.pubDate = timezone(parseDate($('meta[itemprop="dateUpdate"]').attr('content')!), 8);
+        article.author = $('span[data-role="original-link"] a').text();
+        const published = $('meta[itemprop="datePublished"]').attr('content');
+        article.pubDate = published ? parseDateInTimezone(published, 8) : undefined;
 
         if (/window\.sohu_mp\.article_video/.test($('script').text())) {
             const videoSrc = $('script')
@@ -72,7 +75,7 @@ function fetchArticle(item) {
                 .match(/cover: "(.*?)",/)?.[1];
             const type = videoSrc?.split('.').pop()?.toLowerCase();
             const source = type ? <source src={videoSrc} type={`video/${type}`} /> : <source src={videoSrc} />;
-            item.description = renderToString(
+            article.description = renderToString(
                 poster ? (
                     <video controls poster={poster}>
                         {source}
@@ -82,12 +85,12 @@ function fetchArticle(item) {
                 )
             );
         } else {
-            const article = $('#mp-editor');
+            const content = $('#mp-editor');
 
-            article.find('#backsohucom, p[data-role="editor-name"]').each((i, e) => {
+            content.find('#backsohucom, p[data-role="editor-name"]').each((i, e) => {
                 $(e).remove();
             });
-            article.find('img').each((_, e) => {
+            content.find('img').each((_, e) => {
                 const $e = $(e);
                 if (!$e.attr('data-src') || $e.attr('src')) {
                     return;
@@ -97,11 +100,12 @@ function fetchArticle(item) {
                 $e.removeAttr('data-src');
             });
 
-            item.description = article.html();
+            article.description = content.html();
         }
 
-        return item;
+        return article;
     });
+    return { ...item, ...detail, author: item.author || detail.author };
 }
 
 async function handler(ctx) {
@@ -152,12 +156,6 @@ async function handler(ctx) {
             .text()
             .match(/globalConst\s=\s(.*)/)?.[1] || '{}'
     );
-    const originalRequest = JSON.parse(
-        $('script:contains("originalRequest")')
-            .text()
-            .match(/originalRequest\s=\s(.*)/)?.[1] || '{}'
-    );
-
     const blockData = await ofetch('https://odin.sohu.com/odin/api/blockdata', {
         method: 'POST',
         headers: {
@@ -209,18 +207,18 @@ async function handler(ctx) {
         },
     });
 
-    const list = blockData.data[renderData.param.data2.reqParam.tplCompKey].list.map((item) => ({
+    const list: DataItem[] = blockData.data[renderData.param.data2.reqParam.tplCompKey].list.map((item) => ({
         title: item.title,
         description: item.brief,
         link: `https://www.sohu.com/a/${item.id}_${globalConst.mkeyConst_mkey}`,
     }));
 
-    const items = await Promise.all(list.map((e) => fetchArticle(e)));
+    const items = await pMap(list, (item) => fetchArticle(item), { concurrency: 3 });
 
     return {
         title: `搜狐号 - ${globalConst.title}`,
         description: briefIntroductionCard.column_9_text,
-        link: originalRequest.url,
+        link: pageResponse.url,
         image: briefIntroductionCard.column_2_image.startsWith('http') ? briefIntroductionCard.column_2_image.replace('http:', 'https:') : `https:${briefIntroductionCard.column_2_image}`,
         item: items,
     };
@@ -231,13 +229,13 @@ async function legacyIdHandler(ctx) {
     const authorArticleAPI = `https://v2.sohu.com/author-page-api/author-articles/pc/${id}`;
 
     const response = await ofetch(authorArticleAPI);
-    const list = response.data.pcArticleVOS.map((item) => ({
+    const list: DataItem[] = response.data.pcArticleVOS.map((item) => ({
         title: item.title,
         link: item.link.startsWith('http') ? item.link : `https://${item.link}`,
         pubDate: parseDate(item.publicTime),
     }));
 
-    const items = await Promise.all(list.map((e) => fetchArticle(e)));
+    const items = await pMap(list, (item) => fetchArticle(item), { concurrency: 3 });
 
     return {
         title: `搜狐号 - ${id}`,
