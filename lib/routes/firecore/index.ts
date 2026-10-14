@@ -1,8 +1,11 @@
 import { load } from 'cheerio';
 
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+
+const platformNames = { ios: 'iOS / iPadOS', tvos: 'tvOS', macos: 'macOS' };
 
 export const route: Route = {
     path: '/:os',
@@ -23,29 +26,30 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
+    const os = ctx.req.param('os');
+    if (!Object.hasOwn(platformNames, os)) {
+        throw new InvalidParameterError('Unsupported platform. Choose ios, tvos, or macos.');
+    }
     const host = 'https://firecore.com/releases';
     const { data } = await got(host);
     const $ = load(data);
-    const items = $(`div.tab-pane.fade#${ctx.req.param('os')}`)
-        .find('.release-date')
+    const items = $(`.release-section[data-platform="${platformNames[ctx.req.param('os')]}"]`)
+        .find('article.release-entry')
         .toArray()
         .map((item) => {
             const $item = $(item);
-            const title = $item
-                .parent()
-                .contents()
-                .filter((_, el) => el.nodeType === 3)
-                .text();
-            const pubDate = parseDate($item.text().match(/(\d{4}-\d{2}-\d{2})/)![1]);
-
-            const next = $item.parent().nextUntil('hr');
+            const title = $item.find('.release-version').text();
+            const date = $item.find('.card-body > div').first().find('span.text-muted').text();
+            const pubDate = date ? parseDate(`${date} UTC`) : undefined;
+            const content = $item.find('.card-body').children().slice(1);
             return {
                 title,
-                description: next
+                description: content
                     .toArray()
-                    .map((item) => $(item).html())
+                    .map((item) => $(item).prop('outerHTML'))
                     .join(''),
                 pubDate,
+                guid: `${ctx.req.param('os')}:${title}`,
             };
         });
 
