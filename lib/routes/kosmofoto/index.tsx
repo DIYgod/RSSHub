@@ -9,20 +9,25 @@ import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
 const baseUrl = 'https://kosmofoto.com';
 
 const api = (path: string, query: Record<string, string | number>) => ofetch(`${baseUrl}/wp-json/wp/v2/${path}`, { query });
 
 // Images are served through Jetpack Photon with a resize query (696px wide); without the query the original is served
-const cleanContent = (html: string) => {
+const cleanContent = (html: string, articleUrl: string) => {
     const $ = load(html, null, false);
     $('img').each((_, el) => {
         const $img = $(el);
         const src = $img.attr('src');
         // Jetpack Photon (i0.wp.com) serves a resized variant; without the query string the original is served
-        if (src && new URL(src).hostname.endsWith('.wp.com')) {
-            $img.attr('src', src.split('?', 1)[0]);
+        if (src) {
+            const imageUrl = new URL(src, articleUrl);
+            if (imageUrl.hostname.endsWith('.wp.com')) {
+                imageUrl.search = '';
+            }
+            $img.attr('src', imageUrl.href);
         }
         // srcset, sizes and the dimensions all describe the resized variant the rewrite just replaced
         $img.removeAttr('srcset').removeAttr('sizes').removeAttr('width').removeAttr('height');
@@ -46,8 +51,10 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['kosmofoto.com/category/:category', 'kosmofoto.com/category/:parent/:category', 'kosmofoto.com/'],
+            source: ['kosmofoto.com/category/:category', 'kosmofoto.com/category/:parent/:category'],
+            target: '/:category',
         },
+        { source: ['kosmofoto.com/'], target: '/' },
     ],
     name: 'Posts',
     maintainers: ['IvanWng97'],
@@ -72,7 +79,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const categorySlug = ctx.req.param('category');
-    const limit = Number(ctx.req.query('limit')) || 10;
+    const limit = Math.min(getRouteLimit(ctx, 10), 100);
 
     const category = categorySlug
         ? await cache.tryGet(`kosmofoto:category:${categorySlug}`, async () => {
@@ -92,7 +99,7 @@ async function handler(ctx) {
 
     const items: DataItem[] = posts.map((post) => {
         const featured = post._embedded?.['wp:featuredmedia']?.find((media) => media.id === post.featured_media);
-        const $ = cleanContent(post.content.rendered);
+        const $ = cleanContent(post.content.rendered, post.link);
         // most posts already show the featured image in the body; only prepend it when the body lacks it
         const image = $(`img.wp-image-${post.featured_media}`).length ? undefined : featured?.source_url;
 
