@@ -2,6 +2,7 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
+import { getRouteLimit } from '@/utils/route-limit';
 
 export const route: Route = {
     path: '/news',
@@ -24,7 +25,7 @@ async function handler(ctx) {
     const newsUrl = $('#top_url_news').text();
     const mode = $('#top_url_mode').text();
     const data = await ofetch(`${workerUrl}/cgi-mod/worker.cgi`, { query: { origin, op: 'gate', lan: language, r: redirection } });
-    const limit = Math.min(Number(ctx.req.query('limit')) || 30, data.total_justin);
+    const limit = Math.min(getRouteLimit(ctx, 30), data.total_justin);
     const items = Array.from({ length: limit }, (_, index) => {
         const sourceId = data[`justin_sid_${index}`];
         const articleId = data[`justin_nid_${index}`];
