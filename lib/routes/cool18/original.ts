@@ -2,9 +2,11 @@ import { load } from 'cheerio';
 import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
-import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
+
+import { getArticle } from './article';
 
 const link = 'https://www.cool18.com/indexorgposts.php';
 
@@ -19,20 +21,12 @@ export const route: Route = {
     handler,
 };
 
-function getItem(item: DataItem) {
-    return cache.tryGet(item.link!, async () => {
-        const response = await ofetch(item.link!);
-        const $ = load(response);
-        item.description = $('pre').html()?.replaceAll('<font color="#E6E6DD">cool18.com</font>', '');
-        return item;
-    });
-}
-
 async function handler(ctx) {
     const response = await ofetch(link);
     const $ = load(response);
+    const limit = getRouteLimit(ctx, 20);
     const items = $('#d_list a[href*="act=threadview"]')
-        .slice(0, Number(ctx.req.query('limit')) || 20)
+        .slice(0, ctx.req.query('sorted') === 'false' ? limit : Math.max(20, limit))
         .toArray()
         .map((element) => {
             const article = $(element);
@@ -44,6 +38,6 @@ async function handler(ctx) {
                 pubDate: parseDate(article.nextAll('i').first().text(), 'MM/DD/YY'),
             };
         });
-    const item = await pMap(items, getItem, { concurrency: 3 });
-    return { title: 'Cool18 - 热门泛原创', link, language: 'zh-CN' as const, item };
+    const item = await pMap(items, getArticle, { concurrency: 3 });
+    return { title: 'Cool18 - 热门泛原创', link, language: 'zh-CN' as const, item: item.filter((item): item is DataItem => item !== undefined) };
 }
