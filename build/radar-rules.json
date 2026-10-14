@@ -8,7 +8,7 @@
         "source": [
           "/:category"
         ],
-        "target": "/81params=>{const category=params.category;return`/81/81rc/${category?`/${category}`:\"\"}`}"
+        "target": "/81/81rc/:category{.+}?"
       }
     ]
   },
@@ -480,7 +480,7 @@
         "source": [
           "/"
         ],
-        "target": "/daum(_,url)=>{const urlObj=new URL(url);const lang=urlObj.searchParams.get(\"lang\")??void 0;return`/daum/potplayer${lang?`/${lang}`:\"\"}`}"
+        "target": "/daum/potplayer/:lang?"
       }
     ]
   },
@@ -931,7 +931,7 @@
         "source": [
           "/search-result"
         ],
-        "target": "/ifun(_,url)=>{const urlObj=new URL(url);const keywords=urlObj.searchParams.get(\"s\");return`/ifun/n/search/${keywords}`}"
+        "target": "/ifun/n/search/:keywords"
       },
       {
         "title": "盐选故事专栏",
@@ -939,7 +939,7 @@
         "source": [
           "/article-list/1"
         ],
-        "target": "/ifun(_,url)=>{const urlObj=new URL(url);const name=urlObj.searchParams.get(\"tagName\");return`/ifun/n/tag/${name}`}"
+        "target": "/ifun/n/tag/:name"
       }
     ]
   },
@@ -2036,7 +2036,7 @@
         "source": [
           "/:language/:category"
         ],
-        "target": "/joneslanglasalleparams=>{const language=params.language;const category=params.category;return language?`/${language}${category?`/${category}`:\"\"}`:\"\"}"
+        "target": "/joneslanglasalle/:language?/:category{.+}?"
       },
       {
         "title": "Latest",
@@ -3184,7 +3184,7 @@
           "/:owner/:repo/commits",
           "/:owner/:repo/commits/:branch"
         ],
-        "target": "/gitcodeparams=>`/gitcode/commits/${params.owner}/${params.repo}${params.branch?`/${params.branch}`:\"\"}`"
+        "target": "/gitcode/commits/:owner/:repo/:branch?"
       }
     ]
   },
@@ -3675,7 +3675,7 @@
         "source": [
           "/page/info/mio/mio/homePage"
         ],
-        "target": "/miui(_,url)=>`/miui/community/user/${new URL(url).searchParams.get(\"uid\")}`"
+        "target": "/miui/community/user/:uid"
       }
     ]
   },
@@ -5125,7 +5125,7 @@
           "/news",
           "/news/:type"
         ],
-        "target": "/gamebase(params,url)=>{const type=params.type;const urlObj=new URL(url);const category=urlObj.searchParams.get(\"type\")??void 0;return`/gamebase/news${type?`/${type}${category?`/${category}`:\"\"}`:\"\"}`}"
+        "target": "/gamebase/news/:type?/:category?"
       }
     ]
   },
@@ -5286,7 +5286,7 @@
         "source": [
           "/literature"
         ],
-        "target": "/inspirehep(_params,url)=>`/inspirehep/literature/${new URL(url).searchParams.get(\"q\")}`"
+        "target": "/inspirehep/literature/:q"
       },
       {
         "title": "Collection Search",
@@ -5355,7 +5355,7 @@
         "source": [
           "/report.shtml"
         ],
-        "target": "/iresearch(_,url)=>{const urlObj=new URL(url);const id=urlObj.searchParams.get(\"classId\")??urlObj.searchParams.get(\"channelId\")??urlObj.searchParams.get(\"cid\")??void 0;return`/iresearch/weekly${id?`/${id}`:\"\"}`}"
+        "target": "/iresearch/weekly/:id?"
       },
       {
         "title": "家电行业",
@@ -5403,7 +5403,7 @@
         "source": [
           "/report.shtml"
         ],
-        "target": "/iresearch(_,url)=>{const urlObj=new URL(url);const type=urlObj.searchParams.get(\"type\")??void 0;const id=urlObj.searchParams.get(\"classId\")??urlObj.searchParams.get(\"channelId\")??urlObj.searchParams.get(\"cid\")??void 0;return`/iresearch/report${type?`/${type}${id?`/${id}`:\"\"}`:\"\"}`}"
+        "target": "/iresearch/report/:type?/:id?"
       },
       {
         "title": "最新报告",
@@ -5411,7 +5411,7 @@
         "source": [
           "/report.shtml"
         ],
-        "target": "/iresearch(_,url)=>{const urlObj=new URL(url);const id=urlObj.searchParams.get(\"classId\")??urlObj.searchParams.get(\"channelId\")??urlObj.searchParams.get(\"cid\")??void 0;return`/iresearch/report/1${id?`/${id}`:\"\"}`}"
+        "target": "/iresearch/report/:type?/:id?"
       },
       {
         "title": "研究图表",
@@ -5419,7 +5419,7 @@
         "source": [
           "/report.shtml"
         ],
-        "target": "/iresearch(_,url)=>{const urlObj=new URL(url);const id=urlObj.searchParams.get(\"classId\")??urlObj.searchParams.get(\"channelId\")??urlObj.searchParams.get(\"cid\")??void 0;return`/iresearch/report/4${id?`/${id}`:\"\"}`}"
+        "target": "/iresearch/report/:type?/:id?"
       },
       {
         "title": "周度市场观察",
@@ -5427,7 +5427,7 @@
         "source": [
           "/report.shtml"
         ],
-        "target": "/iresearch(_,url)=>{const urlObj=new URL(url);const id=urlObj.searchParams.get(\"classId\")??urlObj.searchParams.get(\"channelId\")??urlObj.searchParams.get(\"cid\")??void 0;return`/iresearch/report/3${id?`/${id}`:\"\"}`}"
+        "target": "/iresearch/report/:type?/:id?"
       },
       {
         "title": "热门报告",
@@ -5435,7 +5435,7 @@
         "source": [
           "/report.shtml"
         ],
-        "target": "/iresearch(_,url)=>{const urlObj=new URL(url);const id=urlObj.searchParams.get(\"classId\")??urlObj.searchParams.get(\"channelId\")??urlObj.searchParams.get(\"cid\")??void 0;return`/iresearch/report/2${id?`/${id}`:\"\"}`}"
+        "target": "/iresearch/report/:type?/:id?"
       },
       {
         "title": "周度市场观察 - 家电行业",
@@ -5681,7 +5681,7 @@
           "/videos",
           "/images"
         ],
-        "target": "/iwara(params,url)=>{const searchParams=new URL(url).searchParams;const type=url.includes(\"/videos\")?\"video\":\"image\";const sort=searchParams.get(\"sort\")||\"date\";const rating=searchParams.get(\"rating\")||\"ecchi\";return`/iwara/ranking/${type}/${sort}/${rating}`}"
+        "target": "/iwara/ranking/:type?/:sort?/:rating?"
       },
       {
         "title": "User Subscriptions",
@@ -5967,7 +5967,7 @@
         "source": [
           "/mall/r/w/reportNew/report-list.html"
         ],
-        "target": "/nanhua(_,url)=>{const params=new URL(url).searchParams;const type1=params.get(\"type1\");const type2=params.get(\"type2\");return type1&&type2?`/nanhua/report/${encodeURIComponent(type1)}/${encodeURIComponent(type2)}`:\"\"}"
+        "target": "/nanhua/report/:type1/:type2"
       }
     ]
   },
@@ -6549,7 +6549,7 @@
         "source": [
           "/explore"
         ],
-        "target": "/voronoiapp(_,url)=>{const parsedURL=new URL(url);const keyword=parsedURL.searchParams.get(\"search\");return`/voronoiapp/search/${keyword}`}"
+        "target": "/voronoiapp/search/:keyword"
       },
       {
         "title": "Author Posts",
@@ -6677,7 +6677,7 @@
         "source": [
           "/:caty"
         ],
-        "target": "/yuancheng.work(_,url)=>url?`/yuancheng.work/${/\\w+-(\\w+)-\\w+/.exec(url)[1]}`:\"/yuancheng.work\""
+        "target": "/yuancheng.work/:caty?"
       }
     ]
   },
@@ -7513,7 +7513,7 @@
         "source": [
           "/:category"
         ],
-        "target": "/005params=>{const category=params.category;return`/005${category?`/${category}`:\"\"}`}"
+        "target": "/005/:category?"
       },
       {
         "title": "二次元资讯",
@@ -7558,7 +7558,7 @@
         "source": [
           "/"
         ],
-        "target": "/0xxx(_,url)=>{const urlObj=new URL(url);const params=urlObj.searchParams;params.delete(\"next\");const filter=urlObj.searchParams.toString();return`/0xxx${filter?`/${filter}`:\"\"}`}"
+        "target": "/0xxx/:filter?"
       }
     ]
   },
@@ -7571,7 +7571,7 @@
         "source": [
           "/:category"
         ],
-        "target": "/10000link(params,url)=>{const urlObj=new URL(url);const id=urlObj.searchParams.get(\"chid\")??void 0;const category=params.category;return`/10000link/info${category?`/${category}${id?`/${id}`:\"\"}`:\"\"}`}"
+        "target": "/10000link/info/:category?/:id?"
       }
     ]
   },
@@ -7653,7 +7653,7 @@
         "source": [
           "/:category"
         ],
-        "target": "/199itparams=>{const category=params.category;return`/199it${category?`/${category}`:\"\"}`}"
+        "target": "/199it/:category{.+}?"
       },
       {
         "title": "最新",
@@ -9125,7 +9125,7 @@
           "/:category",
           "/"
         ],
-        "target": "/423downparams=>{const category=params.category;return`/423down${category?`/${category}`:\"\"}`}"
+        "target": "/423down/:category{.+}?"
       }
     ],
     "www": [
@@ -9436,7 +9436,7 @@
         "source": [
           "/:category"
         ],
-        "target": "/78dmparams=>{const category=params.category?.replace(/\\.html$/,\"\");return`/78dm${category?`/${category}`:\"\"}`}"
+        "target": "/78dm/:category{.+}?"
       },
       {
         "title": "新品速递 - 全部",
@@ -9859,7 +9859,7 @@
         "source": [
           "/list/:category"
         ],
-        "target": "/a9vgparams=>{const category=params.category;return category?`/${category}`:\"\"}"
+        "target": "/a9vg/:category{.+}?"
       },
       {
         "title": "All",
@@ -10378,7 +10378,7 @@
         "source": [
           "/:category"
         ],
-        "target": "/agriparams=>{const category=params.category;return category?`/${category}`:\"\"}"
+        "target": "/agri/:category{.+}?"
       },
       {
         "title": "机构 - 成果展示",
@@ -10693,7 +10693,7 @@
         "source": [
           "/discover/:id"
         ],
-        "target": "/aibaseparams=>{const id=params.id;return`/discover${id?`/${id}`:\"\"}`}"
+        "target": "/aibase/discover/:id?"
       },
       {
         "title": "图像处理 - 图片背景移除",
@@ -10981,7 +10981,7 @@
         "source": [
           "/topic/:id"
         ],
-        "target": "/aibaseparams=>{const id=params.id;return`/topic${id?`/${id}`:\"\"}`}"
+        "target": "/aibase/topic/:id?/:filter?"
       },
       {
         "title": "AI",
@@ -11855,7 +11855,7 @@
         "source": [
           "/news/:category"
         ],
-        "target": "/ali213params=>{const category=params.category;return`/news/${category?`/${category}`:\"\"}`}"
+        "target": "/ali213/news/:category?"
       },
       {
         "title": "最新资讯",
@@ -11935,7 +11935,7 @@
         "source": [
           "/news/zl/:category"
         ],
-        "target": "/ali213params=>{const category=params.category;return`/ali213/zl${category?`/${category}`:\"\"}`}"
+        "target": "/ali213/zl/:category?"
       },
       {
         "title": "首页",
@@ -12101,7 +12101,7 @@
         "source": [
           "/:device/:sort"
         ],
-        "target": "/amazfitwatchfacesparams=>{const device=params.device;const sort=params.sort;return`/amazfitwatchfaces${device?`/${device}${sort?`/${sort}`:\"\"}`:\"\"}`}"
+        "target": "/amazfitwatchfaces/:device/:sort/:searchParams?"
       },
       {
         "title": "Fresh watch faces for Amazfit X",
@@ -12391,7 +12391,7 @@
         "source": [
           "/:category"
         ],
-        "target": "/app-salesparams=>{const category=params.category;return`/app-sales${category?`/${category}`:\"\"}`}"
+        "target": "/app-sales/:category?/:country?"
       },
       {
         "title": "Highlights",
@@ -12487,7 +12487,7 @@
         "source": [
           "/:language/100100"
         ],
-        "target": "/appleparams=>{const language=params.language;return`/apple/security-releases${language?`/${language}`:\"\"}`}"
+        "target": "/apple/security-releases/:language?"
       }
     ],
     "podcasts": [
@@ -12622,7 +12622,7 @@
         "source": [
           "/categories"
         ],
-        "target": "/asiafruitchina(_,url)=>{const urlObj=new URL(url);const category=urlObj.searchParams.get(\"id\")??void 0;return`/asiafruitchina/categories${category?`/${category}`:\"\"}`}"
+        "target": "/asiafruitchina/categories/:category?"
       },
       {
         "title": "全部",
@@ -13150,7 +13150,7 @@
         "source": [
           "/"
         ],
-        "target": "/baai(_params,url)=>{const searchParams=new URL(url).searchParams;const tagId=searchParams.get(\"tag_id\");const sort=searchParams.get(\"sort\");const range=searchParams.get(\"time_range\");return`/baai/hub${tagId?`/${tagId}`:\"\"}${sort?`/${sort}`:\"\"}${range?`/${range}`:\"\"}`}"
+        "target": "/baai/hub/:tagId?/:sort?/:range?"
       }
     ]
   },
@@ -13242,7 +13242,7 @@
         "source": [
           "/:id/history"
         ],
-        "target": "/bandisoftparams=>{const id=params.id;return`/bandisoft/history${id?`/${id}`:\"\"}`}"
+        "target": "/bandisoft/history/:id?/:language?"
       }
     ]
   },
@@ -13255,7 +13255,7 @@
         "source": [
           "/:category"
         ],
-        "target": "/banshujiangparams=>{const category=params.category;return`/banshujiang${category?`/${category}`:\"\"}`}"
+        "target": "/banshujiang/:category{.+}?"
       },
       {
         "title": "ActionScript",
@@ -13847,7 +13847,7 @@
         "source": [
           "/:category"
         ],
-        "target": "/beijingpriceparams=>{const category=params.category;return`/beijingprice${category?`/${category}`:\"\"}`}"
+        "target": "/beijingprice/:category{.+}?"
       },
       {
         "title": "价格资讯 - 新闻资讯",
@@ -14351,7 +14351,7 @@
         "source": [
           "/:category"
         ],
-        "target": "/bnuparams=>{const category=params.category;return category?`/${category.replace(/\\/index\\.html$/,\"\")}`:\"\"}"
+        "target": "/bnu/mba/:category{.+}?"
       },
       {
         "title": "新闻聚焦",
@@ -14626,7 +14626,7 @@
         "source": [
           "/gold-news/:category"
         ],
-        "target": "/bullionvaultparams=>{const category=params.category;return`/bullionvault/gold-news${category?`/${category}`:\"\"}`}"
+        "target": "/bullionvault/gold-news/:category?"
       },
       {
         "title": "Gold market analysis & gold investment research",
@@ -14816,7 +14816,7 @@
         "source": [
           "/news/roll.asp"
         ],
-        "target": "/c114(_,url)=>{const original=new URL(url).searchParams.get(\"o\");return`/roll${original?`/${original}`:\"\"}`}"
+        "target": "/c114/roll/:original?"
       }
     ]
   },
@@ -15151,7 +15151,7 @@
         "source": [
           "/information"
         ],
-        "target": "/cbndata(params,url)=>{const urlObj=new URL(url);const id=urlObj.searchParams.get(\"tag_id\")??void 0;return`/information${id?`/${id}`:\"\"}`}"
+        "target": "/cbndata/information/:id?"
       },
       {
         "title": "全部",
@@ -15204,7 +15204,7 @@
         "source": [
           "/dzp_news.aspx"
         ],
-        "target": "/cbpanet(_,url)=>{const{searchParams}=new URL(url);const bigId=searchParams.get(\"bigid\");const smallId=searchParams.get(\"smallid\");return`/dzp_news${bigId?`/${bigId}${smallId?`/${smallId}`:\"\"}`:\"\"}`}"
+        "target": "/cbpanet/dzp_news/:bigId?/:smallId?"
       },
       {
         "title": "协会 - 协会介绍",
@@ -15659,7 +15659,7 @@
         "source": [
           "/:category"
         ],
-        "target": "/cccmcparams=>{const category=params.category;return`/cccmc${category?`/${category}`:\"\"}`}"
+        "target": "/cccmc/:category{.+}?"
       },
       {
         "title": "商业机会 - 供应信息",
@@ -15837,7 +15837,7 @@
           "/portal/cn/hybzs_list.jsp",
           "/portal/cn/fangyizhuanqu_list.jsp"
         ],
-        "target": "/ccfa(_,url)=>{const type=new URL(url).searchParams.get(\"type\");return type?`/${type}`:\"\"}"
+        "target": "/ccfa/:type?"
       },
       {
         "title": "协会动态",
@@ -16251,7 +16251,7 @@
         "source": [
           "/:id"
         ],
-        "target": "/cfmmcparams=>`/cfmmc${params.id?`/${params.id.replace(/\\/index\\.shtml/,\"\")}`:\"\"}`"
+        "target": "/cfmmc/:id{.+}?"
       }
     ]
   },
@@ -16372,7 +16372,7 @@
         "source": [
           "/:category"
         ],
-        "target": "/chinacdcparams=>{const category=params.category;return`/chinacdc${category?`/${category}`:\"\"}`}"
+        "target": "/chinacdc/:category{.+}?"
       },
       {
         "title": "中心要闻",
@@ -16809,7 +16809,7 @@
         "source": [
           "/:category"
         ],
-        "target": "/chinadailyparams=>{const category=params.category;return`/chinadaily/language${category?`/${category}`:\"\"}`}"
+        "target": "/chinadaily/language/:category{.+}?"
       },
       {
         "title": "精彩推荐",
@@ -16936,7 +16936,7 @@
         "source": [
           "/html/:category"
         ],
-        "target": "/chinaniaparams=>{const category=params.category;return category?`/${category}`:\"\"}"
+        "target": "/chinania/:category{.+}?"
       },
       {
         "title": "协会动态 - 协会动态",
@@ -17106,7 +17106,7 @@
         "source": [
           "/CreditResearch/:category"
         ],
-        "target": "/chinaratingsparams=>{const category=params.category;return`/chinaratings/CreditResearch${category?`/${category}`:\"\"}`}"
+        "target": "/chinaratings/CreditResearch/:category{.+}?"
       }
     ]
   },
@@ -17203,7 +17203,7 @@
         "source": [
           "/packages"
         ],
-        "target": "/chocolateyparams=>{const id=params.id;return`/chocolatey/package${id?`/${id}`:\"\"}`}"
+        "target": "/chocolatey/packages/:id"
       }
     ]
   },
@@ -17331,7 +17331,7 @@
         "source": [
           "/site/term/:id"
         ],
-        "target": "/cisiaparams=>{const id=params.id.replace(/\\.html/,\"\");return id?`/${id}`:\"\"}"
+        "target": "/cisia/:id?"
       },
       {
         "title": "分支机构信息 - 企业动态",
@@ -17655,7 +17655,7 @@
         "source": [
           "/subject/:id"
         ],
-        "target": "/clsparams=>{const id=params.id;return`/subject${id?`/${id}`:\"\"}`}"
+        "target": "/cls/subject/:id?"
       }
     ]
   },
@@ -17775,7 +17775,7 @@
         "source": [
           "/:category"
         ],
-        "target": "/cngoldparams=>{const category=params.category;return category?`/${category}`:\"\"}"
+        "target": "/cngold/:category?"
       },
       {
         "title": "政策法规 - 法律法规",
@@ -17897,7 +17897,7 @@
         "source": [
           "/:category"
         ],
-        "target": "/cnljxh(params,url)=>{const urlObj=new URL(url);const category=params.category;const id=urlObj.searchParams.get(\"classid\")??void 0;return`/cnljxh${category?`/${category}${id?`/${id}`:\"\"}`:\"\"}`}"
+        "target": "/cnljxh/:category?/:id?"
       },
       {
         "title": "协会专区 - 协会简介",
@@ -18498,7 +18498,7 @@
         "source": [
           "/"
         ],
-        "target": "/costar(_,url)=>{const filter=new URL(url).search?.replace(/\\?/,\"\");return`/costar/press-releases${filter?`/${filter}`:\"\"}`}"
+        "target": "/costar/press-releases/:filter{.+}?"
       }
     ]
   },
@@ -18511,7 +18511,7 @@
         "source": [
           "/news/:category"
         ],
-        "target": "/counter-strike(params,url)=>{const parsedUrl=new URL(url);const category=params.category;const language=parsedUrl.searchParams.get(\"l\");return`/news${category?`/${category}${language?`/${language}`:\"\"}`:\"\"}`}"
+        "target": "/counter-strike/news/:category?/:language?"
       }
     ]
   },
@@ -18524,7 +18524,7 @@
         "source": [
           "/news.php"
         ],
-        "target": "/cpcaauto(_,url)=>{const{searchParams}=new URL(url);const types=searchParams.get(\"types\");const id=searchParams.get(\"id\");return types?`/${types}${id?`/${id}`:\"\"}`:\"\"}"
+        "target": "/cpcaauto/news/:type?/:id?"
       },
       {
         "title": "行业新闻 - 国内乘用车",
@@ -19243,7 +19243,7 @@
         "source": [
           "/category/:category"
         ],
-        "target": "/cuilingmagparams=>{const category=params.category;return`/cuilingmag${category?`/${category}`:\"\"}`}"
+        "target": "/cuilingmag/:category?"
       },
       {
         "title": "全部",
@@ -19541,7 +19541,7 @@
         "source": [
           "/news*"
         ],
-        "target": "/dbaplus(_,url)=>{const urlObj=new URL(url);const href=urlObj.href;const id=href.match(/-(\\d+)-\\.html/)?.[1];return`/dbaplus/news${id?`/${id}`:\"\"}`}"
+        "target": "/dbaplus/news/:id?"
       },
       {
         "title": "全部",
@@ -19839,7 +19839,7 @@
         "source": [
           "/:lang/blog"
         ],
-        "target": "/deeplparams=>{const lang=params.lang;return`/deepl/blog${lang?`/${lang}`:\"\"}`}"
+        "target": "/deepl/blog/:lang?"
       },
       {
         "title": "Deutsch",
@@ -20005,7 +20005,7 @@
           "/the-batch",
           "/the-batch/tag/:tag/"
         ],
-        "target": "/deeplearningparams=>{const tag=params.tag;return`/the-batch${tag?`/${tag}`:\"\"}`}"
+        "target": "/deeplearning/the-batch/:tag{.+}?"
       },
       {
         "title": "Weekly Issues",
@@ -20610,7 +20610,7 @@
         "source": [
           "/filtro/:filter"
         ],
-        "target": "/diariofruticolaparams=>{const filter=params.filter;return`/diariofruticola/filtro${filter?`/${filter}`:\"\"}`}"
+        "target": "/diariofruticola/filtro/:filter{.+}"
       }
     ]
   },
@@ -20636,7 +20636,7 @@
         "source": [
           "/"
         ],
-        "target": "/digitalpolicyalert(_,url)=>{const urlObj=new URL(url);const filters=createSearchParams(urlObj.searchParams.toString()).toString();return`/digitalpolicyalert/activity-tracker${filters?`/${filters}`:\"\"}`}"
+        "target": "/digitalpolicyalert/activity-tracker/:filters?"
       }
     ]
   },
@@ -21723,7 +21723,7 @@
         "source": [
           "/academic/index.aspx"
         ],
-        "target": "/eshukan(_,url)=>{const{searchParams}=new URL(url);const id=searchParams.get(\"id\");return`/academic${id?`/${id}`:\"\"}`}"
+        "target": "/eshukan/academic/:id?"
       }
     ]
   },
@@ -21860,7 +21860,7 @@
         "source": [
           "/czech-news/:category"
         ],
-        "target": "/expatsparams=>{const category=params.category;return`/expats/czech-news${category?`/${category}`:\"\"}`}"
+        "target": "/expats/czech-news/:category?"
       },
       {
         "title": "Daily News",
@@ -22008,7 +22008,7 @@
         "source": [
           "/:id"
         ],
-        "target": "/fangchanparams=>{const id=params.id;return`/fangchan/list/${id?`/${id}`:\"\"}`}"
+        "target": "/fangchan/list/:id?"
       },
       {
         "title": "数据研究",
@@ -22108,7 +22108,7 @@
         "source": [
           "/lists/:id"
         ],
-        "target": "/fashionnetworkparams=>{const id=params.id;return`/fashionnetwork/cn/lists${id?`/${id}`:\"\"}`}"
+        "target": "/fashionnetwork/cn/lists/:id?"
       },
       {
         "title": "独家",
@@ -22348,7 +22348,7 @@
         "source": [
           "/forum.php"
         ],
-        "target": "/flyert(_,url)=>{const params=new URL(url).searchParams.entries().toArray().map(([key,value])=>key+\"=\"+value).join(\"&\");return`/forum${params?`/${encodeURIComponent(params)}`:\"\"}`}"
+        "target": "/flyert/forum/:params{.+}?"
       }
     ]
   },
@@ -22791,7 +22791,7 @@
         "source": [
           "/column/:column"
         ],
-        "target": "/geekparkparams=>{const column=params.column;return column?`/${column}`:\"\"}"
+        "target": "/geekpark/:column?"
       }
     ],
     "www": [
@@ -23299,7 +23299,7 @@
         "source": [
           "/surveillance/idwr/idwr/:year"
         ],
-        "target": "/goparams=>{const year=params.year;return`/go/jihs/idwr${year?`/${year}`:\"\"}`}"
+        "target": "/go/jihs/idwr/:year?"
       }
     ]
   },
@@ -23312,7 +23312,7 @@
         "source": [
           "/"
         ],
-        "target": "/go(_,url)=>{const category=new URL(url).href.match(/mhlw\\.go\\.jp\\/(.*)$/)?.[1]??void 0;return`/mhlw/pdf${category?`/${category}`:\"\"}`}"
+        "target": "/go/mhlw/pdf/:category{.+}?"
       },
       {
         "title": "毎月勤労統計調査 全国調査（月別結果）",
@@ -23385,7 +23385,7 @@
         "source": [
           "/:category/:id"
         ],
-        "target": "/grainoilparams=>{const category=params.category;const id=params.id;return`/grainoil/${category}/${id}`}"
+        "target": "/grainoil/:category/:id"
       },
       {
         "title": "政务信息",
@@ -24046,7 +24046,7 @@
           "/",
           "/:id/list.htm"
         ],
-        "target": "/hitparams=>{const id=params.id;return`/hit/hitgs${id?`/${id}`:\"\"}`}"
+        "target": "/hit/hitgs/:id?"
       },
       {
         "title": "通知公告",
@@ -24950,7 +24950,7 @@
         "source": [
           "/:category"
         ],
-        "target": "/hustparams=>{const category=params.category;return`/hust/gs${category?`/${category}`:\"\"}`}"
+        "target": "/hust/gs/:category{.+}?"
       },
       {
         "title": "新闻动态",
@@ -25168,7 +25168,7 @@
         "source": [
           "/:category"
         ],
-        "target": "/hustparams=>{const category=params.category;return`/hust/mse${category?`/${category}`:\"\"}`}"
+        "target": "/hust/mse/:category{.+}?"
       },
       {
         "title": "首页栏目 - 学院新闻",
@@ -26393,7 +26393,7 @@
           "/presentations",
           "/:conference/presentations"
         ],
-        "target": "/infoqparams=>{const conference=params.conference;return`/presentations${conference?`/${conference}`:\"\"}`}"
+        "target": "/infoq/presentations/:conference?"
       }
     ]
   },
@@ -26407,7 +26407,7 @@
           "/bukken/:region/bukkens/list",
           "/bukken/:region/bukkens/list/local-:area"
         ],
-        "target": "/inshokutenparams=>`/bukken/${params.area??params.region}`"
+        "target": "/inshokuten/bukken/:area?/:region?"
       },
       {
         "title": "賃料相場",
@@ -26918,7 +26918,7 @@
         "source": [
           "/:type/:name"
         ],
-        "target": "/jbmaparams=>{const type=params.type;const name=params.name;if([\"report\",\"cat_report\",\"tag_report\"].includes(type)){return`/${type}${name?`/${name}`:\"\"}`}return`/${type}`}"
+        "target": "/jbma/report/:filter{.+}?"
       },
       {
         "title": "Metals Forcus",
@@ -27212,7 +27212,7 @@
           "/home/explore",
           "/explore"
         ],
-        "target": "/jisiluparams=>{const filter=params.filter;return`/jisilu/explore${filter?`/${filter}`:\"\"}`}"
+        "target": "/jisilu/explore/:filter?"
       },
       {
         "title": "用户",
@@ -27280,7 +27280,7 @@
         "source": [
           "/news/articleList.html"
         ],
-        "target": "/joinsurl=>{const category=url.searchParams.get(\"sc_section_code\");return`/joins/chinese${category?`/${category}`:\"\"}`}"
+        "target": "/joins/chinese/:category?"
       },
       {
         "title": "财经",
@@ -27661,7 +27661,7 @@
         "source": [
           "/:path"
         ],
-        "target": "/keylol(params,url)=>url.replaceAll(\"forum.php?\",\"\")"
+        "target": "/keylol/:path"
       }
     ]
   },
@@ -27791,7 +27791,7 @@
         "source": [
           "/"
         ],
-        "target": "/koyso(_,url)=>{const urlObj=new URL(url);const category=urlObj.searchParams.get(\"category\")??void 0;const sort=urlObj.searchParams.get(\"sort\")??void 0;return`/koyso${category?`/${category}`:\"0\"}${sort?`/${sort}`:\"\"}`}"
+        "target": "/koyso/:category?/:sort?"
       },
       {
         "title": "全部游戏",
@@ -28259,7 +28259,7 @@
         "source": [
           "/research.html"
         ],
-        "target": "/lhratings(_,url)=>{const urlObj=new URL(url);const type=urlObj.searchParams.get(\"type\")??void 0;return`/lhratings/research/${type?`/${type}`:\"\"}`}"
+        "target": "/lhratings/research/:type?"
       },
       {
         "title": "宏观经济",
@@ -28488,7 +28488,7 @@
         "source": [
           "/:category"
         ],
-        "target": "/lrepacksparams=>{const category=params.category;return`/lrepacks${category?`/${category}`:\"\"}`}"
+        "target": "/lrepacks/:category?"
       },
       {
         "title": "Новые репаки на сегодня",
@@ -28839,7 +28839,7 @@
         "source": [
           "/:uid"
         ],
-        "target": "/mattersparams=>`/matters/author/${params.uid.slice(1)}`"
+        "target": "/matters/author/:uid"
       },
       {
         "title": "Latest, heat, essence",
@@ -31714,7 +31714,7 @@
         "source": [
           "/profile"
         ],
-        "target": "/sohu(_params,url)=>`/sohu/mp/${new URL(url).searchParams.get(\"xpt\")}`"
+        "target": "/sohu/mp/:xpt"
       }
     ]
   },
@@ -31843,7 +31843,7 @@
         "source": [
           "/category/:category"
         ],
-        "target": "/mycard520params=>{const category=params.category;return`/mycard520${category?`/${category}`:\"\"}`}"
+        "target": "/mycard520/category/:category?"
       },
       {
         "title": "最新遊戲",
@@ -33011,7 +33011,7 @@
           "/:category",
           "/"
         ],
-        "target": "/nikkeiparams=>{if(params.category&&params.type){return`/nikkei/cn/cn/${params.category}/${params.type.replace(\".html\",\"\")}`}if(params.category&&!params.type){return`/nikkei/cn/cn/${params.category.replace(\".html\",\"\")}`}return\"/nikkei/cn/cn\"}"
+        "target": "/nikkei/cn/*"
       }
     ],
     "zh.cn": [
@@ -33023,7 +33023,7 @@
           "/:category",
           "/"
         ],
-        "target": "/nikkeiparams=>{if(params.category&&params.type){return`/nikkei/cn/zh/${params.category}/${params.type.replace(\".html\",\"\")}`}if(params.category&&!params.type){return`/nikkei/cn/zh/${params.category.replace(\".html\",\"\")}`}return\"/nikkei/cn/zh\"}"
+        "target": "/nikkei/cn/*"
       }
     ],
     "www": [
@@ -33248,7 +33248,7 @@
         "source": [
           "/publish/$:path(.*)/.(:ext(html|htm))"
         ],
-        "target": "/nmcparams=>{const path=params.path;const ext=params.ext;const id=path&&ext?`${path}/${ext}`:void 0;return`/nmc/publish${id?`/${id}`:\"\"}`}"
+        "target": "/nmc/publish/:id{.+}?"
       },
       {
         "title": "首页 - 卫星云图",
@@ -33863,7 +33863,7 @@
           "/home/index/:keykind",
           "/home/index"
         ],
-        "target": "/nosecparams=>`/nosec${params.keykind?`/${params.keybind.replace(\".html\",\"\")}`:\"\"}`"
+        "target": "/nosec/:keykind?"
       }
     ]
   },
@@ -34054,7 +34054,7 @@
         "source": [
           "/:filename"
         ],
-        "target": "/nuistparams=>{const filename=params.filename.replace(/\\.htm$/i,\"\");return`/nuist${filename===\"index\"?\"/bulletin\":`/bulletin/${filename}`}`}"
+        "target": "/nuist/bulletin/:category?"
       }
     ],
     "lib": [
@@ -34329,7 +34329,7 @@
           "/:type/:key",
           "/:type/:key/:morekey"
         ],
-        "target": "/onejavparams=>{const itype=params.morekey===void 0?params.type:params.type===\"tag\"?\"tag\":\"day\";const ikey=`${itype===\"day\"?params.type:\"\"}${params.key||\"\"}${itype===\"tag\"&&params.morekey!==void 0?\"%2F\":\"\"}${params.morekey||\"\"}`;return`/onejav/${itype}/${ikey}`}"
+        "target": "/onejav/:type/:key?"
       }
     ]
   },
@@ -34410,7 +34410,7 @@
         "source": [
           "/"
         ],
-        "target": "/oschina(_,url)=>{const urlObj=new URL(url);const id=urlObj.searchParams.get(\"id\")??void 0;return`/oschina/column/${id}`}"
+        "target": "/oschina/column/:id"
       },
       {
         "title": "活动",
@@ -34418,7 +34418,7 @@
         "source": [
           "/"
         ],
-        "target": "/oschina(_,url)=>{const urlObj=new URL(url);const category=urlObj.searchParams.get(\"tab\")??void 0;return`/oschina/event${category?`/${category}`:\"\"}`}"
+        "target": "/oschina/event/:category?"
       },
       {
         "title": "强力推荐",
@@ -36651,7 +36651,7 @@
         "source": [
           "/petitions"
         ],
-        "target": "/parliament.uk(_,url)=>{const urlObj=new URL(url);const state=urlObj.searchParams.get(\"state\");return`/parliament.uk/petitions${state?`/${state}`:\"\"}`}"
+        "target": "/parliament.uk/petitions/:state?"
       },
       {
         "title": "All petitions",
@@ -38963,7 +38963,7 @@
           "/podcasts/",
           "/podcast/:id"
         ],
-        "target": "/scientificamericanparams=>{const id=params.id;return`/scientificamerican/podcast${id?`/${id}`:\"\"}`}"
+        "target": "/scientificamerican/podcast/:id?"
       },
       {
         "title": "Science Quickly",
@@ -39027,7 +39027,7 @@
           "/#/apps",
           "/"
         ],
-        "target": "/scoop(_,url)=>{const urlObj=new URL(url);const query=urlObj.searchParams.toString()??void 0;return`/scoop/apps${query?`/${query}`:\"\"}`}"
+        "target": "/scoop/apps/:query?"
       }
     ]
   },
@@ -40077,7 +40077,7 @@
         "source": [
           "/search"
         ],
-        "target": "/shopify(_params,url)=>{const searchParams=new URL(url).searchParams;if(!searchParams.has(\"q\")){return\"\"}return`/shopify/apps/search/${searchParams.get(\"q\")}`}"
+        "target": "/shopify/apps/search/:q"
       }
     ]
   },
@@ -40614,7 +40614,7 @@
         "source": [
           "/lawandrules/sselawsrules/:category"
         ],
-        "target": "/sseparams=>{const category=params.category;return`/sse/sselawsrules${category?`/${category}`:\"\"}`}"
+        "target": "/sse/sselawsrules/:category{.+}?"
       },
       {
         "title": "最新规则",
@@ -41201,7 +41201,7 @@
           "/article/list.html",
           "/article/list/:id"
         ],
-        "target": "/stcn(params,url)=>{const urlObj=new URL(url);const id=urlObj.searchParams.get(\"type\")??params.id;return`/stcn/article/list${id?`/${id}`:\"\"}`}"
+        "target": "/stcn/article/list/:id?"
       },
       {
         "title": "要闻",
@@ -41317,7 +41317,7 @@
           "/article/list.html",
           "/article/list/:id"
         ],
-        "target": "/stcn(params,url)=>{const urlObj=new URL(url);const id=urlObj.searchParams.get(\"type\")??params.id;return`/stcn/article/rank${id?`/${id}`:\"\"}`}"
+        "target": "/stcn/article/rank/:id?"
       },
       {
         "title": "要闻",
@@ -41902,7 +41902,7 @@
         "source": [
           "/www/lawrules/rule/:category"
         ],
-        "target": "/szseparams=>{const category=params.category;return`/szse/rule${category?`/${category}`:\"\"}`}"
+        "target": "/szse/rule/:channel{.+}?"
       },
       {
         "title": "综合类",
@@ -42449,7 +42449,7 @@
         "source": [
           "/occasus/:category"
         ],
-        "target": "/theparams=>{const category=params.category;return`/the${category?`/category/${category}`:\"\"}`}"
+        "target": "/the/:filter{.+}?"
       },
       {
         "title": "时局",
@@ -42691,7 +42691,7 @@
           "/blog",
           "/blog/c/:category"
         ],
-        "target": "/tidbparams=>{const category=params.category;return`/tidb/blog/c${category?`/${category}`:\"\"}`}"
+        "target": "/tidb/blog/c/:category?"
       },
       {
         "title": "全部文章",
@@ -43195,7 +43195,7 @@
         "source": [
           "/zydt/:category"
         ],
-        "target": "/tsinghuaparams=>{const category=params.category?.replace(/\\.htm$/,\"\");return`/tsinghua/lib/zydt${category?`/${category}`:\"\"}`}"
+        "target": "/tsinghua/lib/zydt/:category?"
       },
       {
         "title": "图书馆资源动态",
@@ -43229,7 +43229,7 @@
         "source": [
           "/news/:category"
         ],
-        "target": "/tsinghua(_,url)=>`/tsinghua/news/${new URL(url).pathname.split(\"/\").pop()?.replace(\".htm\",\"\")}`"
+        "target": "/tsinghua/news/:category?"
       }
     ]
   },
@@ -44995,7 +44995,7 @@
         "source": [
           "/:category"
         ],
-        "target": "/xjtuparams=>{const category=params.category;return`/xjtu/zs${category?`/${category}`:\"\"}`}"
+        "target": "/xjtu/zs/:category{.+}?"
       }
     ]
   },
@@ -45308,7 +45308,7 @@
         "source": [
           "/"
         ],
-        "target": "/ynet(_,url)=>{const urlObj=new URL(url);const domainParts=urlObj.hostname.split(\".\");let category=\"\";if(domainParts.length>2){const subdomains=domainParts.slice(0,-2).filter(part=>part!==\"www\");if(subdomains.length>0){category=subdomains[0]}}const idMatch=urlObj.pathname.match(/\\/list\\/(.+)\\.html/);const id=idMatch?idMatch[1]:\"\";return`/ynet/list${category?`/${category}`:\"\"}${id?`/${id}`:\"\"}`}"
+        "target": "/ynet/list/:category?/:id?"
       }
     ]
   },
@@ -45442,7 +45442,7 @@
           "/",
           "/t/:tag"
         ],
-        "target": "/yuanliaoparams=>{const tag=params.tag;return`/yuanliao${tag?`/${tag}`:\"\"}`}"
+        "target": "/yuanliao/:tag?"
       },
       {
         "title": "问题反馈",
@@ -46065,7 +46065,7 @@
         "source": [
           "/:params"
         ],
-        "target": "/1lou(_,url)=>{const parsedUrl=new URL(url);return`/1lou${parsedUrl.href.replace(rootUrl,\"\")}`}"
+        "target": "/1lou/:params{.+}?"
       },
       {
         "title": "搜索",
@@ -46073,7 +46073,7 @@
         "source": [
           "/search"
         ],
-        "target": "/1lou(_,url)=>{const parsedUrl=new URL(url);const searchParams=parsedUrl.searchParams;const query=searchParams.get(\"q\")||parsedUrl.pathname.match(/\\/search-(.+)-\\d+\\.htm/)?.[1]||\"\";return`/1lou/search/${query}`}"
+        "target": "/1lou/search/:params"
       }
     ]
   },
@@ -47133,7 +47133,7 @@
         "source": [
           "/category/:id"
         ],
-        "target": "/cnbetaparams=>`/cnbeta/category/${params.id.replace(\".htm\",\"\")}`"
+        "target": "/cnbeta/category/:id"
       },
       {
         "title": "头条资讯",
@@ -47149,7 +47149,7 @@
         "source": [
           "/topics/:id"
         ],
-        "target": "/cnbetaparams=>`/cnbeta/topics/${params.id.replace(\".htm\",\"\")}`"
+        "target": "/cnbeta/topics/:id"
       }
     ]
   },
@@ -47330,7 +47330,7 @@
         "source": [
           "/team/*team"
         ],
-        "target": "/dongqiudiparams=>`/dongqiudi/result/${params.team.replace(\".html\",\"\")}`"
+        "target": "/dongqiudi/result/:team"
       },
       {
         "title": "球员新闻",
@@ -47338,7 +47338,7 @@
         "source": [
           "/player/*id"
         ],
-        "target": "/dongqiudiparams=>`/dongqiudi/player_news/${params.id.replace(\".html\",\"\")}`"
+        "target": "/dongqiudi/player_news/:id"
       },
       {
         "title": "专题",
@@ -47354,7 +47354,7 @@
         "source": [
           "/team/*team"
         ],
-        "target": "/dongqiudiparams=>`/dongqiudi/team_news/${params.team.replace(\".html\",\"\")}`"
+        "target": "/dongqiudi/team_news/:team"
       }
     ],
     "m": [
@@ -47805,7 +47805,7 @@
         "source": [
           "/categories/:id"
         ],
-        "target": "/gcores(params,url)=>{const urlObj=new URL(url);const id=params.id;const tab=urlObj.searchParams.get(\"tab\")??void 0;return`/gcores/categories/${id}/${tab?`/${tab}`:\"\"}`}"
+        "target": "/gcores/categories/:id/:tab?"
       },
       {
         "title": "全部",
@@ -47853,7 +47853,7 @@
         "source": [
           "/collections/:id"
         ],
-        "target": "/gcores(params,url)=>{const urlObj=new URL(url);const id=params.id;const tab=urlObj.searchParams.get(\"tab\")??void 0;return`/gcores/collections/${id}/${tab?`/${tab}`:\"\"}`}"
+        "target": "/gcores/collections/:id/:tab?"
       },
       {
         "title": "全部",
@@ -47917,7 +47917,7 @@
         "source": [
           "/tags/:id/originals"
         ],
-        "target": "/gcores(params,url)=>{const urlObj=new URL(url);const id=params.id;const tab=urlObj.searchParams.get(\"tab\")??void 0;return`/gcores/tags/${id}/${tab?`/${tab}`:\"\"}`}"
+        "target": "/gcores/tags/:id/:tab?"
       },
       {
         "title": "全部",
@@ -48056,7 +48056,7 @@
         "source": [
           "/"
         ],
-        "target": "/getitfree(_,url)=>{const keyword=new URL(url).searchParams.get(\"s\");return`/getitfree/search${keyword?`/${keyword}`:\"\"}`}"
+        "target": "/getitfree/search/:keyword"
       },
       {
         "title": "标签",
@@ -48077,7 +48077,7 @@
         "source": [
           "/:category"
         ],
-        "target": "/gov/ahparams=>{const category=params.category;return`/gov/ah/kjt${category?`/${category}`:\"\"}`}"
+        "target": "/gov/ah/kjt/:category{.+}?"
       },
       {
         "title": "科技资讯 - 通知公告",
@@ -48729,7 +48729,7 @@
         "source": [
           "/csrc/:id/zfxxgk_zdgk.shtml"
         ],
-        "target": "/gov/csrcparams=>{const id=params.id;return`/gov/csrc/zfxxgk_zdgk/${id?`/${id}`:\"\"}`}"
+        "target": "/gov/csrc/zfxxgk_zdgk/:id?"
       },
       {
         "title": "主动公开目录 - 按主题查看",
@@ -49357,7 +49357,7 @@
         "source": [
           "/list"
         ],
-        "target": "/gov/jgjcndrc(_,url)=>{const{searchParams}=new URL(url);const columnId=searchParams.get(\"clmId\");const subColumnId=searchParams.get(\"sclmId\");return`/jgjcndrc${columnId?`/${columnId}${subColumnId?`/${subColumnId}`:\"\"}`:\"\"}`}"
+        "target": "/gov/jgjcndrc/:columnId?/:subColumnId?"
       }
     ]
   },
@@ -49396,7 +49396,7 @@
         "source": [
           "/:category"
         ],
-        "target": "/gov/lswzparams=>{const category=params.category;return`/gov/lswz${category?`/${category}`:\"\"}`}"
+        "target": "/gov/lswz/:category{.+}?"
       },
       {
         "title": "新闻发布",
@@ -49916,7 +49916,7 @@
         "source": [
           "/:category%7B.+%7D"
         ],
-        "target": "/gov/moaparams=>{const category=params.category;return`/gov/moa/gjs${category?`/${category}`:\"\"}`}"
+        "target": "/gov/moa/gjs/:category{.+}?"
       },
       {
         "title": "工作动态",
@@ -50151,7 +50151,7 @@
         "source": [
           "/fggz/:category*"
         ],
-        "target": "/gov/ndrcparams=>{const category=params.category;return`/gov/ndrc/fggz/${category?`/${category.endsWith(\"/\")?category:`${category}/`}`:\"/\"}`}"
+        "target": "/gov/ndrc/fggz/:category{.+}?"
       },
       {
         "title": "机关办公 - 业务工作",
@@ -50879,7 +50879,7 @@
         "source": [
           "/xwdt/:category*"
         ],
-        "target": "/gov/ndrcparams=>{const category=params.category;return`/gov/ndrc/xwdt/${category?`/${category.endsWith(\"/\")?category:`${category}/`}`:\"/\"}`}"
+        "target": "/gov/ndrc/xwdt/:category{.+}?"
       }
     ],
     "zfxxgk": [
@@ -51324,7 +51324,7 @@
         "source": [
           "/:category"
         ],
-        "target": "/gov/shparams=>{const category=params.category.replace(/\\/index\\.html/,\"\");return`/gov/sh/fgw${category?`/${category}`:\"\"}`}"
+        "target": "/gov/sh/fgw/:category{.+}?"
       },
       {
         "title": "最新信息公开",
@@ -51932,7 +51932,7 @@
         "source": [
           "/contents"
         ],
-        "target": "/infzm(_,url)=>url?`/infzm/${url.match(/contents\\?term_id=(\\d*)/)?.[1]}`:\"\""
+        "target": "/infzm/:id"
       }
     ]
   },
@@ -52296,7 +52296,7 @@
         "source": [
           "/jobs/search"
         ],
-        "target": "/linkedin(params,url)=>{const searchParams=new URLSearchParams(new URL(url).search);const fJT=parseRouteParam(searchParams.get(\"f_JT\"));const fE=parseRouteParam(searchParams.get(\"f_E\"));const keywords=encodeURIComponent(searchParams.get(\"keywords\")||\"\");const newSearchParams=new URLSearchParams;for(const[key,value]of searchParams){if(![\"f_JT\",\"f_E\",\"keywords\"].includes(key)){newSearchParams.append(key,value)}}return`/linkedin/jobs/${fJT}/${fE}/${keywords}/?${newSearchParams.toString()}`}"
+        "target": "/linkedin/jobs/:job_types/:exp_levels/:keywords?/:routeParams?"
       }
     ]
   },
@@ -54924,7 +54924,7 @@
         "source": [
           "/*"
         ],
-        "target": "/wnacg(_,url)=>`/wnacg/category/${new URL(url).pathname.match(/albums-index-cate-(\\d+)\\.html$/)[1]}`"
+        "target": "/wnacg/category/:cid"
       },
       {
         "title": "最新",
@@ -54941,7 +54941,7 @@
         "source": [
           "/*"
         ],
-        "target": "/wnacg(_,url)=>`/wnacg/tag/${new URL(url).pathname.match(/albums-index-tag-(.+?)\\.html$/)[1]}`"
+        "target": "/wnacg/tag/:tag"
       }
     ]
   },
