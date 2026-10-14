@@ -1,7 +1,9 @@
 import { load } from 'cheerio';
 
 import type { DataItem, Route } from '@/types';
-import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/parse-date';
+import { getPlaywrightPage } from '@/utils/playwright';
+import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/blog',
@@ -10,7 +12,7 @@ export const route: Route = {
     parameters: {},
     features: {
         requireConfig: false,
-        requirePuppeteer: false,
+        requirePuppeteer: true,
         antiCrawler: false,
         supportBT: false,
         supportPodcast: false,
@@ -18,13 +20,13 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['devolverdigital.com/blog'],
+            source: ['devolverdigital.com/propaganda', 'devolverdigital.com/propaganda/:slug', 'devolverdigital.com/blog'],
         },
     ],
     name: 'Official Blogs',
     maintainers: ['XXY233'],
     handler,
-    url: 'devolverdigital.com/blog',
+    url: 'devolverdigital.com/propaganda',
 };
 
 async function handler() {
@@ -33,49 +35,46 @@ async function handler() {
     return {
         title: 'DevolverDigital Blog',
         language: 'en-us' as const,
-        link: 'https://www.devolverdigital.com/blog',
+        link: 'https://www.devolverdigital.com/propaganda',
         item: items,
     };
 }
 
 async function fetchPage() {
-    const baseUrl = 'https://www.devolverdigital.com/blog';
-    const response = await ofetch(baseUrl);
-    const $ = load(response, { scriptingEnabled: false });
-
-    // Extract all posts of this page
-    const $titleDivs = $('div.w-full.flex.justify-center.py-4.bg-red-400.undefined');
-    const $contentDivs = $('div.bg-gray-800.flex.justify-center.font-sm.py-4');
-    const items: DataItem[] = $titleDivs.toArray().map((titleDiv, index) => {
-        const content = $contentDivs[index];
-        const postAuthor = parsePostAuthor($, titleDiv);
-        const postDate = parsePostDate($, titleDiv);
-        const postTitle = $(titleDiv).find('h1').text();
-        const postLink = $(content).find('div.ml-auto.flex.items-center a').attr('href');
-        // Modify the src attribute of the image
-        parsePostImages($, content);
-        const postContent = $.html($(content).find('div.cms-content'));
-        return {
-            title: postTitle,
-            link: postLink,
-            author: postAuthor,
-            pubDate: postDate,
-            description: postContent,
-        };
+    const baseUrl = 'https://www.devolverdigital.com/propaganda';
+    const { page, destroy } = await getPlaywrightPage(baseUrl, {
+        closeTimeout: 0,
+        onBeforeLoad: async (page) => {
+            await page.route('**/*', (route) => (route.request().resourceType() === 'document' ? route.continue() : route.abort()));
+        },
     });
-
-    return items;
-}
-
-function parsePostAuthor($, titleDiv) {
-    const $postAuthorElement = $(titleDiv).find('div.font-xs.leading-none.mb-1');
-    return $postAuthorElement.text().replace('By ', '') || 'Devolver Digital';
-}
-
-function parsePostDate($, titleDiv) {
-    const dateStr = $(titleDiv).find('div.font-2xs.leading-none.mb-1').text();
-    const cleanedDateStr = dateStr.replace(/(\d+)(st|nd|rd|th)/, '$1');
-    return new Date(cleanedDateStr);
+    try {
+        await page.waitForSelector('.cms-content', { state: 'attached' });
+        const response = await page.content();
+        const $ = load(response);
+        const items: DataItem[] = $('.cms-content')
+            .toArray()
+            .map((content) => {
+                const $post = $(content).parent();
+                const $title = $post.find('h1');
+                const link = $post.find('a[href^="https://www.devolverdigital.com/propaganda/"]').attr('href');
+                if (!link) {
+                    throw new Error('Devolver Digital article permalink was not found');
+                }
+                parsePostImages($, content);
+                return {
+                    title: $title.text(),
+                    link,
+                    category: [$title.prev().children().first().text()],
+                    author: $title.next().text().replace(/^By /, ''),
+                    pubDate: timezone(parseDate($title.prev().children().last().text(), 'MMMM D, YYYY'), 0),
+                    description: $(content).html(),
+                };
+            });
+        return items;
+    } finally {
+        await destroy();
+    }
 }
 
 function parsePostImages($, content) {
