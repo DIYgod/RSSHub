@@ -1,9 +1,11 @@
 import type { Context } from 'hono';
 
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
 type Category = {
     id: number;
@@ -30,6 +32,11 @@ export const route: Route = {
     handler,
 };
 
+function getGmtDate(value: string | undefined) {
+    const date = value ? parseDate(`${value.replace(/Z$/, '')}Z`) : undefined;
+    return date && !Number.isNaN(date.getTime()) ? date : undefined;
+}
+
 async function handler(ctx: Context) {
     const baseUrl = 'https://www.im2maker.com';
     const channel = ctx.req.param('channel')?.toLowerCase();
@@ -38,12 +45,18 @@ async function handler(ctx: Context) {
     let link = baseUrl;
     const query: PostsQuery = {
         _embed: '',
-        per_page: ctx.req.query('limit') === '10' ? undefined : ctx.req.query('limit'),
+        per_page: String(Math.min(getRouteLimit(ctx, 10), 100)),
     };
 
     if (channel) {
         const category = await cache.tryGet(`im2maker:category:${channel}`, async () => {
             const categories = await ofetch<Category[]>(`${baseUrl}/wp-json/wp/v2/categories`, { query: { slug: channel } });
+            if (!Array.isArray(categories)) {
+                throw new TypeError('The source did not return its WordPress categories.');
+            }
+            if (!categories.length) {
+                throw new InvalidParameterError(`Unknown channel: ${channel}. Check the channel slug in the route documentation.`);
+            }
             return categories[0];
         });
         title = category.name;
@@ -58,7 +71,7 @@ async function handler(ctx: Context) {
         link: post.link,
         guid: post.guid.rendered,
         description: post.content.rendered,
-        pubDate: parseDate(post.date_gmt),
+        pubDate: getGmtDate(post.date_gmt),
         author: post._embedded?.author?.[0]?.name,
         category: post._embedded?.['wp:term']?.flat().map((term) => term.name),
     }));
