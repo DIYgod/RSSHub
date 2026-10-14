@@ -4,13 +4,14 @@ import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 import timezone from '@/utils/timezone';
 
 import { renderDescription } from './templates/description';
 
 export const handler = async (ctx) => {
     const { category = 'zx/zxfb/' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 10;
+    const limit = getRouteLimit(ctx, 10);
 
     const rootUrl = 'http://www.agri.cn';
     const currentUrl = new URL(category.endsWith('/') ? category : `${category}/`, rootUrl).href;
@@ -178,12 +179,8 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['www.agri.cn/:category?'],
-            target: (params) => {
-                const category = params.category;
-
-                return category ? `/${category}` : '';
-            },
+            source: ['www.agri.cn/*category', 'www.agri.cn/'],
+            target: '/:category?',
         },
         {
             title: '机构 - 成果展示',
