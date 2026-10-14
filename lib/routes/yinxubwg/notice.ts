@@ -3,6 +3,22 @@ import { parseDate } from '@/utils/parse-date';
 
 import { namespace } from './namespace';
 
+function parseCalendarDate(sourceDate: string | undefined): Date | undefined {
+    if (typeof sourceDate !== 'string' || !sourceDate.trim()) {
+        return;
+    }
+
+    const value = sourceDate.trim();
+    const isCalendarDay = /^\d{4}-\d{2}-\d{2}$/.test(value);
+    // UTC midnight represents the calendar day, not a source publication instant.
+    const date = parseDate(isCalendarDay ? `${value}T00:00:00Z` : value);
+    if (!Number.isFinite(date.getTime()) || (isCalendarDay && date.toISOString().slice(0, 10) !== value)) {
+        return;
+    }
+
+    return date;
+}
+
 export const route = {
     path: '/notice',
     categories: ['travel'],
@@ -40,7 +56,7 @@ export const route = {
         const items = list.map((item) => ({
             title: item.title,
             link: item.out_url || `${baseUrl}/yxgw/notice/detail?id=${item.article_id}&cate=${cate}&pos=news`,
-            pubDate: parseDate(item.push_time_new),
+            pubDate: parseCalendarDate(item.push_time_new),
         }));
 
         return {
