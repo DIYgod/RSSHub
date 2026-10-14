@@ -34,7 +34,7 @@ async function handler() {
         .toArray()
         .map((item) => {
             const $item = $(item);
-            const a = $item.find('a').first();
+            const a = $item.find('a');
             return {
                 title: a.text(),
                 link: `${host}${a.attr('href')}`,
