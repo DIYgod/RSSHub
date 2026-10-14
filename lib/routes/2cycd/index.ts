@@ -51,7 +51,7 @@ async function handler(ctx) {
             const author = $item.find('td.by cite a').eq(0).text();
             return {
                 title: xst.text(),
-                link: xst.attr('href'),
+                link: new URL(xst.attr('href')!, currentUrl).href,
                 author,
             };
         });
