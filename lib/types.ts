@@ -88,6 +88,8 @@ export type Data = {
     link?: string;
     item?: DataItem[];
     allowEmpty?: boolean;
+    /** Default publication-date sorting preference; the common sorted parameter takes precedence. */
+    sortItems?: boolean;
     image?: string;
     author?: string;
     language?: Language;
@@ -174,6 +176,7 @@ export type Language =
     | 'hi'
     | 'hr'
     | 'hu'
+    | 'id'
     | 'in'
     | 'is'
     | 'it'
@@ -182,6 +185,7 @@ export type Language =
     | 'ja'
     | 'ko'
     | 'mk'
+    | 'mul'
     | 'ne'
     | 'nl'
     | 'nl-be'
@@ -204,8 +208,10 @@ export type Language =
     | 'sv'
     | 'sv-fi'
     | 'sv-se'
+    | 'th'
     | 'tr'
     | 'uk'
+    | 'vi'
     | 'zh'
     | 'zh-CN'
     | 'zh-HK'
