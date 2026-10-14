@@ -1,9 +1,21 @@
-import { load } from 'cheerio';
+import { type Cheerio, load } from 'cheerio';
+import { type AnyNode, cloneNode, Document } from 'domhandler';
+import { escapeUTF8 } from 'entities/escape';
+import pMap from 'p-map';
 
 import { config } from '@/config';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
+
+function copyElements<T extends AnyNode>(selection: Cheerio<T>): Cheerio<T> {
+    const copy = selection.map((_, element) => cloneNode(element, true));
+    const root = new Document(copy.toArray());
+    copy.each((_, element) => {
+        element.parent = root;
+    });
+    return copy;
+}
 
 export const route: Route = {
     path: '/:category?',
@@ -38,6 +50,11 @@ export const route: Route = {
 由于 mox.moe 对非登录用户屏蔽了部分漫画详情内容的获取，且极易触发反爬机制，导致访问 ip 被重定向至 google.com，因此在未配置\`MOX_COOKIE\`参数的情况下路由只会返回漫画标题和封面，不会对详情内容进行抓取。
 :::`,
 };
+
+function getDescription(content: string): string {
+    const description = content.match(/document\.getElementById\("div_desc_content"\)\.innerHTML\s*=\s*("(?:\\.|[^"\\])*")\s*;/s)?.[1];
+    return description ? JSON.parse(description) : '';
+}
 
 async function handler(ctx) {
     const category = ctx.req.param('category') ?? '';
@@ -78,10 +95,34 @@ async function handler(ctx) {
         })
         .filter((i) => i.guid);
 
+    if (!items.length) {
+        items = $('script')
+            .toArray()
+            .flatMap((script) =>
+                Array.from(
+                    $(script)
+                        .text()
+                        .matchAll(/disp_divinfo\(\s*"div_info_"\s*\+\s*"\d+",([\s\S]*?)\);/g),
+                    (match) => {
+                        const values = Array.from(match[1].matchAll(/"(?:\\.|[^"\\])*"/g), (value) => JSON.parse(value[0]));
+                        const link = new URL(values[0], currentUrl).href;
+                        return {
+                            title: values[8],
+                            author: values[9] || undefined,
+                            link,
+                            guid: new URL(link).pathname.split('/').pop(),
+                            description: values[1] ? `<img src="${escapeUTF8(values[1])}">` : undefined,
+                        };
+                    }
+                )
+            );
+    }
+
     if (cookie) {
-        items = await Promise.all(
-            items.map((item) =>
-                cache.tryGet(item.guid!, async () => {
+        items = await pMap(
+            items,
+            async (item) => {
+                const details = await cache.tryGet(`${item.link}:article`, async () => {
                     const detailResponse = await got({
                         method: 'get',
                         url: item.link,
@@ -92,20 +133,28 @@ async function handler(ctx) {
 
                     const content = load(detailResponse.data);
 
-                    item.author = content('.author .text_bglight font a')
+                    const author = content('.author .text_bglight font a')
                         .toArray()
                         .map((i) => $(i).text())
                         .filter(Boolean)
                         .join('、');
 
-                    const infoBlock = content('.author .text_bglight').toArray();
+                    const categoryBlock = copyElements(content('.author .text_bglight').filter((_, element) => content(element).text().trimStart().startsWith('分類：')));
+                    categoryBlock.find('.filesize').remove();
+                    const category = categoryBlock
+                        .children('font')
+                        .toArray()
+                        .map((element) => content(element).text().trim())
+                        .filter(Boolean);
+                    const cover = content('.img_book').attr('src');
+                    const desc = getDescription(detailResponse.data);
+                    const description = `${cover ? `<img src="${escapeUTF8(cover)}"><br>` : ''}${desc}`;
 
-                    const desc = detailResponse.data?.match(/document\.getElementById\("div_desc_content"\)\.innerHTML = "(.*?)";/s)?.[1] ?? '';
-                    item.description = `<img src="${content('.img_book').attr('src')}"><br>${infoBlock.map((i) => $(i).html()).join('<br>')}<br>${desc}`;
-
-                    return item;
-                })
-            )
+                    return { author, description, category };
+                });
+                return { ...item, ...details, description: details.description || item.description };
+            },
+            { concurrency: 3 }
         );
     }
 
