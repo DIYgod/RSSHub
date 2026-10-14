@@ -4,10 +4,12 @@ import { Genre, GenreNotation, NarouNovelFetch, SearchBuilder } from 'narou';
 
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Data, Route } from '@/types';
+import { getRouteLimit } from '@/utils/route-limit';
 
 import { handleIsekaiRanking } from './ranking-isekai';
 import { renderDescription } from './templates/description';
 import { IsekaiCategory, isekaiCategoryToJapanese, NovelType, novelTypeToJapanese, periodToJapanese, periodToOrder, RankingPeriod, RankingType } from './types/ranking';
+import { getNovelDates } from './utils';
 
 const getParameters = () => {
     // Generate ranking type options
@@ -205,7 +207,7 @@ function parseGenreRankingType(type: string) {
 
 async function handler(ctx: Context): Promise<Data> {
     const { listType, type } = ctx.req.param();
-    const limit = Math.min(Number(ctx.req.query('limit') ?? 300), 300);
+    const limit = Math.min(getRouteLimit(ctx, 300), 300);
 
     const api = new NarouNovelFetch();
     const searchParams: SearchParams = {
@@ -257,6 +259,7 @@ async function handler(ctx: Context): Promise<Data> {
         title: `#${index + 1} ${novel.title}`,
         link: `https://ncode.syosetu.com/${novel.ncode.toLowerCase()}`,
         description: renderDescription({ novel }),
+        ...getNovelDates(novel),
         author: novel.writer,
         category: novel.keyword.split(/[\s/\u{FF0F}]/u).filter(Boolean),
     }));
@@ -265,6 +268,7 @@ async function handler(ctx: Context): Promise<Data> {
         title: `小説家になろう - ${rankingTitle}`,
         link: rankingUrl,
         item: items,
+        sortItems: false,
         language: 'ja',
     };
 }

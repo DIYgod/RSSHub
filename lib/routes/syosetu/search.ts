@@ -5,10 +5,12 @@ import queryString from 'query-string';
 
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Data, Route } from '@/types';
+import { getRouteLimit } from '@/utils/route-limit';
 
 import { renderDescription } from './templates/description';
 import type { NarouSearchParams } from './types/search';
 import { SyosetuSub, syosetuSubToJapanese } from './types/search';
+import { getNovelDates } from './utils';
 
 export const route: Route = {
     path: '/search/:sub/:query',
@@ -125,7 +127,7 @@ async function handler(ctx: Context): Promise<Data> {
     const { sub, query } = ctx.req.param();
     const searchUrl = `https://${sub}.syosetu.com/search/search/search.php?${query}`;
 
-    const limit = Math.min(Number(ctx.req.query('limit') ?? 40), 40);
+    const limit = Math.min(getRouteLimit(ctx, 40), 40);
     const searchParams = mapToSearchParams(query, limit);
     const builder = createNovelSearchBuilder(sub, searchParams);
     const result = await builder.execute();
@@ -134,8 +136,7 @@ async function handler(ctx: Context): Promise<Data> {
         title: novel.title,
         link: `https://${isGeneral(sub) ? 'ncode' : 'novel18'}.syosetu.com/${String(novel.ncode).toLowerCase()}`,
         description: renderDescription({ novel, genreText: GenreNotation[novel.genre] }),
-        // Skip pubDate - search results prioritize search sequence over timestamps
-        // pubDate: novel.general_lastup,
+        ...getNovelDates(novel),
         author: novel.writer,
         // Split by whitespace characters(\s), slash(/), full-width slash(／)
         category: novel.keyword.split(/[\s/\u{FF0F}]/u).filter(Boolean),
@@ -153,5 +154,6 @@ async function handler(ctx: Context): Promise<Data> {
         title: searchTerms.length > 0 ? `Syosetu Search: ${searchTerms.join(' ')}` : 'Syosetu Search',
         link: searchUrl,
         item: items,
+        sortItems: false,
     };
 }
