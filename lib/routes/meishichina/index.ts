@@ -1,9 +1,11 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
 const isChinese = (text: string): boolean => /^[\u{4E00}-\u{9FA5}]+$/u.test(text);
 
@@ -13,7 +15,7 @@ export const handler = async (ctx) => {
     const DEFAULT_ORDERBY = 'hot';
 
     const { category = DEFAULT_CATEGORY } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 20;
+    const limit = getRouteLimit(ctx, 20);
 
     // If `category` is in Chinese, it should come from the tab titles,
     // because each `recipe-type` has an English ID.
@@ -41,78 +43,121 @@ export const handler = async (ctx) => {
               .find((a) => $(a).text() === category)
         : undefined;
 
-    const { data: response } = isTab
-        ? await got(apiUrl, {
-              searchParams: {
-                  ac: 'recipe',
-                  op: 'getMoreDiffStateRecipeList',
-                  classid: categoryEl ? $(categoryEl).prop('data') : DEFAULT_CLASSID,
-                  orderby: categoryEl ? $(categoryEl).prop('order') : DEFAULT_ORDERBY,
-                  page: 1,
-              },
-          })
-        : { data: undefined };
+    const tabIndex =
+        isTab && !categoryEl
+            ? $('#w5 .titlebar_wrap h2')
+                  .toArray()
+                  .findIndex((heading) => $(heading).text() === category)
+            : -1;
 
-    let items = isTab
-        ? response.data.slice(0, limit).map((item) => {
-              const title = item.title;
-              const guid = `meishichina-${item.id}`;
-              const image = item.fcover.split(/\?/, 1)[0];
+    const { data: response } =
+        isTab && tabIndex < 0
+            ? await got(apiUrl, {
+                  searchParams: {
+                      ac: 'recipe',
+                      op: 'getMoreDiffStateRecipeList',
+                      classid: categoryEl ? $(categoryEl).prop('data') : DEFAULT_CLASSID,
+                      orderby: categoryEl ? $(categoryEl).prop('order') : DEFAULT_ORDERBY,
+                      page: 1,
+                  },
+              })
+            : { data: undefined };
 
-              return {
-                  title,
-                  pubDate: item.datelines ? parseDate(item.datelines, 'X') : parseDate(item.dateline, 'YYYY-M-D'),
-                  link: new URL(`recipe-${item.id}.html`, rootUrl).href,
-                  category: item.mainingredient.replace(/。$/, '').split('、'),
-                  author: item.username,
-                  guid,
-                  id: guid,
-                  image,
-                  banner: image,
-              };
-          })
-        : $('div#J_list ul li')
-              .slice(0, limit)
-              .toArray()
-              .map((item) => {
-                  const $item = $(item);
+    let items: DataItem[] =
+        tabIndex >= 0
+            ? $('#w5 ul')
+                  .eq(tabIndex)
+                  .children('li')
+                  .slice(0, limit)
+                  .toArray()
+                  .map((item) => {
+                      const $item = $(item);
+                      const a = $item.find('a').first();
+                      const link = new URL(a.attr('href')!, rootUrl).href;
+                      const recipeId = new URL(link).pathname.match(/^\/recipe-(\d+)\.html$/)?.[1];
+                      if (!recipeId) {
+                          throw new Error('Recipe list entry has an invalid URL');
+                      }
+                      const imageSource = a.find('img').attr('data-src') ?? a.find('img').attr('src');
+                      const image = imageSource ? new URL(imageSource, currentUrl).href.split(/\?/, 1)[0] : undefined;
+                      const guid = `meishichina-${recipeId}`;
+                      return { title: a.attr('title') ?? a.find('div').text(), link, author: $item.find('a.u').text(), guid, id: guid, image, banner: image };
+                  })
+            : isTab
+              ? response.data.slice(0, limit).map((item) => {
+                    const title = item.title;
+                    const guid = `meishichina-${item.id}`;
+                    const image = item.fcover.split(/\?/, 1)[0];
 
-                  const title = $item.find('div.detail h2').text();
-                  const description = $item.find('div.detail').html();
-                  const guid = `meishichina-${$item.prop('data-id')}`;
-                  const image = $item.find('div.pic img').prop('src')!.split(/\?/, 1)[0];
+                    return {
+                        title,
+                        pubDate: item.datelines ? parseDate(item.datelines, 'X') : parseDate(item.dateline, 'YYYY-M-D'),
+                        link: new URL(`recipe-${item.id}.html`, rootUrl).href,
+                        category: item.mainingredient.replace(/。$/, '').split('、'),
+                        author: item.username,
+                        guid,
+                        id: guid,
+                        image,
+                        banner: image,
+                    };
+                })
+              : $('div#J_list ul li')
+                    .slice(0, limit)
+                    .toArray()
+                    .map((item) => {
+                        const $item = $(item);
 
-                  return {
-                      title,
-                      description,
-                      link: $item.find('div.detail h2 a').prop('href'),
-                      category: $item.find('p.subcontent').text().replace(/。$/, '').split('、'),
-                      author: $item.find('p.subline a').text(),
-                      guid,
-                      id: guid,
-                      content: {
-                          html: description,
-                          text: $item.find('div.detail').text(),
-                      },
-                      image,
-                      banner: image,
-                  };
-              });
+                        const title = $item.find('div.detail h2').text();
+                        const description = $item.find('div.detail').html();
+                        const guid = `meishichina-${$item.prop('data-id')}`;
+                        const image = $item.find('div.pic img').prop('src')!.split(/\?/, 1)[0];
 
-    items = await Promise.all(
-        items.map((item) =>
-            cache.tryGet(item.link, async () => {
+                        return {
+                            title,
+                            description,
+                            link: $item.find('div.detail h2 a').prop('href'),
+                            category: $item.find('p.subcontent').text().replace(/。$/, '').split('、'),
+                            author: $item.find('p.subline a').text(),
+                            guid,
+                            id: guid,
+                            content: {
+                                html: description,
+                                text: $item.find('div.detail').text(),
+                            },
+                            image,
+                            banner: image,
+                        };
+                    });
+
+    items = await pMap(
+        items,
+        (item) => {
+            if (!item.link) {
+                throw new Error('Recipe list entry is missing its URL');
+            }
+            return cache.tryGet(item.link, async () => {
                 const { data: detailResponse } = await got(item.link);
 
                 const $$ = load(detailResponse);
 
+                $$('img[data-src]').each((_, element) => {
+                    const image = $$(element);
+                    image.attr('src', new URL(image.attr('data-src')!, item.link).href).removeAttr('data-src');
+                });
                 $$('input[type="hidden"]').remove();
                 $$('p.J_photo, p.copyright').remove();
                 $$('div.sharebox').nextAll().addBack().remove();
 
-                const title = $$('a#recipe_title').text();
-                const description = $$('div.recipDetail').html();
-                const image = $$('div#recipe_De_imgBox img').prop('src')?.split(/\?/, 1)[0] ?? undefined;
+                const title = $$('a#recipe_title').text() || $$('.main > h1.title a').text();
+                const recipeContent = $$('div.recipDetail');
+                const currentContent = $$('.main > .mbox').filter((_, element) => $$(element).find('.recipephoto, fieldset.particulars, .recipeStep, .recipeTip').length > 0);
+                const description = recipeContent.length
+                    ? recipeContent.html()
+                    : currentContent
+                          .toArray()
+                          .map((element) => $$(element).html())
+                          .join('');
+                const image = ($$('div#recipe_De_imgBox img').prop('src') ?? $$('.recipephoto img').prop('src'))?.split(/\?/, 1)[0];
 
                 const pubDate = detailResponse.match(/"pubDate":\s"(.*?)",/)?.[1] ?? undefined;
                 const updated = detailResponse.match(/"upDate":\s"(.*?)",/)?.[1] ?? undefined;
@@ -130,24 +175,25 @@ export const handler = async (ctx) => {
                             .map((c) => $$(c).text().trim()),
                     ]),
                 ].filter(Boolean);
-                item.author = $$('span#recipe_username').text();
+                item.author = $$('span#recipe_username').text() || $$('.main > .author h5 a').text();
                 item.content = {
                     html: description,
-                    text: $$('div.recipDetail').text(),
+                    text: recipeContent.length ? recipeContent.text() : currentContent.text(),
                 };
                 item.image = image;
                 item.banner = image;
                 item.updated = updated ? parseDate(updated) : item.updated;
 
                 return item;
-            })
-        )
+            });
+        },
+        { concurrency: 3 }
     );
 
     const image = new URL('static/lib/logo.png', rootImageUrl).href;
 
     return {
-        title: `${isTab ? (categoryEl ? category : DEFAULT_CATEGORY) : `${$('h1.on').text()}${$('a.right.on').text()}`}${(
+        title: `${isTab ? (categoryEl || tabIndex >= 0 ? category : DEFAULT_CATEGORY) : `${$('h1.on').text()}${$('a.right.on').text()}`}${(
             $('title')
                 .text()
                 .match(/(?:.*_)?([^_]+)_(.*)$/) || []
@@ -157,7 +203,6 @@ export const handler = async (ctx) => {
         description: $('meta[name="description"]').prop('content'),
         link: currentUrl,
         item: items,
-        allowEmpty: true,
         image,
         author: $('div.logo_inner a').prop('title'),
     };
