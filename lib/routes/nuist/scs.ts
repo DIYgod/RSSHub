@@ -1,9 +1,10 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
-import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+
+import got, { parseCampusDate } from './utils';
 
 const baseTitle = 'NUIST CS（南信大计软院）';
 const baseUrl = 'https://scs.nuist.edu.cn';
@@ -42,33 +43,33 @@ async function handler(ctx) {
     const response = await got(link);
     const $ = load(response.data);
 
-    const list = $('.newsList ul')
+    const list = $('ul.news_list')
         .eq(0)
         .find('li')
         .toArray()
-        .map((item): DataItem => {
+        .map((item): DataItem & { link: string } => {
             const $item = $(item);
             return {
-                title: $item.find('a').attr('title')!,
-                link: new URL($item.find('a').attr('href')!, baseUrl).href,
-                pubDate: parseDate($item.find('.newsDate').text()),
+                title: $item.find('.news_title a').attr('title')!,
+                link: new URL($item.find('.news_title a').attr('href')!, baseUrl).href,
+                pubDate: parseCampusDate($item.find('.news_meta').text()),
             };
         });
 
-    const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link!, async () => {
+    const items = await pMap(
+        list,
+        async (item) => ({
+            ...item,
+            ...(await cache.tryGet(item.link + ':content', async () => {
                 const response = await got(item.link);
                 const $ = load(response.data);
-
-                const authorMatch = $('.newsTitleAddDate')
+                const authorMatch = $('.arti_metas')
                     .text()
                     .match(/发布者：(.*)发布时间/);
-                item.author = authorMatch ? authorMatch[1].trim() : undefined;
-                item.description = $('.newsContent').html();
-                return item;
-            })
-        )
+                return { author: authorMatch ? authorMatch[1].trim() : undefined, description: $('.entry').html() };
+            })),
+        }),
+        { concurrency: 3 }
     );
 
     return {

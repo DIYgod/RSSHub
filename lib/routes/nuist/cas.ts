@@ -1,10 +1,10 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
-import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+
+import got, { parseCampusDate } from './utils';
 
 const baseTitle = 'NUIST AS（南信大大气科学学院）';
 const baseUrl = 'https://cas.nuist.edu.cn';
@@ -39,49 +39,45 @@ async function handler(ctx) {
     const list = $('#ctl00_ctl00_body_NewsList')
         .find('tr.gridline')
         .toArray()
-        .map((item): DataItem => {
+        .map((item): DataItem & { link: string } => {
             const $item = $(item);
             return {
                 title: $item.find('.Title').text(),
                 link: new URL($item.find('.Title').attr('href')!, baseUrl).href,
-                pubDate: parseDate(
+                pubDate: parseCampusDate(
                     $item
                         .find('td')
                         .eq(2)
                         .text()
-                        .replaceAll(/[[\]]+/g, ''),
-                    'YYYY.MM.DD'
+                        .replaceAll(/[[\]]+/g, '')
                 ),
             };
         });
 
-    const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link!, async () => {
+    const items = await pMap(
+        list,
+        async (item) => ({
+            ...item,
+            ...(await cache.tryGet(item.link + ':content', async () => {
                 try {
                     const response = await got(item.link);
                     const $ = load(response.data);
-
                     const authorMatch = $('.zzxx')
                         .text()
                         .match(/作者:(.*) 发布时间/);
-                    item.author = authorMatch ? authorMatch[1].trim() : undefined;
-                    item.pubDate = timezone(
-                        parseDate(
-                            $('.zzxx')
-                                .text()
-                                .match(/发布时间:(\d{4}\/\d{2}\/\d{2} \d{2}:\d{2}:\d{2})/)![1]
-                        ),
-                        8
+                    const pubDate = parseCampusDate(
+                        $('.zzxx')
+                            .text()
+                            .match(/发布时间:(\d{4}\/\d{2}\/\d{2} \d{2}:\d{2}:\d{2})/)?.[1]
                     );
-                    item.description = $('#vsb_content').html();
+                    return { author: authorMatch ? authorMatch[1].trim() : undefined, ...(pubDate && { pubDate }), description: $('#vsb_content').html() };
                 } catch {
-                    // intranet
+                    // Intranet articles retain the public list metadata.
+                    return {};
                 }
-
-                return item;
-            })
-        )
+            })),
+        }),
+        { concurrency: 3 }
     );
 
     return {
