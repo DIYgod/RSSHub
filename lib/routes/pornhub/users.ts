@@ -47,7 +47,6 @@ async function handler(ctx): Promise<Data> {
         link,
         image: $('#getAvatar').attr('src'),
         language: $('html').attr('lang') as Language | undefined,
-        allowEmpty: true,
         item: items,
     };
 }
