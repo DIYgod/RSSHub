@@ -15,7 +15,7 @@ export const route: Route = {
     maintainers: ['Levix', 'cscnk52'],
     radar: [
         {
-            source: ['research.google'],
+            source: ['research.google', 'research.google/blog'],
         },
     ],
     handler: async () => {
@@ -26,11 +26,11 @@ export const route: Route = {
             .map((eleItem): DataItem => {
                 const item = $(eleItem);
                 const a = item.find('a');
+                const date = item.find('.glue-card__eyebrow').text();
                 return {
-                    title: a.find('.headline-5').text(),
+                    title: a.find('.headline-6').text(),
                     link: `${baseUrl}${a.attr('href')}`,
-                    pubDate: parseDate(item.find('.glue-label.glue-spacer-1-bottom').text()),
-                    author: 'Google',
+                    pubDate: date ? parseDate(`${date} UTC`) : undefined,
                     category: item
                         .find('.not-glue.caption')
                         .toArray()
@@ -39,14 +39,17 @@ export const route: Route = {
             });
 
         const items = await Promise.all(
-            list.map((item) =>
-                cache.tryGet(item.link!, async () => {
+            list.map(async (item) => {
+                const content = await cache.tryGet(`google:research:content:${item.link}`, async () => {
                     const response = await ofetch(item.link!);
                     const $ = load(response);
-                    item.description = $('.blog-detail-wrapper.js-gt-blog-detail-wrapper').html();
-                    return item;
-                })
-            )
+                    return {
+                        description: $('.blog-detail-wrapper.js-gt-blog-detail-wrapper').html() ?? undefined,
+                        author: $('.basic-hero--blog-detail__description p').eq(1).text() || undefined,
+                    };
+                });
+                return { ...item, ...content };
+            })
         );
 
         return {

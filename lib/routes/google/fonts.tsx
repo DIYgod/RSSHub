@@ -2,9 +2,11 @@ import { renderToString } from 'hono/jsx/dom/server';
 
 import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
 const titleMap = {
     date: 'Newest',
@@ -32,7 +34,7 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    name: 'Google Fonts',
+    name: 'Fonts',
     maintainers: ['Fatpandac'],
     handler,
     description: `| Newest | Trending | Most popular |  Name | Number of styles |
@@ -46,16 +48,19 @@ This route requires API key, therefore it's only available when self-hosting, re
 
 async function handler(ctx) {
     const sort = ctx.req.param('sort') ?? 'date';
-    const limit = ctx.req.param('limit') ?? 25;
+    if (!Object.hasOwn(titleMap, sort)) {
+        throw new InvalidParameterError(`Unknown Google Fonts sort "${sort}". Available sorts: ${Object.keys(titleMap).join(', ')}.`);
+    }
+    const limit = Math.max(25, getRouteLimit(ctx, 25));
 
-    const API_KEY = config.google.fontsApiKey;
-    if (!API_KEY) {
+    const apiKey = config.google.fontsApiKey;
+    if (!apiKey) {
         throw new ConfigNotFoundError('Google Fonts API key is required.');
     }
 
-    const googleFontsAPI = `https://www.googleapis.com/webfonts/v1/webfonts?sort=${sort}&key=${API_KEY}`;
+    const googleFontsApi = `https://www.googleapis.com/webfonts/v1/webfonts?sort=${sort}&key=${apiKey}`;
 
-    const response = await got.get(googleFontsAPI);
+    const response = await got.get(googleFontsApi);
     const data = response.data.items.slice(0, limit);
 
     return {
@@ -63,12 +68,16 @@ async function handler(ctx) {
         link: 'https://fonts.google.com',
         item:
             data &&
-            data.map((item) => ({
-                title: item.family,
-                description: renderDescription(item),
-                link: `https://fonts.google.com/specimen/${item.family.replaceAll(/\s/g, '+')}`,
-                pubDate: parseDate(item.lastModified, 'YYYY-MM-DD'),
-            })),
+            data.map((item: WebFont) => {
+                const updated = item.lastModified ? parseDate(`${item.lastModified}T00:00:00Z`) : undefined;
+                return {
+                    title: item.family,
+                    description: renderDescription(item),
+                    category: item.category ? [item.category] : undefined,
+                    link: `https://fonts.google.com/specimen/${item.family.replaceAll(/\s/g, '+')}`,
+                    updated: updated && !Number.isNaN(updated.getTime()) ? updated : undefined,
+                };
+            }),
     };
 }
 
@@ -84,15 +93,9 @@ interface WebFont {
 const renderDescription = (item: WebFont): string =>
     renderToString(
         <>
-            <text>Family: {item.family}</text>
-            <br />
-            <text>Category: {item.category}</text>
-            <br />
             <text>Subsets: {item.subsets?.join(',')}</text>
             <br />
             <text>Version: {item.version}</text>
-            <br />
-            <text>Last modified: {item.lastModified}</text>
             <br />
             <strong>File:</strong>
             <br />
