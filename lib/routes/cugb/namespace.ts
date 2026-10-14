@@ -2,7 +2,7 @@ import type { Namespace } from '@/types';
 
 export const namespace: Namespace = {
     name: 'China University of Geosciences (Beijing)',
-    url: 'cugb.edu.cn',
+    url: 'www.cugb.edu.cn',
     categories: ['university'],
     description: '',
     lang: 'zh-CN',
