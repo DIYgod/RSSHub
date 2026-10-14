@@ -1,13 +1,16 @@
-import type { Route } from '@/types';
-import got from '@/utils/got';
+import { renderNewProduct } from '@/routes/mi/templates/newproduct';
+import type { Data, DataItem, Route } from '@/types';
+import { ViewType } from '@/types';
+import cache from '@/utils/cache';
+import { parseDate } from '@/utils/parse-date';
 
-import { parseFloorItem, parseModule } from './utils';
+import type { GoodsDetailItem, GoodsListItem } from './types';
+import utils from './utils';
 
 export const route: Route = {
     path: '/latest',
     categories: ['shopping'],
     example: '/xiaomiyoupin/latest',
-    parameters: {},
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -21,21 +24,41 @@ export const route: Route = {
             source: ['xiaomiyoupin.com/'],
         },
     ],
-    name: '每日上新',
-    maintainers: ['xyqfer', 'DIYgod', 'bigfei'],
+    name: '上新',
+    maintainers: ['xyqfer', 'DIYgod', 'bigfei', 'nuomi1'],
     handler,
     url: 'xiaomiyoupin.com/',
+    view: ViewType.Notifications,
 };
 
-async function handler() {
-    const response = await got('https://m.xiaomiyoupin.com/homepage/main/v1005');
-    const floors = parseModule(response.data.data.homepage.floors, 'product_hot');
-    const items = parseFloorItem(floors);
+const getDataItems = (list: GoodsListItem[]): Promise<DataItem[]> =>
+    Promise.all(
+        list.map((listItem) =>
+            cache.tryGet(`xiaomiyoupin:product:dataitem:${listItem.gid}`, async () => {
+                const detailItem = await utils.getNewProductItem(listItem);
+                return getDataItem(listItem, detailItem);
+            })
+        )
+    );
+
+const getDataItem = (listItem: GoodsListItem, detailItem: GoodsDetailItem): DataItem => ({
+    title: listItem.name,
+    description: renderNewProduct(utils.toNewProduct(listItem, detailItem)),
+    link: listItem.jumpUrl,
+    image: listItem.image,
+    pubDate: parseDate(listItem.firstReleaseTime, 'X'),
+    language: 'zh-CN',
+});
+
+async function handler(): Promise<Data> {
+    const list = await utils.getNewProductList();
+    const items = await getDataItems(list);
 
     return {
-        title: '小米有品每日上新',
-        link: 'https://m.xiaomiyoupin.com/w/newproduct?pageid=1605',
-        description: '小米有品每日上新',
+        title: '小米有品上新',
+        link: 'https://www.xiaomiyoupin.com/',
         item: items,
+        image: 'https://cnbj1.fds.api.xiaomi.com/mijia-m/trade_common/yp_logo.png',
+        language: 'zh-CN',
     };
 }
