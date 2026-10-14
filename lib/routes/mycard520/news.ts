@@ -2,6 +2,7 @@ import type { Cheerio, CheerioAPI } from 'cheerio';
 import { load } from 'cheerio';
 import type { Element } from 'domhandler';
 import type { Context } from 'hono';
+import pMap from 'p-map';
 
 import type { Data, DataItem, Language, Route } from '@/types';
 import { ViewType } from '@/types';
@@ -11,7 +12,8 @@ import { parseDate } from '@/utils/parse-date';
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { category = 'cardgame' } = ctx.req.param();
-    const limit = Number(ctx.req.query('limit') ?? '18');
+    const requestedLimit = Number(ctx.req.query('limit'));
+    const limit = Number.isSafeInteger(requestedLimit) && requestedLimit > 0 ? requestedLimit : 18;
 
     const baseUrl = 'https://app.mycard520.com.tw';
     const targetUrl: string = new URL(`category/${category.endsWith('/') ? category : `${category}/`}`, baseUrl).href;
@@ -55,8 +57,9 @@ export const handler = async (ctx: Context): Promise<Data> => {
         });
 
     items = (
-        await Promise.all(
-            items.map((item) => {
+        await pMap(
+            items,
+            (item) => {
                 if (!item.link) {
                     return item;
                 }
@@ -91,7 +94,8 @@ export const handler = async (ctx: Context): Promise<Data> => {
                         ...processedItem,
                     };
                 });
-            })
+            },
+            { concurrency: 6 }
         )
     ).filter((_): _ is DataItem => true);
 
@@ -100,7 +104,6 @@ export const handler = async (ctx: Context): Promise<Data> => {
         description: $('meta[name="keywords"]').attr('content'),
         link: targetUrl,
         item: items,
-        allowEmpty: true,
         image: $('div.logo img').attr('src'),
         author: $('title').text().split(/-/).pop()?.trim(),
         language,
@@ -162,11 +165,7 @@ export const route: Route = {
     radar: [
         {
             source: ['app.mycard520.com.tw/category/:category'],
-            target: (params) => {
-                const category: string = params.category;
-
-                return `/mycard520${category ? `/${category}` : ''}`;
-            },
+            target: '/category/:category',
         },
         {
             title: '最新遊戲',
