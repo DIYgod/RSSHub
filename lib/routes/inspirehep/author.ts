@@ -1,6 +1,7 @@
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
+import { getRouteLimit } from '@/utils/route-limit';
 
 import type { AuthorResponse, LiteratureResponse } from './types';
 import { baseUrl, parseLiterature } from './utils';
@@ -31,7 +32,7 @@ export const getAuthorById = (id: string) =>
 
 async function handler(ctx) {
     const id = ctx.req.param('id');
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 25;
+    const limit = getRouteLimit(ctx, 25);
 
     const authorInfo = await getAuthorById(id);
     const response = await ofetch<LiteratureResponse>(`${baseUrl}/api/literature`, {
