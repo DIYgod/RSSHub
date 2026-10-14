@@ -7,6 +7,7 @@ import type { Data, DataItem, Language, Route } from '@/types';
 import { ViewType } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
 const renderDescription = (description, images) =>
     renderToString(
@@ -25,7 +26,7 @@ const renderDescription = (description, images) =>
     );
 
 export const handler = async (ctx: Context): Promise<Data> => {
-    const limit = Number(ctx.req.query('limit') ?? '100');
+    const limit = getRouteLimit(ctx, 100);
 
     const baseUrl = 'https://tf.121.com.cn';
     const imgBaseUrl = 'https://wx.121.com.cn';
@@ -84,7 +85,6 @@ export const handler = async (ctx: Context): Promise<Data> => {
         description: title,
         link: targetUrl,
         item: items,
-        allowEmpty: true,
         image: logoSrc ? new URL(logoSrc, baseUrl).href : undefined,
         author: $('div#webnameDiv').text(),
         language,
