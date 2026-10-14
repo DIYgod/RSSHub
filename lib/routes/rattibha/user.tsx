@@ -1,8 +1,7 @@
-import { raw } from 'hono/html';
-import { renderToString } from 'hono/jsx/dom/server';
+import { load } from 'cheerio';
+import pMap from 'p-map';
 
-import { config } from '@/config';
-import type { Route } from '@/types';
+import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -20,11 +19,7 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: [
-        {
-            source: ['rattibha.com/:user'],
-        },
-    ],
+    radar: [{ source: ['rattibha.com/:user'] }],
     name: 'User Threads',
     maintainers: ['yshalsager'],
     handler,
@@ -32,59 +27,58 @@ export const route: Route = {
 
 async function handler(ctx) {
     const baseUrl = 'https://rattibha.com';
-    const { user: twitterUser } = ctx.req.param();
-
-    const userData = await cache.tryGet(`rattibha:user:${twitterUser}`, async () => {
-        const data = await ofetch(`${baseUrl}/user`, {
-            query: { id: twitterUser },
-        });
-        return data.user;
-    });
-
-    const userThreads = await cache.tryGet(
-        `rattibha:userThreads:${twitterUser}`,
-        () =>
-            ofetch(`${baseUrl}/u_threads`, {
-                query: {
-                    id: userData.account_user_id,
-                    page: 0,
-                    post_type: 0,
-                },
-            }),
-        config.cache.routeExpire,
-        false
+    const user = ctx.req.param('user');
+    const response: { html: string } = await ofetch(`${baseUrl}/api/author-threads?page=1&username=${encodeURIComponent(user)}&sort=recent`);
+    const $ = load(response.html);
+    const list: Array<DataItem & { link: string; title: string }> = $('a[href^="/thread/"]')
+        .toArray()
+        .map((element) => ({
+            title: $(element).find('.tc-text').text(),
+            author: $(element).find('.tc-name').text(),
+            link: new URL($(element).attr('href') ?? '', baseUrl).href,
+        }))
+        .filter((item, index, items) => items.findIndex((other) => other.link === item.link) === index);
+    const items = await pMap(
+        list,
+        async (item) => {
+            const article = await cache.tryGet(`rattibha:thread:v2:${item.link}`, async () => {
+                const pageSource1 = await ofetch(item.link);
+                const detail = load(pageSource1);
+                const lang = detail('html').attr('lang');
+                const language: Language | undefined = ['en', 'fr', 'es'].includes(lang ?? '') ? (lang as 'en' | 'fr' | 'es') : undefined;
+                if (!detail('.tweet-content').length) {
+                    throw new Error(`Rattibha did not return a thread body for ${item.link}`);
+                }
+                return {
+                    listingTitle: item.title,
+                    title: detail('.tweet-text').first().text() || item.title,
+                    description: detail('.tweet-content')
+                        .toArray()
+                        .map((element) => detail(element).prop('outerHTML'))
+                        .join(''),
+                    date: detail('meta[property="article:published_time"]').attr('content'),
+                    modified: detail('meta[property="article:modified_time"]').attr('content'),
+                    language,
+                    image: detail('meta[property="og:image"]').attr('content'),
+                };
+            });
+            return {
+                ...item,
+                title: item.title === article.listingTitle ? article.title : item.title,
+                description: article.description,
+                pubDate: article.date ? parseDate(article.date) : undefined,
+                updated: article.modified ? parseDate(article.modified) : undefined,
+                image: article.image,
+                language: article.language,
+            };
+        },
+        { concurrency: 3, stopOnError: false }
     );
-
-    // extract the relevant data from the API response
-    const items = userThreads.map((item) => ({
-        title: item.thread.t.info.text.split('\n', 1)[0],
-        link: `${baseUrl}/thread/${item.thread_id}`,
-        pubDate: parseDate(item.thread.created_at),
-        updated: parseDate(item.thread.updated_at),
-        author: userData.name,
-        category: item.thread.categories.map((category) => category.tag.name),
-        description: renderToString(
-            <>
-                {item.thread.m ? (
-                    <>
-                        {item.thread.m.type === 1 ? (
-                            <video controls preload="metadata" poster={item.thread.m.picture_url}>
-                                <source src={item.thread.m.video_url} type="video/mp4" />
-                            </video>
-                        ) : item.thread.m.type === 2 ? (
-                            <img src={item.thread.m.picture_url} />
-                        ) : null}
-                        <br />
-                    </>
-                ) : null}
-                {raw(item.thread.t.info.text.replaceAll('\n', '<br>'))}
-            </>
-        ),
-    }));
-
+    const language = items[0]?.language;
     return {
-        title: `سلاسل تغريدات ${twitterUser}`,
-        link: `${baseUrl}/${twitterUser}`,
+        title: `سلاسل تغريدات ${user}`,
+        link: `${baseUrl}/${encodeURIComponent(user)}`,
         item: items,
+        language: items.every((item) => item.language === language) ? language : undefined,
     };
 }
