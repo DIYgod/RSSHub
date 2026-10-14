@@ -2,7 +2,7 @@ import type { Namespace } from '@/types';
 
 export const namespace: Namespace = {
     name: '笔趣阁',
-    url: 'xbiquwx.la',
+    url: 'www.b520.cc',
     description: `::: tip
 此处的 **笔趣阁** 指网络上使用和 **笔趣阁** 样式相似模板的小说阅读网站，包括但不限于下方列举的网址。
 :::
@@ -13,7 +13,7 @@ export const namespace: Namespace = {
 | <http://www.biqu5200.net>  | 笔趣阁     |
 | <https://www.xbiquge.so>   | 笔趣阁     |
 | <https://www.biqugeu.net>  | 顶点小说网 |
-| <http://www.b520.cc>       | 笔趣阁     |
+| <https://www.b520.cc>      | 笔趣阁     |
 | <https://www.ahfgb.com>    | 笔趣鸽     |
 | <https://www.ibiquge.la>   | 香书小说   |
 | <https://www.biquge.tv>    | 笔趣阁     |
