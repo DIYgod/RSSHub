@@ -42,24 +42,26 @@ async function handler() {
         .map((item): DataItem => {
             const $item = $(item);
             const a = $item.find('a.list_text_title');
+            const sourceDate = $item.find('.time').attr('title');
+            const date = sourceDate ? parseDate(sourceDate, 'YYYY-MM-DD HH:mm', true) : undefined;
             return {
                 title: a.text(),
                 link: `${baseUrl}${a.attr('href')}`,
                 author: $item.find('.name').text(),
-                pubDate: timezone(parseDate($item.find('.time').attr('title')!), 9),
+                pubDate: date && Number.isFinite(date.getTime()) ? timezone(date, 9) : undefined,
             };
         });
 
     const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link!, async () => {
+        list.map(async (item) => {
+            const description = await cache.tryGet(`kimlaw:body:${item.link}`, async () => {
                 const { data: response } = await got(item.link);
                 const $ = load(response);
 
-                item.description = $('.board_txt_area').html();
-                return item;
-            })
-        )
+                return $('.board_txt_area').html();
+            });
+            return { ...item, description };
+        })
     );
 
     return {
