@@ -1,17 +1,28 @@
+import { load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
 
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
+
+import { getCoomerMediaUrl } from '../coomer/utils';
 
 const periods = { '1d': 'day', '1w': 'week', '1m': 'month' };
 
 export const periodOptions = Object.keys(periods).map((value) => ({ value, label: value }));
 
-function renderFiles(post, assetsUrl: string) {
-    const files = [post.file, ...(post.attachments ?? [])].filter((file) => file?.path);
+function renderFiles(post, assetsUrl: string, rootUrl: string) {
+    const filePaths = new Set<string>();
+    const files = [post.file, ...(post.attachments ?? [])].filter((file) => {
+        if (!file?.path || filePaths.has(file.path)) {
+            return false;
+        }
+        filePaths.add(file.path);
+        return true;
+    });
     return files.map((file) => {
-        const link = new URL(file.path, assetsUrl).href;
+        const link = assetsUrl === 'https://img.coomer.st' ? getCoomerMediaUrl(file.path, rootUrl) : new URL(file.path, assetsUrl).href;
         const extension = file.path.split('.').pop().toLowerCase();
         if (['png', 'jpg', 'jpeg', 'gif', 'webp'].includes(extension)) {
             return <img src={link} alt="" />;
@@ -59,8 +70,8 @@ export function createPublicHandler(rootUrl: string, assetsUrl: string, name: st
         return {
             title: `${name} - ${mode === 'popular' ? `Popular posts (${period})` : mode === 'search' ? `Search: ${query}` : `${source}/${id} direct messages`}`,
             link,
-            item: posts.slice(0, Number(ctx.req.query('limit')) || 25).map((post) => {
-                const content = post.content ?? post.substring ?? '';
+            item: posts.slice(0, getRouteLimit(ctx, 25)).map((post) => {
+                const content = load(post.content ?? post.substring ?? '', null, false).html() ?? '';
                 const postLink = mode === 'dms' ? `${rootUrl}/${post.service}/user/${post.user}/dms#${post.hash}` : `${rootUrl}/${post.service}/user/${post.user}/post/${post.id}`;
                 return {
                     title: post.title || (mode === 'dms' ? content : 'Untitled Post'),
@@ -71,7 +82,7 @@ export function createPublicHandler(rootUrl: string, assetsUrl: string, name: st
                     description: renderToString(
                         <>
                             <div dangerouslySetInnerHTML={{ __html: content }} />
-                            {renderFiles(post, assetsUrl)}
+                            {renderFiles(post, assetsUrl, rootUrl)}
                         </>
                     ),
                 };
