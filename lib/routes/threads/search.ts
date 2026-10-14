@@ -3,9 +3,8 @@ import { load } from 'cheerio';
 import type { Route } from '@/types';
 import { ViewType } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 
-import { buildContent, extractThreadItems, parseRouteOptions, threadUrl } from './utils';
+import { buildContent, extractThreadItems, getPubDate, parseRouteOptions, threadUrl } from './utils';
 
 export const route: Route = {
     path: '/search/:keyword/:routeParams?',
@@ -51,7 +50,7 @@ async function handler(ctx) {
             author: item.post.user?.username,
             title,
             description,
-            pubDate: parseDate(item.post.taken_at, 'X'),
+            pubDate: getPubDate(item.post.taken_at),
             link: threadUrl(item.post.code),
         };
     });
