@@ -4,8 +4,9 @@ import type { Route } from '@/types';
 import { getSubPath } from '@/utils/common-utils';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
-import { ProcessItem, rootUrl } from './utils';
+import { getInitialState, ProcessItem, rootUrl } from './utils';
 
 const shortcuts = {
     '/information': '/information/web_news',
@@ -14,6 +15,21 @@ const shortcuts = {
     '/information/life': '/information/happy_life',
     '/information/estate': '/information/real_estate',
     '/information/workplace': '/information/web_zhichang',
+};
+
+const findItemList = (state): any[] | undefined => {
+    if (!state || typeof state !== 'object') {
+        return;
+    }
+    if (Array.isArray(state.itemList)) {
+        return state.itemList;
+    }
+    for (const value of Object.values(state)) {
+        const itemList = findItemList(value);
+        if (itemList) {
+            return itemList;
+        }
+    }
 };
 
 export const route: Route = {
@@ -29,14 +45,14 @@ export const route: Route = {
     maintainers: ['nczitzk', 'fashioncj'],
     description: `| 最新资讯频道 | 快讯        | 推荐资讯  | 生活 | 房产   | 职场      | 搜索文章                | 搜索快讯                |
 | ------------ | ----------- | --------- | ---- | ------ | --------- | ----------------------- | ----------------------- |
-| news         | newsflashes | recommend | life | estate | workplace | search/articles/ 关键词 | search/articles/ 关键词 |`,
+| news         | newsflashes | recommend | life | estate | workplace | search/articles/ 关键词 | search/newsflashes/ 关键词 |`,
     handler,
 };
 
 async function handler(ctx) {
     const path = getSubPath(ctx)
         .replace(/^\/news(?!flashes)/, '/information')
-        .replace(/\/search\/article/, '/search/articles');
+        .replace(/^\/search\/article(?=\/|$)/, '/search/articles');
 
     const currentUrl = `${rootUrl}${Object.hasOwn(shortcuts, path) ? shortcuts[path] : path}`;
 
@@ -47,10 +63,13 @@ async function handler(ctx) {
 
     const $ = load(response.data);
 
-    const data = JSON.parse(response.data.match(/"itemList":(\[.*?\])/)[1]);
+    const data = findItemList(getInitialState(response.data));
+    if (!data) {
+        throw new Error('36kr page does not contain an article list. Please check the source page.');
+    }
 
     let items = data
-        .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 30)
+        .slice(0, getRouteLimit(ctx, 30))
         .filter((item) => item.itemType !== 0)
         .map((item) => {
             item = item.templateMaterial ?? item;
@@ -58,7 +77,7 @@ async function handler(ctx) {
                 title: item.widgetTitle.replaceAll(/<\/?em>/g, ''),
                 author: item.author,
                 pubDate: parseDate(item.publishTime),
-                link: `${rootUrl}/${path === '/newsflashes' ? 'newsflashes' : 'p'}/${item.itemId}`,
+                link: `${rootUrl}/${path === '/newsflashes' || path.startsWith('/search/newsflashes/') ? 'newsflashes' : 'p'}/${item.itemId}`,
                 description: item.widgetContent ?? item.content,
             };
         });
