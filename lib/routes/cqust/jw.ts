@@ -1,6 +1,7 @@
 import { load } from 'cheerio';
 import type { Context } from 'hono';
 
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -19,14 +20,17 @@ export const route: Route = {
     handler,
 };
 
-const host = 'http://jw.cqust.edu.cn';
+const host = 'https://jw.cqust.edu.cn';
 const map = {
-    notify: '/tzgg/tz.htm',
-    news: '/xwdt/xxyw.htm',
+    notify: '/tzgg.htm',
+    news: '/xwdt.htm',
 };
 
 async function handler(ctx: Context) {
     const { type = 'notify' } = ctx.req.param();
+    if (!Object.hasOwn(map, type)) {
+        throw new InvalidParameterError('Invalid type. Use notify or news.');
+    }
     const link = host + map[type];
     const response = await ofetch(link);
     const $ = load(response);
@@ -35,15 +39,14 @@ async function handler(ctx: Context) {
         title: '重科教务处',
         link,
         description: $('meta[name="description"]').attr('content') || '重科教务处',
-        item: $('li[id^="lineu"]')
+        item: $('.text-list li')
             .slice(0, 10)
             .toArray()
             .map((item) => {
                 const $item = $(item);
                 return {
                     title: $item.find('a').text(),
-                    description: $item.find('p').text() + ' [...]',
-                    pubDate: timezone(parseDate($item.find('.shijian').text().replace('》', '')), 8),
+                    pubDate: timezone(parseDate($item.find('span').text(), 'YYYY-MM-DD'), 8),
                     link: new URL($item.find('a').attr('href')!, host).href,
                 };
             }),
