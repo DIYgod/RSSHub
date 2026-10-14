@@ -1,10 +1,12 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
 export const route: Route = {
     path: '/paper/:id?',
@@ -29,7 +31,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const id = ctx.req.param('id') ?? 'zjrb';
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 100;
+    const limit = getRouteLimit(ctx, 100);
 
     const allowedId = ['zjrb', 'qjwb', 'msb', 'zjlnb', 'zjfzb', 'jnyb'];
     if (!allowedId.includes(id)) {
@@ -58,56 +60,56 @@ async function handler(ctx) {
 
     const $ = load(response.data);
 
-    let items: any[] = $(query)
+    const links: string[] = $(query)
         .toArray()
         .map((a) => `${currentUrl}/${$(a).attr('href')}`);
 
-    await Promise.all(
+    const sections = await pMap(
         $('#pageLink')
             .slice(1)
             .toArray()
-            .map((p) => `${currentUrl}/${$(p).attr('href')}`)
-            .map(async (p) => {
-                const pageResponse = await got({
+            .map((p) => `${currentUrl}/${$(p).attr('href')}`),
+        async (p) => {
+            const pageResponse = await got({
+                method: 'get',
+                url: p,
+            });
+
+            const page = load(pageResponse.data);
+
+            return page(query)
+                .toArray()
+                .map((a) => `${currentUrl}/${page(a).attr('href')}`);
+        },
+        { concurrency: 3 }
+    );
+    links.push(...sections.flat());
+
+    const items = await pMap(
+        links.filter((a) => (id === 'jnyb' ? a.endsWith('?div=1') : true)).slice(0, limit),
+        (link) =>
+            cache.tryGet(link, async () => {
+                const detailResponse = await got({
                     method: 'get',
-                    url: p,
+                    url: link,
                 });
 
-                const page = load(pageResponse.data);
+                const content = load(detailResponse.data);
 
-                items.push(
-                    ...page(query)
-                        .toArray()
-                        .map((a) => `${currentUrl}/${page(a).attr('href')}`)
-                );
-            })
-    );
+                const title = content('.main-article-title').text();
+                const author = content('.main-article-author').text().trim() || undefined;
 
-    items = await Promise.all(
-        items
-            .filter((a) => (id === 'jnyb' ? a.endsWith('?div=1') : true))
-            .slice(0, limit)
-            .map((link) =>
-                cache.tryGet(link, async () => {
-                    const detailResponse = await got({
-                        method: 'get',
-                        url: link,
-                    });
+                content('.main-article-alltitle').remove();
 
-                    const content = load(detailResponse.data);
-
-                    const title = content('.main-article-title').text();
-
-                    content('.main-article-alltitle').remove();
-
-                    return {
-                        title,
-                        pubDate,
-                        link: link.split('?', 1)[0],
-                        description: content('.main-article-content').html(),
-                    };
-                })
-            )
+                return {
+                    title,
+                    author,
+                    pubDate,
+                    link: link.split('?', 1)[0],
+                    description: content('.main-article-content').html(),
+                };
+            }),
+        { concurrency: 3 }
     );
 
     return {
