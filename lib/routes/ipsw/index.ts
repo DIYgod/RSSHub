@@ -1,8 +1,11 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
+import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 const host = 'https://ipsw.me/';
 
@@ -19,10 +22,20 @@ export const route: Route = {
     handler,
 };
 
-function replaceurl(e) {
-    e = e.replace("';", '');
-    e = e.replace("window.location = '/", () => host);
-    return e;
+function getFirmwareUrl(onclick: string | undefined) {
+    const path = onclick?.match(/window\.location(?:\.href)?\s*=\s*(['"])(.*?)\1/)?.[2];
+    if (!path) {
+        throw new Error('IPSW.me did not provide a firmware download link.');
+    }
+    return new URL(path, host).href;
+}
+
+function parseReleaseDate(text: string) {
+    if (!text) {
+        return;
+    }
+    const date = parseDate(text.replaceAll(/(\d+)(?:st|nd|rd|th)\b/g, '$1'), ['MMMM D, YYYY', 'D MMM YYYY', 'D MMMM YYYY']);
+    return Number.isNaN(date.getTime()) ? undefined : timezone(date, 0);
 }
 
 async function handler(ctx) {
@@ -53,22 +66,27 @@ async function handler(ctx) {
               .map((item) => {
                   const info = {
                       title: $(item).find('td').eq(1).text(),
-                      link: replaceurl($(item).attr('onclick')),
+                      link: getFirmwareUrl($(item).attr('onclick')),
                   };
                   return info;
               })
         : $('.products a')
               .toArray()
               .map((item) => {
+                  const link = $(item).attr('href');
+                  if (!link) {
+                      throw new Error('IPSW.me did not provide a product link.');
+                  }
                   const info = {
-                      title: $(item).find('img').attr('alt'),
-                      link: $(item).attr('href'),
+                      title: $(item).find('img').attr('alt') ?? $(item).text(),
+                      link,
                   };
                   return info;
               });
 
-    const out = await Promise.all(
-        list.map((info) => {
+    const out = await pMap(
+        list,
+        (info) => {
             const title = info.title;
             const itemUrl = new URL(info.link, host).href;
 
@@ -79,20 +97,17 @@ async function handler(ctx) {
                 });
                 const $ = load(response.data);
                 const description = $('div.selector__wizard').html();
-                let removeString;
-                removeString = pname.includes(',') ? $('div.table-responsive table tr').first().find('td').text().trim() : $('tr.firmware').first().find('td').eq(2).text();
-                // 处理发布日期,以表格第一行的日期为最新的发布日期
-                removeString = removeString.replace('th', '').replace('nd', '').replace('st', '').replace('rd', '');
-                const rdate = removeString.replaceAll(' ', ',');
+                const releaseDate = pname.includes(',') ? $('div.table-responsive table tr').first().find('td').text().trim() : $('tr.firmware').first().find('td').eq(2).text();
                 return {
                     title,
                     link: itemUrl,
                     description,
-                    pubDate: new Date(rdate).toLocaleDateString(),
+                    pubDate: parseReleaseDate(releaseDate),
                     guid: title,
                 };
             });
-        })
+        },
+        { concurrency: 3 }
     );
     return {
         title: `${pname} - ${ptype} Released`,
