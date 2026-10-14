@@ -5,6 +5,7 @@ import ConfigNotFoundError from '@/errors/types/config-not-found';
 import type { DataItem, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 // type id => display name
 type Mapping = Record<string, string>;
@@ -50,19 +51,20 @@ const handler: Route['handler'] = async (ctx) => {
 
     const item = $('tbody.tsdm_normalthread')
         .toArray()
+        .filter((item) => $(item).find('a.xst').attr('href'))
         .map<DataItem>((item) => {
-            const $ = load(item);
+            const $item = $(item);
 
-            const title = $('a.xst').text();
-            const price = $('span.xw1').last().text();
-            const link = $('a.xst').attr('href');
-            const date = $('td.by em').first().text().trim();
+            const title = $item.find('a.xst').text();
+            const price = $item.find('span.xw1').last().text();
+            const link = new URL($item.find('a.xst').attr('href')!, 'https://www.tsdm39.com').href;
+            const date = $item.find('td.by em').first().text().trim();
 
             return {
                 title,
                 description: `价格：${price}`,
                 link,
-                pubDate: parseDate(date),
+                pubDate: date ? timezone(parseDate(date), 8) : undefined,
             };
         });
 
