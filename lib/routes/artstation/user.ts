@@ -7,6 +7,8 @@ import { parseDate } from '@/utils/parse-date';
 
 import { renderDescription } from './templates/description';
 
+const resolveImageUrl = (url: string) => url.replace(/\/\d{14}\/small_square\//, '/large/');
+
 export const route: Route = {
     path: '/:handle',
     categories: ['picture'],
@@ -25,7 +27,7 @@ export const route: Route = {
             source: ['www.artstation.com/:handle'],
         },
     ],
-    name: 'Artist Profolio',
+    name: 'Artist Portfolio',
     maintainers: ['TonyRL'],
     handler,
 };
@@ -64,9 +66,6 @@ async function handler(ctx) {
             page: 1,
         },
     });
-
-    const resolveImageUrl = (url) => url.replace(/\/\d{14}\/small_square\//, '/large/');
-
     const list = projects.data.map((item) => ({
         title: item.title,
         description: renderDescription({
@@ -98,14 +97,9 @@ async function handler(ctx) {
 
                     item.description = renderDescription({
                         description: data.description,
+                        projectUrl: item.link,
                         assets: data.assets,
                     });
-
-                    for (const a of data.assets) {
-                        if (a.asset_type !== 'video' && a.asset_type !== 'image' && a.asset_type !== 'video_clip' && a.asset_type !== 'cover') {
-                            throw new Error(`Unhandle asset type: ${a.asset_type}`); // model3d, marmoset, pano
-                        }
-                    }
                 }
 
                 return item;
