@@ -88,7 +88,7 @@ const getTribeDetail = (id) =>
 
 const getTribeSets = (id, limit) =>
     cache.tryGet(
-        `500px:tribeSets:${id}`,
+        `500px:tribeSets:${id}:${limit}`,
         async () => {
             const data = await ofetch(`${baseUrl}/community/tribe/getTribeSetsV2`, {
                 headers,
