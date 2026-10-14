@@ -1,6 +1,8 @@
 import { load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
+import pMap from 'p-map';
 
+import type { DataItem } from '@/types';
 import got from '@/utils/got';
 import md5 from '@/utils/md5';
 
@@ -8,9 +10,10 @@ const rootUrl = 'https://www.iyingdi.com';
 const infoUrL = 'https://api.iyingdi.com/web/post/info';
 
 const ProcessFeed = async (cache, articleList) => {
-    const items = await Promise.all(
-        articleList.map((item) =>
-            cache.tryGet(item.link, async () => {
+    const items = await pMap(
+        articleList,
+        async (item: DataItem & { link: string; postId: number }) => {
+            const detail = await cache.tryGet(item.link, async () => {
                 const infoForm = {
                     post_id: item.postId,
                     timestamp: '',
@@ -27,10 +30,11 @@ const ProcessFeed = async (cache, articleList) => {
                     },
                     form: ProcessForm(infoForm),
                 });
-                item.description = cleanHtml(JSON.parse(body).post.content);
-                return item;
-            })
-        )
+                return { description: cleanHtml(JSON.parse(body).post.content) };
+            });
+            return { ...item, ...detail };
+        },
+        { concurrency: 3 }
     );
 
     return items;
@@ -92,14 +96,14 @@ const cleanHtml = (htmlString) => {
         );
     });
 
-    // 用户头像
+    // Remove author avatar cards.
     $('.yingdi-card.user').each((i, e) => {
         $(e).prev('p').remove();
         $(e).remove();
     });
-    // 套牌代码复制
+    // Remove deck copy controls.
     $('.action-button').remove();
-    // 投票
+    // Remove voting controls.
     $('.yingdi-ballot').remove();
     $('hr').remove();
     return $.html();
