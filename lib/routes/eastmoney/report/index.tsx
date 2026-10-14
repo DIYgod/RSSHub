@@ -1,8 +1,10 @@
 import { load } from 'cheerio';
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
+import pMap from 'p-map';
 
-import type { Route } from '@/types';
+import InvalidParameterError from '@/errors/types/invalid-parameter';
+import type { DataItem, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
@@ -59,6 +61,9 @@ async function handler(ctx) {
         strategyreport: '策略报告',
         stock: '个股研报',
     };
+    if (!Object.hasOwn(reportType, category)) {
+        throw new InvalidParameterError(`Invalid report category: ${category}. Use strategyreport, macresearch, brokerreport, industry, or stock.`);
+    }
     const linkType = {
         brokerreport: 'zw_brokerreport',
         industry: 'zw_industry',
@@ -76,7 +81,7 @@ async function handler(ctx) {
             .match(/var initdata(.=?)(.*?);/)![2]
     );
 
-    const list = initData.data.map((item) => {
+    const list: Array<DataItem & { pubDate: ReturnType<typeof parseDateInTimezone>; originItem?: (typeof initData.data)[number] }> = initData.data.map((item) => {
         const stockName = category === 'stock' ? `[${item.stockName}]` : '';
         return {
             title: `[${item.orgSName}]${stockName}${item.title}`,
@@ -86,30 +91,34 @@ async function handler(ctx) {
             originItem: item, // temp use
         };
     });
-
-    const items = await Promise.all(
-        list.map(async (item) => {
+    const items = await pMap(
+        list,
+        async (item) => {
             const tempOriginItem = item.originItem;
             delete item.originItem; // temp use
 
-            const cached = await cache.tryGet(item.link, async () => {
+            const cached = await cache.tryGet(`eastmoney:report:article:${item.link}`, async () => {
                 try {
-                    const { data: response } = await got(item.link);
+                    const { data: response } = await got(item.link!);
                     const $ = load(response);
+                    const pdfLink = $('.pdf-link').attr('href');
+                    const enclosureUrl = pdfLink ? new URL(pdfLink, item.link).href : undefined;
+                    if (enclosureUrl) {
+                        item.enclosure_url = enclosureUrl;
+                        item.enclosure_type = 'application/pdf';
+                    }
 
                     if (category === 'stock') {
-                        const { title, stockName, stockCode, emRatingName, ratingChange, indvInduName } = tempOriginItem;
+                        const { stockName, stockCode, emRatingName, ratingChange, indvInduName } = tempOriginItem;
                         const ratingChangeStr = getRatingChangeStr(ratingChange);
                         const currentYear = new Date().getFullYear();
                         const nextYear = currentYear + 1;
-                        const description = $('.newsContent').html();
-                        const enclosureUrl = $('#ContentBody .rightlab').attr('href');
+                        const description = $('.ctx-content').html();
                         const predictThisYearEps = getEpsOrPeStr(tempOriginItem.predictThisYearEps, 3);
                         const predictThisYearPe = getEpsOrPeStr(tempOriginItem.predictThisYearPe, 2);
                         const predictNextYearEps = getEpsOrPeStr(tempOriginItem.predictNextYearEps, 3);
                         const predictNextYearPe = getEpsOrPeStr(tempOriginItem.predictNextYearPe, 2);
 
-                        item.enclosure_url = enclosureUrl;
                         item.description = renderToString(
                             <>
                                 <table>
@@ -117,7 +126,6 @@ async function handler(ctx) {
                                         <tr>
                                             <th rowspan={2}>股票代码</th>
                                             <th rowspan={2}>股票简称</th>
-                                            <th rowspan={2}>报告名称</th>
                                             <th rowspan={2}>东财评级</th>
                                             <th rowspan={2}>评级变动</th>
                                             <th colspan={2}>{currentYear}盈利预测</th>
@@ -133,9 +141,6 @@ async function handler(ctx) {
                                         <tr>
                                             <td>{stockCode}</td>
                                             <td>{stockName}</td>
-                                            <td>
-                                                <a href={enclosureUrl}>{title}</a>
-                                            </td>
                                             <td>{emRatingName}</td>
                                             <td>{ratingChangeStr}</td>
                                             <td>{predictThisYearEps}</td>
@@ -150,7 +155,6 @@ async function handler(ctx) {
                             </>
                         );
                     } else {
-                        item.link = $('.pdf-link').attr('href');
                         item.description = $('.ctx-content').html();
                     }
                     return item;
@@ -158,8 +162,9 @@ async function handler(ctx) {
                     return item;
                 }
             });
-            return { ...cached, pubDate: item.pubDate };
-        })
+            return { ...cached, link: item.link, pubDate: item.pubDate };
+        },
+        { concurrency: 3 }
     );
 
     return {

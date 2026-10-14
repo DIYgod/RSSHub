@@ -1,7 +1,6 @@
 import type { Route } from '@/types';
 import { ViewType } from '@/types';
 import got from '@/utils/got';
-import md5 from '@/utils/md5';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
@@ -47,19 +46,15 @@ export async function handler(ctx) {
     const items = arr.map((item) => {
         const linkUrl = `https://guba.eastmoney.com/news,${item.reply_guba.stockbar_code},${item.source_post_id}.html#allReplyList`;
         const descriptionContent = `
-        <p>${item.source_post_title}</p>
-        <hr/>
-        <br/>
         <blockquote cite="${linkUrl}">
           <p>${item.reply_text}</p>
         </blockquote>
-        <p style="text-align:right;">—— 评论者：<cite>${item.reply_user.user_nickname}</cite></p>
         `;
 
-        const guid: string = 'guid-' + md5(item.reply_text) + `-${item.source_post_id}`;
+        const guid = `eastmoney:reply:${item.reply_id}`;
 
         return {
-            title: item.post_title || `${nickname} 发布了评论: ${descriptionContent}`,
+            title: item.post_title || item.source_post_title || `${nickname} 发布了评论`,
             description: descriptionContent,
             pubDate: timezone(parseDate(item.reply_publish_time), 8),
             link: linkUrl,
