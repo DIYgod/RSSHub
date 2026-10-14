@@ -8,7 +8,11 @@ export const route: Route = {
     path: ['/:language/:domain?', '/scripts/sort/:sort/:language?'],
     categories: ['program-update'],
     example: '/greasyfork/en/google.com',
-    parameters: { language: "language, located on the top right corner of Greasy Fork's search page, set to `all` for including all languages", domain: "the script's target domain" },
+    parameters: {
+        language: "language, located on the top right corner of Greasy Fork's search page, set to `all` for including all languages",
+        domain: "the script's target domain",
+        sort: 'Sorting mode from the table below; defaults to updated',
+    },
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -60,12 +64,14 @@ async function handler(ctx) {
         item: list?.toArray().map((item) => {
             const $item = $(item);
             const h2 = $item.find('h2');
+            const created = $item.find('.script-list-created-date relative-time').attr('datetime');
+            const updated = $item.find('.script-list-updated-date relative-time').attr('datetime');
             return {
                 title: h2.find('a').text(),
                 description: h2.find('.description').text(),
                 link: new URL(h2.find('a').attr('href')!, 'https://greasyfork.org').href,
-                pubDate: parseDate($item.find('.script-list-created-date relative-time').attr('datetime')!),
-                updated: parseDate($item.find('.script-list-updated-date relative-time').attr('datetime')!),
+                pubDate: created ? parseDate(created) : undefined,
+                updated: updated ? parseDate(updated) : undefined,
                 author: $item
                     .find('.script-list-author a')
                     .toArray()
