@@ -1,5 +1,6 @@
 import { load } from 'cheerio';
 
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -32,6 +33,9 @@ async function handler(ctx) {
         tzgg: ['https://scit.nju.edu.cn/10916/list.htm', '通知公告'],
         kydt: ['https://scit.nju.edu.cn/11003/list.htm', '科研动态'],
     };
+    if (!Object.hasOwn(type_dict, type)) {
+        throw new InvalidParameterError('Unsupported type. Use tzgg or kydt.');
+    }
     const response = await got({
         method: 'get',
         url: type_dict[type][0],
