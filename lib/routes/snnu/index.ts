@@ -1,9 +1,11 @@
 import { load } from 'cheerio';
+import { FetchError } from 'ofetch';
+import pMap from 'p-map';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
 
 export const route: Route = {
     path: '/',
@@ -33,41 +35,37 @@ export const route: Route = {
         const $ = load(response);
         const list = $('.ul-txtq3 li').slice(0, 10).toArray();
 
-        const items = await Promise.all(
-            list.map((item) => {
+        const items = await pMap(
+            list,
+            async (item) => {
                 const $item = $(item);
                 const $link = $item.find('a');
                 const link = new URL($link.attr('href') || '', url).href;
 
-                const pubDate = parseDate($item.find('.date.date2').text());
+                const date = $item.find('.date.date2').text();
+                const pubDate = date ? parseDateInTimezone(date, 8) : undefined;
 
                 let title = $item.find('a .txt h3').text();
                 if (!title) {
                     title = $link.text();
                 }
 
-                return cache.tryGet(link, async () => {
-                    try {
+                const metadata = { title, link, pubDate };
+                try {
+                    const detail = await cache.tryGet(link, async () => {
                         const detailResponse = await ofetch(link);
                         const $$ = load(detailResponse);
-                        const description = $$('.v_news_content').html() || $$('#vsb_content').html();
-
-                        return {
-                            title,
-                            link,
-                            description,
-                            pubDate,
-                        };
-                    } catch {
-                        // Fallback to title and link if detail fetch fails
-                        return {
-                            title,
-                            link,
-                            pubDate,
-                        };
+                        return { description: $$('.v_news_content').html() || $$('#vsb_content').html() };
+                    });
+                    return { ...metadata, ...detail };
+                } catch (error) {
+                    if (error instanceof FetchError) {
+                        return metadata;
                     }
-                });
-            })
+                    throw error;
+                }
+            },
+            { concurrency: 3 }
         );
 
         return {
