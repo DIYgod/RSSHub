@@ -17,7 +17,7 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['foresightnews.pro/column/detail/:id', 'foresightnews.pro/'],
+            source: ['foresightnews.pro/column/detail/:id'],
         },
     ],
     name: '专栏',
@@ -28,12 +28,10 @@ export const route: Route = {
 
 async function handler(ctx) {
     const id = ctx.req.param('id');
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 50;
-
     const apiUrl = new URL('v1/articles', apiRootUrl).href;
     const currentUrl = new URL(`column/detail/${id}`, rootUrl).href;
 
-    const { items, info } = await processItems(apiUrl, limit, {
+    const { items, info } = await processItems(apiUrl, ctx, {
         column_id: id,
     });
 
@@ -48,7 +46,6 @@ async function handler(ctx) {
         image,
         icon,
         logo: icon,
-        subtitle: column,
         author: 'Foresight News',
     };
 }
