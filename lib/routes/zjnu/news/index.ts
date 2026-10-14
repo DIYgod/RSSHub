@@ -36,7 +36,7 @@ async function handler() {
             const $item = $(item);
             const a = $item.find('a');
             return {
-                title: a.text(),
+                title: a.attr('title') || a.text(),
                 link: `${host}${a.attr('href')}`,
                 description: '',
                 pubDate: timezone(parseDate($item.find('div.ex_fields>span.Article_PublishDate').text(), 'YYYY-MM-DD'), 8),
