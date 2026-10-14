@@ -40,7 +40,7 @@ async function handler(ctx) {
         throw new InvalidParameterError('这个人没有任何动态。');
     }
     let out = await Promise.all(
-        data.map((item) => {
+        utils.selectDynamics(data).map((item) => {
             if (!username) {
                 username = item.username;
             }
