@@ -4,6 +4,8 @@ import type { Route } from '@/types';
 import { ViewType } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
+import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/html_clip/:user/:tag',
@@ -20,7 +22,7 @@ async function handler(ctx) {
     const type = 'html';
     const user = ctx.req.param('user');
     const tag = ctx.req.param('tag');
-    const num = ctx.req.query('limit') || 20;
+    const num = getRouteLimit(ctx, 20);
     const rootUrl = 'https://www.inoreader.com/stream';
     const currentUrl = `${rootUrl}/user/${user}/tag/${tag}/view/${type}?n=${num}`;
 
@@ -33,7 +35,7 @@ async function handler(ctx) {
     const entries = $('#snip_body>.article_content');
 
     return {
-        title: $('.header_text').text().trim(),
+        title: $('.header_text').text(),
         link: currentUrl,
         item: entries.toArray().map((item) => {
             const header = $(item).prev();
@@ -43,14 +45,16 @@ async function handler(ctx) {
                 .text()
                 .replace(/posted (on|at) /, '')
                 .replace(/UTC.*/, '');
+            const author = $('div.article_author span span', header).text().trim();
+            const feedName = $('div.article_author a.feed_link', header).text().trim();
+            const parsedDate = pubDate ? parseDate(pubDate.trim(), 'MMM DD YYYY HH:mm:ss', true) : undefined;
             return {
-                title: $('a.title_link', header).text().trim(),
+                title: $('a.title_link', header).text(),
                 link: $('a.title_link', header).attr('href'),
-                author: $('div.article_author span span', header).text().trim() + ' via ' + $('div.article_author a.feed_link', header).text().trim(),
-                pubDate: parseDate(pubDate, ['MMM DD YYYY HH:mm:ss', 'HH:mm:ss']),
+                author: author ? [author, feedName].filter(Boolean).join(' via ') : undefined,
+                pubDate: parsedDate && Number.isFinite(parsedDate.getTime()) ? timezone(parsedDate, 0) : undefined,
                 description: $(item).html(),
             };
         }),
-        allowEmpty: true,
     };
 }
