@@ -29,10 +29,12 @@ export const route: Route = {
 
 async function handler(ctx) {
     const label = ctx.req.param('label') ?? '';
+    const requestedLimit = Number(ctx.req.query('limit'));
+    const limit = Number.isSafeInteger(requestedLimit) && requestedLimit > 0 ? requestedLimit : 50;
 
     const rootUrl = 'https://www.mygopen.com';
     const currentUrl = `${rootUrl}${label ? `/search/label/${label}` : ''}`;
-    const apiUrl = `${rootUrl}/feeds/posts/default${label ? `/-/${label}` : ''}?alt=json-in-script&max-results=${ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 50}`;
+    const apiUrl = `${rootUrl}/feeds/posts/default${label ? `/-/${label}` : ''}?alt=json-in-script&max-results=${limit}`;
 
     const response = await got({
         method: 'get',
@@ -43,6 +45,7 @@ async function handler(ctx) {
         title: item.title.$t,
         description: item.content.$t,
         pubDate: parseDate(item.published.$t),
+        category: item.category?.map((category) => category.term),
         link: item.link.pop().href,
     }));
 
