@@ -52,26 +52,35 @@ async function handler(ctx) {
     const normalOffers = response.searchResult.paginationResult.results;
     const data = [...highlightedOffers, ...normalOffers];
 
-    const resultList = data.map((item) => {
-        const title = item.title ?? '';
-        const link = baseUrl + item.urlUI;
-        const coverImg = item.doorPhotoUI.urls.full ?? '';
-        const descriptionText = item.couponType === 0 ? item.poiNameUI : `${item.desc} (${item.startTimeUI} - ${item.expireTimeUI}) [${item.multiplePoiDistrictName}]`;
-        const description = renderDescription({
-            description: descriptionText,
-            image: coverImg,
+    const resultList = data
+        .filter((item) => item.urlUI)
+        .map((item) => {
+            const title = item.title ?? '';
+            const link = new URL(item.urlUI, baseUrl).href;
+            const coverImg = item.doorPhotoUI.urls.full ?? '';
+            const descriptionText = item.couponType === 0 ? item.poiNameUI : `${item.desc} (${item.startTimeUI} - ${item.expireTimeUI}) [${item.multiplePoiDistrictName}]`;
+            const description = renderDescription({
+                description: descriptionText,
+                image: coverImg,
+            });
+            return {
+                title,
+                description,
+                link,
+            };
         });
-        return {
-            title,
-            description,
-            link,
-        };
-    });
+    const links = new Set<string>();
 
     return {
         title: pageInfo.seoInfo.title ?? 'OpenRice Hong Kong Offers',
         link: baseUrl + urlPath,
         description: pageInfo.seoInfo.metadataDictionary.name.find((item: { key: string; value: string }) => item.key === 'description')?.value ?? 'OpenRice Hong Kong Offers',
-        item: resultList,
+        item: resultList.filter((item) => {
+            if (links.has(item.link)) {
+                return false;
+            }
+            links.add(item.link);
+            return true;
+        }),
     };
 }
