@@ -1,5 +1,6 @@
 import { load } from 'cheerio';
 
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
@@ -41,6 +42,9 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { uid, type = 'article', option } = ctx.req.param();
+    if (type !== 'article' && type !== 'state') {
+        throw new InvalidParameterError('Invalid type: use article or state.');
+    }
     const baseUrl = 'https://www.pingwest.com';
     const aimUrl = `${baseUrl}/user/${uid}/${type}`;
     const { userName, realUid, userSign, userAvatar } = await cache.tryGet(`pingwest:user:info:${uid}`, async () => {
