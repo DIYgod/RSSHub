@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -9,7 +9,7 @@ import { fetchBbcContent } from './utils';
 
 export const route: Route = {
     path: '/zhongwen/topics/:topic/:variant?',
-    name: 'Topics - BBC News 中文',
+    name: 'Topics - 中文',
     maintainers: ['TonyRL'],
     handler,
     example: '/bbc/zhongwen/topics/ckr7mn6r003t',
@@ -32,17 +32,17 @@ export const route: Route = {
     categories: ['traditional-media'],
 };
 
-async function handler(ctx) {
+async function handler(ctx): Promise<Data> {
     const { topic, variant = 'trad' } = ctx.req.param();
     const link = `https://www.bbc.com/zhongwen/topics/${topic}/${variant}`;
 
-    const response = await ofetch(link);
+    const response = await ofetch(link, { allowH2: false });
     const $ = load(response);
 
     const nextData = JSON.parse($('script#__NEXT_DATA__').text());
     const pageData = nextData.props.pageProps.pageData;
 
-    const list = pageData.curations[0].summaries.map((item) => ({
+    const list: Array<DataItem & { link: string }> = pageData.curations[0].summaries.map((item) => ({
         title: item.title,
         link: item.link,
         pubDate: parseDate(item.firstPublished),
@@ -67,6 +67,7 @@ async function handler(ctx) {
         description: pageData.description,
         link,
         image: 'https://www.bbc.com/favicon.ico',
+        language: variant === 'simp' ? 'zh-CN' : 'zh-TW',
         item: items,
     };
 }

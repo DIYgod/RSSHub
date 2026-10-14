@@ -1,10 +1,22 @@
 import type { CheerioAPI } from 'cheerio';
 import { load } from 'cheerio';
+import type { Context } from 'hono';
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 import type { JSX } from 'hono/jsx/jsx-runtime';
 
+import type { DataItem } from '@/types';
 import ofetch from '@/utils/ofetch';
+import { getRouteLimit } from '@/utils/route-limit';
+
+export const limitBbcItems = <T extends Pick<DataItem, 'pubDate'>>(items: T[], ctx: Context): T[] => {
+    const limit = getRouteLimit(ctx);
+    if (limit === undefined) {
+        return items;
+    }
+    const sortedItems = ctx.req.query('sorted') === 'false' ? items : items.toSorted((a, b) => +new Date(b.pubDate || 0) - +new Date(a.pubDate || 0));
+    return sortedItems.slice(0, limit);
+};
 
 type BlockAttribute = 'bold' | 'italic';
 
@@ -389,6 +401,7 @@ const extractArticleWithInitialData = ($: CheerioAPI, item) => {
 
 export const fetchBbcContent = async (link: string, item) => {
     const response = await ofetch.raw(link, {
+        allowH2: false,
         retryStatusCodes: [403],
     });
     const $ = load(response._data);
