@@ -33,7 +33,7 @@ export const route: Route = {
                 description: '河畔的cookie',
             },
             {
-                name: 'UESTC_BBS_AUTH_KEY',
+                name: 'UESTC_BBS_AUTH_STR',
                 optional: false,
                 description: '河畔Header中的authorization字段',
             },
@@ -48,7 +48,7 @@ export const route: Route = {
 仅支持自建，您需要设置以下配置才能正常使用：
 
 - 河畔 cookie: \`UESTC_BBS_COOKIE\`
-- Header 中的授权字段: \`UESTC_BBS_AUTH_KEY\`
+- Header 中的授权字段: \`UESTC_BBS_AUTH_STR\`
 
 :::`,
     radar: [
