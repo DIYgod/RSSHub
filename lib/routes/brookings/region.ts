@@ -4,13 +4,14 @@ import { escapeText } from 'entities';
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
 export const route: Route = {
     path: '/region/:region{.+}?',
     example: '/brookings/region/asia-the-pacific/china',
     parameters: { region: 'Region path after /regions/ in the website URL, defaults to asia-the-pacific/china' },
     categories: ['finance'],
-    radar: [{ source: ['www.brookings.edu/regions/:region+'], target: '/region/:region' }],
+    radar: [{ source: ['www.brookings.edu/regions/*region'], target: '/region/:region' }],
     name: 'Regional research',
     maintainers: ['DIYgod'],
     handler,
@@ -59,5 +60,5 @@ async function handler(ctx) {
             pubDate: parseDate(item.post_date_formatted, 'MMMM D, YYYY'),
         }))
         .toSorted((a, b) => b.pubDate.getTime() - a.pubDate.getTime());
-    return { title: $('title').text(), link, item: items.slice(0, Number(ctx.req.query('limit')) || 20) };
+    return { title: $('title').text(), link, item: items.slice(0, getRouteLimit(ctx, 20)) };
 }
