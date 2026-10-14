@@ -36,7 +36,7 @@ async function handler(ctx: Context): Promise<Data> {
     const timeline = await getTimelineByAccountId(account.id);
 
     const items = timeline.posts.map((post) => ({
-        title: post.content.split('\n', 1)[0],
+        title: post.content,
         description: parseDescription(post, timeline),
         pubDate: parseDate(post.createdAt, 'X'),
         link: `${baseUrl}/post/${post.id}`,
@@ -51,7 +51,6 @@ async function handler(ctx: Context): Promise<Data> {
         icon: account.avatar.locations[0].location,
         logo: account.avatar.locations[0].location,
         language: 'en',
-        allowEmpty: true,
         item: items,
     };
 }
