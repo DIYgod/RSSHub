@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
@@ -37,9 +38,9 @@ export const route: Route = {
             .map((item): DataItem => {
                 const $item = $(item);
                 const $time = $item.find('.time');
-                const day = $time.find('.time-d').text();
+                const day = $time.find('.time-d').text().trim();
                 const monthYear = $time.contents().last().text().trim();
-                const pubDate = timezone(parseDate(`${monthYear}-${day}`, 'YYYY-MM-DD'), 8);
+                const pubDate = day && monthYear ? timezone(parseDate(`${monthYear}-${day}`, 'YYYY-MM-DD'), 8) : undefined;
 
                 const $link = $item.find('.tit a');
                 let href = $link.attr('href') || '';
@@ -52,23 +53,24 @@ export const route: Route = {
                 };
             });
 
-        const items = await Promise.all(
-            list.map((item) =>
-                cache.tryGet(item.link!, async () => {
-                    // 判断link如果是https://xb.nankai.edu.cn/的则为校内访问的
+        const items = await pMap(
+            list,
+            async (item) => {
+                const detail = await cache.tryGet(`nankai:notice:article:v2:${item.link}`, async () => {
+                    // Campus notice links may require access from the university network.
                     if (item.link!.includes('xb.nankai.edu.cn')) {
-                        item.description = '该通知可能需要校内访问权限';
-                    } else {
-                        const { data: detailResponse } = await got(item.link);
-                        const $detail = load(detailResponse);
-
-                        // 提取正文内容
-                        const content = $detail('.wp_articlecontent').html();
-                        item.description = content;
+                        return { description: '该通知可能需要校内访问权限' };
                     }
-                    return item;
-                })
-            )
+                    const { data: detailResponse } = await got(item.link);
+                    const $detail = load(detailResponse);
+
+                    // Extract the article body.
+                    const content = $detail('.wp_articlecontent').html();
+                    return { description: content };
+                });
+                return { ...item, ...detail };
+            },
+            { concurrency: 3 }
         );
 
         return {
