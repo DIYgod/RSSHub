@@ -64,6 +64,7 @@ type Listing = {
 async function handler(ctx: Context) {
     const { query } = ctx.req.param();
     const searchParams = new URLSearchParams(query);
+    searchParams.delete('page');
 
     const filters = [{ filter: 'price_search_type', selected: ['total'] }];
     const keys = new Set(searchParams.keys());
@@ -77,7 +78,7 @@ async function handler(ctx: Context) {
         filters.push({ filter, selected });
     }
 
-    const link = `${rootUrl}/car-search?${query}`;
+    const link = `${rootUrl}/car-search?${searchParams.toString()}`;
     const response = await ofetch(`${rootUrl}/at-gateway?opname=SearchResultsListingsGridQuery`, {
         method: 'POST',
         headers: {
@@ -89,7 +90,7 @@ async function handler(ctx: Context) {
                 variables: {
                     filters,
                     channel: 'cars',
-                    page: Number(searchParams.get('page')) || 1,
+                    page: 1,
                     sortBy: searchParams.get('sort') ?? 'relevance',
                     searchId: '00000000-0000-0000-0000-000000000000',
                 },
