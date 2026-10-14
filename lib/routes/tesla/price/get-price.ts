@@ -1,5 +1,6 @@
 import { load } from 'cheerio';
 
+import NotFoundError from '@/errors/types/not-found';
 import got from '@/utils/got';
 
 async function getTeslaPrice(link) {
@@ -13,9 +14,16 @@ async function getTeslaPrice(link) {
         const $ele = $('p').eq(i);
         if ($ele.text().trim().includes('经销商报价')) {
             const priceDom = $ele.next();
-            price = ' => 经销商报价: ' + $(priceDom).text().trim();
+            const quote = $(priceDom).text().trim();
+            if (quote) {
+                price = ' => 经销商报价: ' + quote;
+            }
             break;
         }
+    }
+
+    if (!price) {
+        throw new NotFoundError(`Dealer prices are unavailable at ${link}. Dongchedi may require login to view this page.`);
     }
 
     return price;
