@@ -2,16 +2,18 @@ import sanitizeHtml from 'sanitize-html';
 
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
 
 const rootUrl = 'https://www.landiannews.com/';
 
 const getRenderedText = (html: string) => sanitizeHtml(html, { allowedTags: [], allowedAttributes: {} });
 
-const getPubDate = (dateGmt?: string, date?: string) => (dateGmt ? parseDate(`${dateGmt}Z`) : date ? parseDate(date) : undefined);
+const getPubDate = (dateGmt?: string, date?: string) => (dateGmt ? parseDateInTimezone(dateGmt, 0) : date ? parseDateInTimezone(date, 8) : undefined);
 
 const fetchTaxonomy = async (slug: string, type: 'categories' | 'tags') => {
-    const taxonomyUrl = `${rootUrl}wp-json/wp/v2/${type}?slug=${slug}`;
+    const url = new URL(`wp-json/wp/v2/${type}`, rootUrl);
+    url.searchParams.set('slug', slug);
+    const taxonomyUrl = url.href;
     const cachedTaxonomy = await cache.tryGet(taxonomyUrl, async () => {
         const taxonomyData = await ofetch(taxonomyUrl);
         if (!taxonomyData[0] || !taxonomyData[0].id || !taxonomyData[0].name) {
@@ -33,8 +35,11 @@ async function fetchNewsItems(apiUrl: string) {
         description: item.content.rendered,
         link: item.link,
         pubDate: getPubDate(item.date_gmt, item.date),
-        author: item._embedded.author[0].name,
-        category: item._embedded['wp:term'].flat().map((term) => term.name),
+        author: item._embedded?.author?.[0]?.name,
+        category: item._embedded?.['wp:term']
+            ?.flat()
+            .filter(Boolean)
+            .map((term) => term.name),
     }));
 }
 
