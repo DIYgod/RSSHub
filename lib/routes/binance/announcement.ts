@@ -3,6 +3,7 @@ import type { Route } from '@/types';
 import { ViewType } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
 interface ArticleItem {
     code: string;
@@ -50,7 +51,7 @@ const handler: Route['handler'] = async (ctx) => {
     const baseUrl = 'https://www.binance.com';
     const rawType = ctx.req.param('type');
     const rawLang = ctx.req.param('lang');
-    const limit = Number(ctx.req.query('limit') ?? '20');
+    const limit = getRouteLimit(ctx, 20);
     const pageSize = Number.isNaN(limit) || limit <= 0 ? 20 : limit;
 
     let type = rawType;
@@ -127,7 +128,7 @@ export const route: Route = {
     radar: [
         {
             source: ['www.binance.com/:lang/messages/v2/group/announcement'],
-            target: '/binance/announcement/all/:lang',
+            target: '/announcement/all/:lang',
         },
     ],
     parameters: {
