@@ -7,7 +7,7 @@ export const route: Route = {
     path: '/counterstrike/matches/:team',
     radar: [
         {
-            source: ['liquipedia.net/counterstrike/:id/Matches', 'liquipedia.net/dota2/:id'],
+            source: ['liquipedia.net/counterstrike/:id/Matches'],
             target: '/counterstrike/matches/:id',
         },
     ],
