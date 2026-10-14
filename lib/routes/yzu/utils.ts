@@ -14,9 +14,14 @@ export const fetchList = async (link: string, limit: number) => {
         gotoConfig: { waitUntil: 'networkidle' },
     });
 
-    const cookie = (await page.context().cookies()).map((c) => `${c.name}=${c.value}`).join('; ');
-    const response = await page.content();
-    await destroy();
+    let cookie: string;
+    let response: string;
+    try {
+        cookie = (await page.context().cookies()).map((c) => `${c.name}=${c.value}`).join('; ');
+        response = await page.content();
+    } finally {
+        await destroy();
+    }
 
     const $ = load(response);
     const list = $('.list01 li')
@@ -33,8 +38,10 @@ export const fetchList = async (link: string, limit: number) => {
         });
 
     return Promise.all(
-        list.map((info) =>
-            cache.tryGet(info.link, async () => {
+        list.map(async (info) => ({
+            title: info.title,
+            link: info.link,
+            description: await cache.tryGet(`yzu:article:description:${info.link}`, async () => {
                 const detailResponse = await ofetch(info.link, {
                     headers: {
                         Cookie: cookie,
@@ -42,14 +49,9 @@ export const fetchList = async (link: string, limit: number) => {
                     },
                 });
                 const $detail = load(detailResponse);
-
-                return {
-                    title: info.title,
-                    link: info.link,
-                    description: $detail('.v_news_content').html()?.trim(),
-                    pubDate: timezone(parseDate(info.date), 8),
-                };
-            })
-        )
+                return $detail('.v_news_content').html()?.trim();
+            }),
+            pubDate: timezone(parseDate(info.date), 8),
+        }))
     );
 };
