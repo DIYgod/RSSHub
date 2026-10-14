@@ -3,16 +3,18 @@ import { load } from 'cheerio';
 import type { Element } from 'domhandler';
 import type { Context } from 'hono';
 import { renderToString } from 'hono/jsx/dom/server';
+import pMap from 'p-map';
 
 import type { Data, DataItem, Language, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { id } = ctx.req.param();
-    const limit = Number(ctx.req.query('limit') ?? '30');
+    const limit = getRouteLimit(ctx, 30);
 
     const baseUrl = 'https://www.wdfxw.net';
     const targetUrl: string = new URL(`bookfree${id ? `-${id}` : ''}.html`, baseUrl).href;
@@ -52,7 +54,6 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 link: linkUrl,
                 content: {
                     html: description,
-                    text: description,
                 },
                 image,
                 banner: image,
@@ -62,13 +63,14 @@ export const handler = async (ctx: Context): Promise<Data> => {
             return processedItem;
         });
 
-    items = await Promise.all(
-        items.map((item) => {
+    items = await pMap(
+        items,
+        async (item) => {
             if (!item.link) {
                 return item;
             }
 
-            return cache.tryGet(item.link, async (): Promise<DataItem> => {
+            const detail = await cache.tryGet(`wdfxw:detail:v2:${item.link}`, async (): Promise<DataItem> => {
                 const detailResponse = await ofetch(item.link!);
                 const $$: CheerioAPI = load(detailResponse);
 
@@ -92,23 +94,21 @@ export const handler = async (ctx: Context): Promise<Data> => {
                     .text()
                     .split(/：/)
                     .pop();
-                const upDatedStr: string | undefined = pubDateStr;
+                const date = pubDateStr ? parseDate(pubDateStr) : undefined;
 
                 const processedItem: DataItem = {
                     title,
-                    pubDate: pubDateStr ? parseDate(pubDateStr) : item.pubDate,
+                    pubDate: date && Number.isFinite(date.getTime()) ? date : undefined,
                     category: categories,
                     author: authors,
-                    updated: upDatedStr ? parseDate(upDatedStr) : item.updated,
-                    language,
+                    updated: date && Number.isFinite(date.getTime()) ? date : undefined,
                 };
 
-                return {
-                    ...item,
-                    ...processedItem,
-                };
+                return processedItem;
             });
-        })
+            return { ...item, ...detail };
+        },
+        { concurrency: 3 }
     );
 
     return {
@@ -116,7 +116,6 @@ export const handler = async (ctx: Context): Promise<Data> => {
         description: $('meta[name="description"]').attr('content'),
         link: targetUrl,
         item: items,
-        allowEmpty: true,
         image: $('div.xxxk_top img').attr('src'),
         author: $('div.xxxk_top img').attr('alt'),
         language,
@@ -132,7 +131,7 @@ export const route: Route = {
     handler,
     example: '/wdfxw/bookfree',
     parameters: {
-        category: {
+        id: {
             description: '分类，默认为空，即全部，可在对应分类页 URL 中找到',
             options: [
                 {
@@ -296,13 +295,13 @@ export const route: Route = {
 | [国家标准 GB](https://www.wdfxw.net/bookfree-00001.html)                  | [00001](https://rsshub.app/wdfxw/bookfree/00001)     |
 | [国外标准](https://www.wdfxw.net/bookfree-00003.html)                     | [00003](https://rsshub.app/wdfxw/bookfree/00003)     |
 | [监理资料](https://www.wdfxw.net/bookfree-00004.html)                     | [00004](https://rsshub.app/wdfxw/bookfree/00004)     |
-| [施工组织设计](https://极速.wdfxw.net/bookfree-00005.html)                | [00005](https://rsshub.app/wdfxw/bookfree/00005)     |
+| [施工组织设计](https://www.wdfxw.net/bookfree-00005.html)                | [00005](https://rsshub.app/wdfxw/bookfree/00005)     |
 | [土木工程毕业设计论文](https://www.wdfxw.net/bookfree-00006.html)         | [00006](https://rsshub.app/wdfxw/bookfree/00006)     |
 | [机械类毕业设计论文](https://www.wdfxw.net/bookfree-00007.html)           | [00007](https://rsshub.app/wdfxw/bookfree/00007)     |
 | [小学课件教学资料](https://www.wdfxw.net/bookfree-00008.html)             | [00008](https://rsshub.app/wdfxw/bookfree/00008)     |
 | [初中课件教学资料](https://www.wdfxw.net/bookfree-00009.html)             | [00009](https://rsshub.app/wdfxw/bookfree/00009)     |
 | [高中课件教学资料](https://www.wdfxw.net/bookfree-00010.html)             | [00010](https://rsshub.app/wdfxw/bookfree/00010)     |
-| [工作计划个人总结](https://www.wdfxw.net/bookfree-00011.html)             | [00011](极速//rsshub.app/wdfxw/bookfree/00011)       |
+| [工作计划个人总结](https://www.wdfxw.net/bookfree-00011.html)             | [00011](https://rsshub.app/wdfxw/bookfree/00011)       |
 | [中学小学教案导学案与教学设计](https://www.wdfxw.net/bookfree-00012.html) | [00012](https://rsshub.app/wdfxw/bookfree/00012)     |
 | [作文大全](https://www.wdfxw.net/bookfree-00013.html)                     | [00013](https://rsshub.app/wdfxw/bookfree/00013)     |
 | [幼儿教育](https://www.wdfxw.net/bookfree-00014.html)                     | [00014](https://rsshub.app/wdfxw/bookfree/00014)     |
@@ -310,7 +309,7 @@ export const route: Route = {
 | [财务管理](https://www.wdfxw.net/bookfree-00016.html)                     | [00016](https://rsshub.app/wdfxw/bookfree/00016)     |
 | [管理信息化](https://www.wdfxw.net/bookfree-00017.html)                   | [00017](https://rsshub.app/wdfxw/bookfree/00017)     |
 | [行业分类](https://www.wdfxw.net/bookfree-00018.html)                     | [00018](https://rsshub.app/wdfxw/bookfree/00018)     |
-| [合同样本](https://www.wdfxw.net/bookfree-00019.html)                     | [00019](https://rsshub.app/wdf极速xw/bookfree/00019) |
+| [合同样本](https://www.wdfxw.net/bookfree-00019.html)                     | [00019](https://rsshub.app/wdfxw/bookfree/00019) |
 | [品质管理](https://www.wdfxw.net/bookfree-00020.html)                     | [00020](https://rsshub.app/wdfxw/bookfree/00020)     |
 | [企业管理](https://www.wdfxw.net/bookfree-00021.html)                     | [00021](https://rsshub.app/wdfxw/bookfree/00021)     |
 | [人力资源](https://www.wdfxw.net/bookfree-00022.html)                     | [00022](https://rsshub.app/wdfxw/bookfree/00022)     |
