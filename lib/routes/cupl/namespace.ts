@@ -2,7 +2,7 @@ import type { Namespace } from '@/types';
 
 export const namespace: Namespace = {
     name: 'CUPL',
-    url: 'jwc.cupl.edu.cn/index/tzgg.htm',
+    url: 'jwc.cupl.edu.cn/tz/tzgg.htm',
     description: 'China University of Political Science and Law Academic Affairs Office Notices',
 
     zh: {
