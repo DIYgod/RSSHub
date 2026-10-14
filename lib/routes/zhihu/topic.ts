@@ -57,7 +57,7 @@ function handler(ctx) {
             switch (type) {
                 case 'answer':
                     title = `${item.question.title}-${item.author.name}的回答：${item.excerpt}`;
-                    description = `<strong>${item.question.title}</strong><br>${item.author.name}的回答<br/>${processImage(item.content)}`;
+                    description = processImage(item.content);
                     link = `https://www.zhihu.com/question/${item.question.id}/answer/${item.id}`;
                     pubDate = parseDate(item.updated_time * 1000);
                     author = item.author.name;
@@ -88,8 +88,7 @@ function handler(ctx) {
                     break;
 
                 default:
-                    description = '未知类型，请点击<a href="https://github.com/DIYgod/RSSHub/issues">链接</a>提交issue';
-                    pubDate = parseDate(Date.now());
+                    throw new Error(`Unknown topic item type: ${type}`);
             }
 
             return {
