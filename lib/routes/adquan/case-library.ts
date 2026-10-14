@@ -8,12 +8,13 @@ import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 import timezone from '@/utils/timezone';
 
 import { renderDescription } from './templates/description';
 
 export const handler = async (ctx: Context): Promise<Data> => {
-    const limit = Number(ctx.req.query('limit') ?? '24');
+    const limit = getRouteLimit(ctx, 24);
 
     const baseUrl = 'https://www.adquan.com';
     const targetUrl: string = new URL('case_library/index', baseUrl).href;
@@ -72,7 +73,9 @@ export const handler = async (ctx: Context): Promise<Data> => {
                     const description: string | undefined = renderDescription({
                         description: $$('div.articleContent').html() ?? undefined,
                     });
-                    const pubDateStr: string | undefined = $$('p.time').text().split(/：/).pop();
+                    const pubDateStr: string | undefined = $$('p.time')
+                        .text()
+                        .match(/\d{4}-\d{2}-\d{2}(?:\s+\d{2}:\d{2}(?::\d{2})?)?/)?.[0];
                     const categoryEls: Element[] = $$('span.article_5').toArray();
                     const categories: string[] = [...new Set(categoryEls.map((el) => $$(el).text()).filter(Boolean))];
                     const authors: DataItem['author'] = $$('div.infoTitle_right span').text();
