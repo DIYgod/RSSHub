@@ -1,8 +1,10 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/parse-date';
 import parser from '@/utils/rss-parser';
 
 import { renderHeader } from './templates/header';
@@ -35,7 +37,7 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['theverge.com/:hub', 'theverge.com/'],
+            source: ['theverge.com/:hub'],
         },
     ],
     name: 'Category',
@@ -126,9 +128,12 @@ async function handler(ctx) {
 
     const feed = await parser.parseURL(link);
 
-    const items = await Promise.all(
-        feed.items.map((item) =>
-            cache.tryGet(item.link!, async () => {
+    const items = await pMap(
+        feed.items,
+        async (item) => ({
+            ...item,
+            pubDate: item.pubDate ? parseDate(item.pubDate) : undefined,
+            ...(await cache.tryGet(item.link!, async () => {
                 const response = await ofetch(item.link!);
 
                 const $ = load(response);
@@ -166,12 +171,10 @@ async function handler(ctx) {
                         .join('<br>');
                 }
 
-                item.description = description;
-                item.category = node.categories?.map((c) => c.title);
-
-                return item;
-            })
-        )
+                return { description, category: node.categories?.map((category) => category.title), updated: node.updatedAt ? parseDate(node.updatedAt) : undefined };
+            })),
+        }),
+        { concurrency: 3 }
     );
 
     return {
