@@ -25,7 +25,7 @@ export type RoutePath =
   | `/163/music/user/events/:id`
   | `/163/music/user/playlist/:uid`
   | `/163/music/user/playrecords/:uid/:type?`
-  | `/163/news/rank/:category?/:type?/:time?`
+  | `/163/news/rank/:category/:type?/:time?`
   | `/163/news/special/:type?`
   | `/163/open/vip`
   | `/163/renjian/:category?`
@@ -214,8 +214,8 @@ export type RoutePath =
   | `/android/pixel-update-bulletin`
   | `/android/platform-tools-releases`
   | `/android/security-bulletin`
-  | `/anime1anime/:category/:name`
-  | `/anime1search/:keyword`
+  | `/anime1/anime/:category/:name`
+  | `/anime1/search/:keyword`
   | `/annualreviews/:id`
   | `/anquanke/:category/:fulltext?`
   | `/anthropic/engineering`
@@ -233,7 +233,6 @@ export type RoutePath =
   | `/apnews/sitemap/:route`
   | `/apnews/topics/:topic?`
   | `/apnic/blog`
-  | `/app-center/release/:user/:app/:distribution_group`
   | `/app-sales/:category?/:country?`
   | `/app-sales/mostwanted/:time?/:country?`
   | `/apple/apps/update/:country/:id/:platform?`
@@ -249,7 +248,7 @@ export type RoutePath =
   | `/appstore/xianmian`
   | `/appstorrent/programs`
   | `/aqara/:path{.+}?`
-  | `/aqara/:region/:type?`
+  | `/aqara/:region{cn|kr|eu|us|ru|en}/:type?`
   | `/aqara/cn/news`
   | `/aqara/community/:id?/:keyword?`
   | `/aqicn/:city/:pollution?`
@@ -578,7 +577,7 @@ export type RoutePath =
   | `/cde/:channel/:category`
   | `/cde/xxgk/:category`
   | `/cde/zdyz/:category`
-  | `/cdi/:id?`
+  | `/cdi/:id`
   | `/cdu/cdrw`
   | `/cdu/jwgg`
   | `/cdu/tzggcdunews`
@@ -904,7 +903,6 @@ export type RoutePath =
   | `/devtrium/`
   | `/dewu/declaration/:categoryId?`
   | `/dewu/techblog/:categoryId?`
-  | `/dgjyw/:category{.+}?`
   | `/dgtle/`
   | `/dgtle/article/:id?/:pushed?`
   | `/dgtle/feed`
@@ -1028,8 +1026,8 @@ export type RoutePath =
   | `/duozhi/:category{.+}?`
   | `/duozhuayu/search/:wd`
   | `/dushu/fuzhou`
-  | `/dut/:0?`
-  | `/dut/*/*`
+  | `/dut/:site?`
+  | `/dut/:site/:category{.+}`
   | `/dw/news/:lang?/:id?`
   | `/dw/rss/:channel?`
   | `/dx2025/:type?/:category?`
@@ -1291,11 +1289,17 @@ export type RoutePath =
   | `/gc.ca/pm/:language?`
   | `/gcores/articles`
   | `/gcores/categories/:id/:tab?`
+  | `/gcores/categories/:id/radios`
+  | `/gcores/categories/:id/videos`
   | `/gcores/collections/:id/:tab?`
+  | `/gcores/collections/:id/radios`
+  | `/gcores/collections/:id/videos`
   | `/gcores/news`
   | `/gcores/radios/:category?`
   | `/gcores/radios/preview`
   | `/gcores/tags/:id/:tab?`
+  | `/gcores/tags/:id/radios`
+  | `/gcores/tags/:id/videos`
   | `/gcores/topics/:id/recommend`
   | `/gcores/topics/recommend`
   | `/gcores/users/:id/radios`
@@ -1398,7 +1402,7 @@ export type RoutePath =
   | `/gov/beijing/bjedu/gh/:urlPath?`
   | `/gov/beijing/bphc/:caty`
   | `/gov/beijing/jw/tzgg`
-  | `/gov/beijing/kw/:channel`
+  | `/gov/beijing/kw/:channel{.+}`
   | `/gov/beijing/mhc/:caty`
   | `/gov/caac/cjwt/:category?`
   | `/gov/cac/:path{.+}`
@@ -1497,10 +1501,10 @@ export type RoutePath =
   | `/gov/nea/sjzz/:bureau`
   | `/gov/nfra/:id?`
   | `/gov/nifdc/:path{.+}?`
-  | `/gov/nmpa/:path{.+}`
+  | `/gov/nmpa/:path{.+}?`
   | `/gov/nopss/:path{.+}?`
   | `/gov/npc/:caty`
-  | `/gov/nppa/:path{.+}`
+  | `/gov/nppa/:path{.+}?`
   | `/gov/nrta/dsj/:category?`
   | `/gov/nrta/news/:category?`
   | `/gov/nsfc/:path{.+}?`
@@ -1549,7 +1553,7 @@ export type RoutePath =
   | `/gov/zhengce/zuixin`
   | `/gov/zj/ningbogzw-notice/:colId?`
   | `/gov/zj/ningborsjnotice/:colId?`
-  | `/gov/zj/search/:websiteid?/:word/:cateid?`
+  | `/gov/zj/search/:websiteid?/:word?/:cateid?/:sortType?`
   | `/gov/zj/zfcg-helper`
   | `/gov/zj/zfcg/:code?`
   | `/govopendata/xinwenlianbo`
@@ -1737,10 +1741,10 @@ export type RoutePath =
   | `/huitun/xiaohongshu/:user_id`
   | `/humanlayer/blog`
   | `/hunanpea/rsks/:guid`
-  | `/hunau/gfxy/:category?/:page?`
-  | `/hunau/ied/:type?/:category?/:page?`
-  | `/hunau/jwc/:category?/:page?`
-  | `/hunau/xky/:category?/:page?`
+  | `/hunau/gfxy/:category?`
+  | `/hunau/ied/:type?/:category?`
+  | `/hunau/jwc/:category?`
+  | `/hunau/xky/:category?`
   | `/huodongxing/explore`
   | `/huoxian/zone`
   | `/hupu/:category?`
@@ -2103,7 +2107,6 @@ export type RoutePath =
   | `/letterboxd/user/diary/:username`
   | `/letterboxd/user/followingdiary/:username`
   | `/lfsyd/home`
-  | `/lfsyd/old_home`
   | `/lfsyd/tag/:tagId?`
   | `/lfsyd/user/:id?`
   | `/lg/osaka/food-permit`
@@ -2121,7 +2124,6 @@ export type RoutePath =
   | `/lineageos/changes`
   | `/link3/events`
   | `/link3/profile/:handle`
-  | `/linkedin/cn/jobs/:keywords?`
   | `/linkedin/company/:company_id/posts`
   | `/linkedin/jobs/:job_types/:exp_levels/:keywords?/:routeParams?`
   | `/linkresearcher/:params`
@@ -2432,7 +2434,7 @@ export type RoutePath =
   | `/neu/bmie/:type`
   | `/neu/news/:type`
   | `/neu/yz/:type`
-  | `/newmuseum/exhibitions`
+  | `/newmuseum/exhibitions/:state?`
   | `/newrank/douyin/:dyid`
   | `/newrank/wechat/:wxid`
   | `/news/whxw`
@@ -2592,7 +2594,7 @@ export type RoutePath =
   | `/oceanengine/index/:keyword`
   | `/oceanengine/index/:keyword/toutiao`
   | `/oct0pu5/`
-  | `/odaily/:id?`
+  | `/odaily/:id{280}?`
   | `/odaily/activity`
   | `/odaily/newsflash`
   | `/odaily/search/news/:keyword`
@@ -2620,7 +2622,6 @@ export type RoutePath =
   | `/onet/news`
   | `/onlyfans/:username`
   | `/oo-software/changelog/:id`
-  | `/openai/chatgpt-atlas/release-notes`
   | `/openai/chatgpt/release-notes`
   | `/openai/cookbook`
   | `/openai/news`
@@ -2736,7 +2737,6 @@ export type RoutePath =
   | `/pku/scc/recruit/:type?`
   | `/pku/ss/admission`
   | `/pku/ss/notice`
-  | `/pku/ss/pgadmin`
   | `/playno1/av/:catid?`
   | `/playno1/st/:catid?`
   | `/playpcesor/`
@@ -2827,15 +2827,23 @@ export type RoutePath =
   | `/qlu/notice`
   | `/qm120/news/:category?`
   | `/qnap/release-notes/:id`
-  | `/qoo-app/apps/:lang?/card/:id`
-  | `/qoo-app/apps/:lang?/comment/:id`
-  | `/qoo-app/apps/:lang?/note/:id`
-  | `/qoo-app/apps/:lang?/post/:id`
+  | `/qoo-app/apps/:lang/card/:id`
+  | `/qoo-app/apps/:lang/comment/:id`
+  | `/qoo-app/apps/:lang/note/:id`
+  | `/qoo-app/apps/:lang/post/:id`
+  | `/qoo-app/apps/card/:id`
+  | `/qoo-app/apps/comment/:id`
+  | `/qoo-app/apps/note/:id`
+  | `/qoo-app/apps/post/:id`
   | `/qoo-app/news/:lang?`
-  | `/qoo-app/notes/:lang?/note/:id`
-  | `/qoo-app/notes/:lang?/topic/:topic`
-  | `/qoo-app/notes/:lang?/user/:uid`
-  | `/qoo-app/user/:lang?/appComment/:uid`
+  | `/qoo-app/notes/:lang/note/:id`
+  | `/qoo-app/notes/:lang/topic/:topic`
+  | `/qoo-app/notes/:lang/user/:uid`
+  | `/qoo-app/notes/note/:id`
+  | `/qoo-app/notes/topic/:topic`
+  | `/qoo-app/notes/user/:uid`
+  | `/qoo-app/user/:lang/appComment/:uid`
+  | `/qoo-app/user/appComment/:uid`
   | `/qq/ac/comic/:id?`
   | `/qq/ac/rank/:type?/:time?`
   | `/qq/cfhd/news/:category?`
@@ -3152,6 +3160,7 @@ export type RoutePath =
   | `/snowpeak/us/new-arrivals`
   | `/sobooks/:category?`
   | `/sobooks/date/:date?`
+  | `/sobooks/date/:year/:month`
   | `/sobooks/tag/:id?`
   | `/socialbeta/home`
   | `/sogou/doodles`
@@ -3328,8 +3337,6 @@ export type RoutePath =
   | `/tenant-shop/chintai/:pref?/:type?`
   | `/tencent/cloud/developer/column/:categoryId?`
   | `/tencent/news/author/:mid`
-  | `/tencent/news/coronavirus/data/:province?/:city?`
-  | `/tencent/news/coronavirus/total`
   | `/tencent/pvp/newsindex/:type`
   | `/tencent/qcloud/mlvb/changelog`
   | `/tencent/qq/sdk/changelog/:platform`
@@ -3355,7 +3362,6 @@ export type RoutePath =
   | `/theinitium/app/:category?`
   | `/theinitium/author/:type/:language?`
   | `/theinitium/channel/:type?/:language?`
-  | `/theinitium/follow/articles/:language?`
   | `/theinitium/tags/:type/:language?`
   | `/themoviedb/:mediaType/:sheet/:lang?`
   | `/themoviedb/collection/:id/:lang?`
@@ -3681,7 +3687,6 @@ export type RoutePath =
   | `/whu/rsgis/:type/:sub?`
   | `/whu/swrh/:type`
   | `/wiensued/:path{.+}?`
-  | `/wikinews/latest`
   | `/wikipedia/current-events/:includeToday?`
   | `/windsurf/blog`
   | `/windsurf/changelog`
@@ -3908,10 +3913,8 @@ export type RoutePath =
   | `/zcool/top/:type`
   | `/zcool/user/:uid`
   | `/zed/blog`
-  | `/zhibo8/forum/:id`
   | `/zhibo8/luxiang/:category?`
   | `/zhibo8/more/:category?`
-  | `/zhibo8/post/:id`
   | `/zhihu/bookstore/newest`
   | `/zhihu/collection/:id/:getAll?`
   | `/zhihu/daily`
