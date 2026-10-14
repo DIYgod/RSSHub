@@ -1,43 +1,98 @@
-import { load } from 'cheerio'; // 可以使用类似 jQuery 的 API HTML 解析器
+import { load } from 'cheerio';
+import pMap from 'p-map';
 
-import got from '@/utils/got'; // 自订的 got
+import cache from '@/utils/cache';
+import got from '@/utils/got';
+import { parseDate } from '@/utils/parse-date';
 
-/**
- * 获取页面内容
- * @param selector 正文CSS选择器
- * @param pageUrl 页面URL
- * @returns {Promise<string|string>} 页面内容，为符合RSS规范的HTML
- */
+/** Read article content and source metadata from the selected elements. */
 async function getPageItem(selector, pageUrl) {
     const response = await got(pageUrl);
     const $ = load(response.data);
     const page = $(selector);
-    return page ? page.html() : '无法获取内容';
+    if (!page.length) {
+        throw new Error(`Jishou University article content was not found: ${pageUrl}`);
+    }
+    return page.html();
 }
 
-/**
- * 获取页面内容、标题、日期
- * @param selector 正文CSS选择器
- * @param pageUrl 页面URL
- * @param titleSelector 标题CSS选择器
- * @param dateSelector 日期CSS选择器
- * @param dateHander 日期处理函数，在CMS系统中会以“日期：点击数”等特殊格式显示日期，需要处理切分出日期
- * @returns {Promise<{date, pageInfo: string, title: (*|jQuery|string)}|{date: string, pageInfo: string, title: string}>} 页面内容、标题、日期
- */
+/** Read article content and source metadata from the selected elements. */
 async function getPageDetails(selector, pageUrl, titleSelector, dateSelector, dateHander = (date) => date) {
     const response = await got(pageUrl);
     const $ = load(response.data);
     const page = $(selector);
+    if (!page.length) {
+        throw new Error(`Jishou University article content was not found: ${pageUrl}`);
+    }
     const date = dateHander($(dateSelector).text());
     const title = $(titleSelector).text();
-    return page
-        ? { pageInfo: page.html(), date, title }
-        : {
-              pageInfo: '无法获取内容',
-              date: '1970-1-1',
-              title: '无法获取标题',
-          };
+    return { pageInfo: page.html(), date, title };
 }
 const getPageItemAndDate = getPageDetails;
 
 export { getPageItem, getPageItemAndDate };
+
+const parseCmsDate = (text: string) => {
+    const value = text.match(/\d{4}-\d{2}-\d{2}/)?.[0];
+    return value && !Number.isNaN(parseDate(value, 'YYYY-MM-DD', true).getTime()) ? parseDate(`${value}T00:00:00+08:00`) : undefined;
+};
+
+const getCmsDetails = async (link: string) => {
+    const response = await got(link);
+    const $ = load(response.data);
+    const body = $('#articleDiv, .gp-article, .mzw-det > .txt, #js_content, .s_c2_bjq').first();
+    const attachments = $('a.gpArticleTitle[href*="docs/"]');
+    if (!body.length && !attachments.length) {
+        throw new Error(`Jishou University article content was not found: ${link}`);
+    }
+    body.find('img[data-src]').each((_, el) => {
+        $(el).attr('src', $(el).attr('data-src')!);
+    });
+    for (const el of body.find('[href], [src]').add(attachments).toArray()) {
+        const node = $(el);
+        for (const attr of ['href', 'src']) {
+            const value = node.attr(attr);
+            if (value) {
+                node.attr(attr, new URL(value, link).href);
+            }
+        }
+    }
+    const author =
+        $('.info span, .gp-articleAuthor span')
+            .toArray()
+            .map((el) =>
+                $(el)
+                    .text()
+                    .match(/^\s*作者[：:]\s*([^|]*)/)?.[1]
+                    ?.trim()
+            )
+            .find(Boolean) ||
+        $('#js_name').text().trim() ||
+        undefined;
+    return { description: (body.html() ?? '') + $.html(attachments), author };
+};
+
+export const getCmsItems = async (pageUrl: string, category: string) => {
+    const response = await got(pageUrl);
+    const $ = load(response.data);
+    const list = $('a.gpTextArea, ul.mzw-list4 li > a').toArray();
+    if (!list.length) {
+        throw new Error(`Jishou University notices were not found on the first page: ${pageUrl}`);
+    }
+    return pMap(
+        list,
+        async (el) => {
+            const node = $(el);
+            const href = node.attr('href');
+            if (!href) {
+                throw new Error(`Jishou University notice has no article link: ${pageUrl}`);
+            }
+            const link = new URL(href, pageUrl).href;
+            const title = node.find('.gpArticleTitle, .tit').first().text();
+            const date = node.find('.gpArticleDate').text() || `${node.find('.year').text()}-${node.find('.day').text()}`;
+            const details = await cache.tryGet(`jsu:cms:${link}`, () => getCmsDetails(link));
+            return { title, link, pubDate: parseCmsDate(date), category: [category], ...details };
+        },
+        { concurrency: 3 }
+    );
+};
