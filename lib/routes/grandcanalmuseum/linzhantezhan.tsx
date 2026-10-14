@@ -1,10 +1,10 @@
 import { load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
+import pMap from 'p-map';
 
 import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 
 import { namespace } from './namespace';
 
@@ -73,8 +73,9 @@ export const route: Route = {
                 return { title, link, imgUrl };
             });
 
-        const items = await Promise.all(
-            rawItems.map((item) =>
+        const items = await pMap(
+            rawItems,
+            (item) =>
                 cache.tryGet(item.link, async (): Promise<DataItem> => {
                     const detailResponse = await ofetch(item.link);
                     const $d = load(detailResponse);
@@ -95,28 +96,34 @@ export const route: Route = {
                     });
 
                     const { startDate, endDate } = parseExhibitionDuration(fullDuration);
-                    const pubDate = startDate ? parseDate(startDate) : undefined;
 
+                    const articleContent = $d('.zhengwen').html();
                     const description = renderToString(
                         <div>
                             <img src={item.imgUrl} />
                             <br />
-                            <p>
-                                <b>地点：</b>
-                                {location || '参考详情'}
-                            </p>
-                            <p>
-                                <b>开展：</b>
-                                {startDate || '未定/常设'}
-                            </p>
-                            <p>
-                                <b>闭展：</b>
-                                {endDate || '未定/常设'}
-                            </p>
-                            {fullDuration && (
-                                <p>
-                                    <small>原始展期：{fullDuration}</small>
-                                </p>
+                            {articleContent ? (
+                                <div dangerouslySetInnerHTML={{ __html: articleContent }} />
+                            ) : (
+                                <>
+                                    <p>
+                                        <b>地点：</b>
+                                        {location || '参考详情'}
+                                    </p>
+                                    <p>
+                                        <b>开展：</b>
+                                        {startDate || '未定/常设'}
+                                    </p>
+                                    <p>
+                                        <b>闭展：</b>
+                                        {endDate || '未定/常设'}
+                                    </p>
+                                    {fullDuration && (
+                                        <p>
+                                            <small>原始展期：{fullDuration}</small>
+                                        </p>
+                                    )}
+                                </>
                             )}
                         </div>
                     );
@@ -124,7 +131,6 @@ export const route: Route = {
                     return {
                         title: item.title,
                         link: item.link,
-                        pubDate,
                         description,
                         _extra: {
                             museumName,
@@ -133,8 +139,8 @@ export const route: Route = {
                             endDate,
                         },
                     };
-                })
-            )
+                }),
+            { concurrency: 3 }
         );
 
         return {
