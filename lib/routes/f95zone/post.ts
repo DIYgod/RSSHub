@@ -1,6 +1,7 @@
 import { load } from 'cheerio';
 
 import { config } from '@/config';
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -42,6 +43,9 @@ Note: This route does not support Radar auto-detection because the post ID is in
     radar: [],
     handler: async (ctx) => {
         const { thread, postId } = ctx.req.param();
+        if (!/^post-[1-9]\d*$/.test(postId)) {
+            throw new InvalidParameterError('postId must be a positive post ID prefixed with post-, for example post-5909830');
+        }
         const baseUrl = 'https://f95zone.to';
         const link = `${baseUrl}/threads/${thread}/#${postId}`;
 
@@ -54,6 +58,9 @@ Note: This route does not support Radar auto-detection because the post ID is in
         const $ = load(response);
         const title = $('h1.p-title-value').text().trim();
         const post = $(`article[data-content="${postId}"]`);
+        if (!post.length) {
+            throw new Error(`Post ${postId} was not found on the first page of thread ${thread}. Check the post ID and whether it requires F95ZONE_COOKIE.`);
+        }
         const content = post.find('.bbWrapper').html() || '';
         const author = post.attr('data-author');
         const postDate = post.find('time.u-dt').first().attr('datetime');
@@ -74,7 +81,7 @@ Note: This route does not support Radar auto-detection because the post ID is in
                     link,
                     guid: updateDate ? `${link}_${updateDate}` : link,
                     description: processContent(content),
-                    pubDate: updateDate ? parseDate(updateDate) : postDate ? parseDate(postDate) : undefined,
+                    pubDate: postDate ? parseDate(postDate) : undefined,
                     author,
                     category: tags,
                 },
