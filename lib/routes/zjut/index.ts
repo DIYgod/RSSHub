@@ -1,5 +1,6 @@
 import { load } from 'cheerio';
 import type { Context } from 'hono';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
@@ -20,7 +21,7 @@ export const route: Route = {
             target: '/:type',
         },
     ],
-    name: '浙江工业大学',
+    name: '首页',
     maintainers: ['junbaor'],
     handler,
     url: 'www.zjut.edu.cn',
@@ -49,20 +50,22 @@ async function handler(ctx: Context) {
             };
         });
 
-    const items = await Promise.all(
-        list.map((item) => {
+    const items = await pMap(
+        list,
+        async (item) => {
             if (!item.link.startsWith(`${host}/`)) {
                 return item;
             }
 
-            return cache.tryGet(item.link, async () => {
+            const description = await cache.tryGet(`zjut:index:details:${item.link}`, async () => {
                 const response = await ofetch(item.link);
                 const $ = load(response);
 
-                item.description = $('.wp_articlecontent').html();
-                return item;
+                return $('.wp_articlecontent').html();
             });
-        })
+            return { ...item, description };
+        },
+        { concurrency: 3 }
     );
 
     return {

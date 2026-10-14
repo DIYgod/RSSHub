@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
@@ -20,7 +21,7 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    name: '浙工大新闻',
+    name: '新闻',
     maintainers: ['junbaor', 'yikZero'],
     url: 'www.news.zjut.edu.cn',
     handler,
@@ -48,30 +49,33 @@ async function handler(ctx) {
             const title = $item.find('a').text();
             const link = $item.find('a').attr('href');
 
-            const date = $item.find("span[class='news_meta']").text();
+            const dateText = $item.find("span[class='news_meta']").text();
+            const date = dateText.trim() ? parseDate(dateText) : undefined;
 
             return {
                 title,
                 description: '',
-                pubDate: parseDate(date),
+                pubDate: date && !Number.isNaN(date.getTime()) ? date : undefined,
                 link,
             };
         });
 
-    const items = await Promise.all(
-        list.map((item) => {
+    const items = await pMap(
+        list,
+        async (item) => {
             if (item.link!.startsWith('http')) {
                 item.description = `<a href="${item.link}" target="_blank" rel="noopener noreferrer">${item.link}</a>`;
                 return item;
             }
-            return cache.tryGet(`${host}${item.link}`, async () => {
+            const link = `${host}${item.link}`;
+            const description = await cache.tryGet(`zjut:news:details:${link}`, async () => {
                 const itemsResponse = await got(`${host}${item.link}`);
                 const $ = load(itemsResponse.data);
-                item.link = `${host}${item.link}`;
-                item.description = $('div[class="wp_articlecontent"]').html() ?? '';
-                return item;
+                return $('div[class="wp_articlecontent"]').html() ?? '';
             });
-        })
+            return { ...item, link, description };
+        },
+        { concurrency: 3 }
     );
 
     return {
