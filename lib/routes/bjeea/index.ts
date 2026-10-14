@@ -1,7 +1,10 @@
 import { load } from 'cheerio';
 import type { Context } from 'hono';
+import { FetchError } from 'ofetch';
+import pMap from 'p-map';
 
 import InvalidParameterError from '@/errors/types/invalid-parameter';
+import NotFoundError from '@/errors/types/not-found';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
@@ -44,6 +47,28 @@ const categoryMap = {
     zkkd: { title: '首页 / 自考快递', suffix: 'html/zkkd' },
 };
 
+async function getArticle(item: DataItem & { link: string }) {
+    if (!item.link.startsWith(baseUrl)) {
+        return item;
+    }
+    try {
+        const description = await cache.tryGet(`bjeea:article:${item.link}`, async () => {
+            const response = await ofetch(item.link);
+            const content = load(response)('div.info-txt').html();
+            if (!content) {
+                throw new NotFoundError('The source did not provide article content.');
+            }
+            return content;
+        });
+        return { ...item, description };
+    } catch (error) {
+        if (error instanceof FetchError || error instanceof NotFoundError) {
+            return item;
+        }
+        throw error;
+    }
+}
+
 async function handler(ctx: Context) {
     const { type = 'bjeeagg' } = ctx.req.param();
     if (!Object.hasOwn(categoryMap, type)) {
@@ -65,21 +90,10 @@ async function handler(ctx: Context) {
                 pubDate: timezone(parseDate($item.find('span').text()), 8),
                 link,
                 guid: link,
-                description: title,
             };
         });
 
-    const result = await Promise.all(
-        list.map((item) =>
-            item.link.startsWith(baseUrl)
-                ? cache.tryGet(item.link, async () => {
-                      const detailResponse = await ofetch(item.link);
-                      item.description = load(detailResponse)('div.info-txt').html();
-                      return item;
-                  })
-                : item
-        )
-    );
+    const result = await pMap(list, getArticle, { concurrency: 6, stopOnError: false });
 
     return {
         title: siteTitle + categoryMap[type].title,
