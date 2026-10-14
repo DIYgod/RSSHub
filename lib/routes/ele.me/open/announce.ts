@@ -2,6 +2,8 @@ import { randomUUID } from 'node:crypto';
 
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/open/announce',
@@ -37,7 +39,7 @@ async function handler() {
         item: data.result.broadcastList.map((item) => ({
             title: item.title,
             description: '',
-            pubDate: item.beginDate,
+            pubDate: item.beginDate ? timezone(parseDate(item.beginDate), 8) : undefined,
             link: `https://open.shop.ele.me/common/publicnotice/${item.templateId}`,
         })),
     };
