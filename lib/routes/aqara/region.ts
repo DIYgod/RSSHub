@@ -1,7 +1,8 @@
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 
 export const route: Route = {
-    path: '/:region/:type?',
+    path: '/:region{cn|kr|eu|us|ru|en}/:type?',
     categories: ['other'],
     example: '/aqara/en/news',
     parameters: {
@@ -20,13 +21,16 @@ export const route: Route = {
     handler,
 };
 
-function handler(ctx) {
-    const types = {
-        news: 'press-release',
-        blog: 'article',
-    };
+const types = {
+    news: 'news',
+    blog: 'blog',
+};
 
+function handler(ctx) {
     const { region = 'en', type = 'news' } = ctx.req.param();
+    if (!Object.hasOwn(types, type)) {
+        throw new InvalidParameterError('Invalid Aqara content type. Use news or blog.');
+    }
     const redirectTo = `/aqara/${region}/category/${types[type]}`;
     return ctx.set('redirect', redirectTo);
 }
