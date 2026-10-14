@@ -1,4 +1,6 @@
 import { load } from 'cheerio';
+import { FetchError } from 'ofetch';
+import pMap from 'p-map';
 
 import type { RidershipExtra } from '@/routes/tokyometro/utils';
 import { cellText, parseCount, parseFiscalYear, parsePct, ridershipItem } from '@/routes/tokyometro/utils';
@@ -27,8 +29,11 @@ const fetchPage = (url: string): Promise<string> => ofetch(url, { headers: BROWS
 const fetchOptional = async (url: string): Promise<string | null> => {
     try {
         return await fetchPage(url);
-    } catch {
-        return null;
+    } catch (error) {
+        if (error instanceof FetchError && error.response?.status === 404) {
+            return null;
+        }
+        throw error;
     }
 };
 
@@ -64,8 +69,8 @@ const parseStations = (html: string, fiscalYear: number, firstRank: number): Arr
             unit: '人/日',
             measure: 'boarding',
             rank: ranked ? parseCount(rankText) : firstRank + index,
-            // A ratio above 50 (e.g. 102.5) means "% of the previous year"; anything else is already a % change.
-            yoy_pct: yoy === null ? null : yoy > 50 ? Math.round((yoy - 100) * 10) / 10 : yoy,
+            // From FY2023 the source publishes a ratio; earlier years publish a percentage change.
+            yoy_pct: yoy === null ? null : fiscalYear >= 2023 ? Math.round((yoy - 100) * 10) / 10 : yoy,
             raw,
         };
         return ridershipItem(extra, r.link ?? `${HOST}/company/data/passenger/`);
@@ -82,7 +87,11 @@ const fetchYear = async (indexHtml: string, indexUrl: string) => {
     const items = parseStations(indexHtml, fiscalYear, 1);
     // 101位以下: {year}_01.html … in the same directory; a missing page (404) or an empty one ends the sequence.
     const dir = indexUrl.slice(0, indexUrl.lastIndexOf('/') + 1);
-    const subpages = await Promise.all(Array.from({ length: MAX_SUBPAGES }, (_, i) => fetchOptional(`${dir}${year}_${String(i + 1).padStart(2, '0')}.html`)));
+    const subpages = await pMap(
+        Array.from({ length: MAX_SUBPAGES }, (_, i) => `${dir}${year}_${String(i + 1).padStart(2, '0')}.html`),
+        fetchOptional,
+        { concurrency: 3 }
+    );
     for (const html of subpages) {
         const page = html === null ? [] : parseStations(html, fiscalYear, items.length + 1);
         if (page.length === 0) {
