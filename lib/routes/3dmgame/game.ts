@@ -30,17 +30,17 @@ async function handler(ctx) {
 
     const { data: response } = await got(url);
     const $ = load(response);
-    const listSelector = type === 'resource' ? $('.ZQ_Left .Llis_4 .lis li, .zq_left .rigtbox7 li').toArray() : $('.ZQ_Left .lis, .zq_left .newsleft li').toArray();
+    const listSelector = type === 'resource' ? $('.ZQ_Left .Llis_4 .lis li, .zq_left .rigtbox7 li').toArray() : $('.ZQ_Left .lis, .zq_left .newsleft li, .zq_left .newlis li').toArray();
 
     const list = listSelector.map((i) => {
         const $i = $(i);
         const a = $i.find('a[href]').last();
-        const time = $i.find('.time');
+        const time = $i.find('.time, > span');
         return {
             title: a.text(),
             description: $i.find('.miaoshu').text(),
             link: a.attr('href'),
-            pubDate: time.length ? parseDate(time.text().trim()) : null, // 2020-12-31
+            pubDate: time.length ? parseDate(time.text().trim()) : undefined, // 2020-12-31
         };
     });
 
