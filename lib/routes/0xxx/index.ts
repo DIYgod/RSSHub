@@ -8,12 +8,13 @@ import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
 import { renderDescription } from './templates/description';
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { filter } = ctx.req.param();
-    const limit = Number(ctx.req.query('limit') ?? '100');
+    const limit = getRouteLimit(ctx, 100);
 
     const baseUrl = 'https://0xxx.ws';
     const targetUrl: string = new URL(filter ? `?${filter}` : '', baseUrl).href;
@@ -111,7 +112,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
     const logoSrc: string | undefined = $('div.logo img').attr('src');
 
     return {
-        title: title ? `${title} - ${filter}` : filter,
+        title: title && filter ? `${title} - ${filter}` : title || filter,
         description: $('meta[name="description"]').attr('content'),
         link: targetUrl,
         item: items,
