@@ -1,5 +1,6 @@
 import { load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
@@ -99,8 +100,9 @@ export const route: Route = {
                 };
             });
 
-        const items = await Promise.all(
-            list.map((item) => {
+        const items = await pMap(
+            list,
+            (item) => {
                 // use seperate cache key for special path
                 const cacheKey = isSpecial ? `${item.itemLink}-special` : item.itemLink;
 
@@ -112,7 +114,7 @@ export const route: Route = {
                     const content = load(detailResponse.data);
 
                     const pubDateRaw = content('.article .info .infowrap img.icon_time').next('span').text().replaceAll('时间：', '');
-                    const pubDate = parseDate(pubDateRaw);
+                    const pubDate = pubDateRaw ? parseDate(pubDateRaw) : undefined;
 
                     // Default path: return as news, no detail information for return
                     if (!isSpecial) {
@@ -139,7 +141,7 @@ export const route: Route = {
                     const fullDuration = texts.find((text) => text.includes('时间：'))?.replaceAll(/(?:展览)?时间：/g, '');
 
                     if (!fullDuration) {
-                        return {};
+                        return { title: item.title, link: item.itemLink, pubDate, description: content('.content.f16').html() ?? undefined };
                     }
 
                     let location = texts.find((text) => text.includes('地点：'))?.replaceAll(/(?:展(?:览|出))?地点：/g, '') || '';
@@ -148,20 +150,7 @@ export const route: Route = {
 
                     location = locMatch[0];
 
-                    let title = texts.find((text) => text.includes('展览名称：'))?.replaceAll('展览名称：', '');
-
-                    // Some exhibition titles are not in the format of "展览名称: xxx", try to extract title from the original list title if the above method failed
-                    if (!title) {
-                        // try get the title between “” or 《》, if not exist, get the text after '|' in the original list title
-                        const quoteMatch = item.title.match(/[“《](.*?)[”》]/);
-
-                        if (quoteMatch) {
-                            title = quoteMatch[1];
-                        } else if (item.title.includes('|')) {
-                            const pipeParts = item.title.split('|');
-                            title = pipeParts.at(-1);
-                        }
-                    }
+                    const title = item.title;
 
                     const { startDate, endDate } = extractDates(fullDuration);
                     const { imgUrl, itemLink } = item;
@@ -203,7 +192,8 @@ export const route: Route = {
                         },
                     };
                 });
-            })
+            },
+            { concurrency: 3 }
         );
 
         return {
