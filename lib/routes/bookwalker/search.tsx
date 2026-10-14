@@ -7,10 +7,11 @@ import { renderToString } from 'hono/jsx/dom/server';
 import type { Data, DataItem, Language, Route } from '@/types';
 import { ViewType } from '@/types';
 import ofetch from '@/utils/ofetch';
+import { getRouteLimit } from '@/utils/route-limit';
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { filter = 'order=sell_desc' } = ctx.req.param();
-    const limit = Number(ctx.req.query('limit') ?? '24');
+    const limit = getRouteLimit(ctx, 24);
 
     const baseUrl = 'https://www.bookwalker.com.tw';
     const targetUrl: string = new URL(`search?${filter}`, baseUrl).href;
@@ -53,7 +54,6 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 author: authors,
                 content: {
                     html: description,
-                    text: description,
                 },
                 image,
                 banner: image,
@@ -104,7 +104,7 @@ export const route: Route = {
     radar: [
         {
             source: ['www.bookwalker.com.tw/search'],
-            target: '/bookwalker/search',
+            target: '/search',
         },
     ],
     view: ViewType.Articles,
