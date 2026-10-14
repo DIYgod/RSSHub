@@ -34,22 +34,29 @@ async function handler() {
         .toArray()
         .map((item) => {
             const $item = $(item);
-            const a = $item.find('a');
+            const a = $item.find('.Article_Title a');
+            const href = a.attr('href')?.trim();
+            if (!href) {
+                return null;
+            }
             return {
                 title: a.attr('title') || a.text(),
-                link: `${host}${a.attr('href')}`,
-                description: '',
+                link: new URL(href, host).href,
                 pubDate: timezone(parseDate($item.find('div.ex_fields>span.Article_PublishDate').text(), 'YYYY-MM-DD'), 8),
-                author: '浙江师范大学',
             };
-        });
+        })
+        .filter((item) => item !== null);
 
     const items = await Promise.all(
         list.map((item) =>
             cache.tryGet(item.link, async () => {
                 const detail = await ofetch(item.link);
                 const $detail = load(detail);
-                return { ...item, description: $detail('div.Article_Content').html() ?? '' };
+                return {
+                    ...item,
+                    description: $detail('div.Article_Content').html() ?? '',
+                    author: $detail('.info_xx .Article_Author').text().trim() || undefined,
+                };
             })
         )
     );
