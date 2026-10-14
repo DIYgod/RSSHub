@@ -24,11 +24,13 @@ async function handler() {
         .map((item) => {
             const $item = $(item);
             const a = $item.find('.news-teaser__title a');
+            const date = $item.find('.news-teaser__date').text().trim();
+            const pubDate = date ? parseDate(date, 'MMMM D, YYYY', true) : undefined;
             return {
-                title: a.text().trim(),
+                title: a.text(),
                 description: $item.find('.news-teaser__summary').text().trim(),
                 link: new URL(a.attr('href')!, link).href,
-                pubDate: parseDate($item.find('.news-teaser__date').text(), 'MMMM D, YYYY'),
+                pubDate: pubDate && !Number.isNaN(pubDate.getTime()) ? pubDate : undefined,
                 category: $item.find('.news-teaser__category a').text(),
             };
         });
