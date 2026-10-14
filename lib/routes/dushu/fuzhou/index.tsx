@@ -2,17 +2,19 @@ import { renderToString } from 'hono/jsx/dom/server';
 
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/parse-date';
 
 const host = 'https://gateway-api-ipv4.dushu365.com/compose-orch/offlineActivity/v100/activity/list';
 const itemLink = 'https://card.dushu.io/requirement/offline-activity/activity-detail/v/index.html';
 const link = 'https://card.dushu.io/requirement/offline-activity/host-home/v/index.html?webview-type=rn&hostId=xtntzsnwsnkw511r';
 
-const transformTime = (item) => {
-    const startTime = new Date(item.startTime);
-    item.startTime = `${startTime.getFullYear()}-${startTime.getMonth() + 1}-${startTime.getDate()} ${startTime.getHours()}:${startTime.getMinutes()}`;
-    const endTime = new Date(item.endTime);
-    item.endTime = `${endTime.getFullYear()}-${endTime.getMonth() + 1}-${endTime.getDate()} ${endTime.getHours()}:${endTime.getMinutes()}`;
-};
+const eventTimeFormat = new Intl.DateTimeFormat('sv-SE', {
+    dateStyle: 'short',
+    timeStyle: 'short',
+    timeZone: 'Asia/Shanghai',
+    hour12: false,
+});
+const formatEventTime = (time: number) => eventTimeFormat.format(parseDate(time));
 
 export const route: Route = {
     path: '/fuzhou',
@@ -29,13 +31,14 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['www.dushu365.com*'],
+            source: ['www.dushu365.com/'],
+            target: '/fuzhou',
         },
     ],
     name: '樊登福州运营中心',
     maintainers: ['Fatpandac'],
     handler,
-    url: 'www.dushu365.com*',
+    url: 'www.dushu365.com',
 };
 
 async function handler() {
@@ -50,13 +53,13 @@ async function handler() {
     });
 
     const data = response.data.activityListVOS;
-    data.map((element) => transformTime(element));
 
     return {
         title: '樊登福州运营中心',
         link,
         item: data.map((item) => ({
             title: item.activityName,
+            pubDate: parseDate(item.startTime),
             link: itemLink + '?productId=' + item.activityId + '&type=' + item.type,
             description: renderToString(
                 <>
@@ -64,9 +67,9 @@ async function handler() {
                     <br />
                     <text>{`地点：${item.address}`}</text>
                     <br />
-                    <text>{`开始时间： ${item.startTime}`}</text>
+                    <text>{`开始时间： ${formatEventTime(item.startTime)}`}</text>
                     <br />
-                    <text>{`结束时间： ${item.endTime}`}</text>
+                    <text>{`结束时间： ${formatEventTime(item.endTime)}`}</text>
                     <br />
                     <img style="heigth:500px;width:500px" src={item.posterImg} />
                 </>
