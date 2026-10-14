@@ -21,7 +21,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { id, lang } = ctx.req.param();
-    const mangaDetail = await getMangaDetails(id, lang);
+    const mangaDetail = await getMangaDetails(id, true, lang);
 
     return {
         title: mangaDetail.title,
