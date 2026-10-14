@@ -1,9 +1,11 @@
 import CryptoJS from 'crypto-js';
+import pMap from 'p-map';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/hqsz',
@@ -45,6 +47,13 @@ function Decrypt(word) {
     return decryptedStr;
 }
 
+interface Notice {
+    id: string;
+    title: string;
+    author: string;
+    publishTime: string;
+}
+
 async function handler() {
     const base = 'http://hqsz.ouc.edu.cn/';
     const link = base + 'api/website/frontendWebsite/lists';
@@ -57,34 +66,35 @@ async function handler() {
             pageIndex: '1',
         },
     });
-    const list = JSON.parse(Decrypt(data)).data.list.map((item) => ({
+    const list: Array<DataItem & { id: string; link: string }> = JSON.parse(Decrypt(data)).data.list.map((item: Notice) => ({
         title: item.title,
         id: item.id,
         author: item.author,
         link: base + 'news_detail.html?id=' + item.id,
-        pubDate: parseDate(item.publishTime),
+        pubDate: timezone(parseDate(item.publishTime), 8),
     }));
 
-    const out = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link, async () => {
+    const out = await pMap(
+        list,
+        async ({ id, ...metadata }) => {
+            const description = await cache.tryGet(`ouc:article:body:${metadata.link}`, async () => {
                 const { data } = await got.post(base + 'api/website/frontendWebsite/info', {
                     form: {
                         schoolCode: '10423',
                         website: '89e97da117d547128283cf9d12891fa9',
-                        id: item.id,
+                        id,
                     },
                 });
-                item.description = Decrypt(JSON.parse(Decrypt(data)).data.content);
-                delete item.id;
-                return item;
-            })
-        )
+                return Decrypt(JSON.parse(Decrypt(data)).data.content);
+            });
+            return { ...metadata, description };
+        },
+        { concurrency: 3 }
     );
 
     return {
         title: '中国海洋大学后勤公告通知',
-        link,
+        link: base + 'news.html?typeId=02',
         description: '中国海洋大学后勤公告通知',
         item: out,
     };
