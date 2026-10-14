@@ -4,6 +4,7 @@ import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
 import { pageByNavigationPathQuery } from './query';
 import { getItem } from './utils';
@@ -36,7 +37,7 @@ export const route: Route = {
 
 async function handler(ctx: Context) {
     const { path } = ctx.req.param();
-    const limit = Number.parseInt(ctx.req.query('limit') ?? '10');
+    const limit = getRouteLimit(ctx, 10);
 
     const response = await ofetch('https://api.afr.com/api/content-audience/afr/graphql', {
         query: {
@@ -55,7 +56,7 @@ async function handler(ctx: Context) {
         description: node.overview.about,
         link: `https://www.afr.com${node.urls.canonical.path}`,
         pubDate: parseDate(node.dates.firstPublished),
-        updated: parseDate(node.dates.modified),
+        updated: parseDate(node.dates.published),
         author: node.byline
             .filter((byline) => byline.type === 'AUTHOR')
             .map((byline) => byline.author.name)
