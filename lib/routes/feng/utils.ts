@@ -71,6 +71,9 @@ const getThread = (tid, topicId) => {
                 'X-Request-Id': getXRequestId(url),
             },
         });
+        if (response.data.status.code !== 0) {
+            throw new Error(`The forum did not provide thread ${tid}: ${response.data.status.message} (code ${response.data.status.code}). Check that ${baseUrl}/post/${tid} is public.`);
+        }
         return response.data;
     });
 };
