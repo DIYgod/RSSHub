@@ -7,6 +7,7 @@ import type { Data, DataItem, Language, Route } from '@/types';
 import { ViewType } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
 const idOptions = [
     {
@@ -128,7 +129,7 @@ const languageOptions = [
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { id = 'bandizip', language = 'en' } = ctx.req.param();
-    const limit = Number(ctx.req.query('limit') ?? '500');
+    const limit = getRouteLimit(ctx, 500);
 
     const validIds = new Set<string>(idOptions.map((option) => option.value));
 
@@ -164,7 +165,6 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
             const linkUrl: string = targetUrl;
             const guid = `bandisoft-${id}-${language}-${version}`;
-            const upDatedStr: string | undefined = pubDateStr;
 
             const processedItem: DataItem = {
                 title,
@@ -176,9 +176,8 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 id: guid,
                 content: {
                     html: description,
-                    text: description,
+                    text: $el.find('ul.cell3').text(),
                 },
-                updated: upDatedStr ? parseDate(upDatedStr) : undefined,
                 language: lang,
             };
 
@@ -190,7 +189,6 @@ export const handler = async (ctx: Context): Promise<Data> => {
         description: $('meta[name="description"]').attr('content'),
         link: targetUrl,
         item: items,
-        allowEmpty: true,
         image: $('img#logo_light').attr('src'),
         author,
         language: lang,
@@ -263,12 +261,12 @@ To subscribe to [Bandizip Version History](https://www.bandisoft.com/bandizip/hi
     radar: [
         {
             source: ['www.bandisoft.com/:id/history'],
-            target: (params) => {
-                const id: string = params.id;
-
-                return `/bandisoft/history${id ? `/${id}` : ''}`;
-            },
+            target: '/history/:id',
         },
+        ...languageOptions.map(({ value }) => ({
+            source: [`${value}.bandisoft.com/:id/history`],
+            target: `/history/:id/${value}`,
+        })),
     ],
     view: ViewType.Articles,
 
@@ -290,7 +288,7 @@ To subscribe to [Bandizip Version History](https://www.bandisoft.com/bandizip/hi
             },
         },
         description: `::: tip
-若订阅 [Bandizip 更新记录](https://cn.bandisoft.com/bandizip/history/)，网址为 \`https://cn.bandisoft.com/bandizip/history/\`，请截取 \`cn\` 作为 \`category\` 参数填入，此时目标路由为 [\`/bandisoft/:language?/:id?\`](https://rsshub.app/bandisoft/:language?/:id?)。
+若订阅 [Bandizip 更新记录](https://cn.bandisoft.com/bandizip/history/)，请将 \`bandizip\` 作为 \`id\`、\`cn\` 作为 \`language\` 参数，目标路由为 [\`/bandisoft/history/bandizip/cn\`](https://rsshub.app/bandisoft/history/bandizip/cn)。
 :::
 
 <details>
