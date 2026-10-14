@@ -16,7 +16,7 @@ export async function processList(listElements) {
             return processItem({ link, date });
         })
     );
-    return items.map((item) => (item.status === 'fulfilled' ? item.value : { title: 'Error Reading Item' }));
+    return items.filter((item) => item.status === 'fulfilled').map((item) => item.value);
 }
 
 async function processItem({ link: articleLink, date }) {
