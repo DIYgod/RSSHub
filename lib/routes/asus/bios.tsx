@@ -1,6 +1,8 @@
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 
+import InvalidParameterError from '@/errors/types/invalid-parameter';
+import NotFoundError from '@/errors/types/not-found';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
@@ -29,15 +31,31 @@ type ProductInfo = {
     productLine: string;
 };
 
+const normalizeModel = (model: string): string =>
+    model
+        .replace(/-model$/i, '')
+        .toLowerCase()
+        .replaceAll(/[^a-z\d]/g, '');
+
+const matchesModel = (product, model: string): boolean => {
+    const productSlug = new URL(product.Url).pathname.split('/').findLast((segment) => segment.length > 0);
+    const names = [product.Title, ...product.Title.split(/[()/]/), productSlug].filter(Boolean);
+    return names.some((name) => normalizeModel(name) === normalizeModel(model));
+};
+
 const getProductInfo = (model, language) => {
     const currentEndpoint = endPoints[language] ?? endPoints.zh;
     const { url, lang, websiteCode } = currentEndpoint;
 
     const searchAPI = `${url}recent-data/apiv2/SearchSuggestion?SystemCode=asus&WebsiteCode=${websiteCode}&SearchKey=${model}&SearchType=ProductsAll&RowLimit=4&sitelang=${lang}`;
 
-    return cache.tryGet(`asus:bios:${model}:${language}`, async (): Promise<ProductInfo> => {
+    return cache.tryGet(`asus:bios:v2:${model}:${language}`, async (): Promise<ProductInfo> => {
         const response = await ofetch(searchAPI);
-        const product = response.Result[0].Content[0];
+        // An unmatched search still returns recommended products, so its first item is not reliable.
+        const product = response.Result?.flatMap((group) => group.Content ?? []).find((candidate) => matchesModel(candidate, model));
+        if (!product) {
+            throw new NotFoundError(`ASUS did not return a matching product for ${model}. Use the exact model name or product-page slug.`);
+        }
 
         return {
             productID: product.DataId,
@@ -104,6 +122,9 @@ export const route: Route = {
 async function handler(ctx) {
     const model = ctx.req.param('model');
     const language = ctx.req.param('lang') ?? 'en';
+    if (!Object.hasOwn(endPoints, language)) {
+        throw new InvalidParameterError('Invalid language. Use en for global or zh for Chinese ASUS support.');
+    }
     const productInfo = await getProductInfo(model, language);
     const biosAPI =
         language === 'zh'
