@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
@@ -59,22 +60,25 @@ async function handler() {
         })
         .filter((item) => item !== null);
 
-    const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link, async () => {
+    const items = await pMap(
+        list,
+        async (item) => ({
+            ...item,
+            ...(await cache.tryGet(`meritalk:body:${item.link}`, async () => {
                 const { data: response } = await got(item.link);
                 const $ = load(response);
 
                 const featuredImage = $('.single-featured-image').html() || '';
                 const fullContent = $('.single-body').html() || '';
-                item!.description = renderDescription({
-                    featuredImage,
-                    fullContent,
-                });
-
-                return item;
-            })
-        )
+                return {
+                    description: renderDescription({
+                        featuredImage,
+                        fullContent,
+                    }),
+                };
+            })),
+        }),
+        { concurrency: 3 }
     );
 
     return {
