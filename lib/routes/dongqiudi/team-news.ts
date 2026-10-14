@@ -9,8 +9,8 @@ export const route: Route = {
     parameters: { team: '球队 id, 可在[懂球帝数据](https://www.dongqiudi.com/data)中找到' },
     radar: [
         {
-            source: ['www.dongqiudi.com/team/*team'],
-            target: (params) => `/dongqiudi/team_news/${params.team.replace('.html', '')}`,
+            source: ['www.dongqiudi.com/team/:team'],
+            target: '/team_news/:team',
         },
     ],
     name: '球队新闻',
@@ -19,7 +19,7 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const teamId = ctx.req.param('team');
+    const teamId = ctx.req.param('team').replace(/\.html$/, '');
 
-    return await processFeed('team', teamId);
+    return await processFeed(ctx, 'team', teamId);
 }
