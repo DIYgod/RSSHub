@@ -1,14 +1,17 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
-import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
 import { renderDescription } from './templates/description';
+import { fetchArticleMetadata } from './utils';
 
 export const route: Route = {
-    name: 'IEEE Author Articles',
+    name: 'Author Articles',
     maintainers: ['Derekmini'],
     categories: ['journal'],
     path: '/author/:aid/:sortType',
@@ -30,7 +33,10 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { aid, sortType } = ctx.req.param();
-    const count = ctx.req.query('limit') || 10;
+    if (!/^[1-9]\d*$/.test(aid)) {
+        throw new InvalidParameterError('Invalid author ID. Use a positive integer.');
+    }
+    const count = getRouteLimit(ctx, 10);
     const host = 'https://ieeexplore.ieee.org';
 
     const res = await ofetch(`${host}/rest/author/${aid}`);
@@ -38,7 +44,7 @@ async function handler(ctx) {
     const title = `${author.preferredName} on IEEE Xplore`;
     const link = `${host}/author/${aid}`;
     const description = author.bioParagraphs.join(' ');
-    const image = `${host}${author.photoUrl}`;
+    const image = author.photoUrl ? new URL(author.photoUrl, host).href : undefined;
 
     const response = await ofetch(`${host}/rest/search`, {
         method: 'POST',
@@ -49,33 +55,26 @@ async function handler(ctx) {
         },
     });
 
-    const list = response.records.map((item) => ({
+    const list: Array<{ title: string; link: string; doi?: string; author?: string; abstract: string; pubDate?: Date }> = response.records.map((item) => ({
         title: item.articleTitle,
         link: item.htmlLink,
         doi: item.doi,
-        authors: 'authors' in item ? item.authors.map((itemAuth) => itemAuth.preferredName).join('; ') : 'Do not have author',
-        abstract: 'abstract' in item ? item.abstract : '',
+        author: item.authors?.map((itemAuth) => itemAuth.preferredName).join('; '),
+        abstract: load(item.abstract ?? '').text(),
     }));
 
-    const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link, async () => {
-                if (item.abstract !== '') {
-                    const res = await ofetch(`${host}${item.link}`, {
-                        parseResponse: (txt) => txt,
-                    });
-                    const $ = load(res);
-                    const metadataMatch = $.html().match(/metadata=(.*);/);
-                    const metadata = metadataMatch ? JSON.parse(metadataMatch[1]) : null;
-                    item.pubDate = metadata?.insertDate ? parseDate(metadata.insertDate) : undefined;
-                    item.abstract = load(metadata?.abstract || '').text();
-                }
-                return {
-                    ...item,
-                    description: renderDescription(item),
-                };
-            })
-        )
+    const items = await pMap(
+        list,
+        async (item) => {
+            const metadata = item.abstract ? await fetchArticleMetadata(item.link) : undefined;
+            const article = {
+                ...item,
+                abstract: metadata?.abstract || item.abstract,
+                pubDate: metadata?.insertDate ? parseDate(metadata.insertDate) : undefined,
+            };
+            return { ...article, description: renderDescription(article) };
+        },
+        { concurrency: 3 }
     );
 
     return {
