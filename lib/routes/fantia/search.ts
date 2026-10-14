@@ -1,4 +1,5 @@
 import { config } from '@/config';
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { DataItem, Route } from '@/types';
 import { ViewType } from '@/types';
 import got from '@/utils/got';
@@ -49,7 +50,7 @@ export const route: Route = {
             default: 'all',
         },
         period: {
-            description: 'Ranking period, see the table below, empty by default',
+            description: 'Ranking period, see the table below, empty by default. Rankings cannot be combined with a keyword or a custom search order.',
             options: [
                 { value: 'daily', label: 'デイリー' },
                 { value: 'weekly', label: 'ウィークリー' },
@@ -151,16 +152,42 @@ Rating
 
 async function handler(ctx) {
     const type = ctx.req.param('type') || 'posts';
+    if (!['fanclubs', 'posts', 'products', 'commissions'].includes(type)) {
+        throw new InvalidParameterError(`Unknown search type "${type}". Expected fanclubs, posts, products, or commissions.`);
+    }
     const caty = ctx.req.param('caty') || '';
     const order = ctx.req.param('order') || 'updater';
     const rating = ctx.req.param('rating') || 'all';
     const keyword = ctx.req.param('keyword') || '';
     const period = ctx.req.param('period') || '';
+    if (period && !['daily', 'weekly', 'monthly', 'all'].includes(period)) {
+        throw new InvalidParameterError(`Unknown ranking period "${period}". Expected daily, weekly, monthly, or all.`);
+    }
+    if (period && (keyword || order !== 'updater')) {
+        throw new InvalidParameterError('Fantia rankings do not support keyword searches or custom search orders. Leave period empty to search.');
+    }
+    if (period && type === 'fanclubs' && rating !== 'all') {
+        throw new InvalidParameterError('Fantia creator rankings do not support rating filters. Leave period empty to search by rating.');
+    }
 
     const rootUrl = 'https://fantia.jp';
-    const apiUrl = `${rootUrl}/api/v1/search/${type}?keyword=${keyword}&peroid=${period}&brand_type=0&category=${caty === 'all' ? '' : caty}&order=${order}${
-        rating === 'all' ? '' : rating === 'general' ? '&rating=general' : '&adult=1'
-    }&per_page=30`;
+    const searchParams = new URLSearchParams({ brand_type: '0', category: caty === 'all' ? '' : caty, per_page: '30' });
+    if (period) {
+        searchParams.set('period', period);
+        searchParams.set('kind', 'point');
+        if (type !== 'fanclubs') {
+            searchParams.set('rating_type', rating === 'general' ? 'general' : rating === 'all' ? 'all' : 'adult');
+        }
+    } else {
+        searchParams.set('keyword', keyword);
+        searchParams.set('order', order);
+    }
+    if (!period && rating === 'general') {
+        searchParams.set('rating', 'general');
+    } else if (!period && rating !== 'all') {
+        searchParams.set('adult', '1');
+    }
+    const apiUrl = `${rootUrl}/api/v1/${period ? 'ranking' : 'search'}/${type}?${searchParams}`;
     const response = await got({
         method: 'get',
         url: apiUrl,
@@ -176,7 +203,7 @@ async function handler(ctx) {
             items = response.data.fanclubs.map((item) => ({
                 title: item.fanclub_name_with_creator_name,
                 link: `${rootUrl}/fanclubs/${item.id}`,
-                description: `${item.icon ? `<img src="${item.icon.main}">` : ''}"><p>${item.title}</p>`,
+                description: `${item.icon ? `<img src="${item.icon.main}">` : ''}<p>${item.title}</p>`,
             }));
             break;
 
@@ -195,16 +222,16 @@ async function handler(ctx) {
                 title: item.name,
                 link: `${rootUrl}/products/${item.id}`,
                 author: item.fanclub.fanclub_name_with_creator_name,
-                description: `${item.buyable_lowest_plan.description ? `<p>${item.buyable_lowest_plan.description}</p>` : ''}<img src="${item.thumb ? item.thumb.main : item.thumb_micro}">`,
+                description: `${item.buyable_lowest_plan?.description ? `<p>${item.buyable_lowest_plan.description}</p>` : ''}<img src="${item.thumb ? item.thumb.main : item.thumb_micro}">`,
             }));
             break;
 
         case 'commissions':
-            items = response.data.commissions.map((item) => ({
+            items = (period ? response.data.products : response.data.commissions).map((item) => ({
                 title: item.name,
                 link: `${rootUrl}/commissions/${item.id}`,
                 author: item.fanclub.fanclub_name_with_creator_name,
-                description: `${item.buyable_lowest_plan.description ? `<p>${item.buyable_lowest_plan.description}</p>` : ''}<img src="${item.thumb ? item.thumb.main : item.thumb_micro}">`,
+                description: `${item.buyable_lowest_plan?.description ? `<p>${item.buyable_lowest_plan.description}</p>` : ''}<img src="${item.thumb ? item.thumb.main : item.thumb_micro}">`,
             }));
             break;
 
@@ -214,7 +241,7 @@ async function handler(ctx) {
 
     return {
         title: `Fantia - Search ${type}`,
-        link: apiUrl.replace('api/v1/search/', ''),
+        link: period ? `${rootUrl}/ranking?${new URLSearchParams({ ...Object.fromEntries(searchParams), content: type.slice(0, -1) })}` : apiUrl.replace('api/v1/search/', ''),
         item: items,
     };
 }
