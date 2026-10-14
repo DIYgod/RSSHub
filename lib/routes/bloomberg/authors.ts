@@ -11,9 +11,17 @@ import { parseArticle } from './utils';
 const parseAuthorNewsList = async (slug) => {
     const baseURL = `https://www.bloomberg.com/authors/${slug}`;
     const apiUrl = `https://www.bloomberg.com/lineup/api/lazy_load_author_stories?slug=${slug}&authorType=default&page=1`;
-    const resp = await ofetch(apiUrl);
+    let resp;
+    try {
+        resp = await ofetch(apiUrl);
+    } catch (error) {
+        if (error instanceof Error && error.name === 'FetchError') {
+            return [];
+        }
+        throw error;
+    }
     // Likely rate limited
-    if (!resp.html) {
+    if (!resp?.html) {
         return [];
     }
     const $ = load(resp.html);
@@ -67,7 +75,6 @@ async function handler(ctx): Promise<Data> {
     if (source === 'rss' || list.length === 0) {
         list = (await rssParser.parseURL(`${link}.rss`)).items;
     }
-
     const item = await pMap(list, (item) => parseArticle(item), { concurrency: 1 });
     const authorName = item.find((i) => i.author)?.author ?? slug;
 

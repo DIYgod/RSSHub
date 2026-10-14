@@ -2,6 +2,7 @@ import type { CheerioAPI } from 'cheerio';
 import { load } from 'cheerio';
 import { escapeUTF8 } from 'entities';
 import type { Context } from 'hono';
+import pMap from 'p-map';
 
 import type { Data, DataItem, Language, Route } from '@/types';
 import { ViewType } from '@/types';
@@ -9,62 +10,100 @@ import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
-const parseTextChildren = (children: any[]): string => children.map((child: any) => escapeUTF8(child.text)).join('');
+interface ContentNode {
+    type?: string;
+    text?: string;
+    children?: ContentNode[];
+    strong?: boolean;
+    emphasis?: boolean;
+    delete?: boolean;
+    inlineCode?: boolean;
+    url?: string;
+    title?: string;
+    alt?: string;
+    size?: { width: number; height: number };
+    depth?: number;
+    lang?: string;
+    ordered?: boolean;
+    start?: number;
+}
 
-const parseImageNode = (node: any): string => {
+const parseImageNode = (node: ContentNode): string => {
     const titleAttr = node.title ? ` title="${escapeUTF8(node.title)}"` : '';
     const altAttr = node.alt ? ` alt="${escapeUTF8(node.alt)}"` : '';
     const styleAttr = node.size ? ` style="width:${node.size.width}px;height:${node.size.height}px;"` : '';
-    return `<img src="${escapeUTF8(node.url)}"${titleAttr}${altAttr}${styleAttr}>`;
+    return node.url ? `<img src="${escapeUTF8(node.url)}"${titleAttr}${altAttr}${styleAttr}>` : '';
 };
 
-const parseListItemNode = (listItem: any): string => `<li>${parseContentToHtml(listItem.children)}</li>`;
-
-const parseListNode = (node: any): string => {
-    const tag = node.ordered ? 'ol' : 'ul';
-    const startAttr = node.ordered && node.start !== 1 ? ` start="${node.start}"` : '';
-    const listItemsHtml = node.children.map((item: any) => parseListItemNode(item)).join('');
-    return `<${tag}${startAttr}>${listItemsHtml}</${tag}>`;
+const parseContentNode = (node: ContentNode): string => {
+    if (node.text !== undefined) {
+        let text = escapeUTF8(node.text);
+        if (node.inlineCode) {
+            text = `<code>${text}</code>`;
+        }
+        if (node.strong) {
+            text = `<strong>${text}</strong>`;
+        }
+        if (node.emphasis) {
+            text = `<em>${text}</em>`;
+        }
+        if (node.delete) {
+            text = `<del>${text}</del>`;
+        }
+        return text;
+    }
+    const children = parseContentToHtml(node.children ?? []);
+    switch (node.type) {
+        case 'paragraph':
+            return `<p>${children}</p>`;
+        case 'image':
+            return parseImageNode(node);
+        case 'heading': {
+            const depth = node.depth && node.depth >= 1 && node.depth <= 6 ? node.depth : 2;
+            return `<h${depth}>${children}</h${depth}>`;
+        }
+        case 'code':
+            return `<pre><code${node.lang ? ` class="language-${escapeUTF8(node.lang)}"` : ''}>${(node.children ?? []).map((child) => escapeUTF8(child.text ?? '')).join('')}</code></pre>`;
+        case 'list': {
+            const tag = node.ordered ? 'ol' : 'ul';
+            const startAttr = node.ordered && node.start !== undefined && node.start !== 1 ? ` start="${node.start}"` : '';
+            return `<${tag}${startAttr}>${children}</${tag}>`;
+        }
+        case 'listItem':
+            return `<li>${children}</li>`;
+        case 'blockquote':
+            return `<blockquote>${children}</blockquote>`;
+        case 'link':
+            return node.url ? `<a href="${escapeUTF8(node.url)}"${node.title ? ` title="${escapeUTF8(node.title)}"` : ''}>${children}</a>` : children;
+        case 'table': {
+            const [header, ...rows] = node.children ?? [];
+            return `<table><thead><tr>${(header?.children ?? []).map((cell) => `<th>${parseContentToHtml(cell.children ?? [])}</th>`).join('')}</tr></thead><tbody>${parseContentToHtml(rows)}</tbody></table>`;
+        }
+        case 'tableRow':
+            return `<tr>${children}</tr>`;
+        case 'tableCell':
+            return `<td>${children}</td>`;
+        case 'thematicBreak':
+            return '<hr>';
+        default:
+            return children;
+    }
 };
 
-const parseParagraphChildren = (children: any[]): string =>
-    children
-        .map((child: any) => {
-            if (child.text !== undefined) {
-                return escapeUTF8(child.text);
-            }
-            if (child.type === 'image') {
-                return parseImageNode(child);
-            }
-            return '';
-        })
-        .join('');
+const parseContentToHtml = (content: ContentNode[]): string => content.map((node) => parseContentNode(node)).join('');
 
-const parseContentToHtml = (content: any[]): string =>
-    content
-        ?.map((node: any) => {
-            switch (node.type) {
-                case 'paragraph':
-                    return `<p>${parseParagraphChildren(node.children)}</p>`;
-                case 'image':
-                    return parseImageNode(node);
-                case 'heading':
-                    return `<h${node.depth}>${parseTextChildren(node.children)}</h${node.depth ?? ''}>`;
-                case 'code':
-                    return `<pre><code${node.lang ? ` class="language-${node.lang}"` : ''}>${parseTextChildren(node.children)}</code></pre>`;
-                case 'list':
-                    return parseListNode(node);
-                case 'blockquote':
-                    return `<blockquote>${parseContentToHtml(node.children)}</blockquote>`;
-                default:
-                    return '';
-            }
-        })
-        .join('') ?? '';
+async function getArticleDescription(link: string, slug: string): Promise<string | undefined> {
+    const details = await cache.tryGet(link, async () => {
+        const response = await ofetch(`https://tidb.net/blog/api/posts/${slug}/detail`, { query: { visit: true } });
+        return { description: response.content ? parseContentToHtml(JSON.parse(response.content)) : undefined };
+    });
+    return details.description;
+}
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { category = 'latest' } = ctx.req.param();
-    const limit = Number(ctx.req.query('limit') ?? '20');
+    const requestedLimit = Number(ctx.req.query('limit') ?? '20');
+    const limit = Number.isFinite(requestedLimit) && Math.floor(requestedLimit) > 0 ? Math.floor(requestedLimit) : 20;
 
     const baseUrl = 'https://tidb.net';
     const targetUrl: string = new URL(`blog${category === 'latest' ? '' : `/c/${category}`}`, baseUrl).href;
@@ -116,7 +155,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
             id: guid,
             content: {
                 html: description,
-                text: description,
+                text: description ? load(description).text() : undefined,
             },
             updated: updated ? parseDate(updated) : undefined,
             language,
@@ -125,61 +164,17 @@ export const handler = async (ctx: Context): Promise<Data> => {
         return processedItem;
     });
 
-    items = await Promise.all(
-        items.map((item) => {
+    items = await pMap(
+        items,
+        async (item) => {
             if (!item.link) {
                 return item;
             }
-
-            return cache.tryGet(item.link, async (): Promise<DataItem> => {
-                const detailUrl: string = new URL(`blog/api/posts/${item.guid}/detail`, baseUrl).href;
-
-                const detailResponse = await ofetch(detailUrl, {
-                    query: {
-                        visit: true,
-                    },
-                });
-
-                const title: string = detailResponse.title;
-                const description: string | null | undefined = detailResponse.content ? parseContentToHtml(JSON.parse(detailResponse.content)) : item.description;
-                const pubDate: number | string = detailResponse.publishedAt;
-                const linkUrl: string | undefined = `blog/${detailResponse.slug}`;
-                const categories: string[] = [...new Set([detailResponse.category?.name, ...(detailResponse.tags ?? []).map((c) => c.name)].filter(Boolean))];
-                const authors: DataItem['author'] = detailResponse.author?.username
-                    ? [
-                          {
-                              name: detailResponse.author.username,
-                              url: new URL(`u/${detailResponse.author.username}`, baseUrl).href,
-                              avatar: detailResponse.author.avatarURL,
-                          },
-                      ]
-                    : undefined;
-                const guid = `tidb-blog-${detailResponse.slug}`;
-                const updated: number | string = detailResponse.lastModifiedAt ?? pubDate;
-
-                const processedItem: DataItem = {
-                    title,
-                    description,
-                    pubDate: pubDate ? parseDate(pubDate) : undefined,
-                    link: new URL(linkUrl, baseUrl).href,
-                    category: categories,
-                    author: authors,
-                    guid,
-                    id: guid,
-                    content: {
-                        html: description,
-                        text: description,
-                    },
-                    updated: updated ? parseDate(updated) : undefined,
-                    language,
-                };
-
-                return {
-                    ...item,
-                    ...processedItem,
-                };
-            });
-        })
+            const description = (await getArticleDescription(item.link, String(item.guid))) ?? item.description;
+            const guid = `tidb-blog-${item.guid}`;
+            return { ...item, description, guid, id: guid, content: { html: description, text: description ? load(description).text() : undefined } };
+        },
+        { concurrency: 3 }
     );
 
     const title: string = $('title').text();
@@ -189,7 +184,6 @@ export const handler = async (ctx: Context): Promise<Data> => {
         description: $('meta[property="og:description"]').attr('content'),
         link: targetUrl,
         item: items,
-        allowEmpty: true,
         image: $('meta[property="og:image"]').attr('content'),
         author: title.split(/\|/).pop()?.trim(),
         language,
@@ -264,12 +258,8 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['tidb.net/blog', 'tidb.net/blog/c/:category'],
-            target: (params) => {
-                const category: string = params.category;
-
-                return `/tidb/blog/c${category ? `/${category}` : ''}`;
-            },
+            source: ['tidb.net/blog/c/:category'],
+            target: '/blog/c/:category',
         },
         {
             title: '全部文章',

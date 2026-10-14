@@ -3,6 +3,7 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
+import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
 
 const currentURL = (catagory: string, page: number) => (catagory === '_all' ? `https://www.csie.ncku.edu.tw/zh-hant/news?page=${page}` : `https://www.csie.ncku.edu.tw/zh-hant/news/${catagory}?page=${page}`);
 
@@ -48,37 +49,32 @@ export const route: Route = {
     maintainers: ['simbafs'],
     handler: async (ctx) => {
         let catagory = ctx.req.param('catagory') ?? '_all';
-        if (catagories[catagory] === undefined) {
+        if (!Object.hasOwn(catagories, catagory)) {
             catagory = 'normal';
         }
 
-        const base = 1; // get from query
-        const limit = 3; // get from query
+        const $ = await ofetch<CheerioAPI>(currentURL(catagory, 1), {
+            parseResponse: load,
+        });
 
-        const item = (
-            await Promise.allSettled(
-                Array.from({ length: limit }, async (_, i) => {
-                    const $ = await ofetch<CheerioAPI>(currentURL(catagory, base + i), {
-                        parseResponse: load,
-                    });
-
-                    return $('.list-title > li')
-                        .toArray()
-                        .map((e) => ({
-                            title: $('a', e).text(),
-                            pubDate: new Date($('small', e).text()),
-                            link: `https://www.csie.ncku.edu.tw${$('a', e).attr('href')}`,
-                            catagory: $('span:nth-child(2)', e).text(),
-                        }));
-                })
-            )
-        )
-            .filter((item) => item.status === 'fulfilled')
-            .flatMap((item) => item.value);
+        const item = $('.list-title > li')
+            .toArray()
+            .map((e) => {
+                const date = $('small', e)
+                    .text()
+                    .match(/\d{4}\.\d{2}\.\d{2}/)?.[0]
+                    .replaceAll('.', '-');
+                return {
+                    title: $('a', e).text(),
+                    pubDate: date ? parseDateInTimezone(date, 8) : undefined,
+                    link: `https://www.csie.ncku.edu.tw${$('a', e).attr('href')}`,
+                    category: [$('span:nth-child(2)', e).text()].filter(Boolean),
+                };
+            });
 
         return {
             title: `成大資訊系公告 - ${catagories[catagory]}`,
-            link: currentURL(catagory, base),
+            link: currentURL(catagory, 1),
             item,
         };
     },

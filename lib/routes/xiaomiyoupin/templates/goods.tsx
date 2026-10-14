@@ -4,7 +4,9 @@ import { renderToString } from 'hono/jsx/dom/server';
 type Goods = {
     pic_url?: string;
     img_square?: string;
-    imgs?: { img800?: string };
+    imgs?: {
+        img800?: string;
+    };
     alt?: string;
     videos_url?: string[];
     name?: string;
@@ -13,13 +15,11 @@ type Goods = {
     price_min?: number;
     flash_price?: number;
 };
-
 const GoodsFigure = (goods: Goods) => {
     const imageUrl = goods.pic_url || goods.img_square || goods.imgs?.img800;
-    const marketPrice = goods.market_price ? goods.market_price / 100 : undefined;
+    const marketPrice = isNullish(goods.market_price) ? undefined : goods.market_price / 100;
     const salePrice = goods.price_min ?? goods.flash_price;
-    const finalPrice = salePrice ? salePrice / 100 : undefined;
-
+    const finalPrice = isNullish(salePrice) ? undefined : salePrice / 100;
     return (
         <figure>
             <img src={imageUrl} alt={goods.alt} loading="lazy" style="display:block; margin-left:auto; margin-right:auto; width:100%;" />
@@ -50,5 +50,7 @@ const GoodsFigure = (goods: Goods) => {
         </figure>
     );
 };
-
 export const renderGoods = (goods: Goods): string => renderToString(<GoodsFigure {...goods} />);
+function isNullish(value: unknown): value is null | undefined {
+    return value === null || value === undefined;
+}

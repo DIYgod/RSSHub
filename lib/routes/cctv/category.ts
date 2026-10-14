@@ -36,18 +36,15 @@ async function handler(ctx) {
 
     switch (category) {
         case 'mzzlbg':
-            // 每周质量报告
-            return await getMzzlbg();
+            return await getMzzlbg(ctx);
 
         case 'xinwen1j1':
-            // 新闻1+1
-            return await xinwen1j1();
+            return await xinwen1j1(ctx);
 
         case 'xwlb':
-            return await getXWLB();
+            return await getXWLB(ctx);
 
         default:
-            // 央视新闻
-            return await getNews(category);
+            return await getNews(category, ctx);
     }
 }

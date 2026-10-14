@@ -1,9 +1,12 @@
 import { load } from 'cheerio';
+import type { Context } from 'hono';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit, hasItemFilters } from '@/utils/route-limit';
 import timezone from '@/utils/timezone';
 
 export const route: Route = {
@@ -21,13 +24,12 @@ export const route: Route = {
     url: 'jwc.gdou.edu.cn/jwdt/jwtz.htm',
 };
 
-async function handler() {
+async function handler(ctx: Context) {
     const link = 'https://jwc.gdou.edu.cn/jwdt/jwtz.htm';
     const response = await ofetch(link);
     const $ = load(response);
 
     const list = $('li[id^="line_u8_"] a')
-        .slice(0, 10)
         .toArray()
         .map((item): DataItem => {
             const $item = $(item);
@@ -38,16 +40,25 @@ async function handler() {
                 author: '教务部',
             };
         });
+    if (ctx.req.query('sorted') === 'false' || list.every((item) => item.pubDate && Number.isFinite(new Date(item.pubDate).getTime()))) {
+        if (ctx.req.query('sorted') !== 'false') {
+            list.sort((a, b) => new Date(b.pubDate!).getTime() - new Date(a.pubDate!).getTime());
+        }
+        list.splice(getRouteLimit(ctx, hasItemFilters(ctx) ? list.length : 10));
+    }
 
-    const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link!, async () => {
+    const items = await pMap(
+        list,
+        async (item) => {
+            const article = await cache.tryGet(`${item.link}#article-content`, async () => {
                 const response = await ofetch(item.link!);
                 const $ = load(response);
-                item.description = $('.v_news_content').html();
-                return item;
-            })
-        )
+                return { description: $('.v_news_content').html() };
+            });
+
+            return { ...item, ...article };
+        },
+        { concurrency: 3 }
     );
 
     return {

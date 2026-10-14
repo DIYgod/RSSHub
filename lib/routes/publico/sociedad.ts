@@ -49,7 +49,7 @@ async function handler(ctx) {
     const items = getItems($);
 
     return {
-        title: 'Medio Ambiente | Sociedad | Público',
+        title: $('head title').text(),
         link: currentUrl,
         item: items,
     };

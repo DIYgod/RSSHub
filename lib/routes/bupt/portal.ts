@@ -1,4 +1,5 @@
 import { config } from '@/config';
+import ConfigNotFoundError from '@/errors/types/config-not-found';
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -23,6 +24,9 @@ export const route: Route = {
 
 async function handler() {
     const cookie = config.bupt.portal_cookie;
+    if (!cookie) {
+        throw new ConfigNotFoundError('BUPT_PORTAL_COOKIE is required to access the BUPT portal.');
+    }
     const headers: Record<string, string> = {};
     if (cookie) {
         headers.cookie = cookie;

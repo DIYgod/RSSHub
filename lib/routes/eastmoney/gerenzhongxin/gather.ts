@@ -58,8 +58,6 @@ async function handler(ctx) {
         allItems.push(...trplResult.value.item);
     }
 
-    allItems.sort((a, b) => b.pubDate.getTime() - a.pubDate.getTime());
-
     const nickname = allItems[0]?.author || '用户';
 
     return {

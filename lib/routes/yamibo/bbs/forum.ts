@@ -7,7 +7,21 @@ import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 
-import { bbsOrigin, fetchThread, generateDescription, getDate } from '../utils';
+import { bbsOrigin, fetchThread, generateDescription, getDate, getUpdated } from '../utils';
+
+async function fetchDescription(id: string): Promise<{ description?: string; updated?: Date }> {
+    const { data } = await fetchThread(id);
+    if (data && !data.startsWith('<script type="text/javascript">')) {
+        const $ = load(data);
+        const op = $('#postlist>div[id^="post_"]').first();
+        const postId = op.attr('id')?.match(/\d+/)?.[0];
+        if (postId) {
+            return { updated: getUpdated(op), description: generateDescription(op, postId) };
+        }
+    }
+
+    return {};
+}
 
 export const route: Route = {
     name: 'BBS - 板块',
@@ -77,39 +91,37 @@ async function handler(ctx: Context): Promise<Data> {
             const title = $item.find('th em').text() + $item.find('th .s.xst').text();
             const link = `${bbsOrigin}/thread-${id}-1-1.html`;
             const pubDate = getDate($item.find('td.by').first().find('em').text());
+            const author = $item.find('td.by').first().find('cite').text();
+            const category = $item
+                .find('th em a')
+                .toArray()
+                .map((element) => $(element).text())
+                .filter(Boolean);
 
             return {
                 id,
                 title,
                 link,
                 pubDate,
+                author: author || undefined,
+                category,
             };
         });
 
     items = await pMap(
         items,
-        async (item) =>
-            await cache.tryGet<DataItem>(item.link!, async () => {
-                let description: string | undefined;
-                const { data } = await fetchThread(item.id!);
-                if (data && !data.startsWith('<script type="text/javascript">')) {
-                    const $ = load(data);
-                    if ($('#postlist>div[id^="post_"]').length) {
-                        const op = $('#postlist>div[id^="post_"]').first();
-                        const postId = op.attr('id')?.match(/\d+/)?.[0];
-                        if (postId) {
-                            description = generateDescription(op, postId);
-                        }
-                    }
-                }
-
-                return {
-                    title: item.title,
-                    link: item.link,
-                    description,
-                    pubDate: item.pubDate,
-                };
-            }),
+        async (item) => {
+            const details = await cache.tryGet(`yamibo:forum:detail:v2:${item.link}`, () => fetchDescription(item.id!));
+            return {
+                title: item.title,
+                link: item.link,
+                pubDate: item.pubDate,
+                author: item.author,
+                category: item.category,
+                description: details.description,
+                updated: details.updated,
+            };
+        },
         { concurrency: 5 }
     );
 

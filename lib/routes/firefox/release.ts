@@ -33,7 +33,9 @@ async function handler(ctx) {
     const response = await got.get(link);
     const $ = load(response.data);
     const version = $('.c-release-version').text();
-    const pubDate = parseDate($('.c-release-date').text(), 'MMMM D, YYYY');
+    const itemLink = $('link[rel="canonical"]').attr('href') || link;
+    const date = $('.c-release-date').text().trim();
+    const pubDate = date ? parseDate(`${date} UTC`) : undefined;
 
     return {
         title: `Firefox ${platform} release notes`,
@@ -41,7 +43,7 @@ async function handler(ctx) {
         item: [
             {
                 title: `Firefox ${platform} ${version} release notes`,
-                link,
+                link: itemLink,
                 description: $('.c-release-notes').html(),
                 guid: `${platform} ${version}`,
                 pubDate,

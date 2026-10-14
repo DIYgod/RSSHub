@@ -3,8 +3,8 @@ import type { Context } from 'hono';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
-import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { getPlaywrightPage } from '@/utils/playwright';
 import timezone from '@/utils/timezone';
 
 export const route: Route = {
@@ -18,8 +18,8 @@ export const route: Route = {
     },
     features: {
         requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
+        requirePuppeteer: true,
+        antiCrawler: true,
         supportBT: false,
         supportPodcast: false,
         supportScihub: false,
@@ -41,7 +41,7 @@ export const route: Route = {
 };
 
 async function handler(ctx: Context) {
-    let type = ctx.req.param('type'); // 默认类型为通知公告
+    let type = ctx.req.param('type'); // Default to notices when the type is absent.
     if (!type) {
         type = 'tzgg';
     }
@@ -59,71 +59,51 @@ async function handler(ctx: Context) {
         throw new Error('Invalid type parameter');
     }
 
-    const response = await got({
-        method: 'get',
-        url: currentUrl,
-    });
+    const { context, page, destroy } = await getPlaywrightPage(currentUrl, { noGoto: true, closeTimeout: 0 });
+    try {
+        await page.route('**/*', (request) => (['document', 'script'].includes(request.request().resourceType()) ? request.continue() : request.abort()));
+        await page.goto(currentUrl, { waitUntil: 'networkidle', timeout: 12000 });
+        const pageContent = await page.content();
+        const $ = load(pageContent);
 
-    const $ = load(response.data);
-
-    const list = $('.txt-elise')
-        .toArray()
-        .map((item): (DataItem & { link: string }) | null => {
-            const $item = $(item);
-            const $link = $item.find('a');
-            // Skip elements without links or with empty href
-            if ($link.length === 0 || !$link.attr('href')) {
-                return null;
-            }
-            return {
-                title: $link.text().trim(),
-                link: rootUrl + '/' + $link.attr('href'),
-            };
-        })
-        .filter((item) => item !== null);
-
-    const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link, async () => {
-                const detailResponse = await got({
-                    method: 'get',
-                    url: item.link,
-                });
-
-                const content = load(detailResponse.data);
-
-                // 选择包含新闻内容的元素
-                const newsContent = content('.v_news_content');
-
-                // 移除不必要的标签，比如 <p> 和 <span> 中无用的内容
-                newsContent.find('p, span, strong').each((_, el) => {
-                    const element = content(el);
-                    const text = element.text().trim();
-
-                    // 删除没有有用文本的元素，防止空元素被保留
-                    if (text === '') {
-                        element.remove();
-                    } else {
-                        // 去除多余的嵌套标签，但保留其内容
-                        element.replaceWith(text);
-                    }
-                });
-
-                // 清理后的内容转换为文本
-                const cleanedDescription = newsContent.text().trim();
-
-                // 提取并格式化发布时间
-                item.description = cleanedDescription;
-                item.pubDate = timezone(parseDate(content('.info').text().replace('发布时间：', '').trim()), 8);
-
-                return item;
+        const list = $('.txt-elise')
+            .toArray()
+            .map((item): (DataItem & { link: string }) | null => {
+                const $item = $(item);
+                const $link = $item.find('a');
+                // Skip elements without links or with empty href
+                if ($link.length === 0 || !$link.attr('href')) {
+                    return null;
+                }
+                return {
+                    title: $link.contents().not('span').text(),
+                    link: rootUrl + '/' + $link.attr('href'),
+                    pubDate: timezone(parseDate($link.find('span').text(), 'YYYY-MM-DD'), 8),
+                };
             })
-        )
-    );
+            .filter((item) => item !== null);
+        const orderedList = list;
+        const entries = orderedList;
+        const items = await Promise.all(
+            entries.map((item) =>
+                cache.tryGet(item.link, async () => {
+                    const detailResponse = await context.request.get(item.link, { timeout: 12000 });
+                    const detailContent = await detailResponse.text();
+                    const content = load(detailContent);
 
-    return {
-        title: `北京邮电大学教务处 - ${pageTitle}`,
-        link: currentUrl,
-        item: items,
-    };
+                    item.description = content('.v_news_content').html();
+
+                    return item;
+                })
+            )
+        );
+
+        return {
+            title: `北京邮电大学教务处 - ${pageTitle}`,
+            link: currentUrl,
+            item: items,
+        };
+    } finally {
+        await destroy();
+    }
 }

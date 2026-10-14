@@ -27,14 +27,17 @@ async function handler(ctx) {
     return await buildData({
         link,
         url: link,
-        title: ($) => $('.channel_tab > .noline > a').text().trim() + ' - 政府文件库',
+        title: ($) => ($('meta[name="lanmu"]').attr('content') || $('.channel_tab > .noline > a').text().trim() || $('title').text().split('_', 1)[0]) + ' - 政府文件库',
         description: '政府文件库, 当页的所有列表',
         item: {
             item: '.news_box > .list > ul > li:not(.line)',
             title: ($) => $('h4 > a').text(),
             link: ($) => $('h4 > a').attr('href'),
             // The list provides calendar dates, represented at UTC midnight.
-            pubDate: ($) => parseDateInTimezone($('h4 > .date').text().trim(), 0),
+            pubDate: ($) => {
+                const date = $('h4 > .date').text().trim();
+                return date ? parseDateInTimezone(date, 0) : undefined;
+            },
         },
     });
 }

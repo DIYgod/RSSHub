@@ -1,4 +1,4 @@
-import { load } from 'cheerio';
+import { type CheerioAPI, load } from 'cheerio';
 import { escapeAttribute, escapeText } from 'entities';
 import pMap from 'p-map';
 
@@ -6,6 +6,7 @@ import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
 const baseUrl = 'https://www.taiwanplus.com';
 
@@ -16,12 +17,20 @@ export const route: Route = {
     categories: ['traditional-media'],
     maintainers: ['DIYgod'],
     parameters: { category: 'News category path from the website URL, defaults to taiwan-news.' },
-    radar: [{ source: ['www.taiwanplus.com/news/:category*'], target: '/news/:category' }],
+    radar: [
+        { source: ['www.taiwanplus.com/news/:category'], target: '/news/:category' },
+        { source: ['www.taiwanplus.com/news/:category/:subcategory'], target: '/news/:category/:subcategory' },
+    ],
     handler,
 };
 
-function getItem(item: DataItem) {
-    return cache.tryGet(item.link!, async () => {
+function getVideoData($: CheerioAPI) {
+    const payload: unknown[] = JSON.parse($('#__NUXT_DATA__').text() || '[]');
+    return payload.some((value): value is Record<string, number> => typeof value === 'object' && value !== null && !Array.isArray(value) && Object.hasOwn(value, 'vodId') && Object.hasOwn(value, 'transcript')) ? payload : undefined;
+}
+
+async function getItem(item: DataItem) {
+    const details = await cache.tryGet(`${item.link}:transcript:v3`, async () => {
         const response = await ofetch(item.link!);
         const $ = load(response);
         const articles = $('script[type="application/ld+json"]')
@@ -31,16 +40,28 @@ function getItem(item: DataItem) {
                 return data['@graph'] ?? [data];
             });
         const article = articles.find((entry) => entry['@type'] === 'NewsArticle');
+        const details: Omit<DataItem, 'title' | 'link'> = {};
         if (article) {
-            item.title = article.headline;
-            item.pubDate = parseDate(article.datePublished);
-            item.updated = article.dateModified ? parseDate(article.dateModified) : undefined;
-            item.author = article.author?.name;
+            details.pubDate = parseDate(article.datePublished);
+            details.updated = article.dateModified ? parseDate(article.dateModified) : undefined;
+            details.author = article.author?.name;
             const image = Array.isArray(article.image) ? article.image[0] : article.image;
-            item.description = `${image ? `<img src="${escapeAttribute(image)}">` : ''}<p>${escapeText(article.description ?? '')}</p>`;
+            const payload = getVideoData($);
+            const video = payload?.find((value): value is Record<string, number> => typeof value === 'object' && value !== null && !Array.isArray(value) && Object.hasOwn(value, 'vodId') && Object.hasOwn(value, 'transcript'));
+            const transcript = video && payload ? payload[video.transcript] : undefined;
+            const tags = video && payload ? payload[video.tags] : undefined;
+            details.category = Array.isArray(tags)
+                ? tags.flatMap((reference) => {
+                      const tag = typeof reference === 'number' && payload ? payload[reference] : undefined;
+                      const name = tag && typeof tag === 'object' && 'tagName' in tag && typeof tag.tagName === 'number' && payload ? payload[tag.tagName] : undefined;
+                      return typeof name === 'string' ? [name] : [];
+                  })
+                : undefined;
+            details.description = `${image ? `<img src="${escapeAttribute(image)}">` : ''}<p>${escapeText(article.description ?? '')}</p>${typeof transcript === 'string' ? transcript : ''}`;
         }
-        return item;
+        return details;
     });
+    return { ...item, ...details };
 }
 
 async function handler(ctx) {
@@ -48,7 +69,7 @@ async function handler(ctx) {
     const link = `${baseUrl}/news/${category}`;
     const response = await ofetch(link);
     const $ = load(response);
-    const limit = Number(ctx.req.query('limit')) || 20;
+    const limit = getRouteLimit(ctx, 20);
     const seen = new Set<string>();
     const items = $('a.news[href]')
         .toArray()

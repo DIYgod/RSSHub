@@ -1,7 +1,7 @@
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
-import { appDetail, getRootUrl, X_UA } from '../utils';
+import { appDetail, getLanguage, getRootUrl, X_UA } from '../utils';
 
 export async function handler(ctx) {
     const requestPath = ctx.req.path.replace('/taptap', '');
@@ -30,6 +30,7 @@ export async function handler(ctx) {
         description: appDescription,
         link: url,
         image: appImg,
+        language: getLanguage(lang),
         item: list.map((item) => ({
             title: `${appName} / ${item.version_label}`,
             description: item.whatsnew.text,

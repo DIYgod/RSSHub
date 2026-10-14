@@ -33,7 +33,8 @@ async function handler(ctx) {
     const listUrl = `${apiRootUrl}/v1_2/homePage`;
     const filmUrl = `${apiRootUrl}/v1_2/filmInfo`;
 
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 50;
+    const requestedLimit = Number(ctx.req.query('limit'));
+    const limit = Number.isFinite(requestedLimit) && requestedLimit >= 1 ? Math.floor(requestedLimit) : 50;
 
     const response = await got({
         method: 'post',

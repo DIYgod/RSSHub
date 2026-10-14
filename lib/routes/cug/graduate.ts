@@ -43,6 +43,12 @@ async function handler() {
                 const res = await ofetch(item.link!);
                 const $ = load(res);
                 item.description = $('.v_news_content').html();
+                const pubDate = $('.article_data')
+                    .text()
+                    .match(/发稿时间：(\d{4}-\d{2}-\d{2} \d{2}:\d{2})/)?.[1];
+                if (pubDate) {
+                    item.pubDate = timezone(parseDate(pubDate, 'YYYY-MM-DD HH:mm'), 8);
+                }
                 return item;
             })
         )

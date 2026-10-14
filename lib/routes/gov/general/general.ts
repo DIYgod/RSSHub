@@ -3,41 +3,28 @@ import { load } from 'cheerio';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import cache from '@/utils/cache';
 import { getSubPath } from '@/utils/common-utils';
-// 来人拯救一下啊( >﹏<。)
-// 待做功能：
-// 1. 传入和处理
-//         [] index.php?c=category&id=12
-// 2. 处理其他网站链接
-//         [] 其他政府网站
-// 3. 添加视频内容
-//         [] 示例1: http://www.dianbai.gov.cn/ywdt/dbyw/content/post_1091433.html
-// 4. 处理网站功能
-//        [] hdjlpt 互动交流
-// 使用方法
-// import { gdgov } from '../general/general';
-//
-// export default async (ctx) => {
-//     const info = {
-//         pathstartat: 1,                                              // 网站放到子目录时使用，默认为0。如 www.yunfu.gov.cn/yfsrmzf/jcxxgk/zcfg/zcjd 为一层子目录则使用 1。
-//         defaultPath: 'zwgk/zcjd/',                                   // 默认路径。假设网址是 a.b.gov.cn/c/d/ 则输入 c/d/。访问 gov/b/a/ 时使用默认路径，访问 gov/b/a/c/d/ 则为指定路径。
-//         name_element: 'SiteName, ColumnName',                        // 网站名，默认使用网页标题。
-//         name_match_type: 'meta',                                     // 网站名类型。可选 meta（从 <meta> 中获取 content 里面的内容）、name（name_element 就是网站名）、element（选择元素从中获取文本）。
-//         name_match: '(.*)',                                          // 网站名类型为 element 时使用的匹配内容。
-//         name_join: '—',                                             // 网站名为 meta 或 element 时，如有多个选择器找到内容，将这里的字符串放到这些内容之间。
-//         list_element: '.news_list li a',                             // 页面列表中选择具体到 a。element 都是填写 CSS 选择器。
-//         list_include: 'site',                                        // 筛选列表中的页面，会生成选择器添加到 list_element 中。可选 all（包含全部）、site（仅限本站）。
-//         title_element: '.content_title',                             // 正文的标题，默认使用 <meta name="ArticleTitle" content="*">
-//         title_match: '(.*)',                                         // 使用正则匹配选择器获取到的文本。match 都是填写正则表达式。
-//         description_element: '#zoomcon',                             // 正文。
-//         author_element: undefined,                                   // 正文来源，一般是某某网站、某某媒体，默认使用 <meta name="ContentSource" content="*">。
-//         author_match: undefined,                                     // 匹配正文来源。
-//         authorisme: '茂名市电白区人民政府网',                        // 作者是 本网 等内容时改成这里的文本。
-//         pubDate_element: 'publishtime',                              // 发布时间，默认使用 <meta name="PubDate" content="*">。
-//         pubDate_match: '(.*)',                                       // 匹配发布时间。
-//         pubDate_format: undefined                                    // 发布时间的格式。
-//     };
-//     await gdgov(info, ctx);
+// Shared scraper for public government article lists and Guangdong policy interpretations.
+// Example caller configuration (legacy property names are part of the caller contract):
+// const info = {
+//     pathstartat: 1,                              // Number of website path segments preceding the list path; defaults to 0.
+//     defaultPath: 'zwgk/zcjd/',                   // List path used when only the website branch is supplied.
+//     name_element: 'SiteName, ColumnName',       // Site name, metadata names, or selectors; defaults to the page title.
+//     name_match_type: 'meta',                    // 'meta', 'name' (literal name), or 'element' (selector text).
+//     name_match: '(.*)',                         // Capture expression for element-based site names.
+//     name_join: '—',                             // Separator between name components.
+//     list_element: '.news_list li a',            // Selectors identifying article anchors.
+//     list_include: 'site',                       // 'all' anchors or 'site' anchors belonging to the current website.
+//     title_element: '.content_title',            // Defaults to the ArticleTitle meta content.
+//     title_match: '(.*)',                        // Capture expression for the article title.
+//     description_element: '#zoomcon',            // Selectors containing the article body.
+//     author_element: undefined,                 // Defaults to the ContentSource meta content.
+//     author_match: undefined,                   // Capture expression for the article source.
+//     authorisme: 'Government website',           // Replacement for sources identifying themselves as the current website.
+//     pubDate_element: 'publishtime',             // Defaults to the PubDate meta content.
+//     pubDate_match: '(.*)',                      // Capture expression for the publication date.
+//     pubDate_format: undefined,                  // Optional publication date format.
 // };
+// return await gdgov(info, ctx);
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
@@ -55,101 +42,101 @@ const gdgov = async (info, ctx) => {
         throw new InvalidParameterError('Invalid site or branch');
     }
 
-    // 网站
-    const pathstartat = info.pathstartat === undefined ? 0 : info.pathstartat;
+    // Website root.
+    const pathStartAt = info.pathstartat === undefined ? 0 : info.pathstartat;
     let rootUrl = 'http://' + branch + '.' + site + '.gov.cn';
-    for (let index = 0; index < pathstartat; index++) {
+    for (let index = 0; index < pathStartAt; index++) {
         const element = path[index + 2];
         rootUrl = rootUrl + '/' + element;
     }
 
-    // 默认路径
+    // Default list path.
     const defaultPath = info.defaultPath;
 
-    // 网站名
-    let name_element = info.name_element;
-    const name_match_type = info.name_match_type;
-    const name_match = info.name_match;
-    const name_join = info.name_join;
+    // Feed name.
+    let nameElement = info.name_element;
+    const nameMatchType = info.name_match_type;
+    const nameMatch = info.name_match;
+    const nameJoin = info.name_join;
 
-    // 列表元素
-    let list_element = info.list_element;
-    let list_include = info.list_include;
-    if (list_element === undefined) {
-        list_element = 'a[href*="content"]';
-        list_include = 'site';
+    // Article list selectors.
+    let listElement = info.list_element;
+    let listInclude = info.list_include;
+    if (listElement === undefined) {
+        listElement = 'a[href*="content"]';
+        listInclude = 'site';
     }
-    if (list_include === 'site') {
-        list_element = list_element.split(',').filter((item) => item !== '');
-        for (let index = 0; index < list_element.length; index++) {
-            list_element[index] += '[href*="' + rootUrl.slice(7) + '"]';
+    if (listInclude === 'site') {
+        listElement = listElement.split(',').filter((item) => item !== '');
+        for (let index = 0; index < listElement.length; index++) {
+            listElement[index] += '[href*="' + rootUrl.slice(7) + '"]';
         }
-        list_element = list_element.join(',');
+        listElement = listElement.join(',');
     }
 
-    // 标题元素
-    let title_element = info.title_element;
-    let title_match = info.title_match;
+    // Article title selectors.
+    let titleElement = info.title_element;
+    let titleMatch = info.title_match;
 
-    // 作者（来源）元素
-    const author_element = info.author_element;
-    const author_match = info.author_match;
-    const authorisme = info.authorisme;
+    // Article source selectors.
+    const authorElement = info.author_element;
+    const authorMatch = info.author_match;
+    const authorIsMe = info.authorisme;
 
-    // 正文
-    let description_element = info.description_element;
+    // Article body selectors.
+    let descriptionElement = info.description_element;
 
-    // 发布时间元素
-    let pubDate_element = info.pubDate_element;
-    let pubDate_match = info.pubDate_match;
-    let pubDate_format = info.pubDate_format;
+    // Publication date selectors.
+    let pubDateElement = info.pubDate_element;
+    let pubDateMatch = info.pubDate_match;
+    let pubDateFormat = info.pubDate_format;
 
-    let pathname = path.slice(2 + pathstartat).join('/');
+    let pathname = path.slice(2 + pathStartAt).join('/');
     pathname = pathname === '' ? defaultPath : pathname.endsWith('/') ? pathname : pathname + '/';
     const currentUrl = `${rootUrl}/${pathname}`;
 
     let $ = load('');
     let name: string;
     let list: any;
-    // 判断是否处于特殊目录
+    // Government information disclosure API.
     if (pathname.startsWith('gkmlpt')) {
-        title_element = undefined;
-        title_match = undefined;
-        description_element = 'div[class="article-content"]';
-        pubDate_element = undefined;
-        pubDate_match = undefined;
-        pubDate_format = undefined;
+        titleElement = undefined;
+        titleMatch = undefined;
+        descriptionElement = 'div[class="article-content"]';
+        pubDateElement = undefined;
+        pubDateMatch = undefined;
+        pubDateFormat = undefined;
 
         const res = await got(`${rootUrl}/gkmlpt/api/all/0`);
-        name = authorisme + '政府信息公开平台';
+        name = authorIsMe + '政府信息公开平台';
         list = res.data.articles.filter((item) => item.url.includes('content'));
     } else {
         const res = await got(currentUrl);
         const dataArray = res.data;
         $ = load(dataArray);
-        switch (name_match_type) {
+        switch (nameMatchType) {
             case 'name':
-                name = name_element;
+                name = nameElement;
                 break;
             case 'meta':
-                name_element = name_element.split(',').filter((item) => item !== '');
-                for (let index = 0; index < name_element.length; index++) {
-                    name_element[index] = $('meta[name="' + name_element[index].trim() + '"]').attr('content');
+                nameElement = nameElement.split(',').filter((item) => item !== '');
+                for (let index = 0; index < nameElement.length; index++) {
+                    nameElement[index] = $('meta[name="' + nameElement[index].trim() + '"]').attr('content');
                 }
-                name = name_element.join(name_join);
+                name = nameElement.join(nameJoin);
                 break;
             case 'element':
-                name_element = name_element.split(',').filter((item) => item !== '');
-                for (let index = 0; index < name_element.length; index++) {
-                    name_element[index] = $(name_element[index].trim()).text().match(name_match)![1];
+                nameElement = nameElement.split(',').filter((item) => item !== '');
+                for (let index = 0; index < nameElement.length; index++) {
+                    nameElement[index] = $(nameElement[index].trim()).text().match(nameMatch)![1];
                 }
-                name = name_element.join(name_join);
+                name = nameElement.join(nameJoin);
                 break;
             default:
                 name = $('head title').text();
                 break;
         }
-        list = $(list_element);
+        list = $(listElement);
     }
 
     const lists = list.map((i, item) => {
@@ -159,7 +146,7 @@ const gdgov = async (info, ctx) => {
             link = i.url;
         } else {
             link = $(item).attr('href')!;
-            // 判断获取到的链接是否完整，不完整则补全。
+            // Resolve article links against the website root.
             if (!link.startsWith('http')) {
                 link.startsWith('/') ? (link = `${rootUrl}${link}`) : (link = `${rootUrl}/${link}`);
             }
@@ -168,61 +155,71 @@ const gdgov = async (info, ctx) => {
         return link;
     });
 
+    const links = Array.isArray(lists) ? lists : lists.toArray();
     const items = await Promise.all(
-        lists.map((link) => {
-            const idlink = new URL(link);
+        links.map((link) => {
+            const idLink = new URL(link);
 
-            if (idlink.pathname === '/zcjdpt') {
+            if (idLink.pathname === '/zcjdpt') {
                 // http://www.dg.gov.cn/zcjdpt?id=4798
                 // http://smzj.maoming.gov.cn/zcjdpt?id=4595
                 // http://fgj.maoming.gov.cn/zcjdpt?id=4993
                 // https://zcjd.cloud.gd.gov.cn/api/home/article?id=4993
                 return cache.tryGet(link, async () => {
-                    const zcjdlink = 'https://zcjd.cloud.gd.gov.cn/api/home/article' + idlink.search;
-                    const response = await got(zcjdlink);
+                    const zcjdLink = 'https://zcjd.cloud.gd.gov.cn/api/home/article' + idLink.search;
+                    const response = await got(zcjdLink);
                     const data = response.data.data;
-                    for (const item of data.jie_du_items) {
-                        item.jd_content = item.jd_content.replaceAll(/((\n {4})|(\n))/g, '</p><p style="font-size: 16px;line-height: 32px;text-indent: 2em;">');
+                    if (!data?.art_title?.trim()) {
+                        throw new Error(`Policy interpretation title was not found at ${zcjdLink}`);
                     }
+                    const interpretations = data.jie_du_items ?? [];
+                    for (const item of interpretations) {
+                        item.jd_content = item.jd_content?.replaceAll(/((\n {4})|(\n))/g, '</p><p style="font-size: 16px;line-height: 32px;text-indent: 2em;">');
+                    }
+                    const pubDate = data.pub_time ? parseDate(data.pub_time) : undefined;
 
                     return {
                         link,
                         title: data.art_title,
                         description: renderZcjdpt(data),
-                        pubDate: timezone(parseDate(data.pub_time), 8),
-                        author: /本/.test(data.pub_unite) ? authorisme : data.pub_unite,
+                        pubDate: pubDate && Number.isFinite(pubDate.getTime()) ? timezone(pubDate, 8) : undefined,
+                        author: /本/.test(data.pub_unite) ? authorIsMe : data.pub_unite,
                     };
                 });
             }
-            if (idlink.host === 'mp.weixin.qq.com') {
+            if (idLink.host === 'mp.weixin.qq.com') {
                 return finishArticleItem({ link });
             }
             return cache.tryGet(link, async () => {
-                // 获取网页
+                // Fetch the article page.
                 const { data: res } = await got(link);
                 const content = load(res);
 
-                // 获取来源
-                const author = author_element === undefined ? content('meta[name="ContentSource"]').attr('content') : content(author_element).text().trim().match(author_match)![1].trim().replaceAll(/(-*$)/g, '');
+                // Extract the article source.
+                const author = authorElement === undefined ? content('meta[name="ContentSource"]').attr('content') : content(authorElement).text().trim().match(authorMatch)?.[1]?.trim().replaceAll(/(-*$)/g, '');
 
-                // 获取发布时间
-                const pubDate = pubDate_element === undefined ? content('meta[name="PubDate"]').attr('content') : content(pubDate_element).text().trim().match(pubDate_match)![1].trim().replaceAll(/(-*$)/g, '');
+                // Extract the publication date.
+                const pubDate = pubDateElement === undefined ? content('meta[name="PubDate"]').attr('content') : content(pubDateElement).text().trim().match(pubDateMatch)?.[1]?.trim().replaceAll(/(-*$)/g, '');
+                const parsedDate = pubDate ? parseDate(pubDate, pubDateFormat) : undefined;
 
-                // 获取标题
-                const title = title_element === undefined ? content('meta[name="ArticleTitle"]').attr('content') : content(title_element).text().trim().match(title_match)![1];
-                // 获取正文
-                const description_content = description_element.split(',').filter((item) => item !== '');
-                for (let index = 0; index < description_content.length; index++) {
-                    description_content[index] = content(description_content[index].trim()).html();
+                // Extract the article title.
+                const title = titleElement === undefined ? content('meta[name="ArticleTitle"]').attr('content') : content(titleElement).text().trim().match(titleMatch)?.[1];
+                if (!title?.trim()) {
+                    throw new Error(`Article title was not found at ${link}`);
                 }
-                const description = description_content.join('');
+                // Extract the article body.
+                const descriptionContent = descriptionElement.split(',').filter((item) => item !== '');
+                for (let index = 0; index < descriptionContent.length; index++) {
+                    descriptionContent[index] = content(descriptionContent[index].trim()).html();
+                }
+                const description = descriptionContent.join('');
 
                 return {
                     link,
-                    title: title!,
+                    title,
                     description,
-                    pubDate: timezone(parseDate(pubDate!, pubDate_format), 8),
-                    author: /本/.test(author!) ? authorisme : author,
+                    pubDate: parsedDate && Number.isFinite(parsedDate.getTime()) ? timezone(parsedDate, 8) : undefined,
+                    author: /本/.test(author!) ? authorIsMe : author,
                 };
             });
         })

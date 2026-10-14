@@ -1,4 +1,5 @@
 import type { Data, Route } from '@/types';
+import { parseDate } from '@/utils/parse-date';
 import parser from '@/utils/rss-parser';
 
 export const route: Route = {
@@ -14,6 +15,8 @@ const createItem = (item) => ({
     title: item.title,
     link: item.link,
     description: item.contentSnippet,
+    category: item.categories,
+    pubDate: item.isoDate || item.pubDate ? parseDate(item.isoDate ?? item.pubDate) : undefined,
 });
 
 async function handler(): Promise<Data> {

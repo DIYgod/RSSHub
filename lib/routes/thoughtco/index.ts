@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { DataItem, Language, Route } from '@/types';
@@ -329,7 +330,8 @@ async function handler(ctx) {
         throw new InvalidParameterError('Invalid category');
     }
 
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 50;
+    const requestedLimit = Number(ctx.req.query('limit') || '50');
+    const limit = Number.isFinite(requestedLimit) && Math.floor(requestedLimit) > 0 ? Math.floor(requestedLimit) : 50;
 
     const rootUrl = 'https://www.thoughtco.com';
     const currentUrl = new URL(category, rootUrl).href;
@@ -350,8 +352,9 @@ async function handler(ctx) {
             };
         });
 
-    items = await Promise.all(
-        items.map((item) =>
+    items = await pMap(
+        items,
+        (item) =>
             cache.tryGet(item.link!, async () => {
                 const { data: detailResponse } = await got(item.link);
 
@@ -391,12 +394,14 @@ async function handler(ctx) {
                             .map((c) => c.trim())
                     ),
                 ];
-                item.pubDate = parseDate(detailResponse.match(/"datePublished": "(.*?)"/)[1]);
-                item.updated = parseDate(detailResponse.match(/"dateModified": "(.*?)"/)[1]);
+                const publishedDate = detailResponse.match(/"datePublished": "(.*?)"/)?.[1];
+                const modifiedDate = detailResponse.match(/"dateModified": "(.*?)"/)?.[1];
+                item.pubDate = publishedDate ? parseDate(publishedDate) : undefined;
+                item.updated = modifiedDate ? parseDate(modifiedDate) : undefined;
 
                 return item;
-            })
-        )
+            }),
+        { concurrency: 3 }
     );
 
     const author = $('meta[property="og:site_name"]').prop('content');

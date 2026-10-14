@@ -5,6 +5,7 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
+import { getRouteLimit } from '@/utils/route-limit';
 
 const sections = { recommended: { index: 0, name: '重磅推荐' }, hot: { index: 1, name: '最热连载小说' }, featured: { index: 3, name: '精选强推' } };
 
@@ -40,7 +41,7 @@ async function handler(ctx) {
             seen.add(url);
             return true;
         })
-        .slice(0, Number(ctx.req.query('limit')) || 20);
+        .slice(0, getRouteLimit(ctx, 20));
     const items = await pMap(
         list,
         (itemLink) =>

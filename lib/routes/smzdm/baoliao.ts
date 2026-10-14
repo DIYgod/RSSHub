@@ -52,29 +52,32 @@ async function handler(ctx) {
         .toArray()
         .map((item): DataItem => {
             const $item = $(item);
+            const published = $item.find('.pandect-content-time').text();
             return {
                 title: $item.find('.pandect-content-title a').text(),
                 link: $item.find('.pandect-content-title a').attr('href'),
-                pubDate: timezone(parseDate($item.find('.pandect-content-time').text(), ['YYYY-MM-DD', 'MM-DD HH:mm']), 8),
+                pubDate: published ? timezone(parseDate(published, ['YYYY-MM-DD', 'MM-DD HH:mm']), 8) : undefined,
             };
         });
 
     const out = await pMap(
         list,
-        (item) =>
-            cache.tryGet(item.link!, async () => {
+        async (item) => {
+            const detail = await cache.tryGet(item.link!, async () => {
                 const response = await ofetch(item.link!, {
                     headers: {
                         cookie,
                     },
                 });
                 const $ = load(response);
-                item.description = $('article.txt-detail').html();
-                item.pubDate = timezone(parseDate($('.time').text().replace('更新时间：', '')), 8);
-                item.author = title;
+                const description = $('article.txt-detail').html();
+                const published = $('meta[name="weibo:webpage:create_at"]').attr('content');
+                const pubDate = published && /^\d{4}-\d{2}-\d{2}/.test(published) ? parseDate(published) : undefined;
 
-                return item;
-            }),
+                return { description, pubDate };
+            });
+            return { ...item, ...detail, pubDate: detail.pubDate || item.pubDate, author: title };
+        },
         { concurrency: 3 }
     );
 

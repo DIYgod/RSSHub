@@ -1,10 +1,13 @@
 import zlib from 'node:zlib';
 
+import type { Context } from 'hono';
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 
+import type { DataItem } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
 const constants = {
     labelHot: '热门',
@@ -25,9 +28,10 @@ const imgRootUrl = 'https://img.foresightnews.pro';
 const icon = new URL('foresight.ico', rootUrl).href;
 const image = new URL('vertical_logo.png', imgRootUrl).href;
 
-const processItems = async (apiUrl, limit, ...parameters) => {
+const processItems = async (apiUrl, ctx: Context, ...parameters) => {
+    const limit = getRouteLimit(ctx, 50);
     const searchParams = {
-        size: limit,
+        size: Math.max(50, limit),
     };
     for (const param of parameters) {
         Object.assign(searchParams, param);
@@ -45,9 +49,9 @@ const processItems = async (apiUrl, limit, ...parameters) => {
     const response = await ofetch(requestUrl.href);
 
     const buffer = Buffer.from(response.data?.list ?? response.data, 'base64');
-    let items = JSON.parse(String(zlib.inflateSync(buffer)));
+    const nativeItems = JSON.parse(String(zlib.inflateSync(buffer)));
 
-    items = (items?.list ?? items).slice(0, limit).map((item) => {
+    let items: DataItem[] = (nativeItems?.list ?? nativeItems).map((item) => {
         const sourceType = item.source_type ?? (item.source_link ? (item.column?.title ? 'article' : 'news') : item.event_type ? 'event' : constants.defaultType);
 
         item = item.source_type ? item[item.source_type] : item;
@@ -65,6 +69,7 @@ const processItems = async (apiUrl, limit, ...parameters) => {
         ].filter((v, index, self) => v && self.indexOf(v) === index);
 
         const link = new URL(`${params[sourceType]}/detail/${item.id}`, rootUrl).href;
+        const pubDate = item.published_at ? parseDate(item.published_at * 1000) : undefined;
 
         return {
             title: item.title,
@@ -89,10 +94,19 @@ const processItems = async (apiUrl, limit, ...parameters) => {
             author: item.column?.title ?? item.author?.username,
             category: categories,
             guid: `foresightnews-${sourceType}#${item.id}`,
-            pubDate: item.published_at ? parseDate(item.published_at * 1000) : undefined,
+            pubDate: pubDate && Number.isFinite(pubDate.getTime()) ? pubDate : undefined,
             updated: item.last_update_at ? parseDate(item.last_update_at * 1000) : undefined,
         };
     });
+
+    const nativeOrder = ctx.req.query('sorted') === 'false';
+    const allDated = items.every((item) => item.pubDate instanceof Date && Number.isFinite(item.pubDate.getTime()));
+    if (!nativeOrder && allDated) {
+        items = items.toSorted((a, b) => +new Date(b.pubDate!) - +new Date(a.pubDate!));
+    }
+    if (nativeOrder || allDated) {
+        items = items.slice(0, limit);
+    }
 
     return { items, info };
 };

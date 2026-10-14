@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
@@ -30,9 +31,14 @@ async function handler(): Promise<Data> {
     const feedXml = await ofetch(feedUrl, { responseType: 'text' });
     const feed = await parser.parseString(feedXml);
 
-    const items = await Promise.all(
-        feed.items.map((item) =>
-            cache.tryGet(item.link!, async (): Promise<DataItem> => {
+    const items = await pMap(
+        feed.items,
+        async (item) => ({
+            title: item.title!,
+            link: item.link!,
+            author: item.author,
+            pubDate: item.pubDate ? parseDate(item.pubDate) : undefined,
+            ...(await cache.tryGet(item.link!, async (): Promise<Pick<DataItem, 'description' | 'category'>> => {
                 const response = await ofetch(item.link!);
                 const $ = load(response);
 
@@ -41,17 +47,14 @@ async function handler(): Promise<Data> {
                 $body.find('style').remove();
 
                 return {
-                    title: item.title!,
-                    link: item.link!,
-                    author: item.author,
-                    pubDate: item.pubDate ? parseDate(item.pubDate) : undefined,
                     description: $body.html(),
                     category: $('#tags a')
                         .toArray()
                         .map((tag) => $(tag).text()),
                 };
-            })
-        )
+            })),
+        }),
+        { concurrency: 3 }
     );
 
     return {

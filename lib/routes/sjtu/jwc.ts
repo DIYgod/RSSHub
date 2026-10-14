@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
@@ -7,12 +8,17 @@ import { parseDate } from '@/utils/parse-date';
 
 const urlRoot = 'https://jwc.sjtu.edu.cn';
 
+class CampusAccessError extends Error {}
+
 async function getFullArticle(link) {
     const response = await got(link);
     if (!response) {
         return null;
     }
     const $ = load(response.body);
+    if ($('title').text() === '系统提示' && $('body').text().includes('该栏目内容已设置访问权限，请切换到校内IP访问。')) {
+        throw new CampusAccessError(`Article ${link} requires a campus IP address; open the original page from the campus network.`);
+    }
     const content = $('.content-con');
     if (content.length === 0) {
         return null;
@@ -103,29 +109,33 @@ async function handler(ctx) {
 
     const $ = load(response.body);
 
-    const out = await Promise.all(
-        $('body > div.list-box > div.container > div > div.ny_right > div > div.ny_right_con > div > ul')
-            .find('li')
-            .toArray()
-            .map((e) => {
-                const info = $(e).find('.wz');
-                const relativeLink = info.find('a').attr('href');
-                const link = new URL(relativeLink!, sectionLink).href;
-                const title = info.find('a > h2').text();
-                const timeElement = $(e).find('.sj');
-                const day = timeElement.find('h2').text();
-                const yearAndMonth = timeElement.find('p').text();
-                const pubDate = parseDate(`${yearAndMonth}.${day}`, 'YYYY.MM.DD');
-                return cache.tryGet(link, async () => {
-                    const description = await getFullArticle(link);
-                    return {
-                        title,
-                        link,
-                        pubDate,
-                        description,
-                    };
-                });
-            })
+    const out = await pMap(
+        $('body > div.list-box > div.container > div > div.ny_right > div > div.ny_right_con > div > ul').find('li').toArray(),
+        async (e) => {
+            const info = $(e).find('.wz');
+            const relativeLink = info.find('a').attr('href');
+            const link = new URL(relativeLink!, sectionLink).href;
+            const title = info.find('a > h2').text();
+            const timeElement = $(e).find('.sj');
+            const day = timeElement.find('h2').text();
+            const yearAndMonth = timeElement.find('p').text();
+            const pubDate = yearAndMonth && day ? parseDate(`${yearAndMonth}.${day} +0000`, 'YYYY.MM.DD ZZ') : undefined;
+            const articlePromise = cache.tryGet(`sjtu:jwc:details:v4:${link}`, async () => ({ description: await getFullArticle(link) }));
+            let detailResult;
+            try {
+                detailResult = await articlePromise;
+            } catch (error) {
+                if (error instanceof CampusAccessError) {
+                    return { title, link, pubDate };
+                }
+                throw error;
+            }
+            {
+                const details = detailResult;
+                return { title, link, pubDate, ...details };
+            }
+        },
+        { concurrency: 3 }
     );
 
     return {

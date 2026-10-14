@@ -1,6 +1,7 @@
 import { config } from '@/config';
 import type { Data, Route } from '@/types';
 import got from '@/utils/got';
+import { getRouteLimit } from '@/utils/route-limit';
 
 import { getNSFWSeriesNovels } from './novel-api/series/nsfw';
 import { getSFWSeriesNovels } from './novel-api/series/sfw';
@@ -48,7 +49,7 @@ const hasPixivAuth = () => Boolean(config.pixiv && config.pixiv.refreshToken);
 
 async function handler(ctx): Promise<Data> {
     const id = ctx.req.param('id');
-    const { limit } = ctx.req.query();
+    const limit = getRouteLimit(ctx, 10);
 
     // Get series info and check content rating
     const seriesInfoResponse = await got(`${baseUrl}/ajax/novel/series/${id}`);

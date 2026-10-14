@@ -1,9 +1,11 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import { parseDate } from '@/utils/parse-date';
-import playwright from '@/utils/playwright';
+import { getPlaywrightPage } from '@/utils/playwright';
+import { getRouteLimit } from '@/utils/route-limit';
 
 export const route: Route = {
     path: '/publications/:id',
@@ -16,8 +18,8 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['researchgate.net/profile/:username'],
-            target: '/publications/:username',
+            source: ['researchgate.net/profile/:id'],
+            target: '/publications/:id',
         },
     ],
     name: 'Publications',
@@ -30,65 +32,61 @@ async function handler(ctx) {
 
     const rootUrl = 'https://www.researchgate.net';
     const currentUrl = `${rootUrl}/profile/${id}`;
-    const context = await playwright();
-    const page = await context.newPage();
-    await page.route('**/*', (route) => {
-        const request = route.request();
-        request.resourceType() === 'document' || request.resourceType() === 'script' ? route.continue() : route.abort();
-    });
-    await page.goto(currentUrl);
-    const response = await page.evaluate(() => document.documentElement.getHTML());
-    await page.close();
-
-    const $ = load(response);
-
-    const list = $('div[itemprop="headline"] a')
-        .toArray()
-        .slice(0, ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 15)
-        .map((item): DataItem => {
-            const $item = $(item);
-            return {
-                title: $item.text(),
-                link: $item.attr('href'),
-            };
+    const { page, destroy } = await getPlaywrightPage(currentUrl, { noGoto: true, closeTimeout: 0 });
+    try {
+        await page.route('**/*', (route) => {
+            const request = route.request();
+            request.resourceType() === 'document' || request.resourceType() === 'script' ? route.continue() : route.abort();
         });
+        await page.goto(currentUrl);
+        const response = await page.evaluate(() => document.documentElement.getHTML());
 
-    const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link!, async () => {
-                const page = await context.newPage();
-                await page.route('**/*', (route) => {
-                    const request = route.request();
-                    request.resourceType() === 'document' || request.resourceType() === 'script' ? route.continue() : route.abort();
-                });
-                await page.goto(item.link!);
-                const detailResponse = await page.evaluate(() => document.documentElement.getHTML());
-                await page.close();
-                const content = load(detailResponse);
+        const $ = load(response);
 
-                item.doi = content('meta[property="citation_doi"]').attr('content');
-                item.pubDate = parseDate(content('meta[property="citation_publication_date"]').attr('content')!);
+        const list = $('div[itemprop="headline"] a')
+            .toArray()
+            .slice(0, getRouteLimit(ctx, 15))
+            .map((item): DataItem => {
+                const $item = $(item);
+                return {
+                    title: $item.text(),
+                    link: $item.attr('href'),
+                };
+            });
 
-                const authors: any[] = [];
+        const items = await pMap(
+            list,
+            (item) =>
+                cache.tryGet(item.link!, async () => {
+                    await page.goto(item.link!);
+                    const detailResponse = await page.evaluate(() => document.documentElement.getHTML());
+                    const content = load(detailResponse);
 
-                content('meta[property="citation_author"]').each((_, el) => {
-                    authors.push(content(el).attr('content'));
-                });
+                    item.doi = content('meta[property="citation_doi"]').attr('content');
+                    const pubDate = content('meta[property="citation_publication_date"]').attr('content')?.trim();
+                    item.pubDate = pubDate ? parseDate(pubDate) : undefined;
 
-                item.author = authors.join(', ');
+                    const authors: any[] = [];
 
-                item.description = content('div[itemprop="description"]').html();
+                    content('meta[property="citation_author"]').each((_, el) => {
+                        authors.push(content(el).attr('content'));
+                    });
 
-                return item;
-            })
-        )
-    );
+                    item.author = authors.join(', ');
 
-    await context.close();
+                    item.description = content('div[itemprop="description"]').html();
 
-    return {
-        title: `${$('meta[property="profile:username"]').attr('content')}'s Publications - ResearchGate`,
-        link: currentUrl,
-        item: items,
-    };
+                    return item;
+                }),
+            { concurrency: 1 }
+        );
+
+        return {
+            title: `${$('meta[property="profile:username"]').attr('content')}'s Publications - ResearchGate`,
+            link: currentUrl,
+            item: items,
+        };
+    } finally {
+        await destroy();
+    }
 }

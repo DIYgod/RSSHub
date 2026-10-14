@@ -1,12 +1,21 @@
 import { load } from 'cheerio';
 import dayjs from 'dayjs';
 import { renderToString } from 'hono/jsx/dom/server';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
+import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 import { namespace } from './namespace';
+
+const getExhibitionContent = async (link: string) => {
+    const response = await ofetch(link);
+    const $ = load(response);
+    return { description: $('.exhUs_r').first().html() ?? '' };
+};
 
 // Convert YYYY年M月D日 to YYYY-MM-DD
 const formatDate = (dateString: string | undefined) => {
@@ -82,7 +91,7 @@ export const route: Route = {
                     .replace(/^展期：/, '');
 
                 const { startDate, endDate } = parseExhibitionDuration(fullDuration);
-                const pubDate = startDate ? parseDate(startDate) : undefined;
+                const pubDate = startDate ? timezone(parseDate(startDate), 8) : undefined;
 
                 const description = renderToString(
                     <div>
@@ -126,7 +135,7 @@ export const route: Route = {
             title: `${museumName} - 临时展览`,
             link: listUrl,
             language: 'zh-CN',
-            item: items,
+            item: await pMap(items, async (item) => ({ ...item, description: (item.description ?? '') + (await cache.tryGet(item.link!, () => getExhibitionContent(item.link!))).description }), { concurrency: 3 }),
         };
     },
 };

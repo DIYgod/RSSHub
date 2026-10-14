@@ -1,7 +1,7 @@
 import type { Route } from '@/types';
-import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { getRouteLimit } from '@/utils/route-limit';
 
 import { rootUrl } from './utils';
 
@@ -20,28 +20,32 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['0daily.com/newsflash', '0daily.com/'],
+            source: ['www.odaily.news/:locale/newsflash', 'www.odaily.news/newsflash', 'www.odaily.news/'],
         },
     ],
     name: '快讯',
     maintainers: ['nczitzk'],
     handler,
-    url: '0daily.com/newsflash',
+    url: 'www.odaily.news/zh-CN/newsflash',
+};
+
+type Newsflash = {
+    id: number;
+    title: string;
+    description: string;
+    publishTimestamp: number;
+    tags: Array<{ name: string }>;
 };
 
 async function handler(ctx) {
-    const currentUrl = `${rootUrl}/api/pp/api/info-flow/newsflash_columns/newsflashes?b_id=&per_page=${ctx.req.query('limit') ?? 100}`;
-
-    const response = await got({
-        method: 'get',
-        url: currentUrl,
-    });
-
-    const items = response.data.data.items.map((item) => ({
+    const query = new URLSearchParams({ page: '1', size: String(getRouteLimit(ctx, 100)) });
+    const response = await ofetch<{ data: { list: Newsflash[] } }>(`https://web-api.odaily.news/newsflash/page?${query}`);
+    const items = response.data.list.map((item) => ({
         title: item.title,
-        link: item.news_url,
-        pubDate: timezone(parseDate(item.published_at), 8),
-        description: `<p>${item.description}</p>`,
+        link: `${rootUrl}/newsflash/${item.id}`,
+        pubDate: parseDate(item.publishTimestamp),
+        description: item.description,
+        category: item.tags.map((tag) => tag.name),
     }));
 
     return {

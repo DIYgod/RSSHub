@@ -6,6 +6,7 @@ import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 import timezone from '@/utils/timezone';
 
 const categories = {
@@ -31,6 +32,8 @@ export const route: Route = {
 
 async function handler(ctx) {
     const category = ctx.req.param('category');
+    const sourceLimit = getRouteLimit(ctx, 20);
+    const limit = ctx.req.query('sorted') === 'false' ? sourceLimit : Math.max(20, sourceLimit);
     if (category && !Object.hasOwn(categories, category)) {
         throw new InvalidParameterError(`Unknown policy category: ${category}. Use ${Object.keys(categories).join(', ')}.`);
     }
@@ -55,7 +58,7 @@ async function handler(ctx) {
             return [{ title: anchor.text(), link: itemLink, pubDate: timezone(parseDate(row.find('.date').text()), 8) }];
         })
         .toSorted((a, b) => new Date(b.pubDate!).getTime() - new Date(a.pubDate!).getTime())
-        .slice(0, Number(ctx.req.query('limit')) || 20);
+        .slice(0, limit);
     const items = await pMap(
         list,
         (item) =>

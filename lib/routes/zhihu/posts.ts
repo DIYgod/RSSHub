@@ -9,7 +9,7 @@ export const route: Route = {
     path: '/posts/:usertype/:id',
     categories: ['social-media'],
     example: '/zhihu/posts/people/frederchen',
-    parameters: { usertype: '作者 id，可在用户主页 URL 中找到', id: '用户类型usertype，参考用户主页的URL。目前有两种，见下表' },
+    parameters: { usertype: '用户类型usertype，参考用户主页的URL。目前有两种，见下表', id: '作者 id，可在用户主页 URL 中找到' },
     features: {
         requireConfig: [
             {

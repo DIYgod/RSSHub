@@ -1,8 +1,9 @@
 import { load } from 'cheerio'; // 类似 jQuery 的 API HTML 解析器
 
+import NotFoundError from '@/errors/types/not-found';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
-import ofetch from '@/utils/ofetch'; // 统一使用的请求库
+import ofetch from '@/utils/ofetch';
 
 export const route: Route = {
     path: '/detail/:name',
@@ -27,17 +28,18 @@ async function handler(ctx) {
 
     const idUrl = await getId(name);
     if (!idUrl) {
-        return null;
+        throw new NotFoundError(`BTBTLA has no matching title for "${name}".`);
     }
     const detailLink = 'https://www.btbtla.com' + idUrl;
     const detailResponse = await ofetch(detailLink);
     const $ = load(detailResponse);
 
     const itemElements = $('div[name=download-list] .module-downlist.selected .module-row-one.active .module-row-info').toArray();
+    const entries = itemElements;
 
     // 使用缓存处理所有项目
     const items = await Promise.all(
-        itemElements.map(async (element) => {
+        entries.map(async (element) => {
             const $row = $(element);
             const title = $row.find('.module-row-title h4').text().trim();
             const link = $row.find('.module-row-text').attr('href');

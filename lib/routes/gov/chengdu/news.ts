@@ -5,6 +5,7 @@ import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import { parseDate } from '@/utils/parse-date';
 import { getPlaywrightPage, type Page } from '@/utils/playwright';
+import { getRouteLimit } from '@/utils/route-limit';
 import timezone from '@/utils/timezone';
 
 const baseUrl = 'https://www.chengdu.gov.cn';
@@ -70,10 +71,10 @@ async function handler(ctx) {
         if (!Array.isArray(apiResponse.results)) {
             throw new TypeError('The news API no longer returns an article list.');
         }
-        const requestedLimit = Number.parseInt(ctx.req.query('limit') ?? '');
-        const items = apiResponse.results
-            .slice(0, requestedLimit > 0 ? requestedLimit : 20)
-            .map((item): DataItem => ({ title: item.title, link: new URL(item.url, baseUrl).href, pubDate: timezone(parseDate(item.publishedTimeStr), 8) }));
+        const limit = getRouteLimit(ctx, 20);
+        // Detail metadata can refine dates and titles from the search result.
+        const candidateLimit = ctx.req.query('sorted') === 'false' ? limit : Math.max(20, limit);
+        const items = apiResponse.results.slice(0, candidateLimit).map((item): DataItem => ({ title: item.title, link: new URL(item.url, baseUrl).href, pubDate: timezone(parseDate(item.publishedTimeStr), 8) }));
         return { title: '成都市人民政府 - 政务要闻', link, language: 'zh-CN' as const, item: await pMap(items, (item) => getItem(item, page), { concurrency: 1 }) };
     } finally {
         await destroy();

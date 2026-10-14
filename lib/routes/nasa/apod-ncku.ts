@@ -4,6 +4,9 @@ import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
+
+import { getAPODItems } from './utils';
 
 export const route: Route = {
     path: '/apod-ncku',
@@ -20,17 +23,17 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['apod.nasa.govundefined'],
+            source: ['sprite.phys.ncku.edu.tw/astrolab/mirrors/apod/*path', 'sprite.phys.ncku.edu.tw/astrolab/mirrors/apod'],
         },
     ],
     name: 'Cheng Kung University Mirror',
     maintainers: ['nczitzk', 'williamgateszhao'],
     handler,
-    url: 'apod.nasa.govundefined',
+    url: 'sprite.phys.ncku.edu.tw/astrolab/mirrors/apod/',
 };
 
 async function handler(ctx) {
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 10;
+    const limit = getRouteLimit(ctx, 10);
     const rootUrl = 'http://sprite.phys.ncku.edu.tw/astrolab/mirrors/apod/archivepix.html';
     const response = await got({
         method: 'get',
@@ -38,6 +41,14 @@ async function handler(ctx) {
     });
 
     const $ = load(response.data);
+
+    if ($('main .hds-content-item-heading[href*="/image-article/"]').length) {
+        return {
+            title: 'NASA 每日一天文圖 (成大物理分站) ',
+            link: rootUrl,
+            item: await getAPODItems(limit),
+        };
+    }
 
     const list = $('body > b > a')
         .slice(0, limit)

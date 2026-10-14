@@ -1,4 +1,5 @@
 import type { Context } from 'hono';
+import pMap from 'p-map';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
@@ -20,28 +21,30 @@ const host = 'www.missevan.com';
 async function handler(ctx: Context) {
     const { id } = ctx.req.param();
     const dramaUrl = `https://${host}/dramaapi/getdrama?drama_id=${id}`;
-    const dramaResp = await ofetch(dramaUrl);
+    const dramaResp = await ofetch<{ info: { episodes: { episode: Array<{ sound_id: number; name: string }> }; drama: { cover: string; name: string; abstract: string } } }>(dramaUrl);
 
-    const items = await Promise.all(
-        dramaResp.info.episodes.episode.map((item) => {
+    const items = await pMap(
+        dramaResp.info.episodes.episode,
+        async (item) => {
             const soundUrl = `https://www.missevan.com/sound/getsound?soundid=${item.sound_id}`;
-            return cache.tryGet(soundUrl, async () => {
+            const soundData = await cache.tryGet(`missevan:sound:v1:${item.sound_id}`, async () => {
                 const soundResponse = await ofetch(soundUrl);
-                const soundData = soundResponse.info.sound;
-                return {
-                    title: item.name,
-                    enclosure_url: soundData.soundurl,
-                    itunes_duration: Math.trunc(soundData.duration / 1000),
-                    enclosure_type: 'audio/mpeg',
-                    image: dramaResp.info.drama.cover,
-                    itunes_author: soundData.username,
-                    itunes_category: '',
-                    link: `https://www.missevan.com/sound/player?id=${item.sound_id}`,
-                    description: `<img src=${dramaResp.info.drama.cover}><br>${soundData.intro}`,
-                    pubDate: parseDate(soundData.last_update_time * 1000),
-                };
+                return soundResponse.info.sound;
             });
-        })
+            return {
+                title: item.name,
+                enclosure_url: soundData.soundurl,
+                itunes_duration: Math.trunc(soundData.duration / 1000),
+                enclosure_type: 'audio/mpeg',
+                image: dramaResp.info.drama.cover,
+                itunes_author: soundData.username,
+                itunes_category: '',
+                link: `https://www.missevan.com/sound/player?id=${item.sound_id}`,
+                description: `<img src=${dramaResp.info.drama.cover}><br>${soundData.intro}`,
+                pubDate: parseDate(soundData.last_update_time * 1000),
+            };
+        },
+        { concurrency: 3 }
     );
 
     return {

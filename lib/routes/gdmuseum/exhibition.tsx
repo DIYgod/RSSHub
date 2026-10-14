@@ -3,6 +3,7 @@ import dayjs from 'dayjs';
 import type { Context } from 'hono';
 import { renderToString } from 'hono/jsx/dom/server';
 
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { DataItem, Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -42,6 +43,9 @@ export const route: Route = {
     ],
     handler: async (ctx: Context) => {
         const typeParam = ctx.req.param('type') || 'all';
+        if (typeParam !== 'all' && typeParam !== 'temp') {
+            throw new InvalidParameterError('type must be all or temp.');
+        }
 
         const museumName = namespace.zh?.name || namespace.name;
         const baseUrl = 'https://www.gdmuseum.org.cn';

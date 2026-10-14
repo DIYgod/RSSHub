@@ -4,13 +4,15 @@ import type { Context } from 'hono';
 
 import type { Data, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import timezone from '@/utils/timezone';
+import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
 
-function ROCDate(dateStr: string | Date): Date {
-    const date = new Date(dateStr);
-    date.setFullYear(date.getFullYear() + 1911);
-
-    return timezone(date, 8);
+function parseRocDate(dateStr: string): Date | undefined {
+    const match = dateStr.match(/^(\d{2,4})-(\d{2})-(\d{2})$/);
+    if (!match) {
+        return;
+    }
+    const year = Number(match[1]) + (match[1].length < 4 ? 1911 : 0);
+    return parseDateInTimezone(`${year}-${match[2]}-${match[3]}`, 8);
 }
 
 async function handler(ctx: Context): Promise<Data> {
@@ -37,8 +39,8 @@ async function handler(ctx: Context): Promise<Data> {
         .toArray()
         .map((e) => ({
             title: $('a', e).attr('title') || '',
-            link: $('a', e).attr('href') || '',
-            pubDate: ROCDate($('div p:nth-child(1)', e).text().replace('更新日期：', '').trim()),
+            link: new URL($('a', e).attr('href') || '', url).href,
+            pubDate: parseRocDate($('div p:nth-child(1)', e).text().replace('更新日期：', '').trim()),
             category: [$('div p:nth-child(2)', e).text().replace('分類：', '')],
             author: $('div p:nth-child(3)', e).text().replace('發布單位：', ''),
         }));

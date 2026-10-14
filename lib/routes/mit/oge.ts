@@ -1,10 +1,12 @@
 import { load } from 'cheerio';
 import type { Context } from 'hono';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/oge/:type?/:name?',
@@ -60,24 +62,26 @@ async function handler(ctx: Context) {
             return {
                 title: a.text(),
                 link: a.attr('href'),
-                pubDate: parseDate(date),
+                pubDate: date.trim() ? timezone(parseDate(date.trim()), 0) : undefined,
                 author: author?.trim(),
             };
         });
 
-    const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link!, async () => {
+    const items = await pMap(
+        list,
+        async (item) => {
+            const details = await cache.tryGet(`mit:oge:article-details:v2:${item.link}`, async () => {
                 const detailResponse = await ofetch(item.link!);
                 const $$ = load(detailResponse);
 
                 const description = $$('.blog-main .col-12').first();
-                description.find('h2, p.meta-date').remove();
-                item.description = description.html() ?? undefined;
-
-                return item;
-            })
-        )
+                description.children('h2').first().remove();
+                description.children('p.meta-date').remove();
+                return { description: description.html() ?? undefined };
+            });
+            return { ...item, ...details };
+        },
+        { concurrency: 3 }
     );
 
     return {

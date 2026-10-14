@@ -1,3 +1,4 @@
+import { escapeUTF8 } from 'entities/escape';
 import type { Persona, Post } from 'mixi2';
 import { Category, MixiClient } from 'mixi2';
 
@@ -19,14 +20,22 @@ export function getClient() {
 }
 
 export function parsePost(post: Post) {
-    let description = post.text ? `<p>${post.text}</p>` : '';
+    let description = post.text ? `<p>${escapeUTF8(post.text)}</p>` : '';
 
     const medias = post.medias ?? [];
     for (const media of medias) {
         if (media.category === Category.CATEGORY_POST_IMAGE) {
-            description += `<img src="${media.postImage?.largeImageUrl ?? media.postImage?.smallImageUrl}"${media.description ? `alt="${media.description}"` : ''} />`;
+            const imageUrl = media.postImage?.largeImageUrl || media.postImage?.smallImageUrl;
+            if (imageUrl) {
+                description += `<img src="${escapeUTF8(imageUrl)}"${media.description ? ` alt="${escapeUTF8(media.description)}"` : ''} />`;
+            }
         } else if (media.category === Category.CATEGORY_POST_VIDEO) {
-            description += `<img src="${media.postVideo?.previewImageUrl}" alt="${media.description}" />`;
+            const video = media.postVideo;
+            if (video?.url) {
+                description += `<video controls src="${escapeUTF8(video.url)}"${video.previewImageUrl ? ` poster="${escapeUTF8(video.previewImageUrl)}"` : ''}></video>`;
+            } else if (video?.previewImageUrl) {
+                description += `<img src="${escapeUTF8(video.previewImageUrl)}"${media.description ? ` alt="${escapeUTF8(media.description)}"` : ''} />`;
+            }
         }
     }
     return description;

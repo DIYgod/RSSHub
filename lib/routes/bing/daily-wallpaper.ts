@@ -59,6 +59,7 @@ async function handler(ctx) {
     });
     const items = resp.MediaContents.map((item) => {
         const ssd = item.Ssd;
+        const date = ssd ? parseDate(ssd, ['YYYYMMDD_HHmm', 'YYYYMMDD'], true) : undefined;
         const link = `${apiUrl}${item.ImageContent.Image.Url.match(/\/th\?id=[^_]+_[^_]+/)[0].replace(/(_\d+x\d+\.webp)$/i, '')}_${type}.jpg`;
         let description = `<img width="1920" height="1080" src="${link}" alt="Article Cover Image" style="display: block; margin: 0 auto;"><br>`;
         if (story) {
@@ -71,7 +72,7 @@ async function handler(ctx) {
             description,
             link: `${apiUrl}${item.ImageContent.BackstageUrl}`,
             author: item.ImageContent.Copyright,
-            pubDate: timezone(parseDate(ssd, 'YYYYMMDD_HHmm'), 0),
+            pubDate: date && Number.isFinite(date.getTime()) ? timezone(date, 0) : undefined,
         };
     });
     return {

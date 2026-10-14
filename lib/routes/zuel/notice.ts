@@ -1,5 +1,7 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
+import NotFoundError from '@/errors/types/not-found';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
@@ -42,38 +44,69 @@ async function handler() {
 
     let items = $('.list_item')
         .toArray()
-        .map((item): DataItem => {
+        .flatMap((item): DataItem[] => {
             const $item = $(item);
 
             const a = $item.find('.Article_Title a');
+            const link = getNoticeLink(a.attr('href'), currentUrl);
+            if (!link) {
+                return [];
+            }
 
-            return {
-                title: a.text(),
-                pubDate: parseDate($item.find('.Article_PublishDate').text()),
-                link: `${a.attr('href')!.startsWith('http') ? '' : rootUrl}${a.attr('href')}`,
-            };
+            return [
+                {
+                    title: a.text(),
+                    pubDate: getPublicationDate($item.find('.Article_PublishDate').text()),
+                    link,
+                },
+            ];
         });
 
-    items = await Promise.all(
-        items.map((item) =>
-            cache.tryGet(item.link!, async () => {
+    items = await pMap(
+        items,
+        async (item) => {
+            const detail = await cache.tryGet(`zuel:notice-body:v2:${item.link}`, async () => {
                 const detailResponse = await got({
                     method: 'get',
                     url: item.link,
                 });
 
                 const content = load(detailResponse.data);
-
-                item.description = content('.wp_articlecontent, .psgCont, .infodetail').html();
-
-                return item;
-            })
-        )
+                const article = content('.wp_articlecontent, .psgCont, .infodetail').first();
+                const description = article.html();
+                if (!description?.trim() || (!article.text().trim() && !article.find('img[src], video, audio, iframe[src], a[href], svg, picture').length)) {
+                    throw new NotFoundError('The notice page does not contain an available article body.');
+                }
+                return { description };
+            });
+            return { ...item, description: detail.description };
+        },
+        { concurrency: 3 }
     );
 
     return {
-        title: '中南财经大学 - 通知公告',
+        title: '中南财经政法大学 - 通知公告',
         link: currentUrl,
         item: items,
     };
+}
+
+function getNoticeLink(href: string | undefined, baseUrl: string) {
+    if (!href) {
+        return;
+    }
+    try {
+        const url = new URL(href, baseUrl);
+        return url.protocol === 'http:' || url.protocol === 'https:' ? url.href : undefined;
+    } catch {
+        return;
+    }
+}
+
+function getPublicationDate(value: string) {
+    if (!value.trim()) {
+        return;
+    }
+    const date = parseDate(value);
+    return Number.isFinite(date.getTime()) ? date : undefined;
 }

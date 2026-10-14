@@ -1,4 +1,5 @@
-import { load } from 'cheerio';
+import { type Cheerio, load } from 'cheerio';
+import { type AnyNode, cloneNode, Document } from 'domhandler';
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 
@@ -7,6 +8,15 @@ import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
+
+function copyElements<T extends AnyNode>(selection: Cheerio<T>): Cheerio<T> {
+    const copy = selection.map((_, element) => cloneNode(element, true));
+    const root = new Document(copy.toArray());
+    copy.each((_, element) => {
+        element.parent = root;
+    });
+    return copy;
+}
 
 const rootUrl = 'http://www.mztoday.gov.cn';
 const basicInfoDict = {
@@ -110,9 +120,17 @@ const getInfoContent = (item) =>
     cache.tryGet(item.url, async () => {
         const response = await got(item.url);
         const $ = load(response.data);
+        const content = copyElements($('.showText, #js_content, #articleContent').first());
+        if (!content.length && $('.articleTitle, #js_article').length) {
+            throw new Error(`Article content was not found: ${item.url}`);
+        }
+        content.find('img[data-src]').each((_, image) => {
+            const $image = $(image);
+            $image.attr('src', $image.attr('data-src')!).removeAttr('data-src');
+        });
         return {
             title: item.title,
-            content: $('td:nth-child(2)').html(),
+            content: content.html(),
             link: item.url,
             pubDate: item.pubDate,
         };
@@ -154,10 +172,10 @@ async function handler(ctx) {
 
     return {
         title: `今日绵竹-${basicInfoDict[infoType].name}`,
-        link: `${infoBasicUrl}1`,
+        link: infoBasicUrl,
         item: items.map((item) => ({
             title: item.title,
-            description: renderToString(<div>{item.content ? raw(item.content) : null}</div>),
+            description: item.content ? renderToString(<div>{raw(item.content)}</div>) : undefined,
             link: item.link,
             pubDate: item.pubDate,
         })),

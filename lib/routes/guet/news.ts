@@ -1,6 +1,8 @@
 import { load } from 'cheerio';
 import type { Context } from 'hono';
+import pMap from 'p-map';
 
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
@@ -31,12 +33,58 @@ const paths = {
     xsxx: 'xsxx',
 };
 
+const externalContentSelectors: Record<string, string> = {
+    'mp.weixin.qq.com': '#js_content',
+    'www.stdaily.com': '.content',
+    'app.gmdaily.cn': '.article-content',
+    'gx.people.com.cn': '#rm_txt_zw',
+    'guangxi.eol.cn': '.TRS_Editor',
+};
+
+async function getArticle(link: string, articleHost: string) {
+    const result = await ofetch(link, { responseType: 'text' });
+    const $ = load(result);
+    if (articleHost === 'v.gltvs.com') {
+        const movie = result.match(/playMovie\('([^']+\.mp4)',\s*'([^']*)'/);
+        if (!movie) {
+            throw new Error(`No public video found in ${link}`);
+        }
+        const video = $('<video controls></video>').attr('src', new URL(movie[1], 'https://video.gltvs.com').href);
+        if (movie[2]) {
+            video.attr('poster', new URL(movie[2], link).href);
+        }
+        return { description: $.html(video), pubDate: undefined };
+    }
+    const content = $(externalContentSelectors[articleHost] ?? '.wp_articlecontent');
+    content.find('script, style').remove();
+    content.find('img[data-src]').each((_, image) => {
+        const element = $(image);
+        element.attr('src', element.attr('data-src')!);
+    });
+    content.find('.wp_video_player[sudy-wp-src]').each((_, player) => {
+        const element = $(player);
+        const mediaUrl = new URL(element.attr('sudy-wp-src')!, link).href;
+        const video = $('<video controls></video>').attr('src', mediaUrl);
+        element.replaceWith(video);
+    });
+    const time =
+        articleHost === new URL(host).hostname
+            ? $('.arti_metas')
+                  .text()
+                  .match(/发布时间：\s*(\d+)年(\d+)月(\d+)日\s*(\d+)时(\d+)分/)
+            : undefined;
+    return {
+        description: content.html(),
+        pubDate: time ? timezone(parseDate(`${time[1]}-${time[2]}-${time[3]} ${time[4]}:${time[5]}`), 8) : undefined,
+    };
+}
+
 async function handler(ctx: Context) {
     const { type = 'gdyw' } = ctx.req.param();
-    const path = paths[type];
-    if (!path) {
-        throw new Error('参数不在可选范围之内');
+    if (!Object.hasOwn(paths, type)) {
+        throw new InvalidParameterError('Invalid news type. Use gdyw, xykx, mtgd, tzgg, xntz, or xsxx.');
     }
+    const path = paths[type];
     const url = `${host}/${path}/list.htm`;
 
     const response = await ofetch(url);
@@ -48,31 +96,24 @@ async function handler(ctx: Context) {
             const $item = $(element);
             const a = $item.find('.news_title a');
             return {
-                title: a.text().trim(),
+                title: a.text(),
                 link: new URL(a.attr('href')!, host).href,
                 description: $item.find('.news_text a').text(),
-                pubDate: parseDate($item.find('.news_date').text(), 'YYYY-MM-DD'),
+                pubDate: timezone(parseDate($item.find('.news_date').text(), 'YYYY-MM-DD'), 8),
             };
         });
 
-    const item = await Promise.all(
-        list.map((item) => {
-            if (!item.link.startsWith(`${host}/`)) {
+    const item = await pMap(
+        list,
+        async (item) => {
+            const articleHost = new URL(item.link).hostname;
+            if (articleHost !== new URL(host).hostname && !Object.hasOwn(externalContentSelectors, articleHost) && articleHost !== 'v.gltvs.com') {
                 return item;
             }
-            return cache.tryGet(item.link, async () => {
-                const result = await ofetch(item.link);
-                const $$ = load(result);
-                item.description = $$('.wp_articlecontent').html() ?? item.description;
-                const time = $$('.arti_metas')
-                    .text()
-                    .match(/发布时间：\s*(\d+)年(\d+)月(\d+)日\s*(\d+)时(\d+)分/);
-                if (time) {
-                    item.pubDate = timezone(parseDate(`${time[1]}-${time[2]}-${time[3]} ${time[4]}:${time[5]}`), 8);
-                }
-                return item;
-            });
-        })
+            const article = await cache.tryGet(`guet:article:${item.link}`, () => getArticle(item.link, articleHost));
+            return { ...item, description: article.description ?? item.description, pubDate: article.pubDate ?? item.pubDate };
+        },
+        { concurrency: 3 }
     );
 
     return {

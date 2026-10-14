@@ -1,11 +1,14 @@
-import type { CheerioAPI } from 'cheerio';
 import { load } from 'cheerio';
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
+import pMap from 'p-map';
 
+import InvalidParameterError from '@/errors/types/invalid-parameter';
+import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 import timezone from '@/utils/timezone';
 
 const typeMap = {
@@ -13,17 +16,16 @@ const typeMap = {
     jwc: { url: 'https://jwc.hafu.edu.cn/tzgg.htm', root: 'https://jwc.hafu.edu.cn/', title: '河南财院 教务处 - 公告通知', parseFn: jwcParse },
     zsjyc: { url: 'https://zsjyc.hafu.edu.cn/tztg.htm', root: 'https://zsjyc.hafu.edu.cn/', title: '河南财院 招生就业处 - 公告通知', parseFn: zsjycParse },
 };
-// Number of get articles
-let limit = 10;
-
 export const parseList = async (ctx, type) => {
+    if (!Object.hasOwn(typeMap, type)) {
+        throw new InvalidParameterError('Invalid notice type. Use ggtz, jwc, or zsjyc.');
+    }
     const link = typeMap[type].url;
     const title = typeMap[type].title;
 
     const response = await got(link);
     const $ = load(response.data);
 
-    limit = ctx.req.query('limit') || limit;
     const resultList = await typeMap[type].parseFn(ctx, $);
 
     return {
@@ -33,169 +35,126 @@ export const parseList = async (ctx, type) => {
     };
 };
 
-async function tryGetFullText(href, link, type) {
-    let articleData: CheerioAPI | null = null;
-    let description: string;
-    // for some unexpected href link
-    try {
-        const articleRes = await got(link);
-        articleData = load(articleRes.data);
-        // fullText
-        let articleBody = articleData('div[class=v_news_content]').html();
-        // attachments
-        if (articleData('[id^=nattach]').length !== 0) {
-            articleBody = tryGetAttachments(articleData, articleBody, type);
-        }
-
-        description = articleBody ? renderToString(<>{raw(articleBody)}</>) : '';
-    } catch {
-        description = href;
+async function tryGetFullText(link, type) {
+    const articleRes = await got(link);
+    const articleData = load(articleRes.data);
+    let articleBody = articleData('div[class=v_news_content]').html();
+    if (articleData('[id^=nattach]').length !== 0) {
+        articleBody = tryGetAttachments(articleData, articleBody, type, link);
     }
-
+    if (!articleBody) {
+        throw new Error(`Hafu article content was not found at ${link}`);
+    }
+    const description = renderToString(<>{raw(articleBody)}</>);
     return { articleData, description };
 }
 
-function tryGetAttachments(articleData, articleBody, type) {
+function tryGetAttachments(articleData, articleBody, type, articleUrl) {
+    const attachments = type === 'ggtz' ? articleData('[id^=nattach]').prev() : articleData('[id^=nattach]').parent().prev();
     return (
-        articleBody +
-        (type === 'ggtz'
-            ? articleData('[id^=nattach]')
-                  .prev()
-                  .toArray()
-                  .map((item) => {
-                      const href = articleData(item).attr('href').slice(1);
-                      const link = typeMap.ggtz.root + href;
-                      const title = articleData(item).text();
-                      return `<br/><a href=${link}>${title}</a>`;
-                  })
-                  .join('')
-            : articleData('[id^=nattach]')
-                  .parent()
-                  .prev()
-                  .toArray()
-                  .map((item) => {
-                      const href = articleData(item).find('a').attr('href').slice(1);
-                      const link = typeMap[type].root + href;
-                      const title = articleData(item).find('a').find('span').text();
-                      return `<br/><a href=${link}> ${title} </a>`;
-                  })
-                  .join(''))
+        (articleBody ?? '') +
+        attachments
+            .toArray()
+            .map((item) => {
+                const element = articleData(item);
+                const anchor = element.is('a') ? element : element.find('a').first();
+                const href = anchor.attr('href');
+                if (!href) {
+                    return '';
+                }
+                const link = new URL(href, articleUrl).href;
+                return renderToString(
+                    <>
+                        <br />
+                        <a href={link}>{anchor.text()}</a>
+                    </>
+                );
+            })
+            .join('')
     );
 }
-// A. got from hostPage     1.article(link), 2.article(title), 3.(pubDate)
-// B. got from articlePage  1.description(fullText), 2.article(author), 3.detailed(pubDate)
+function parsePublicationDate(value: string | undefined, format: string) {
+    if (!value) {
+        return;
+    }
+    const date = parseDate(value, format);
+    return Number.isNaN(date.getTime()) ? undefined : timezone(date, 8);
+}
+
+async function getArticle(link: string, type: string) {
+    const { articleData, description } = await tryGetFullText(link, type);
+    if (type === 'ggtz') {
+        const header = articleData('h1').next().text();
+        const index = header.indexOf('日期');
+        return {
+            description,
+            author: index === -1 ? '' : header.slice(0, index - 2),
+            pubDate: parsePublicationDate(index === -1 ? undefined : header.slice(index + 3, index + 19), 'YYYY-MM-DD HH:mm'),
+        };
+    }
+    if (type === 'jwc') {
+        return { description, author: '供稿单位：' + articleData('span[class=authorstyle259690]').text(), pubDate: undefined };
+    }
+    return {
+        description,
+        author: '供稿单位：招生就业处',
+        pubDate: parsePublicationDate(articleData('span[class=timestyle127702]').text(), 'YYYY-MM-DD HH:mm'),
+    };
+}
+
 async function ggtzParse(ctx, $) {
-    const data = $('a[class=c269582]').parent().slice(0, limit);
-    const resultItems = await Promise.all(
-        data.toArray().map(async (item) => {
-            // .slice(3) for cut out str '../' in original link
-            const href = $(item).find('a[class=c269582]').attr('href').slice(3);
-            const link = typeMap.ggtz.root + href;
-            const title = $(item).find('a[class=c269582]').attr('title');
-
-            const result = await cache.tryGet(link, async () => {
-                const { articleData, description } = await tryGetFullText(href, link, 'ggtz');
-                let author = '';
-                let pubDate: Date;
-                if (articleData) {
-                    const header = articleData('h1').next().text();
-                    const index = header.indexOf('日期');
-
-                    author = header.slice(0, index - 2) || '';
-
-                    const date = header.slice(index + 3, index + 19);
-                    pubDate = parseDate(date, 'YYYY-MM-DD HH:mm');
-                } else {
-                    const date = $(item).find('a[class=c269582_date]').text();
-                    pubDate = parseDate(date, 'YYYY-MM-DD');
-                }
-
-                return {
-                    title,
-                    description,
-                    pubDate: timezone(pubDate, 8),
-                    link,
-                    author,
-                };
-            });
-
-            return result;
-        })
+    const data = $('a[class=c269582]').parent().slice(0, getRouteLimit(ctx, 10));
+    return await pMap(
+        data.toArray(),
+        async (item): Promise<DataItem> => {
+            const anchor = $(item).find('a[class=c269582]');
+            const link = new URL(anchor.attr('href'), typeMap.ggtz.url).href;
+            const article = await cache.tryGet(`hafu:article:${link}`, () => getArticle(link, 'ggtz'));
+            return {
+                title: anchor.attr('title'),
+                link,
+                ...article,
+                pubDate: article.pubDate ?? parsePublicationDate($(item).find('a[class=c269582_date]').text(), 'YYYY-MM-DD'),
+            };
+        },
+        { concurrency: 3 }
     );
-
-    return resultItems;
 }
-// A. got from hostPage     1.article(link), 2.article(title), 3.(pubDate)
-// B. got from articlePage  1.description(fullText), 2.article(author)
+
 async function jwcParse(ctx, $) {
-    const data = $('a[class=c259713]').parent().parent().slice(0, limit);
-    const resultItems = await Promise.all(
-        data.toArray().map(async (item) => {
-            const href = $(item).find('a[class=c259713]').attr('href');
-            const link = typeMap.jwc.root + href;
-            const title = $(item).find('a[class=c259713]').attr('title');
-
-            const date = $(item).find('span[class=timestyle259713]').text();
-            const pubDate = parseDate(date, 'YYYY/MM/DD');
-
-            const result = await cache.tryGet(link, async () => {
-                const { articleData, description } = await tryGetFullText(href, link, 'jwc');
-
-                let author = '';
-                if (articleData) {
-                    author = articleData('span[class=authorstyle259690]').text();
-                }
-
-                return {
-                    title,
-                    description,
-                    pubDate: timezone(pubDate, 8),
-                    link,
-                    author: '供稿单位：' + author,
-                };
-            });
-
-            return result;
-        })
+    const data = $('a[class=c259713]').parent().parent().slice(0, getRouteLimit(ctx, 10));
+    return await pMap(
+        data.toArray(),
+        async (item): Promise<DataItem> => {
+            const anchor = $(item).find('a[class=c259713]');
+            const link = new URL(anchor.attr('href'), typeMap.jwc.url).href;
+            const article = await cache.tryGet(`hafu:article:${link}`, () => getArticle(link, 'jwc'));
+            return {
+                title: anchor.attr('title'),
+                link,
+                ...article,
+                pubDate: parsePublicationDate($(item).find('span[class=timestyle259713]').text(), 'YYYY/MM/DD'),
+            };
+        },
+        { concurrency: 3 }
     );
-
-    return resultItems;
 }
-// A. got from hostPage     1.article(link), 2.article(title), 3.(pubDate)
-// B. got from articlePage  1.description(fullText), 2.detailed(pubDate)
+
 async function zsjycParse(ctx, $) {
-    const data = $('a[class=c127701]').parent().parent().slice(0, limit);
-    const resultItems = await Promise.all(
-        data.toArray().map(async (item) => {
-            const href = $(item).find('a[class=c127701]').attr('href');
-            const link = typeMap.zsjyc.root + href;
-
-            const title = $(item).find('a[class=c127701]').attr('title');
-
-            const result = await cache.tryGet(link, async () => {
-                const { articleData, description } = await tryGetFullText(href, link, 'zsjyc');
-
-                let pubDate: Date;
-                if (articleData) {
-                    const date = articleData('span[class=timestyle127702]').text();
-                    pubDate = parseDate(date, 'YYYY-MM-DD HH:mm');
-                } else {
-                    const date = $(item).find('a[class=c269582_date]').text();
-                    pubDate = parseDate(date, 'YYYY-MM-DD');
-                }
-
-                return {
-                    title,
-                    description,
-                    pubDate: timezone(pubDate, 8),
-                    link,
-                    author: '供稿单位：招生就业处',
-                };
-            });
-
-            return result;
-        })
+    const data = $('a[class=c127701]').parent().parent().slice(0, getRouteLimit(ctx, 10));
+    return await pMap(
+        data.toArray(),
+        async (item): Promise<DataItem> => {
+            const anchor = $(item).find('a[class=c127701]');
+            const link = new URL(anchor.attr('href'), typeMap.zsjyc.url).href;
+            const article = await cache.tryGet(`hafu:article:${link}`, () => getArticle(link, 'zsjyc'));
+            return {
+                title: anchor.attr('title'),
+                link,
+                ...article,
+                pubDate: article.pubDate ?? parsePublicationDate($(item).find('a[class=c269582_date]').text(), 'YYYY-MM-DD'),
+            };
+        },
+        { concurrency: 3 }
     );
-
-    return resultItems;
 }

@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
@@ -36,6 +37,48 @@ export const route: Route = {
 :::`,
 };
 
+function parseForumDate(value?: string) {
+    const text = value?.trim();
+    if (!text) {
+        return;
+    }
+    const date = parseDate(text);
+    return Number.isNaN(date.getTime()) ? undefined : date;
+}
+
+function resolveForumLink(value: string | undefined, base: string) {
+    if (!value) {
+        return;
+    }
+    try {
+        const link = new URL(value, base);
+        return link.protocol === 'http:' || link.protocol === 'https:' ? link.href : undefined;
+    } catch {
+        return;
+    }
+}
+
+async function fetchArticleContent(link: string, headers: { Cookie: string | undefined }): Promise<Pick<DataItem, 'description'>> {
+    const resp = await got(link, { headers });
+    const $ = load(resp.data);
+    const post = $('[id^="post_"]').first();
+    const firstViewBox = post.find('.t_f');
+
+    firstViewBox.find('.jammer, [style*="display:none"]').remove();
+    firstViewBox.append(post.find('.pattl img[zoomfile]'));
+    firstViewBox.find('img').each((_, img) => {
+        const $img = $(img);
+        if ($img.attr('zoomfile')) {
+            $img.attr('src', $img.attr('zoomfile'));
+            $img.removeAttr('zoomfile');
+            $img.removeAttr('file');
+        }
+        $img.removeAttr('onmouseover');
+    });
+
+    return { description: firstViewBox.html() };
+}
+
 async function handler(ctx) {
     const fid = ctx.req.param('fid');
     const url = `${baseUrl}/forum-${fid}-1.html`;
@@ -52,46 +95,33 @@ async function handler(ctx) {
     const forumCategory = $('.nex_bkinterls_top .nex_bkinterls_ls a').text();
     let items = $('[id^="normalthread"]')
         .toArray()
-        .map((item): DataItem => {
+        .flatMap((item): Array<DataItem & { link: string }> => {
             const $item = $(item);
             const nexAuthorBtms = $item.find('.nex_author_btms');
             const nexForumtitTopA = $item.find('.nex_forumtit_top a').first();
+            const link = resolveForumLink(nexForumtitTopA.attr('href'), url);
+            if (!link) {
+                return [];
+            }
             const nexFtdate = nexAuthorBtms.find('.nex_ftdate');
             const pubDate = nexFtdate.find('span').length > 0 ? nexFtdate.find('span').attr('title') : nexFtdate.text().replace('发表于', '');
-            return {
-                title: nexForumtitTopA.text().trim(),
-                pubDate: parseDate(pubDate!.trim()),
-                category: nexAuthorBtms.find('em a').text().trim(),
-                link: baseUrl + '/' + nexForumtitTopA.attr('href'),
-                author: $item.find('.nex_threads_author').find('a').text().trim(),
-            };
+            return [
+                {
+                    title: nexForumtitTopA.text(),
+                    pubDate: parseForumDate(pubDate),
+                    category: nexAuthorBtms.find('em a').text().trim(),
+                    link,
+                    author: $item.find('.nex_threads_author').find('a').text().trim(),
+                },
+            ];
         });
-    items = await Promise.all(
-        items.map((item) =>
-            cache.tryGet(item.link!, async () => {
-                const resp = await got(item.link, {
-                    headers,
-                });
-                const $ = load(resp.data);
-                const post = $('[id^="post_"]').first();
-                const firstViewBox = post.find('.t_f');
-
-                firstViewBox.find('.jammer, [style*="display:none"]').remove();
-                firstViewBox.append(post.find('.pattl img[zoomfile]'));
-                firstViewBox.find('img').each((_, img) => {
-                    const $img = $(img);
-                    if ($img.attr('zoomfile')) {
-                        $img.attr('src', $img.attr('zoomfile'));
-                        $img.removeAttr('zoomfile');
-                        $img.removeAttr('file');
-                    }
-                    $img.removeAttr('onmouseover');
-                });
-
-                item.description = firstViewBox.html();
-                return item;
-            })
-        )
+    items = await pMap(
+        items,
+        async (item) => {
+            const detail = await cache.tryGet(item.link!, () => fetchArticleContent(item.link!, headers));
+            return { ...item, ...detail };
+        },
+        { concurrency: 3 }
     );
     return {
         title: `司机社${forumCategory}论坛`,

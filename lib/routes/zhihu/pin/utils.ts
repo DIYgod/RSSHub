@@ -8,15 +8,15 @@ const generateDescription = (target, description = '') => {
                 break;
 
             case 'image':
-                description += `<img src="${item.url.replaceAll(/_.+\.jpg/g, '.jpg')}" />`;
+                description += `<img src="${item.url}" />`;
                 break;
 
             case 'video':
                 try {
-                    description += `<video controls metadata="preload" width="${item.playlist.hd.width}" height="${item.playlist.hd.height}" poster="${item.cover_info.thumbnail.split('?', 1)[0]}" src="${item.playlist.hd.play_url}"></video>`;
+                    description += `<video controls preload="metadata" width="${item.playlist.hd.width}" height="${item.playlist.hd.height}" poster="${item.cover_info.thumbnail}" src="${item.playlist.hd.play_url}"></video>`;
                 } catch {
                     const video = item.playlist.find((v) => v.quality === 'hd') ?? item.playlist.at(-1);
-                    description += `<video controls metadata="preload" width="${video.width}" height="${video.height}" poster="${item.thumbnail.split('?', 1)[0]}" src="${video.url}"></video>`;
+                    description += `<video controls preload="metadata" width="${video.width}" height="${video.height}" poster="${item.thumbnail}" src="${video.url}"></video>`;
                 }
                 break;
 
@@ -35,10 +35,11 @@ export const generateData = (data) =>
     data.map((item) => {
         const target = item.target ?? item;
         const pubDate = parseDate(target.created, 'X');
+        const updated = target.updated !== undefined && target.updated !== null && target.updated !== '' ? parseDate(target.updated, 'X') : undefined;
         const author = target.author.name;
         const title = target.excerpt_title;
         const link = `https://www.zhihu.com/pin/${target.id}`;
-        let description = generateDescription(target, `<a href="https://www.zhihu.com${target.author.url}">${author}</a>：`);
+        let description = generateDescription(target);
         if (target.origin_pin !== undefined) {
             const t = target.origin_pin;
             const origin_link = `<a href="https://www.zhihu.com/pin/${t.id}">转发原文</a>：`;
@@ -50,6 +51,8 @@ export const generateData = (data) =>
             description,
             author,
             pubDate,
+            updated,
+            category: target.tags,
             link,
         };
     });

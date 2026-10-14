@@ -64,8 +64,8 @@ async function handler(ctx) {
 
     const out = await pMap(
         list,
-        (item) =>
-            cache.tryGet(item.link!, async () => {
+        async (item) => {
+            const detail = await cache.tryGet(item.link!, async () => {
                 const response = await ofetch(item.link!, {
                     headers: {
                         cookie,
@@ -74,14 +74,17 @@ async function handler(ctx) {
                 const $ = load(response);
                 const article = $('.m-contant article');
                 article.find('h1, .recommend-tab, input, .the-end').remove();
-                item.description = article.html() ?? item.description;
+                const description = article.html() ?? undefined;
                 const ldJson = JSON.parse($('script[type="application/ld+json"]:contains("datePublished")').text() || '{}');
-                item.pubDate = $('meta[property="og:release_date"]').length ? timezone(parseDate($('meta[property="og:release_date"]').attr('content')!, 'YYYY-MM-DD HH:mm:ss'), 8) : item.pubDate;
-                item.author = ldJson.author?.name;
-                item.category = [...(ldJson.about?.map((a) => a.name) || []), ...(ldJson.mentions?.map((m) => m.name) || [])];
+                const releaseDate = $('meta[property="og:release_date"]').attr('content');
+                const pubDate = releaseDate ? timezone(parseDate(releaseDate, 'YYYY-MM-DD HH:mm:ss'), 8) : undefined;
+                const author = ldJson.author?.name;
+                const category = [...(ldJson.about?.map((a) => a.name) || []), ...(ldJson.mentions?.map((m) => m.name) || [])];
 
-                return item;
-            }),
+                return { description, pubDate, author, category };
+            });
+            return { ...item, ...detail, description: detail.description ?? item.description, pubDate: detail.pubDate ?? item.pubDate };
+        },
         { concurrency: 3 }
     );
 

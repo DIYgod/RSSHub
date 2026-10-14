@@ -4,6 +4,7 @@ import type { Route } from '@/types';
 import { ViewType } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 import rssParser from '@/utils/rss-parser';
 
 import { parseArticle, rootUrl } from './utils';
@@ -73,7 +74,7 @@ async function handler(ctx) {
     const currentUrl = mappedSite ? `${rootUrl}/${mappedSite}/news.rss` : `${rootUrl}/news.rss`;
 
     const feed = await rssParser.parseString(await ofetch(currentUrl));
-    const list = feed.items.slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 50).map((item) => ({
+    const list = feed.items.slice(0, getRouteLimit(ctx, 50)).map((item) => ({
         title: item.title,
         link: item.link,
         pubDate: item.pubDate ? parseDate(item.pubDate) : undefined,

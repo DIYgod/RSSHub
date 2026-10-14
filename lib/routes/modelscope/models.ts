@@ -1,9 +1,11 @@
 import MarkdownIt from 'markdown-it';
+import pMap from 'p-map';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
 const md = MarkdownIt({
     html: true,
@@ -39,29 +41,31 @@ async function handler(ctx) {
     const link = `${baseUrl}/models`;
 
     const { data } = await got.put(`${baseUrl}/api/v1/dolphin/models`, {
-        json: { PageSize: ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 36, PageNumber: 1, SortBy: 'GmtModified', Target: '', SingleCriterion: [] },
+        json: { PageSize: getRouteLimit(ctx, 36), PageNumber: 1, SortBy: 'GmtModified', Target: '', SingleCriterion: [] },
     });
 
-    const models = data.Data.Model.Models.map((model) => ({
-        title: model.ChineseName,
+    const models: Array<DataItem & { link: string; slug: string }> = data.Data.Model.Models.map((model) => ({
+        title: model.ChineseName || model.Name,
         description: model.Description,
         author: model.Organization.FullName,
         link: `${link}/${model.Path}/${model.Name}`,
         pubDate: parseDate(model.CreatedTime, 'X'),
-        category: [...new Set([...model.Tasks.map((task) => task.ChineseName), ...model.Tags])],
+        category: [...new Set([...(model.Tasks ?? []).map((task) => task.ChineseName), ...(model.Tags ?? [])])],
         slug: `/${model.Path}/${model.Name}`,
     }));
 
-    const items = await Promise.all(
-        models.map((item) =>
-            cache.tryGet(item.link, async () => {
-                const { data } = await got(`${baseUrl}/api/v1/models${item.slug}`);
+    const items = await pMap(
+        models,
+        async ({ slug, ...item }) => {
+            const body = await cache.tryGet(`${item.link}:readme`, async () => {
+                const { data } = await got(`${baseUrl}/api/v1/models${slug}`);
 
-                const content = data.Data.ReadMeContent.replaceAll(/img src="(?!http)(.*?)"/g, (_match, p1) => `img src="${baseUrl}/api/v1/models${item.slug}/repo?Revision=master&FilePath=${p1}&View=true"`);
-                item.description = md.render(content);
-                return item;
-            })
-        )
+                const content = data.Data.ReadMeContent.replaceAll(/img src="(?!http)(.*?)"/g, (_match, p1) => `img src="${baseUrl}/api/v1/models${slug}/repo?Revision=master&FilePath=${p1}&View=true"`);
+                return { content: md.render(content) };
+            });
+            return { ...item, description: body.content };
+        },
+        { concurrency: 3 }
     );
 
     return {

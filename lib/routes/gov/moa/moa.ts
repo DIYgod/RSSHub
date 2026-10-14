@@ -1,12 +1,14 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseRelativeDate } from '@/utils/parse-date';
+import { parseDate, parseRelativeDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 const hostUrl = 'http://www.moa.gov.cn/';
-const hostUrlObj = new URL(hostUrl); // 用于在下面判断 host
+const hostUrlObj = new URL(hostUrl); // Used to classify links by hostname.
 
 export const route: Route = {
     path: '/suburl/:suburl{.+}',
@@ -14,8 +16,14 @@ export const route: Route = {
     example: '/gov/moa/suburl/gk/zcjd/',
     radar: [
         {
-            source: ['moa.gov.cn/'],
-            target: '/suburl/:suburl',
+            title: '政策解读',
+            source: ['www.moa.gov.cn/gk/zcjd/', 'www.moa.gov.cn/'],
+            target: '/suburl/gk/zcjd/',
+        },
+        {
+            title: '农业农村部动态',
+            source: ['www.moa.gov.cn/xw/zwdt/'],
+            target: '/suburl/xw/zwdt/',
         },
     ],
     parameters: { suburl: '下级目录，请使用最下级的目录' },
@@ -34,9 +42,9 @@ export const route: Route = {
 async function handler(ctx) {
     const rawSuburl = ctx.req.param('suburl');
     const suburl = rawSuburl.slice(-1) === '/' ? rawSuburl : rawSuburl + '/';
-    // 特殊处理两个，其他的栏目都可以找到那种一个列表下去的目录
+    // Handle specialized channels separately from ordinary article lists.
     if (suburl === 'xw/tpxw/') {
-        // 图片新闻
+        // Photo news.
         return await dealChannel(suburl, {
             channelTitleSelector: '.pub-media2-head',
             listSelector: '.tupian_list li',
@@ -45,11 +53,11 @@ async function handler(ctx) {
         });
     }
     if (suburl.startsWith('sj/zxfb')) {
-        // 数据 - 最新发布
+        // Latest data releases.
         return await dealLatestDataChannel();
     }
     if (suburl.startsWith('gk')) {
-        // 公开
+        // Disclosure articles.
         return await dealChannel(suburl, {
             channelTitleSelector: 'title',
             listSelector: '.commonlist li',
@@ -58,7 +66,7 @@ async function handler(ctx) {
         });
     }
     if (suburl.startsWith('govpublic')) {
-        // 最新公开
+        // Latest disclosures.
         return await dealChannel('govpublic/1/index.htm', {
             channelTitleText: '最新公开',
             listSelector: '.commonlist li',
@@ -74,11 +82,11 @@ async function handler(ctx) {
     });
 }
 
-// 处理文章列表，从那里获得一堆要爬取的页面，然后爬取
+// Fetch the channel list and its article details.
 async function dealChannel(suburl, selectors) {
     const { channelTitleSelector, listSelector, titleSelector, dateSelector, channelTitleText } = selectors;
 
-    // 为了与下面解析相对链接的 dealLink 配合，这里末尾必须保证有一条斜杠
+    // Keep a trailing slash so dealLink can resolve relative URLs.
     const url = suburl.startsWith('http') ? suburl : hostUrl + suburl;
     const response = await got.get(url);
     const $ = load(response.data);
@@ -99,10 +107,10 @@ async function dealChannel(suburl, selectors) {
                 pageType,
                 title,
                 link,
-                // 先在这里获取一个精确到日的时间
-                // 如果是正常文章的话可以在那里提取更精确的时间
-                // 如果是公示文章或者站外文章的话只能用这个保底了
-                pubDate: parseRelativeDate(dateraw),
+                // Keep the calendar date from the list as a fallback.
+                // Ordinary articles may declare a more precise publication time.
+                // Disclosure and external articles may only expose the list date.
+                pubDate: dateraw ? (/^\d{4}/.test(dateraw) ? timezone(parseDate(dateraw), 8) : parseRelativeDate(dateraw)) : undefined,
             };
         });
 
@@ -116,13 +124,13 @@ async function dealChannel(suburl, selectors) {
             }
 
             if (item.pageType === 'normal') {
-                // 正常文章
+                // Ordinary articles.
                 item = await dealNormalPage(link, item);
             } else if (item.pageType === 'govpublic') {
-                // 公示文章
+                // Disclosure articles.
                 item = await dealGovpublicPage(link, item);
             } else {
-                // 外部文章
+                // External articles.
                 item.description = `外部链接：${item.link}`;
             }
 
@@ -134,16 +142,16 @@ async function dealChannel(suburl, selectors) {
     return {
         title: `中华人民共和国农业农村部 - ${channelTitle}`,
         link: url,
-        item: items,
+        item: items.map(({ pageType: _pageType, ...item }) => item),
     };
 }
 
-// 处理正常文章，例子：http://www.moa.gov.cn/xw/zwdt/202309/t20230915_6436615.htm
+// Parse an ordinary article.
 async function dealNormalPage(link, item) {
     const response = await got.get(link);
     const $ = load(response.data);
 
-    // 互动-直播访谈
+    // Live interviews.
     if (link.includes('zbft')) {
         const pageHeader = $('.nybzb').html() ?? '';
         const pics = $('.tpsl').html() ?? '';
@@ -154,26 +162,32 @@ async function dealNormalPage(link, item) {
     }
 
     // normal news
+    item.title = $('meta[name="ArticleTitle"]').attr('content') || item.title;
     const metaElements = $('.bjjMAuthorBox span.dc_2').toArray();
 
-    // 政府网站变动不频繁，写死第几个应该没有多大关系
+    // The page header places the source in its first field.
     const author = $(metaElements[1]).text();
     const source = $(metaElements[2]).text();
     item.author = `${author} ${source}`;
 
-    // 对于这个网站内的链接，能提供更精确的时间
-    // 这个的日期跟时间之间的空格数量好像会乱变的
+    // Prefer the precise publication time declared by the article.
+    // Whitespace between the date and time can vary.
     const exactTime = $(metaElements[0]).text();
     const dateMatch = /\d{4}-\d{2}-\d{2}/.exec(exactTime);
     const timeMatch = /\d{2}:\d{2}/.exec(exactTime);
-    item.pubDate = parseRelativeDate(`${dateMatch![0]} ${timeMatch![0]}`);
+    const pubDate = $('meta[name="PubDate"]').attr('content');
+    if (pubDate) {
+        item.pubDate = timezone(parseDate(pubDate), 8);
+    } else if (dateMatch && timeMatch) {
+        item.pubDate = timezone(parseDate(`${dateMatch[0]} ${timeMatch[0]}`), 8);
+    }
 
     item.description = $('.arc_body').html();
 
     return item;
 }
 
-// 处理那种带索引号的公示文章，例子：http://www.moa.gov.cn/gk/zcjd/202402/t20240219_6448654.htm
+// Parse disclosure articles with an index number.
 async function dealGovpublicPage(link, item) {
     if (item.link.endsWith('.pdf')) {
         return item;
@@ -181,16 +195,21 @@ async function dealGovpublicPage(link, item) {
     const response = await got.get(link);
     const $ = load(response.data);
 
+    item.title = $('meta[name="ArticleTitle"]').attr('content') || item.title;
     const body = $('.gsj_htmlcon_bot');
-    const [, year, month, date] = $('.pubtime')
+    const dateMatch = $('.pubtime')
         .text()
-        .match(/：(\d{4})[|年-](\d{1,2})[|月-](\d{1,2})日?/)!;
+        .match(/：(\d{4})[|年-](\d{1,2})[|月-](\d{1,2})日?/);
+    const pubDate = $('meta[name="PubDate"]').attr('content');
     const [, author] = $('.pubtime.source')
         ?.text()
         ?.match(/：(.+)/) ?? [null, ''];
 
-    if (year && month && date) {
-        item.pubDate = `${year}-${month}-${date}`;
+    if (pubDate) {
+        item.pubDate = timezone(parseDate(pubDate), 8);
+    } else if (dateMatch) {
+        const [, year, month, date] = dateMatch;
+        item.pubDate = timezone(parseDate(`${year}-${month}-${date}`), 8);
     }
     item.author = author;
     item.description = body.html();
@@ -208,10 +227,12 @@ async function dealLatestDataChannel() {
             isLatestMessage: true,
         },
     });
-    const items = await Promise.all(
-        res.data.result.table.map((item) => {
+    const table: Array<DataItem & { id: string; date?: string }> = res.data.result.table;
+    const items = await pMap(
+        table,
+        (item) => {
             const { date, id } = item;
-            item.pubDate = date;
+            item.pubDate = date ? timezone(parseDate(date), 8) : undefined;
             const link = (item.link = `http://zdscxx.moa.gov.cn:8080/nyb/pc/messageView.jsp?id=${id}`);
 
             return cache.tryGet(link, async () => {
@@ -222,12 +243,13 @@ async function dealLatestDataChannel() {
 
                 return item;
             });
-        })
+        },
+        { concurrency: 3 }
     );
     return {
         title: '中华人民共和国农业农村部 - 数据 - 最新发布',
         link: 'http://zdscxx.moa.gov.cn:8080/nyb/pc/messageList.jsp',
-        item: items,
+        item: items.map(({ date: _date, ...item }) => item),
     };
 }
 
@@ -242,14 +264,14 @@ async function getLatestDataArticleDetail(id) {
     return res.data.result;
 }
 
-// 处理相对 url 和 按链接对文章类型进行分类
+// Resolve relative URLs and classify article layouts.
 function dealLink(element, url) {
     const rawLink = element.attr('href');
     const { host, href } = new URL(rawLink, url);
 
-    // host 不同的是外部文章，outside
-    // url 里带 govpublic 的都是公示文章，govpublic
-    // 其他的都算普通文章，normal
+    // A different hostname identifies an external article.
+    // The govpublic path identifies a disclosure article.
+    // Other paths use the ordinary article layout.
     let pageType: string;
     if (host === hostUrlObj.host) {
         pageType = href.includes('gk') || href.includes('govpublic') ? 'govpublic' : 'normal';

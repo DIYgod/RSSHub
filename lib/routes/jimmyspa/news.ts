@@ -82,7 +82,6 @@ async function handler(ctx) {
                 pubDate,
                 content: {
                     html: description,
-                    text: title,
                 },
             };
         });
@@ -90,7 +89,6 @@ async function handler(ctx) {
     return {
         title: `幾米 - 最新消息(${language})`,
         link: `${rootUrl}/${language}/News`,
-        allowEmpty: true,
         item: items,
     };
 }
@@ -100,7 +98,7 @@ function convertHtmlDateToStandardFormat(htmlContent: string): Date | undefined 
     const match = htmlContent.match(dateRegex);
 
     if (match) {
-        const day = Number.parseInt(match[1]) + 1;
+        const day = match[1].padStart(2, '0');
         const year = match[2];
         const monthAbbreviation = match[3];
 
@@ -121,7 +119,10 @@ function convertHtmlDateToStandardFormat(htmlContent: string): Date | undefined 
 
         const month = monthMapping.get(monthAbbreviation) ?? '';
 
-        return parseDate(`20${year}-${month}-${day}`);
+        const date = `20${year}-${month}-${day}`;
+        if (month && Number.isFinite(parseDate(date, 'YYYY-MM-DD', true).getTime())) {
+            return parseDate(`${date}T00:00:00+08:00`);
+        }
     }
 
     return undefined;

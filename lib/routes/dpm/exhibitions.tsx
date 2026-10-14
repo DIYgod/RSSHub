@@ -2,10 +2,12 @@ import { load } from 'cheerio';
 import type { Context } from 'hono';
 import { renderToString } from 'hono/jsx/dom/server';
 
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 import { namespace } from './namespace';
 
@@ -37,6 +39,9 @@ export const route: Route = {
         const apiUrl = `${baseUrl}/searchs/exhibition.html`;
 
         const typeParam = ctx.req.param('type');
+        if (typeParam && !Object.hasOwn(TYPE_MAP, typeParam)) {
+            throw new InvalidParameterError(`Unsupported exhibition type. Use ${Object.keys(TYPE_MAP).join(', ')} or omit it for all current exhibitions.`);
+        }
 
         const currentType = typeParam ? TYPE_MAP[typeParam] : undefined;
 
@@ -49,7 +54,7 @@ export const route: Route = {
             pagesize: '50',
         };
 
-        // only add type_cid to searchParams when the type parameter is valid, otherwise keep it as undefined to fetch all exhibitions without filtering
+        // Omit type_cid to fetch all current exhibitions when no type was requested.
         if (currentType?.cid) {
             searchParams.type_cid = currentType.cid;
         }
@@ -141,7 +146,7 @@ export const route: Route = {
                     }
                 }
 
-                const pubDate = startDate ? parseDate(startDate) : undefined;
+                const pubDate = startDate ? timezone(parseDate(startDate, 'YYYY-MM-DD'), 8) : undefined;
 
                 const description = renderToString(
                     <div>

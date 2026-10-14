@@ -1,44 +1,25 @@
 import type { Route } from '@/types';
-import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+
+import { getArticles, getLimit, processArticles, rootUrl } from './utils';
 
 export const route: Route = {
     path: '/news',
     categories: ['new-media'],
     example: '/panewslab/news',
-    radar: [
-        {
-            source: ['panewslab.com/'],
-        },
-    ],
+    radar: [{ source: ['www.panewslab.com/zh/newsflash'], target: '/news' }],
     name: '快讯',
     maintainers: ['nczitzk'],
     handler,
-    url: 'panewslab.com/',
+    url: 'www.panewslab.com/zh/newsflash',
 };
 
 async function handler(ctx) {
-    const rootUrl = 'https://panewslab.com';
-    const apiUrl = `${rootUrl}/webapi/flashnews?LId=1&Rn=${ctx.req.query('limit') ?? 50}&tw=0`;
-    const currentUrl = `${rootUrl}/zh/news/index.html`;
-
-    const response = await got({
-        method: 'get',
-        url: apiUrl,
-    });
-
-    const items = response.data.data.flashNews[0].list.map((item) => ({
-        title: item.title,
-        author: item.author.name,
-        pubDate: parseDate(item.publishTime * 1000),
-        link: `${rootUrl}/zh/articledetails/${item.id}.html`,
-        description: `<p>${item.desc.replaceAll('\r\n原文链接', '')}</p>`,
-        category: item.tags,
-    }));
+    const articles = await getArticles({ type: 'NEWS', isShowInList: true, take: getLimit(ctx.req.query('limit'), 50) });
+    const items = await processArticles(articles, false);
 
     return {
         title: 'PANews - 快讯',
-        link: currentUrl,
+        link: `${rootUrl}/zh/newsflash`,
         item: items,
     };
 }

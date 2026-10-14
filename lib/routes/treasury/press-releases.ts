@@ -1,5 +1,6 @@
 import { load } from 'cheerio';
 import type { Context } from 'hono';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
@@ -21,43 +22,54 @@ export const route: Route = {
 | all            | statements-remarks   | readouts | testimonies |`,
 };
 
+type ArticleDetails = Pick<DataItem, 'description' | 'pubDate'>;
+
+async function fetchArticleDetails(link: string): Promise<ArticleDetails> {
+    const detailResponse = await ofetch(link);
+    const content = load(detailResponse);
+    const publishedTime = content('time').attr('datetime');
+    return {
+        description: content('.field--name-field-news-body').html(),
+        pubDate: publishedTime ? parseDate(publishedTime) : undefined,
+    };
+}
+
 async function handler(ctx: Context) {
     const { category = 'all', title = '' } = ctx.req.param();
 
     const rootUrl = 'https://home.treasury.gov';
-    const currentUrl = `${rootUrl}/news/press-releases${category === 'all' ? '' : `/${category}`}${title === '' ? '' : `?title=${title}`}`;
-    const response = await ofetch(currentUrl);
+    const currentUrl = new URL(`/news/press-releases${category === 'all' ? '' : `/${category}`}`, rootUrl);
+    if (title) {
+        currentUrl.searchParams.set('title', title);
+    }
+    const response = await ofetch(currentUrl.href);
 
     const $ = load(response);
 
     const list = $('.featured-stories__headline a')
         .slice(0, 10)
         .toArray()
+        .filter((item) => $(item).attr('href'))
         .map((item): DataItem => {
             const $item = $(item);
             return {
                 title: $item.text(),
-                link: `${rootUrl}${$item.attr('href')}`,
+                link: new URL($item.attr('href')!, currentUrl).href,
             };
         });
 
-    const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link!, async () => {
-                const detailResponse = await ofetch(item.link!);
-                const content = load(detailResponse);
-
-                item.description = content('.field--name-field-news-body').html();
-                item.pubDate = parseDate(content('time').attr('datetime')!);
-
-                return item;
-            })
-        )
+    const items = await pMap(
+        list,
+        async (item) => {
+            const details = await cache.tryGet(item.link!, () => fetchArticleDetails(item.link!));
+            return { ...item, description: details.description, pubDate: details.pubDate };
+        },
+        { concurrency: 3, stopOnError: false }
     );
 
     return {
-        title: $('title').text(),
-        link: currentUrl,
+        title: $('head title').text(),
+        link: currentUrl.href,
         item: items,
     };
 }

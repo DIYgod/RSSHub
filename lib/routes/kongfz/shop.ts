@@ -1,5 +1,6 @@
 import { load } from 'cheerio';
 import type { Context } from 'hono';
+import pMap from 'p-map';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
@@ -39,8 +40,9 @@ async function handler(ctx: Context) {
             };
         });
 
-    const items = await Promise.all(
-        list.map((item) =>
+    const items = await pMap(
+        list,
+        (item) =>
             cache.tryGet(item.link!, async () => {
                 const detailResponse = await ofetch(item.link!);
                 const content = load(detailResponse);
@@ -49,13 +51,14 @@ async function handler(ctx: Context) {
                 content('div.buy-group').remove();
                 content('div.weixin-popup-bg').remove();
 
+                const date = content('span.up-book-date-time').text();
                 return {
                     ...item,
                     description: content('div.major-function').html() + `<img src="${content('ul.lg-list li img').attr('src')}">`,
-                    pubDate: timezone(parseDate(content('span.up-book-date-time').text()), 8),
+                    pubDate: date ? timezone(parseDate(date), 8) : undefined,
                 };
-            })
-        )
+            }),
+        { concurrency: 3 }
     );
 
     const titleSplit = $('title').text().split('_');

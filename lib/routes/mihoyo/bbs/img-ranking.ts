@@ -1,3 +1,4 @@
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import got from '@/utils/got';
 
@@ -40,6 +41,20 @@ const getRankingTypeInfo = (game, ranking_type) => {
     };
 };
 
+const getForumRadar = (game: string, forumType: string, forum: { forum_id: number; cates?: Record<string, { cate_id: number }> }) =>
+    Object.entries(RANKING_TYPE_MAP)
+        .filter(([rankingType]) => game !== 'bh2' || rankingType !== 'daily')
+        .flatMap(([rankingType, ranking]) => {
+            const options = new URLSearchParams({ forumType, rankingType });
+            if (forum.cates) {
+                return Object.entries(forum.cates).map(([cateType, cate]) => ({
+                    source: [`miyoushe.com/${game}/imgRanking/${forum.forum_id}/${ranking.id}/${cate.cate_id}`],
+                    target: `/bbs/img-ranking/${game}/${options}&cateType=${cateType}`,
+                }));
+            }
+            return { source: [`miyoushe.com/${game}/imgRanking/${forum.forum_id}/${ranking.id}/:cateId`], target: `/bbs/img-ranking/${game}/${options}` };
+        });
+
 export const route: Route = {
     path: '/bbs/img-ranking/:game/:routeParams?',
     categories: ['game'],
@@ -53,12 +68,7 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: [
-        {
-            source: ['miyoushe.com/:game/imgRanking/:forum_id/:ranking_id/:cate_id'],
-            target: '/bbs/img-ranking/:game',
-        },
-    ],
+    radar: Object.entries(DATA_MAP).flatMap(([game, info]) => Object.entries(info.forums).flatMap(([forumType, forum]) => getForumRadar(game, forumType, forum))),
     name: '米游社 - 同人榜',
     maintainers: ['CaoMeiYouRen'],
     handler,
@@ -67,7 +77,7 @@ export const route: Route = {
 | forumType   | 主榜类型（仅原神、大别野有 cos 主榜） | tongren/cos                                                          | tongren      |
 | cateType    | 子榜类型（仅崩坏三、原神有子榜）      | 崩坏三：illustration/comic/cos；原神：illustration/comic/qute/manual | illustration |
 | rankingType | 排行榜类型（崩坏二没有日榜）          | daily/weekly/monthly                                                 | daily        |
-| lastId      | 当前页 id（用于分页）                 | 数字                                                                 | 1            |
+| lastId      | 首屏游标                              | 省略或 0                                                             | 空           |
 
 游戏缩写
 
@@ -106,23 +116,33 @@ async function handler(ctx) {
     const game = ctx.req.param('game');
     const routeParams = Object.fromEntries(new URLSearchParams(ctx.req.param('routeParams')));
     const { forumType: forum_type = 'tongren', cateType: cate_type, rankingType: ranking_type, lastId: last_id = '' } = routeParams;
-    const page_size = ctx.req.query('limit') || '20';
+    if (last_id && last_id !== '0') {
+        throw new InvalidParameterError('Only the first page is supported; omit lastId or use 0.');
+    }
+    const requestedLimit = Number(ctx.req.query('limit'));
+    const pageSize = String(Number.isSafeInteger(requestedLimit) && requestedLimit > 0 ? requestedLimit : 20);
     const { gids, title: game_title } = getGameInfo(game);
     if (!gids) {
-        throw new Error('未知的游戏！');
+        throw new InvalidParameterError('Unknown game; use a documented game abbreviation.');
     }
     const { forum_id, title: forum_title } = getForumInfo(game, forum_type);
     if (!forum_id) {
-        throw new Error(`${game_title} 的排行榜不存在！`);
+        throw new InvalidParameterError(`Unknown ranking forum for ${game}.`);
     }
     const { cate_id, title: cate_title } = getCateInfo(game, forum_type, cate_type);
     const { id: type, title: type_title } = getRankingTypeInfo(game, ranking_type);
+    if (cate_id === undefined) {
+        throw new InvalidParameterError(`Unknown ranking category for ${game}.`);
+    }
+    if (!type || (game === 'bh2' && type === RANKING_TYPE_MAP.daily.id)) {
+        throw new InvalidParameterError(`Unsupported ranking period for ${game}.`);
+    }
     const query = new URLSearchParams({
         gids,
         forum_id,
         cate_id,
         type,
-        page_size,
+        page_size: pageSize,
         last_id,
     }).toString();
     const url = `https://bbs-api.miyoushe.com/post/wapi/getImagePostList?${query}`;
@@ -138,7 +158,7 @@ async function handler(ctx) {
     const items = list.map((e) => post2item(e));
     const data = {
         title,
-        link: url,
+        link: `https://www.miyoushe.com/${game}/imgRanking/${forum_id}/${type}/${cate_id}`,
         item: items,
     };
     return data;

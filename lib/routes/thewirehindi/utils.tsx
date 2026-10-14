@@ -29,18 +29,15 @@ export function mapPostToItem(post): DataItem {
         title: post.title.rendered,
         description: renderDescription(post.excerpt.rendered, image, altText, post.content.rendered),
         link: post.link,
-        pubDate: parseDate(post.date_gmt),
-        updated: parseDate(post.modified_gmt),
+        pubDate: post.date_gmt ? parseDate(`${post.date_gmt}Z`) : undefined,
+        updated: post.modified_gmt ? parseDate(`${post.modified_gmt}Z`) : undefined,
         itunes_item_image: image,
         image,
-        author:
-            post._embedded?.author
-                ?.map((v) => ({
-                    name: v.name,
-                    url: v.link,
-                    avatar: v.avatar_urls?.['96'] || v.avatar_urls?.['48'] || v.avatar_urls?.['24'],
-                }))
-                .join(', ') || 'The Wire Hindi',
+        author: post._embedded?.author?.map((v) => ({
+            name: v.name,
+            url: v.link,
+            avatar: v.avatar_urls?.['96'] || v.avatar_urls?.['48'] || v.avatar_urls?.['24'],
+        })),
         category: post._embedded?.['wp:term']?.flat().map((v) => v.name),
     };
 }

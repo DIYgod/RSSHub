@@ -9,6 +9,7 @@ import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate, parseRelativeDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 import { isValidHost } from '@/utils/valid-host';
 
 import { renderDescription } from './templates/description';
@@ -19,7 +20,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
         throw new InvalidParameterError('Invalid category');
     }
 
-    const limit = Number(ctx.req.query('limit') ?? '30');
+    const limit = getRouteLimit(ctx, 30);
 
     const baseUrl = 'https://info.10000link.com';
     const targetUrl: string = new URL(`${category}.aspx${id ? `?chid=${id}` : ''}`, baseUrl).href;
@@ -114,7 +115,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
     ).filter((_): _ is DataItem => true);
 
     const author = '10000万联网';
-    const title: string = $('h1').contents().first().text();
+    const title: string = $('h2').first().text() || $('title').text();
     const logoSrc: string | undefined = $('a.navbar-brand img').attr('src');
 
     return {
@@ -238,7 +239,7 @@ export const route: Route = {
             target: (params, url) => {
                 const urlObj: URL = new URL(url);
                 const id: string | undefined = urlObj.searchParams.get('chid') ?? undefined;
-                const category: string = params.category;
+                const category: string = params.category.replace(/\.aspx$/i, '');
 
                 return `/10000link/info${category ? `/${category}${id ? `/${id}` : ''}` : ''}`;
             },

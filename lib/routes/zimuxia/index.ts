@@ -55,13 +55,6 @@ async function handler(ctx) {
                 const detailResponse = await got(item.link);
                 const content = load(detailResponse.data);
 
-                const links = detailResponse.data.match(/<a href="magnet:(.*?)" target="_blank">磁力下载<\/a>/g);
-
-                if (links) {
-                    item.enclosure_type = 'application/x-bittorrent';
-                    item.enclosure_url = decodeURIComponent(links.pop().match(/<a href="(.*)" target="_blank">磁力下载<\/a>/)[1]);
-                }
-
                 item.description = content('.content-box').html();
 
                 return item;

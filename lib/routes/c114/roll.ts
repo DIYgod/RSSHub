@@ -5,11 +5,12 @@ import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 import timezone from '@/utils/timezone';
 
 export const handler = async (ctx) => {
     const { original = 'false' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 15;
+    const limit = getRouteLimit(ctx, 15);
 
     const rootUrl = 'https://www.c114.com.cn';
     const currentUrl = new URL(`news/roll.asp${original === 'true' ? '?o=true' : ''}`, rootUrl).href;
@@ -51,8 +52,9 @@ export const handler = async (ctx) => {
 
                 item.title = title;
                 item.description = description;
-                item.pubDate = timezone(parseDate($$('div.r_time').text(), 'YYYY/M/D HH:mm'), 8);
-                item.author = $$('div.author').first().text().trim();
+                const publishedTime = $$('div.r_time, div.article_top > div.time').first().text();
+                item.pubDate = publishedTime ? timezone(parseDate(publishedTime, 'YYYY/M/D HH:mm'), 8) : undefined;
+                item.author = $$('div.author, div.article_author').first().text().trim();
                 item.content = {
                     html: description,
                     text: $$('.text').text(),
@@ -71,7 +73,6 @@ export const handler = async (ctx) => {
         description: $('meta[name="description"]').prop('content'),
         link: currentUrl,
         item: items,
-        allowEmpty: true,
         image,
         author: $('p.top1-1-1 a').first().text(),
         language,
@@ -101,11 +102,7 @@ export const route: Route = {
     radar: [
         {
             source: ['c114.com.cn/news/roll.asp'],
-            target: (_, url) => {
-                const original = new URL(url).searchParams.get('o');
-
-                return `/roll${original ? `/${original}` : ''}`;
-            },
+            target: '/roll',
         },
     ],
 };

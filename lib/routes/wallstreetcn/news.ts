@@ -1,4 +1,6 @@
-import type { Route } from '@/types';
+import pMap from 'p-map';
+
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -23,6 +25,8 @@ export const route: Route = {
     path: '/news/:category?',
     categories: ['finance'],
     example: '/wallstreetcn/news',
+    parameters: { category: '资讯分类，默认为 `global`，可选值见下表' },
+    features: { supportPodcast: true },
     radar: [
         {
             source: ['wallstreetcn.com/news/:category', 'wallstreetcn.com/'],
@@ -48,13 +52,30 @@ export const route: Route = {
 | medicine     | 医药  |`,
 };
 
+function parseSourceTime(value: unknown) {
+    if ((typeof value !== 'number' && typeof value !== 'string') || (typeof value === 'string' && !value.trim())) {
+        return;
+    }
+    const seconds = Number(value);
+    if (!Number.isFinite(seconds)) {
+        return;
+    }
+    const date = parseDate(seconds * 1000);
+    return Number.isFinite(date.getTime()) ? date : undefined;
+}
+
+function parseLimit(value: string | undefined, defaultLimit: number) {
+    const limit = Number(value);
+    return Number.isFinite(limit) && limit >= 1 ? Math.floor(limit) : defaultLimit;
+}
+
 async function handler(ctx) {
     const category = ctx.req.param('category') ?? 'global';
 
     const rootUrl = 'https://wallstreetcn.com';
     const apiRootUrl = 'https://api-one.wallstcn.com';
     const currentUrl = `${rootUrl}/news/${category}`;
-    const apiUrl = `${apiRootUrl}/apiv1/content/information-flow?channel=${category}&accept=article&limit=${ctx.req.query('limit') ?? 25}`;
+    const apiUrl = `${apiRootUrl}/apiv1/content/information-flow?channel=${category}&accept=article&limit=${parseLimit(ctx.req.query('limit'), 25)}`;
 
     const response = await got({
         method: 'get',
@@ -67,43 +88,54 @@ async function handler(ctx) {
             type: item.resource_type,
             guid: item.resource.id,
             link: item.resource.uri,
-            pubDate: parseDate(item.resource.display_time * 1000),
+            pubDate: parseSourceTime(item.resource.display_time),
         }));
 
-    items = await Promise.all(
-        items.map((item) =>
-            cache.tryGet(item.link, async () => {
-                const detailResponse = await got({
-                    method: 'get',
-                    url: `${apiRootUrl}/apiv1/content/${item.type === 'live' ? `lives/${item.guid}` : `articles/${item.guid}?extract=0`}`,
-                });
+    items = await pMap<DataItem & { type?: string }, DataItem | null>(
+        items,
+        async (item) => {
+            const details = await cache.tryGet<Pick<DataItem, 'title' | 'author' | 'description' | 'category' | 'enclosure_type' | 'enclosure_url' | 'itunes_item_image' | 'itunes_duration'> | null>(
+                `wallstreetcn:news:detail-with-author:${item.link}`,
+                async () => {
+                    const detailResponse = await got({
+                        method: 'get',
+                        url: `${apiRootUrl}/apiv1/content/${item.type === 'live' ? `lives/${item.guid}` : `articles/${item.guid}?extract=0`}`,
+                    });
 
-                const responseData = detailResponse.data;
+                    const responseData = detailResponse.data;
 
-                // 处理 { code: 60301, message: '内容不存在或已被删除', data: {} }
-                if (responseData.code !== 20000) {
-                    return null;
+                    // The source returns a non-success code for missing or deleted content.
+                    if (responseData.code !== 20000) {
+                        return null;
+                    }
+
+                    const data = responseData.data;
+
+                    const details: Pick<DataItem, 'title' | 'author' | 'description' | 'category' | 'enclosure_type' | 'enclosure_url' | 'itunes_item_image' | 'itunes_duration'> = {
+                        title: data.title || data.content_text,
+                        author: data.source_name || data.author?.display_name,
+                        description: data.content + (data.content_more ?? ''),
+                        category: data.asset_tags?.map((tag) => tag.name) ?? [],
+                    };
+
+                    if (data.audio_uri) {
+                        details.enclosure_type = 'audio/mpeg';
+                        details.enclosure_url = data.audio_uri;
+                        details.itunes_item_image = data.image?.uri ?? '';
+                        details.itunes_duration = data.audio_info?.duration ?? '';
+                    }
+
+                    return details;
                 }
-
-                const data = responseData.data;
-
-                item.title = data.title || data.content_text;
-                item.author = data.source_name ?? data.author.display_name;
-                item.description = data.content + (data.content_more ?? '');
-                item.category = data.asset_tags?.map((t) => t.name) ?? [];
-
-                if (data.audio_uri) {
-                    item.enclosure_type = 'audio/mpeg';
-                    item.enclosure_url = data.audio_uri;
-                    item.itunes_item_image = data.image?.uri ?? '';
-                    item.itunes_duration = data.audio_info?.duration ?? '';
-                }
-
-                delete item.type;
-
-                return item;
-            })
-        )
+            );
+            if (!details) {
+                return null;
+            }
+            const current = { ...item, ...details };
+            delete current.type;
+            return current;
+        },
+        { concurrency: 3 }
     );
 
     items = items.filter((item) => item !== null);

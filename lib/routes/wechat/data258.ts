@@ -5,6 +5,7 @@ import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 import timezone from '@/utils/timezone';
 import wait from '@/utils/wait';
 import { finishArticleItem } from '@/utils/wechat-mp';
@@ -59,7 +60,7 @@ async function handler(ctx) {
 
     const id = ctx.req.param('id');
 
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 5;
+    const limit = getRouteLimit(ctx, 5);
 
     const rootUrl = 'https://mp.data258.com';
     const pageUrl = id ? `${rootUrl}/article/category/${id}` : rootUrl;
@@ -98,47 +99,49 @@ async function handler(ctx) {
     let err; // !!! let RSSHub throw an anti-crawler prompt if the route is empty !!!
 
     /* oxlint-disable no-await-in-loop */
-    for (const item of items) {
-        // https://mp.data258.com/wx?id=${id}&t={token}, id is a permanent hex, token is a temporary base64
-        const cacheId = item.link.match(/id=([\da-f]+)/)[1];
-        item.link = item.link.startsWith('http') ? item.link : `${rootUrl}${item.link}`;
-        const realLink = await cache.tryGet(`data258:${cacheId}`, async () => {
-            try {
-                // !!! here we must sleep 1s to avoid being anti-crawled !!!
-                // !!! please do note that if the interval is less than 1s, your IP will be banned for a long time !!!
-                await wait(1000);
+    try {
+        for (const item of items) {
+            // https://mp.data258.com/wx?id=${id}&t={token}, id is a permanent hex, token is a temporary base64
+            const cacheId = item.link.match(/id=([\da-f]+)/)[1];
+            item.link = item.link.startsWith('http') ? item.link : `${rootUrl}${item.link}`;
+            const realLink = await cache.tryGet(`data258:${cacheId}`, async () => {
+                try {
+                    // !!! here we must sleep 1s to avoid being anti-crawled !!!
+                    // !!! please do note that if the interval is less than 1s, your IP will be banned for a long time !!!
+                    await wait(1000);
 
-                const response = await got.get(item.link, {
-                    headers: {
-                        Referer: pageUrl, // essential
-                    },
-                });
-                if (response.data.includes('今日浏览次数已达上限')) {
-                    // !!! as long as cache hits, the link will not be crawled and consume the limit !!!
-                    // !!! so that's not a big problem if the RSSHub instance is self-hosted !!!
-                    err = new Error(response.data);
+                    const response = await got.get(item.link, {
+                        headers: {
+                            Referer: pageUrl, // essential
+                        },
+                    });
+                    if (response.data.includes('今日浏览次数已达上限')) {
+                        // !!! as long as cache hits, the link will not be crawled and consume the limit !!!
+                        // !!! so that's not a big problem if the RSSHub instance is self-hosted !!!
+                        err = new Error(response.data);
+                        return '';
+                    }
+                    const $ = load(response.data);
+                    const jmpJS = $('script')
+                        .filter((_, e) => $(e).html()!.includes('location.href'))
+                        .html();
+                    return jmpJS!.match(/location\.href='([^']+)'/)![1];
+                } catch (error) {
+                    err = error;
                     return '';
                 }
-                const $ = load(response.data);
-                const jmpJS = $('script')
-                    .filter((_, e) => $(e).html()!.includes('location.href'))
-                    .html();
-                return jmpJS!.match(/location\.href='([^']+)'/)![1];
-            } catch (error) {
-                err = error;
-                return '';
+            });
+            if (realLink) {
+                item.link = realLink;
+            } else {
+                break; // being anti-crawled, immediately cancel following operations
             }
-        });
-        if (realLink) {
-            item.link = realLink;
-        } else {
-            break; // being anti-crawled, immediately cancel following operations
         }
+    } finally {
+        // !!! release the lock, let it expire immediately since no need to keep it in cache !!!
+        await cache.set('data258:lock', '0', 1);
     }
     /* eslint-enable no-await-in-loop */
-
-    // !!! release the lock, let it expire immediately since no need to keep it in cache !!!
-    await cache.set('data258:lock', '0', 1);
 
     // jump links are valid only for a short period of time, drop those un-jumped items
     // http://mp.weixin.qq.com/s
@@ -150,7 +153,7 @@ async function handler(ctx) {
         throw err;
     }
 
-    await Promise.all(items.map((item) => finishArticleItem(item, !!categoryPage)));
+    await Promise.all(items.map((item) => finishArticleItem(item, categoryPage.length > 0)));
 
     return {
         title,

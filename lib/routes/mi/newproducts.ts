@@ -1,3 +1,5 @@
+import pMap from 'p-map';
+
 import type { Data, DataItem, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
@@ -27,13 +29,14 @@ export const route: Route = {
 };
 
 const getDataItems = (list: NewProductListItem[]): Promise<DataItem[]> =>
-    Promise.all(
-        list.map((listItem) =>
+    pMap(
+        list,
+        (listItem) =>
             cache.tryGet(`mi:product:dataitem:${listItem.product_id}`, async () => {
                 const detailItem = await utils.getNewProductItem(listItem);
                 return getDataItem(listItem, detailItem);
-            })
-        )
+            }),
+        { concurrency: 6 }
     );
 
 const getDataItem = (listItem: NewProductListItem, detailItem: NewProductDetailItem): DataItem => ({

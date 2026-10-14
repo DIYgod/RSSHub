@@ -5,7 +5,7 @@ import ofetch from '@/utils/ofetch';
 
 import { renderDescription } from './templates/description';
 
-const handler = async () => {
+const handler: Route['handler'] = async () => {
     const link = 'https://coolidge.org/about-us/news-media';
     const html = await ofetch(link);
     const $ = load(html);
@@ -42,6 +42,7 @@ const handler = async () => {
         title: 'Coolidge Corner Theatre - News',
         link,
         description: 'News',
+        language: 'en',
         item: items,
     };
 };

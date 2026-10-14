@@ -1,14 +1,14 @@
+import type { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
 import { namespace } from './namespace';
 
-export const route = {
+export const route: Route = {
     path: '/information',
     categories: ['travel'],
     example: '/lnmuseum/information',
-    params: {},
     name: 'Information',
     maintainers: ['magazian'],
     radar: [
@@ -39,7 +39,7 @@ export const route = {
 
             return {
                 title: item.title,
-                pubDate: timezone(parseDate(item.createTime), 8),
+                pubDate: item.createTime === undefined || item.createTime === null ? undefined : timezone(parseDate(item.createTime), 8),
                 link: itemLink,
             };
         });

@@ -86,7 +86,7 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['www.xlmp4.com/detail/:id'],
+            source: ['www.xlmp4.com/html/:id', 'www.xlmp4.com/detail/:id'],
         },
     ],
     name: '剧集订阅',

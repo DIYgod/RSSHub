@@ -23,8 +23,8 @@ async function handler() {
             title: post.title.rendered,
             link: post.link,
             description: post.content.rendered,
-            pubDate: parseDate(post.date_gmt),
-            updated: parseDate(post.modified_gmt),
+            pubDate: parseDate(`${post.date_gmt}Z`),
+            updated: parseDate(`${post.modified_gmt}Z`),
         })),
     };
 }

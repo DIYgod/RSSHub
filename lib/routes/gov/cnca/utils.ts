@@ -44,7 +44,9 @@ export const getFeed = async (path: string, description: string): Promise<Data> 
                 const $ = load(response);
                 item.description = $('.detail_messge').html();
                 item.author = $('#source').text();
-                item.pubDate = timezone(parseDate($('meta[name="PubDate"]').attr('content')!, 'YYYY-MM-DD HH:mm'), 8);
+                const dateText = $('meta[name="PubDate"]').attr('content');
+                const date = dateText ? parseDate(dateText, 'YYYY-MM-DD HH:mm') : undefined;
+                item.pubDate = date && !Number.isNaN(date.getTime()) ? timezone(date, 8) : item.pubDate;
 
                 return item;
             });

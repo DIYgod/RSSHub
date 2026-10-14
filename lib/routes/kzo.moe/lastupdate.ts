@@ -19,12 +19,11 @@ async function handler() {
         .toArray()
         .map(([, bookUrl, coverUrl, tagJp, tagEnd, score, name, author]) => ({
             title: name,
+            author,
+            category: [tagJp === '' ? '日語' : '', tagEnd === '' ? '完結' : ''].filter(Boolean),
             description: `
             <img src="${coverUrl}" />
-            <h1>${name}</h1>
-            <h2>${author}</h2>
             <h2>${score}</h2>
-            <h2>${[tagJp === '' ? '日語' : '', tagEnd === '' ? '完結' : ''].filter(Boolean).join(' ')}</h2>
         `.trim(),
             link: bookUrl,
         }));

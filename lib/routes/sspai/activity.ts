@@ -100,6 +100,7 @@ async function handler(ctx) {
             }
 
             return {
+                guid: `sspai:activity:${item.id}`,
                 title: item_title,
                 description: item_desc,
                 link: item_url,

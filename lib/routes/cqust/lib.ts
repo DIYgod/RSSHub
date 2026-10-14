@@ -1,6 +1,7 @@
 import { load } from 'cheerio';
 import type { Context } from 'hono';
 
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -26,6 +27,9 @@ const map = {
 
 async function handler(ctx: Context) {
     const { type = 'news' } = ctx.req.param();
+    if (!Object.hasOwn(map, type)) {
+        throw new InvalidParameterError('Invalid type. Use news.');
+    }
     const link = host + map[type];
     const response = await ofetch(link, {
         headers: {

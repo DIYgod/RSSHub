@@ -1,3 +1,5 @@
+import { load } from 'cheerio';
+
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import logger from '@/utils/logger';
@@ -23,11 +25,24 @@ export const route: Route = {
             source: ['daily.zhihu.com/*'],
         },
     ],
-    name: '知乎日报',
+    name: '日报',
     maintainers: ['DHPO', 'pseudoyu'],
     handler,
     url: 'daily.zhihu.com/*',
 };
+
+function getStoryContent(body?: string) {
+    const $ = load(body ?? '', null, false);
+    const authors = $('.answer > .meta > .author')
+        .toArray()
+        .map((element) => $(element).text().replace(/，$/, ''))
+        .filter(Boolean);
+    $('.headline, .answer > .meta').remove();
+    return {
+        author: [...new Set(authors)].join(', ') || undefined,
+        description: $('.content-inner').html() ?? $.html(),
+    };
+}
 
 async function handler() {
     const latest = await ofetch('https://daily.zhihu.com/api/4/stories/latest');
@@ -45,7 +60,7 @@ async function handler() {
 
                     return {
                         title: storyJson.title,
-                        description: storyJson.body,
+                        ...getStoryContent(storyJson.body),
                         link: storyJson.url,
                         image: storyJson.image,
                         pubDate: storyJson.publish_time ? parseDate(storyJson.publish_time, 'X') : timezone(parseDate(latest.date, 'YYYYMMDD'), 8),

@@ -4,6 +4,7 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { DataItem, Route } from '@/types';
 import { parseDate } from '@/utils/parse-date';
 import { getPlaywrightPage } from '@/utils/playwright';
+import { getRouteLimit } from '@/utils/route-limit';
 
 const sites = {
     cn: { url: 'https://www.cbre.com.cn/insights', language: 'zh-CN', name: '中国' },
@@ -72,7 +73,7 @@ async function handler(ctx) {
         await page.waitForSelector(selector, { state: 'attached' });
         const src = await page.locator(selector).first().getAttribute('src');
         const iframeUrl = new URL(src!, config.url);
-        const searchHub = iframeUrl.pathname.split('/').at(-1);
+        const resultsPath = iframeUrl.pathname.split('/').at(-1);
         const [response] = await Promise.all([
             page.waitForResponse((response) => {
                 const request = response.request();
@@ -82,7 +83,7 @@ async function handler(ctx) {
                     url.pathname === '/coveo/rest/search/v2' &&
                     request.method() === 'POST' &&
                     request.frame() === page.mainFrame() &&
-                    new URLSearchParams(request.postData()!).get('searchHub') === searchHub
+                    new URL(request.frame().url()).pathname.split('/').at(-1) === resultsPath
                 );
             }),
             page.goto(iframeUrl.href, { waitUntil: 'domcontentloaded' }),
@@ -97,7 +98,7 @@ async function handler(ctx) {
     if (!Array.isArray(data.results)) {
         throw new TypeError('CBRE did not return its research results. Check that the selected site and section are available.');
     }
-    const item: DataItem[] = data.results.slice(0, Number(ctx.req.query('limit')) || 9).map((result) => {
+    const item: DataItem[] = data.results.slice(0, getRouteLimit(ctx, 9)).map((result) => {
         const report = result.raw;
         const pdf = report.sprinklrattachmenturl;
         const attachment = pdf && new URL(pdf).pathname.toLowerCase().endsWith('.pdf') ? pdf : undefined;

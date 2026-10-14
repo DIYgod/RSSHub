@@ -3,9 +3,9 @@ import { renderToString } from 'hono/jsx/dom/server';
 
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
-import { baseUrl } from './utils';
+import { baseUrl, parseRecordDate } from './utils';
 
 interface CollectionRecord {
     id: string;
@@ -72,7 +72,7 @@ export const route: Route = {
 async function handler(ctx) {
     const collection = ctx.req.param('collection');
     const q = ctx.req.param('q');
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 25;
+    const limit = getRouteLimit(ctx, 25);
     const sort = collection === 'jobs' ? 'mostrecent' : ['seminars', 'conferences'].includes(collection) ? 'datedesc' : undefined;
     const response = await ofetch<{ hits: { hits: CollectionRecord[] } }>(`${baseUrl}/api/${collection}`, {
         query: { sort, size: limit, page: 1, q },
@@ -99,8 +99,8 @@ async function handler(ctx) {
                     `${collectionNames[collection]} ${record.id}`,
                 link: `${baseUrl}/${collection}/${record.id}`,
                 guid: `${collection}:${record.id}`,
-                pubDate: parseDate(record.created),
-                updated: parseDate(record.updated),
+                pubDate: parseRecordDate(record.created),
+                updated: parseRecordDate(record.updated),
                 author: metadata.speakers?.map((speaker) => speaker.name).join(', '),
                 category: metadata.inspire_categories?.map((category) => category.term) ?? metadata.project_type ?? metadata.institution_type ?? metadata.ranks,
                 description: renderToString(

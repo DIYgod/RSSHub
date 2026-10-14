@@ -1,7 +1,8 @@
 import { load } from 'cheerio';
 import type { Context } from 'hono';
+import pMap from 'p-map';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -21,12 +22,15 @@ export const route: Route = {
 | tv | movies | comedy | music | tvrecaps  | books | theater | art | awards | video |`,
 };
 
-async function loadArticle(articleURL: string) {
+type ArticleDetails = Pick<DataItem, 'title' | 'author' | 'pubDate' | 'description'> & { category: string[] };
+
+async function loadArticle(articleURL: string): Promise<ArticleDetails> {
     const response = await ofetch(articleURL);
     const $ = load(response);
 
-    const tags = $('meta[property="article:tag"]').attr('content')!.split(', ');
+    const category = $('meta[property="article:tag"]').attr('content')?.split(', ') ?? [];
     const description = $('div.article-content');
+    const publicationTime = $('meta[property="article:published_time"]').attr('content');
 
     // remove the content that we don't want to show
     description.find('aside.related').remove();
@@ -37,16 +41,12 @@ async function loadArticle(articleURL: string) {
     description.find('div.mobile-secondary-area').remove();
     description.find('aside.newsletter-flex-text').remove();
 
-    description.append('<br /><br />tags: ' + tags.join(', '));
-
     return {
         title: $('meta[property="og:title"]').attr('content') ?? '',
-        author: 'by ' + $('meta[name="author"]').attr('content'),
-        pubDate: parseDate($('meta[property="article:published_time"]').attr('content')!),
-        link: articleURL,
-        guid: articleURL,
+        author: $('meta[name="author"]').attr('content'),
+        pubDate: publicationTime && Number.isFinite(Date.parse(publicationTime)) ? parseDate(publicationTime) : undefined,
         description: description.html(),
-        tags,
+        category,
     };
 }
 
@@ -76,11 +76,18 @@ async function handler(ctx: Context) {
             return articleURL;
         });
 
-    let result = await Promise.all(articleURLs.map((articleURL) => cache.tryGet(articleURL, () => loadArticle(articleURL))));
+    let result = await pMap(
+        articleURLs,
+        async (articleURL) => {
+            const detail = await cache.tryGet(`vulture:article:v4:${articleURL}`, () => loadArticle(articleURL));
+            return { title: detail.title, author: detail.author, pubDate: detail.pubDate, description: detail.description, category: detail.category, link: articleURL, guid: articleURL };
+        },
+        { concurrency: 3, stopOnError: false }
+    );
 
     if (excludetags !== undefined) {
         const tagsToExclude = excludetags.split(',');
-        result = result.filter((item: any) => !item.tags?.some((itemTag: string) => tagsToExclude.includes(itemTag)));
+        result = result.filter((item) => !item.category?.some((itemTag: string) => tagsToExclude.includes(itemTag)));
     }
 
     return {

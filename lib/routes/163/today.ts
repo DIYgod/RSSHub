@@ -4,6 +4,7 @@ import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 import timezone from '@/utils/timezone';
 
 export const route: Route = {
@@ -36,9 +37,10 @@ export const route: Route = {
 
 async function handler(ctx) {
     const needContent = /t|y/i.test(ctx.req.param('need_content') ?? 'true');
+    const limit = getRouteLimit(ctx, needContent ? 30 : 200);
 
     const rootUrl = 'https://gw.m.163.com';
-    const currentUrl = `${rootUrl}/nc/api/v1/feed/static/normal-list?start=0&tid=T1573700340788&size=${ctx.req.query('limit') ?? (needContent ? 30 : 200)}`;
+    const currentUrl = `${rootUrl}/nc/api/v1/feed/static/normal-list?start=0&tid=T1573700340788&size=${limit}`;
 
     const response = await got({
         method: 'get',

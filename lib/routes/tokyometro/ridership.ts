@@ -137,8 +137,12 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['www.tokyometro.jp/corporate/enterprise/passenger_rail/transportation/passengers/:page'],
+            source: ['www.tokyometro.jp/corporate/enterprise/passenger_rail/transportation/passengers/index.html'],
             target: '/ridership',
         },
+        ...[2024, 2023, 2022, 2021, 2020].map((year) => ({
+            source: [`www.tokyometro.jp/corporate/enterprise/passenger_rail/transportation/passengers/${year}.html`],
+            target: `/ridership/${year}`,
+        })),
     ],
 };

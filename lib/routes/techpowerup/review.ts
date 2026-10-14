@@ -1,6 +1,7 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
-import type { Language, Route } from '@/types';
+import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -54,10 +55,11 @@ async function handler(ctx) {
         .map((item) => {
             const $item = $(item);
             const a = $item.find('.title a');
+            const date = $item.find('.date time').attr('datetime');
             return {
                 title: a.text(),
                 link: baseUrl + a.attr('href'),
-                pubDate: parseDate($item.find('.date time').attr('datetime')!), // 2023-05-21T16:05:14+00:00
+                pubDate: date ? parseDate(date) : undefined, // 2023-05-21T16:05:14+00:00
                 author: $item
                     .find('.author')
                     .contents()
@@ -71,21 +73,20 @@ async function handler(ctx) {
             };
         });
 
-    const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link, async () => {
-                const response = await ofetch(item.link, {
-                    headers,
-                });
+    const items = await pMap(
+        list,
+        async (item) => {
+            const detail = await cache.tryGet(`techpowerup:detail-fields:v1:${item.link}`, async (): Promise<Partial<DataItem>> => {
+                const response = await ofetch(item.link, { headers });
                 const $ = load(response);
-
                 fixImages($);
-
-                await parseReviews($, item);
-
-                return item;
-            })
-        )
+                const detail: Partial<DataItem> = {};
+                await parseReviews($, detail);
+                return detail;
+            });
+            return { ...item, ...detail, pubDate: detail.pubDate ?? item.pubDate };
+        },
+        { concurrency: 3 }
     );
 
     return {

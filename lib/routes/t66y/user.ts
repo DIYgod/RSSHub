@@ -5,6 +5,7 @@ import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
 import { baseUrl, parseContent } from './utils';
 
@@ -26,7 +27,7 @@ async function handler(ctx) {
     const response = await got(link);
     const $ = load(response.data);
     const list = $('tr.tr3 h3 a[href]')
-        .slice(0, Number(ctx.req.query('limit')) || 20)
+        .slice(0, getRouteLimit(ctx, 20))
         .toArray()
         .map((element) => {
             const anchor = $(element);
@@ -42,11 +43,13 @@ async function handler(ctx) {
         });
     const items = await pMap(
         list,
-        (item) =>
-            cache.tryGet(item.link, async () => {
+        async (item) => {
+            const description = await cache.tryGet(`${item.link}:body:v2`, async () => {
                 const detailResponse = await got(item.link);
-                return { ...item, description: parseContent(detailResponse.data) };
-            }),
+                return parseContent(detailResponse.data);
+            });
+            return { ...item, description };
+        },
         { concurrency: 3 }
     );
     return { title: `${username} - 草榴社区`, link, item: items };

@@ -5,9 +5,11 @@ export interface ApiResponse {
     };
 }
 
-interface ListItem {
+export interface ListItem {
     title: string;
     description?: string;
+    hashtags?: string[] | null;
+    lang?: string;
     id: string;
     time_scheduled: number;
     channel: Channel;
@@ -15,7 +17,7 @@ interface ListItem {
     image_auto_url?: string;
     video_url: string;
     text?: string;
-    media: Media[];
+    media?: Media[];
     watch_count?: number;
 }
 interface Channel {

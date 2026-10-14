@@ -1,5 +1,6 @@
 import { type CheerioAPI, load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
@@ -71,59 +72,38 @@ export const route: Route = {
                 };
             });
 
-        const items = await Promise.all(
-            list.map(({ imgUrl, ...item }) =>
-                cache.tryGet(item.link, async (): Promise<DataItem> => {
+        const items = await pMap(
+            list,
+            async ({ imgUrl, ...item }) => {
+                const detail = await cache.tryGet(item.link, async () => {
                     const detailResponse = await ofetch(item.link);
                     const $detail = load(detailResponse);
-
                     const { fullDuration, location } = extractExhibitionMeta($detail);
                     const { startDate, endDate } = parseExhibitionDuration(fullDuration ?? '');
-
                     const dateRaw =
                         $detail('div.n2')
                             .text()
-                            .match(/\[(.+?)\]/)?.[1] || '';
-                    const pubDate = timezone(parseDate(dateRaw), 8);
-
-                    const description = renderToString(
-                        <div>
-                            <img src={imgUrl} />
-                            <br />
-                            <p>
-                                <b>地点：</b>
-                                {location || '参考详情'}
-                            </p>
-                            <p>
-                                <b>开展：</b>
-                                {startDate || '未定/常设'}
-                            </p>
-                            <p>
-                                <b>闭展：</b>
-                                {endDate || '未定/常设'}
-                            </p>
-                            {fullDuration && (
-                                <p>
-                                    <small>原始展期：{fullDuration}</small>
-                                </p>
-                            )}
-                        </div>
-                    );
-
-                    return {
-                        title: item.title,
-                        link: item.link,
-                        pubDate,
-                        description,
-                        _extra: {
-                            museumName,
-                            location,
-                            startDate,
-                            endDate,
-                        },
-                    };
-                })
-            )
+                            .match(/\[(.+?)\]/)?.[1]
+                            ?.trim() || '';
+                    const parsedDate = /^\d{4}-\d{2}-\d{2}$/.test(dateRaw) ? timezone(parseDate(dateRaw, 'YYYY-MM-DD', true), 8) : undefined;
+                    const pubDate = parsedDate && !Number.isNaN(parsedDate.getTime()) ? parsedDate : undefined;
+                    return { pubDate, location, startDate, endDate, description: $detail('.info .txt').html() || undefined };
+                });
+                const { pubDate, location, startDate, endDate } = detail;
+                const description = renderToString(
+                    <div>
+                        {imgUrl && <img src={imgUrl} />}
+                        <div dangerouslySetInnerHTML={{ __html: detail.description || '' }} />
+                    </div>
+                );
+                return {
+                    ...item,
+                    pubDate,
+                    description,
+                    _extra: { museumName, location, startDate, endDate },
+                };
+            },
+            { concurrency: 3 }
         );
 
         return {

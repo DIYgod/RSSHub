@@ -1,4 +1,6 @@
 import { load } from 'cheerio';
+import type { Element } from 'domhandler';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
@@ -22,9 +24,10 @@ const idMp = {
     phd2: PhD2_ID,
 };
 
-const parsePage = async (items, type) => {
-    const results = await Promise.all(
-        items.map(async (item) => {
+const parsePage = async (items: Element[], type) => {
+    const results = await pMap(
+        items,
+        async (item) => {
             const $ = load(item);
             const aTag = $('span.Article_Title > a');
             const title = aTag.attr('title') ?? '';
@@ -47,11 +50,11 @@ const parsePage = async (items, type) => {
                     `;
                 return resultItem;
             }
-            return await cache.tryGet(url, async () => {
+            const details = await cache.tryGet(`${url}:article-body`, async () => {
                 const result = await got(url);
                 const $ = load(result.data);
                 const description = cleanEntryContent($);
-                resultItem.description = description;
+                const details: Partial<DataItem> = { description };
                 if (type !== DOWNLOAD_ID) {
                     const dateText = $('.arti_update')
                         .text()
@@ -61,12 +64,16 @@ const parsePage = async (items, type) => {
                         .text()
                         .match(/[:：]?\s*(.+)/);
                     const author = authorText ? authorText[1].trim() : '';
-                    resultItem.pubDate = timezone(parseDate(date), 8);
-                    resultItem.author = author;
+                    if (date) {
+                        details.pubDate = timezone(parseDate(date), 8);
+                    }
+                    details.author = author;
                 }
-                return resultItem;
+                return details;
             });
-        })
+            return { ...resultItem, ...details };
+        },
+        { concurrency: 3 }
     );
     return results;
 };

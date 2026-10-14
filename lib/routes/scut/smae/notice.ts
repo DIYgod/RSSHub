@@ -1,10 +1,11 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 // 导入必要的模组
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
 
 const categoryMap = {
     gwxx: { title: '公务信息', tag: '20616' },
@@ -55,20 +56,29 @@ async function handler(ctx) {
             return {
                 title: a.attr('title')!,
                 link: `${baseUrl}${a.attr('href')}`,
-                pubDate: parseDate(pubDate.text()),
+                pubDate: parseDateInTimezone(pubDate.text(), 8),
             };
         });
-    const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link!, async () => {
+    const items = await pMap(
+        list,
+        async (item) => ({
+            ...item,
+            ...(await cache.tryGet(`smae:article-v3:${item.link}`, async () => {
                 const { data: response } = await got(item.link);
                 const $ = load(response);
 
-                item.description = $('div.wp_articlecontent').html();
+                const content = $('div.wp_articlecontent');
+                content.find('.wp_pdf_player[pdfsrc]').each((_, element) => {
+                    const pdf = $(element);
+                    const url = new URL(pdf.attr('pdfsrc')!, item.link).href;
+                    pdf.replaceWith($('<p>').append($('<a>').attr('href', url).text('Download PDF')));
+                });
+                item.description = content.html();
 
-                return item;
-            })
-        )
+                return { description: item.description };
+            })),
+        }),
+        { concurrency: 3 }
     );
     return {
         title: `华南理工大学机械与汽车工程学院 - ${categoryMeta.title}`,

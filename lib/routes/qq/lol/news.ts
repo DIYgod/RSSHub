@@ -2,6 +2,7 @@ import type { CheerioAPI } from 'cheerio';
 import { load } from 'cheerio';
 import type { Context } from 'hono';
 import iconv from 'iconv-lite';
+import pMap from 'p-map';
 
 import type { Data, DataItem, Language, Route } from '@/types';
 import { ViewType } from '@/types';
@@ -12,7 +13,8 @@ import timezone from '@/utils/timezone';
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { category = 23 } = ctx.req.param();
-    const limit = Number(ctx.req.query('limit') ?? '30');
+    const requestedLimit = Number(ctx.req.query('limit'));
+    const limit = Number.isSafeInteger(requestedLimit) && requestedLimit > 0 ? requestedLimit : 30;
 
     const baseUrl = 'https://lol.qq.com';
     const apiBaseUrl = 'https://apps.game.qq.com';
@@ -67,8 +69,9 @@ export const handler = async (ctx: Context): Promise<Data> => {
     });
 
     items = (
-        await Promise.all(
-            items.map((item) => {
+        await pMap(
+            items,
+            (item) => {
                 if (!item.link) {
                     return item;
                 }
@@ -126,7 +129,8 @@ export const handler = async (ctx: Context): Promise<Data> => {
                         ...processedItem,
                     };
                 });
-            })
+            },
+            { concurrency: 3 }
         )
     ).filter((_): _ is DataItem => true);
 
@@ -138,7 +142,6 @@ export const handler = async (ctx: Context): Promise<Data> => {
         description: $('meta[name="Description"]').attr('content'),
         link: targetUrl,
         item: items,
-        allowEmpty: true,
         image: `https:${$('a.logo img').attr('src')}`,
         author: $('meta[name="author"]').attr('content'),
         language,

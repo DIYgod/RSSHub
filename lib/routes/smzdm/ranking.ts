@@ -243,10 +243,9 @@ async function handler(ctx) {
     return {
         title: `什么值得买${typeOptions.find((item) => item.value === rank_type)?.label}-${idOptions.find((item) => item.value === rank_id)?.label}-${hour}小时`,
         link: 'https://www.smzdm.com/top/',
-        allowEmpty: true,
         item: list.map((item) => ({
             title: `${item.article_title} - ${item.article_price}`,
-            description: `${item.article_title} - ${item.article_price}<br><img src="${item.article_pic}">`,
+            description: `${item.article_price}<br><img src="${item.article_pic}">`,
             link: item.article_url,
         })),
     };

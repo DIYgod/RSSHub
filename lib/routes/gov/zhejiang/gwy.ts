@@ -3,7 +3,8 @@ import { load } from 'cheerio';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
+import { getRouteLimit } from '@/utils/route-limit';
 
 export const route: Route = {
     path: '/gwy/:category?/:column?',
@@ -20,14 +21,14 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['zjks.gov.cn/zjgwy/website/init.htm', 'zjks.gov.cn/zjgwy/website/queryDetail.htm', 'zjks.gov.cn/zjgwy/website/queryMore.htm'],
+            source: ['gwy.zjks.gov.cn/zjgwy/website/init.htm', 'gwy.zjks.gov.cn/zjgwy/website/queryDetail.htm', 'gwy.zjks.gov.cn/zjgwy/website/queryMore.htm'],
             target: '/gwy',
         },
     ],
     name: '通知',
     maintainers: ['nczitzk'],
     handler,
-    url: 'zjks.gov.cn/zjgwy/website/init.htm',
+    url: 'gwy.zjks.gov.cn/zjgwy/website/init.htm',
     description: `| 分类         | id |
 | ------------ | -- |
 | 重要通知     | 1  |
@@ -55,7 +56,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { category, column } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 50;
+    const limit = getRouteLimit(ctx, 50);
 
     const rootUrl = 'http://gwy.zjks.gov.cn';
     const currentUrl = new URL(`zjgwy/website/${category ? 'queryMore' : 'init'}.htm`, rootUrl).href;
@@ -72,22 +73,35 @@ async function handler(ctx) {
     const $ = load(response);
 
     let items = $('a[onclick^="queryDetail"]')
-        .slice(0, limit)
         .toArray()
         .map((item): DataItem & { tzid?: string } => {
             const $item = $(item);
 
             const matches = $item.prop('onclick').match(/queryDetail\('?(\d+)'?, '?(\d+)'?\);/);
+            const date = $item.parent().next().text().trim();
+            const link = new URL(detailUrl);
+            link.searchParams.set('mkxh', matches![1]);
+            link.searchParams.set('oldornew', 'new');
+            link.searchParams.set('tzid', matches![2]);
+            if (column) {
+                link.searchParams.set('dsdm', column);
+            }
 
             return {
                 title: $item.text(),
-                link: detailUrl,
+                link: link.href,
                 category: matches![1],
                 guid: `zjks-${matches![1]}-${matches![2]}`,
-                pubDate: parseDate($item.parent().next().text()),
+                pubDate: date ? parseDateInTimezone(date, 8) : undefined,
                 tzid: matches![2],
             };
         });
+
+    const datesKnown = items.every((item) => item.pubDate instanceof Date && Number.isFinite(item.pubDate.getTime()));
+    if (ctx.req.query('sorted') !== 'false' && datesKnown) {
+        items.sort((a, b) => Number(b.pubDate) - Number(a.pubDate));
+    }
+    items = items.slice(0, datesKnown || ctx.req.query('sorted') === 'false' ? limit : Math.max(50, limit));
 
     items = await Promise.all(
         items.map((item) =>
@@ -120,16 +134,24 @@ async function handler(ctx) {
         )
     );
 
+    const feedLink = new URL(currentUrl);
+    feedLink.searchParams.set('oldornew', 'new');
+    if (category) {
+        feedLink.searchParams.set('mkxh', category);
+    }
+    if (column) {
+        feedLink.searchParams.set('dsdm', column);
+    }
+
     const columnName = $('button.btn-success').last().text();
     const categoryName = $('table').parent().prev().find('h5').text();
 
     return {
         item: items,
         title: `${$('title').text()} - ${columnName}${categoryName}`,
-        link: currentUrl,
+        link: feedLink.href,
         description: $('div.title-font2').text(),
         subtitle: `${columnName}${categoryName}`,
         author: $('div.title-font').text(),
-        allowEmpty: true,
     };
 }

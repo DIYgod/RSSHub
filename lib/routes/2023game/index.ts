@@ -52,11 +52,19 @@ async function handler(ctx: Context): Promise<Data> {
             const $item = $(item);
             const href = $item.find('a').attr('href');
             return {
-                title: $item.text().trim(),
+                title: $item.find('h2').text(),
                 guid: `2023game:${href}`,
-                link: href!,
+                link: new URL(href!, currentUrl).href,
                 pubDate: parseDate($item.find('.time_box').text()),
-                description: $item.html(),
+                description: $item
+                    .find('.img_box, .info_box > p')
+                    .toArray()
+                    .map((element) => $.html(element))
+                    .join(''),
+                category: $item
+                    .find('.vg_tab')
+                    .toArray()
+                    .map((element) => $(element).text()),
             };
         });
 

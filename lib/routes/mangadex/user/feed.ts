@@ -2,6 +2,7 @@ import { config } from '@/config';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
+import { getRouteLimit } from '@/utils/route-limit';
 
 import getToken from '../_access';
 import constants from '../_constants';
@@ -81,31 +82,31 @@ async function handler(ctx) {
 
     const { lang } = ctx.req.param();
 
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : DEFAULT_LIMIT;
+    const requestedLimit = getRouteLimit(ctx, DEFAULT_LIMIT);
+    const limit = Math.min(ctx.req.query('sorted') === 'false' ? requestedLimit : Math.max(DEFAULT_LIMIT, requestedLimit), 500);
 
     const accessToken = await getToken();
 
     const filteredLanguages = await getFilteredLanguages();
     const languagesQuery = new Set([...(lang ? [lang] : []), ...filteredLanguages].filter(Boolean));
 
+    const feedUrl = `${userFollowUrl}${toQueryString({
+        translatedLanguage: languagesQuery,
+        order: {
+            publishAt: 'desc',
+        },
+        limit,
+    })}`;
+
     const feed = await cache.tryGet<Chapter[]>(
-        'mangadex:user-follows',
+        `mangadex:user-follows:v2:${feedUrl}`,
         async () => {
-            const response = await got.get(
-                `${userFollowUrl}${toQueryString({
-                    translatedLanguage: languagesQuery,
-                    order: {
-                        publishAt: 'desc',
-                    },
-                    limit,
-                })}`,
-                {
-                    headers: {
-                        Authorization: `Bearer ${accessToken}`,
-                        'User-Agent': config.trueUA,
-                    },
-                }
-            );
+            const response = await got.get(feedUrl, {
+                headers: {
+                    Authorization: `Bearer ${accessToken}`,
+                    'User-Agent': config.trueUA,
+                },
+            });
 
             const followedChapterFeed = response?.data?.data;
             if (!followedChapterFeed) {
@@ -120,7 +121,7 @@ async function handler(ctx) {
 
     const mangaIds = feed.map((chapter) => chapter.relationships.find((relationship) => relationship.type === 'manga')?.id).filter((mangaId) => mangaId !== undefined);
 
-    const mangaMetas = await getMangaMetaByIds(mangaIds);
+    const mangaMetas = await getMangaMetaByIds(mangaIds, true, [...languagesQuery]);
 
     return {
         title: 'User Follows',

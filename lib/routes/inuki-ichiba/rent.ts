@@ -3,6 +3,7 @@ import { load } from 'cheerio';
 import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
+import { getRouteLimit } from '@/utils/route-limit';
 
 import type { ListingExtra } from './utils';
 import { clean, normalizeFloor, parseArea, parseCondition, parseHeavyFood, parseJpy, parseMonths, parseWalkMin, parseWard, summarize, tsuboUnit } from './utils';
@@ -84,14 +85,14 @@ const parseList = (html: string): ListCard[] => {
             const tags = [...$el.find('.tag_list li').toArray(), ...$el.find('.picto_list .picto').toArray()].map((t) => clean($(t).text())).filter((t): t is string => t !== null);
 
             const rentJpy = parseJpy(raw.rent);
-            const { tsubo, area_m2 } = parseArea(clean(areaText));
+            const { tsubo, area_m2: areaM2 } = parseArea(clean(areaText));
 
             const extra: ListingExtra = {
                 source: 'inuki-ichiba',
                 listing_id: id,
                 rent_jpy: rentJpy,
                 tsubo,
-                area_m2,
+                area_m2: areaM2,
                 tsubo_unit_jpy: tsuboUnit(rentJpy, tsubo),
                 floor: normalizeFloor(clean(floorText)),
                 station: station?.replace(/駅$/, '') ?? null,
@@ -152,8 +153,8 @@ const mergeDetail = (base: ListingExtra, d: DetailFields): ListingExtra => ({
 });
 
 const enrich = async (card: ListCard): Promise<ListingExtra> => {
-    const html = await ofetch(card.link);
-    return mergeDetail(card.extra, parseDetail(html));
+    const detail = await cache.tryGet(`inuki-ichiba:detail:${card.link}`, async () => parseDetail(await ofetch(card.link)));
+    return mergeDetail(card.extra, detail);
 };
 
 export const handler = async (ctx): Promise<Data> => {
@@ -162,26 +163,24 @@ export const handler = async (ctx): Promise<Data> => {
     if (pref !== undefined && !prefecture) {
         throw new Error(`Unknown prefecture "${pref}", expected one of ${PREFECTURES.map((p) => p.slug).join(', ')}`);
     }
-    const limit = Math.min(ctx.req.query('limit') ? Number(ctx.req.query('limit')) : PAGE_SIZE, PAGE_SIZE);
+    const limit = Math.min(getRouteLimit(ctx, PAGE_SIZE) ?? PAGE_SIZE, PAGE_SIZE);
     // `sort=id` is the 新着順 option of the search results page.
     const listUrl = prefecture ? `${HOST}/rent/search-results?location%5B${prefecture.code}%5D%5Bprefecture%5D=${prefecture.code}&sort=id` : `${HOST}/sp_rent/1`;
 
     const cards = parseList(await ofetch(listUrl)).slice(0, limit);
 
     const items = await Promise.all(
-        cards.map((card) =>
-            cache.tryGet(card.link, async (): Promise<DataItem> => {
-                const extra = await enrich(card);
-                return {
-                    title: card.title,
-                    link: card.link,
-                    guid: card.link,
-                    // The site does not publish a listing date; no pubDate is fabricated.
-                    description: summarize(extra),
-                    _extra: extra,
-                };
-            })
-        )
+        cards.map(async (card): Promise<DataItem> => {
+            const extra = await enrich(card);
+            return {
+                title: card.title,
+                link: card.link,
+                guid: card.link,
+                // The site does not publish a listing date; no pubDate is fabricated.
+                description: summarize(extra),
+                _extra: extra,
+            };
+        })
     );
 
     return {

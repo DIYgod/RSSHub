@@ -151,23 +151,21 @@ export const route: Route = {
         const targetList = isSpecial ? list.filter((item) => item.exhibitionType === 'special' || item.exhibitionType === 'temporary') : list;
 
         const items = await Promise.all(
-            targetList.map((item) => {
-                const cacheKey = item.itemLink;
+            targetList.map(async (item): Promise<DataItem> => {
+                if (item.exhibitionType === 'permanent' || item.exhibitionType === 'special') {
+                    const { startDate, endDate } = extractDates(item.fullDuration);
+                    return {
+                        title: item.title,
+                        link: item.itemLink,
+                        pubDate: startDate ? parseDate(startDate) : undefined,
+                        description: renderDescription(item.imgUrl, item.location, startDate, endDate, item.fullDuration),
+                        _extra: { museumName, location: item.location, startDate, endDate },
+                    };
+                }
 
-                return cache.tryGet(cacheKey, async (): Promise<DataItem> => {
-                    if (item.exhibitionType === 'permanent' || item.exhibitionType === 'special') {
-                        const { startDate, endDate } = extractDates(item.fullDuration);
-                        return {
-                            title: item.title,
-                            link: item.itemLink,
-                            pubDate: startDate ? parseDate(startDate) : undefined,
-                            description: renderDescription(item.imgUrl, item.location, startDate, endDate, item.fullDuration),
-                            _extra: { museumName, location: item.location, startDate, endDate },
-                        };
-                    }
-
+                const details = await cache.tryGet(`hnmuseum:exhibition-details:${item.itemLink}`, async () => {
                     const url = new URL(item.itemLink);
-                    // for theme exhibition, the detail page may be a SPA, so need to fetch the JS file to extract the data
+                    // Theme exhibitions publish their metadata in a module script.
                     if (url.hostname === 'vrexhibition.hnmuseum.com') {
                         const htmlRes = await got({ method: 'get', url: item.itemLink });
                         const $spa = load(htmlRes.data);
@@ -182,26 +180,21 @@ export const route: Route = {
                         const locMatch = jsContent.match(/"(湖南省博物馆[^"]+厅)"/);
                         const location = locMatch?.[1];
                         const { startDate, endDate } = extractDates(fullDuration);
-
-                        return {
-                            title,
-                            link: item.itemLink,
-                            pubDate: startDate ? parseDate(startDate) : undefined,
-                            description: renderDescription(item.imgUrl, location, startDate, endDate, fullDuration),
-                            _extra: { museumName, location, startDate, endDate },
-                        };
+                        return { title, location, startDate, endDate, fullDuration };
                     }
 
                     const detailResponse = await got({ method: 'get', url: item.itemLink });
                     const content = load(detailResponse.data);
-                    const title = content('h1#page-title').text();
-                    return {
-                        title,
-                        link: item.itemLink,
-                        description: renderDescription(item.imgUrl),
-                        _extra: { museumName },
-                    };
+                    return { title: content('h1#page-title').text() };
                 });
+
+                return {
+                    title: details.title,
+                    link: item.itemLink,
+                    pubDate: details.startDate ? parseDate(details.startDate) : undefined,
+                    description: renderDescription(item.imgUrl, details.location, details.startDate, details.endDate, details.fullDuration),
+                    _extra: { museumName, location: details.location, startDate: details.startDate, endDate: details.endDate },
+                };
             })
         );
 

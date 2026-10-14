@@ -2,9 +2,10 @@ import { load } from 'cheerio';
 import type { Context } from 'hono';
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
+import pMap from 'p-map';
 
 import InvalidParameterError from '@/errors/types/invalid-parameter';
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -48,11 +49,13 @@ const payload = {
 const endpoints = {
     en: {
         title: 'Insights - KPMG ',
+        language: 'en' as const,
         link: `${baseUrl}/xx/en/home/insights.html`,
         api: `${baseUrl}/esearch/xx-en`,
     },
     zh: {
         title: '洞察 - 毕马威',
+        language: 'zh-CN' as const,
         link: `${baseUrl}/cn/zh/home/insights.html`,
         api: `${baseUrl}/esearch/cn-zh`,
     },
@@ -61,7 +64,7 @@ const render = (data: { image?: string; alt?: string; content?: string; pdf?: st
 
 const KpmgDescription = ({ image, alt, content, pdf }: { image?: string; alt?: string; content?: string; pdf?: string }) => (
     <>
-        {image ? <img src={`https://assets.kpmg.com${image}`} alt={alt} /> : null}
+        {image ? <img src={image} alt={alt} /> : null}
         {content ? (
             <>
                 <br />
@@ -79,7 +82,7 @@ const KpmgDescription = ({ image, alt, content, pdf }: { image?: string; alt?: s
 
 const handler = async (ctx: Context) => {
     const { lang = 'en' } = ctx.req.param();
-    const endpoint = endpoints[lang];
+    const endpoint = Object.hasOwn(endpoints, lang) ? endpoints[lang] : undefined;
     if (!endpoint) {
         throw new InvalidParameterError('Invalid language');
     }
@@ -90,17 +93,18 @@ const handler = async (ctx: Context) => {
         body: payload,
     });
 
-    const list = response.results.map((item) => ({
+    const list: Array<DataItem & { link: string; imageAlt?: string }> = response.results.map((item) => ({
         title: item.kpmg_title.raw,
         description: item.kpmg_description.raw,
         link: item.kpmg_url.raw,
-        pubDate: parseDate(item.kpmg_article_date_time.raw),
-        image: item.kpmg_image.raw,
+        pubDate: item.kpmg_article_date_time?.raw ? parseDate(item.kpmg_article_date_time.raw) : undefined,
+        image: item.kpmg_image.raw ? new URL(item.kpmg_image.raw, 'https://assets.kpmg.com').href : undefined,
         imageAlt: item.kpmg_image_alt?.raw,
     }));
 
-    const item = await Promise.all(
-        list.map((item) =>
+    const item = await pMap(
+        list,
+        (item) =>
             cache.tryGet(item.link, async () => {
                 const response = await ofetch(item.link);
                 const $ = load(response);
@@ -117,20 +121,22 @@ const handler = async (ctx: Context) => {
                 const pdfDetails = $('.pdfdetails').parent().parent().parent();
                 pdfDetails.find('.hidden-xs, .sr-only').remove();
 
-                item.description = render({
+                const { imageAlt, ...processedItem } = item;
+                processedItem.description = render({
                     image: item.image,
-                    alt: item.imageAlt,
+                    alt: imageAlt,
                     content,
                     pdf: pdfDetails.prop('outerHTML') ?? undefined,
                 });
 
-                return item;
-            })
-        )
+                return processedItem;
+            }),
+        { concurrency: 3 }
     );
 
     return {
-        title: 'KPMG Insights',
+        title: endpoint.title,
+        language: endpoint.language,
         link,
         item,
     };

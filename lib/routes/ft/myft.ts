@@ -72,7 +72,7 @@ async function handler(ctx) {
 
     return {
         title: 'FT.com - myFT',
-        link,
+        link: 'https://www.ft.com/myft',
         description: 'FT.com - myFT',
         item: items as DataItem[],
     };

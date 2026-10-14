@@ -19,7 +19,10 @@ async function handler() {
     const response = await ofetch(link);
     const $ = load(response);
     const aqi = $('div.val').text();
-    const time = `${new Date().getFullYear()}-${$('span.t-time').eq(0).text().replaceAll(/\s+/g, '').replace('月', '-').replace('日', ' ').replace('时', ':00:00')}`;
+    const time = /\blastLstAqiStr\s*=\s*["'](\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2})["']/.exec(response)?.[1];
+    if (!time) {
+        throw new Error('The air quality source did not provide its full measurement timestamp.');
+    }
 
     return {
         title: '上海市生态环境局 - 空气质量',
@@ -29,7 +32,7 @@ async function handler() {
                 title: `${aqi} - ${time}`,
                 link,
                 description: $('table.table').html()! + $('div.air-yb').html(),
-                pubDate: timezone(parseDate(time), 8),
+                pubDate: timezone(parseDate(time, 'YYYY-MM-DD HH:mm:ss', true), 8),
             },
         ],
     };

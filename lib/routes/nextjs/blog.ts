@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
@@ -10,32 +11,31 @@ const handler: Route['handler'] = async () => {
 
     const $ = load(data);
 
-    const item = await Promise.all(
-        $('article')
-            .slice(0, 20)
-            .toArray()
-            .map((item) => {
-                const $ = load(item);
-                const link = `https://nextjs.org${$('a[href^="/blog"]').attr('href')}`;
+    const item = await pMap(
+        $('article').slice(0, 20).toArray(),
+        (item) => {
+            const $ = load(item);
+            const link = `https://nextjs.org${$('a[href^="/blog"]').attr('href')}`;
 
-                return cache.tryGet(`nextjs:blog:${link}`, async () => {
-                    const data = await ofetch(link);
+            return cache.tryGet(`nextjs:blog:${link}:published-date:authors`, async () => {
+                const data = await ofetch(link);
 
-                    const $ = load(data);
+                const $ = load(data);
 
-                    return {
-                        title: $('h1').text(),
-                        link,
-                        description: $('div.prose').html(),
-                        pubDate: parseDate(
-                            $('p[data-version="v1"]')
-                                .first()
-                                .text()
-                                .replace(/st|nd|rd|th/, '')
-                        ),
-                    };
-                });
-            })
+                const publishedAt = $('meta[property="article:published_time"]').attr('content');
+                const metadata: { author?: Array<{ name?: string }> } = JSON.parse($('script[type="application/ld+json"]').first().text() || '{}');
+                const author = metadata.author?.flatMap((author) => (author.name ? [{ name: author.name }] : []));
+
+                return {
+                    title: $('h1').text(),
+                    link,
+                    description: $('div.prose').html(),
+                    pubDate: publishedAt ? parseDate(publishedAt) : undefined,
+                    author: author?.length ? author : undefined,
+                };
+            });
+        },
+        { concurrency: 3 }
     );
 
     return {

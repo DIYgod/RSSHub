@@ -5,6 +5,8 @@ import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
+import timezone from '@/utils/timezone';
 
 import { renderDescription } from './templates/description';
 
@@ -39,7 +41,8 @@ const extractTranscript = ($: CheerioAPI): string | undefined => {
         return undefined;
     }
     const transcript = paragraphs
-        .slice(startIdx + 1, endIdx)
+        .eq(startIdx)
+        .nextUntil(paragraphs.eq(endIdx))
         .filter((_, p) => $(p).text().trim() !== '')
         .toString();
     return transcript || undefined;
@@ -83,7 +86,8 @@ const parseArticle = async (item: ArticleListItem) => {
     });
 
     const detailDateStr = $('.sigle-meta__date').text();
-    const pubDate = detailDateStr ? parseDate(detailDateStr, 'D. M. YYYY') : item.pubDate;
+    const publishedTime = $('meta[property="article:published_time"]').attr('content');
+    const pubDate = publishedTime ? parseDate(publishedTime) : detailDateStr ? timezone(parseDate(detailDateStr, 'D. M. YYYY'), 0) : item.pubDate;
 
     return {
         title: item.title,
@@ -99,7 +103,7 @@ const handler: Route['handler'] = async (ctx) => {
     const response = await ofetch(targetUrl);
     const $ = load(response);
 
-    const limit = Number(ctx.req.query('limit') || 20);
+    const limit = getRouteLimit(ctx, 20);
 
     const list = $('.news-item-info')
         .slice(0, limit)
@@ -110,7 +114,7 @@ const handler: Route['handler'] = async (ctx) => {
             const link = rawLink ? (rawLink.startsWith('http') ? rawLink : `${baseUrl}${rawLink}`) : '';
             const title = el.find('.news-item-link__title').text();
             const dateStr = el.find('.news-item-meta__date').text();
-            const pubDate = dateStr ? parseDate(dateStr, 'D. M. YYYY') : undefined;
+            const pubDate = dateStr ? timezone(parseDate(dateStr, 'D. M. YYYY'), 0) : undefined;
 
             return {
                 title,

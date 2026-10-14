@@ -22,7 +22,7 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['thegadgetflow.com/categories/:category'],
+            source: ['thegadgetflow.com/categories/:category', 'thegadgetflow.com/collections/:category'],
             target: '/:category',
         },
     ],
@@ -33,15 +33,17 @@ export const route: Route = {
 
 async function handler(ctx) {
     const baseUrl = 'https://thegadgetflow.com';
-    const categoryApiPath = '/wp-json/wp/v2/categories';
+    const categoryApiPath = '/wp-json/wp/v2/collection';
     const postApiPath = '/wp-json/wp/v2/posts';
 
     // get category number
     const categorySlug = ctx.req.param('category') || '';
+    const requestedLimit = Number(ctx.req.query('limit'));
+    const limit = Number.isFinite(requestedLimit) && requestedLimit >= 1 ? Math.min(Math.floor(requestedLimit), 100) : 10;
 
     let category;
     if (categorySlug) {
-        category = await cache.tryGet(`${baseUrl}${categoryApiPath}`, async () => {
+        category = await cache.tryGet(`${baseUrl}${categoryApiPath}:${categorySlug}`, async () => {
             const { data } = await got(`${baseUrl}${categoryApiPath}`, {
                 searchParams: { slug: categorySlug },
             });
@@ -60,9 +62,9 @@ async function handler(ctx) {
     const postsUrl = `${baseUrl}${postApiPath}`;
     const postsResponse = await got(postsUrl, {
         searchParams: {
-            per_page: ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 10,
+            per_page: limit,
             _embed: '',
-            ...(categoryId && { categories: categoryId }),
+            ...(categoryId && { collection: categoryId }),
         },
     });
 
@@ -89,10 +91,15 @@ async function handler(ctx) {
                 </>
             ),
             link: item.link,
-            pubDate: parseDate(item.date_gmt),
-            updated: parseDate(item.modified_gmt),
+            pubDate: item.date_gmt ? parseDate(`${item.date_gmt}Z`) : undefined,
+            updated: item.modified_gmt ? parseDate(`${item.modified_gmt}Z`) : undefined,
             // image,
-            author: item._embedded.author[0].name,
+            author:
+                item._embedded?.author
+                    ?.map((author) => author.name)
+                    .filter(Boolean)
+                    .join(', ') || undefined,
+            category: item._embedded?.['wp:term']?.flat().map((term) => term.name),
         };
         return single;
     });

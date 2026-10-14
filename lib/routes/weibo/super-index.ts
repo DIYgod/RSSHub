@@ -4,6 +4,7 @@ import { config } from '@/config';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
+import md5 from '@/utils/md5';
 
 import weiboUtils from './utils';
 
@@ -62,7 +63,7 @@ async function handler(ctx) {
 
     const containerData = await weiboUtils.tryWithCookies((cookies, verifier) =>
         cache.tryGet<ContainerData>(
-            `weibo:super_index:container:${id}:${type}`,
+            `weibo:super_index:container:${id}:${type}:${md5(cookies)}`,
             async () => {
                 const _r = await got('https://m.weibo.cn/api/container/getIndex', {
                     searchParams: queryString.stringify({
@@ -87,7 +88,7 @@ async function handler(ctx) {
     const resultItems: Array<ReturnType<typeof weiboUtils.formatExtended>> = [];
 
     function handleCard(card) {
-        if (card.card_type !== '9' || !('mblog' in card)) {
+        if ((card.card_type !== 9 && card.card_type !== '9') || !('mblog' in card)) {
             return;
         }
         const formatExtended = weiboUtils.formatExtended(ctx, card.mblog, undefined);

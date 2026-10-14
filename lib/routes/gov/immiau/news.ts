@@ -49,7 +49,7 @@ async function handler() {
         author: item.Source,
         category: item.Category,
         description: item.Content,
-        pubDate: parseDate(item.Date),
+        pubDate: item.Date ? parseDate(`${item.Date} +0000`, 'DD MMM YYYY ZZ') : undefined,
         link: getItemUrl(item.Id),
     }));
 

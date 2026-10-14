@@ -1,9 +1,10 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date'; // 解析日期的工具函数
+import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/zwgk',
@@ -41,26 +42,24 @@ async function handler() {
     const list = data.map((item) => ({
         title: item.title,
         link: item.url,
-        pubDate: parseDate(item.display_date),
+        pubDate: item.display_date === undefined || item.display_date === null ? undefined : parseDate(item.display_date),
     }));
 
-    const items = await Promise.all(
-        list.map((item) =>
+    const items = await pMap(
+        list,
+        (item: DataItem & { link: string }) =>
             cache.tryGet(item.link, async () => {
                 const response = await ofetch(item.link);
                 const $ = load(response);
                 item.description = $('#ivs_content').html();
                 return item;
-            })
-        )
+            }),
+        { concurrency: 3 }
     );
 
     return {
-        // 源标题
         title: '信息公开_政务公开-上海市浦东新区门户网站',
-        // 源链接
         link: 'https://www.pudong.gov.cn/zwgk/zxxxgk/index.html',
-        // 源文章
         item: items,
     };
 }

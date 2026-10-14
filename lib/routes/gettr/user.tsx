@@ -58,13 +58,15 @@ async function handler(ctx) {
     const userInfo = posts.result.aux.uinf[id];
 
     const items = posts.result.data.list.map((post) => {
-        const title = posts.result.aux.post[post.activity.pstid].txt;
-        const description = renderToString(<GettrPostDescription post={posts.result.aux.post[post.activity.pstid]} mediaHost={mediaHost} />);
+        const postData = posts.result.aux.post[post.activity.pstid];
+        const title = postData.txt;
+        const description = renderToString(<GettrPostDescription post={postData} mediaHost={mediaHost} />);
         return {
             title: `${actionMap[post.action]} ${title}`,
             description,
+            author: posts.result.aux.uinf[postData.uid]?.nickname ?? postData.uid,
             pubDate: parseDate(post.cdate),
-            updated: parseDate(post.udate),
+            updated: postData.udate ? parseDate(postData.udate) : undefined,
             link: `${baseUrl}/post/${post.activity.pstid}`,
         };
     });
@@ -87,7 +89,12 @@ const GettrPostDescription = ({ post, mediaHost }: { post: any; mediaHost: strin
                 <br />
             </>
         ) : null}
-        {post.previmg ? (
+        {post.vid ? (
+            <>
+                <video controls src={post.vid} poster={post.previmg} />
+                <br />
+            </>
+        ) : post.previmg ? (
             <>
                 <img src={post.previmg} />
                 <br />

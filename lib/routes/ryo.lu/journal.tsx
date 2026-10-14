@@ -144,7 +144,7 @@ async function handler(ctx): Promise<Data> {
             description,
             link: `${baseUrl}/journal/${entry.slug ?? entry.id}?locale=${lang}`,
             guid: entry.id,
-            pubDate: parseDate(entry.dateTime),
+            pubDate: entry.dateTime ? parseDate(`${entry.dateTime}T00:00:00Z`) : undefined,
         };
     });
 

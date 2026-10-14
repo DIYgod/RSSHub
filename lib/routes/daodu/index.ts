@@ -48,7 +48,8 @@ async function handler(ctx: Context) {
                 content('.member-only').remove();
 
                 item.description = content('.post-entry-text').html();
-                item.pubDate = parseDate(content('meta[property="article:published_time"]').attr('content')!);
+                const pubDate = content('meta[property="article:published_time"]').attr('content');
+                item.pubDate = pubDate ? parseDate(pubDate) : undefined;
 
                 return item;
             })

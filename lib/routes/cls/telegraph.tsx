@@ -1,9 +1,11 @@
 import type { Context } from 'hono';
 import { renderToString } from 'hono/jsx/dom/server';
 
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
 import { getSearchParams, rootUrl } from './utils';
 
@@ -62,7 +64,10 @@ export const route: Route = {
 
 async function handler(ctx: Context) {
     const category = ctx.req.param('category');
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')!) : 50;
+    const limit = getRouteLimit(ctx, 50);
+    if (category && !Object.hasOwn(categories, category)) {
+        throw new InvalidParameterError('Unknown telegraph category. Check the supported categories in the route documentation.');
+    }
 
     let apiUrl = `${rootUrl}/api/cache`;
     if (category) {
@@ -80,7 +85,7 @@ async function handler(ctx: Context) {
 
     const items = response.data.roll_data.slice(0, limit).map((item) => ({
         title: item.title || item.content,
-        link: item.shareurl,
+        link: item.shareurl || `${rootUrl}/detail/${item.id}`,
         description: renderTelegraphDescription(item),
         pubDate: parseDate(item.ctime, 'X'),
         category: item.subjects?.map((s) => s.subject_name),

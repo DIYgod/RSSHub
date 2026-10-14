@@ -8,6 +8,7 @@ import cache from '@/utils/cache';
 import got from '@/utils/got';
 import md5 from '@/utils/md5';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
 import { renderDescription } from './templates/description';
 
@@ -98,7 +99,7 @@ const ProcessItems = async (ctx, currentUrl, rootUrl) => {
     const $ = load(response.data);
 
     let items = $('.video-title')
-        .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 20)
+        .slice(0, getRouteLimit(ctx, 20))
         .toArray()
         .map((item): DataItem & { guid: string } => {
             const $item = $(item);

@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
@@ -41,26 +42,32 @@ export const route: Route = {
             .toArray()
             .map((item) => $(item).attr('href')!);
 
-        const items = await Promise.all(
-            links.map((link) =>
-                cache.tryGet(link, async () => {
+        const items = await pMap(
+            links,
+            (link) =>
+                cache.tryGet(`maldita:article:v3:${link}`, async () => {
                     const response = await ofetch(link);
                     const $ = load(response);
 
+                    const dateText = $('time').attr('datetime');
+                    const articleContent = $('#article-content').html();
+                    if (!articleContent) {
+                        throw new Error(`Maldita article content was not found at ${link}. The source layout may have changed.`);
+                    }
                     return {
                         title: $('h1').text(),
                         link,
                         category: $('#article-metadata .flex a')
                             .toArray()
                             .map((x) => $(x).text()),
-                        pubDate: parseDate($('time').attr('datetime')!),
+                        pubDate: dateText ? parseDate(dateText) : undefined,
                         itunes_item_image: $('#featuredImage img').attr('src'),
                         content: {
-                            html: $('#keys').html()! + $('#article-content').html()!,
+                            html: ($('#keys').html() ?? '') + articleContent,
                         },
                     };
-                })
-            )
+                }),
+            { concurrency: 3 }
         );
 
         return {

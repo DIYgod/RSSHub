@@ -1,7 +1,19 @@
+import { escapeAttribute } from 'entities';
+
 import type { Route } from '@/types';
-import got from '@/utils/got';
-// import { load } from 'cheerio';
+import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+
+interface GalleryItem {
+    title: string;
+    authorProfileName: string;
+    authorDisplayName: string;
+    defaultViewRepoUrl: string;
+    description: string;
+    curatedImageUrl: string;
+    curatedImageAltText: string;
+    curatedAt: string;
+}
 
 export const route: Route = {
     path: '/viz-of-the-day',
@@ -22,23 +34,20 @@ export const route: Route = {
 };
 
 async function handler() {
-    // Your logic here
-    const rootUrl = 'https://public.tableau.com/api/gallery?page=0&count=20&galleryType=viz-of-the-day';
-    const { data: response } = await got(rootUrl);
-
-    const items = response.items.map((item) => ({
+    const baseUrl = 'https://public.tableau.com';
+    const response = await ofetch<{ contents: GalleryItem[] }>(`${baseUrl}/public/apis/bff/discover/v2/vizzes/viz-of-the-day?startIndex=0&limit=12`);
+    const items = response.contents.map((item) => ({
         title: item.title,
-        link: item.sourceUrl,
-        pubDate: parseDate(item.galleryItemPublicationDate),
-        author: item.authorName,
-        description: `<div><p>${item.description}</p><img src='${item.screenshot}'></div>`,
-        itunes_item_image: item.screenshot,
+        link: `${baseUrl}/app/profile/${item.authorProfileName}/viz/${item.defaultViewRepoUrl.replace('/sheets/', '/')}`,
+        pubDate: parseDate(item.curatedAt),
+        author: item.authorDisplayName,
+        description: `<div>${item.description}<img src="${escapeAttribute(item.curatedImageUrl)}" alt="${escapeAttribute(item.curatedImageAltText)}"></div>`,
+        itunes_item_image: item.curatedImageUrl,
     }));
 
     return {
-        // Your RSS output here
         title: 'Tableau Viz of the Day',
-        link: 'https://public.tableau.com/app/discover/viz-of-the-day',
+        link: `${baseUrl}/app/discover/viz-of-the-day`,
         image: 'https://help.tableau.com/current/pro/desktop/en-us/Resources/tableau-logo.png',
         item: items,
     };

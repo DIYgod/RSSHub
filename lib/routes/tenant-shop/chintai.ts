@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { ListingExtra } from '@/routes/temposmart/utils';
 import { clean, normalizeFloor, parseArea, parseCondition, parseJpy, parseMonths, parseWalkMin, parseWard, parseYmd, sumKnown, summarize, tsuboUnit } from '@/routes/temposmart/utils';
@@ -7,6 +8,7 @@ import cache from '@/utils/cache';
 import logger from '@/utils/logger';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 import timezone from '@/utils/timezone';
 
 const PAGE_SIZE = 30;
@@ -76,9 +78,9 @@ const parseList = (html: string, host: string): ListCard[] => {
             const $el = $(el);
             const a = $el.find('div.estatename a');
             const href = a.attr('href');
-            const title = clean(a.text());
+            const title = a.text();
             const id = href?.match(/\/detail\/e-(\d+)/)?.[1];
-            if (!href || !title || !id) {
+            if (!href || !title.trim() || !id) {
                 return null;
             }
             const iconRow = (icon: string): string | null => clean($el.find(`div.add img[src$="/${icon}.png"]`).parent().text());
@@ -178,7 +180,8 @@ const mergeDetail = (base: ListingExtra, d: DetailFields): ListingExtra => ({
 /** A failed detail page keeps the list fields instead of breaking the feed. */
 const enrich = async (card: ListCard): Promise<ListingExtra> => {
     try {
-        return mergeDetail(card.extra, parseDetail(await ofetch(card.link)));
+        const detail = await cache.tryGet(`tenant-shop:detail-fields:v1:${card.link}`, async () => parseDetail(await ofetch(card.link)));
+        return mergeDetail(card.extra, detail);
     } catch (error) {
         logger.warn(`tenant-shop: detail fetch failed for ${card.link}: ${String(error)}`);
         return { ...card.extra, raw: { ...card.extra.raw, detail_error: String(error) } };
@@ -196,26 +199,26 @@ export const handler = async (ctx): Promise<Data> => {
     if (typeSlug !== undefined && !type) {
         throw new Error(`Unknown type "${typeSlug}", expected one of ${TYPES.map((t) => t.slug).join(', ')}`);
     }
-    const limit = Math.min(ctx.req.query('limit') ? Number(ctx.req.query('limit')) : PAGE_SIZE, PAGE_SIZE);
+    const limit = Math.min(getRouteLimit(ctx, PAGE_SIZE), PAGE_SIZE);
     // shin-1 selects 新着物件; the page is ordered by 登録日 desc.
     const listUrl = `${prefecture.host}/chintai_biz/pa-${prefecture.code}/${type ? `${type.code}-1/` : ''}shin-1/`;
 
     const cards = parseList(await ofetch(listUrl), prefecture.host).slice(0, limit);
-    const items = await Promise.all(
-        cards.map((card) =>
-            cache.tryGet(card.link, async (): Promise<DataItem> => {
-                const extra = await enrich(card);
-                return {
-                    title: card.title,
-                    link: card.link,
-                    guid: card.link,
-                    pubDate: extra.listed_at === null ? undefined : timezone(parseDate(extra.listed_at, 'YYYY-MM-DD'), 9),
-                    description: [extra.raw.comment, summarize(extra)].filter(Boolean).join(' / '),
-                    image: card.image,
-                    _extra: extra,
-                };
-            })
-        )
+    const items = await pMap(
+        cards,
+        async (card): Promise<DataItem> => {
+            const extra = await enrich(card);
+            return {
+                title: card.title,
+                link: card.link,
+                guid: card.link,
+                pubDate: extra.listed_at === null ? undefined : timezone(parseDate(extra.listed_at, 'YYYY-MM-DD'), 9),
+                description: [extra.raw.comment, summarize(extra)].filter(Boolean).join(' / '),
+                image: card.image,
+                _extra: extra,
+            };
+        },
+        { concurrency: 3 }
     );
 
     return {
@@ -256,14 +259,18 @@ export const route: Route = {
         antiCrawler: false,
         supportRadar: true,
     },
-    radar: [
-        {
-            source: ['www.tenant-shop.com/chintai_biz/pa-:pa/shin-1', 'www.tenant-shop.com/chintai_biz/pa-:pa'],
-            target: '/chintai/:pa',
-        },
-        {
-            source: ['www.tenant-shop.jp/chintai_biz/pa-:pa/shin-1', 'www.tenant-shop.jp/chintai_biz/pa-:pa'],
-            target: '/chintai/:pa',
-        },
-    ],
+    radar: PREFECTURES.flatMap((prefecture) => {
+        const source = `${new URL(prefecture.host).hostname}/chintai_biz/pa-${prefecture.code}`;
+        const target = `/chintai/${prefecture.slug}`;
+        return [
+            {
+                source: [source, `${source}/shin-1`],
+                target,
+            },
+            ...TYPES.map((type) => ({
+                source: [`${source}/${type.code}-1`, `${source}/${type.code}-1/shin-1`],
+                target: `${target}/${type.slug}`,
+            })),
+        ];
+    }),
 };

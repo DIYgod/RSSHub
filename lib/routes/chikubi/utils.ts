@@ -77,6 +77,9 @@ function processDescription(description: string): string {
 const WP_REST_API_URL = 'https://chikubi.jp/wp-json/wp/v2';
 
 export async function getPosts(ids?: string[]): Promise<DataItem[]> {
+    if (ids?.length === 0) {
+        return [];
+    }
     const url = `${WP_REST_API_URL}/posts${ids?.length ? `?include=${ids.join(',')}` : ''}`;
 
     const cachedData = await cache.tryGet<DataItem[]>(url, async () => {
@@ -87,10 +90,10 @@ export async function getPosts(ids?: string[]): Promise<DataItem[]> {
             throw new TypeError('No posts found for the given IDs');
         }
 
-        return data.map(({ title, link, date, content }) => ({
+        return data.map(({ title, link, date_gmt: dateGmt, content }) => ({
             title: title.rendered,
             link,
-            pubDate: parseDate(date),
+            pubDate: parseDate(`${dateGmt}Z`),
             description: processDescription(content.rendered),
         }));
     });
@@ -122,10 +125,10 @@ export async function getPostsBy<T extends keyof typeof API_TYPES>(type: T, id: 
         const data = JSON.parse(body);
 
         if (Array.isArray(data) && data.length > 0) {
-            return data.map(({ title, link, date, content }) => ({
+            return data.map(({ title, link, date_gmt: dateGmt, content }) => ({
                 title: title.rendered,
                 link,
-                pubDate: parseDate(date),
+                pubDate: parseDate(`${dateGmt}Z`),
                 description: processDescription(content.rendered),
             }));
         }

@@ -3,6 +3,7 @@ import type { Context } from 'hono';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
+import { getRouteLimit } from '@/utils/route-limit';
 
 import { baseUrl, fetchStories, storiesToItems } from './utils';
 
@@ -34,7 +35,7 @@ export const route: Route = {
 
 async function handler(ctx: Context) {
     const { id } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 21;
+    const limit = getRouteLimit(ctx, 21);
 
     const groupId = /^\d+$/.test(id)
         ? id
@@ -63,11 +64,11 @@ async function handler(ctx: Context) {
         },
         limit
     );
-    const group = stories[0].to;
+    const group = stories[0]?.to;
 
     return {
-        title: group.name,
-        link: group.url,
+        title: group?.name ?? `Facebook Group ${id}`,
+        link: group?.url ?? `${baseUrl}/groups/${id}`,
         item: storiesToItems(stories),
     };
 }

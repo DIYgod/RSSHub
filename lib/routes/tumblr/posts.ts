@@ -4,7 +4,7 @@ import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
 import type { Data, Route } from '@/types';
 import got from '@/utils/got';
-import { fallback, queryToInteger } from '@/utils/readable-social';
+import { getRouteLimit } from '@/utils/route-limit';
 
 import utils from './utils';
 
@@ -25,10 +25,12 @@ export const route: Route = {
             {
                 name: 'TUMBLR_CLIENT_SECRET',
                 description: 'Please see above for details.',
+                optional: true,
             },
             {
                 name: 'TUMBLR_REFRESH_TOKEN',
                 description: 'Please see above for details.',
+                optional: true,
             },
         ],
         requirePuppeteer: false,
@@ -51,7 +53,7 @@ async function handler(ctx: Context): Promise<Data> {
     }
 
     const blogIdentifier = ctx.req.param('blog');
-    const limit = fallback(undefined, queryToInteger(ctx.req.query('limit')), 20);
+    const limit = getRouteLimit(ctx, 20);
 
     const response = await got.get(`https://api.tumblr.com/v2/blog/${blogIdentifier}/posts`, {
         searchParams: {
@@ -63,14 +65,14 @@ async function handler(ctx: Context): Promise<Data> {
 
     const blog = response.data.response.blog;
     const posts = response.data.response.posts.map((post: any) => utils.processPost(post));
+    const blogLink = blog?.url ?? (blogIdentifier && !blogIdentifier.startsWith('t:') ? new URL(`https://${blogIdentifier.includes('.') ? blogIdentifier : `${blogIdentifier}.tumblr.com`}`).href : undefined);
 
     return {
         title: `Tumblr - ${blogIdentifier} - Posts`,
         author: blog?.name,
-        link: blog?.url ?? `https://${blogIdentifier}/`,
+        link: blogLink,
         item: posts,
-        allowEmpty: true,
-        image: blog?.avatar?.slice(-1)?.url,
+        image: blog?.avatar?.at(-1)?.url,
         description: blog?.description,
     };
 }

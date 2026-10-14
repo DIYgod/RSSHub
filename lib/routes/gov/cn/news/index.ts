@@ -1,18 +1,20 @@
 import type { Cheerio } from 'cheerio';
 import { load } from 'cheerio';
 import type { Element } from 'domhandler';
+import pMap from 'p-map';
 
-import type { Route } from '@/types';
+import InvalidParameterError from '@/errors/types/invalid-parameter';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import logger from '@/utils/logger';
+import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/news/:uid',
     categories: ['government'],
-    example: '/gov/cn/news/bm',
+    example: '/gov/cn/news/yw',
     parameters: { uid: '分类名' },
     features: {
         requireConfig: false,
@@ -42,28 +44,20 @@ async function handler(ctx) {
             title = '中国政府网 - 部门政务';
             break;
         case 'yw':
-            url = `${originDomain}/yaowen/index.htm`;
-            title = '中国政府网 - 新闻要闻';
-            break;
         case 'gd':
-            // 因 /xinwen/gundong.htm 被重定向到 /yaowen/index.htm, 所以这里直接用要闻的代替了
-            url = `${originDomain}/yaowen/index.htm`;
-            title = '中国政府网 - 滚动新闻';
-            break;
+            return getLatestNews(uid, originDomain);
         case 'gwy':
             url = `${originDomain}/pushinfo/v150203/`;
             title = '中国政府网 - 国务院信息';
             break;
         case 'zhengce':
-            url = 'http://sousuo.gov.cn/s.htm?t=zhengcelibrary';
-            title = '中国政府网 - 政策文件';
-            break;
+            return getPolicyFiles();
         case 'gwyzzjg':
             url = `${originDomain}/gwyzzjg/huiyi/`;
             title = '中国政府网 - 国务院工作会议';
             break;
         default:
-            logger.error('pattern not matched');
+            throw new InvalidParameterError('uid must be bm, gd, yw, gwy, gwyzzjg, or zhengce.');
     }
     const listData = await got.get(url);
     const $ = load(listData.data);
@@ -89,7 +83,7 @@ async function handler(ctx) {
                     let fullTextGet;
                     let pubDate;
                     let author;
-                    let category;
+                    let category: string[] = [];
                     if (/dysMiddleResultConItemTitle/.test($item.html() ?? '')) {
                         if (contentUrl!.includes('content')) {
                             fullTextGet = await got.get(contentUrl);
@@ -104,9 +98,6 @@ async function handler(ctx) {
                         fullTextGet = await got.get(contentUrl);
                         fullTextData = load(fullTextGet.data);
                         const $1 = fullTextData.html();
-                        pubDate = timezone(parseDate(fullTextData('meta[name="firstpublishedtime"]').attr('content'), 'YYYY-MM-DD HH:mm:ss'), 8);
-                        author = fullTextData('meta[name="author"]').attr('content');
-                        category = fullTextData('meta[name="keywords"]').attr('content').split(/[,;]/);
                         if (/zhengceku/.test(contentUrl!)) {
                             // 政策文件库
                             description = fullTextData('.pages_content').html();
@@ -117,6 +108,14 @@ async function handler(ctx) {
                         }
                     } else {
                         description = $item.find('a').text(); // 忽略获取吹风会的全文
+                    }
+                    if (fullTextData) {
+                        const date = fullTextData('meta[name="firstpublishedtime"]').attr('content');
+                        if (date) {
+                            pubDate = timezone(parseDate(date, 'YYYY-MM-DD HH:mm:ss'), 8);
+                        }
+                        author = fullTextData('meta[name="author"]').attr('content');
+                        category = (fullTextData('meta[name="keywords"]').attr('content') ?? '').split(/[,;]/);
                     }
                     return {
                         title: $item.find('a').text(),
@@ -130,4 +129,70 @@ async function handler(ctx) {
             })
         ),
     };
+}
+
+async function getLatestNews(uid: 'yw' | 'gd', originDomain: string) {
+    const link = new URL('/yaowen/liebiao/', originDomain).href;
+    const articles = await ofetch<Array<{ TITLE: string; URL: string; DOCRELPUBTIME?: string }>>(new URL('YAOWENLIEBIAO.json', link).href);
+    // The official page displays the first 20 records from this JSON list.
+    const items = await pMap(
+        articles.slice(0, 20),
+        async (article): Promise<DataItem> => {
+            const url = new URL(article.URL, link).href;
+            const detail = await getArticle(url);
+            return {
+                ...detail,
+                title: article.TITLE,
+                link: url,
+                pubDate: detail.pubDate ?? (article.DOCRELPUBTIME ? timezone(parseDate(article.DOCRELPUBTIME), 8) : undefined),
+            };
+        },
+        { concurrency: 3 }
+    );
+    return {
+        title: `中国政府网 - ${uid === 'yw' ? '新闻要闻' : '滚动新闻'}`,
+        link,
+        item: items,
+    };
+}
+
+function getArticle(url: string) {
+    return cache.tryGet(`gov:cn:news:${url}`, async () => {
+        const response = await got(url);
+        const $ = load(response.data);
+        const date = $('meta[name="firstpublishedtime"]').attr('content');
+        return {
+            description: $('#UCAP-CONTENT, .pages_content').first().html() ?? undefined,
+            pubDate: date ? timezone(parseDate(date, ['YYYY-MM-DD-HH:mm:ss', 'YYYY-MM-DD HH:mm:ss']), 8) : undefined,
+            author: $('meta[name="author"]').attr('content'),
+            category: ($('meta[name="keywords"]').attr('content') ?? '').split(/[,;]/).filter(Boolean),
+        };
+    });
+}
+
+async function getPolicyFiles() {
+    const rootUrl = 'https://sousuo.www.gov.cn';
+    const link = new URL('/zcwjk/policyDocumentLibrary?q=&t=zhengcelibrary&orpro=', rootUrl).href;
+    const response = await ofetch<{ code: number; searchVO: { catMap: Record<string, { listVO: Array<{ title: string; url: string; pubtime?: number }> }> } }>(new URL('/search-gov/data', rootUrl).href, {
+        query: { t: 'zhengcelibrary', q: '', p: 1, n: 5, inpro: '' },
+    });
+    if (response.code !== 200 || !response.searchVO?.catMap) {
+        throw new TypeError('The official policy library did not return its document list.');
+    }
+    // The official first page displays five records from each document category.
+    const articles = Object.values(response.searchVO.catMap).flatMap((category) => category.listVO);
+    const item = await pMap(
+        articles,
+        async (article): Promise<DataItem> => {
+            const detail = await getArticle(article.url);
+            return {
+                ...detail,
+                title: article.title,
+                link: article.url,
+                pubDate: detail.pubDate ?? (article.pubtime ? parseDate(article.pubtime) : undefined),
+            };
+        },
+        { concurrency: 3 }
+    );
+    return { title: '中国政府网 - 政策文件', link, item };
 }

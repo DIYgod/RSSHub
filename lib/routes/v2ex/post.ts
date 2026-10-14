@@ -59,8 +59,17 @@ async function handler(ctx) {
             description: item.content_rendered,
             link: `${pageUrl}#r_${item.id}`,
             author: item.member.username,
-            pubDate: parseDate(item.created, 'X'),
+            pubDate: parsePublicationDate(item.created),
         })),
         allowEmpty: true,
     };
+}
+
+function parsePublicationDate(value?: number) {
+    if (typeof value !== 'number' || !Number.isFinite(value)) {
+        return;
+    }
+
+    const date = parseDate(value, 'X');
+    return Number.isFinite(date.getTime()) ? date : undefined;
 }

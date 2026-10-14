@@ -22,8 +22,16 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['www.pinterest.com/:id/:type?', 'www.pinterest.com/:id'],
-            target: '/user/:id/:type?',
+            source: ['www.pinterest.com/:username/_created'],
+            target: '/user/:username/_created',
+        },
+        {
+            source: ['www.pinterest.com/:username/_saved'],
+            target: '/user/:username/_saved',
+        },
+        {
+            source: ['www.pinterest.com/:username'],
+            target: '/user/:username',
         },
     ],
     name: 'User',

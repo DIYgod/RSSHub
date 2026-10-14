@@ -170,46 +170,41 @@ export const fetchStories = async (friendlyName: string, docId: string, variable
         : undefined;
 
     const stories: any[] = [];
-    let pageInfo = { has_next_page: true, end_cursor: null as string | null };
-    while (pageInfo.has_next_page && stories.length < limit) {
-        // oxlint-disable-next-line no-await-in-loop - depends on previous response for cursor
-        const text = (await cache.tryGet(
-            `facebook:${friendlyName}:${variables.id}:${pageInfo.end_cursor ?? ''}`,
-            () =>
-                ofetch(`${baseUrl}/api/graphql/`, {
-                    method: 'POST',
-                    headers: { 'x-fb-lsd': lsd, 'accept-language': 'en-US', ...(cookie && { cookie }) },
-                    body: new URLSearchParams({
-                        lsd,
-                        jazoest,
-                        ...(dtsg && { fb_dtsg: dtsg }),
-                        fb_api_req_friendly_name: friendlyName,
-                        variables: JSON.stringify({
-                            ...providerVariables,
-                            ...variables,
-                            count: 3,
-                            cursor: pageInfo.end_cursor,
-                            scale: 1,
-                            useDefaultActor: false,
-                        }),
-                        doc_id: docId,
+    const text = (await cache.tryGet(
+        `facebook:${friendlyName}:${variables.id}:first-page:${limit}`,
+        () =>
+            ofetch(`${baseUrl}/api/graphql/`, {
+                method: 'POST',
+                headers: { 'x-fb-lsd': lsd, 'accept-language': 'en-US', ...(cookie && { cookie }) },
+                body: new URLSearchParams({
+                    lsd,
+                    jazoest,
+                    ...(dtsg && { fb_dtsg: dtsg }),
+                    fb_api_req_friendly_name: friendlyName,
+                    variables: JSON.stringify({
+                        ...providerVariables,
+                        ...variables,
+                        count: limit,
+                        cursor: null,
+                        scale: 1,
+                        useDefaultActor: false,
                     }),
+                    doc_id: docId,
                 }),
-            pageInfo.end_cursor ? config.cache.contentExpire : config.cache.routeExpire,
-            !!pageInfo.end_cursor
-        )) as string;
+            }),
+        config.cache.routeExpire,
+        false
+    )) as string;
 
-        const lines = text.split('\n');
-        let next;
-        for (const line of lines) {
-            const data = JSON.parse(line);
-            collectStories(data, stories);
-            next ??= findPageInfo(data);
-        }
-        if (!next) {
-            throw new Error(`Facebook GraphQL failed: ${JSON.parse(lines[0]).errors?.[0]?.message ?? text}`);
-        }
-        pageInfo = next;
+    const lines = text.split('\n');
+    let pageInfo;
+    for (const line of lines) {
+        const data = JSON.parse(line);
+        collectStories(data, stories);
+        pageInfo ??= findPageInfo(data);
+    }
+    if (!pageInfo) {
+        throw new Error(`Facebook GraphQL failed: ${JSON.parse(lines[0]).errors?.[0]?.message ?? text}`);
     }
     return stories;
 };
@@ -220,7 +215,7 @@ export const storiesToItems = (stories: any[]) =>
         const own = renderStory(story);
         const shared = story.attached_story ? renderStory(story.attached_story) : undefined;
         return {
-            title: (own.text ?? shared?.text)?.split('\n', 1)[0] ?? node.actors[0].name,
+            title: own.text ?? shared?.text ?? node.actors[0].name,
             description: own.html + (shared?.html ?? ''),
             link: node.permalink_url,
             pubDate: parseDate(node.creation_time, 'X'),

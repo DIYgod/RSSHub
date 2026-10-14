@@ -72,14 +72,14 @@ async function handler() {
                 .trim()
                 .match(/Issue (\d+)/)![1];
             const date = $item.find('.row li').eq(2).text().trim();
-            const coverUrl = `${baseUrl}${$item.find('.cover-image__popup-moving-cover').attr('data-cover-src')}`;
-            const content = $('.cover-image__popup-view__caption-wrapper').html();
-            const link = $('.browse-journals__item__links a').eq(0).attr('href')!.replace('/current', '');
+            const coverUrl = new URL($item.find('.cover-image__popup-moving-cover').attr('data-cover-src')!, baseUrl).href;
+            const content = $item.find('.cover-image__popup-view__caption-wrapper').html();
+            const link = $item.find('.browse-journals__item__links a').eq(0).attr('href')!.replace('/current', '');
 
             return {
                 title: `${name} | Volume ${volume} Issue ${issue}`,
                 description: renderDescription(coverUrl, content),
-                link: `${baseUrl}/${link}/${volume}/${issue}`,
+                link: new URL(`${link}/${volume}/${issue}`, baseUrl).href,
                 pubDate: parseDate(date),
             };
         });

@@ -47,10 +47,9 @@ async function handler() {
                 const $item = $(item);
                 return {
                     title: $item.find('a').attr('title')!,
-                    description: $item.find('a').attr('title'),
                     link: 'https://itsc.nju.edu.cn' + $item.find('a').attr('href'),
                     pubDate: timezone(parseDate($item.find('.news_meta').text(), 'YYYY-MM-DD'), 8),
-                    category: category_dict[0],
+                    category: category_dict.tzgg,
                 };
             });
         })

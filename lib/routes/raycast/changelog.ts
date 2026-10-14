@@ -6,7 +6,7 @@ import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
 const handler: Route['handler'] = async () => {
-    const item = await cache.tryGet('raycast:changelog', async () => {
+    const item = await cache.tryGet('raycast:changelog:v3', async () => {
         const data = await ofetch('https://www.raycast.com/changelog');
 
         const $ = load(data);
@@ -14,17 +14,17 @@ const handler: Route['handler'] = async () => {
         return $('article')
             .toArray()
             .map<DataItem>((item) => {
-                const $ = load(item);
+                const $item = $(item);
 
-                const version = $('span[id]').attr('id');
-                const html = $('div.markdown').html();
-                const date = $('span[class^=ChangelogEntry_changelogDate]').text();
+                const version = $item.find('span[id]').attr('id');
+                const html = $item.find('div.markdown').html();
+                const date = $item.find('span[class*=changelogDate]').text();
 
                 return {
                     title: `Version ${version}`,
                     description: html,
-                    link: `https://www.raycast.com/changelog/${version?.replaceAll('.', '-')}`,
-                    pubDate: parseDate(date),
+                    link: new URL($item.find('a[href^="/changelog/"]').first().attr('href')!, 'https://www.raycast.com').href,
+                    pubDate: date ? parseDate(`${date} +0000`, 'MMMM D, YYYY ZZ') : undefined,
                 };
             });
     });

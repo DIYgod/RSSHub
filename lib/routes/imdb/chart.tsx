@@ -47,11 +47,10 @@ export const route: Route = {
         },
     },
     example: '/imdb/chart',
-    radar: [
-        {
-            source: ['www.imdb.com/chart/:chart/'],
-        },
-    ],
+    radar: ['top', 'moviemeter', 'toptv', 'tvmeter'].map((chart) => ({
+        source: [`www.imdb.com/chart/${chart}/`],
+        target: `/chart/${chart}`,
+    })),
     name: 'Charts',
     maintainers: ['TonyRL'],
     handler,
@@ -63,12 +62,19 @@ export const route: Route = {
 
 async function handler(ctx: Context) {
     const { chart = 'top' } = ctx.req.param();
+    if (!['top', 'moviemeter', 'toptv', 'tvmeter'].includes(chart)) {
+        throw new Error('Invalid chart. Supported values: top, moviemeter, toptv, tvmeter.');
+    }
     const baseUrl = 'https://www.imdb.com';
     const link = `${baseUrl}/chart/${chart}/`;
 
     const response = await ofetch(link);
     const $ = load(response);
-    const nextData = JSON.parse($('script#__NEXT_DATA__').text());
+    const nextDataText = $('script#__NEXT_DATA__').text();
+    if (!nextDataText) {
+        throw new Error('IMDb did not return chart data (__NEXT_DATA__). Check whether the source is serving a verification page.');
+    }
+    const nextData = JSON.parse(nextDataText);
     const chartTitles: ChartTitleSearchConnection = nextData.props.pageProps.pageData.chartTitles;
 
     const items = chartTitles.edges.map(({ currentRank, node }) => ({

@@ -1,9 +1,9 @@
 import { load } from 'cheerio';
 
-import type { DataItem, Route } from '@/types';
-import cache from '@/utils/cache';
+import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+
+import { parseItems, parseList } from './utils';
 
 export const route: Route = {
     path: '/new',
@@ -41,43 +41,7 @@ async function handler() {
 
     const $ = load(response.data);
 
-    const list = $('.b-46t')
-        .toArray()
-        .map((item): DataItem => {
-            const $item = $(item);
-
-            const a = $item.find('.p-48y');
-
-            return {
-                title: a.text(),
-                link: a.attr('href'),
-                category: $item.nextAll().eq(3).text().replaceAll(/\(|\)/g, '').trim(),
-                pubDate: parseDate($item.nextAll().eq(4).text().trim(), 'MM/DD/YY'),
-                author: $item
-                    .nextAll()
-                    .eq(2)
-                    .text()
-                    .replace(/Submitted by/, '')
-                    .trim(),
-            };
-        });
-
-    const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link!, async () => {
-                const detailResponse = await got({
-                    method: 'get',
-                    url: item.link,
-                });
-
-                const content = load(detailResponse.data);
-
-                item.description = content('.aa_ht').html();
-
-                return item;
-            })
-        )
-    );
+    const items = await parseItems(parseList($, currentUrl));
 
     return {
         title: $('title').text(),

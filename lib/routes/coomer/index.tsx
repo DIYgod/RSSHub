@@ -5,8 +5,18 @@ import { config } from '@/config';
 import type { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
+
+import { getCoomerMediaUrl } from './utils';
 
 const headers = { Accept: 'text/css' };
+const mediaTypes = {
+    m4a: 'audio/mp4',
+    mp3: 'audio/mpeg',
+    ogg: 'audio/ogg',
+    mp4: 'video/mp4',
+    webm: 'video/webm',
+};
 
 export const route: Route = {
     path: '/:source?/:id?',
@@ -48,7 +58,7 @@ There is an optinal parameter **limit** which controls the number of posts to fe
 };
 
 async function handler(ctx) {
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 25;
+    const limit = getRouteLimit(ctx, 25);
     const source = ctx.req.param('source') ?? 'posts';
     const id = ctx.req.param('id');
     const isPosts = source === 'posts';
@@ -70,7 +80,7 @@ async function handler(ctx) {
     const image = isPosts ? `${rootUrl}/favicon.ico` : `${assetsUrl}/icons/${source}/${id}`;
     const items = responseData
         .filter((i) => i.content || i.attachments)
-        .slice(0, limit)
+        .slice(0, Math.max(25, limit))
         .map((i) => {
             i.files = [];
             if ('path' in i.file) {
@@ -88,6 +98,7 @@ async function handler(ctx) {
                 });
             }
             const filesHTML = renderSource(i);
+            const pubDate = i.published ? parseDate(i.published) : undefined;
             let $ = load(filesHTML);
             const coomerFiles = $('img, a, audio, video').map((_, el) => $(el).prop('outerHTML')!);
             let desc = '';
@@ -115,14 +126,9 @@ async function handler(ctx) {
             let enclosureInfo = {};
             load(desc)('audio source, video source').each((_, el) => {
                 const src = $(el).attr('src') ?? '';
-                const mimeType =
-                    {
-                        m4a: 'audio/mp4',
-                        mp3: 'audio/mpeg',
-                        mp4: 'video/mp4',
-                    }[src.replace(/.*\./, '').toLowerCase()] || null;
+                const mimeType = mediaTypes[src.replace(/.*\./, '').toLowerCase()];
 
-                if (mimeType === null) {
+                if (!mimeType) {
                     return;
                 }
 
@@ -133,10 +139,10 @@ async function handler(ctx) {
             });
 
             return {
-                title: i.title || parseDate(i.published),
+                title: i.title || pubDate?.toString() || 'Untitled Post',
                 description: desc,
                 author,
-                pubDate: parseDate(i.published),
+                pubDate,
                 guid: `coomer:${i.service}:${i.user}:post:${i.id}`,
                 link: `${rootUrl}/${i.service}/user/${i.user}/post/${i.id}`,
                 ...enclosureInfo,
@@ -155,7 +161,7 @@ const renderSource = (item): string =>
     renderToString(
         <>
             {item.files?.map((file, index) => {
-                const mediaUrl = `${config.coomer.assetsUrl}${file.path}`;
+                const mediaUrl = config.coomer.assetsUrl === 'https://img.coomer.st' ? getCoomerMediaUrl(file.path, config.coomer.rootUrl) : `${config.coomer.assetsUrl}${file.path}`;
                 if (['jpg', 'png', 'webp', 'jpeg', 'jfif'].includes(file.extension)) {
                     return <img key={`image-${index}`} src={mediaUrl} />;
                 }
@@ -163,7 +169,7 @@ const renderSource = (item): string =>
                 if (['m4a', 'mp3', 'ogg'].includes(file.extension)) {
                     return (
                         <audio key={`audio-${index}`} controls>
-                            <source src={mediaUrl} type={`audio/${file.extention}`} />
+                            <source src={mediaUrl} type={mediaTypes[file.extension]} />
                         </audio>
                     );
                 }
@@ -171,7 +177,7 @@ const renderSource = (item): string =>
                 if (['mp4', 'webm'].includes(file.extension)) {
                     return (
                         <video key={`video-${index}`} controls>
-                            <source src={mediaUrl} type={`video/${file.extention}`} />
+                            <source src={mediaUrl} type={mediaTypes[file.extension]} />
                         </video>
                     );
                 }

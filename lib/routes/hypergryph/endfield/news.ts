@@ -18,13 +18,18 @@ type NewsItem = {
     brief: string;
 };
 
+const parsePublicationDate = (value: number) => {
+    const date = Number.isFinite(value) && value > 0 ? parseDate(value, 'X') : undefined;
+    return date && Number.isFinite(date.getTime()) ? date : undefined;
+};
+
 const parseList = (list: NewsItem[]) =>
     list.map((item) => ({
         title: item.title,
         author: item.author,
         description: item.brief.trim().replaceAll('\n', '<br>'),
         link: `https://endfield.hypergryph.com/news/${item.cid}`,
-        pubDate: parseDate(item.displayTime, 'X'),
+        pubDate: parsePublicationDate(item.displayTime),
     }));
 
 export const route: Route = {

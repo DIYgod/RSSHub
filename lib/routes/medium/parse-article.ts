@@ -3,6 +3,7 @@ import { load } from 'cheerio';
 import { config } from '@/config';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
+import { parseDate } from '@/utils/parse-date';
 
 async function parse(url, cookie = '') {
     const { data } = await got(url, {
@@ -28,13 +29,6 @@ async function parse(url, cookie = '') {
     // get subtitle and remove author actions
     const subtitle = article.find('.pw-subtitle-paragraph');
     const subtitleText = subtitle.text();
-    if (subtitle.length === 0) {
-        // no subtitle
-        article.find('.pw-post-body-paragraph').siblings().first().remove();
-    } else {
-        // preserve subtitle in html
-        subtitle.siblings().remove();
-    }
 
     return {
         title: titleText,
@@ -55,7 +49,7 @@ export default function parseArticle(ctx, url) {
             author,
             link: url,
             description: html,
-            pubDate: publishedTime,
+            pubDate: publishedTime ? parseDate(publishedTime) : undefined,
         };
     });
 }

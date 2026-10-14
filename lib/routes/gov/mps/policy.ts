@@ -6,6 +6,7 @@ import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import { parseDate } from '@/utils/parse-date';
 import { getPlaywrightPage, type Page } from '@/utils/playwright';
+import { getRouteLimit } from '@/utils/route-limit';
 import timezone from '@/utils/timezone';
 
 const baseUrl = 'https://www.mps.gov.cn';
@@ -65,17 +66,19 @@ async function handler(ctx) {
         await page.waitForSelector('.list li a');
         const response = await page.content();
         const $ = load(response);
-        const requestedLimit = Number.parseInt(ctx.req.query('limit') ?? '');
+        const requestedLimit = getRouteLimit(ctx, 20);
+        const candidateLimit = ctx.req.query('sorted') === 'false' ? requestedLimit : Math.max(20, requestedLimit);
         const items = $('.list li')
             .toArray()
-            .slice(0, requestedLimit > 0 ? requestedLimit : 20)
+            .slice(0, candidateLimit)
             .map((element): DataItem => {
                 const row = $(element);
                 const anchor = row.find('a[href]');
+                const publishedDate = row.find('span').text();
                 return {
                     title: anchor.text(),
                     link: new URL(anchor.attr('href')!, link).href,
-                    pubDate: timezone(parseDate(row.find('span').text(), 'YYYY-MM-DD'), 8),
+                    pubDate: publishedDate ? timezone(parseDate(publishedDate, 'YYYY-MM-DD'), 8) : undefined,
                 };
             });
         return { title: `${name} - 中华人民共和国公安部`, link, language: 'zh-CN' as const, item: await pMap(items, (item) => getItem(item, page), { concurrency: 1 }) };

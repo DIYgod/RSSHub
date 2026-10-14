@@ -6,6 +6,7 @@ import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import { parseDate } from '@/utils/parse-date';
 import { getPlaywrightPage, type Page } from '@/utils/playwright';
+import { getRouteLimit } from '@/utils/route-limit';
 
 const baseUrl = 'https://ifs.org.uk';
 const sections = {
@@ -31,32 +32,39 @@ export const route: Route = {
     handler,
 };
 
-function getItem(item: DataItem, page: Page) {
-    return cache.tryGet(item.link!, async () => {
+function parseCalendarDate(value: string) {
+    const date = value.trim() ? parseDate(value.trim(), 'D MMMM YYYY', true) : undefined;
+    return date && Number.isFinite(date.getTime()) ? new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate())) : undefined;
+}
+
+async function getItem(item: DataItem, page: Page) {
+    const detail = await cache.tryGet(`ifs:article-detail:${item.link}`, async () => {
         await page.goto(item.link!, { waitUntil: 'domcontentloaded' });
         await page.waitForSelector('main .c-single-header');
         const response = await page.content();
         const $ = load(response);
         const content = $('main .c-text-block__container.js-wysiwyg');
         content.find('script, style, button').remove();
-        item.description = content
+        const description = content
             .toArray()
             .map((element) => $(element).html())
             .join('');
-        item.author = $('.c-single-header a[href^="/people/"]')
+        const author = $('.c-single-header a[href^="/people/"]')
             .toArray()
             .map((element) => $(element).text())
             .join(', ');
-        item.category = $('.c-single-header .o-tag')
+        const category = $('.c-single-header .o-tag')
             .toArray()
             .map((element) => $(element).text());
+        const detail: Pick<DataItem, 'description' | 'author' | 'category' | 'enclosure_url' | 'enclosure_type'> = { description, author, category };
         const pdf = $('main .c-download-block a[href$=".pdf"]').first().attr('href');
         if (pdf) {
-            item.enclosure_url = new URL(pdf, baseUrl).href;
-            item.enclosure_type = 'application/pdf';
+            detail.enclosure_url = new URL(pdf, baseUrl).href;
+            detail.enclosure_type = 'application/pdf';
         }
-        return item;
+        return detail;
     });
+    return { ...item, ...detail };
 }
 
 async function handler(ctx) {
@@ -75,10 +83,10 @@ async function handler(ctx) {
         await page.waitForSelector('main article .c-card__title-link');
         const response = await page.content();
         const $ = load(response);
-        const requestedLimit = Number.parseInt(ctx.req.query('limit') ?? '');
+        const limit = getRouteLimit(ctx, 20);
         const items = $('main article.c-card')
             .toArray()
-            .slice(0, requestedLimit > 0 ? requestedLimit : 20)
+            .slice(0, limit)
             .map((element): DataItem => {
                 const card = $(element);
                 const title = card.find('.c-card__title-link');
@@ -86,7 +94,7 @@ async function handler(ctx) {
                 return {
                     title: title.text(),
                     link: new URL(title.attr('href')!, baseUrl).href,
-                    pubDate: date ? parseDate(date, 'D MMMM YYYY') : undefined,
+                    pubDate: parseCalendarDate(date),
                 };
             });
         return { title: `IFS - ${$('main h1').first().text()}`, link, language: 'en' as const, item: await pMap(items, (item) => getItem(item, page), { concurrency: 1 }) };

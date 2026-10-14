@@ -1,3 +1,5 @@
+import pMap from 'p-map';
+
 import type { Data, DataItem, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
@@ -33,13 +35,14 @@ export const route: Route = {
 };
 
 const getDataItems = (list: CrowdfundingListItem[]): Promise<DataItem[]> =>
-    Promise.all(
-        list.map((listItem) =>
+    pMap(
+        list,
+        (listItem) =>
             cache.tryGet(`mi:crowdfunding:dataitem:${listItem.project_id}`, async () => {
                 const detailItem = await utils.getCrowdfundingItem(listItem);
                 return getDataItem(listItem, detailItem);
-            })
-        )
+            }),
+        { concurrency: 6 }
     );
 
 const getDataItem = (listItem: CrowdfundingListItem, detailItem: CrowdfundingDetailItem): DataItem => ({

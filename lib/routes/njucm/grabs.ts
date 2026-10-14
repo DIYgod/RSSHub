@@ -20,20 +20,20 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['lib.njucm.edu.cn/2899/list.htm', 'lib.njucm.edu.cn/'],
+            source: ['gra.njucm.edu.cn/2899/list.htm', 'gra.njucm.edu.cn/'],
         },
     ],
     name: '研究生院博士招生',
     maintainers: ['real-jiakai'],
     handler,
-    url: 'lib.njucm.edu.cn/2899/list.htm',
+    url: 'gra.njucm.edu.cn/2899/list.htm',
 };
 
 async function handler(ctx) {
-    const out = await getNoticeList(ctx, url, host, '#wp_news_w3 > table > tbody > tr', 'a', {
-        title: '.Article_Title',
-        content: '.Article_Content',
-        date: '.Article_PublishDate',
+    const out = await getNoticeList(ctx, url, host, '.news_list li.news', 'a', {
+        title: '.arti_title',
+        content: '.wp_articlecontent',
+        date: '.arti_update',
     });
 
     return {

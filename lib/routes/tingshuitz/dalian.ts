@@ -38,10 +38,10 @@ async function handler() {
         .toArray()
         .map((item) => {
             const $item = $(item);
+            const publishedDate = $item.find('span').text();
             return {
-                title: $item.find('a').text().trim(),
-                description: `大连市停水通知：${$item.find('a').text().trim()}`,
-                pubDate: parseDate($item.find('span').text(), 'YYYY-MM-DD'),
+                title: $item.find('a').text(),
+                pubDate: publishedDate.trim() ? parseDate(publishedDate, 'YYYY-MM-DD') : undefined,
                 link: $item.find('a').attr('href'),
             };
         });

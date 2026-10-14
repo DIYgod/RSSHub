@@ -1,12 +1,22 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
+import { getRouteLimit } from '@/utils/route-limit';
 
 import { renderDescription } from './templates/description';
+
+interface SourceReport {
+    id: number;
+    title: string;
+    img_url?: string;
+    author?: string;
+    channel_name: string;
+    release_time?: string;
+}
 
 export const route: Route = {
     path: '/lc_report/:id?',
@@ -52,7 +62,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { id = 'Report' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 11;
+    const limit = getRouteLimit(ctx, 11);
 
     const rootUrl = 'https://www.logclub.com';
     const currentUrl = new URL('lc_report', rootUrl).href;
@@ -64,7 +74,8 @@ async function handler(ctx) {
         },
     });
 
-    let items = response.list.slice(0, limit).map((item) => ({
+    const reports: SourceReport[] = response.list;
+    let items = reports.slice(0, limit).map((item) => ({
         title: item.title,
         link: new URL(`front/lc_report/get_report_info/${item.id}`, rootUrl).href,
         description: renderDescription({
@@ -76,48 +87,51 @@ async function handler(ctx) {
         author: item.author,
         category: [item.channel_name],
         guid: `logclub-report-${item.id}`,
-        pubDate: timezone(parseDate(item.release_time), 8),
+        pubDate: item.release_time ? parseDateInTimezone(item.release_time, 8) : undefined,
     }));
 
-    items = await Promise.all(
-        items.map((item) =>
-            cache.tryGet(item.link, async () => {
-                const { data: detailResponse } = await got(item.link);
+    items = await pMap(
+        items,
+        async (item) => {
+            const detailResponse = await cache.tryGet(`logclub:html:${item.link}`, async () => {
+                const { data } = await got(item.link);
+                return data;
+            });
 
-                const content = load(detailResponse);
+            const content = load(detailResponse);
 
-                content('img').each((_, el) => {
-                    const $el = content(el);
-                    $el.replaceWith(
-                        renderDescription({
-                            image: {
-                                src: $el.prop('src')?.split(/\?/, 1)[0] ?? undefined,
-                                alt: $el.prop('title'),
-                            },
-                        })
-                    );
-                });
+            content('img').each((_, el) => {
+                const $el = content(el);
+                $el.replaceWith(
+                    renderDescription({
+                        image: {
+                            src: $el.prop('src')?.split(/\?/, 1)[0] ?? undefined,
+                            alt: $el.prop('title'),
+                        },
+                    })
+                );
+            });
 
-                item.title = content('h1').first().text();
-                item.description += renderDescription({
-                    description: content('div.article-cont').html() ?? undefined,
-                });
-                item.author = content('div.lc-infos a')
-                    .toArray()
-                    .map((a) => content(a).text())
-                    .join('/');
-                item.category = [
-                    ...new Set([
-                        ...(item.category ?? []),
-                        ...content('div.article-label-r a.label')
-                            .toArray()
-                            .map((c) => content(c).text()),
-                    ]),
-                ].filter(Boolean);
+            item.title = content('h1').first().text();
+            item.description += renderDescription({
+                description: content('div.article-cont').html() ?? undefined,
+            });
+            item.author = content('div.lc-infos a')
+                .toArray()
+                .map((a) => content(a).text())
+                .join('/');
+            item.category = [
+                ...new Set([
+                    ...(item.category ?? []),
+                    ...content('div.article-label-r a.label')
+                        .toArray()
+                        .map((c) => content(c).text()),
+                ]),
+            ].filter(Boolean);
 
-                return item;
-            })
-        )
+            return item;
+        },
+        { concurrency: 3 }
     );
 
     const { data: currentResponse } = await got(currentUrl);

@@ -1,6 +1,7 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
-import type { Data, DataItem } from '@/types';
+import type { Data } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 
@@ -22,36 +23,37 @@ export const fetchFeed = async (limit: number): Promise<Data> => {
 
     const $ = load(data, { xml: true });
 
-    const items = await Promise.all(
-        $('entry')
-            .toArray()
-            .slice(0, limit)
-            .map((entry) => {
-                const title = $(entry).find('title').text();
-                const id = $(entry).find('id').text();
-                const url = $(entry).find('link[href]').attr('href');
-                const imageUrl = $(entry).find('link[rel="enclosure"]').attr('href');
+    const entries = $('entry').toArray().slice(0, limit);
+    const items = await pMap(
+        entries,
+        async (entry) => {
+            const title = $(entry).find('title').text();
+            const id = $(entry).find('id').text();
+            const url = $(entry).find('link[href]').attr('href');
+            const imageUrl = $(entry).find('link[rel="enclosure"]').attr('href');
 
-                if (url === undefined) {
-                    throw new Error(`No article URL found for article with id ${id}`);
-                }
+            if (url === undefined) {
+                throw new Error(`No article URL found for article with id ${id}`);
+            }
 
-                return cache.tryGet(`tailwindcss:${id}`, async (): Promise<DataItem> => ({
-                    title,
-                    link: url,
-                    image: imageUrl,
-                    description: await fetchArticleContent(url),
-                    author: $(entry)
-                        .find('author')
-                        .toArray()
-                        .map((el) => ({
-                            name: $(el).find('name').text(),
-                            url: $(el).find('url').text(),
-                        })),
-                    pubDate: $(entry).find('updated').text(),
-                    guid: $(entry).find('id').text(),
-                }));
-            })
+            const description = await cache.tryGet(`tailwindcss:${id}:body:v2`, () => fetchArticleContent(url));
+            return {
+                title,
+                link: url,
+                image: imageUrl,
+                description,
+                author: $(entry)
+                    .find('author')
+                    .toArray()
+                    .map((el) => ({
+                        name: $(el).find('name').text(),
+                        url: $(el).find('uri').text(),
+                    })),
+                pubDate: $(entry).find('updated').text(),
+                guid: $(entry).find('id').text(),
+            };
+        },
+        { concurrency: 3 }
     );
 
     return {

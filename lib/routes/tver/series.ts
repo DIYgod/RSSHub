@@ -1,9 +1,10 @@
 import type { Context } from 'hono';
+import pMap from 'p-map';
 
 import type { Data, DataItem, Route } from '@/types';
+import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/series/:id',
@@ -22,7 +23,6 @@ export const route: Route = {
     maintainers: ['yuikisaito'],
     handler,
 };
-
 const commonHeaders = {
     Accept: '*/*',
     'Accept-Language': 'ja,en-US;q=0.7,en;q=0.3',
@@ -33,10 +33,35 @@ const commonHeaders = {
     'Sec-Fetch-Mode': 'cors',
     'Sec-Fetch-Site': 'same-site',
 };
-
+interface EpisodeDetails {
+    description?: string;
+    viewStatus?: {
+        startAt?: number;
+    };
+}
+interface SeriesEpisodes {
+    result: {
+        contents?: Array<{
+            contents: Array<{
+                type: string;
+                content: {
+                    id: string;
+                    title: string;
+                    version?: number;
+                };
+            }>;
+        }>;
+    };
+}
+function getPublicationDate(startAt: number | undefined) {
+    if (typeof startAt !== 'number' || !Number.isFinite(startAt) || startAt <= 0) {
+        return;
+    }
+    const date = parseDate(startAt, 'X');
+    return Number.isFinite(date.getTime()) ? date : undefined;
+}
 async function handler(ctx: Context): Promise<Data> {
     const { id } = ctx.req.param();
-
     const browserRequest = {
         method: 'POST',
         body: 'device_type=pc',
@@ -48,11 +73,8 @@ async function handler(ctx: Context): Promise<Data> {
         credentials: 'omit',
         mode: 'cors',
     } as const;
-
     const { result: browser } = await ofetch('https://platform-api.tver.jp/v2/api/platform_users/browser/create', browserRequest);
-
-    const { platform_uid, platform_token } = browser;
-
+    const { platform_uid: platformUid, platform_token: platformToken } = browser;
     const seriesRequest = {
         method: 'GET',
         headers: commonHeaders,
@@ -60,9 +82,7 @@ async function handler(ctx: Context): Promise<Data> {
         credentials: 'omit',
         mode: 'cors',
     } as const;
-
     const { title, description, broadcastProvider } = await ofetch(`https://statics.tver.jp/content/series/${id}.json`, seriesRequest);
-
     const episodesRequest = {
         method: 'GET',
         headers: {
@@ -73,24 +93,21 @@ async function handler(ctx: Context): Promise<Data> {
         credentials: 'omit',
         mode: 'cors',
     } as const;
-
-    const { result } = await ofetch(`https://platform-api.tver.jp/service/api/v1/callSeriesEpisodes/${id}?platform_uid=${platform_uid}&platform_token=${platform_token}`, episodesRequest);
-
-    const items: DataItem[] = (result.contents?.[0]?.contents ?? [])
-        .filter((i) => i.type === 'episode')
-        .map((i) => {
-            const rawPubDate = i.content.broadcastDateLabel;
-            const cleanedPubDate = rawPubDate.replaceAll(/\(.*?\)|放送分/g, '').trim();
-            const parsedPubDate = timezone(parseDate(cleanedPubDate, 'M月D日'), 9).toDateString();
-
+    const { result } = await ofetch<SeriesEpisodes>(`https://platform-api.tver.jp/service/api/v1/callSeriesEpisodes/${id}?platform_uid=${platformUid}&platform_token=${platformToken}`, episodesRequest);
+    const items: DataItem[] = await pMap(
+        (result.contents?.[0]?.contents ?? []).filter((i) => i.type === 'episode'),
+        async (i) => {
+            const episode = await cache.tryGet<EpisodeDetails>(`tver:episode:${i.content.id}:${i.content.version ?? ''}`, () => ofetch(`https://statics.tver.jp/content/episode/${i.content.id}.json`, seriesRequest));
             return {
                 title: i.content.title,
                 link: `https://tver.jp/episodes/${i.content.id}`,
                 image: `https://statics.tver.jp/images/content/thumbnail/episode/xlarge/${i.content.id}.jpg`,
-                pubDate: parsedPubDate,
+                description: episode.description,
+                pubDate: getPublicationDate(episode.viewStatus?.startAt),
             };
-        });
-
+        },
+        { concurrency: 3 }
+    );
     return {
         title: 'TVer - ' + title,
         description,

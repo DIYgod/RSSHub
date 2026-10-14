@@ -4,6 +4,7 @@ import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 import timezone from '@/utils/timezone';
 
 export const route: Route = {
@@ -15,13 +16,13 @@ export const route: Route = {
     handler,
 };
 
-async function handler(): Promise<Data> {
+async function handler(ctx): Promise<Data> {
     const baseUrl = 'https://yjsy.cpu.edu.cn';
     const url = `${baseUrl}/6335/list.htm`;
     const response = await ofetch(url);
     const $ = load(response);
 
-    const list: DataItem[] = $('ul.news_list li.news')
+    let list: DataItem[] = $('ul.news_list li.news')
         .slice(0, 10)
         .toArray()
         .map((item) => {
@@ -33,6 +34,14 @@ async function handler(): Promise<Data> {
                 pubDate: timezone(parseDate($item.find('.news_meta').text(), 'YYYY-MM-DD'), 8),
             };
         });
+
+    const limit = getRouteLimit(ctx);
+    if (limit !== undefined) {
+        if (ctx.req.query('sorted') !== 'false') {
+            list.sort((a, b) => Number(b.pubDate) - Number(a.pubDate));
+        }
+        list = list.slice(0, limit);
+    }
 
     const resultItem = await Promise.all(
         list.map((item) =>

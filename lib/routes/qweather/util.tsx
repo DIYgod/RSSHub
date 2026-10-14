@@ -21,10 +21,12 @@ interface WeatherForecastItem {
     sunrise: string;
     sunset: string;
     moonPhase: string;
+    moonrise?: string | null;
     moonset: string;
 }
 
 interface NowItem {
+    obsTime?: string;
     text: string;
     temp: number;
     feelsLike: number;
@@ -62,7 +64,7 @@ const WeatherForecast = ({ item }: { item: WeatherForecastItem }) => (
         <br />
         日出：{item.sunrise} 日落： {item.sunset}
         <br />
-        月相：{item.moonPhase} 月出：{item.sunrise} 月落：{item.moonset}
+        月相：{item.moonPhase} 月出：{item.moonrise} 月落：{item.moonset}
     </p>
 );
 

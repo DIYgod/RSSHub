@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
@@ -25,34 +26,47 @@ async function handler() {
         .map((item): DataItem => {
             const $item = $(item);
             const a = $item.find('a.news-title');
+            const date = $item.find('.news-date').text();
             return {
                 title: a.text(),
                 link: a.attr('href'),
-                pubDate: parseDate($item.find('.news-date').text()),
+                pubDate: date ? parseDate(`${date} +0000`, 'MMMM DD, YYYY ZZ') : undefined,
             };
         });
 
     return {
         title: 'Simons Foundation | Articles',
         link: url,
-        item: await Promise.all(
-            list.map((item) =>
-                cache.tryGet(item.link!, async () => {
+        item: await pMap(
+            list,
+            async (item) => {
+                const details = await cache.tryGet(`simonsfoundation:article:v4:${item.link}`, async () => {
                     const response = await ofetch(item.link!);
                     const capture = load(response);
+                    const published = capture('meta[property="article:published_time"]').attr('content');
 
                     const banner = capture('div.o-page-header__hero').html();
-                    item.author = capture('.m-meta__inherit').text();
+                    const author =
+                        capture('.m-meta')
+                            .first()
+                            .children('span')
+                            .first()
+                            .text()
+                            .replace(/^By\s+/, '') || undefined;
 
                     capture('.m-block-info__animation').remove();
                     capture('.o-blocks__left').remove();
                     capture('.m-tags').remove();
 
-                    item.description = banner === null ? capture('.o-blocks').html() : banner + capture('.o-blocks').html();
-
-                    return item;
-                })
-            )
+                    return {
+                        pubDate: published ? parseDate(published) : undefined,
+                        author,
+                        description: banner === null ? capture('.o-blocks').html() : banner + capture('.o-blocks').html(),
+                    };
+                });
+                return { ...item, ...details, pubDate: details.pubDate ?? item.pubDate };
+            },
+            { concurrency: 3 }
         ),
     };
 }

@@ -20,7 +20,8 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const limit = Number(ctx.req.query('limit') || 12);
+    const requestedLimit = Number(ctx.req.query('limit'));
+    const limit = Number.isSafeInteger(requestedLimit) && requestedLimit > 0 ? requestedLimit : 12;
     const link = 'https://ai.meta.com/blog/';
 
     const res = await ofetch(link, {

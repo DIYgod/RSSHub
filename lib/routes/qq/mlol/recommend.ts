@@ -1,10 +1,19 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
+
+interface FeedInfo {
+    feedNews: {
+        body: { title: string; imgUrl: string; comCreateDate: string; commentID: string; nickName: string };
+        footer: { source: string; zoneGameId: string };
+    };
+    feedBase: { intent: string };
+}
 
 export const route: Route = {
     path: '/mlol/recommend',
@@ -16,10 +25,11 @@ export const route: Route = {
 };
 
 async function handler() {
-    const response = await ofetch('https://mlol.qt.qq.com/go/mlol_news/recommend_feeds');
+    const response = await ofetch<{ data: { feedsInfo: FeedInfo[] } }>('https://mlol.qt.qq.com/go/mlol_news/recommend_feeds');
 
-    const items = await Promise.all(
-        response.data.feedsInfo.map((feed) => {
+    const items = await pMap(
+        response.data.feedsInfo,
+        (feed) => {
             const body = feed.feedNews.body;
             const link = `https://mlol.qt.qq.com/go/mlol_news/varcache_article?docid=${body.commentID}&gameid=${feed.feedNews.footer.zoneGameId}`;
             const item = {
@@ -40,7 +50,8 @@ async function handler() {
                 item.description = $('.article_content').html() ?? item.description;
                 return item;
             });
-        })
+        },
+        { concurrency: 3 }
     );
 
     return {

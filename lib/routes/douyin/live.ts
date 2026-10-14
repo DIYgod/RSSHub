@@ -108,9 +108,10 @@ async function getEnterResponse(page: Page) {
 
 async function getBrowserRoomData(pageUrl: string) {
     const { page, destroy } = await getPlaywrightPage(pageUrl, { noGoto: true, closeTimeout: 0 });
+    let enterResponse: ReturnType<typeof getEnterResponse> | undefined;
     try {
         await page.route('**/*', (route) => (resourceTypes.has(route.request().resourceType()) ? route.continue() : route.abort()));
-        const enterResponse = getEnterResponse(page);
+        enterResponse = getEnterResponse(page);
         logger.http(`Requesting ${pageUrl}`);
         await page.goto(pageUrl, { waitUntil: 'domcontentloaded' });
         const streamedData = parseRoomHtml(await page.content());
@@ -128,7 +129,12 @@ async function getBrowserRoomData(pageUrl: string) {
         }
         return data;
     } finally {
-        await destroy();
+        try {
+            await destroy();
+        } finally {
+            // Settle the response reader even when streamed HTML or navigation ends first.
+            await enterResponse;
+        }
     }
 }
 
@@ -178,7 +184,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const rid = ctx.req.param('rid');
-    if (!/^\d+$/.test(rid)) {
+    if (!/^[1-9]\d*$/.test(rid)) {
         throw new InvalidParameterError('Invalid room ID. Room ID should be a number.');
     }
 

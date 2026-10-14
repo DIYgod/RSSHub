@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
@@ -24,24 +25,30 @@ async function handler() {
         .map((item): DataItem & { link: string } => {
             const $item = $(item);
             return {
-                title: $item.text().trim(),
+                title: $item.text(),
                 link: new URL($item.attr('href')!, rootUrl).href,
             };
         });
 
-    const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link, async () => {
+    const items = await pMap(
+        list,
+        async (item) => {
+            const details = await cache.tryGet(`${item.link}:article-with-tags`, async () => {
                 const res = await ofetch(item.link);
                 const content = load(res);
                 const publishedTime = content('meta[property="article:published_time"]').attr('content');
-                if (publishedTime) {
-                    item.pubDate = parseDate(publishedTime, 'ddd, MM/DD/YYYY - HH:mm');
-                }
-                item.description = content('.node__content').html();
-                return item;
-            })
-        )
+                const category = content('.content-field_category .field__item')
+                    .toArray()
+                    .map((element) => content(element).text());
+                content('.node__content .content-field_category').remove();
+                const pubDate = publishedTime ? parseDate(publishedTime, 'ddd, MM/DD/YYYY - HH:mm') : undefined;
+                content('.node__content .breadcrumb, .node__content .node--view-mode-node-page-title, .node__content .resource-content-citation > time, .node__content .content-social-share-button-field').remove();
+                const description = content('.node__content').html();
+                return { description, pubDate, category };
+            });
+            return { ...item, ...details };
+        },
+        { concurrency: 3 }
     );
 
     return {

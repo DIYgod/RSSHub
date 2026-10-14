@@ -10,7 +10,6 @@ import { baseUrl, ProcessItems } from './util';
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { id = '0', pushed = '0' } = ctx.req.param();
-    const limit = Number(ctx.req.query('limit') ?? '20');
 
     const targetUrl: string = new URL('article', baseUrl).href;
     const apiUrl: string = new URL(`article/getList/${id}`, baseUrl).href;
@@ -26,7 +25,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
         },
     });
 
-    const items: DataItem[] = await ProcessItems(limit, response.data.dataList);
+    const items: DataItem[] = await ProcessItems(ctx, 20, response.data.dataList);
 
     const title: string | undefined = $(`div[data_cid="${id}"]`).text();
 
@@ -35,7 +34,6 @@ export const handler = async (ctx: Context): Promise<Data> => {
         description: $('meta[name="description"]').attr('content'),
         link: targetUrl,
         item: items,
-        allowEmpty: true,
         author: $('meta[name="keywords"]').attr('content')?.split(/,/, 1)[0] ?? undefined,
         language,
         id: targetUrl,

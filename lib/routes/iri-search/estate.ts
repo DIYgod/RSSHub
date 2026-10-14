@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { ListingExtra } from '@/routes/temposmart/utils';
 import { clean, normalizeFloor, parseArea, parseCondition, parseJpy, parseMonths, parseWalkMin, parseWard, parseYmd, summarize, tsuboUnit } from '@/routes/temposmart/utils';
@@ -6,6 +7,7 @@ import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 import timezone from '@/utils/timezone';
 
 const HOST = 'https://www.iri-search.net';
@@ -175,7 +177,9 @@ const mergeDetail = (base: ListingExtra, d: DetailFields): ListingExtra => ({
 });
 
 const enrich = async (card: ListCard): Promise<ListingExtra> => {
-    const html = await ofetch(card.link);
+    const detailUrl = new URL(card.link);
+    detailUrl.protocol = 'http:';
+    const html = await ofetch(detailUrl.href);
     return mergeDetail(card.extra, parseDetail(html));
 };
 
@@ -186,7 +190,7 @@ export const handler = async (ctx): Promise<Data> => {
     if (area !== undefined && !region && !prefCode) {
         throw new Error(`Unknown area "${area}", expected a region (${REGIONS.map((r) => r.slug).join(', ')}) or a 首都圏 prefecture (${PREFECTURES.keys().toArray().join(', ')})`);
     }
-    const limit = Math.min(ctx.req.query('limit') ? Number(ctx.req.query('limit')) : PAGE_SIZE, PAGE_SIZE);
+    const limit = Math.min(getRouteLimit(ctx, PAGE_SIZE), PAGE_SIZE);
     const query = new URLSearchParams({ page_start_num: '0', order_by: '6', hotlist: '1' });
     if (region) {
         query.set('area_code', region.code);
@@ -196,9 +200,10 @@ export const handler = async (ctx): Promise<Data> => {
     }
     const listUrl = `${HOST}/estate_search/index?${query.toString()}`;
 
-    const cards = parseList(await ofetch(listUrl)).slice(0, limit);
-    const items = await Promise.all(
-        cards.map((card) =>
+    const cards = parseList(await ofetch(listUrl)).slice(0, ctx.req.query('sorted') === 'false' ? limit : PAGE_SIZE);
+    const items = await pMap(
+        cards,
+        (card) =>
             cache.tryGet(card.link, async (): Promise<DataItem> => {
                 const extra = await enrich(card);
                 return {
@@ -209,8 +214,8 @@ export const handler = async (ctx): Promise<Data> => {
                     description: summarize(extra),
                     _extra: extra,
                 };
-            })
-        )
+            }),
+        { concurrency: 3 }
     );
 
     const scope = region?.label ?? (prefCode === undefined ? '全国' : ([...PREFECTURES].find(([, code]) => code === prefCode)?.[0] ?? prefCode));

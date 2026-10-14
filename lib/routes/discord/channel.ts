@@ -3,6 +3,7 @@ import ConfigNotFoundError from '@/errors/types/config-not-found';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { DataItem, Route } from '@/types';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
 import { baseUrl, getChannel, getChannelMessages, getGuild } from './discord-api';
 import { renderDescription } from './templates/message';
@@ -43,7 +44,7 @@ async function handler(ctx) {
     const channelId = ctx.req.param('channelId');
 
     const channelInfo = await getChannel(channelId, authorization);
-    const messagesRaw = await getChannelMessages(channelId, authorization, ctx.req.query('limit') ?? 100);
+    const messagesRaw = await getChannelMessages(channelId, authorization, Math.min(getRouteLimit(ctx, 100), 100));
     if (!('guild_id' in channelInfo) || !channelInfo.guild_id) {
         throw new InvalidParameterError('Channel is not in a guild');
     }

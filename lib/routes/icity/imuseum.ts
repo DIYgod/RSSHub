@@ -1,5 +1,7 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
@@ -32,11 +34,20 @@ export const route: Route = {
             source: ['art.icity.ly/:city'],
             target: '/imuseum/:city',
         },
+        { source: ['art.icity.ly/:city/all'], target: '/imuseum/:city/all' },
+        { source: ['art.icity.ly/:city/latest'], target: '/imuseum/:city/latest' },
+        { source: ['art.icity.ly/:city/hot'], target: '/imuseum/:city/hot' },
+        { source: ['art.icity.ly/:city/end_soon'], target: '/imuseum/:city/end_soon' },
+        { source: ['art.icity.ly/:city/coming'], target: '/imuseum/:city/coming' },
+        { source: ['art.icity.ly/:city/outdated'], target: '/imuseum/:city/outdated' },
     ],
     description: 'iMuseum（每日环球展览）各城市正在进行与即将开始的展览。城市与类型均取自站点 URL 路径，例如 `guangzhou/latest`。',
     handler: async (ctx) => {
         const { city } = ctx.req.param();
         const type = ctx.req.param('type') ?? 'latest';
+        if (!['all', 'latest', 'hot', 'end_soon', 'coming', 'outdated'].includes(type)) {
+            throw new InvalidParameterError('Invalid exhibition type. Use all, latest, hot, end_soon, coming, or outdated.');
+        }
         const currentUrl = `${rootUrl}/${city}/${type}`;
 
         const response = await ofetch(currentUrl);
@@ -61,8 +72,9 @@ export const route: Route = {
                 };
             });
 
-        const items = await Promise.all(
-            list.map((item) =>
+        const items = await pMap(
+            list,
+            (item) =>
                 cache.tryGet(item.link, async () => {
                     const detailResponse = await ofetch(item.link);
                     const $detail = load(detailResponse);
@@ -82,8 +94,8 @@ export const route: Route = {
                         description: $description.html(),
                         image: cover,
                     };
-                })
-            )
+                }),
+            { concurrency: 3 }
         );
 
         return {

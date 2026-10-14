@@ -2,9 +2,9 @@ import { load } from 'cheerio';
 
 import type { Language, Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
-import { domain, getMeta, processItems, processMeta } from './util';
+import { domain, getMeta, parseCalendarDate, processItems, processMeta } from './util';
 
 export const route: Route = {
     path: '/hyxt/:category{.+}?',
@@ -58,7 +58,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { category = 'tzgg' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 30;
+    const limit = getRouteLimit(ctx, 30);
 
     const rootUrl = `https://hyxt.${domain}`;
     const currentUrl = `${rootUrl}/${category}.htm`;
@@ -79,13 +79,13 @@ async function handler(ctx) {
             return {
                 title: a.attr('title') || a.find('h3').text() || a.text(),
                 link: new URL(a.prop('href')!, rootUrl).href,
-                pubDate: parseDate(date.length ? `${date.find('.year').text()}-${date.find('.day').text()}` : $item.find('td').last().text()),
+                pubDate: parseCalendarDate(date.length ? `${date.find('.year').text()}-${date.find('.day').text()}` : $item.find('td').last().text()),
             };
         });
 
     items = await processItems(items, rootUrl);
 
-    const meta = processMeta(response);
+    const meta = processMeta($);
     const siteName = getMeta(meta, 'SiteName');
     const columnName = getMeta(meta, 'ColumnName');
 

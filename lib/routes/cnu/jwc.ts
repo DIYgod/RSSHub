@@ -3,6 +3,7 @@ import { load } from 'cheerio';
 import type { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/jwc',
@@ -12,7 +13,7 @@ export const route: Route = {
     radar: [
         {
             source: ['jwc.cnu.edu.cn/tzgg/index.htm'],
-            target: '/cnu/jwc',
+            target: '/jwc',
         },
     ],
     name: '教务处通知公示',
@@ -46,7 +47,7 @@ async function handler() {
             const dateSpan = item.find('span.date');
             const day = dateSpan.find('span.day').text();
             const year = dateSpan.find('span.year').text();
-            const pubDate = year && day ? parseDate(`${year}-${day}`, 'YYYY-MM-DD') : null;
+            const pubDate = year && day ? timezone(parseDate(`${year}-${day}`, 'YYYY-MM-DD'), 8) : undefined;
 
             const categoryName = item.find('span.name').text().trim();
             return {

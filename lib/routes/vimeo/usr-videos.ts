@@ -1,3 +1,4 @@
+import NotFoundError from '@/errors/types/not-found';
 import type { Route } from '@/types';
 import { ViewType } from '@/types';
 import got from '@/utils/got';
@@ -31,72 +32,74 @@ Some of the categories contain slash like \`3D/CG\` , must change the slash \`/\
 };
 
 async function handler(ctx) {
-    const tokenresponse = await got({
+    const tokenResponse = await got({
         method: 'get',
         url: 'https://vimeo.com/_rv/viewer',
     });
-    const VimeoAuthorization = tokenresponse.data.jwt;
+    const vimeoAuthorization = tokenResponse.data.jwt;
 
     const { username, cat } = ctx.req.param();
 
-    const profileresponse = await got({
+    const profileResponse = await got({
         method: 'get',
         url: `https://api.vimeo.com/users/${username}?fields=name,gender,bio,uri,link,categories&fetch_user_profile=1`,
         headers: {
-            Authorization: `jwt ${VimeoAuthorization}`,
+            Authorization: `jwt ${vimeoAuthorization}`,
+            Accept: 'application/vnd.vimeo.*+json;version=3.4',
         },
     });
 
-    const profilesjs = profileresponse.data;
-    const catjs = profileresponse.data.categories;
+    const profileData = profileResponse.data;
+    const categories = profileResponse.data.categories;
 
-    let catword;
-    if (cat && catjs.length > 0) {
-        for (const catj of catjs) {
+    let categoryWord;
+    if (cat && categories.length > 0) {
+        for (const catj of categories) {
             if (decodeURIComponent(cat).replaceAll('|', '/') === catj.name) {
-                catword = catj.word;
+                categoryWord = catj.word;
             }
         }
     }
 
-    let urlfilter = `&filter=category&filter_category=${catword}`;
+    let urlFilter = `&filter=category&filter_category=${categoryWord}`;
     if (!cat) {
-        urlfilter = '';
+        urlFilter = '';
     }
-    if (!catword && cat && cat !== 'picks') {
-        return null;
+    if (!categoryWord && cat && cat !== 'picks') {
+        throw new NotFoundError('Unknown Vimeo user category. Use picks, a category listed on the profile, or omit this parameter.');
     }
     const picked = cat && cat === 'picks';
 
-    const Vimeocat = `${profilesjs.uri}/videos?fields=name,uri,description,created_time&include_videos=1&page=1&per_page=10${urlfilter}`;
-    const Vimeoallpicks = `/users/${username}/profile_sections?fields=videos.data.clip.name,videos.data.clip.uri,videos.data.clip.description,videos.data.clip.created_time&include_videos=1&badge=1&page=1&per_page=10`;
+    const videoUrl = `${profileData.uri}/videos?fields=name,uri,description,created_time&include_videos=1&page=1&per_page=10${urlFilter}`;
+    const picksUrl = `/users/${username}/profile_sections?fields=videos.data.clip.name,videos.data.clip.uri,videos.data.clip.description,videos.data.clip.created_time&include_videos=1&badge=1&page=1&per_page=10`;
 
-    const contentresponse = await got({
+    const contentResponse = await got({
         method: 'get',
-        url: `https://api.vimeo.com${picked ? Vimeoallpicks : Vimeocat}`,
+        url: `https://api.vimeo.com${picked ? picksUrl : videoUrl}`,
         headers: {
-            Authorization: `jwt ${VimeoAuthorization}`,
+            Authorization: `jwt ${vimeoAuthorization}`,
+            Accept: 'application/vnd.vimeo.*+json;version=3.4',
         },
     });
-    const vimeojs = picked ? contentresponse.data.data[0].videos.data : contentresponse.data.data;
+    const videos = picked ? contentResponse.data.data[0].videos.data : contentResponse.data.data;
 
     return {
-        title: `${profilesjs.name} ${catword ? cat.replaceAll('|', '/') : ''} ${picked ? 'picks' : ''} | Vimeo `,
-        link: profilesjs.link,
-        description: profilesjs.bio,
+        title: `${profileData.name} ${categoryWord ? cat.replaceAll('|', '/') : ''} ${picked ? 'picks' : ''} | Vimeo `,
+        link: profileData.link,
+        description: profileData.bio,
 
-        item: vimeojs.map((item) => {
-            const vdescription = picked ? item.clip.description : item.description;
+        item: videos.map((item) => {
+            const videoDescription = picked ? item.clip.description : item.description;
 
             return {
                 title: picked ? item.clip.name : item.name,
                 description: renderDescription({
                     videoUrl: picked ? item.clip.uri.replace('/videos', '') : item.uri.replace('/videos', ''),
-                    vdescription: vdescription ? vdescription.replaceAll('\n', '<br>') : '',
+                    vdescription: videoDescription ? videoDescription.replaceAll('\n', '<br>') : '',
                 }),
-                pubDate: parseDate(picked || cat ? '' : item.created_time),
+                pubDate: !picked && !cat && item.created_time ? parseDate(item.created_time) : undefined,
                 link: `https://vimeo.com${picked ? item.clip.uri.replace('videos/', '') : item.uri.replace('videos/', '')}`,
-                author: profilesjs.name,
+                author: profileData.name,
             };
         }),
     };

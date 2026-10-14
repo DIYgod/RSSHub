@@ -1,3 +1,5 @@
+import pMap from 'p-map';
+
 import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found.js';
 import type { Route } from '@/types';
@@ -35,7 +37,7 @@ async function handler(ctx) {
     const user = ctx.req.param('user');
 
     const cookie = config.medium.cookies[user];
-    if (cookie === undefined) {
+    if (!cookie?.trim()) {
         throw new ConfigNotFoundError(`缺少 Medium 用户 ${user} 登录后的 Cookie 值`);
     }
 
@@ -47,9 +49,9 @@ async function handler(ctx) {
         throw new ConfigNotFoundError(`Medium 用户 ${user} 的 Cookie 无效或已过期`);
     }
 
-    const urls = posts.items.map((data) => data.post.mediumUrl);
+    const urls: string[] = posts.items.map((data) => data.post.mediumUrl);
 
-    const parsedArticles = await Promise.all(urls.map((url) => parseArticle(ctx, url)));
+    const parsedArticles = await pMap(urls, (url) => parseArticle(ctx, url), { concurrency: 3 });
 
     return {
         title: `${user} Medium Following`,

@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 import { CookieJar } from 'tough-cookie';
 
 import type { Route } from '@/types';
@@ -20,6 +21,7 @@ import cache from '@/utils/cache';
 // nphys             Nature Physics
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 import { baseUrl, journalMap } from './utils';
 
@@ -60,9 +62,10 @@ async function handler() {
             link: `${baseUrl}/${j.title}/current-issue`,
         }));
 
-    const out = await Promise.all(
-        journals.map((journal) =>
-            cache.tryGet(journal.link, async () => {
+    const out = await pMap(
+        journals,
+        (journal) =>
+            cache.tryGet(`nature:cover:v2:${journal.link}`, async () => {
                 const { id, name, link } = journal;
 
                 const response = await got(link, { cookieJar });
@@ -75,17 +78,17 @@ async function handler() {
                 const imageUrl = `https://media.springernature.com/full/springer-static/cover-hires/journal/${id}/${volume}/${issue}?as=webp`;
                 const contents = `<div align="center"><img src="${imageUrl}" alt="Volume ${volume} Issue ${issue}"></div>`;
 
-                const date = $('title').text().split(',', 2)[1].trim();
+                const date = $('title').text().split(',', 2)[1]?.trim();
                 const issueDescription = $('div[data-test=issue-description]').html() ?? '';
 
                 return {
                     title: `${name} | Volume ${volume} Issue ${issue}`,
                     description: contents + issueDescription,
-                    link: response.url,
-                    pubDate: parseDate(date, 'MMMM YYYY'),
+                    link: ogUrl ?? link,
+                    pubDate: date ? timezone(parseDate(date, ['D MMMM YYYY', 'MMMM YYYY']), 0) : undefined,
                 };
-            })
-        )
+            }),
+        { concurrency: 3 }
     );
 
     return {

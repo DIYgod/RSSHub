@@ -1,6 +1,7 @@
 import type { Context } from 'hono';
+import pMap from 'p-map';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -24,30 +25,29 @@ async function handler(ctx: Context) {
     const currentUrl = `${rootUrl}/tag/${id}/l/latest.json`;
     const response = await ofetch(currentUrl);
 
-    const list = response.topic_list.topics.slice(0, 10).map((item) => ({
+    const list: Array<DataItem & { id: number; link: string }> = response.topic_list.topics.slice(0, 10).map((item) => ({
         id: item.id,
         title: item.title,
         link: `${rootUrl}/t/topic/${item.id}`,
         pubDate: parseDate(item.last_posted_at),
     }));
 
-    const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link, async () => {
+    const items = await pMap(
+        list,
+        async (item) => {
+            const detail = await cache.tryGet(`marginnote:article:${item.link}`, async () => {
                 const detailResponse = await ofetch(`${rootUrl}/t/${item.id}.json`);
                 const post = detailResponse.post_stream.posts[0];
-
-                item.author = post.display_username || post.username;
-                item.description = post.cooked;
-
-                return item;
-            })
-        )
+                return { author: post.display_username || post.username, description: post.cooked };
+            });
+            return { ...item, ...detail };
+        },
+        { concurrency: 3 }
     );
 
     return {
         title: `${response.topic_list.tags[0].name} - MarginNote 中文论坛`,
-        link: currentUrl,
+        link: `${rootUrl}/tag/${encodeURIComponent(id)}`,
         item: items,
     };
 }

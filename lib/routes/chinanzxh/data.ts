@@ -6,6 +6,7 @@ import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 import timezone from '@/utils/timezone';
 import { finishArticleItem } from '@/utils/wechat-mp';
 
@@ -58,7 +59,15 @@ function getArticle(item: DataItem) {
         return {
             ...item,
             description: article.html()!,
-            author: $('.author span').first().text().trim() || undefined,
+            author: $('.author span')
+                .toArray()
+                .map(
+                    (element) =>
+                        $(element)
+                            .text()
+                            .match(/^(?:作者|来源)\s*[:：]\s*(.+)/)?.[1]
+                )
+                .find(Boolean),
         };
     });
 }
@@ -71,10 +80,10 @@ async function handler(ctx): Promise<Data> {
     const link = `${rootUrl}/data/${category}/index.html`;
     const response = await ofetch(link);
     const $ = load(response);
-    const requestedLimit = Number.parseInt(ctx.req.query('limit') ?? '');
+    const requestedLimit = getRouteLimit(ctx);
     const items = $('.static-news-list li')
         .toArray()
-        .slice(0, requestedLimit > 0 ? requestedLimit : undefined)
+        .slice(0, requestedLimit)
         .map((element): DataItem => {
             const node = $(element);
             const anchor = node.find('a[href]').first();

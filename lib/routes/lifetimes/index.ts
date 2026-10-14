@@ -1,5 +1,6 @@
 import { load } from 'cheerio';
 import type { Context } from 'hono';
+import pMap from 'p-map';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
@@ -32,7 +33,7 @@ async function handler(ctx: Context) {
     const currentUrl = `${rootUrl}/${category.replace('-', '/')}`;
 
     let title;
-    let list;
+    let list: Array<{ link: string }>;
 
     const apiNode = nodes[category];
     if (apiNode) {
@@ -60,24 +61,26 @@ async function handler(ctx: Context) {
             }));
     }
 
-    const items = await Promise.all(
-        list.map((item) =>
+    const items = await pMap(
+        list,
+        (item) =>
             cache.tryGet(item.link, async () => {
-                try {
-                    const detailResponse = await ofetch(item.link);
-                    const content = load(detailResponse);
+                const detailResponse = await ofetch(item.link);
+                const content = load(detailResponse);
 
-                    item.description = content('article').html();
-                    item.title = content('.container-title').text();
-                    item.author = content('.source').text().replace('来源：', '');
-                    item.pubDate = parseDate(Number.parseInt(detailResponse.match(/\\"ctime\\":(.*),\\"utime\\"/)[1]));
+                const pubDate = detailResponse.match(/\\"ctime\\":(\d+)/)?.[1];
+                const updated = detailResponse.match(/\\"utime\\":(\d+)/)?.[1];
 
-                    return item;
-                } catch {
-                    return '';
-                }
-            })
-        )
+                return {
+                    ...item,
+                    description: content('article').html(),
+                    title: content('.container-title').text(),
+                    author: content('.source').text().replace('来源：', ''),
+                    pubDate: pubDate ? parseDate(Number(pubDate)) : undefined,
+                    updated: updated ? parseDate(Number(updated)) : undefined,
+                };
+            }),
+        { concurrency: 3 }
     );
 
     return {

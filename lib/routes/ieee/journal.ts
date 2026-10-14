@@ -1,16 +1,18 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
-import cache from '@/utils/cache';
 import got from '@/utils/got';
-import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/parse-date';
 
 import { renderDescription } from './templates/description';
+import { fetchArticleMetadata } from './utils';
 
 const ieeeHost = 'https://ieeexplore.ieee.org';
 
 export const route: Route = {
-    name: 'IEEE Journal Articles',
+    name: 'Journal Articles',
     maintainers: ['HenryQW'],
     categories: ['journal'],
     path: '/journal/:punumber/:earlyAccess?',
@@ -24,44 +26,36 @@ export const route: Route = {
 
 async function handler(ctx) {
     const publicationNumber = ctx.req.param('punumber');
+    if (!/^[1-9]\d*$/.test(publicationNumber)) {
+        throw new InvalidParameterError('Invalid publication number. Use a positive integer.');
+    }
     const earlyAccess = !!ctx.req.param('earlyAccess');
 
-    const { displayTitle, currentIssue, preprintIssue, coverImagePath } = await fetchMetadata(publicationNumber);
+    const { displayTitle, currentIssue, preprintIssue, coverImagePath, coverImage } = await fetchMetadata(publicationNumber);
     const { issueNumber, volume } = earlyAccess ? preprintIssue : currentIssue;
 
     const tocData = await fetchTOCData(publicationNumber, issueNumber);
-    const list = tocData.records.map((item) => {
+    const list: Array<ReturnType<ReturnType<typeof mapRecordToItem>>> = tocData.records.map((item) => {
         const mappedItem = mapRecordToItem(volume)(item);
 
         return mappedItem;
     });
 
-    const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link, async () => {
-                const response = await ofetch(`https://ieeexplore.ieee.org${item.link}`);
-
-                const $ = load(response);
-
-                const target = $('script[type="text/javascript"]:contains("xplGlobal.document.metadata")');
-                const code = target.text();
-
-                // 捕获等号右侧的 JSON（最小匹配直到紧随的分号）
-                const m = code.match(/xplGlobal\.document\.metadata\s*=\s*(\{[\s\S]*?\})\s*;/);
-                const metadata: { abstract?: string } = m ? JSON.parse(m[1]) : {};
-                item.abstract = metadata.abstract ?? ' ';
-                item.description = renderDescription(item);
-
-                return item;
-            })
-        )
+    const items = await pMap(
+        list,
+        async (item) => {
+            const metadata = await fetchArticleMetadata(item.link);
+            const article = { ...item, abstract: metadata.abstract || item.abstract, pubDate: metadata.insertDate ? parseDate(metadata.insertDate) : undefined };
+            return { ...article, description: renderDescription(article) };
+        },
+        { concurrency: 3 }
     );
 
     return {
         title: displayTitle,
         link: `${ieeeHost}/xpl/tocresult.jsp?isnumber=${issueNumber}`,
         item: items,
-        image: `${ieeeHost}${coverImagePath}`,
+        image: coverImagePath || coverImage ? new URL(coverImagePath || coverImage, ieeeHost).href : undefined,
     };
 }
 
@@ -79,8 +73,8 @@ async function fetchTOCData(punumber, isnumber) {
 
 function mapRecordToItem(volume) {
     return (item) => ({
-        abstract: item.abstract || '',
-        authors: item.authors ? item.authors.map((author) => author.preferredName).join('; ') : '',
+        abstract: load(item.abstract ?? '').text(),
+        author: item.authors?.map((author) => author.preferredName).join('; '),
         description: '',
         doi: item.doi,
         link: item.htmlLink,

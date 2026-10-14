@@ -7,31 +7,28 @@ import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
 export default {
-    parseFeed: async ({ subjectid }) => {
-        const url = `https://www.dapenti.com/blog/blog.asp?name=xilei&subjectid=${subjectid}`;
+    parseFeed: async ({ subjectid: subjectId }) => {
+        const url = `https://www.dapenti.com/blog/blog.asp?name=xilei&subjectid=${subjectId}`;
         const listRes = await got({
             method: 'get',
             url,
             headers: {
                 Referer: url,
             },
-            // 喷嚏网编码为GBK，需要转码
-            // 转码需要设定返回数据的格式，其可选项是arraybuffer,blob,document,json,text,stream
-            // 默认为json
+            // Fetch binary data before decoding the site's legacy GBK encoding.
             responseType: 'buffer',
         });
-        // 转码
         const data = iconv.decode(listRes.data, 'gb2312');
         const $ = load(data);
-        // 只取最近的三个，取全文rss
+        // Fetch the latest three entries with their full public content.
         const list = $('li', 'ul').slice(0, 3).toArray();
 
-        const result_item = await Promise.all(
+        const items = await Promise.all(
             list.map((item) =>
                 cache.tryGet(`https://www.dapenti.com/blog/${$(item).find('a').attr('href')}`, async () => {
                     const el = $(item);
                     const url = `https://www.dapenti.com/blog/${el.find('a').attr('href')}`;
-                    const original_data = await got({
+                    const articleResponse = await got({
                         method: 'get',
                         url,
                         headers: {
@@ -39,26 +36,44 @@ export default {
                         },
                         responseType: 'buffer',
                     });
-                    const convert_data = iconv.decode(original_data.data, 'gbk');
-                    const description = load(convert_data)('body > table > tbody > tr > td.oblog_t_2 > div > table > tbody > tr:nth-child(2) > td');
+                    const articleHtml = iconv.decode(articleResponse.data, 'gbk');
+                    const $article = load(articleHtml);
+                    const description = $article('body > table > tbody > tr > td.oblog_t_2 > div > table > tbody > tr:nth-child(2) > td');
+                    if (!description.length) {
+                        throw new Error(`Dapenti article content was not found at ${url}. Check whether the source page layout has changed.`);
+                    }
                     const pubInfo = description.find('span span.oblog_text').text().split('发布于');
-                    description.find('table, .adsbygoogle').remove();
-
-                    // remove header
-                    const count = subjectid.toString() === '70' ? 7 : 3;
-                    for (let index = 0; index < count; index++) {
-                        description.children().first().remove();
+                    const pubDate = pubInfo[1]?.trim();
+                    const bodyStart = description.children('p[style="margin:2px 2px 2px 2px;"]').first();
+                    if (!bodyStart.length) {
+                        throw new Error(`Dapenti article body start was not found at ${url}. Check whether the source page layout has changed.`);
                     }
-
-                    // remove footer
-                    for (let index = 0; index < 8; index++) {
-                        description.children().last().remove();
+                    bodyStart.prevAll().remove();
+                    if (subjectId.toString() === '70') {
+                        const dailyStart = description
+                            .children()
+                            .filter((_, element) => $article(element).text().trim() === '每天一图卦，让我们更清楚地了解这个世界')
+                            .first();
+                        if (!dailyStart.length) {
+                            throw new Error(`Dapenti Tugua introduction was not found at ${url}. Check whether the source page layout has changed.`);
+                        }
+                        dailyStart.prevAll().remove();
                     }
+                    const footer = description
+                        .children()
+                        .filter((_, element) => $article(element).text().trimStart().startsWith('【无需App在移动设备上看喷嚏】'))
+                        .first();
+                    if (!footer.length) {
+                        throw new Error(`Dapenti article body end was not found at ${url}. Check whether the source page layout has changed.`);
+                    }
+                    footer.nextAll().remove();
+                    footer.remove();
+                    description.find('script, style, .adsbygoogle').remove();
                     const single = {
                         title: el.text(),
                         author: pubInfo[0].trim(),
                         description: description.html(),
-                        pubDate: timezone(parseDate(pubInfo[1]?.trim()), 8),
+                        pubDate: pubDate ? timezone(parseDate(pubDate), 8) : undefined,
                         link: url,
                     };
                     return single;
@@ -67,9 +82,9 @@ export default {
         );
 
         return {
-            title: `喷嚏-${subjectid}`,
+            title: `喷嚏-${subjectId}`,
             link: url,
-            item: result_item,
+            item: items,
         };
     },
 };

@@ -1,6 +1,8 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import { config } from '@/config';
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import { parseDate } from '@/utils/parse-date';
@@ -37,6 +39,11 @@ export const route: Route = {
 :::`,
 };
 
+function getPublicationDate(value: string | undefined) {
+    const date = value ? parseDate(value) : undefined;
+    return date && !Number.isNaN(date.getTime()) ? timezone(date, 8) : undefined;
+}
+
 async function handler(ctx) {
     const { gchannel = 'paimai' } = ctx.req.param();
     let channelName: string;
@@ -45,7 +52,7 @@ async function handler(ctx) {
     switch (gchannel) {
         case 'paimai':
             channelName = '拍卖信息';
-            link = `${host}/customs/302249/zfxxgk/2799825/2799883/index.html`;
+            link = `${host}/customs/302249/zfxxgk/fdzdgknr/2799883/index.html`;
             break;
         case 'fagui':
             channelName = '海关法规';
@@ -56,66 +63,67 @@ async function handler(ctx) {
             link = `${host}/customs/302249/2480148/index.html`;
             break;
         default:
-            channelName = '拍卖信息';
-            link = `${host}/customs/302249/zfxxgk/2799825/2799883/index.html`;
-            break;
+            throw new InvalidParameterError('Invalid channel. Use paimai, fagui or latest.');
     }
 
     const context = await playwright();
 
-    const list = await cache.tryGet(
-        link,
-        async () => {
-            const response = await playwrightGet(link, context);
-            const $ = load(response);
-            const list = $('[class^="conList_ul"] li')
-                .toArray()
-                .map((item) => {
-                    const $item = $(item);
-                    return {
-                        title: $item.find('a').attr('title')!,
-                        link: new URL($item.find('a').attr('href')!, host).href,
-                        date: parseDate($item.find('span').text()),
-                    };
-                });
-            return list;
-        },
-        config.cache.routeExpire,
-        false
-    );
-
-    const out = await Promise.all(
-        list.map((info) =>
-            cache.tryGet(info.link, async () => {
-                if (info.link.endsWith('.pdf') || info.link.endsWith('.doc')) {
-                    return info;
-                }
-                const response = await playwrightGet(info.link, context);
+    try {
+        const list = await cache.tryGet(
+            link,
+            async () => {
+                const response = await playwrightGet(link, context);
                 const $ = load(response);
-                let date;
+                const list = $('.news_list li, [class^="conList_ul"] li')
+                    .toArray()
+                    .map((item) => {
+                        const $item = $(item);
+                        return {
+                            title: $item.find('a').attr('title') || $item.find('a').text(),
+                            link: new URL($item.find('a').attr('href')!, host).href,
+                            date: getPublicationDate($item.find('span').text()),
+                        };
+                    });
+                return list;
+            },
+            config.cache.routeExpire,
+            false
+        );
 
-                $('.easysite-news-operation').remove();
-                if (/\d{4}-\d{2}-\d{2} \d{2}:\d{2}/.test($('.easysite-news-describe').text())) {
-                    date = timezone(parseDate($('.easysite-news-describe').text(), 'YYYY-MM-DD HH:mm'), 8);
-                }
-                const description = $('.easysite-news-peruse').html();
+        const out = await pMap(
+            list,
+            (info) =>
+                cache.tryGet(info.link, async () => {
+                    if (info.link.endsWith('.pdf') || info.link.endsWith('.doc')) {
+                        return { title: info.title, link: info.link, pubDate: info.date };
+                    }
+                    const response = await playwrightGet(info.link, context);
+                    const $ = load(response);
+                    $('.easysite-news-operation').remove();
+                    const dateText = $('.news_detail_tit, .easysite-news-describe')
+                        .text()
+                        .match(/\d{4}-\d{2}-\d{2} \d{2}:\d{2}(?::\d{2})?/)?.[0];
+                    const date = getPublicationDate(dateText ?? $('meta[name="PubDate"]').attr('content'));
+                    const description = $('.news_detail_con, .easysite-news-peruse').first().html();
 
-                return {
-                    title: info.title!,
-                    link: info.link,
-                    description,
-                    pubDate: date || info.date,
-                };
-            })
-        )
-    );
+                    return {
+                        title: info.title!,
+                        link: info.link,
+                        description,
+                        author: $('meta[name="ContentSource"]').attr('content') || undefined,
+                        pubDate: date || info.date,
+                    };
+                }),
+            { concurrency: 3 }
+        );
 
-    await context.close();
-
-    return {
-        title: `中国海关-${channelName}`,
-        link,
-        language: 'zh-CN' as const,
-        item: out,
-    };
+        return {
+            title: `中国海关-${channelName}`,
+            link,
+            language: 'zh-CN' as const,
+            item: out,
+        };
+    } finally {
+        await context.close();
+    }
 }

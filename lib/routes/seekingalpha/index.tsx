@@ -4,6 +4,7 @@ import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
 const baseUrl = 'https://seekingalpha.com';
 
@@ -54,6 +55,7 @@ async function handler(ctx) {
     const { category = 'news', symbol } = ctx.req.param();
     const pageUrl = `${baseUrl}/symbol/${symbol.toUpperCase()}/${category === 'transcripts' ? `earnings/${category}` : category}`;
 
+    const limit = getRouteLimit(ctx, category === 'news' ? 40 : 20);
     const machineCookie = await getMachineCookie();
     const response = await ofetch(`${baseUrl}/api/v3/symbols/${symbol.toUpperCase()}/${category}`, {
         headers: {
@@ -64,7 +66,7 @@ async function handler(ctx) {
             'filter[until]': 0,
             id: symbol.toLowerCase(),
             include: 'author,primaryTickers,secondaryTickers,sentiments',
-            'page[size]': ctx.req.query('limit') ? Number(ctx.req.query('limit')) : category === 'news' ? 40 : 20,
+            'page[size]': limit,
             'page[number]': 1,
         },
     });
@@ -120,7 +122,6 @@ async function handler(ctx) {
         link: pageUrl,
         image: 'https://seekingalpha.com/samw/static/images/favicon.svg',
         item: items,
-        allowEmpty: true,
         language: 'en-us' as const,
     };
 }

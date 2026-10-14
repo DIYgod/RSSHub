@@ -51,7 +51,7 @@ async function handler(ctx) {
 
     id = $('input[name="journal"]').attr('value');
 
-    const title = $('.page-title').text();
+    const title = $('.journal-title-url h1').text() || $('.page-title').text() || $('title').text();
     const description = $('.intro-copy').text();
     const searchUrl = `${rootUrl}/journals/search-results?journal=${id}&ArticleSearch[current]=1`;
 

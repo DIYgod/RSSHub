@@ -41,27 +41,6 @@ async function handler(ctx) {
     });
     let data = response._data;
 
-    // Get total page number, the link header is absent if there is only one page
-    const lastPageLink = response.headers
-        .get('link')
-        ?.split(',')
-        .find((elem) => elem.includes('"last"'));
-
-    if (lastPageLink) {
-        const urlBase = lastPageLink.match(/<(.*)page=\d*/)?.[1];
-        const pageCount = Number(lastPageLink.match(/page=(\d*)/)?.[1]);
-        const pages = Array.from({ length: pageCount - 1 }, (_, index) => index + 2);
-
-        // Get every page
-        const tasks = pages.map(async (page) => {
-            const pageData = await ofetch(`${urlBase}page=${page}`, {
-                headers,
-            });
-            data = [...data, ...pageData];
-        });
-        await Promise.all(tasks);
-    }
-
     // Sort by commits
     data.sort((a, b) => a.contributions - b.contributions);
     if (order !== 'asc') {

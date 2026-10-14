@@ -6,6 +6,7 @@ import MarkdownIt from 'markdown-it';
 import type { Language, Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
 const md = MarkdownIt({
     html: true,
@@ -36,7 +37,7 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 100;
+    const limit = getRouteLimit(ctx, 100);
 
     const rootUrl = 'https://chuanliu.org';
     const apiRootUrl = 'https://s.chuanliu.org';

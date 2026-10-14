@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import { config } from '@/config';
 import type { DataItem, Route } from '@/types';
@@ -7,6 +8,7 @@ import cache from '@/utils/cache';
 import got from '@/utils/got';
 import md5 from '@/utils/md5';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 import timezone from '@/utils/timezone';
 
 export const route: Route = {
@@ -26,7 +28,8 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['ci-en.dlsite.com/creator/:id/article/843558', 'ci-en.dlsite.com/'],
+            source: ['ci-en.dlsite.com/creator/:id', 'ci-en.dlsite.com/creator/:id/article', 'ci-en.dlsite.com/creator/:id/article/:articleId'],
+            target: '/ci-en/:id/article',
         },
     ],
     name: "Ci-en Creators' Article",
@@ -37,7 +40,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const id = ctx.req.param('id') ?? '7400';
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 10;
+    const limit = ctx.req.query('sorted') === 'false' ? getRouteLimit(ctx, 10) : Math.max(10, getRouteLimit(ctx, 10));
 
     const rootUrl = 'https://ci-en.dlsite.com';
     const currentUrl = `${rootUrl}/creator/${id}/article?mode=list`;
@@ -65,8 +68,9 @@ async function handler(ctx) {
             };
         });
 
-    items = await Promise.all(
-        items.map((item) =>
+    items = await pMap(
+        items,
+        (item) =>
             cache.tryGet(`dlsite:ci-en:${cacheScope}:${item.link}`, async () => {
                 const detailResponse = await got({
                     method: 'get',
@@ -89,13 +93,14 @@ async function handler(ctx) {
                     .map((t) => content(t).text().split('#').pop()!.trim());
 
                 return item;
-            })
-        )
+            }),
+        { concurrency: 3 }
     );
 
     return {
         title: $('title').text(),
         link: currentUrl,
+        language: 'ja' as const,
         item: items,
     };
 }

@@ -28,6 +28,7 @@ async function handler() {
             const $item = $(item);
             return {
                 link: rootUrl,
+                guid: `qttabbar:${$item.find('strong').text()}`,
                 title: $item.text(),
                 description: $item.next().html(),
                 pubDate: parseDate($item.text().match(/\((.*)\)/)![1]),

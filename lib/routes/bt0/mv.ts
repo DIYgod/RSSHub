@@ -19,7 +19,7 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['2bt0.com/mv/'],
+            source: ['2bt0.com/mv/:number'],
         },
     ],
     name: '影视资源下载列表',

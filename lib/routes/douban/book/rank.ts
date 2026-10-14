@@ -1,5 +1,7 @@
 import type { Route } from '@/types';
 import got from '@/utils/got';
+import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/book/rank/:type?',
@@ -22,6 +24,15 @@ export const route: Route = {
 |      | fiction | nonfiction |`,
 };
 
+const getPubDate = (year?: string[]): Date | undefined => {
+    const datePart = year?.[0];
+    if (!datePart || !/^\d{4}-\d{1,2}-\d{1,2}$/.test(datePart)) {
+        return undefined;
+    }
+    const date = timezone(parseDate(datePart, ['YYYY-MM-DD', 'YYYY-M-D', 'YYYY-MM-D', 'YYYY-M-DD'], true), 0);
+    return Number.isNaN(date.getTime()) ? undefined : date;
+};
+
 async function handler(ctx) {
     const { type = '' } = ctx.req.param();
     const referer = `https://m.douban.com/book/${type}`;
@@ -37,18 +48,20 @@ async function handler(ctx) {
     const items = type ? await requestItem(type) : [...(await requestItem('fiction')), ...(await requestItem('nonfiction'))];
 
     return {
+        sortItems: false,
         title: `豆瓣热门图书-${type ? (type === 'fiction' ? '虚构类' : '非虚构类') : '全部'}`,
         link: referer,
         description: '每周一更新',
-        item: items.map(({ title, url, cover, info, rating, null_rating_reason }) => {
+        item: items.map(({ title, url, cover, info, rating, null_rating_reason, year }) => {
             const rate = rating ? `${rating.value.toFixed(1)}分` : null_rating_reason;
             const description = `<img src="${cover.url}"><br>
-              ${title}/${info}/${rate}
+              ${info}/${rate}
             `;
 
             return {
                 title: `${title}-${info}`,
                 description,
+                pubDate: getPubDate(year),
                 link: url,
             };
         }),

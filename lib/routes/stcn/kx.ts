@@ -1,16 +1,18 @@
 import type { CheerioAPI } from 'cheerio';
 import { load } from 'cheerio';
 import type { Context } from 'hono';
+import pMap from 'p-map';
 
 import type { Data, DataItem, Language, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 import timezone from '@/utils/timezone';
 
 export const handler = async (ctx: Context): Promise<Data> => {
-    const limit = Number(ctx.req.query('limit') ?? '30');
+    const limit = getRouteLimit(ctx, 30);
 
     const baseUrl = 'https://www.stcn.com';
     const targetUrl: string = new URL('article/list/kx.html', baseUrl).href;
@@ -35,7 +37,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
         const description: string = item.content;
         const pubDate: number | string = item.time;
         const linkUrl: string | undefined = item.url;
-        const categories: string[] = item.tags ? item.tags.map((c) => c.name) : [];
+        const categories: string[] = item.tags ? item.tags.flat().map((c) => c.name) : [];
         const authors: DataItem['author'] = item.source;
         const image: string | undefined = item.share?.image;
         const updated: number | string = pubDate;
@@ -60,53 +62,65 @@ export const handler = async (ctx: Context): Promise<Data> => {
         return processedItem;
     });
 
-    items = (
-        await Promise.all(
-            items.map((item) => {
-                if (!item.link) {
-                    return item;
-                }
+    items = await pMap(
+        items,
+        async (item) => {
+            if (!item.link) {
+                return item;
+            }
 
-                return cache.tryGet(item.link, async (): Promise<DataItem> => {
-                    const detailResponse = await ofetch(item.link!);
-                    const $$: CheerioAPI = load(detailResponse);
+            const detail = await cache.tryGet(`stcn:kx:detail:v5:${item.link}`, async (): Promise<DataItem> => {
+                const detailResponse = await ofetch(item.link!);
+                const $$: CheerioAPI = load(detailResponse);
 
-                    const title: string = $$('div.detail-title').text();
-                    const description = $$('div.detail-content').html();
-                    const pubDateStr: string | undefined = $$('div.detail-info span').last().text();
-                    const categories: string[] = [...new Set([...[item.category ?? []].flat(), ...($$('meta[name="keywords"]').attr('content')?.split(/,/) ?? [])])];
-                    const authors: DataItem['author'] = $$('div.detail-info span').first().text().split(/：/).pop();
-                    const upDatedStr: string | undefined = pubDateStr;
+                const title: string = $$('div.detail-title').text();
+                const description = $$('div.detail-content').html();
+                const pubDateStr: string | undefined = $$('div.detail-info')
+                    .children('span')
+                    .filter((_, el) => /^\d{4}-\d{2}-\d{2} \d{2}:\d{2}(?::\d{2})?$/.test($$(el).text()))
+                    .last()
+                    .text();
+                const categories: string[] = $$('meta[name="keywords"]').attr('content')?.split(/,/) ?? [];
+                const authors: DataItem['author'] =
+                    $$('div.detail-info')
+                        .children('span')
+                        .filter((_, el) => $$(el).text().startsWith('作者：'))
+                        .first()
+                        .text()
+                        .replace(/^作者：/, '') || $$('div.detail-info span').first().text().split(/：/).pop();
+                const upDatedStr: string | undefined = pubDateStr;
 
-                    const processedItem: DataItem = {
-                        title,
-                        description,
-                        pubDate: pubDateStr ? timezone(parseDate(pubDateStr), 8) : item.pubDate,
-                        category: categories,
-                        author: authors,
-                        content: {
-                            html: description,
-                            text: description,
-                        },
-                        updated: upDatedStr ? timezone(parseDate(upDatedStr), 8) : item.updated,
-                        language,
-                    };
+                const processedItem: DataItem = {
+                    title,
+                    description,
+                    pubDate: pubDateStr ? timezone(parseDate(pubDateStr), 8) : undefined,
+                    category: categories,
+                    author: authors,
+                    content: {
+                        html: description,
+                        text: $$('div.detail-content').text(),
+                    },
+                    updated: upDatedStr ? timezone(parseDate(upDatedStr), 8) : undefined,
+                };
 
-                    return {
-                        ...item,
-                        ...processedItem,
-                    };
-                });
-            })
-        )
-    ).filter((_): _ is DataItem => true);
+                return processedItem;
+            });
+            return {
+                ...item,
+                ...detail,
+                pubDate: detail.pubDate ?? item.pubDate,
+                updated: detail.updated ?? item.updated,
+                category: [...new Set([...[item.category ?? []].flat(), ...[detail.category ?? []].flat()])],
+            };
+        },
+        { concurrency: 3 }
+    );
 
     return {
         title: $('title').text(),
         description: $('meta[name="description"]').attr('content'),
         link: targetUrl,
         item: items,
-        allowEmpty: true,
         image: $('img.stcn-logo').attr('src'),
         author: $('meta[name="keywords"]').attr('content')?.split(/,/, 1)[0],
         language,

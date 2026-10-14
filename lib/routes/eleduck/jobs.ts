@@ -58,7 +58,7 @@ async function handler() {
 
     return {
         title: '招聘 | 电鸭社区',
-        link: 'https://eleduck.com/category/5',
+        link: 'https://eleduck.com/categories/5',
         item: out,
     };
 }

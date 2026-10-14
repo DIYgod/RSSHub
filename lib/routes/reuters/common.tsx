@@ -7,6 +7,7 @@ import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
 const HEADING_TAGS = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'] as const;
 
@@ -190,7 +191,7 @@ async function handler(ctx) {
 
     const category = ctx.req.param('category');
     const topic = ctx.req.param('topic') ?? (category === 'authors' ? 'reuters' : '');
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 20;
+    const limit = getRouteLimit(ctx, 20);
     const useSophi = ctx.req.query('sophi') === 'true' && topic !== '' && CAN_USE_SOPHI.includes(category);
 
     const section_id = `/${category}/${topic ? `${topic}/` : ''}`;

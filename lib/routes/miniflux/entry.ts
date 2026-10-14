@@ -1,7 +1,11 @@
+import pMap from 'p-map';
+
 import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Data, DataItem, Route } from '@/types';
 import got from '@/utils/got';
+import { getRouteLimit, hasItemFilters } from '@/utils/route-limit';
 
 export const route: Route = {
     path: ['/entry/:feeds/:parameters?', '/all/:parameters?', '/default/:parameters?'],
@@ -114,9 +118,14 @@ async function handler(ctx) {
             // each mode. So currently we only save the (last & existed)
             // parameter, since user may mistakenly input this parameter
             // several times.
+            case 'offset':
+                if (option !== '0') {
+                    throw new InvalidParameterError('Only the first page of Miniflux entries is supported. Remove offset or set it to 0.');
+                }
+                break;
             case 'limit':
-                if (!Number.isNaN(option) && !setLimit.length) {
-                    limit = option;
+                if (Number.isSafeInteger(Number(option)) && Number(option) > 0 && !setLimit.length) {
+                    limit = Number(option);
                     setLimit.push(1);
                 }
                 item = '';
@@ -153,28 +162,23 @@ async function handler(ctx) {
         .filter(Boolean)
         .join('&');
 
-    let queryLimit = ctx.req.query('limit');
+    const queryLimit = limit ? getRouteLimit(ctx, limit) : getRouteLimit(ctx);
+    const sourceLimit = limit && queryLimit && !hasItemFilters(ctx) ? Math.min(limit, queryLimit) : (queryLimit ?? limit);
     let result: Data;
-    if (feeds.search(/feeds?=/g) !== -1 || !Number.isNaN(Number.parseInt(feeds.split('&').join('')))) {
-        const feedsID = feeds.replaceAll(/feeds?=/g, '');
-        const feedsList = [feedsID.split('&')].flat();
-
-        if (limit && queryLimit) {
-            if (limit >= queryLimit) {
-                const eachLimit = Number.parseInt(String(queryLimit / feedsList.length));
-                limit = eachLimit || 1;
-            }
-            parameters += `&limit=${limit}`;
-        } else if (limit) {
-            parameters += `&limit=${limit}`;
-        } else if (queryLimit) {
-            const eachLimit = Number.parseInt(String(queryLimit / feedsList.length));
-            limit = eachLimit || 1;
-            parameters += `&limit=${limit}`;
+    if (feeds !== 'all' && feeds !== 'default') {
+        const feedsID: string = feeds.replaceAll(/feeds?=/g, '');
+        const feedsList = [...new Set(feedsID.split('&'))];
+        if (feedsList.some((feed) => !/^[1-9]\d*$/.test(feed) || !Number.isSafeInteger(Number(feed)))) {
+            throw new InvalidParameterError('Feed IDs must be positive integers separated by &. Use all or default to get every feed.');
         }
 
-        await Promise.all(
-            feedsList.map(async (feed) => {
+        if (sourceLimit) {
+            parameters += `&limit=${sourceLimit}`;
+        }
+
+        const feedEntries = await pMap(
+            feedsList,
+            async (feed) => {
                 const url = `${instance}/v1/feeds/${feed}/entries?${parameters}`;
                 const response = await got({
                     method: 'get',
@@ -184,36 +188,41 @@ async function handler(ctx) {
                     },
                 });
 
-                const entries = response.data.entries;
-                // Whether or not get the title of this feed
-                let getFeedTitle = 0;
-                // entries.map(item => {
-                for (const entry of entries) {
-                    entriesID.push(entry.id);
-                    if (!getFeedTitle) {
-                        feedsName.push(entry.feed.title);
-                        getFeedTitle = 1;
-                    }
-                    // Whether or not user would like to add the feed's name
-                    // to the title of article.
-                    let entryTitle = entry.title;
-                    if (addFeedName) {
-                        entryTitle += ` | ${entry.feed.title}`;
-                    }
-                    // let entryURL = `${instance}/share/${entry.share_code}`;
-                    // if (link == 'original') {
-                    //     entryURL = entry.url;
-                    // }
-                    articles.push({
-                        title: entryTitle,
-                        author: entry.author,
-                        pubDate: entry.published_at,
-                        description: entry.content,
-                        link: entry.url,
-                    });
-                }
-            })
+                return response.data.entries;
+            },
+            { concurrency: 3 }
         );
+
+        for (const entries of feedEntries) {
+            // Whether or not get the title of this feed
+            let getFeedTitle = 0;
+            // entries.map(item => {
+            for (const entry of entries) {
+                entriesID.push(entry.id);
+                if (!getFeedTitle) {
+                    feedsName.push(entry.feed.title);
+                    getFeedTitle = 1;
+                }
+                // Whether or not user would like to add the feed's name
+                // to the title of article.
+                let entryTitle = entry.title;
+                if (addFeedName) {
+                    entryTitle += ` | ${entry.feed.title}`;
+                }
+                // let entryURL = `${instance}/share/${entry.share_code}`;
+                // if (link == 'original') {
+                //     entryURL = entry.url;
+                // }
+                articles.push({
+                    title: entryTitle,
+                    author: entry.author,
+                    pubDate: entry.published_at,
+                    description: entry.content,
+                    link: entry.url,
+                    guid: `miniflux:${instance}:entry:${entry.id}`,
+                });
+            }
+        }
 
         const feedsNumber = feedsName.length;
         let agTitle, agInfo;
@@ -233,19 +242,10 @@ async function handler(ctx) {
             link: instance,
             description: agInfo,
             item: articles,
-            allowEmpty: true,
         };
     } else {
-        if (limit && queryLimit) {
-            if (limit < queryLimit) {
-                queryLimit = limit;
-            }
-            // Here we could add a '&' since parameter(s) list must not empty.
-            parameters += `&limit=${queryLimit}`;
-        } else if (queryLimit) {
-            parameters += `&limit=${queryLimit}`;
-        } else if (limit) {
-            parameters += `&limit=${limit}`;
+        if (sourceLimit) {
+            parameters += `&limit=${sourceLimit}`;
         }
 
         const response = await got.get(`${instance}/v1/entries?${parameters}`, {
@@ -270,6 +270,7 @@ async function handler(ctx) {
                 pubDate: entry.published_at,
                 description: entry.content,
                 link: entry.url,
+                guid: `miniflux:${instance}:entry:${entry.id}`,
             });
         }
 
@@ -278,12 +279,11 @@ async function handler(ctx) {
             link: instance,
             description: `All feeds on ${instance} powered by MiniFlux`,
             item: articles,
-            allowEmpty: true,
         };
     }
 
     if (mark !== 'unchanged') {
-        got({
+        await got({
             method: 'put',
             url: `${instance}/v1/entries`,
             headers: {

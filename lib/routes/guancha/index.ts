@@ -1,5 +1,6 @@
 import { load } from 'cheerio';
 
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
@@ -74,6 +75,9 @@ others = 热点新闻 + 滚动新闻
 async function handler(ctx) {
     const total = 10;
     const category = ctx.req.param('category') ?? 'all';
+    if (!Object.hasOwn(config, category)) {
+        throw new InvalidParameterError('Invalid category. Use all, review, story, fengwen, redian, gundong, home, or others.');
+    }
     const rootUrl = 'https://www.guancha.cn';
 
     type ListItem = DataItem & { link: string };
@@ -107,7 +111,7 @@ async function handler(ctx) {
 
                     return {
                         title: $item.text(),
-                        link: `${link!.startsWith('http') ? '' : rootUrl}${link!.replace(/\.shtml/, '_s.shtml')}`,
+                        link: new URL(link!, rootUrl).href,
                     };
                 });
 
@@ -127,29 +131,28 @@ async function handler(ctx) {
 
         redianList = response.data.items
             .map((item) => ({
-                title: item.TITLE,
-                link: `${rootUrl}${item.HTTP_URL.replace(/\.shtml/, '_s.shtml')}`,
+                title: item.title,
+                link: new URL(item.httpUrl, rootUrl).href,
             }))
             .slice(0, category === 'all' ? total / 3 : total);
     }
 
     if (['gundong', 'all', 'others'].includes(category)) {
-        const response = await got({
-            method: 'get',
-            url: `${rootUrl}/api/gundong.htm`,
-        });
-
-        gundongList = response.data.items
-            .map((item) => ({
-                title: item.TITLE,
-                link: `${rootUrl}${item.HTTP_URL.replace(/\.shtml/, '_s.shtml')}`,
+        const response = await got(`${rootUrl}/mainnews-gd/`);
+        const $ = load(response.data);
+        gundongList = $('h4.module-title a')
+            .toArray()
+            .map((element) => ({
+                title: $(element).text(),
+                link: new URL($(element).attr('href')!, rootUrl).href,
             }))
             .slice(0, category === 'all' ? total / 3 : total);
     }
 
+    const list = [...newsList, ...redianList, ...gundongList].filter((item, index, items) => items.findIndex((first) => first.link === item.link) === index);
     const items = await Promise.all(
-        [...newsList, ...redianList, ...gundongList].map((item) =>
-            cache.tryGet(item.link, async () => {
+        list.map(async (item) => {
+            const article = await cache.tryGet(`guancha:home:article:${item.link}`, async () => {
                 let detailResponse = await got({
                     method: 'get',
                     url: item.link,
@@ -162,26 +165,30 @@ async function handler(ctx) {
                 const jumpMatch = detailResponse.data.match(/user.guancha.cn\/main\/content\?id=(.*)";/);
 
                 if (jumpMatch !== null) {
-                    item.link = `https://user.guancha.cn/main/content?id=${jumpMatch[1]}&page=0`;
+                    const link = `https://user.guancha.cn/main/content?id=${jumpMatch[1]}&page=0`;
                     detailResponse = await got({
                         method: 'get',
-                        url: item.link,
+                        url: link,
                     });
                 }
 
                 const content = load(detailResponse.data);
 
-                const dateMatch = detailResponse.data.match(/"pubDate": "(.*)"/);
-                item.pubDate =
+                const dateMatch = detailResponse.data.match(/"pubDate"\s*:\s*"([^"]+)"/);
+                const relativeTime = content('.time1').text();
+                const pubDate =
                     dateMatch === null
-                        ? parseRelativeDate(content('.time1').text()) // PubDates of posts in 'fengwen' are in an informal format.
+                        ? relativeTime
+                            ? parseRelativeDate(relativeTime) // PubDates of posts in 'fengwen' are in an informal format.
+                            : undefined
                         : timezone(parseDate(dateMatch[1]), 8);
 
-                item.description = content('.all-txt').html() || content('.article-txt-content').html();
-                item.author = content('.author-intro p a').text() || content('.article-content div div h4 a').text() || content('.editor-intro p a').text() || content('.left-main > div.time.fix > span').eq(2).text();
-                return item;
-            })
-        )
+                const description = content('.all-txt').html() || content('.article-txt-content').html();
+                const author = content('.author-intro p a').text() || content('.article-content div div h4 a').text() || content('.editor-intro p a').text() || content('.left-main > div.time.fix > span').eq(2).text();
+                return { description, pubDate, author, link: jumpMatch ? `https://user.guancha.cn/main/content?id=${jumpMatch[1]}&page=0` : item.link };
+            });
+            return { ...item, ...article };
+        })
     );
 
     return {

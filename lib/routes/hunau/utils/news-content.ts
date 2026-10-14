@@ -5,38 +5,34 @@ import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
 export const newsContent = async (link, department = '') => {
-    try {
-        // 异步请求文章
-        const { data: response } = await got(link);
-        // 加载文章内容
-        const $ = load(response);
-        let reg = /\d{4}(?:\/\d{2}){2}/;
-        let element = '.newscontent';
+    // Fetch the article.
+    const { data: response } = await got(link);
+    // Load the article content.
+    const $ = load(response);
+    let reg = /\d{4}(?:\/\d{2}){2}/;
+    let element = '.newscontent';
 
-        // 处理特定部门
-        if (department === 'xky') {
-            reg = /\d{4}-\d{2}-\d{2}/;
-            element = '.content .edit';
-        }
-
-        // 解析日期
-        const extractDate = ($('.info').html()?.match(reg) || [])[0];
-        const pubDate = timezone(parseDate(extractDate!, 'YYYY-MM-DD', 'zh-cn'), 8);
-        // 解析文章
-        const newsContent = $(element).first();
-        newsContent.find('table').remove();
-        let description = newsContent.text().replaceAll(/\s+/g, '');
-
-        // 处理特定部门
-        if (department === 'gfxy') {
-            description = description.replace('点击下载文件:', '');
-        }
-
-        // 返回解析的结果
-        return { description, pubDate };
-    } catch {
-        // Handle the error (e.g., log it and return some default values)
-        // console.error(`There was an error fetching the link ${link}: ${error.message}`);
-        return { description: '', pubDate: null };
+    // Select the department-specific article layout.
+    if (['xky', 'jwc', 'gfxy'].includes(department)) {
+        reg = /\d{4}-\d{2}-\d{2}/;
+        element = department === 'jwc' ? '.collection .edit' : '.content .edit';
     }
+
+    // Parse the source publication date.
+    const extractDate = ($('.info').html()?.match(reg) || [])[0];
+    const pubDate = extractDate ? timezone(parseDate(extractDate.replaceAll('/', '-'), 'YYYY-MM-DD', true), 8) : undefined;
+    // Extract the main article content.
+    const newsContent = $(element).first();
+    if (!newsContent.length) {
+        throw new Error(`Article content was not found at ${link}`);
+    }
+    let description = newsContent.html() ?? '';
+
+    // Select the department-specific article layout.
+    if (department === 'gfxy') {
+        description = description.replace('点击下载文件:', '');
+    }
+
+    // Return the extracted article details.
+    return { description, pubDate: pubDate && !Number.isNaN(pubDate.getTime()) ? pubDate : undefined };
 };

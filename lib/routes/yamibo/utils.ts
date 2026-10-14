@@ -1,5 +1,6 @@
 import type { Cheerio } from 'cheerio';
 import type { Element } from 'domhandler';
+import { escapeAttribute } from 'entities';
 
 import { config } from '@/config';
 import ofetch from '@/utils/ofetch';
@@ -8,8 +9,13 @@ import timezone from '@/utils/timezone';
 
 export const bbsOrigin = 'https://bbs.yamibo.com';
 
-export function getDate(date: string): Date {
-    return timezone(parseDate(date), 8);
+export function getDate(value: string | undefined): Date | undefined {
+    if (!value) {
+        return;
+    }
+
+    const date = parseDate(value);
+    return Number.isFinite(date.getTime()) ? timezone(date, 8) : undefined;
 }
 
 type ThreadOptions = { ordertype?: string };
@@ -30,18 +36,46 @@ export async function fetchThread(tid: string, options?: ThreadOptions): Promise
     return { link, data };
 }
 
+function resolveImageUrl(src: string | undefined) {
+    if (!src || !URL.canParse(src, `${bbsOrigin}/`)) {
+        return;
+    }
+
+    const url = new URL(src, `${bbsOrigin}/`);
+    return ['http:', 'https:'].includes(url.protocol) ? url.href : undefined;
+}
+
+function getEditingPanels($item: Cheerio<Element>) {
+    return $item.find('i.pstatus').filter((_, element) => /^\s*本帖最后由 .*? 于 \d{4}-\d{1,2}-\d{1,2} \d{2}:\d{2} 编辑\s*$/.test($item.find(element).text()));
+}
+
+export function getUpdated($item: Cheerio<Element>) {
+    const calendar = getEditingPanels($item)
+        .first()
+        .text()
+        .match(/\d{4}-\d{1,2}-\d{1,2} \d{2}:\d{2}/)?.[0];
+    return getDate(calendar);
+}
+
 export function generateDescription($item: Cheerio<Element>, postId: string) {
     const content = $item.find(`#postmessage_${postId}`).parent();
+    getEditingPanels($item).remove();
     content.find('img').each((_, img) => {
-        const src = img.attribs.zoomfile ?? img.attribs.src;
-        img.attribs.src = `${bbsOrigin}/${src}`;
+        const src = resolveImageUrl(img.attribs.zoomfile ?? img.attribs.src ?? img.attribs.file);
+        if (src) {
+            img.attribs.src = src;
+        } else {
+            content.find(img).remove();
+        }
     });
     let description = content.html() ?? '';
 
     const images = $item.find('.pattl img').toArray();
     for (const img of images) {
-        const src = img.attribs.zoomfile ?? img.attribs.src;
-        description += `<img src="${bbsOrigin}/${src}" />`;
+        const src = resolveImageUrl(img.attribs.zoomfile ?? img.attribs.src ?? img.attribs.file);
+        if (src) {
+            description += `<img src="${escapeAttribute(src)}" />`;
+        }
     }
 
     return description;

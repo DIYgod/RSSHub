@@ -12,6 +12,9 @@ export const categoryTitle = (type) => {
         case 'jwdt':
             title = '教务动态';
             break;
+        case 'xyyw':
+            title = '学院要闻';
+            break;
         case 'xyxw':
             title = '学院新闻';
             break;

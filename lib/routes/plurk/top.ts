@@ -2,6 +2,7 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import { ViewType } from '@/types';
 import got from '@/utils/got';
+import { getRouteLimit } from '@/utils/route-limit';
 
 import { baseUrl, getPlurk } from './utils';
 
@@ -43,7 +44,7 @@ async function handler(ctx) {
         searchParams: {
             period: 'day',
             lang,
-            limit: ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 90,
+            limit: getRouteLimit(ctx, 90),
         },
     });
 

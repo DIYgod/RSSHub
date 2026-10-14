@@ -34,7 +34,7 @@ async function handler() {
             const $item = $(item);
             const a = $item.find('dt a');
             return {
-                title: a.text().trim(),
+                title: a.text(),
                 link: new URL(a.attr('href')!, baseUrl).href,
                 description: $item.find('dd.clamp').text(),
                 pubDate: timezone(parseDate($item.find('dd.time').text(), 'YYYY/MM/DD'), 8),

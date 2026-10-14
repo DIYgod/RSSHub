@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
@@ -44,19 +45,20 @@ async function handler(ctx) {
     });
 
     const $ = load(response.data);
-    const list = $('div#wp_news_w9 ul li').toArray();
+    const list = $('.news_box .news_title a[href]').toArray();
 
     return {
-        title: `新乡医学院三全学院官网信息${$('title').text()}`,
+        title: `豫北医学院官网信息${$('title').text()}`,
         link: currentUrl,
-        item: await Promise.all(
-            list.map(async (item) => {
+        item: await pMap(
+            list,
+            async (item) => {
                 const $item = $(item);
 
-                const link = new URL($item.find('dt a').attr('href')!, rootUrl).href;
-                const pubDate = parseDate($item.find('dd').eq(0).text(), 'YYYY-MM-DD');
+                const link = new URL($item.attr('href')!, rootUrl).href;
+                const pubDate = parseDate($item.closest('.news_box').find('.news_meta').text().trim(), 'YYYY-MM-DD');
 
-                const cacheIn = await cache.tryGet(link, async () => {
+                const cacheIn = await cache.tryGet(`sqmc:body:v2:${link}`, async () => {
                     const detailResponse = await got({
                         method: 'get',
                         url: link,
@@ -64,15 +66,18 @@ async function handler(ctx) {
                     const content = load(detailResponse.data);
 
                     return {
-                        title: $item.find('dt a').text(),
-                        description: content('div.Tr_Detail').html(),
-                        link,
-                        pubDate: timezone(pubDate, 8),
+                        description: content('.wp_articlecontent').html(),
                     };
                 });
 
-                return cacheIn;
-            })
+                return {
+                    title: $item.attr('title') || $item.text(),
+                    link,
+                    pubDate: timezone(pubDate, 8),
+                    ...cacheIn,
+                };
+            },
+            { concurrency: 3 }
         ),
     };
 }

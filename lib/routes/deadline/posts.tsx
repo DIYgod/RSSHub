@@ -5,6 +5,7 @@ import { renderToString } from 'hono/jsx/dom/server';
 import type { Data, Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
 const renderDescription = (embedded, desc) =>
     renderToString(
@@ -42,9 +43,10 @@ export const route: Route = {
 
 async function handler(ctx): Promise<Data> {
     const baseUrl = 'https://deadline.com';
+    const limit = getRouteLimit(ctx, 30);
     const response = await got(`${baseUrl}/wp-json/wp/v2/posts`, {
         searchParams: {
-            per_page: ctx.req.query('limit') ?? 30,
+            per_page: Math.min(limit, 100),
             _embed: true,
         },
     });
@@ -71,7 +73,7 @@ async function handler(ctx): Promise<Data> {
             link: item.link,
             guid: item.guid.rendered,
             description,
-            pubDate: parseDate(item.date_gmt),
+            pubDate: parseDate(`${item.date_gmt}Z`),
             author: embedded.author[0].name,
             category: [...new Set([...embedded['wp:term'][0].map((i) => i.name), ...embedded['wp:term'][1].map((i) => i.name)])],
         };

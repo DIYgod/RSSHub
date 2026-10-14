@@ -63,7 +63,7 @@ async function handler(ctx) {
             const $item = $(item);
 
             return {
-                title: $item.find('.name').text().trim(),
+                title: $item.find('.name').text(),
                 link: $item.find('a').attr('href'),
             };
         });
@@ -90,9 +90,13 @@ async function handler(ctx) {
         )
     );
 
-    const fallbackHtml = await ofetch(currentUrl);
+    let title = $('title').text();
+    if (!title) {
+        const pageSource = await ofetch(currentUrl);
+        title = load(pageSource)('title').text();
+    }
     return {
-        title: $('title').text() || load(fallbackHtml)('title').text(),
+        title,
         link: currentUrl,
         item: items,
     };

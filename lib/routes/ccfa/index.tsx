@@ -6,10 +6,12 @@ import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
+import timezone from '@/utils/timezone';
 
 export const handler = async (ctx) => {
     const { type = '1' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 30;
+    const limit = getRouteLimit(ctx, 30);
 
     const rootUrl = 'http://www.ccfa.org.cn';
     const currentUrl = new URL(`portal/cn/xiehui_list.jsp?type=${type}`, rootUrl).href;
@@ -28,7 +30,7 @@ export const handler = async (ctx) => {
 
             return {
                 title: a.text(),
-                pubDate: parseDate($item.find('span.list_time').text(), 'YYYY/MM/DD'),
+                pubDate: timezone(parseDate($item.find('span.list_time').text(), 'YYYY/MM/DD'), 8),
                 link: new URL(a.prop('href')!, currentUrl).href,
             };
         });
@@ -49,7 +51,7 @@ export const handler = async (ctx) => {
                 const descriptionHtml = $$('div.news_artical_txt').html();
                 const description = renderToString(
                     <>
-                        {intro ? <blockquote>{intro}</blockquote> : null}
+                        {intro ? <blockquote>{raw(intro)}</blockquote> : null}
                         {descriptionHtml ? raw(descriptionHtml) : null}
                     </>
                 );
@@ -61,14 +63,14 @@ export const handler = async (ctx) => {
 
                 item.title = title;
                 item.description = description;
-                item.pubDate = pubDate ? parseDate(pubDate, 'YYYY/MM/DD') : item.pubDate;
+                item.pubDate = pubDate ? timezone(parseDate(pubDate, 'YYYY/MM/DD'), 8) : item.pubDate;
                 item.author = $$('div.artical_info_left')
                     .text()
                     .split(/来源：/)
                     .pop();
                 item.content = {
                     html: description,
-                    text: $$('div.news_artical_txt').text(),
+                    text: $$('div.artical_info_jianjie, div.news_artical_txt').text(),
                 };
 
                 const attachmentEl =
@@ -95,7 +97,6 @@ export const handler = async (ctx) => {
         description,
         link: currentUrl,
         item: items,
-        allowEmpty: true,
         image,
         author: $('meta[property="og:site_name"]').prop('content'),
     };
@@ -108,7 +109,7 @@ export const route: Route = {
     maintainers: ['nczitzk'],
     handler,
     example: '/ccfa/1',
-    parameters: { category: '分类，默认为 `1`，即协会动态，可在对应分类页 URL 中找到' },
+    parameters: { type: '分类，默认为 `1`，即协会动态，可在对应分类页 URL 中找到' },
     description: `::: tip
 若订阅 [协会动态](https://www.ccfa.org.cn/portal/cn/xiehui_list.jsp?type=1)，网址为 \`https://www.ccfa.org.cn/portal/cn/xiehui_list.jsp?type=1\`。截取 \`https://www.ccfa.org.cn/portal/cn/xiehui_list.jsp?type=\` 到末尾的部分 \`1\` 作为参数填入，此时路由为 [\`/ccfa/1\`](https://rsshub.app/ccfa/1)。
 :::
@@ -143,20 +144,6 @@ export const route: Route = {
         supportScihub: false,
     },
     radar: [
-        {
-            source: [
-                'www.ccfa.org.cn/portal/cn/xiehui_list.jsp',
-                'www.ccfa.org.cn/portal/cn/hybz_list.jsp',
-                'www.ccfa.org.cn/portal/cn/lsbq.jsp',
-                'www.ccfa.org.cn/portal/cn/hybzs_list.jsp',
-                'www.ccfa.org.cn/portal/cn/fangyizhuanqu_list.jsp',
-            ],
-            target: (_, url) => {
-                const type = new URL(url).searchParams.get('type');
-
-                return type ? `/${type}` : '';
-            },
-        },
         {
             title: '协会动态',
             source: ['www.ccfa.org.cn/portal/cn/xiehui_list.jsp'],

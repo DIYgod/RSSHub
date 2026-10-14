@@ -1,11 +1,12 @@
 import { load } from 'cheerio';
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
+import pMap from 'p-map';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
 
 export const route: Route = {
     path: '/:community/:category?',
@@ -51,24 +52,27 @@ async function handler(ctx) {
     const data = response.data;
     const $ = load(data);
     const list = $('.simple-topic').toArray();
-    const item = await Promise.all(
-        list.map(async (item) => {
-            const $ = load(item);
-            const categoryName = $('.category-name span').text().trim();
+    const item = await pMap(
+        list,
+        async (item) => {
+            const topic = $(item);
+            const categoryName = topic.find('.category-name span').text().trim();
             if (['置顶', '广告'].includes(categoryName)) {
                 return '';
             }
-            $('.topic-title i').remove();
-            const itemLink = $('.topic-title-wrap').attr('href');
+            topic.find('.topic-title i').remove();
+            const itemLink = topic.find('.topic-title-wrap').attr('href');
 
-            const title = $('.topic-title').text().trim();
-            const content = await cache.tryGet(itemLink!, async () => {
+            const title = topic.find('.topic-title').text();
+            const html = await cache.tryGet(itemLink!, async () => {
                 const result = await got.get(itemLink);
 
-                return load(result.data);
+                return result.data;
             });
+            const content = load(html);
             const article = content('.article-content .content-body').html();
             const comment = content('#all-comments').html();
+            const createdAt = content('.article-content .book-article-meta [data-tooltip]').attr('data-tooltip');
 
             return {
                 title,
@@ -92,9 +96,10 @@ async function handler(ctx) {
                 ),
                 category: categoryName,
                 link: itemLink,
-                pubDate: parseDate($('.timeago').attr('title')!, 'YYYY/MM/DD'),
+                pubDate: createdAt ? parseDateInTimezone(createdAt, 8) : undefined,
             };
-        })
+        },
+        { concurrency: 3 }
     );
 
     const title = $('.sidebar .community-details .header span').text();

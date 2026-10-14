@@ -8,6 +8,7 @@ import { renderToString } from 'hono/jsx/dom/server';
 
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/parse-date';
 
 dayjs.extend(localizedFormat);
 dayjs.extend(duration);
@@ -53,7 +54,6 @@ async function handler() {
             const date = dayjs.unix(Number.parseInt(contest.startTimeSeconds));
             const description = renderToString(
                 <>
-                    <p>比赛：{title}</p>
                     <p>开始时间：{date.format('LL LT')}</p>
                     <p>持续时间：{sec2str(contest.durationSeconds)}</p>
                     <p>比赛类型：{contest.type}</p>
@@ -63,6 +63,7 @@ async function handler() {
             return {
                 title,
                 description,
+                pubDate: parseDate(contest.startTimeSeconds * 1000),
                 link: 'https://codeforces.com/contests/' + contest.id,
             };
         });

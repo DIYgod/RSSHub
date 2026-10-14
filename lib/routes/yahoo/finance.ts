@@ -1,10 +1,6 @@
-import { load } from 'cheerio';
-import pMap from 'p-map';
-
 import type { Route } from '@/types';
-import ofetch from '@/utils/ofetch';
 
-import { parseItem } from './news/utils';
+import { getFinanceTopic } from './utils';
 
 export const route: Route = {
     path: '/finance/:topic?',
@@ -19,21 +15,8 @@ export const route: Route = {
 
 async function handler(ctx) {
     const topic = ctx.req.param('topic') ?? 'latest-news';
-    const link = `https://finance.yahoo.com/topic/${topic}/`;
-    const response = await ofetch(link);
-    const $ = load(response);
-    const limit = Number(ctx.req.query('limit')) || 20;
-    const seen = new Set<string>();
-    const items = $('a[data-ylk*="topic-stream"]:has(h3)')
-        .toArray()
-        .map((element) => ({ title: $(element).find('h3').text(), link: new URL($(element).attr('href')!, link).href }))
-        .filter((item) => {
-            if (seen.has(item.link)) {
-                return false;
-            }
-            seen.add(item.link);
-            return true;
-        })
-        .slice(0, limit);
-    return { title: $('title').text(), link, language: 'en' as const, item: await pMap(items, parseItem, { concurrency: 3 }) };
+    const requestedLimit = Number(ctx.req.query('limit'));
+    const limit = Number.isSafeInteger(requestedLimit) && requestedLimit > 0 ? requestedLimit : 20;
+    const data = await getFinanceTopic('https://finance.yahoo.com', topic, limit);
+    return { ...data, language: 'en' as const };
 }

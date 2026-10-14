@@ -6,6 +6,7 @@ import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import { parseDate } from '@/utils/parse-date';
 import { getPlaywrightPage, type Page } from '@/utils/playwright';
+import { getRouteLimit } from '@/utils/route-limit';
 import timezone from '@/utils/timezone';
 
 const baseUrl = 'https://www.ebrun.com';
@@ -70,10 +71,11 @@ async function handler(ctx) {
         await page.waitForSelector(selector);
         const response = await page.content();
         const $ = load(response);
-        const requestedLimit = Number.parseInt(ctx.req.query('limit') ?? '');
+        const requestedLimit = getRouteLimit(ctx, 20);
+        const detailLimit = ctx.req.query('sorted') === 'false' ? requestedLimit : Math.max(20, requestedLimit);
         const items = $(selector)
             .toArray()
-            .slice(0, requestedLimit > 0 ? requestedLimit : 20)
+            .slice(0, detailLimit)
             .map((element): DataItem => ({ title: $(element).text(), link: new URL($(element).attr('href')!, baseUrl).href }));
         return { title: `亿邦动力 - ${section === 'information' ? '最新资讯' : '快讯'}`, link, language: 'zh-CN' as const, item: await pMap(items, (item) => getItem(item, page), { concurrency: 1 }) };
     } finally {

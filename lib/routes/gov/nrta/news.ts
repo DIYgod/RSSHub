@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
@@ -61,8 +62,9 @@ async function handler(ctx) {
                 title: '',
             };
         });
-    const items = await Promise.all(
-        list.map((item) =>
+    const items = await pMap(
+        list,
+        (item) =>
             cache.tryGet(item.link!, async () => {
                 const detailResponse = await got({
                     method: 'get',
@@ -71,11 +73,12 @@ async function handler(ctx) {
                 const content = load(detailResponse.data);
                 item.title = content('td[id="artTitMob"]').text();
                 item.description = content('div[id="c"]').html();
-                item.pubDate = timezone(parseDate(content('.mobile_time.shareWarpTime').text().trim()), 8);
+                const dateText = content('.mobile_time.shareWarpTime').text().trim();
+                item.pubDate = dateText ? timezone(parseDate(dateText), 8) : undefined;
                 item.author = content('.mobile_time.shareFromz').text();
                 return item;
-            })
-        )
+            }),
+        { concurrency: 3 }
     );
     return {
         title: Object.hasOwn(categories, category) ? categories[category] : '其他',

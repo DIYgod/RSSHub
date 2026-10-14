@@ -20,7 +20,7 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['agemys.org/detail/:id'],
+            source: ['www.agedm.io/detail/:id'],
         },
     ],
     name: '番剧详情',

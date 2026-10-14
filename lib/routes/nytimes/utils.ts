@@ -1,8 +1,44 @@
+import { Buffer } from 'node:buffer';
+
 import { load } from 'cheerio';
 
+import { config } from '@/config';
 import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
+import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import parser from '@/utils/rss-parser';
+
+const rssEncodings = new Set<BufferEncoding>(['ascii', 'utf8', 'utf16le', 'ucs2', 'base64', 'latin1', 'binary', 'hex']);
+const rssEncodingAliases: Record<string, BufferEncoding> = { 'utf-8': 'utf8', 'iso-8859-1': 'latin1' };
+
+export const getRssFeed = async (feedUrl: string, redirectCount = 0): Promise<Awaited<ReturnType<typeof parser.parseString>>> => {
+    const response = await ofetch.raw<ArrayBuffer, 'arrayBuffer'>(feedUrl, {
+        method: 'GET',
+        headers: { Accept: 'application/rss+xml', 'User-Agent': config.ua },
+        responseType: 'arrayBuffer',
+        redirect: 'manual',
+        ignoreResponseError: true,
+        timeout: config.requestTimeout,
+    });
+    const location = response.headers.get('location');
+    if (response.status >= 300 && response.status < 400 && location) {
+        if (redirectCount === 5) {
+            throw new Error('Too many redirects');
+        }
+        return getRssFeed(new URL(location, feedUrl).href, redirectCount + 1);
+    }
+    if (response.status >= 300) {
+        throw new Error(`Status code ${response.status}`);
+    }
+    const charset =
+        response.headers
+            .get('content-type')
+            ?.match(/(encoding|charset)\s*=\s*(\S+)/)?.[2]
+            .toLowerCase() || '';
+    const encoding = rssEncodingAliases[charset] || (rssEncodings.has(charset as BufferEncoding) ? (charset as BufferEncoding) : 'utf8');
+    return parser.parseString(Buffer.from(response._data!).toString(encoding));
+};
 
 const ProcessImage = ($, e) => {
     const photo = $(e).find('figure').find('picture').find('img');
@@ -19,15 +55,18 @@ const ProcessImage = ($, e) => {
 const PuppeterGetter = async (ctx, context, link) => {
     const result = await cache.tryGet(`nyt: ${link}`, async () => {
         const page = await context.newPage();
-        await page.route('**/*', (route) => {
-            const request = route.request();
-            request.resourceType() === 'document' ? route.continue() : route.abort();
-        });
-        await page.goto(link, {
-            waitUntil: 'domcontentloaded',
-        });
-        const response = await page.evaluate(() => document.querySelector('body')!.getHTML());
-        return response;
+        try {
+            await page.route('**/*', (route) => {
+                const request = route.request();
+                request.resourceType() === 'document' ? route.continue() : route.abort();
+            });
+            await page.goto(link, {
+                waitUntil: 'domcontentloaded',
+            });
+            return await page.evaluate(() => document.querySelector('body')!.getHTML());
+        } finally {
+            await page.close();
+        }
     });
     return result;
 };
@@ -41,7 +80,7 @@ const ProcessFeed = (data, hasEnVersion = false) => {
     // 处理 www.nytimes.com
     if (hasEnVersion) {
         content = $('section[name="articleBody"]');
-        result.title = `「英」${$('h1').text().trim()}`;
+        result.title = `「英」${$('h1').text()}`;
         result.author = $('article#story span[itemprop="name"]').text();
 
         // 处理封面图片
@@ -61,13 +100,7 @@ const ProcessFeed = (data, hasEnVersion = false) => {
         });
 
         // remove ad
-        content.find('#CNB').each((i, e) => {
-            $(e).next().remove();
-        });
-
-        content.find('div[id]').each((i, e) => {
-            $(e).remove();
-        });
+        content.find('#CNB').remove();
         // remove useless DOMs
         content.find('aside').each((i, e) => {
             $(e).remove();
@@ -91,12 +124,6 @@ const ProcessFeed = (data, hasEnVersion = false) => {
             // there is a cover photo
             const cover = $('figure.article-span-photo');
             $(cover).insertBefore(content[0].firstChild);
-        }
-
-        if ($('footer.author-info').length > 0) {
-            // credit to original author and translators
-            const footer = $('footer.author-info');
-            $(footer).insertAfter(content[0].lastChild);
         }
     }
 

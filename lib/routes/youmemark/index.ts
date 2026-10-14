@@ -1,5 +1,6 @@
 import { load } from 'cheerio';
 
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Data, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -32,9 +33,21 @@ Add \`?limit=<number>\` to the end of the route to limit the number of items. De
 :::`,
 };
 
+const parseBookmarkDate = (value: string) => {
+    if (!value) {
+        return;
+    }
+    const date = parseDate(value, 'YYYY-MM-DD', true);
+    return Number.isFinite(date.getTime()) ? date : undefined;
+};
+
 async function handler(ctx): Promise<Data> {
     const userid = ctx.req.param('userid');
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 10;
+    const requestedLimit = ctx.req.query('limit');
+    const limit = requestedLimit ? Number.parseInt(requestedLimit) : 10;
+    if (!Number.isFinite(limit) || limit < 1) {
+        throw new InvalidParameterError('limit must be a positive integer');
+    }
 
     const response = await ofetch(`https://youmemark.com/user/${userid}`);
 
@@ -53,7 +66,7 @@ async function handler(ctx): Promise<Data> {
 
             const $linkDiv = $item.find('> div').first();
             const $link = $linkDiv.find('a');
-            const title = $link.find('span').first().text().trim();
+            const title = $link.find('span').first().text();
             const domain = $link.find('span').last().text().trim().replaceAll(/[()]/g, '').trim();
             const link = $link.attr('href');
 
@@ -62,12 +75,12 @@ async function handler(ctx): Promise<Data> {
 
             const dateStr = $item.find('.text-xs.text-gray-500 span').text().trim();
 
-            if (link && title && dateStr) {
+            if (link && title) {
                 items.push({
                     title,
                     link,
                     description: content,
-                    pubDate: parseDate(dateStr, 'YYYY-MM-DD'),
+                    pubDate: parseBookmarkDate(dateStr),
                     author: domain,
                     guid: link,
                 });

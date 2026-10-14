@@ -9,6 +9,14 @@ export const route: Route = {
     path: '/indexers/pianyuan/results/search/api',
     categories: ['multimedia'],
     example: '/pianyuan/indexers/pianyuan/results/search/api?t=test&q=长津湖',
+    features: {
+        requireConfig: [
+            {
+                name: 'PIANYUAN_COOKIE',
+                description: 'Login cookie required by the source website.',
+            },
+        ],
+    },
     radar: [
         {
             source: ['pianyuan.org/'],
@@ -25,9 +33,11 @@ export const route: Route = {
 async function handler(ctx) {
     const link_base = 'https://pianyuan.org/';
     const description = '搜索';
-    // 适配jackett 搜索api, eg: https://rsshub.app/pianyuan/indexers/pianyuan/results/search/api?t=test&q=halo
-    const searchKey = ctx.originalUrl.split('&q=', 2)[1];
-    const link = link_base + `search?q=${searchKey}`;
+    // Preserve the Jackett-compatible search query used by existing clients.
+    const searchKey = ctx.req.query('q') ?? '';
+    const searchUrl = new URL('search', link_base);
+    searchUrl.searchParams.set('q', searchKey);
+    const link = searchUrl.href;
 
     const response = await utils.request(link, cache);
     const $ = load(response._data);

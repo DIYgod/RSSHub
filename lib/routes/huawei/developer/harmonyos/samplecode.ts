@@ -8,6 +8,14 @@ const md = MarkdownIt({
     html: true,
 });
 
+function getPublicationDate(value?: string) {
+    if (!value) {
+        return;
+    }
+    const date = parseDate(value);
+    return Number.isNaN(date.getTime()) ? undefined : date;
+}
+
 export const route: Route = {
     path: '/developer/harmonyos/sample-code',
     categories: ['programming'],
@@ -23,7 +31,7 @@ export const route: Route = {
     radar: [
         {
             source: ['developer.huawei.com/consumer/cn/samples'],
-            target: '/huawei/developer/harmonyos/sample-code',
+            target: '/developer/harmonyos/sample-code',
         },
     ],
     name: 'HarmonyOS 示例代码',
@@ -54,7 +62,7 @@ async function handler(): Promise<Data> {
         link: item.link,
         description: md.render(item.description),
         category: item.keywords,
-        pubDate: parseDate(item.updateTime),
+        pubDate: getPublicationDate(item.updateTime),
         author: 'HarmonyOS',
         id: item.id,
         image: item.effectPictureUrl,

@@ -1,11 +1,11 @@
 import { load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
+import pMap from 'p-map';
 
 import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
 import { fetchArticle, WeChatMpError } from '@/utils/wechat-mp';
 
 const host = 'https://www.cs.sjtu.edu.cn';
@@ -55,16 +55,6 @@ function parseListing(html: string): ListItem[] {
         .filter((it) => it.link && it.title);
 }
 
-function publishDateFromImage(imageUrl: string): Date | undefined {
-    // Image path encodes upload date: /upload/image/YYYYMMDD/...
-    const m = imageUrl.match(/\/upload\/[^/]+\/(\d{4})(\d{2})(\d{2})\//);
-    if (!m) {
-        return undefined;
-    }
-    const [, y, mo, d] = m;
-    return timezone(parseDate(`${y}-${mo}-${d}`, 'YYYY-MM-DD'), 8);
-}
-
 function renderDescription(item: ListItem): string {
     return renderToString(
         <>
@@ -87,16 +77,15 @@ function basicItem(item: ListItem): DataItem {
         description: renderDescription(item),
         author: item.speakers || undefined,
         image: item.image || undefined,
-        pubDate: publishDateFromImage(item.image),
     };
 }
 
-function enrichItem(item: ListItem): Promise<DataItem> {
-    return cache.tryGet(item.link, async () => {
+async function enrichItem(item: ListItem): Promise<DataItem> {
+    const details = await cache.tryGet(`sjtu:cs:activity:v4:${item.link}`, async () => {
         const response = await ofetch.raw<string>(item.link);
         const finalUrl = response.url;
-        let description = renderDescription(item);
-        let pubDate = publishDateFromImage(item.image);
+        let description = '';
+        let pubDate: Date | undefined;
 
         if (new URL(finalUrl).hostname === 'mp.weixin.qq.com') {
             try {
@@ -119,20 +108,22 @@ function enrichItem(item: ListItem): Promise<DataItem> {
                 const publishedMatch = publishedText.match(/(\d{4})-(\d{1,2})-(\d{1,2})/);
                 if (publishedMatch) {
                     const [, y, m, d] = publishedMatch;
-                    pubDate = timezone(parseDate(`${y}-${m.padStart(2, '0')}-${d.padStart(2, '0')}`, 'YYYY-MM-DD'), 8);
+                    pubDate = parseDate(`${y}-${m.padStart(2, '0')}-${d.padStart(2, '0')} +0000`, 'YYYY-MM-DD ZZ');
                 }
             }
         }
 
-        return {
-            title: item.title,
-            link: item.link,
-            description,
-            author: item.speakers || undefined,
-            image: item.image || undefined,
-            pubDate,
-        };
+        return { description, pubDate };
     });
+    return { ...basicItem(item), description: renderDescription(item) + details.description, pubDate: details.pubDate };
+}
+
+async function enrichItemSafely(item: ListItem): Promise<DataItem> {
+    try {
+        return await enrichItem(item);
+    } catch {
+        return basicItem(item);
+    }
 }
 
 export const route: Route = {
@@ -164,8 +155,7 @@ async function handler(): Promise<Data> {
     const listLink = `${host}/xshd.html`;
     const data = await ofetch<string>(listLink);
     const items = parseListing(data);
-    const settledItems = await Promise.allSettled(items.map((it) => enrichItem(it)));
-    const enriched = settledItems.map((result, index) => (result.status === 'fulfilled' ? result.value : basicItem(items[index])));
+    const enriched = await pMap(items, enrichItemSafely, { concurrency: 3 });
 
     return {
         title: '上海交通大学计算机学院 - 学术活动',

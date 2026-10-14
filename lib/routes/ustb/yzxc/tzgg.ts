@@ -1,13 +1,14 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 const host = 'https://yzxc.ustb.edu.cn';
 const url = `${host}/tzgg/index.htm`;
-
 export const route: Route = {
     path: '/yzxc/tzgg',
     categories: ['university'],
@@ -31,13 +32,13 @@ export const route: Route = {
     handler,
     url: 'yzxc.ustb.edu.cn/',
 };
-
 async function handler() {
     const response = await got(url);
     const $ = load(response.data);
     const list = $('.page_content .ul-inline .box');
-    const items = await Promise.all(
-        list.map((i, item) => {
+    const items = await pMap(
+        list.toArray(),
+        async (item) => {
             const $item = $(item);
             const time = $item.find('.time').text();
             const titleDom = $item.find('.title a');
@@ -51,21 +52,18 @@ async function handler() {
             } else {
                 itemUrl = host + path;
             }
-            return cache.tryGet(itemUrl, async () => {
-                let description = titleText;
+            const details = await cache.tryGet<Pick<DataItem, 'description'>>(`ustb:yzxc:detail:${itemUrl}`, async () => {
+                let description;
                 const result = await got(itemUrl);
                 const $ = load(result.data);
                 if ($('.article') && $('.article').html()) {
                     description = $('.article').html()!.trim();
                 }
-                return {
-                    title: titleText,
-                    link: itemUrl,
-                    pubDate: parseDate(time),
-                    description,
-                };
+                return { description };
             });
-        })
+            return { title: titleText, link: itemUrl, pubDate: time ? timezone(parseDate(time, 'YYYY-MM-DD'), 8) : undefined, ...details };
+        },
+        { concurrency: 3 }
     );
     return {
         title: '北京科技大学研究生招生信息网 - 通知公告',

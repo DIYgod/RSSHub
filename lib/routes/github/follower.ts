@@ -1,5 +1,4 @@
 import { config } from '@/config';
-import ConfigNotFoundError from '@/errors/types/config-not-found';
 import type { Route } from '@/types';
 import got from '@/utils/got';
 
@@ -27,49 +26,32 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    if (!config.github || !config.github.access_token) {
-        throw new ConfigNotFoundError('GitHub follower RSS is disabled due to the lack of <a href="https://docs.rsshub.app/deploy/config#route-specific-configurations">relevant config</a>');
-    }
     const user = ctx.req.param('user');
 
     const host = `https://github.com/${user}`;
-    const url = 'https://api.github.com/graphql';
+    const url = `https://api.github.com/users/${user}/followers`;
 
     const response = await got({
-        method: 'post',
+        method: 'get',
         url,
         headers: {
-            Authorization: `bearer ${config.github.access_token}`,
+            Authorization: config.github?.access_token ? `Bearer ${config.github.access_token}` : undefined,
         },
-        json: {
-            query: /* GraphQL */ `
-            {
-                user(login: "${user}") {
-                  followers(first: 10) {
-                    edges {
-                      node {
-                        login
-                        avatarUrl
-                      }
-                    }
-                  }
-                }
-              }
-            `,
+        searchParams: {
+            per_page: 10,
         },
     });
 
-    const data = response.data.data.user.followers.edges;
+    const data = response.data;
 
     return {
-        allowEmpty: true,
         title: `${user}'s followers`,
         link: host,
         item: data.map((follower) => ({
-            title: `${follower.node.login} started following ${user}`,
-            author: follower.node.login,
-            description: `<a href="https://github.com/${follower.node.login}">${follower.node.login}</a> <br> <img sytle="width:50px;" src='${follower.node.avatarUrl}'>`,
-            link: `https://github.com/${follower.node.login}`,
+            title: `${follower.login} started following ${user}`,
+            author: follower.login,
+            description: `<a href="https://github.com/${follower.login}">${follower.login}</a> <br> <img sytle="width:50px;" src='${follower.avatar_url}'>`,
+            link: follower.html_url,
         })),
     };
 }

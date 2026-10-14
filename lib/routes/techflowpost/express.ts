@@ -1,5 +1,6 @@
 import type { Route } from '@/types';
 import { ViewType } from '@/types';
+import { getRouteLimit } from '@/utils/route-limit';
 
 import { getNewsflashItems, rootUrl } from './utils';
 
@@ -29,7 +30,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const currentUrl = `${rootUrl}/zh-CN/newsletter`;
-    const items = await getNewsflashItems(ctx.req.query('limit') ?? 50);
+    const items = await getNewsflashItems(getRouteLimit(ctx, 50));
 
     return {
         title: '深潮TechFlow - 快讯',

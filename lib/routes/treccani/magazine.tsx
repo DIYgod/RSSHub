@@ -50,7 +50,7 @@ async function handler(ctx) {
     const response = await ofetch(link);
     const $ = load(response);
     const data = JSON.parse($('#__NEXT_DATA__').text());
-    const stories = collectStories(data.props.pageProps.story);
+    const stories = collectStories(data.props.pageProps.story.content.body);
     return {
         title: `Treccani Magazine${section ? ` - ${section}` : ''}`,
         link,
@@ -67,6 +67,7 @@ async function handler(ctx) {
                     author: content.nomeAutore || undefined,
                     category: story.tag_list,
                     pubDate: date ? parseDate(date) : undefined,
+                    updated: story.updated_at ? parseDate(story.updated_at) : undefined,
                     description: renderToString(
                         <>
                             {image && <img src={image} alt="" />}

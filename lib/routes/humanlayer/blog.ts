@@ -1,9 +1,18 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+
+function getPublicationDate(value?: string) {
+    if (!value) {
+        return;
+    }
+    const date = parseDate(value);
+    return Number.isNaN(date.getTime()) ? undefined : date;
+}
 
 export const route: Route = {
     path: '/blog',
@@ -21,7 +30,7 @@ export const route: Route = {
     radar: [
         {
             source: ['www.humanlayer.dev/blog'],
-            target: '/humanlayer/blog',
+            target: '/blog',
         },
     ],
     name: 'Blog',
@@ -57,14 +66,15 @@ async function handler(): Promise<Data> {
                 link: `${baseUrl}${href}`,
                 author,
                 description,
-                pubDate: dateStr ? parseDate(dateStr) : undefined,
+                pubDate: getPublicationDate(dateStr),
                 category,
             };
         });
 
-    const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link, async (): Promise<DataItem> => {
+    const items = await pMap(
+        list,
+        async (item) => {
+            const detail = await cache.tryGet(`${item.link}:detail`, async (): Promise<Partial<DataItem>> => {
                 const resp = await ofetch(item.link);
                 const $detail = load(resp);
 
@@ -77,15 +87,23 @@ async function handler(): Promise<Data> {
                 const content = $detail('div.prose').html();
 
                 return {
-                    ...item,
-                    title: ogTitle || item.title,
-                    description: content || ogDesc || item.description,
-                    pubDate: publishedTime ? parseDate(publishedTime) : item.pubDate,
-                    author: ogAuthor || item.author,
+                    title: ogTitle,
+                    description: content || ogDesc,
+                    pubDate: getPublicationDate(publishedTime),
+                    author: ogAuthor,
                     banner: ogImage,
                 };
-            })
-        )
+            });
+            return {
+                ...item,
+                title: detail.title || item.title,
+                description: detail.description || item.description,
+                pubDate: detail.pubDate || item.pubDate,
+                author: detail.author || item.author,
+                banner: detail.banner,
+            };
+        },
+        { concurrency: 3 }
     );
 
     return {

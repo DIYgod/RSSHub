@@ -2,6 +2,7 @@ import { load } from 'cheerio';
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 
+import CaptchaError from '@/errors/types/captcha';
 import type { Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
@@ -67,6 +68,15 @@ const ids = {
     },
 };
 
+function isVerificationPage(data: unknown) {
+    if (typeof data !== 'string') {
+        return false;
+    }
+
+    const $ = load(data);
+    return /^\s*check\(\)\s*;?$/.test($('body').attr('onload') ?? '') && $('input[name="parm_0"]').length > 0 && $('input[name="parm_1"]').length > 0;
+}
+
 export const route: Route = {
     path: '/:id?/:category?',
     categories: ['finance'],
@@ -116,6 +126,10 @@ async function handler(ctx) {
         method: 'get',
         url: apiUrl,
     });
+
+    if (isVerificationPage(response.data)) {
+        throw new CaptchaError('Zhitong Caijing returned a browser verification page; article data is unavailable.');
+    }
 
     let items = response.data.data.slice(0, limit).map((item) => ({
         title: item.title,

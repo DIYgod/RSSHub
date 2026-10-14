@@ -4,6 +4,11 @@ import { parseDate } from '@/utils/parse-date';
 
 import { renderDescription } from './templates/description';
 
+export const getAudioType = (url: string) => {
+    const types: Record<string, string | undefined> = { mp3: 'audio/mpeg', mp4: 'audio/mp4', m4a: 'audio/mp4', m3u8: 'application/vnd.apple.mpegurl' };
+    return types[new URL(url).pathname.split('.').pop()?.toLowerCase() ?? ''];
+};
+
 export const route: Route = {
     path: '/:id',
     categories: ['multimedia'],
@@ -33,7 +38,8 @@ export const route: Route = {
 
 async function handler(ctx) {
     const id = ctx.req.param('id');
-    const size = ctx.req.query('limit') ?? '100';
+    const requestedLimit = Number(ctx.req.query('limit'));
+    const size = Number.isFinite(requestedLimit) && Math.floor(requestedLimit) > 0 ? Math.floor(requestedLimit) : 100;
 
     const rootUrl = 'https://www.radio.cn';
     const apiRootUrl = 'http://tacc.radio.cn';
@@ -53,7 +59,7 @@ async function handler(ctx) {
 
     const items = data.program.map((item) => {
         const enclosure_url = item.streams[0].url;
-        const enclosure_type = `audio/${enclosure_url.match(/\.(\w+)$/)[1]}`;
+        const enclosure_type = getAudioType(enclosure_url);
 
         return {
             guid: item.id,

@@ -4,6 +4,7 @@ import type { Context } from 'hono';
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
 const baseUrl = 'https://www.acea.auto';
 
@@ -39,7 +40,7 @@ async function handler(ctx: Context) {
         responseType: 'json',
         body: new URLSearchParams({ action: 'load_results', 'filters[content][]': type, 'filters[pageNumber]': '1', 'filters[orderby]': 'date' }),
     });
-    const limit = Number(ctx.req.query('limit')) || 20;
+    const limit = getRouteLimit(ctx, 20);
     const posts = response.posts.slice(0, limit);
 
     const details = await ofetch(`${baseUrl}/wp-json/wp/v2/allpt`, {
