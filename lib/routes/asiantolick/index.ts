@@ -5,6 +5,7 @@ import cache from '@/utils/cache';
 import { getSubPath } from '@/utils/common-utils';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
 import { renderDescription } from './templates/description';
 
@@ -29,7 +30,7 @@ export const route: Route = {
 
 export async function handler(ctx) {
     const category = getSubPath(ctx).slice(1);
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 24;
+    const limit = getRouteLimit(ctx, 24);
 
     const rootUrl = 'https://asiantolick.com';
     const apiUrl = new URL('ajax/buscar_posts.php', rootUrl).href;
