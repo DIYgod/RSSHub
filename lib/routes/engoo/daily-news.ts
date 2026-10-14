@@ -6,6 +6,7 @@ import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
 const apiUrl = 'https://api.engoo.com/api';
 const categoryId = '0225ae09-5d63-41c2-bd75-693985d07d78';
@@ -68,6 +69,6 @@ async function handler(ctx) {
             type: 'Published',
         },
     });
-    const limit = Number(ctx.req.query('limit')) || 20;
+    const limit = getRouteLimit(ctx, 20);
     return { title: 'Engoo Daily News', link: 'https://engoo.com/app/daily-news', language: 'en' as const, item: await pMap(response.data.slice(0, limit), getItem, { concurrency: 3 }) };
 }
