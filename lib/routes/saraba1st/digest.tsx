@@ -1,13 +1,17 @@
 import { load } from 'cheerio';
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
+import pMap from 'p-map';
 
 import { config } from '@/config';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 import timezone from '@/utils/timezone';
+
+class RestrictedThreadError extends Error {}
 
 export const route: Route = {
     path: '/digest/:tid',
@@ -41,7 +45,7 @@ async function handler(ctx) {
     const title = $('head title').text().replace(/-.*/, '');
     const list = $('#threadlisttableid tbody[id^="normalthread_"] tr');
     const count = list
-        .slice(0, ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 20)
+        .slice(0, getRouteLimit(ctx, 20))
         .toArray()
         .map((each): DataItem => {
             const $each = $(each);
@@ -50,18 +54,27 @@ async function handler(ctx) {
             return {
                 title: `${title}:${floor}`,
                 link: new URL(floorUrl!, `${host}/2b/`).href,
-                author: $each.find('td.by cite').text(),
+                author: $each.find('td.by cite').first().text(),
                 pubDate: timezone(parseDate($each.find('td.by em').first().text()), 8),
             };
         });
 
-    const resultItems = await Promise.all(
-        count.map((i) =>
-            cache.tryGet(i.link!, async () => {
-                i.description = await fetchContent(i.link);
-                return i;
-            })
-        )
+    const resultItems = await pMap(
+        count,
+        async (i) => {
+            try {
+                return await cache.tryGet(i.link!, async () => {
+                    i.description = await fetchContent(i.link);
+                    return i;
+                });
+            } catch (error) {
+                if (error instanceof RestrictedThreadError) {
+                    return i;
+                }
+                throw error;
+            }
+        },
+        { concurrency: 3 }
     );
 
     return {
@@ -81,6 +94,12 @@ async function fetchContent(url) {
         },
     });
     const subind = load(subres.data);
+    if (/^抱歉，本帖要求阅读权限高于 \d+ 才能浏览$/.test(subind('#messagetext').text().trim())) {
+        throw new RestrictedThreadError('This thread requires a higher reading permission level');
+    }
+    if (!subind('#postlist td[id*="postmessage_"]').length) {
+        throw new Error('Stage1st thread posts are missing');
+    }
     const stubS = subind('<div>');
     subind('#postlist')
         .find('div[id*="post_"] ')
