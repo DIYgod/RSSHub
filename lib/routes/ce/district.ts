@@ -1,6 +1,7 @@
 import { load } from 'cheerio';
 import pMap from 'p-map';
 
+import NotFoundError from '@/errors/types/not-found';
 import type { DataItem, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
@@ -16,9 +17,9 @@ export const route: Route = {
     handler,
     example: '/ce/district',
     parameters: { category: '栏目标识，默认为 roll（即时新闻）' },
-    description: `| 即时新闻 | 经济动态 | 独家视角 | 专题 | 数说地方 | 地方播报 | 专稿 | 港澳台 |
-| -------- | -------- | -------- | ---- | -------- | -------- | ---- | ------ |
-| roll     | jjdt     | poll     | ch   | ssdf     | dfbb     | zg   | gat    |`,
+    description: `| 即时新闻 | 经济动态 | 独家视角 | 专题 | 数说地方 | 地方播报 |
+| -------- | -------- | -------- | ---- | -------- | -------- |
+| roll     | jjdt     | poll     | ch   | ssdf     | dfbb     |`,
     categories: ['traditional-media'],
     features: {
         requireConfig: false,
@@ -49,6 +50,9 @@ export const route: Route = {
 async function handler(ctx) {
     const rootUrl = 'http://district.ce.cn/';
     const { category = 'roll' } = ctx.req.param();
+    if (category === 'zg' || category === 'gat') {
+        throw new NotFoundError('This district category has been retired. Choose roll, jjdt, poll, ch, ssdf or dfbb.');
+    }
     const url = `${rootUrl}newarea/${category}/index.shtml`;
     const response = await fetchHtml(url);
     const $ = load(response);

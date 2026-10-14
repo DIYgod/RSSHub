@@ -2,7 +2,6 @@ import { load } from 'cheerio';
 import pMap from 'p-map';
 
 import InvalidParameterError from '@/errors/types/invalid-parameter';
-import NotFoundError from '@/errors/types/not-found';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
@@ -25,10 +24,10 @@ interface Article {
 }
 
 export const route: Route = {
-    path: '/:id?',
+    path: '/:id',
     categories: ['new-media'],
     example: '/cdi/150',
-    parameters: { id: '分类，见下表，默认为综研国策' },
+    parameters: { id: '分类（必填），见下表' },
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -40,18 +39,13 @@ export const route: Route = {
     name: '栏目',
     maintainers: ['nczitzk'],
     handler,
-    description: `| 樊纲观点 | 综研国策 | 综研观察 | 综研专访 | 综研视点 | 银湖新能源 |
-| -------- | -------- | -------- | -------- | -------- | ---------- |
-| 102      | 152      | 150      | 153      | 154      | 151        |
-
-当前官网可以对应到原参数的栏目为 \`102\`、\`150\` 和 \`154\`。原默认栏目 \`152\` 以及 \`153\`、\`151\` 暂无可核实的新栏目地址。`,
+    description: `| 樊纲观点 | 综研观察 | 综研视点 |
+| -------- | -------- | -------- |
+| 102      | 150      | 154      |`,
 };
 
 async function handler(ctx) {
-    const id = ctx.req.param('id') ?? '152';
-    if (['152', '153', '151'].includes(id)) {
-        throw new NotFoundError(`Cannot map legacy CDI category ${id} to a verified current category. Available categories: 102, 150, 154.`);
-    }
+    const id = ctx.req.param('id');
     if (!Object.hasOwn(categories, id)) {
         throw new InvalidParameterError('Available CDI categories: 102, 150, 154.');
     }

@@ -1,6 +1,7 @@
 import { type Cheerio, load } from 'cheerio';
 import pMap from 'p-map';
 
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
@@ -40,30 +41,28 @@ export const route: Route = {
 | 教学动态 | 45   |
 | 科研动态 | 51   |
 | 护理动态 | 57   |
-| 党群活动 | 63   |
-| 外事活动 | 13   |
-| 媒体二院 | 14   |
-| 理论政策 | 16   |`,
+| 媒体二院 | 14   |`,
 };
 async function handler(ctx) {
     const id = ctx.req.param('id') ?? '110';
-    const rootUrl = 'http://2yuan.xjtu.edu.cn';
     const migratedPath = migratedCategories.get(id);
-    const currentUrl = migratedPath ? new URL(migratedPath, 'http://www.2yuan.xjtu.edu.cn/defsyy/').href : `${rootUrl}/Html/News/Columns/${id}/Index.html`;
+    if (!migratedPath) {
+        throw new InvalidParameterError('Supported hospital news categories: 110, 6, 8, 14, 57, 51 and 45.');
+    }
+    const currentUrl = new URL(migratedPath, 'http://www.2yuan.xjtu.edu.cn/defsyy/').href;
     const response = await got({
         method: 'get',
         url: currentUrl,
     });
     const $ = load(response.data);
-    let items = $(migratedPath ? '.lb-list li a[href], .news-list-lb li a[href]' : '.column_list h2')
+    let items = $('.lb-list li a[href], .news-list-lb li a[href]')
         .toArray()
         .map((item): DataItem => {
             const $item = $(item);
-            const anchor = migratedPath ? $item : $item.find('a');
+            const anchor = $item;
             return {
                 title: anchor.attr('title')!,
                 link: new URL(anchor.attr('href')!, currentUrl).href,
-                ...(!migratedPath && { pubDate: timezone(parseDate($item.find('.dy_date').text()), 8) }),
             };
         });
     items = await pMap(
@@ -77,58 +76,45 @@ async function handler(ctx) {
                         url: item.link,
                     });
                     const content = load(detailResponse.data);
-                    if (migratedPath) {
-                        const body = content('.v_news_content').first();
-                        if (!body.length) {
-                            throw new Error(`Article content was not found at ${item.link}`);
-                        }
-                        const links = new Set(mapElements(body.find('a[href]'), (_, element) => content(element).attr('href')));
-                        const attachments = content('.wznr a[href*="download.jsp"]')
-                            .filter((_, element) => !content(element).closest('.v_news_content').length)
-                            .toArray()
-                            .filter((element) => {
-                                const href = content(element).attr('href')!;
-                                if (links.has(href)) {
-                                    return false;
-                                }
-                                links.add(href);
-                                return true;
-                            });
-                        detail.description = body.html()! + attachments.map((element) => `<p>${content.html(element)}</p>`).join('');
-                        const hospitalAuthor = content('.article-sm span')
-                            .filter((_, element) => content(element).text().startsWith('作者：'))
-                            .text()
-                            .replace(/^作者：/, '')
-                            .trim();
-                        const universityArticle = new URL(item.link!).hostname === 'news.xjtu.edu.cn';
-                        const author =
-                            hospitalAuthor ||
-                            (universityArticle
-                                ? content('.zdf .d_write2')
-                                      .filter((_, element) => content(element).find('.d_write').text() === '文字：')
-                                      .find('.spans')
-                                      .text()
-                                      .trim()
-                                : '');
-                        if (author) {
-                            detail.author = author;
-                        }
-                        const dateText = content('.article-sm span').first().text() || (universityArticle ? content('.con-tit .shfffff span').first().text() : '');
-                        const date = dateText.match(/\d{4}-\d{2}-\d{2}(?: \d{2}:\d{2})?/)?.[0];
-                        if (date) {
-                            detail.pubDate = timezone(parseDate(date, date.length > 10 ? 'YYYY-MM-DD HH:mm' : 'YYYY-MM-DD'), 8);
-                        }
-                    } else {
-                        detail.description = content('#zoom').html();
-                        detail.pubDate = timezone(
-                            parseDate(
-                                content('.sub_tit3 strong')
-                                    .first()
-                                    .text()
-                                    .replace(/发布时间：/, '')
-                            ),
-                            8
-                        );
+                    const body = content('.v_news_content').first();
+                    if (!body.length) {
+                        throw new Error(`Article content was not found at ${item.link}`);
+                    }
+                    const links = new Set(mapElements(body.find('a[href]'), (_, element) => content(element).attr('href')));
+                    const attachments = content('.wznr a[href*="download.jsp"]')
+                        .filter((_, element) => !content(element).closest('.v_news_content').length)
+                        .toArray()
+                        .filter((element) => {
+                            const href = content(element).attr('href')!;
+                            if (links.has(href)) {
+                                return false;
+                            }
+                            links.add(href);
+                            return true;
+                        });
+                    detail.description = body.html()! + attachments.map((element) => `<p>${content.html(element)}</p>`).join('');
+                    const hospitalAuthor = content('.article-sm span')
+                        .filter((_, element) => content(element).text().startsWith('作者：'))
+                        .text()
+                        .replace(/^作者：/, '')
+                        .trim();
+                    const universityArticle = new URL(item.link!).hostname === 'news.xjtu.edu.cn';
+                    const author =
+                        hospitalAuthor ||
+                        (universityArticle
+                            ? content('.zdf .d_write2')
+                                  .filter((_, element) => content(element).find('.d_write').text() === '文字：')
+                                  .find('.spans')
+                                  .text()
+                                  .trim()
+                            : '');
+                    if (author) {
+                        detail.author = author;
+                    }
+                    const dateText = content('.article-sm span').first().text() || (universityArticle ? content('.con-tit .shfffff span').first().text() : '');
+                    const date = dateText.match(/\d{4}-\d{2}-\d{2}(?: \d{2}:\d{2})?/)?.[0];
+                    if (date) {
+                        detail.pubDate = timezone(parseDate(date, date.length > 10 ? 'YYYY-MM-DD HH:mm' : 'YYYY-MM-DD'), 8);
                     }
                     return detail;
                 }),
