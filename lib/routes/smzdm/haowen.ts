@@ -1,6 +1,8 @@
 import { load } from 'cheerio';
+import { FetchError } from 'ofetch';
 import pMap from 'p-map';
 
+import CaptchaError from '@/errors/types/captcha';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
@@ -70,26 +72,38 @@ async function handler(ctx) {
 
     const out = await pMap(
         list,
-        (item) =>
-            cache.tryGet(item.link ?? '', async () => {
-                const response = await ofetch(item.link ?? '', {
-                    headers: {
-                        cookie,
-                    },
+        async (item) => {
+            try {
+                const detail = await cache.tryGet(item.link ?? '', async () => {
+                    const response = await ofetch(item.link ?? '', {
+                        headers: {
+                            cookie,
+                        },
+                    });
+                    const $ = load(response);
+                    if ($('script[src*="captcha.qq.com/TCaptcha.js"]').length) {
+                        throw new CaptchaError(`The article at ${item.link} requires a CAPTCHA.`);
+                    }
+                    const content = $('#articleId');
+                    content.find('.item-name').remove();
+                    content.find('.recommend-tab').remove();
+
+                    const releaseDate = $('meta[property="og:release_date"]').attr('content');
+
+                    const description = content.html() ?? undefined;
+                    const pubDate = releaseDate ? timezone(parseDate(releaseDate), 8) : undefined;
+                    const author = $('meta[property="og:author"]').attr('content');
+
+                    return { description, pubDate, author };
                 });
-                const $ = load(response);
-                const content = $('#articleId');
-                content.find('.item-name').remove();
-                content.find('.recommend-tab').remove();
-
-                const releaseDate = $('meta[property="og:release_date"]').attr('content');
-
-                item.description = content.html() ?? item.description;
-                item.pubDate = releaseDate ? timezone(parseDate(releaseDate), 8) : item.pubDate;
-                item.author = $('meta[property="og:author"]').attr('content') ?? item.author;
-
+                return { ...item, description: detail.description ?? item.description, pubDate: detail.pubDate ?? item.pubDate, author: detail.author ?? item.author };
+            } catch (error) {
+                if (!(error instanceof FetchError || error instanceof CaptchaError)) {
+                    throw error;
+                }
                 return item;
-            }),
+            }
+        },
         { concurrency: 3 }
     );
 

@@ -57,7 +57,7 @@ async function handler(ctx) {
             .map((item) => {
                 const $item = $(item);
                 return {
-                    title: `${$item.find('.feed-block-title a').eq(0).text().trim()} - ${$item.find('.z-highlight').text().trim()}`,
+                    title: `${$item.find('.feed-block-title a').eq(0).text()} - ${$item.find('.z-highlight').text()}`,
                     description: `${$item.find('.feed-block-descripe-top').text()}<br>${$item.find('.feed-block-extras span').text()}<br><img src="http:${$item.find('.z-feed-img img').attr('src')}">`,
                     category: $item
                         .find('.feed-block-tags a')

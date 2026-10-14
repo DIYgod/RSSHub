@@ -68,8 +68,8 @@ async function handler(ctx): Promise<Data> {
     // get detail info from each item
     const out = await pMap(
         items,
-        (item) =>
-            cache.tryGet(item.link!, async (): Promise<any> => {
+        async (item) => {
+            const detail = await cache.tryGet(item.link!, async () => {
                 const response = await ofetch(item.link!, {
                     headers: {
                         cookie,
@@ -79,17 +79,17 @@ async function handler(ctx): Promise<Data> {
 
                 // filter outdated articles
                 if ($('span.old').length > 0) {
-                    return null;
+                    return { outdated: true };
                 }
                 const pubDate = $('meta[name="weibo:webpage:create_at"]').attr('content');
-                item.pubDate = pubDate;
-
-                if (item.description === '阅读全文') {
-                    item.description = $('p[itemprop="description"]').first().html() ?? undefined;
-                }
-
-                return item;
-            }),
+                const description = $('p[itemprop="description"]').first().html() ?? undefined;
+                return { pubDate, description };
+            });
+            if (detail.outdated) {
+                return null;
+            }
+            return { ...item, pubDate: detail.pubDate, description: item.description === '阅读全文' ? detail.description : item.description };
+        },
         { concurrency: 3 }
     );
 

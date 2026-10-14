@@ -1,6 +1,8 @@
 import { load } from 'cheerio';
+import { FetchError } from 'ofetch';
 import pMap from 'p-map';
 
+import CaptchaError from '@/errors/types/captcha';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
@@ -48,6 +50,9 @@ async function handler(ctx) {
     });
     const cookie = getHeaders().cookie || [...response.headers.getSetCookie().map((c) => c.split(';', 1)[0]), `x-waf-captcha-referer=${link}`].join('; ');
     const $ = load(response._data);
+    if ($('script[src*="captcha.qq.com/TCaptcha.js"]').length) {
+        throw new CaptchaError(`The category listing at ${link} requires a CAPTCHA.`);
+    }
     const title = $('title').text().split('_', 1)[0];
 
     const payload = JSON.parse($('#__NUXT_DATA__').text());
@@ -64,24 +69,32 @@ async function handler(ctx) {
 
     const out = await pMap(
         list,
-        (item) =>
-            cache.tryGet(item.link!, async () => {
-                try {
+        async (item) => {
+            try {
+                const detail = await cache.tryGet(item.link!, async () => {
                     const response = await ofetch(item.link!, {
                         headers: {
                             cookie,
                         },
                     });
                     const $ = load(response);
-                    item.description = $('article').html() ?? item.description;
-                    item.pubDate = timezone(parseDate($('meta[property="og:release_date"]').attr('content')!), 8);
-                    item.author = $('meta[property="og:author"]').attr('content')!;
-                } catch {
-                    // 404
+                    if ($('script[src*="captcha.qq.com/TCaptcha.js"]').length) {
+                        throw new CaptchaError(`The article at ${item.link} requires a CAPTCHA.`);
+                    }
+                    const description = $('article').html() ?? undefined;
+                    const releaseDate = $('meta[property="og:release_date"]').attr('content');
+                    const pubDate = releaseDate ? timezone(parseDate(releaseDate), 8) : undefined;
+                    const author = $('meta[property="og:author"]').attr('content');
+                    return { description, pubDate, author };
+                });
+                return { ...item, ...detail, description: detail.description ?? item.description, pubDate: detail.pubDate ?? item.pubDate };
+            } catch (error) {
+                if (!(error instanceof FetchError || error instanceof CaptchaError)) {
+                    throw error;
                 }
-
                 return item;
-            }),
+            }
+        },
         { concurrency: 3 }
     );
 
