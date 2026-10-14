@@ -34,18 +34,18 @@ export const route: Route = {
 };
 
 async function handler() {
-    const feed = await parser.parseURL('https://zed.dev/blog.rss');
+    const feed = await parser.parseString(await ofetch<string, 'text'>('https://zed.dev/blog.rss', { responseType: 'text' }));
     if (!feed.title) {
         throw new Error('Zed blog feed has no title');
     }
 
     const items = await Promise.all(
-        feed.items.map((item) => {
+        feed.items.map(async (item) => {
             const { link, title } = item;
             if (!link || !title) {
                 throw new Error('Zed blog feed item has no link or title');
             }
-            return cache.tryGet(link, async () => {
+            const description = await cache.tryGet(`zed:${link}:description:v2`, async () => {
                 const data = await ofetch(link);
                 const $ = load(data);
 
@@ -57,17 +57,17 @@ async function handler() {
                 article.find('[class]').removeAttr('class');
                 article.find('[id]').removeAttr('id');
                 article.find('[preload]').removeAttr('preload');
-                article.find('figcaption').remove();
                 article.find('aside').remove(); // remove Looking and hiring part
 
-                return {
-                    title,
-                    link,
-                    description: article.html(),
-                    pubDate: item.pubDate,
-                    author: item.creator,
-                } satisfies DataItem;
+                return article.html();
             });
+            return {
+                title,
+                link,
+                description,
+                pubDate: item.pubDate,
+                author: item.creator,
+            } satisfies DataItem;
         })
     );
 
