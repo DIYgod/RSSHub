@@ -9,6 +9,7 @@ import cache from '@/utils/cache';
 import { generateHeaders, PRESETS } from '@/utils/header-generator';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
 const abdrKey = 'F617E80F5BD64F5A';
 const abdrIv = '636014d173e04409';
@@ -99,7 +100,7 @@ export const route: Route = {
 
 async function handler(ctx: Context) {
     const { id, tab = 'main' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ?? 20;
+    const limit = getRouteLimit(ctx, 20);
     const link = `https://baijiahao.baidu.com/u?app_id=${id}`;
 
     const page = await ofetch(link, { headerGeneratorOptions: PRESETS.MODERN_IOS });
