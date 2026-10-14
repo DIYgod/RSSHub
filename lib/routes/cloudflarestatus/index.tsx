@@ -1,77 +1,75 @@
-import type { Cheerio, CheerioAPI } from 'cheerio';
-import { load } from 'cheerio';
-import type { Element } from 'domhandler';
 import type { Context } from 'hono';
-import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 
-import type { Data, DataItem, Language, Route } from '@/types';
+import type { Data, Route } from '@/types';
 import { ViewType } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
+
+interface IncidentUpdate {
+    id: string;
+    status: string;
+    body: string;
+    display_at: string;
+    created_at: string;
+    updated_at: string;
+}
+
+interface Incident {
+    id: string;
+    name: string;
+    shortlink: string;
+    incident_updates: IncidentUpdate[];
+}
+
+interface StatusResponse {
+    page: { name: string; url: string };
+    incidents: Incident[];
+}
+
+interface MaintenanceResponse {
+    scheduled_maintenances: Incident[];
+}
+
+const baseUrl = 'https://www.cloudflarestatus.com';
 
 export const handler = async (ctx: Context): Promise<Data> => {
-    const limit = Number(ctx.req.query('limit') ?? '100');
+    const limit = getRouteLimit(ctx, 100);
+    const [incidents, maintenances] = await Promise.all([ofetch<StatusResponse>(`${baseUrl}/api/v2/incidents.json`), ofetch<MaintenanceResponse>(`${baseUrl}/api/v2/scheduled-maintenances.json`)]);
 
-    const baseUrl = 'https://www.cloudflarestatus.com';
+    const items = [...incidents.incidents, ...maintenances.scheduled_maintenances].flatMap((incident) =>
+        incident.incident_updates.map((update) => {
+            const status = update.status.replaceAll('_', ' ');
+            const type = status.charAt(0).toUpperCase() + status.slice(1);
+            const description = renderToString(<p style={{ whiteSpace: 'pre-line' }}>{update.body}</p>);
 
-    const response = await ofetch(baseUrl);
-    const $: CheerioAPI = load(response);
-    const language = ($('html').attr('lang') ?? 'en') as Language;
-
-    $('div.incidents-list').remove();
-
-    const items: DataItem[] = $('div.update')
-        .slice(0, limit)
-        .toArray()
-        .map((el) => {
-            const $el: Cheerio<Element> = $(el);
-
-            const $actualTitleEl: Cheerio<Element> = $el.parent().parent().find('a');
-            const actualTitle: string = $actualTitleEl.text();
-            const type: string = $el.find('strong').first().text();
-            const text: string = $el.find('span.whitespace-pre-wrap').first().text();
-
-            const title = `${type ? `${type} - ` : ''}${text}`;
-            const description: string | undefined = renderToString(
-                <>
-                    {actualTitle ? <h2>{actualTitle}</h2> : null}
-                    {$el.html() ? raw($el.html()) : null}
-                </>
-            );
-            const pubDateStr: string | undefined = $el.find('span.ago').attr('data-datetime-unix');
-            const href: string | undefined = $actualTitleEl.attr('href');
-            const linkUrl: string | undefined = href ? new URL(href, baseUrl).href : undefined;
-            const categories: string[] = [type].filter(Boolean);
-            const guid: string = linkUrl ? `${linkUrl}#${pubDateStr}` : '';
-            const upDatedStr: string | undefined = pubDateStr;
-
-            const processedItem: DataItem = {
-                title,
+            return {
+                title: `${type} - ${incident.name}`,
                 description,
-                pubDate: pubDateStr ? parseDate(pubDateStr, 'x') : undefined,
-                link: linkUrl,
-                category: categories,
-                guid,
-                id: guid,
-                content: {
-                    html: description,
-                    text: description,
-                },
-                updated: upDatedStr ? parseDate(upDatedStr, 'x') : undefined,
-                language,
+                pubDate: parseDate(update.display_at ?? update.created_at),
+                updated: parseDate(update.updated_at),
+                link: incident.shortlink,
+                category: [type],
+                guid: update.id,
+                id: update.id,
+                content: { html: description, text: update.body },
+                language: 'en' as const,
             };
+        })
+    );
 
-            return processedItem;
-        });
+    if (ctx.req.query('sorted') !== 'false') {
+        items.sort((a, b) => b.pubDate.getTime() - a.pubDate.getTime());
+    }
 
     return {
-        title: $('title').text(),
-        description: $('meta[name="description"]').attr('content'),
-        link: baseUrl,
-        item: items,
+        title: incidents.page.name,
+        description: 'Real-time status and incident history for Cloudflare services, network locations, and scheduled maintenance.',
+        link: incidents.page.url,
+        item: items.slice(0, limit),
         allowEmpty: true,
-        language,
+        language: 'en',
         id: baseUrl,
     };
 };
