@@ -5,6 +5,7 @@ import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 import timezone from '@/utils/timezone';
 
 export const route: Route = {
@@ -35,13 +36,14 @@ async function handler(ctx: Context) {
             const $item = $(item);
             const day = $item.find('.pic em').text();
             const yearMonth = $item.find('.pic span').contents().last().text();
+            const pubDate = parseDate(`${yearMonth}.${day}`, ['YYYY.MM.DD', 'YYYY.M.D'], true);
             return {
                 title: $item.find('.txt h3').text(),
                 link: new URL($item.attr('href')!, link).href,
-                pubDate: timezone(parseDate(`${yearMonth}.${day}`, 'YYYY.MM.DD'), 8),
+                pubDate: Number.isFinite(pubDate.getTime()) ? timezone(pubDate, 8) : undefined,
             };
         })
-        .slice(0, ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 10);
+        .slice(0, getRouteLimit(ctx, 10));
 
     const items = await Promise.all(
         list.map((item) =>
