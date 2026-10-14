@@ -1,6 +1,7 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -39,7 +40,7 @@ async function handler(ctx) {
     const { section = 'news' } = ctx.req.param();
     const r = await ofetch(`${url}/${section}/index.html`);
     const $ = load(r);
-    let itemsoup;
+    let itemsoup: Array<DataItem & { link: string }>;
     switch (section) {
         case 'news':
             itemsoup = $('#gallery-wrapper > article')
@@ -48,7 +49,7 @@ async function handler(ctx) {
                     const i = $(i0);
                     const img = i.find('img').attr('src');
                     return {
-                        title: i.find('a').text().trim(),
+                        title: i.find('h1 > a').text(),
                         link: `${url}${i.find('a').attr('href')}`,
                         category: i.find('.in-con02 > span:nth-child(1)').text(),
                         itunes_item_image: `${url}${img}`,
@@ -58,30 +59,32 @@ async function handler(ctx) {
         default:
             itemsoup = $('li.clear')
                 .toArray()
-                .map((i0) => {
+                .flatMap((i0) => {
                     const i = $(i0);
-                    return {
-                        title: i.find('h3>a').attr('title'),
-                        link: `${url}${i.find('h3>a').attr('href')}`,
-                        category: i.find('p>span:nth-child(1)').text(),
-                    };
+                    const a = i.find('h3 > a');
+                    const title = a.attr('title') || a.text();
+                    const href = a.attr('href');
+                    return title && href ? { title, link: new URL(href, url).href, category: i.find('p>span:nth-child(1)').text() } : [];
                 });
     }
-    const items = await Promise.all(
-        itemsoup.map((j) =>
-            cache.tryGet(j.link, async () => {
-                const r = await ofetch(j.link);
+    const items = await pMap(
+        itemsoup,
+        async (item) => {
+            const detail = await cache.tryGet(item.link, async () => {
+                const r = await ofetch(item.link);
                 const $ = load(r);
                 const img = $('.tempWrap > ul > li:nth-child(1)> img').attr('src');
-                j.description = $('.ot_main_r .content').html();
-                j.author = $('.math_time_l > span:nth-child(3)').text().trim();
-                j.pubDate = parseDate($('.math_time_l > span:nth-child(2)').text(), 'YYYY-MM-DD');
-                if (!j.itunes_item_image) {
-                    j.itunes_item_image = img ? `${url}${img}` : banner;
-                }
-                return j;
-            })
-        )
+                const date = $('.math_time_l > span:nth-child(2)').text().trim();
+                return {
+                    description: $('.ot_main_r .content').html(),
+                    author: $('.math_time_l > span:nth-child(3)').text().trim(),
+                    pubDate: date ? parseDate(`${date}T00:00:00+08:00`) : undefined,
+                    itunes_item_image: img ? `${url}${img}` : undefined,
+                };
+            });
+            return { ...item, ...detail, itunes_item_image: item.itunes_item_image || detail.itunes_item_image || banner };
+        },
+        { concurrency: 3 }
     );
 
     return {
