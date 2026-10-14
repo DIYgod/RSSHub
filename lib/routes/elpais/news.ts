@@ -6,6 +6,7 @@ import cache from '@/utils/cache';
 import logger from '@/utils/logger';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 import parser from '@/utils/rss-parser';
 
 export const route: Route = {
@@ -21,40 +22,49 @@ export const route: Route = {
 
 async function handler(ctx) {
     const link = 'https://elpais.com/';
-    const response = await ofetch(link);
-    const $ = load(response);
-    const feedUrl = $('link[type="application/rss+xml"]').first().attr('href');
-    if (!feedUrl) {
-        throw new Error(`El País does not advertise an RSS feed for ${link}.`);
+    const feed = await parser.parseString(await ofetch('https://feeds.elpais.com/mrss-s/pages/ep/site/elpais.com/portada'));
+    const limit = getRouteLimit(ctx, 20);
+    const sourceOrder = ctx.req.query('sorted') === 'false';
+    const sourceItems = feed.items
+        .filter((item): item is typeof item & { title: string; link: string } => Boolean(item.title && item.link))
+        .slice(0, Math.max(20, limit))
+        .map((item) => ({ ...item, pubDate: item.pubDate ? parseDate(item.pubDate) : undefined }));
+    const datesComplete = sourceItems.every((item) => item.pubDate && Number.isFinite(item.pubDate.getTime()));
+    if (!sourceOrder && datesComplete) {
+        sourceItems.sort((first, second) => second.pubDate!.getTime() - first.pubDate!.getTime());
     }
-    const feed = await parser.parseURL(feedUrl);
-    const limit = Number(ctx.req.query('limit') ?? 20);
+    const selectedItems = sourceOrder || datesComplete ? sourceItems.slice(0, limit) : sourceItems;
     const items = await pMap(
-        feed.items.filter((item): item is typeof item & { title: string; link: string } => Boolean(item.title && item.link)).slice(0, limit),
+        selectedItems,
         async (item) => ({
             title: item.title,
             link: item.link,
             author: item.creator,
-            pubDate: item.pubDate ? parseDate(item.pubDate) : undefined,
+            pubDate: item.pubDate,
             category: item.categories,
-            description: await cache.tryGet(`elpais:article:${item.link}`, async () => {
-                try {
-                    const response = await ofetch(item.link!);
-                    const $ = load(response);
-                    const metadata = $('script[type="application/ld+json"]')
-                        .toArray()
-                        .flatMap((element) => JSON.parse($(element).text()))
-                        .find((entry) => entry.articleBody);
-                    const content = $('[data-dtm-region="articulo_cuerpo"]').first();
-                    if (metadata?.isAccessibleForFree === true && content.length) {
-                        content.find('aside, script, .ad, .a_b').remove();
-                        return content.html() ?? item.content ?? '';
-                    }
-                } catch (error) {
-                    logger.warn(`Unable to retrieve El País article ${item.link}: ${error}`);
-                }
-                return item.content ?? '';
-            }),
+            description:
+                (
+                    await cache.tryGet<{ description?: string }>(`elpais:body:${item.link}`, async () => {
+                        try {
+                            const response = await ofetch(item.link!);
+                            const $ = load(response);
+                            const metadata = $('script[type="application/ld+json"]')
+                                .toArray()
+                                .flatMap((element) => JSON.parse($(element).text()))
+                                .find((entry) => entry.articleBody);
+                            const content = $('[data-dtm-region="articulo_cuerpo"]').first();
+                            if (metadata?.isAccessibleForFree === true && content.length) {
+                                content.find('aside, script, .ad, .a_b').remove();
+                                return { description: content.html() ?? undefined };
+                            }
+                        } catch (error) {
+                            logger.warn(`Unable to retrieve El País article ${item.link}: ${error}`);
+                        }
+                        return {};
+                    })
+                ).description ??
+                item.content ??
+                '',
         }),
         { concurrency: 3 }
     );
