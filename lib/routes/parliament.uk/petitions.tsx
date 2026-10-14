@@ -10,7 +10,8 @@ import { parseDate } from '@/utils/parse-date';
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { state = 'all' } = ctx.req.param();
-    const limit = Number(ctx.req.query('limit') ?? '50');
+    const requestedLimit = Number(ctx.req.query('limit'));
+    const limit = Number.isSafeInteger(requestedLimit) && requestedLimit > 0 ? requestedLimit : 50;
 
     const rootUrl = 'https://petition.parliament.uk';
     const targetUrl: string = new URL(`petitions?state=${state}`, rootUrl).href;
@@ -39,7 +40,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
         );
         const guid = `parliament.uk-petition-${item.id}`;
 
-        const author: DataItem['author'] = attributes.creator_name;
+        const author: DataItem['author'] = attributes.creator_name || undefined;
 
         const extraLinks = attributes.departments?.map((link) => ({
             url: link.url,
@@ -58,7 +59,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
             id: guid,
             content: {
                 html: description,
-                text: attributes.background,
+                text: [attributes.background, attributes.additional_details].filter(Boolean).join('\n\n'),
             },
             updated: parseDate(attributes.updated_at),
             language,
@@ -75,7 +76,6 @@ export const handler = async (ctx: Context): Promise<Data> => {
         description: $('meta[property="twitter:description"]').prop('content'),
         link: targetUrl,
         item: items,
-        allowEmpty: true,
         image: feedImage,
         author: $('meta[name="msapplication-tooltip"]').prop('content'),
         language,
@@ -127,12 +127,7 @@ If you subscribe to [Recent petitions](https://petition.parliament.uk/petitions?
     radar: [
         {
             source: ['petition.parliament.uk/petitions'],
-            target: (_, url) => {
-                const urlObj = new URL(url);
-                const state = urlObj.searchParams.get('state');
-
-                return `/parliament.uk/petitions${state ? `/${state}` : ''}`;
-            },
+            target: '/petitions',
         },
         {
             title: 'All petitions',
