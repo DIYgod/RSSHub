@@ -1,8 +1,10 @@
 import { load } from 'cheerio';
 
 import type { Route } from '@/types';
-import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
+
+import { getBjxPage } from './utils';
 
 export const route: Route = {
     path: '/gf/:type',
@@ -11,8 +13,8 @@ export const route: Route = {
     parameters: { type: '分类，北极星光伏最后的`type`字段' },
     features: {
         requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
+        requirePuppeteer: true,
+        antiCrawler: true,
         supportBT: false,
         supportPodcast: false,
         supportScihub: false,
@@ -29,26 +31,25 @@ export const route: Route = {
 
 async function handler(ctx) {
     const type = ctx.req.param('type');
-    const response = await got({
-        method: 'get',
-        url: `https://guangfu.bjx.com.cn/${type}/`,
-    });
-    const data = response.data;
-    const $ = load(data);
-    const typeName = $('div.box2 em:last').text();
-    const list = $('div.cc-list-content ul li');
-    return {
-        title: `北极星太阳能光大网${typeName}`,
-        description: $('meta[name="Description"]').attr('content'),
-        link: `https://guangfu.bjx.com.cn/${type}/`,
-        item: list.toArray().map((item) => {
-            const $item = $(item);
-            return {
-                title: $item.find('a').attr('title')!,
-                description: $item.html(),
-                link: $item.find('a').attr('href'),
-                pubDate: parseDate($item.find('span').text()),
-            };
-        }),
-    };
+    const { page, destroy } = await getBjxPage(`https://guangfu.bjx.com.cn/${type}/`);
+    try {
+        const data = await page.content();
+        const $ = load(data);
+        const list = $('div.cc-list-content ul li');
+        return {
+            title: $('title').text(),
+            description: $('meta[name="Description"]').attr('content'),
+            link: `https://guangfu.bjx.com.cn/${type}/`,
+            item: list.toArray().map((item) => {
+                const $item = $(item);
+                return {
+                    title: $item.find('a').attr('title')!,
+                    link: $item.find('a').attr('href'),
+                    pubDate: timezone(parseDate($item.find('span').text()), 8),
+                };
+            }),
+        };
+    } finally {
+        await destroy();
+    }
 }
