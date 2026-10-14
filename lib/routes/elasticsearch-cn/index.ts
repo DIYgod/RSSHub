@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
@@ -58,13 +59,15 @@ async function handler(ctx) {
                 title: a.text(),
                 link: a.attr('href'),
                 author: $item.find('.aw-user-name').text(),
-                pubDate: timezone(/\d{4}-\d{2}-\d{2} \d{2}:\d{2}/.test(pubDate) ? parseDate(pubDate) : parseRelativeDate(pubDate), 8),
+                pubDate: pubDate ? (/\d{4}-\d{2}-\d{2} \d{2}:\d{2}/.test(pubDate) ? timezone(parseDate(pubDate), 8) : parseRelativeDate(pubDate)) : undefined,
             };
         });
 
-    items = await Promise.all(
-        items.map((item) =>
-            cache.tryGet(item.link!, async () => {
+    items = await pMap(
+        items,
+        async (item) => ({
+            ...item,
+            ...(await cache.tryGet(`elasticsearch-cn:content:${item.link}`, async () => {
                 const detailResponse = await got({
                     method: 'get',
                     url: item.link,
@@ -72,11 +75,16 @@ async function handler(ctx) {
 
                 const content = load(detailResponse.data);
 
-                item.description = content('.markitup-box').first().html();
-
-                return item;
-            })
-        )
+                const article = content('.markitup-box').first();
+                const category = article
+                    .find('.aw-topic-bar a.text')
+                    .toArray()
+                    .map((element) => content(element).text().trim());
+                article.find('.aw-topic-bar').remove();
+                return { description: article.html() ?? undefined, category };
+            })),
+        }),
+        { concurrency: 3 }
     );
 
     return {
