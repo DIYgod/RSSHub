@@ -22,6 +22,10 @@ async function handler() {
         .map((elem) => {
             const $esction = $(elem).find('section[class="post-preview"]');
 
+            const date = $(elem).find('time.post-date').attr('datetime');
+            const parsedDate = date && /^\d{2}-\d{2}-\d{2}$/.test(date) ? parseDate(date, 'YY-MM-DD', true) : undefined;
+            const publicationDate = parsedDate && Number.isFinite(parsedDate.getTime()) ? parseDate(`${parsedDate.getFullYear()}-${date?.slice(3)}T00:00:00Z`) : undefined;
+
             return {
                 title: $esction.find('h2').text(),
                 description: $esction.find('h3').text(),
@@ -31,7 +35,7 @@ async function handler() {
                     .find('a.post-tag')
                     .toArray()
                     .map((tag) => $(tag).text()),
-                pubDate: parseDate($(elem).find('time.post-date').attr('datetime')!, 'YY-MM-DD'),
+                pubDate: publicationDate,
             };
         });
 
