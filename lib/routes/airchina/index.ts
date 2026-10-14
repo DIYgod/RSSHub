@@ -2,11 +2,11 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
-import buildData from '@/utils/common-config';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
-const baseUrl = 'https://www.airchina.com.cn';
+const baseUrl = 'https://webresource.airchina.com.cn';
 
 export const route: Route = {
     path: '/announcement',
@@ -33,34 +33,42 @@ export const route: Route = {
 };
 
 async function handler() {
-    const link = `${baseUrl}/cn/info/new-service/service_announcement.shtml`;
-    const data = await buildData({
-        link,
-        url: link,
-        title: '国航服务公告',
-        description: '中国国际航空公司服务公告',
-        item: {
-            item: '.serviceMsg li',
-            title: ($) => $('a').text(),
-            link: ($) => $('a').attr('href'),
-            pubDate: ($) => parseDate($('span').text(), 'YYYY-MM-DD'),
-            guid: ($) => {
-                const href = $('a').attr('href');
-                return href ? Buffer.from(href).toString('base64') : undefined;
-            },
-        },
-    });
-
-    await Promise.all(
-        data.item.map(async (item) => {
-            const detailLink = baseUrl + item.link;
-            item.description = await cache.tryGet(detailLink, async () => {
-                const result = await got(detailLink);
-                const $ = load(result.data);
-                return $('.serviceMsg').html() ?? '';
-            });
+    const link = `${baseUrl}/zh-CN/content/about_us/service_announcement/`;
+    const response = await got(link);
+    const $ = load(response.data);
+    const items = $('.ui-list-li')
+        .toArray()
+        .map((element) => {
+            const item = $(element);
+            const href = item.find('a.ui-list-link').attr('href');
+            const date = item.find('.ui-add-data').text();
+            return {
+                title: item.find('a.ui-list-link').text(),
+                link: href ? new URL(href, baseUrl).href : undefined,
+                pubDate: date ? timezone(parseDate(date, 'YYYY-MM-DD'), 8) : undefined,
+                guid: href ? Buffer.from(href).toString('base64') : undefined,
+            };
         })
+        .filter((item) => item.link);
+
+    const data = await Promise.all(
+        items.map((item) =>
+            cache.tryGet(item.link!, async () => {
+                const response = await got(item.link!);
+                const $ = load(response.data);
+                return {
+                    ...item,
+                    title: $('.article_main .catalog-title').text() || item.title,
+                    description: $('.article_main .txt').html(),
+                };
+            })
+        )
     );
 
-    return data;
+    return {
+        title: '国航服务公告',
+        description: '中国国际航空公司服务公告',
+        link,
+        item: data,
+    };
 }
