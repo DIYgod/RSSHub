@@ -14,7 +14,7 @@ export const route: Route = {
         requirePuppeteer: false,
         antiCrawler: false,
         supportBT: false,
-        supportPodcast: false,
+        supportPodcast: true,
         supportScihub: false,
     },
     radar: [
@@ -48,16 +48,13 @@ async function handler() {
                         <br />
                     </>
                 ) : null}
-                {item.author ? (
-                    <>
-                        by <a href={`https://www.urbandictionary.com/author.php?author=${item.author}`}>{item.author}</a>
-                    </>
-                ) : null}
             </>
         ),
-        link: `${baseUrl}/define.php?term=${item.word}`,
+        link: item.permalink,
         guid: item.permalink,
-        pubDate: parseDate(item.written_on),
+        enclosure_url: item.play_sound_url || undefined,
+        enclosure_type: item.play_sound_url ? 'audio/mpeg' : undefined,
+        pubDate: item.written_on ? parseDate(item.written_on) : undefined,
         author: item.author,
     }));
 
