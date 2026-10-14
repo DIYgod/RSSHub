@@ -1,6 +1,7 @@
 import type { DataItem, Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 import timezone from '@/utils/timezone';
 
 const nodes = {
@@ -176,7 +177,7 @@ async function handler(ctx) {
         url: currentUrl,
         form: {
             page: 0,
-            pageSize: ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 50,
+            pageSize: getRouteLimit(ctx, 50),
             keywords: keyword,
             'nodeIds[]': type === '/info/listse' ? nodes[category].id : undefined,
             disclosureSubtype: type === '/info/listse' ? undefined : nodes[category].id,
