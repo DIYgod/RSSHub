@@ -1,4 +1,5 @@
 import { youtube as googleYoutube } from '@googleapis/youtube';
+import { escapeText } from 'entities';
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 
@@ -63,7 +64,7 @@ export const getVideos = (id, part, cache) =>
         return res;
     });
 export const getThumbnail = (thumbnails) => thumbnails.maxres || thumbnails.standard || thumbnails.high || thumbnails.medium || thumbnails.default;
-export const formatDescription = (description) => description?.replaceAll(/\r\n|\r|\n/g, '<br>');
+export const formatDescription = (description) => (isNullish(description) ? undefined : escapeText(description).replaceAll(/\r\n|\r|\n/g, '<br>'));
 export const renderYoutube = (embed, videoId, img, description) =>
     renderToString(
         <>
@@ -79,13 +80,12 @@ export const renderYoutube = (embed, videoId, img, description) =>
                     referrerpolicy="strict-origin-when-cross-origin"
                 />
             ) : (
-                <img src={img?.url ?? ''} />
+                <img src={typeof img === 'string' ? img : (img?.url ?? '')} />
             )}
             <br />
             {description ? <>{raw(description)}</> : null}
         </>
     );
-
 export const getSubscriptions = async (part, cache) => {
     // access tokens expire after one hour
     let accessToken = await cache.get('youtube:accessToken', false);
@@ -95,7 +95,6 @@ export const getSubscriptions = async (part, cache) => {
         await cache.set('youtube:accessToken', accessToken, 3600); // ~3600s
     }
     youtubeOAuth2Client.setCredentials({ access_token: accessToken, refresh_token: config.youtube.refreshToken });
-
     return cache.tryGet('youtube:getSubscriptions', () => getSubscriptionsRecusive(part), config.cache.routeExpire, false);
 };
 export async function getSubscriptionsRecusive(part, nextPageToken?) {
@@ -118,7 +117,6 @@ export async function getSubscriptionsRecusive(part, nextPageToken?) {
 // taken from https://webapps.stackexchange.com/a/101153
 export const isYouTubeChannelId = (id) => /^UC[\w-]{21}[AQgw]$/.test(id);
 export const getVideoUrl = (id: string) => `https://www.youtube-nocookie.com/embed/${id}?controls=1&autoplay=1&mute=0`;
-
 // Get the appropriate playlist ID with or without shorts
 export const getPlaylistWithShortsFilter = (id: string, filterShorts = true): string => {
     // If filtering shorts is enabled, convert channel IDs (UC...) and playlist IDs (UU...) to playlist format without shorts (UULF...)
@@ -128,7 +126,6 @@ export const getPlaylistWithShortsFilter = (id: string, filterShorts = true): st
     // If filterShorts is false or the ID format doesn't match known patterns, return original ID
     return id;
 };
-
 export const callApi = async function callApi<T>({ googleApi, youtubeiApi, params }: { googleApi: (params: any) => Promise<T>; youtubeiApi: (params: any) => Promise<T>; params: any }): Promise<T> {
     if (config.youtube?.key) {
         try {
@@ -139,3 +136,6 @@ export const callApi = async function callApi<T>({ googleApi, youtubeiApi, param
     }
     return await youtubeiApi(params);
 };
+function isNullish(value: unknown): value is null | undefined {
+    return value === null || value === undefined;
+}
