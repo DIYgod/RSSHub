@@ -6,6 +6,7 @@ import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 import timezone from '@/utils/timezone';
 
 const HOST = 'https://www.abc-tenpo.com';
@@ -161,7 +162,7 @@ export const handler = async (ctx): Promise<Data> => {
     if (pref !== undefined && !prefecture) {
         throw new Error(`Unknown prefecture "${pref}", expected one of ${PREFECTURES.map((p) => p.slug).join(', ')}`);
     }
-    const limit = Math.min(ctx.req.query('limit') ? Number(ctx.req.query('limit')) : PAGE_SIZE, PAGE_SIZE);
+    const limit = Math.min(getRouteLimit(ctx, PAGE_SIZE), PAGE_SIZE);
     // sort=1 is 新着順.
     const listUrl = `${HOST}/property/search?sort=1${prefecture ? `&pref%5B%5D=${prefecture.code}` : ''}`;
 
