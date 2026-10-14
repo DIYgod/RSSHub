@@ -37,7 +37,10 @@ export const fetchContentStream = (streamId, limit) =>
 
 export const fetchContentItems = async (streamIds, limit) => {
     const streams = await Promise.all(streamIds.map((streamId) => fetchContentStream(streamId, limit)));
-    const list = streams.flat().map((item) => normalizeItem(item));
+    const list = streams
+        .flat()
+        .slice(0, limit)
+        .map((item) => normalizeItem(item));
 
     return Promise.all(
         list.map((item) =>

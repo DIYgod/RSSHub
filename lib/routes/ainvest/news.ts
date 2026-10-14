@@ -1,6 +1,7 @@
 import { fetchContentItems } from '@/routes/ainvest/utils';
 import type { Route } from '@/types';
 import { ViewType } from '@/types';
+import { getRouteLimit } from '@/utils/route-limit';
 
 export const route: Route = {
     path: '/news',
@@ -28,7 +29,7 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 5;
+    const limit = getRouteLimit(ctx, 5);
     const streamIds = [109, 416, 438, 529, 721, 834, 835];
     const items = await fetchContentItems(streamIds, limit);
 
