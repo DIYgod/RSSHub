@@ -9,8 +9,8 @@ export const route: Route = {
     example: '/wnacg/tag/漢化',
     radar: [
         {
-            source: ['wnacg.com/*'],
-            target: (_, url) => `/wnacg/tag/${new URL(url).pathname.match(/albums-index-tag-(.+?)\.html$/)![1]}`,
+            source: ['wnacg.com/albums-index-tag-:tag.html'],
+            target: '/tag/:tag',
         },
     ],
     handler,
