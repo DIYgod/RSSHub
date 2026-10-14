@@ -1,10 +1,12 @@
 import { load } from 'cheerio';
 import iconv from 'iconv-lite';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 import timezone from '@/utils/timezone';
 
 export const route: Route = {
@@ -42,19 +44,24 @@ async function handler(ctx) {
 
     const $ = load(iconv.decode(response.data, 'gb2312'));
     const list = $('.page-main-list .list-item a')
-        .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 50)
+        .slice(0, ctx.req.query('sorted') === 'false' ? getRouteLimit(ctx, 50) : Math.max(50, getRouteLimit(ctx, 50)))
         .toArray()
         .map((item): DataItem => {
             const $item = $(item);
+            const href = $item.attr('href');
+            if (!href) {
+                throw new Error('IQnew did not provide an article link.');
+            }
 
             return {
-                link: rootUrl + $item.attr('href'),
+                link: new URL(href, url).href,
                 title: '',
             };
         });
 
-    const items = await Promise.all(
-        list.map((item) =>
+    const items = await pMap(
+        list,
+        (item) =>
             cache.tryGet(item.link!, async () => {
                 const detailResponse = await got({
                     method: 'get',
@@ -65,7 +72,8 @@ async function handler(ctx) {
                 const content = load(iconv.decode(detailResponse.data, 'gb2312'));
 
                 item.title = content('.main-article .title').text();
-                item.pubDate = timezone(parseDate(content('.time').eq(0).text()), 8);
+                const date = content('.time').eq(0).text();
+                item.pubDate = date ? timezone(parseDate(date), 8) : undefined;
                 item.description = content('.content-intro').html();
                 item.author = content('.author a').text();
                 item.category = content('.keyword > a')
@@ -73,8 +81,8 @@ async function handler(ctx) {
                     .map((item) => $(item).text());
 
                 return item;
-            })
-        )
+            }),
+        { concurrency: 3 }
     );
 
     return {
