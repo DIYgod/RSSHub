@@ -2,6 +2,8 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
+import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/search/:params',
@@ -20,6 +22,12 @@ export const route: Route = {
 
 async function handler(ctx) {
     const query = new URLSearchParams(ctx.req.param('params'));
+    if (query.has('page')) {
+        query.set('page', '1');
+    }
+    if (query.has('start')) {
+        query.set('start', '0');
+    }
     const { data: html } = await got('https://store.steampowered.com/search/', {
         searchParams: query,
     });
@@ -55,7 +63,9 @@ async function handler(ctx) {
                 if (hasReview) {
                     desc += $el.find('.search_review_summary').attr('data-tooltip-html');
                 }
+                const releaseDate = $el.find('.search_released').text().trim();
                 return {
+                    pubDate: /^\d{1,2} [A-Z]{3}, \d{4}$/i.test(releaseDate) ? timezone(parseDate(releaseDate, 'D MMM, YYYY'), 0) : undefined,
                     title: $el.find('span.title').text(),
                     link: $el.attr('href'),
                     description: desc.replaceAll('\n', '<br>'),
