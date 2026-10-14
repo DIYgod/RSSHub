@@ -1,3 +1,5 @@
+import pMap from 'p-map';
+
 import { config } from '@/config';
 import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
@@ -162,15 +164,18 @@ async function getArticleItems({ category, limit }: { category?: string; limit: 
         throw new TypeError('TechFlow API returned an invalid article list.');
     }
 
-    return await Promise.all(
-        response.data.map((article) =>
-            cache.tryGet(`techflowpost:article:${article.id}`, async () => {
+    return await pMap(
+        response.data,
+        async (article) => {
+            const detail = await cache.tryGet(`techflowpost:article-content:v1:${article.id}`, async () => {
                 const itemLink = `${rootUrl}/${locale}/article/${article.id}`;
-                const detail = await requestApi<ArticleDetailResponse>(`/client/articles/${article.id}`, itemLink);
+                const response = await requestApi<ArticleDetailResponse>(`/client/articles/${article.id}`, itemLink);
+                return { content: response.article?.content };
+            });
 
-                return getArticleItem(article, detail.article?.content);
-            })
-        )
+            return getArticleItem(article, detail.content);
+        },
+        { concurrency: 3 }
     );
 }
 
@@ -185,15 +190,18 @@ async function getNewsflashItems(limit: string | number) {
         throw new TypeError('TechFlow API returned an invalid newsflash list.');
     }
 
-    return await Promise.all(
-        response.data.map((newsflash) =>
-            cache.tryGet(`techflowpost:newsflash:${newsflash.id}`, async () => {
+    return await pMap(
+        response.data,
+        async (newsflash) => {
+            const detail = await cache.tryGet(`techflowpost:newsflash-content:v1:${newsflash.id}`, async () => {
                 const itemLink = `${rootUrl}/${locale}/newsletter/${newsflash.id}`;
-                const detail = await requestApi<NewsflashDetailResponse>(`/client/newsflashes/${newsflash.id}`, itemLink);
+                const response = await requestApi<NewsflashDetailResponse>(`/client/newsflashes/${newsflash.id}`, itemLink);
+                return { content: response.content };
+            });
 
-                return getNewsflashItem(newsflash, detail.content);
-            })
-        )
+            return getNewsflashItem(newsflash, detail.content);
+        },
+        { concurrency: 3 }
     );
 }
 
