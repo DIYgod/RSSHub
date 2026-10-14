@@ -1,5 +1,6 @@
 import { load } from 'cheerio';
 
+import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -7,8 +8,8 @@ import timezone from '@/utils/timezone';
 
 const rootUrl = 'https://www.tgb.cn';
 
-const renderPostDetail = async (item) =>
-    await cache.tryGet(item.link, async () => {
+const renderPostDetail = async <T extends DataItem>(item: T) => {
+    const details = await cache.tryGet(`${item.link}:details:v2`, async (): Promise<Pick<DataItem, 'description' | 'pubDate' | 'category'>> => {
         const detailResponse = await got({
             method: 'get',
             url: item.link,
@@ -27,12 +28,12 @@ const renderPostDetail = async (item) =>
             delete img.attribs['data-original'];
         });
 
-        item.description = content('#first').html();
+        let description = content('#first').html();
         if (detailResponse.url?.startsWith('https://www.tgb.cn/topic/transfer') || content('.login-view-button').length !== 0) {
-            item.description += '<br>登录后可查看完整文章';
+            description += '<br>登录后可查看完整文章';
         }
 
-        item.pubDate = timezone(
+        const pubDate = timezone(
             parseDate(
                 content('.article-data > span:nth-child(2)')
                     .text()
@@ -41,11 +42,13 @@ const renderPostDetail = async (item) =>
             8
         );
 
-        item.category = content('.classify')
+        const category = content('.classify')
             .toArray()
             .map((item) => content(item).text().trim());
 
-        return item;
+        return { description, pubDate, category };
     });
+    return { ...item, ...details };
+};
 
 export { renderPostDetail, rootUrl };
