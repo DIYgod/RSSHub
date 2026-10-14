@@ -2,6 +2,6 @@ import type { Namespace } from '@/types';
 
 export const namespace: Namespace = {
     name: 'AGE 动漫',
-    url: 'agemys.cc',
+    url: 'www.agedm.io',
     lang: 'zh-CN',
 };

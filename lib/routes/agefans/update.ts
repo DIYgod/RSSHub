@@ -22,13 +22,13 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['agemys.org/update', 'agemys.org/'],
+            source: ['www.agedm.io/update', 'www.agedm.io/'],
         },
     ],
     name: '最近更新',
     maintainers: ['nczitzk'],
     handler,
-    url: 'agemys.org/update',
+    url: 'www.agedm.io/update',
 };
 
 async function handler() {
