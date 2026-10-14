@@ -8,7 +8,7 @@ import { PRESETS } from '@/utils/header-generator';
 import logger from '@/utils/logger';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
-import playwright from '@/utils/playwright';
+import { getPlaywrightPage } from '@/utils/playwright';
 
 export const route: Route = {
     path: '/user/:id',
@@ -31,7 +31,7 @@ export const route: Route = {
             target: '/user/:id',
         },
     ],
-    name: 'User timeline - Sotwe',
+    name: 'User timeline',
     maintainers: ['TonyRL'],
     handler,
     view: ViewType.Pictures,
@@ -73,21 +73,30 @@ async function handler(ctx) {
             } catch {
                 //
             }
-            const context = await playwright();
-            const page = await context.newPage();
-            await page.route('**/*', (route) => {
-                const request = route.request();
-                ['document', 'script', 'xhr', 'fetch'].includes(request.resourceType()) ? route.continue() : route.abort();
+            const { page, destroy } = await getPlaywrightPage(apiUrl, {
+                noGoto: true,
+                closeTimeout: 0,
+                onBeforeLoad: async (page) => {
+                    await page.route('**/*', (route) => {
+                        const request = route.request();
+                        ['document', 'script', 'xhr', 'fetch'].includes(request.resourceType()) ? route.continue() : route.abort();
+                    });
+                },
             });
-            logger.http(`Requesting ${apiUrl}`);
-            await page.goto(apiUrl, {
-                waitUntil: 'domcontentloaded',
-            });
-            const response = await page.evaluate(() => document.documentElement.textContent);
-            await page.close();
-            await context.close();
+            try {
+                logger.http(`Requesting ${apiUrl}`);
+                const browserResponse = await page.goto(apiUrl, {
+                    waitUntil: 'domcontentloaded',
+                });
+                if (!browserResponse?.ok()) {
+                    throw new Error(`Sotwe API request failed with HTTP ${browserResponse?.status() ?? 'no response'}. Check whether ${apiUrl} is accessible from this RSSHub instance.`);
+                }
+                const response = await page.evaluate(() => document.documentElement.textContent);
 
-            return JSON.parse(response || '{}');
+                return JSON.parse(response || '{}');
+            } finally {
+                await destroy();
+            }
         },
         config.cache.routeExpire,
         false
