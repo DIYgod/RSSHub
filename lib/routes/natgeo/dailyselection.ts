@@ -30,19 +30,12 @@ async function handler() {
     const host = 'http://dili.bdatu.com/jiekou/mains/p1.html';
     const data = await got(host);
 
-    let sort = 0;
-    let addtime = '';
-
-    for (const album of data.data.album) {
-        if (Number.parseInt(album.ds) !== 1) {
-            continue;
-        }
-
-        sort = album.sort;
-        addtime = album.addtime;
-        break;
+    const album = data.data.album.find((album) => Number(album.ds) === 1) ?? data.data.album.find((album) => Number(album.timing) === 1);
+    if (!album || !/^[1-9]\d*$/.test(String(album.id))) {
+        throw new Error('The source did not provide a current daily photo album. Please try again when a new album is published.');
     }
-    const api = 'http://dili.bdatu.com/jiekou/albums/a' + sort + '.html';
+    const { id: albumId, addtime } = album;
+    const api = `http://dili.bdatu.com/jiekou/albums/a${albumId}.html`;
     const response = await got(api);
     const items = response.data.picture;
     const out: any[] = [];
@@ -52,7 +45,7 @@ async function handler() {
             title: item.title,
             link: item.url,
             description: `<img src="${item.url}"><br>` + item.content,
-            pubDate: timezone(parseDate(addtime), 0),
+            pubDate: addtime ? timezone(parseDate(addtime), 8) : undefined,
             guid: item.id,
         };
         out.push(info);
@@ -61,7 +54,7 @@ async function handler() {
 
     return {
         title: 'Photo of the Daily Selection',
-        link: api,
+        link: 'http://dili.bdatu.com/',
         item: out,
     };
 }
