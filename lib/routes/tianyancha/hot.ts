@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
@@ -14,6 +15,20 @@ export const route: Route = {
     maintainers: ['nczitzk'],
     handler,
 };
+
+async function getArticleDetails(link: string): Promise<Pick<DataItem, 'author' | 'description' | 'pubDate'>> {
+    const details = await cache.tryGet(link, async () => {
+        const detailResponse = await ofetch(link);
+        const content = load(detailResponse);
+        const publishedDate = content('.resource').next().text();
+        return {
+            author: content('.resource').text().replace('来源：', ''),
+            description: content('.news-content').html(),
+            pubDate: publishedDate.trim() ? parseRelativeDate(publishedDate) : undefined,
+        };
+    });
+    return { author: details.author, description: details.description, pubDate: details.pubDate };
+}
 
 async function handler() {
     const rootUrl = 'https://www.tianyancha.com/';
@@ -32,20 +47,7 @@ async function handler() {
             };
         });
 
-    const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link!, async () => {
-                const detailResponse = await ofetch(item.link!);
-                const content = load(detailResponse);
-
-                item.author = content('.resource').text().replace('来源：', '');
-                item.description = content('.news-content').html();
-                item.pubDate = parseRelativeDate(content('.resource').next().text());
-
-                return item;
-            })
-        )
-    );
+    const items = await pMap(list, async (item) => ({ ...item, ...(await getArticleDetails(item.link!)) }), { concurrency: 3 });
 
     return {
         title: '热门搜索 - 天眼查',
