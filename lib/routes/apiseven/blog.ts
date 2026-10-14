@@ -55,6 +55,7 @@ async function handler() {
                     description: md.render(json.props.pageProps.post.content),
                     link: item.link,
                     pubDate: item.pubDate,
+                    category: item.category,
                     author: json.props.pageProps.post.author_name,
                 };
             })
