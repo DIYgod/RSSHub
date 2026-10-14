@@ -8,9 +8,10 @@ import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
 export const handler = async (ctx: Context): Promise<Data> => {
-    const limit = Number(ctx.req.query('limit') ?? '5');
+    const limit = getRouteLimit(ctx, 5);
 
     const baseUrl = 'https://aflcio.org';
     const targetUrl: string = new URL('blog', baseUrl).href;
