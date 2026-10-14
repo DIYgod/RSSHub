@@ -4,10 +4,11 @@ import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
 export const handler = async (ctx) => {
     const { category = 'jgzx/xwzx' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 15;
+    const limit = getRouteLimit(ctx, 15);
 
     const rootUrl = 'https://www.beijingprice.cn';
     const currentUrl = new URL(category.endsWith('/') ? category : `${category}/`, rootUrl).href;
@@ -136,12 +137,8 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['beijingprice.cn/:category?'],
-            target: (params) => {
-                const category = params.category;
-
-                return `/beijingprice${category ? `/${category}` : ''}`;
-            },
+            source: ['beijingprice.cn/*category', 'beijingprice.cn/'],
+            target: '/:category?',
         },
         {
             title: '价格资讯 - 新闻资讯',
