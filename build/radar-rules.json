@@ -26205,6 +26205,14 @@
         "target": "/huggingface/activity/:user/likes"
       },
       {
+        "title": "User Posts Activity",
+        "docs": "https://docs.rsshub.app/routes/huggingface",
+        "source": [
+          "/:user/activity/posts"
+        ],
+        "target": "/huggingface/activity/:user/posts"
+      },
+      {
         "title": "Community Articles",
         "docs": "https://docs.rsshub.app/routes/huggingface",
         "source": [

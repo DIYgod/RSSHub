@@ -5043,6 +5043,10 @@
   "/huggingface/activity/:user/likes": [
     "dotwee"
   ],
+  "/huggingface/activity/:user/posts": [
+    "qqc20043",
+    "pseudoyu"
+  ],
   "/huggingface/blog-community/:sort?": [
     "yuguorui"
   ],

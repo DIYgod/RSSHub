@@ -1731,6 +1731,7 @@ export type RoutePath =
   | `/hubu/zhxy/:category{.+}?`
   | `/hudsonrivertrading/blog/:section?`
   | `/huggingface/activity/:user/likes`
+  | `/huggingface/activity/:user/posts`
   | `/huggingface/blog`
   | `/huggingface/blog-community/:sort?`
   | `/huggingface/blog-zh`
