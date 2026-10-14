@@ -166,21 +166,21 @@ const bakeSiteSearchParams = (filterPairs: Record<string, Filter[] | string[]>):
             continue;
         }
         switch (key) {
-            case 'category': {
+            case 'category':
                 searchParams.set('cat', (value as Filter[]).map((pair) => pair.id).join(','));
 
                 break;
-            }
-            case 'tag': {
+
+            case 'tag':
                 searchParams.set('tag', (value as Filter[]).map((pair) => pair.slug).join(','));
 
                 break;
-            }
-            case 'search': {
+
+            case 'search':
                 searchParams.set('s', value.join(','));
 
                 break;
-            }
+
             default:
             // Do nothing
         }
