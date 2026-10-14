@@ -1,6 +1,8 @@
 import { load } from 'cheerio';
+import { escapeText } from 'entities';
+import pMap from 'p-map';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import oftech from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -14,8 +16,8 @@ export const route: Route = {
     example: '/sustainabilitymag/articles',
     radar: [
         {
-            source: ['https://sustainabilitymag.com/articles'],
-            target: '/sustainabilitymag/articles',
+            source: ['sustainabilitymag.com/articles'],
+            target: '/articles',
         },
     ],
     features: {
@@ -43,12 +45,15 @@ const render = (widgets) =>
                 case 'text':
                     return w.html;
                 case 'blockquote':
-                    return `<blockquote>${w.html}</blockquote>`;
+                case 'blockquoteV2': {
+                    const attribution = w.attribution || [w.name, w.jobTitle].filter(Boolean).join(', ');
+                    return `<blockquote>${w.html}${attribution ? `<cite>${escapeText(attribution)}</cite>` : ''}</blockquote>`;
+                }
                 case 'keyFacts':
                     return `<div><ul>${w.keyFacts.map((k) => `<li>${k.text}</li>`).join('')}</ul></div>`;
                 case 'inlineVideo':
                     return w.provider === 'youtube'
-                        ? `<iframe id="ytplayer" type="text/html" width="640" height="360" src="https://www.youtube-nocookie.com/embed/${w.videoId}" frameborder="0" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>`
+                        ? `<iframe id="ytplayer" type="text/html" width="640" height="360" src="https://www.youtube-nocookie.com/embed/${w.videoId}" frameborder="0" allowfullscreen></iframe>`
                         : new Error(`Unhandled inlineVideo provider: ${w.provider}`);
                 case 'inlineImage':
                     return w.inlineImageImages
@@ -114,36 +119,39 @@ async function handler() {
         body: requestBody,
     });
 
-    const list = results.data.paginatedWidget.articles.results.map((item) => ({
+    const list: Array<DataItem & { link: string }> = results.data.paginatedWidget.articles.results.map((item) => ({
         title: item.headline,
         link: `${baseURL}${item.fullUrlPath}`,
         image: item.images?.thumbnail_widescreen_553?.url,
         category: item.category,
     }));
 
-    const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link, async () => {
+    const items = await pMap(
+        list,
+        async (item) => {
+            const detail = await cache.tryGet(`sustainabilitymag:article:v2:${item.link}`, async () => {
                 const response = await oftech(item.link);
                 const $ = load(response);
 
                 const nextData = JSON.parse($('script#__NEXT_DATA__').text());
                 const article = nextData.props.pageProps.article;
-                item.pubDate = parseDate(article.displayDate);
-                item.author = article.author.name;
+                const pubDate = article.displayDate ? parseDate(article.displayDate) : undefined;
+                const author = article.author.name;
                 const heroImage = article.images[findLargestImgKey(article.images)][0];
-                item.description = renderFigure(heroImage.url, heroImage.caption) + render(article.body.widgets);
+                const description = renderFigure(heroImage.url, heroImage.caption) + render(article.body.widgets);
 
-                return item;
-            })
-        )
+                return { pubDate, author, description };
+            });
+            return { ...item, ...detail };
+        },
+        { concurrency: 3 }
     );
 
     return {
         title: 'Sustainability Magazine Articles',
         language: feedLang,
         description: feedDescription,
-        link: `https://${feedURL}`,
+        link: feedURL,
         item: items,
     };
 }
