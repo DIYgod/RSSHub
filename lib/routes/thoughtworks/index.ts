@@ -1,6 +1,21 @@
+import { load } from 'cheerio';
+import pMap from 'p-map';
+
 import type { Route } from '@/types';
-import ofetch from '@/utils/ofetch'; // 统一使用的请求库
+import cache from '@/utils/cache';
+import ofetch from '@/utils/ofetch'; // Shared request client
 import { parseDate } from '@/utils/parse-date';
+
+type SearchResult = {
+    title: string;
+    uri: string;
+    excerpt: string;
+    raw: {
+        sysauthor?: string | string[];
+        tw_published_date?: number;
+        tw_topic?: string | string[];
+    };
+};
 
 export const route: Route = {
     path: '/blog',
@@ -15,8 +30,20 @@ export const route: Route = {
     maintainers: ['Hyvi'],
     handler,
 };
+
+const getArticleDescription = (link: string) =>
+    cache.tryGet(link, async () => {
+        const response = await ofetch(link);
+        const $ = load(response);
+        const content = $('main .authorAndDate + .container');
+        if (!content.length) {
+            throw new Error('Thoughtworks article content not found.');
+        }
+        return content.html();
+    });
+
 async function handler() {
-    // https://www.thoughtworks.com/rest/search/config 里的 BLOG_SEARCH_TOKEN
+    // Fetch the public blog search token from the site configuration.
     const tokenData = await ofetch('https://www.thoughtworks.com/rest/search/config', {
         headers: {
             'content-type': 'application/json',
@@ -27,7 +54,7 @@ async function handler() {
     // 'Bearer ' + token
     const bearerToken = 'Bearer ' + tokenData.BLOG_SEARCH_TOKEN;
 
-    const data = await ofetch('https://platform-eu.cloud.coveo.com/rest/search/v2?organizationId=thoughtworksproductionhcqoag0q', {
+    const data = await ofetch<{ results: SearchResult[] }>('https://platform-eu.cloud.coveo.com/rest/search/v2?organizationId=thoughtworksproductionhcqoag0q', {
         method: 'POST',
         headers: {
             authorization: bearerToken,
@@ -43,28 +70,32 @@ async function handler() {
             firstResult: 0,
         },
     });
-    // 从 API 响应中提取相关数据
-    const items = data.results.map((item) => ({
-        // 文章标题
-        title: item.title,
-        // 文章链接
-        link: item.uri,
-        // 文章正文
-        description: item.excerpt,
-        // 文章发布日期
-        pubDate: parseDate(item.raw.tw_published_date),
-        // 如果有的话，文章作者
-        author: item.raw.sysauthor,
-        // 如果有的话，文章分类
-        // category: item.labels.map((label) => label.name),
-    }));
+    // Map the source search results to feed items.
+    const items = await pMap(
+        data.results,
+        async (item) => ({
+            // Article title
+            title: item.title,
+            // Article link
+            link: item.uri,
+            // Main article content
+            description: await getArticleDescription(item.uri),
+            // Publication date
+            pubDate: item.raw.tw_published_date ? parseDate(item.raw.tw_published_date) : undefined,
+            // Article authors when available
+            author: Array.isArray(item.raw.sysauthor) ? item.raw.sysauthor.map((name) => ({ name })) : item.raw.sysauthor,
+            // Article categories when available
+            category: Array.isArray(item.raw.tw_topic) ? item.raw.tw_topic : item.raw.tw_topic ? [item.raw.tw_topic] : undefined,
+        }),
+        { concurrency: 3 }
+    );
 
     return {
-        // 源标题
+        // Feed title
         title: 'ThoughtWorks Blog',
-        // 源链接
+        // Feed link
         link: 'https://www.thoughtworks.com/zh-cn/insights/blog',
-        // 源文章
+        // Feed items
         item: items,
     };
 }
