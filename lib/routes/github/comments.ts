@@ -1,9 +1,11 @@
+import { escapeAttribute, escapeText } from 'entities';
 import MarkdownIt from 'markdown-it';
 
 import { config } from '@/config';
 import type { DataItem, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
 const md = MarkdownIt({
     html: true,
@@ -47,7 +49,7 @@ async function handler(ctx) {
     const user = ctx.req.param('user');
     const repo = ctx.req.param('repo');
     const number = ctx.req.param('number') && Number.isNaN(Number.parseInt(ctx.req.param('number'))) ? 1 : Number.parseInt(ctx.req.param('number'));
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 100;
+    const limit = getRouteLimit(ctx, 100);
     const headers =
         config.github && config.github.access_token
             ? {
@@ -146,7 +148,8 @@ async function singleIssue(ctx, user, repo, number, limit, headers) {
                     title: `${actor} ${item.event} ${user}/${repo}: ${typeDict[type].title} #${issue.number}`,
                     author: actor,
                     pubDate: parseDate(item.created_at),
-                    link: item.url,
+                    link: issue.html_url,
+                    guid: item.url,
                 });
                 break;
             case 'commented':
@@ -161,20 +164,21 @@ async function singleIssue(ctx, user, repo, number, limit, headers) {
             case 'cross-referenced':
                 items.push({
                     title: `${actor} ${item.event} on ${user}/${repo}: ${typeDict[type].title} #${issue.number}`,
-                    description: `${actor} mentioned this issue in <a href='${item.source.issue.html_url}'><b>${item.source.issue.title}</b> #${item.source.issue.number}</a>`,
+                    description: `${escapeText(actor)} mentioned this issue in <a href="${escapeAttribute(item.source.issue.html_url)}"><b>${escapeText(item.source.issue.title)}</b> #${item.source.issue.number}</a>`,
                     author: actor,
                     pubDate: parseDate(item.created_at),
                     guid: `${actor} ${item.event} on ${user}/${repo}: ${typeDict[type].title} #${issue.number} on ${item.created_at}`,
-                    link: `${actor} ${item.event} on ${user}/${repo}: ${typeDict[type].title} #${issue.number} on ${item.created_at}`,
+                    link: item.source.issue.html_url,
                 });
                 break;
             case 'renamed':
                 items.push({
                     title: `${actor} ${item.event} on ${user}/${repo}: ${typeDict[type].title} #${issue.number}`,
-                    description: `${actor} changed the title <del>${item.rename.from}</del> ${item.rename.to}`,
+                    description: `${escapeText(actor)} changed the title <del>${escapeText(item.rename.from)}</del> ${escapeText(item.rename.to)}`,
                     author: actor,
                     pubDate: parseDate(item.created_at),
-                    link: item.url,
+                    link: issue.html_url,
+                    guid: item.url,
                 });
                 break;
             case 'reviewed':
