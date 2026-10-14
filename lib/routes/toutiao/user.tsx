@@ -1,4 +1,6 @@
+import { load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
+import { getMimeType } from 'hono/utils/mime';
 
 import { config } from '@/config';
 import NotFoundError from '@/errors/types/not-found';
@@ -18,6 +20,23 @@ const renderVideo = (url, poster) =>
             <source src={url} type="video/mp4" />
         </video>
     );
+
+const getImageMimeType = (image: string) => {
+    const mimeType = getMimeType(new URL(image).pathname)?.split(';', 1)[0];
+    return mimeType?.startsWith('image/') ? mimeType : undefined;
+};
+
+const renderImage = (description: string, image: string) => {
+    const $ = load(description, null, false);
+    if (
+        $('img[src]')
+            .toArray()
+            .some((element) => $(element).attr('src') === image)
+    ) {
+        return description;
+    }
+    return description + renderToString(<img src={image} />);
+};
 
 export const route: Route = {
     path: '/user/token/:token',
@@ -49,7 +68,7 @@ async function handler(ctx) {
             const userAgent = headers['user-agent'];
 
             const data = await ofetch<{ data: Feed[] }>(`https://www.toutiao.com/api/pc/list/feed?${query}&a_bogus=${generate_a_bogus(query, userAgent)}`, {
-                headerGeneratorOptions: PRESETS.MODERN_WINDOWS_CHROME,
+                headers,
             });
 
             return data.data;
@@ -90,15 +109,16 @@ async function handler(ctx) {
             // text w/o title
             case 32: {
                 const enclosure = item.large_image_list?.pop();
+                const enclosureType = enclosure?.url ? getImageMimeType(enclosure.url) : undefined;
                 const user = item.user && 'name' in item.user ? item.user : undefined;
                 return {
-                    title: item.content?.split('\n', 1)[0],
-                    description: item.rich_content,
+                    title: item.content,
+                    description: enclosure?.url && !enclosureType ? renderImage(item.rich_content, enclosure.url) : item.rich_content,
                     link: `https://www.toutiao.com/w/${item.id}/`,
                     pubDate: parseDate(item.publish_time, 'X'),
                     author: user?.name,
-                    enclosure_url: enclosure?.url,
-                    enclosure_type: enclosure?.url ? `image/${new URL(enclosure.url).pathname.split('.').pop()}` : undefined,
+                    enclosure_url: enclosureType ? enclosure?.url : undefined,
+                    enclosure_type: enclosureType,
                     user: {
                         name: user?.name,
                         avatar: user?.avatar_url,
