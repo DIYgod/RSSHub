@@ -1,9 +1,11 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 const rootUrl = 'http://www.nifd.cn';
 
@@ -49,39 +51,36 @@ async function handler(ctx) {
     const $ = load(response.data);
     const list = $('div.qr-main-item')
         .toArray()
-        .map((item): DataItem => ({
-            title: $(item).find('h2').text(),
-            link: rootUrl + $(item).find('a').attr('href'),
-            author: $(item).find('p > span:nth-child(2)').text(),
-            pubDate: parseDate($(item).find('p > span:nth-child(1)').text(), 'YYYY-MM-DD'),
-        }));
+        .map((item): DataItem & { link: string } => {
+            const $item = $(item);
+            const date = ($item.find('p > span:nth-child(1)').text() || $item.children('span').text()).replaceAll(/[[\]]/g, '');
+            return {
+                title: $item.find('h2, h4').first().text(),
+                link: new URL($item.find('a').attr('href')!, rootUrl).href,
+                author: $item.find('p > span:nth-child(2)').text(),
+                pubDate: date ? timezone(parseDate(date, ['YYYY-MM-DD', 'YYYY年MM月DD日']), 8) : undefined,
+            };
+        });
 
-    const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link!, async () => {
+    const items = await pMap(
+        list,
+        async (item) => ({
+            ...item,
+            ...(await cache.tryGet(`nifd:details:v2:${item.link}`, async () => {
                 const detailResponse = await got.get(item.link);
                 const content = load(detailResponse.data);
-                item.description = content('div.qrd-content').html();
-
+                const details: Pick<DataItem, 'description' | 'enclosure_url' | 'enclosure_type' | 'enclosure_title'> = { description: content('div.qrd-content').html() };
                 const $enclosureEl = content('div.report-bottom a').first();
                 const enclosureUrl = $enclosureEl.attr('href');
-
                 if (enclosureUrl) {
-                    const enclosureItem = {
-                        enclosure_url: new URL(enclosureUrl, rootUrl).href,
-                        enclosure_type: `application/${enclosureUrl.split(/\./).pop() ?? 'pdf'}`,
-                        enclosure_title: $enclosureEl.prev().text(),
-                    };
-
-                    item = {
-                        ...item,
-                        ...enclosureItem,
-                    };
+                    details.enclosure_url = new URL(enclosureUrl, rootUrl).href;
+                    details.enclosure_type = `application/${enclosureUrl.split(/\./).pop() ?? 'pdf'}`;
+                    details.enclosure_title = $enclosureEl.prev().text();
                 }
-
-                return item;
-            })
-        )
+                return details;
+            })),
+        }),
+        { concurrency: 3 }
     );
 
     return {
