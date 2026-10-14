@@ -4,12 +4,13 @@ import type { Context } from 'hono';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 import timezone from '@/utils/timezone';
 
 export const rootUrl = 'https://www.asahi.com';
 
 export const buildFeed = async (ctx: Context, currentUrl: string) => {
-    const limit = Number(ctx.req.query('limit')) || 6;
+    const limit = getRouteLimit(ctx, 6);
 
     const response = await ofetch(currentUrl);
 
