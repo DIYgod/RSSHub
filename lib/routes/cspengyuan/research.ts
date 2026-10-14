@@ -3,6 +3,7 @@ import { escapeAttribute } from 'entities';
 import type { Route } from '@/types';
 import { parseDate } from '@/utils/parse-date';
 import { getPlaywrightPage } from '@/utils/playwright';
+import { getRouteLimit } from '@/utils/route-limit';
 import timezone from '@/utils/timezone';
 
 const baseUrl = 'https://www.cspengyuan.com';
@@ -52,7 +53,7 @@ async function handler(ctx) {
     } finally {
         await destroy();
     }
-    const limit = Number(ctx.req.query('limit')) || 20;
+    const limit = getRouteLimit(ctx, 20);
     const items = response.responseData.content.slice(0, limit).map((report) => {
         const pdfUrl = new URL(report.pdfUrl.startsWith('/api/files/') ? report.pdfUrl : `/api/files/${report.pdfUrl}`, baseUrl).href;
         return {
