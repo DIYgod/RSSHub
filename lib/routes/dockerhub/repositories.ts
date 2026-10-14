@@ -4,6 +4,7 @@ import type { Route } from '@/types';
 import { ViewType } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
 export const route: Route = {
     name: 'Owner Repositories',
@@ -19,7 +20,7 @@ export const route: Route = {
 
 async function handler(ctx: Context) {
     const owner = ctx.req.param('owner')!.toLowerCase();
-    const limit = Number.parseInt(ctx.req.query('limit') || '10');
+    const limit = getRouteLimit(ctx, 10);
     const link = `https://hub.docker.com/r/${owner}`;
     const url = `https://hub.docker.com/v2/repositories/${owner}`;
     const response = await got(url, {
