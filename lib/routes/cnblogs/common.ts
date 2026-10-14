@@ -10,7 +10,7 @@ export const route: Route = {
     path: ['/aggsite/topdiggs', '/aggsite/topviews', '/aggsite/headline', '/cate/:type', '/pick'],
     categories: ['blog'],
     example: '/cnblogs/aggsite/topdiggs',
-    parameters: {},
+    parameters: { type: '博客分类，仅用于 /cate/:type，可在对应分类页 URL 中找到，如 go' },
     features: {
         requireConfig: false,
         requirePuppeteer: false,
