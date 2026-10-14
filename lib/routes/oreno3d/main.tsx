@@ -1,10 +1,12 @@
 import { load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
+import pMap from 'p-map';
 
 import type { Route } from '@/types';
+import cache from '@/utils/cache';
 import got from '@/utils/got';
 
-import { sync_detail as get_sec_page_data } from './get-sec-page-data';
+import { getDetails } from './get-sec-page-data';
 
 const rootUrl = 'https://oreno3d.com';
 
@@ -15,24 +17,24 @@ const sortRename = {
     popularity: '人気',
 };
 
-function get_user_url(rootUrl, ctx, sort) {
+function getUserUrl(rootUrl, ctx, sort) {
     let userUrl = '';
-    // 判断userurl获取位置
+    // Choose the list URL from the route parameters.
     if (ctx.req.param('keyword')) {
         const keyword = ctx.req.param('keyword');
-        userUrl = `${rootUrl}/search?sort=${sort}&keyword=${keyword}`;
+        userUrl = `${rootUrl}/search?sort=${encodeURIComponent(sort)}&keyword=${encodeURIComponent(keyword)}`;
     } else if (ctx.req.param('characterid')) {
         const characterid = ctx.req.param('characterid');
-        userUrl = `${rootUrl}/characters/${characterid}?sort=${sort}`;
+        userUrl = `${rootUrl}/characters/${characterid}?sort=${encodeURIComponent(sort)}`;
     } else if (ctx.req.param('authorid')) {
         const authorid = ctx.req.param('authorid');
-        userUrl = `${rootUrl}/authors/${authorid}?sort=${sort}`;
+        userUrl = `${rootUrl}/authors/${authorid}?sort=${encodeURIComponent(sort)}`;
     } else if (ctx.req.param('tagid')) {
         const tagid = ctx.req.param('tagid');
-        userUrl = `${rootUrl}/tags/${tagid}?sort=${sort}`;
+        userUrl = `${rootUrl}/tags/${tagid}?sort=${encodeURIComponent(sort)}`;
     } else if (ctx.req.param('originid')) {
         const originid = ctx.req.param('originid');
-        userUrl = `${rootUrl}/origins/${originid}?sort=${sort}`;
+        userUrl = `${rootUrl}/origins/${originid}?sort=${encodeURIComponent(sort)}`;
     }
     return userUrl;
 }
@@ -40,7 +42,15 @@ export const route: Route = {
     path: ['/authors/:authorid/:sort/:pagelimit?', '/characters/:characterid/:sort/:pagelimit?', '/origins/:originid/:sort/:pagelimit?', '/search/:keyword/:sort/:pagelimit?', '/tags/:tagid/:sort/:pagelimit?'],
     categories: ['anime'],
     example: '/oreno3d/authors/3189/latest/1',
-    parameters: { authorid: 'Author id, can be found in URL', sort: 'Sort method, see the table above', pagelimit: 'The maximum number of pages to be crawled, the default is 1' },
+    parameters: {
+        authorid: 'Author id, can be found in URL',
+        characterid: 'Character id, can be found in URL',
+        originid: 'Origin id, can be found in URL',
+        keyword: 'Search keyword',
+        tagid: 'Tag id, can be found in URL',
+        sort: 'Sort method, see the table above',
+        pagelimit: 'Deprecated; only the first page is fetched',
+    },
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -58,139 +68,80 @@ export const route: Route = {
 | favorites | hot | latest | popularity |`,
 };
 
-async function handler(ctx) {
-    // 获取视频链接列表及标题
-    function getLinksTitle(response) {
-        const selector = 'a.box';
-        const $ = load(response.data);
-        const title = $('div.g-main-list').find('h1.main-h').text();
-        const list = $(selector);
-        return { title, list };
-    }
-    // 数据爬取和分析
-    async function getData(response) {
-        const $ = load(response.data);
-        // 第一页，获取搜索主标题
-        const title = getLinksTitle(response).title;
-        const list = getLinksTitle(response).list;
-        const items = await Promise.all(
-            list.toArray().map(async (item) => {
-                // 第一页，获取搜各视频地址
-                const link = $(item).attr('href');
-                // 第二页数据分析+缓存
-                const sec_data = await get_sec_page_data(link);
-                // 传递
-                const raw_pic_link = sec_data.raw_pic_link;
-                const video_name = sec_data.video_name;
-                const authors = sec_data.authors;
-                const origins = sec_data.origins;
-                const characters = sec_data.characters;
-                const tags = sec_data.tags;
-                const desc = sec_data.desc;
-                const iwara_link = sec_data.iwara_link;
-                const oreno3d_link = sec_data.oreno3d_link;
-                // 打包,缓存HTML
-                const description = renderToString(
-                    <>
-                        <img src={raw_pic_link} />
-                        <p>
-                            标题：<b>{video_name}</b>
-                        </p>
-                        <p>
-                            作者：<b>{authors}</b>
-                        </p>
-                        <p>
-                            原作：<b>{origins}</b>
-                        </p>
-                        <p>
-                            角色：<b>{characters}</b>
-                        </p>
-                        <p>
-                            标签：<b>{tags}</b>
-                        </p>
-                        <p>简介：</p>
-                        <div style="white-space: pre-line;">
-                            <b>{desc}</b>
-                        </div>
-                        <p>
-                            iwara链接：
-                            <b>
-                                <a href={iwara_link}>{iwara_link}</a>
-                            </b>
-                        </p>
-                        <p>
-                            Oreno3D链接：
-                            <b>
-                                <a href={oreno3d_link}>{oreno3d_link}</a>
-                            </b>
-                        </p>
-                    </>
-                );
-                const title = `${video_name} - ${authors}`;
-                return {
-                    title,
-                    author: authors,
-                    link: oreno3d_link,
-                    category: tags.split(' '),
-                    description,
-                };
-            })
-        );
-        return { items, title };
-    }
-    // 参数定义
-    const sort = ctx.req.param('sort');
-    let pagelimit = ctx.req.param('pagelimit') ?? 1;
-    // 根链接
-    const userUrl = get_user_url(rootUrl, ctx, sort);
-    // 确认最大页数并比较修改(同时也是获取第一页的内容)
-    const response = await got(userUrl);
+// Fetch and parse article details.
+async function getData(response) {
     const $ = load(response.data);
-    const maxPageSelector = 'div.container > main > div.g-main-list > ul.pagination > li:last-child > a';
-    // 页码判断
-    if ($(maxPageSelector)) {
-        const pageLink = new URLSearchParams($(maxPageSelector).attr('href'));
-        const actualNum = pageLink.get('page'); // 获取最大页数
-        if (Number.parseInt(pagelimit) >= Number.parseInt(actualNum ?? '')) {
-            pagelimit = actualNum;
-        }
-    } else {
-        pagelimit = 1;
-    }
-    // 构造网页数据的对应数组
-    const responseList = [response];
-    // 将第一页的数据加入数组
-    // 创建不含第一页链接的数组
-    const Links: string[] = [];
-    for (let i = 1; i < pagelimit; i++) {
-        Links.push(`${userUrl}&page=${i + 1}`);
-    }
-    // 由数组索引添加response
-    await Promise.all(
-        Links.map(async (link) => {
-            const response = await got(link);
-            responseList.push(response);
-        })
+    // Read the list title and links.
+    const title = $('div.g-main-list').find('h1.main-h').text();
+    const list = $('a.box[href]');
+    const items = await pMap(
+        list.toArray(),
+        async (item) => {
+            // Read the article link.
+            const link = new URL($(item).attr('href')!, rootUrl).href;
+            // Cache the article details.
+            const details = await cache.tryGet(`oreno3d:detail:v5:${link}`, () => getDetails(link));
+            // Read the parsed detail fields.
+            const thumbnailUrl = details.thumbnailUrl;
+            const videoTitle = details.videoTitle;
+            const authors = details.authors;
+            const origins = details.origins;
+            const characters = details.characters;
+            const desc = details.desc;
+            const iwaraUrl = details.iwaraUrl;
+            const articleLink = details.articleLink;
+            // Render the article description.
+            const description = renderToString(
+                <>
+                    {thumbnailUrl ? <img src={thumbnailUrl} /> : null}
+                    <p>
+                        原作：<b>{origins}</b>
+                    </p>
+                    <p>
+                        角色：<b>{characters}</b>
+                    </p>
+                    <p>简介：</p>
+                    <div style="white-space: pre-line;">
+                        <b>{desc}</b>
+                    </div>
+                    <p>
+                        iwara链接：
+                        <b>
+                            <a href={iwaraUrl}>{iwaraUrl}</a>
+                        </b>
+                    </p>
+                    <p>
+                        Oreno3D链接：
+                        <b>
+                            <a href={articleLink}>{articleLink}</a>
+                        </b>
+                    </p>
+                </>
+            );
+            const title = `${videoTitle} - ${authors}`;
+            return {
+                title,
+                author: authors,
+                link: articleLink,
+                category: details.tagList,
+                description,
+            };
+        },
+        { concurrency: 3 }
     );
-    // 由数组索引获取初步分析数据
-    const tempData: any[] = [];
-    await Promise.all(
-        responseList.map(async (response) => {
-            const result = await getData(response);
-            tempData.push(result);
-        })
-    );
-    // 拼接多页面item
-    const realItem: any[] = tempData.flatMap((data) => data.items);
-    // 构造最终data
-    const data = {
-        title: tempData[0].title,
-        item: realItem,
-    };
-    // 生成RSS源码
+    return { items, title };
+}
+
+async function handler(ctx) {
+    // Read the route parameters.
+    const sort = ctx.req.param('sort');
+    const userUrl = getUserUrl(rootUrl, ctx, sort);
+    const response = await got(userUrl);
+    const result = await getData(response);
+    // Return the feed.
     return {
-        title: `${data.title} - ${sortRename[sort]}(Page 1-${pagelimit})`,
+        title: `${result.title} - ${sortRename[sort]}(Page 1-1)`,
         link: userUrl,
-        item: data.item,
+        item: result.items,
     };
 }
