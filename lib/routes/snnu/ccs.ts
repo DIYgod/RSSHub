@@ -1,9 +1,11 @@
 import { load } from 'cheerio';
+import { FetchError } from 'ofetch';
+import pMap from 'p-map';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
 
 export const route: Route = {
     path: '/ccs/:type?',
@@ -22,7 +24,7 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    name: '计算机科学学院',
+    name: '人工智能与计算机学院',
     maintainers: ['alterkeyy'],
     radar: [
         {
@@ -60,40 +62,37 @@ export const route: Route = {
         const $ = load(response);
         const list = $('.lunwen dl dd').slice(0, 10).toArray();
 
-        const items = await Promise.all(
-            list.map((item) => {
+        const items = await pMap(
+            list,
+            async (item) => {
                 const $item = $(item);
-                const $link = $item.find('a').first();
+                const $link = $item.find('a');
                 const link = new URL($link.attr('href') || '', configTarget.url).href;
 
-                const pubDate = parseDate($item.find('.spani').text());
+                const date = $item.find('.spani').text();
+                const pubDate = date ? parseDateInTimezone(date, 8) : undefined;
                 const title = $link.text();
 
-                return cache.tryGet(link, async () => {
-                    try {
+                const metadata = { title, link, pubDate };
+                try {
+                    const detail = await cache.tryGet(link, async () => {
                         const detailResponse = await ofetch(link);
                         const $$ = load(detailResponse);
-                        const description = $$('.v_news_content').html() || $$('#vsb_content').html();
-
-                        return {
-                            title,
-                            link,
-                            description,
-                            pubDate,
-                        };
-                    } catch {
-                        return {
-                            title,
-                            link,
-                            pubDate,
-                        };
+                        return { description: $$('.v_news_content').html() || $$('#vsb_content').html() };
+                    });
+                    return { ...metadata, ...detail };
+                } catch (error) {
+                    if (error instanceof FetchError) {
+                        return metadata;
                     }
-                });
-            })
+                    throw error;
+                }
+            },
+            { concurrency: 3 }
         );
 
         return {
-            title: `陕西师范大学 - 计算机科学学院${configTarget.name}`,
+            title: `陕西师范大学 - 人工智能与计算机学院${configTarget.name}`,
             link: configTarget.url,
             image: 'https://ccs.snnu.edu.cn/images/logo.png',
             item: items,

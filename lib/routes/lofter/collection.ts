@@ -3,6 +3,7 @@ import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
 export const route: Route = {
     path: '/collection/:collectionID',
@@ -51,11 +52,9 @@ async function fetchCollection(collectionID, limit, offset = 0) {
 
 async function handler(ctx) {
     const collectionID = ctx.req.param('collectionID');
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : '50';
+    const limit = getRouteLimit(ctx, 50);
 
-    const response = await cache.tryGet(collectionID, () => fetchCollection(collectionID, Number(limit)), config.cache.routeExpire, false);
-
-    const { title, link, description, items } = response;
+    const { title, link, description, items } = await cache.tryGet(`lofter:collection:${collectionID}:${limit}`, () => fetchCollection(collectionID, limit), config.cache.routeExpire, false);
 
     const itemsArray = items.map((item) => ({
         title: item.post.title || item.post.noticeLinkTitle,
@@ -73,7 +72,7 @@ async function handler(ctx) {
                 .map((video) => `<video src='${video.originUrl}' poster='${video.video_img_url}' controls='controls'></video>`)
                 .join('') +
             item.post.content,
-        pubDate: parseDate(item.post.publishTime),
+        pubDate: Number.isFinite(item.post.publishTime) ? parseDate(item.post.publishTime) : undefined,
         author: item.post.blogInfo.blogNickName,
         category: item.post.tag.split(','),
     }));

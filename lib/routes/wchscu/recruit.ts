@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
@@ -15,34 +16,32 @@ const handler = async () => {
         .toArray()
         .map((item): DataItem & { link: string } => {
             const $item = $(item);
+            const date = parseDate($item.find('span.s2').text(), 'YYYY.MM.DD', true);
             return {
                 title: $item.find('span.s1').text(),
-                pubDate: parseDate($item.find('span.s2').text()),
+                pubDate: Number.isFinite(date.getTime()) ? date : undefined,
                 link: new URL($item.find('a').prop('href')!, rootUrl).href,
             };
         });
 
-    const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link, async () => {
+    const items = await pMap(
+        list,
+        async (item) => {
+            const detail = await cache.tryGet(`wchscu:recruit:detail:v1:${item.link}`, async () => {
                 const { data: response } = await got(item.link);
                 const $ = load(response);
                 const newLocal = $('div.xxy3 .content');
-                // 选择类名为“comment-body”的第一个元素
-                item.description = newLocal.html();
-
-                // 上面每个列表项的每个属性都在此重用，
-                // 并增加了一个新属性“description”
-                return item;
-            })
-        )
+                return { description: newLocal.html() };
+            });
+            return { ...item, ...detail };
+        },
+        { concurrency: 3 }
     );
 
     return {
         title: $('title').text(),
         link: currentUrl,
         item: items,
-        allowEmpty: true,
     };
 };
 

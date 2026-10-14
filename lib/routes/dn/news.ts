@@ -5,8 +5,8 @@ import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 import timezone from '@/utils/timezone';
-import { isValidHost } from '@/utils/valid-host';
 
 import { renderDescription } from './templates/description';
 
@@ -44,11 +44,14 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { language, category = '' } = ctx.req.param();
-    if (!isValidHost(language)) {
-        throw new InvalidParameterError('Invalid language');
+    if (!['en-us', 'zh-cn'].includes(language)) {
+        throw new InvalidParameterError('Invalid language. Use en-us or zh-cn.');
+    }
+    if (category && !['category-1', 'category-2', 'category-3'].includes(category)) {
+        throw new InvalidParameterError('Invalid category. Use category-1, category-2, or category-3, or omit it for the latest news.');
     }
 
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 10;
+    const limit = getRouteLimit(ctx, 10);
 
     const rootUrl = 'https://dn.com';
     const currentUrl = new URL(`/${language}/news/${category}`, rootUrl).href;
@@ -57,31 +60,31 @@ async function handler(ctx) {
 
     const $ = load(response);
 
-    let items = $('a.list-item')
+    let items = $('.news-list-item, .news-lists > .list-item')
         .slice(0, limit)
         .toArray()
         .map((item): DataItem & { link: string; category: string[] } => {
             const $item = $(item);
 
-            const image = $item.find('div.img img');
+            const image = $item.find('.news-item-cover img');
 
             return {
-                title: $item.find('h2.ellipse2').text(),
-                link: new URL($item.prop('href')!, rootUrl).href,
+                title: $item.find('.news-item-title, .list-item-title').text(),
+                link: new URL($item.find('.news-item-title, .list-item-title').attr('href')!, rootUrl).href,
                 description: renderDescription({
-                    image: image
+                    image: image.length
                         ? {
                               src: image.prop('src')!,
                               alt: image.prop('alt'),
                           }
                         : undefined,
-                    abstracts: $item.find('p.abstract').html() ?? undefined,
+                    abstracts: $item.find('.news-item-desc, .list-item-desc').html() ?? undefined,
                 }),
                 category: $item
-                    .find('span.cat')
+                    .find('.news-item-category, .list-item-category')
                     .toArray()
                     .map((c) => $(c).text()),
-                pubDate: timezone(parseDate($item.find('span.time').text()), 8),
+                pubDate: timezone(parseDate($item.find('.news-item-date, .list-item-date').text().trim(), language === 'en-us' ? 'DD MMM YYYY hh:mm:ss A' : 'YYYY-MM-DD HH:mm:ss', 'en'), 8),
             };
         });
 
@@ -92,37 +95,34 @@ async function handler(ctx) {
 
                 const content = load(detailResponse);
 
-                item.title = content('h1.tit').text();
-                item.description = renderDescription({
-                    abstracts: content('div.abstract').html() ?? undefined,
-                    description: content('div.detail').html() ?? undefined,
-                });
-                item.author = content('span.author')
+                item.title = content('.news-detail-title').text();
+                item.description = content('.news-detail-content').html() ?? undefined;
+                item.author = content('.news-detail-meta-item.author span')
                     .text()
-                    .replace(/(By|作者)\s/, '');
+                    .replace(/^(By|作者)[：:]\s*/, '');
                 item.category = [
                     ...item.category,
-                    ...content('div.tags p a')
+                    ...content('.news-detail-tag')
                         .toArray()
                         .map((c) => content(c).text()),
                 ];
-                item.pubDate = timezone(parseDate(content('span.date').text()), 8);
+                item.pubDate = timezone(parseDate(content('.news-detail-meta-item.date span').text().trim(), language === 'en-us' ? 'DD MMM YYYY hh:mm:ss A' : 'YYYY-MM-DD HH:mm:ss', 'en'), 8);
 
                 return item;
             })
         )
     );
 
-    const title = $('a.logo img').prop('alt');
-    const icon = $('link[rel="icon"]').prop('href');
+    const title = $('a.logo').attr('title') ?? 'DN.com';
+    const iconPath = $('link[rel="icon"]').attr('href');
+    const icon = iconPath ? new URL(iconPath, rootUrl).href : undefined;
 
     return {
         item: items,
-        title: `${title} - ${$('div.group a.active').text()}`,
+        title: `${title} - ${$('.news-category-item.active').text()}`,
         link: currentUrl,
         description: $('meta[name="description"]').prop('content'),
         language: $('html').prop('lang') as Language,
-        image: new URL($('a.logo img').prop('src')!, rootUrl).href,
         icon,
         logo: icon,
         subtitle: $('title').text(),

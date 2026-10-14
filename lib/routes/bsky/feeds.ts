@@ -9,7 +9,7 @@ export const route: Route = {
     path: '/profile/:handle/feed/:space/:routeParams?',
     categories: ['social-media'],
     view: ViewType.SocialMedia,
-    example: '/bsky/profile/jaz.bsky.social/feed/cv:cat',
+    example: '/bsky/profile/bsky.app/feed/hot-classic',
     parameters: {
         handle: 'User handle, can be found in URL',
         space: 'Space ID, can be found in URL',
@@ -37,11 +37,10 @@ async function handler(ctx) {
     const feeds = await getFeed(uri);
 
     const items = feeds.feed.map(({ post }) => ({
-        title: post.record.text.split('\n', 1)[0],
+        title: post.record.text,
         description: renderPost({
-            text: post.record.text.replaceAll('\n', '<br>'),
+            text: post.record.text,
             embed: post.embed,
-            // embed.$type "app.bsky.embed.record#view" and "app.bsky.embed.recordWithMedia#view" are not handled
         }),
         author: post.author.displayName,
         pubDate: parseDate(post.record.createdAt),

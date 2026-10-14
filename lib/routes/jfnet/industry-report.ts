@@ -7,7 +7,7 @@ import { parseDate } from '@/utils/parse-date';
 
 const HOST = 'https://www.jfnet.or.jp';
 const INDEX = `${HOST}/industry_report/?c=29&y=0`; // c=29 → 月次レポート only
-const MEDIA_API = `${HOST}/wp-json/wp/v2/media?search=getujidata&per_page=100&_fields=date,source_url`;
+const MEDIA_API = `${HOST}/wp-json/wp/v2/media?search=getujidata&per_page=100&_fields=date,date_gmt,source_url`;
 
 export interface MarketReportExtra {
     source: 'jfnet';
@@ -28,11 +28,10 @@ const parseIndex = (html: string): Array<Omit<MarketReportExtra, 'released_at'> 
         .toArray()
         .map((row) => {
             const cols = $(row).children('div');
-            const title = cols.eq(0).text().trim();
+            const title = cols.eq(0).text();
             const period = cols
                 .eq(1)
                 .text()
-                .trim()
                 .match(/(\d{4})年(\d{1,2})月/);
             const pdf = $(row).find('a[href$=".pdf"]').attr('href');
             const xls = $(row).find('a[href$=".xls"], a[href$=".xlsx"]').attr('href');
@@ -53,24 +52,28 @@ const parseIndex = (html: string): Array<Omit<MarketReportExtra, 'released_at'> 
 
 export const handler = async (): Promise<Data> => {
     const [entries, media] = await Promise.all([
-        cache.tryGet(INDEX, async () => parseIndex(await ofetch(INDEX))) as Promise<ReturnType<typeof parseIndex>>,
+        cache.tryGet(INDEX, async () => {
+            const html = await ofetch(INDEX);
+            return parseIndex(html);
+        }),
         cache.tryGet(MEDIA_API, async () => {
-            const list: Array<{ date: string; source_url: string }> = await ofetch(MEDIA_API);
-            return Object.fromEntries(list.map((m) => [m.source_url, m.date]));
-        }) as Promise<Record<string, string>>,
+            const list: Array<{ date: string; date_gmt?: string; source_url: string }> = await ofetch(MEDIA_API);
+            return Object.fromEntries(list.map((m) => [m.source_url, { date: m.date, dateGmt: m.date_gmt }]));
+        }),
     ]);
 
     const items: DataItem[] = entries.map((e) => {
-        const releasedAt = media[e.pdf] ?? null;
+        const releasedAt = media[e.pdf]?.date ?? null;
+        const dateGmt = media[e.pdf]?.dateGmt;
         const [year, month] = e.month.split('-', 2);
         const label = `${year}年${Number(month)}月度`;
         return {
             title: `${e.survey} ${label}`,
             link: e.pdf,
             guid: e.pdf,
-            pubDate: releasedAt === null ? undefined : parseDate(releasedAt),
-            description: `${e.survey}（月次レポート） ${label} — <a href="${e.pdf}">PDF</a>${e.xls ? ` / <a href="${e.xls}">Excel</a>` : ''}`,
-            _extra: { ...e, title: undefined, released_at: releasedAt } as unknown as MarketReportExtra,
+            pubDate: dateGmt ? parseDate(`${dateGmt}Z`) : undefined,
+            description: `<a href="${e.pdf}">PDF</a>${e.xls ? ` / <a href="${e.xls}">Excel</a>` : ''}`,
+            _extra: { source: e.source, survey: e.survey, month: e.month, pdf: e.pdf, xls: e.xls, released_at: releasedAt } satisfies MarketReportExtra,
         };
     });
 

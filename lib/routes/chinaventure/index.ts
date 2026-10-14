@@ -4,6 +4,7 @@ import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 import timezone from '@/utils/timezone';
 
 const rootUrl = 'https://www.chinaventure.com.cn';
@@ -42,7 +43,7 @@ export const route: Route = {
     name: '分类',
     maintainers: ['yuxinliu-alex'],
     handler,
-    url: 'chinaventure.com.cn/',
+    url: 'www.chinaventure.com.cn/',
     description: `| 推荐 | 商业深度 | 资本市场 | 5G | 健康 | 教育 | 地产 | 金融 | 硬科技 | 新消费 |
 | ---- | -------- | -------- | -- | ---- | ---- | ---- | ---- | ------ | ------ |
 |      | 78       | 80       | 83 | 111  | 110  | 112  | 113  | 114    | 116    |`,
@@ -57,7 +58,7 @@ async function handler(ctx) {
         url: currentUrl,
     });
     const $ = load(response.data);
-    const limit = ctx.req.query('limit');
+    const limit = getRouteLimit(ctx, 20);
     const list = $('a', '.common_newslist_pc')
         .filter((_, element) => !!$(element).attr('href'))
         .toArray()
@@ -65,7 +66,7 @@ async function handler(ctx) {
             link: rootUrl + $(item).attr('href'),
             title: '',
         }))
-        .slice(0, limit ? Number.parseInt(limit) : 20);
+        .slice(0, limit);
 
     const items = await Promise.all(
         list.map((item) =>

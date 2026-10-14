@@ -1,6 +1,5 @@
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 
 import utils from './utils';
 
@@ -38,12 +37,11 @@ async function handler(ctx) {
         title: 'Furstar 已出售角色',
         link: 'https://furstar.jp',
         description: 'Furstar 已经出售或预订的角色列表',
-        language: ctx.req.param('lang'),
+        language: utils.language(ctx.req.param('lang')),
         item: info.map((e) => ({
             title: e.title,
             author: e.author.name ?? undefined,
             description: `<img src="${e.headImage}"/> ${utils.renderAuthor(e.author)}`,
-            pubDate: parseDate(new Date().toISOString()), // No Time for now
             link: e.detailPage,
         })),
     };

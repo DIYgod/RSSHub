@@ -1,7 +1,18 @@
+import pMap from 'p-map';
+
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+
+interface HomeItem {
+    type: number;
+    aid: number;
+    title: string;
+    summary: string;
+    created_at?: number;
+    user_name?: string;
+}
 
 export const route: Route = {
     path: '/',
@@ -22,10 +33,13 @@ async function handler() {
         },
     });
 
-    const articleItems = response.data.dataList.flat().filter((item) => item.type === 1 || item.type === 4);
+    const articleItems: HomeItem[] = response.data.dataList.flat().filter((item) => item.type === 1 || item.type === 4);
+    const ordered = articleItems;
+    const selected = ordered;
 
-    const items = await Promise.all(
-        articleItems.map(async (item) => {
+    const items = await pMap(
+        selected,
+        async (item) => {
             const isArticle = item.type === 1;
             const dlink = isArticle ? `https://opser.api.dgtle.com/v1/article/view/${item.aid}` : `https://opser.api.dgtle.com/v1/feeds/inst/${item.aid}`;
 
@@ -34,13 +48,14 @@ async function handler() {
                 return {
                     title: isArticle ? item.title : item.summary,
                     description: isArticle ? detail.content : detail.content + detail.imgs_url.map((dimg) => `<img src="${dimg.path.split('?', 1)[0]}">`).join(''),
-                    pubDate: parseDate(item.send_at * 1000),
+                    pubDate: item.created_at ? parseDate(item.created_at, 'X') : undefined,
                     link: isArticle ? `https://www.dgtle.com/article-${item.aid}-1.html` : `https://www.dgtle.com/inst-${item.aid}-1.html`,
                     category: isArticle ? '文章' : '兴趣动态',
                     author: item.user_name,
                 };
             });
-        })
+        },
+        { concurrency: 3 }
     );
 
     return {

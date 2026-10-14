@@ -121,9 +121,9 @@ const flowTasks = {
 };
 
 async function login({ username, password, authenticationSecret, phoneOrEmail }) {
-    return (await cache.tryGet(
+    return await cache.tryGet(
         `twitter:authentication:${username}`,
-        async () => {
+        async (): Promise<{ oauth_token: string; oauth_token_secret: string } | undefined> => {
             try {
                 await loginLimiterQueue.removeTokens(1);
 
@@ -220,10 +220,7 @@ async function login({ username, password, authenticationSecret, phoneOrEmail })
         },
         60 * 60 * 24 * 30, // 30 days
         false
-    )) as {
-        oauth_token: string;
-        oauth_token_secret: string;
-    } | null;
+    );
 }
 
 export default login;

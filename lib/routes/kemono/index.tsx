@@ -5,9 +5,14 @@ import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
-import { KEMONO_API_URL, KEMONO_ROOT_URL, MIME_TYPE_MAP } from './const';
+import { KEMONO_API_URL, KEMONO_ASSETS_URL, KEMONO_ROOT_URL, MIME_TYPE_MAP } from './const';
 import type { DiscordMessage, KemonoFile, KemonoPost } from './types';
+
+function isMissingPublicationValue(value: unknown): value is null | undefined | '' {
+    return ([undefined, null, ''] as unknown[]).includes(value);
+}
 
 const headers = { Accept: 'text/css' };
 
@@ -77,6 +82,14 @@ interface KemonoAttachment {
     path?: string;
 }
 
+function parsePublishedDate(value?: string | number | null) {
+    if (isMissingPublicationValue(value)) {
+        return;
+    }
+    const date = parseDate(value);
+    return Number.isNaN(date.getTime()) ? undefined : date;
+}
+
 function buildApiUrl(source: string, userId?: string, contentType?: string): string {
     if (source === 'posts') {
         return `${KEMONO_API_URL}/posts`;
@@ -115,17 +128,19 @@ async function fetchUserProfile(source: string, userId: string): Promise<string>
     try {
         const profileUrl = `${KEMONO_API_URL}/${source}/user/${userId}/profile`;
         const response = await got({ method: 'get', url: profileUrl, headers });
-        return response.data.name || 'Unknown User';
+        return typeof response.data.name === 'string' ? response.data.name : '';
     } catch {
-        return 'Unknown User';
+        return '';
     }
 }
 
 function processPostFiles(post: KemonoPost): KemonoFile[] {
     const files: KemonoFile[] = [];
+    const filePaths = new Set<string>();
 
     const file: KemonoAttachment | undefined = post.file;
     if (file?.path) {
+        filePaths.add(file.path);
         files.push({
             name: file.name || 'Unnamed File',
             path: file.path,
@@ -135,13 +150,16 @@ function processPostFiles(post: KemonoPost): KemonoFile[] {
 
     const attachments: KemonoAttachment[] = post.attachments ?? [];
     for (const attachment of attachments) {
-        if (attachment.path) {
-            files.push({
-                name: attachment.name || 'Unnamed Attachment',
-                path: attachment.path,
-                extension: extractFileExtension(attachment.path),
-            });
+        if (!attachment.path || filePaths.has(attachment.path)) {
+            continue;
         }
+
+        filePaths.add(attachment.path);
+        files.push({
+            name: attachment.name || 'Unnamed Attachment',
+            path: attachment.path,
+            extension: extractFileExtension(attachment.path),
+        });
     }
 
     return files;
@@ -162,7 +180,7 @@ function generateEnclosureInfo(htmlContent: string): { enclosure_url?: string; e
         }
 
         const extension = extractFileExtension(src);
-        const mimeType = MIME_TYPE_MAP[extension as keyof typeof MIME_TYPE_MAP];
+        const mimeType = Object.entries(MIME_TYPE_MAP).find(([ext]) => ext === extension)?.[1];
 
         if (!mimeType) {
             return;
@@ -183,7 +201,7 @@ const renderDiscordMessage = (message: DiscordMessage) =>
         <>
             {message.content ? <p>{message.content}</p> : null}
             {message.attachments?.map((attachment) => (
-                <img src={`https://img.kemono.cr/thumbnail/data${attachment.path}`} />
+                <img src={`${KEMONO_ASSETS_URL}/thumbnail/data${attachment.path}`} />
             ))}
             {message.embeds?.map((embed) => {
                 if (embed.type === 'image') {
@@ -213,25 +231,26 @@ const renderPostFiles = (post: KemonoPost & { files?: KemonoFile[] }) =>
             {post.files?.map((file) => {
                 const extension = file.extension;
                 const typeSuffix = file.extension ?? '';
+                const mediaUrl = `${KEMONO_ASSETS_URL}${file.path}`;
 
                 if (['jpg', 'png', 'webp', 'jpeg', 'jfif'].includes(extension)) {
-                    return <img src={file.path} />;
+                    return <img src={mediaUrl} />;
                 }
                 if (['m4a', 'mp3', 'ogg'].includes(extension)) {
                     return (
                         <audio controls>
-                            <source src={file.path} type={`audio/${typeSuffix}`} />
+                            <source src={mediaUrl} type={extension === 'mp3' ? MIME_TYPE_MAP.mp3 : extension === 'm4a' ? MIME_TYPE_MAP.m4a : 'audio/ogg'} />
                         </audio>
                     );
                 }
                 if (['mp4', 'webm'].includes(extension)) {
                     return (
                         <video controls>
-                            <source src={file.path} type={`video/${typeSuffix}`} />
+                            <source src={mediaUrl} type={`video/${typeSuffix}`} />
                         </video>
                     );
                 }
-                return <a href={file.path}>{file.name}</a>;
+                return <a href={mediaUrl}>{file.name}</a>;
             })}
             {post.embed ? (
                 post.embed.type === 'image' ? (
@@ -269,7 +288,7 @@ async function processDiscordMessages(channels: any[], limit: number) {
                         title: message.content || 'Discord Message',
                         description: renderDiscordMessage(message),
                         author: `${message.author.username}#${message.author.discriminator}`,
-                        pubDate: parseDate(message.published),
+                        pubDate: parsePublishedDate(message.published),
                         category: channel.name,
                         guid: `kemono:discord:${message.server}:${message.channel}:${message.id}`,
                         link: `https://discord.com/channels/${message.server}/${message.channel}/${message.id}`,
@@ -283,13 +302,12 @@ async function processDiscordMessages(channels: any[], limit: number) {
 
 function processAnnouncements(announcements: any[], authorName: string, source: string, userId: string, limit: number) {
     return announcements.slice(0, limit).map((announcement) => {
-        const rawDate = announcement.published || announcement.added;
-        const displayDate = parseDate(rawDate);
+        const displayDate = parsePublishedDate(announcement.published) ?? parsePublishedDate(announcement.added);
 
         return {
-            title: `Announcement from ${displayDate.toDateString()}`,
+            title: displayDate ? `Announcement from ${displayDate.toDateString()}` : 'Announcement',
             description: `<div>${announcement.content || ''}</div>`,
-            author: authorName,
+            author: authorName || undefined,
             pubDate: displayDate,
             guid: `kemono:${source}:${userId}:announcement:${announcement.hash}`,
             link: `${KEMONO_ROOT_URL}/${source}/user/${userId}/announcements`,
@@ -304,8 +322,8 @@ function processFancards(fancards: any[], authorName: string, source: string, us
         return {
             title: `Fancard ${fancard.id}`,
             description: `<img src="${imageUrl}" alt="Fancard ${fancard.id}" />`,
-            author: authorName,
-            pubDate: parseDate(fancard.added),
+            author: authorName || undefined,
+            pubDate: parsePublishedDate(fancard.added),
             guid: `kemono:${source}:${userId}:fancard:${fancard.id}`,
             link: imageUrl,
             enclosure_url: imageUrl,
@@ -316,14 +334,15 @@ function processFancards(fancards: any[], authorName: string, source: string, us
 
 function processPosts(posts: KemonoPost[], authorName: string, limit: number) {
     return posts
-        .filter((post) => post.content || post.attachments)
+        .filter((post) => post.content || post.substring || post.attachments)
         .slice(0, limit)
         .map((post) => {
             const files = processPostFiles(post);
             const postWithFiles = { ...post, files };
 
             const filesHtml = renderPostFiles(postWithFiles);
-            let description = post.content ? `<div>${post.content}</div>` : '';
+            const content = post.content || post.substring;
+            let description = content ? `<div>${content}</div>` : '';
 
             const $ = load(description);
             const kemonoFileElements = load(filesHtml)('img, a, audio, video')
@@ -351,8 +370,8 @@ function processPosts(posts: KemonoPost[], authorName: string, limit: number) {
             return {
                 title: post.title || 'Untitled Post',
                 description,
-                author: authorName,
-                pubDate: parseDate(post.published),
+                author: authorName || undefined,
+                pubDate: parsePublishedDate(post.published),
                 guid: `kemono:${post.service}:${post.user}:post:${post.id}`,
                 link: `${KEMONO_ROOT_URL}/${post.service}/user/${post.user}/post/${post.id}`,
                 ...generateEnclosureInfo(description),
@@ -361,7 +380,7 @@ function processPosts(posts: KemonoPost[], authorName: string, limit: number) {
 }
 
 async function handler(ctx) {
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 25;
+    const limit = getRouteLimit(ctx, 25);
     const source = ctx.req.param('source') || 'posts';
     const userId = ctx.req.param('id');
     const contentType = ctx.req.param('type');
@@ -377,7 +396,7 @@ async function handler(ctx) {
 
         const authorName = isPostsMode || isDiscordMode || !userId ? '' : await fetchUserProfile(source, userId);
 
-        const iconUrl = isPostsMode || isDiscordMode ? `${KEMONO_ROOT_URL}/favicon.ico` : `https://img.kemono.cr/icons/${source}/${userId}`;
+        const iconUrl = isPostsMode || isDiscordMode ? `${KEMONO_ROOT_URL}/favicon.ico` : `${KEMONO_ASSETS_URL}/icons/${source}/${userId}`;
 
         let items: any[];
         let title: string;

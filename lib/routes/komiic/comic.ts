@@ -1,6 +1,7 @@
 import type { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
 export const route: Route = {
     path: '/comic/:id',
@@ -29,7 +30,6 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { id } = ctx.req.param();
-    const { limit = 0 } = ctx.req.query();
     const baseUrl = 'https://komiic.com';
 
     const { data: comicInfo } = await got.post(`${baseUrl}/api/query`, {
@@ -69,7 +69,7 @@ async function handler(ctx) {
 
     const sortedChapters = chapterData.data.chaptersByComicId.toSorted((a, b) => Date.parse(b.dateUpdated) - Date.parse(a.dateUpdated));
 
-    const chapterLimit = Number(limit) || sortedChapters.length;
+    const chapterLimit = getRouteLimit(ctx) ?? sortedChapters.length;
     const filteredChapters = sortedChapters.slice(0, chapterLimit);
 
     const generateChapterDescription = (chapter) =>
@@ -81,7 +81,7 @@ async function handler(ctx) {
     const items = filteredChapters.map((chapter) => ({
         title: chapter.type === 'book' ? `第 ${chapter.serial} 卷` : `第 ${chapter.serial} 话`,
         link: `${baseUrl}/comic/${id}/chapter/${chapter.id}/images/all`,
-        pubDate: parseDate(chapter.dateUpdated),
+        pubDate: chapter.dateUpdated && Number.isFinite(Date.parse(chapter.dateUpdated)) ? parseDate(chapter.dateUpdated) : undefined,
         description: generateChapterDescription(chapter),
     }));
 

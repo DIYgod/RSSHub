@@ -1,10 +1,12 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 import { isValidHost } from '@/utils/valid-host';
 
 import { renderDescription } from './templates/description';
@@ -15,7 +17,7 @@ export const handler = async (ctx) => {
         throw new InvalidParameterError('Invalid category');
     }
 
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 12;
+    const limit = getRouteLimit(ctx, 12);
 
     const rootUrl = 'https://lrepacks.net';
     const currentUrl = new URL(category, rootUrl).href;
@@ -49,14 +51,15 @@ export const handler = async (ctx) => {
             };
         });
 
-    items = await Promise.all(
-        items.map((item) =>
-            cache.tryGet(item.link!, async () => {
+    items = await pMap(
+        items,
+        async (item) => {
+            const detail = await cache.tryGet('lrepacks:article:' + item.link, async () => {
                 const { data: detailResponse } = await got(item.link);
 
                 const $$ = load(detailResponse);
 
-                const data = JSON.parse($$('script[type="application/ld+json"]').first().text())['@graph']?.[0] ?? undefined;
+                const data = JSON.parse($$('script[type="application/ld+json"]').text())['@graph']?.[0];
 
                 $$('div.entry-content a.highslide[href]').each((_, el) => {
                     const $el = $$(el);
@@ -74,29 +77,34 @@ export const handler = async (ctx) => {
                 });
 
                 const title = $$('h2.entry-title').text();
-                const description =
-                    item.description +
-                    renderDescription({
-                        description: $$('div.entry-content').html() ?? undefined,
-                    });
+                const description = renderDescription({
+                    description: $$('div.entry-content').html() ?? undefined,
+                });
                 const image = $$('meta[property="og:image"]').prop('content');
 
-                item.title = title;
-                item.description = description;
-                item.pubDate = data ? parseDate(data.datePublished) : undefined;
-                item.author = data?.author?.name ?? undefined;
-                item.content = {
-                    html: description,
-                    text: $$('div.entry-content').text(),
+                return {
+                    title,
+                    description,
+                    pubDate: data?.datePublished ? parseDate(data.datePublished) : undefined,
+                    author: data?.author?.name,
+                    content: { text: $$('div.entry-content').text() },
+                    image,
+                    updated: data?.dateModified ? parseDate(data.dateModified) : undefined,
                 };
-                item.image = image;
-                item.banner = image;
-                item.updated = data ? parseDate(data.dateModified) : undefined;
-                item.language = language;
-
-                return item;
-            })
-        )
+            });
+            const description = item.description + detail.description;
+            return {
+                ...item,
+                ...detail,
+                description,
+                content: {
+                    html: description,
+                    text: detail.content.text,
+                },
+                banner: detail.image,
+            };
+        },
+        { concurrency: 3 }
     );
 
     const image = new URL($('div.logo img').prop('src')!, rootUrl).href;
@@ -106,7 +114,6 @@ export const handler = async (ctx) => {
         description: $('meta[name="description"]').prop('content'),
         link: currentUrl,
         item: items,
-        allowEmpty: true,
         image,
         author: $('meta[property="og:site_name"]').prop('content'),
         language,
@@ -150,12 +157,8 @@ If you subscribe to [Системные программы](https://lrepacks.net
     },
     radar: [
         {
-            source: ['lrepacks.net/:category'],
-            target: (params) => {
-                const category = params.category;
-
-                return `/lrepacks${category ? `/${category}` : ''}`;
-            },
+            source: ['lrepacks.net/:category?'],
+            target: '/:category?',
         },
         {
             title: 'Новые репаки на сегодня',

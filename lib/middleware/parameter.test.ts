@@ -5,7 +5,6 @@ import { afterEach, describe, expect, it, vi } from 'vitest';
 process.env.OPENAI_API_KEY = 'sk-1234567890';
 process.env.OPENAI_API_ENDPOINT = 'https://api.openai.mock/v1';
 
-vi.mock('@/utils/request-rewriter', () => ({ default: null }));
 const { config } = await import('@/config');
 const { default: app } = await import('@/app');
 const { default: parameter } = await import('@/middleware/parameter');
@@ -281,6 +280,25 @@ describe('filter', () => {
 });
 
 describe('limit', () => {
+    it.each([undefined, '', 'invalid', '-2', 'NaN', 'Infinity'])('preserves entries for an invalid or absent limit: %s', async (limit) => {
+        const items = Array.from({ length: 5 }, (_, index) => ({ title: `Entry ${index}`, link: `https://rsshub.example/${index}` }));
+        const result = await runMiddleware({ title: 'Limit validation', item: items }, { limit });
+        expect(result.item.map((item) => item.title)).toEqual(items.map((item) => item.title));
+        expect(result.item.map((item) => item.link)).toEqual(items.map((item) => item.link));
+    });
+
+    it.each([
+        { limit: '0', count: 0 },
+        { limit: '1', count: 1 },
+        { limit: '3', count: 3 },
+        { limit: '2.5', count: 2 },
+        { limit: '20', count: 5 },
+    ])('retains the existing nonnegative limit $limit', async ({ limit, count }) => {
+        const items = Array.from({ length: 5 }, (_, index) => ({ title: `Entry ${index}`, link: `https://rsshub.example/${index}` }));
+        const result = await runMiddleware({ title: 'Limit validation', item: items }, { limit });
+        expect(result.item.map((item) => item.title)).toEqual(items.slice(0, count).map((item) => item.title));
+    });
+
     it('limit', async () => {
         const response = await app.request('/test/1?limit=3');
         const parsed = await parser.parseString(await response.text());
@@ -292,6 +310,45 @@ describe('limit', () => {
 });
 
 describe('sorted', () => {
+    it.each([
+        { preference: undefined, sorted: undefined, order: ['Recent', 'Ranked'] },
+        { preference: false, sorted: undefined, order: ['Ranked', 'Recent'] },
+        { preference: false, sorted: 'true', order: ['Recent', 'Ranked'] },
+        { preference: false, sorted: 'yes', order: ['Recent', 'Ranked'] },
+        { preference: true, sorted: 'false', order: ['Ranked', 'Recent'] },
+    ])('respects route preference $preference with common sorted=$sorted', async ({ preference, sorted, order }) => {
+        const result = await runMiddleware(
+            {
+                title: 'Ranking',
+                sortItems: preference,
+                item: [
+                    { title: 'Ranked', pubDate: '2026-10-07T12:00:00Z' },
+                    { title: 'Recent', pubDate: '2026-10-09T12:00:00Z' },
+                ],
+            },
+            { sorted }
+        );
+        expect(result.item.map((item) => item.title)).toEqual(order);
+        expect(result.item.every((item) => !Number.isNaN(Date.parse(item.pubDate)))).toBe(true);
+    });
+
+    it('filters publication times while preserving a source ranking', async () => {
+        const now = Date.now();
+        const result = await runMiddleware(
+            {
+                title: 'Ranking',
+                sortItems: false,
+                item: [
+                    { title: 'Ranked', pubDate: new Date(now - 20000) },
+                    { title: 'Expired', pubDate: new Date(now - 120000) },
+                    { title: 'Recent', pubDate: new Date(now - 10000) },
+                ],
+            },
+            { filter_time: '60' }
+        );
+        expect(result.item.map((item) => item.title)).toEqual(['Ranked', 'Recent']);
+    });
+
     it('sorted', async () => {
         const response = await app.request('/test/sort?sorted=false');
         expect(response.status).toBe(200);
@@ -662,5 +719,84 @@ describe('entities', () => {
         expect(data.title).toBe('Feed\u{A0}Title & More');
         expect(data.description).toBe('Feed…');
         expect(data.item[0].title).toBe('Item’s ’ &notify ?a=1&lt=2');
+    });
+});
+
+const makeImageData = () => ({
+    image: 'https://example.com/logo.png',
+    item: [
+        {
+            title: 'Post',
+            link: 'https://example.com/post',
+            description:
+                '<p>Text</p><picture><source srcset="https://example.com/a.webp"><img src="https://example.com/a.png"></picture><video src="https://example.com/a.mp4" poster="https://example.com/a.jpg"></video><audio src="https://example.com/a.mp3"></audio>',
+            image: 'https://example.com/a.png',
+            banner: 'https://example.com/banner.png',
+            itunes_item_image: 'https://example.com/art.png',
+            enclosure_url: 'https://example.com/a.png',
+            enclosure_type: 'image/png',
+            enclosure_length: 10,
+            attachments: [
+                { url: 'https://example.com/a.png', mime_type: 'image/png' },
+                { url: 'https://example.com/a.mp3', mime_type: 'audio/mpeg' },
+            ],
+            media: { thumbnail: { url: 'https://example.com/a.png' } },
+        },
+    ],
+});
+
+describe('show_image', () => {
+    it('removes pictures and artwork while retaining text, video and audio', async () => {
+        const data = await runMiddleware(makeImageData(), { show_image: 'false' });
+        expect(data.image).toBeUndefined();
+        expect(data.item[0].description).not.toMatch(/<img|<picture|poster=/);
+        expect(data.item[0].description).toContain('<p>Text</p>');
+        expect(data.item[0].description).toContain('a.mp4');
+        expect(data.item[0].image).toBeUndefined();
+        expect(data.item[0].itunes_item_image).toBeUndefined();
+        expect(data.item[0].enclosure_url).toBeUndefined();
+        expect(data.item[0].attachments).toHaveLength(1);
+        expect(data.item[0].attachments[0].mime_type).toBe('audio/mpeg');
+        expect(data.item[0].media.thumbnail).toBeUndefined();
+    });
+    it('keeps images by default', async () => {
+        const data = await runMiddleware(makeImageData(), {});
+        expect(data.item[0].description).toContain('<img');
+        expect(data.item[0].image).toBe('https://example.com/a.png');
+    });
+});
+
+describe('enclosure', () => {
+    it('extracts direct media and downloads, preserving metadata and rejecting unsafe or untyped links', async () => {
+        const data = await runMiddleware(
+            {
+                item: [
+                    {
+                        title: 'Media',
+                        link: 'https://example.com/posts/one',
+                        enclosure_url: 'https://example.com/audio.mp3',
+                        enclosure_type: 'audio/mpeg',
+                        enclosure_length: 123,
+                        description:
+                            '<img src="/cover.png"><video><source src="/stream?id=1" type="video/mp4"></video><audio src="/audio.mp3"></audio><a href="/report.pdf">Report</a><img data-src="/cover.png"><a href="/article">Article</a><video src="javascript:alert(1)" type="video/mp4"></video><img src="data:image/png;base64,abc"><a href="/constructor">Unknown</a>',
+                    },
+                ],
+            },
+            { enclosure: 'true' }
+        );
+        expect(data.item[0].attachments).toEqual([
+            expect.objectContaining({ url: 'https://example.com/audio.mp3', mime_type: 'audio/mpeg', size_in_bytes: 123 }),
+            { url: 'https://example.com/stream?id=1', mime_type: 'video/mp4' },
+            { url: 'https://example.com/cover.png', mime_type: 'image/png' },
+            { url: 'https://example.com/report.pdf', mime_type: 'application/pdf' },
+        ]);
+        expect(data.item[0].description).toContain('<video>');
+    });
+
+    it('keeps automatic extraction opt-in and respects hidden images', async () => {
+        const original = await runMiddleware(makeImageData(), {});
+        expect(original.item[0].attachments).toHaveLength(2);
+        const extracted = await runMiddleware(makeImageData(), { enclosure: 'true', show_image: 'false' });
+        expect(extracted.item[0].attachments.map((attachment) => attachment.mime_type)).toEqual(['audio/mpeg', 'video/mp4']);
     });
 });

@@ -25,8 +25,12 @@ export const route: Route = {
     },
     radar: [
         {
+            source: ['www.scpta.com.cn/front/News/List/:category'],
+            target: '/news/:category',
+        },
+        {
             source: ['www.scpta.com.cn/front/News/List'],
-            target: '/news',
+            target: '/news/33',
         },
     ],
     name: '通知公告',

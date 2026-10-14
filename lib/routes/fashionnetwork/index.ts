@@ -1,16 +1,19 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 import timezone from '@/utils/timezone';
 
 import { renderDescription } from './templates/description';
 
 export const handler = async (ctx) => {
     const { id = '0' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 20;
+    const limit = getRouteLimit(ctx, 20);
+    const poolSize = ctx.req.query('sorted') === 'false' ? limit : Math.max(20, limit);
 
     const rootUrl = 'https://fashionnetwork.cn';
     const currentUrl = new URL(`lists/${id}`, rootUrl).href;
@@ -22,7 +25,7 @@ export const handler = async (ctx) => {
     const language = $('html').prop('lang') as Language;
 
     let items = $('div.home__item')
-        .slice(0, limit)
+        .slice(0, poolSize)
         .toArray()
         .map((item): DataItem => {
             const $item = $(item);
@@ -56,9 +59,10 @@ export const handler = async (ctx) => {
             };
         });
 
-    items = await Promise.all(
-        items.map((item) =>
-            cache.tryGet(item.link!, async () => {
+    items = await pMap(
+        items,
+        async (item) => {
+            const detail = await cache.tryGet(`fashionnetwork:article:${item.link}`, async () => {
                 const { data: detailResponse } = await got(item.link);
 
                 const $$ = load(detailResponse);
@@ -68,23 +72,24 @@ export const handler = async (ctx) => {
                     description: $$('div.article-content').html() ?? undefined,
                 });
 
-                item.title = title;
-                item.description = description;
-                item.pubDate = timezone(parseDate($$('span.time-ago').first().text().trim()), 8);
-                item.category = $$('div.newsTags')
-                    .find('div.news-tag')
-                    .toArray()
-                    .map((c) => $$(c).text());
-                item.author = $$('div.newsLeftCol span').first().text();
-                item.content = {
-                    html: description,
-                    text: $$('div.article-content').text(),
+                return {
+                    title,
+                    description,
+                    pubDate: timezone(parseDate($$('span.time-ago').first().text().trim()), 8),
+                    category: $$('div.newsTags')
+                        .find('div.news-tag')
+                        .toArray()
+                        .map((c) => $$(c).text()),
+                    author: $$('div.newsLeftCol span').first().text(),
+                    content: {
+                        html: description,
+                        text: $$('div.article-content').text(),
+                    },
                 };
-                item.language = language;
-
-                return item;
-            })
-        )
+            });
+            return { ...item, ...detail };
+        },
+        { concurrency: 3 }
     );
 
     const label = $(`label[for="news_categs_${id}"]`).text()?.split(/\(/, 1)?.[0]?.trim() ?? '';
@@ -95,7 +100,6 @@ export const handler = async (ctx) => {
         description: $('meta[name="description"]').prop('content'),
         link: currentUrl,
         item: items,
-        allowEmpty: true,
         image,
         author: $('meta[name="author"]').prop('content'),
         language,
@@ -109,9 +113,9 @@ export const route: Route = {
     maintainers: ['nczitzk'],
     handler,
     example: '/fashionnetwork/cn/lists/0',
-    parameters: { category: '分类，默认为 0，可在对应分类页 URL 中找到' },
+    parameters: { id: '分类，默认为 0，可在对应分类页 URL 中找到' },
     description: `::: tip
-若订阅 [独家新闻](https://fashionnetwork.cn)，网址为 \`https://fashionnetwork.cn/lists/13.html\`。截取 \`https://fashionnetwork.cn/\` 到末尾 \`.html\` 的部分 \`13\` 作为参数填入，此时路由为 [\`/fashionnetwork/cn/lists/13\`](https://rsshub.app/fashionnetwork/cn/lists/13)。
+若订阅 [独家新闻](https://fashionnetwork.cn/lists/13)，可将分类页 URL 中 \`lists/\` 后的 \`13\` 填入 \`id\` 参数，对应路由为 [\`/fashionnetwork/cn/lists/13\`](https://rsshub.app/fashionnetwork/cn/lists/13)。
 :::
 
 | 分类                                           | ID                                                  |
@@ -137,51 +141,47 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['fashionnetwork.cn/lists/:id'],
-            target: (params) => {
-                const id = params.id;
-
-                return `/fashionnetwork/cn/lists${id ? `/${id}` : ''}`;
-            },
+            source: ['fashionnetwork.cn/', 'fashionnetwork.cn/lists/0', 'fashionnetwork.cn/lists/0.html'],
+            target: '/cn/lists/0',
         },
         {
             title: '独家',
-            source: ['fashionnetwork.cn/lists/13'],
+            source: ['fashionnetwork.cn/lists/13', 'fashionnetwork.cn/lists/13.html'],
             target: '/cn/lists/13',
         },
         {
             title: '商业',
-            source: ['fashionnetwork.cn/lists/1'],
+            source: ['fashionnetwork.cn/lists/1', 'fashionnetwork.cn/lists/1.html'],
             target: '/cn/lists/1',
         },
         {
             title: '人物',
-            source: ['fashionnetwork.cn/lists/8'],
+            source: ['fashionnetwork.cn/lists/8', 'fashionnetwork.cn/lists/8.html'],
             target: '/cn/lists/8',
         },
         {
             title: '设计',
-            source: ['fashionnetwork.cn/lists/3'],
+            source: ['fashionnetwork.cn/lists/3', 'fashionnetwork.cn/lists/3.html'],
             target: '/cn/lists/3',
         },
         {
             title: '产业',
-            source: ['fashionnetwork.cn/lists/5'],
+            source: ['fashionnetwork.cn/lists/5', 'fashionnetwork.cn/lists/5.html'],
             target: '/cn/lists/5',
         },
         {
             title: '创新研究',
-            source: ['fashionnetwork.cn/lists/6'],
+            source: ['fashionnetwork.cn/lists/6', 'fashionnetwork.cn/lists/6.html'],
             target: '/cn/lists/6',
         },
         {
             title: '人事变动',
-            source: ['fashionnetwork.cn/lists/12'],
+            source: ['fashionnetwork.cn/lists/12', 'fashionnetwork.cn/lists/12.html'],
             target: '/cn/lists/12',
         },
         {
             title: '新闻资讯',
-            source: ['fashionnetwork.cn/lists/11'],
+            source: ['fashionnetwork.cn/lists/11', 'fashionnetwork.cn/lists/11.html'],
             target: '/cn/lists/11',
         },
     ],

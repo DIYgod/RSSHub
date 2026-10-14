@@ -31,7 +31,8 @@ export const route: Route = {
 
 async function handler() {
     const baseUrl = 'https://agorahub.github.io';
-    const response = await got(`${baseUrl}/pen0/`);
+    const link = `${baseUrl}/pen0/`;
+    const response = await got(link);
     const $ = load(response.data);
 
     const list = $('div article')
@@ -63,7 +64,7 @@ async function handler() {
     return {
         title: $('head title').text(),
         description: $('head meta[name="description"]').attr('content'),
-        link: response.url,
+        link,
         image: $('link[rel="apple-touch-icon"]').attr('href'),
         item: items,
     };

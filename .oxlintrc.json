@@ -3,7 +3,7 @@
     "categories": {
         "correctness": "off"
     },
-    "ignorePatterns": ["**/coverage", "**/.vscode", "**/docker-compose.yml", "!.github", "assets/build", "dist", "dist-lib", "dist-worker"],
+    "ignorePatterns": ["**/coverage", "**/.vscode", "**/docker-compose.yml", "!.github", "assets/build", "eslint-plugins/anti-slop/**", "dist", "dist-lib", "dist-worker"],
     "env": {
         "builtin": true,
         "browser": true,
@@ -18,7 +18,8 @@
         "@stylistic/eslint-plugin",
         "eslint-plugin-simple-import-sort",
         { "name": "eslint-js", "specifier": "oxlint-plugin-eslint" },
-        "./eslint-plugins/nsfw-flag.js"
+        "./eslint-plugins/nsfw-flag.js",
+        { "name": "anti-slop", "specifier": "./eslint-plugins/anti-slop/index.ts" }
     ],
     "rules": {
         // #region --- ESLint js/recommended possible problems ---
@@ -190,7 +191,7 @@
         "unicorn-js/no-array-from-fill": "error",
         "unicorn/no-array-method-this-argument": "error",
         // "unicorn/no-array-reduce": "error",
-        "unicorn/no-array-reverse": "error",
+        // "unicorn/no-array-reverse": "error",
         // "unicorn/no-array-sort": "error",
         "unicorn-js/no-array-sort-for-min-max": "error",
         "unicorn-js/no-array-splice": "error",
@@ -205,6 +206,7 @@
         // "unicorn-js/no-chained-comparison": "error", off, handled by oxc/bad-comparison-sequence
         // "unicorn-js/no-collection-bracket-access": "error", off, handled by tsc
         "unicorn-js/no-computed-property-existence-check": "error",
+        "unicorn-js/no-conflicting-constraints": "error",
         "unicorn-js/no-confusing-array-splice": "error",
         "unicorn/no-confusing-array-with": "error",
         "unicorn/no-console-spaces": "error",
@@ -223,16 +225,28 @@
         "unicorn-js/no-global-object-property-assignment": "error",
         "unicorn/no-immediate-mutation": "error",
         "unicorn-js/no-impossible-length-comparison": "error",
+        "unicorn-js/no-incomplete-accessor-override": "error",
         "unicorn-js/no-incorrect-query-selector": "error",
         // "unicorn-js/no-incorrect-template-string-interpolation": "error", // unopinionated, too many false positives in v68
+        "unicorn-js/no-ineffective-csp-directives": "error",
         "unicorn/no-instanceof-builtins": "error",
         // "unicorn-js/no-invalid-argument-count": "error", off, handled by tsc
+        "unicorn-js/no-invalid-boolean-attribute-value": "error",
         // "unicorn-js/no-invalid-character-comparison": "error", off, handled by oxc/bad-char-at-comparison
+        "unicorn-js/no-invalid-dom-token": "error",
         "unicorn/no-invalid-fetch-options": "error",
+        "unicorn-js/no-invalid-integrity": "error",
+        "unicorn-js/no-invalid-intl-options": "error",
+        "unicorn-js/no-invalid-property-descriptor": "error",
         "unicorn/no-invalid-remove-event-listener": "error",
+        "unicorn-js/no-invalid-response-options": "error",
+        "unicorn-js/no-invalid-style-set-property": "error",
+        "unicorn-js/no-invalid-temporal-arithmetic": "error",
+        "unicorn-js/no-invalid-url-protocol-comparison": "error",
         "unicorn-js/no-invalid-well-known-symbol-methods": "error",
         "unicorn-js/no-late-current-target-access": "error",
         "unicorn-js/no-late-event-control": "error",
+        "unicorn-js/no-leading-empty-lines": "error",
         "unicorn/no-lonely-if": "error",
         "unicorn-js/no-loop-iterable-mutation": "error",
         "unicorn/no-magic-array-flat-depth": "error",
@@ -255,6 +269,7 @@
         // "unicorn/no-object-as-default-parameter": "error",
         "unicorn-js/no-object-methods-with-collections": "error",
         "unicorn-js/no-optional-chaining-on-undeclared-variable": "error",
+        "unicorn-js/no-prevent-default-in-passive-listener": "error",
         // "unicorn/no-process-exit": "error",
         "unicorn-js/no-redundant-comparison": "error",
         "unicorn-js/no-return-array-push": "error",
@@ -280,6 +295,7 @@
         "unicorn-js/no-unnecessary-fetch-options": "error",
         "unicorn-js/no-unnecessary-global-this": "error",
         "unicorn-js/no-unnecessary-nested-ternary": "error",
+        // "unicorn-js/no-unnecessary-parameters": "error", warn
         "unicorn-js/no-unnecessary-polyfills": "error",
         "unicorn/no-unnecessary-slice-end": "error",
         "unicorn-js/no-unnecessary-splice": "error",
@@ -289,12 +305,14 @@
         "unicorn/no-unreadable-iife": "error",
         "unicorn-js/no-unreadable-object-destructuring": "error",
         "unicorn-js/no-unsafe-buffer-conversion": "error",
+        "unicorn-js/no-unsafe-json-serialization": "error",
         // "unicorn-js/no-unsafe-promise-all-settled-values": "error", off, handled by tsc
         "unicorn-js/no-unsafe-property-key": "error",
         // "unicorn-js/no-unsafe-sqlite-interpolation": "error", // unused
         "unicorn-js/no-unsafe-string-replacement": "error",
         "unicorn-js/no-unused-builtin-method-return": "error",
         "unicorn-js/no-unused-iterator-helper": "error",
+        "unicorn-js/no-url-in-search-params": "error",
         "unicorn-js/no-useless-boolean-cast": "error",
         // "unicorn-js/no-useless-coercion": "error", off, handled by @typescript-eslint/no-unnecessary-type-conversion
         "unicorn/no-useless-collection-argument": "error",
@@ -361,6 +379,7 @@
         "unicorn/prefer-dom-node-text-content": "error",
         "unicorn-js/prefer-early-return": "error",
         "unicorn-js/prefer-else-if": "error",
+        "unicorn-js/prefer-escaped-irregular-whitespace": "error",
         "unicorn/prefer-event-target": "error",
         "unicorn/prefer-export-from": "error",
         "unicorn-js/prefer-flat-math-min-max": "error",
@@ -380,6 +399,7 @@
         "unicorn-js/prefer-iterator-zip": "error",
         // "unicorn-js/prefer-iterator-to-array-at-end": "error",
         // "unicorn/prefer-keyboard-event-key": "error", // unused
+        "unicorn-js/prefer-literal-ascii": "error",
         "unicorn-js/prefer-location-assign": "error",
         "unicorn/prefer-logical-operator-over-ternary": "error",
         "unicorn-js/prefer-map-from-entries": "error",
@@ -405,6 +425,7 @@
         "unicorn/prefer-optional-catch-binding": "error",
         // "unicorn-js/prefer-path2d": "error", // unused
         "unicorn-js/prefer-private-class-fields": "error",
+        "unicorn-js/prefer-promise-static-methods": "error",
         "unicorn-js/prefer-promise-try": "error",
         "unicorn-js/prefer-promise-with-resolvers": "error",
         "unicorn/prefer-prototype-methods": "error",
@@ -418,6 +439,7 @@
         "unicorn-js/prefer-set-methods": "error",
         "unicorn/prefer-set-size": "error",
         "unicorn-js/prefer-short-arrow-method": "warn",
+        "unicorn-js/prefer-short-escape-sequences": "error",
         // "unicorn-js/prefer-simple-condition-first": "error", // unopinionated
         "unicorn-js/prefer-simple-sort-comparator": "error",
         "unicorn-js/prefer-simplified-conditions": "error",
@@ -462,6 +484,7 @@
         "unicorn/require-number-to-fixed-digits-argument": "error",
         "unicorn-js/require-passive-events": "error",
         // "unicorn-js/require-proxy-trap-boolean-return": "error", off, handled by tsc
+        "unicorn-js/require-text-decoder-streaming": "error",
         // "unicorn-js/single-line-block-comment-style": "error",
         // "unicorn/switch-case-braces": "error",
         "unicorn-js/switch-case-break-position": "error",
@@ -577,35 +600,23 @@
             "error",
             {
                 "selector": "CallExpression[callee.property.name='get'][arguments.length=0]",
-                "message": "Please use .toArray() instead."
+                "message": "Use .toArray() instead."
+            },
+            {
+                "selector": "CallExpression[callee.property.name='clone'][arguments.length=0]:not([callee.object.name=/^(request|response|req|res)$/])",
+                "message": "Usage of .clone() in cheerio is not allowed."
+            },
+            {
+                "selector": "CallExpression[callee.property.name='empty'][arguments.length=0]",
+                "message": "Usage of .empty() in cheerio is not allowed."
             },
             {
                 "selector": "CallExpression[callee.property.name='toArray'] MemberExpression[object.callee.property.name='map']",
-                "message": "Please use .toArray() before .map()."
-            },
-            {
-                "selector": "CallExpression[callee.property.name=\"catch\"] > ArrowFunctionExpression[params.length=0][body.value=null]",
-                "message": "Usage of .catch(() => null) is not allowed. Please handle the error appropriately."
-            },
-            {
-                "selector": "CallExpression[callee.property.name=\"catch\"] > ArrowFunctionExpression[params.length=0][body.type=\"Identifier\"][body.name=\"undefined\"]",
-                "message": "Usage of .catch(() => undefined) is not allowed. Please handle the error appropriately."
-            },
-            {
-                "selector": "CallExpression[callee.property.name=\"catch\"] > ArrowFunctionExpression[params.length=0] > ArrayExpression[elements.length=0]",
-                "message": "Usage of .catch(() => []) is not allowed. Please handle the error appropriately."
-            },
-            {
-                "selector": "CallExpression[callee.property.name=\"catch\"] > ArrowFunctionExpression[params.length=0] > BlockStatement[body.length=0]",
-                "message": "Usage of .catch(() => {}) is not allowed. Please handle the error appropriately."
+                "message": "Use .toArray() before .map()."
             },
             {
                 "selector": "CallExpression[callee.name=\"load\"] AwaitExpression > CallExpression",
                 "message": "Do not use await in call expressions. Extract the result into a variable first."
-            },
-            {
-                "selector": "Identifier[name=\"_ctx\"]",
-                "message": "Usage of `_ctx` is not allowed."
             },
             {
                 "selector": "CallExpression[callee.property.name=\"each\"] > FunctionExpression",
@@ -621,11 +632,31 @@
             },
             {
                 "selector": "TSTypeReference[typeName.name='ReturnType'] TSTypeQuery[exprName.name='load']",
-                "message": "Usage of ReturnType<typeof load> is not allowed. Please use appropriate types from cheerio instead."
+                "message": "Usage of ReturnType<typeof load> is not allowed. Use appropriate types from cheerio instead."
             },
             {
                 "selector": "TSTypeReference[typeName.name='ReturnType'] TSTypeReference[typeName.name='CheerioAPI']",
-                "message": "Usage of ReturnType<CheerioAPI> is not allowed. Please use appropriate types from cheerio and domhandler instead."
+                "message": "Usage of ReturnType<CheerioAPI> is not allowed. Use appropriate types from cheerio and domhandler instead."
+            },
+            {
+                "selector": "CallExpression[callee.property.name=\"catch\"] > ArrowFunctionExpression[params.length=0][body.value=null]",
+                "message": "Usage of .catch(() => null) is not allowed. Handle the error appropriately."
+            },
+            {
+                "selector": "CallExpression[callee.property.name=\"catch\"] > ArrowFunctionExpression[params.length=0][body.type=\"Identifier\"][body.name=\"undefined\"]",
+                "message": "Usage of .catch(() => undefined) is not allowed. Handle the error appropriately."
+            },
+            {
+                "selector": "CallExpression[callee.property.name=\"catch\"] > ArrowFunctionExpression[params.length=0] > ArrayExpression[elements.length=0]",
+                "message": "Usage of .catch(() => []) is not allowed. Handle the error appropriately."
+            },
+            {
+                "selector": "CallExpression[callee.property.name=\"catch\"] > ArrowFunctionExpression[params.length=0] > BlockStatement[body.length=0]",
+                "message": "Usage of .catch(() => {}) is not allowed. Handle the error appropriately."
+            },
+            {
+                "selector": "Identifier[name=\"_ctx\"]",
+                "message": "Usage of `_ctx` is not allowed."
             }
         ],
 
@@ -703,7 +734,7 @@
 
         "unicorn/no-array-callback-reference": "warn",
         "unicorn/no-array-reduce": "warn",
-
+        "unicorn/no-array-reverse": ["error", { "allowExpressionStatement": false }],
         "unicorn/no-array-sort": ["warn", { "allowAfterSpread": true }],
 
         "unicorn/no-await-expression-member": "off",
@@ -713,6 +744,7 @@
         "unicorn/no-null": "off",
         "unicorn/no-object-as-default-parameter": "warn",
         "unicorn/no-process-exit": "off",
+        "unicorn-js/no-unnecessary-parameters": "warn",
         "unicorn/no-useless-iterator-to-array": "off",
         "unicorn/no-useless-switch-case": "off",
 
@@ -782,6 +814,7 @@
         "oxc/erasing-op": "error",
         "oxc/misrefactored-assign-op": "error",
         "oxc/missing-throw": "error",
+        "oxc/no-accumulating-spread": "error",
         "oxc/number-arg-out-of-range": "error",
         "oxc/only-used-in-recursion": "error",
         "oxc/uninvoked-array-callback": "error",

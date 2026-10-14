@@ -1,4 +1,5 @@
-import { load } from 'cheerio';
+import { type Cheerio, load } from 'cheerio';
+import { type AnyNode, cloneNode, Document } from 'domhandler';
 
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
@@ -22,20 +23,23 @@ async function handler() {
         .text()
         .replaceAll(/[\s#|]/g, '');
 
-    const items = $('#docContent .content h3')
+    const items = $('#docContent .content h2, #docContent .content h3')
         .toArray()
         .map((item) => {
             const $item = $(item);
-            const title = $item
-                .text()
-                .replaceAll(/[\s#|]/g, '')
-                .replaceAll('更新说明', '');
-            const version = /^\d+\.\d+\.(\d{6})/.exec(title);
+            const title = copyNodes($item).find('.header-anchor').remove().end().text();
+            const version = /\d+\.\d+\.(\d{6})/.exec(title);
+            const date = /\d{4}[.-]\d{2}[.-]\d{2}/.exec(title)?.[0];
             return {
                 title,
                 description:
-                    ($item.text().includes('更新说明') ? '<h3><a href="' + $item.find('a[target="_blank"]').attr('href') + '" target="_blank" rel="noopener noreferrer">更新说明<span></span></a></h3>' : '') + $item.next().html(),
-                pubDate: timezone(version ? parseDate(version[1], 'YYMMDD') : parseDate(title), 8),
+                    ($item.text().includes('更新说明') ? '<h3><a href="' + $item.find('a[target="_blank"]').attr('href') + '" target="_blank" rel="noopener noreferrer">更新说明<span></span></a></h3>' : '') +
+                    $item
+                        .nextUntil('h2, h3')
+                        .toArray()
+                        .map((element) => $.html(element))
+                        .join(''),
+                pubDate: version ? timezone(parseDate(version[1], 'YYMMDD'), 8) : date ? timezone(parseDate(date.replaceAll('.', '-')), 8) : undefined,
                 link: link + $item.find('a.header-anchor').attr('href'),
             };
         });
@@ -46,4 +50,13 @@ async function handler() {
         item: items,
         description: name,
     };
+}
+
+function copyNodes<T extends AnyNode>(selection: Cheerio<T>): Cheerio<T> {
+    const copy = selection.map((_, node) => cloneNode(node, true));
+    const root = new Document(copy.toArray());
+    for (const node of copy) {
+        node.parent = root;
+    }
+    return copy;
 }

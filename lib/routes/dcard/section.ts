@@ -1,7 +1,7 @@
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import { parseDate } from '@/utils/parse-date';
-import playwright from '@/utils/playwright';
+import { getPlaywrightPage } from '@/utils/playwright';
 
 import utils from './utils';
 
@@ -26,7 +26,6 @@ export const route: Route = {
 async function handler(ctx) {
     const { type = 'latest', section = 'posts' } = ctx.req.param();
     const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 30;
-    const context = await playwright();
 
     let link = 'https://www.dcard.tw/f';
     let api = 'https://www.dcard.tw/service/api/v2';
@@ -48,41 +47,47 @@ async function handler(ctx) {
         title += '最新';
     }
 
-    const page = await context.newPage();
-    await page.route('**/*', (route) => {
-        const request = route.request();
-        request.resourceType() === 'document' || request.resourceType() === 'script' ? route.continue() : route.abort();
-    });
-    await page.setExtraHTTPHeaders({
-        referer: `https://www.dcard.tw/f/${section}`,
-    });
+    const { page, context, destroy } = await getPlaywrightPage(`${api}&limit=100`, { noGoto: true, closeTimeout: 0 });
+    try {
+        await page.route('**/*', (route) => {
+            const request = route.request();
+            request.resourceType() === 'document' || request.resourceType() === 'script' ? route.continue() : route.abort();
+        });
+        await page.setExtraHTTPHeaders({
+            referer: `https://www.dcard.tw/f/${section}`,
+        });
 
-    await page.goto(`${api}&limit=100`);
-    await page.waitForSelector('body > pre');
-    const response = await page.evaluate(() => document.querySelector('body > pre')!.textContent);
-    const cookies = await cache.tryGet('dcard:cookies', () => page.context().cookies(), 3600, false);
-    await page.close();
+        const sourceResponse = await page.goto(`${api}&limit=100`);
+        if (sourceResponse && !sourceResponse.ok()) {
+            throw new Error(`Dcard returned HTTP ${sourceResponse.status()} for its public posts API. The source may require connection verification.`);
+        }
+        await page.waitForSelector('body > pre');
+        const response = await page.evaluate(() => document.querySelector('body > pre')!.textContent);
+        const cookies = await cache.tryGet('dcard:cookies', () => page.context().cookies(), 3600, false);
+        await page.close();
 
-    const data = JSON.parse(response);
-    const items = data.map((item) => ({
-        title: `「${item.forumName}」${item.title}`,
-        link: `https://www.dcard.tw/f/${item.forumAlias}/p/${item.id}`,
-        description: item.excerpt,
-        author: `${item.school || '匿名'}．${item.gender === 'M' ? '男' : '女'}`,
-        pubDate: parseDate(item.createdAt),
-        category: [item.forumName, ...item.topics],
-        forumAlias: item.forumAlias,
-        id: item.id,
-    }));
+        const data = JSON.parse(response);
+        const items = data.map((item) => ({
+            title: `「${item.forumName}」${item.title}`,
+            link: `https://www.dcard.tw/f/${item.forumAlias}/p/${item.id}`,
+            description: item.excerpt,
+            author: `${item.school || '匿名'}．${item.gender === 'M' ? '男' : '女'}`,
+            pubDate: parseDate(item.createdAt),
+            category: [item.forumName, ...item.topics],
+            forumAlias: item.forumAlias,
+            id: item.id,
+        }));
 
-    // parse fulltext for first `limit` items
-    const result = await utils.ProcessFeed(items, cookies, context, limit, cache);
-    await context.close();
+        // parse fulltext for first `limit` items
+        const result = await utils.ProcessFeed(items, cookies, context, limit, cache);
 
-    return {
-        title,
-        link,
-        description: '不想錯過任何有趣的話題嗎？趕快加入我們吧！',
-        item: result,
-    };
+        return {
+            title,
+            link,
+            description: '不想錯過任何有趣的話題嗎？趕快加入我們吧！',
+            item: result,
+        };
+    } finally {
+        await destroy();
+    }
 }

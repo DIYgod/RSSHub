@@ -26,8 +26,10 @@ export const parseList = async (
         title: string;
         description?: string;
         pubDate: Date;
+        updated?: Date;
         link: string;
         category?: string[];
+        author?: Array<{ name: string; url?: string }>;
     }>;
 }> => {
     const pageResponse = await ofetch.raw(baseUrl + sectionUrl);
@@ -39,15 +41,21 @@ export const parseList = async (
     }
     const origin = new URL(pageResponse.url).origin;
 
-    const title = $('meta[property="og:title"]').attr('content') as string;
+    const title = $('meta[property="og:title"]').attr('content');
+    if (!title) {
+        throw new Error(`zaobao: no og:title on ${sectionUrl}`);
+    }
 
     const resultList = await Promise.all(
         data.toArray().map((item) => {
             const $item = $(item);
-            const href = $item.attr('href') as string;
-            const link = baseUrl + href;
+            const href = $item.attr('href');
+            if (!href) {
+                throw new Error(`zaobao: article link without href on ${sectionUrl}`);
+            }
+            const link = new URL(href, origin).href;
 
-            return cache.tryGet(link, async () => {
+            return cache.tryGet(`zaobao:article:v4:${link}`, async () => {
                 if (href.includes('https://')) {
                     const isSingapore = pageResponse.url.startsWith('https://www.zaobao.com.sg/');
                     return {
@@ -67,6 +75,8 @@ export const parseList = async (
 
                 const title = ldJson.headline;
                 const pubDate = parseDate(ldJson.datePublished);
+                const updated = ldJson.dateModified ? parseDate(ldJson.dateModified) : undefined;
+                const author = ldJson.author?.name ? [{ name: ldJson.author.name, url: ldJson.author.url }] : undefined;
 
                 const isSingapore = response.url.startsWith('https://www.zaobao.com.sg/');
                 if (isSingapore) {
@@ -107,8 +117,10 @@ export const parseList = async (
                     title,
                     description,
                     pubDate,
+                    updated,
                     link,
                     category,
+                    author,
                 };
             });
         })
@@ -161,10 +173,7 @@ const processImageData = (isSg, images, $1): ImageData[] => {
         return images.map((img) => ({
             type: 'data',
             html: '',
-            src: img.url
-                .replaceAll(/\/\/.*\.com\/s3fs-public/g, '//static.zaobao.com/s3fs-public')
-                .replaceAll('s3/files', 's3fs-public')
-                .split('?', 1)[0],
+            src: img.url,
             title: img.caption,
         }));
     }
@@ -175,11 +184,7 @@ const processImageData = (isSg, images, $1): ImageData[] => {
             {
                 type: 'data',
                 html: hkImg.prop('outerHTML'),
-                src: hkImg
-                    .attr('src')
-                    .replaceAll(/\/\/.*\.com\/s3fs-public/g, '//static.zaobao.com/s3fs-public')
-                    .replaceAll('s3/files', 's3fs-public')
-                    .split('?', 1)[0],
+                src: hkImg.attr('src'),
                 title: hkImg.attr('title'),
             },
         ];

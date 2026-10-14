@@ -36,7 +36,7 @@ export const route: Route = {
         supportScihub: false,
         nsfw: true,
     },
-    name: 'Skeb',
+    name: 'Works and Creators',
     maintainers: ['SnowAgar25'],
     handler,
     radar: [
@@ -116,7 +116,7 @@ async function handler(ctx): Promise<Data> {
         throw new Error('Invalid data received from API');
     }
 
-    const items = await cache.tryGet(category, async () => {
+    const items = await cache.tryGet(`skeb:items:v2:${category}`, async () => {
         if (!Object.hasOwn(apiData, category) || !Array.isArray(apiData[category])) {
             return [];
         }

@@ -17,7 +17,7 @@ export const route: Route = {
     parameters: { id: '用户 id, 可在用户主页 URL 中找到', type: '动态的类型, 不填则默认全部' },
     features: {
         requireConfig: false,
-        requirePuppeteer: false,
+        requirePuppeteer: true,
         antiCrawler: true,
         supportBT: false,
         supportPodcast: false,
@@ -133,35 +133,42 @@ async function handler(ctx) {
     const items = await pMap(
         data,
         async (item) => {
-            try {
-                return await cache.tryGet(item.target, async () => {
-                    // legal_user_visible 为 true 时列表已含完整内容，无需再请求详情
-                    if (item.legal_user_visible) {
-                        return buildListItem(item);
-                    }
+            // Complete list entries already contain the current content.
+            if (item.legal_user_visible) {
+                return buildListItem(item);
+            }
 
+            try {
+                const cachedDetail = await cache.tryGet(`xueqiu:user:detail:${item.id}`, async () => {
                     try {
                         const detail = await ofetch(`${apiUrl}/statuses/show.json`, {
                             query: { id: item.id },
                             headers: { Cookie: cookie, Referer: link },
                         });
 
-                        return {
-                            title: buildTitle(item, detail),
-                            description: buildDescription(detail),
-                            pubDate: parseDate(item.created_at),
-                            link: rootUrl + item.target,
-                        };
+                        return { detail };
                     } catch (error: any) {
-                        // Permanent failures (post deleted / not found): cache the fallback.
+                        // Cache permanent failures while assembling current list fields outside the cache.
                         const data: ApiError | undefined = error.response?._data || error.data;
                         if (data?.error_code) {
-                            return buildListItem(item);
+                            return {};
                         }
                         // Transient failures (rate limit / WAF): throw to skip caching, retry next request.
                         throw error;
                     }
                 });
+
+                if (!('detail' in cachedDetail)) {
+                    return buildListItem(item);
+                }
+
+                const detail = cachedDetail.detail;
+                return {
+                    title: buildTitle(item, detail),
+                    description: buildDescription(detail),
+                    pubDate: parseDate(item.created_at),
+                    link: rootUrl + item.target,
+                };
             } catch {
                 // Transient failure: provide a fallback item without caching, retry next request.
                 return buildListItem(item);

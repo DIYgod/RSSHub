@@ -81,7 +81,6 @@ async function handler(ctx) {
         item: data.map((item) => ({
             title: `${item.uname} ${item.title}`,
             description: `${item.uname} ${item.title}`,
-            pubDate: new Date().toUTCString(),
             guid: `https://live.bilibili.com/${item.roomid} ${item.title}`,
             link: `https://live.bilibili.com/${item.roomid}`,
         })),

@@ -2,16 +2,21 @@ import 'dotenv/config';
 
 import { ofetch } from 'ofetch';
 
+import type { HostRateLimits } from '@/utils/host-rate-limit';
+import { parseHostRateLimits } from '@/utils/host-rate-limit';
+
 type ConfigEnvKeys =
     // App config
     | 'DISALLOW_ROBOT'
     | 'ENABLE_CLUSTER'
     | 'IS_PACKAGE'
+    | 'USER_ROUTES_PATH'
     | 'NODE_NAME'
     | 'PLAYWRIGHT_WS_ENDPOINT'
     | 'PUPPETEER_WS_ENDPOINT'
     | 'PLAYWRIGHT_CDP_ENDPOINT'
     | 'CHROMIUM_EXECUTABLE_PATH'
+    | 'CI_EN_COOKIE'
     // Network
     | 'PORT'
     | 'SOCKET'
@@ -19,6 +24,9 @@ type ConfigEnvKeys =
     | 'DISABLE_IPV6'
     | 'REQUEST_RETRY'
     | 'REQUEST_TIMEOUT'
+    | 'REQUEST_AUTO_SELECT_FAMILY'
+    | 'REQUEST_RATE_LIMITS'
+    | 'WORDPRESS_ALLOWED_DOMAINS'
     | 'UA'
     | 'NO_RANDOM_UA'
     | 'ALLOW_ORIGIN'
@@ -98,6 +106,8 @@ type ConfigEnvKeys =
     | 'BUKENAVI_PASSWORD'
     | 'CAIXIN_COOKIE'
     | 'CIVITAI_COOKIE'
+    | 'COOMER_ASSETS_URL'
+    | 'COOMER_ROOT_URL'
     | 'DIANPING_COOKIE'
     | 'DIDA365_USERNAME'
     | 'DIDA365_PASSWORD'
@@ -106,6 +116,7 @@ type ConfigEnvKeys =
     | `DISCUZ_COOKIE_${string}`
     | 'DISQUS_API_KEY'
     | 'DOUBAN_COOKIE'
+    | 'DOUYIN_COOKIE'
     | 'EH_IPB_MEMBER_ID'
     | 'EH_IPB_PASS_HASH'
     | 'EH_SK'
@@ -115,6 +126,7 @@ type ConfigEnvKeys =
     | `EMAIL_CONFIG_${string}`
     | 'ETHERSCAN_API_KEY'
     | 'F95ZONE_COOKIE'
+    | 'FACEBOOK_COOKIE'
     | 'FANBOX_SESSION_ID'
     | 'FANFOU_CONSUMER_KEY'
     | 'FANFOU_CONSUMER_SECRET'
@@ -133,14 +145,14 @@ type ConfigEnvKeys =
     | 'HUITUN_COOKIE'
     | 'INFZM_COOKIE'
     | 'INITIUM_MEMBER_COOKIE'
-    | 'IG_USERNAME'
-    | 'IG_PASSWORD'
-    | 'IG_PROXY'
     | 'IG_COOKIE'
+    | 'INSTAGRAM_COOKIE'
     | 'IWARA_USERNAME'
     | 'IWARA_PASSWORD'
     | 'JAVDB_SESSION'
     | 'JUMEILI_COOKIE'
+    | 'KEMONO_ASSETS_URL'
+    | 'KEMONO_ROOT_URL'
     | 'KEYLOL_COOKIE'
     | 'LASTFM_API_KEY'
     | 'LOCALS_SESSION'
@@ -242,7 +254,6 @@ type ConfigEnvKeys =
     | 'XIAOHONGSHU_PROXY'
     | 'XIMALAYA_TOKEN'
     | 'XSIJISHE_COOKIE'
-    | 'XSIJISHE_USER_AGENT'
     | 'XUEQIU_COOKIES'
     | 'YAMIBO_SALT'
     | 'YAMIBO_AUTH'
@@ -264,6 +275,7 @@ export type ConfigEnv = Partial<Record<ConfigEnvKeys, string | undefined>>;
 let envs: ConfigEnv = process.env;
 
 export type Config = {
+    userRoutesPath?: string;
     // app config
     disallowRobot: boolean;
     enableCluster?: string;
@@ -281,6 +293,8 @@ export type Config = {
     disableIPv6: boolean;
     requestRetry: number;
     requestTimeout: number;
+    requestAutoSelectFamily?: boolean;
+    requestRateLimits: HostRateLimits;
     ua: string;
     isDefaultUA: boolean;
     trueUA: string;
@@ -399,6 +413,13 @@ export type Config = {
     civitai: {
         cookie?: string;
     };
+    ciEn: {
+        cookie?: string;
+    };
+    coomer: {
+        assetsUrl: string;
+        rootUrl: string;
+    };
     dianping: {
         cookie?: string;
     };
@@ -421,6 +442,9 @@ export type Config = {
     douban: {
         cookie?: string;
     };
+    douyin: {
+        cookie?: string;
+    };
     ehentai: {
         ipb_member_id?: string;
         ipb_pass_hash?: string;
@@ -436,6 +460,9 @@ export type Config = {
         apiKey?: string;
     };
     f95zone: {
+        cookie?: string;
+    };
+    facebook: {
         cookie?: string;
     };
     fanbox: {
@@ -483,9 +510,6 @@ export type Config = {
         memberCookie?: string;
     };
     instagram: {
-        username?: string;
-        password?: string;
-        proxy?: string;
         cookie?: string;
     };
     iwara: {
@@ -497,6 +521,10 @@ export type Config = {
     };
     jumeili: {
         cookie?: string;
+    };
+    kemono: {
+        assetsUrl: string;
+        rootUrl: string;
     };
     keylol: {
         cookie?: string;
@@ -691,6 +719,7 @@ export type Config = {
         cookie?: string;
     };
     wordpress: {
+        allowedDomains: string[];
         cdnUrl?: string;
     };
     xiaoyuzhou: {
@@ -706,7 +735,6 @@ export type Config = {
     };
     xsijishe: {
         cookie?: string;
-        userAgent?: string;
     };
     xueqiu: {
         cookies?: string;
@@ -752,6 +780,16 @@ const toBoolean = (value: string | undefined, defaultValue: boolean) => {
 
 const toInt = (value: string | undefined, defaultValue?: number) => (value === undefined ? defaultValue : Number.parseInt(value));
 
+const getAssetsUrl = (rootUrl: string, assetsUrl?: string) => {
+    if (assetsUrl) {
+        return assetsUrl.replace(/\/+$/, '');
+    }
+
+    const url = new URL(rootUrl);
+    url.hostname = `img.${url.hostname}`;
+    return url.href.replace(/\/+$/, '');
+};
+
 const calculateValue = () => {
     const bilibili_cookies: Record<string, string | undefined> = {};
     const email_config: Record<string, string | undefined> = {};
@@ -783,6 +821,7 @@ const calculateValue = () => {
         disallowRobot: toBoolean(envs.DISALLOW_ROBOT, false),
         enableCluster: toBoolean(envs.ENABLE_CLUSTER, false),
         isPackage: !!envs.IS_PACKAGE,
+        userRoutesPath: envs.USER_ROUTES_PATH,
         nodeName: envs.NODE_NAME,
         playwrightWSEndpoint: envs.PLAYWRIGHT_WS_ENDPOINT ?? envs.PUPPETEER_WS_ENDPOINT,
         playwrightCDPEndpoint: envs.PLAYWRIGHT_CDP_ENDPOINT,
@@ -796,6 +835,8 @@ const calculateValue = () => {
         disableIPv6: toBoolean(envs.DISABLE_IPV6, false),
         requestRetry: toInt(envs.REQUEST_RETRY, 2), // 请求失败重试次数
         requestTimeout: toInt(envs.REQUEST_TIMEOUT, 30000), // Milliseconds to wait for the server to end the response before aborting the request
+        requestAutoSelectFamily: envs.REQUEST_AUTO_SELECT_FAMILY === undefined ? undefined : toBoolean(envs.REQUEST_AUTO_SELECT_FAMILY, false),
+        requestRateLimits: parseHostRateLimits(envs.REQUEST_RATE_LIMITS),
         ua: envs.UA || (toBoolean(envs.NO_RANDOM_UA, false) ? TRUE_UA : 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36'),
         isDefaultUA: !envs.UA && !toBoolean(envs.NO_RANDOM_UA, false),
         trueUA: TRUE_UA,
@@ -920,6 +961,13 @@ const calculateValue = () => {
         civitai: {
             cookie: envs.CIVITAI_COOKIE,
         },
+        ciEn: {
+            cookie: envs.CI_EN_COOKIE,
+        },
+        coomer: {
+            assetsUrl: getAssetsUrl(envs.COOMER_ROOT_URL || 'https://coomer.st', envs.COOMER_ASSETS_URL),
+            rootUrl: (envs.COOMER_ROOT_URL || 'https://coomer.st').replace(/\/+$/, ''),
+        },
         dianping: {
             cookie: envs.DIANPING_COOKIE,
         },
@@ -942,6 +990,9 @@ const calculateValue = () => {
         douban: {
             cookie: envs.DOUBAN_COOKIE,
         },
+        douyin: {
+            cookie: envs.DOUYIN_COOKIE,
+        },
         ehentai: {
             ipb_member_id: envs.EH_IPB_MEMBER_ID,
             ipb_pass_hash: envs.EH_IPB_PASS_HASH,
@@ -958,6 +1009,9 @@ const calculateValue = () => {
         },
         f95zone: {
             cookie: envs.F95ZONE_COOKIE,
+        },
+        facebook: {
+            cookie: envs.FACEBOOK_COOKIE,
         },
         fanbox: {
             session: envs.FANBOX_SESSION_ID,
@@ -1004,10 +1058,7 @@ const calculateValue = () => {
             memberCookie: envs.INITIUM_MEMBER_COOKIE,
         },
         instagram: {
-            username: envs.IG_USERNAME,
-            password: envs.IG_PASSWORD,
-            proxy: envs.IG_PROXY,
-            cookie: envs.IG_COOKIE,
+            cookie: envs.INSTAGRAM_COOKIE ?? envs.IG_COOKIE,
         },
         iwara: {
             username: envs.IWARA_USERNAME,
@@ -1018,6 +1069,10 @@ const calculateValue = () => {
         },
         jumeili: {
             cookie: envs.JUMEILI_COOKIE,
+        },
+        kemono: {
+            assetsUrl: getAssetsUrl(envs.KEMONO_ROOT_URL || 'https://kemono.cr', envs.KEMONO_ASSETS_URL),
+            rootUrl: (envs.KEMONO_ROOT_URL || 'https://kemono.cr').replace(/\/+$/, ''),
         },
         keylol: {
             cookie: envs.KEYLOL_COOKIE,
@@ -1212,6 +1267,10 @@ const calculateValue = () => {
             cookie: envs.WENKU8_COOKIE,
         },
         wordpress: {
+            allowedDomains:
+                envs.WORDPRESS_ALLOWED_DOMAINS?.split(',')
+                    .map((domain) => domain.trim().toLowerCase())
+                    .filter(Boolean) ?? [],
             cdnUrl: envs.WORDPRESS_CDN,
         },
         xiaoyuzhou: {
@@ -1227,7 +1286,6 @@ const calculateValue = () => {
         },
         xsijishe: {
             cookie: envs.XSIJISHE_COOKIE,
-            user_agent: envs.XSIJISHE_USER_AGENT,
         },
         xueqiu: {
             cookies: envs.XUEQIU_COOKIES,

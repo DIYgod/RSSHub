@@ -1,6 +1,8 @@
+import { load } from 'cheerio';
+
 import type { Route } from '@/types';
 import { ViewType } from '@/types';
-import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
@@ -41,23 +43,40 @@ export const route: Route = {
     handler,
 };
 
+interface SearchDocument {
+    es_title_t: string;
+    es_url_s: string;
+    es_unified_dt?: string;
+    es_description_t?: string;
+}
+
 async function handler(ctx) {
-    const language = ctx.req.param('language');
-
-    const responseData = await got(
-        `https://www.spglobal.com/crownpeaksearchproxy.aspx?q=https%3A%2F%2Fsearchg2-restricted.crownpeak.net%2Fsandpglobal-spglobal-live%2Fselect%3Fq%3D*%253A*%26echoParams%3Dexplicit%26fl%3Dtitle%2Ccustom_i_article_id%2Ccustom_ss_theme%2Ccustom_ss_theme_full%2Ccustom_dt_meta_publish_date%2Ccustom_s_meta_location%20%2Ccustom_s_local_url%2Ccustom_s_tile_image%2Ccustom_s_cshtml_path%2Ccustom_s_sub_type%2Ccustom_s_meta_type%2Cscore%2Ccustom_s_division%2Ccustom_ss_contenttype%2Ccustom_ss_location%2Ccustom_ss_region%2Ccustom_ss_theme%2Ccustom_ss_author_thumbnails%2Ccustom_ss_authors%2Ccustom_ss_author_titles%2Ccustom_s_meta_videoid%2Ctaxonomy_tag_freeform%2Ccustom_ss_tags%2Ccustom_ss_freeform%26defType%3Dedismax%26wt%3Djson%26start%3D0%26rows%3D10%26fq%3Dcustom_s_type%3Aarticle%26fq%3Dcustom_s_sub_type%3A(%22blog%22%2C%20%22news%22%2C%20%22research%22%2C%20%22podcast%22%2C%20%22video%22%2C%20%22article%22%2C%20%22pdf%20details%22)%26fq%3Dcustom_s_division%3A%22Ratings%22%26fq%3Dcustom_s_region%3A%22${language}%22%26facet%3Dtrue%26facet.mincount%3D1%26facet.field%3Dcustom_ss_theme_full%26facet.limit%3D15%26sort%3Dcustom_dt_meta_publish_date%20desc%26f.custom_ss_theme_full.facet.sort%3Dindex`
-    );
-
-    const items = responseData?.data?.response?.docs || [];
+    const language = ctx.req.param('language') ?? 'en';
+    const link = `https://www.spglobal.com/ratings/${language}/`;
+    const html = await ofetch(link, { responseType: 'text' });
+    const $ = load(html);
+    const list = $('[dynamic-list-url]').first();
+    const searchUrl = list.attr('dynamic-list-url');
+    const authPath = list.attr('search-auth-token-endpoint');
+    if (!searchUrl || !authPath) {
+        throw new Error('S&P Global did not provide the public ratings search endpoint.');
+    }
+    const queryUrl = new URL(searchUrl, link);
+    queryUrl.searchParams.set('start', '0');
+    queryUrl.searchParams.set('rows', '10');
+    const { token } = await ofetch<{ token: string }>(new URL(`/${authPath}`, link).href);
+    const response = await ofetch<{ response: { docs: SearchDocument[] } }>(queryUrl.href, {
+        headers: { Authorization: `Bearer ${token}` },
+    });
 
     return {
         title: `S&P Global Ratings(${language})`,
-        link: `https://www.spglobal.com/ratings/${language}/`,
-        allowEmpty: true,
-        item: items.map((x) => ({
-            title: x.title,
-            pubDate: parseDate(x.custom_dt_meta_publish_date),
-            link: `https://www.spglobal.com${x.custom_s_local_url}`,
+        link,
+        item: response.response.docs.map((item) => ({
+            title: item.es_title_t,
+            pubDate: item.es_unified_dt ? parseDate(item.es_unified_dt) : undefined,
+            link: new URL(item.es_url_s, link).href,
+            description: item.es_description_t,
         })),
     };
 }

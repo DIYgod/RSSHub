@@ -3,10 +3,10 @@ import dayjs from 'dayjs';
 
 import type { DataItem, Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
 
 export const route: Route = {
-    path: '/search/:websiteid?/:word/:cateid?',
+    path: '/search/:websiteid?/:word?/:cateid?/:sortType?',
     categories: ['government'],
     example: '/gov/zj/search',
     parameters: {
@@ -15,12 +15,6 @@ export const route: Route = {
         cateid: '信息分类-默认：658（全部）',
         sortType: '排序类型-默认：2（按时间）',
     },
-    radar: [
-        {
-            source: ['search.zj.gov.cn/jsearchfront/search.do'],
-            target: '/search/:websiteid?/:word/:cateid?',
-        },
-    ],
     name: '全省政府网站统一搜索',
     url: 'search.zj.gov.cn/jsearchfront/search.do',
     maintainers: ['HaoyuLee'],
@@ -58,10 +52,11 @@ export const route: Route = {
                 const $ = load(item);
                 const title = $('.titleWrapper>a');
                 const footer = $('.sourceTime>span');
+                const date = footer.eq(1).text().replace('时间:', '').trim();
                 return {
                     title: title.text().trim(),
                     link: title.attr('href') || '',
-                    pubDate: parseDate(footer.eq(1).text().replace('时间:', '')) || '',
+                    pubDate: date ? parseDateInTimezone(date, 8) : undefined,
                     author: footer.eq(0).text().trim().replace('来源:', ''),
                     description: $('.newsDescribe>a').text(),
                 };

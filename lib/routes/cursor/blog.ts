@@ -2,11 +2,34 @@ import { load } from 'cheerio';
 import type { Context } from 'hono';
 
 import InvalidParameterError from '@/errors/types/invalid-parameter';
-import type { Data, Route } from '@/types';
+import type { Data, Language, Route } from '@/types';
 import { ViewType } from '@/types';
+import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 import { isValidHost } from '@/utils/valid-host';
+
+const getBlogContent = (url: string) =>
+    cache.tryGet(`cursor:blog:${url}`, async () => {
+        const response = await ofetch(url);
+        const $ = load(response);
+        const article = $('.prose--blog, main article .prose').first();
+        if (!article.length) {
+            throw new Error(`Cursor blog article content was not found at ${url}`);
+        }
+
+        const description = article.html() ?? undefined;
+        article.find('script, style').remove();
+
+        return {
+            description,
+            content: {
+                html: description,
+                text: article.text(),
+            },
+        };
+    });
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { topic, locale } = ctx.req.param();
@@ -14,7 +37,8 @@ export const handler = async (ctx: Context): Promise<Data> => {
         throw new InvalidParameterError('Invalid locale');
     }
 
-    const limit = Number(ctx.req.query('limit') ?? '10');
+    const requestedLimit = getRouteLimit(ctx, 10);
+    const limit = ctx.req.query('sorted') === 'false' ? requestedLimit : Math.max(10, requestedLimit);
 
     const baseUrl = 'https://cursor.com';
     const normalizedTopic = topic === 'all' ? undefined : topic;
@@ -26,17 +50,19 @@ export const handler = async (ctx: Context): Promise<Data> => {
     const $ = load(html);
 
     const main = $('#main').last(); // there are two main tags before hydration
-    const items = main
+    const list = main
         .find('article')
-        .slice(0, limit)
         .toArray()
         .map((el) => {
             const $el = $(el);
-            const $link = $el.find('a').first();
+            const descendantLink = $el.find('a').first();
+            const $link = descendantLink.length ? descendantLink : $el.closest('a');
 
-            const title = $link.find('p').first().text();
-            const description = $link.find('p').eq(1).text();
-            const pubDate = parseDate($el.find('time').first().text());
+            const title = $el.find('p').first().text();
+            const description = $el.find('p').eq(1).text();
+            const timeEl = $el.find('time');
+            const pubDateStr = timeEl.attr('datetime') || timeEl.text();
+            const pubDate = pubDateStr ? parseDate(pubDateStr) : undefined;
 
             const href = $link.attr('href');
             const link = href ? new URL(href, baseUrl).href : undefined;
@@ -47,15 +73,27 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 pubDate,
                 link,
             };
-        });
+        })
+        .filter((item, index, items) => items.findIndex((candidate) => candidate.link === item.link) === index)
+        .slice(0, limit);
+    const orderedList = ctx.req.query('sorted') === 'false' ? list : list.toSorted((a, b) => (b.pubDate?.getTime() ?? 0) - (a.pubDate?.getTime() ?? 0));
+    const candidates = orderedList.slice(0, requestedLimit);
+    const items = await Promise.all(
+        candidates.map(async (item) => {
+            if (!item.link || new URL(item.link).hostname !== 'cursor.com') {
+                return item;
+            }
+            return { ...item, ...(await getBlogContent(item.link)) };
+        })
+    );
 
     return {
         title: $('title').text() || 'Cursor Blog',
         description: $('meta[property="og:description"]').attr('content'),
         link: targetUrl,
         item: items,
-        allowEmpty: true,
         image: $('meta[property="og:image"]').attr('content'),
+        language: $('html').attr('lang') as Language | undefined,
     };
 };
 

@@ -4,6 +4,7 @@ import { config } from '@/config';
 import type { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
 const md = MarkdownIt({
     html: true,
@@ -38,7 +39,7 @@ async function handler(ctx) {
     const response = await got(`https://gitee.com/api/v5/repos/${owner}/${repo}/releases`, {
         searchParams: {
             access_token: config.gitee.access_token ?? undefined,
-            per_page: ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 100,
+            per_page: getRouteLimit(ctx, 100),
             direction: 'desc',
         },
     });
@@ -48,7 +49,7 @@ async function handler(ctx) {
         description: md.render(item.body),
         author: item.author.login,
         pubDate: parseDate(item.created_at),
-        guid: item.target_commitish,
+        guid: String(item.id),
         link: `https://gitee.com/${owner}/${repo}/releases/${item.tag_name}`,
     }));
 

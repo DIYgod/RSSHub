@@ -2,6 +2,8 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
+import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
 export const route: Route = {
     path: '/student/:type',
@@ -21,13 +23,29 @@ export const route: Route = {
             source: ['www5.zzu.edu.cn/student/'],
         },
     ],
-    name: '郑大学生处',
+    name: '学生处',
     maintainers: ['amandus1990'],
     handler,
     description: `| 新闻资讯 | 通知公告 |
 | -------- | -------- |
 | xwzx     | tzgg     |`,
 };
+
+function parsePublishedDate(value?: string) {
+    if (!value) {
+        return;
+    }
+    const match = value.match(/^\s*(\d{4})[-/](\d{1,2})[-/](\d{1,2})(?:\s|T|$)/);
+    if (!match) {
+        return;
+    }
+    const calendarDate = `${match[1]}-${match[2].padStart(2, '0')}-${match[3].padStart(2, '0')}`;
+    if (!Number.isFinite(parseDate(calendarDate, 'YYYY-MM-DD', true).getTime())) {
+        return;
+    }
+    const date = parseDate(Date.parse(value));
+    return Number.isFinite(date.getTime()) ? date : undefined;
+}
 
 async function handler(ctx) {
     const type = ctx.req.param('type');
@@ -42,17 +60,17 @@ async function handler(ctx) {
 
     // 解析页面内容并提取文章信息
     const list = $('.part-list ul li')
-        .slice(0, 10)
+        .slice(0, Math.max(10, getRouteLimit(ctx, 10)))
         .toArray()
         .map((element) => {
             const $element = $(element);
-            const $link = $element.find('a').first();
+            const $link = $element.find('a');
             const link = new URL($link.attr('href')!, typeDict[type][1]).href;
-            const title = $link.find('span').text().trim();
+            const title = $link.find('span').text();
 
             // 获取发布时间 (格式: yyyy年mm月dd日)
             const pubDateText = $element.find('em').text().trim();
-            let pubDate: string | null = null;
+            let pubDate: string | undefined;
 
             if (pubDateText) {
                 const match = pubDateText.match(/(\d{4})年(\d{1,2})月(\d{1,2})日/);
@@ -67,7 +85,7 @@ async function handler(ctx) {
             return {
                 title,
                 link,
-                pubDate,
+                pubDate: parsePublishedDate(pubDate),
             };
         });
 

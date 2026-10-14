@@ -44,9 +44,8 @@ async function handler() {
         const title = $item.find('strong').text();
 
         announceList.push({
-            title: `${time} ${title}`,
+            title,
             link: `https://mp.weixin.qq.com${$link.attr('href')}`,
-            description: title,
             pubDate: parseDate(time),
         });
     });

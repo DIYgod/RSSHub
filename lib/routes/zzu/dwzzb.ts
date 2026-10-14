@@ -1,5 +1,7 @@
 import type { Route } from '@/types';
 import got from '@/utils/got';
+import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
 export const route: Route = {
     path: '/dwzzb/:type',
@@ -19,13 +21,29 @@ export const route: Route = {
             source: ['dwzzb.v.zzu.edu.cn/'],
         },
     ],
-    name: '郑大党委组织部',
+    name: '党委组织部',
     maintainers: ['amandus1990'],
     handler,
     description: `| 党建工作 | 干部工作 | 人才工作 | 乡村振兴工作 |
 | -------- | -------- | -------- | ------------ |
 | djgz     | gbgz     | rcgz     | fpgz         |`,
 };
+
+function parsePublishedDate(value?: string) {
+    if (!value) {
+        return;
+    }
+    const match = value.match(/^\s*(\d{4})[-/](\d{1,2})[-/](\d{1,2})(?:\s|T|$)/);
+    if (!match) {
+        return;
+    }
+    const calendarDate = `${match[1]}-${match[2].padStart(2, '0')}-${match[3].padStart(2, '0')}`;
+    if (!Number.isFinite(parseDate(calendarDate, 'YYYY-MM-DD', true).getTime())) {
+        return;
+    }
+    const date = parseDate(Date.parse(value));
+    return Number.isFinite(date.getTime()) ? date : undefined;
+}
 
 async function handler(ctx) {
     const type = ctx.req.param('type');
@@ -42,19 +60,19 @@ async function handler(ctx) {
     const response = await got(apiUrl);
     const data = response.data.data;
 
-    const items = data.slice(0, 20).map((item) => {
+    const items = data.slice(0, Math.max(20, getRouteLimit(ctx, 20))).map((item) => {
         const link = item.articleUrl || `article.jsp?catalogArticleId=${item.catalogArticleId}`;
         return {
             title: item.articleTitle,
             link: new URL(link, 'https://dwzzb.v.zzu.edu.cn').href,
-            pubDate: item.publishTime,
+            pubDate: parsePublishedDate(item.publishTime),
             description: item.articleSummary,
         };
     });
 
     return {
         title: `郑大党委组织部-${typeDict[type][0]}`,
-        link: apiUrl,
+        link: 'https://dwzzb.v.zzu.edu.cn/',
         item: items,
     };
 }

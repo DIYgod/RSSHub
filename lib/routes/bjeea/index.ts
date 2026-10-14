@@ -1,6 +1,7 @@
 import { load } from 'cheerio';
 import type { Context } from 'hono';
 
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
@@ -14,15 +15,15 @@ export const route: Route = {
     parameters: { type: '分类名' },
     radar: [
         {
-            source: ['www.bjeea.com/bjeeagg'],
+            source: ['www.bjeea.cn/html/bjeeagg/:path?', 'www.bjeea.cn/html/bjeeagg'],
             target: '/bjeeagg',
         },
         {
-            source: ['www.bjeea.com/zkzc'],
+            source: ['www.bjeea.cn/html/zkzc/:path?', 'www.bjeea.cn/html/zkzc'],
             target: '/zkzc',
         },
         {
-            source: ['www.bjeea.com/zkkd'],
+            source: ['www.bjeea.cn/html/zkkd/:path?', 'www.bjeea.cn/html/zkkd'],
             target: '/zkkd',
         },
     ],
@@ -45,6 +46,9 @@ const categoryMap = {
 
 async function handler(ctx: Context) {
     const { type = 'bjeeagg' } = ctx.req.param();
+    if (!Object.hasOwn(categoryMap, type)) {
+        throw new InvalidParameterError(`Unknown category: ${type}. Available categories: ${Object.keys(categoryMap).join(', ')}.`);
+    }
 
     const listPageUrl = baseUrl + categoryMap[type].suffix;
     const response = await ofetch(listPageUrl);

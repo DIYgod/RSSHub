@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import type { Context } from 'hono';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
@@ -38,37 +39,38 @@ export const route: Route = {
 | jyxd    | 经验心得 |`,
 };
 
-async function handler(ctx) {
+async function handler(ctx: Context) {
     const { type } = ctx.req.param();
     const response = await got(`${host}/kyzx/${type}`);
     const $ = load(response.data);
     const typeName = $('.bread-nav .location a').last().text() || '考研资讯';
     const list = $('ul.news-list').children();
+    const candidates = list.toArray().map((element) => {
+        const $item = $(element);
+        const path = $item.find('a').attr('href')!;
+        return {
+            title: $item.find('a').text(),
+            link: new URL(path, host).href,
+            path,
+            pubDate: timezone(parseDate($item.find('.span-time, .time').first().text()), 8),
+        };
+    });
+    const ordered = candidates;
+    const selected = ordered;
     const items = await Promise.all(
-        list.map((i, item) => {
-            const $item = $(item);
-            const itemTitle = $item.find('a').text();
-            const itemDate = $item.find('.span-time').text();
-            const path = $item.find('a').attr('href');
-            let itemUrl = '';
-            itemUrl = (path!.startsWith('http') ? path : host + path)!;
-            return cache.tryGet(itemUrl, async () => {
-                let description: string;
-                if (itemUrl) {
-                    const result = await got(itemUrl);
-                    const $ = load(result.data);
-                    description = $('#article_dnull').html()!.trim();
-                } else {
-                    description = itemTitle;
-                }
+        selected.map((item) =>
+            cache.tryGet(item.link, async () => {
+                const result = await got(item.link);
+                const $ = load(result.data);
+                const description = $('#article_dnull').html()!.trim();
                 return {
-                    title: itemTitle,
-                    link: itemUrl,
-                    pubDate: timezone(parseDate(itemDate), 8),
+                    title: item.title,
+                    link: item.link,
+                    pubDate: item.pubDate,
                     description,
                 };
-            });
-        })
+            })
+        )
     );
 
     return {

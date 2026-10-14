@@ -1,9 +1,20 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
+
+interface SourceArticle {
+    article_info: {
+        article_id: number;
+        title: string;
+        create_at: string;
+    };
+    author?: { profile?: { name?: string } };
+    cate?: { name?: string };
+}
 
 export const route: Route = {
     path: '/',
@@ -35,12 +46,11 @@ async function handler() {
         },
     });
 
-    const {
-        data: { articles },
-    } = response.data;
+    const articles: SourceArticle[] = response.data.data.articles;
 
-    const items = await Promise.all(
-        articles.map((article) => {
+    const items = await pMap(
+        articles,
+        (article) => {
             const info = article.article_info;
             const articleId = info.article_id;
             const link = `${baseUrl}/p/${articleId}.html`;
@@ -55,12 +65,13 @@ async function handler() {
                     description: content,
                     link,
                     author: article.author?.profile?.name || '',
-                    pubDate: parseDate(info.create_at, 'YYYY-MM-DD HH:mm:ss'),
-                    category: [],
-                    guid: articleId,
+                    pubDate: parseDateInTimezone(info.create_at, 8),
+                    category: article.cate?.name ? [article.cate.name] : [],
+                    guid: String(articleId),
                 };
             });
-        })
+        },
+        { concurrency: 3 }
     );
 
     return {

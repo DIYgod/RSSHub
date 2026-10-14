@@ -29,7 +29,7 @@ export const route: Route = {
     maintainers: ['ZeddYu'],
     handler,
     url: 'ndss-symposium.org/',
-    description: 'Return results from 2020',
+    description: 'Accepted papers from the latest symposium and workshop pages.',
 };
 
 async function handler() {
@@ -40,13 +40,34 @@ async function handler() {
         data.map(async (elem) => {
             const $ = load(elem.content.rendered);
             const link = elem.link;
-            const pubDate = parseDate(elem.date);
+            const pubDate = elem.date_gmt ? parseDate(`${elem.date_gmt}Z`) : parseDate(elem.date);
+
+            const modernPapers = $('.pt-cv-content-item')
+                .toArray()
+                .map((item): DataItem | undefined => {
+                    const $item = $(item);
+                    const $title = $item.find('.pt-cv-title a');
+                    const href = $title.attr('href');
+                    if (!href) {
+                        return;
+                    }
+                    return {
+                        title: $title.text(),
+                        link: new URL(href, link).href,
+                        author: $item.find('.pt-cv-ctf-display_authors .pt-cv-ctf-value').text().trim(),
+                        pubDate,
+                    };
+                })
+                .filter((item): item is DataItem => item !== undefined);
+            if (modernPapers.length > 0) {
+                return modernPapers;
+            }
 
             const divMatch = $('div h3')
                 .toArray()
                 .map((item): DataItem => {
                     const $item = $(item);
-                    const title = $item.text().trim();
+                    const title = $item.text();
                     return {
                         title,
                         author: $item.siblings().text().trim().replaceAll('\n', '').replaceAll(/\s+/g, ' '),
@@ -62,13 +83,19 @@ async function handler() {
                                 // some titles and authos are not complete
                                 const response = await got(item.link);
                                 const $ = load(response.body);
-                                item.description = $('.paper-data').text().trim().replaceAll('\n', '');
-                                item.title = $('h1.entry-title').text().trim().replaceAll('\n', '').replaceAll(/\s+/g, ' ');
-                                item.author = $('h1.entry-title').siblings().text().trim().replaceAll('\n', '').replaceAll(/\s+/g, ' ');
+                                const $paper = $('.paper-data');
+                                const $authors = $paper
+                                    .find('p')
+                                    .filter((_, element) => $(element).find('strong').text().trim().length > 0)
+                                    .first();
+                                item.author = $authors.text().trim();
+                                $authors.remove();
+                                item.description = $paper.html();
+                                item.title = $('h1.entry-title').text();
                                 return item;
                             });
                         }
-                        item.link = `${link}#${item.title}`;
+                        item.link = `${link}#${item.title?.trim()}`;
                         return item;
                     })
                 );
@@ -78,7 +105,7 @@ async function handler() {
                 .toArray()
                 .map((item) => {
                     const $item = $(item);
-                    const title = $item.text().trim();
+                    const title = $item.text();
                     return {
                         title,
                         author: $item
@@ -89,7 +116,7 @@ async function handler() {
                             .trim()
                             .replaceAll('\n', '')
                             .replaceAll(/\s+/g, ' '),
-                        link: `${link}#${title}`,
+                        link: `${link}#${$item.text().trim()}`,
                         pubDate,
                     };
                 });
@@ -101,7 +128,6 @@ async function handler() {
         title: 'NDSS',
         link: url,
         description: 'The Network and Distributed System Security (NDSS) Symposium Accpeted Papers',
-        allowEmpty: true,
         item: items.flat(),
     };
 }

@@ -1,7 +1,8 @@
 import { load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
+import pMap from 'p-map';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -35,23 +36,24 @@ export const route: Route = {
 | ---- | --------------- | --------------- | --------------- | --------------- | ---------- | --------------- | --------------- | --------------- |
 | 18   | 5261            | 6030            | 13352           | 83422           | 100418     | 13074           | 12252           | 12212           |`,
 };
-
+type ListedItem = DataItem & {
+    description: string;
+    link: string;
+};
 async function handler(ctx) {
     const node = ctx.req.param('node') ?? 1;
     const currentUrl = `https://6api.ycwb.com/app_if/jy/getArticles?nodeid=${node}&pagesize=15`;
-
     const { data: response } = await got(currentUrl);
-
-    const list = response.artiles.map((item) => ({
+    const list: ListedItem[] = response.artiles.map((item) => ({
         title: item.TITLE,
         description: renderToString(
             <>
-                {item.PICLINKS ? (
+                {getPictureUrls(item.PICLINKS, item.PICS).map((src) => (
                     <>
-                        <img src={item.PICLINKS} />
+                        <img src={src} />
                         <br />
                     </>
-                ) : null}
+                ))}
                 {item.ABSTRACT ? (
                     <>
                         <blockquote>
@@ -62,64 +64,103 @@ async function handler(ctx) {
                 ) : null}
             </>
         ),
-        pubDate: timezone(parseDate(item.PUBTIME), 8),
+        pubDate: getPublicationDate(item.PUBTIME),
         link: item.PUBURL,
-        nodeName: item.NODENAME,
+        category: typeof item.NODENAME === 'string' && item.NODENAME.trim() ? [item.NODENAME] : undefined,
     }));
-
-    let nodeName = '';
-    let nodeLink = '';
-
-    const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link, async () => {
-                const detailResponse = await got({
-                    method: 'get',
-                    url: item.link,
-                });
-
-                const content = load(detailResponse.data);
-
-                const $comments = content('.main_article')
-                    .contents()
-                    .filter((_, el) => el.nodeType === 8);
-                $comments.each((_, el) => {
-                    // Remove useless comments
-                    if (/audioPlayer|audio-box/.test(el.data)) {
-                        el.data = '';
-                    }
-                    // Filter author from comments
-                    if (/author/.test(el.data)) {
-                        item.author = el.data.split('<author>', 2)[1].split('</author>', 1)[0];
-                    }
-                });
-
-                nodeName = nodeName === '' ? item.nodeName : nodeName;
-
-                // Filter node link from content('.path a')
-                const children = content('.path').children('a');
-                for (const child of children) {
-                    if (content(child).text() === nodeName && nodeLink === '') {
-                        nodeLink = content(child).attr('href')!;
-                    }
+    const nodeName = response.artiles[0]?.NODENAME ?? '';
+    const items = await pMap(
+        list,
+        async (item) => {
+            let details: ArticleDetails;
+            try {
+                details = await cache.tryGet(`ycwb:article:v3:${item.link}`, () => fetchArticleDetails(item.link));
+            } catch (error) {
+                if (!(error instanceof ArticleVerificationError)) {
+                    throw error;
                 }
-
-                content('span').removeAttr('style').removeAttr('class');
-                content('img').removeAttr('style').removeAttr('class').removeAttr('placement').removeAttr('data-toggle').removeAttr('trigger').removeAttr('referrerpolicy');
-                content('br').removeAttr('style').removeAttr('class');
-                content('p').removeAttr('style').removeAttr('class');
-                content('.space10, .ddf').remove();
-
-                item.description += content('.main_article').html() ?? '';
-
-                return item;
-            })
-        )
+                details = { description: '', nodeLinks: [] };
+            }
+            return { item: { ...item, description: details.description || item.description, author: details.author }, nodeLinks: details.nodeLinks };
+        },
+        { concurrency: 3, stopOnError: false }
     );
-
+    const nodeLink = items.flatMap((entry) => entry.nodeLinks).find((entry) => entry.name === nodeName && entry.link)?.link;
     return {
         title: `羊城晚报金羊网 - ${nodeName}`,
-        link: nodeLink === '' ? 'https://www.ycwb.com/' : nodeLink,
-        item: items,
+        link: nodeLink || 'https://www.ycwb.com/',
+        item: items.map((entry) => entry.item),
     };
+}
+type ArticleDetails = Pick<DataItem, 'author'> & {
+    description: string;
+    nodeLinks: Array<{
+        name: string;
+        link: string;
+    }>;
+};
+class ArticleVerificationError extends Error {}
+async function fetchArticleDetails(link: string): Promise<ArticleDetails> {
+    const { data } = await got({ method: 'get', url: link });
+    const $ = load(data);
+    const article = $('.main_article');
+    if (!article.length && $('script').text().includes('acw_sc__v2')) {
+        throw new ArticleVerificationError(`Article verification required: ${link}`);
+    }
+    if (!article.length) {
+        throw new Error(`Unable to find main article content: ${link}`);
+    }
+    let author: string | undefined;
+    const comments = $('.main_article')
+        .contents()
+        .filter((_, element) => element.nodeType === 8);
+    comments.each((_, element) => {
+        // Remove unused audio player comments.
+        if (/audioPlayer|audio-box/.test(element.data)) {
+            element.data = '';
+        }
+        const authorMatch = element.data.match(/<author>([\s\S]*?)<\/author>/);
+        if (!authorMatch) {
+            return;
+        }
+        author = authorMatch[1].trim() ? authorMatch[1] : undefined;
+        element.data = element.data.replace(authorMatch[0], '');
+        if (!element.data) {
+            $(element).remove();
+        }
+    });
+    const nodeLinks = $('.path a')
+        .toArray()
+        .map((element) => ({ name: $(element).text(), link: $(element).attr('href') ?? '' }));
+    $('span, br, p').removeAttr('style').removeAttr('class');
+    $('img').removeAttr('style').removeAttr('class').removeAttr('placement').removeAttr('data-toggle').removeAttr('trigger').removeAttr('referrerpolicy');
+    $('.space10, .ddf').remove();
+    return { description: $('.main_article').html() ?? '', author, nodeLinks };
+}
+function getPublicationDate(value: unknown) {
+    if (!((typeof value === 'string' && value.trim()) || (typeof value === 'number' && Number.isFinite(value)))) {
+        return;
+    }
+    const date = parseDate(value);
+    return Number.isFinite(date.getTime()) ? timezone(date, 8) : undefined;
+}
+function isImageUrl(value: unknown): value is string {
+    if (typeof value !== 'string' || !value) {
+        return false;
+    }
+    try {
+        const url = new URL(value);
+        return ['https:', 'http:'].includes(url.protocol) && !url.username && !url.password;
+    } catch {
+        return false;
+    }
+}
+function getPictureUrls(picLinks: unknown, pictures: unknown): string[] {
+    if (isImageUrl(picLinks)) {
+        return [picLinks];
+    }
+    if (!Array.isArray(pictures)) {
+        return [];
+    }
+    return [...new Set(pictures.map((picture) => (picture && typeof picture === 'object' ? picture.attpath : undefined)).filter(isImageUrl))];
 }

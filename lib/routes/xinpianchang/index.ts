@@ -1,4 +1,5 @@
 import type { Route } from '@/types';
+import { getRouteLimit } from '@/utils/route-limit';
 
 import { getData, processItems, rootUrl } from './util';
 
@@ -27,7 +28,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { params = 'article-0-0-all-all-0-0-score' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 60;
+    const limit = getRouteLimit(ctx, 60);
 
     const currentUrl = new URL(`discover/${params}`, rootUrl).href;
 

@@ -48,7 +48,7 @@ async function handler(ctx) {
         .map((item) => {
             const $item = $(item);
             const $link = $item.find('a');
-            const title = $link.attr('title') || $link.text().trim();
+            const title = $link.attr('title') || $link.text();
             const link = $link.attr('href') || '';
             const dateText = $item.find('span').text().trim();
 

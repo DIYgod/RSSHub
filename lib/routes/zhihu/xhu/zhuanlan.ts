@@ -22,7 +22,7 @@ export const route: Route = {
     radar: [
         {
             source: ['zhuanlan.zhihu.com/:id'],
-            target: '/zhuanlan/:id',
+            target: '/xhu/zhuanlan/:id',
         },
     ],
     name: 'xhu- 专栏',

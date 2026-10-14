@@ -23,33 +23,34 @@ export const route: Route = {
             target: '/chrono',
         },
     ],
-    name: 'Fil Info Le Phocéen (Chrono)',
+    name: 'Fil Info (Chrono)',
     maintainers: ['Loopy03'],
     handler: async (_) => {
         const response = await ofetch('https://www.lephoceen.fr/chrono');
         const $ = load(response);
 
-        // Récupération du fichier json
+        // Read the embedded page data.
         const jsonRaw = $('script[id="__NEXT_DATA__"]').html();
         const jsonData = JSON.parse(jsonRaw ?? '');
 
-        // Tableau des articles via le chemin identifié du fichier json
+        // Extract the article array from the page data.
         // Structure: props -> pageProps -> data -> datas
         const articles = jsonData?.props?.pageProps?.data?.datas || [];
 
         const items = articles.map((item: any) => {
-            // Gestion du lien : le slug est relatif, on ajoute le domaine
+            // Resolve article slugs against the website.
             const baseUrl = 'https://www.lephoceen.fr';
             const link = item.slug.startsWith('http') ? item.slug : `${baseUrl}${item.slug}`;
 
-            // Gestion de la date : Le JSON fournit un timestamp UNIX (en secondes)
+            // The source uses Unix timestamps in seconds.
             const pubDate = parseDate(item.date.publish_at.timestamp * 1000);
 
             return {
                 title: item.title,
                 link,
                 description: item.text || `[${item.category?.name}] ${item.title}`,
-                pubDate, // L'objet Date standard gère le fuseau correctement
+                pubDate, // Unix timestamps identify the publication instant.
+                updated: item.date.updated_at?.timestamp ? parseDate(item.date.updated_at.timestamp * 1000) : undefined,
                 category: [item.category?.name],
                 image: item.images?.['16x9']?.url,
             };

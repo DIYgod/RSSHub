@@ -1,7 +1,6 @@
 import type { Route } from '@/types';
-import got from '@/utils/got';
 
-import { baseUrl, getBuildId, parseItem, parseList } from './utils';
+import { baseUrl, getApi, getPoolSize, processList } from './utils';
 
 export const route: Route = {
     path: '/kol/:kolId/:lang?',
@@ -28,16 +27,11 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { kolId, lang = 'en' } = ctx.req.param();
-    const { limit = 10 } = ctx.req.query();
+    const poolSize = getPoolSize(ctx, 10);
 
-    const buildId = await getBuildId();
-    const { data: response } = await got(`${baseUrl}/_next/data/${buildId}/${lang}/kol/${kolId}.json`);
-
-    const { queries } = response.pageProps.dehydratedState;
-    const { data: profile } = queries.find((q) => q.queryKey[0] === '/user/get_profile').state;
-
-    const list = parseList(queries.find((q) => q.queryKey[0] === '/feed/list/user').state.data.pages[0].list.slice(0, limit), lang, buildId);
-    const items = await Promise.all(list.map((item) => parseItem(item)));
+    const profile = await getApi('/user/get_profile', lang, { id: Number(kolId) });
+    const response = await getApi('/feed/list/user', lang, { id: Number(kolId), count: poolSize });
+    const items = await processList(response.list, lang, ctx, 10);
 
     return {
         title: `${profile.nickname} - Followin`,

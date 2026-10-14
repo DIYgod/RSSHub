@@ -46,7 +46,7 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['thewirehindi.com/category/*'],
+            source: ['thewirehindi.com/category/:category'],
         },
     ],
     name: 'Category',

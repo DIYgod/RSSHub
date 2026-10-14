@@ -19,11 +19,15 @@ export const route: Route = {
     },
     radar: [
         {
+            source: ['m.douban.com/subject_collection/:type'],
+            target: '/list/:type',
+        },
+        {
             source: ['www.douban.com/subject_collection/:type'],
             target: '/list/:type',
         },
     ],
-    name: '豆瓣榜单与集合',
+    name: '榜单与集合',
     maintainers: ['5upernova-heng', 'honue'],
     handler,
     description: `| 榜单 / 集合        | 路由                          |
@@ -67,51 +71,38 @@ async function handler(ctx) {
     const routeParams = Object.fromEntries(new URLSearchParams(ctx.req.param('routeParams')));
     const playable = fallback(undefined, queryToInteger(routeParams.playable), 0);
     const score = fallback(undefined, queryToFloat(routeParams.score), 0);
-    let start = 0;
-    const count = 50;
-    let items: any[] = [];
-    let title = '';
-    let description = '';
-    let total = null;
-    while (total === null || start < total) {
-        const url = `https://m.douban.com/rexxar/api/v2/subject_collection/${type}/items?playable=${playable}&start=${start}&count=${count}`;
-        // eslint-disable-next-line no-await-in-loop
-        const response = await got({
-            method: 'get',
-            url,
-            headers: {
-                Referer: `https://m.douban.com/subject_collection/${type}`,
-            },
-        });
-        title = response.data.subject_collection.name;
-        description = response.data.subject_collection.description;
-        total = response.data.total;
-        const newItems = response.data.subject_collection_items
-            .filter((item) => {
-                const rate = item.rating ? item.rating.value : 0;
-                return rate >= score; // 保留rate大于等于score的项and过滤无评分项
-            })
-            .map((item) => {
-                const title = item.title;
-                const link = item.url;
-                const description = renderListDescription({
-                    ranking_value: item.ranking_value,
-                    title,
-                    original_title: item.original_title,
-                    rate: item.rating ? item.rating.value : null,
-                    card_subtitle: item.card_subtitle,
-                    description: item.cards ? item.cards[0].content : item.abstract,
-                    cover: item.cover_url || item.cover?.url,
-                });
-                return {
-                    title,
-                    link,
-                    description,
-                };
+    const url = `https://m.douban.com/rexxar/api/v2/subject_collection/${type}/items?playable=${playable}&start=0&count=50`;
+    const response = await got({
+        method: 'get',
+        url,
+        headers: {
+            Referer: `https://m.douban.com/subject_collection/${type}`,
+        },
+    });
+    const title = response.data.subject_collection.name;
+    const description = response.data.subject_collection.description;
+    const items = response.data.subject_collection_items
+        .filter((item) => {
+            const rate = item.rating ? item.rating.value : 0;
+            return rate >= score; // Keep entries at or above the selected rating.
+        })
+        .map((item) => {
+            const title = item.title;
+            const link = item.url;
+            const description = renderListDescription({
+                ranking_value: item.ranking_value,
+                original_title: item.original_title,
+                rate: item.rating ? item.rating.value : null,
+                card_subtitle: item.card_subtitle,
+                description: item.cards ? item.cards[0].content : item.abstract,
+                cover: item.cover_url || item.cover?.url,
             });
-        items = [...items, ...newItems];
-        start += count;
-    }
+            return {
+                title,
+                link,
+                description,
+            };
+        });
 
     return {
         title: `豆瓣 - ${title}`,

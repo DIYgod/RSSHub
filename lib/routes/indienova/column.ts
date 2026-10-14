@@ -1,6 +1,7 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 
@@ -71,13 +72,16 @@ Game Jam
 
 async function handler(ctx) {
     const columnId = ctx.req.param('columnId');
+    if (!columnId || !/^\d+$/.test(columnId) || !/[1-9]/.test(columnId)) {
+        throw new Error('Invalid column ID. Use a positive integer from the official column URL.');
+    }
 
     const { data: response, url: link } = await got(`${baseUrl}/column/${columnId}`);
     const $ = load(response);
 
-    const list = parseList($);
+    const list: Array<DataItem & { link: string }> = parseList($);
 
-    const items = await Promise.all(list.map((item) => cache.tryGet(item.link, () => parseItem(item))));
+    const items = await pMap(list, (item) => cache.tryGet(item.link, () => parseItem(item)), { concurrency: 3 });
 
     return {
         title: $('head title').text(),

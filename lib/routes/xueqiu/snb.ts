@@ -1,7 +1,20 @@
+import { load } from 'cheerio';
+
+import { config } from '@/config';
 import type { Route } from '@/types';
+import { evaluateScriptData } from '@/utils/evaluate-script';
 import got from '@/utils/got';
 import { PRESETS } from '@/utils/header-generator';
 import { parseDate } from '@/utils/parse-date';
+
+interface CubeInfo {
+    name: string;
+    description: string;
+    sell_rebalancing?: {
+        updated_at: number;
+        rebalancing_histories: Array<{ stock_name: string; prev_weight_adjusted?: number; target_weight: number }>;
+    };
+}
 
 export const route: Route = {
     path: '/snb/:id',
@@ -9,9 +22,9 @@ export const route: Route = {
     example: '/xueqiu/snb/ZH1288184',
     parameters: { id: '组合代码, 可在组合主页 URL 中找到.' },
     features: {
-        requireConfig: false,
+        requireConfig: [{ name: 'XUEQIU_COOKIES', optional: true, description: '需要登录才能访问的组合请配置雪球登录 Cookie。' }],
         requirePuppeteer: false,
-        antiCrawler: false,
+        antiCrawler: true,
         supportBT: false,
         supportPodcast: false,
         supportScihub: false,
@@ -32,36 +45,46 @@ async function handler(ctx) {
 
     const response = await got(url, {
         headerGeneratorOptions: PRESETS.MODERN_ANDROID,
+        headers: { Cookie: config.xueqiu.cookies },
     });
 
-    const data = response.data;
-    const pattern = /SNB.cubeInfo = \{(.+)\}/;
-    const info = pattern.exec(data);
-    const obj = JSON.parse('{' + info![1] + '}');
-    const rebalancing_histories = obj.sell_rebalancing.rebalancing_histories;
-    const snb_title = obj.name + ' 的调仓历史';
-    const snb_description = obj.description;
+    const $ = load(response.data);
+    const script = $('script')
+        .toArray()
+        .map((element) => $(element).text())
+        .filter((source) => source.includes('cubeInfo'))
+        .join('\n');
+    if (!script) {
+        throw new Error('The Xueqiu portfolio page does not expose its data. Verify the portfolio ID and set a valid XUEQIU_COOKIES from an account that can view it.');
+    }
+    const obj = await evaluateScriptData<CubeInfo>(`var SNB = {};\n${script}`, 'SNB.cubeInfo');
+    const rebalancing = obj?.sell_rebalancing;
+    if (!obj?.name || !rebalancing || !Array.isArray(rebalancing.rebalancing_histories) || !rebalancing.updated_at) {
+        throw new Error('The Xueqiu portfolio has no accessible rebalance data. Verify access on Xueqiu and refresh XUEQIU_COOKIES.');
+    }
+    const snbTitle = obj.name + ' 的调仓历史';
+    const snbDescription = obj.description;
 
     const title = obj.name + ' 的上一笔调仓';
     let description = '';
-    for (const some_detail of rebalancing_histories) {
-        const prev_weight_adjusted = some_detail.prev_weight_adjusted ?? 0;
-        description += some_detail.stock_name + ' from ' + prev_weight_adjusted + ' to ' + some_detail.target_weight + '，\n';
+    for (const detail of rebalancing.rebalancing_histories) {
+        const prevWeightAdjusted = detail.prev_weight_adjusted ?? 0;
+        description += detail.stock_name + ' from ' + prevWeightAdjusted + ' to ' + detail.target_weight + '，\n';
     }
-    const time = obj.sell_rebalancing.updated_at;
+    const time = rebalancing.updated_at;
 
     const single = {
         title,
         description,
-        pubDate: parseDate(time),
+        pubDate: parseDate(time, 'x'),
         link: url,
         guid: `xueqiu::snb::${id}::${time}`,
     };
 
     return {
-        title: snb_title,
+        title: snbTitle,
         link: url,
-        description: snb_description,
+        description: snbDescription,
         item: [single],
     };
 }

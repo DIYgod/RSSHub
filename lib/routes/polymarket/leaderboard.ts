@@ -1,4 +1,6 @@
-import type { Route } from '@/types';
+import { escape } from 'entities/escape';
+
+import type { Data, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 
 import type { LeaderboardEntry } from './types';
@@ -32,7 +34,7 @@ export const route: Route = {
     handler,
 };
 
-async function handler(ctx) {
+async function handler(ctx): Promise<Data> {
     const category = ctx.req.param('category') || 'OVERALL';
     const timePeriod = ctx.req.param('timePeriod') || 'DAY';
 
@@ -48,12 +50,12 @@ async function handler(ctx) {
     const items = data.map((entry) => ({
         title: `#${entry.rank} ${entry.userName || entry.proxyWallet}`,
         description: `
-            <p><strong>Rank:</strong> #${entry.rank}</p>
+            <p><strong>Rank:</strong> #${escape(entry.rank)}</p>
             <p><strong>PnL:</strong> $${entry.pnl.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
             <p><strong>Volume:</strong> $${entry.vol.toLocaleString()}</p>
-            ${entry.xUsername ? `<p><strong>X:</strong> @${entry.xUsername}</p>` : ''}
+            ${entry.xUsername ? `<p><strong>X:</strong> @${escape(entry.xUsername)}</p>` : ''}
             ${entry.verifiedBadge ? '<p>✅ Verified</p>' : ''}
-            ${entry.profileImage ? `<img src="${entry.profileImage}" alt="${entry.userName || 'Trader'}" style="max-width: 100px; border-radius: 50%;">` : ''}
+            ${entry.profileImage ? `<img src="${escape(entry.profileImage)}" alt="${escape(entry.userName || 'Trader')}" style="max-width: 100px; border-radius: 50%;">` : ''}
         `,
         link: `https://polymarket.com/portfolio?address=${entry.proxyWallet}`,
         author: entry.userName || entry.proxyWallet,
@@ -66,5 +68,6 @@ async function handler(ctx) {
         title: `Polymarket Leaderboard - ${categoryName} (${periodName})`,
         link: 'https://polymarket.com/leaderboard',
         item: items,
+        language: 'en',
     };
 }

@@ -1,9 +1,11 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/cookbook',
@@ -30,14 +32,21 @@ export const route: Route = {
     name: 'Cookbook',
 };
 
+type AstroScalar = string | number | boolean | null;
+type AstroSerializedObject = { [key: string]: AstroSerialized };
+type AstroSerialized = AstroScalar | [0, AstroSerialized] | [1, AstroSerialized[]] | AstroSerializedObject;
+type AstroValue = AstroScalar | AstroValue[] | { [key: string]: AstroValue };
+
+const isAstroObject = (val: AstroScalar | AstroSerializedObject): val is AstroSerializedObject => val !== null && typeof val === 'object';
+
 // Recursively decode Astro component props serialization.
 // [0, value] is a scalar; [1, [...]] is an array.
-function decodeAstroValue(val: unknown): unknown {
+function decodeAstroValue(val: AstroSerialized): AstroValue {
     if (Array.isArray(val)) {
         return val[0] === 0 ? decodeAstroValue(val[1]) : val[1].map((item) => decodeAstroValue(item));
     }
-    if (val !== null && typeof val === 'object') {
-        const result: Record<string, unknown> = {};
+    if (isAstroObject(val)) {
+        const result: { [key: string]: AstroValue } = {};
         for (const [key, value] of Object.entries(val)) {
             result[key] = decodeAstroValue(value);
         }
@@ -72,7 +81,7 @@ async function handler() {
     }
 
     // Parse the astro-island props JSON.
-    const props = JSON.parse(propsRaw) as { entries: [number, unknown[]] };
+    const props: { entries: [number, AstroSerialized[]] } = JSON.parse(propsRaw);
     const entriesArray = props.entries[1];
 
     if (!Array.isArray(entriesArray)) {
@@ -80,40 +89,42 @@ async function handler() {
     }
 
     const articles = entriesArray
-        .map((item) => decodeAstroValue(item) as CookbookEntry | null)
-        .filter((item): item is CookbookEntry => item !== null && typeof item === 'object' && 'title' in item)
+        .map((item) => decodeAstroValue(item))
+        .filter((item): item is AstroValue & CookbookEntry => item !== null && typeof item === 'object' && 'title' in item)
         .filter((item) => !item.archived)
         .toSorted((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 
-    const items = await Promise.all(
-        articles.slice(0, 30).map((item) =>
-            cache.tryGet(`${rootUrl}/cookbook/${item.internal_path}`, async () => {
-                const link = `${rootUrl}/cookbook/${item.internal_path}`;
-                const dataItem: DataItem = {
-                    title: item.title,
-                    link,
-                    pubDate: parseDate(item.date),
-                    category: item.tags ?? [],
-                    description: item.description,
-                };
+    const items = await pMap(
+        articles.slice(0, 30),
+        async (item) => {
+            const link = `${rootUrl}/cookbook/${item.internal_path}`;
+            const dataItem: DataItem = {
+                title: item.title,
+                link,
+                pubDate: item.date ? (/^\d{4}-\d{2}-\d{2}$/.test(item.date) ? timezone(parseDate(item.date, 'YYYY-MM-DD'), 0) : parseDate(item.date)) : undefined,
+                category: item.tags ?? [],
+                description: item.description,
+            };
 
-                if (item.authorAffiliations?.length) {
-                    dataItem.author = item.authorAffiliations.join(', ');
-                } else if (item.authors?.length) {
-                    dataItem.author = item.authors
-                        .map((a) => a.name)
-                        .filter(Boolean)
-                        .join(', ');
-                }
+            if (item.authorAffiliations?.length) {
+                dataItem.author = item.authorAffiliations.join(', ');
+            } else if (item.authors?.length) {
+                dataItem.author = item.authors
+                    .map((a) => a.name)
+                    .filter(Boolean)
+                    .join(', ');
+            }
 
+            const content = await cache.tryGet(`openai:cookbook:detail:v2:${link}`, async () => {
                 const detailResponse = await ofetch(link);
                 const $detail = load(detailResponse);
-                const content = $detail('article').html();
-                dataItem.description = content ?? dataItem.description;
+                return { description: $detail('article').html() };
+            });
+            dataItem.description = content.description ?? dataItem.description;
 
-                return dataItem;
-            })
-        )
+            return dataItem;
+        },
+        { concurrency: 3 }
     );
 
     return {

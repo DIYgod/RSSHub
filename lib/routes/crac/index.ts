@@ -1,8 +1,8 @@
 import { load } from 'cheerio';
 
-import type { DataItem, Route } from '@/types';
-import cache from '@/utils/cache';
-import got from '@/utils/got';
+import InvalidParameterError from '@/errors/types/invalid-parameter';
+import type { Route } from '@/types';
+import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
@@ -26,51 +26,63 @@ export const route: Route = {
 | 1        | 2        | 3        | 5        | 6        | 7       | 8          | 9        |`,
     radar: [
         {
-            source: ['www.crac.org.cn/News/*'],
+            source: ['www.crac.org.cn/', 'www.crac.org.cn/News/*'],
         },
     ],
 };
 
-async function handler(ctx) {
-    const baseUrl = 'http://www.crac.org.cn';
-    const type = ctx.req.param('type');
-    const link = type ? `${baseUrl}/News/List?type=${type}` : `${baseUrl}/News/List`;
+const categories = {
+    '1': 1,
+    '2': 5,
+    '3': 6,
+    '5': 9,
+    '6': 7,
+    '7': 15,
+    '8': 10,
+    '9': 11,
+};
 
-    const response = await got({
-        method: 'get',
-        url: link,
+type Post = {
+    link: string;
+    title: { rendered: string };
+    content: { rendered: string };
+    date_gmt: string;
+    modified_gmt: string;
+    _embedded?: {
+        author?: Array<{ name: string }>;
+        'wp:term'?: Array<Array<{ name: string }>>;
+    };
+};
+
+async function handler(ctx) {
+    const baseUrl = 'https://www.crac.org.cn';
+    const type = ctx.req.param('type');
+    if (type && !Object.hasOwn(categories, type)) {
+        throw new InvalidParameterError('Invalid type. Use 1, 2, 3, 5, 6, 7, 8 or 9, or omit the type for all news.');
+    }
+    const category = type ? categories[type] : undefined;
+    const limit = Math.min(10, 100);
+    const link = category ? `${baseUrl}/?cat=${category}` : `${baseUrl}/`;
+    const posts = await ofetch<Post[]>(baseUrl, {
+        query: {
+            rest_route: '/wp/v2/posts',
+            per_page: limit,
+            _embed: true,
+            ...(category && { categories: category }),
+        },
     });
 
-    const $ = load(response.data);
-    const list = $('div.InCont_r_d_cont > li')
-        .toArray()
-        .map((item): DataItem & { link: string } => {
-            const $item = $(item);
-            return {
-                link: new URL($item.find('a').attr('href')!, baseUrl).href,
-                pubDate: parseDate($item.find('span.cont_d').text(), 'YYYY-MM-DD'),
-                title: '',
-            };
-        });
-
-    await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link, async () => {
-                const response = await got({
-                    method: 'get',
-                    url: item.link,
-                });
-                const content = load(response.data);
-                item.title = content('div.r_d_cont_title > h3').text();
-                item.description = content('div.r_d_cont').html()!.trim().replaceAll('\n', '');
-                return item;
-            })
-        )
-    );
-
     return {
-        title: $('title').text(),
+        title: '中国无线电协会业余无线电分会 - CRAC',
         link,
-        item: list,
+        item: posts.map((post) => ({
+            title: load(post.title.rendered).text(),
+            link: post.link,
+            description: post.content.rendered,
+            pubDate: post.date_gmt ? parseDate(`${post.date_gmt}Z`) : undefined,
+            updated: post.modified_gmt ? parseDate(`${post.modified_gmt}Z`) : undefined,
+            author: post._embedded?.author?.[0]?.name,
+            category: post._embedded?.['wp:term']?.flat().map((term) => term.name),
+        })),
     };
 }

@@ -1,12 +1,32 @@
 import { load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
 
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
 const baseUrl = 'https://news.google.com';
+
+const getPublisherUrl = (metadata: string | undefined, fallback: string) => {
+    const encoded = metadata?.match(/(?:^|;)\s*5:\s*([^;]+)/)?.[1];
+    if (!encoded) {
+        return fallback;
+    }
+    try {
+        const values: unknown = JSON.parse(Buffer.from(encoded, 'base64').toString('utf8'));
+        if (Array.isArray(values)) {
+            const url = values.find((value) => typeof value === 'string' && /^https?:\/\//.test(value));
+            if (url && new URL(url).hostname !== 'news.google.com') {
+                return url as string;
+            }
+        }
+    } catch {
+        // Google may change click metadata; preserve the working News link.
+    }
+    return fallback;
+};
 
 export const route: Route = {
     path: '/news/:category/:locale',
@@ -31,9 +51,9 @@ async function handler(ctx) {
     const locale = ctx.req.param('locale');
 
     const categoryUrls = await cache.tryGet(`google:news:${locale}`, async () => {
-        const front_data = await ofetch(`${baseUrl}/?${locale}`);
+        const frontData = await ofetch(`${baseUrl}/?${locale}`);
 
-        const $ = load(front_data);
+        const $ = load(frontData);
         return [
             ...$('a.brSCsc')
                 .slice(3) // skip Home, For you and Following
@@ -56,7 +76,11 @@ async function handler(ctx) {
                 }),
         ];
     });
-    const categoryUrl = categoryUrls.find((item) => item.category === category)!.url;
+    const selectedCategory = categoryUrls.find((item) => item.category === category || (category === 'Top stories' && item.category === 'Home'));
+    if (!selectedCategory) {
+        throw new InvalidParameterError(`Unknown Google News category "${category}". Available categories: ${categoryUrls.map((item) => item.category).join(', ')}.`);
+    }
+    const categoryUrl = selectedCategory.url;
 
     const data = await ofetch(categoryUrl);
     const $ = load(data);
@@ -67,6 +91,10 @@ async function handler(ctx) {
         const $item = $(item);
 
         const title = $item.find('.gPFEn').text();
+        const anchor = $item.find('a.WwrzSb').first();
+        const newsUrl = new URL(anchor.attr('href')!, baseUrl).href;
+        const timestamp = $item.find('time').attr('datetime');
+        const publicationDate = timestamp ? parseDate(timestamp) : undefined;
 
         const authorText = $item.find('.bInasb span').text();
         const authors = authorText
@@ -88,10 +116,11 @@ async function handler(ctx) {
 
         return {
             title,
-            description: renderDescription($item.find('img.Quavad').attr('src'), title),
-            pubDate: parseDate($item.find('time').attr('datetime')!),
+            description: renderDescription($item.find('img.Quavad').attr('src')),
+            pubDate: publicationDate && !Number.isNaN(publicationDate.getTime()) ? publicationDate : undefined,
             author: authors,
-            link: new URL($item.find('a.WwrzSb').first().attr('href')!, baseUrl).href,
+            link: getPublisherUrl(anchor.attr('jslog'), newsUrl),
+            guid: newsUrl,
         };
     });
 
@@ -102,15 +131,12 @@ async function handler(ctx) {
     };
 }
 
-const renderDescription = (img: string | undefined, brief: string): string =>
-    renderToString(
-        <>
-            {img ? (
-                <>
-                    <img src={img} />
-                    <br />
-                </>
-            ) : null}
-            {brief}
-        </>
-    );
+const renderDescription = (img: string | undefined): string | undefined =>
+    img
+        ? renderToString(
+              <>
+                  <img src={img} />
+                  <br />
+              </>
+          )
+        : undefined;

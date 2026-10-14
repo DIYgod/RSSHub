@@ -3,6 +3,8 @@ import { load } from 'cheerio';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
+import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/latest',
@@ -19,51 +21,49 @@ export const route: Route = {
     },
     radar: [
         {
+            source: ['fgk.chinatax.gov.cn/zcfgk/c100027/list.html'],
+            target: '/latest',
+        },
+        {
             source: ['www.chinatax.gov.cn/*'],
         },
     ],
     name: '最新文件',
     maintainers: ['nczitzk', 'fuzy112'],
     handler,
-    url: 'www.chinatax.gov.cn/*',
+    url: 'fgk.chinatax.gov.cn/zcfgk/c100027/list.html',
 };
 
 async function handler() {
-    const link = 'http://www.chinatax.gov.cn/chinatax/n810341/n810755/index.html';
+    const link = 'https://fgk.chinatax.gov.cn/zcfgk/c100027/list.html';
 
     const response = await got({
         method: 'get',
         url: link,
     });
     const $ = load(response.data);
-    const list = $('ul.list.whlist li')
+    const list = $('.list > ul > li')
         .slice(0, 10)
         .toArray()
         .map((item): DataItem => {
             const $item = $(item);
             const a = $item.find('a');
             return {
-                title: a.text(),
-                link: new URL(a.attr('href')!, 'http://www.chinatax.gov.cn').href,
+                title: a.find('.bt').text(),
+                link: new URL(a.attr('href')!, link).href,
             };
         });
     const items = await Promise.all(
         list.map((item) =>
             cache.tryGet(item.link!, async () => {
-                try {
-                    const res = await got({ method: 'get', url: item.link });
-                    const content = load(res.data);
-                    item.pubDate = content('meta[name="PubDate"]').attr('content');
-                    item.description = content('#fontzoom').html();
-                    return item;
-                } catch (error) {
-                    const requestError = error as Error;
-                    if (requestError.name === 'HTTPError' || requestError.name === 'FetchError') {
-                        item.description = requestError.message;
-                        return item;
-                    }
-                    throw error;
+                const res = await got({ method: 'get', url: item.link });
+                const content = load(res.data);
+                const pubDate = content('meta[name="PubDate"]').attr('content');
+                if (pubDate) {
+                    item.pubDate = timezone(parseDate(pubDate), 8);
                 }
+                item.description = content('.arc_cont').html();
+                return item;
             })
         )
     );

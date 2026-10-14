@@ -1,14 +1,13 @@
 import queryString from 'query-string';
 
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import { ViewType } from '@/types';
 import got from '@/utils/got';
+import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
-    path: [
-        '/post/popular_recent/:period?', // 对应 konachan.com
-        '/sfw/post/popular_recent/:period?', // 对应 konachan.net（SFW）
-    ],
+    path: '/post/popular_recent/:period?',
     categories: ['picture'],
     view: ViewType.Pictures,
     example: '/konachan/post/popular_recent/1d',
@@ -23,19 +22,8 @@ export const route: Route = {
             ],
             default: '1d',
         },
-        safe_search: {
-            description: '是否使用无r18的站点konachan.net，若是,则在路径前加上 `/sfw`，如`/konachan/sfw/post/popular_recent/1d`，若否则默认使用 konachan.com',
-            default: 'false',
-        },
     },
-    radar: [
-        {
-            source: ['konachan.com/post'],
-        },
-        {
-            source: ['konachan.net/post'],
-        },
-    ],
+    radar: [{ source: ['konachan.com/post'], target: '/post/popular_recent' }],
     name: 'Popular Recent Posts',
     maintainers: ['magic-akari', 'NekoAria', 'sineeeee'],
     description: `| 最近 24 小时 | 最近一周 | 最近一月 | 最近一年 |
@@ -47,9 +35,19 @@ export const route: Route = {
     },
 };
 
-async function handler(ctx) {
+export async function handler(ctx) {
     const { period = '1d' } = ctx.req.param();
-    const isSfw = ctx.req.path.includes('/sfw');
+    const titles = {
+        '1d': 'Last 24 hours',
+        '1w': 'Last week',
+        '1m': 'Last month',
+        '1y': 'Last year',
+    };
+
+    if (!Object.hasOwn(titles, period)) {
+        throw new InvalidParameterError('Invalid period: use 1d, 1w, 1m, or 1y.');
+    }
+    const isSfw = ctx.req.path.startsWith('/konachan/sfw/');
     const baseUrl = isSfw ? 'https://konachan.net' : 'https://konachan.com';
 
     const response = await got({
@@ -61,16 +59,12 @@ async function handler(ctx) {
 
     const posts = response.data;
 
-    const titles = {
-        '1d': 'Last 24 hours',
-        '1w': 'Last week',
-        '1m': 'Last month',
-        '1y': 'Last year',
-    };
-
     const mime = {
-        jpg: 'jpeg',
-        png: 'png',
+        jpg: 'image/jpeg',
+        jpeg: 'image/jpeg',
+        png: 'image/png',
+        gif: 'image/gif',
+        webp: 'image/webp',
     };
 
     const title = titles[period];
@@ -84,7 +78,7 @@ async function handler(ctx) {
             guid: `${ctx.req.path}#${post.id}`,
             link: `${baseUrl}/post/show/${post.id}`,
             author: post.author,
-            pubDate: new Date(post.created_at * 1e3).toUTCString(),
+            pubDate: post.created_at === undefined ? undefined : parseDate(post.created_at, 'X'),
             description: (() => {
                 const result: string[] = [
                     `<img src="${post.sample_url}" />`,
@@ -97,7 +91,7 @@ async function handler(ctx) {
             media: {
                 content: {
                     url: post.file_url,
-                    type: `image/${mime[post.file_ext]}`,
+                    type: mime[post.file_ext],
                 },
                 thumbnail: {
                     url: post.preview_url,

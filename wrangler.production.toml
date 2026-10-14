@@ -26,6 +26,15 @@ enabled = true
 [browser]
 binding = "BROWSER"
 
+# Share Browser Run sessions across requests and Worker isolates.
+[[durable_objects.bindings]]
+name = "BROWSER_SESSIONS"
+class_name = "BrowserSession"
+
+[[migrations]]
+tag = "browser-session-v1"
+new_sqlite_classes = ["BrowserSession"]
+
 # KV namespace for caching (auto-provisioned on first deploy)
 [[kv_namespaces]]
 binding = "CACHE"

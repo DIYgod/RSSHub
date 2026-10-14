@@ -1,9 +1,17 @@
 type Value = number | string | boolean | Value[] | Record<string, never>;
 
-const toPrimitive = (v: Value): number | string | boolean => (Array.isArray(v) ? v.join(',') : typeof v === 'object' ? '[object Object]' : v);
+const isEmptyObject = (v: number | string | boolean | Record<string, never>): v is Record<string, never> => typeof v === 'object';
+
+const isString = (v: number | string | boolean): v is string => typeof v === 'string';
+
+const toPrimitive = (v: Value): number | string | boolean => (Array.isArray(v) ? v.join(',') : isEmptyObject(v) ? '[object Object]' : v);
 
 // precedence: | < ^ < & < shifts < additive < multiplicative
-const binaryPrecedence: Record<string, number> = { '|': 1, '^': 2, '&': 3, '<<': 4, '>>': 4, '+': 5, '-': 5, '*': 6, '/': 6, '%': 6 };
+const binaryPrecedence = { '|': 1, '^': 2, '&': 3, '<<': 4, '>>': 4, '+': 5, '-': 5, '*': 6, '/': 6, '%': 6 } as const;
+
+type BinaryOperator = keyof typeof binaryPrecedence;
+
+const isBinaryOperator = (op: string): op is BinaryOperator => Object.hasOwn(binaryPrecedence, op);
 
 export const evaluateJsl = (source: string): string => {
     let pos = 0;
@@ -86,21 +94,21 @@ export const evaluateJsl = (source: string): string => {
         return primary();
     };
 
-    const readBinaryOperator = (): string | undefined => {
+    const readBinaryOperator = (): BinaryOperator | undefined => {
         skipSpaces();
         const two = source.slice(pos, pos + 2);
         if (two === '<<' || two === '>>') {
             return two;
         }
         const one = source[pos];
-        return one && binaryPrecedence[one] === undefined ? undefined : one;
+        return one && isBinaryOperator(one) ? one : undefined;
     };
 
     const applyBinary = (op: string, left: Value, right: Value): Value => {
         const a = toPrimitive(left);
         const b = toPrimitive(right);
         if (op === '+') {
-            return typeof a === 'string' || typeof b === 'string' ? `${a}${b}` : Number(a) + Number(b);
+            return isString(a) || isString(b) ? `${a}${b}` : Number(a) + Number(b);
         }
         const x = Number(a);
         const y = Number(b);

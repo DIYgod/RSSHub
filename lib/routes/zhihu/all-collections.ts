@@ -49,7 +49,7 @@ async function handler(ctx) {
         },
     });
 
-    const collections = response.data.data as Collection[];
+    const collections: Collection[] = response.data.data;
 
     const allCollectionItems = await Promise.all(
         collections.map(async (collection) => {

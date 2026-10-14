@@ -38,9 +38,8 @@ async function handler(ctx) {
     const name = ctx.req.param('name');
     const rssUrl = `https://rss.cnki.net/kns/rss.aspx?Journal=${name}&Virtual=knavi`;
 
-    const rssResponse = await got.get(rssUrl);
-
     try {
+        const rssResponse = await got.get(rssUrl);
         const feed = await parser.parseString(rssResponse.data);
 
         if (feed.items && feed.items.length !== 0) {

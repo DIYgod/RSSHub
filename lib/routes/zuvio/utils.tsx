@@ -22,7 +22,7 @@ const renderSections = (sections) => {
     for (const section of sections) {
         switch (section.type) {
             case 'text':
-                output += section.content.replaceAll('\n', '<br>');
+                output += renderTextSection(section);
 
                 break;
 
@@ -67,17 +67,17 @@ const getBoards = () =>
 
 export { apiUrl, getBoards, renderDesc, renderSections, rootUrl, token };
 
-const renderRefArticle = (ref_article): string =>
+const renderRefArticle = (refArticle): string =>
     renderToString(
         <>
             引用自：
-            <a href={ref_article.id}>
-                <img src={ref_article.user_icon} />
+            <a href={`${rootUrl}/article/${refArticle.id}`}>
+                <img src={refArticle.user_icon} />
                 <div>
-                    {ref_article.university} {ref_article.user_name} {ref_article.board_name}
+                    {refArticle.university} {refArticle.user_name} {refArticle.board_name}
                 </div>
-                <div>{ref_article.title}</div>
-                <div>{ref_article.abstract}</div>
+                <div>{refArticle.title}</div>
+                <div>{refArticle.abstract}</div>
             </a>
             <hr />
         </>
@@ -91,10 +91,12 @@ const renderImageSection = (section): string =>
         </>
     );
 
+const renderTextSection = (section): string => renderToString(<>{section.content}</>).replaceAll('\n', '<br>');
+
 const renderYouTubeSection = (section): string =>
     renderToString(
         <>
-            <iframe width="672" height="377" src={`https://www.youtube-nocookie.com/embed/${section.youtube_id}`} frameborder="0" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>
+            <iframe width="672" height="377" src={`https://www.youtube-nocookie.com/embed/${section.youtube_id}`} frameborder="0" allowfullscreen></iframe>
             <br />
         </>
     );

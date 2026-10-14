@@ -22,7 +22,7 @@ export const route: Route = {
     path: '/info/:type',
     categories: ['university'],
     example: '/tsinghua/info/zhongyao',
-    parameters: { type: '默认为重要公告' },
+    parameters: { type: '分类，必填，见下表，例如 `zhongyao`（重要公告）' },
     name: '校内信息发布平台',
     maintainers: ['prnake'],
     handler,
@@ -35,8 +35,19 @@ export const route: Route = {
 :::`,
 };
 
-function getLink(href: string | undefined, alterUrl: string) {
-    return href === undefined ? alterUrl : new URL(href, newsUrl).href;
+function getLink(href: string | undefined) {
+    return href?.trim() ? new URL(href, newsUrl).href : undefined;
+}
+
+function parseReportedDate(value: string): Date | undefined {
+    const parts = value.match(/(\d{4})\D+(\d{1,2})\D+(\d{1,2})(?:\D+(\d{1,2})\D+(\d{1,2})(?:\D+(\d{1,2}))?)?/);
+    if (!parts) {
+        return undefined;
+    }
+    const [, year, month, day, hour = '0', minute = '0', second = '0'] = parts;
+    const date = parseDate(`${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')} ${hour.padStart(2, '0')}:${minute.padStart(2, '0')}:${second.padStart(2, '0')}`, 'YYYY-MM-DD HH:mm:ss', true);
+
+    return Number.isNaN(date.getTime()) ? undefined : timezone(date, 8);
 }
 
 async function handler(ctx: Context) {
@@ -57,37 +68,23 @@ async function handler(ctx: Context) {
                   .slice(0, 10)
                   .toArray()
                   .map((elem) => ({
-                      link: getLink($('td>a', elem).attr('href'), link),
+                      link: getLink($('td>a', elem).attr('href')),
                       title: $('td>a', elem).text() || $('td', elem).text(),
-                      pubDate: timezone(
-                          parseDate(
-                              $('td>font>span', elem)
-                                  .text()
-                                  .replace(/(\d+)\D(\d+)\D(\d+)\D(\d+)/, '2020-$1-$2T$3:$4')
-                          ),
-                          8
-                      ),
+                      pubDate: parseReportedDate($('td>font>span', elem).text()),
                   }))
             : $('.cont_list>li')
                   .slice(0, 10)
                   .toArray()
                   .map((elem) => ({
-                      link: getLink($('a', elem).attr('href'), link),
+                      link: getLink($('a', elem).attr('href')),
                       title: $('a', elem).text(),
-                      pubDate: timezone(
-                          parseDate(
-                              $('time', elem)
-                                  .text()
-                                  .replace(/(\d+)\D(\d+)\D(\d+)/, '$1-$2-$3')
-                          ),
-                          8
-                      ),
+                      pubDate: parseReportedDate($('time', elem).text()),
                   }));
 
     return {
         title: `清华大学 - ${title}`,
         link,
         description: `清华大学内网信息发布平台 - ${title}`,
-        item: items,
+        item: items.filter((item) => item.link),
     };
 }

@@ -1,5 +1,7 @@
 import { load } from 'cheerio';
+import { escapeAttribute } from 'entities';
 import type { Context } from 'hono';
+import pMap from 'p-map';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
@@ -9,7 +11,7 @@ import { parseDate } from '@/utils/parse-date';
 export const route: Route = {
     path: '/explore/:category?/:title?',
     categories: ['study'],
-    example: '/mubu/explore/16/读书笔记',
+    example: '/mubu/explore/2/读书笔记',
     parameters: { category: '分类 id', title: '显示标题' },
     name: '精选社区',
     maintainers: ['laampui', 'nczitzk'],
@@ -19,6 +21,13 @@ export const route: Route = {
 const rootUrl = 'https://mubu.com';
 const apiUrl = 'https://api2.mubu.com';
 
+interface ExploreDoc {
+    exploreDocId: string;
+    title: string;
+    userInfo: { userName: string };
+    submitTime: number;
+}
+
 const renderNodes = (nodes) =>
     `<ul>${nodes
         .map((node) => {
@@ -27,7 +36,12 @@ const renderNodes = (nodes) =>
                 ele = renderNodes(node.children);
             }
             if (Array.isArray(node.images)) {
-                ele += node.images.map((pic) => `<div style="text-align: center;"><img src="${apiUrl}/v3/${pic.url}" style="max-width: 100%;object-fit: contain;" /></div>`).join('');
+                ele += node.images
+                    .map((pic) => {
+                        const imageUrl = pic.uri || pic.url;
+                        return imageUrl ? `<div style="text-align: center;"><img src="${escapeAttribute(new URL(imageUrl, `${apiUrl}/v3/`).href)}" style="max-width: 100%;object-fit: contain;" /></div>` : '';
+                    })
+                    .join('');
             }
 
             return `<li>${node.text}${ele}</li>`;
@@ -37,21 +51,22 @@ const renderNodes = (nodes) =>
 async function handler(ctx: Context) {
     const { category = '0', title = '' } = ctx.req.param();
 
-    const response = await ofetch(`${apiUrl}/v3/api/explore/get_explore_doc_list`, {
+    const response = await ofetch<{ data: { rows: ExploreDoc[] } }>(`${apiUrl}/v3/api/explore/get_explore_doc_list`, {
         method: 'POST',
         body: {
-            categoryId: '3',
+            categoryId: category,
             pageSize: '20',
             start: '',
             type: category === '0' ? 0 : 1,
         },
     });
 
-    const items = await Promise.all(
-        response.data.rows.slice(0, 20).map((item) => {
+    const items = await pMap(
+        response.data.rows.slice(0, 20),
+        async (item) => {
             const link = `${rootUrl}/explore/${item.exploreDocId}`;
 
-            return cache.tryGet(link, async () => {
+            const details = await cache.tryGet(`mubu:definition:${link}`, async () => {
                 const detailResponse = await ofetch(`${apiUrl}/v3/api/explore/get`, {
                     method: 'POST',
                     body: {
@@ -66,13 +81,15 @@ async function handler(ctx: Context) {
 
                 return {
                     title: item.title,
-                    author: item.userName,
+                    author: item.userInfo.userName,
                     pubDate: parseDate(item.submitTime),
                     link,
                     description: $('body').html(),
                 };
             });
-        })
+            return { ...details, title: item.title, author: item.userInfo.userName, pubDate: parseDate(item.submitTime), link };
+        },
+        { concurrency: 3 }
     );
 
     return {

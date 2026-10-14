@@ -47,6 +47,8 @@ async function handler(ctx) {
     const type = ctx.req.param('type') ?? 'recommend';
     const time = ctx.req.param('time') ?? '5';
     const sort = ctx.req.param('sort') ?? '1';
+    const requestedLimit = Number(ctx.req.query('limit'));
+    const limit = Number.isFinite(requestedLimit) && requestedLimit >= 1 ? Math.floor(requestedLimit) : 50;
 
     const rootUrl = 'http://blog.sciencenet.cn';
     const currentUrl = `${rootUrl}/blog.php?mod=${type}&type=list&op=${time}&ord=${sort}`;
@@ -60,7 +62,7 @@ async function handler(ctx) {
     const $ = load(iconv.decode(response.data, 'gbk'));
 
     let items = $('tr td a[title]')
-        .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 50)
+        .slice(0, limit)
         .toArray()
         .map((item): DataItem => {
             const $item = $(item);
@@ -75,8 +77,9 @@ async function handler(ctx) {
     // Bound simultaneous downloads and decoding of potentially large GBK pages.
     items = await pMap(
         items,
-        (item) =>
-            cache.tryGet(item.link!, async () => {
+        async (item) => ({
+            ...item,
+            ...(await cache.tryGet(`sciencenet:article:v2:${item.link}`, async () => {
                 const detailResponse = await got({
                     method: 'get',
                     url: item.link,
@@ -85,12 +88,9 @@ async function handler(ctx) {
 
                 const content = load(iconv.decode(detailResponse.data, 'gbk'));
 
-                item.author = content('.xs2').text();
-                item.description = content('#blog_article').html();
-                item.pubDate = timezone(parseDate(content('.xg1').eq(5).text()), 8);
-
-                return item;
-            }),
+                return { author: content('.xs2').text(), description: content('#blog_article').html(), pubDate: timezone(parseDate(content('.xg1').eq(5).text()), 8) };
+            })),
+        }),
         { concurrency: 3 }
     );
 

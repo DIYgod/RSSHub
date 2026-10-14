@@ -8,13 +8,28 @@ import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 import timezone from '@/utils/timezone';
 
 import { renderDescription } from './templates/description';
 
+const parseListDate = (value: string, link?: string) => {
+    let date = value;
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(date)) {
+        const monthDay = date.match(/^(\d{2})-\d{2}$/);
+        const articleDate = link?.match(/\/news\/html\/(\d{4})-(\d{1,2})\//);
+        if (!monthDay || !articleDate || Number(monthDay[1]) !== Number(articleDate[2])) {
+            return;
+        }
+        date = `${articleDate[1]}-${date}`;
+    }
+    const pubDate = timezone(parseDate(date, 'YYYY-MM-DD', true), 8);
+    return Number.isNaN(pubDate.getTime()) ? undefined : pubDate;
+};
+
 export const handler = async (ctx: Context): Promise<Data> => {
     const { category = 'new' } = ctx.req.param();
-    const limit = Number(ctx.req.query('limit') ?? '30');
+    const limit = getRouteLimit(ctx, 30);
 
     const rootUrl = 'https://www.ali213.net';
     const targetUrl: string = new URL(`news/${category.endsWith('/') ? category : `${category}/`}`, rootUrl).href;
@@ -57,7 +72,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
             return {
                 title,
                 description,
-                pubDate: parseDate($item.find('div.lone_f_r_f span').first().text()),
+                pubDate: parseListDate($item.find('div.lone_f_r_f span').first().text(), link),
                 link,
                 author,
                 content: {
@@ -83,7 +98,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                         const $$: CheerioAPI = load(detailResponse);
 
                         const title: string = $$('h1.newstit').text();
-                        const image: string | undefined = $$('div#Content img').first().prop('src');
+                        const image: string | undefined = $$('div#Content img').prop('src');
 
                         const mediaContent: Cheerio<Element> = $$('div#Content p span img');
                         const media: Record<string, Record<string, string>> = {};
@@ -132,14 +147,18 @@ export const handler = async (ctx: Context): Promise<Data> => {
                             })
                             .filter((_): _ is { url: string; type: string; content_html: string } => true);
 
+                        const pubTime = $$('div.newstag_l')
+                            .text()
+                            .match(/\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}/)?.[0];
+
                         return {
                             ...item,
                             title,
                             description,
-                            pubDate: timezone(parseDate($$('div.newstag_l').text().split(/\s/, 1)[0]), 8),
+                            pubDate: pubTime ? timezone(parseDate(pubTime, 'YYYY-MM-DD HH:mm:ss'), 8) : undefined,
                             content: {
                                 html: description,
-                                text: $$('div#Content').html() ?? '',
+                                text: $$('div#Content').html(),
                             },
                             image,
                             banner: image,
@@ -212,11 +231,7 @@ export const route: Route = {
     radar: [
         {
             source: ['www.ali213.net/news/:category'],
-            target: (params) => {
-                const category = params.category;
-
-                return `/news/${category ? `/${category}` : ''}`;
-            },
+            target: '/news/:category?',
         },
         {
             title: '最新资讯',

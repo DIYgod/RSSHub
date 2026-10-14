@@ -3,6 +3,7 @@ import { load } from 'cheerio';
 import type { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/yjs',
@@ -43,10 +44,11 @@ async function handler() {
             list.toArray().map((item) => {
                 const $item = $(item);
                 const a = $item.find('a');
+                const pubDate = parseDate($item.find('span').text().trim(), 'YYYY-MM-DD', true);
                 return {
                     title: a.text(),
                     link: new URL(a.attr('href')!, link).href,
-                    pubDate: parseDate($item.find('span').text(), 'YYYY-MM-DD'),
+                    pubDate: Number.isFinite(pubDate.getTime()) ? timezone(pubDate, 8) : undefined,
                 };
             }),
     };

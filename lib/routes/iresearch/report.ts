@@ -1,10 +1,14 @@
+import { load } from 'cheerio';
 import type { Context } from 'hono';
+import pMap from 'p-map';
 
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Data, DataItem, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 import timezone from '@/utils/timezone';
 
 import { renderDescription } from './templates/description';
@@ -204,17 +208,21 @@ interface ReportItem extends DataItem {
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { type: paramType = defaultType, id: paramId = '' } = ctx.req.param();
-    const limit = Number(ctx.req.query('limit') ?? '50');
+    const limit = getRouteLimit(ctx, 50);
 
-    const typeObj = types?.[paramType] ?? Object.values(types).find((obj) => obj.label === paramType || obj.value === paramType);
+    const typeObj = Object.hasOwn(types, paramType) ? types[paramType] : Object.values(types).find((obj) => obj.label === paramType);
     if (!typeObj) {
-        throw new Error(`Invalid type: ${paramType}. Please refer to [the documentation](https://docs.rsshub.app/routes/other#${siteTitle}) for valid types.`);
+        throw new InvalidParameterError('type must be 1, 2, 3, 4, or a documented category name.');
     }
 
     const idObj = idOptions.find((option) => option.label === paramId || option.value === paramId);
 
+    if (!idObj && !/^\d+$/.test(paramId)) {
+        throw new InvalidParameterError('id must be a numeric industry ID or a documented industry name.');
+    }
+
     const type: number = typeObj.value;
-    const id: string | undefined = idObj?.value;
+    const id = idObj?.value ?? paramId;
 
     const baseUrl = 'https://www.iresearch.com.cn';
     const imageBaseUrl = 'https://pic.iresearch.cn';
@@ -259,24 +267,22 @@ export const handler = async (ctx: Context): Promise<Data> => {
         const authors: DataItem['author'] = item.Author;
         const guid: string = item.Id ? `iresearch-${item.Id}` : item.id ? `iresearch-ireport.${item.id}` : '';
         const image: string | undefined = images?.[0] ?? undefined;
-        const updated: number | string = pubDate;
 
         let processedItem: ReportItem = {
             title,
             description,
             pubDate: pubDate ? timezone(parseDate(pubDate), 8) : undefined,
-            link: item.id ? new URL(`report/detail?id=${item.id}`, baseUrl).href : (linkUrl ?? (item.Id ? new URL(`chart/detail?id=${item.id}`, baseUrl).href : undefined)),
+            link: item.id ? new URL(`report/detail?id=${item.id}`, baseUrl).href : (linkUrl ?? (item.Id ? new URL(`chart/detail?id=${item.Id}`, baseUrl).href : undefined)),
             category: categories,
             author: authors,
             guid,
             id: guid,
             content: {
                 html: description,
-                text: description,
+                text: description ? load(description).text() : undefined,
             },
             image,
             banner: image,
-            updated: updated ? timezone(parseDate(updated), 8) : undefined,
             detailId: item.id ?? (linkUrl ? item.NewsId : item.Id),
         };
 
@@ -315,8 +321,9 @@ export const handler = async (ctx: Context): Promise<Data> => {
         return processedItem;
     });
 
-    items = await Promise.all(
-        items.map((item) => {
+    items = await pMap(
+        items,
+        (item) => {
             if (!item.link || (item.guid ? /chart\.\d+$/.test(item.guid) : false)) {
                 delete item.detailId;
                 return item;
@@ -359,20 +366,18 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 const pubDate: number | string = data.Uptime;
                 const categories: string[] = [...new Set([...(item.category ?? []), data.industry, ...(data.Keyword ?? []), ...(data.keywords?.split(/,/) ?? [])])].filter(Boolean);
                 const image: string | undefined = images?.[0] ?? undefined;
-                const updated: number | string = pubDate;
 
                 let processedItem: DataItem = {
                     title,
                     description,
-                    pubDate: pubDate ? timezone(parseDate(pubDate), 8) : undefined,
+                    pubDate: pubDate ? timezone(parseDate(pubDate), 8) : item.pubDate,
                     category: categories,
                     content: {
                         html: description,
-                        text: description,
+                        text: description ? load(description).text() : undefined,
                     },
                     image,
                     banner: image,
-                    updated: updated ? timezone(parseDate(updated), 8) : undefined,
                 };
 
                 const medias: Record<string, Record<string, string>> = (() => {
@@ -414,7 +419,8 @@ export const handler = async (ctx: Context): Promise<Data> => {
                     ...processedItem,
                 };
             });
-        })
+        },
+        { concurrency: 3 }
     );
 
     return {
@@ -422,7 +428,6 @@ export const handler = async (ctx: Context): Promise<Data> => {
         description: siteTitle,
         link: targetUrl,
         item: items,
-        allowEmpty: true,
         author: siteTitle,
         id: targetUrl,
     };
@@ -507,53 +512,27 @@ export const route: Route = {
     radar: [
         {
             source: ['www.iresearch.com.cn/report.shtml'],
-            target: (_, url) => {
-                const urlObj: URL = new URL(url);
-                const type: string | undefined = urlObj.searchParams.get('type') ?? undefined;
-                const id: string | undefined = urlObj.searchParams.get('classId') ?? urlObj.searchParams.get('channelId') ?? urlObj.searchParams.get('cid') ?? undefined;
-
-                return `/iresearch/report${type ? `/${type}${id ? `/${id}` : ''}` : ''}`;
-            },
+            target: '/report',
         },
         {
             title: '最新报告',
             source: ['www.iresearch.com.cn/report.shtml'],
-            target: (_, url) => {
-                const urlObj: URL = new URL(url);
-                const id: string | undefined = urlObj.searchParams.get('classId') ?? urlObj.searchParams.get('channelId') ?? urlObj.searchParams.get('cid') ?? undefined;
-
-                return `/iresearch/report/1${id ? `/${id}` : ''}`;
-            },
+            target: '/report/1',
         },
         {
             title: '研究图表',
             source: ['www.iresearch.com.cn/report.shtml'],
-            target: (_, url) => {
-                const urlObj: URL = new URL(url);
-                const id: string | undefined = urlObj.searchParams.get('classId') ?? urlObj.searchParams.get('channelId') ?? urlObj.searchParams.get('cid') ?? undefined;
-
-                return `/iresearch/report/4${id ? `/${id}` : ''}`;
-            },
+            target: '/report/4',
         },
         {
             title: '周度市场观察',
             source: ['www.iresearch.com.cn/report.shtml'],
-            target: (_, url) => {
-                const urlObj: URL = new URL(url);
-                const id: string | undefined = urlObj.searchParams.get('classId') ?? urlObj.searchParams.get('channelId') ?? urlObj.searchParams.get('cid') ?? undefined;
-
-                return `/iresearch/report/3${id ? `/${id}` : ''}`;
-            },
+            target: '/report/3',
         },
         {
             title: '热门报告',
             source: ['www.iresearch.com.cn/report.shtml'],
-            target: (_, url) => {
-                const urlObj: URL = new URL(url);
-                const id: string | undefined = urlObj.searchParams.get('classId') ?? urlObj.searchParams.get('channelId') ?? urlObj.searchParams.get('cid') ?? undefined;
-
-                return `/iresearch/report/2${id ? `/${id}` : ''}`;
-            },
+            target: '/report/2',
         },
         {
             title: '周度市场观察 - 家电行业',

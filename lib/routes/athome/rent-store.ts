@@ -7,6 +7,7 @@ import cache from '@/utils/cache';
 import logger from '@/utils/logger';
 import { parseDate } from '@/utils/parse-date';
 import { getPlaywrightPage } from '@/utils/playwright';
+import { getRouteLimit } from '@/utils/route-limit';
 import timezone from '@/utils/timezone';
 
 const HOST = 'https://www.athome.co.jp';
@@ -24,16 +25,14 @@ const NAV_TIMEOUT = 12000;
  * Ceiling for the list page as a whole, measured from the start of the request so that a slow
  * navigation eats into the wait rather than adding to it. `#serverApp-state` sits about 62% of the
  * way into a 2.4MB document, so a throttled client needs to receive ~1.5MB before it can appear —
- * hence a window this wide. Being blocked is detected separately and fails in about a second, so
- * the width costs a refused client nothing.
+ * hence a window this wide. The same deadline also bounds the interstitial's authentication.
  */
 const LIST_DEADLINE_MS = 26000;
 /**
- * Only the document is needed. Blocking the page's images, fonts, stylesheets and media leaves the
- * whole connection to the one response that matters, which is what a bandwidth-starved client is
- * short of. Scripts are deliberately **not** blocked: the interstitial clears itself with one.
+ * The SSR document carries the listing data. Scripts and API requests are also allowed so the
+ * authentication interstitial can finish; unrelated resources do not need to be downloaded.
  */
-const SKIP_RESOURCES = new Set(['image', 'media', 'font', 'stylesheet']);
+const ALLOWED_RESOURCES = new Set(['document', 'script', 'xhr', 'fetch']);
 /** A detail document is a fraction of the list page's size, so it needs nothing like the same window. */
 const DETAIL_STATE_TIMEOUT = 10000;
 const DEFAULT_LIMIT = 10;
@@ -91,20 +90,31 @@ interface Bukken {
  * The state keeps the whole HTTP response the SSR pass made (`G.text.…` keys), so the payload is three
  * layers down: the response envelope, its `body` — held as text, not an object — and that payload's `data`.
  */
-const payloadOf = (html: string, keyPart: string): Record<string, unknown> | null => {
+interface Payload {
+    bukkenData?: { bukkenList?: Bukken[] };
+    propertyData?: PropertyData;
+}
+
+interface ResponseEnvelope {
+    body: string;
+}
+
+interface ResponseBody {
+    data?: Payload;
+}
+
+const payloadOf = (html: string, keyPart: string): Payload | null => {
     const raw = load(html)('#serverApp-state').text();
     if (!raw) {
         throw new Error('athome: #serverApp-state is missing from the settled page');
     }
-    const state: Record<string, unknown> = JSON.parse(raw);
+    const state: Record<string, ResponseEnvelope> = JSON.parse(raw);
     const key = Object.keys(state).find((k) => k.includes(keyPart));
     if (key === undefined) {
         return null;
     }
-    const envelope = state[key] as { body?: unknown } | null;
-    const body = envelope?.body ?? envelope;
-    const parsed = typeof body === 'string' ? JSON.parse(body) : body;
-    return ((parsed as { data?: unknown } | null)?.data ?? parsed) as Record<string, unknown> | null;
+    const body: ResponseBody = JSON.parse(state[key].body);
+    return body.data ?? null;
 };
 
 const listOf = (html: string): Bukken[] => {
@@ -112,7 +122,7 @@ const listOf = (html: string): Bukken[] => {
     if (payload === null) {
         throw new Error('athome: the SSR state holds no listing response; the internal API may have been renamed');
     }
-    const list = (payload as { bukkenData?: { bukkenList?: Bukken[] } }).bukkenData?.bukkenList;
+    const list = payload.bukkenData?.bukkenList;
     return Array.isArray(list) ? list : [];
 };
 
@@ -144,7 +154,7 @@ const names = (list: Array<{ flagName?: string; name?: string } | null> | undefi
 
 /** 情報公開日, the coordinates and the fee/feature detail exist only on the detail page's own SSR payload. */
 const detailOf = (html: string): Detail => {
-    const p = ((payloadOf(html, DETAIL_KEY) as { propertyData?: PropertyData } | null)?.propertyData ?? {}) as PropertyData;
+    const p: PropertyData = payloadOf(html, DETAIL_KEY)?.propertyData ?? {};
     return {
         listed_at: value(p.kokaiDate),
         next_update: value(p.kokaiKoshinDate),
@@ -171,7 +181,7 @@ const occupiedFloor = (kaidateKai: string | undefined): string | null => {
     return clean(parts.length > 1 ? parts.at(-1) : parts[0]);
 };
 
-const toItem = (b: Bukken, d: Detail | null): DataItem | null => {
+const toItem = (b: Bukken, d: Detail | null): (DataItem & { _extra: ListingExtra }) | null => {
     const id = b.id === undefined ? null : String(b.id);
     const title = clean(b.title) ?? clean(b.tatemonoNm);
     if (id === null || title === null) {
@@ -269,7 +279,7 @@ export const handler = async (ctx): Promise<Data> => {
             throw new Error(`Invalid ${name} "${v}", expected a lowercase site slug such as tokyo / shinjuku-city / yokohama_naka-city`);
         }
     }
-    const limit = Math.min(ctx.req.query('limit') ? Number(ctx.req.query('limit')) : DEFAULT_LIMIT, PAGE_SIZE);
+    const limit = Math.min(getRouteLimit(ctx, DEFAULT_LIMIT), PAGE_SIZE);
     // 所在地 (to the 丁目), 階, 面積, 賃料 and the ward all come from the list page. The detail visit only
     // adds 情報公開日, the coordinates and the fee detail, so a consumer that needs none of those can
     // skip it and make this an ordinary fast route.
@@ -284,28 +294,17 @@ export const handler = async (ctx): Promise<Data> => {
     const { page, destroy } = await getPlaywrightPage(listUrl, {
         gotoConfig: { waitUntil: 'commit', timeout: NAV_TIMEOUT },
         onBeforeLoad: async (p) => {
-            await p.route('**/*', (r) => (SKIP_RESOURCES.has(r.request().resourceType()) ? r.abort() : r.continue()));
+            await p.route('**/*', (r) => (ALLOWED_RESOURCES.has(r.request().resourceType()) ? r.continue() : r.abort()));
         },
     });
-    const items: DataItem[] = [];
+    const items: Array<DataItem & { _extra: ListingExtra }> = [];
     try {
         let bukken: Bukken[];
         try {
-            // One predicate for both outcomes, so a refused client is reported the moment its title
-            // says 認証中 rather than after the full wait: the interstitial arrives immediately, the
-            // payload does not, and waiting the same time for each would punish only the slow one.
+            // The authentication interstitial can resolve through its own scripts and reload.
+            // Wait for settled SSR data instead of treating its initial title as a refusal.
             const stateTimeout = Math.max(3000, LIST_DEADLINE_MS - (Date.now() - startedAt));
-            let outcome: 'ready' | 'blocked' | 'slow';
-            try {
-                const handle = await page.waitForFunction(() => (document.querySelector('#serverApp-state') ? 'ready' : document.title.includes('認証中') ? 'blocked' : false), { timeout: stateTimeout });
-                outcome = (await handle.jsonValue()) as 'ready' | 'blocked';
-            } catch {
-                // A reload mid-check destroys the execution context; the content check below decides.
-                outcome = 'slow';
-            }
-            if (outcome !== 'ready') {
-                throw new Error(outcome === 'blocked' ? 'interstitial' : `no #serverApp-state within ${stateTimeout}ms`);
-            }
+            await page.waitForSelector('#serverApp-state', { state: 'attached', timeout: stateTimeout });
             bukken = listOf(await page.content()).slice(0, limit);
         } catch (error) {
             // Only the list page is fatal: an empty feed is indistinguishable from "no new listings".
@@ -313,7 +312,7 @@ export const handler = async (ctx): Promise<Data> => {
             let blocked = String(error).includes('interstitial');
             if (!blocked) {
                 try {
-                    blocked = (await page.content()).includes('認証中');
+                    blocked = (await page.title()).includes('認証中');
                 } catch {
                     // The page may already be gone; the message below still names the failure.
                 }
@@ -321,8 +320,8 @@ export const handler = async (ctx): Promise<Data> => {
             logger.warn(`athome: ${listUrl} failed after ${Date.now() - startedAt}ms (blocked=${blocked}): ${String(error)}`);
             throw new Error(
                 blocked
-                    ? 'athome: the site is serving the 認証中 interstitial instead of the listing page — this client has been rate-limited; poll less often rather than retrying'
-                    : `athome: the listing page did not produce #serverApp-state within ${LIST_DEADLINE_MS}ms (no interstitial was shown, so the page was served too slowly rather than refused)`,
+                    ? `athome: the site's authentication page did not resolve within ${LIST_DEADLINE_MS}ms; check source availability and reduce polling frequency`
+                    : `athome: the listing page did not produce #serverApp-state within ${LIST_DEADLINE_MS}ms; loading did not finish or the official page structure changed`,
                 { cause: error }
             );
         }
@@ -370,7 +369,7 @@ export const handler = async (ctx): Promise<Data> => {
 
     // The site's default order is not chronological, so the feed is sorted by 情報公開日 itself, newest
     // first. With `detail=0` nothing carries a date and the site's own order is kept.
-    items.sort((a, b) => ((b._extra as ListingExtra).listed_at ?? '').localeCompare((a._extra as ListingExtra).listed_at ?? ''));
+    items.sort((a, b) => (b._extra.listed_at ?? '').localeCompare(a._extra.listed_at ?? ''));
 
     return {
         title: `アットホーム 貸店舗 (${city})`,
@@ -399,7 +398,7 @@ export const route: Route = {
 
 This route needs a browser, and the browser is not a convenience. The page is Angular Universal SSR behind a JavaScript interstitial, and only the settled page carries the \`#serverApp-state\` payload the route reads. A plain HTTP client is served normally for about four requests and then gets the 「認証中」 interstitial on everything afterwards, and pacing the requests 3s apart does not lift it. A browser gets a far larger allowance — dozens of navigations — but **is not exempt**: push hard enough and it is refused too, so this is a matter of cadence rather than of using the right client. The interstitial reloads itself, which stops a \`domcontentloaded\` navigation from ever settling, so the page is opened with \`commit\` and every wait is bounded here, against a deadline measured from the start of the request rather than from the navigation.
 
-Being refused and being served slowly are told apart rather than guessed at: one check watches for \`#serverApp-state\` and for the 認証中 title at the same time, so a refused client is reported in about a second while a slow one keeps the full window. That window is wide (26s for the list page) because \`#serverApp-state\` sits roughly 62% of the way into a 2.4MB document — a throttled client has to receive about 1.5MB before it can appear — and the width costs a refused client nothing. For the same reason the page's images, fonts, stylesheets and media are not fetched at all, leaving the connection to the one response that matters; scripts are left alone, since the interstitial needs one to clear itself. **Being blocked is a volume problem, not a retry problem** — poll less often rather than retrying, and keep the cache warm. The route waits for \`#serverApp-state\` on the **list** page and **throws if it never appears**, so an unsettled page surfaces as an error rather than as a silently empty feed.
+The 「認証中」 page can be a normal temporary authentication step: its scripts resolve it and reload to the listing page. The route therefore waits for attached \`#serverApp-state\` within the existing 26s list-page deadline, and only checks for a remaining authentication page after that wait fails. A temporary title alone does not prove that the client was refused. The deadline is measured from the start of the request because the SSR state sits well into a large document. Images, fonts, stylesheets and media are not fetched; scripts remain available for the authentication step. Keep polling infrequent and the cache warm rather than retrying blocked requests. An unsettled page surfaces as an error rather than a silently empty feed.
 
 情報公開日，the coordinates and the fee detail exist only on each listing's own page, so the route visits them — reusing one browser tab rather than opening a browser per listing, and caching per listing so a repeated poll only pays for listings it has not seen before.
 

@@ -1,6 +1,7 @@
 import { renderToString } from 'hono/jsx/dom/server';
+import pMap from 'p-map';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -110,13 +111,14 @@ async function handler(ctx) {
         url: apiUrl,
     });
 
-    let items = response.data.data.map((item) => ({
-        title: item.prjid,
+    let items: Array<DataItem & { title: string; link: string }> = response.data.data.map((item) => ({
+        title: String(item.prjid),
         link: `${rootUrl}/api/ras/projectrends/details?id=${item.prjid}`,
     }));
 
-    items = await Promise.all(
-        items.map((item) =>
+    items = await pMap(
+        items,
+        (item) =>
             cache.tryGet(item.link, async () => {
                 const detailResponse = await got({
                     method: 'get',
@@ -131,11 +133,11 @@ async function handler(ctx) {
 
                 item.description = renderDescription(data, current);
 
-                item.pubDate = timezone(parseDate(current.startTime, 'YYYY-MM-DD HH:mm:ss'), 8);
+                item.pubDate = current.startTime ? timezone(parseDate(current.startTime, 'YYYY-MM-DD HH:mm:ss'), 8) : undefined;
 
                 return item;
-            })
-        )
+            }),
+        { concurrency: 3 }
     );
 
     return {

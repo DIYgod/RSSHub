@@ -27,7 +27,7 @@ const getPosts = async (searchParams) => {
     });
 };
 const getTags = async (slug) => {
-    const data = await ofetch(`${ENDPOINT}/tags?slug=${slug}`);
+    const data = await ofetch(`${ENDPOINT}/tags`, { query: { slug } });
     if (data.length === 0) {
         throw new Error(`Invalid tag slug: ${slug}`);
     }

@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
@@ -38,21 +39,26 @@ async function handler(ctx) {
             };
         });
 
-    const item = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link!, async () => {
-                if (new URL(item.link!).pathname.startsWith('/content.jsp')) {
-                    return item;
-                }
+    const item = await pMap(
+        list,
+        async (item) => {
+            if (new URL(item.link!).pathname.startsWith('/content.jsp')) {
+                return item;
+            }
+            const detail = await cache.tryGet(`xjtu:international:content:v2:${item.link}`, async () => {
                 const resp = await got(item.link);
 
                 const $Des = load(resp.data);
                 const description = $Des('div.ctnCont').html();
+                if (!description?.trim()) {
+                    throw new Error(`Unable to find article content at ${item.link}`);
+                }
 
-                item.description = description;
-                return item;
-            })
-        )
+                return { description };
+            });
+            return { ...item, ...detail };
+        },
+        { concurrency: 3, stopOnError: false }
     );
 
     return {

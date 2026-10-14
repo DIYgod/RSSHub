@@ -15,12 +15,22 @@ const renderDescription = (data): string =>
         </>
     );
 
-export const parseItems = (e) => ({
-    title: e.find('a > img').attr('alt')!,
-    link: e.find('a').attr('href')!,
-    description: renderDescription({
-        poster: e.find('a > img').data('src'),
-        previewVideo: e.find('a > span').data('trailer'),
-    }),
-    pubDate: parseRelativeDate(e.find('.video-addtime').text()),
-});
+export const parseItems = (e, baseUrl: string) => {
+    const thumbnail = e.find('.video-card__thumbnail');
+    const date = e
+        .find('.video-card__meta')
+        .text()
+        .match(/\d+\s+(?:seconds?|minutes?|hours?|days?|weeks?|months?|years?) ago/i)?.[0];
+    const poster = thumbnail.find('img').attr('data-front-lazy-src') || thumbnail.find('img').attr('src');
+    const previewVideo = thumbnail.attr('data-front-video-preview-src');
+
+    return {
+        title: e.find('.video-card__title').text(),
+        link: new URL(e.find('.video-card__title').attr('href')!, baseUrl).href,
+        description: renderDescription({
+            poster: poster ? new URL(poster, baseUrl).href : undefined,
+            previewVideo: previewVideo ? new URL(previewVideo, baseUrl).href : undefined,
+        }),
+        pubDate: date ? parseRelativeDate(date) : undefined,
+    };
+};

@@ -1,10 +1,13 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import { config } from '@/config';
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
+import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
 export const route: Route = {
     path: '/tab/:tabid',
@@ -39,42 +42,50 @@ async function handler(ctx) {
     });
 
     const $ = load(response.data);
-    const links = $('span.item_title > a')
+    const limit = getRouteLimit(ctx, 10);
+    const list = $('span.item_title > a')
         .toArray()
-        .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 10)
-        .map((link) => `${host}${$(link).attr('href')!.replace(/#.*$/, '')}`);
+        .slice(0, limit)
+        .map((link) => ({
+            title: $(link).text(),
+            link: `${host}${$(link).attr('href')!.replace(/#.*$/, '')}`,
+            category: $(link)
+                .closest('.cell')
+                .find('a.node')
+                .toArray()
+                .map((node) => $(node).text())
+                .filter(Boolean),
+        }));
 
-    const items = await Promise.all(
-        links.map((link) =>
-            cache.tryGet(`v2ex-${link}`, async () => {
+    const items = await pMap(
+        list,
+        async (item) => {
+            const details = await cache.tryGet<Pick<DataItem, 'description' | 'author' | 'pubDate'>>(`v2ex:tab:article-details:v3:${item.link}`, async () => {
                 const response = await got({
                     method: 'get',
-                    url: link,
+                    url: item.link,
                     headers: {
                         'user-agent': config.ua,
                     },
                 });
 
                 const $ = load(response.data);
-                const list = $('[id^="r_"]').toArray();
-                const replyContent = list
-                    .map((item) => {
-                        const post = $(item);
-                        const content = post.find('.reply_content').html();
-                        const author = post.find('.dark').first().text();
-                        const no = post.find('.no').text();
-                        return `<p><div>#${no}: <i>${author}</i></div><div>${content}</div></p>`;
-                    })
-                    .join('');
 
                 return {
-                    title: $('.header h1').text(),
-                    link,
-                    description: `${$('div.topic_content').html()}<div>${replyContent}</div>`,
+                    description: $('div.topic_content').html() ?? undefined,
                     author: $('div.header > small > a').text(),
+                    pubDate: parsePublicationDate($('.header small span[title]').attr('title')),
                 };
-            })
-        )
+            });
+
+            return {
+                ...item,
+                description: details.description,
+                author: details.author,
+                pubDate: details.pubDate,
+            };
+        },
+        { concurrency: 3 }
     );
 
     return {
@@ -83,4 +94,14 @@ async function handler(ctx) {
         description: `V2EX-tab-${tabid}`,
         item: items,
     };
+}
+
+function parsePublicationDate(value?: string) {
+    const match = /^(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}) ([+-]\d{2}:\d{2})$/.exec(value ?? '');
+    if (!match || !Number.isFinite(parseDate(match[1], 'YYYY-MM-DD HH:mm:ss', true).getTime())) {
+        return;
+    }
+
+    const date = parseDate(match[1].replace(' ', 'T') + match[2]);
+    return Number.isFinite(date.getTime()) ? date : undefined;
 }

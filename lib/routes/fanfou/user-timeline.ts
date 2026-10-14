@@ -48,7 +48,7 @@ async function handler(ctx: Context) {
         };
     });
 
-    const authorName = result[0].author;
+    const authorName = result[0]?.author ?? uid;
 
     return {
         title: `${authorName}的饭否`,

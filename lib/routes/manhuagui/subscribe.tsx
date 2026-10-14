@@ -7,7 +7,7 @@ import type { Route } from '@/types';
 import got from '@/utils/got';
 import { parseRelativeDate } from '@/utils/parse-date';
 
-const web_url = 'https://www.manhuagui.com/user/book/shelf/1';
+const webUrl = 'https://www.manhuagui.com/user/book/shelf/1';
 
 export const route: Route = {
     path: '/subscribe',
@@ -50,32 +50,32 @@ async function handler() {
     const cookie = config.manhuagui.cookie;
     const response = await got({
         method: 'get',
-        url: web_url,
+        url: webUrl,
         headers: {
             Cookie: cookie,
         },
     });
     const $ = load(response.data);
-    const user_name = $('.avatar-box').find('h3').text();
-    const title = `${user_name} 的 漫画订阅`;
-    const link = web_url;
-    const description = `${user_name} 的 漫画订阅`;
+    const username = $('.avatar-box').find('h3').text();
+    const title = `${username} 的 漫画订阅`;
+    const link = webUrl;
+    const description = `${username} 的 漫画订阅`;
 
     const item = $('.dy_content_li')
         .toArray()
         .map((item) => {
-            const img_src = $(item).find('img').attr('src'); // 漫画的封面
-            const manga_title = $(item).find('.co_1.c_space').first().text(); // 最新的一话题目
-            const title = $(item).find('img').attr('alt'); // 漫画的名字
-            const link = $(item).find('.co_1.c_space').first().children().attr('href'); // 漫画最新的链接
+            const imageUrl = $(item).find('img').attr('src');
+            const chapterTitle = $(item).find('.co_1.c_space').first().text();
+            const title = $(item).find('img').attr('alt');
+            const link = $(item).find('.co_1.c_space').first().children().attr('href');
             const description = renderToString(
                 <>
-                    <h1>{manga_title}</h1>
-                    <img src={img_src} />
+                    <h1>{chapterTitle}</h1>
+                    <img src={imageUrl} />
                 </>
             );
-            const pubDate = $(item).find('.co_1.c_space').first().next().text();
-            const publishDate = parseRelativeDate(pubDate); // 处理相对时间
+            const pubDate = $(item).find('.co_1.c_space').first().next().text().trim();
+            const publishDate = pubDate ? parseRelativeDate(pubDate) : undefined;
             const single = {
                 title: title!,
                 link,

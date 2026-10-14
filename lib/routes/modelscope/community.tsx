@@ -1,11 +1,13 @@
 import { load } from 'cheerio';
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
+import pMap from 'p-map';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 import timezone from '@/utils/timezone';
 
 export const route: Route = {
@@ -47,13 +49,13 @@ const renderDescription = (thumb, quote, content) =>
     );
 
 async function handler(ctx) {
-    const baseUrl = 'https://community.modelscope.cn';
+    const baseUrl = 'https://modelscope.csdn.net';
 
     const { data } = await got.post(`${baseUrl}/v1/namespace_page/article`, {
-        json: { id: 142373, notInMediaAidList: [], pageNum: 1, pageSize: ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 30 },
+        json: { id: 142373, notInMediaAidList: [], pageNum: 1, pageSize: getRouteLimit(ctx, 30) },
     });
 
-    const articles = data.data.content.map((c) => ({
+    const articles: Array<DataItem & { link: string; thumb?: string }> = data.data.content.map((c) => ({
         title: c.content.name,
         description: c.content.desc,
         author: c.nickname,
@@ -63,23 +65,28 @@ async function handler(ctx) {
         thumb: c.content.thumb,
     }));
 
-    const items = await Promise.all(
-        articles.map((item) =>
-            cache.tryGet(item.link, async () => {
+    const items = await pMap(
+        articles,
+        async ({ thumb, ...item }) => {
+            const body = await cache.tryGet(`${item.link}:article-content`, async () => {
                 const { data } = await got(item.link);
 
                 const $ = load(data);
-                const initialData = JSON.parse(
-                    $('script')
-                        .text()
-                        .match(/window\.__INITIAL_STATE__\s*=\s*(\{.*?\});/)![1]
-                );
+                const initialState = $('script')
+                    .toArray()
+                    .map((element) => $(element).text())
+                    .find((script) => script.includes('window.__INITIAL_STATE__'))
+                    ?.match(/window\.__INITIAL_STATE__\s*=\s*(\{[\s\S]*\});?\s*$/)?.[1];
+                if (!initialState) {
+                    throw new Error(`Article content state was not found at ${item.link}`);
+                }
+                const initialData = JSON.parse(initialState);
 
-                item.description = renderDescription(item.thumb, item.description, initialData.pageData.detail.ext.content);
-
-                return item;
-            })
-        )
+                return { content: initialData.pageData.detail.ext.content };
+            });
+            return { ...item, description: renderDescription(thumb, item.description, body.content) };
+        },
+        { concurrency: 3 }
     );
 
     return {

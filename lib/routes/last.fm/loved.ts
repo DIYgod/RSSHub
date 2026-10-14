@@ -1,4 +1,5 @@
 import type { Context } from 'hono';
+import { html } from 'hono/html';
 
 import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
@@ -46,12 +47,15 @@ async function handler(ctx: Context) {
     return {
         title: `Loved Tracks by ${data.lovedtracks['@attr'].user} - Last.fm`,
         link: `https://www.last.fm/user/${user}/loved`,
-        item: list.map((item) => ({
-            title: `${item.name} - ${item.artist.name}`,
-            author: item.artist.name,
-            description: `<img src="${item.image.at(-1)['#text']}" />`,
-            pubDate: parseDate(item.date.uts * 1000),
-            link: item.url,
-        })),
+        item: list.map((item) => {
+            const image = item.image?.at(-1)?.['#text'];
+            return {
+                title: `${item.name} - ${item.artist.name}`,
+                author: item.artist.name,
+                description: image ? html`<img src="${image}" />`.toString() : undefined,
+                pubDate: item.date?.uts ? parseDate(item.date.uts * 1000) : undefined,
+                link: item.url,
+            };
+        }),
     };
 }

@@ -156,9 +156,10 @@ export const handler = async (ctx): Promise<Data> => {
 
     const cookie = await memberCookie();
     // A guest page and a member page of the same listing are different documents, so they cannot share a key.
-    const item = (await cache.tryGet(`bukenavi:detail:${cookie === null ? 'guest' : 'member'}:${region}:${id}`, async () =>
-        parseDetail(await ofetch(link, { responseType: 'text', headers: cookie === null ? undefined : { Cookie: cookie } }), region, id)
-    )) as DataItem | null;
+    const item = await cache.tryGet(`bukenavi:detail:${cookie === null ? 'guest' : 'member'}:${region}:${id}`, async () => {
+        const html = await ofetch(link, { headers: cookie === null ? undefined : { Cookie: cookie } });
+        return parseDetail(html, region, id);
+    });
     if (item === null) {
         throw new Error(`bukenavi: listing ${id} could not be read; it may have been delisted`);
     }
@@ -198,8 +199,8 @@ It adds what the area route's cards omit: 乗降者数 for the nearest station, 
     categories: ['other'],
     features: {
         requireConfig: [
-            { name: 'BUKENAVI_EMAIL', optional: true, description: 'ぶけなび account e-mail. Optional — without it the route reads the public view.' },
-            { name: 'BUKENAVI_PASSWORD', optional: true, description: 'ぶけなび account password. Optional — without it the route reads the public view.' },
+            { name: 'BUKENAVI_EMAIL', optional: true, description: 'ぶけなび account e-mail. Without it the route reads the public view.' },
+            { name: 'BUKENAVI_PASSWORD', optional: true, description: 'ぶけなび account password. Without it the route reads the public view.' },
         ],
         requirePuppeteer: false,
         antiCrawler: false,

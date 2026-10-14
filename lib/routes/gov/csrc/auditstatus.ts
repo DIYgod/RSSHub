@@ -1,10 +1,8 @@
-import { load } from 'cheerio';
+import { html } from 'hono/html';
 
 import type { Route } from '@/types';
-import got from '@/utils/got';
-import md5 from '@/utils/md5';
+import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/auditstatus/:apply_id',
@@ -24,51 +22,113 @@ export const route: Route = {
     handler,
 };
 
-async function handler(ctx) {
-    const baseUrl = 'https://neris.csrc.gov.cn';
-    const { apply_id } = ctx.req.param();
-    const itemUrl = `${baseUrl}/alappl/home1/onlinealog`;
-    const res = await got(itemUrl, {
-        searchParams: {
-            appMatrCde: apply_id,
-        },
+interface Progress {
+    taskName?: string;
+    fnshDate?: number;
+    fileTypeCde?: string;
+    alFileCde?: string;
+    offsetInfmPubIndc?: string;
+}
+
+interface Application {
+    alAppLtCde: string;
+    appMatrName: string;
+    apptPubName: string;
+    alDecsBookFileno?: string;
+    acptInfmPubIndc?: string;
+    wrtnFdbkInfmPubIndc?: string;
+    alDecsBookPubIndc?: string;
+    abtdRenewInfmPubIndc?: string;
+    cnlInfmPubIndc?: string;
+    aprvSchdPubFlowPOs?: Progress[];
+}
+
+const baseUrl = 'https://neris.csrc.gov.cn';
+const dateFormatter = new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Shanghai', year: 'numeric', month: '2-digit', day: '2-digit' });
+
+function getDate(timestamp?: number) {
+    if (timestamp === undefined || timestamp === null) {
+        return;
+    }
+    const date = parseDate(timestamp);
+    return Number.isNaN(date.getTime()) ? undefined : date;
+}
+
+function getPublicProgress(application: Application) {
+    return (application.aprvSchdPubFlowPOs ?? []).filter((progress) => {
+        const taskName = progress.taskName;
+        if (!taskName) {
+            return false;
+        }
+        if (application.alDecsBookFileno === '0500' || !progress.fileTypeCde) {
+            return true;
+        }
+        switch (progress.fileTypeCde) {
+            case '02':
+                return taskName === '补正通知' || taskName === '接收补正材料';
+            case '04':
+                return taskName.includes('书面反馈') || taskName.includes('接收书面回复');
+            default:
+                return ['03', '05', '06', '07', '08'].includes(progress.fileTypeCde);
+        }
     });
-    const $ = load(res.data);
+}
 
-    const out = $('tr[height="50"]')
-        .toArray()
-        .map((item) => {
-            const $item = $(item);
-            const itemTitle = $item.find('li.templateTip').text();
-            const audit_status_td = $item.find('td[style="font-weight:100 ;color: black ;position: relative;left:20px"]');
-            const audit_status = audit_status_td.eq(-1).text();
-            const title = '【' + audit_status + '】' + itemTitle;
-            const audit_date = audit_status_td.eq(-1).next('td').text();
+function getPublicFileUrl(application: Application, progress: Progress) {
+    if ((progress.fileTypeCde === '02' && progress.taskName !== '补正通知') || (progress.fileTypeCde === '04' && !progress.taskName?.includes('书面反馈'))) {
+        return;
+    }
+    const permission = {
+        '02': progress.offsetInfmPubIndc,
+        '03': application.acptInfmPubIndc,
+        '04': application.wrtnFdbkInfmPubIndc,
+        '05': application.alDecsBookPubIndc,
+        '06': application.abtdRenewInfmPubIndc,
+        '07': application.abtdRenewInfmPubIndc,
+        '08': application.cnlInfmPubIndc,
+    }[progress.fileTypeCde ?? ''];
+    if (application.alDecsBookFileno === '0500' || permission !== '1' || !progress.alFileCde) {
+        return;
+    }
+    const url = new URL('/alappl/home/buZhengList', baseUrl);
+    url.searchParams.set('alFileCde', progress.alFileCde);
+    return url.href;
+}
 
-            let audit_desc = '';
-            if (audit_status_td.length > 1) {
-                for (let i = 0; i < audit_status_td.length; i++) {
-                    audit_desc += audit_status_td.eq(i).next('td').text() + '，' + audit_status_td.eq(i).text() + '；';
-                }
-            } else {
-                audit_desc = audit_date + '，' + audit_status;
-            }
+function renderProgress(application: Application, step: Progress) {
+    const date = getDate(step.fnshDate);
+    const fileUrl = getPublicFileUrl(application, step);
+    return html`<li>${date ? dateFormatter.format(date) : ''} ${fileUrl ? html`<a href="${fileUrl}">${step.taskName}</a>` : step.taskName}</li>`;
+}
 
-            const description = itemTitle + '：' + audit_desc;
-
-            const single = {
-                title,
-                description,
-                pubDate: timezone(parseDate(audit_date), 8),
-                link: res.url,
-                guid: `${res.url}#${md5(description)}`,
-            };
-            return single;
-        });
+async function handler(ctx) {
+    const { apply_id: applyId } = ctx.req.param();
+    const data = await ofetch<{ appltList: Application[] }>(`${baseUrl}/alappl/home1/newOnlinealog`, {
+        query: { appMatrCde: applyId, appMatrName: '', apptName: '', pageNo: 1, pageSize: 10 },
+    });
+    if (!Array.isArray(data.appltList)) {
+        throw new TypeError('CSRC approval API returned an unexpected application list.');
+    }
+    const pageUrl = new URL('/alappl/home1/onlinealog', baseUrl);
+    pageUrl.searchParams.set('appMatrCde', applyId);
 
     return {
-        title: `${$('.zx2 div').attr('title')} - 申请事项进度查询 - 中国证监会`,
-        link: res.url,
-        item: out,
+        title: `${data.appltList[0]?.appMatrName ?? '中国证监会'} - 申请事项进度查询 - 中国证监会`,
+        link: pageUrl.href,
+        language: 'zh-CN' as const,
+        item: data.appltList.map((application) => {
+            if (!application.alAppLtCde) {
+                throw new Error('CSRC approval API returned an application without its public identifier.');
+            }
+            const progress = getPublicProgress(application);
+            const latest = progress.at(-1);
+            const progressHtml = progress.map((step) => renderProgress(application, step));
+            return {
+                title: `${latest?.taskName ? `【${latest.taskName}】` : ''}关于${application.apptPubName}的《${application.appMatrName}》`,
+                guid: application.alAppLtCde,
+                pubDate: getDate(latest?.fnshDate),
+                description: `<ul>${progressHtml.join('')}</ul>`,
+            };
+        }),
     };
 }

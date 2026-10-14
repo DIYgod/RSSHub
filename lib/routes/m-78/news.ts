@@ -5,7 +5,8 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Data, Route } from '@/types';
 import { ViewType } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
+import { getRouteLimit } from '@/utils/route-limit';
 
 import type { Post } from './types';
 
@@ -85,9 +86,12 @@ async function handler(ctx: Context): Promise<Data> {
     const cateAPIUrl = `${rootUrl}/wp-json/wp/v2/categories`;
     const postsAPIUrl = `${rootUrl}/wp-json/wp/v2/posts`;
     const category = ctx.req.param('category') ?? 'news';
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')!) : 20;
+    const limit = Math.min(getRouteLimit(ctx, 20), 100);
 
     const categories = await ofetch(`${cateAPIUrl}?slug=${category}`);
+    if (!Array.isArray(categories)) {
+        throw new TypeError('The M-78 categories API returned non-JSON content. The upstream site may be blocking automated requests.');
+    }
     if (categories.length === 0) {
         throw new InvalidParameterError('Category not found');
     }
@@ -95,6 +99,9 @@ async function handler(ctx: Context): Promise<Data> {
     const { id: categoryId, link: categoryLink, name: categoryName } = categories[0];
 
     const posts = await ofetch<Post[]>(`${postsAPIUrl}?categories=${categoryId}&per_page=${limit}`);
+    if (!Array.isArray(posts)) {
+        throw new TypeError('The M-78 posts API returned non-JSON content. The upstream site may be blocking automated requests.');
+    }
     return {
         title: `${categoryName} | ニュース`,
         link: categoryLink,
@@ -110,8 +117,8 @@ async function handler(ctx: Context): Promise<Data> {
                 title: post.title.rendered,
                 link: post.link,
                 description: $.html(),
-                pubDate: parseDate(post.date_gmt),
-                updated: parseDate(post.modified_gmt),
+                pubDate: post.date_gmt ? parseDateInTimezone(post.date_gmt, 0) : undefined,
+                updated: post.modified_gmt ? parseDateInTimezone(post.modified_gmt, 0) : undefined,
             };
         }),
     };

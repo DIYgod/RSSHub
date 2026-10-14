@@ -1,10 +1,11 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
 
 const rootUrl = 'https://www.itsec.gov.cn';
 const currentUrl = `${rootUrl}/zxxw/index.html`;
@@ -54,18 +55,19 @@ async function handler() {
             return {
                 title,
                 link,
-                pubDate: date ? timezone(parseDate(date), 8) : undefined,
+                pubDate: date && Number.isFinite(parseDate(date).getTime()) ? parseDateInTimezone(date, 8) : undefined,
             };
         })
         .filter((item): item is { title: string; link: string; pubDate: Date | undefined } => item !== null);
 
-    const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item!.link, async () => {
-                const { data: detailResponse } = await got(item!.link);
+    const items = await pMap(
+        list,
+        async (item) => {
+            const details = await cache.tryGet(`itsec:news-details:${item.link}`, async () => {
+                const { data: detailResponse } = await got(item.link);
                 const $detail = load(detailResponse);
 
-                const title = $detail('.article-tit').text() || item!.title;
+                const title = $detail('.article-tit').text();
                 const date = $detail('.article .date').text();
                 const author = $detail('.article .from').last().text().trim();
 
@@ -74,13 +76,15 @@ async function handler() {
 
                 return {
                     title,
-                    link: item!.link,
+                    link: item.link,
                     description,
                     author,
-                    pubDate: date ? timezone(parseDate(date), 8) : item!.pubDate,
+                    pubDate: date && Number.isFinite(parseDate(date).getTime()) ? parseDateInTimezone(date, 8) : undefined,
                 };
-            })
-        )
+            });
+            return { ...item, ...details, title: details.title || item.title, pubDate: details.pubDate ?? item.pubDate };
+        },
+        { concurrency: 3 }
     );
 
     return {

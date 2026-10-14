@@ -1,5 +1,7 @@
 // Worker-compatible Playwright with ordinary remote WebSocket and Browser Run support.
-import { launch } from '@cloudflare/playwright';
+import type { BrowserWorker } from '@cloudflare/playwright';
+import { connect, launch } from '@cloudflare/playwright';
+import type { DurableObjectNamespace, DurableObjectStub } from '@cloudflare/workers-types';
 import type { Browser, Page } from 'patchright';
 
 import { config } from '@/config';
@@ -11,10 +13,46 @@ export { setPlaywrightServiceBinding } from './playwright-remote.worker';
 
 type GotoOptions = Parameters<Page['goto']>[1];
 let browserBinding: any;
+let browserSessionBinding: DurableObjectNamespace | undefined;
 
 export const setBrowserBinding = (binding: any) => {
     browserBinding = binding;
 };
+
+export const setBrowserSessionBinding = (binding?: DurableObjectNamespace) => {
+    browserSessionBinding = binding;
+};
+
+async function getSessionId(stub: DurableObjectStub, invalidSessionId?: string) {
+    const response = await stub.fetch('https://browser-session/session', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(invalidSessionId ? { invalidSessionId } : {}),
+    });
+    if (!response.ok) {
+        throw new Error(`Browser session acquisition failed (${response.status}). Check the BROWSER and BROWSER_SESSIONS bindings.`);
+    }
+    const data = await response.json<{ sessionId?: unknown }>();
+    if (typeof data.sessionId !== 'string' || !data.sessionId) {
+        throw new Error('Browser session coordinator did not return a session ID.');
+    }
+    return data.sessionId;
+}
+
+async function connectSharedBrowser(binding: BrowserWorker, sessions: DurableObjectNamespace) {
+    const stub = sessions.get(sessions.idFromName('rsshub-browser'));
+    const sessionId = await getSessionId(stub);
+    try {
+        return await connect(binding, sessionId);
+    } catch (error) {
+        // Network and quota failures must not replace a session used by other requests.
+        if (!(error instanceof Error) || !/Unable to connect to browser: code: (?:400|404|410)\b/.test(error.message)) {
+            throw error;
+        }
+        const replacement = await getSessionId(stub, sessionId);
+        return connect(binding, replacement);
+    }
+}
 
 const launchBrowser = async (options: { javaScriptEnabled?: boolean; useConfiguredEndpoint?: boolean } = {}) => {
     let browser: Browser;
@@ -27,7 +65,9 @@ const launchBrowser = async (options: { javaScriptEnabled?: boolean; useConfigur
         if (!browserBinding) {
             throw new Error('Configure PLAYWRIGHT_WS_ENDPOINT or a Cloudflare BROWSER binding. Browser Run requires remote mode or a deployed Worker.');
         }
-        browser = (await launch(browserBinding, { keep_alive: 60000 })) as unknown as Browser;
+        const binding = browserBinding;
+        const sessions = browserSessionBinding;
+        browser = (sessions ? await connectSharedBrowser(binding, sessions) : await launch(binding, { keep_alive: 60000 })) as unknown as Browser;
     }
     try {
         const context = await browser.newContext({

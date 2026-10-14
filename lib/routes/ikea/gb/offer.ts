@@ -1,9 +1,17 @@
-import { load } from 'cheerio';
+import { type Cheerio, load } from 'cheerio';
+import { type AnyNode, cloneNode, Document } from 'domhandler';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
 
-import { renderOffer } from '../templates/offer';
+function copyElements<T extends AnyNode>(selection: Cheerio<T>): Cheerio<T> {
+    const copy = selection.map((_, element) => cloneNode(element, true));
+    const root = new Document(copy.toArray());
+    copy.each((_, element) => {
+        element.parent = root;
+    });
+    return copy;
+}
 
 export const route: Route = {
     path: '/gb/offer',
@@ -34,55 +42,26 @@ async function handler() {
     const response = await got(link);
 
     const $ = load(response.data);
-    const carousel = $('.pub__carousel-slide')
+    const items = $('main .hri-content-card, main .hri-compact-card')
         .toArray()
-        .map((e) => {
-            const $e = $(e);
-            const title = $e.find('h3');
-            const img = $e.find('.pub__image').each((_, e) => {
-                e.attribs.src = e.attribs.src.split('?', 1)[0];
-                delete e.attribs.srcset;
-            });
-            const link = new URL($e.find('pub-hide-empty-link a').attr('href')!);
-            const { searchParams, href } = link;
-            searchParams.delete('itm_content');
-            searchParams.delete('itm_element');
-            searchParams.delete('itm_campaign');
+        .map((element) => {
+            const card = $(element);
+            const title = card.find('.hri-content-card__title, .hri-compact-card__title').text();
+            const href = card.find('a.hri-content-card__headers, a.hri-compact-card__link').attr('href');
+            if (!title || !href) {
+                throw new Error('Unable to extract an offer title or link from the IKEA UK offers page.');
+            }
+            const url = new URL(href, link);
+            url.searchParams.delete('itm_content');
+            url.searchParams.delete('itm_element');
+            url.searchParams.delete('itm_campaign');
+            const content = copyElements(card);
+            content.find('.hri-content-card__headers, .hri-compact-card__link, .hri-content-card__footer, script, style, button, svg').remove();
             return {
-                title: title.text(),
-                description: renderOffer({
-                    img: img.parent().html() ?? undefined,
-                    desc: title.next().parent().html() ?? undefined,
-                }),
-                link: href,
-                guid: `${href}#${title.text()}`,
-            };
-        });
-
-    const banner = $('div[data-pub-type="banner"]')
-        .toArray()
-        .map((e) => {
-            const $e = $(e);
-            const title = $e.find('h2');
-            const next = title.next();
-            const img = $e.find('.pub__image').each((_, e) => {
-                e.attribs.src = e.attribs.src.split('?', 1)[0];
-                delete e.attribs.srcset;
-            });
-
-            const link = new URL(next.find('a').attr('href')!);
-            const { searchParams, href } = link;
-            searchParams.delete('itm_content');
-            searchParams.delete('itm_element');
-            searchParams.delete('itm_campaign');
-            return {
-                title: title.text(),
-                description: renderOffer({
-                    img: img.parent().html() ?? undefined,
-                    desc: title.parent().html() ?? undefined,
-                }),
-                link: href,
-                guid: `${href}#${title.text()}`,
+                title,
+                description: content.html() || undefined,
+                link: url.href,
+                guid: `${url.href}#${title}`,
             };
         });
 
@@ -90,6 +69,6 @@ async function handler() {
         title: 'IKEA UK - Offers',
         link,
         description: 'Offers by IKEA UK.',
-        item: [...carousel, ...banner],
+        item: items,
     };
 }

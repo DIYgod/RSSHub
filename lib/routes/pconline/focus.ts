@@ -1,9 +1,10 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
 
 const rootUrl = 'https://www.pconline.com.cn';
 interface Item {
@@ -49,7 +50,40 @@ const categories = {
     },
 };
 
-const getContent = (item) =>
+const parseArticles = (response: string): { articleList: Item[] } => {
+    const payload = response.match(/^\s*Module\.callback\(([\s\S]*)\);?\s*$/)?.[1];
+    if (!payload) {
+        throw new Error('PConline returned an unexpected article list response.');
+    }
+    const tokens = payload.match(/"(?:[^"\\]|\\.)*"|'(?:[^'\\]|\\.)*'|[^"']+/gs) || [];
+    if (tokens.join('') !== payload) {
+        throw new Error('PConline returned malformed article list strings.');
+    }
+    const json = tokens
+        .map((token) => {
+            if (token.startsWith('"')) {
+                return token;
+            }
+            if (token.startsWith("'")) {
+                let value = '';
+                for (let index = 1; index < token.length - 1; index++) {
+                    const character = token[index];
+                    if (character === '\\') {
+                        const next = token[++index];
+                        value += next === "'" ? "'" : `\\${next}`;
+                    } else {
+                        value += character === '"' ? String.raw`\"` : character;
+                    }
+                }
+                return JSON.stringify(JSON.parse(`"${value}"`));
+            }
+            return token.replaceAll(/,\s*(?=[}\]])/g, '');
+        })
+        .join('');
+    return JSON.parse(json);
+};
+
+const getContent = (item: DataItem & { link: string }) =>
     cache.tryGet(item.link, async () => {
         const detailResponse = await got({
             method: 'get',
@@ -74,17 +108,8 @@ export const handler = async (ctx) => {
         url: currentUrl,
     });
 
-    const resString = response.data
-        .replace(/Module\.callback\((.*)\)/s, '$1')
-        .split('\n')
-        .filter((e) => e.indexOf('"tags":') !== 0)
-        .join('\n')
-        .replaceAll("'", '"');
-    const tinyData = resString.replaceAll(/[\n\r]/g, '');
-    const dataString = tinyData.replaceAll(',}', '}');
-    const data = JSON.parse(dataString || '');
-    const { articleList } = data;
-    const list = articleList.map((item: Item) => ({
+    const { articleList } = parseArticles(response.data);
+    const list: Array<DataItem & { link: string }> = articleList.map((item: Item) => ({
         id: item.id,
         title: item.title,
         author: [
@@ -93,18 +118,18 @@ export const handler = async (ctx) => {
                 avatar: item.authorImg,
             },
         ],
-        pubDate: parseDate(item.pc_pubDate),
+        pubDate: parseDateInTimezone(item.pc_pubDate, 8),
         link: item.url,
         description: item.summary,
         category: item.channelName,
         image: item.cover,
     }));
 
-    const items = await Promise.all(list.map((item) => getContent(item)));
+    const items = await pMap(list, getContent, { concurrency: 3 });
 
     return {
         title: `太平洋科技-${cate.title}`,
-        link: currentUrl,
+        link: `${rootUrl}/focus/`,
         item: items,
     };
 };

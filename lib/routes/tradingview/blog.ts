@@ -1,4 +1,4 @@
-import { load } from 'cheerio';
+import { type CheerioAPI, load } from 'cheerio';
 import pMap from 'p-map';
 
 import type { DataItem, Language, Route } from '@/types';
@@ -63,9 +63,33 @@ export const route: Route = {
 | [Widgets](https://www.tradingview.com/blog/en/category/widgets/)                               | category/widgets              |`,
 };
 
+function getCategories(content: CheerioAPI): string[] | undefined {
+    const structuredData = content('script[type="application/ld+json"]').first().text();
+    if (!structuredData) {
+        return undefined;
+    }
+    try {
+        const data = JSON.parse(structuredData);
+        const nodes = Array.isArray(data) ? data : (data['@graph'] ?? [data]);
+        const sections = nodes.find((node) => [node['@type']].flat().includes('BlogPosting'))?.articleSection;
+        return typeof sections === 'string' ? [sections] : Array.isArray(sections) ? sections.filter((section) => typeof section === 'string') : undefined;
+    } catch {
+        return undefined;
+    }
+}
+
+function parsePubDate(value?: string) {
+    if (!value) {
+        return;
+    }
+    const date = parseDate(value);
+    return Number.isFinite(date.getTime()) ? date : undefined;
+}
+
 async function handler(ctx) {
     const { category = 'en' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 22;
+    const requestedLimit = Number(ctx.req.query('limit'));
+    const limit = Number.isFinite(requestedLimit) && requestedLimit >= 1 ? Math.floor(requestedLimit) : 22;
 
     const rootUrl = 'https://www.tradingview.com';
     const currentUrl = new URL(`blog/${category.endsWith('/') ? category : `${category}/`}`, rootUrl).href;
@@ -80,67 +104,51 @@ async function handler(ctx) {
         .map((item): DataItem => {
             const $item = $(item);
 
-            const title = $item.find('div.title').text();
+            const title = $item.find('.title').text();
 
             return {
                 title,
                 link: $item.find('a.articles-grid-link').prop('href'),
                 description: renderDescription({
                     image: {
-                        src: $item
-                            .find('div.articles-grid-img img')
-                            .prop('src')!
-                            .replace(/-\d+x\d+\./, '.'),
+                        src: $item.find('div.articles-grid-img img').prop('src'),
                         alt: title,
                     },
                 }),
                 category: $item
-                    .find('a.section')
+                    .find('a.tv-category-link')
                     .toArray()
-                    .map((c) => $(c).text()),
-                guid: `tradingview-blog-${category}-${$item.prop('id')}`,
-                pubDate: parseDate($item.find('div.date').text(), 'MMM D, YYYY'),
+                    .map((c) => $(c).text().trim()),
             };
         });
 
     const items = await pMap(
         list,
-        (item) =>
-            cache.tryGet(item.link!, async () => {
+        async (item) => {
+            const detail = await cache.tryGet(`tradingview:blog:detail:v5:${item.link}`, async () => {
                 const { data: detailResponse } = await got(item.link);
 
                 const content = load(detailResponse);
 
-                content('div.entry-content')
-                    .find('img')
-                    .each((_, e) => {
-                        content(e).replaceWith(
-                            renderDescription({
-                                image: {
-                                    src: content(e)
-                                        .prop('src')!
-                                        .replace(/-\d+x\d+\./, '.'),
-                                },
-                            })
-                        );
-                    });
-
-                item.title = content('meta[property="og:title"]').prop('content');
-                item.description = renderDescription({
+                const title = content('h1.single-title').text() || undefined;
+                const description = renderDescription({
                     image: {
                         src: content('meta[property="og:image"]').prop('content'),
-                        alt: item.title,
+                        alt: title,
                     },
                     description: content('div.entry-content').html() ?? undefined,
                 });
-                item.author = content('meta[property="og:site_name"]').prop('content');
-                item.category = content('div.sections a.section')
-                    .toArray()
-                    .map((c) => content(c).text());
-                item.pubDate = parseDate(content('div.single-date').text(), 'MMM D, YYYY');
-
-                return item;
-            }),
+                return {
+                    title,
+                    description,
+                    author: content('meta[name="author"]').prop('content') || undefined,
+                    category: getCategories(content),
+                    pubDate: parsePubDate(content('meta[property="article:published_time"]').prop('content')),
+                    updated: parsePubDate(content('meta[property="article:modified_time"]').prop('content')),
+                };
+            });
+            return { ...item, ...detail, title: detail.title ?? item.title, category: detail.category ?? item.category };
+        },
         { concurrency: 3 }
     );
 

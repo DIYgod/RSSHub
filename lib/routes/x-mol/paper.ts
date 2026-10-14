@@ -9,6 +9,18 @@ import timezone from '@/utils/timezone';
 
 import utils from './utils';
 
+async function fetchDetail(link: string): Promise<Pick<DataItem, 'description' | 'author' | 'doi'>> {
+    const response = await got(link);
+    const $ = load(response.data);
+    const description = $('.maga-content');
+    const doi = description.find('.itsmblue').eq(1).text().trim();
+    description.find('.itgaryfirst').remove();
+    description.find('span').eq(0).remove();
+    const author = description.find('span').eq(0).text().trim();
+    description.find('span').eq(0).remove();
+    return { doi, author, description: description.html() };
+}
+
 export const route: Route = {
     path: '/paper/:type/:magazine',
     categories: ['journal'],
@@ -38,52 +50,39 @@ async function handler(ctx) {
     });
     const data = response.data;
     const $ = load(data);
+    const requestedLimit = Number(ctx.req.query('limit') ?? '20');
+    const limit = Number.isFinite(requestedLimit) && requestedLimit >= 1 ? Math.floor(requestedLimit) : 20;
 
     const newsItem = $('.magazine-model-content-new li')
         .toArray()
-        .slice(0, ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 20)
+        .slice(0, limit)
+        .filter((item) => $(item).find('.magazine-model-btn a').first().attr('href'))
         .map((item): DataItem & { link: string } => {
             const $item = $(item);
+            const rawDate = $item
+                .find('.magazine-text-atten')
+                .text()
+                .match(/\d{4}-\d{2}-\d{2}/)?.[0];
+            const pubDate = rawDate ? timezone(parseDate(rawDate, 'YYYY-MM-DD', true), 8) : undefined;
             return {
-                title: $item.find('.magazine-text-title a').text().trim(),
+                title: $item.find('.magazine-text-title a').text(),
                 link: new URL($item.find('.magazine-model-btn a').first().attr('href')!, utils.host).href,
-                pubDate: timezone(
-                    parseDate(
-                        $item
-                            .find('.magazine-text-atten')
-                            .text()
-                            .match(/\d{4}-\d{2}-\d{2}/)![0]
-                    ),
-                    8
-                ),
+                pubDate: pubDate && Number.isFinite(pubDate.getTime()) ? pubDate : undefined,
             };
         });
 
     const item = await pMap(
         newsItem,
-        (element) =>
-            cache.tryGet(element.link, async () => {
-                const response = await got(element.link);
-                const $ = load(response.data);
-
-                const description = $('.maga-content');
-                element.doi = description.find('.itsmblue').eq(1).text().trim();
-
-                description.find('.itgaryfirst').remove();
-                description.find('span').eq(0).remove();
-                element.author = description.find('span').eq(0).text().trim();
-                description.find('span').eq(0).remove();
-
-                element.description = description.html();
-
-                return element;
-            }),
-        { concurrency: 2 }
+        async (element) => {
+            const detail = await cache.tryGet(`xmol:paper:detail:v1:${element.link}`, () => fetchDetail(element.link));
+            return { ...element, doi: detail.doi, author: detail.author, description: detail.description };
+        },
+        { concurrency: 2, stopOnError: false }
     );
 
     return {
         title: $('title').text(),
-        link: response.url,
+        link,
         description: $('meta[name="description"]').attr('content'),
         item,
     };

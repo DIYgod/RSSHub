@@ -12,8 +12,8 @@ export const route: Route = {
     path: '/user/article/:uid',
     radar: [
         {
-            source: ['www.acfun.cn/u/:id'],
-            target: '/user/article/:id',
+            source: ['www.acfun.cn/u/:uid'],
+            target: '/user/article/:uid',
         },
     ],
     name: '用户文章',

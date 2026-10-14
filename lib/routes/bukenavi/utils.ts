@@ -33,7 +33,7 @@ const serialise = (jar: Map<string, string>): string => [...jar].map(([k, v]) =>
  */
 const login = async (email: string, password: string): Promise<string | null> => {
     const jar = new Map<string, string>();
-    const page = await ofetch.raw(`${HOST}/kanto/user/login`, { responseType: 'text' });
+    const page = await ofetch.raw(`${HOST}/kanto/user/login`);
     cookiesFrom(page.headers, jar);
     const token = TOKEN.exec(page._data ?? '')?.[1];
     if (token === undefined) {
@@ -48,7 +48,6 @@ const login = async (email: string, password: string): Promise<string | null> =>
         headers: { Cookie: serialise(jar), Referer: `${HOST}/kanto/user/login`, 'Content-Type': 'application/x-www-form-urlencoded' },
         redirect: 'manual',
         ignoreResponseError: true,
-        responseType: 'text',
     });
     cookiesFrom(res.headers, jar);
     if (!jar.has('bukenavi_session')) {

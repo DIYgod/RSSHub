@@ -8,6 +8,8 @@ import { baseUrl, gqlFeatures, gqlMap, initGqlMap } from './constants';
 import type { ApiParams } from './utils';
 import { gatherLegacyFromData, paginationTweets, twitterGot } from './utils';
 
+const isRestId = (value: unknown): value is string => typeof value === 'string' && value.length > 0;
+
 const getUserResult = (response: any) => {
     const errors = response?.errors;
     if (errors !== undefined && errors !== null && (!Array.isArray(errors) || errors.length > 0)) {
@@ -32,7 +34,7 @@ const getUserResult = (response: any) => {
     if (result?.__typename === 'UserUnavailable') {
         throw new InvalidParameterError('Twitter user is unavailable');
     }
-    if (!result || typeof result.rest_id !== 'string' || result.rest_id.length === 0) {
+    if (!result || !isRestId(result.rest_id)) {
         throw new Error('Twitter API returned an incomplete user response');
     }
     return result;
@@ -82,25 +84,29 @@ const cacheTryGet = async (_id, params, operationName, func) => {
 };
 
 const getUserTweets = (id: string, params?: ApiParams) =>
-    cacheTryGet(id, params, 'getUserTweets', async (id, params = {}) =>
-        gatherLegacyFromData(
+    cacheTryGet(id, params, 'getUserTweets', async (id, params: ApiParams = {}) => {
+        const tweets = gatherLegacyFromData(
             await paginationTweets('UserTweets', id, {
                 ...params,
-                count: 20,
+                count: params.count ?? 20,
                 includePromotedContent: true,
                 withQuickPromoteEligibilityTweetFields: true,
                 withVoice: true,
                 withV2Timeline: true,
-            })
-        )
-    );
+            }),
+            ['profile-conversation-'],
+            id
+        );
+        // Keep only root posts; drop replies and self-thread continuations from profile-conversation modules
+        return tweets.filter((t) => !t.in_reply_to_status_id_str);
+    });
 
 const getUserTweetsAndReplies = (id: string, params?: ApiParams) =>
-    cacheTryGet(id, params, 'getUserTweetsAndReplies', async (id, params = {}) =>
+    cacheTryGet(id, params, 'getUserTweetsAndReplies', async (id, params: ApiParams = {}) =>
         gatherLegacyFromData(
             await paginationTweets('UserTweetsAndReplies', id, {
                 ...params,
-                count: 20,
+                count: params.count ?? 20,
                 includePromotedContent: true,
                 withCommunity: true,
                 withVoice: true,

@@ -42,10 +42,11 @@ async function handler(ctx) {
         throw new ConfigNotFoundError('Miyoushe Timeline is not available due to the absense of [Miyoushe Cookie]. Check <a href="https://docs.rsshub.app/deploy/config#route-specific-configurations">relevant config tutorial</a>');
     }
 
-    const page_size = ctx.req.query('limit') || '20';
+    const requestedLimit = Number(ctx.req.query('limit'));
+    const pageSize = String(Number.isSafeInteger(requestedLimit) && requestedLimit > 0 ? requestedLimit : 20);
     const searchParams = {
         gids: 2,
-        page_size,
+        page_size: pageSize,
     };
     const link = 'https://www.miyoushe.com/ys/timeline';
     const url = 'https://bbs-api.miyoushe.com/painter/wapi/timeline/list';

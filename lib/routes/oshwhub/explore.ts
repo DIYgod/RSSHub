@@ -2,6 +2,7 @@ import type { CheerioAPI } from 'cheerio';
 import { load } from 'cheerio';
 import type { Context } from 'hono';
 import MarkdownIt from 'markdown-it';
+import pMap from 'p-map';
 
 import type { Data, DataItem, Language, Route } from '@/types';
 import { ViewType } from '@/types';
@@ -38,6 +39,8 @@ const findNamesByUuids = (data: any[], uuids: string[]): string[] => {
     return uuids.flatMap((uuid) => allItems.filter((item) => item.uuid === uuid || item.name === uuid).map((item) => item.name)).filter(Boolean);
 };
 
+const resolveMediaUrl = (source: string | undefined) => (source ? new URL(source, 'https://image.lceda.cn').href : undefined);
+
 const md = MarkdownIt({
     html: true,
     linkify: true,
@@ -45,7 +48,8 @@ const md = MarkdownIt({
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { type = 'new', origin = 'all', projectTag } = ctx.req.param();
-    const limit = Number(ctx.req.query('limit') ?? '15');
+    const requestedLimit = Number(ctx.req.query('limit') ?? 15);
+    const limit = Number.isFinite(requestedLimit) && requestedLimit >= 1 ? Math.floor(requestedLimit) : 15;
 
     const baseUrl = 'https://oshwhub.com';
     const apiUrl: string = new URL('api/project', baseUrl).href;
@@ -72,7 +76,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
     let items: DataItem[] = response.result.lists.slice(0, limit).map((item): DataItem => {
         const title: string = item.name;
-        const image: string | undefined = item.thumb?.startsWith('https:') ? item.thumb : `https:${item.thumb}`;
+        const image: string | undefined = resolveMediaUrl(item.thumb);
         const description: string | undefined = renderDescription({
             images: image
                 ? [
@@ -93,7 +97,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                   {
                       name: item.owner.name,
                       url: new URL(item.owner.username, baseUrl).href,
-                      avatar: item.owner.avatar ? `https:${item.owner.avatar}` : undefined,
+                      avatar: resolveMediaUrl(item.owner.avatar),
                   },
               ]
             : undefined;
@@ -104,7 +108,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
             title,
             description,
             pubDate: pubDate ? parseDate(pubDate) : undefined,
-            link: linkUrl ? new URL(item.link, baseUrl).href : undefined,
+            link: linkUrl ? new URL(linkUrl, baseUrl).href : undefined,
             category: categories,
             author: authors,
             guid,
@@ -122,8 +126,9 @@ export const handler = async (ctx: Context): Promise<Data> => {
         return processedItem;
     });
 
-    items = await Promise.all(
-        items.map((item) => {
+    items = await pMap(
+        items,
+        (item) => {
             if (!item.link || !item.guid) {
                 return item;
             }
@@ -147,7 +152,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                         const item = {
                             name: author.nickname,
                             url: new URL(author.username, baseUrl).href,
-                            avatar: author.avatar ? `https:${author.avatar}` : undefined,
+                            avatar: resolveMediaUrl(author.avatar),
                         };
                         return [`${item.name}|${item.url}`, item];
                     })
@@ -155,7 +160,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                     .values()
                     .toArray();
                 const guid: string = result.uuid ? `oshwhub-${result.uuid}` : item.guid || '';
-                const image: string | undefined = result.thumb?.startsWith('https:') ? result.thumb : `https:${result.thumb}`;
+                const image: string | undefined = resolveMediaUrl(result.thumb);
                 const upDatedStr: string | undefined = result.updated_at || pubDateStr;
 
                 const attachments = result.attachments;
@@ -204,7 +209,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 const attachment = attachments?.[0];
 
                 if (attachment && attachment.src) {
-                    const enclosureUrl: string | undefined = `https://image.lceda.cn${attachment.src}`;
+                    const enclosureUrl: string | undefined = resolveMediaUrl(attachment.src);
                     const enclosureType: string = attachment.mime;
                     const enclosureTitle: string = attachment.name;
                     const enclosureLength = Number(attachment.size);
@@ -223,7 +228,8 @@ export const handler = async (ctx: Context): Promise<Data> => {
                     ...processedItem,
                 };
             });
-        })
+        },
+        { concurrency: 3 }
     );
 
     const title: string = $('title').text();

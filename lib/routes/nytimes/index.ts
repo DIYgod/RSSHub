@@ -1,13 +1,13 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import playwright from '@/utils/playwright';
-import parser from '@/utils/rss-parser';
 
-import utils from './utils';
+import utils, { getRssFeed } from './utils';
 
 export const route: Route = {
     path: '/:lang?',
@@ -27,7 +27,7 @@ export const route: Route = {
     },
     features: {
         requireConfig: false,
-        requirePuppeteer: false,
+        requirePuppeteer: true,
         antiCrawler: false,
         supportBT: false,
         supportPodcast: false,
@@ -81,85 +81,93 @@ async function handler(ctx) {
         // Do nothing
     }
 
-    const context = await playwright();
-    const feed = await parser.parseURL(rssUrl);
-    const items = await Promise.all(
-        feed.items.splice(0, 10).map(async (item) => {
-            let link = item.link;
+    const context = lang === 'en' ? await playwright() : undefined;
+    let tasks: Promise<DataItem[]> | undefined;
+    try {
+        const feed = await getRssFeed(rssUrl);
+        tasks = pMap(
+            feed.items.slice(0, 10),
+            async (item) => {
+                let link = item.link;
 
-            let response,
-                hasEnVersion = false,
-                dual = false;
+                let response,
+                    hasEnVersion = false,
+                    dual = false;
 
-            if (lang === 'dual') {
-                link = link!.replace('/?utm_source=RSS', '') + '/dual';
+                if (lang === 'dual') {
+                    link = link!.replace('/?utm_source=RSS', '') + '/dual';
 
-                try {
-                    response = await cache.tryGet(`nyt: ${link}`, async () => {
-                        const response = await got(link);
+                    try {
+                        response = await cache.tryGet(`nyt: ${link}`, async () => {
+                            const response = await got(link);
 
-                        return response.data;
-                    });
+                            return response.data;
+                        });
 
-                    dual = true;
-                } catch {
+                        dual = true;
+                    } catch {
+                        response = await cache.tryGet(`nyt: ${item.link}`, async () => {
+                            const response = await got(item.link);
+
+                            return response.data;
+                        });
+                    }
+                } else {
                     response = await cache.tryGet(`nyt: ${item.link}`, async () => {
                         const response = await got(item.link);
 
                         return response.data;
                     });
-                }
-            } else {
-                response = await cache.tryGet(`nyt: ${item.link}`, async () => {
-                    const response = await got(item.link);
 
-                    return response.data;
-                });
+                    if (lang === 'en') {
+                        const $ = load(response);
+                        if ($('.dual-btn').length > 0) {
+                            hasEnVersion = true;
+                            link = $('.dual-btn a').last().attr()!.href;
 
-                if (lang === 'en') {
-                    const $ = load(response);
-                    if ($('.dual-btn').length > 0) {
-                        hasEnVersion = true;
-                        link = $('.dual-btn a').last().attr()!.href;
-
-                        response = await utils.PuppeterGetter(ctx, context, link);
+                            response = await utils.PuppeterGetter(ctx, context, link);
+                        }
                     }
                 }
-            }
 
-            const single: DataItem = {
-                title: item.title!,
-                pubDate: item.pubDate,
-                link,
-                author: item['dc:creator'],
-            };
+                const single: DataItem = {
+                    title: item.title!,
+                    pubDate: item.pubDate,
+                    link,
+                    author: item['dc:creator'],
+                };
 
-            const result = utils.ProcessFeed(response, hasEnVersion);
+                const result = utils.ProcessFeed(response, hasEnVersion);
 
-            // Match 感谢|謝.*?cn.letters@nytimes.com。
-            const ending = /&#x611F;(&#x8C22|&#x8B1D);.*?cn\.letters@nytimes\.com&#x3002;/g;
+                // Match 感谢|謝.*?cn.letters@nytimes.com。
+                const ending = /&#x611F;(&#x8C22|&#x8B1D);.*?cn\.letters@nytimes\.com&#x3002;/g;
 
-            single.description = result.description?.replaceAll(ending, '');
+                single.description = result.description?.replaceAll(ending, '');
 
-            if (hasEnVersion) {
-                single.title = result.title;
-                single.author = result.author;
-            }
+                if (hasEnVersion) {
+                    single.title = result.title;
+                    single.author = result.author;
+                }
 
-            if (dual) {
-                single.title = `「中英」${single.title}`;
-            }
+                if (dual) {
+                    single.title = `「中英」${single.title}`;
+                }
 
-            return single;
-        })
-    );
-
-    await context.close();
-
-    return {
-        title,
-        link: 'https://cn.nytimes.com',
-        description: title,
-        item: items,
-    };
+                return single;
+            },
+            { concurrency: 3, stopOnError: false }
+        );
+        const items = await tasks;
+        return {
+            title,
+            link: 'https://cn.nytimes.com',
+            description: title,
+            item: items,
+        };
+    } finally {
+        if (tasks) {
+            await Promise.allSettled([tasks]);
+        }
+        await context?.close();
+    }
 }

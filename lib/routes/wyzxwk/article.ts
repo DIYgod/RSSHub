@@ -1,9 +1,11 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/article/:id?',
@@ -95,9 +97,12 @@ async function handler(ctx) {
             };
         });
 
-    items = await Promise.all(
-        items.map((item) =>
-            cache.tryGet(item.link!, async () => {
+    items = await pMap(
+        items,
+        async (item) => ({
+            ...item,
+            ...(await cache.tryGet(item.link!, async () => {
+                const detail: Pick<DataItem, 'description' | 'pubDate' | 'author'> = {};
                 if (item.link!.indexOf('wyzxwk.com') > 0) {
                     try {
                         const detailResponse = await got({
@@ -110,17 +115,22 @@ async function handler(ctx) {
 
                         const pubDate = detailResponse.data.match(/<span class="s-grey-3">(\d{4}-\d{2}-\d{2})<\/span>/);
                         if (pubDate) {
-                            item.pubDate = parseDate(pubDate[1], 'YYYY-MM-DD');
+                            const date = timezone(parseDate(pubDate[1], 'YYYY-MM-DD', true), 8);
+                            if (!Number.isNaN(date.getTime())) {
+                                detail.pubDate = date;
+                            }
                         }
 
-                        item.description = content('article').html();
+                        detail.description = content('article').html();
+                        detail.author = content('.m-atc .f-fl .s-grey-3').first().text().trim() || undefined;
                     } catch {
-                        item.description = '';
+                        detail.description = '';
                     }
                 }
-                return item;
-            })
-        )
+                return detail;
+            })),
+        }),
+        { concurrency: 3 }
     );
 
     return {

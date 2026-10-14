@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
@@ -38,10 +39,10 @@ async function handler() {
         .map((el) => {
             const $el = $(el);
             const href = $el.attr('href') || '';
-            const text = $el.text().trim();
+            const text = $el.text();
 
             // Extract date from link text (e.g., "2nd October, 2025 Redis 101 : From a Beginners POV")
-            const dateMatch = text.match(/^(\d{1,2}(?:st|nd|rd|th)\s+\w+,\s+\d{4})\s+(\S.*)$/);
+            const dateMatch = text.match(/^\s*(\d{1,2}(?:st|nd|rd|th)\s+\w+,\s+\d{4})\s+(\S[\s\S]*)$/);
 
             let date: string | undefined;
             let title: string;
@@ -71,9 +72,10 @@ async function handler() {
             };
         });
 
-    const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link, async () => {
+    const items = await pMap(
+        list,
+        async (item) => {
+            const details = await cache.tryGet(`mrinalxdev:content:${item.link}`, async () => {
                 const response = await ofetch(item.link);
                 const $ = load(response);
 
@@ -81,6 +83,9 @@ async function handler() {
                 $('nav').remove();
                 $('footer').remove();
                 $('a[href*="buymeacoffee"]').parent().remove();
+                $('script, style').remove();
+                $('body > h1').first().remove();
+                $('body > span.text-sm.text-gray-500').remove();
 
                 // Extract main content - typically in body after nav
                 const content = $('body').html();
@@ -97,8 +102,10 @@ async function handler() {
                 }
 
                 return dataItem;
-            })
-        )
+            });
+            return { ...details, title: item.title, link: item.link, pubDate: item.date ? parseDate(item.date, 'Do MMMM, YYYY') : undefined };
+        },
+        { concurrency: 3 }
     );
 
     return {

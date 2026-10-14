@@ -1,8 +1,9 @@
 import { load } from 'cheerio';
 
+import type { DataItem } from '@/types';
 import got from '@/utils/got';
 
-export async function getFullText(item) {
+export async function getFullText(item: DataItem & { link: string }) {
     if (item.link.startsWith('https://www.youtube.com/')) {
         return item;
     }
@@ -20,10 +21,20 @@ export async function getFullText(item) {
     content('.dictionary-box').remove();
     // Those are for "延伸閱讀" links, which are not part of the main article.
     content('.moreArticle').remove();
+    content('.lineAd, .advertiseInArticlePad').remove();
+    content('.articlekeywordGroup').remove();
 
     const topImage = content('.fullPic').html();
+    const authors = [
+        ...new Set(
+            content('.paragraph a.author')
+                .toArray()
+                .map((author) => content(author).text())
+        ),
+    ];
 
     item.description = (topImage === null ? '' : topImage) + content('.paragraph').eq(0).html();
+    item.author = authors.length ? authors.join(', ') : undefined;
     item.category = [
         ...content("meta[property='article:tag']")
             .toArray()

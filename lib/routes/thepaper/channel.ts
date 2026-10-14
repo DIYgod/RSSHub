@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
@@ -42,7 +43,7 @@ async function handler(ctx) {
     const id = ctx.req.param('id');
     const channelUrl = `https://m.thepaper.cn/channel/${id}`;
     const channelUrlResp = await ofetch(channelUrl);
-    const $ = load(channelUrlResp.data);
+    const $ = load(channelUrlResp);
     const nextData = $('#__NEXT_DATA__').text();
     const channelUrlData = JSON.parse(nextData);
 
@@ -54,12 +55,12 @@ async function handler(ctx) {
     });
     const list = resp.data.list;
 
-    const items = await Promise.all(list.map((item) => utils.ProcessItem(item, ctx)));
+    const items = await pMap(list, (item) => utils.ProcessItem(item, ctx), { concurrency: 3 });
     return {
         title: `澎湃新闻频道 - ${utils.ChannelIdToName(id, channelUrlData)}`,
         link: channelUrl,
         item: items,
         itunes_author: '澎湃新闻',
-        image: utils.ExtractLogo(channelUrlResp),
+        image: utils.ExtractLogo($),
     };
 }

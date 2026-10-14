@@ -1,7 +1,9 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
+import { getRouteLimit } from '@/utils/route-limit';
 
 import { renderPostDetail, rootUrl } from './util';
 
@@ -42,21 +44,26 @@ async function handler(ctx) {
     const author = $('meta[property="og:author"]').attr('content');
 
     let items = $('.tittle_data')
-        .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 50)
+        .slice(0, getRouteLimit(ctx, 50))
         .toArray()
         .map((item) => {
             const $item = $(item);
 
             const a = $item.find('a').first();
 
+            const href = a.attr('href');
+            if (!href) {
+                return;
+            }
             return {
-                title: a.text().trim(),
-                link: `${rootUrl}/${a.attr('href')}`,
+                title: a.attr('title') || a.text(),
+                link: new URL(href, rootUrl).href,
                 author,
             };
-        });
+        })
+        .filter((item) => item !== undefined);
 
-    items = await Promise.all(items.map(async (item) => await renderPostDetail(item)));
+    items = await pMap(items, renderPostDetail, { concurrency: 3 });
 
     return {
         title: `淘股吧 - ${author}`,

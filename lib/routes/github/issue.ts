@@ -56,7 +56,7 @@ async function handler(ctx) {
     const repo = ctx.req.param('repo');
     const state = ctx.req.param('state');
     const labels = ctx.req.param('labels');
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 100;
+    const limit = Math.max(100, Number.parseInt(ctx.req.query('limit') ?? '') || 100);
 
     const host = `https://github.com/${user}/${repo}/issues`;
     const url = `https://api.github.com/repos/${user}/${repo}/issues`;
@@ -85,7 +85,6 @@ async function handler(ctx) {
     const data = response.data;
 
     return {
-        allowEmpty: true,
         title: `${user}/${repo}${state ? ' ' + state.replace(/^\S/, (s) => s.toUpperCase()) : ''} Issues${labels ? ' - ' + labels : ''}`,
         link: host,
         item: data

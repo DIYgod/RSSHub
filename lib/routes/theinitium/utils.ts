@@ -1,5 +1,6 @@
 import { load } from 'cheerio';
 import type { Context } from 'hono';
+import pMap from 'p-map';
 
 import { config } from '@/config';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
@@ -161,8 +162,9 @@ function cleanGhostHtml(html: string): string {
 export async function postsToItems(posts: GhostPost[]) {
     const memberCookie = config.initium?.memberCookie;
 
-    const items = await Promise.all(
-        posts.map(async (post) => {
+    const items = await pMap(
+        posts,
+        async (post) => {
             const authors = post.authors?.map((a) => stripLangSuffix(a.name)) ?? [];
             const categories = post.tags?.filter((t) => t.visibility === 'public').map((t) => stripLangSuffix(t.name)) ?? [];
 
@@ -170,7 +172,7 @@ export async function postsToItems(posts: GhostPost[]) {
 
             // For paid articles with truncated content, scrape full text if cookie available
             if (!post.access && memberCookie) {
-                const fullHtml = (await cache.tryGet(`theinitium:full:${post.slug}`, () => scrapeFullArticle(post.url, memberCookie) as Promise<string>, config.cache.contentExpire)) as string | null;
+                const fullHtml = await cache.tryGet(`theinitium:full:${post.slug}`, () => scrapeFullArticle(post.url, memberCookie), config.cache.contentExpire);
                 if (fullHtml) {
                     description = cleanGhostHtml(fullHtml);
                 }
@@ -178,16 +180,17 @@ export async function postsToItems(posts: GhostPost[]) {
 
             return {
                 title: post.title,
-                author: authors.join(', ') || post.primary_author?.name || '',
+                author: authors.join(', ') || post.primary_author?.name,
                 category: categories,
                 description,
                 link: post.url,
-                pubDate: parseDate(post.published_at),
-                updated: parseDate(post.updated_at),
+                pubDate: post.published_at ? parseDate(post.published_at) : undefined,
+                updated: post.updated_at ? parseDate(post.updated_at) : undefined,
                 guid: post.uuid,
-                banner: post.feature_image ?? undefined,
+                banner: post.feature_image,
             };
-        })
+        },
+        { concurrency: 3 }
     );
 
     return items;

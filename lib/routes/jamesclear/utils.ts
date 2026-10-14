@@ -15,7 +15,7 @@ export function processItem(item: any): DataItem {
         title: item.title.rendered,
         link: item.link,
         description: item.content.rendered,
-        pubDate: parseDate(item.date_gmt),
+        pubDate: item.date_gmt && Number.isFinite(parseDate(item.date_gmt, 'YYYY-MM-DDTHH:mm:ss', true).getTime()) ? parseDate(`${item.date_gmt}Z`) : undefined,
         author: 'James Clear',
         guid: item.guid.rendered,
     };

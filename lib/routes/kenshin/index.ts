@@ -1,5 +1,6 @@
 import { load } from 'cheerio';
 import type { Context } from 'hono';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
@@ -14,7 +15,7 @@ export const route: Route = {
     name: '分类',
     maintainers: ['nczitzk'],
     description: `::: tip
-如 \`藝能新聞\` 的 \`日劇新聞\` 分类，路由为 \`/jnews/news_drama\`
+如 \`藝能新聞\` 的 \`日劇新聞\` 分类，路由为 \`/kenshin/jnews/news_drama\`
 :::
 
 藝能新聞 jnews
@@ -62,32 +63,39 @@ async function handler(ctx: Context) {
 
     const $ = load(response);
 
-    const list = $('.entry-title a')
+    const list = $('.entry-title a, a.loop-link:has(h2.post-title)')
         .slice(0, 10)
         .toArray()
         .map((item): DataItem & { link: string } => {
             const $item = $(item);
             return {
-                title: $item.text(),
+                title: $item.find('h2.post-title').text() || $item.text(),
                 link: $item.attr('href')!,
             };
         });
 
-    const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link, async () => {
+    const items = await pMap(
+        list,
+        async (item) => {
+            const detail = await cache.tryGet(`kenshin:detail:${item.link}`, async () => {
                 const detailResponse = await ofetch(item.link);
                 const content = load(detailResponse);
 
+                const category = content('a[rel="tag"]')
+                    .toArray()
+                    .map((tag) => content(tag).text());
+                content('.sharing-options, .cat-tags').remove();
                 content('.fb-comments').prev().remove();
                 content('.code-block, .fb-comments').remove();
 
-                item.description = content('.entry-content').html();
-                item.pubDate = parseDate(content('meta[property="article:published_time"]').attr('content')!);
-
-                return item;
-            })
-        )
+                const description = content('.entry-content, .post-page-content').first().html();
+                const sourceDate = content('meta[property="article:published_time"]').attr('content');
+                const date = sourceDate ? parseDate(sourceDate) : undefined;
+                return { description, category, pubDate: date && Number.isFinite(date.getTime()) ? date : undefined };
+            });
+            return { ...item, ...detail };
+        },
+        { concurrency: 3 }
     );
 
     return {

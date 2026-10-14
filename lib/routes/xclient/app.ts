@@ -1,9 +1,11 @@
 import { load } from 'cheerio';
 import type { Context } from 'hono';
+import { html } from 'hono/html';
 
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/app/:name',
@@ -31,10 +33,12 @@ async function handler(ctx: Context) {
             .toArray()
             .map((item) => {
                 const td = $(item).find('td');
+                const rawDate = td.eq(2).text();
+                const pubDate = rawDate ? timezone(parseDate(rawDate, 'YYYY-MM-DD', true), 8) : undefined;
                 return {
                     title: td.eq(0).text(),
-                    description: `版本号：${td.eq(0).text()}<br>更新日期：${td.eq(2).text()}<br>文件大小：${td.eq(3).text()}`,
-                    pubDate: parseDate(td.eq(2).text()),
+                    description: html`文件大小：${td.eq(3).text()}`.toString(),
+                    pubDate: pubDate && Number.isFinite(pubDate.getTime()) ? pubDate : undefined,
                     link,
                     guid: td.eq(0).text(),
                 };

@@ -8,10 +8,19 @@ import { parseDate } from '@/utils/parse-date';
 
 const host = 'https://dribbble.com';
 
+async function fetchHtml(url: string): Promise<string> {
+    const response = await ofetch.raw<string, 'text'>(url, { responseType: 'text' });
+    const html = response._data ?? '';
+    if (response.status === 202 && html.includes('awsWafCookieDomainList')) {
+        throw new Error('Dribbble returned an AWS WAF challenge (HTTP 202). Anonymous source access is currently blocked.');
+    }
+    return html;
+}
+
 // Refactored function to load a link asynchronously
 async function loadContent(link) {
     // Make a GET request to the specified  and retrieve the response
-    const response = await ofetch(link);
+    const response = await fetchHtml(link);
     const $ = load(response);
 
     const shotData = JSON.parse(
@@ -19,6 +28,10 @@ async function loadContent(link) {
             .text()
             .match(/shotData:\s(\{.+?\}),\n/)?.[1] ?? '{}'
     );
+
+    if (!shotData.shotUser) {
+        throw new Error('Dribbble did not provide shot metadata. The source page may be blocked or its format may have changed.');
+    }
 
     // Join multiple shots together by selecting elements with class 'media-shot' or 'main-shot' or 'block-media-wrapper'
     // 'block-media-wrapper' is a new class of dribbble
@@ -162,7 +175,7 @@ function ProcessFeed(list) {
  */
 const getData = async (url, title) => {
     // Make a GET request to the specified URL
-    const response = await ofetch(url);
+    const response = await fetchHtml(url);
 
     // Load the response data into a cheerio object
     const $ = load(response);

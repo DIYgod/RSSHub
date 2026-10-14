@@ -5,6 +5,7 @@ import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
 export const route: Route = {
     path: '/research',
@@ -22,11 +23,25 @@ export const route: Route = {
     url: 'www.anthropic.com/research',
 };
 
+type PublicationPost = { title: string; slug: { current: string }; publishedOn: string };
+type PublicationSection = { title?: string; posts?: PublicationPost[] };
+
+function findPageSections(value: unknown): PublicationSection[] {
+    if (Array.isArray(value)) {
+        return value.flatMap((item) => findPageSections(item));
+    }
+    if (!value || typeof value !== 'object') {
+        return [];
+    }
+    const page = (value as { page?: { sections?: PublicationSection[] } }).page;
+    return Array.isArray(page?.sections) ? page.sections : Object.values(value).flatMap((item) => findPageSections(item));
+}
+
 async function handler(ctx) {
     const link = 'https://www.anthropic.com/research';
     const response = await ofetch(link);
     const $ = load(response);
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 20;
+    const limit = getRouteLimit(ctx, 20);
 
     // self.__next_f.push
     const regexp = /self\.__next_f\.push\((.+)\)/;
@@ -67,7 +82,7 @@ async function handler(ctx) {
             };
         });
 
-    const sections = fd.flatMap((d) => (Array.isArray(d.data) ? d.data : [])).flatMap((item) => item?.page?.sections ?? []);
+    const sections = fd.flatMap((d) => findPageSections(d.data));
     const publicationSections = sections.filter((section) => section?.title === 'Publications');
     const posts = publicationSections
         .flatMap((section) => section?.posts ?? [])

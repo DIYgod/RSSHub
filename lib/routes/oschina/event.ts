@@ -1,188 +1,79 @@
-import type { Cheerio, CheerioAPI } from 'cheerio';
 import { load } from 'cheerio';
-import type { Element } from 'domhandler';
 import type { Context } from 'hono';
+import pMap from 'p-map';
 
-import type { Data, DataItem, Language, Route } from '@/types';
+import type { Data, DataItem, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
-import { renderDescription } from './templates/description';
+import { apiBaseUrl, getLimit } from './utils';
+
+interface EventResponse {
+    code: number;
+    message: string;
+    result: {
+        id: number;
+        topic: string;
+        description: string;
+        createTime: string;
+        updateTime: string;
+        imgUrl: string;
+        province: string;
+        city: string;
+        userVo: { name: string; spaceUrl: string; portraitUrl: string };
+    };
+}
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { category = 'latest' } = ctx.req.param();
-    const limit = Number(ctx.req.query('limit') ?? '30');
-
+    const limit = getLimit(ctx.req.query('limit'), 30);
     const baseUrl = 'https://www.oschina.net';
-    const targetUrl: string = new URL(`event?tab=${category}`, baseUrl).href;
-    const apiUrl: string = new URL('action/ajax/get_more_event_list', baseUrl).href;
-
-    const response = await ofetch(apiUrl, {
+    const targetUrl = new URL(`event?tab=${category}`, baseUrl).href;
+    const response = await ofetch(new URL('action/ajax/get_more_event_list', baseUrl).href, {
         method: 'post',
-        body: {
-            tab: category,
-        },
+        body: { tab: category },
     });
-    const $: CheerioAPI = load(response);
-
-    const targetResponse = await ofetch(targetUrl);
-    const $target: CheerioAPI = load(targetResponse);
-    const language = ($target('html').attr('lang') ?? 'zh-CN') as Language;
-
-    let items: DataItem[] = $('div.event-item')
+    const $ = load(response);
+    const list = $('div.event-item')
         .slice(0, limit)
         .toArray()
-        .map((el) => {
-            const $el: Cheerio<Element> = $(el);
-
-            const title: string = $el.find('a.summary').text();
-            const image: string | undefined = $el.find('header.item-banner img').attr('data-delay');
-            const description: string = renderDescription({
-                images: image
-                    ? [
-                          {
-                              src: image,
-                              alt: title,
-                          },
-                      ]
-                    : undefined,
-                description: $el.html() ?? undefined,
-            });
-            const pubDateStr: string | undefined = $el.find('footer.when-where label').first().text();
-            const linkUrl: string | undefined = $el.find('a.summary').attr('href');
-            const categoryEl: Cheerio<Element> = $el.find('footer.when-where label').last();
-            const categories: string[] = [categoryEl.text()];
-            const authorEls: Element[] = $el.find('div.sponsor').toArray();
-            const authors: DataItem['author'] = authorEls.map((authorEl) => {
-                const $authorEl: Cheerio<Element> = $(authorEl);
-
+        .flatMap((element) => {
+            const item = $(element);
+            const link = item.find('a.summary').attr('href') ?? /window\.open\(['"]([^'"]+)['"]/.exec(item.attr('onclick') ?? '')?.[1];
+            return link ? { link: new URL(link, baseUrl).href } : [];
+        });
+    const items: DataItem[] = await pMap(
+        list,
+        async (item) => {
+            const eventId = new URL(item.link).pathname.split('/', 3)[2];
+            const details = await cache.tryGet(`oschina:event:details:${eventId}`, async () => {
+                const response = await ofetch<EventResponse>(`${apiBaseUrl}/oschinapi/event/id`, { query: { id: eventId } });
+                if (response.code !== 200) {
+                    throw new Error(`Unable to fetch OSCHINA event ${eventId}: ${response.message}`);
+                }
+                const event = response.result;
                 return {
-                    name: $authorEl.find('span').text(),
-                    avatar: $authorEl.find('img').attr('data-delay'),
+                    title: event.topic,
+                    description: event.description,
+                    pubDate: timezone(parseDate(event.createTime), 8),
+                    updated: timezone(parseDate(event.updateTime), 8),
+                    image: event.imgUrl,
+                    category: [event.province + event.city].filter(Boolean),
+                    author: [{ name: event.userVo.name, url: event.userVo.spaceUrl, avatar: event.userVo.portraitUrl }],
                 };
             });
-            const upDatedStr: string | undefined = pubDateStr;
-
-            const processedItem: DataItem = {
-                title,
-                pubDate: pubDateStr ? parseDate(pubDateStr) : undefined,
-                link: linkUrl,
-                category: categories,
-                author: authors,
-                content: {
-                    html: description,
-                    text: description,
-                },
-                image,
-                banner: image,
-                updated: upDatedStr ? parseDate(upDatedStr) : undefined,
-                language,
-            };
-
-            return processedItem;
-        });
-
-    items = (
-        await Promise.all(
-            items.map((item) => {
-                if (!item.link) {
-                    return item;
-                }
-
-                return cache.tryGet(item.link, async (): Promise<DataItem> => {
-                    const detailResponse = await ofetch(item.link!);
-                    const $$: CheerioAPI = load(detailResponse);
-
-                    const title: string = $$('h1').text();
-                    const image: string | undefined = $$('div.event-img img').attr('src');
-                    const description: string = renderDescription({
-                        images: image
-                            ? [
-                                  {
-                                      src: image,
-                                      alt: title,
-                                  },
-                              ]
-                            : undefined,
-                        description: $$('div.event-detail').html() ?? undefined,
-                    });
-                    const pubDateStr: string | undefined = $$('span.box-fl')
-                        .filter((_, el) => $$(el).text().includes('时间'))
-                        .next()
-                        .text()
-                        ?.split('至', 1)[0]
-                        ?.trim();
-                    const linkUrl: string | undefined = $$('val[data-name="weixinUrl"]').attr('data-value');
-                    const categories: string[] = [...(item.category ?? []), $$('div.cost span.c').text()].filter(Boolean);
-                    const authorEls: Element[] = $$('div.user-list div.box-aw').toArray();
-                    const authors: DataItem['author'] = authorEls.map((authorEl) => {
-                        const $$authorEl: Cheerio<Element> = $$(authorEl);
-
-                        return {
-                            name: $$authorEl.find('h3').text(),
-                            url: $$authorEl.find('a').attr('href'),
-                            avatar: $$authorEl.prev().find('img').attr('src'),
-                        };
-                    });
-                    const upDatedStr: string | undefined = pubDateStr;
-
-                    let processedItem: DataItem = {
-                        title,
-                        description,
-                        pubDate: pubDateStr ? parseDate(pubDateStr) : item.pubDate,
-                        link: linkUrl ?? item.link,
-                        category: categories,
-                        author: authors,
-                        content: {
-                            html: description,
-                            text: description,
-                        },
-                        image,
-                        banner: image,
-                        updated: upDatedStr ? parseDate(upDatedStr) : item.updated,
-                        language,
-                    };
-
-                    const extraLinkEls: Element[] = $$('div.aside-list ul li').toArray();
-                    const extraLinks = extraLinkEls
-                        .map((extraLinkEl) => {
-                            const $$extraLinkEl: Cheerio<Element> = $$(extraLinkEl);
-
-                            return {
-                                url: $$extraLinkEl.find('a.list-item').attr('href'),
-                                type: 'related',
-                                content_html: $$extraLinkEl.find('a.list-item').html(),
-                            };
-                        })
-                        .filter((_): _ is { url: string; type: string; content_html: string } => true);
-
-                    if (extraLinks) {
-                        processedItem = {
-                            ...processedItem,
-                            _extra: {
-                                links: extraLinks,
-                            },
-                        };
-                    }
-
-                    return {
-                        ...item,
-                        ...processedItem,
-                    };
-                });
-            })
-        )
-    ).filter((_): _ is DataItem => true);
-
+            return { ...details, link: item.link };
+        },
+        { concurrency: 3 }
+    );
     return {
-        title: $target('title').text(),
-        description: $target('meta[name="description"]').attr('content'),
+        title: `OSCHINA - ${category === 'recommend' ? '强力推荐' : '最新活动'}`,
         link: targetUrl,
         item: items,
-        allowEmpty: true,
-        language,
+        language: 'zh-CN',
         id: targetUrl,
     };
 };
@@ -216,22 +107,13 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['www.oschina.net'],
-            target: (_, url) => {
-                const urlObj: URL = new URL(url);
-                const category: string | undefined = urlObj.searchParams.get('tab') ?? undefined;
-
-                return `/oschina/event${category ? `/${category}` : ''}`;
-            },
-        },
-        {
             title: '强力推荐',
-            source: ['www.oschina.net'],
+            source: ['www.oschina.net/event'],
             target: '/event/recommend',
         },
         {
             title: '最新活动',
-            source: ['www.oschina.net'],
+            source: ['www.oschina.net/event'],
             target: '/event/latest',
         },
     ],

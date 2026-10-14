@@ -16,6 +16,9 @@ export const route: Route = {
         embed: '默认为开启内嵌视频, 任意值为关闭',
     },
     categories: ['social-media'],
+    features: {
+        requirePuppeteer: true,
+    },
 };
 
 async function handler(ctx) {
@@ -40,7 +43,7 @@ async function handler(ctx) {
         },
     });
 
-    const vlist = [...response.data.data.list.vlist];
+    const vlist = response.data.data.list.vlist;
     const pageTotal = Math.ceil(response.data.data.page.count / response.data.data.page.ps);
 
     const getPage = async (pageId) => {

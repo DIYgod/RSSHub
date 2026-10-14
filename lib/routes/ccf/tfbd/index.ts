@@ -21,7 +21,11 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['tfbd.ccf.org.cn/tfbd/:caty/:id', 'tfbd.ccf.org.cn/'],
+            source: ['tfbd.ccf.org.cn/tfbd/:caty/:id'],
+        },
+        {
+            source: ['tfbd.ccf.org.cn/'],
+            target: '/tfbd/xwdt/tzgg',
         },
     ],
     name: '大数据专家委员会',

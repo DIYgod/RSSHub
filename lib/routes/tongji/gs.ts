@@ -1,9 +1,11 @@
-import { load } from 'cheerio';
+import { type Cheerio, load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/gs',
@@ -28,15 +30,20 @@ export const route: Route = {
     handler,
     url: 'gs.tongji.edu.cn/tzgg.htm',
 };
-
-async function getNoticeContent(item) {
-    const response = await got(item.link);
+async function getNoticeContent(link: string) {
+    const response = await got(link);
     const $ = load(response.body);
-    const content = $('#vsb_content').html();
-    item.description = content;
-    return item;
+    const main = $('.v_news_content').first();
+    const content = main.length ? main : $('#vsb_content');
+    const attachments = mapElements(
+        content
+            .closest('form')
+            .find('ul')
+            .filter((_, element) => !content.find(element).length && $(element).find('a[href*="news.DownloadAttachUrl"]').length > 0),
+        (_, element) => $.html(element)
+    ).join('');
+    return { description: (content.html() ?? '') + attachments || undefined };
 }
-
 async function handler() {
     const baseUrl = 'https://gs.tongji.edu.cn';
     const response = await got(`${baseUrl}/tzgg.htm`);
@@ -46,15 +53,13 @@ async function handler() {
         .find('li')
         .toArray()
         .map((item) => {
-            const title = $(item).find('a').attr('title');
+            const title = $(item).find('a').attr('title')!;
             const linkRaw = $(item).find('a').attr('href');
             const link = linkRaw!.startsWith('http') ? linkRaw : `${baseUrl}/${linkRaw}`;
             const pubDate = $(item).find('span').text();
-            return { title, link, pubDate: parseDate(pubDate, 'YYYY-MM-DD') };
+            return { title, link, pubDate: timezone(parseDate(pubDate, 'YYYY-MM-DD'), 8) };
         });
-
-    const itemsWithContent = await Promise.all(items.map((item) => cache.tryGet(item.link!, () => getNoticeContent(item))));
-
+    const itemsWithContent = await pMap(items, async (item) => ({ ...item, ...(await cache.tryGet(`tongji:gs:article:${item.link}`, () => getNoticeContent(item.link!))) }), { concurrency: 3 });
     return {
         title: '同济大学研究生院',
         link: baseUrl,
@@ -64,4 +69,7 @@ async function handler() {
         logo: 'https://upload.wikimedia.org/wikipedia/zh/f/f8/Tongji_University_Emblem.svg',
         item: itemsWithContent,
     };
+}
+function mapElements<T, U>(selection: Cheerio<T>, mapper: (index: number, node: T) => U | U[] | null | undefined): U[] {
+    return selection.toArray().flatMap((node, index) => mapper(index, node) ?? []);
 }

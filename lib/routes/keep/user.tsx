@@ -2,6 +2,7 @@ import { renderToString } from 'hono/jsx/dom/server';
 
 import type { Data, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/user/:id',
@@ -18,7 +19,8 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['gotokeep.com/users/:id'],
+            source: ['show.gotokeep.com/users/:id'],
+            target: '/user/:id',
         },
     ],
     name: '运动日记',
@@ -35,11 +37,6 @@ async function handler(ctx): Promise<Data> {
         },
     });
 
-    // check user have post or not
-    if (response.data.entries.length === 0) {
-        throw new Error('该用户运动日记为空');
-    }
-
     const items = response.data.entries.flatMap((entry) =>
         entry.entries.map((item) => {
             let images: string[] = [];
@@ -49,29 +46,38 @@ async function handler(ctx): Promise<Data> {
                 images = [item.meta.picture];
             }
 
+            const videoUrl = item.videoBitRateUrls?.[0];
+            const poster = videoUrl ? item.images?.[0] : undefined;
+            if (poster) {
+                images = images.filter((image) => image !== poster);
+            }
+
             const minute = Math.floor(item.meta.secondDuration / 60);
             const second = item.meta.secondDuration - minute * 60;
             return {
-                title: item.meta.title.trim(),
-                pubDate: item.created,
+                title: item.meta.title,
+                pubDate: item.created ? parseDate(item.created) : undefined,
                 link: `https://show.gotokeep.com/entries/${item.id}`,
                 author: item.author.username,
-                description: renderDescription(item, minute, second, images),
+                description: renderDescription(item, minute, second, images, videoUrl, poster),
+                enclosure_url: videoUrl,
+                enclosure_type: videoUrl ? 'video/mp4' : undefined,
             };
         })
     );
 
     return {
-        title: `${items[0].author} 的 Keep 动态`,
+        title: `${items[0]?.author ?? id} 的 Keep 动态`,
         link: `https://show.gotokeep.com/users/${id}`,
         language: 'zh-CN',
         item: items,
     };
 }
 
-const renderDescription = (item: any, minute: number, second: number, images: string[]) => renderToString(<KeepDescription item={item} minute={minute} second={second} images={images} />);
+const renderDescription = (item: any, minute: number, second: number, images: string[], videoUrl?: string, poster?: string) =>
+    renderToString(<KeepDescription item={item} minute={minute} second={second} images={images} videoUrl={videoUrl} poster={poster} />);
 
-const KeepDescription = ({ item, minute, second, images }: { item: any; minute: number; second: number; images: string[] }) => (
+const KeepDescription = ({ item, minute, second, images, videoUrl, poster }: { item: any; minute: number; second: number; images: string[]; videoUrl?: string; poster?: string }) => (
     <>
         项目：
         {item.meta.name === item.meta.workoutName ? item.meta.name : `${item.meta.name} - ${item.meta.workoutName}`}
@@ -83,6 +89,7 @@ const KeepDescription = ({ item, minute, second, images }: { item: any; minute: 
                 备注：{item.content}
             </>
         ) : null}
+        {videoUrl ? <video controls src={videoUrl} poster={poster} /> : null}
         {images ? (
             <>
                 <br />

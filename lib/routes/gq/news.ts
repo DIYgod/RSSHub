@@ -4,6 +4,7 @@ import type { Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/parse-date';
 import parser from '@/utils/rss-parser';
 
 const host = 'https://www.gq.com';
@@ -39,13 +40,19 @@ async function handler() {
             cache.tryGet(item.link!, async () => {
                 const data = await ofetch(item.link!);
                 const $ = load(data);
-                const description = $('#main-content');
+                const body = $('.article-body__content');
+                const description = body.length ? body : $('#main-content');
+                if (body.length) {
+                    description.first().prepend($('.lead-asset').first());
+                }
                 description.find('.article-body__footer').remove();
+                description.find('.content-header__accreditation').remove();
                 description.find('[class*="ContentHeaderContributorImage"]').remove();
                 description.find('h1').remove();
                 return {
                     title: item.title!,
-                    pubDate: item.pubDate,
+                    author: item.creator,
+                    pubDate: item.pubDate ? parseDate(item.pubDate) : undefined,
                     link: item.link,
                     category: item.categories,
                     description: description.html(),
@@ -57,6 +64,7 @@ async function handler() {
     return {
         title: 'GQ',
         link: host,
+        language: 'en-us' as const,
         description: `GQ is the global flagship of men's fashion, the arbiter of cool for anyone who sees the world through the lens of taste and style.`,
         item: items,
     };

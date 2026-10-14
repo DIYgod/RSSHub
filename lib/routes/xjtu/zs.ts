@@ -1,109 +1,112 @@
-import type { Cheerio, CheerioAPI } from 'cheerio';
-import { load } from 'cheerio';
-import type { Element } from 'domhandler';
+import { type Cheerio, type CheerioAPI, load } from 'cheerio';
+import { type AnyNode, cloneNode, Document, type Element } from 'domhandler';
 import type { Context } from 'hono';
+import pMap from 'p-map';
 
 import type { Data, DataItem, Language, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 import timezone from '@/utils/timezone';
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { category = 'zsxx1/zskx' } = ctx.req.param();
-    const limit = Number(ctx.req.query('limit') ?? '30');
-
+    const limit = getRouteLimit(ctx, 30);
     const baseUrl = 'https://zs.xjtu.edu.cn';
     const targetUrl = `${baseUrl}/${category}.htm`;
-
     const response = await ofetch(targetUrl);
     const $: CheerioAPI = load(response);
     const language = ($('html').attr('lang') ?? 'zh') as Language;
-
     let items: DataItem[] = $('section.TextList ul li')
         .slice(0, limit)
         .toArray()
         .map((el) => {
             const $el: Cheerio<Element> = $(el);
             const $aEl: Cheerio<Element> = $el.find('a.flex');
-
             const title: string = $aEl.text();
             const pubDateStr: string | undefined = $el.find('b').text();
             const linkUrl: string | undefined = $aEl.attr('href');
             const categoryEls: Element[] = $el.find('i.zc').toArray();
             const categories: string[] = [...new Set(categoryEls.map((el) => $(el).text()).filter(Boolean))];
-            const upDatedStr: string | undefined = pubDateStr;
-
             const processedItem: DataItem = {
                 title,
                 pubDate: pubDateStr ? parseDate(pubDateStr) : undefined,
                 link: linkUrl ? new URL(linkUrl, targetUrl).href : undefined,
                 category: categories,
-                updated: upDatedStr ? parseDate(upDatedStr) : undefined,
                 language,
             };
-
             return processedItem;
         });
-
     items = (
-        await Promise.all(
-            items.map((item) => {
+        await pMap(
+            items,
+            (item) => {
                 if (!item.link) {
                     return item;
                 }
-
-                return cache.tryGet(item.link, async (): Promise<DataItem> => {
-                    const detailResponse = await ofetch(item.link!);
-                    const $$: CheerioAPI = load(detailResponse);
-
-                    const title: string = $$('div.show01 h5').text();
-                    const description: string | undefined = $$('div.v_news_content').html() ?? undefined;
-                    const pubDateStr: string | undefined = $$('div.show01 i')
-                        .text()
-                        ?.match(/(\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}:\d{2})/)?.[1];
-                    const categoryEls: Element[] = $$('div.mianbao a').slice(1).toArray();
-                    const categories: string[] = [...new Set(categoryEls.map((el) => $$(el).text()).filter(Boolean))];
-                    const upDatedStr: string | undefined = pubDateStr;
-
-                    const processedItem: DataItem = {
-                        title,
-                        description,
-                        pubDate: pubDateStr ? timezone(parseDate(pubDateStr), 8) : item.pubDate,
-                        category: categories,
-                        content: {
-                            html: description,
-                            text: description,
-                        },
-                        updated: upDatedStr ? timezone(parseDate(upDatedStr), 8) : item.updated,
-                        language,
-                    };
-
-                    return {
-                        ...item,
-                        ...processedItem,
-                    };
-                });
-            })
+                return mapResolvedValue(
+                    cache.tryGet(`xjtu:zs:content:v5:${item.link}`, async (): Promise<DataItem> => {
+                        const detailResponse = await ofetch(item.link!);
+                        const $$: CheerioAPI = load(detailResponse);
+                        const title: string = $$('div.show01 h5').text();
+                        const body = $$('div.v_news_content').first();
+                        if (!body.html()?.trim()) {
+                            throw new Error(`Unable to find article content at ${item.link}`);
+                        }
+                        const attachmentLinks = new Set(mapElements(body.find('a[href]'), (_, attachment) => $$(attachment).attr('href')));
+                        $$('[name="_newscontent_fromname"] a[href*="download.jsp"]')
+                            .filter((_, attachment) => {
+                                const href = $$(attachment).attr('href')!;
+                                if ($$(attachment).closest('.v_news_content').length || attachmentLinks.has(href)) {
+                                    return false;
+                                }
+                                attachmentLinks.add(href);
+                                return true;
+                            })
+                            .each((_, attachment) => {
+                                const attachmentWrapper1 = $$('<p/>');
+                                attachmentWrapper1.append(copyContent($$(attachment), $$));
+                                body.append(attachmentWrapper1);
+                            });
+                        const description: string | undefined = body.html() ?? undefined;
+                        const pubDateStr: string | undefined = $$('div.show01 i')
+                            .text()
+                            ?.match(/(\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}:\d{2})/)?.[1];
+                        const categoryEls: Element[] = $$('div.mianbao a').slice(1).toArray();
+                        const categories: string[] = [...new Set(categoryEls.map((el) => $$(el).text()).filter(Boolean))];
+                        const processedItem: DataItem = {
+                            title,
+                            description,
+                            pubDate: pubDateStr ? timezone(parseDate(pubDateStr), 8) : undefined,
+                            category: categories,
+                            content: {
+                                html: description,
+                                text: body.text(),
+                            },
+                        };
+                        return processedItem;
+                    }),
+                    (detail) => ({ ...item, ...detail, pubDate: detail.pubDate ?? item.pubDate, language })
+                );
+            },
+            { concurrency: 3, stopOnError: false }
         )
     ).filter((_): _ is DataItem => true);
-
     const title: string = $('title').text();
-
+    const image = $('div.logoimg img').attr('src');
     return {
         title,
         description: title.split(/-/, 1)[0],
         link: targetUrl,
         item: items,
-        allowEmpty: true,
-        image: $('div.logoimg img').attr('src'),
+        image: image ? new URL(image, targetUrl).href : undefined,
         author: $('META[Name="keywords"]').attr('Content'),
         language,
         id: targetUrl,
     };
 };
-
 export const route: Route = {
     path: '/zs/:category{.+}?',
     name: '本科招生网',
@@ -160,10 +163,24 @@ export const route: Route = {
             source: ['zs.xjtu.edu.cn/:category'],
             target: (params) => {
                 const category: string = params.category;
-
                 return `/xjtu/zs${category ? `/${category}` : ''}`;
             },
         },
     ],
     view: ViewType.Articles,
 };
+async function mapResolvedValue<T, U>(promise: Promise<T>, mapper: (value: T) => U | Promise<U>): Promise<U> {
+    const value = await promise;
+    return mapper(value);
+}
+function mapElements<T, U>(selection: Cheerio<T>, mapper: (index: number, node: T) => U | U[] | null | undefined): U[] {
+    return selection.toArray().flatMap((node, index) => mapper(index, node) ?? []);
+}
+function copyContent<T extends AnyNode>(selection: Cheerio<T>, $: CheerioAPI): Cheerio<T> {
+    const nodes = selection.toArray().map((node) => cloneNode(node, true));
+    const root = new Document(nodes);
+    for (const node of nodes) {
+        node.parent = root;
+    }
+    return $(nodes);
+}

@@ -21,7 +21,7 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['roll.caijing.com.cn/'],
+            source: ['roll.caijing.com.cn/index1.html', 'roll.caijing.com.cn/'],
         },
     ],
     name: '滚动新闻',
@@ -31,7 +31,7 @@ export const route: Route = {
 };
 
 async function handler() {
-    const baseUrl = 'https://roll.caijing.com.cn';
+    const baseUrl = 'http://roll.caijing.com.cn';
     const response = await got(`${baseUrl}/json/lists1.json`, {
         searchParams: {
             time: Math.random(),
@@ -41,7 +41,6 @@ async function handler() {
     const list = response.data.map((item) => ({
         title: item.title,
         link: item.url.replace('http://', 'https://'),
-        pubDate: timezone(parseDate(item.published, 'MM-DD HH:mm'), 8),
         category: item.cat,
     }));
 
@@ -50,6 +49,8 @@ async function handler() {
             cache.tryGet(item.link, async () => {
                 const response = await got(item.link);
                 const $ = load(response.data);
+                const publishedTime = $('#pubtime_baidu').text();
+                item.pubDate = publishedTime ? timezone(parseDate(publishedTime, 'YYYY-MM-DD HH:mm:ss'), 8) : undefined;
                 item.author = $('.editor').text().trim() || $('#editor_baidu').text().trim().replaceAll(/[()]/g, '');
                 item.description = $('.article-content').html();
                 item.category = [
@@ -66,7 +67,7 @@ async function handler() {
     return {
         title: '滚动新闻-财经网',
         image: 'https://www.caijing.com.cn/favicon.ico',
-        link: baseUrl,
+        link: `${baseUrl}/index1.html`,
         item: items,
     };
 }

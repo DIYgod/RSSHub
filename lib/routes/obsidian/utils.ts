@@ -12,7 +12,7 @@ type CommunitySearchConfig = {
 type CommunitySearchHit = {
     document: {
         authors?: string[];
-        github_created_at?: string;
+        created_at?: string;
         github_updated_at?: string;
         id: string;
         latest_release_at?: string;
@@ -44,7 +44,7 @@ export async function buildCommunityFeed(type: CommunityEntryType): Promise<Data
             per_page: hitsPerPage,
             q: '*',
             query_by: 'name,authors,short_desc',
-            sort_by: 'github_created_at:desc',
+            sort_by: 'created_at:desc,sort_id:asc',
         },
     });
 
@@ -88,7 +88,7 @@ function buildItem(document: CommunitySearchHit['document']): DataItem {
         description: document.short_desc,
         link: `https://community.obsidian.md/${document.type}s/${document.slug}`,
         guid: `${document.type}:${document.id}`,
-        pubDate: document.github_created_at ? parseDate(document.github_created_at) : undefined,
+        pubDate: document.created_at ? parseDate(document.created_at) : undefined,
         updated: document.latest_release_at ? parseDate(document.latest_release_at) : document.github_updated_at ? parseDate(document.github_updated_at) : undefined,
         author: document.authors?.join(', '),
         category: document.tags,

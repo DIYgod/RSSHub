@@ -42,11 +42,11 @@ async function handler() {
             const item = $(el);
 
             const id = item.find('a').attr('href')!.slice(17, -1);
+            const publishedDate = item.find('.datetime').text();
             return {
-                title: item.find('span').text().trim(),
-                description: item.find('span').text().trim(),
+                title: item.find('span').text(),
                 link: 'http://www.yjsswjt.com/list.jsp?id=' + id,
-                pubDate: parseDate(item.find('.datetime').text(), 'YYYY.MM.DD'),
+                pubDate: publishedDate.trim() ? parseDate(publishedDate, 'YYYY.MM.DD') : undefined,
             };
         }),
     };

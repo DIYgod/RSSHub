@@ -1,4 +1,7 @@
-import type { Route } from '@/types';
+import pMap from 'p-map';
+
+import InvalidParameterError from '@/errors/types/invalid-parameter';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -34,27 +37,31 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const type = ctx.req.param('type');
+    const type = ctx.req.param('type') ?? '0';
+    if (!Object.hasOwn(typeMap, type)) {
+        throw new InvalidParameterError('Invalid notice type: use 0 (all), 1 (other), or 2 (rule changes).');
+    }
     const url = `https://open.dangdang.com/op-api/developer-platform/document/menu/list?categoryId=3&type=${type > 0 ? typeMap[type] : ''}`;
     const response = await got({ method: 'get', url });
 
-    const list = response.data.data.documentMenu.map((item) => ({
+    const list: Array<DataItem & { source: string }> = response.data.data.documentMenu.map((item) => ({
         title: item.title,
         description: item.type,
         documentId: item.documentId,
         source: `https://open.dangdang.com/op-api/developer-platform/document/info/get?document_id=${item.documentId}`,
         link: `https://open.dangdang.com/home/notice/message/1/${item.documentId}`,
-        pubDate: timezone(parseDate(item.modifyTime), 8),
+        pubDate: item.modifyTime ? timezone(parseDate(item.modifyTime), 8) : undefined,
     }));
 
-    const result = await Promise.all(
-        list.map((item) =>
+    const result = await pMap(
+        list,
+        (item) =>
             cache.tryGet(item.source, async () => {
                 const itemResponse = await got(item.source);
                 item.description = itemResponse.data.data.documentContentList[0].content;
                 return item;
-            })
-        )
+            }),
+        { concurrency: 3 }
     );
 
     return {

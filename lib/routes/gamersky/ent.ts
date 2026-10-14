@@ -2,7 +2,7 @@ import type { Context } from 'hono';
 
 import type { Route } from '@/types';
 
-import { getArticle, getArticleList, mdTableBuilder, parseArticleList } from './utils';
+import { getArticleList, getArticles, mdTableBuilder, parseArticleList } from './utils';
 
 const idNameMap = new Map([
     ['all', { title: '热点图文', suffix: 'ent', nodeId: '20107' }],
@@ -19,7 +19,7 @@ export const route: Route = {
     categories: ['game'],
     example: '/gamersky/ent/xz',
     parameters: {
-        type: '分类类型，留空为 `all`',
+        category: '分类类型，留空为 `all`',
     },
     features: {
         requireConfig: false,
@@ -50,7 +50,7 @@ async function handler(ctx: Context) {
 
     const response = await getArticleList(idName.nodeId);
     const list = parseArticleList(response);
-    const fullTextList = await Promise.all(list.map((item) => getArticle(item)));
+    const fullTextList = await getArticles(list);
     return {
         title: `${idName.title} - 游民娱乐`,
         link: `https://www.gamersky.com/${idName.suffix}`,

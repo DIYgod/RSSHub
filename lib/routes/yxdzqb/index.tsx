@@ -49,16 +49,23 @@ async function handler(ctx) {
     const response = await got.get(link);
 
     const $ = load(response.data);
-    const title = $('.btn-primary b').text() || $('.btn-danger b').text() || $('.btn-info b').text();
-    const list = $('tr.bg-none');
+    const title = $('h1').text() || $('.btn-primary b').text() || $('.btn-danger b').text() || $('.btn-info b').text();
+    const currentList = $('.games .game');
+    const list = currentList.length ? currentList : $('tr.bg-none');
 
     const out = list.toArray().map((item) => {
         const $item = $(item);
 
-        const title = $item.find('div table:nth-child(1) tr td:nth-child(1)').text();
-        const description = renderToString(<YxdzqbDescription src={$item.find('table.cell_tabs > tbody > tr > td:nth-child(1) > img').attr('src')} description={$item.find('div.collapse').html() ?? undefined} />);
-        const link = $item.find('div.collapse table.cell_tabs > tbody > tr > td:nth-child(1) > a').attr('href');
-        const guid = link + $item.find('div.cell_price span:nth-child(2)').text();
+        const currentLayout = $item.hasClass('game');
+        const title = $item.find(currentLayout ? '.game-title' : 'div table:nth-child(1) tr td:nth-child(1)').text();
+        const description = renderToString(
+            <YxdzqbDescription
+                src={$item.find(currentLayout ? '.game-art img' : 'table.cell_tabs > tbody > tr > td:nth-child(1) > img').attr('src')}
+                description={currentLayout ? ($item.find('.game-price').html() ?? '') + ($item.find('.facts').prop('outerHTML') ?? '') : ($item.find('div.collapse').html() ?? undefined)}
+            />
+        );
+        const link = $item.find(currentLayout ? '.game-title a' : 'div.collapse table.cell_tabs > tbody > tr > td:nth-child(1) > a').attr('href');
+        const guid = link + $item.find(currentLayout ? '.game-price .now' : 'div.cell_price span:nth-child(2)').text();
 
         const single = {
             title,

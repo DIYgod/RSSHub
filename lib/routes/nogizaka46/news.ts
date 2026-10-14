@@ -1,6 +1,7 @@
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
+import { getRouteLimit } from '@/utils/route-limit';
 
 const rootUrl = 'https://www.nogizaka46.com';
 
@@ -21,6 +22,9 @@ export const route: Route = {
         {
             source: ['news.nogizaka46.com/s/n46/news/list'],
         },
+        {
+            source: ['www.nogizaka46.com/s/n46/news/list'],
+        },
     ],
     name: 'Nogizaka46 News 乃木坂 46 新闻',
     maintainers: ['crispgm', 'Fatpandac'],
@@ -29,7 +33,7 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 25;
+    const limit = getRouteLimit(ctx, 25);
 
     const response = await got({
         method: 'get',
@@ -44,13 +48,12 @@ async function handler(ctx) {
         title: item.title,
         link: item.link_url,
         description: item.text,
-        pubDate: parseDate(item.date),
+        pubDate: item.date ? parseDateInTimezone(item.date, 9) : undefined,
         category: item.cate,
         guid: rootUrl + new URL(item.link_url).pathname,
     }));
 
     return {
-        allowEmpty: true,
         title: '乃木坂46官网 NEWS',
         link: 'http://www.nogizaka46.com/news/',
         item: items,

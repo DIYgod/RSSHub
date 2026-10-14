@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import { encodeXML } from 'entities';
 
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
@@ -22,7 +23,7 @@ async function handler() {
         .map((ele) => {
             const $item = $(ele);
             const titleNode = $item.find('.title > a');
-            const thumbnail = $item.find('a > img').attr('src');
+            const thumbnail = getImageUrl($item.find('a > img').attr('src'), url);
 
             const infoNode = $item.find('.info');
             const desc = infoNode.find('.desc').text();
@@ -30,7 +31,7 @@ async function handler() {
             return {
                 title: titleNode.text(),
                 link: titleNode.attr('href'),
-                description: [`简介: ${desc}`, `<img src="${thumbnail}"/>`].join('<br/>'),
+                description: [`简介: ${encodeXML(desc)}`, thumbnail ? `<img src="${encodeXML(thumbnail)}"/>` : undefined].filter(Boolean).join('<br/>'),
                 author: infoNode.find('.user a').text(),
             };
         });
@@ -41,4 +42,19 @@ async function handler() {
         link: url,
         item: items,
     };
+}
+
+function getImageUrl(value: unknown, baseUrl: string): string | undefined {
+    if (typeof value !== 'string' || !value) {
+        return;
+    }
+    try {
+        const url = new URL(value, baseUrl);
+        if (['http:', 'https:'].includes(url.protocol) && !url.username && !url.password) {
+            return url.href;
+        }
+    } catch {
+        // Ignore unsupported source image URLs.
+    }
+    return;
 }

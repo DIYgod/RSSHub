@@ -1,3 +1,7 @@
+import type { Page } from 'patchright';
+
+import { config } from '@/config';
+
 import { renderCover } from './templates/cover';
 import { renderDesc } from './templates/desc';
 import { renderEmbed } from './templates/embed';
@@ -45,3 +49,15 @@ const getOriginAvatar = (url) =>
         .replaceAll(/~\w+_\d+x\d+/g, '');
 
 export { getOriginAvatar, proxyVideo, resolveUrl, templates };
+
+export const getApiResponse = async (page: Page, pageUrl: string, apiPath: string) => {
+    const [response] = await Promise.all([page.waitForResponse((response) => response.url().includes(apiPath), { timeout: config.requestTimeout }), page.goto(pageUrl, { waitUntil: 'domcontentloaded' })]);
+    if (!response.ok()) {
+        throw new Error(`Douyin API returned HTTP ${response.status()}. Anonymous access may be blocked by the source site.`);
+    }
+    try {
+        return await response.json();
+    } catch {
+        throw new Error(`Douyin API returned invalid JSON (HTTP ${response.status()}). Anonymous access may be blocked by the source site.`);
+    }
+};

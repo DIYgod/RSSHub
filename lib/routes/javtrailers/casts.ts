@@ -1,8 +1,9 @@
+import pMap from 'p-map';
+
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
-import playwright from '@/utils/playwright';
 
-import { baseUrl, getItem, parseList, playwrightFetch } from './utils';
+import { baseUrl, getItem, getList, parseList } from './utils';
 
 export const route: Route = {
     path: '/casts/:cast',
@@ -11,7 +12,8 @@ export const route: Route = {
     parameters: { cast: 'Cast name, can be found in the URL of the cast page' },
     radar: [
         {
-            source: ['javtrailers.com/casts/:category'],
+            source: ['javtrailers.com/casts/:cast'],
+            target: '/casts/:cast',
         },
     ],
     name: 'Casts',
@@ -20,21 +22,25 @@ export const route: Route = {
     handler,
     features: {
         nsfw: true,
-        requirePuppeteer: true,
+        requirePuppeteer: false,
     },
 };
 
 async function handler(ctx) {
     const { cast } = ctx.req.param();
 
-    const context = await playwright();
-    const response = await playwrightFetch(`${baseUrl}/api/casts/${cast}?page=0`, context);
+    const response = await getList(`${baseUrl}/casts/${cast}`, 'cast');
 
     const list = parseList(response.videos);
 
-    const items = await Promise.all(list.map((item) => cache.tryGet(item.link, () => getItem(item, context))));
-
-    await context.close();
+    const items = await pMap(
+        list,
+        async (item) => ({
+            ...(await cache.tryGet(item.link, () => getItem(item))),
+            ...item,
+        }),
+        { concurrency: 3 }
+    );
 
     return {
         title: `Watch ${response.cast.name} Jav Online | Japanese Adult Video - JavTrailers.com`,

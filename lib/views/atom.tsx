@@ -1,6 +1,7 @@
 import type { FC } from 'hono/jsx';
 
 import type { Data } from '@/types';
+import { getItemAttachments } from '@/utils/attachments';
 
 const RSS: FC<{ data: Data }> = ({ data }) => (
     <feed xmlns="http://www.w3.org/2005/Atom" xmlns:rsshub="http://rsshub.app/xml/schemas" xml:lang={data.language || 'en'}>
@@ -22,6 +23,9 @@ const RSS: FC<{ data: Data }> = ({ data }) => (
                 <title>{item.title}</title>
                 {item.description ? <content type="html">{item.description}</content> : item.content?.text ? <content type="text">{item.content.text}</content> : <content src={item.link} type="text/html" />}
                 <link href={item.link} />
+                {getItemAttachments(item).map((attachment) => (
+                    <link rel="enclosure" href={attachment.url} type={attachment.mime_type} length={attachment.size_in_bytes} title={attachment.title} />
+                ))}
                 <id>{item.guid || item.link || item.title}</id>
                 {item.pubDate && <published>{new Date(item.pubDate).toISOString()}</published>}
                 <updated>{new Date(item.updated || item.pubDate || new Date()).toISOString()}</updated>

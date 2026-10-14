@@ -1,5 +1,6 @@
 import { load } from 'cheerio';
 
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import got from '@/utils/got';
 
 const apiSlug = 'wp-json/wp/v2';
@@ -97,16 +98,16 @@ const bakeFiltersWithPair = async (filters: Record<string, string[]>, rootUrl: s
 
         const filter = await getFilterByKeyAndKeyword(key, keyword, rootUrl);
 
+        if (!filter?.id || !filter.slug) {
+            throw new InvalidParameterError(`No ${key} matches "${keyword}". Check the category or tag name on the WordPress site.`);
+        }
+
         return [
-            ...(filter?.id && filter.slug
-                ? [
-                      {
-                          id: filter.id,
-                          name: filter.name,
-                          slug: filter.slug,
-                      },
-                  ]
-                : []),
+            {
+                id: filter.id,
+                name: filter.name,
+                slug: filter.slug,
+            },
             ...(await bakeKeywords(key, rest)),
         ];
     };
@@ -158,6 +159,47 @@ const bakeUrl = (url: string, rootUrl: string, searchParams: URLSearchParams = n
     return `${rootUrl}/${url}${searchParamsSuffix}`;
 };
 
+const bakeSiteSearchParams = (filterPairs: Record<string, Filter[] | string[]>): URLSearchParams => {
+    const searchParams = new URLSearchParams();
+    for (const [key, value] of Object.entries(filterPairs)) {
+        if (!value.length) {
+            continue;
+        }
+        switch (key) {
+            case 'category':
+                searchParams.set('cat', (value as Filter[]).map((pair) => pair.id).join(','));
+
+                break;
+
+            case 'tag':
+                searchParams.set('tag', (value as Filter[]).map((pair) => pair.slug).join(','));
+
+                break;
+
+            case 'search':
+                searchParams.set('s', value.join(','));
+
+                break;
+
+            default:
+            // Do nothing
+        }
+    }
+    return searchParams;
+};
+
+const bakeFeedUrl = (rootUrl: string, filterPairs: Record<string, Filter[] | string[]>): string => bakeUrl('feed/', rootUrl, bakeSiteSearchParams(filterPairs));
+
+const bakePageUrl = (rootUrl: string, filterPairs: Record<string, Filter[] | string[]>): string => {
+    const taxonomyKeys = ['category', 'tag'].filter((key) => filterPairs[key]?.length);
+    if (taxonomyKeys.length === 1 && filterPairs[taxonomyKeys[0]].length === 1) {
+        const key = taxonomyKeys[0];
+        const pair = filterPairs[key][0] as Filter;
+        return bakeUrl(`${key}/${pair.slug}`, rootUrl, bakeFilterSearchParams(filterPairs, 'name'));
+    }
+    return bakeUrl('', rootUrl, bakeSiteSearchParams(filterPairs));
+};
+
 /**
  * Fetch data from the specified URL.
  *
@@ -201,7 +243,6 @@ const fetchData = async (url: string, rootUrl: string): Promise<object> => {
         title,
         description: $('meta[property="og:description"]').attr('content') || $('meta[name="description"]').attr('content'),
         link: url,
-        allowEmpty: true,
         image,
         author: $('meta[property="og:site_name"]').attr('content'),
         language: $('html').attr('lang'),
@@ -241,25 +282,6 @@ const getFilterKeyForSearchParams = (key: string, isApi: boolean = false): strin
     const keys = isApi ? filterApiKeys : filterKeys;
 
     return Object.hasOwn(keys, key) ? (keys[key] ?? key) : undefined;
-};
-
-/**
- * Get filter parameters for URL.
- *
- * @param filterPairs - The filter pairs object.
- *                      e.g. `{ category: [ { id: ..., name: ..., slug: ... }, { id: ..., name: ..., slug: ... } ], tag: [ { id: ..., name: ..., slug: ... } ] }`.
- * @returns The filter parameters for the URL, or undefined if no filters are available.
- */
-const getFilterParamsForUrl = (filterPairs: Record<string, Filter[]>): string | undefined => {
-    const keys = Object.keys(filterPairs).filter((key) => filterPairs[key].length > 0 && !Object.hasOwn(filterKeys, key));
-
-    if (keys.length === 0) {
-        return;
-    }
-
-    const key = keys[0];
-
-    return `${key}/${filterPairs[key].map((pair) => pair.slug).join('/')}`;
 };
 
 /**
@@ -305,4 +327,4 @@ const parseFilterStr = (filterStr: string | undefined): Record<string, string[]>
     return parseStr(filterStr, {});
 };
 
-export { apiSlug, bakeFilterSearchParams, bakeFiltersWithPair, bakeUrl, fetchData, getFilterParamsForUrl, parseFilterStr };
+export { apiSlug, bakeFeedUrl, bakeFilterSearchParams, bakeFiltersWithPair, bakePageUrl, bakeUrl, fetchData, parseFilterStr };

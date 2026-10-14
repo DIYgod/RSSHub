@@ -1,5 +1,6 @@
 import type { Data, Route } from '@/types';
 import { ViewType } from '@/types';
+import { getRouteLimit } from '@/utils/route-limit';
 
 import { baseUrl, getData, getList, variables } from './utils.js';
 
@@ -194,7 +195,12 @@ export const route: Route = {
     view: ViewType.Articles,
     radar: [
         {
+            source: ['daily.dev/squads/:squads'],
+            target: '/squads/:squads',
+        },
+        {
             source: ['app.daily.dev/squads/:squads'],
+            target: '/squads/:squads',
         },
     ],
     name: 'Squads',
@@ -204,7 +210,8 @@ export const route: Route = {
 };
 
 async function handler(ctx): Promise<Data> {
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 20;
+    const requestedLimit = getRouteLimit(ctx, 20);
+    const limit = ctx.req.query('sorted') === 'false' ? requestedLimit : Math.max(20, requestedLimit);
     const squads = ctx.req.param('squads');
 
     const link = `${baseUrl}/squads/${squads}`;
@@ -229,7 +236,7 @@ async function handler(ctx): Promise<Data> {
             first: limit,
         },
     });
-    const items = getList(data, true);
+    const items = getList(data);
 
     return {
         title: `${name} - daily.dev`,

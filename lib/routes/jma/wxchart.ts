@@ -1,5 +1,6 @@
 import type { Context } from 'hono';
 
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { DataItem, Route } from '@/types';
 import { ViewType } from '@/types';
 import ofetch from '@/utils/ofetch';
@@ -59,6 +60,9 @@ const toYmd = (date: Date) => date.toISOString().slice(0, 10).replaceAll('-', ''
 
 async function handler(ctx: Context) {
     const { type = 'daily' } = ctx.req.param();
+    if (type !== 'daily' && type !== 'monthly') {
+        throw new InvalidParameterError('Chart type must be daily or monthly.');
+    }
     return type === 'monthly' ? await monthly() : await daily();
 }
 

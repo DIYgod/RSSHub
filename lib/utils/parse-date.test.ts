@@ -7,6 +7,8 @@ import { parseRelativeDate } from './parse-date';
 
 dayjs.extend(weekday);
 
+const p = (...args: Parameters<typeof parseRelativeDate>) => parseRelativeDate(...args).getTime();
+
 describe('parseRelativeDate', () => {
     // === CONSTANTS ===
     const second = 1000;
@@ -29,8 +31,6 @@ describe('parseRelativeDate', () => {
     const PREVIOUS_WEDNESDAY = TODAY_START + 2 * day - week; // Jan 28 (Last week)
     const LAST_SUNDAY = new Date('2026-02-01T00:00:00').getTime(); // Yesterday (Feb 01)
     const LAST_FRIDAY = new Date('2026-01-30T00:00:00').getTime(); // Last Friday (Jan 30)
-
-    const p = (str: string, ...opts: any[]) => parseRelativeDate(str, ...opts).getTime();
 
     beforeEach(() => {
         MockDate.set(NOW_TIMESTAMP);
@@ -81,6 +81,18 @@ describe('parseRelativeDate', () => {
             expect(p('2 hours later')).toBe(NOW_TIMESTAMP + 2 * hour);
             expect(p('10分钟后')).toBe(NOW_TIMESTAMP + 10 * minute);
             expect(p('10 分鐘後')).toBe(NOW_TIMESTAMP + 10 * minute);
+        });
+
+        it('handles abbreviated units', () => {
+            expect(p('1y ago')).toBe(dayjs(NOW_TIMESTAMP).subtract(1, 'year').valueOf());
+            expect(p('3mo ago')).toBe(dayjs(NOW_TIMESTAMP).subtract(3, 'month').valueOf());
+            expect(p('2w ago')).toBe(NOW_TIMESTAMP - 2 * week);
+            expect(p('5d ago')).toBe(NOW_TIMESTAMP - 5 * day);
+        });
+
+        it('does not read the "m" of a month as a minute', () => {
+            expect(p('11 months ago')).toBe(dayjs(NOW_TIMESTAMP).subtract(11, 'month').valueOf());
+            expect(p('11mo ago')).toBe(dayjs(NOW_TIMESTAMP).subtract(11, 'month').valueOf());
         });
 
         it('handles mixed units', () => {

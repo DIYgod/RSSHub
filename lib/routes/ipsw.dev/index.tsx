@@ -1,8 +1,10 @@
 import { load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
 
-import type { Data, Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import got from '@/utils/got';
+import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/index/:productID',
@@ -18,7 +20,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { productID } = ctx.req.param();
-    const link = `https://ipsw.dev/product/version/${productID}`;
+    const link = `https://ipsw.dev/${productID}`;
 
     const resp = await got({
         method: 'get',
@@ -27,20 +29,28 @@ async function handler(ctx) {
 
     const $ = load(resp.data);
 
-    const productName = $('#IdentifierModal > div > div > div.modal-body > p:nth-child(1) > em').text();
+    const productName = $('#identifier_info_content .font-semibold').first().text() || productID;
 
-    const list: Data[] = $('.firmware')
+    const builds = new Set<string>();
+    const list = $('.firmware')
         .toArray()
-        .map((element) => {
+        .map((element): DataItem | undefined => {
             const ele = $(element);
-            const version = ele.find('td:nth-child(1) > div > div > strong').text();
-            const build = ele.find('td:nth-child(1) > div > div > div > code').text();
+            const version = ele.find('.versions-info > div').first().text();
+            const build = ele.find('.build-id').text();
+            if (!build) {
+                throw new Error('IPSW.dev did not provide a firmware build identifier.');
+            }
+            if (builds.has(build)) {
+                return undefined;
+            }
+            builds.add(build);
             const date = ele.find('td:nth-child(3)').text();
             const size = ele.find('td:nth-child(4)').text();
             return {
                 title: `${productName} - ${version}`,
                 link: `https://ipsw.dev/download/${productID}/${build}`,
-                pubDate: new Date(date).toLocaleDateString(),
+                pubDate: date ? timezone(parseDate(date, 'MMMM D, YYYY'), 0) : undefined,
                 guid: build,
                 description: renderToString(
                     <table>
@@ -65,7 +75,8 @@ async function handler(ctx) {
                     </table>
                 ),
             };
-        });
+        })
+        .filter((item): item is DataItem => item !== undefined);
 
     return {
         title: `${productName} Released`,

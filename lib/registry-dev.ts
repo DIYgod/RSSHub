@@ -37,13 +37,13 @@ export function createDevRegistry({ routesDirectory, namespaces }: { routesDirec
         const outer = outerContexts.get(ctx.req.raw);
         if (outer) {
             for (const [key, value] of Object.entries(outer.var)) {
-                ctx.set(key as never, value as never);
+                ctx.set(key, value);
             }
         }
         await next();
         if (outer) {
             for (const [key, value] of Object.entries(ctx.var)) {
-                outer.set(key as never, value as never);
+                outer.set(key, value);
             }
         }
         if (!ctx.finalized && (ctx.get('data') || ctx.get('apiData') || ctx.get('redirect') || ctx.get('no-content'))) {
@@ -54,10 +54,10 @@ export function createDevRegistry({ routesDirectory, namespaces }: { routesDirec
     };
 
     const loadTopDirectory = async (name: string): Promise<Hono> => {
-        const modules = (await directoryImport({
+        const modules = await directoryImport<ModulesType[string]>({
             targetDirectoryPath: path.join(routesDirectory, name),
             importPattern: /\.tsx?$/,
-        })) as ModulesType;
+        });
 
         // directoryImport keys are relative to the imported directory; restore the lib/routes-relative form
         const prefixed: ModulesType = {};

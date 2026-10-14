@@ -7,6 +7,7 @@ import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 import { namespace } from './namespace';
 
@@ -179,19 +180,21 @@ export const route: Route = {
         const list = (
             await Promise.all(
                 itemsToParse.map(({ $item, contextUrl }) => {
-                    const aTag = $item.find('a').first();
+                    const aTag = $item.find('a');
 
                     const rawLink = aTag.attr('href') || '';
                     const itemLink = buildItemLink(rawLink, contextUrl, baseUrl);
 
                     return cache.tryGet(itemLink, async (): Promise<DataItem> => {
+                        const detailResponse = await got(itemLink);
+                        const $detail = load(detailResponse.data);
                         // for detailed exhibition page if available, different from base exhibition page.
                         const rawZtzl = aTag.attr('ztzlurl') || '';
                         const exhibitionLink = buildExhibitionLink(rawZtzl, itemLink, baseUrl);
 
                         // title may not have full display on the page, use the img alt information instead
                         const imgTag = $item.find('img');
-                        let title = $item.find('.hide_title').text() || '';
+                        let title = $item.find('.hide_title').text();
 
                         const rawSrc = imgTag.attr('src')!;
                         const imgUrl = new URL(rawSrc, contextUrl).href;
@@ -209,8 +212,6 @@ export const route: Route = {
                         let fullDuration = findValue('展期');
 
                         if (!title || title.endsWith('...')) {
-                            const detailResponse = await got(itemLink);
-                            const $detail = load(detailResponse.data);
                             const detailTitle = $detail('.crumb_mod_box .title').text();
                             title =
                                 detailTitle ||
@@ -232,8 +233,8 @@ export const route: Route = {
 
                         const { startDate, endDate } = parseExhibitionDuration(fullDuration);
 
-                        // CHN museum didnot have pubDate on the page, use exhibition startDate instead.
-                        const pubDate = startDate ? parseDate(startDate) : undefined;
+                        const publicationDate = $detail('meta[name="PubDate"]').attr('content');
+                        const pubDate = publicationDate ? timezone(parseDate(publicationDate, 'YYYY-MM-DD HH:mm:ss'), 8) : undefined;
 
                         const description = renderToString(
                             <div>

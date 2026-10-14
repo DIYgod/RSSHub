@@ -17,7 +17,7 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    name: '豆瓣每月推荐片单',
+    name: '每月推荐片单',
     maintainers: ['honue'],
     handler,
     description: `| 额外参数 | 含义                   | 接受的值 | 默认值 |
@@ -70,14 +70,13 @@ async function handler(ctx) {
     items = response.data.subject_collection_items
         .filter((item) => {
             const rate = item.rating ? item.rating.value : 0;
-            return rate >= score; // 保留rate大于等于score的项and过滤无评分项
+            return rate >= score; // Keep rated entries at or above the selected score.
         })
         .map((item) => {
             const title = item.title;
             const link = item.url;
             const description = renderListDescription({
                 ranking_value: item.ranking_value,
-                title,
                 original_title: item.original_title,
                 rate: item.rating ? item.rating.value : null,
                 card_subtitle: item.card_subtitle,

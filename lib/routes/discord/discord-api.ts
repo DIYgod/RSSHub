@@ -4,6 +4,7 @@ import type { RESTGetAPIChannelMessagesQuery, RESTGetAPIChannelMessagesResult, R
 import type { APIMessage } from 'discord-api-types/v10';
 
 import { config } from '@/config';
+import RequestInProgressError from '@/errors/types/request-in-progress';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 
@@ -41,7 +42,7 @@ export const getChannel = (channelId, authorization) =>
 
 export const getChannelMessages = (channelId, authorization, limit = 100) =>
     cache.tryGet(
-        `discord:channels:${channelId}:messages`,
+        `discord:channels:${channelId}:messages:${limit}`,
         () =>
             ofetch<RESTGetAPIChannelMessagesResult>(`${apiUrl}/channels/${channelId}/messages`, {
                 headers: {
@@ -82,16 +83,21 @@ export interface SearchGuildMessagesParams {
 export const searchGuildMessages = (guildId: string, authorization: string, params: SearchGuildMessagesParams) =>
     cache.tryGet(
         `discord:guilds:${guildId}:search:${JSON.stringify(params)}`,
-        () => {
+        async () => {
             const queryParams = {
                 ...params,
                 has: params.has?.length ? params.has : undefined,
             };
 
-            return ofetch<SearchGuildMessagesResult>(`${apiUrl}/guilds/${guildId}/messages/search`, {
+            const response = await ofetch.raw<SearchGuildMessagesResult & { retry_after?: number }>(`${apiUrl}/guilds/${guildId}/messages/search`, {
                 headers: { authorization },
                 query: queryParams,
             });
+            if (response.status === 202) {
+                const retryAfter = response._data?.retry_after;
+                throw new RequestInProgressError(`Discord search index is not ready. Please retry ${retryAfter && retryAfter > 0 ? `after ${retryAfter} seconds` : 'shortly'}.`);
+            }
+            return response._data!;
         },
         config.cache.routeExpire,
         false

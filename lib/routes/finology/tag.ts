@@ -8,7 +8,7 @@ export const route: Route = {
     path: '/tag/:topic',
     categories: ['finance'],
     example: '/finology/tag/startups',
-    parameters: { category: 'Refer Table below or find in URL' },
+    parameters: { topic: 'Refer Table below or find in URL' },
     radar: [
         {
             source: ['insider.finology.in/tag/:topic'],

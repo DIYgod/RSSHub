@@ -3,6 +3,7 @@ import { renderToString } from 'hono/jsx/dom/server';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
+import { getRouteLimit } from '@/utils/route-limit';
 
 export const route: Route = {
     path: '/read/:type?',
@@ -29,7 +30,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { type = '电子图书' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 15;
+    const limit = getRouteLimit(ctx, 15);
 
     const author = '中国国家图书馆';
 
@@ -94,6 +95,5 @@ async function handler(ctx) {
         logo: icon,
         subtitle: type,
         author,
-        allowEmpty: true,
     };
 }

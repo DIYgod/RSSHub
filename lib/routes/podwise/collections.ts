@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import { ViewType } from '@/types';
-import ofetch from '@/utils/ofetch'; // 统一使用的请求库
+import ofetch from '@/utils/ofetch';
 
 export const route: Route = {
     path: '/explore',
@@ -20,28 +20,28 @@ export const route: Route = {
         const link = 'https://podwise.ai/explore';
         const response = await ofetch(link);
         const $ = load(response);
-        const content = $('#navigator').next();
-        // header/[div => content]/footer, content p(2)
-        const collectinDescription = content.find('p').eq(1).text();
-
-        const items = content
-            .find('.group')
+        const seen = new Set<string>();
+        const items = $('main a.group[href*="/collections/"]')
             .toArray()
             .map((item) => {
                 const $item = $(item);
-                const title = $item.find('a').first().text();
-                const link = $item.find('a').first().attr('href');
-                const description = $item.find('p').first().text();
                 return {
-                    title,
-                    link: `https://podwise.ai${link}`,
-                    description,
+                    title: $item.find('h2, h3').first().text(),
+                    link: new URL($item.attr('href')!, link).href,
+                    description: $item.find('p').first().text(),
                 };
+            })
+            .filter((item) => {
+                if (seen.has(item.link)) {
+                    return false;
+                }
+                seen.add(item.link);
+                return true;
             });
 
         return {
             title: $('title').text(),
-            description: collectinDescription,
+            description: $('meta[name="description"]').attr('content'),
             item: items,
             link,
         };

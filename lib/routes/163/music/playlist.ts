@@ -65,6 +65,7 @@ async function handler(ctx) {
             return {
                 title: `${thisSong.name} - ${singer}`,
                 description: renderPlaylistDescription({
+                    songId: item.id,
                     singer,
                     album: thisSong.album.name,
                     date: new Date(thisSong.album.publishTime).toLocaleDateString(),

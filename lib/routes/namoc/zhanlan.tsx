@@ -1,5 +1,7 @@
 import { load } from 'cheerio';
+import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
+import pMap from 'p-map';
 
 import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
@@ -30,84 +32,85 @@ export const route: Route = {
         const response = await ofetch(listUrl);
         const $ = load(response);
 
-        const items = await Promise.all(
-            $('ul.zllist#zlhglb > li.clearfix')
-                .toArray()
-                .map((el) => {
-                    const $li = $(el);
+        const items = await pMap(
+            $('ul.zllist#zlhglb > li.clearfix').toArray(),
+            (el) => {
+                const $li = $(el);
 
-                    const $titleAnchor = $li.find('div.text h3 > a');
-                    const title = $titleAnchor.attr('title') || '';
+                const $titleAnchor = $li.find('div.text h3 > a');
+                const title = $titleAnchor.attr('title') || '';
 
-                    const rawLink = $titleAnchor.attr('href') || '';
-                    const link = new URL(rawLink, baseUrl).href;
+                const rawLink = $titleAnchor.attr('href') || '';
+                const link = new URL(rawLink, baseUrl).href;
 
-                    const fullDuration = $li
-                        .find('div.text div p')
-                        .filter((_, p) => $(p).text().startsWith('展览时间：'))
-                        .text()
-                        .replace('展览时间：', '');
+                const fullDuration = $li
+                    .find('div.text div p')
+                    .filter((_, p) => $(p).text().startsWith('展览时间：'))
+                    .text()
+                    .replace('展览时间：', '');
 
-                    const location = $li
-                        .find('div.text div p')
-                        .filter((_, p) => $(p).text().startsWith('展览场地：'))
-                        .text()
-                        .replace('展览场地：', '');
+                const location = $li
+                    .find('div.text div p')
+                    .filter((_, p) => $(p).text().startsWith('展览场地：'))
+                    .text()
+                    .replace('展览场地：', '');
 
-                    // Parse startDate and endDate from "YYYY-MM-DD至YYYY-MM-DD"
-                    const dateParts = fullDuration.split('至');
-                    const startDate = dateParts[0] || undefined;
-                    const endDate = dateParts[1] || undefined;
+                // Parse startDate and endDate from "YYYY-MM-DD至YYYY-MM-DD"
+                const dateParts = fullDuration.split('至');
+                const startDate = dateParts[0] || undefined;
+                const endDate = dateParts[1] || undefined;
 
-                    const scriptText = $li.find('p.image script').text();
-                    const images = JSON.parse(scriptText.match(/var\s+jsonImageStr\s*=\s*'(\[.*?\])'/s)![1]) as Array<{ savepath: string }>;
-                    const imgUrl = new URL(images[0].savepath, baseUrl).href;
+                const scriptText = $li.find('p.image script').text();
+                const images: Array<{ savepath: string }> = JSON.parse(scriptText.match(/var\s+jsonImageStr\s*=\s*'(\[.*?\])'/s)![1]);
+                const imgUrl = new URL(images[0].savepath, baseUrl).href;
 
-                    return cache.tryGet(link, async (): Promise<DataItem> => {
-                        // Fetch detail page for pubDate
-                        const detailHtml = await ofetch(link);
-                        const $detail = load(detailHtml);
-                        const pubDateStr = $detail('meta[name="PubDate"]').attr('content') || '';
-                        const pubDate = timezone(parseDate(pubDateStr), 8);
+                return cache.tryGet(link, async (): Promise<DataItem> => {
+                    // Fetch detail page for pubDate
+                    const detailHtml = await ofetch(link);
+                    const $detail = load(detailHtml);
+                    const pubDateStr = $detail('meta[name="PubDate"]').attr('content') || '';
+                    const pubDate = pubDateStr ? timezone(parseDate(pubDateStr), 8) : undefined;
 
-                        const description = renderToString(
-                            <div>
-                                <img src={imgUrl} />
-                                <br />
+                    const description = renderToString(
+                        <div>
+                            <img src={imgUrl} />
+                            <br />
+                            <p>
+                                <b>地点：</b>
+                                {location || '参考详情'}
+                            </p>
+                            <p>
+                                <b>开展：</b>
+                                {startDate || '未定/常设'}
+                            </p>
+                            <p>
+                                <b>闭展：</b>
+                                {endDate || '未定/常设'}
+                            </p>
+                            {fullDuration && (
                                 <p>
-                                    <b>地点：</b>
-                                    {location || '参考详情'}
+                                    <small>原始展期：{fullDuration}</small>
                                 </p>
-                                <p>
-                                    <b>开展：</b>
-                                    {startDate || '未定/常设'}
-                                </p>
-                                <p>
-                                    <b>闭展：</b>
-                                    {endDate || '未定/常设'}
-                                </p>
-                                {fullDuration && (
-                                    <p>
-                                        <small>原始展期：{fullDuration}</small>
-                                    </p>
-                                )}
-                            </div>
-                        );
+                            )}
+                            {raw($detail('.zlcontent_xx .text').html() ?? '')}
+                        </div>
+                    );
 
-                        return {
-                            title,
-                            link,
-                            pubDate,
-                            description,
-                            _extra: {
-                                museumName,
-                                location,
-                                startDate,
-                                endDate,
-                            },
-                        };
-                    });
-                })
+                    return {
+                        title,
+                        link,
+                        pubDate,
+                        description,
+                        _extra: {
+                            museumName,
+                            location,
+                            startDate,
+                            endDate,
+                        },
+                    };
+                });
+            },
+            { concurrency: 6 }
         );
 
         return {

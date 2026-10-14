@@ -1,10 +1,11 @@
-import { renderToString } from 'hono/jsx/dom/server';
+import pMap from 'p-map';
 
 import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
+import md5 from '@/utils/md5';
 import { parseDate } from '@/utils/parse-date';
 
 const rootUrl = 'https://zodgame.xyz';
@@ -52,16 +53,12 @@ async function handler(ctx) {
 
     const info = response.data.Variables;
 
-    const ThreadList = info.forum_threadlist
+    const threadList: Array<DataItem & { tid: string }> = info.forum_threadlist
         .map((item) => {
-            const type = info.threadtypes.types[item.typeid];
-            if (!type) {
-                return;
-            }
-
+            const type = info.threadtypes?.types?.[item.typeid];
             return {
                 tid: item.tid,
-                title: `[${type}] ${item.subject}`,
+                title: type ? `[${type}] ${item.subject}` : item.subject,
                 author: item.author,
                 link: `${rootUrl}/forum.php?mod=viewthread&tid=${item.tid}&extra=page%3D1`,
                 category: type,
@@ -71,9 +68,10 @@ async function handler(ctx) {
         .filter((item) => item !== undefined);
 
     // fulltext
-    const items = await Promise.all(
-        ThreadList.map((item) =>
-            cache.tryGet(item.tid, async () => {
+    const items = await pMap(
+        threadList,
+        async (item) => {
+            const details = await cache.tryGet(`zodgame:details:${md5(cookie)}:${item.tid}`, async () => {
                 const threadResponse = await got({
                     method: 'get',
                     url: `${rootUrl}/api/mobile/index.php?version=4&module=viewthread&tid=${item.tid}`,
@@ -84,29 +82,19 @@ async function handler(ctx) {
 
                 const threadInfo = threadResponse.data.Variables;
 
-                let description = '';
-
-                if (threadInfo.thread.freemessage) {
-                    description += threadInfo.thread.freemessage;
-                    description += renderDescription(threadInfo.postlist[0].message);
-                } else {
-                    description += threadInfo.postlist[0].message;
-                }
+                const description = [threadInfo.thread.freemessage, threadInfo.postlist[0].message].filter(Boolean).join('<br /><br />');
 
                 return {
-                    title: item.title,
-                    author: item.author,
-                    link: item.link,
                     description,
-                    category: item.category,
-                    pubDate: item.pubDate,
-                    guid: item.tid,
                     upvotes: Number(threadInfo.thread.recommend_add),
                     downvotes: Number(threadInfo.thread.recommend_sub),
                     comments: Number(threadInfo.thread.replies),
                 };
-            })
-        )
+            });
+            const { tid, ...currentItem } = item;
+            return { ...currentItem, ...details, guid: tid };
+        },
+        { concurrency: 3 }
     );
 
     return {
@@ -115,12 +103,3 @@ async function handler(ctx) {
         item: items,
     };
 }
-
-const renderDescription = (content: string): string =>
-    renderToString(
-        <>
-            <br />
-            <br />
-            <span>{content}</span>
-        </>
-    );

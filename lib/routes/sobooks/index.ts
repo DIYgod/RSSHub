@@ -18,7 +18,11 @@ export const route: Route = {
     radar: [
         {
             source: ['sobooks.net/:category'],
-            target: '/:category',
+            target: '/:category?',
+        },
+        {
+            source: ['sobooks.cc/:category'],
+            target: '/:category?',
         },
     ],
     name: '首页',

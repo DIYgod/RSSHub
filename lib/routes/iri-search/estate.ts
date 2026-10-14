@@ -5,13 +5,12 @@ import type { ListingExtra } from '@/routes/temposmart/utils';
 import { clean, normalizeFloor, parseArea, parseCondition, parseJpy, parseMonths, parseWalkMin, parseWard, parseYmd, summarize, tsuboUnit } from '@/routes/temposmart/utils';
 import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
-import logger from '@/utils/logger';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 import timezone from '@/utils/timezone';
 
 const HOST = 'https://www.iri-search.net';
-const DETAIL_CONCURRENCY = 2;
 const PAGE_SIZE = 30;
 
 /** `area_code` values of the search form. */
@@ -31,12 +30,12 @@ const REGIONS = [
 ];
 
 /** 首都圏 prefectures (`prefectural_code`, JIS X 0401), the only ones paired with `area_code=1`. */
-const PREFECTURES: Record<string, string> = {
-    tokyo: '13',
-    kanagawa: '14',
-    saitama: '11',
-    chiba: '12',
-};
+const PREFECTURES = new Map([
+    ['tokyo', '13'],
+    ['kanagawa', '14'],
+    ['saitama', '11'],
+    ['chiba', '12'],
+]);
 
 interface ListCard {
     title: string;
@@ -66,7 +65,7 @@ const parseList = (html: string): ListCard[] => {
         .toArray()
         .map((el): ListCard | null => {
             const $el = $(el);
-            const a = $el.find('a').first();
+            const a = $el.find('a');
             const href = a.attr('href');
             const title = clean(a.text());
             const id = $el.find('input[name="inquiry[]"]').attr('value') ?? href?.match(/id=(\d+)/)?.[1];
@@ -87,7 +86,6 @@ const parseList = (html: string): ListCard[] => {
                 .map((t) => clean($(t).text()));
             const permissionValues = table
                 .find('th.mini_th')
-                .first()
                 .closest('tr')
                 .next('tr')
                 .find('td')
@@ -178,24 +176,21 @@ const mergeDetail = (base: ListingExtra, d: DetailFields): ListingExtra => ({
     raw: { ...base.raw, listed_at: d.listed_at, deposit: d.deposit, key_money: d.key_money, fixtures: d.fixtures, status: d.status, note: d.note },
 });
 
-/** A failed detail page keeps the list fields instead of breaking the feed. */
 const enrich = async (card: ListCard): Promise<ListingExtra> => {
-    try {
-        return mergeDetail(card.extra, parseDetail(await ofetch(card.link)));
-    } catch (error) {
-        logger.warn(`iri-search: detail fetch failed for ${card.link}: ${String(error)}`);
-        return { ...card.extra, raw: { ...card.extra.raw, detail_error: String(error) } };
-    }
+    const detailUrl = new URL(card.link);
+    detailUrl.protocol = 'http:';
+    const html = await ofetch(detailUrl.href);
+    return mergeDetail(card.extra, parseDetail(html));
 };
 
 export const handler = async (ctx): Promise<Data> => {
     const area: string | undefined = ctx.req.param('area');
     const region = area === undefined ? undefined : REGIONS.find((r) => r.slug === area);
-    const prefCode = area === undefined || region ? undefined : (PREFECTURES[area] ?? (Object.values(PREFECTURES).includes(area) ? area : undefined));
+    const prefCode = area === undefined || region ? undefined : (PREFECTURES.get(area) ?? (PREFECTURES.values().toArray().includes(area) ? area : undefined));
     if (area !== undefined && !region && !prefCode) {
-        throw new Error(`Unknown area "${area}", expected a region (${REGIONS.map((r) => r.slug).join(', ')}) or a 首都圏 prefecture (${Object.keys(PREFECTURES).join(', ')})`);
+        throw new Error(`Unknown area "${area}", expected a region (${REGIONS.map((r) => r.slug).join(', ')}) or a 首都圏 prefecture (${PREFECTURES.keys().toArray().join(', ')})`);
     }
-    const limit = Math.min(ctx.req.query('limit') ? Number(ctx.req.query('limit')) : PAGE_SIZE, PAGE_SIZE);
+    const limit = Math.min(getRouteLimit(ctx, PAGE_SIZE), PAGE_SIZE);
     const query = new URLSearchParams({ page_start_num: '0', order_by: '6', hotlist: '1' });
     if (region) {
         query.set('area_code', region.code);
@@ -205,7 +200,7 @@ export const handler = async (ctx): Promise<Data> => {
     }
     const listUrl = `${HOST}/estate_search/index?${query.toString()}`;
 
-    const cards = parseList(await ofetch(listUrl)).slice(0, limit);
+    const cards = parseList(await ofetch(listUrl)).slice(0, ctx.req.query('sorted') === 'false' ? limit : PAGE_SIZE);
     const items = await pMap(
         cards,
         (card) =>
@@ -219,11 +214,11 @@ export const handler = async (ctx): Promise<Data> => {
                     description: summarize(extra),
                     _extra: extra,
                 };
-            }) as Promise<DataItem>,
-        { concurrency: DETAIL_CONCURRENCY }
+            }),
+        { concurrency: 3 }
     );
 
-    const scope = region?.label ?? (prefCode === undefined ? '全国' : (Object.keys(PREFECTURES).find((k) => PREFECTURES[k] === prefCode) ?? prefCode));
+    const scope = region?.label ?? (prefCode === undefined ? '全国' : ([...PREFECTURES].find(([, code]) => code === prefCode)?.[0] ?? prefCode));
     return {
         title: `iri-search 新着物件 (${scope})`,
         link: listUrl,

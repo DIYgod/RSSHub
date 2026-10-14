@@ -19,7 +19,7 @@ export const route: Route = {
     parameters: { uid: '用户 id, 可在 UP 主主页中找到', embed: '默认为开启内嵌视频, 任意值为关闭' },
     features: {
         requireConfig: false,
-        requirePuppeteer: false,
+        requirePuppeteer: true,
         antiCrawler: false,
         supportBT: false,
         supportPodcast: false,
@@ -194,7 +194,7 @@ async function fetchVideoListFromBrowser(uid: string): Promise<VideoListData> {
 
     try {
         const response = await waitForVideoListResponseFromVideoPage(page, videoUrl);
-        const data = (await response.json()) as VideoListResponse;
+        const data: VideoListResponse = await response.json();
         if (data.code) {
             logger.error(JSON.stringify(data.data));
             throw new Error(`Got error code ${data.code} while fetching in browser mode: ${data.message}`);

@@ -49,7 +49,7 @@ async function handler(ctx) {
             };
         });
 
-    await Promise.all(
+    const items = await Promise.all(
         list.map((item) =>
             cache.tryGet(item.link!, async () => {
                 const response = await got({
@@ -71,6 +71,6 @@ async function handler(ctx) {
     return {
         title: $('title').text(),
         link,
-        item: list,
+        item: items,
     };
 }

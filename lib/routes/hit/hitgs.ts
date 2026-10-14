@@ -2,6 +2,8 @@ import type { Cheerio, CheerioAPI } from 'cheerio';
 import { load } from 'cheerio';
 import type { Element } from 'domhandler';
 import type { Context } from 'hono';
+import { getMimeType } from 'hono/utils/mime';
+import pMap from 'p-map';
 
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Data, DataItem, Language, Route } from '@/types';
@@ -9,9 +11,29 @@ import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
+import timezone from '@/utils/timezone';
 import { isValidHost } from '@/utils/valid-host';
 
 import { renderDescription } from './templates/description';
+
+const documentMimeTypes = {
+    rar: 'application/vnd.rar',
+    doc: 'application/msword',
+    docx: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+    xls: 'application/vnd.ms-excel',
+    xlsx: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+    ppt: 'application/vnd.ms-powerpoint',
+    pptx: 'application/vnd.openxmlformats-officedocument.presentationml.presentation',
+};
+
+function parsePublicationDate(value?: string) {
+    if (!value?.trim()) {
+        return;
+    }
+    const date = parseDate(value);
+    return Number.isNaN(date.getTime()) ? undefined : timezone(date, 8);
+}
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { id = 'tzgg' } = ctx.req.param();
@@ -19,7 +41,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
         throw new InvalidParameterError('Invalid id');
     }
 
-    const limit = Number(ctx.req.query('limit') ?? '10');
+    const limit = Math.max(10, getRouteLimit(ctx, 10));
 
     const baseUrl = 'https://hitgs.hit.edu.cn';
     const targetUrl: string = new URL(`${id}/list.htm`, baseUrl).href;
@@ -35,36 +57,35 @@ export const handler = async (ctx: Context): Promise<Data> => {
             const $el: Cheerio<Element> = $(el);
 
             const title: string = $el.find('div.news_title, span.div.news_title, div.bttb2').text();
-            const description: string | undefined = renderDescription({
-                intro: $el.find('div.news_text, div.jj5').text(),
-            });
-            const pubDateStr: string | undefined = $('span.news_meta').text() || ($('span.news_days').text() ? `${$('span.news_days').text()}-${$('span.news_year').text()}` : `${$('div.tm-3').text()}-${$('div.tm-1').text()}`);
+            const intro = $el.find('div.news_text, div.jj5').text();
+            const description: string | undefined = renderDescription({ intro });
+            const pubDateStr: string | undefined =
+                $el.find('span.news_meta').text() || ($el.find('span.news_days').text() ? `${$el.find('span.news_days').text()}-${$el.find('span.news_year').text()}` : `${$el.find('div.tm-3').text()}-${$el.find('div.tm-1').text()}`);
             const linkUrl: string | undefined = $el.find('div.news_title a').attr('href') ?? $el.find('div.bttb2 a').attr('href') ?? $el.find('a').attr('href');
-            const upDatedStr: string | undefined = pubDateStr;
 
             const processedItem: DataItem = {
                 title,
                 description,
-                pubDate: parseDate(pubDateStr),
+                pubDate: parsePublicationDate(pubDateStr),
                 link: linkUrl ? new URL(linkUrl, baseUrl).href : undefined,
                 content: {
                     html: description,
-                    text: description,
+                    text: intro,
                 },
-                updated: parseDate(upDatedStr),
                 language,
             };
 
             return processedItem;
         });
 
-    items = await Promise.all(
-        items.map((item) => {
+    items = await pMap(
+        items,
+        async (item: (typeof items)[number]) => {
             if (!item.link) {
                 return item;
             }
 
-            return cache.tryGet(item.link, async (): Promise<DataItem> => {
+            const detail = await cache.tryGet(item.link, async (): Promise<Partial<DataItem>> => {
                 const detailResponse = await ofetch(item.link!);
                 const $$: CheerioAPI = load(detailResponse);
 
@@ -73,48 +94,52 @@ export const handler = async (ctx: Context): Promise<Data> => {
                     description: $$('div.wp_articlecontent').html() ?? undefined,
                 });
                 const pubDateStr: string | undefined = $$('span.arti_update').text().split(/：/).pop()?.trim();
-                const upDatedStr: string | undefined = pubDateStr;
 
-                let processedItem: DataItem = {
-                    title,
+                let processedItem: Partial<DataItem> = {
+                    title: title || undefined,
                     description,
-                    pubDate: pubDateStr ? parseDate(pubDateStr) : item.pubDate,
+                    pubDate: parsePublicationDate(pubDateStr),
                     content: {
                         html: description,
-                        text: description,
+                        text: $$('div.wp_articlecontent').text(),
                     },
-                    updated: upDatedStr ? parseDate(upDatedStr) : item.updated,
                     language,
                 };
 
-                const $enclosureEl: Cheerio<Element> = $$('a[sudyfile-attr]')
-                    .filter((_, el) => {
-                        const $el: Cheerio<Element> = $$(el);
+                const $enclosureEl: Cheerio<Element> = $$('a[sudyfile-attr]').filter((_, el) => {
+                    const $el: Cheerio<Element> = $$(el);
 
-                        return !$el.attr('href')?.endsWith('htm');
-                    })
-                    .first();
+                    const href = $el.attr('href');
+                    return !!href && !/\.html?$/i.test(new URL(href, item.link).pathname);
+                });
 
                 const enclosureUrl: string | undefined = $enclosureEl.attr('href');
 
                 if (enclosureUrl) {
-                    const enclosureType = `application/${enclosureUrl.split(/\./).pop() || 'octet-stream'}`;
+                    const resolvedUrl = new URL(enclosureUrl, item.link);
+                    const enclosureType = (getMimeType(resolvedUrl.pathname) ?? getMimeType(resolvedUrl.pathname, documentMimeTypes))?.split(';', 1)[0] ?? 'application/octet-stream';
                     const enclosureTitle: string | undefined = $enclosureEl.attr('sudyfile-attr')?.match(/'title':'(.*?)'/)?.[1];
 
                     processedItem = {
                         ...processedItem,
-                        enclosure_url: new URL(enclosureUrl, baseUrl).href,
+                        enclosure_url: resolvedUrl.href,
                         enclosure_type: enclosureType,
                         enclosure_title: enclosureTitle || title,
                     };
                 }
 
-                return {
-                    ...item,
-                    ...processedItem,
-                };
+                return processedItem;
             });
-        })
+            return {
+                ...item,
+                ...detail,
+                title: detail.title || item.title,
+                description: detail.description || item.description,
+                pubDate: detail.pubDate ?? item.pubDate,
+                content: detail.description ? detail.content : item.content,
+            };
+        },
+        { concurrency: 3 }
     );
 
     const title: string = $('title').text();
@@ -125,7 +150,6 @@ export const handler = async (ctx: Context): Promise<Data> => {
         description: title,
         link: targetUrl,
         item: items,
-        allowEmpty: true,
         image: $('div.foot-logo img').attr('src'),
         author,
         language,
@@ -141,7 +165,7 @@ export const route: Route = {
     handler,
     example: '/hit/hitgs/tzgg',
     parameters: {
-        category: {
+        id: {
             description: '分类，默认为 `tzgg`，即通知公告，可在对应分类页 URL 中找到',
             options: [
                 {
@@ -210,12 +234,12 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['hitgs.hit.edu.cn', 'hitgs.hit.edu.cn/:id/list.htm'],
-            target: (params) => {
-                const id: string = params.id;
-
-                return `/hit/hitgs${id ? `/${id}` : ''}`;
-            },
+            source: ['hitgs.hit.edu.cn', 'hitgs.hit.edu.cn/main.htm'],
+            target: '/hitgs',
+        },
+        {
+            source: ['hitgs.hit.edu.cn/:id/list.htm'],
+            target: '/hitgs/:id',
         },
         {
             title: '通知公告',

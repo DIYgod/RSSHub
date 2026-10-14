@@ -18,7 +18,6 @@ interface DiscoverQueries {
     limit: string;
     [key: string]: string;
 }
-
 export const route: Route = {
     path: '/discover/:query?/:subCate?/:hasVideo?/:city?/:college?/:recommendLevel?/:sort?',
     categories: ['design'],
@@ -159,7 +158,6 @@ UI 17
 | ---- | -------- | -------- | -------- |
 | 0    | 2        | 3        | 1        |`,
 };
-
 async function handler(ctx) {
     const categories = {
         0: '精选',
@@ -178,7 +176,6 @@ async function handler(ctx) {
         613: '服装',
         44: '其他',
     };
-
     const subCategories = {
         0: { 617: '运营设计', 9: '包装', 30: '动画/影视', 34: '人像摄影', 2: '商业插画', 616: '电商', 757: 'APP界面', 292: '艺术插画', 637: '家装设计', 10: '海报', 809824: '文章' },
         8: { 9: '包装', 10: '海报', 15: '品牌', 779: 'IP形象', 14: '字体/字形', 13: 'Logo', 12: '书籍/画册', 534: '宣传物料', 624: '图案', 625: '信息图表', 626: 'PPT/Keynote', 11: '其他平面', 809: '文章' },
@@ -196,7 +193,9 @@ async function handler(ctx) {
         613: { 672: '休闲/流行服饰', 671: '正装/礼服', 814: '传统/民族服饰', 677: '配饰', 676: '鞋履设计', 673: '儿童服饰', 680: '其他服装', 815: '文章' },
         44: { 417: '文案/策划', 798: 'VR设计', 683: '独立游戏', 45: '其他', 824: '文章' },
     };
-
+    const limitValue = ctx.req.query('limit');
+    const requestedLimit = limitValue && /^\d+$/.test(limitValue) ? Number(limitValue) : NaN;
+    const limit = Number.isSafeInteger(requestedLimit) && requestedLimit > 0 ? String(requestedLimit) : '25';
     const queries: DiscoverQueries = {
         cate: '0',
         subCate: ctx.req.param('subCate') ?? '0',
@@ -204,17 +203,16 @@ async function handler(ctx) {
         college: ctx.req.param('college') ?? '0',
         recommendLevel: ctx.req.param('recommendLevel') ?? '2',
         sort: ctx.req.param('sort') ?? '9',
-        limit: ctx.req.query('limit') ?? '25',
+        limit,
     };
-
     let query = ctx.req.param('query') ?? '';
-
     if (query.includes('=')) {
-        for (const q of query.split('&')) {
+        const streamLines = query.split('&');
+        for (const q of streamLines) {
             const kv = q.split('=');
             queries[kv[0]] = kv[1];
         }
-        queries.limit = '25';
+        queries.limit = limit;
         queries.page = '1';
     } else {
         switch (query) {
@@ -236,21 +234,16 @@ async function handler(ctx) {
                 queries.cate = ctx.req.param('query') ?? '0';
         }
     }
-
     query = '';
-
     for (const q in queries) {
         if (q === 'city') {
             queries[q] = Object.hasOwn(locations, queries[q]) ? locations[queries.city].toString() : (queries[q] = '0');
         }
         query += `${q}=${queries[q]}&`;
     }
-
     query = query.slice(0, Math.max(0, query.length - 1));
-
     const rootUrl = 'https://www.zcool.com.cn';
     const currentUrl = `${rootUrl}/p1/discover/list?${query}`;
-
     const response = await got({
         method: 'get',
         url: currentUrl,
@@ -258,34 +251,28 @@ async function handler(ctx) {
             Referer: rootUrl,
         },
     });
-
     const list = response.data.datas.map((item) => ({
         title: item.content.title,
         link: item.content.pageUrl,
-        pubDate: parseDate(item.content.publishTime),
+        pubDate: item.content.publishTime !== undefined && item.content.publishTime !== null && item.content.publishTime !== '' ? parseDate(item.content.publishTime) : undefined,
         author: item.content.creatorObj.username,
         category: item.content.tags,
     }));
-
     const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link, async () => {
+        list.map(async (item) => {
+            const detail = await cache.tryGet(`zcool:discover:${item.link}:description`, async () => {
                 const detailResponse = await got({
                     method: 'get',
                     url: item.link,
                 });
                 const content = load(detailResponse.data);
-
                 content('.prism-player, .image-info-icons').remove();
-
                 const videos = detailResponse.data.match(/source: '(https:\/\/video\.zcool\.cn\/.*)',/g);
-
                 if (videos) {
                     content('.video-content-box').each((i, el) => {
                         if (i >= videos.length) {
                             return;
                         }
-
                         content(el).append(
                             renderDescription({
                                 video: videos[i].match(/source: '(https:\/\/video\.zcool\.cn\/.*)'/)[1],
@@ -293,16 +280,15 @@ async function handler(ctx) {
                         );
                     });
                 }
-
-                item.description = renderDescription({
-                    description: item.link.includes('article') ? (content('.articleContentWrapper').html() ?? undefined) : (content('.workShowBox').parent().html() ?? undefined),
-                });
-
-                return item;
-            })
-        )
+                return {
+                    description: renderDescription({
+                        description: item.link.includes('article') ? (content('.articleContentWrapper').html() ?? undefined) : (content('.workShowBox').parent().html() ?? undefined),
+                    }),
+                };
+            });
+            return { ...item, ...detail };
+        })
     );
-
     return {
         title: `站酷 - ${categories[queries.cate]}${queries.subCate === '0' ? '' : ` - ${subCategories[queries.cate][queries.subCate]}`}`,
         link: `${rootUrl}/discover?${query}`,

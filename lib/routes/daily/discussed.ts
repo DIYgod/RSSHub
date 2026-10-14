@@ -1,11 +1,12 @@
 import type { Data, Route } from '@/types';
 import { ViewType } from '@/types';
+import { getRouteLimit } from '@/utils/route-limit';
 
-import { baseUrl, getData, getList, variables } from './utils.js';
+import { baseUrl, getData, getDateSort, getList, variables } from './utils.js';
 
 const query = /* GraphQL */ `
-    query MostDiscussedFeed($first: Int, $supportedTypes: [String!] = ["article", "share", "freeform"]) {
-        page: mostDiscussedFeed(first: $first, supportedTypes: $supportedTypes) {
+    query MostDiscussedFeed($first: Int, $period: Int, $supportedTypes: [String!] = ["article", "share", "freeform"]) {
+        page: mostDiscussedFeed(first: $first, period: $period, supportedTypes: $supportedTypes) {
             ...FeedPostConnection
         }
     }
@@ -63,7 +64,12 @@ export const route: Route = {
     view: ViewType.Articles,
     radar: [
         {
-            source: ['app.daily.dev/discussed'],
+            source: ['daily.dev/posts/discussed', 'daily.dev/discussed'],
+            target: '/discussed',
+        },
+        {
+            source: ['app.daily.dev/posts/discussed', 'app.daily.dev/discussed'],
+            target: '/discussed',
         },
     ],
     name: 'Most Discussed',
@@ -92,8 +98,10 @@ export const route: Route = {
 };
 
 async function handler(ctx): Promise<Data> {
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 20;
-    const dateSort = ctx.req.param('dateSort') ? JSON.parse(ctx.req.param('dateSort')) : true;
+    const dateSort = getDateSort(ctx.req.param('dateSort'));
+    const requestedLimit = getRouteLimit(ctx, 20);
+    const shouldSort = ctx.req.query('sorted') === undefined ? dateSort : ctx.req.query('sorted') !== 'false';
+    const limit = shouldSort ? Math.max(20, requestedLimit) : requestedLimit;
     const period = ctx.req.param('period') ? Number(ctx.req.param('period')) : 7;
 
     const link = `${baseUrl}/posts/discussed`;
@@ -106,12 +114,13 @@ async function handler(ctx): Promise<Data> {
             period,
         },
     });
-    const items = getList(data, dateSort);
+    const items = getList(data);
 
     return {
         title: 'Real-time discussions in the developer community | daily.dev',
         link,
         item: items,
+        sortItems: dateSort,
         description: 'Stay on top of real-time developer discussions on daily.dev. Join conversations happening now and engage with the most active community members.',
         logo: `${baseUrl}/favicon-32x32.png`,
         icon: `${baseUrl}/favicon-32x32.png`,

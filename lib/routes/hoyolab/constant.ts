@@ -1,21 +1,21 @@
-// 域名
+// API origin
 const HOST = 'https://bbs-api-os.hoyolab.com';
-// 活动列接口
+// Event list API
 const EVENT_LIST = '/community/community_contribution/wapi/event/list';
-// 活动详情接口
+// Article details API
 const POST_FULL = '/community/post/wapi/getPostFull';
-// 公告和资讯接口
+// Announcements and news API
 const NEW_LIST = '/community/post/wapi/getNewsList';
 
-// 源网站链接
+// Human-readable website origin
 const LINK = 'https://www.hoyolab.com';
 
-// 部分图片使用了禁止公开访问的域名
+// Some article images use a private upload host.
 const PRIVATE_IMG = '<img src="https://hoyolab-upload-private.hoyolab.com/upload';
-// 使用以下域名可以替换
+// Replace it with the public upload host.
 const PUBLIC_IMG = '<img src="https://upload-os-bbs.hoyolab.com/upload';
 
-// 公告类型
+// Official circle page types
 const OFFICIAL_PAGE_TYPE = {
     2: 27,
     6: 39,

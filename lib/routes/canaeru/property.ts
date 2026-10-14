@@ -1,17 +1,15 @@
 import { load } from 'cheerio';
-import pMap from 'p-map';
 
 import type { ListingExtra } from '@/routes/temposmart/utils';
 import { clean, normalizeFloor, parseArea, parseCondition, parseJpy, parseMonths, parseMonthsSum, parseWalkMin, parseWard, parseYmd, summarize, tsuboUnit } from '@/routes/temposmart/utils';
 import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
-import logger from '@/utils/logger';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 import timezone from '@/utils/timezone';
 
 const HOST = 'https://canaeru.usen.com';
-const DETAIL_CONCURRENCY = 2;
 const DEFAULT_LIMIT = 10;
 const PAGE_SIZE = 10;
 
@@ -55,7 +53,7 @@ const value = (text: string | null): string | null => {
 };
 
 /** 'JR山手線新宿駅' → ['JR山手線', '新宿']; a station with no 線 prefix yields a null line. */
-const splitStation = (text: string | null): { line: string | null; station: string | null } => {
+const splitStation = (text: string | null) => {
     const s = clean(text?.split('徒歩', 1)[0] ?? null);
     if (s === null) {
         return { line: null, station: null };
@@ -80,7 +78,7 @@ const parseList = (html: string): ListCard[] => {
         .toArray()
         .map((el): ListCard | null => {
             const $el = $(el);
-            const heading = clean($el.find('.title label').first().text());
+            const heading = clean($el.find('.title label').text());
             const href = $el.find('.btn.detail a').attr('href');
             const id = href?.match(/\/p(\d+)/)?.[1] ?? heading?.match(/\((\d+)\)\s*$/)?.[1];
             if (!heading || !href || !id) {
@@ -208,14 +206,9 @@ const mergeDetail = (base: ListingExtra, d: DetailFields): ListingExtra => ({
     },
 });
 
-/** A failed detail page keeps the list fields instead of breaking the feed. */
 const enrich = async (card: ListCard): Promise<ListingExtra> => {
-    try {
-        return mergeDetail(card.extra, parseDetail(await ofetch(card.link, { responseType: 'text' })));
-    } catch (error) {
-        logger.warn(`canaeru: detail fetch failed for ${card.link}: ${String(error)}`);
-        return { ...card.extra, raw: { ...card.extra.raw, detail_error: String(error) } };
-    }
+    const html = await ofetch(card.link);
+    return mergeDetail(card.extra, parseDetail(html));
 };
 
 export const handler = async (ctx): Promise<Data> => {
@@ -226,7 +219,7 @@ export const handler = async (ctx): Promise<Data> => {
     }
     // 市区町村 codes are the prefecture's two digits plus three more (新宿区 = 13104), written with an `A`
     // prefix in the path. A code from another prefecture would quietly widen the search, so the pair is checked.
-    const city: string | undefined = ctx.req.param('city');
+    const city: string | undefined = ctx.req.param('city')?.replace(/^A/, '');
     if (city !== undefined) {
         if (!/^\d{5}$/.test(city)) {
             throw new Error(`Invalid city "${city}", expected a 5-digit JIS X 0402 市区町村 code such as 13104`);
@@ -235,13 +228,12 @@ export const handler = async (ctx): Promise<Data> => {
             throw new Error(`City "${city}" does not belong to ${prefecture.label} (${prefecture.code})`);
         }
     }
-    const limit = Math.min(ctx.req.query('limit') ? Number(ctx.req.query('limit')) : DEFAULT_LIMIT, PAGE_SIZE);
+    const limit = Math.min(getRouteLimit(ctx, DEFAULT_LIMIT), PAGE_SIZE);
     const listUrl = `${HOST}/${prefecture.base}/${prefecture.slug}/search/${city === undefined ? '' : `A${city}/`}`;
 
-    const cards = parseList(await ofetch(listUrl, { responseType: 'text' })).slice(0, limit);
-    const items = await pMap(
-        cards,
-        (card) =>
+    const cards = parseList(await ofetch(listUrl)).slice(0, limit);
+    const items = await Promise.all(
+        cards.map((card) =>
             cache.tryGet(card.link, async (): Promise<DataItem> => {
                 const extra = await enrich(card);
                 return {
@@ -253,8 +245,8 @@ export const handler = async (ctx): Promise<Data> => {
                     image: card.image,
                     _extra: extra,
                 };
-            }) as Promise<DataItem>,
-        { concurrency: DETAIL_CONCURRENCY }
+            })
+        )
     );
 
     return {
@@ -279,7 +271,7 @@ export const route: Route = {
             options: PREFECTURES.map((p) => ({ value: p.slug, label: p.label })),
         },
         city: {
-            description: 'Optional 市区町村, as a 5-digit JIS X 0402 code (新宿区 `13104`, 港区 `13103`, 横浜市中区 `14104`). Must belong to `pref`; omit for the whole prefecture.',
+            description: 'Optional 市区町村, as a 5-digit JIS X 0402 code (新宿区 `13104`, 港区 `13103`, 横浜市中区 `14104`). The native URL prefix `A` is also accepted. Must belong to `pref`; omit for the whole prefecture.',
         },
     },
     description: `Listings on canaeru（USEN）for one prefecture — or one 市区町村 when \`city\` is given (\`/canaeru/tokyo/13104\` is 新宿区). Each item's \`_extra\` carries the shared listing fields (賃料，坪，坪単価，階，最寄駅，保証金，礼金，造作価格，現況，…) from the list and detail pages; unknown values are \`null\`, and the site's 「ー」 placeholder is treated as unknown rather than kept as text.
@@ -304,7 +296,11 @@ One caveat on 造作価格: the publisher occasionally appends 万円 to a figur
     },
     radar: [
         {
-            source: ['canaeru.usen.com/bukken/:pref/search/:city', 'canaeru.usen.com/bukken/:pref/search'],
+            source: ['canaeru.usen.com/bukken/:pref/search/:city', 'canaeru.usen.com/bukken_h/:pref/search/:city', 'canaeru.usen.com/bukken_tokai/:pref/search/:city'],
+            target: '/:pref/:city',
+        },
+        {
+            source: ['canaeru.usen.com/bukken/:pref/search', 'canaeru.usen.com/bukken_h/:pref/search', 'canaeru.usen.com/bukken_tokai/:pref/search'],
             target: '/:pref',
         },
     ],

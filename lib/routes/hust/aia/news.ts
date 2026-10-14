@@ -3,6 +3,7 @@ import { load } from 'cheerio';
 import type { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: ['/aia/news', '/auto/news'],
@@ -41,10 +42,11 @@ async function handler() {
             list &&
             list.toArray().map((item) => {
                 const $item = $(item);
+                const pubDate = parseDate(`${$item.find('.date3 div').text().trim()}-${$item.find('.date3 p').text().trim()}`, ['YYYY-MM-DD', 'YYYY-MM-D'], true);
                 return {
                     title: $item.find('a h2').text(),
                     description: $item.find('a div').text() || '华科人工智能和自动化学院新闻',
-                    pubDate: parseDate($item.find('.date3').text(), 'DDYYYY-MM'),
+                    pubDate: Number.isFinite(pubDate.getTime()) ? timezone(pubDate, 8) : undefined,
                     link: new URL($item.find('a').attr('href')!, link).href,
                 };
             }),

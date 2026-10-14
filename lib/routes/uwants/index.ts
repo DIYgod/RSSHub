@@ -1,10 +1,12 @@
 import { load } from 'cheerio';
 import type { Context } from 'hono';
+import pMap from 'p-map';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 import timezone from '@/utils/timezone';
 
 const rootUrl = 'https://www.uwants.com';
@@ -24,7 +26,7 @@ export const route: Route = {
 
 async function handler(ctx: Context) {
     const { fid } = ctx.req.param();
-    const limit = Number(ctx.req.query('limit') ?? '15');
+    const limit = getRouteLimit(ctx, 15);
 
     const currentUrl = `${rootUrl}/archiver/?fid-${fid}.html`;
     const response = await ofetch(currentUrl);
@@ -41,9 +43,10 @@ async function handler(ctx: Context) {
             };
         });
 
-    const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link, async () => {
+    const items = await pMap(
+        list,
+        async (item) => {
+            const details = await cache.tryGet<Pick<DataItem, 'description' | 'author' | 'pubDate'>>(item.link, async () => {
                 const detailResponse = await ofetch(item.link);
 
                 const data = detailResponse
@@ -64,14 +67,20 @@ async function handler(ctx: Context) {
                     .match(/\d{4}-\d{1,2}-\d{1,2} \d{1,2}:\d{2} [AP]M/)?.[0];
 
                 return {
-                    title: item.title,
-                    link: `${rootUrl}/viewthread.php?tid=${item.link.match(/tid-(\d+)\.html/)![1]}`,
                     author: cite.eq(0).text(),
-                    description: content('.archiver_post').html(),
+                    description: content('.archiver_post').html() ?? undefined,
                     pubDate: date ? timezone(parseDate(date, 'YYYY-M-D hh:mm A'), 8) : undefined,
                 };
-            })
-        )
+            });
+            return {
+                ...item,
+                link: `${rootUrl}/viewthread.php?tid=${item.link.match(/tid-(\d+)\.html/)![1]}`,
+                description: details.description,
+                author: details.author,
+                pubDate: details.pubDate,
+            };
+        },
+        { concurrency: 3 }
     );
 
     return {

@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import { escapeAttribute, escapeText } from 'entities';
 
 import { config } from '@/config';
 import cache from '@/utils/cache';
@@ -10,7 +11,7 @@ const topicDataHanding = (data, ctx) =>
     data.posts.map((item) => {
         let audioName, videoName, linkName;
 
-        // 获取纯文字内容 和 即刻原文链接
+        // Read the post text and original webpage link.
         let content, link;
         switch (item.type) {
             case 'ORIGINAL_POST':
@@ -31,29 +32,29 @@ const topicDataHanding = (data, ctx) =>
                 link = 'https://github.com/DIYgod/RSSHub/issues';
         }
 
-        // rss内容
+        // Render the entry body.
         let description = '';
-        // 作者昵称
+        // Read the author display name.
         let author = '';
 
-        // 添加内容作者信息
+        // Include author details when requested.
         if (item.user) {
             author = item.user.screenName;
             if (ctx.req.param('showUid')) {
-                description += `<span>用户昵称：${author} <br> Username：${item.user.username}</span><br>`;
+                description += `<span>用户昵称：${escapeText(author)} <br> Username：${escapeText(item.user.username)}</span><br>`;
             }
         }
 
         if (item.linkInfo) {
             const linkUrl = item.linkInfo.originalLinkUrl || item.linkInfo.linkUrl;
 
-            // 对于即刻抓取的微信公众号文章 特殊处理
-            // 此时 Rss原文链接 变为 微信公众号链接
+            // Use the original WeChat article link when available.
+            // The entry then links directly to the WeChat article.
             if (new URL(linkUrl).host === 'mp.weixin.qq.com') {
                 link = linkUrl;
             }
 
-            // 1. 音频
+            // 1. Audio
             const audioObject = item.linkInfo.audio || item.audio;
             if (audioObject) {
                 const audioImage = audioObject.image.picUrl || audioObject.image.thumbnailUrl;
@@ -62,12 +63,12 @@ const topicDataHanding = (data, ctx) =>
                 const audioAuthor = audioObject.author;
                 audioName = `${audioTitle} - ${audioAuthor}`;
                 description += `
-            <img src="${audioImage}">
-            <a href="${audioLink}">${audioName}</a>
+            <img src="${escapeAttribute(audioImage)}">
+            <a href="${escapeAttribute(audioLink)}">${escapeText(audioName)}</a>
         `;
             }
 
-            // 2. 视频
+            // 2. Video
             const videoObject = item.linkInfo.video || item.video;
             if (videoObject) {
                 const videoImage = videoObject.image.picUrl || videoObject.image.thumbnailUrl;
@@ -75,34 +76,34 @@ const topicDataHanding = (data, ctx) =>
                 const videoDuration = Math.floor(videoObject.duration / 60000);
                 videoName = item.linkInfo.title;
                 description += `
-            <img src="${videoImage}">
-            <a href="${videoLink}">${videoName || '观看视频'} - 约${videoDuration}分钟</a>
+            <img src="${escapeAttribute(videoImage)}">
+            <a href="${escapeAttribute(videoLink)}">${escapeText(videoName || '观看视频')} - 约${videoDuration}分钟</a>
         `;
             }
 
-            // 3. 链接
+            // 3. Links
             if (!audioObject && !videoObject && linkUrl) {
-                // 部分链接有标题
+                // Some links provide a title.
                 linkName = item.linkInfo.title;
                 const linkTitle = linkName || '访问原文';
-                // 部分链接有缩略图
+                // Some links provide a thumbnail.
                 const linkImage = item.linkInfo.pictureUrl;
-                const imageTag = `<img src="${linkImage}">`;
+                const imageTag = `<img src="${escapeAttribute(linkImage)}">`;
                 description += `
             ${linkImage ? imageTag : ''}
-            <a href="${linkUrl}">${linkTitle}</a>
+            <a href="${escapeAttribute(linkUrl)}">${escapeText(linkTitle)}</a>
         `;
             }
         }
 
-        // 4. 文字内容
-        description += description ? `<br>${content}` : content;
+        // 4. Post text
+        description += description ? `<br>${escapeText(content)}` : escapeText(content);
 
-        // 5. 图片
+        // 5. Images
         if (item.pictures) {
             for (const pic of item.pictures) {
                 if (pic.format === 'gif') {
-                    description += `<img src="${pic.picUrl.split('?imageMogr2/', 1)[0]}">`;
+                    description += `<img src="${escapeAttribute(pic.picUrl.split('?imageMogr2/', 1)[0])}">`;
                 } else {
                     // jpeg, bmp, png, gif, webp
                     // https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types
@@ -118,30 +119,30 @@ const topicDataHanding = (data, ctx) =>
                     //         break;
                     // }
                     const imgUrl = /\.[\da-z]+\?imageMogr2/.test(pic.picUrl) ? pic.picUrl.split('?imageMogr2/', 1)[0] : pic.picUrl.replace(/thumbnail\/.+/, '');
-                    description += `<br><img src="${imgUrl}">`;
+                    description += `<br><img src="${escapeAttribute(imgUrl)}">`;
                     // description += `<br><picture><source srcset="${
                     //     pic.picUrl.split('/thumbnail/')[0]
-                    // }/strip/format/webp" type="image/webp"><source srcset="${imgUrl}" type="image/${type}"><img src="${imgUrl}"></picture>`;
+                    // }/strip/format/webp" type="image/webp"><source srcset="${escapeAttribute(imgUrl)}" type="image/${type}"><img src="${escapeAttribute(imgUrl)}"></picture>`;
                 }
             }
         }
 
-        // 6. 视频
+        // 6. Video
         if (item.video) {
-            description += `<br><video src="${item.video.url}" controls></video>`;
+            description += `<br><video src="${escapeAttribute(item.video.url)}" controls></video>`;
         }
 
-        // rss标题
-        // 优先将音频和视频名作为标题
-        // 其次将正文内容作为标题
-        // 若都没有 则是推送型消息，将连接标题作为主题
-        // “无题” fallback
+        // Select the entry title.
+        // Prefer audio and video titles.
+        // Otherwise use the post text.
+        // Fall back to a linked article title for notification posts.
+        // Use an untitled fallback when no title is available.
         const title = audioName || videoName || content || linkName || '无题';
 
         return {
             title,
             description: description.trim().replaceAll('\n', '<br>'),
-            pubDate: parseDate(item.createdAt),
+            pubDate: parseCreatedAt(item.createdAt),
             author,
             link,
         };
@@ -194,4 +195,9 @@ const constructTopicEntry = async (ctx, url) => {
     return data;
 };
 
-export { constructTopicEntry, topicDataHanding };
+function parseCreatedAt(value?: string): Date | undefined {
+    const date = value ? parseDate(value) : undefined;
+    return date && Number.isFinite(date.getTime()) ? date : undefined;
+}
+
+export { constructTopicEntry, parseCreatedAt, topicDataHanding };

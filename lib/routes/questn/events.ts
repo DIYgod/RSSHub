@@ -24,7 +24,6 @@ Filter parameters:
 - chain\\_filter: 0: all chains, 1: ethereum, 56: bsc, 137: polygon, 42161: arb, 10: op, 324: zksync, 43114: avax
 - search: 'Search keyword',
 - count: 'Number of events to fetch',
-- page: 'Page number',
 
 :::`,
     categories: ['other'],
@@ -39,7 +38,7 @@ Filter parameters:
     radar: [
         {
             source: ['app.questn.com/explore'],
-            target: '/events/:category?/:status_filter?/:community_filter?/:reward_filter?/:chain_filter?/:search?/:count?/:page?',
+            target: '/events',
         },
     ],
     handler,
@@ -48,19 +47,28 @@ Filter parameters:
 async function handler(ctx) {
     const url = 'https://api.questn.com/consumer/explore/list/';
 
-    const parsedFilter: { category?: string; status_filter?: string; community_filter?: string; reward_filter?: string; chain_filter?: string; search?: string; count?: string; page?: string } = parseFilterStr(
-        ctx.req.param('filter')
-    );
+    const parsedFilter: {
+        category?: string;
+        status_filter?: string;
+        community_filter?: string;
+        rewards_filter?: string;
+        reward_filter?: string;
+        chain_filter?: string;
+        search?: string;
+        count?: string;
+    } = parseFilterStr(ctx.req.param('filter'));
 
+    const requestedLimit = Number(parsedFilter.count || ctx.req.query('limit'));
+    const count = Number.isSafeInteger(requestedLimit) && requestedLimit > 0 ? requestedLimit : 20;
     const params = {
         category: parsedFilter.category || '200',
         status_filter: parsedFilter.status_filter || '100',
         community_filter: parsedFilter.community_filter || '0',
-        rewards_filter: parsedFilter.reward_filter || '0',
+        rewards_filter: parsedFilter.rewards_filter || parsedFilter.reward_filter || '0',
         chain_filter: parsedFilter.chain_filter || '0',
         search: parsedFilter.search || '',
-        count: parsedFilter.count || ctx.req.query('limit') || '20',
-        page: parsedFilter.page || '1',
+        count: String(count),
+        page: '1',
     };
 
     const response = await ofetch(`${url}?${new URLSearchParams(params)}`, {
@@ -78,7 +86,6 @@ async function handler(ctx) {
         author: item.community_info ? item.community_info.name : '',
         guid: item.id,
         pubDate: parseDate(item.start_time * 1000),
-        itunes_duration: item.end_time > 0 ? item.end_time - item.start_time : 0,
     }));
 
     return {
@@ -88,15 +95,6 @@ async function handler(ctx) {
         image: 'https://app.questn.com/static/svgs/logo-white.svg',
         logo: 'https://app.questn.com/static/svgs/logo-white.svg',
         author: 'QuestN',
-        item:
-            items && items.length > 0
-                ? items
-                : [
-                      {
-                          title: 'No events found',
-                          description: 'No events found',
-                          link: 'https://app.questn.com/explore',
-                      },
-                  ],
+        item: items,
     };
 }

@@ -29,7 +29,7 @@ async function handler() {
         title: item.title,
         link: item.url,
         description: item.contentHtml,
-        pubDate: timezone(parseDate(item.publishedTimeStr), 8),
+        pubDate: item.publishedTimeStr ? timezone(parseDate(item.publishedTimeStr), 8) : undefined,
         category: item.channelName,
     }));
 

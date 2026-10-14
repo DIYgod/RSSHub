@@ -2,10 +2,10 @@ import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import { ViewType } from '@/types';
-import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
-import { fetchArticle, removeDuplicateByKey } from './utils';
+import { fetchArticle, fetchScreen, removeDuplicateByKey } from './utils';
 
 export const route: Route = {
     path: '/mobile/:path{.+}?',
@@ -38,16 +38,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const path = ctx.req.param('path') ? `/${ctx.req.param('path')}` : '/';
-    const apiRootUrl = 'https://apnews.com/graphql/delivery/ap/v1';
-    const res = await ofetch(apiRootUrl, {
-        query: {
-            operationName: 'ContentPageQuery',
-            variables: { path },
-            extensions: { persistedQuery: { version: 1, sha256Hash: '3bc305abbf62e9e632403a74cc86dc1cba51156d2313f09b3779efec51fc3acb' } },
-        },
-    });
-
-    const screen = res.data.Screen;
+    const screen = await fetchScreen(path);
 
     const deduplicatedItems = removeDuplicateByKey(
         [...screen.main.filter((e) => e.__typename === 'ColumnContainer').flatMap((_) => _.columns), ...screen.main.filter((e) => e.__typename !== 'ColumnContainer')]
@@ -86,7 +77,7 @@ async function handler(ctx) {
         'link'
     ) as DataItem[];
 
-    const list = deduplicatedItems.toSorted((a, b) => Number(b!.pubDate) - Number(a!.pubDate)).slice(0, ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 20);
+    const list = deduplicatedItems.toSorted((a, b) => Number(b!.pubDate) - Number(a!.pubDate)).slice(0, getRouteLimit(ctx, 20));
 
     const items = ctx.req.query('fulltext') === 'true' ? await pMap(list, (item) => fetchArticle(item), { concurrency: 10 }) : list;
 

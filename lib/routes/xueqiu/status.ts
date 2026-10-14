@@ -19,7 +19,7 @@ export const route: Route = {
     },
     features: {
         requireConfig: false,
-        requirePuppeteer: false,
+        requirePuppeteer: true,
         antiCrawler: true,
         supportBT: false,
         supportPodcast: false,
@@ -27,7 +27,7 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['xueqiu.com/:uid/:id'],
+            source: ['xueqiu.com/'],
             target: '/status/:uid/:id',
         },
     ],

@@ -1,11 +1,13 @@
 import type { CheerioAPI } from 'cheerio';
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
 const author = 'Peter Wunder';
 const rootUrl = 'https://projects.peterwunder.de';
@@ -77,12 +79,12 @@ function fetchBadge(item: BadgeItem) {
 }
 
 const handler: Route['handler'] = async (ctx) => {
-    const limit = Number(ctx.req.query('limit')) || defaultLimit;
+    const limit = getRouteLimit(ctx, defaultLimit);
 
     const { data: response } = await got(currentUrl);
     const $: CheerioAPI = load(response);
 
-    const items = await Promise.all(extractListItems($, limit).map((item) => fetchBadge(item)));
+    const items = await pMap(extractListItems($, limit), fetchBadge, { concurrency: 3 });
 
     return {
         title: 'All Activity Challenges - New Badges',

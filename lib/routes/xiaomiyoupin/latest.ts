@@ -21,7 +21,7 @@ export const route: Route = {
             source: ['xiaomiyoupin.com/'],
         },
     ],
-    name: '小米有品每日上新',
+    name: '每日上新',
     maintainers: ['xyqfer', 'DIYgod', 'bigfei'],
     handler,
     url: 'xiaomiyoupin.com/',

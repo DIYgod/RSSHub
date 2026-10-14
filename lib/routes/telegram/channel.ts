@@ -2,15 +2,19 @@ import querystring from 'node:querystring';
 
 import { load } from 'cheerio';
 import { FetchError } from 'ofetch';
+import pMap from 'p-map';
+import { errors } from 'teleproto';
 
 import { config } from '@/config';
 import type { DataItem, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
+import logger from '@/utils/logger';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import { fallback, queryToBoolean } from '@/utils/readable-social';
 
+import { expandTelegraph } from './telegraph';
 import { renderVideo } from './templates/video';
 import tglibchannel from './tglib/channel';
 
@@ -71,6 +75,7 @@ export const route: Route = {
 | showReplyTo            | For reply messages, show the target of the reply                      | 0/1/true/false                                     | true         |
 | showFwdFrom            | For forwarded messages, show the forwarding source                    | 0/1/true/false                                     | true         |
 | showFwdFromAuthor      | For forwarded messages, show the author of the forwarding source      | 0/1/true/false                                     | true         |
+| includeTelegraph       | Expand public telegra.ph article links into their full content          | 0/1/true/false                                     | false        |
 | showInlineButtons      | Show inline buttons                                                   | 0/1/true/false                                     | false        |
 | showMediaTagInTitle    | Show media tags in the title                                          | 0/1/true/false                                     | true         |
 | showMediaTagAsEmoji    | Show media tags as emoji                                              | 0/1/true/false                                     | true         |
@@ -147,13 +152,24 @@ For backward compatibility reasons, invalid \`routeParams\` will be treated as \
     handler,
     description: `::: tip
 Due to Telegram restrictions, some channels involving pornography, copyright, and politics cannot be subscribed. You can confirm by visiting \`https://t.me/s/:username\`, it's recommended to deploy your own instance with telegram api configs (create your telegram application via \`https://core.telegram.org/api/obtaining_api_id\`, run this command \`node ./lib/routes/telegram/scripts/get-telegram-session.mjs\` to get \`TELEGRAM_SESSION\` and set it as Environment Variable).
+MTProto connections can use a SOCKS4/5 \`PROXY_URI\` (for example, \`socks5://127.0.0.1:1080\`) or the dedicated \`TELEGRAM_PROXY_HOST\`, \`TELEGRAM_PROXY_PORT\`, and \`TELEGRAM_PROXY_SECRET\` MTProxy settings, which take precedence. HTTP proxies only apply to the public web feed; use a SOCKS or MTProxy endpoint for authenticated MTProto feeds.
+
+When a reverse proxy removes a public URL prefix (for example, \`/rss\`), set its \`X-Forwarded-Prefix\` request header to that prefix so Telegram media links include it. Access-control \`key\` and \`code\` parameters are preserved in these media links.
 :::`,
 };
 
 async function handler(ctx) {
     const useWeb = ctx.req.param('routeParams') || !config.telegram.session;
     if (!useWeb) {
-        return tglibchannel(ctx);
+        try {
+            return await tglibchannel(ctx);
+        } catch (error) {
+            // A flood wait blocks the account for minutes to hours, while the public web preview still works
+            if (!(error instanceof errors.FloodWaitError)) {
+                throw error;
+            }
+            logger.warn(`Telegram MTProto requires a wait of ${error.seconds} seconds, falling back to the web preview`);
+        }
     }
 
     const username = ctx.req.param('username');
@@ -171,8 +187,12 @@ async function handler(ctx) {
     let includeReply = true;
     let includeServiceMsg = true;
     let includeUnsupportedMsg = false;
+    let includeTelegraph = false;
     let searchQuery = routeParams; // for backward compatibility
-    if (routeParams && routeParams.search(/(^|&)(show(LinkPreview|ViaBot|ReplyTo|FwdFrom(Author)?|InlineButtons|MediaTag(InTitle|AsEmoji)|HashtagAsHyperlink)|include(Fwd|Reply|(Service|Unsupported)Msg)|searchQuery)=/) !== -1) {
+    if (
+        routeParams &&
+        routeParams.search(/(^|&)(show(LinkPreview|ViaBot|ReplyTo|FwdFrom(Author)?|InlineButtons|MediaTag(InTitle|AsEmoji)|HashtagAsHyperlink)|include(Telegraph|Fwd|Reply|(Service|Unsupported)Msg)|searchQuery)=/) !== -1
+    ) {
         routeParams = querystring.parse(ctx.req.param('routeParams'));
         showLinkPreview = !!fallback(undefined, queryToBoolean(routeParams.showLinkPreview), showLinkPreview);
         showViaBot = !!fallback(undefined, queryToBoolean(routeParams.showViaBot), showViaBot);
@@ -183,6 +203,7 @@ async function handler(ctx) {
         showMediaTagInTitle = !!fallback(undefined, queryToBoolean(routeParams.showMediaTagInTitle), showMediaTagInTitle);
         showMediaTagAsEmoji = !!fallback(undefined, queryToBoolean(routeParams.showMediaTagAsEmoji), showMediaTagAsEmoji);
         showHashtagAsHyperlink = !!fallback(undefined, queryToBoolean(routeParams.showHashtagAsHyperlink), showHashtagAsHyperlink);
+        includeTelegraph = !!fallback(undefined, queryToBoolean(routeParams.includeTelegraph), false);
         includeFwd = !!fallback(undefined, queryToBoolean(routeParams.includeFwd), includeFwd);
         includeReply = !!fallback(undefined, queryToBoolean(routeParams.includeReply), includeReply);
         includeServiceMsg = !!fallback(undefined, queryToBoolean(routeParams.includeServiceMsg), includeServiceMsg);
@@ -239,11 +260,10 @@ async function handler(ctx) {
     const channelName = $('.tgme_channel_info_header_title').text();
     const feedTitle = (searchQuery ? `"${searchQuery}" - ` : '') + channelName + ' - Telegram Channel';
 
-    return {
+    const feed = {
         title: feedTitle,
         description: $('.tgme_channel_info_description').text(),
         link: resourceUrl,
-        allowEmpty: true,
 
         itunes_author: channelName,
         image: $('.tgme_page_photo_image > img').attr('src'),
@@ -686,7 +706,8 @@ async function handler(ctx) {
                 }
 
                 /* pubDate */
-                const pubDate = parseDate($item.find('.tgme_widget_message_date time').attr('datetime')!);
+                const publishedAt = $item.find('.tgme_widget_message_date time').attr('datetime');
+                const pubDate = publishedAt ? parseDate(publishedAt) : undefined;
 
                 /* ----- finished parsing ----- */
 
@@ -694,7 +715,7 @@ async function handler(ctx) {
                 let mediaTag = '';
                 if (showMediaTagInTitle) {
                     for (const type of msgTypes) {
-                        if (type !== REPLY || type !== FORWARDED || type !== VIA_BOT || (type === REPLY && showReplyTo) || (type === FORWARDED && showFwdFrom) || (type === VIA_BOT && showViaBot)) {
+                        if ((type !== REPLY && type !== FORWARDED && type !== VIA_BOT) || (type === REPLY && showReplyTo) || (type === FORWARDED && showFwdFrom) || (type === VIA_BOT && showViaBot)) {
                             mediaTag += showMediaTagAsEmoji ? mediaTagDict[type][1] : mediaTagDict[type][0];
                         }
                     }
@@ -729,11 +750,11 @@ async function handler(ctx) {
                 if (messageTextObj.length > 0 && !titleCompleteFlag) {
                     const _messageTextObj = $(messageTextObj.toString());
                     _messageTextObj.find('br').replaceWith('\n');
-                    const trimmedTitleText = _messageTextObj.text().split('\n', 1).at(0)?.trim();
-                    messageTitle += (messageTitle && trimmedTitleText ? ': ' : '') + trimmedTitleText;
+                    const titleText = _messageTextObj.text().split('\n', 1).at(0);
+                    messageTitle += (messageTitle && titleText ? ': ' : '') + titleText;
                 }
 
-                messageTitle = messageTitle === '' ? mediaTag || pubDate.toUTCString() : `${mediaTag}${mediaTag ? ' ' : ''}${messageTitle}`;
+                messageTitle = messageTitle === '' ? mediaTag || pubDate?.toUTCString() || '' : `${mediaTag}${mediaTag ? ' ' : ''}${messageTitle}`;
 
                 let description = '';
                 if (showFwdFrom) {
@@ -768,4 +789,8 @@ async function handler(ctx) {
             .filter((item) => item !== null)
             .toReversed(),
     };
+    if (includeTelegraph) {
+        feed.item = await pMap(feed.item, async (item) => ({ ...item, description: await expandTelegraph(item.description) }), { concurrency: 3 });
+    }
+    return feed;
 }

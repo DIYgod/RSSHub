@@ -1,13 +1,13 @@
 import type { Context } from 'hono';
+import pMap from 'p-map';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
 const host = 'http://www.design.zjut.edu.cn';
-
 export const route: Route = {
     path: '/design/:type',
     categories: ['university'],
@@ -65,33 +65,36 @@ export const route: Route = {
 | -------- | -------- |
 | 122      | 123      |`,
 };
-
 async function handler(ctx: Context) {
-    const { type } = ctx.req.param();
-
+    return await getDesignFeed(ctx.req.param('type')!);
+}
+export async function getDesignFeed(type: string) {
     const { data } = await ofetch(`${host}/jsp/api/an/column`, { query: { id: type } });
-
-    const list = data.pages.list.map((item) => ({
+    const list: Array<
+        DataItem & {
+            link: string;
+        }
+    > = data.pages.list.map((item) => ({
         title: item.title,
         link: item.url || `${host}/#/detail/${item.id}`,
         pubDate: timezone(parseDate(item.date), 8),
         description: item.content,
         id: item.id,
     }));
-
-    const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link, async () => {
-                if (!item.link.startsWith(`${host}/#/detail/`)) {
-                    return item;
-                }
-                const { data } = await ofetch(`${host}/jsp/api/an/news`, { query: { id: item.id } });
-                item.description = data.content;
+    const items = await pMap(
+        list,
+        async (item) => {
+            if (!item.link.startsWith(`${host}/#/detail/`)) {
                 return item;
-            })
-        )
+            }
+            const description = await cache.tryGet(`zjut:design:details:${item.link}`, async () => {
+                const { data } = await ofetch(`${host}/jsp/api/an/news`, { query: { id: item.id } });
+                return data.content;
+            });
+            return { ...item, description };
+        },
+        { concurrency: 3 }
     );
-
     return {
         title: `浙江工业大学设计与建筑学院 - ${data.name}`,
         link: `${host}/#/category?id=${type}`,

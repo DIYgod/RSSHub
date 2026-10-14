@@ -2,7 +2,7 @@ import type { Route } from '@/types';
 
 import { processItems } from './utils';
 
-const baseURL = 'https://www.hao6v.tv/gvod/dsj.html';
+const baseURL = 'https://www.hao6v.cc/gvod/dsj.html';
 
 export const route: Route = {
     path: '/latestTVSeries',
@@ -32,9 +32,9 @@ async function handler(ctx) {
     const item = await processItems(ctx, baseURL, []);
 
     return {
-        title: '6v电影-最新电影',
+        title: '6v电影-最新电视剧',
         link: baseURL,
-        description: '6v最新电影RSS',
+        description: '6v最新电视剧RSS',
         item,
     };
 }

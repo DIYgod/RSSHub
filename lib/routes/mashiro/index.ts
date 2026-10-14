@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
@@ -16,7 +17,11 @@ export const route: Route = {
     parameters: { lang: 'the language of the site. Can be either `en` or `zh-cn`. Default: `en`' },
     radar: [
         {
-            source: ['mashiro.best/', 'mashiro.best/:lang/'],
+            source: ['mashiro.best/:lang/'],
+        },
+        {
+            source: ['mashiro.best/'],
+            target: '/en',
         },
     ],
     name: 'Blog',
@@ -31,7 +36,7 @@ export const route: Route = {
             .toArray()
             .map((item): DataItem => {
                 const $item = $(item);
-                const a = $item.find('a').first();
+                const a = $item.find('a');
 
                 const title = a.find('.article-title').text();
                 const link = `${baseUrl}${a.attr('href')}`;
@@ -44,15 +49,17 @@ export const route: Route = {
                 };
             });
 
-        const items = await Promise.all(
-            links.map((item) =>
-                cache.tryGet(item.link!, async () => {
+        const items = await pMap(
+            links,
+            async (item) => {
+                const description = await cache.tryGet(`mashiro:article:${item.link}`, async () => {
                     const response = await ofetch(item.link!);
                     const $ = load(response);
-                    item.description = $('.article-content').html();
-                    return item;
-                })
-            )
+                    return $('.article-content').html();
+                });
+                return { ...item, description };
+            },
+            { concurrency: 3 }
         );
 
         return {

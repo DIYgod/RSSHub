@@ -4,6 +4,7 @@ import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
 export const route: Route = {
     path: '/news',
@@ -40,7 +41,7 @@ async function handler(ctx) {
     const newsIndexJsonText = $('script:contains("window.__INITIAL_STATE__")').text().replaceAll('window.__INITIAL_STATE__=', '');
     const newsIndexJson = JSON.parse(newsIndexJsonText);
 
-    const limit = ctx.req.query('limit');
+    const limit = getRouteLimit(ctx, 20);
     const newsListResponse = await ofetch(`${rootUrl}/rajax/news_h.jsp?cmd=getWafNotCk_getList`, {
         method: 'POST',
         headers: {
@@ -48,7 +49,7 @@ async function handler(ctx) {
         },
         body: new URLSearchParams({
             page: '1',
-            pageSize: String(limit ?? 20),
+            pageSize: String(limit),
             fromMid: newsIndexJson.modules.module366.id,
             idList: `[${newsIndexJson.modules.module366.prop3}]`,
             sortKey: newsIndexJson.modules.module366.blob0.sortKey,

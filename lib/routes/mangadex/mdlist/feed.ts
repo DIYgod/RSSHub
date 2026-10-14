@@ -2,6 +2,7 @@ import { config } from '@/config';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
+import { getRouteLimit } from '@/utils/route-limit';
 
 import getToken from '../_access';
 import constants from '../_constants';
@@ -34,7 +35,7 @@ export const route: Route = {
             target: '/mdlist/:id',
         },
     ],
-    description: 'Sepcific MangaDex MDList Feed',
+    description: 'Specific MangaDex MDList Feed. The existing `private` query option requires authentication to access a private list.',
     example: '/mangadex/mdlist/10cca803-8dc9-4f0e-86a8-6659a3ce5188?limit=10&private=true',
     maintainers: ['chrisis58'],
     categories: ['anime'],
@@ -42,8 +43,8 @@ export const route: Route = {
         id: {
             description: 'The list id of the manga list',
         },
-        private: {
-            description: '(Query Param) Needed to access private lists, any value will be treated as true',
+        lang: {
+            description: 'The translated chapter language, combined with the configured language preferences',
         },
     },
     features: {
@@ -82,7 +83,8 @@ export const route: Route = {
 async function handler(ctx) {
     const { id, lang } = ctx.req.param();
 
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : DEFAULT_LIMIT;
+    const requestedLimit = getRouteLimit(ctx, DEFAULT_LIMIT);
+    const limit = Math.min(ctx.req.query('sorted') === 'false' ? requestedLimit : Math.max(DEFAULT_LIMIT, requestedLimit), 500);
     const isPrivate = !!ctx.req.query('private');
 
     const accessToken = isPrivate ? await getToken() : undefined;
@@ -118,24 +120,23 @@ async function handler(ctx) {
         config.cache.contentExpire
     );
 
+    const feedUrl = `${constants.API.BASE}/list/${id}/feed${toQueryString({
+        limit,
+        translatedLanguage: languagesQuery,
+        order: {
+            publishAt: 'desc',
+        },
+    })}`;
+
     const feed = await cache.tryGet<Chapter[]>(
-        `mangadex:mdlist-feed-${id}`,
+        `mangadex:mdlist-feed:v2:${isPrivate}:${feedUrl}`,
         async () => {
-            const response = await got.get(
-                `${constants.API.BASE}/list/${id}/feed${toQueryString({
-                    limit,
-                    translatedLanguage: languagesQuery,
-                    order: {
-                        publishAt: 'desc',
-                    },
-                })}`,
-                {
-                    headers: {
-                        Authorization: isPrivate ? `Bearer ${accessToken}` : '',
-                        'User-Agent': config.trueUA,
-                    },
-                }
-            );
+            const response = await got.get(feedUrl, {
+                headers: {
+                    Authorization: isPrivate ? `Bearer ${accessToken}` : '',
+                    'User-Agent': config.trueUA,
+                },
+            });
 
             const feed = response?.data?.data;
             if (!feed) {
@@ -150,7 +151,7 @@ async function handler(ctx) {
 
     const mangaIds = feed.map((chapter) => chapter.relationships.find((relationship) => relationship.type === 'manga')?.id).filter((mangaId) => mangaId !== undefined);
 
-    const mangaMetas = await getMangaMetaByIds(mangaIds);
+    const mangaMetas = await getMangaMetaByIds(mangaIds, true, [...languagesQuery]);
 
     return {
         title: `MDList - ${listName} by ${listAuthor}`,

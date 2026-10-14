@@ -2,10 +2,12 @@ import { load } from 'cheerio';
 import pMap from 'p-map';
 import { CookieJar } from 'tough-cookie';
 
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 import timezone from '@/utils/timezone';
 
 const site = 'https://oas.gdut.edu.cn/seeyon';
@@ -36,6 +38,9 @@ const typeMap = {
     },
 };
 
+const styBlocklist = new Set(['color:rgb(0,0,0)', 'color:black', 'background:rgb(255,255,255)', 'background:white', 'text-align:left', 'text-align:justify', 'font-style:normal', 'font-weight:normal']);
+const styPrefixBlocklist = ['font-family', 'font-size', 'background', 'text-autospace', 'text-transform', 'letter-spacing', 'line-height', 'padding', 'margin', 'text-justify', 'word-break', 'vertical-align', 'mso-', '-ms-'];
+
 function getArg(type) {
     return JSON.stringify([
         { page: 1, size: 50 },
@@ -48,7 +53,7 @@ export const route: Route = {
     categories: ['university'],
     example: '/gdut/oa_news/notice',
     parameters: {
-        type: '通知类型，留空则获取所有分类',
+        type: '通知类型，默认为 notice（校内通知），可选值见下表',
     },
     features: {
         requireConfig: false,
@@ -82,19 +87,19 @@ export const route: Route = {
 
 async function handler(ctx) {
     const typeParam = ctx.req.param('type') ?? 'notice';
-    if (typeMap[typeParam] === undefined) {
-        throw new Error('通知类型' + typeParam + '未定义');
+    if (!Object.hasOwn(typeMap, typeParam)) {
+        throw new InvalidParameterError('type must be department, academy, notice, announcement, tender_result, or tender_invite.');
     }
 
     const type = typeMap[typeParam];
 
-    // 获取cookie
+    // Initialize the public portal session.
     const cookieJar = new CookieJar();
     await got(site + '/ggIP.do?method=portalSeachMore&subject=&departmentName=&newsType=&startDate=&endDate=', {
         cookieJar,
     });
 
-    // 获取文章列表
+    // Fetch the first article list page.
     const listUrl = '/ajax.do?method=ajaxAction&managerName=ggManager&rnd=1';
     const resp = await got.post(site + listUrl, {
         cookieJar,
@@ -107,8 +112,8 @@ async function handler(ctx) {
         throw new Error('文章列表获取失败，可能是被临时限制了访问，请稍后重试\n' + JSON.stringify(resp.data));
     }
 
-    // 构造文章数组
-    const articles: Array<DataItem & { link: string }> = resp.data.data.map((item): DataItem & { link: string } => ({
+    // Read article metadata from the list.
+    let articles: Array<DataItem & { link: string }> = resp.data.data.map((item): DataItem & { link: string } => ({
         title: item.title,
         guid: item.id,
         link: site + '/newsData.do?method=newsView&newsId=' + item.id,
@@ -116,20 +121,27 @@ async function handler(ctx) {
         author: item.publishUserDepart,
         category: item.typeName,
     }));
+    const limit = getRouteLimit(ctx);
+    if (limit && (ctx.req.query('sorted') === 'false' || articles.every((item) => item.pubDate instanceof Date && Number.isFinite(item.pubDate.getTime())))) {
+        if (ctx.req.query('sorted') !== 'false') {
+            articles.sort((a, b) => (b.pubDate as Date).getTime() - (a.pubDate as Date).getTime());
+        }
+        articles = articles.slice(0, limit);
+    }
 
     const results = await pMap(
         articles,
         async (data) => {
             const link = data.link;
             data.description = await cache.tryGet(link, async () => {
-                // 获取数据
+                // Fetch the article body.
                 const response = await got(link, {
                     cookieJar,
                 });
 
                 const $ = load(response.data);
                 const node = $('#content');
-                // 清理样式
+                // Remove page styling from the article body.
                 node.find('*')
                     .filter((_, el) => el.tagName === 'meta' || el.tagName === 'style')
                     .remove();
@@ -142,25 +154,8 @@ async function handler(ctx) {
                         const newSty = el.attribs.style
                             .split(';')
                             .filter((s) => {
-                                const styBlocklist = ['color:rgb(0,0,0)', 'color:black', 'background:rgb(255,255,255)', 'background:white', 'text-align:left', 'text-align:justify', 'font-style:normal', 'font-weight:normal'];
-                                const styPrefixBlocklist = [
-                                    'font-family',
-                                    'font-size',
-                                    'background',
-                                    'text-autospace',
-                                    'text-transform',
-                                    'letter-spacing',
-                                    'line-height',
-                                    'padding',
-                                    'margin',
-                                    'text-justify',
-                                    'word-break',
-                                    'vertical-align',
-                                    'mso-',
-                                    '-ms-',
-                                ];
                                 const sty = s.trim();
-                                if (styBlocklist.includes(sty.replaceAll(/\s+/g, ''))) {
+                                if (styBlocklist.has(sty.replaceAll(/\s+/g, ''))) {
                                     return false;
                                 }
                                 for (const prefix of styPrefixBlocklist) {

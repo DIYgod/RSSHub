@@ -5,10 +5,52 @@ import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
 import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
+import logger from '@/utils/logger';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
+import timezone from '@/utils/timezone';
 
 const BASE_URL = 'https://south-plus.net';
+
+type ForumHeaders = {
+    Accept: string;
+    'Accept-Language': string;
+    Referer: string;
+    'User-Agent'?: string;
+    Cookie?: string;
+};
+
+const parseThread = async (item: DataItem, headers: ForumHeaders): Promise<DataItem> => {
+    try {
+        const detail = await cache.tryGet(`${item.link}:detail-v4`, async () => {
+            const detailHtml = await ofetch(item.link!, { headers });
+            const $ = load(detailHtml);
+            const content = $('#read_tpc');
+            if (content.length === 0) {
+                throw new Error('The source did not expose the first post; check thread access permissions.');
+            }
+            const fields: Pick<DataItem, 'description' | 'pubDate' | 'author'> = { description: content.html() };
+            const dateMatch = $('.tiptop .fl.gray')
+                .first()
+                .text()
+                .match(/(\d{4}-\d{2}-\d{2}\s+\d{2}:\d{2})/);
+            if (dateMatch) {
+                fields.pubDate = timezone(parseDate(dateMatch[1], 'YYYY-MM-DD HH:mm'), 8);
+            }
+            const author = $('.r_two a[href*="action-show-uid"] strong');
+            if (author.length > 0) {
+                fields.author = author.first().text().trim();
+            }
+            return fields;
+        });
+        return { ...item, ...detail };
+    } catch (error) {
+        // Keep fresh listing fields and allow unsuccessful detail requests to retry.
+        logger.warn(`south-plus: detail fetch failed for ${item.link}: ${String(error)}`);
+        return item;
+    }
+};
 
 async function handler(ctx): Promise<Data> {
     const fid = ctx.req.param('fid') ?? '8';
@@ -17,7 +59,7 @@ async function handler(ctx): Promise<Data> {
 
     const forumUrl = `${BASE_URL}/thread.php?fid-${fid}.html`;
 
-    const headers: Record<string, string> = {
+    const headers: ForumHeaders = {
         Accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
         'Accept-Language': 'zh-CN,zh;q=0.9',
         Referer: 'https://south-plus.net/index.php',
@@ -55,7 +97,7 @@ async function handler(ctx): Promise<Data> {
             const $el = $(item);
             const $row = $el.closest('tr');
             const threadLink = $el.attr('href');
-            const title = $el.text().trim();
+            const title = $el.text();
             const link = threadLink ? new URL(threadLink, BASE_URL).href : '';
 
             // Author in column 2
@@ -67,8 +109,9 @@ async function handler(ctx): Promise<Data> {
             // Last post date in column 4 (a.f10)
             const lastPostDateText = $row.find('td.tal.y-style a.f10').text().trim();
 
-            // Use last post date as pubDate for RSS sorting
-            const pubDate = parseDate(lastPostDateText) || parseDate(postDateText);
+            // Preserve publication and last-reply clocks separately in the site's UTC+8 timezone.
+            const pubDate = postDateText ? timezone(parseDate(postDateText, 'YYYY-MM-DD'), 8) : undefined;
+            const updated = lastPostDateText ? timezone(parseDate(lastPostDateText, 'YYYY-MM-DD HH:mm'), 8) : undefined;
 
             // Thread category tag (e.g. [自购], [公告]) in column 1
             const category = $row.find('a.s8').text().trim();
@@ -78,50 +121,14 @@ async function handler(ctx): Promise<Data> {
                 link,
                 author,
                 pubDate,
+                updated,
                 category: category ? [category] : undefined,
             };
         });
 
     // Optionally fetch full content for each thread (with cache)
-    const limit = ctx.req.query('limit') ? Math.trunc(Number(ctx.req.query('limit'))) : 50;
-    const items = await pMap(
-        threadList.slice(0, limit),
-        (item) =>
-            cache.tryGet(item.link!, async () => {
-                try {
-                    const detailHtml = await ofetch(item.link!, { headers });
-                    const $detail = load(detailHtml);
-
-                    // Get the main post content
-                    // PHPWind: <div class="f14" id="read_tpc"> for the first post
-                    const contentEl = $detail('#read_tpc');
-                    if (contentEl.length > 0) {
-                        item.description = contentEl.html() ?? '';
-
-                        // Get the original post date from tiptop area
-                        const dateEl = $detail('.tiptop .fl.gray');
-                        if (dateEl.length > 0) {
-                            const dateText = dateEl.first().text().trim();
-                            const dateMatch = dateText.match(/(\d{4}-\d{2}-\d{2}\s+\d{2}:\d{2})/);
-                            if (dateMatch) {
-                                item.pubDate = parseDate(dateMatch[1]);
-                            }
-                        }
-
-                        // Get the author from the detail page
-                        const authorEl = $detail('.r_two a[href*="action-show-uid"] strong');
-                        if (authorEl.length > 0) {
-                            item.author = authorEl.first().text().trim();
-                        }
-                    }
-                } catch {
-                    // If detail page fails, keep the list page data
-                }
-
-                return item;
-            }),
-        { concurrency: 3 }
-    );
+    const limit = getRouteLimit(ctx, 50);
+    const items = await pMap(threadList.slice(0, limit), (item) => parseThread(item, headers), { concurrency: 3 });
 
     return {
         title: $('head > title').text().trim(),

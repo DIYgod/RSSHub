@@ -1,10 +1,12 @@
 import { load } from 'cheerio';
 import type { Context } from 'hono';
+import pMap from 'p-map';
 
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
 
 export const route: Route = {
     path: '/:type?/:name?',
@@ -16,6 +18,7 @@ export const route: Route = {
     },
     features: {
         antiCrawler: true,
+        nsfw: true,
     },
     name: '最新图片',
     maintainers: ['hoilc'],
@@ -26,6 +29,9 @@ const host = 'https://ja.hentai-cosplay-xxx.com/';
 
 async function handler(ctx: Context) {
     const { type, name } = ctx.req.param();
+    if (type && (!['tag', 'keyword'].includes(type) || !name)) {
+        throw new InvalidParameterError('Invalid search parameters: use tag or keyword with a nonempty name, or omit both for all images.');
+    }
     const url = type ? `${host}search/${type}/${encodeURIComponent(name)}/` : `${host}search/`;
 
     const response = await ofetch(url);
@@ -44,8 +50,9 @@ async function handler(ctx: Context) {
             };
         });
 
-    const items = await Promise.all(
-        list.map((info) =>
+    const items = await pMap(
+        list,
+        (info) =>
             cache.tryGet(info.link, async () => {
                 const detailResponse = await ofetch(info.link.replace('https://ja.hentai-cosplay-xxx.com/', 'https://hentai-cosplay-xxx.com/'));
                 const $ = load(detailResponse);
@@ -57,10 +64,10 @@ async function handler(ctx: Context) {
                         .toArray()
                         .map((element) => `<img src=${$(element).attr('src')} alt="">`)
                         .join(' '),
-                    pubDate: parseDate(info.date),
+                    pubDate: info.date ? parseDateInTimezone(info.date, 0) : undefined,
                 };
-            })
-        )
+            }),
+        { concurrency: 3 }
     );
 
     return {

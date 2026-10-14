@@ -41,7 +41,7 @@ export const route: Route = {
     radar: [
         {
             source: ['www.gcores.com/radios/preview'],
-            target: '/gcores/radios/preview',
+            target: '/radios/preview',
         },
     ],
     view: ViewType.Notifications,

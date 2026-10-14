@@ -57,7 +57,7 @@ function handler(ctx) {
             link: `https://www.zhihu.com/question/${questionId}`,
             item: listRes.map((item) => {
                 const title = `${item.author.name}的回答：${item.excerpt}`;
-                const description = `${item.author.name}的回答<br/><br/>${processImage(item.content)}`;
+                const description = processImage(item.content);
 
                 return {
                     title,

@@ -8,28 +8,34 @@ import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 import timezone from '@/utils/timezone';
 import { isValidHost } from '@/utils/valid-host';
 
 const parsePost = ($: CheerioAPI, post: Cheerio<Element>, base: string): DataItem => {
     const no = post.find('.qlink').attr('data-no');
     const image = post.find('.file-thumb img').attr('data-sync-original');
+    const thumbnail = post.find('.file-thumb img').attr('src');
+    const isVideo = image && /\.(?:mp4|webm)(?:[?#]|$)/i.test(image);
     const dateMatch = post
         .find('.now')
         .text()
         .match(/(\d{4}\/\d{2}\/\d{2})\(.\) (\d{2}:\d{2}:\d{2})/);
+
+    post.find('.quote .postvote-slot').remove();
+    const date = dateMatch ? parseDate(`${dateMatch[1]} ${dateMatch[2]}`, 'YYYY/MM/DD HH:mm:ss', true) : undefined;
 
     return {
         title: post.find('.title').text(),
         link: `${base}pixmicat.php?res=${no}`,
         guid: `komica:${base}${no}`,
         author: post.find('.name').text(),
-        pubDate: dateMatch ? timezone(parseDate(`${dateMatch[1]} ${dateMatch[2]}`, 'YYYY/MM/DD HH:mm:ss'), 8) : undefined,
+        pubDate: date && Number.isFinite(date.getTime()) ? timezone(date, 8) : undefined,
         category: post
             .find('.category a[href*="mode=category"]')
             .toArray()
             .map((a) => $(a).text()),
-        description: (image ? (image.endsWith('.mp4') ? `<video src="${image}" controls></video><br>` : `<img src="${image}"><br>`) : '') + (post.find('.quote').html() ?? ''),
+        description: (image ? (isVideo ? `<video src="${image}"${thumbnail ? ` poster="${thumbnail}"` : ''} controls></video><br>` : `<img src="${image}"><br>`) : '') + (post.find('.quote').html() ?? ''),
     };
 };
 
@@ -38,7 +44,7 @@ const handler = async (ctx: Context): Promise<Data> => {
     if (!isValidHost(host)) {
         throw new InvalidParameterError('Invalid host');
     }
-    const limit = Number(ctx.req.query('limit') ?? '30');
+    const limit = getRouteLimit(ctx, 30);
     const baseUrl = `https://${host}.komica1.org/${board}/`;
 
     const listUrl = `${baseUrl}pixmicat.php?mode=module&load=mod_threadlist${category ? `&c=${encodeURIComponent(category)}` : ''}`;
@@ -84,8 +90,8 @@ export const route: Route = {
     categories: ['bbs'],
     radar: [
         {
-            source: ['komica1.org/:board/'],
-            target: '/:host/:board',
+            source: ['gita.komica1.org/:board/'],
+            target: '/gita/:board',
         },
     ],
 };

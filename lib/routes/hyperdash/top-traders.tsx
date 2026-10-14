@@ -1,7 +1,6 @@
 import { renderToString } from 'hono/jsx/dom/server';
 
 import type { Route } from '@/types';
-import { parseDate } from '@/utils/parse-date';
 
 import { fetchTopTraders, formatCurrency, formatPnL } from './utils';
 
@@ -20,7 +19,7 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['hyperdash.info/'],
+            source: ['hyperdash.com/', 'hyperdash.com/leaderboard'],
         },
     ],
     name: 'Top Traders',
@@ -32,88 +31,49 @@ export const route: Route = {
 async function handler() {
     const traders = await fetchTopTraders();
 
-    const items = traders.map((trader, index) => {
-        const rank = index + 1;
-
+    const items = traders.map((trader) => {
         const title = trader.address;
-
-        const accountValue = formatCurrency(trader.account_value);
-        const mainPosition = {
-            coin: trader.main_position.coin,
-            value: formatCurrency(trader.main_position.value),
-            side: trader.main_position.side,
-        };
-        const directionBias = trader.direction_bias !== null && trader.direction_bias !== undefined ? trader.direction_bias.toFixed(2) + '%' : 'N/A';
-        const pnl = {
-            day: formatPnL(trader.perp_day_pnl),
-            week: formatPnL(trader.perp_week_pnl),
-            month: formatPnL(trader.perp_month_pnl),
-            alltime: formatPnL(trader.perp_alltime_pnl),
-        };
         const description = renderToString(
             <>
-                <h3>Trader #{rank}</h3>
+                <h3>Trader #{trader.rank}</h3>
                 <p>
-                    <strong>Address:</strong> <code>{trader.address}</code>
+                    <strong>Account Value:</strong> {formatCurrency(trader.accountValue)}
+                </p>
+                <h4>30-day Performance</h4>
+                <p>
+                    <strong>Net PnL:</strong> {formatPnL(trader.netPnl)}
                 </p>
                 <p>
-                    <strong>Account Value:</strong> {accountValue}
-                </p>
-                <h4>Main Position</h4>
-                <p>
-                    <strong>Coin:</strong> {mainPosition.coin}
+                    <strong>Gross PnL:</strong> {formatPnL(trader.grossPnl)}
                 </p>
                 <p>
-                    <strong>Position Value:</strong> {mainPosition.value}
+                    <strong>Funding PnL:</strong> {formatPnL(trader.fundingPnl)}
                 </p>
                 <p>
-                    <strong>Side:</strong> {mainPosition.side}
+                    <strong>Fees:</strong> {formatCurrency(trader.totalFees)}
                 </p>
                 <p>
-                    <strong>Direction Bias:</strong> {directionBias}
+                    <strong>Volume:</strong> {formatCurrency(trader.volume)}
                 </p>
-                <h4>PnL Performance</h4>
-                <table>
-                    <tr>
-                        <th>Period</th>
-                        <th>PnL</th>
-                    </tr>
-                    <tr>
-                        <td>Day</td>
-                        <td>{pnl.day}</td>
-                    </tr>
-                    <tr>
-                        <td>Week</td>
-                        <td>{pnl.week}</td>
-                    </tr>
-                    <tr>
-                        <td>Month</td>
-                        <td>{pnl.month}</td>
-                    </tr>
-                    <tr>
-                        <td>All-time</td>
-                        <td>{pnl.alltime}</td>
-                    </tr>
-                </table>
+                <p>
+                    <strong>Trades:</strong> {trader.tradeCount} ({trader.winningTrades} winning, {trader.losingTrades} losing)
+                </p>
             </>
         );
-
-        const baseTime = new Date();
-        const orderTimestamp = new Date(baseTime.getTime() - index * 1000); // Each item 1 second apart
 
         return {
             title,
             description,
-            link: `https://hyperdash.info/trader/${trader.address}`,
-            pubDate: parseDate(orderTimestamp.toISOString()),
+            link: `https://hyperdash.com/trader/${trader.address}`,
             guid: trader.address,
         };
     });
 
     return {
         title: 'HyperDash Top Traders',
-        link: 'https://hyperdash.info/',
-        description: 'Top performing traders on HyperDash - real-time cryptocurrency derivatives trading analytics',
+        link: 'https://hyperdash.com/leaderboard',
+        description: 'Top performing traders on HyperDash - 30-day profit and loss leaderboard',
+        sortItems: false,
         item: items,
         language: 'en' as const,
     };

@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import { escapeUTF8 } from 'entities/escape';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
@@ -27,6 +28,8 @@ export const route: Route = {
 
 interface TopicDoc {
     title?: DataItem['title'];
+    brief?: string;
+    imageUrl?: string;
     createdByName?: string;
     tags?: string[];
 }
@@ -41,39 +44,36 @@ async function handler(ctx) {
             columnId: topicId,
         },
     });
-    const list = response.list.map((item) => {
-        let doc: TopicDoc = {};
-        let baseLink = {};
-        switch (item.type) {
-            case 0:
-                doc = item.knowledge;
-                baseLink = `${baseUrl}/db`;
-                break;
-            case 1:
-                doc = item.dbDoc;
-                baseLink = `${baseUrl}/doc`;
-                break;
-            default:
-                logger.error(`unknown type ${item.type}`);
+    const list = response.list.flatMap((item): Array<DataItem & { link: string }> => {
+        const doc: TopicDoc | undefined = item.type === 0 ? item.knowledge : item.type === 1 ? item.dbDoc : undefined;
+        if (!doc?.title || item.rid === undefined || item.rid === null) {
+            logger.error(`Unsupported or incomplete topic entry of type ${item.type}`);
+            return [];
         }
+        const baseLink = `${baseUrl}/${item.type === 0 ? 'db' : 'doc'}`;
 
-        return {
-            title: doc.title,
-            link: `${baseLink}/${item.rid}`,
-            pubDate: timezone(parseDate(item.createdTime), 8),
-            author: doc.createdByName,
-            category: doc.tags,
-        };
+        return [
+            {
+                title: doc.title,
+                link: `${baseLink}/${item.rid}`,
+                pubDate: timezone(parseDate(item.createdTime), 8),
+                author: doc.createdByName,
+                category: doc.tags,
+                description: item.type === 1 ? `${doc.imageUrl ? `<img src="${escapeUTF8(doc.imageUrl)}">` : ''}${doc.brief ? `<p>${escapeUTF8(doc.brief).replaceAll('\n', '<br>')}</p>` : ''}` : undefined,
+            },
+        ];
     });
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
-                const response = await ofetch(item.link);
-                const $ = load(response);
-                item.description = $('div.editor-content-styl.article-style').first().html();
-                return item;
-            })
+            item.description === undefined
+                ? cache.tryGet(item.link, async () => {
+                      const response = await ofetch(item.link);
+                      const $ = load(response);
+                      item.description = $('div.editor-content-styl.article-style').first().html();
+                      return item;
+                  })
+                : item
         )
     );
 

@@ -1,6 +1,7 @@
 import type { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
 const rootUrl = 'https://www.abmedia.io';
 const postsAPIUrl = `${rootUrl}/wp-json/wp/v2/posts`;
@@ -20,7 +21,12 @@ export const route: Route = {
     },
     radar: [
         {
+            source: ['abmedia.io/'],
+            target: '/index',
+        },
+        {
             source: ['www.abmedia.io/'],
+            target: '/index',
         },
     ],
     name: '首页最新新闻',
@@ -30,7 +36,8 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const limit = ctx.req.param('limit') ?? 10;
+    const requestedLimit = getRouteLimit(ctx, 10);
+    const limit = Math.min(Math.max(requestedLimit, 1), 100);
     const url = `${postsAPIUrl}?per_page=${limit}`;
 
     const response = await got.get(url);
@@ -40,7 +47,7 @@ async function handler(ctx) {
         title: item.title.rendered,
         link: item.link,
         description: item.content.rendered,
-        pubDate: parseDate(item.date),
+        pubDate: parseDate(`${item.date_gmt}Z`),
     }));
 
     return {

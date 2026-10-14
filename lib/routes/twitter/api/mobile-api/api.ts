@@ -119,15 +119,7 @@ const tweetDetail = (userId, params) =>
         ['threaded_conversation_with_injections_v2']
     );
 
-const listTweets = (listId, params = {}) =>
-    paginationTweets(
-        gqlMap.ListTimeline,
-        listId,
-        {
-            ...params,
-        },
-        ['list', 'timeline_response', 'timeline']
-    );
+const listTweets = (listId, params = {}) => paginationTweets(gqlMap.ListTimeline, listId, params, ['list', 'timeline_response', 'timeline']);
 
 function gatherLegacyFromData(entries, filterNested?, userId?) {
     const tweets: any[] = [];
@@ -238,7 +230,7 @@ const getUser = async (id) => {
     return (userData.data?.user || userData.data?.user_result)?.result?.legacy;
 };
 
-const cacheTryGet = async (_id, params, func) => {
+const cacheTryGet = async <T>(_id, params, func: (id, params) => Promise<T>) => {
     const id = await getUserID(_id);
     if (id === undefined) {
         throw new InvalidParameterError('User not found');
@@ -263,7 +255,7 @@ const getUserTweets = async (id, params = {}) => {
         [_getUserTweets, getUserTweetsAndReplies, getUserMedia].map(async (func) => {
             try {
                 const result = await func(id, params);
-                tweets.push(...(result as any[]));
+                tweets.push(...result);
             } catch (error) {
                 logger.warn(`Failed to get tweets for ${id} with ${func.name}: ${error}`);
             }

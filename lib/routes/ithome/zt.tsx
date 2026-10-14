@@ -1,15 +1,17 @@
 import { load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { getRouteLimit } from '@/utils/route-limit';
+
+import { parseSourceDate } from './utils';
 
 export const handler = async (ctx) => {
     const { id = 'xijiayi' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 50;
+    const limit = getRouteLimit(ctx, 50);
 
     const rootUrl = 'https://www.ithome.com';
     const currentUrl = new URL(`zt/${id}`, rootUrl).href;
@@ -32,16 +34,7 @@ export const handler = async (ctx) => {
 
             return {
                 title,
-                pubDate: timezone(
-                    parseDate(
-                        $item
-                            .find('span.time script')
-                            .text()
-                            .match(/'(.*?)'/)?.[0] ?? ''
-                    ),
-                    8
-                ),
-                link: $item.find('a').first().prop('href'),
+                link: $item.find('a').prop('href'),
                 author: $item.find('div.editor').contents().first().text(),
                 image,
                 banner: image,
@@ -49,8 +42,9 @@ export const handler = async (ctx) => {
             };
         });
 
-    items = await Promise.all(
-        items.map((item) =>
+    items = await pMap(
+        items,
+        (item) =>
             cache.tryGet(item.link!, async () => {
                 const { data: detailResponse } = await got(item.link);
 
@@ -73,11 +67,11 @@ export const handler = async (ctx) => {
 
                 const title = $$('h1').text();
                 const description = $$('div#paragraph').html();
-                const image = $$('div#paragraph img').first().prop('src');
+                const image = $$('div#paragraph img').prop('src');
 
                 item.title = title;
                 item.description = description;
-                item.pubDate = timezone(parseDate($$('span#pubtime_baidu').text()), 8);
+                item.pubDate = parseSourceDate($$('span#pubtime_baidu').text());
                 item.category = $$('div.cv a')
                     .toArray()
                     .map((c) => $$(c).text())
@@ -92,8 +86,8 @@ export const handler = async (ctx) => {
                 item.language = language;
 
                 return item;
-            })
-        )
+            }),
+        { concurrency: 3 }
     );
 
     const image = new URL($('meta[property="og:image"]').prop('content'), rootUrl).href;
@@ -103,7 +97,6 @@ export const handler = async (ctx) => {
         description: $('meta[name="description"]').prop('content'),
         link: currentUrl,
         item: items,
-        allowEmpty: true,
         image,
         author,
         language,
@@ -117,7 +110,7 @@ export const route: Route = {
     maintainers: ['nczitzk'],
     handler,
     example: '/ithome/zt/xijiayi',
-    parameters: { category: '专题 id，默认为 xijiayi，即 [喜加一](https://www.ithome.com/zt/xijiayi)，可在对应专题页 URL 中找到' },
+    parameters: { id: '专题 id，默认为 xijiayi，即 [喜加一](https://www.ithome.com/zt/xijiayi)，可在对应专题页 URL 中找到' },
     description: `::: tip
 更多专题请见 [IT 之家专题](https://www.ithome.com/zt)
 :::`,

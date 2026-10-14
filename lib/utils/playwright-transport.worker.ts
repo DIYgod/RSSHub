@@ -7,7 +7,7 @@ type WorkerSocket = {
     close(code?: number, reason?: string): void;
     addEventListener(type: string, listener: (event: { data?: string | ArrayBuffer }) => void): void;
 };
-type Message = Record<string, unknown>;
+type Message = { id?: number; guid?: string; method?: string; params?: object; metadata?: object; result?: object; error?: object; log?: string[] };
 type Progress = { race<T>(promise: Promise<T>): Promise<T> };
 type ConnectOptions = { headers?: Record<string, string> };
 export type TransportServer = { WebSocketTransport: { connect: (progress: Progress, endpoint: string, options?: ConnectOptions) => Promise<NativeTransport> } };
@@ -105,7 +105,7 @@ export class NativeTransport {
         });
         socket.addEventListener('message', (event) => {
             try {
-                const text = typeof event.data === 'string' ? event.data : new TextDecoder().decode(event.data as ArrayBuffer);
+                const text = event.data instanceof ArrayBuffer ? new TextDecoder().decode(event.data) : (event.data ?? '');
                 const message = JSON.parse(text);
                 if (this.messageHandler) {
                     this.deliver(message);

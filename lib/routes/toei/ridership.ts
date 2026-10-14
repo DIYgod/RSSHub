@@ -1,3 +1,5 @@
+import pMap from 'p-map';
+
 import type { RidershipExtra } from '@/routes/tokyometro/utils';
 import { ridershipItem } from '@/routes/tokyometro/utils';
 import type { Data, Route } from '@/types';
@@ -13,7 +15,7 @@ const CATALOG_PAGE = `https://catalog.data.metro.tokyo.lg.jp/dataset/${DATASET}`
 interface Resource {
     url: string;
     description: string;
-    last_modified: string | null;
+    last_modified?: string | null;
 }
 
 /** '《都営地下鉄》 - [地下鉄関連情報 各駅乗降人員一覧] 浅草線\n\n2024年4月～2025年3月' → line + fiscal year. */
@@ -32,7 +34,7 @@ const parseCsv = (buf: ArrayBuffer, line: string, fiscalYear: number, link: stri
     const rows = text
         .split(/\r?\n/)
         .slice(1)
-        .map((l) => l.split(',').map((c) => c.trim()))
+        .map((l) => l.split(','))
         .filter((cells) => cells.length >= 3 && cells[0] !== '' && !cells[0].startsWith('計'));
     return rows.map((cells, index) => {
         const [label, boarding, alighting] = cells;
@@ -57,24 +59,29 @@ const parseCsv = (buf: ArrayBuffer, line: string, fiscalYear: number, link: stri
 };
 
 export const handler = async (): Promise<Data> => {
-    const pkg = (await cache.tryGet(PACKAGE_API, async () => {
+    const pkg = await cache.tryGet(PACKAGE_API, async () => {
         const body = await ofetch(PACKAGE_API);
         const resources: Resource[] = body?.result?.resources ?? [];
-        return resources.map((r) => ({ ...r, meta: parseResource(r) })).filter((r) => r.meta !== null);
-    })) as Array<Resource & { meta: { line: string; fiscalYear: number } }>;
+        return resources
+            .map((r) => {
+                const meta = parseResource(r);
+                return meta ? { ...r, meta } : null;
+            })
+            .filter((r) => r !== null);
+    });
 
     const items = (
-        await Promise.all(
-            pkg.map(
-                (r) =>
-                    cache.tryGet(`${r.url}#${r.last_modified ?? ''}`, async () => {
-                        const buf: ArrayBuffer = await ofetch(r.url, { responseType: 'arrayBuffer' });
-                        return parseCsv(buf, r.meta.line, r.meta.fiscalYear, CATALOG_PAGE).map((item) => ({
-                            ...item,
-                            pubDate: r.last_modified === null ? undefined : parseDate(r.last_modified),
-                        }));
-                    }) as Promise<Array<ReturnType<typeof ridershipItem>>>
-            )
+        await pMap(
+            pkg,
+            (r) =>
+                cache.tryGet(`toei:ridership:v2:${r.url}#${r.last_modified ?? ''}`, async () => {
+                    const buf: ArrayBuffer = await ofetch(r.url, { responseType: 'arrayBuffer' });
+                    return parseCsv(buf, r.meta.line, r.meta.fiscalYear, CATALOG_PAGE).map((item) => ({
+                        ...item,
+                        pubDate: r.last_modified ? parseDate(r.last_modified) : undefined,
+                    }));
+                }),
+            { concurrency: 3 }
         )
     ).flat();
     const fiscalYear = pkg[0]?.meta.fiscalYear;

@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
@@ -14,7 +15,7 @@ interface BlogItem {
     slug: string;
     title: string;
     publishedAt: string;
-    authorsData: AuthorData[];
+    authorsData?: AuthorData[];
     upvotes: number;
     thumbnail: string;
     tags: string[];
@@ -49,16 +50,19 @@ export const route: Route = {
     url: 'huggingface.co/blog',
 };
 
-async function handler() {
-    const response = await ofetch<BlogApiResponse>('https://huggingface.co/api/blog');
+function getPublicationDate(publishedAt: string | undefined) {
+    const date = publishedAt ? parseDate(publishedAt) : undefined;
+    return date && !Number.isNaN(date.getTime()) ? date : undefined;
+}
 
-    const { allBlogs } = response;
+async function handler() {
+    const { allBlogs } = await ofetch<BlogApiResponse>('https://huggingface.co/api/blog');
 
     const lists = allBlogs.map((blog) => ({
         title: blog.title,
         link: `https://huggingface.co${blog.url}`,
-        pubDate: parseDate(blog.publishedAt),
-        author: blog.authorsData.map((author) => ({
+        pubDate: getPublicationDate(blog.publishedAt),
+        author: blog.authorsData?.map((author) => ({
             name: author.fullname || author.name,
         })),
         upvotes: blog.upvotes,
@@ -66,18 +70,24 @@ async function handler() {
         category: blog.tags,
     }));
 
-    const items: DataItem[] = await Promise.all(
-        lists.map((item) =>
-            cache.tryGet(item.link, async () => {
+    const items: DataItem[] = await pMap(
+        lists,
+        async (item) => {
+            const details = await cache.tryGet(item.link, async () => {
                 const response = await ofetch(item.link);
                 const $ = load(response);
-                $('.mb-4, .mb-6, .not-prose, h1').remove();
+                const content = $('.blog-content > .relative.overflow-clip').first();
+                if (!content.length) {
+                    throw new Error(`HuggingFace article content was not found at ${item.link}`);
+                }
+                content.find('.absolute.not-prose').remove();
                 return {
-                    ...item,
-                    description: $('.blog-content').html(),
+                    description: content.html(),
                 };
-            })
-        )
+            });
+            return { ...item, description: details.description };
+        },
+        { concurrency: 3 }
     );
 
     return {

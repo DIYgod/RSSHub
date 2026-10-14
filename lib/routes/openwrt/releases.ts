@@ -13,8 +13,8 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['openwrt.org/toh/:band/:model'],
-            target: '/releases/:model',
+            source: ['openwrt.org/toh/:brand/:model'],
+            target: '/releases/:brand/:model',
         },
     ],
     name: 'Releases',
@@ -28,6 +28,9 @@ async function handler(ctx) {
     const url = `https://openwrt.org/toh/${brand}/${model}`;
     const response = await got(url);
     const $ = load(response.data);
+    if ($('#anubis_challenge').length) {
+        throw new Error(`OpenWrt returned an anti-bot challenge. Configure a proxy that can access the device page: ${url}`);
+    }
     const table = $('#installation').next();
 
     return {
@@ -39,7 +42,7 @@ async function handler(ctx) {
             {
                 title: table.find('.supported_current_rel').text(),
                 link: url,
-                description: `Firmware OpenWrt Install: ${table.find('.firmware_openwrt_install_url').html()}<br><br>Firmware OpenWrt Upgrade: ${$('.firmware_openwrt_upgrade_url').html()}'`,
+                description: `Firmware OpenWrt Install: ${table.find('.firmware_openwrt_install_url').html()}<br><br>Firmware OpenWrt Upgrade: ${$('.firmware_openwrt_upgrade_url').html()}`,
             },
         ],
     };

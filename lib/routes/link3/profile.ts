@@ -4,7 +4,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/profile/:handle',
-    name: 'Link3 Profile',
+    name: 'Profile',
     url: 'link3.to',
     maintainers: ['cxheng315'],
     example: '/link3/profile/synfutures_defi',
@@ -21,7 +21,7 @@ export const route: Route = {
     radar: [
         {
             source: ['link3.to/:handle'],
-            target: '/:handle',
+            target: '/profile/:handle',
         },
     ],
     handler,
@@ -89,23 +89,11 @@ async function handler(ctx) {
         },
     });
 
-    const status = response.data.profile.status;
-
-    if (status !== 'SUCCESS') {
-        return {
-            title: 'Error',
-            description: 'Profile not found',
-            items: [
-                {
-                    title: 'Error',
-                    description: 'Profile not found',
-                    link: `https://link3.to/${handle}`,
-                },
-            ],
-        };
+    const profileResponse = response.data?.profile;
+    if (profileResponse?.status !== 'SUCCESS' || !profileResponse.data) {
+        throw new Error(`Unable to load Link3 profile "${handle}". Check that the profile handle exists and is public.`);
     }
-
-    const profile = response.data.profile.data;
+    const profile = profileResponse.data;
 
     const items = profile.blocks
         .filter((block) => block.__typename === 'EventBlock')
@@ -128,15 +116,6 @@ async function handler(ctx) {
         logo: profile.profilePicture ?? profile.personalProfilePicture.picture,
         image: profile.profilePicture ?? profile.personalProfilePicture.picture,
         author: profile.handle,
-        item:
-            items && items.length > 0
-                ? items
-                : [
-                      {
-                          title: 'No events',
-                          description: 'No events',
-                          link: `https://link3.to/${handle}`,
-                      },
-                  ],
+        item: items,
     };
 }

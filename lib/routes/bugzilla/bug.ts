@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import { escapeText } from 'entities';
 import type { Context } from 'hono';
 
 import InvalidParameterError from '@/errors/types/invalid-parameter';
@@ -22,22 +23,24 @@ async function handler(ctx: Context): Promise<Data> {
     }
     const link = `https://${INSTANCES.get(site)}/show_bug.cgi?id=${bugId}`;
     const xml = await ofetch(`${link}&ctype=xml`);
-    const $ = load(xml);
-    const items = $('long_desc').map((index, rawItem) => {
-        const $ = load(rawItem, null, false);
-        return {
-            title: `comment #${$('commentid').text()}`,
-            link: `${link}#c${index}`,
-            description: $('thetext').text(),
-            pubDate: parseDate($('bug_when').text()),
-            author: $('who').attr('name'),
-        };
-    });
-    return { title: $('short_desc').text(), link, item: items.toArray() };
+    const $ = load(xml, { xmlMode: true });
+    const items = $('long_desc')
+        .toArray()
+        .map((rawItem, index) => {
+            const $item = $(rawItem);
+            return {
+                title: `comment #${$item.find('commentid').text()}`,
+                link: `${link}#c${index}`,
+                description: `<pre>${escapeText($item.find('thetext').text())}</pre>`,
+                pubDate: parseDate($item.find('bug_when').text()),
+                author: $item.find('who').attr('name'),
+            };
+        });
+    return { title: $('short_desc').text(), link, item: items };
 }
 
-function markdownFrom(instances: Map<string, string>, separator: string = ', '): string {
-    return [...instances].map(([k, v]) => `[\`${k}\`](https://${v})`).join(separator);
+function markdownFrom(separator: string = ', '): string {
+    return [...INSTANCES].map(([k, v]) => `[\`${k}\`](https://${v})`).join(separator);
 }
 
 export const route: Route = {
@@ -50,12 +53,12 @@ export const route: Route = {
         site: 'site identifier',
         bugId: 'numeric identifier of the bug in the site',
     },
-    description: `Supported site identifiers: ${markdownFrom(INSTANCES)}.`,
+    description: `Supported site identifiers: ${markdownFrom()}.`,
     categories: ['programming'],
 
     // Radar is infeasible, because it needs access to URL parameters.
     zh: {
         name: 'bugs',
-        description: `支持的站点标识符：${markdownFrom(INSTANCES, '、')}。`,
+        description: `支持的站点标识符：${markdownFrom('、')}。`,
     },
 };

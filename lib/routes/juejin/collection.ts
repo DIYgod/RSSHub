@@ -5,7 +5,7 @@ import { getCollection, parseList, ProcessFeed } from './utils';
 export const route: Route = {
     path: '/collection/:collectionId',
     categories: ['programming'],
-    example: '/juejin/collection/6845243180586123271',
+    example: '/juejin/collection/6845243327650988046',
     parameters: { collectionId: '收藏夹唯一标志符, 在浏览器地址栏URL中能够找到' },
     features: {
         requireConfig: false,
@@ -39,6 +39,5 @@ async function handler(ctx) {
         link: `https://juejin.cn/collection/${collectionId}`,
         description: '掘金，用户单个收藏夹',
         item: result,
-        allowEmpty: true,
     };
 }

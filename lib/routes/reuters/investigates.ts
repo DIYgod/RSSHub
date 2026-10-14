@@ -20,7 +20,7 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    name: 'Inverstigates',
+    name: 'Investigates',
     maintainers: ['LyleLee'],
     handler,
 };
@@ -46,7 +46,8 @@ async function handler() {
 
                 item.title = content('title').text();
                 item.description = content('article.special-report').html();
-                item.pubDate = parseDate(content('time[itemprop="datePublished"]').attr('datetime')!);
+                const pubDate = content('time[itemprop="datePublished"]').attr('datetime')?.trim();
+                item.pubDate = pubDate ? parseDate(pubDate) : undefined;
                 item.author = content('meta[property="og:article:publisher"]').attr('content');
 
                 return item;

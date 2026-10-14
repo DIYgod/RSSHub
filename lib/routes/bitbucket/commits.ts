@@ -20,7 +20,7 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['bitbucket.com/commits/:workspace/:repo_slug'],
+            source: ['bitbucket.org/:workspace/:repo_slug/commits'],
         },
     ],
     name: 'Commits',
@@ -32,16 +32,15 @@ async function handler(ctx) {
     const workspace = ctx.req.param('workspace');
     const repo_slug = ctx.req.param('repo_slug');
 
-    const headers = {
+    const headers: Record<string, string> = {
         Accept: 'application/json',
     };
-    let auth = '';
     if (config.bitbucket && config.bitbucket.username && config.bitbucket.password) {
-        auth = config.bitbucket.username + ':' + config.bitbucket.password + '@';
+        headers.Authorization = `Basic ${Buffer.from(`${config.bitbucket.username}:${config.bitbucket.password}`).toString('base64')}`;
     }
     const response = await got({
         method: 'get',
-        url: `https://${auth}api.bitbucket.org/2.0/repositories/${workspace}/${repo_slug}/commits/`,
+        url: `https://api.bitbucket.org/2.0/repositories/${workspace}/${repo_slug}/commits/`,
         searchParams: queryString.stringify({
             sort: '-target.date',
         }),

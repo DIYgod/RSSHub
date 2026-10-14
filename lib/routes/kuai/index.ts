@@ -1,10 +1,12 @@
 import { load } from 'cheerio';
 import type { Context } from 'hono';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 import timezone from '@/utils/timezone';
 
 const categories = {
@@ -68,29 +70,33 @@ async function handler(ctx: Context) {
     const response = await ofetch(link);
     const $ = load(response);
 
+    const limit = getRouteLimit(ctx, 40);
+    const candidateLimit = ctx.req.query('sorted') === 'false' ? limit : Math.max(40, limit);
     const list = $('.data_row')
-        .slice(0, ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 40)
+        .slice(0, candidateLimit)
         .toArray()
         .map((item): DataItem & { link: string } => {
             const $item = $(item);
             const a = $item.find('.news_title h3 a');
             return {
-                title: a.text().trim(),
+                title: a.text(),
                 link: new URL(a.attr('href')!, baseUrl).href,
             };
         });
 
-    const items = await Promise.all(
-        list.map((item) =>
+    const items = await pMap(
+        list,
+        (item) =>
             cache.tryGet(item.link, async () => {
                 const detailResponse = await ofetch(item.link);
                 const content = load(detailResponse);
                 content('.s .more').remove();
-                item.pubDate = timezone(parseDate(content('.xg1.hm').contents().first().text().trim(), 'YYYY-M-D HH:mm'), 8);
+                const date = content('.xg1.hm').contents().first().text().trim();
+                item.pubDate = date ? timezone(parseDate(date, 'YYYY-M-D HH:mm'), 8) : undefined;
                 item.description = (content('.s a').html()?.trim() ?? '') + (content('.video').html() ?? '');
                 return item;
-            })
-        )
+            }),
+        { concurrency: 3 }
     );
 
     return {

@@ -1,9 +1,20 @@
-import { load } from 'cheerio';
+import { type Cheerio, load } from 'cheerio';
+import { type AnyNode, cloneNode, Document } from 'domhandler';
 import type { Context } from 'hono';
+import pMap from 'p-map';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
+
+function copyElements<T extends AnyNode>(selection: Cheerio<T>): Cheerio<T> {
+    const copy = selection.map((_, element) => cloneNode(element, true));
+    const root = new Document(copy.toArray());
+    copy.each((_, element) => {
+        element.parent = root;
+    });
+    return copy;
+}
 
 export const route: Route = {
     path: '/recommend/:annotation?',
@@ -24,39 +35,48 @@ const idPattern = /230427\('\w+','(\w+)'\)/;
 
 function getContent(onclick: string, annotation: string) {
     const id = onclick.match(idPattern)![1];
-    return ofetch(`https://www.gushiwen.cn/nocdn/ajaxshiwenDetailCont.aspx?id=${id}&value=${annotation}`, { headers: { cookie: 'login=flase' } });
+    return ofetch(`https://www.guwendao.net/nocdn/ajaxshiwenDetailCont.aspx?id=${id}&value=${annotation}`, { headers: { cookie: 'login=flase' } });
 }
 
 async function handler(ctx: Context) {
-    const url = 'https://www.gushiwen.cn/';
+    const url = 'https://www.guwendao.net/';
     const res = await ofetch(url);
     const { annotation } = ctx.req.param();
     const $ = load(res);
 
-    const out = await Promise.all(
-        $('div.sons:has(div.contson)')
-            .slice(0, 10)
-            .toArray()
-            .map((item) => {
-                const $item = $(item);
-                const href = $item.find('p a').attr('href');
-                const link = href ? new URL(href, url).href : undefined;
+    const out = await pMap(
+        $('div.sons:has(div.contson)').slice(0, 10).toArray(),
+        (item) => {
+            const $item = $(item);
+            const href = $item.find('p a').attr('href');
+            const link = href ? new URL(href, url).href : undefined;
 
-                return cache.tryGet(`gushiwen:recommend:${link}:${annotation ?? ''}`, async () => {
-                    let description = $item.find('div.contson').html();
-                    const onclick = $item.find('img[onclick]').attr('onclick');
-                    if (annotation && onclick) {
-                        description = await getContent(onclick, annotation);
-                    }
+            return cache.tryGet(`gushiwen:recommend:${link}:${annotation ?? ''}`, async () => {
+                let description = $item.find('div.contson').html();
+                const onclick = $item.find('img[onclick]').attr('onclick');
+                if (annotation && onclick) {
+                    const annotationHtml = await getContent(onclick, annotation);
+                    const annotationContent = load(annotationHtml);
+                    description = annotationContent('.contson').html();
+                } else {
+                    const content = copyElements($item.find('div.contson'));
+                    content
+                        .find('p')
+                        .filter((_, element) => $(element).find('a[href*="shiwenv_"]').length > 0)
+                        .remove();
+                    content.find('p.source').remove();
+                    description = content.html();
+                }
 
-                    return {
-                        title: $item.find('b').text(),
-                        link,
-                        description,
-                        author: $item.find('p.source').text(),
-                    };
-                });
-            })
+                return {
+                    title: $item.find('b').text(),
+                    link,
+                    description,
+                    author: $item.find('p.source').text(),
+                };
+            });
+        },
+        { concurrency: 2 }
     );
 
     return {

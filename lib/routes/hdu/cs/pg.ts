@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
@@ -20,7 +21,7 @@ const getSingleRecord = async () => {
         const date = dateTxt.slice(1, -1);
         return {
             title: $item.find('a').text(),
-            pubDate: parseDate(date),
+            pubDate: date ? parseDate(date) : undefined,
             link: link + $item.find('a').attr('href'),
         };
     });
@@ -52,8 +53,9 @@ export const route: Route = {
 
 async function handler() {
     const items = await getSingleRecord();
-    const out = await Promise.all(
-        items.map((item) =>
+    const out = await pMap(
+        items,
+        (item) =>
             cache.tryGet(item.link, async () => {
                 const response = await got(item.link);
                 const $ = load(response.data);
@@ -63,8 +65,8 @@ async function handler() {
                     description: $('.wp_articlecontent').html(),
                     pubDate: item.pubDate,
                 };
-            })
-        )
+            }),
+        { concurrency: 3 }
     );
 
     return {

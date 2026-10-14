@@ -1,9 +1,10 @@
 import { load } from 'cheerio';
 
+import type { DataItem } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
-export const parseItem = async (item) => {
+export const parseItem = async (item): Promise<DataItem> => {
     const response = await ofetch(item.link);
     const $ = load(response);
     const ldJson = JSON.parse($('script[type="application/ld+json"]').text());
@@ -13,15 +14,21 @@ export const parseItem = async (item) => {
     cover.find('img').attr('src', cover.find('img').attr('url')?.split('?', 1)[0]);
     cover.find('img').removeAttr('style srcset url');
 
-    item.description =
-        cover.parent().html() +
-        $('.document-body')
-            .toArray()
-            .map((item) => $(item).html())
-            .join('');
-    item.pubDate = parseDate(ldJson.datePublished);
-    item.author = ldJson.author.map((a) => ({ name: a.name }));
-    item.image = ldJson.image.url.split('?', 1)[0];
+    const categories = item.categories?.map((category) => (typeof category === 'string' ? category : category._)).filter(Boolean);
 
-    return item;
+    return {
+        title: item.title || ldJson.headline,
+        link: item.link,
+        guid: item.guid,
+        description:
+            cover.parent().html() +
+            $('.document-body')
+                .toArray()
+                .map((item) => $(item).html())
+                .join(''),
+        pubDate: parseDate(ldJson.datePublished),
+        author: ldJson.author.map((author) => ({ name: author.name })),
+        image: ldJson.image?.url?.split('?', 1)[0],
+        category: categories?.length ? categories : [ldJson.articleSection, ldJson.keywords].flat().filter(Boolean),
+    };
 };

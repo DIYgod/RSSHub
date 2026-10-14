@@ -5,11 +5,14 @@ import http from 'node:http';
 import https from 'node:https';
 
 import { HttpsProxyAgent } from 'https-proxy-agent';
-import type { RequestInfo } from 'undici';
+import type { Dispatcher, RequestInfo } from 'undici';
 import undici from 'undici';
 import { afterAll, afterEach, describe, expect, it, vi } from 'vitest';
 
 import { PRESETS } from '@/utils/header-generator';
+
+const connectOf = (dispatcher: Dispatcher) => dispatcher[Object.getOwnPropertySymbols(dispatcher).find((s) => s.description === 'options')!].connect;
+const requestTlsOf = (dispatcher: Dispatcher) => dispatcher[Object.getOwnPropertySymbols(dispatcher).find((s) => s.description === 'request tls settings')!];
 
 const originalGlobals = {
     fetch,
@@ -203,6 +206,58 @@ describe('request-rewriter', () => {
         // headers
         const headers = lastRequestHeaders(fetchSpy.mock.lastCall?.[0]);
         expect(headers.get('user-agent')).toBe(userAgent);
+    });
+
+    it('ofetch allowH2: false forces HTTP/1.1 on the dispatcher in use', async () => {
+        const fetchSpy = vi.spyOn(undici, 'fetch').mockImplementation(() => Promise.resolve(createJsonResponse()));
+        const base = new undici.Agent();
+        const dispatchSpy = vi.spyOn(base, 'dispatch').mockImplementation(() => true);
+
+        try {
+            await ofetch('http://rsshub.test/h1', { retry: 0, dispatcher: base, allowH2: false });
+        } catch {
+            // ignore
+        }
+
+        const options = fetchSpy.mock.lastCall?.[1];
+        options?.dispatcher?.dispatch({ origin: 'http://rsshub.test', path: '/h1', method: 'GET' }, {});
+        expect(dispatchSpy).toHaveBeenCalledWith(expect.objectContaining({ allowH2: false }), expect.anything());
+
+        try {
+            await ofetch('http://rsshub.test/h2', { retry: 0, dispatcher: base });
+        } catch {
+            // ignore
+        }
+        expect(fetchSpy.mock.lastCall?.[1]?.dispatcher).toBeUndefined();
+    });
+
+    it('ofetch minVersion sets the TLS floor on the dispatcher in use', async () => {
+        const fetchSpy = vi.spyOn(undici, 'fetch').mockImplementation(() => Promise.resolve(createJsonResponse()));
+
+        try {
+            await ofetch('http://rsshub.test/tls', { retry: 0, minVersion: 'TLSv1.3' });
+        } catch {
+            // ignore
+        }
+        const direct = fetchSpy.mock.lastCall?.[1]?.dispatcher;
+        expect(direct).toBeInstanceOf(undici.Agent);
+        expect(connectOf(direct!)).toMatchObject({ preferH2: true, minVersion: 'TLSv1.3' });
+
+        try {
+            await ofetch('http://rsshub.test/headers', { retry: 0, minVersion: 'TLSv1.3' });
+        } catch {
+            // ignore
+        }
+        const proxied = fetchSpy.mock.lastCall?.[1]?.dispatcher;
+        expect(proxied).toBeInstanceOf(undici.ProxyAgent);
+        expect(requestTlsOf(proxied!).minVersion).toBe('TLSv1.3');
+
+        try {
+            await ofetch('http://rsshub.test/tls', { retry: 0 });
+        } catch {
+            // ignore
+        }
+        expect(fetchSpy.mock.lastCall?.[1]?.dispatcher).toBeUndefined();
     });
 
     it('ofetch header preset', async () => {

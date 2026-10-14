@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import { FetchError } from 'ofetch';
 import pMap from 'p-map';
 
 import type { RidershipExtra } from '@/routes/tokyometro/utils';
@@ -22,14 +23,17 @@ const BROWSER_HEADERS = {
     'sec-fetch-user': '?1',
 };
 
-const fetchPage = (url: string): Promise<string> => ofetch(url, { headers: BROWSER_HEADERS, responseType: 'text' });
+const fetchPage = (url: string): Promise<string> => ofetch(url, { headers: BROWSER_HEADERS });
 
 /** null on 404 (the 101位以下 sequence and older-year URLs end that way). */
 const fetchOptional = async (url: string): Promise<string | null> => {
     try {
         return await fetchPage(url);
-    } catch {
-        return null;
+    } catch (error) {
+        if (error instanceof FetchError && error.response?.status === 404) {
+            return null;
+        }
+        throw error;
     }
 };
 
@@ -65,8 +69,8 @@ const parseStations = (html: string, fiscalYear: number, firstRank: number): Arr
             unit: '人/日',
             measure: 'boarding',
             rank: ranked ? parseCount(rankText) : firstRank + index,
-            // A ratio above 50 (e.g. 102.5) means "% of the previous year"; anything else is already a % change.
-            yoy_pct: yoy === null ? null : yoy > 50 ? Math.round((yoy - 100) * 10) / 10 : yoy,
+            // From FY2023 the source publishes a ratio; earlier years publish a percentage change.
+            yoy_pct: yoy === null ? null : fiscalYear >= 2023 ? Math.round((yoy - 100) * 10) / 10 : yoy,
             raw,
         };
         return ridershipItem(extra, r.link ?? `${HOST}/company/data/passenger/`);
@@ -74,7 +78,7 @@ const parseStations = (html: string, fiscalYear: number, firstRank: number): Arr
 };
 
 const fetchYear = async (indexHtml: string, indexUrl: string) => {
-    const heading = load(indexHtml)('h1').first().text();
+    const heading = load(indexHtml)('h1').text();
     const fiscalYear = parseFiscalYear(heading);
     if (fiscalYear === null) {
         throw new Error('jreast: fiscal year not found in the page heading');
@@ -85,8 +89,8 @@ const fetchYear = async (indexHtml: string, indexUrl: string) => {
     const dir = indexUrl.slice(0, indexUrl.lastIndexOf('/') + 1);
     const subpages = await pMap(
         Array.from({ length: MAX_SUBPAGES }, (_, i) => `${dir}${year}_${String(i + 1).padStart(2, '0')}.html`),
-        (url) => fetchOptional(url),
-        { concurrency: 2 }
+        fetchOptional,
+        { concurrency: 3 }
     );
     for (const html of subpages) {
         const page = html === null ? [] : parseStations(html, fiscalYear, items.length + 1);
@@ -113,10 +117,10 @@ const resolveYearPage = async (year: string | undefined): Promise<{ link: string
 
 export const handler = async (ctx): Promise<Data> => {
     const yearParam: string | undefined = ctx.req.param('year');
-    const page = (await cache.tryGet(`jreast/ridership:${yearParam ?? 'latest'}`, async () => {
+    const page = await cache.tryGet(`jreast/ridership:${yearParam ?? 'latest'}`, async () => {
         const { link, html } = await resolveYearPage(yearParam);
         return { link, ...(await fetchYear(html, link)) };
-    })) as { link: string; fiscalYear: number; items: Array<ReturnType<typeof ridershipItem>> };
+    });
     const link = page.link;
 
     return {

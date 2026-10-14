@@ -1,8 +1,5 @@
-import { load } from 'cheerio';
-
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/job/bigemploy',
@@ -25,27 +22,23 @@ export const route: Route = {
     name: '大型招聘会',
     maintainers: ['Derekmini'],
     handler,
-    url: 'job.hrbeu.edu.cn/*',
+    url: 'job.hrbeu.edu.cn',
 };
 
 async function handler() {
-    const response = await got('http://job.hrbeu.edu.cn/HrbeuJY/web');
-
-    const $ = load(response.data);
-
-    const list = $('div.articlecontent')
-        .toArray()
-        .map((item) => ({
-            title: $(item).find('a.bigTitle').text(),
-            pubDate: parseDate($(item).find('p').eq(1).text().replace('时间:', '').trim()),
-            description: '点击标题，登录查看招聘详情',
-            link: $(item).find('a.bigTitle').attr('href'),
-        }));
-
+    const rootUrl = 'http://job.hrbeu.edu.cn';
+    const { data } = await got(`${rootUrl}/f/ajaxHome/ajax_findBilateralchosefairLimitList?num=10`);
+    if (data.state !== 1) {
+        throw new Error(`The employment website returned an error: ${data.msg}`);
+    }
     return {
         title: '大型招聘会',
-        link: 'http://job.hrbeu.edu.cn/HrbeuJY/web',
-        item: list,
-        allowEmpty: true,
+        link: rootUrl,
+        item: data.object.map((item) => ({
+            title: item.title,
+            link: new URL(item.url, rootUrl).href,
+            guid: item.id,
+            description: `<p>时间：${item.startTime} - ${item.endTime}</p><p>地点：${item.place}</p>`,
+        })),
     };
 }

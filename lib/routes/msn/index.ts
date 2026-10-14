@@ -1,12 +1,21 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
+interface MsnCard {
+    url: string;
+    title: string;
+    abstract: string;
+    publishedDateTime?: string;
+    category?: string;
+}
+
 const apiKey = '0QfOX3Vn51YCzitbLaRkTTBadtWpgTN8NZLW0C1SEM';
-const fetchedArticleContentHtmlImgRegex = /<img data-reference="image" data-document-id="cms\/api\/amp\/image\/([A-Za-z0-9]+)">/;
+const fetchedArticleContentHtmlImgRegex = /<img data-reference="image" data-document-id="cms\/api\/amp\/image\/([A-Za-z0-9]+)">/g;
 
 export const route: Route = {
     path: '/:market/:name/:id',
@@ -46,9 +55,15 @@ export const route: Route = {
         const parsedSettings = JSON.parse(dataClientSettings);
         const requestMuid = parsedSettings.fd_muid;
 
-        const jsonData = await ofetch(`https://assets.msn.com/service/news/feed/pages/providerfullpage?market=${market}&query=newest&CommunityProfileId=${truncatedId}&apikey=${apiKey}&user=m-${requestMuid}`);
-        const items = await Promise.all(
-            jsonData.sections[0].cards.map(async (card) => {
+        const jsonData = await ofetch<{ sections: Array<{ cards: MsnCard[] }> }>(
+            `https://assets.msn.com/service/news/feed/pages/providerfullpage?market=${market}&query=newest&CommunityProfileId=${truncatedId}&apikey=${apiKey}&user=m-${requestMuid}`
+        );
+        if (!jsonData.sections?.[0]?.cards?.length) {
+            throw new Error('MSN returned no articles for this channel. Check the market and source ID on its public page.');
+        }
+        const items = await pMap(
+            jsonData.sections[0].cards,
+            async (card) => {
                 let articleContentHtml = '';
 
                 const articleUrl = card.url;
@@ -56,8 +71,9 @@ export const route: Route = {
                 let articleId = parsedArticleUrl?.pathname.split('/').pop();
                 if (articleId?.startsWith('ar-')) {
                     articleId = articleId.slice(3);
-                    const fetchedArticleContentHtml = await cache.tryGet(articleId, async () => {
-                        const articleData = await ofetch<{ body: string }>(`https://assets.msn.com/content/view/v2/Detail/${market}/${articleId}`);
+                    const articleDetailUrl = `https://assets.msn.com/content/view/v2/Detail/${market}/${articleId}`;
+                    const fetchedArticleContentHtml = await cache.tryGet(articleDetailUrl, async () => {
+                        const articleData = await ofetch<{ body: string }>(articleDetailUrl);
                         return articleData.body;
                     });
                     articleContentHtml = fetchedArticleContentHtml.replace(fetchedArticleContentHtmlImgRegex, '<img src="https://img-s-msn-com.akamaized.net/tenant/amp/entityid/$1.img">');
@@ -70,10 +86,11 @@ export const route: Route = {
                     content: {
                         html: articleContentHtml,
                     },
-                    pubDate: parseDate(card.publishedDateTime),
-                    category: [card.category],
+                    pubDate: card.publishedDateTime ? parseDate(card.publishedDateTime) : undefined,
+                    category: card.category ? [card.category] : undefined,
                 };
-            })
+            },
+            { concurrency: 3 }
         );
 
         const channelLink = `https://www.msn.com/${market}/channel/source/${name}/${id}`;

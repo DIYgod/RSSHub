@@ -97,7 +97,6 @@ const processItems: ($: CheerioAPI, targetEl: Cheerio<Element>, limit: number) =
                         author,
                         content: {
                             html: description,
-                            text: $$('div.aw-question-detail-txt').text(),
                         },
                         updated: updatedStr ? timezone(parseDate(updatedStr), 8) : item.updated,
                     };

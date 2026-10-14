@@ -1,16 +1,16 @@
 import { load } from 'cheerio';
 import type { Context } from 'hono';
 
-import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 import timezone from '@/utils/timezone';
 
 export const rootUrl = 'https://www.asahi.com';
 
 export const buildFeed = async (ctx: Context, currentUrl: string) => {
-    const limit = Number(ctx.req.query('limit')) || 6;
+    const limit = getRouteLimit(ctx, 6);
 
     const response = await ofetch(currentUrl);
 
@@ -52,7 +52,7 @@ export const buildFeed = async (ctx: Context, currentUrl: string) => {
         list = [...links].slice(0, limit).map((link) => ({ link }));
     }
 
-    const items = (await Promise.all(
+    const items = await Promise.all(
         list.map((item) =>
             cache.tryGet(item.link, async () => {
                 const detailResponse = await ofetch(item.link);
@@ -70,12 +70,12 @@ export const buildFeed = async (ctx: Context, currentUrl: string) => {
                 };
             })
         )
-    )) as DataItem[];
+    );
 
     return {
         title: $('title').text(),
         link: currentUrl,
-        item: items,
+        item: items.filter((item): item is typeof item & { title: string } => item.title !== undefined),
         description: '朝日新聞社のニュースサイト、朝日新聞デジタルの社会ニュースについてのページです',
     };
 };

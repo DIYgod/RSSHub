@@ -8,6 +8,7 @@ import type { DataItem, Route } from '@/types';
 import { ViewType } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
 const baseUrl = 'https://fraenkelgallery.com';
 
@@ -60,17 +61,17 @@ export const route: Route = {
     name: 'Exhibitions & Conversations',
     maintainers: ['IvanWng97'],
     handler,
-    description: 'Exhibitions come with artist, year, type and status as categories and the full exhibition page including all images.',
+    description: 'Exhibitions come with artist, year, type and status as categories and the full exhibition page including all images. The source supports at most 100 entries on its first API page.',
 };
 
 async function handler(ctx) {
     const type = ctx.req.param('type') ?? 'exhibitions';
-    const config = types[type as keyof typeof types];
+    const config = Object.entries(types).find(([key]) => key === type)?.[1];
     if (!config) {
         throw new InvalidParameterError(`Unknown type "${type}", expected one of ${Object.keys(types).join(', ')}`);
     }
     const { endpoint, title, link } = config;
-    const limit = Number(ctx.req.query('limit')) || 20;
+    const limit = Math.min(getRouteLimit(ctx, 20), 100);
 
     const entries = await ofetch(`${baseUrl}/wp-json/wp/v2/${endpoint}`, {
         query: { per_page: limit, _embed: 'wp:featuredmedia,wp:term' },
@@ -85,11 +86,7 @@ async function handler(ctx) {
             // WordPress returns *_gmt without a timezone designator
             pubDate: parseDate(`${entry.date_gmt}Z`),
             updated: parseDate(`${entry.modified_gmt}Z`),
-            // an _embed sub-request that fails is inlined as an error object rather than a term list
-            category: (entry._embedded?.['wp:term'] ?? [])
-                .filter((group) => Array.isArray(group))
-                .flat()
-                .map((term) => decodeHTML(term.name)),
+            category: (entry._embedded?.['wp:term'] ?? []).flat().map((term) => decodeHTML(term.name)),
             description: renderToString(
                 <>
                     {image ? (

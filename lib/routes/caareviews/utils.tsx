@@ -16,28 +16,33 @@ const getList = async (url) => {
         .map((item) => ({
             title: $(item).find('div.title').text().trim(),
             link: new URL($(item).find('div.title > em > a').attr('href')!, rootUrl).href,
-            author: $(item).find('div.contributors').text().trim(),
+            author: $(item)
+                .find('div.reviewer a')
+                .toArray()
+                .map((author) => $(author).text())
+                .join(', '),
         }));
 
     return list;
 };
 
-const getItems = (ctx, list) =>
+const getItems = (_context, list) =>
     Promise.all(
         list.map((item) =>
             cache.tryGet(item.link, async () => {
                 const detailResponse = await got(item.link);
                 const $ = load(detailResponse.data);
 
-                const coverUrl = new URL($('div.cover > a').attr('href')!, rootUrl).href;
+                const coverPath = $('div.cover > a').attr('href');
+                const coverUrl = coverPath ? new URL(coverPath, rootUrl).href : undefined;
+                $('div.review_heading, div.content.full-review > div.reviewer').remove();
                 const content = $('div.content.full-review').html();
                 item.description = renderToString(
                     <>
-                        <img src={coverUrl} />
+                        {coverUrl ? <img src={coverUrl} /> : null}
                         {raw(content ?? '')}
                     </>
                 );
-                $('div.review_heading').remove();
                 item.pubDate = parseDate($('div.header-text > div.clearfix').text());
                 item.doi = $('div.crossref > a').attr('href')!.replace('http://dx.doi.org/', '');
 

@@ -1,9 +1,11 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
 export const route: Route = {
     path: '/channel/:id?',
@@ -33,7 +35,7 @@ async function handler(ctx) {
 
     const rootUrl = 'https://www.storm.mg';
     const currentUrl = new URL('/api/getArticleList', rootUrl).href;
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 20;
+    const limit = getRouteLimit(ctx, 20);
 
     const response = await ofetch(currentUrl, {
         query: {
@@ -48,18 +50,19 @@ async function handler(ctx) {
         },
     });
 
-    const list = response.list.map((item) => ({
+    const list: Array<DataItem & { link: string }> = response.list.map((item) => ({
         title: item.title,
-        pubDate: parseDate(item.createdAt),
-        author: item.articleAuthor,
+        pubDate: item.publishAt ? parseDate(`${item.publishAt} +0800`, 'YYYY-MM-DD HH:mm:ss ZZ') : undefined,
+        author: item.articleAuthor.map((entry) => ({ name: entry.author.name })),
         category: [...item.articleChannel.map((e) => e.channel.title), ...item.articleKeyword.map((e) => e.keyword.title)],
-        updated: parseDate(item.updated),
+        updated: item.updatedAt ? parseDate(item.updatedAt) : undefined,
         link: new URL(`/article/${item.oldId}`, rootUrl).href,
     }));
 
-    const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link, async () => {
+    const items = await pMap(
+        list,
+        async (item) => {
+            const detail = await cache.tryGet(`storm:channel:v5:${item.link}`, async () => {
                 const detailResponse = await ofetch(item.link);
 
                 const content = load(detailResponse);
@@ -67,15 +70,18 @@ async function handler(ctx) {
                 content('.notify_wordings').remove();
                 content('#premium_block').remove();
 
-                item.description = content('div[data-test-comp="ArticleContent"]').html();
-                return item;
-            })
-        )
+                const description = (content('[data-test-comp="ArticleCover"]').first().html() ?? '') + (content('div[data-test-comp="ArticleContent"]').html() ?? '');
+                const published = content('meta[property="article:published_time"]').attr('content');
+                return { description, pubDate: published ? parseDate(published) : undefined };
+            });
+            return { ...item, ...detail, pubDate: detail.pubDate ?? item.pubDate };
+        },
+        { concurrency: 3 }
     );
 
     return {
         title: '風傳媒',
-        link: currentUrl,
+        link: new URL(`/channel/${id}`, rootUrl).href,
         item: items,
     };
 }

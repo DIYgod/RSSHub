@@ -4,8 +4,10 @@ import utc from 'dayjs/plugin/utc.js';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
+import logger from '@/utils/logger';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 import timezone from '@/utils/timezone';
 
 dayjs.extend(utc);
@@ -25,7 +27,7 @@ export const route: Route = {
     url: 'esearch.cug.edu.cn',
 };
 
-async function handler() {
+async function handler(ctx) {
     const host = 'https://esearch.cug.edu.cn';
     const now = dayjs().utcOffset(8);
 
@@ -69,12 +71,22 @@ async function handler() {
             description: item.html,
         }));
 
+    const articles = ctx.req.query('sorted') === 'false' ? results : [...results].sort((a, b) => Number(b.pubDate) - Number(a.pubDate));
+    const limit = getRouteLimit(ctx);
     const out = await Promise.all(
-        results.map((item) =>
+        articles.slice(0, limit).map((item) =>
             cache.tryGet(item.link, async () => {
-                const response = await ofetch(item.link);
-                const $ = load(response);
-                item.description = $('.v_news_content').html() ?? item.description;
+                try {
+                    const response = await ofetch(item.link);
+                    const $ = load(response);
+                    const contentSelector = new URL(item.link).hostname === 't.m.youth.cn' ? '#content' : '.v_news_content';
+                    item.description = $(contentSelector).html() ?? item.description;
+                } catch (error) {
+                    if (!(error instanceof Error) || !('statusCode' in error) || error.statusCode !== 404) {
+                        throw error;
+                    }
+                    logger.warn(`Failed to fetch ${item.link}: ${error}`);
+                }
                 return item;
             })
         )

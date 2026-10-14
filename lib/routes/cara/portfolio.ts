@@ -1,5 +1,6 @@
 import type { Data, Route } from '@/types';
 import cache from '@/utils/cache';
+import { getRouteLimit } from '@/utils/route-limit';
 
 import { API_HOST, CDN_HOST, HOST } from './constant';
 import type { PortfolioResponse } from './types';
@@ -23,7 +24,7 @@ export const route: Route = {
 
 async function handler(ctx): Promise<Data> {
     const user = ctx.req.param('user');
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 15;
+    const limit = getRouteLimit(ctx, 15);
     const userInfo = await parseUserData(user);
 
     const api = `${API_HOST}/profiles/portfolio?id=${userInfo.id}&take=${limit}`;

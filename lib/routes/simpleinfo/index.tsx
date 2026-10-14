@@ -1,6 +1,7 @@
 import { load } from 'cheerio';
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
+import pMap from 'p-map';
 
 import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
@@ -22,6 +23,10 @@ export const route: Route = {
         supportScihub: false,
     },
     radar: [
+        {
+            source: ['blog.simpleinfo.cc/shasha77'],
+            target: '/',
+        },
         {
             source: ['blog.simpleinfo.cc/blog/:category'],
             target: '/:category',
@@ -63,20 +68,25 @@ async function handler(ctx): Promise<Data> {
             };
         });
 
-    const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link!, async () => {
+    const items = await pMap(
+        list,
+        async (item) => {
+            const details = await cache.tryGet(`simpleinfo:article:v3:${item.link}`, async () => {
                 const result = await got(item.link);
                 const content = load(result.data);
-                item.author = content('meta[property="article:author"]').attr('content');
-                item.pubDate = timezone(parseDate(content('meta[property="article:published_time"]').attr('content')!), 8);
-                item.description = renderDescription({
-                    image: content('meta[property="og:image"]').attr('content'),
-                    description: content('.article-content').first().html() ?? undefined,
-                });
-                return item;
-            })
-        )
+                const published = content('meta[property="article:published_time"]').attr('content');
+                return {
+                    author: content('meta[property="article:author"]').attr('content'),
+                    pubDate: published ? timezone(parseDate(published), 8) : undefined,
+                    description: renderDescription({
+                        image: content('meta[property="og:image"]').attr('content'),
+                        description: content('.article-content').first().html() ?? undefined,
+                    }),
+                };
+            });
+            return { ...item, ...details };
+        },
+        { concurrency: 3 }
     );
 
     return {

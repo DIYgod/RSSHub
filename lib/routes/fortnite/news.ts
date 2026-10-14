@@ -1,6 +1,5 @@
 import { escapeText } from 'entities';
 import type { Context } from 'hono';
-import { Agent } from 'undici';
 
 import { renderYoutube } from '@/routes/youtube/utils';
 import type { DataItem, Language, Route } from '@/types';
@@ -61,10 +60,13 @@ export const route: Route = {
         .join(', ')}`,
 };
 
+type IndexObject = Record<`_${number}`, number>;
+
+const isIndexObject = (value: IndexObject | string | number | boolean): value is IndexObject => typeof value === 'object';
+
 const fetchData = async (path: string, lang: string) => {
     const values = await ofetch(`https://www.fortnite.com${path}.data`, {
         query: { lang },
-        dispatcher: new Agent({ connect: { minVersion: 'TLSv1.3' } }),
         responseType: 'json',
     });
     const get = (i: number) => {
@@ -75,8 +77,8 @@ const fetchData = async (path: string, lang: string) => {
         if (Array.isArray(value)) {
             return value.map((element) => get(element));
         }
-        if (typeof value === 'object') {
-            return Object.fromEntries(Object.entries(value).map(([key, index]) => [values[Number(key.slice(1))], get(index as number)]));
+        if (isIndexObject(value)) {
+            return Object.fromEntries(Object.entries(value).map(([key, index]) => [values[Number(key.slice(1))], get(index)]));
         }
         return value;
     };

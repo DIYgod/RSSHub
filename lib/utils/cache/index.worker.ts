@@ -6,7 +6,7 @@ import { config } from '@/config';
 import type CacheModule from './base';
 import { stringify } from './base';
 import http from './http';
-import kv, { getKVNamespace } from './kv';
+import kv, { getKVNamespace, toKVTtl } from './kv';
 
 const cacheModule: CacheModule = config.cache.type === 'http' ? http : kv;
 
@@ -55,7 +55,7 @@ const globalCache: GlobalCache = {
         }
         const stored = stringify(value);
         if (key) {
-            await getKVNamespace()!.put(key, stored, { expirationTtl: maxAge });
+            await getKVNamespace()!.put(key, stored, { expirationTtl: toKVTtl(maxAge) });
         }
     },
     claim: async (key, maxAge) => {

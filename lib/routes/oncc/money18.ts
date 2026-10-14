@@ -1,5 +1,8 @@
 import { load } from 'cheerio';
 import dayjs from 'dayjs';
+import utc from 'dayjs/plugin/utc.js';
+import { FetchError } from 'ofetch';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
@@ -8,6 +11,8 @@ import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
 import { renderDescription } from './templates/money18';
+
+dayjs.extend(utc);
 
 const sections = {
     exp: '新聞總覽',
@@ -45,7 +50,9 @@ export const route: Route = {
 
 async function handler(ctx) {
     const id = ctx.req.param('id') ?? 'exp';
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 30;
+    // oxlint-disable-next-line unicorn/prefer-number-coercion -- Preserve decimal-prefix semantics shared with RSSHub's common limit parser.
+    const parsedLimit = Number.parseInt(ctx.req.query('limit') ?? '', 10);
+    const limit = Number.isFinite(parsedLimit) && parsedLimit > 0 ? parsedLimit : 30;
 
     const rootUrl = 'https://money18.on.cc';
     const currentUrl = `${rootUrl}/finnews/news_${id === 'industry' ? 'industry.html' : `breaking.html?section=${id}`}`;
@@ -54,7 +61,8 @@ async function handler(ctx) {
 
     const toApiUrl = (date) => `${rootUrl}/cnt/utf8/content/${date}/articleList/list_${id}_all.js`;
 
-    let apiUrl = id === 'ipo' ? ipoApiUrl : id === 'industry' ? industryApiUrl : toApiUrl(dayjs().format('YYYYMMDD'));
+    const today = dayjs().utcOffset(8);
+    let apiUrl = id === 'ipo' ? ipoApiUrl : id === 'industry' ? industryApiUrl : toApiUrl(today.format('YYYYMMDD'));
     let hasArticle = false;
     let items: DataItem[];
     let i = 0;
@@ -70,10 +78,10 @@ async function handler(ctx) {
             });
             hasArticle = true;
         } catch (error) {
-            if ((error as { code?: string }).code === 'ERR_NON_2XX_3XX_RESPONSE') {
-                hasArticle = false;
-                apiUrl = toApiUrl(dayjs().subtract(++i, 'day').format('YYYYMMDD'));
+            if (id === 'ipo' || id === 'industry' || !(error instanceof FetchError) || error.response?.status !== 404 || i >= 7) {
+                throw error;
             }
+            apiUrl = toApiUrl(today.subtract(++i, 'day').format('YYYYMMDD'));
         }
     }
 
@@ -82,7 +90,7 @@ async function handler(ctx) {
     if (id === 'ipo') {
         items = response.data.articles.map((item) => ({
             title: item.title,
-            author: item.authorname,
+            author: item.authorname || undefined,
             link: `${rootUrl}/finnews/content/${id}/${item.articleId}.html`,
             description: renderDescription({
                 images: item.hasHdPhoto ? [`https://hk.on.cc/hk/bkn${item.hdEnlargeThumbnail}`] : undefined,
@@ -93,7 +101,7 @@ async function handler(ctx) {
     } else if (id === 'industry') {
         items = response.data.articles.slice(0, limit).map((item) => ({
             title: item.title,
-            author: item.authorname,
+            author: item.authorname || undefined,
             link: `${rootUrl}/finnews/content/${id}/${item.articleId}.html`,
             category: item.sector.map((s) => s.name),
             pubDate: timezone(parseDate(item.pubDate), 8),
@@ -101,15 +109,16 @@ async function handler(ctx) {
     } else {
         items = response.data.slice(0, limit).map((item) => ({
             title: item.title,
-            author: item.authorname,
+            author: item.authorname || undefined,
             link: `${rootUrl}/finnews/content/${id}/${item.articleId}.html`,
             pubDate: timezone(parseDate(item.pubDate), 8),
         }));
     }
 
     if (id !== 'ipo') {
-        items = await Promise.all(
-            items.map((item) =>
+        items = await pMap(
+            items,
+            (item) =>
                 cache.tryGet(item.link!, async () => {
                     const detailResponse = await got({
                         method: 'get',
@@ -126,8 +135,8 @@ async function handler(ctx) {
                     });
 
                     return item;
-                })
-            )
+                }),
+            { concurrency: 3 }
         );
     }
 

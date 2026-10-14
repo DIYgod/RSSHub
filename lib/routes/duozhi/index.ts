@@ -2,19 +2,21 @@ import type { Cheerio, CheerioAPI } from 'cheerio';
 import { load } from 'cheerio';
 import type { Element } from 'domhandler';
 import type { Context } from 'hono';
+import pMap from 'p-map';
 
 import type { Data, DataItem, Language, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 import timezone from '@/utils/timezone';
 
 import { renderDescription } from './templates/description';
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { category } = ctx.req.param();
-    const limit = Number(ctx.req.query('limit') ?? '30');
+    const limit = getRouteLimit(ctx, 30);
 
     const baseUrl = 'http://www.duozhi.com';
     const targetUrl: string = new URL(category && category.endsWith('/') ? category : category ? `${category}/` : '', baseUrl).href;
@@ -24,7 +26,6 @@ export const handler = async (ctx: Context): Promise<Data> => {
     const language = ($('html').attr('lang') ?? 'zh') as Language;
 
     let items: DataItem[] = $('div.post-item')
-        .slice(0, limit)
         .toArray()
         .map((el) => {
             const $el: Cheerio<Element> = $(el);
@@ -61,7 +62,6 @@ export const handler = async (ctx: Context): Promise<Data> => {
                     url: undefined,
                     avatar: undefined,
                 }));
-            const upDatedStr: string | undefined = pubDateStr;
 
             const processedItem: DataItem = {
                 title,
@@ -72,19 +72,32 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 author: authors,
                 content: {
                     html: description,
-                    text: description,
+                    text: $el.find('p.post-desc').text(),
                 },
                 image,
                 banner: image,
-                updated: upDatedStr ? parseDate(upDatedStr) : undefined,
                 language,
             };
 
             return processedItem;
         });
 
-    items = await Promise.all(
-        items.map((item) => {
+    if (ctx.req.query('sorted') === 'false') {
+        items = items.slice(0, limit);
+    } else if (items.every((item) => item.pubDate && !Number.isNaN(parseDate(item.pubDate).getTime()))) {
+        items.sort((a, b) => parseDate(b.pubDate!).getTime() - parseDate(a.pubDate!).getTime());
+        // List dates have day precision; include the entire boundary day before detail timestamps are sorted.
+        const boundaryDate = items[limit - 1]?.pubDate;
+        if (boundaryDate) {
+            items = items.filter((item) => parseDate(item.pubDate!).getTime() >= parseDate(boundaryDate).getTime());
+        }
+    } else {
+        items = items.slice(0, Math.max(30, limit));
+    }
+
+    items = await pMap(
+        items,
+        (item) => {
             if (!item.link) {
                 return item;
             }
@@ -130,7 +143,6 @@ export const handler = async (ctx: Context): Promise<Data> => {
                         url: undefined,
                         avatar: undefined,
                     }));
-                const upDatedStr: string | undefined = pubDateStr;
 
                 const processedItem: DataItem = {
                     title,
@@ -140,11 +152,10 @@ export const handler = async (ctx: Context): Promise<Data> => {
                     author: authors,
                     content: {
                         html: description,
-                        text: description,
+                        text: $$('div.subject-content').text(),
                     },
                     image,
                     banner: image,
-                    updated: upDatedStr ? timezone(parseDate(upDatedStr), 8) : item.updated,
                     language,
                 };
 
@@ -153,7 +164,8 @@ export const handler = async (ctx: Context): Promise<Data> => {
                     ...processedItem,
                 };
             });
-        })
+        },
+        { concurrency: 4 }
     );
 
     return {

@@ -4,6 +4,8 @@ import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
+import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/news/:category?',
@@ -28,7 +30,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { category = '3' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 15;
+    const limit = getRouteLimit(ctx, 15);
 
     const rootUrl = 'http://www.casssp.org.cn';
     const currentUrl = new URL(`news/${category}/`, rootUrl).href;
@@ -42,10 +44,12 @@ async function handler(ctx) {
         .toArray()
         .map((item): DataItem => {
             const $item = $(item);
+            const date = $item.closest('.s_layout').find('[class*="e_timeFormat-"]').text().trim();
 
             return {
                 title: $item.text(),
                 link: new URL($item.prop('href')!, rootUrl).href,
+                pubDate: date ? timezone(parseDate(date, 'YYYY-MM-DD'), 8) : undefined,
             };
         });
 
@@ -57,7 +61,6 @@ async function handler(ctx) {
                 const content = load(detailResponse);
 
                 item.description = content('div.e_richText-25, div.e_richText-3').html();
-                item.pubDate = parseDate(`${content('p.e_timeFormat-15').text()}-${content('p.e_timeFormat-14').text()}-${content('p.e_timeFormat-11').text()}`);
 
                 return item;
             })
@@ -65,7 +68,8 @@ async function handler(ctx) {
     );
 
     const image = $('img[la="la"]').first().prop('src');
-    const icon = new URL($('link[rel="shortcut icon "]').prop('href')!, rootUrl).href;
+    const iconHref = $('link[rel~="icon"]').first().prop('href');
+    const icon = iconHref ? new URL(iconHref, rootUrl).href : undefined;
 
     return {
         item: items,
