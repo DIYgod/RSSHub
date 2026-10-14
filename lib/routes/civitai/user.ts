@@ -1,12 +1,33 @@
+import { load } from 'cheerio';
+
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
+const imageBaseUrl = 'https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA';
+
+function renderArticleContent(content: string) {
+    const $ = load(content, null, false);
+    $('edge-media').each((_, element) => {
+        const media = $(element);
+        const url = media.attr('url');
+        const type = media.attr('type');
+        if (!url || !['image', 'video', 'audio'].includes(type ?? '')) {
+            return;
+        }
+        const filename = media.attr('filename') ?? `${url}.${type === 'video' ? 'mp4' : type === 'audio' ? 'mp3' : 'jpeg'}`;
+        const src = url.startsWith('https://') || url.startsWith('http://') ? url : `${imageBaseUrl}/${url}/original=true/${encodeURIComponent(filename)}`;
+        const replacement = type === 'image' ? $('<img>').attr('src', src) : $(`<${type}>`).attr({ src, controls: '', preload: 'metadata' });
+        media.replaceWith(replacement);
+    });
+    return $.html();
+}
+
 export const route: Route = {
     path: '/user/:username/articles',
     categories: ['program-update'],
-    example: '/civitai/user/Chenkin/articles',
+    example: '/civitai/user/Moonbear_AIArt/articles',
     parameters: { username: 'Username' },
     radar: [
         {
@@ -61,7 +82,7 @@ async function handler(ctx) {
         link: `https://civitai.com/articles/${item.id}`,
         id: item.id,
         pubDate: parseDate(item.publishedAt),
-        updated: parseDate(item.publishedAt),
+        updated: item.updatedAt ? parseDate(item.updatedAt) : undefined,
         author: item.user?.username,
         category: item.tags.map((tag) => tag.name),
         image: `https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/${item.coverImage.url}/${item.coverImage.name}`,
@@ -76,7 +97,7 @@ async function handler(ctx) {
                     },
                 });
 
-                item.description = response.result.data.json.content;
+                item.description = renderArticleContent(response.result.data.json.content);
 
                 return item;
             })
@@ -85,7 +106,7 @@ async function handler(ctx) {
 
     return {
         title: `${username} Creator Profile | Civitai`,
-        description: userProfile.profile.message.replaceAll('\n', ' ') || userProfile.profile.bio,
+        description: userProfile.profile?.message?.replaceAll('\n', ' ') || userProfile.profile?.bio,
         link: `https://civitai.com/user/${username}/articles`,
         image: userProfile.image,
         item: items,
