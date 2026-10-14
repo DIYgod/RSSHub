@@ -10,6 +10,7 @@ import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
 type DescriptionImage = {
     src?: string;
@@ -31,7 +32,7 @@ const renderDescription = ({ images, description }: { images?: DescriptionImage[
     );
 
 export const handler = async (ctx: Context): Promise<Data> => {
-    const limit = Number(ctx.req.query('limit') ?? '50');
+    const limit = getRouteLimit(ctx, 50);
 
     const baseUrl = 'https://augmentcode.com';
     const targetUrl: string = new URL('blog', baseUrl).href;
@@ -40,40 +41,34 @@ export const handler = async (ctx: Context): Promise<Data> => {
     const $: CheerioAPI = load(response);
     const language = ($('html').attr('lang') ?? 'en') as Language;
 
-    let items: DataItem[] = $('div[data-slot="card"]')
+    let items: DataItem[] = $('a[href^="/blog/"]:has(h2, h3)')
         .slice(0, limit)
         .toArray()
         .map((el) => {
-            const $el: Cheerio<Element> = $(el);
-
-            const title: string = $el.find('div[data-slot="card-content"]').text();
-            const pubDateStr: string | undefined = $el.find('div[data-slot="card-footer"] p').last().text();
-            const linkUrl: string | undefined = $el.parent().attr('href');
-            const authorEls: Element[] = $el.find('div[data-slot="card-footer"] p').first().find('span').toArray();
-            const authors: DataItem['author'] = authorEls.map((authorEl) => {
-                const $authorEl: Cheerio<Element> = $(authorEl);
-
-                return {
-                    name: $authorEl.contents().first().text(),
-                    url: undefined,
-                    avatar: undefined,
-                };
-            });
-            const image: string | undefined = $el.find('div[data-slot="card-header"] img').attr('src');
-            const upDatedStr: string | undefined = pubDateStr;
-
-            const processedItem: DataItem = {
+            const $el = $(el);
+            const title = $el.find('h2, h3').first().text();
+            const timestamp = $el
+                .find('[title^="Unix:"]')
+                .first()
+                .attr('title')
+                ?.match(/^Unix:\s*(\d+)$/)?.[1];
+            const image = $el
+                .find('img')
+                .filter((_, image) => $(image).attr('alt') === title)
+                .first()
+                .attr('src');
+            const authors = $el
+                .find('[class*="-space-x"] img')
+                .toArray()
+                .map((image) => ({ name: $(image).attr('alt')! }));
+            return {
                 title,
-                pubDate: pubDateStr ? parseDate(pubDateStr) : undefined,
-                link: linkUrl ? new URL(linkUrl, baseUrl).href : undefined,
+                link: new URL($el.attr('href')!, baseUrl).href,
+                pubDate: timestamp ? parseDate(Number(timestamp)) : undefined,
                 author: authors,
-                image,
-                banner: image,
-                updated: upDatedStr ? parseDate(upDatedStr) : undefined,
+                image: image ? new URL(image, baseUrl).href : undefined,
                 language,
             };
-
-            return processedItem;
         });
 
     items = await Promise.all(
@@ -86,7 +81,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 const detailResponse = await ofetch(item.link!);
                 const $$: CheerioAPI = load(detailResponse);
 
-                const title: string = $$('article h1').text();
+                const title: string = $$('h1').first().text();
                 const image: string | undefined = $$('meta[property="og:image"]').attr('content') ?? item.image;
                 const description: string | undefined = renderDescription({
                     images: image
@@ -110,7 +105,11 @@ export const handler = async (ctx: Context): Promise<Data> => {
                         avatar: undefined,
                     };
                 });
-                const upDatedStr: string | undefined = pubDateStr;
+                const articleMetadata = $$('script[type="application/ld+json"]')
+                    .toArray()
+                    .map((el) => JSON.parse($$(el).text()))
+                    .find((metadata) => metadata['@type'] === 'BlogPosting');
+                const upDatedStr: string | undefined = $$('meta[property="article:modified_time"]').attr('content') ?? articleMetadata?.dateModified;
 
                 const processedItem: DataItem = {
                     title,
@@ -142,7 +141,6 @@ export const handler = async (ctx: Context): Promise<Data> => {
         description: $('meta[name="description"]').attr('content'),
         link: targetUrl,
         item: items,
-        allowEmpty: true,
         image: $('meta[property="og:image"]').attr('content'),
         author: title.split(/-/).pop()?.trim(),
         language,
