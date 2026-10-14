@@ -3,6 +3,7 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
+import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
 
 const currentURL = (catagory: string) => `https://phys.ncku.edu.tw/news/${catagory === '_all' ? '' : catagory}`;
 
@@ -67,7 +68,7 @@ export const route: Route = {
     maintainers: ['simbafs'],
     handler: async (ctx) => {
         let catagory = ctx.req.param('catagory') ?? '_all';
-        if (catagories[catagory] === undefined) {
+        if (!Object.hasOwn(catagories, catagory)) {
             catagory = '_all';
         }
 
@@ -77,16 +78,18 @@ export const route: Route = {
 
         const item = $('.newsList .Txt')
             .toArray()
-            .map((e) => ({
-                title: $('a', e).text(),
-                pubDate: new Date(
-                    $('.newsDate', e)
-                        .text()
-                        .match(/\d{4}(?: \/ \d{2}){2}/)?.[0] || ''
-                ),
-                link: $('a', e).attr('href'),
-                catagory: $('.newIcon', e).text(),
-            }));
+            .map((e) => {
+                const date = $('.newsDate', e)
+                    .text()
+                    .match(/\d{4}(?: \/ \d{2}){2}/)?.[0]
+                    .replaceAll(' / ', '-');
+                return {
+                    title: $('a', e).text(),
+                    pubDate: date ? parseDateInTimezone(date, 8) : undefined,
+                    link: $('a', e).attr('href'),
+                    category: [$('.newIcon', e).text()].filter(Boolean),
+                };
+            });
 
         return {
             title: `成大物理系公告 - ${catagories[catagory]}`,
