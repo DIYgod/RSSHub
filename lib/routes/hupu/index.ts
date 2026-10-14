@@ -30,9 +30,17 @@ const isCategory = (key: string): key is keyof typeof categories => Object.hasOw
 
 type PagePropsData = Partial<Record<(typeof categories)[keyof typeof categories]['data'], Array<HomePostItem | NewsDataItem>>>;
 
+const parsePublishTime = (value: unknown): Date | undefined => {
+    if (typeof value !== 'string' || !/^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$/.test(value)) {
+        return;
+    }
+    const date = parseDate(value, 'YYYY-MM-DD HH:mm:ss', true);
+    return Number.isFinite(date.getTime()) ? timezone(date, 8) : undefined;
+};
+
 export const route: Route = {
-    path: ['/dept/:category?', '/:category?'],
-    name: '手机虎扑网',
+    path: '/:category?',
+    name: '移动版',
     url: 'm.hupu.com',
     maintainers: ['nczitzk', 'hyoban'],
     example: '/hupu/nba',
@@ -51,10 +59,10 @@ export const route: Route = {
 :::`,
     categories: ['bbs'],
     radar: [
-        {
-            source: ['m.hupu.com/:category', 'm.hupu.com/'],
-            target: '/:category',
-        },
+        { source: ['m.hupu.com/'], target: '/' },
+        { source: ['m.hupu.com/nba'], target: '/nba' },
+        { source: ['m.hupu.com/cba'], target: '/cba' },
+        { source: ['m.hupu.com/soccer'], target: '/soccer' },
     ],
     handler: async (ctx): Promise<Data> => {
         const category = ctx.req.param('category') || '';
@@ -92,7 +100,7 @@ export const route: Route = {
                   } satisfies DataItem)
                 : ({
                       title: item.title,
-                      pubDate: timezone(parseDate(item.publishTime), 8),
+                      pubDate: parsePublishTime(item.publishTime),
                       link: item.link.replace(/bbs\.hupu.com/, 'm.hupu.com/bbs'),
                       guid: item.tid,
                   } satisfies DataItem)
