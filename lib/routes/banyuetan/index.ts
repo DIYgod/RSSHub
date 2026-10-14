@@ -8,13 +8,14 @@ import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 import timezone from '@/utils/timezone';
 
 import { renderDescription } from './templates/description';
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { id = 'jinritan' } = ctx.req.param();
-    const limit = Number(ctx.req.query('limit') ?? '30');
+    const limit = getRouteLimit(ctx, 30);
 
     const baseUrl = 'http://www.banyuetan.org';
     const targetUrl: string = new URL(`byt/${id}/index.html`, baseUrl).href;
@@ -76,11 +77,8 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 const $$: CheerioAPI = load(detailResponse);
 
                 const title: string = $$('div.detail_tit h1').text();
-                const description: string | undefined =
-                    item.description +
-                    renderDescription({
-                        description: $$('div#detail_content').html() || undefined,
-                    });
+                const contentHtml = $$('div#detail_content').html();
+                const description: string | undefined = contentHtml ? renderDescription({ description: contentHtml }) : (item.description ?? undefined);
                 const pubDateStr: string | undefined = $$('meta[property="og:release_date"]').attr('content');
                 const categories: string[] = $$('META[name="keywords"]').attr('content')?.split(/,/) ?? [];
                 const authorEls: Element[] = [...$$('META[name="author"]').toArray(), ...$$('META[name="source"]').toArray()];
@@ -127,7 +125,6 @@ export const handler = async (ctx: Context): Promise<Data> => {
         description: title,
         link: targetUrl,
         item: items,
-        allowEmpty: true,
         image: new URL('static/v1/image/logo.png', baseUrl).href,
         author: title.split(/—/).pop(),
         language,
