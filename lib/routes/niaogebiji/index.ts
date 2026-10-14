@@ -1,6 +1,7 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -21,15 +22,17 @@ export const route: Route = {
     url: 'niaogebiji.com/',
 };
 
+type Article = { title: string; summary: string; author: string; published_at: string; updated_at: string; catname: string; tag_list: string[]; link: string };
+
 async function handler() {
     const baseUrl = 'https://www.niaogebiji.com';
-    const { data: response } = await got(`${baseUrl}/pc/index/getMoreArticle`);
+    const { data: response }: { data: { return_code: string; return_msg: string; return_data: Article[] } } = await got(`${baseUrl}/pc/index/getMoreArticle`);
 
     if (response.return_code !== '200') {
         throw new Error(response.return_msg);
     }
 
-    const postList = response.return_data.map((item) => ({
+    const postList = response.return_data.map((item): DataItem & { link: string } => ({
         title: item.title,
         description: item.summary,
         author: item.author,
@@ -39,17 +42,17 @@ async function handler() {
         link: new URL(item.link, baseUrl).href,
     }));
 
-    const result = await Promise.all(
-        postList.map((item) =>
-            cache.tryGet(item.link, async () => {
+    const result = await pMap(
+        postList,
+        async (item) => ({
+            ...item,
+            ...(await cache.tryGet(`niaogebiji:home:details:v2:${item.link}`, async () => {
                 const { data: response } = await got(item.link);
                 const $ = load(response);
-
-                item.description = $('.pc_content').html();
-
-                return item;
-            })
-        )
+                return { description: $('.pc_content').html() };
+            })),
+        }),
+        { concurrency: 3 }
     );
 
     return {
