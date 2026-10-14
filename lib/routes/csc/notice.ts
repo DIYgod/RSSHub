@@ -8,6 +8,7 @@ import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import { getPlaywrightPage } from '@/utils/playwright';
+import { getRouteLimit } from '@/utils/route-limit';
 import timezone from '@/utils/timezone';
 
 const baseUrl = 'https://www.csc.edu.cn';
@@ -67,7 +68,7 @@ export const route: Route = {
 
 async function handler(ctx: Context): Promise<Data> {
     const { type = 'lxtz' } = ctx.req.param();
-    const limit = Number(ctx.req.query('limit') ?? 10);
+    const limit = getRouteLimit(ctx, 10);
     if (!isNoticeType(type)) {
         throw new InvalidParameterError(`Invalid type: ${type}. Use one of ${Object.keys(typeMap).join(', ')}.`);
     }
@@ -78,11 +79,16 @@ async function handler(ctx: Context): Promise<Data> {
         },
         gotoConfig: { waitUntil: 'domcontentloaded' },
     });
-    await page.waitForSelector('.list-a li');
-    const html = await page.content();
-    const cookies = await page.context().cookies();
-    await destroy();
-    const headers = { cookie: cookies.map((c) => `${c.name}=${c.value}`).join('; ') };
+    let html: string;
+    let headers: { cookie: string };
+    try {
+        await page.waitForSelector('.list-a li');
+        html = await page.content();
+        const cookies = await page.context().cookies();
+        headers = { cookie: cookies.map((c) => `${c.name}=${c.value}`).join('; ') };
+    } finally {
+        await destroy();
+    }
     const $ = load(html);
 
     const list = $('.list-a li')
