@@ -18,7 +18,7 @@ export const route: Route = {
 function extractDateFromURL(url: string) {
     const regex = /\d{4}-\d{2}-\d{2}/;
     const match = url.match(regex);
-    return match ? match[0] : null;
+    return match?.[0];
 }
 
 async function handler() {
@@ -33,33 +33,28 @@ async function handler() {
 
     const $ = load(response.data);
 
-    const alist = $('a.reference.external');
+    const alist = $('a.reference.external[href^="notesen/"]');
 
-    const list = alist
-        .toArray()
-        .map((item): DataItem & { link: string } => {
-            const $item = $(item);
+    const list = alist.toArray().map((item): DataItem & { link: string } => {
+        const $item = $(item);
 
-            const link = $item.attr('href') || '';
-            const title = $item.text();
-            const pubDate = extractDateFromURL(link);
+        const link = $item.attr('href') || '';
+        const title = $item.text();
+        const pubDate = extractDateFromURL(link);
 
-            return {
-                title,
-                link,
-                pubDate,
-                category: 'Uncategoried',
-            };
-        })
-        .filter((item) => item.link.startsWith('notesen'));
+        return {
+            title,
+            link: new URL(link, baseUrl).href,
+            pubDate,
+        };
+    });
 
     const items = await Promise.all(
         list.map((item) =>
             cache.tryGet(item.link, async () => {
-                const articleUrl = `${baseUrl}${item.link}`;
                 const response = await got({
                     method: 'get',
-                    url: articleUrl,
+                    url: item.link,
                 });
 
                 const $ = load(response.data);
@@ -68,9 +63,9 @@ async function handler() {
                 const articlePubDate = $('tr.added-on.field td.field-body').text();
 
                 item.author = author;
-                // Some articles might be missing the added-on field.
-                // As a safeguard, if the date from url is null, fallbacks to the article one.
-                item.pubDate = parseDate(item.pubDate || articlePubDate);
+                const pubDate = item.pubDate || articlePubDate;
+                item.pubDate = pubDate ? parseDate(pubDate) : undefined;
+                $('div.document > h1.title, div.document > table.docinfo').remove();
                 item.description = $('div.document').first().html();
 
                 return item;
