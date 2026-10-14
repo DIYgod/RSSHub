@@ -190,7 +190,7 @@
         "globals": "17.13.0",
         "js-beautify": "2.0.3",
         "mockdate": "3.0.5",
-        "msw": "3.0.2",
+        "msw": "3.0.3",
         "node-network-devtools": "1.0.30",
         "oxfmt": "0.72.0",
         "oxlint": "1.87.0",
