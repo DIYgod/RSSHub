@@ -1,5 +1,3 @@
-import { load } from 'cheerio';
-
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 
@@ -26,7 +24,7 @@ export const route: Route = {
     name: '就业服务平台',
     maintainers: ['Derekmini'],
     handler,
-    url: 'job.hrbeu.edu.cn/*',
+    url: 'job.hrbeu.edu.cn',
     description: `| 通知公告 | 热点新闻 |
 | :------: | :------: |
 |   tzgg   |   rdxw   |
@@ -37,45 +35,23 @@ export const route: Route = {
 };
 
 async function handler() {
-    const date = new Date();
-    const year = date.getFullYear();
-    const month = date.getMonth() + 1;
-    let strmMonth;
-    month < 10 ? (strmMonth = '0' + month) : (strmMonth = month);
-    const day = date.getDate();
-
-    const response = await ofetch('http://job.hrbeu.edu.cn/HrbeuJY/Web/Employ/QueryCalendar', {
-        query: {
-            yearMonth: year + '-' + strmMonth,
-        },
+    const today = new Date().toLocaleDateString('sv-SE', { timeZone: 'Asia/Shanghai' });
+    const response = await ofetch(`${rootUrl}/f/recruitmentFair/ajax_calendar_list`, {
+        query: { time: today.slice(0, 7) },
     });
-
-    let link = '';
-    for (let i = 0, l = response.length; i < l; i++) {
-        // if (response[i].day === Number('10')) {
-        if (response[i].day === day) {
-            link = response[i].Items[0].link;
-        }
+    if (response.state !== 1) {
+        throw new Error(`The employment website returned an error: ${response.msg}`);
     }
-
-    const todayResponse = await ofetch(`${rootUrl}${link}`, {
-        parseResponse: (txt) => txt,
-    });
-
-    const $ = load(todayResponse);
-
-    const list = $('li.clearfix')
-        .toArray()
-        .map((item) => ({
-            title: $(item).find('span.news_tit.news_tit_s').find('a').attr('title')!,
-            description: '点击标题，登录查看招聘详情',
-            link: $(item).find('span.news_tit.news_tit_s').find('a').attr('href'),
-        }));
-
     return {
         title: '今日招聘会',
-        link: 'http://job.hrbeu.edu.cn/HrbeuJY/web',
-        item: list,
-        allowEmpty: true,
+        link: rootUrl,
+        item: response.data
+            .filter((item) => item.startTimeFormat === today)
+            .map((item) => ({
+                title: item.title,
+                link: new URL(item.url, rootUrl).href,
+                guid: item.id,
+                description: `<p>时间：${item.startTime} - ${item.endTime}</p><p>地点：${item.field}</p>`,
+            })),
     };
 }
