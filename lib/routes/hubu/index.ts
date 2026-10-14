@@ -5,9 +5,37 @@ import pMap from 'p-map';
 import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
 import timezone from '@/utils/timezone';
+
+interface MobileChinanewsResponse {
+    msgcode: number;
+    data: {
+        title: string;
+        content: string;
+        keywords?: string[];
+    };
+}
+
+const fetchMobileChinanewsArticle = async (articleId: string) => {
+    const response = await ofetch<MobileChinanewsResponse>(`https://dw.chinanews.com/cns/app/v1/wapDetail/content/${articleId}.json`, {
+        query: { language: 'chs' },
+    });
+    if (response.msgcode !== 0 || !response.data?.title || !response.data.content) {
+        throw new Error(`China News did not return the content of article ${articleId}.`);
+    }
+    const $ = load(response.data.content, undefined, false);
+    $('.btpauthor, script, style').remove();
+    const description = $.root().html();
+    return {
+        title: response.data.title,
+        description,
+        category: response.data.keywords?.filter(Boolean),
+        content: { html: description, text: $.root().text() },
+    };
+};
 
 export const handler = async (ctx) => {
     const { category = 'index/tzgg' } = ctx.req.param();
@@ -49,11 +77,16 @@ export const handler = async (ctx) => {
     items = await pMap(
         items,
         async (item) => {
-            const detail = await cache.tryGet(`hubu:content:v2:${item.link}`, async () => {
+            const articleUrl = new URL(item.link);
+            const mobileChinanews = articleUrl.hostname === 'm.chinanews.com' && /^\/wap\/detail\/chs\/[^/]+\/(\d+)\.shtml$/.exec(articleUrl.pathname);
+            const detail = await cache.tryGet(`hubu:content:${mobileChinanews ? 'v3' : 'v2'}:${item.link}`, async () => {
+                if (mobileChinanews) {
+                    return fetchMobileChinanewsArticle(mobileChinanews[1]);
+                }
                 const { data: detailBuffer } = await got(item.link, { responseType: 'buffer' });
                 const charset = /charset=["']?([^"'\s>;]+)/i.exec(detailBuffer.toString('ascii'))?.[1] ?? 'utf-8';
                 const $$ = load(iconv.decode(detailBuffer, charset));
-                const hubeiChinanews = new URL(item.link).hostname === 'www.hb.chinanews.com.cn';
+                const hubeiChinanews = articleUrl.hostname === 'www.hb.chinanews.com.cn';
                 const title = $$('div.dtl-tit h4, div.con-tit h4').text() || (hubeiChinanews ? $$('.de_head .t1').text() : '');
                 if (!title) {
                     return {};
