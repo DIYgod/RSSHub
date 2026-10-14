@@ -1,5 +1,6 @@
 import { load } from 'cheerio';
 import type { Context } from 'hono';
+import pMap from 'p-map';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
@@ -46,8 +47,9 @@ async function handler(ctx: Context) {
             };
         });
 
-    const items = await Promise.all(
-        list.map((item) =>
+    const items = await pMap(
+        list,
+        (item) =>
             cache.tryGet(item.link, async () => {
                 if (item.link.includes('content.jsp')) {
                     return item;
@@ -58,13 +60,13 @@ async function handler(ctx: Context) {
                     ...item,
                     description: $('.articelMain').html(),
                 };
-            })
-        )
+            }),
+        { concurrency: 3 }
     );
 
     return {
         title: `福州大学教务处${$('h4').text().trim()}`,
-        link: `http://jwch.fzu.edu.cn/${type}`,
+        link: `${urlHead}${type}.htm`,
         description: `福州大学教务处${descriptionMap[type] ?? ''}`,
         item: items,
     };
