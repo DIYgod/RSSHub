@@ -75,7 +75,7 @@ function getStationInfo(stationName) {
             },
         });
 
-        return res.data
+        const station = res.data
             .split('@')
             .map((item) => {
                 const itemData = item.split('|');
@@ -88,14 +88,20 @@ function getStationInfo(stationName) {
                     : null;
             })
             .find(Boolean);
+
+        if (!station) {
+            throw new InvalidParameterError(`Unknown railway station: ${stationName}`);
+        }
+
+        return station;
     });
 }
 
 export const route: Route = {
     path: '/:date/:from/:to/:type?',
     categories: ['travel'],
-    example: '/12306/2022-02-19/重庆/永川东',
-    parameters: { date: '时间，格式为（YYYY-MM-DD）', from: '始发站', to: '终点站', type: '售票类型，成人和学生可选，默认为成人' },
+    example: '/12306/tomorrow/重庆/永川东',
+    parameters: { date: '时间，格式为 YYYY-MM-DD，也支持 today（今天）和 tomorrow（明天），使用中国标准时间', from: '始发站', to: '终点站', type: '售票类型，成人和学生可选，默认为成人' },
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -110,7 +116,8 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const date = ctx.req.param('date');
+    const requestedDate = ctx.req.param('date');
+    const date = ['today', 'tomorrow'].includes(requestedDate) ? new Date(Date.now() + (requestedDate === 'tomorrow' ? 24 * 60 * 60 * 1000 : 0)).toLocaleDateString('sv-SE', { timeZone: 'Asia/Shanghai' }) : requestedDate;
     const fromStationInfo = await getStationInfo(ctx.req.param('from'));
     const toStationInfo = await getStationInfo(ctx.req.param('to'));
     const type = ctx.req.param('type') ?? 'ADULT';
