@@ -1,15 +1,17 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
 export const route: Route = {
     path: '/contest/:language?/:rated?/:category?/:keyword?',
     categories: ['programming'],
     example: '/atcoder/contest',
-    parameters: { language: 'Language, `jp` as Japanese or `en` as English, English by default', rated: 'Rated Range, see below, all by default', category: 'Category, see below, all by default', keyword: 'Keyword' },
+    parameters: { language: 'Language, `ja` (or legacy `jp`) as Japanese or `en` as English, English by default', rated: 'Rated Range, see below, all by default', category: 'Category, see below, all by default', keyword: 'Keyword' },
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -45,7 +47,8 @@ Category
 async function handler(ctx) {
     const status = ['action', 'upcoming', 'recent'];
 
-    const language = ctx.req.param('language') ?? 'en';
+    const languageParam = ctx.req.param('language') ?? 'en';
+    const language = languageParam === 'jp' ? 'ja' : languageParam;
 
     let rated = ctx.req.param('rated') ?? '0';
     const category = ctx.req.param('category') ?? '0';
@@ -66,7 +69,7 @@ async function handler(ctx) {
 
     let items = $(isStatus ? `#contest-table-${rated}` : '.row')
         .find('tr')
-        .slice(1, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 20)
+        .slice(1, getRouteLimit(ctx, 20) + 1)
         .toArray()
         .map((item): DataItem => {
             const $item = $(item).find('td a').eq(1);
@@ -77,8 +80,9 @@ async function handler(ctx) {
             };
         });
 
-    items = await Promise.all(
-        items.map((item) =>
+    items = await pMap(
+        items,
+        (item) =>
             cache.tryGet(item.link!, async () => {
                 const detailResponse = await got({
                     method: 'get',
@@ -91,8 +95,8 @@ async function handler(ctx) {
                 item.pubDate = parseDate(content('.fixtime-full').first().text());
 
                 return item;
-            })
-        )
+            }),
+        { concurrency: 1 }
     );
 
     return {
