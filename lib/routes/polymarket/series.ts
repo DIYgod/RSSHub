@@ -1,4 +1,6 @@
-import type { Route } from '@/types';
+import { escape } from 'entities/escape';
+
+import type { Data, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
@@ -13,7 +15,6 @@ export const route: Route = {
     parameters: {
         slug: {
             description: 'Series slug, e.g. nfl, nba, mlb. If omitted, lists all series.',
-            default: 'all',
         },
     },
     features: {
@@ -36,7 +37,7 @@ export const route: Route = {
     handler,
 };
 
-async function handler(ctx) {
+async function handler(ctx): Promise<Data> {
     const slug = ctx.req.param('slug');
 
     if (slug) {
@@ -67,6 +68,7 @@ async function handler(ctx) {
             title: `Polymarket Series - ${series.title}`,
             link: `https://polymarket.com/series/${series.slug}`,
             item: items,
+            language: 'en',
         };
     }
     // List all series
@@ -82,10 +84,10 @@ async function handler(ctx) {
     const items = data.map((series) => ({
         title: series.title,
         description: `
-                ${series.description ? `<p>${series.description}</p>` : ''}
+                ${series.description ? `<p>${escape(series.description)}</p>` : ''}
                 <p><strong>Volume:</strong> $${(series.volume || 0).toLocaleString()}</p>
                 <p><strong>Liquidity:</strong> $${(series.liquidity || 0).toLocaleString()}</p>
-                ${series.image ? `<img src="${series.image}" alt="${series.title}" style="max-width: 100%;">` : ''}
+                ${series.image ? `<img src="${escape(series.image)}" alt="${escape(series.title)}" style="max-width: 100%;">` : ''}
             `,
         link: `https://polymarket.com/series/${series.slug}`,
         pubDate: series.createdAt ? parseDate(series.createdAt) : undefined,
@@ -95,5 +97,6 @@ async function handler(ctx) {
         title: 'Polymarket - Series',
         link: 'https://polymarket.com',
         item: items,
+        language: 'en',
     };
 }
