@@ -87,7 +87,7 @@ for (const namespace in namespaces) {
                         const sourceURL = new URL('https://' + source);
                         return sourceURL.pathname + sourceURL.search + sourceURL.hash;
                     }),
-                    target: radarItem.target ? `/${namespace}${radarItem.target}` : realPath,
+                    target: typeof radarItem.target === 'string' && radarItem.target ? `/${namespace}${radarItem.target}` : realPath,
                 });
             }
         }
