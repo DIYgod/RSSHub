@@ -1,7 +1,24 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { Route } from '@/types';
+import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
+
+async function fetchDetails(url: string) {
+    const response = await ofetch(url);
+    const $ = load(response);
+    const content = $('.v_news_content').first();
+    const attachments = $('form[name="_newscontent_fromname"] a[href*="DownloadAttachUrl"]')
+        .filter((_, link) => !$(link).closest('.v_news_content').length)
+        .toArray()
+        .map((link) => `<li>${$.html(link)}</li>`)
+        .join('');
+
+    return {
+        description: `${content.html() ?? ''}${attachments ? `<ul>${attachments}</ul>` : ''}` || undefined,
+    };
+}
 
 export const route: Route = {
     path: '/jyc/:type?',
@@ -47,23 +64,32 @@ async function handler(ctx) {
             const $item = $(item);
             const $link = $item.find('a').first();
 
-            // 处理相对链接，转换为绝对链接
+            // Resolve source relative article links.
             const linkHref = $link.attr('href') || '';
             const absoluteLink = new URL(linkHref, 'https://jyc.xupt.edu.cn').href;
 
-            // 日期格式：<span><i>18</i>/03</span> - 只有月日，无年份
-            // 根据规范，网站不提供完整日期时不添加 pubDate
+            // The list calendar label supplies only month and day.
+            // Do not infer a year or a source timezone from this list label.
 
             return {
-                title: $link.text().trim(),
+                title: $link.text(),
                 link: absoluteLink,
             };
         })
         .filter((item) => item.title && item.link);
 
+    const items = await pMap(
+        list,
+        async (item) => {
+            const details = await cache.tryGet(item.link, () => fetchDetails(item.link));
+            return { ...item, description: details.description };
+        },
+        { concurrency: 3 }
+    );
+
     return {
         title: `西安邮电大学教务处 - ${typeName}`,
         link: url,
-        item: list,
+        item: items,
     };
 }
