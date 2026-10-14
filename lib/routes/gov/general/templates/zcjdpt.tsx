@@ -50,15 +50,6 @@ export const renderZcjdpt = (data: ZcjdptData) => {
     return renderToString(
         <div class="content">
             <div class="wrap" style="max-width: 1200px;margin: auto;">
-                <h3 class="policy" style="text-align: center;font-size: 40px;font-weight: bold;color: #32638C;line-height: 66px;">
-                    {data.art_title}
-                </h3>
-                <p
-                    class="department"
-                    style="max-width: 506px;text-align: center;background: #3b87c7;font-size: 20px;font-weight: bold;color: #FFF;margin: 12px auto 36px;box-sizing: border-box;padding: 10px 15px;background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAfoAAAAzCAMAAABIWzqzAAAAXVBMVEUAAAA7h8c7h8c7h8c7h8c7h8c7h8c7h8c7h8c7h8c7h8c7h8c7h8c7h8c7h8c7h8c7h8c7h8c7h8c7h8c7h8c7h8c7h8c7h8c7h8c7h8c7h8c7h8c7h8c7h8e9GIvqAAAAHnRSTlMA/fjk0xQEwbKoaz8v8OyblYmCWjUlIQ0Kx3NfVUbjQScSAAABNElEQVR42u3cB3LCUBAE0VFEiSyCCXv/Y9rlCFhwgD/97qAqqXe1agKWGu3ygKF8J60DhtaSDkXATnHQh3PAzlmf3gJm3vRlzAJWslHflgErS/2o5gEj80q/TgEjJ/2py4CNstaNa8DGVbdI+T4a3duT8k3kez3YBCxs9OhIyrdQHPXPNmBgqwmzQPJmmjKQ8pOXDZq0CiRupWnVIpC0RaUnukDSOt0h5dsoaz3VBxLW64U2kKxWr4yBZI3iqTfV6oWeqpOwrBdv+KbKWnzXm+pEzTO1qETDN7USkztT2SDm9aZmmnAJGLiI3TxTxVFs5JraiD18U/meeO+qZVBvqyfeuypr4r2rTlzVMDWvxC0dU0vivatsIN67mvGLra2tuJFrqjiIy9im1uIevql8x+ksV807+Hx1WMdc5EgAAAAASUVORK5CYII=) 0 0 no-repeat;background-size: 100% 100%;"
-                >
-                    {data.pub_unite}
-                </p>
                 <div class="p_date" style="text-align: center;margin: 0 0 36px 0;display: flex;justify-content: center;flex-wrap: wrap;">
                     {data.pub_time?.length ? (
                         <span class="pub_time" style="font-size: 20px;color: #32638C;width: 15em;margin: 0.5em;">

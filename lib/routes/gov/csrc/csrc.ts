@@ -4,10 +4,26 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
+
+const enclosureTypes: Record<string, string> = {
+    pdf: 'application/pdf',
+    doc: 'application/msword',
+    docx: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+    xls: 'application/vnd.ms-excel',
+    xlsx: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+    ppt: 'application/vnd.ms-powerpoint',
+    pptx: 'application/vnd.openxmlformats-officedocument.presentationml.presentation',
+};
+
+function getEnclosureType(filePath: string) {
+    const extension = new URL(filePath, 'http://www.csrc.gov.cn').pathname.split('.').pop()?.toLowerCase();
+    return extension && Object.hasOwn(enclosureTypes, extension) ? enclosureTypes[extension] : 'application/octet-stream';
+}
 
 export const handler = async (ctx) => {
     const { id = 'c101972' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 50;
+    const limit = getRouteLimit(ctx, 50);
 
     const rootUrl = 'http://www.csrc.gov.cn';
     const apiUrl = new URL('getLocalList', rootUrl).href;
@@ -39,13 +55,14 @@ export const handler = async (ctx) => {
 
     const items = response.data.results.slice(0, limit).map((item) => {
         const title = item.title;
+        const date = item.publishedTime !== undefined && item.publishedTime !== null ? parseDate(item.publishedTime) : undefined;
         const description = item.contentHtml;
         const enclosure = item.resList?.[0] ?? undefined;
 
         return {
             title,
             description,
-            pubDate: parseDate(item.publishedTime),
+            pubDate: date && !Number.isNaN(date.getTime()) ? date : undefined,
             link: item.url,
             category: [item.channelName],
             content: {
@@ -53,7 +70,7 @@ export const handler = async (ctx) => {
                 text: item.content,
             },
             enclosure_url: enclosure ? new URL(enclosure.filePath, rootUrl).href : undefined,
-            enclosure_type: enclosure ? `application/${enclosure.filePath.split(/\./).pop()}` : undefined,
+            enclosure_type: enclosure ? getEnclosureType(enclosure.filePath) : undefined,
             enclosure_title: enclosure ? enclosure.title : undefined,
         };
     });
@@ -71,7 +88,6 @@ export const handler = async (ctx) => {
         description,
         link: currentUrl,
         item: items,
-        allowEmpty: true,
         image,
         author,
     };
@@ -84,7 +100,7 @@ export const route: Route = {
     maintainers: ['nczitzk'],
     handler,
     example: '/gov/csrc/zfxxgk_zdgk/c101971',
-    parameters: { id: '频道 id，默认为 `c101971`，即行政处罚决定，可在对应频道页 URL 中找到' },
+    parameters: { id: '频道 id，默认为 `c101972`，即市场禁入决定，可在对应频道页 URL 中找到' },
     description: `::: tip
 若订阅 [行政处罚决定](http://www.csrc.gov.cn/csrc/c101971/zfxxgk_zdgk.shtml)，网址为 \`http://www.csrc.gov.cn/csrc/c101971/zfxxgk_zdgk.shtml\`。截取 \`http://www.csrc.gov.cn/csrc/\` 到末尾 \`/zfxxgk_zdgk.shtml\` 的部分 \`c101971\` 作为参数填入，此时路由为 [\`/gov/csrc/zfxxgk_zdgk/c101971\`](https://rsshub.app/gov/csrc/zfxxgk_zdgk/c101971)。
 :::
@@ -215,11 +231,7 @@ export const route: Route = {
     radar: [
         {
             source: ['www.csrc.gov.cn/csrc/:id/zfxxgk_zdgk.shtml'],
-            target: (params) => {
-                const id = params.id;
-
-                return `/gov/csrc/zfxxgk_zdgk/${id ? `/${id}` : ''}`;
-            },
+            target: '/zfxxgk_zdgk/:id',
         },
         {
             title: '主动公开目录 - 按主题查看',

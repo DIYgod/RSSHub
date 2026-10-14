@@ -51,7 +51,7 @@ async function handler() {
             return {
                 title: a.text(),
                 link,
-                pubDate: timezone(parseDate(pubDate), 8),
+                pubDate: pubDate ? timezone(parseDate(pubDate), 8) : undefined,
             };
         });
 

@@ -4,30 +4,43 @@ import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 import timezone from '@/utils/timezone';
 
 export const handler = async (ctx) => {
     const { category = 'html/xinwen/index' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 25;
+    const limit = getRouteLimit(ctx, 25);
+    // Article timestamps can refine the dates on the first list page.
+    const candidateLimit = ctx.req.query('sorted') === 'false' ? limit : Math.max(25, limit);
 
     const rootUrl = 'https://www.lswz.gov.cn';
-    const currentUrl = `${rootUrl}/${category}.shtml`;
+    let currentUrl = `${rootUrl}/${category}.shtml`;
 
     const { data: response } = await got(currentUrl);
 
-    const $ = load(response);
+    let $ = load(response);
+    const redirectsToFirstLink = $('script')
+        .toArray()
+        .some((script) => /window\.location\.href\s*=\s*document\.links\[0\]\.href/.test($(script).text()));
+    const redirectUrl = redirectsToFirstLink ? $('a[href]').first().prop('href') : undefined;
+    if (redirectUrl) {
+        currentUrl = new URL(redirectUrl, currentUrl).href;
+        const { data: redirectedResponse } = await got(currentUrl);
+        $ = load(redirectedResponse);
+    }
 
     const language = $('html').prop('lang') as Language;
 
     let items = $('ul.lists li')
-        .slice(0, limit)
+        .slice(0, candidateLimit)
         .toArray()
         .map((item): DataItem & { link: string } => {
             const $item = $(item);
+            const pubDate = $item.find('span').text();
 
             return {
                 title: $item.find('a').text(),
-                pubDate: parseDate($item.find('span').text()),
+                pubDate: pubDate ? timezone(parseDate(pubDate), 8) : undefined,
                 link: new URL($item.find('a').prop('href')!, rootUrl).href,
             };
         });
@@ -61,14 +74,14 @@ export const handler = async (ctx) => {
         )
     );
 
-    const image = new URL($('div.lsj-index-logo img').prop('src')!, rootUrl).href;
+    const imageSource = $('div.lsj-index-logo img').prop('src');
+    const image = imageSource ? new URL(imageSource, rootUrl).href : undefined;
 
     return {
         title: $('title').text(),
         description: $('meta[name="ColumnDescription"]').prop('content'),
         link: currentUrl,
         item: items,
-        allowEmpty: true,
         image,
         author: $('meta[name="SiteName"]').prop('content'),
         language,
@@ -145,12 +158,9 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['www.lswz.gov.cn/:category?'],
-            target: (params) => {
-                const category = params.category;
-
-                return `/gov/lswz${category ? `/${category}` : ''}`;
-            },
+            title: '新闻发布',
+            source: ['www.lswz.gov.cn/'],
+            target: '/html/xinwen/index',
         },
         {
             title: '新闻发布',

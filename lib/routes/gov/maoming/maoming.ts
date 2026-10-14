@@ -25,89 +25,88 @@ async function handler(ctx) {
     const path = getSubPath(ctx)
         .split('/')
         .filter((item) => item !== '');
-    let pathstartat = 0;
+    let pathStartAt = 0;
     let defaultPath = '';
-    let list_element: string;
-    let list_include = 'site';
-    let title_element: string;
-    let title_match = '(.*)';
-    let description_element: string;
-    let authorisme: string;
-    let pubDate_element: string;
-    let pubDate_match: string;
-    // let pubDate_format = undefined;
+    let listElement: string;
+    let listInclude = 'site';
+    let titleElement: string;
+    let titleMatch = '(.*)';
+    let descriptionElement: string;
+    let authorIsMe: string;
+    let pubDateElement: string;
+    let pubDateMatch: string;
     switch (path[1]) {
         case 'www':
-            list_element = '.GsTL5 a';
-            authorisme = '茂名市人民政府网';
+            listElement = '.GsTL5 a';
+            authorIsMe = '茂名市人民政府网';
             switch (path[2]) {
                 case undefined:
-                    list_element = 'h1 a, #d11_li ul a[href*="content"], .two-o ul a[href*="content"], .thr-o ul a[href*="content"]';
+                    listElement = 'h1 a, #d11_li ul a[href*="content"], .two-o ul a[href*="content"], .thr-o ul a[href*="content"]';
                     break;
                 case 'jtysj':
-                    pathstartat = 1;
+                    pathStartAt = 1;
                     defaultPath = 'gkmlpt/';
-                    authorisme = '茂名市交通运输局';
+                    authorIsMe = '茂名市交通运输局';
                     break;
                 case 'mmtyjrswj':
-                    pathstartat = 1;
+                    pathStartAt = 1;
                     defaultPath = 'gkmlpt/';
-                    authorisme = '茂名市退役军人事务局';
+                    authorIsMe = '茂名市退役军人事务局';
                     break;
                 case 'mmsjj':
-                    pathstartat = 1;
+                    pathStartAt = 1;
                     defaultPath = 'gkmlpt/';
-                    authorisme = '茂名市审计局';
+                    authorIsMe = '茂名市审计局';
                     break;
                 case 'mmgyzc':
-                    pathstartat = 1;
+                    pathStartAt = 1;
                     defaultPath = 'gkmlpt/';
-                    authorisme = '茂名市人民政府国有资产监督管理委员会';
+                    authorIsMe = '茂名市人民政府国有资产监督管理委员会';
                     break;
                 case 'mmtjj':
-                    pathstartat = 1;
+                    pathStartAt = 1;
                     defaultPath = 'gkmlpt/';
-                    authorisme = '茂名市统计局';
+                    authorIsMe = '茂名市统计局';
                     break;
                 case 'mmylbzj':
-                    pathstartat = 1;
+                    pathStartAt = 1;
                     defaultPath = 'gkmlpt/';
-                    authorisme = '茂名市医疗保障局';
+                    authorIsMe = '茂名市医疗保障局';
                     break;
                 case 'mmjrgzj':
-                    pathstartat = 1;
+                    pathStartAt = 1;
                     defaultPath = 'gkmlpt/';
-                    authorisme = '茂名市金融工作局';
+                    authorIsMe = '茂名市金融工作局';
                     break;
                 case 'xfj':
-                    pathstartat = 1;
+                    pathStartAt = 1;
                     defaultPath = 'gkmlpt/';
-                    authorisme = '茂名市信访局';
+                    authorIsMe = '茂名市信访局';
                     break;
                 case 'mmzfgjj':
-                    pathstartat = 1;
+                    pathStartAt = 1;
                     defaultPath = 'gkmlpt/';
-                    authorisme = '茂名市住房公积金管理中心';
+                    authorIsMe = '茂名市住房公积金管理中心';
                     break;
                 case 'mmgxhzs':
-                    pathstartat = 1;
+                    pathStartAt = 1;
                     defaultPath = 'gkmlpt/';
-                    authorisme = '茂名市供销合作联社';
+                    authorIsMe = '茂名市供销合作联社';
                     break;
                 case 'mmdszbgs':
-                    pathstartat = 1;
+                    pathStartAt = 1;
                     defaultPath = 'gkmlpt/';
-                    authorisme = '茂名市地志办';
+                    authorIsMe = '茂名市地志办';
                     break;
                 case 'mmjjlyslgc':
-                    pathstartat = 1;
+                    pathStartAt = 1;
                     defaultPath = 'gkmlpt/';
-                    authorisme = '茂名市高州水库管理中心';
+                    authorIsMe = '茂名市高州水库管理中心';
                     break;
                 case 'ywdt':
                     switch (path[3]) {
                         case undefined:
-                            list_element = '#d11_li ul a[href*="content"], .two-o ul a[href*="content"]';
+                            listElement = '#d11_li ul a[href*="content"], .two-o ul a[href*="content"]';
                             break;
                         default:
                             break;
@@ -116,12 +115,12 @@ async function handler(ctx) {
                 case 'zwgk':
                     switch (path[3]) {
                         case undefined:
-                            list_element = '.er-zw-l ul a';
+                            listElement = '.er-zw-l ul a';
                             break;
                         case 'zcjd':
                             switch (path[4]) {
                                 case undefined:
-                                    list_element = '.swiper-slide a, .bt a, .zcjdlist a';
+                                    listElement = '.swiper-slide a, .bt a, .zcjdlist a';
                                     break;
                                 default:
                                     break;
@@ -134,33 +133,27 @@ async function handler(ctx) {
                 default:
                     break;
             }
-            title_element = '#ScDetailTitle';
-            description_element = '#zoomcon';
-            pubDate_element = '.desc span:nth-child(2)';
-            pubDate_match = '日期：(.*)';
+            titleElement = '#ScDetailTitle';
+            descriptionElement = '#zoomcon';
+            pubDateElement = '.desc span:nth-child(2)';
+            pubDateMatch = '日期：(.*)';
+            if (path[2] === 'zwgk' && path[3] === 'zcjd' && path[4] === 'jd') {
+                listElement = '.common-list li a';
+                titleElement = '.zw-title';
+                pubDateElement = '.zw-info .time';
+                pubDateMatch = String.raw`时间:\s*(.*)`;
+            }
             break;
-        // 不知道这种怎么做
-        // case 'rd':
-        //     defaultPath = 'index.php?c=category&id=12';
-        //     list_element = '.news_title ul li \a'';
-        //     list_include = 'all';
-        //     title_element = '.article_title';
-        //     title_match = '(.*)';
-        //     description_element = '.article_content > *:not(.article_)';
-        //     authorisme = '茂名市人大网';
-        //     pubDate_element = '.op_ span:nth-child(1)';
-        //     pubDate_match = '发布时间：(.*)';
-        //     break;
         case 'fgj':
-            list_element = '.list a';
+            listElement = '.list a';
             switch (path[2]) {
                 case undefined:
-                    list_element = '.item a, .index-news-list a';
+                    listElement = '.item a, .index-news-list a';
                     break;
                 case 'zwgk':
                     switch (path[3]) {
                         case undefined:
-                            list_element = '.zw-news-list a';
+                            listElement = '.zw-news-list a';
                             break;
                         default:
                             break;
@@ -169,246 +162,245 @@ async function handler(ctx) {
                 default:
                     break;
             }
-            title_element = '.title';
-            description_element = '.content';
-            authorisme = '茂名市发展和改革局';
-            pubDate_element = '.info';
-            pubDate_match = '发布时间：(.*)';
+            titleElement = '.title';
+            descriptionElement = '.content';
+            authorIsMe = '茂名市发展和改革局';
+            pubDateElement = '.info';
+            pubDateMatch = '发布时间：(.*)';
             break;
         case 'jxj':
-            list_element = path[2] === undefined ? '.lanse_16, .hei_14, .NoticeInfo li a, #con_two_2 a, #con_two_3 a, .hei[href*="content"], .main2lr_main a' : '#main21l_main_dk > table > tbody > tr > td:nth-child(2) a';
-            title_element = 'td[background="/global/rlyelen_line04.gif"] > table:nth-child(1) > tbody > tr:nth-child(2)';
-            description_element = 'td[background="/global/rlyelen_line04.gif"] > table:nth-child(1) > tbody > tr:nth-child(4)';
-            authorisme = '茂名市工业和信息化局';
-            pubDate_element = 'td[background="/global/rlyelen_line04.gif"] > table:nth-child(1) > tbody > tr:nth-child(3) > td > table > tbody > tr > td';
-            pubDate_match = '发表时间：\n(.*)';
+            listElement = path[2] === undefined ? '.lanse_16, .hei_14, .NoticeInfo li a, #con_two_2 a, #con_two_3 a, .hei[href*="content"], .main2lr_main a' : '#main21l_main_dk > table > tbody > tr > td:nth-child(2) a';
+            titleElement = 'td[background="/global/rlyelen_line04.gif"] > table:nth-child(1) > tbody > tr:nth-child(2)';
+            descriptionElement = 'td[background="/global/rlyelen_line04.gif"] > table:nth-child(1) > tbody > tr:nth-child(4)';
+            authorIsMe = '茂名市工业和信息化局';
+            pubDateElement = 'td[background="/global/rlyelen_line04.gif"] > table:nth-child(1) > tbody > tr:nth-child(3) > td > table > tbody > tr > td';
+            pubDateMatch = '发表时间：\n(.*)';
             break;
         case 'mmjyj':
-            list_element = '.news_title a';
+            listElement = '.news_title a';
             if (path[3] === undefined) {
                 switch (path[2]) {
                     case undefined:
-                        list_element = '.title0_ a, .content0 a';
+                        listElement = '.title0_ a, .content0 a';
                         break;
                     case 'xwzx':
-                        list_element = '.news_title li a, .news_title_ li a';
+                        listElement = '.news_title li a, .news_title_ li a';
                         break;
                     default:
                         break;
                 }
             }
-            title_element = '.article_title';
-            description_element = '.article_body';
-            authorisme = '茂名市教育局';
-            pubDate_element = '.op_ span:nth-child(2)';
-            pubDate_match = '发布时间：(.*)';
+            titleElement = '.article_title';
+            descriptionElement = '.article_body';
+            authorIsMe = '茂名市教育局';
+            pubDateElement = '.op_ span:nth-child(2)';
+            pubDateMatch = '发布时间：(.*)';
             break;
         case 'kjj':
-            list_element = path[2] === undefined ? '.hover-content-item ul li a[href*="kjj.maoming.gov.cn"][href*="content"]' : '.list-right-content a[href*="kjj.maoming.gov.cn"], .list-right-content a[href*="mp.weixin.qq.com"]';
-            list_include = 'all';
-            title_element = '.article-detail-title';
-            description_element = '.article-detail-content';
-            authorisme = '茂名市科学技术局';
-            pubDate_element = '.article-detail-time span:nth-child(2)';
-            pubDate_match = '发布时间：(.*)';
+            listElement = path[2] === undefined ? '.hover-content-item ul li a[href*="kjj.maoming.gov.cn"][href*="content"]' : '.list-right-content a[href*="kjj.maoming.gov.cn"], .list-right-content a[href*="mp.weixin.qq.com"]';
+            listInclude = 'all';
+            titleElement = '.article-detail-title';
+            descriptionElement = '.article-detail-content';
+            authorIsMe = '茂名市科学技术局';
+            pubDateElement = '.article-detail-time span:nth-child(2)';
+            pubDateMatch = '发布时间：(.*)';
             break;
         case 'mmga':
-            list_element = path[3] === undefined ? '.lnewsc a[href*="content"]' : '.new_list a';
-            title_element = '.top h2';
-            description_element = '.mid.text';
-            authorisme = '茂名市公安局';
-            pubDate_element = '.top td:nth-child(1)';
-            pubDate_match = '时间：(.*)';
+            listElement = path[3] === undefined ? '.lnewsc a[href*="content"]' : '.new_list a';
+            titleElement = '.top h2';
+            descriptionElement = '.mid.text';
+            authorIsMe = '茂名市公安局';
+            pubDateElement = '.top td:nth-child(1)';
+            pubDateMatch = '时间：(.*)';
             break;
         case 'smzj':
             defaultPath = 'zwgk/xxgkml/zcjd/';
-            list_element = '.HK_List_ul_5 a';
-            title_element = '.HTitle';
-            description_element = '#mmhygs';
-            authorisme = '茂名市民政局';
-            pubDate_element = '.HTime';
-            pubDate_match = '日期：(.*)';
+            listElement = '.HK_List_ul_5 a';
+            titleElement = '.HTitle';
+            descriptionElement = '#mmhygs';
+            authorIsMe = '茂名市民政局';
+            pubDateElement = '.HTime';
+            pubDateMatch = '日期：(.*)';
             break;
         case 'sfj':
-            list_element = path[2] === undefined ? '.bothA a' : '.list a';
-            title_element = '.title';
-            description_element = '#context';
-            authorisme = '茂名市司法局';
-            pubDate_element = '.info span:nth-child(1)';
-            pubDate_match = '发布时间：(.*)';
+            listElement = path[2] === undefined ? '.bothA a' : '.list a';
+            titleElement = '.title';
+            descriptionElement = '#context';
+            authorIsMe = '茂名市司法局';
+            pubDateElement = '.info span:nth-child(1)';
+            pubDateMatch = '发布时间：(.*)';
             break;
         case 'czj':
-            list_element = path[2] === undefined ? '.tabContent_item a[href*="content"]' : '.newsList_right .clearfix a';
-            title_element = '.newsContainer_title';
-            description_element = '.newsContainer_text';
-            authorisme = '茂名市财政局';
-            pubDate_element = '.time';
-            pubDate_match = '(.*)';
+            listElement = path[2] === undefined ? '.tabContent_item a[href*="content"]' : '.newsList_right .clearfix a';
+            titleElement = '.newsContainer_title';
+            descriptionElement = '.newsContainer_text';
+            authorIsMe = '茂名市财政局';
+            pubDateElement = '.time';
+            pubDateMatch = '(.*)';
             break;
         case 'mmrs':
-            list_element = '.g-list a';
+            listElement = '.g-list a';
             if (path[3] === undefined) {
                 switch (path[2]) {
                     case undefined:
-                        list_element = '.news-box a, .new_list a, .news-box2 a[href*="content"]';
+                        listElement = '.news-box a, .new_list a, .news-box2 a[href*="content"]';
                         break;
                     case 'xwzx':
-                        list_element = '.marqueetop ul li a, .special-clu ul li a, .soc-list ul li a';
+                        listElement = '.marqueetop ul li a, .special-clu ul li a, .soc-list ul li a';
                         break;
                     case 'zwxx':
-                        list_element = '.marqueetop a, .gud-file ul li a, .dyn-box ul li a, .org-list a';
+                        listElement = '.marqueetop a, .gud-file ul li a, .dyn-box ul li a, .org-list a';
                         break;
                     default:
                         break;
                 }
             }
-            title_element = '.pre-box h3';
-            description_element = '.pre-box .clearfix';
-            authorisme = '茂名市人力资源和社会保障局网站';
-            pubDate_element = '.pre-box > *:nth-child(3)';
-            pubDate_match = '发布时间:(.*)\u{A0}';
+            titleElement = '.pre-box h3';
+            descriptionElement = '.pre-box .clearfix';
+            authorIsMe = '茂名市人力资源和社会保障局网站';
+            pubDateElement = '.pre-box > *:nth-child(3)';
+            pubDateMatch = '发布时间:(.*)\u{A0}';
             break;
         case 'zrzyj':
-            list_element = '.ul li a[href*="content"]';
-            title_element = 'header.title h1';
-            description_element = 'article.info';
-            authorisme = '茂名市自然资源局';
-            pubDate_element = 'header.title p span:nth-child(1)';
-            pubDate_match = '日期：(.*)';
+            listElement = '.ul li a[href*="content"]';
+            titleElement = 'header.title h1';
+            descriptionElement = 'article.info';
+            authorIsMe = '茂名市自然资源局';
+            pubDateElement = 'header.title p span:nth-child(1)';
+            pubDateMatch = '日期：(.*)';
             break;
         case 'sthjj':
-            list_element = path[3] === undefined ? '.item-style1 ul li a[href*="content"], #notice-box ul li a' : '.pull-left';
-            title_element = '.article_top_l p';
-            title_match = '(.*)\n';
-            description_element = '.txt';
-            authorisme = '茂名市生态环境局';
-            pubDate_element = '.article_top_l > p > :nth-child(2)';
-            pubDate_match = '发布时间：(.*)';
+            listElement = path[3] === undefined ? '.item-style1 ul li a[href*="content"], #notice-box ul li a' : '.pull-left';
+            titleElement = '.article_top_l p';
+            titleMatch = '(.*)\n';
+            descriptionElement = '.txt';
+            authorIsMe = '茂名市生态环境局';
+            pubDateElement = '.article_top_l > p > :nth-child(2)';
+            pubDateMatch = '发布时间：(.*)';
             break;
         case 'jianshe':
             defaultPath = 'xwdt/zcjd/';
-            list_element = '.listhref a';
-            title_element = '#showtitlediv';
-            description_element = '.aleft > *:nth-child(3)';
-            authorisme = '茂名市住房和城乡建设局';
-            pubDate_element = '#showtitlediv + table';
-            pubDate_match = '刊登时间：(.*)，信息';
+            listElement = '.listhref a';
+            titleElement = '#showtitlediv';
+            descriptionElement = '.aleft > *:nth-child(3)';
+            authorIsMe = '茂名市住房和城乡建设局';
+            pubDateElement = '#showtitlediv + table';
+            pubDateMatch = '刊登时间：(.*)，信息';
             break;
         case 'swj':
             defaultPath = 'zcjd/';
-            list_element = '#lblListInfo a';
-            title_element = '.HTitle';
-            description_element = '#mmhygs';
-            authorisme = '茂名市水务局';
-            pubDate_element = '.HTime';
-            pubDate_match = '日期：(.*)';
+            listElement = '#lblListInfo a';
+            titleElement = '.HTitle';
+            descriptionElement = '#mmhygs';
+            authorIsMe = '茂名市水务局';
+            pubDateElement = '.HTime';
+            pubDateMatch = '日期：(.*)';
             break;
         case 'mmny':
-            list_element = '.xw > a';
+            listElement = '.xw > a';
             switch (path[2]) {
                 case undefined:
-                    list_element = '.txt li a, .Tabcon ul li a';
+                    listElement = '.txt li a, .Tabcon ul li a';
                     break;
                 case 'zsq':
                     if (path[3] !== undefined) {
-                        list_element = '.img a';
+                        listElement = '.img a';
                     }
                     break;
                 default:
                     break;
             }
-            title_element = '.bt';
-            title_match = '(.*)\n';
-            description_element = '.lien > table > tbody > tr:nth-child(4)';
-            authorisme = '茂名市农业农村局';
-            pubDate_element = '.lien > table > tbody > tr:nth-child(2)';
-            pubDate_match = '日期：(.*)\u{A0}\u{A0}\u{A0}点击数';
+            titleElement = '.bt';
+            titleMatch = '(.*)\n';
+            descriptionElement = '.lien > table > tbody > tr:nth-child(4)';
+            authorIsMe = '茂名市农业农村局';
+            pubDateElement = '.lien > table > tbody > tr:nth-child(2)';
+            pubDateMatch = '日期：(.*)\u{A0}\u{A0}\u{A0}点击数';
             break;
         case 'lyj':
-            list_element = path[2] === undefined ? '#main-slide .changeDiv a, .lycneter_all a[href*="content"]' : '.r_text a';
-            title_element = 'h3';
-            description_element = '.time_r + div';
-            authorisme = '茂名市林业局';
-            pubDate_element = '.time_r';
-            pubDate_match = '发布时间：(.*)\u{A0}\u{A0}\u{A0}文章来源';
+            listElement = path[2] === undefined ? '#main-slide .changeDiv a, .lycneter_all a[href*="content"]' : '.r_text a';
+            titleElement = 'h3';
+            descriptionElement = '.time_r + div';
+            authorIsMe = '茂名市林业局';
+            pubDateElement = '.time_r';
+            pubDateMatch = '发布时间：(.*)\u{A0}\u{A0}\u{A0}文章来源';
             break;
         case 'mmswj':
-            list_element = path[2] === undefined ? 'div[id^="con_three_"] a, .pt6 a[href*="content"]' : '#main21l_main_dk > table a';
-            title_element = 'td[background="/global/rlyelen_line04.gif"] > table:nth-child(1) > tbody > tr:nth-child(2)';
-            description_element = 'td[background="/global/rlyelen_line04.gif"] > table:nth-child(1) > tbody > tr:nth-child(4)';
-            authorisme = '茂名市商务局';
-            pubDate_element = 'td[background="/global/rlyelen_line04.gif"] > table:nth-child(1) > tbody > tr:nth-child(3)';
-            pubDate_match = '发表时间：(.*)';
+            listElement = path[2] === undefined ? 'div[id^="con_three_"] a, .pt6 a[href*="content"]' : '#main21l_main_dk > table a';
+            titleElement = 'td[background="/global/rlyelen_line04.gif"] > table:nth-child(1) > tbody > tr:nth-child(2)';
+            descriptionElement = 'td[background="/global/rlyelen_line04.gif"] > table:nth-child(1) > tbody > tr:nth-child(4)';
+            authorIsMe = '茂名市商务局';
+            pubDateElement = 'td[background="/global/rlyelen_line04.gif"] > table:nth-child(1) > tbody > tr:nth-child(3)';
+            pubDateMatch = '发表时间：(.*)';
             break;
         case 'wgxj':
             defaultPath = 'zcfg/zcjd/';
-            list_element = '.com-news a';
-            title_element = '.text-title h2';
-            description_element = '.text-body';
-            authorisme = '茂名市文化广电旅游体育局';
-            pubDate_element = '.text-title p';
-            pubDate_match = '最后更新：\u{2002}(.*)\u{2002}\u{2002}\u{2002}\u{2002}来源';
+            listElement = '.com-news a';
+            titleElement = '.text-title h2';
+            descriptionElement = '.text-body';
+            authorIsMe = '茂名市文化广电旅游体育局';
+            pubDateElement = '.text-title p';
+            pubDateMatch = '最后更新：\u{2002}(.*)\u{2002}\u{2002}\u{2002}\u{2002}来源';
             break;
         case 'wsjkj':
-            list_element = path[2] === undefined ? '.tbv_mn a' : '.news_list a';
-            title_element = 'h1.content_title';
-            description_element = '#zoomcon';
-            authorisme = '茂名市卫生健康局';
-            pubDate_element = '.desc span:nth-child(1)';
-            pubDate_match = '发布时间：(.*)';
+            listElement = path[2] === undefined ? '.tbv_mn a' : '.news_list a';
+            titleElement = 'h1.content_title';
+            descriptionElement = '#zoomcon';
+            authorIsMe = '茂名市卫生健康局';
+            pubDateElement = '.desc span:nth-child(1)';
+            pubDateMatch = '发布时间：(.*)';
             break;
         case 'scj':
-            list_element = path[2] === undefined ? '.title_content a' : '.news_list > ul > li a';
-            title_element = '.subject_tit';
-            description_element = '#zoomcon';
-            authorisme = '茂名市市场监督管理局';
-            pubDate_element = '.subject_litle span:nth-child(1)';
-            pubDate_match = '发布时间:(.*)';
+            listElement = path[2] === undefined ? '.title_content a' : '.news_list > ul > li a';
+            titleElement = '.subject_tit';
+            descriptionElement = '#zoomcon';
+            authorIsMe = '茂名市市场监督管理局';
+            pubDateElement = '.subject_litle span:nth-child(1)';
+            pubDateMatch = '发布时间:(.*)';
             break;
         case 'ajj':
-            list_element = path[2] === undefined ? '.picList a, .title_content a[href*="content"]' : '.newslist ul li a';
-            title_element = '.opinion_result center p:nth-child(1)';
-            description_element = '.opinion_result_content';
-            authorisme = '茂名市应急管理局';
-            pubDate_element = '.opinion_result center p:nth-child(2) span:nth-child(1)';
-            pubDate_match = '发布时间：(.*)';
+            listElement = path[2] === undefined ? '.picList a, .title_content a[href*="content"]' : '.newslist ul li a';
+            titleElement = '.opinion_result center p:nth-child(1)';
+            descriptionElement = '.opinion_result_content';
+            authorIsMe = '茂名市应急管理局';
+            pubDateElement = '.opinion_result center p:nth-child(2) span:nth-child(1)';
+            pubDateMatch = '发布时间：(.*)';
             break;
         case 'cgj':
-            list_element =
+            listElement =
                 path[2] === undefined
                     ? '#con_two_1 a[href*="cgj.maoming.gov.cn"], #con_two_1 a[href*="mp.weixin.qq.com"], .newshotkuan.pt9 .heibti[href*="cgj.maoming.gov.cn"], .newshotkuan.pt9 .heibti[href*="mp.weixin.qq.com"], .qkuan01.mt9 .heibti[href*="cgj.maoming.gov.cn"], .qkuan01.mt9 .heibti[href*="mp.weixin.qq.com"], #demo a[href*="cgj.maoming.gov.cn"], #demo a[href*="mp.weixin.qq.com"], .main3lr_main a[href*="cgj.maoming.gov.cn"], .main3lr_main a[href*="mp.weixin.qq.com"]'
                     : '#main21l_main_dkc .hei[href*="cgj.maoming.gov.cn"], #main21l_main_dkc .hei[href*="mp.weixin.qq.com"]';
-            list_include = 'all';
-            title_element = 'td[background="/global/rlyelen_line04.gif"] > table:nth-child(1) > tbody > tr:nth-child(2)';
-            description_element = 'td[background="/global/rlyelen_line04.gif"] > table:nth-child(1) > tbody > tr:nth-child(4)';
-            authorisme = '茂名市城市管理和综合执法局';
-            pubDate_element = 'td[background="/global/rlyelen_line04.gif"] > table:nth-child(1) > tbody > tr:nth-child(3)';
-            pubDate_match = '发表时间：(.*)';
+            listInclude = 'all';
+            titleElement = 'td[background="/global/rlyelen_line04.gif"] > table:nth-child(1) > tbody > tr:nth-child(2)';
+            descriptionElement = 'td[background="/global/rlyelen_line04.gif"] > table:nth-child(1) > tbody > tr:nth-child(4)';
+            authorIsMe = '茂名市城市管理和综合执法局';
+            pubDateElement = 'td[background="/global/rlyelen_line04.gif"] > table:nth-child(1) > tbody > tr:nth-child(3)';
+            pubDateMatch = '发表时间：(.*)';
             break;
         case 'xzfw':
             defaultPath = 'zcjd/';
-            list_element = '#lblListInfo a';
-            title_element = '.HTitle';
-            description_element = '#mmhygs';
-            authorisme = '茂名市政务服务网';
-            pubDate_element = '.HTime';
-            pubDate_match = '发布日期：(.*)\u{A0}\u{A0}\u{A0}点击率';
+            listElement = '#lblListInfo a';
+            titleElement = '.HTitle';
+            descriptionElement = '#mmhygs';
+            authorIsMe = '茂名市政务服务网';
+            pubDateElement = '.HTime';
+            pubDateMatch = '发布日期：(.*)\u{A0}\u{A0}\u{A0}点击率';
             break;
         default:
             throw new Error(`Unknown path[1]: ${path[1]}`);
     }
     const info = {
-        pathstartat,
+        pathstartat: pathStartAt,
         defaultPath,
-        list_element,
-        list_include,
-        title_element,
-        title_match,
-        description_element,
-        authorisme,
-        pubDate_element,
-        pubDate_match,
-        // pubDate_format,
+        list_element: listElement,
+        list_include: listInclude,
+        title_element: titleElement,
+        title_match: titleMatch,
+        description_element: descriptionElement,
+        authorisme: authorIsMe,
+        pubDate_element: pubDateElement,
+        pubDate_match: pubDateMatch,
     };
     return await gdgov(info, ctx);
 }
