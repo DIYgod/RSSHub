@@ -28,6 +28,8 @@ export const categories = {
     20: '韓漫 漢化',
     21: '韓漫 生肉',
     22: '同人誌 3D漫畫',
+    37: 'AI圖集',
+    38: '合集',
 };
 const baseUrl = 'https://www.wnacg.com';
 const parseImageList = (
@@ -74,16 +76,14 @@ export async function handler(ctx) {
                 const $item = $(item);
                 const href = $item.find('a').attr('href');
                 const aid = href!.match(/^\/photos-index-aid-(\d+)\.html$/)![1];
+                const date = $item
+                    .find('.info_col')
+                    .text()
+                    .match(/\d{4}-\d{2}-\d{2}/)?.[0];
                 return {
                     title: $item.find('a').attr('title')!,
                     link: `${baseUrl}${href}`,
-                    pubDate: parseDate(
-                        $item
-                            .find('.info_col')
-                            .text()
-                            .replace(/\d+張照片，\n創建於/, ''),
-                        'YYYY-MM-DD'
-                    ),
+                    pubDate: date ? parseDate(date, 'YYYY-MM-DD') : undefined,
                     aid,
                 };
             }

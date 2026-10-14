@@ -21,6 +21,12 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
+    radar: [
+        {
+            source: ['space.bilibili.com/:uid/lists/:sid'],
+            target: '/user/channel/:uid/:sid',
+        },
+    ],
     name: 'UP 主频道的视频列表',
     maintainers: ['weirongxu'],
     handler,
@@ -34,7 +40,7 @@ async function handler(ctx) {
 
     const link = `https://space.bilibili.com/${uid}/channel/seriesdetail?sid=${sid}`;
 
-    // 获取频道信息
+    // Fetch series metadata.
     const channelInfoLink = `https://api.bilibili.com/x/series/series?series_id=${sid}`;
     const channelInfo = await cache.tryGet(channelInfoLink, async () => {
         const response = await got(channelInfoLink, {
@@ -42,11 +48,11 @@ async function handler(ctx) {
                 Referer: link,
             },
         });
-        // 频道不存在时返回 null
+        // Missing series return no metadata.
         return response.data.data;
     });
 
-    if (!channelInfo) {
+    if (!channelInfo || channelInfo.meta?.mid !== uid) {
         throw new NotFoundError(`Bilibili series ${sid} was not found`);
     }
     const [username, face] = await cacheIn.getUsernameAndFaceFromUID(uid);

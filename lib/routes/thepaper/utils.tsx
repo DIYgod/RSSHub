@@ -16,7 +16,7 @@ export const parseSourceDate = (value?: string | number) => {
 };
 const defaultRssItem = (item) => ({
     title: item.name,
-    link: item.link || `https://m.thepaper.cn/${item.cornerLabelDesc === '短剧' ? 'series' : 'detail'}/${item.contId}`,
+    link: item.link || `https://m.thepaper.cn/${item.cornerLabelDesc === '短剧' ? 'series/' : 'newsDetail_forward_'}${item.contId}`,
     pubDate: parseSourceDate(item.pubTimeLong) ?? parseSourceDate(item.publishTime),
     author: item.author || item.authorInfo?.sname || item.trackAuthor || undefined,
     category: [...(item.tagList?.map((tag) => tag.tag) ?? []), ...(item.nodeInfo?.name ? [item.nodeInfo.name] : [])],
@@ -32,7 +32,7 @@ async function processItem(item, ctx) {
         // external link
         return defaultRssItem(item);
     }
-    const itemUrl = `https://m.thepaper.cn/${item.cornerLabelDesc && item.cornerLabelDesc === '短剧' ? 'series' : 'detail'}/${item.contId}`;
+    const itemUrl = `https://m.thepaper.cn/${item.cornerLabelDesc && item.cornerLabelDesc === '短剧' ? 'series/' : 'newsDetail_forward_'}${item.contId}`;
     const contentDetail = await cache.tryGet(`${itemUrl}${useOldMode ? ':old' : ''}`, async () => {
         const res = await ofetch(itemUrl);
         const $ = load(res);

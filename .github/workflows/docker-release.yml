@@ -46,6 +46,7 @@ jobs:
             attestations: write
         steps:
             - name: Enable ZRAM
+              id: zram
               # Reduce memory pressure
               # PERCENT=100 is safe: https://fedoraproject.org/wiki/Changes/Scale_ZRAM_to_full_memory_size
               run: |
@@ -56,6 +57,7 @@ jobs:
                   echo -e 'ALGO=zstd\nPERCENT=100' | sudo tee -a /etc/default/zramswap
                   sudo systemctl restart zramswap
                   swapon
+              background: true
 
             - name: Prepare
               run: |
@@ -107,6 +109,9 @@ jobs:
                   tags=$(jq -r '.target["docker-metadata-action"].args.DOCKER_META_IMAGES' "$DOCKER_METADATA_OUTPUT_BAKE_FILE_TAGS")
                   echo "tags=$tags" >> "$GITHUB_OUTPUT"
 
+            - name: Wait for ZRAM
+              wait: zram
+
             - name: Build and push Docker image (ordinary version)
               id: build-and-push
               uses: docker/build-push-action@c3c9e263c25d99ce0380d002d59b67737d91b0dc # v7.4.0
@@ -134,7 +139,7 @@ jobs:
                   touch "${{ runner.temp }}/digests/ordinary/${digest#sha256:}"
 
             - name: Upload digest (ordinary version)
-              uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+              uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
               with:
                   name: digests-ordinary-${{ env.PLATFORM_PAIR }}
                   path: ${{ runner.temp }}/digests/ordinary/*
@@ -189,7 +194,7 @@ jobs:
                   touch "${{ runner.temp }}/digests/chromium/${digest#sha256:}"
 
             - name: Upload digest (Chromium-bundled version)
-              uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+              uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
               with:
                   name: digests-chromium-${{ env.PLATFORM_PAIR }}
                   path: ${{ runner.temp }}/digests/chromium/*
@@ -222,7 +227,7 @@ jobs:
                   password: ${{ secrets.GITHUB_TOKEN }}
 
             - name: Download digests (ordinary version)
-              uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+              uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
               with:
                   path: ${{ runner.temp }}/digests/ordinary
                   pattern: digests-ordinary-*
@@ -248,7 +253,7 @@ jobs:
                       $(printf '${{ vars.DOCKER_USERNAME }}/${{ needs.release.outputs.repo-name }}@sha256:%s ' *)
 
             - name: Download digests (Chromium-bundled version)
-              uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+              uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
               with:
                   path: ${{ runner.temp }}/digests/chromium
                   pattern: digests-chromium-*
@@ -274,23 +279,19 @@ jobs:
                       $(printf '${{ vars.DOCKER_USERNAME }}/${{ needs.release.outputs.repo-name }}@sha256:%s ' *)
 
     github-release:
-        runs-on: ubuntu-latest
+        runs-on: ubuntu-slim
         needs: [release, merge]
         timeout-minutes: 5
         permissions:
             contents: write
         steps:
-            - name: Create a source release for the published images
+            - name: Prepare release notes
+              id: notes
               env:
-                  GH_TOKEN: ${{ github.token }}
                   IMAGE_REPOSITORY: ${{ needs.release.outputs.repo-name }}
                   DOCKER_USERNAME: ${{ vars.DOCKER_USERNAME }}
               run: |
-                  set -euo pipefail
-                  release_tag="v$(date -u +%Y.%m.%d)-${GITHUB_SHA:0:7}"
-                  if gh release view "$release_tag" --repo "$GITHUB_REPOSITORY" > /dev/null 2>&1; then
-                      exit 0
-                  fi
+                  echo "tag=v$(date -u +%Y.%m.%d)-${GITHUB_RUN_NUMBER}.${GITHUB_SHA:0:7}" >> "$GITHUB_OUTPUT"
                   image_repository="${GITHUB_REPOSITORY,,}"
                   cat > "$RUNNER_TEMP/release-notes.md" <<EOF
                   Source commit: $GITHUB_SHA
@@ -303,8 +304,14 @@ jobs:
 
                   Use these commit-specific image tags to reproduce this release. Daily Docker tags may be updated by subsequent builds.
                   EOF
-                  gh release create "$release_tag" --repo "$GITHUB_REPOSITORY" --target "$GITHUB_SHA" \
-                      --title "$release_tag" --notes-file "$RUNNER_TEMP/release-notes.md"
+
+            - name: Create a source release for the published images
+              uses: softprops/action-gh-release@efb35369e0ad2afab669f228072c1b0d510eae64 # v3.0.3
+              with:
+                  tag_name: ${{ steps.notes.outputs.tag }}
+                  name: ${{ steps.notes.outputs.tag }}
+                  target_commitish: ${{ github.sha }}
+                  body_path: ${{ runner.temp }}/release-notes.md
 
     description:
         runs-on: ubuntu-slim

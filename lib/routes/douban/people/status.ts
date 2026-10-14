@@ -7,9 +7,11 @@ import type { Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import md5 from '@/utils/md5';
+import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
 import { fallback, queryToBoolean, queryToInteger } from '@/utils/readable-social';
-import timezone from '@/utils/timezone';
+
+import { getIpLocations } from '../ip-location';
 
 export const route: Route = {
     path: '/people/:userid/status/:routeParams?',
@@ -19,10 +21,12 @@ export const route: Route = {
     parameters: { userid: '整数型用户 id', routeParams: '额外参数；见下' },
     name: '用户广播',
     maintainers: ['alfredcai'],
+    features: { requireConfig: [{ name: 'DOUBAN_COOKIE', optional: true, description: '仅登录可见的广播或IP属地详情需要本人豆瓣 Cookie。' }] },
     handler,
     description: `::: tip
 
 - **目前只支持整数型 id**
+- 源详情页显示的作者 IP 属地和首屏回帖 IP 属地分别放入 \`IP属地：…\` 和 \`回帖IP属地：…\` 分类，可使用通用过滤参数。没有提供该字段的广播不添加；个人资料所在地不作为 IP。
 - 字母型的 id，可以通过头像图片链接来找到其整数型 id，图片命名规则\`ul[userid]-*.jpg\`或\`u[userid]-*.jpg\`，即取文件名中间的数字
 - 例如：用户 id: \`MovieL\`他的头像图片链接：\`https://img1.doubanio.com/icon/ul1128221-98.jpg\`他的整数型 id: \`1128221\`
 
@@ -111,7 +115,7 @@ function getStatusLink(status) {
     }
     const uriId = status.uri?.match(/^douban:\/\/douban\.com\/status\/(\d+)(?:[/?]|$)/)?.[1];
     const statusId = String(status.id || uriId || '');
-    for (const sourceLink of [status.sharing_url, status.url]) {
+    for (const sourceLink of [status.url, status.sharing_url]) {
         if (!sourceLink) {
             continue;
         }
@@ -521,42 +525,32 @@ function getContentByActivity(ctx, item, params: ContentParams = {}, picsPrefixe
     return { title, description };
 }
 
-async function getFullTextItems(items) {
-    const prefix = 'https://m.douban.com/rexxar/api/v2/status/';
+interface FullTextStatus {
+    id: string | number;
+    text: string;
+    reshared_status?: FullTextStatus;
+}
 
+function getStatusText(id: FullTextStatus['id']) {
+    const url = `https://m.douban.com/rexxar/api/v2/status/${id}`;
+    return cache.tryGet(`douban:status-text:${id}:${md5(config.douban.cookie || 'visitor')}`, async () => {
+        const { data } = await got(url, { headers: { Cookie: config.douban.cookie } });
+        return data.text;
+    });
+}
+
+async function getFullTextItems(items: Array<{ status: FullTextStatus }>) {
     await pMap(
         items,
-        async (item: any) => {
-            let url = prefix + item.status.id;
-            let cacheResult = await cache.get(url);
-            if (cacheResult) {
-                item.status.text = cacheResult;
-            } else {
-                const {
-                    data: { text },
-                } = await got(url);
-                cache.set(url, text);
-                item.status.text = text;
-            }
-            // retweet
-            if (!item.status.reshared_status) {
+        async (item) => {
+            item.status.text = await getStatusText(item.status.id);
+            if (!item.status.reshared_status || !tryFixStatus(item.status.reshared_status).isFixSuccess) {
                 return;
             }
-            url = prefix + item.status.reshared_status.id;
-            cacheResult = await cache.get(url);
-            if (cacheResult) {
-                item.status.reshared_status.text = cacheResult;
-            } else if (tryFixStatus(item.status.reshared_status).isFixSuccess) {
-                try {
-                    // A deleted account can leave a reshare whose original status returns HTTP 403.
-                    const {
-                        data: { text },
-                    } = await got(url);
-                    cache.set(url, text);
-                    item.status.reshared_status.text = text;
-                } catch {
-                    item.status.reshared_status.text += '\n[获取原动态失败]';
-                }
+            try {
+                item.status.reshared_status.text = await getStatusText(item.status.reshared_status.id);
+            } catch {
+                item.status.reshared_status.text += '\n[获取原动态失败]';
             }
         },
         { concurrency: 3 }
@@ -567,17 +561,17 @@ async function handler(ctx) {
     const userid = ctx.req.param('userid');
     const url = `https://m.douban.com/rexxar/api/v2/status/user_timeline/${userid}`;
     const items = await cache.tryGet(
-        url,
+        `douban:timeline:${userid}:${md5(config.douban.cookie || 'visitor')}`,
         async () => {
-            const _r = await got(url);
+            const _r = await got(url, { headers: { Cookie: config.douban.cookie } });
             return _r.data.items;
         },
         config.cache.routeExpire,
         false
     );
 
-    if (!items?.length) {
-        throw new Error('Douban returned no public statuses for this user. Check whether the profile has visible statuses.');
+    if (!Array.isArray(items) || !items.length) {
+        throw new TypeError('The Douban timeline returned no accessible posts. Verify the user ID and DOUBAN_COOKIE.');
     }
 
     for (const item of items) {
@@ -588,20 +582,22 @@ async function handler(ctx) {
     return {
         title: `豆瓣广播 - ${items ? items[0].status.author.name : userid}`,
         link: `https://m.douban.com/people/${userid}/statuses`,
-        item:
-            items &&
-            items
-                .filter((item) => !item.deleted)
-                .map((item) => {
-                    const author = item.status.author?.name;
-                    const r = getContentByActivity(ctx, item);
-                    return {
-                        title: r.title,
-                        author,
-                        link: getStatusLink(item.status),
-                        pubDate: item.status.create_time ? timezone(parseDate(item.status.create_time), 8) : undefined,
-                        description: r.description,
-                    };
-                }),
+        item: await pMap(
+            items.filter((item) => !item.deleted),
+            async (item) => {
+                const author = item.status.author?.name;
+                const r = getContentByActivity(ctx, item);
+                const link = getStatusLink(item.status);
+                return {
+                    title: r.title,
+                    author,
+                    link,
+                    pubDate: item.status.create_time ? parseDateInTimezone(item.status.create_time, 8) : undefined,
+                    description: r.description,
+                    category: await getIpLocations(link),
+                };
+            },
+            { concurrency: 3 }
+        ),
     };
 }

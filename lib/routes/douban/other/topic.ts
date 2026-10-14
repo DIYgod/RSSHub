@@ -1,6 +1,13 @@
+import pMap from 'p-map';
+
+import { config } from '@/config';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
+import md5 from '@/utils/md5';
+import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
+
+import { getIpLocations } from '../ip-location';
 
 export const route: Route = {
     path: '/topic/:id/:sort?',
@@ -8,7 +15,7 @@ export const route: Route = {
     example: '/douban/topic/48823',
     parameters: { id: '话题id', sort: '排序方式，hot或new，默认为new' },
     features: {
-        requireConfig: false,
+        requireConfig: [{ name: 'DOUBAN_COOKIE', optional: true, description: '仅登录可见的话题或IP属地详情需要本人豆瓣 Cookie。' }],
         requirePuppeteer: false,
         antiCrawler: false,
         supportBT: false,
@@ -17,6 +24,7 @@ export const route: Route = {
     },
     name: '话题',
     maintainers: ['LogicJake', 'pseudoyu', 'haowenwu'],
+    description: '源详情页明确显示的作者 IP 属地和首屏回帖 IP 属地分别放入 IP 属地：… 和 回帖 IP 属地：… 分类，可使用通用过滤参数。不以作者个人资料所在地替代 IP。需要登录才能查看的内容请配置 DOUBAN\\_COOKIE。',
     handler,
 };
 
@@ -32,21 +40,26 @@ async function handler(ctx) {
         url: api,
         headers: {
             Referer: link,
+            Cookie: config.douban.cookie,
         },
     });
 
-    const data = response.data.items;
+    const data = response.data?.items;
+    if (!Array.isArray(data) || !data.length) {
+        throw new TypeError('The Douban topic API returned no accessible items. Verify the topic ID and DOUBAN_COOKIE.');
+    }
 
     let title = id;
     let description = '';
 
-    if (data[0].topic !== null) {
+    if (data[0].topic) {
         title = data[0].topic.name;
         description = data[0].topic.introduction;
     }
 
-    const out = await Promise.all(
-        data.map(async (item) => {
+    const out = await pMap(
+        data,
+        async (item) => {
             const type = item.target.type;
             let author;
             let date;
@@ -54,7 +67,7 @@ async function handler(ctx) {
             let link;
             let title;
             if (type === 'status') {
-                link = item.target.status.sharing_url.split('&', 1)[0];
+                link = item.target.status.url || item.target.status.sharing_url.split('&', 1)[0];
                 author = item.target.status.author.name;
                 title = author + '的广播';
                 date = item.target.status.create_time;
@@ -67,7 +80,7 @@ async function handler(ctx) {
                     }
                 }
             } else if (type === 'topic') {
-                link = item.target.sharing_url;
+                link = item.target.url || item.target.sharing_url;
                 author = item.target.author.name;
                 title = item.target.title;
                 date = item.target.create_time;
@@ -80,7 +93,7 @@ async function handler(ctx) {
                     }
                 }
             } else {
-                link = item.target.sharing_url;
+                link = item.target.url || item.target.sharing_url;
                 author = item.target.author.name;
                 title = author + '的日记';
                 date = item.target.create_time;
@@ -88,32 +101,29 @@ async function handler(ctx) {
                 const id = item.target.id;
                 const itemUrl = `https://www.douban.com/j/note/${id}/full`;
 
-                const cacheIn = await cache.get(link);
-                if (cacheIn) {
-                    return JSON.parse(cacheIn);
-                }
-                const response = await got.get(itemUrl);
-                description = response.data.html;
+                description = await cache.tryGet(`douban:note:${id}:${md5(config.douban.cookie || 'visitor')}`, async () => {
+                    const response = await got.get(itemUrl, { headers: { Cookie: config.douban.cookie } });
+                    return response.data.html;
+                });
             }
             const single = {
                 title,
                 link,
                 author,
-                pubDate: new Date(date).toUTCString(),
+                pubDate: date ? parseDateInTimezone(date, 8) : undefined,
                 description,
             };
 
-            if (type !== 'status') {
-                cache.set(link, JSON.stringify(single));
-            }
             return single;
-        })
+        },
+        { concurrency: 3 }
     );
+    const items = await pMap(out, async (item) => ({ ...item, category: await getIpLocations(item.link) }), { concurrency: 3 });
 
     return {
         title: `${title}-豆瓣话题`,
         description,
         link,
-        item: out,
+        item: items,
     };
 }

@@ -4,13 +4,18 @@ import pMap from 'p-map';
 
 import cache from '@/utils/cache';
 import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
 
 const indexUrl = 'http://mei8.vip/';
 
 const getOriginUrl = async () =>
     await cache.tryGet('jpxgmn:originUrl', async () => {
-        const response = await got(indexUrl);
-        const $ = load(response.data);
+        // The publish page now 301-redirects to the source site, so use the final origin.
+        const response = await ofetch.raw(indexUrl);
+        if (new URL(response.url).host !== new URL(indexUrl).host) {
+            return new URL(response.url).origin;
+        }
+        const $ = load(response._data);
         const entries = $('ul > li > span');
         const origins = entries
             .toArray()

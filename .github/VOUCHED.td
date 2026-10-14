@@ -16,5 +16,4 @@ neverbehave
 pseudoyu
 tonyrl
 -weixshaw impersonate as magazian in #23333. 23f8a7a8509f6620a79503a45370a7339a157bcb
--zhangsan-xyz impersonate as TonyRL, cscnk52 in #22881. 6e51dceaf55678d0a24361dc1205d4a9e794435f
 zhenlonghe
