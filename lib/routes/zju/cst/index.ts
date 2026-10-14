@@ -1,4 +1,6 @@
 import { load } from 'cheerio';
+import { FetchError } from 'ofetch';
+import pMap from 'p-map';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
@@ -6,6 +8,8 @@ import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
 const host = 'http://www.cst.zju.edu.cn/';
+
+class ArticleUnavailableError extends Error {}
 
 const map = new Map([
     [0, { id: '', title: '浙大软件学院-全部通知' }],
@@ -66,28 +70,40 @@ async function handler(ctx) {
     const link = host + map.get(type)!.id;
     let items: any[] = [];
     if (type === 0) {
-        const tasks = Array.from(map.values(), (value) => getPage(value.id));
-        const results = await Promise.all(tasks);
+        const results = await pMap(map.values(), (value) => getPage(value.id), { concurrency: 3 });
         items = results.flat();
     } else {
         items = await getPage(map.get(type)!.id);
     }
 
-    const out = await Promise.all(
-        items.map((item) =>
-            cache.tryGet(item.link, async () => {
-                const response = await got({
-                    method: 'get',
-                    url: item.link,
-                    headers: {
-                        Referer: link,
-                    },
+    const out = await pMap(
+        items,
+        async (item) => {
+            try {
+                const description = await cache.tryGet(`zju:cst:details:v2:${item.link}`, async () => {
+                    const response = await got({
+                        method: 'get',
+                        url: item.link,
+                        headers: {
+                            Referer: link,
+                        },
+                    });
+                    const $ = load(response.data);
+                    const description = $(new URL(item.link).hostname === 'www.idi.zju.edu.cn' ? 'article.article-content' : '.vid_wz').html();
+                    if (!description) {
+                        throw new ArticleUnavailableError('Article content is unavailable at this source page.');
+                    }
+                    return description;
                 });
-                const $ = load(response.data);
-                item.description = $('.vid_wz').html();
+                return { ...item, description };
+            } catch (error) {
+                if (!(error instanceof ArticleUnavailableError || error instanceof FetchError)) {
+                    throw error;
+                }
                 return item;
-            })
-        )
+            }
+        },
+        { concurrency: 3 }
     );
 
     return {
