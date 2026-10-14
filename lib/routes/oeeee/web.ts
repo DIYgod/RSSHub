@@ -1,4 +1,6 @@
-import type { Route } from '@/types';
+import pMap from 'p-map';
+
+import type { DataItem, Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
@@ -32,7 +34,7 @@ async function handler(ctx) {
 
     const { data: response } = await got(currentUrl);
 
-    const list = response.data.map((item) => ({
+    const list: Array<DataItem & { link: string }> = response.data.map((item) => ({
         title: '【' + item.channel_name + '】' + item.title,
         description: renderDescription({
             thumb: item.img,
@@ -40,14 +42,12 @@ async function handler(ctx) {
         }),
         pubDate: timezone(parseDate(item.datetime), 8),
         link: item.linkurl,
-        author: item.author,
-        // channelName: item.channel_name,
-        channelEname: item.channel_ename,
+        author: item.author || undefined,
     }));
 
-    const channelEname = list[1] ? list[1].channelEname : '';
+    const channelEname = response.data.find((item) => item.linkurl)?.channel_ename ?? '';
 
-    const items = await Promise.all(list.map((item) => parseArticle(item)));
+    const items = await pMap(list, (item) => parseArticle(item), { concurrency: 3 });
 
     return {
         title: '南方都市报奥一网',
