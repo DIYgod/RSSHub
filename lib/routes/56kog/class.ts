@@ -1,4 +1,5 @@
 import type { Route } from '@/types';
+import { getRouteLimit } from '@/utils/route-limit';
 
 import { fetchItems, rootUrl } from './util';
 
@@ -29,7 +30,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { category = '1_1' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 30;
+    const limit = getRouteLimit(ctx, 30);
 
     const currentUrl = new URL(`class/${category}.html`, rootUrl).href;
 

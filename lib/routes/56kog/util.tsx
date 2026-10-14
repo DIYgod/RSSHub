@@ -108,7 +108,6 @@ const fetchItems = async (limit, currentUrl) => {
         logo: icon,
         subtitle: $('meta[name="keywords"]').prop('content'),
         author: $('div.uni_footer a').text(),
-        allowEmpty: true,
     };
 };
 
