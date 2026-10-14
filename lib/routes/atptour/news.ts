@@ -2,6 +2,7 @@ import { config } from '@/config';
 import type { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
 export const route: Route = {
     path: '/news/:lang?',
@@ -22,7 +23,7 @@ async function handler(ctx) {
     const baseUrl = 'https://www.atptour.com';
     const favIcon = `${baseUrl}/assets/atptour/assets/favicon.ico`;
     const { lang = 'en' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 15;
+    const limit = getRouteLimit(ctx, 15);
 
     const link = `${baseUrl}/${lang}/-/tour/news/latest-filtered-results/0/${limit}`;
     const { data } = await got(link, {
