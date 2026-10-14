@@ -8,6 +8,7 @@ import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
 import { API_HOST, CDN_HOST, HOST } from './constant';
+import { renderPost } from './templates/post';
 import type { PortfolioDetailResponse, PortfolioResponse, UserNextData } from './types';
 
 export function customFetch<T = any, R extends ResponseType = 'json'>(request: FetchRequest, options?: FetchOptions<R>) {
@@ -39,10 +40,10 @@ export async function parseUserData(user: string) {
 export async function fetchPortfolioItem(item: PortfolioResponse['data'][number]) {
     const res = await customFetch<PortfolioDetailResponse>(`${API_HOST}/posts/${item.postId}`);
 
-    const description = res.data.images
-        .filter((i) => !i.isCoverImg)
-        .map((image) => `<img src="${CDN_HOST}/${image.src}" />`)
-        .join('<br />');
+    const description = renderPost({
+        content: res.data.content,
+        images: res.data.images.filter((i) => !i.isCoverImg).map((image) => ({ src: `${CDN_HOST}/${image.src}` })),
+    });
 
     const dataItem: DataItem = {
         title: res.data.title || res.data.content,
