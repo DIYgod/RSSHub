@@ -5,6 +5,7 @@ import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
 import { renderDescription } from './templates/description';
 
@@ -37,7 +38,7 @@ The supported channels are all listed in the table below. For other channels, pl
 
 async function handler(ctx) {
     const { category = 'news/justin' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 30;
+    const limit = getRouteLimit(ctx, 30);
 
     const rootUrl = 'https://www.abc.net.au';
     const apiUrl = new URL('news-web/api/loader/channelrefetch', rootUrl).href;
