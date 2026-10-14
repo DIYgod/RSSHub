@@ -3,6 +3,7 @@ import { load } from 'cheerio';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { DataItem, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
+import { getRouteLimit } from '@/utils/route-limit';
 
 const baseUrl = 'http://www.fx57.cn';
 
@@ -54,6 +55,6 @@ async function handler(ctx) {
             enclosure_type: 'application/x-bittorrent',
         });
     }
-    const items = groups.flatMap((group) => group.toReversed()).slice(0, Number(ctx.req.query('limit')) || 20);
+    const items = groups.flatMap((group) => group.toReversed()).slice(0, getRouteLimit(ctx, 20));
     return { title: `枫叶网 - ${name}`, link, language: 'zh-CN' as const, item: items };
 }
