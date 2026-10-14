@@ -5,8 +5,7 @@ import type { Context } from 'hono';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
 
 const apiUrl = 'https://www.lagou.com/jobs/v2/positionAjax.json';
 const rsaPublicKey =
@@ -67,7 +66,7 @@ async function handler(ctx: Context) {
     const payload = JSON.stringify({ city, pn: 1, kd: position, px: 'new' });
     const code = crypto.createHash('sha256').update(`${originHeader}${apiUrl}${payload}`).digest('hex').toUpperCase();
 
-    const { data } = await ofetch(apiUrl, {
+    const response = await ofetch(apiUrl, {
         method: 'POST',
         headers: {
             Origin: 'https://www.lagou.com',
@@ -81,7 +80,14 @@ async function handler(ctx: Context) {
         body: new URLSearchParams({ data: encrypt(payload) }),
     });
 
-    const list = JSON.parse(decrypt(data)).content.positionResult.result;
+    if (typeof response === 'string' && response.includes('aliyun_waf_aa')) {
+        throw new Error('Lagou returned a browser verification page instead of job data. Try again after the source site allows the request.');
+    }
+    if (typeof response?.data !== 'string' || !response.data) {
+        throw new Error('Lagou did not return encrypted job data. The source API response may have changed.');
+    }
+
+    const list = JSON.parse(decrypt(response.data)).content.positionResult.result;
 
     return {
         title: `${position} - ${city} - 拉勾网`,
@@ -89,11 +95,10 @@ async function handler(ctx: Context) {
         item: list.map((item) => ({
             title: `${item.positionName}[${city === '全国' ? item.city + '·' : ''}${item.businessZones ? item.businessZones[0] : item.district}] - ${item.companyShortName}`,
             author: item.companyShortName,
-            description: `薪资：${item.salary}<br>要求：${item.workYear} / ${item.education}<br>公司名称：${item.companyFullName}<br>公司描述：${item.industryField} / ${item.financeStage} / ${item.companySize}${
-                item.companyLabelList && item.companyLabelList.length !== 0 ? '<br>公司标签：' + item.companyLabelList.join(', ') : ''
-            }<br>职位优势：${item.positionAdvantage}${item.positionLables ? '<br>职位标签：' + item.positionLables.join(', ') : ''}${item.linestaion ? '<br>附近线路：' + item.linestaion : ''}`,
+            description: `薪资：${item.salary}<br>要求：${item.workYear} / ${item.education}<br>公司名称：${item.companyFullName}<br>公司描述：${item.industryField} / ${item.financeStage} / ${item.companySize}<br>职位优势：${item.positionAdvantage}${item.linestaion ? '<br>附近线路：' + item.linestaion : ''}`,
+            category: [...new Set([...(item.companyLabelList ?? []), ...(item.positionLables ?? [])].filter(Boolean))],
             link: `https://www.lagou.com/wn/jobs/${item.positionId}.html`,
-            pubDate: timezone(parseDate(item.createTime), 8),
+            pubDate: item.createTime ? parseDateInTimezone(item.createTime, 8) : undefined,
         })),
     };
 }
