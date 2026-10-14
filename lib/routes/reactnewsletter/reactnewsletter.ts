@@ -12,15 +12,15 @@ export const route: Route = {
     example: '/reactnewsletter',
     radar: [
         {
-            source: ['bytes.dev/issues', 'bytes.dev/'],
+            source: ['reactnewsletter.com/issues', 'reactnewsletter.com/'],
             target: '',
         },
     ],
-    name: 'React Newsletter',
-    description: 'Stay up to date on the latest React news, tutorials, resources, and more. Delivered every Tuesday, for free.',
+    name: 'Archives',
+    description: 'Archive summaries of React news, tutorials, and resources.',
     maintainers: ['meixger'],
     handler,
-    url: 'bytes.dev/issues',
+    url: 'reactnewsletter.com/issues',
 };
 
 async function handler() {
@@ -31,14 +31,14 @@ async function handler() {
 
     const items = json.props.pageProps.issues.map((item) => ({
         title: item.title,
-        pubDate: parseDate(item.date),
+        pubDate: item.date ? parseDate(`${item.date} +0000`, 'YYYY-MM-DD ZZ') : undefined,
         description: item.summary,
         link: `/issues/${item.slug}`,
     }));
 
     return {
-        title: 'reactnewsletter.dev',
-        description: 'Stay up to date on the latest React news, tutorials, resources, and more. Delivered every Tuesday, for free.',
+        title: $('title').text(),
+        description: 'Archive summaries of React news, tutorials, and resources.',
         link: currentURL,
         item: items,
     };
