@@ -1,9 +1,8 @@
-import zlib from 'node:zlib';
-
 import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
+import { parseDate } from '@/utils/parse-date';
 
 import cache from './cache';
 
@@ -48,16 +47,12 @@ async function handler(ctx) {
 
     const link = `https://www.bilibili.com/video/${bvid || `av${aid}`}`;
     const danmakuResponse = await got.get(`https://comment.bilibili.com/${cid}.xml`, {
-        decompress: false,
-        responseType: 'buffer',
         headers: {
             Referer: link,
         },
     });
 
-    let danmakuText = danmakuResponse.body;
-
-    danmakuText = await ((danmakuText[0] & 0x0f) === 0x08 ? zlib.inflateSync(danmakuText) : zlib.inflateRawSync(danmakuText));
+    const danmakuText = danmakuResponse.body;
 
     let danmakuList: any[] = [];
     const $ = load(danmakuText, { xmlMode: true });
@@ -73,7 +68,7 @@ async function handler(ctx) {
         description: `${videoName} 的 弹幕动态`,
         item: danmakuList.map((item) => ({
             title: `[${processFloatTime(item.p.split(',', 1)[0])}] ${item.text}`,
-            pubDate: new Date(item.p.split(',', 5)[4] * 1000).toUTCString(),
+            pubDate: parseDate(item.p.split(',', 5)[4], 'X'),
             guid: `${cid}-${item.p.split(',', 5)[4]}-${item.p.split(',', 8)[7]}`,
             link,
         })),

@@ -16,6 +16,9 @@ export const route: Route = {
         embed: '默认为开启内嵌视频, 任意值为关闭',
     },
     categories: ['social-media'],
+    features: {
+        requirePuppeteer: true,
+    },
 };
 
 async function handler(ctx) {

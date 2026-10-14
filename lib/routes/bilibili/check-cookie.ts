@@ -26,7 +26,11 @@ async function handler() {
             Cookie: cookie,
         },
     });
-    const isResponseValid = response.code === 0 && !!response.data.mid;
+    const isResponseValid = response.code === 0 && !!response.data?.mid;
+
+    if (!isResponseValid) {
+        return { code: -1 };
+    }
 
     // Workers do not fetch subtitles, so only validate the login session there.
     if (isWorker) {

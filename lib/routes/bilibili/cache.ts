@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import { FetchError } from 'ofetch';
 import { RateLimiterMemory, RateLimiterQueue } from 'rate-limiter-flexible';
 
 import { config } from '@/config';
@@ -38,35 +39,57 @@ const getConfiguredCookie = () => {
     return config.bilibili.cookies[Object.keys(config.bilibili.cookies)[Math.floor(Math.random() * Object.keys(config.bilibili.cookies).length)]] || '';
 };
 
+let anonymousCookiePromise: Promise<string> | undefined;
+
 const getCookie = (disableConfig = false) => {
     const configuredCookie = disableConfig ? undefined : getConfiguredCookie();
     if (configuredCookie !== undefined) {
         return configuredCookie;
     }
 
+    if (anonymousCookiePromise) {
+        return anonymousCookiePromise;
+    }
     const key = 'bili-cookie';
-    return cache.tryGet(key, async () => {
-        let waitForRequest = Promise.resolve('');
-        const { destroy } = await getPlaywrightPage('https://space.bilibili.com/1/dynamic', {
-            onBeforeLoad: (page) => {
-                waitForRequest = new Promise<string>((resolve) => {
-                    page.on('requestfinished', async (request) => {
-                        if (request.url() !== 'https://api.bilibili.com/x/web-interface/nav') {
-                            return;
-                        }
-                        const cookies = await page.context().cookies();
-                        let cookieString = cookies.map((cookie) => `${cookie.name}=${cookie.value}`).join('; ');
-                        cookieString = cookieString.replace(/b_lsid=[0-9A-F]+_[0-9A-F]+/, () => `b_lsid=${utils.lsid()}`);
-                        resolve(cookieString);
-                    });
+    anonymousCookiePromise = (async () => {
+        try {
+            return await cache.tryGet<string>(key, async () => {
+                const url = 'https://space.bilibili.com/1/dynamic';
+                const timeout = 12000;
+                const { page, destroy } = await getPlaywrightPage(url, {
+                    noGoto: true,
+                    closeTimeout: 0,
                 });
-            },
-        });
-        const cookieString = await waitForRequest;
-        logger.debug(`Got bilibili cookie: ${cookieString}`);
-        await destroy();
-        return cookieString;
-    });
+                try {
+                    await page.route('**/*', (route) => {
+                        if (['document', 'script', 'xhr', 'fetch'].includes(route.request().resourceType())) {
+                            return route.continue();
+                        }
+                        return route.abort();
+                    });
+                    const [response] = await Promise.all([
+                        page.waitForResponse((response) => response.url() === 'https://api.bilibili.com/x/web-interface/nav', { timeout }),
+                        page.goto(url, { waitUntil: 'domcontentloaded', timeout }),
+                    ]);
+                    if (!response.ok()) {
+                        throw new Error(`Bilibili anonymous session request failed with HTTP ${response.status()}`);
+                    }
+                    const cookies = await page.context().cookies();
+                    const cookieString = cookies
+                        .map((cookie) => `${cookie.name}=${cookie.value}`)
+                        .join('; ')
+                        .replace(/b_lsid=[0-9A-F]+_[0-9A-F]+/, () => `b_lsid=${utils.lsid()}`);
+                    logger.debug(`Initialized Bilibili anonymous session with ${cookies.length} cookies`);
+                    return cookieString;
+                } finally {
+                    await destroy();
+                }
+            });
+        } finally {
+            anonymousCookiePromise = undefined;
+        }
+    })();
+    return anonymousCookiePromise;
 };
 
 const getRenderData = (uid) => {
@@ -128,55 +151,24 @@ const getWbiVerifyString = () => {
     });
 };
 
-const getUsernameFromUID = (uid) => {
-    const key = 'bili-username-from-uid-' + uid;
-    return cache.tryGet(key, async () => {
-        const cookie = await getCookie();
-        const wbiVerifyString = await getWbiVerifyString();
-        // await got(`https://space.bilibili.com/${uid}/`, {
-        //     headers: {
-        //         Referer: 'https://www.bilibili.com/',
-        //         Cookie: cookie,
-        //     },
-        // });
-        const params = utils.addWbiVerifyInfo(`mid=${uid}&token=&platform=web&web_location=1550101`, wbiVerifyString);
-        const { data: nameResponse } = await got(`https://api.bilibili.com/x/space/wbi/acc/info?${params}`, {
+const getPublicUserCard = (uid) =>
+    cache.tryGet<{ name: string; face: string }>(`bili-user-card-from-uid-${uid}`, async () => {
+        const { data: response } = await got(`https://api.bilibili.com/x/web-interface/card?mid=${uid}`, {
             headers: {
                 Referer: `https://space.bilibili.com/${uid}/`,
-                Cookie: cookie,
             },
         });
-        return nameResponse.data ? nameResponse.data.name : undefined;
+        if (response.code !== 0 || !response.data?.card?.name) {
+            throw new Error(`Bilibili public profile request failed: code = ${response.code}, message = ${response.message}`);
+        }
+        return response.data.card;
     });
-};
+
+const getUsernameFromUID = async (uid) => (await getPublicUserCard(uid)).name;
 
 const getUsernameAndFaceFromUID = async (uid) => {
-    const nameKey = 'bili-username-from-uid-' + uid;
-    const faceKey = 'bili-userface-from-uid-' + uid;
-    let name = await cache.get(nameKey);
-    let face = await cache.get(faceKey);
-    if (!name || !face) {
-        const cookie = await getCookie();
-        const wbiVerifyString = await getWbiVerifyString();
-        const dmImgList = utils.getDmImgList();
-        const renderData = await getRenderData(uid);
-        const params = utils.addWbiVerifyInfo(utils.addRenderData(utils.addDmVerifyInfo(`mid=${uid}&token=&platform=web&web_location=1550101`, dmImgList), renderData), wbiVerifyString);
-        const { data: nameResponse } = await got(`https://api.bilibili.com/x/space/wbi/acc/info?${params}`, {
-            headers: {
-                Referer: `https://space.bilibili.com/${uid}/`,
-                Cookie: cookie,
-            },
-        });
-        if (nameResponse.data.name) {
-            name = nameResponse.data.name;
-            face = nameResponse.data.face;
-            cache.set(nameKey, nameResponse.data.name);
-            cache.set(faceKey, nameResponse.data.face);
-        } else {
-            logger.error(`Error when visiting /x/space/wbi/acc/info: ${JSON.stringify(nameResponse)}`);
-        }
-    }
-    return [name, face];
+    const card = await getPublicUserCard(uid);
+    return [card.name, card.face];
 };
 
 const getLiveIDFromShortID = (shortID) => {
@@ -206,24 +198,37 @@ const getUserInfoFromLiveID = (liveID) => {
 const getVideoNameFromId = (aid, bvid) => {
     const key = `bili-videoname-from-id-${bvid || aid}`;
     return cache.tryGet(key, async () => {
-        const { data } = await got('https://api.bilibili.com/x/web-interface/view', {
-            searchParams: {
-                aid: aid || undefined,
-                bvid: bvid || undefined,
-            },
-            referer: `https://www.bilibili.com/video/${bvid || `av${aid}`}`,
-        });
-        return data.data.title;
+        try {
+            const { data } = await got('https://api.bilibili.com/x/web-interface/view', {
+                searchParams: {
+                    aid: aid || undefined,
+                    bvid: bvid || undefined,
+                },
+                headers: {
+                    Referer: `https://www.bilibili.com/video/${bvid || `av${aid}`}`,
+                },
+            });
+            return data.data.title;
+        } catch (error) {
+            if (!(error instanceof FetchError) || error.response?.status !== 412 || !(await getCidFromId(aid, 1, bvid))) {
+                throw error;
+            }
+            // Keep an explicit video identifier when the title endpoint blocks anonymous access.
+            return bvid || `av${aid}`;
+        }
     });
 };
 
 const getCidFromId = (aid, pid, bvid) => {
     const key = `bili-cid-from-id-${bvid || aid}-${pid}`;
     return cache.tryGet(key, async () => {
-        const { data } = await got(`https://api.bilibili.com/x/web-interface/view?${bvid ? `bvid=${bvid}` : `aid=${aid}`}`, {
+        const { data } = await got(`https://api.bilibili.com/x/player/pagelist?${bvid ? `bvid=${bvid}` : `aid=${aid}`}`, {
             referer: `https://www.bilibili.com/video/${bvid || `av${aid}`}`,
         });
-        return data?.data?.pages[pid - 1]?.cid;
+        if (data.code !== 0) {
+            throw new Error(`Bilibili page list request failed: code = ${data.code}, message = ${data.message}`);
+        }
+        return data.data?.[pid - 1]?.cid;
     });
 };
 

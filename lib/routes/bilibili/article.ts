@@ -1,11 +1,30 @@
-import { load } from 'cheerio';
+import { type CheerioAPI, load } from 'cheerio';
 
 import type { Route } from '@/types';
 import cacheGeneral from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 import cache from './cache';
+
+const getOpusPubDate = ($: CheerioAPI) => {
+    const prefix = 'window.__INITIAL_STATE__=';
+    const stateScript = $('script')
+        .toArray()
+        .map((script) => $(script).text())
+        .find((script) => script.startsWith(prefix));
+    const stateEnd = stateScript?.lastIndexOf(';(function');
+    if (stateScript && stateEnd !== undefined && stateEnd > prefix.length) {
+        const state = JSON.parse(stateScript.slice(prefix.length, stateEnd));
+        const timestamp = state.detail?.modules?.find((module) => module.module_author)?.module_author?.pub_ts;
+        if (timestamp) {
+            return parseDate(timestamp, 'X');
+        }
+    }
+    const displayTime = $('.opus-module-author__pub__text').text().replace('编辑于 ', '');
+    return displayTime ? timezone(parseDate(displayTime, 'YYYY年MM月DD日 HH:mm'), 8) : undefined;
+};
 
 export const route: Route = {
     path: '/user/article/:uid',
@@ -14,7 +33,7 @@ export const route: Route = {
     parameters: { uid: '用户 id, 可在 UP 主主页中找到' },
     features: {
         requireConfig: false,
-        requirePuppeteer: false,
+        requirePuppeteer: true,
         antiCrawler: false,
         supportBT: false,
         supportPodcast: false,
@@ -45,9 +64,10 @@ async function handler(ctx) {
     const link = `https://space.bilibili.com/${uid}/article`;
     const description = `${name} 的 bilibili 图文`;
     const cookie = await cache.getCookie();
+    const entries = data.items;
 
     const item = await Promise.all(
-        data.items.map(async (item) => {
+        entries.map(async (item) => {
             const link = 'https:' + item.jump_url;
             const data = await cacheGeneral.tryGet<string>(
                 link,
@@ -66,14 +86,12 @@ async function handler(ctx) {
 
             const $ = load(data);
             const description = $('.opus-module-content').html();
-            const pubDate = $('.opus-module-author__pub__text').text().replace('编辑于 ', '');
 
             const single = {
                 title: item.content,
                 link,
                 description: description || item.content,
-                // 2019年11月11日 08:50
-                pubDate: pubDate ? parseDate(pubDate, 'YYYY年MM月DD日 HH:mm') : undefined,
+                pubDate: getOpusPubDate($),
             };
             return single;
         })
