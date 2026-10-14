@@ -1,6 +1,16 @@
 import type { FC } from 'hono/jsx';
+import { getMimeType } from 'hono/utils/mime';
 
 import type { Data } from '@/types';
+
+const getImageMimeType = (image: string) => {
+    try {
+        const mimeType = getMimeType(new URL(image, 'https://rsshub.app').pathname)?.split(';', 1)[0];
+        return mimeType?.startsWith('image/') ? mimeType : undefined;
+    } catch {
+        return;
+    }
+};
 
 const RSS: FC<{ data: Data }> = ({ data }) => {
     const hasItunes = data.itunes_author || data.itunes_category || (data.item && data.item.some((i) => i.itunes_item_image || i.itunes_duration));
@@ -49,7 +59,7 @@ const RSS: FC<{ data: Data }> = ({ data }) => {
                         <guid isPermaLink="false">{item.guid || item.link || item.title}</guid>
                         {item.pubDate && <pubDate>{item.pubDate}</pubDate>}
                         {item.author && <dc:creator>{item.author}</dc:creator>}
-                        {item.image && <enclosure url={item.image} type="image/jpeg" />}
+                        {item.image && !item.enclosure_url && <enclosure url={item.image} type={getImageMimeType(item.image)} />}
                         {item.itunes_item_image && <itunes:image href={item.itunes_item_image} />}
                         {item.enclosure_url && <enclosure url={item.enclosure_url} length={item.enclosure_length} type={item.enclosure_type} />}
                         {item.itunes_duration && <itunes:duration>{item.itunes_duration}</itunes:duration>}
