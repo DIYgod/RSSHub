@@ -1,8 +1,9 @@
+import pMap from 'p-map';
+
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
-import ofetch from '@/utils/ofetch';
 
-import { baseUrl, getItem, headers, parseList } from './utils';
+import { baseUrl, getItem, getList, parseList } from './utils';
 
 export const route: Route = {
     path: '/categories/:category',
@@ -27,11 +28,18 @@ export const route: Route = {
 async function handler(ctx) {
     const { category } = ctx.req.param();
 
-    const response = await ofetch(`${baseUrl}/api/categories/${category}?page=0`, { headers });
+    const response = await getList(`${baseUrl}/categories/${category}`, 'category');
 
     const list = parseList(response.videos);
 
-    const items = await Promise.all(list.map((item) => cache.tryGet(item.link, () => getItem(item))));
+    const items = await pMap(
+        list,
+        async (item) => ({
+            ...(await cache.tryGet(item.link, () => getItem(item))),
+            ...item,
+        }),
+        { concurrency: 3 }
+    );
 
     return {
         title: `Watch ${response.category.name} Jav Online | Japanese Adult Video - JavTrailers.com`,
