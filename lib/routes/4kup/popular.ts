@@ -2,6 +2,7 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
+import { getRouteLimit } from '@/utils/route-limit';
 
 import loadArticle from './article';
 import { SUB_NAME_PREFIX, SUB_URL } from './const';
@@ -56,7 +57,7 @@ function getPeriodConfig(period) {
 }
 
 async function handler(ctx) {
-    const limit = Number.parseInt(ctx.req.query('limit')) || 20;
+    const limit = getRouteLimit(ctx, 20);
     const period = ctx.req.param('period');
 
     const { url, range, title } = getPeriodConfig(period);
@@ -74,6 +75,9 @@ async function handler(ctx) {
         .toArray()
         .map((post) => $(post).find('.wpp-post-title').attr('href'))
         .filter((link) => link !== undefined);
+    if (links.length === 0) {
+        throw new Error(`4KUP has no popular posts available for this period. Please check ${url} or try another period.`);
+    }
     const slugs = links.map((link) => link.split('/').findLast(Boolean));
     const { data: posts }: { data: WPPost[] } = await got(`${SUB_URL}wp-json/wp/v2/posts?slug=${slugs.join(',')}&per_page=${limit}`);
 
