@@ -82,7 +82,8 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
         data.description &&= decodeHTMLStrict(data.description + '');
 
         // sort items
-        if (ctx.req.query('sorted') !== 'false') {
+        const sorted = ctx.req.query('sorted');
+        if (sorted === undefined ? data.sortItems !== false : sorted !== 'false') {
             data.item = data.item.toSorted((a: DataItem, b: DataItem) => +new Date(b.pubDate || 0) - +new Date(a.pubDate || 0));
         }
 
@@ -314,8 +315,9 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
         }
 
         // limit
-        if (ctx.req.query('limit')) {
-            data.item = data.item.slice(0, Number.parseInt(ctx.req.query('limit')!));
+        const limit = Number.parseInt(ctx.req.query('limit') ?? '');
+        if (limit >= 0) {
+            data.item = data.item.slice(0, limit);
         }
 
         // telegram instant view
