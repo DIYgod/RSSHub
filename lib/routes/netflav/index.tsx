@@ -48,7 +48,14 @@ async function handler() {
         props: { initialState },
     } = nextData;
 
-    const docs: NetflavVideo[] = [...initialState.censored.docs, ...initialState.uncensored.docs, ...initialState.chinese.docs, ...initialState.trending.docs];
+    const seen = new Set<string>();
+    const docs: NetflavVideo[] = [...initialState.censored.docs, ...initialState.uncensored.docs, ...initialState.chinese.docs, ...initialState.trending.docs].filter((item) => {
+        if (seen.has(item.videoId)) {
+            return false;
+        }
+        seen.add(item.videoId);
+        return true;
+    });
 
     const items = docs.map((item) => ({
         title: item.title,
@@ -69,7 +76,6 @@ async function handler() {
         image: `${baseUrl}${head.find((h) => h[0] === 'meta' && h[1].property === 'og:image')[1].content}`,
         link: baseUrl,
         item: items,
-        allowEmpty: true,
     };
 }
 
