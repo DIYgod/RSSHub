@@ -2,6 +2,8 @@ import { load } from 'cheerio';
 import iconv from 'iconv-lite';
 
 import { config } from '@/config';
+import ConfigNotFoundError from '@/errors/types/config-not-found';
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import got from '@/utils/got';
 
@@ -46,12 +48,18 @@ export const route: Route = {
 
 async function handler(ctx) {
     const category = ctx.req.param('category') ?? 'lastupdate';
+    if (!Object.hasOwn(cateUrlMap, category)) {
+        throw new InvalidParameterError(`Unknown category. Supported categories: ${Object.keys(cateUrlMap).join(', ')}.`);
+    }
+    if (!config.wenku8.cookie) {
+        throw new ConfigNotFoundError('WENKU8_COOKIE is required. Configure a logged-in Wenku8 cookie to access this category.');
+    }
     const response = await got({
         method: 'get',
         url: cateUrlMap[category],
         responseType: 'buffer',
         headers: {
-            UserAgent: config.ua,
+            'User-Agent': config.ua,
             cookie: config.wenku8.cookie,
         },
     });
