@@ -4,6 +4,8 @@ import type { Context } from 'hono';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
+import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/gr/:type',
@@ -69,13 +71,13 @@ async function handler(ctx: Context) {
     const list = $('ul.wp_article_list > li.list_item')
         .toArray()
         .map((item): DataItem => ({
-            pubDate: $(item).find('.Article_PublishDate').text(),
+            pubDate: timezone(parseDate($(item).find('.Article_PublishDate').text(), 'YYYY-MM-DD'), 8),
             title: $(item).find('a').attr('title')!,
             link: `${rootUrl}${$(item).find('a').attr('href')}`,
         }));
-
+    const entries = list;
     const items = await Promise.all(
-        list.map((item) =>
+        entries.map((item) =>
             cache.tryGet(item.link!, async () => {
                 const detailResponse = await got.get(item.link);
                 const content = load(detailResponse.data);
