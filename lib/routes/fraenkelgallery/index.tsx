@@ -8,6 +8,7 @@ import type { DataItem, Route } from '@/types';
 import { ViewType } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
 const baseUrl = 'https://fraenkelgallery.com';
 
@@ -60,7 +61,7 @@ export const route: Route = {
     name: 'Exhibitions & Conversations',
     maintainers: ['IvanWng97'],
     handler,
-    description: 'Exhibitions come with artist, year, type and status as categories and the full exhibition page including all images.',
+    description: 'Exhibitions come with artist, year, type and status as categories and the full exhibition page including all images. The source supports at most 100 entries on its first API page.',
 };
 
 async function handler(ctx) {
@@ -70,7 +71,7 @@ async function handler(ctx) {
         throw new InvalidParameterError(`Unknown type "${type}", expected one of ${Object.keys(types).join(', ')}`);
     }
     const { endpoint, title, link } = config;
-    const limit = Number(ctx.req.query('limit')) || 20;
+    const limit = Math.min(getRouteLimit(ctx, 20), 100);
 
     const entries = await ofetch(`${baseUrl}/wp-json/wp/v2/${endpoint}`, {
         query: { per_page: limit, _embed: 'wp:featuredmedia,wp:term' },
