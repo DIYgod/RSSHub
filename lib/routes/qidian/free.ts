@@ -37,10 +37,17 @@ async function handler(ctx) {
     const title = isMM ? '起点女生网' : '起点中文网';
 
     // Reason: PC site (www.qidian.com) returns anti-bot JS challenge; mobile site has SSR data
-    const response = await got('https://m.qidian.com/free', { headerGeneratorOptions: PRESETS.MODERN_IOS });
+    const response = await got(`https://m.qidian.com/free${isMM ? '/female/' : ''}`, { headerGeneratorOptions: PRESETS.MODERN_IOS });
     const $ = load(response.data);
-    const { pageContext } = JSON.parse($('#vite-plugin-ssr_pageContext').text());
+    const pageContextText = $('#vite-plugin-ssr_pageContext').text();
+    if (!pageContextText) {
+        throw new Error('The official free-books page did not return public book data.');
+    }
+    const { pageContext } = JSON.parse(pageContextText);
     const pageData = pageContext.pageProps.pageData;
+    if (isMM && pageData.gender !== 'female') {
+        throw new Error('The official female free-books page did not return female book data.');
+    }
 
     const items = (pageData.curFree || []).map((book) => ({
         title: book.bName,

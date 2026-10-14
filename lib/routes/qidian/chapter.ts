@@ -4,7 +4,7 @@ import type { Route } from '@/types';
 import { ViewType } from '@/types';
 import got from '@/utils/got';
 import { PRESETS } from '@/utils/header-generator';
-import { parseDate } from '@/utils/parse-date';
+import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
 
 export const route: Route = {
     path: '/chapter/:id',
@@ -37,7 +37,9 @@ async function handler(ctx) {
     const $ = load(response.data);
 
     const name = $('meta[property="og:title"]').attr('content');
-    const coverUrl = `https:${$('.detail__header-cover__img').attr('src')}`;
+    const { pageContext: bookContext } = JSON.parse($('#vite-plugin-ssr_pageContext').text());
+    const cover = $('.detail__header-cover__img').attr('src');
+    const coverUrl = cover ? new URL(cover, 'https://m.qidian.com').href : undefined;
 
     const { data: catalog } = await got(`https://m.qidian.com/book/${id}/catalog/`, { headerGeneratorOptions: PRESETS.MODERN_IOS });
     const $c = load(catalog);
@@ -47,14 +49,14 @@ async function handler(ctx) {
         .flatMap((v) => v.cs)
         .map((c) => ({
             title: c.cN,
-            pubDate: parseDate(c.uT),
+            pubDate: parseDateInTimezone(c.uT, 8),
             link: `https://vipreader.qidian.com/chapter/${id}/${c.id}`,
         }));
 
     return {
         title: `起点 ${name}`,
         link: `https://book.qidian.com/info/${id}`,
-        description: $('#bookSummary content').text(),
+        description: bookContext.pageProps.pageData.bookInfo.desc,
         image: coverUrl,
         item: chapterItem,
     };
