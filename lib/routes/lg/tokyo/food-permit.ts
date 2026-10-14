@@ -4,6 +4,7 @@ import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 import timezone from '@/utils/timezone';
 
 import { csvRecords, decodeText, isoDate, type PermitExtra, type Row, warekiMonth } from '../utils';
@@ -221,7 +222,7 @@ export const handler = async (ctx): Promise<Data> => {
     if (sources.length === 0) {
         throw new Error(`Unknown ward "${ward}", expected one of ${Object.keys(SOURCES).join(', ')}`);
     }
-    const limit = Math.min(ctx.req.query('limit') ? Number(ctx.req.query('limit')) : DEFAULT_LIMIT, MAX_LIMIT);
+    const limit = Math.min(getRouteLimit(ctx, DEFAULT_LIMIT), MAX_LIMIT);
 
     const lists = await Promise.all(sources.map((s) => cache.tryGet(`lg/tokyo/food-permit:${s}:${limit}`, () => fetchSource(s, limit))));
     const items = lists.flat().toSorted((a, b) => (b._extra.permit_date ?? '').localeCompare(a._extra.permit_date ?? ''));
