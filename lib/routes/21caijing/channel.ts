@@ -8,6 +8,7 @@ import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate, parseRelativeDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 import timezone from '@/utils/timezone';
 
 const processMenu = (data: any[]) => {
@@ -17,7 +18,7 @@ const processMenu = (data: any[]) => {
         const currentPath = parentPath ? `${parentPath}/${item.name}` : item.name;
         const currentUrl = item.url || parentUrl;
         const currentApiUrl = item.api || item.children?.[0]?.api;
-        const currentShort = parentShort || currentUrl.split('/channel/').pop();
+        const currentShort = parentShort || currentUrl?.split('/channel/').pop();
 
         if (currentUrl && currentApiUrl) {
             result[currentPath] = {
@@ -43,7 +44,7 @@ const processMenu = (data: any[]) => {
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { name = '热点' } = ctx.req.param();
-    const limit = Number(ctx.req.query('limit') ?? '30');
+    const limit = getRouteLimit(ctx, 30);
 
     const domain = 'm.21jingji.com';
     const baseUrl = `https://${domain}`;
@@ -60,7 +61,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
     const currentChannel = menu[name];
 
     const apiUrl: string = new URL(currentChannel.apiUrl, baseUrl).href;
-    const targetUrl: string = new URL(`#/${currentChannel.url}`, baseUrl).href;
+    const targetUrl: string = new URL(`#${currentChannel.url}`, baseUrl).href;
     const authUrl: string = new URL('reader/cbhChannelAuth', baseUrl).href;
 
     const targetResponse = await ofetch(targetUrl);
@@ -182,7 +183,7 @@ export const route: Route = {
     handler,
     example: '/21caijing/channel/热点',
     parameters: {
-        category: '分类，默认为热点，可在对应分类页 URL 中找到',
+        name: '频道名称，默认为热点，可在对应分类页 URL 中找到',
     },
     description: `::: tip
 若订阅 [热点](https://m.21jingji.com/#/)，请将 \`热点\` 作为 \`name\` 参数填入，此时目标路由为 [\`/21caijing/channel/热点\`](https://rsshub.app/21caijing/channel/热点)。
