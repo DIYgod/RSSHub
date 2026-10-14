@@ -1,17 +1,16 @@
-import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { Route } from '@/types';
-import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
-import { getUserInfoFromUID } from './utils';
+import { getArticleDescription, getPageData, type LuoguArticle } from './utils';
 
 export const route: Route = {
     path: '/user/article/:uid',
     categories: ['programming'],
     example: '/luogu/user/article/1',
-    parameters: { name: '用户 UID' },
+    parameters: { uid: '用户 UID' },
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -38,40 +37,29 @@ const baseUrl = 'https://www.luogu.com';
 async function handler(ctx) {
     const { uid } = ctx.req.param();
 
-    const userInfo = await getUserInfoFromUID(uid);
-    const response = await ofetch(`${baseUrl}/api/article/find`, {
-        query: {
-            user: uid,
-            page: 1,
-            ascending: false,
+    const link = `${baseUrl}/user/${uid}/article`;
+    const response = await ofetch(link, { responseType: 'text' });
+    const { articles, user } = getPageData<{ articles: { result: LuoguArticle[] }; user: { name: string; slogan: string; avatar: string } }>(response);
+    const item = await pMap(
+        articles.result,
+        async (article) => {
+            const link = `${baseUrl}/article/${article.lid}`;
+            return {
+                title: article.title,
+                link,
+                author: article.author.name,
+                pubDate: parseDate(article.time, 'X'),
+                description: await getArticleDescription(link),
+            };
         },
-    });
-
-    const posts = response.articles.result.map((item) => ({
-        title: item.title,
-        link: `${baseUrl}/article/${item.lid}`,
-        author: item.author.name,
-        pubDate: parseDate(item.time, 'X'),
-        description: item.content,
-    }));
-
-    const item = await Promise.all(
-        posts.map((item) =>
-            cache.tryGet(item.link, async () => {
-                const response = await ofetch(item.link);
-                const $ = load(response);
-                item.description = $('div#rendered-preview').html();
-
-                return item;
-            })
-        )
+        { concurrency: 3 }
     );
 
     return {
-        title: `${userInfo.name} 的个人中心 - 洛谷 | 计算机科学教育新生态`,
-        description: userInfo.description,
-        link: `${baseUrl}/user/${uid}#article`,
-        image: userInfo.avatar,
+        title: `${user.name} 的个人中心 - 洛谷 | 计算机科学教育新生态`,
+        description: user.slogan,
+        link,
+        image: user.avatar,
         item,
     };
 }
