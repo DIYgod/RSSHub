@@ -56,26 +56,28 @@ async function handler(ctx) {
     const workList = data.props.pageProps.workList.map((item) => ({
         title: item.title,
         link: item.pageUrl,
-        pubDate: parseDate(item.publishTime, 'x'),
+        pubDate: item.publishTime !== undefined && item.publishTime !== null && item.publishTime !== '' ? parseDate(item.publishTime, 'x') : undefined,
         category: [item.objectTypeStr, item.cateStr, item.subCateStr, ...item.tags],
     }));
 
     const items = await Promise.all(
-        workList.map((item) =>
-            cache.tryGet(item.link, async () => {
+        workList.map(async (item) => {
+            const detail = await cache.tryGet(`zcool:user:${item.link}:description`, async () => {
                 const { data: response } = await got(item.link);
                 const $ = load(response);
 
                 const data = JSON.parse($('script#__NEXT_DATA__').text());
+                let description;
                 if (item.link.startsWith('https://www.zcool.com.cn/article/')) {
-                    item.description = extractArticle(data);
+                    description = extractArticle(data);
                 } else if (item.link.startsWith('https://www.zcool.com.cn/work/')) {
-                    item.description = extractWork(data);
+                    description = extractWork(data);
                 }
 
-                return item;
-            })
-        )
+                return { description };
+            });
+            return { ...item, ...detail };
+        })
     );
 
     return {
