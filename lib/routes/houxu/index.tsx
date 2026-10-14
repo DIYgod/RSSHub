@@ -4,6 +4,7 @@ import { renderToString } from 'hono/jsx/dom/server';
 import type { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
 export const route: Route = {
     name: '热点',
@@ -21,7 +22,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const rootUrl = 'https://houxu.app';
-    const apiUrl = `${rootUrl}/api/1/records/index?limit=${ctx.req.query('limit') ?? 50}`;
+    const apiUrl = `${rootUrl}/api/1/records/index?limit=${getRouteLimit(ctx, 50)}`;
 
     const response = await got({
         method: 'get',
