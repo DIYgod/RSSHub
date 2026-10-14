@@ -44,7 +44,7 @@ async function handler() {
         title: item.title,
         description: item.description_html,
         link: `https://${FQDN}/changelog/${item.slug}`,
-        pubDate: parseDate(item.published_at.timestamp),
+        pubDate: item.published_at ? parseDate(item.published_at) : undefined,
     }));
 
     return {
