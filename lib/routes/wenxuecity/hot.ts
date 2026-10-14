@@ -1,5 +1,6 @@
 import { load } from 'cheerio';
 import type { Context } from 'hono';
+import pMap from 'p-map';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
@@ -15,13 +16,18 @@ export const route: Route = {
     maintainers: ['changlan'],
     handler,
 };
-
+function parsePublicationDate(value: string | undefined) {
+    if (!value?.trim()) {
+        return;
+    }
+    const date = parseDate(value);
+    return Number.isFinite(date.getTime()) ? date : undefined;
+}
 async function handler(ctx: Context) {
     const { cid } = ctx.req.param();
     const baseUrl = `https://bbs.wenxuecity.com/?cid=${cid}/`;
     const response = await ofetch(baseUrl);
     const $ = load(response);
-
     const list = $('div.item')
         .slice(0, 10)
         .toArray()
@@ -33,29 +39,41 @@ async function handler(ctx: Context) {
                 author: $item.find('span.user > a').text(),
             };
         });
-
-    const out = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link, async () => {
-                const result = await ofetch(item.link, {
-                    headers: {
-                        Referer: baseUrl,
-                    },
+    const out = await unwrapFirstFailure(
+        pMap(
+            list,
+            async (item) => {
+                const detail = await cache.tryGet(`wenxuecity:article:${item.link}`, async () => {
+                    const result = await ofetch(item.link, {
+                        headers: {
+                            Referer: baseUrl,
+                        },
+                    });
+                    const content = load(result);
+                    const description = content('#msgbodyContent').html();
+                    if (description === null) {
+                        throw new Error(`Article body not found at ${item.link}`);
+                    }
+                    return {
+                        description,
+                        pubDate: parsePublicationDate(content('span.date').text()),
+                    };
                 });
-                const content = load(result);
-                return {
-                    ...item,
-                    description: content('div#content').html(),
-                    pubDate: parseDate(content('span.date').text()),
-                };
-            })
+                return { ...item, description: detail.description, pubDate: detail.pubDate };
+            },
+            { concurrency: 3, stopOnError: false }
         )
     );
-
     return {
-        allowEmpty: true,
         title: $('title').text(),
         link: baseUrl,
         item: out,
     };
+}
+async function unwrapFirstFailure<T>(promise: Promise<T>): Promise<T> {
+    try {
+        return await promise;
+    } catch (error) {
+        throw error instanceof AggregateError ? error.errors[0] : error;
+    }
 }
