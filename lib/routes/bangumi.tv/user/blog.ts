@@ -42,10 +42,11 @@ async function handler(ctx) {
         .map((item): DataItem => {
             const $item = $(item);
             const a = $item.find('a');
+            const dateString = $item.parent().find('.time').text().split('·', 1)[0].trim();
             return {
                 title: a.text(),
                 link: new URL(a.attr('href')!, 'https://bgm.tv').href,
-                pubDate: timezone(parseDate($item.parent().find('small.time').text()), 0),
+                pubDate: dateString ? timezone(parseDate(dateString), 8) : undefined,
             };
         });
 

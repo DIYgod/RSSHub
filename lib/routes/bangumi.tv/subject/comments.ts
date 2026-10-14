@@ -9,7 +9,7 @@ export const getComments = async (subjectID, minLength) => {
     const html = await ofetch(link);
     const $ = load(html);
     const title = $('.nameSingle').find('a').text();
-    const comments = $('.item')
+    const comments = $('.item[data-item-user]')
         .toArray()
         .map((el) => {
             const $el = $(el);
@@ -17,6 +17,11 @@ export const getComments = async (subjectID, minLength) => {
             let rate: string | null = null;
             if ($rateEl.length > 0) {
                 rate = $rateEl.attr('class')!.match(/stars(\d)/)![1];
+            }
+
+            const commentId = $el.find('.likes_grid[id]').attr('id') ?? $el.attr('id');
+            if (!commentId) {
+                throw new Error('Bangumi comment is missing its native HTML ID. The source page layout may have changed.');
             }
 
             const dateString = $el.find('small.grey').text().slice(2);
@@ -27,6 +32,7 @@ export const getComments = async (subjectID, minLength) => {
 
             return {
                 user: $el.find('.l').text(),
+                commentId,
                 rate: rate || '无',
                 content: $el.find('p').text(),
                 date,
@@ -40,9 +46,9 @@ export const getComments = async (subjectID, minLength) => {
         item: comments.map((c) => ({
             title: `${c.user}的吐槽`,
             description: `【评分：${c.rate}】  ${c.content}`,
-            guid: `${link}#${c.user}`,
+            guid: `${link}#${c.commentId}`,
             pubDate: c.date,
-            link,
+            link: `${link}#${c.commentId}`,
         })),
     };
 };
