@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
@@ -6,6 +7,52 @@ import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
+type ArticleDetails = Pick<DataItem, 'description' | 'author' | 'updated'>;
+type XiumiDocument = {
+    cubes?: Array<{
+        pages?: Array<{
+            layers?: Array<{
+                _comp?: {
+                    _$raHTML?: string;
+                };
+            }>;
+        }>;
+    }>;
+};
+async function fetchArticleDetails(link: string): Promise<ArticleDetails> {
+    const response = await ofetch(link);
+    const $ = load(response);
+    if (new URL(link).hostname === 'c.xiumius.cn') {
+        const encodedInfo = response.match(/injectedData\.showInfo\s*=\s*JSON\.parse\(decodeURIComponent\("([^"]+)"/);
+        if (encodedInfo) {
+            const info: {
+                show_data_url?: string;
+                owner?: {
+                    nickname?: string;
+                };
+                updated_at?: string;
+            } = JSON.parse(decodeURIComponent(encodedInfo[1]));
+            if (info.show_data_url) {
+                const dataUrl = new URL(info.show_data_url, link);
+                if (dataUrl.protocol === 'https:' && dataUrl.hostname === 'sd.xiumius.cn' && dataUrl.pathname.startsWith('/xmi/pd/')) {
+                    const document = await ofetch<XiumiDocument>(dataUrl.href);
+                    const description = document.cubes
+                        ?.flatMap((cube) => cube.pages ?? [])
+                        .flatMap((page) => page.layers ?? [])
+                        .map((layer) => layer._comp?._$raHTML)
+                        .filter(Boolean)
+                        .join('');
+                    return {
+                        description: description || undefined,
+                        author: info.owner?.nickname,
+                        updated: info.updated_at ? parseDate(info.updated_at) : undefined,
+                    };
+                }
+            }
+        }
+    }
+    return { description: $('.v_news_content').html() || undefined };
+}
 export const route: Route = {
     path: '/lib/tzgg/:category?',
     url: 'lib.tsinghua.edu.cn',
@@ -25,65 +72,83 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['lib.tsinghua.edu.cn/tzgg/:category', 'lib.tsinghua.edu.cn/tzgg.htm'],
+            source: ['lib.tsinghua.edu.cn/tzgg.htm'],
+            target: '/lib/tzgg',
+        },
+        {
+            source: ['lib.tsinghua.edu.cn/tzgg/kgtz.htm'],
+            target: '/lib/tzgg/kgtz',
+        },
+        {
+            source: ['lib.tsinghua.edu.cn/tzgg/sgwx.htm'],
+            target: '/lib/tzgg/sgwx',
+        },
+        {
+            source: ['lib.tsinghua.edu.cn/tzgg/fwtz.htm'],
+            target: '/lib/tzgg/fwtz',
+        },
+        {
+            source: ['lib.tsinghua.edu.cn/tzgg/wgtb.htm'],
+            target: '/lib/tzgg/wgtb',
+        },
+        {
+            source: ['lib.tsinghua.edu.cn/tzgg/qtkx.htm'],
+            target: '/lib/tzgg/qtkx',
+        },
+        {
+            source: ['lib.tsinghua.edu.cn/tzgg/gjtz.htm'],
+            target: '/lib/tzgg/gjtz',
         },
     ],
     name: '图书馆通知公告',
     maintainers: ['linsenwang', 'Aquarius-Situla'],
     handler,
 };
-
 async function handler(ctx) {
     /* Determine the target URL based on whether a specific category is requested */
     const { category } = ctx.req.param();
     const host = category ? `https://lib.tsinghua.edu.cn/tzgg/${category}.htm` : 'https://lib.tsinghua.edu.cn/tzgg.htm';
     const response = await ofetch(host);
     const $ = load(response);
-
     /* Extract the feed title, either the specific category name or the global title */
     const feedTitle = category ? $('.tags .on').text() : '通知公告';
-
     /* Extract the logo image URL to be used as the feed icon */
-    const image = new URL($('div.logo a img').attr('src') || 'images/logo.png', 'https://lib.tsinghua.edu.cn').href;
-
+    const imageUrl = $('div.logo a img').attr('src');
+    const image = imageUrl ? new URL(imageUrl, host).href : undefined;
     /* Parse the list of notices and extract metadata for each item */
     const list = $('ul.notice-list li')
         .toArray()
         .filter((item) => $(item).find('a').attr('href'))
-        .map((item): DataItem & { link: string } => {
-            const $item = $(item);
-            const title = $item.find('a').text();
-            const time = $item.find('.notice-date').text();
-            const a = $item.find('a').attr('href');
-
-            const itemCategory = category ? feedTitle : $item.find('.notice-label').text();
-
-            const fullUrl = new URL(a!, host).href;
-
-            return {
-                title,
-                link: fullUrl,
-                pubDate: timezone(parseDate(time, 'YYYY-MM-DD'), 8),
-                category: itemCategory,
-            };
-        });
-
+        .map(
+            (
+                item
+            ): DataItem & {
+                link: string;
+            } => {
+                const $item = $(item);
+                const title = $item.find('a').text();
+                const time = $item.find('.notice-date').text().trim();
+                const a = $item.find('a').attr('href');
+                const itemCategory = category ? feedTitle : $item.find('.notice-label').text();
+                const fullUrl = new URL(a!, host).href;
+                return {
+                    title,
+                    link: fullUrl,
+                    pubDate: time ? timezone(parseDate(time, 'YYYY/MM/DD'), 8) : undefined,
+                    category: itemCategory,
+                };
+            }
+        );
     /* Fetch full article content for each notice using RSSHub's cache mechanism */
-    const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link, async () => {
-                const response = await ofetch(item.link);
-                const $ = load(response);
-
-                item.description = $('.v_news_content').html() || undefined;
-
-                return item;
-            })
-        )
+    const items = await pMap(
+        list,
+        async (item) => {
+            const details = await cache.tryGet(`tsinghua:lib:tzgg:detail:${item.link}`, () => fetchArticleDetails(item.link));
+            return { ...item, description: details.description, author: details.author, updated: details.updated };
+        },
+        { concurrency: 3, stopOnError: false }
     );
-
     return {
-        allowEmpty: true,
         title: '图书馆通知公告 - ' + feedTitle,
         link: host,
         image,
