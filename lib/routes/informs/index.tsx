@@ -1,6 +1,4 @@
 import { load } from 'cheerio';
-import { raw } from 'hono/html';
-import { renderToString } from 'hono/jsx/dom/server';
 
 import { config } from '@/config';
 import type { DataItem, Route } from '@/types';
@@ -63,11 +61,14 @@ async function handler(ctx) {
     const list = $('div.issue-item')
         .slice(0, 10)
         .toArray()
-        .map((item): DataItem => ({
-            title: $(item).find('h5.issue-item__title').text(),
-            link: `${rootUrl}${$(item).find('h5.issue-item__title > a').attr('href')}`,
-            pubDate: parseDate($(item).find('div.rlist--inline.separator.toc-item__detail > p').remove('span').text()),
-        }));
+        .map((item): DataItem => {
+            const date = parseDate($(item).find('div.rlist--inline.separator.toc-item__detail > p').remove('span').text());
+            return {
+                title: $(item).find('h5.issue-item__title').text(),
+                link: `${rootUrl}${$(item).find('h5.issue-item__title > a').attr('href')}`,
+                pubDate: Number.isFinite(date.getTime()) ? date : undefined,
+            };
+        });
     const items = await Promise.all(
         list.map((item) =>
             cache.tryGet(item.link!, async () => {
@@ -79,7 +80,8 @@ async function handler(ctx) {
                     },
                 });
                 const detail = load(detailResponse.data);
-                item.description = renderDescription(detail('div.accordion-tabbed.loa-accordion').text(), detail('div.hlFld-Abstract').find('h2').replaceWith($('<h2>Abstract </h2>')).end().html() ?? '');
+                item.author = detail('div.accordion-tabbed.loa-accordion').text();
+                item.description = detail('div.hlFld-Abstract').find('h2').replaceWith($('<h2>Abstract </h2>')).end().html() ?? '';
 
                 return item;
             })
@@ -92,12 +94,3 @@ async function handler(ctx) {
         item: items,
     };
 }
-
-const renderDescription = (author: string, content: string): string =>
-    renderToString(
-        <>
-            <strong> {author} </strong>
-            <br />
-            {raw(content)}
-        </>
-    );
