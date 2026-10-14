@@ -9,6 +9,7 @@ import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
 const baseUrl = 'https://www.35mmc.com';
 
@@ -79,7 +80,8 @@ export const route: Route = {
 
 async function handler(ctx) {
     const categorySlug = ctx.req.param('category');
-    const limit = Number(ctx.req.query('limit')) || 10;
+    const requestedLimit = getRouteLimit(ctx, 10);
+    const limit = Math.min(Math.max(requestedLimit, 1), 100);
 
     const category = categorySlug
         ? await cache.tryGet(`35mmc:category:${categorySlug}`, async () => {
