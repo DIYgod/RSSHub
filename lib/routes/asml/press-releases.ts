@@ -1,3 +1,5 @@
+import { load } from 'cheerio';
+
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
@@ -13,47 +15,37 @@ export const route: Route = {
     handler,
 };
 
-interface AsmlArticle {
-    title: { data: { value: string } };
-    url: { path: string };
-    articleDate: { data: { value: string } };
-}
-
 async function handler() {
-    const rootUrl = 'https://www.asml.com';
-    const currentUrl = `${rootUrl}/en/news/press-releases`;
-
-    const buildId = await cache.tryGet('asml:buildId', async () => {
-        const html = await ofetch(currentUrl);
-        return html.match(/"buildId":"(.*?)"/)[1];
-    });
-
-    const response = await ofetch<{ pageProps: { componentProps: Record<string, { articles: AsmlArticle[] }> } }>(`${rootUrl}/_next/data/${buildId}/en/news/press-releases.json`, {
-        query: { path: ['news', 'press-releases'] },
-    });
-
-    const list = Object.values(response.pageProps.componentProps)[0]
-        .articles.flat()
-        .map((article) => ({
-            title: article.title.data.value.trim(),
-            link: `${rootUrl}${article.url.path}`,
-            pubDate: parseDate(article.articleDate.data.value),
-            path: article.url.path,
-        }));
+    const rootUrl = 'https://investor.asml.com';
+    const currentUrl = `${rootUrl}/news/press-releases-and-announcements`;
+    const response = await ofetch(currentUrl);
+    const $ = load(response);
+    const list = $('.search-results__item')
+        .toArray()
+        .map((article) => {
+            const $article = $(article);
+            const link = $article.find('.search-results__title a');
+            return {
+                title: link.text(),
+                link: new URL(link.attr('href')!, rootUrl).href,
+                pubDate: parseDate($article.find('.search-results__date-posted').text(), 'MMMM D, YYYY'),
+            };
+        });
 
     const items = await Promise.all(
         list.map((item) =>
             cache.tryGet(item.link, async () => {
-                const detailResponse = await ofetch(`${rootUrl}/_next/data/${buildId}${item.path}.json`);
-                const { fields, placeholders } = detailResponse.pageProps.page.layout.sitecore.route;
+                const detailResponse = await ofetch(item.link);
+                const $$ = load(detailResponse);
+                const content = $$('.full-release-body');
+                const heading = content.children('p').first();
+                if (heading.text().trim() === item.title.trim()) {
+                    heading.remove();
+                }
 
                 return {
                     ...item,
-                    description: placeholders['headless-main']
-                        .find((component) => component.componentName === 'CustomContainer')
-                        .placeholders['content-component-placeholder'].map((component) => component.fields.content.value)
-                        .join(''),
-                    pubDate: parseDate(fields.publicationDate.value),
+                    description: content.html(),
                 };
             })
         )
