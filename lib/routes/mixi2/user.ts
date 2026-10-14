@@ -4,11 +4,12 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Data, Route } from '@/types';
 import { ViewType } from '@/types';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
 import { CONFIG_OPTIONS, getClient, parsePost, postFilter } from './utils';
 
 const handler = async (ctx: Context): Promise<Data> => {
-    const limit = Number(ctx.req.query('limit') ?? '20');
+    const limit = getRouteLimit(ctx, 20);
     const name = ctx.req.param('name');
     const mediaOnly = ctx.req.param('media') === 'media';
 
@@ -64,13 +65,13 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['mixi.social/:id'],
-            target: '/user/:id',
+            source: ['mixi.social/:name'],
+            target: '/user/:name',
             title: 'ユーザー - ポスト',
         },
         {
-            source: ['mixi.social/:id'],
-            target: '/user/:id/media',
+            source: ['mixi.social/:name'],
+            target: '/user/:name/media',
             title: 'ユーザー - メディア',
         },
     ],
