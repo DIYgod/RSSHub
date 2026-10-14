@@ -12,6 +12,7 @@
 // nmat:             Nature Materials
 // natmachintell:    Nature Machine Intelligence
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
@@ -33,8 +34,8 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['nature.com/latest-news', 'nature.com/news', 'nature.com/'],
-            target: '/news',
+            source: ['nature.com/:journal/news-and-comment'],
+            target: '/news-and-comment/:journal',
         },
     ],
     name: 'News & Comment',
@@ -53,11 +54,14 @@ export const route: Route = {
 
 - Using router (\`/nature/research/\` + "short name for a journal") to query latest research paper for a certain journal of Nature Publishing Group.
 - The journals from NPG are run by different group of people, and the website of may not be consitent for all the journals`,
-    url: 'nature.com/latest-news',
+    url: 'nature.com/ng/news-and-comment',
 };
 
 async function handler(ctx) {
     const journal = ctx.req.param('journal');
+    if (!journal) {
+        throw new Error('Specify the journal short name, for example /nature/news-and-comment/ng.');
+    }
     const pageURL = `${baseUrl}/${journal}/news-and-comment`;
 
     const pageResponse = await got(pageURL, { cookieJar });
@@ -66,7 +70,7 @@ async function handler(ctx) {
 
     let items = getArticleList(pageCapture);
 
-    items = await Promise.all(items.map((item) => getArticle(item)));
+    items = await pMap(items, getArticle, { concurrency: 3 });
 
     return {
         title: pageCapture('title').text(),
