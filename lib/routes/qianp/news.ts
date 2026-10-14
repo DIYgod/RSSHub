@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
@@ -42,8 +43,9 @@ async function handler(ctx) {
             };
         });
 
-    const items = await Promise.all(
-        list.map((item) =>
+    const items = await pMap(
+        list,
+        (item) =>
             cache.tryGet(item.link!, async () => {
                 const { data: response } = await got(item.link, {
                     headers,
@@ -57,8 +59,8 @@ async function handler(ctx) {
                 item.description = $('.news_center').html();
 
                 return item;
-            })
-        )
+            }),
+        { concurrency: 3 }
     );
 
     return {
