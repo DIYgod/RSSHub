@@ -87,6 +87,7 @@ async function handler(ctx) {
         } catch (error) {
             if (error instanceof FetchError && error.statusCode === 403) {
                 const { page, destroy } = await getPlaywrightPage(profileUrl, {
+                    closeTimeout: 0,
                     onBeforeLoad: async (page) => {
                         const expectResourceTypes = new Set(['document', 'script', 'xhr', 'fetch']);
                         await page.route('**/*', (route) => {
@@ -95,9 +96,12 @@ async function handler(ctx) {
                         });
                     },
                 });
-                await page.waitForSelector('.content');
-                response = await page.content();
-                await destroy();
+                try {
+                    await page.waitForSelector('.content');
+                    response = await page.content();
+                } finally {
+                    await destroy();
+                }
             } else {
                 throw new NotFoundError(error instanceof Error ? error.message : String(error));
             }
