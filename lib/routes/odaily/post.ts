@@ -1,9 +1,12 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 import timezone from '@/utils/timezone';
 
 import { rootUrl } from './utils';
@@ -34,22 +37,49 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['0daily.com/'],
+            source: ['www.odaily.news/', 'www.odaily.news/:locale/post'],
         },
     ],
     name: '文章',
     maintainers: ['nczitzk'],
     handler,
-    url: '0daily.com/',
+    url: 'www.odaily.news/zh-CN/post',
     description: `| 最新 | 新品 | DeFi | NFT | 存储 | 波卡 | 行情 | 活动 |
 | ---- | ---- | ---- | --- | ---- | ---- | ---- | ---- |
 | 280  | 333  | 331  | 334 | 332  | 330  | 297  | 296  |`,
 };
 
+type CurrentPost = {
+    id: number;
+    title: string;
+    summary: string;
+    publishTimestamp: number;
+    tags: Array<{ name: string }>;
+};
+type CurrentPostDetail = { content: string; author?: { nickname: string } };
+
 async function handler(ctx) {
     const id = ctx.req.param('id') ?? '280';
 
-    const currentUrl = `${rootUrl}/api/pp/api/app-front/feed-stream?feed_id=${id}&b_id=&per_page=${ctx.req.query('limit') ?? 25}`;
+    if (id === '280') {
+        const query = new URLSearchParams({ page: '1', size: String(getRouteLimit(ctx, 25)) });
+        const response = await ofetch<{ data: { list: CurrentPost[] } }>(`https://web-api.odaily.news/post/page?${query}`);
+        const items = await pMap(
+            response.data.list,
+            async (item) => {
+                const link = `${rootUrl}/post/${item.id}`;
+                const detail = await cache.tryGet(link + ':body', async () => {
+                    const response = await ofetch<{ data: CurrentPostDetail }>(`https://web-api.odaily.news/post/detail/${item.id}`);
+                    return { description: response.data.content, author: response.data.author?.nickname };
+                });
+                return { title: item.title, link, pubDate: parseDate(item.publishTimestamp), category: item.tags.map((tag) => tag.name), ...detail };
+            },
+            { concurrency: 3 }
+        );
+        return { title: `${titles[id]} - Odaily星球日报`, link: rootUrl, item: items };
+    }
+
+    const currentUrl = `${rootUrl}/api/pp/api/app-front/feed-stream?feed_id=${id}&b_id=&per_page=${getRouteLimit(ctx, 25)}`;
 
     const response = await got(currentUrl);
 
