@@ -107,7 +107,7 @@ async function handler(ctx) {
         const profileImageUrl = userInfo.profile_image_url;
 
         const response = await cache.tryGet(
-            `weibo:timeline:${uid}`,
+            `weibo:timeline:${uid}:${feature}:${md5(token)}`,
             async () => {
                 const _r = await got(`https://api.weibo.com/2/statuses/home_timeline.json?access_token=${token}&count=100&feature=${feature}`);
                 return _r.data;

@@ -5,6 +5,7 @@ import type { Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
+import md5 from '@/utils/md5';
 import { parseDate } from '@/utils/parse-date';
 import { fallback, queryToBoolean } from '@/utils/readable-social';
 
@@ -40,7 +41,7 @@ async function handler(ctx) {
 
     const data = await weiboUtils.tryWithCookies((cookies, verifier) =>
         cache.tryGet(
-            `weibo:keyword-statuses:${keyword}`,
+            `weibo:keyword-statuses:${keyword}:${md5(cookies)}`,
             async () => {
                 const _r = await got({
                     method: 'get',

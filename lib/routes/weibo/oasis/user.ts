@@ -19,7 +19,7 @@ export const route: Route = {
     radar: [
         {
             source: ['m.weibo.cn/u/:uid', 'm.weibo.cn/profile/:uid'],
-            target: '/user/:uid',
+            target: '/oasis/user/:uid',
         },
     ],
     name: '绿洲用户',
