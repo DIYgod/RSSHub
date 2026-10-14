@@ -103,7 +103,7 @@ async function handler(ctx) {
             });
     }
 
-    items = (await Promise.all(
+    items = await Promise.all(
         items.map((item) =>
             cache.tryGet(item.link!, async () => {
                 try {
@@ -122,22 +122,16 @@ async function handler(ctx) {
 
                     // Spans for publish dates are the same cases as above.
 
-                    item.pubDate = timezone(
-                        parseDate(
-                            content('span.time')
-                                .text()
-                                .replace(/发布时间：/, '') ?? content('span.public_time').text()
-                        ),
-                        8
-                    );
+                    const pubTime = (content('span.time').text() || content('span.public_time').text() || content('.top-time').text()).match(/\d{4}-\d{2}-\d{2}(?: \d{2}:\d{2}(?::\d{2})?)?/)?.[0];
+                    item.pubDate = pubTime ? timezone(parseDate(pubTime), 8) : undefined;
 
                     return item;
                 } catch {
-                    return '';
+                    return item;
                 }
             })
         )
-    )) as typeof items;
+    );
 
     return {
         title,
