@@ -1,9 +1,33 @@
-import { load } from 'cheerio';
+import { type Cheerio, type CheerioAPI, load } from 'cheerio';
+import { type AnyNode, cloneNode, Document } from 'domhandler';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+
+interface ArticleSchema {
+    '@type'?: string | string[];
+    '@graph'?: ArticleSchema[];
+    datePublished?: string;
+    articleBody?: string;
+    author?: Array<{ name?: string }> | { name?: string };
+}
+
+function getArticleSchema(content: CheerioAPI) {
+    return content('script[type="application/ld+json"]')
+        .toArray()
+        .flatMap((element): ArticleSchema[] => {
+            try {
+                const schema: ArticleSchema | ArticleSchema[] = JSON.parse(content(element).text());
+                return Array.isArray(schema) ? schema : (schema['@graph'] ?? [schema]);
+            } catch {
+                return [];
+            }
+        })
+        .find((schema) => ['NewsArticle', 'LiveBlogPosting'].some((type) => (Array.isArray(schema['@type']) ? schema['@type'].includes(type) : schema['@type'] === type)));
+}
 
 export const route: Route = {
     path: '/news/:team',
@@ -36,36 +60,48 @@ async function handler(ctx) {
 
     const $ = load(response.data);
 
-    let items = $('.news-list__headline-link')
+    let items = $('.news-list__headline-link, .sdc-site-tile__headline-link')
         .toArray()
         .map((item): DataItem => {
             const $item = $(item);
 
             return {
                 title: $item.text(),
-                link: $item.attr('href'),
+                link: new URL($item.attr('href')!, rootUrl).href,
             };
         });
 
-    items = await Promise.all(
-        items.map((item) =>
-            cache.tryGet(item.link!, async () => {
+    items = await pMap(
+        items,
+        async (item) => {
+            const details = await cache.tryGet(`skysports:article:v4:${item.link}`, async () => {
                 const detailResponse = await got({
                     method: 'get',
                     url: item.link,
                 });
 
                 const content = load(detailResponse.data);
+                const schema = getArticleSchema(content);
 
                 content('.roadblock').remove();
-                content('.sdc-article-widget, .sdc-site-layout-sticky-region').remove();
+                content('.sdc-site-layout-sticky-region, .ui-vendor-checkd, .sdc-article-related-stories, .sdc-article-strapline, .sdc-site-live-on-sky').remove();
+                content('.sdc-site-video').each((_, element) => {
+                    const video = content(element);
+                    const poster = copyNodes(video.find('.sdc-site-video__poster img').first());
+                    const caption = copyNodes(video.find('.sdc-site-video__caption').first());
+                    video.contents().remove();
+                    video.append(poster, caption);
+                });
 
-                item.description = content('.sdc-article-body, .polaris-tile-group-separator').html();
-                item.pubDate = parseDate(detailResponse.data.match(/"datePublished": ?"(.*)","dateModified"/)[1]);
+                const description = content('.sdc-article-body, .polaris-tile-group-separator').html() ?? content('.sdc-site-video').first().html() ?? schema?.articleBody;
+                const pubDate = schema?.datePublished ? parseDate(schema.datePublished) : undefined;
+                const author = Array.isArray(schema?.author) ? schema.author.flatMap((author) => (author.name ? { name: author.name } : [])) : schema?.author?.name;
 
-                return item;
-            })
-        )
+                return { description, pubDate, author };
+            });
+            return { ...item, ...details };
+        },
+        { concurrency: 3 }
     );
 
     return {
@@ -73,4 +109,13 @@ async function handler(ctx) {
         link: currentUrl,
         item: items,
     };
+}
+
+function copyNodes<T extends AnyNode>(selection: Cheerio<T>): Cheerio<T> {
+    const copy = selection.map((_, node) => cloneNode(node, true));
+    const root = new Document(copy.toArray());
+    for (const node of copy) {
+        node.parent = root;
+    }
+    return copy;
 }
