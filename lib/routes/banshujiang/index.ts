@@ -8,15 +8,16 @@ import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
 import { renderDescription } from './templates/description';
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { category } = ctx.req.param();
-    const limit = Number(ctx.req.query('limit') ?? '20');
+    const limit = getRouteLimit(ctx, 20);
 
     const baseUrl = 'http://banshujiang.cn';
-    const targetUrl: string = new URL(`${category ? 'e_books' : `category/${category}`}/page/1`, baseUrl).href;
+    const targetUrl: string = new URL(`${category ? `category/${category}` : 'e_books'}/page/1`, baseUrl).href;
 
     const response = await ofetch(targetUrl);
     const $: CheerioAPI = load(response);
@@ -90,7 +91,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                               },
                           ]
                         : undefined,
-                    description: ($$('table').first().parent().html() ?? '') + ($$('div.ebook-markdown').html() ?? ''),
+                    description: ($$('div.ebook-markdown').html() ?? '') + ($$('ul.inline').parent().html() ?? ''),
                 });
 
                 $$('ul.inline').parent().parent().remove();
@@ -101,6 +102,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                     ...new Set(
                         $$('table tr')
                             .toArray()
+                            .filter((el) => ['语言：', '编程语言：', '移动开发：', '操作系统：', '数据库：', '开源软件：', '其他分类：'].includes($$(el).find('td').first().text().trim()))
                             .map((el) => $$(el).find('td').last().text())
                             .filter(Boolean)
                     ),
@@ -142,7 +144,6 @@ export const handler = async (ctx: Context): Promise<Data> => {
         description: title.split(/-/).pop()?.trim(),
         link: targetUrl,
         item: items,
-        allowEmpty: true,
         image: new URL('logo.png?imageView2/2/w/128/h/128/q/100', baseUrl).href,
         author: $('a.brand').text(),
         language,
