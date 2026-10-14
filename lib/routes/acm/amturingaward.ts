@@ -1,14 +1,17 @@
 import { load } from 'cheerio';
 
 import type { Route } from '@/types';
+import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/amturingaward',
     categories: ['programming'],
     example: '/acm/amturingaward',
     name: 'A.M.Turing Award Winners',
+    features: {
+        antiCrawler: true,
+    },
     maintainers: ['nczitzk'],
     handler,
 };
@@ -16,9 +19,20 @@ export const route: Route = {
 async function handler() {
     const rootUrl = 'https://amturing.acm.org';
     const currentUrl = `${rootUrl}/byyear.cfm`;
-    const response = await ofetch(currentUrl);
+    const initialResponse = await ofetch.raw<string>(currentUrl, { ignoreResponseError: true });
+    const cookie = initialResponse.headers
+        .getSetCookie()
+        .map((value) => value.split(';', 1)[0])
+        .join('; ');
+    let response = initialResponse._data;
+    if (!initialResponse.ok) {
+        if (initialResponse.status !== 403 || !cookie) {
+            throw new Error(`The ACM source returned HTTP ${initialResponse.status}.`);
+        }
+        response = await ofetch(currentUrl, { headers: { Cookie: cookie } });
+    }
 
-    const $ = load(response);
+    const $ = load(response ?? '');
 
     const items = await Promise.all(
         $('.award-winners-list li')
@@ -33,7 +47,7 @@ async function handler() {
                     .find('a')
                     .toArray()
                     .map((a) => `${rootUrl}${$(a).attr('href')}`);
-                const winners = await Promise.all(winnersUrls.map((url) => ofetch(url)));
+                const winners = await Promise.all(winnersUrls.map((url) => cache.tryGet(url, () => ofetch(url, { headers: { Cookie: cookie } }))));
 
                 let description = '';
                 for (const winner of winners) {
@@ -47,10 +61,9 @@ async function handler() {
                 }
 
                 return {
-                    pubDate: parseDate(`${year}-12-31`),
                     description,
                     title: year,
-                    link: currentUrl,
+                    link: winnersUrls[0],
                     guid: `${currentUrl}#${year}`,
                 };
             })
