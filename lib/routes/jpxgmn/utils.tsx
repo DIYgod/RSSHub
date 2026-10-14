@@ -1,5 +1,6 @@
 import { load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
+import pMap from 'p-map';
 
 import cache from '@/utils/cache';
 import got from '@/utils/got';
@@ -11,7 +12,14 @@ const getOriginUrl = async () =>
         const response = await got(indexUrl);
         const $ = load(response.data);
         const entries = $('ul > li > span');
-        return 'http://' + $(entries[Math.floor(Math.random() * entries.length)]).text();
+        const origins = entries
+            .toArray()
+            .map((el) => $(el).text().trim())
+            .filter(Boolean);
+        if (!origins.length) {
+            throw new Error(`No gallery site addresses were found at ${indexUrl}. The source index may have moved or been removed.`);
+        }
+        return `http://${origins[Math.floor(Math.random() * origins.length)]}`;
     });
 const getImages = ($articleContent) =>
     $articleContent('article > p img')
@@ -26,15 +34,14 @@ const getArticleDesc = async (articleUrl) => {
         pageCnt = 1;
     }
     const images = getImages($content);
-    const otherImages = await Promise.all(
-        Array.from({ length: pageCnt - 1 })
-            .keys()
-            .toArray()
-            .map(async (pageIndex) => {
-                const pageUrl = articleUrl.replace('.html', () => `_${pageIndex + 1}.html`);
-                const pageResponse = await got(pageUrl);
-                return getImages(load(pageResponse.data));
-            })
+    const otherImages = await pMap(
+        Array.from({ length: pageCnt - 1 }, (_, index) => index),
+        async (pageIndex) => {
+            const pageUrl = articleUrl.replace('.html', () => `_${pageIndex + 1}.html`);
+            const pageResponse = await got(pageUrl);
+            return getImages(load(pageResponse.data));
+        },
+        { concurrency: 3 }
     );
     const allImages = [...images, ...otherImages.flat()];
     return renderToString(
