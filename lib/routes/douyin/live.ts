@@ -3,9 +3,9 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import logger from '@/utils/logger';
-import playwright from '@/utils/playwright';
+import { getPlaywrightPage } from '@/utils/playwright';
 
-import { getOriginAvatar } from './utils';
+import { getApiResponse, getOriginAvatar } from './utils';
 
 export const route: Route = {
     path: '/live/:rid',
@@ -32,7 +32,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const rid = ctx.req.param('rid');
-    if (Number.isNaN(rid)) {
+    if (!/^[1-9]\d*$/.test(rid)) {
         throw new InvalidParameterError('Invalid room ID. Room ID should be a number.');
     }
 
@@ -41,26 +41,17 @@ async function handler(ctx) {
     const renderData = await cache.tryGet(
         `douyin:live:${rid}`,
         async () => {
-            let roomInfo;
-            const context = await playwright();
-            const page = await context.newPage();
-            await page.route('**/*', (route) => {
-                const request = route.request();
-                request.resourceType() === 'document' || request.resourceType() === 'stylesheet' || request.resourceType() === 'script' || request.resourceType() === 'xhr' ? route.continue() : route.abort();
-            });
-            page.on('response', async (response) => {
-                const request = response.request();
-                if (request.url().includes('/webcast/room/web/enter')) {
-                    roomInfo = await response.json();
-                }
-            });
-            logger.http(`Requesting ${pageUrl}`);
-            await page.goto(pageUrl, {
-                waitUntil: 'networkidle',
-            });
-            await context.close();
-
-            return roomInfo;
+            const { page, destroy } = await getPlaywrightPage(pageUrl, { noGoto: true, closeTimeout: 0 });
+            try {
+                await page.route('**/*', (route) => {
+                    const request = route.request();
+                    request.resourceType() === 'document' || request.resourceType() === 'stylesheet' || request.resourceType() === 'script' || request.resourceType() === 'xhr' ? route.continue() : route.abort();
+                });
+                logger.http(`Requesting ${pageUrl}`);
+                return await getApiResponse(page, pageUrl, '/webcast/room/web/enter');
+            } finally {
+                await destroy();
+            }
         },
         config.cache.routeExpire,
         false
