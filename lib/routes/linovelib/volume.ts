@@ -31,7 +31,7 @@ async function handler(ctx: Context): Promise<Data> {
             .toArray()
             .map((elem) => ({
                 title: $(elem).find('h2').text(),
-                link: $(elem).find('.volume-cover').attr('href'),
+                link: new URL($(elem).find('.volume-cover').attr('href')!, link).href,
             }))
             .toReversed(),
     };
