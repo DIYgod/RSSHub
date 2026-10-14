@@ -33,6 +33,8 @@ export const route: Route = {
 
 async function handler(ctx: Context) {
     const { type1, type2 } = ctx.req.param();
+    const requestedLimit = Number(ctx.req.query('limit'));
+    const limit = Number.isSafeInteger(requestedLimit) && requestedLimit > 0 ? requestedLimit : 20;
     const baseUrl = 'https://mall.nanhua.net';
     const apiBase = `${baseUrl}/mall/nh/api`;
     const link = `${baseUrl}/mall/r/w/reportNew/report-list.html?type1=${type1}&type2=${type2}`;
@@ -50,7 +52,7 @@ async function handler(ctx: Context) {
         body: {
             type1Code: type1,
             type2Code: type2,
-            pageSize: ctx.req.query('limit') || '20',
+            pageSize: String(limit),
         },
     });
 
@@ -60,7 +62,7 @@ async function handler(ctx: Context) {
     const items: DataItem[] = response.data.result.map((item) => ({
         title: item.title,
         description: item.content || item.summary || item.desc,
-        link: item.fileName ? `${apiBase}/report/getReportFile?reportId=${item.id}&filetitle=${item.fileName}` : /^\d+$/.test(item.id) ? item.detailUrl : `${baseUrl}/mall/r/w/reportNew/report-list-page.html?id=${item.id}`,
+        link: item.detailUrl || baseUrl + '/mall/r/w/reportNew/report-list-page.html?id=' + encodeURIComponent(item.id),
         pubDate: timezone(parseDate(item.createTime), 8),
         author: item.personName,
         category: [item.type1Name, item.type2Name, item.typeName].filter(Boolean),
