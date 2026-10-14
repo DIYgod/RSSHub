@@ -3,6 +3,28 @@ import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
+function parseBulletinDate(value?: string) {
+    if (!value?.trim()) {
+        return;
+    }
+    const date = timezone(parseDate(value), 8);
+    return Number.isNaN(date.getTime()) ? undefined : date;
+}
+
+function bulletinLink(value: string | undefined, fallback: string) {
+    if (value) {
+        try {
+            const url = new URL(value, 'https://ehall.wtu.edu.cn');
+            if (url.protocol === 'https:' || url.protocol === 'http:') {
+                return url.href;
+            }
+        } catch {
+            // Preserve the original bulletin identity for invalid source links.
+        }
+    }
+    return fallback;
+}
+
 export const route: Route = {
     path: '/:type',
     categories: ['university'],
@@ -36,9 +58,12 @@ async function handler(ctx) {
 
     const typeInt = Number.parseInt(ctx.req.param('type'));
     const value = map.get(typeInt);
-    const title = value!.title;
-    const columnId = value!.id;
-    const type = value!.type;
+    if (!value) {
+        throw new Error('Unsupported bulletin type. Use 1, 2, or 3.');
+    }
+    const title = value.title;
+    const columnId = value.id;
+    const type = value.type;
     const res = await got({
         method: 'get',
         url: `${apiUrl}${columnId}`,
@@ -51,8 +76,8 @@ async function handler(ctx) {
         description: `${title} - 武汉纺织大学信息门户`,
         item: resJson.map((item) => ({
             title: item.TITLE,
-            pubDate: timezone(parseDate(item.CREATE_TIME), 8),
-            link: item.GOTO_URL ?? `${psgUrl}type=${type}?bulletinId=${item.WID}`,
+            pubDate: parseBulletinDate(item.CREATE_TIME),
+            link: bulletinLink(item.GOTO_URL, `${psgUrl}type=${type}&bulletinId=${item.WID}`),
             author: item.PUBLISH_USER_DEPT_NAME,
         })),
     };
