@@ -44,19 +44,20 @@ async function handler(ctx): Promise<Data> {
         .map((item) => {
             const title = $(item);
             const body = title.next('div.blog_frame_middle');
+            const sourceDate = body
+                .find('div.blog_data div.data_r')
+                .text()
+                .match(/\d{4}年\d{1,2}月\d{1,2}日\s*\(\d{2}:\d{2}\)/)?.[0]
+                .replace(/\s*\(/, ' (');
+            const parsedDate = sourceDate ? parseDate(sourceDate, ['YYYY年MM月DD日 (HH:mm)', 'YYYY年M月D日 (HH:mm)'], true) : undefined;
             const i: DataItem = {
                 title: title.find('tbody tr td').text(),
                 link: title.find('tbody tr td a').attr('href'),
-                pubDate: timezone(
-                    parseDate(
-                        body
-                            .find('div.blog_data div.data_r')
-                            .text()
-                            .match(/\d+年\d+月\d+日 \(\d+:\d+\)/)![0],
-                        'YYYY年M月D日 (HH:mm)'
-                    ),
-                    9
-                ),
+                category: body
+                    .find('div.blog_data div.data_r a[href*="category="]')
+                    .toArray()
+                    .map((a) => $(a).text()),
+                pubDate: parsedDate && Number.isFinite(parsedDate.getTime()) ? timezone(parsedDate, 9) : undefined,
             };
             body.find('a img').each((_, el) => {
                 $(el).attr('src', $(el).parent('a').attr('href'));
