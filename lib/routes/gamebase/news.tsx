@@ -1,6 +1,8 @@
+import { load } from 'cheerio';
 import type { Context } from 'hono';
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
+import pMap from 'p-map';
 
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Data, DataItem, Route } from '@/types';
@@ -8,7 +10,19 @@ import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 import timezone from '@/utils/timezone';
+
+interface NewsListItem {
+    news_no: number;
+    news_title: string;
+    post_time: string;
+    nickname?: string;
+    system?: string;
+    update_date?: string;
+    news_img?: string;
+    news_short_desc?: string;
+}
 
 const types = {
     newslist: 'newsList',
@@ -39,7 +53,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
         throw new InvalidParameterError(`Invalid type: ${type}`);
     }
 
-    const limit = Number(ctx.req.query('limit') ?? '30');
+    const limit = getRouteLimit(ctx, 30);
 
     const baseUrl = 'https://news.gamebase.com.tw';
     const targetUrl: string = new URL(`news${category === 'all' ? '' : `/newslist?type=${category}`}`, baseUrl).href;
@@ -47,7 +61,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
     const apiUrl: string = new URL('api/news/getNewsList', apiBaseUrl).href;
     const language = 'zh-TW';
 
-    const response = await ofetch(apiUrl, {
+    const response = await ofetch<{ return_msg?: { list?: NewsListItem[] } }>(apiUrl, {
         method: 'post',
         body: {
             GB_type: types[type],
@@ -56,8 +70,17 @@ export const handler = async (ctx: Context): Promise<Data> => {
         },
     });
 
-    const items: DataItem[] = await Promise.all(
-        response.return_msg?.list?.slice(0, limit).map((item) =>
+    let list = response.return_msg?.list ?? [];
+    if (ctx.req.query('sorted') === 'false' || list.every((item) => item.post_time && Number.isFinite(parseDate(item.post_time).getTime()))) {
+        if (ctx.req.query('sorted') !== 'false') {
+            list.sort((a, b) => parseDate(b.post_time).getTime() - parseDate(a.post_time).getTime());
+        }
+        list = list.slice(0, limit);
+    }
+
+    const items: DataItem[] = await pMap(
+        list,
+        (item) =>
             cache.tryGet(`gamebase-news-${item.news_no}`, async (): Promise<DataItem> => {
                 const detailResponse = await ofetch(`${apiBaseUrl}/api/news/getNewsInfo`, {
                     method: 'post',
@@ -76,7 +99,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 const authors: DataItem['author'] = detail.nickname ?? item.nickname;
                 const guid = `gamebase-news-${item.news_no}`;
                 const image: string | undefined = detail.news_img ?? item.news_img;
-                const updated: number | string = detail.update_date ?? item.update_date ?? pubDate;
+                const updated: number | string | undefined = detail.update_date ?? item.update_date;
 
                 const metaDesc = detail.news_content ?? detail.news_meta?.meta_des;
 
@@ -105,7 +128,6 @@ export const handler = async (ctx: Context): Promise<Data> => {
                     id: guid,
                     content: {
                         html: description,
-                        text: description,
                     },
                     image,
                     banner: image,
@@ -114,16 +136,21 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 };
 
                 return processedItem;
-            })
-        ) ?? []
+            }),
+        { concurrency: 3 }
     );
 
     return {
         title: '新聞 | 遊戲基地 Gamebase',
         description: '精選基地編輯每日為你帶來的電玩、動漫、娛樂遊戲最新新聞',
         link: targetUrl,
-        item: items,
-        allowEmpty: true,
+        item: items.map((item) => ({
+            ...item,
+            content: {
+                ...item.content,
+                text: load(item.content?.html ?? item.description ?? '').text(),
+            },
+        })),
         image: 'https://image.gamebase.com.tw/gb_tw/static/logo_01.png',
         author: '遊戲基地 Gamebase',
         language,
@@ -158,17 +185,16 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
+    // Radar's client preserves legacy source-array tails when merging remote rules.
     radar: [
         {
-            source: ['news.gamebase.com.tw/news', 'news.gamebase.com.tw/news/:type'],
-            target: (params, url) => {
-                const type: string = params.type;
-                const urlObj: URL = new URL(url);
-                const category: string | undefined = urlObj.searchParams.get('type') ?? undefined;
-
-                return `/gamebase/news${type ? `/${type}${category ? `/${category}` : ''}` : ''}`;
-            },
+            source: ['news.gamebase.com.tw/news', 'news.gamebase.com.tw/'],
+            target: '/news',
         },
+        ...Object.keys(types).map((type) => ({
+            source: [`news.gamebase.com.tw/news/${type}`],
+            target: `/news/${type}`,
+        })),
     ],
     view: ViewType.Articles,
 
