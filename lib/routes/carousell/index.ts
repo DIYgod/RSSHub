@@ -287,6 +287,7 @@ async function handler(ctx): Promise<Data> {
         .map(({ listingCard: item }: { listingCard: ListingCard }) => ({
             title: item.title,
             description: `${item.photoUrls.map((url) => `<img src="${url.replace('_thumbnail.', '_progressive.')}">`).join('')}<br>${Object.values(item.belowFold)
+                .filter((v) => v.component !== 'header_1' || v.stringContent !== item.title)
                 .map((v) => v.stringContent.replaceAll('\r', '<br>'))
                 .join('<br>')}`,
             author: `${item.seller.firstName ?? ''} ${item.seller.lastName ?? ''} (@${item.seller.username})`.trim(),
@@ -297,6 +298,7 @@ async function handler(ctx): Promise<Data> {
 
     return {
         title: `Carousell ${region.toUpperCase()} Search - ${keyword}`,
+        link: `${baseUrl}/search/${encodeURIComponent(keyword)}`,
         item: items,
     };
 }
