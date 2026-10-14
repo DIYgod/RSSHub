@@ -20,7 +20,7 @@ export const extractChangelogItems = ($: CheerioAPI, updatesUrl: string): DataIt
             return {
                 title: $title.text(),
                 link: anchor ? `${updatesUrl}#${anchor}` : updatesUrl,
-                ...(date && { pubDate: parseDate(date) }),
+                ...(date && { pubDate: parseDate(`${date}T00:00:00Z`) }),
                 description:
                     $content
                         .not($title)
