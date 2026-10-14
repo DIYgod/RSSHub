@@ -1,53 +1,34 @@
 import { renderToString } from 'hono/jsx/dom/server';
 
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
 
 import { namespace } from './namespace';
 
-// format the date to YYYY-MM-DD and handle missing year or month
-const extractDates = (durationStr: string) => {
-    let startDate: string | undefined;
-    let endDate: string | undefined;
-
-    if (!durationStr) {
-        return { startDate, endDate };
+const formatCalendarDate = (year: number, month: number, day: number) => {
+    const date = new Date(Date.UTC(year, month - 1, day));
+    if (date.getUTCFullYear() !== year || date.getUTCMonth() !== month - 1 || date.getUTCDate() !== day) {
+        return;
     }
+    return `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+};
 
-    const parts = durationStr.split(/-+/).map((p) => p.trim()); // currently - is used
-    const startStr = parts[0];
-    const endStr = parts[1];
-
-    let startYear: string | undefined;
-    let startMonth: string | undefined;
-
-    const startRegex = /(\d{4})[年.](\d{1,2})(?:[月.](\d{1,2}))?/; // matches formats like "2024年5月10日", "2024.5.10"
-    const startMatch = startStr.match(startRegex);
-
-    if (startMatch) {
-        startYear = startMatch[1];
-        startMonth = startMatch[2].padStart(2, '0');
-        const startDay = startMatch[3] ? startMatch[3].padStart(2, '0') : '01'; // use 1st day of month if day is missing
-        startDate = `${startYear}-${startMonth}-${startDay}`;
+const extractDates = (duration: string) => {
+    const start = duration?.match(/(\d{4})[年./-]\s*(\d{1,2})[月./-]\s*(\d{1,2})日?/);
+    if (!start) {
+        return {};
     }
-
-    if (endStr && startDate) {
-        const endRegex = /(?:(\d{4})[年.])?(\d{1,2})(?:[月.](\d{1,2}))?/;
-        const endMatch = endStr.match(endRegex);
-
-        if (endMatch) {
-            const matchYear = endMatch[1];
-            const matchMonth: string | undefined = endMatch[2];
-            const matchDay: string | undefined = endMatch[3];
-
-            const finalEndYear = matchYear || startYear;
-            const finalEndMonth = matchMonth ? matchMonth.padStart(2, '0') : startMonth;
-            const finalEndDay = matchDay ? matchDay.padStart(2, '0') : '01';
-            endDate = `${finalEndYear}-${finalEndMonth}-${finalEndDay}`;
-        }
+    const year = Number(start[1]);
+    const startDate = formatCalendarDate(year, Number(start[2]), Number(start[3]));
+    if (!startDate) {
+        return {};
     }
-
+    const remainder = duration.slice((start.index ?? 0) + start[0].length);
+    const endText = remainder.match(/^\s*[-~～至—–]\s*(.+)/)?.[1];
+    const end = endText?.match(/^(?:(\d{4})[年./-])?(\d{1,2})[月./-]\s*(\d{1,2})日?/);
+    const endDate = end ? formatCalendarDate(end[1] ? Number(end[1]) : year, Number(end[2]), Number(end[3])) : undefined;
     return { startDate, endDate };
 };
 
@@ -67,6 +48,7 @@ interface Exhibit {
     imgSrc?: string[];
     position?: string;
     timedesc: string;
+    describe?: string;
 }
 
 interface ExhibitList {
@@ -99,6 +81,9 @@ export const route: Route = {
     ],
     handler: async (ctx) => {
         const typeParam = ctx.req.param('type') || 'default';
+        if (!Object.hasOwn(TYPE_MAP, typeParam)) {
+            throw new InvalidParameterError('Unsupported exhibition type. Use review, abroad, virtual, forecast, or default.');
+        }
         const currentType = TYPE_MAP[typeParam];
 
         const baseUrl = 'https://www.njmuseum.com';
@@ -127,15 +112,16 @@ export const route: Route = {
             const title = item.title;
             const itemLink = `${baseUrl}/zh/${item.link}?id=${item.id}`;
             const imgPath = item.imgSrc?.[0];
-            const imgUrl = `${resourceUrl}${imgPath}`;
+            const imgUrl = imgPath ? new URL(imgPath, resourceUrl).href : undefined;
             const location = item.position;
             const fullDuration = item.timedesc;
             const { startDate, endDate } = extractDates(fullDuration);
-            const pubDate = startDate ? parseDate(startDate) : undefined; // use start date as publication date if publication date is notavailable
+            const pubDate = startDate ? parseDateInTimezone(startDate, 8) : undefined;
 
             const description = renderToString(
                 <div>
-                    <img src={imgUrl} />
+                    {item.describe && <div dangerouslySetInnerHTML={{ __html: item.describe }} />}
+                    {imgUrl && <img src={imgUrl} />}
                     <br />
                     <p>
                         <b>地点：</b>
