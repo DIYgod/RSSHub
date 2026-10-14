@@ -1,8 +1,18 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
+import { parseDate } from '@/utils/parse-date';
+
+const getPublicationDate = (timestamp: number | undefined) => {
+    if (typeof timestamp !== 'number' || !Number.isFinite(timestamp)) {
+        return;
+    }
+    const date = parseDate(timestamp, 'X');
+    return Number.isFinite(date.getTime()) ? date : undefined;
+};
 
 type ArticleData = [
     string,
@@ -39,23 +49,29 @@ export async function fetchItems(queryParam: string): Promise<DataItem[]> {
         method: 'post',
     });
     const data: [ArticleData[], number] = JSON.parse(body.replace(/^[^[]*/, ''));
-    const items = await Promise.all(
-        data[0].map((item) => {
+    const items = await pMap(
+        data[0],
+        async (item) => {
             const link = item[6];
-            return cache.tryGet(link, async (): Promise<DataItem> => {
+            const detail = await cache.tryGet<Pick<DataItem, 'description' | 'author'>>(`web:article:v2:${link}`, async () => {
                 const { data: articleHtml }: { data: string } = await got.get(link);
                 const $ = load(articleHtml);
                 const articleBody = $('.devsite-article-body');
+                const authors = articleBody
+                    .find('.wd-authors .wd-author > div > span')
+                    .toArray()
+                    .map((element) => $(element).text().trim())
+                    .filter(Boolean);
                 articleBody.find('.wd-authors').remove();
 
                 return {
-                    title: item[0],
-                    pubDate: new Date(item[5][0] * 1e3),
                     description: articleBody.html(),
-                    link,
+                    author: authors.length ? authors.join(', ') : undefined,
                 };
             });
-        })
+            return { title: item[0], pubDate: getPublicationDate(item[5]?.[0]), description: detail.description, author: detail.author, link };
+        },
+        { concurrency: 3, stopOnError: false }
     );
 
     return items;
