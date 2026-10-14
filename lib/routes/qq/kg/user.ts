@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { Route } from '@/types';
 import { evaluateScriptData } from '@/utils/evaluate-script';
@@ -48,8 +49,9 @@ async function handler(ctx) {
     const authorimg = data.data.head_img_url;
     const ugcList = data.data.ugclist;
 
-    const items = await Promise.all(
-        ugcList.map(async (item) => {
+    const items = await pMap(
+        ugcList,
+        async (item) => {
             const link = `https://node.kg.qq.com/play?s=${item.shareid}`;
             const item_info = await cache.getPlayInfo(ctx, item.shareid, item.ksong_mid);
 
@@ -59,21 +61,21 @@ async function handler(ctx) {
                 link,
                 guid: `ksong:${item.ksong_mid}`,
                 author,
-                pubDate: parseDate(item_info.ctime * 1000) || parseDate(item.ctime, 'X'),
+                pubDate: item_info.ctime ? parseDate(item_info.ctime, 'X') : item.ctime ? parseDate(item.ctime, 'X') : undefined,
                 itunes_item_image: item_info.itunes_item_image || item.avatar,
                 enclosure_url: item_info.enclosure_url,
-                enclosure_type: 'audio/x-m4a',
+                enclosure_type: 'audio/mp4',
             };
 
             return single;
-        })
+        },
+        { concurrency: 3 }
     );
 
     return {
         title: `${author} - 全民K歌`,
         link: url,
         description: data.share.content,
-        allowEmpty: true,
         item: items,
         image: authorimg,
         itunes_author: author,
