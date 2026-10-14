@@ -3,6 +3,7 @@ import { load } from 'cheerio';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
+import { getRouteLimit } from '@/utils/route-limit';
 
 import { baseUrl, getResearch } from './utils';
 
@@ -27,5 +28,5 @@ async function handler(ctx) {
     if (!name) {
         throw new InvalidParameterError('Use the complete Carnegie expert profile path, for example china/people/michael-pettis.');
     }
-    return { title: `Carnegie - ${name}`, link, language: 'en' as const, item: await getResearch(`contributors.title:=${JSON.stringify(name)}`, Number(ctx.req.query('limit')) || 20) };
+    return { title: `Carnegie - ${name}`, link, language: 'en' as const, item: await getResearch(`contributors.title:=${JSON.stringify(name)}`, getRouteLimit(ctx, 20)) };
 }

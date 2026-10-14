@@ -1,4 +1,5 @@
 import type { Route } from '@/types';
+import { getRouteLimit } from '@/utils/route-limit';
 
 import { baseUrl, getResearch } from './utils';
 
@@ -20,6 +21,6 @@ async function handler(ctx) {
         title: `Carnegie - ${region}`,
         link: `${baseUrl}/regions/${encodeURIComponent(region)}`,
         language: 'en' as const,
-        item: await getResearch(`regions.slug:=${JSON.stringify(region)}`, Number(ctx.req.query('limit')) || 20),
+        item: await getResearch(`regions.slug:=${JSON.stringify(region)}`, getRouteLimit(ctx, 20)),
     };
 }
