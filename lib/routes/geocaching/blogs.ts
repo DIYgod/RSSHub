@@ -1,6 +1,7 @@
 import type { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
 export const route: Route = {
     path: '/blogs/:language?',
@@ -55,7 +56,7 @@ async function handler(ctx) {
     const baseUrl = 'https://www.geocaching.com';
     const language = ctx.req.param('language') ?? 'en';
     const searchParams: PostsSearchParams = {
-        per_page: ctx.req.query('limit') ?? 20,
+        per_page: Math.min(getRouteLimit(ctx, 20), 100),
         _embed: 1,
         _fields: ['id', 'title', 'link', 'guid', 'content', 'date_gmt', 'modified_gmt', '_embedded', '_links'].join(','),
     };
@@ -74,7 +75,7 @@ async function handler(ctx) {
 
     const { data: response } = await got(`${baseUrl}/blog/wp-json/wp/v2/posts`, { searchParams });
     const items = response.map((item) => {
-        const media = item._embedded['wp:featuredmedia'][0];
+        const media = item._embedded['wp:featuredmedia']?.[0];
         const mediaDetails = media?.media_details;
         const mediaSize = mediaDetails?.sizes.large || mediaDetails?.sizes.full;
         return {
@@ -82,8 +83,8 @@ async function handler(ctx) {
             link: item.link,
             guid: item.guid.rendered,
             description: item.content.rendered,
-            pubDate: parseDate(item.date_gmt),
-            updated: parseDate(item.modified_gmt),
+            pubDate: parseDate(`${item.date_gmt}Z`),
+            updated: parseDate(`${item.modified_gmt}Z`),
             author: item._embedded.author[0].name,
             category: item._embedded['wp:term'][0].map((category) => category.name.trim()),
             media: mediaSize
@@ -108,12 +109,11 @@ async function handler(ctx) {
     return {
         title: Object.hasOwn(languageToLabel, language) ? `Geocaching Blog - ${languageToLabel[language]}` : 'Geocaching Blog',
         link: `${baseUrl}/blog/`,
-        language: Object.hasOwn(languageToCategory, language) ? language : 'en',
+        language: language === 'all' ? 'mul' : Object.hasOwn(languageToCategory, language) ? language : 'en',
         image: 'https://i.ytimg.com/vi_webp/G28VxvBoSLQ/maxresdefault.webp',
         icon: `${baseUrl}/blog/favicon.ico`,
         logo: `${baseUrl}/blog/favicon.ico`,
         description: 'Geocaching Official Blog',
         item: items,
-        allowEmpty: true,
     };
 }
