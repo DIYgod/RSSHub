@@ -123,6 +123,12 @@ async function handler(ctx) {
     if (!cfg) {
         throw new InvalidParameterError('Bad category. See <a href="https://docs.rsshub.app/routes/new-media#wang-yi-xin-wen-pai-hang-bang">docs</a>');
     }
+    if (!['click', 'follow'].includes(type)) {
+        throw new InvalidParameterError('Invalid ranking type. Use click or follow.');
+    }
+    if (!Object.hasOwn(timeRange, time)) {
+        throw new InvalidParameterError('Invalid time range. Use hour, day, week or month.');
+    }
     if ((category !== 'whole' && type === 'click' && time === 'month') || (category === 'whole' && type === 'click' && time === 'hour') || (type === 'follow' && time === 'hour')) {
         throw new InvalidParameterError('Bad timeRange range. See <a href="https://docs.rsshub.app/routes/new-media#wang-yi-xin-wen-pai-hang-bang">docs</a>');
     }

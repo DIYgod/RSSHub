@@ -5,6 +5,7 @@ import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 import timezone from '@/utils/timezone';
 
 const titles = {
@@ -43,6 +44,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const category = ctx.req.param('category') ?? 'texie';
+    const limit = getRouteLimit(ctx, 50);
 
     const rootUrl = 'https://renjian.163.com';
     const currentUrl = `${rootUrl}/special/renjian_${category}/`;
@@ -60,14 +62,14 @@ async function handler(ctx) {
     const urls = data.match(/url:"(.*)",/g);
 
     if (urls) {
-        list = urls.slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 50).map((item) => ({
+        list = urls.slice(0, limit).map((item) => ({
             link: item.match(/url:"(.*)",/)![1],
         }));
     } else {
         const $ = load(data);
 
         list = $('.article h3 a')
-            .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 50)
+            .slice(0, limit)
             .toArray()
             .map((item) => {
                 const $item = $(item);
