@@ -1,11 +1,15 @@
 import querystring from 'node:querystring';
 
+import pMap from 'p-map';
+
 import { config } from '@/config';
 import type { Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
+import { parseDate } from '@/utils/parse-date';
 import { fallback, queryToBoolean, queryToInteger } from '@/utils/readable-social';
+import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/people/:userid/status/:routeParams?',
@@ -53,12 +57,11 @@ export const route: Route = {
 
 function tryFixStatus(status) {
     let result = { isFixSuccess: true, why: '' };
-    const now = new Date();
 
     if (!status) {
         result = {
             isFixSuccess: false,
-            // 添加方括号，与 status.msg 的样式统一
+            // Match the bracketed messages provided by status.msg.
             why: '[ 无内容 ]',
         };
         status = {}; // dummy
@@ -90,9 +93,6 @@ function tryFixStatus(status) {
         if (!status.author.avatar) {
             status.author.avatar = 'https://img1.doubanio.com/icon/user_normal.jpg';
         }
-        if (!status.create_time) {
-            status.create_time = now.toLocaleString();
-        }
         if (!status.entities) {
             status.entities = [];
         }
@@ -102,13 +102,42 @@ function tryFixStatus(status) {
         status.sharing_url = status.sharing_url.split('&', 1)[0];
     }
 
-    if (!result.isFixSuccess) {
-        status.sharing_url = 'https://www.douban.com?rsshub_failed=' + now.getTime().toString();
-        if (!status.create_time) {
-            status.create_time = now.toLocaleString();
+    return result;
+}
+
+function getStatusLink(status) {
+    if (!status) {
+        throw new Error('Douban returned a timeline item without a status identity.');
+    }
+    const uriId = status.uri?.match(/^douban:\/\/douban\.com\/status\/(\d+)(?:[/?]|$)/)?.[1];
+    const statusId = String(status.id || uriId || '');
+    for (const sourceLink of [status.sharing_url, status.url]) {
+        if (!sourceLink) {
+            continue;
+        }
+        try {
+            const url = new URL(sourceLink);
+            const path = url.pathname === '/doubanapp/dispatch' ? url.searchParams.get('uri') : url.pathname;
+            const linkId = path?.match(/\/status\/(\d+)(?:[/?]|$)/)?.[1];
+            if (['http:', 'https:'].includes(url.protocol) && ['www.douban.com', 'm.douban.com', 'douban.com'].includes(url.hostname) && /^[1-9]\d*$/.test(linkId || '') && (!statusId || linkId === statusId)) {
+                status.id = linkId;
+                return sourceLink.split('&', 1)[0].replace(/\?_i=(.*)/, '');
+            }
+        } catch {
+            // Try another source-provided identity when a link is malformed.
         }
     }
-    return result;
+    if (!/^[1-9]\d*$/.test(statusId)) {
+        throw new Error('Douban returned a status without an identifiable status ID.');
+    }
+    status.id = statusId;
+    if (uriId === statusId) {
+        return `https://www.douban.com/doubanapp/dispatch?uri=${encodeURIComponent(status.uri.replace('douban://douban.com', ''))}`;
+    }
+    if (/^[1-9]\d*$/.test(String(status.author?.id || ''))) {
+        return `https://www.douban.com/people/${status.author.id}/status/${statusId}/`;
+    }
+    throw new Error('Douban returned a status without a public URL or identifiable author.');
 }
 
 interface ContentParams {
@@ -283,7 +312,7 @@ function getContentByActivity(ctx, item, params: ContentParams = {}, picsPrefixe
     }
     title += `${activityInTitle}: `;
 
-    if (showTimestampInDescription) {
+    if (showTimestampInDescription && status.create_time) {
         description += `<br><small>${status.create_time}</small><br>`;
     }
 
@@ -315,8 +344,8 @@ function getContentByActivity(ctx, item, params: ContentParams = {}, picsPrefixe
     if (status.images && status.images.length) {
         description += readable ? '<br clear="both" /><div style="clear: both"></div>' : '<br>';
 
-        // 一些RSS Reader会识别所有<img>标签作为内含图片显示，我们不想要头像也作为内含图片之一
-        // 让所有配图在description的最前面再次出现一次，但宽高设为0
+        // Some readers extract every image, including author avatars.
+        // Put hidden copies of the post images before the avatars.
         let picsPrefix = '';
         for (const image of status.images) {
             if (!(image.large && image.large.url)) {
@@ -394,10 +423,10 @@ function getContentByActivity(ctx, item, params: ContentParams = {}, picsPrefixe
             description += `<img src="${status.card.image.large.url}" ${readable ? 'vspace="0" hspace="12" align="left" height="75" style="height: 75px;"' : ''} />`;
         }
 
-        // 直接转发 或 带文本转发
+        // A reshare may include additional text.
         const isNewReshared = status.activity === '转发小组讨论' || (status.card.type === 'topic' && status.text !== '' && status.activity === '');
         const isNewStatus = !isNewReshared && status.card.type === 'topic' && status.text === '' && status.activity === '';
-        // 覆盖sharing_url，使得RSS条目链接直接指向位于/topic/的新版动态内容
+        // Link directly to the newer topic page.
         if (isNewStatus) {
             status.sharing_url = status.card.url;
         }
@@ -495,8 +524,9 @@ function getContentByActivity(ctx, item, params: ContentParams = {}, picsPrefixe
 async function getFullTextItems(items) {
     const prefix = 'https://m.douban.com/rexxar/api/v2/status/';
 
-    await Promise.all(
-        items.map(async (item) => {
+    await pMap(
+        items,
+        async (item: any) => {
             let url = prefix + item.status.id;
             let cacheResult = await cache.get(url);
             if (cacheResult) {
@@ -518,7 +548,7 @@ async function getFullTextItems(items) {
                 item.status.reshared_status.text = cacheResult;
             } else if (tryFixStatus(item.status.reshared_status).isFixSuccess) {
                 try {
-                    // 存在reshared_status字段正常，但尝试获取时返回403的情况。比如原po被炸号就可能这样。
+                    // A deleted account can leave a reshare whose original status returns HTTP 403.
                     const {
                         data: { text },
                     } = await got(url);
@@ -528,7 +558,8 @@ async function getFullTextItems(items) {
                     item.status.reshared_status.text += '\n[获取原动态失败]';
                 }
             }
-        })
+        },
+        { concurrency: 3 }
     );
 }
 
@@ -545,9 +576,14 @@ async function handler(ctx) {
         false
     );
 
-    if (items) {
-        await getFullTextItems(items);
+    if (!items?.length) {
+        throw new Error('Douban returned no public statuses for this user. Check whether the profile has visible statuses.');
     }
+
+    for (const item of items) {
+        getStatusLink(item.status);
+    }
+    await getFullTextItems(items);
 
     return {
         title: `豆瓣广播 - ${items ? items[0].status.author.name : userid}`,
@@ -557,11 +593,13 @@ async function handler(ctx) {
             items
                 .filter((item) => !item.deleted)
                 .map((item) => {
+                    const author = item.status.author?.name;
                     const r = getContentByActivity(ctx, item);
                     return {
                         title: r.title,
-                        link: item.status.sharing_url.replace(/\?_i=(.*)/, ''),
-                        pubDate: new Date(Date.parse(item.status.create_time + ' GMT+0800')).toUTCString(),
+                        author,
+                        link: getStatusLink(item.status),
+                        pubDate: item.status.create_time ? timezone(parseDate(item.status.create_time), 8) : undefined,
                         description: r.description,
                     };
                 }),
