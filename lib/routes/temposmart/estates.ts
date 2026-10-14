@@ -1,9 +1,12 @@
+import type { CheerioAPI } from 'cheerio';
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 import timezone from '@/utils/timezone';
 
 import type { ListingExtra } from './utils';
@@ -31,8 +34,8 @@ interface ListCard {
 }
 
 /** The list page's h1 reads '新宿区の居抜き物件…' / '東京都の居抜き物件…', so the area name is whatever precedes 「の居抜き物件」. */
-const areaLabel = (html: string, fallback: string): string => {
-    const h1 = clean(load(html)('h1').text());
+const areaLabel = ($: CheerioAPI, fallback: string): string => {
+    const h1 = clean($('h1').text());
     const name = h1?.split('の居抜き物件', 1)[0];
     return name !== undefined && name !== h1 ? name : fallback;
 };
@@ -61,17 +64,17 @@ interface DetailFields {
  *   所在地 .estateItem__estateAddress--link, 所在階 .estateItem__estateFloor, 保証金/敷金 .estateItem__estateDeposit,
  *   面積 .estateItem__estateArea, 現況 .estateItem__estatePurpose, tags .estateItem__estateProperties__tag
  */
-const parseList = (html: string): ListCard[] => {
-    const $ = load(html);
-    return $('.estateItem')
+const parseList = ($: CheerioAPI): ListCard[] =>
+    $('.estateItem')
         .toArray()
         .map((el) => {
             const $el = $(el);
             const a = $el.find('.estateItem__estateTitle a');
             const href = a.attr('href');
-            const title = clean(a.text());
+            const title = a.text();
+            const normalizedTitle = clean(title);
             const id = clean($el.find('.estateItem__estateId--value').text());
-            if (!href || !title || !id) {
+            if (!href || !normalizedTitle || !id) {
                 return null;
             }
 
@@ -96,7 +99,7 @@ const parseList = (html: string): ListCard[] => {
                 tags.unshift('NEW');
             }
 
-            const notes = bracketNotes(title);
+            const notes = bracketNotes(normalizedTitle);
             const rentJpy = parseJpy(raw.rent);
             const { tsubo, area_m2 } = parseArea(raw.area);
             const purpose = raw.purpose;
@@ -116,9 +119,9 @@ const parseList = (html: string): ListCard[] => {
                 deposit_jpy: null,
                 key_money_months: null,
                 fixtures_transfer_jpy: null,
-                condition: parseCondition(purpose, title),
+                condition: parseCondition(purpose, normalizedTitle),
                 prev_business: purpose !== null && purpose !== 'スケルトン' && purpose !== 'その他' ? purpose : null,
-                heavy_food_ok: parseHeavyFood(title),
+                heavy_food_ok: parseHeavyFood(normalizedTitle),
                 business_limit: notes.length > 0 ? notes.join(' / ') : null,
                 listed_at: null,
                 ward: parseWard(raw.address),
@@ -129,7 +132,6 @@ const parseList = (html: string): ListCard[] => {
             return { title, link: new URL(href, HOST).href, extra };
         })
         .filter((c): c is ListCard => c !== null);
-};
 
 /**
  * Detail page selectors (`/estates/{id}`):
@@ -201,9 +203,9 @@ const mergeDetail = (base: ListingExtra, d: DetailFields): ListingExtra => {
     };
 };
 
-const enrich = async (card: ListCard): Promise<ListingExtra> => {
-    const html = await ofetch(card.link);
-    return mergeDetail(card.extra, parseDetail(html));
+const fetchDetail = async (link: string): Promise<DetailFields> => {
+    const html = await ofetch<string>(link);
+    return parseDetail(html);
 };
 
 export const handler = async (ctx): Promise<Data> => {
@@ -212,7 +214,7 @@ export const handler = async (ctx): Promise<Data> => {
     if (!prefecture) {
         throw new Error(`Unknown prefecture "${pref}", expected one of ${PREFECTURES.map((p) => p.slug).join(', ')}`);
     }
-    const limit = Math.min(ctx.req.query('limit') ? Number(ctx.req.query('limit')) : DEFAULT_LIMIT, PAGE_SIZE);
+    const limit = Math.min(getRouteLimit(ctx, DEFAULT_LIMIT), PAGE_SIZE);
 
     // 市区町村 codes are the prefecture's two digits plus three more (新宿区 = 13104). A code from another
     // prefecture would silently return that prefecture's listings, so the pair is checked rather than trusted.
@@ -228,26 +230,30 @@ export const handler = async (ctx): Promise<Data> => {
     const listUrl = district === undefined ? `${HOST}/estates/pref/${prefecture.code}?sort=new` : `${HOST}/estates/pref/${prefecture.code}/district/${district}?sort=new`;
 
     const html: string = await ofetch(listUrl);
-    const cards = parseList(html).slice(0, limit);
+    const $ = load(html);
+    const cards = parseList($).slice(0, limit);
 
-    const items = await Promise.all(
-        cards.map((card) =>
-            cache.tryGet(card.link, async (): Promise<DataItem> => {
-                const extra = await enrich(card);
-                return {
-                    title: card.title,
-                    link: card.link,
-                    guid: card.link,
-                    pubDate: extra.listed_at === null ? undefined : timezone(parseDate(extra.listed_at, 'YYYY-MM-DD'), 9),
-                    description: summarize(extra),
-                    _extra: extra,
-                };
-            })
-        )
+    const items = await pMap(
+        cards,
+        async (card): Promise<DataItem> => {
+            const detail = await cache.tryGet<DetailFields>(`temposmart:detail:v2:${card.link}`, () => fetchDetail(card.link));
+            const extra = mergeDetail(card.extra, detail);
+            return {
+                title: card.title,
+                link: card.link,
+                guid: card.link,
+                category: extra.tags,
+                // UTC midnight represents the source calendar day, not a publication timestamp.
+                pubDate: extra.listed_at === null ? undefined : timezone(parseDate(extra.listed_at, 'YYYY-MM-DD'), 0),
+                description: summarize(extra),
+                _extra: extra,
+            };
+        },
+        { concurrency: 3, stopOnError: false }
     );
 
     return {
-        title: `テンポスマート 新着物件 (${areaLabel(html, prefecture.label)})`,
+        title: `テンポスマート 新着物件 (${areaLabel($, prefecture.label)})`,
         link: listUrl,
         language: 'ja',
         item: items,
