@@ -4,6 +4,7 @@
 import { load } from 'cheerio';
 import type { Context } from 'hono';
 
+import NotFoundError from '@/errors/types/not-found';
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -28,6 +29,9 @@ export const route: Route = {
 async function handler(ctx: Context) {
     const baseURL = 'https://www.cell.com';
     const { category } = ctx.req.param();
+    if (!['current', 'inpress'].includes(category)) {
+        throw new NotFoundError('Invalid Cell category. Use current or inpress.');
+    }
     const inPress = category === 'inpress';
     const pageURL = inPress ? `${baseURL}/cell/inpress.rss` : `${baseURL}/cell/current.rss`;
     const categoryTitle = inPress ? 'Articles in press' : 'Latest issue';
@@ -45,7 +49,8 @@ async function handler(ctx: Context) {
             return {
                 title: $item.find(String.raw`dc\:title`).text(),
                 author: $item.find(String.raw`dc\:creator`).text(),
-                description: `<p style="color: #007dbc; text-transform: uppercase; font-weight: 700;">${section}</p>${$item.find('description').text()}`,
+                description: $item.find('description').text(),
+                category: section ? [section] : undefined,
                 link: address,
                 guid: address,
                 doi: $item.find(String.raw`dc\:identifier`).text(),
