@@ -1,4 +1,5 @@
 import type { Route } from '@/types';
+import { getRouteLimit } from '@/utils/route-limit';
 
 import { apiRootUrl, ProcessThreads, rootUrl, types } from './utils';
 
@@ -64,10 +65,11 @@ async function handler(ctx) {
     const id = ctx.req.param('id') ?? '';
     const type = ctx.req.param('type') ?? 'hot';
     const order = ctx.req.param('order') ?? '';
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 10;
+    const limit = getRouteLimit(ctx, 10);
+    const isTag = Number.isNaN(Number(id));
 
-    const currentUrl = `${rootUrl}${id ? (Number.isNaN(id) ? `/category/${id}` : `/section/${id}`) : ''}`;
-    const apiUrl = `${apiRootUrl}/api${id ? (Number.isNaN(id) ? `/tags/${id}/` : `/forums/${id}/`) : ''}threads?type=${type}&includes=tags,forum_name,summary&ps=${limit}&pg=1&order=${order === '' ? '' : 'time_desc'}&is_groupid=1`;
+    const currentUrl = `${rootUrl}${id ? (isTag ? `/category/${id}` : `/section/${id}`) : ''}`;
+    const apiUrl = `${apiRootUrl}/api/${id ? (isTag ? `tags/${id}/` : `forums/${id}/`) : ''}threads?type=${type}&includes=tags,forum_name,summary&ps=${limit}&pg=1&order=${order === '' ? '' : 'time_desc'}&is_groupid=1`;
 
     return {
         title: `一亩三分地 - ${Object.hasOwn(sections, id) ? sections[id] : id}${types[type]}`,
