@@ -157,6 +157,5 @@ async function handler(ctx) {
         item: items,
         logo: feedLogo,
         image: feedLogo,
-        allowEmpty: true,
     };
 }
