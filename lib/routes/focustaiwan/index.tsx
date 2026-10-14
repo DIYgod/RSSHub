@@ -32,7 +32,7 @@ export const route: Route = {
 
 | Politics | Cross-strait | Business | Society | Science & Tech | Culture | Sports |
 | -------- | ------------ | -------- | ------- | -------------- | ------- | ------ |
-| politics | cross-strait | business | society | sci-tech | culture | sports |`,
+| politics | cross-strait | business | society | sci-tech       | culture | sports |`,
 };
 
 async function handler(ctx) {

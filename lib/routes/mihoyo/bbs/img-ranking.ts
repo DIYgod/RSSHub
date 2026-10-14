@@ -77,7 +77,7 @@ export const route: Route = {
 | forumType   | 主榜类型（仅原神、大别野有 cos 主榜） | tongren/cos                                                          | tongren      |
 | cateType    | 子榜类型（仅崩坏三、原神有子榜）      | 崩坏三：illustration/comic/cos；原神：illustration/comic/qute/manual | illustration |
 | rankingType | 排行榜类型（崩坏二没有日榜）          | daily/weekly/monthly                                                 | daily        |
-| lastId      | 首屏游标                             | 省略或 0                                                             | 空           |
+| lastId      | 首屏游标                              | 省略或 0                                                             | 空           |
 
 游戏缩写
 

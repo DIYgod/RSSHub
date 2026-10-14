@@ -27,8 +27,8 @@ export const route: Route = {
     handler,
     description: `网站已迁移，其他旧数字分类已下线，请使用新版分类 URL 中的 UUID。
 
-| id | 分类 |
-| --- | --- |
+| id                                   | 分类     |
+| ------------------------------------ | -------- |
 | 87e1e7e4-ffcb-401d-aa8a-c086b9eccec1 | 智库资讯 |
 | 54a1eca3-4e67-464d-bad3-eae6ac25c96a | 研究成果 |
 | 4e93db34-5604-41c0-96e7-51dcebcf6735 | 全球经济 |

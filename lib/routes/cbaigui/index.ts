@@ -17,14 +17,14 @@ export const route: Route = {
     maintainers: ['nczitzk'],
     description: `默认订阅[首页](https://cbaigui.com)的妖怪词条、杂谈和站点公告。网站改版后，原分类和标签路径仍可作为路由参数，名称对应[妖怪列表](https://cbaigui.com/monster)中的属性或书籍筛选项。
 
-| 筛选项 | 路径参数 |
-| ------ | -------- |
-| 妖怪词条 | monster |
-| 杂谈 | essays |
-| 站点公告 | notice |
-| 妖 | post-tag/妖 |
-| 埃及 | post-category/世界/非洲/埃及 |
-| 白泽图 | post-category/词条/白泽图 |`,
+| 筛选项   | 路径参数                           |
+| -------- | ---------------------------------- |
+| 妖怪词条 | monster                            |
+| 杂谈     | essays                             |
+| 站点公告 | notice                             |
+| 妖       | post-tag / 妖                      |
+| 埃及     | post-category / 世界 / 非洲 / 埃及 |
+| 白泽图   | post-category / 词条 / 白泽图      |`,
     handler,
 };
 

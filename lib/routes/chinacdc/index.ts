@@ -183,7 +183,7 @@ export const route: Route = {
 
 #### [党建园地](https://www.chinacdc.cn/dqgz/djgz/)
 
-| [党建工作](https://www.chinacdc.cn/dqgz/djgz/)     | [廉政文化](https://www.chinacdc.cn/dqgz/djgz_13611/)                 | [工会工作](https://www.chinacdc.cn/dqgz/ghgz/)          | [团青工作](https://www.chinacdc.cn/dqgz/tqgz/)          | [理论学习](https://www.chinacdc.cn/dqgz/tqgz_13618/)                 |
+| [党建工作](https://www.chinacdc.cn/dqgz/djgz/)     | [廉政文化](https://www.chinacdc.cn/dqgz/djgz_13611/)            | [工会工作](https://www.chinacdc.cn/dqgz/ghgz/)     | [团青工作](https://www.chinacdc.cn/dqgz/tqgz/)     | [理论学习](https://www.chinacdc.cn/dqgz/tqgz_13618/)            |
 | -------------------------------------------------- | --------------------------------------------------------------- | -------------------------------------------------- | -------------------------------------------------- | --------------------------------------------------------------- |
 | [dqgz/djgz](https://rsshub.app/chinacdc/dqgz/djgz) | [dqgz/djgz\\_13611](https://rsshub.app/chinacdc/dqgz/djgz_13611) | [dqgz/ghgz](https://rsshub.app/chinacdc/dqgz/ghgz) | [dqgz/tqgz](https://rsshub.app/chinacdc/dqgz/tqgz) | [dqgz/tqgz\\_13618](https://rsshub.app/chinacdc/dqgz/tqgz_13618) |
 

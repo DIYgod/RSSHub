@@ -136,9 +136,9 @@ export const route: Route = {
 订阅 [科技前沿](https://www.xwenming.com/index.php/category/news)，其源网址为 \`https://www.xwenming.com/index.php/category/news\`，请参考该 URL 指定部分构成参数，此时路由为 [\`/xwenming/news\`](https://rsshub.app/xwenming/news) 或 [\`/xwenming/科技前沿\`](https://rsshub.app/xwenming/科技前沿)。
 :::
 
-| 分类                                                                | ID                                                                  |
-| ------------------------------------------------------------------- | ------------------------------------------------------------------- |
-| [全部](https://www.xwenming.com)                                    | [<空>](https://rsshub.app/xwenming)                                 |
+| 分类                                                                | ID                                                         |
+| ------------------------------------------------------------------- | ---------------------------------------------------------- |
+| [全部](https://www.xwenming.com)                                    | [<空>](https://rsshub.app/xwenming)                        |
 | [科技前沿](https://www.xwenming.com/index.php/category/news)        | [news](https://rsshub.app/xwenming/news)                   |
 | [疑难杂症](https://www.xwenming.com/index.php/category/solve)       | [solve](https://rsshub.app/xwenming/solve)                 |
 | [通知专栏](https://www.xwenming.com/index.php/category/notice)      | [notice](https://rsshub.app/xwenming/notice)               |

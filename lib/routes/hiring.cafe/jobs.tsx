@@ -84,8 +84,8 @@ async function getSearchPage(url: string) {
         const { page, destroy } = await getPlaywrightPage(url, { noGoto: true, closeTimeout: 0 });
         try {
             await page.route('**/*', (route) => (['document', 'script', 'xhr', 'fetch'].includes(route.request().resourceType()) ? route.continue() : route.abort()));
-            await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 30_000 });
-            await page.waitForSelector('script#__NEXT_DATA__', { state: 'attached', timeout: 10_000 });
+            await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 30000 });
+            await page.waitForSelector('script#__NEXT_DATA__', { state: 'attached', timeout: 10000 });
             return await page.content();
         } finally {
             await destroy();

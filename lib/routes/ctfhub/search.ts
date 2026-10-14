@@ -14,17 +14,17 @@ export const route: Route = {
         class: '比赛类型',
         title: '通过 CTF 赛事名称过滤',
     },
-    description: `| \`:class\` | 类型                               |
-| :------: | ---------------------------------- |
-|     0    | Jeopardy \\[解题]                   |
-|     1    | Attack with Defense \\[AwD 攻防]    |
+    description: `| \`:class\` | 类型                                 |
+| :------: | ------------------------------------ |
+|     0    | Jeopardy \\[解题]                     |
+|     1    | Attack with Defense \\[AwD 攻防]      |
 |     2    | Attack with Defense Plus \\[ADP 攻防] |
-|     3    | Jeopardy + AwD \\[JAD 解题攻防]     |
-|     4    | Robo Hacking Game \\[RHG AI 自动化] |
-|     5    | Real World \\[RW 真实世界]          |
-|     6    | Penetration \\[场景渗透]            |
-|     7    | King of The Hill \\[KoH 抢占山头]   |
-|     8    | Mix \\[混合]                        |
+|     3    | Jeopardy + AwD \\[JAD 解题攻防]       |
+|     4    | Robo Hacking Game \\[RHG AI 自动化]   |
+|     5    | Real World \\[RW 真实世界]            |
+|     6    | Penetration \\[场景渗透]              |
+|     7    | King of The Hill \\[KoH 抢占山头]     |
+|     8    | Mix \\[混合]                          |
 
 > class 以 <https://api.ctfhub.com/User_API/Event/getType> 的返回结果为准
 

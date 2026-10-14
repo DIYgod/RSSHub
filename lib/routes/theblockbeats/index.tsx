@@ -188,7 +188,7 @@ export const route: Route = {
 
 | 全部 | 深度 | 精选 | 热点追踪 |
 | :--: | :--: | :--: | :------: |
-|  0   |  1   |  2   |    3     |`,
+|   0  |   1  |   2  |     3    |`,
 };
 
 async function handler(ctx) {

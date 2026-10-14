@@ -256,29 +256,29 @@ export const route: Route = {
 
 #### 分类
 
-| 分类                                        | ID                                |
-| ------------------------------------------- | --------------------------------- |
-| [全部游戏](https://playzip.com/)               | [0](https://rsshub.app/koyso/0)   |
-| [动作游戏](https://playzip.com/category/action)    | [3](https://rsshub.app/koyso/3)   |
-| [冒险游戏](https://playzip.com/category/adventure)    | [5](https://rsshub.app/koyso/5)   |
-| [绅士游戏](https://playzip.com/category/r18)    | [7](https://rsshub.app/koyso/7)   |
-| [射击游戏](https://playzip.com/category/shooting)    | [1](https://rsshub.app/koyso/1)   |
-| [休闲游戏](https://playzip.com/category/casual)    | [2](https://rsshub.app/koyso/2)   |
-| [体育竞速](https://playzip.com/category/sports_racing)    | [4](https://rsshub.app/koyso/4)   |
+| 分类                                                   | ID                                |
+| ------------------------------------------------------ | --------------------------------- |
+| [全部游戏](https://playzip.com/)                       | [0](https://rsshub.app/koyso/0)   |
+| [动作游戏](https://playzip.com/category/action)        | [3](https://rsshub.app/koyso/3)   |
+| [冒险游戏](https://playzip.com/category/adventure)     | [5](https://rsshub.app/koyso/5)   |
+| [绅士游戏](https://playzip.com/category/r18)           | [7](https://rsshub.app/koyso/7)   |
+| [射击游戏](https://playzip.com/category/shooting)      | [1](https://rsshub.app/koyso/1)   |
+| [休闲游戏](https://playzip.com/category/casual)        | [2](https://rsshub.app/koyso/2)   |
+| [体育竞速](https://playzip.com/category/sports_racing) | [4](https://rsshub.app/koyso/4)   |
 | [模拟经营](https://playzip.com/category/simulation)    | [6](https://rsshub.app/koyso/6)   |
-| [角色扮演](https://playzip.com/category/rpg)    | [8](https://rsshub.app/koyso/8)   |
-| [策略游戏](https://playzip.com/category/strategy)    | [9](https://rsshub.app/koyso/9)   |
-| [格斗游戏](https://playzip.com/category/fighting)   | [10](https://rsshub.app/koyso/10) |
-| [恐怖游戏](https://playzip.com/category/horror)   | [11](https://rsshub.app/koyso/11) |
-| [即时战略](https://playzip.com/category/rts)   | [12](https://rsshub.app/koyso/12) |
-| [卡牌游戏](https://playzip.com/category/card)   | [13](https://rsshub.app/koyso/13) |
-| [独立游戏](https://playzip.com/category/indie)   | [14](https://rsshub.app/koyso/14) |
-| [局域网联机](https://playzip.com/category/lan) | [15](https://rsshub.app/koyso/15) |
+| [角色扮演](https://playzip.com/category/rpg)           | [8](https://rsshub.app/koyso/8)   |
+| [策略游戏](https://playzip.com/category/strategy)      | [9](https://rsshub.app/koyso/9)   |
+| [格斗游戏](https://playzip.com/category/fighting)      | [10](https://rsshub.app/koyso/10) |
+| [恐怖游戏](https://playzip.com/category/horror)        | [11](https://rsshub.app/koyso/11) |
+| [即时战略](https://playzip.com/category/rts)           | [12](https://rsshub.app/koyso/12) |
+| [卡牌游戏](https://playzip.com/category/card)          | [13](https://rsshub.app/koyso/13) |
+| [独立游戏](https://playzip.com/category/indie)         | [14](https://rsshub.app/koyso/14) |
+| [局域网联机](https://playzip.com/category/lan)         | [15](https://rsshub.app/koyso/15) |
 
 #### 排序
 
-| 排序                                  | ID                                          |
-| ------------------------------------- | ------------------------------------------- |
+| 排序                                     | ID                                          |
+| ---------------------------------------- | ------------------------------------------- |
 | [热度](https://playzip.com/?sort=views)  | [views](https://rsshub.app/koyso/0/views)   |
 | [最新](https://playzip.com/?sort=latest) | [latest](https://rsshub.app/koyso/0/latest) |`,
     categories: ['game'],

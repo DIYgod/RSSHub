@@ -73,16 +73,31 @@ function catalogJson<T>(script: string, name: string): T {
             } else if (character === '"') {
                 quoted = false;
             }
-        } else if (character === '"') {
-            quoted = true;
-        } else if (character === '{' || character === '[') {
-            depth++;
-        } else if (character === '}' || character === ']') {
-            depth--;
-            if (depth === 0) {
-                return JSON.parse(script.slice(start, index + 1));
+        } else
+            switch (character) {
+                case '"': {
+                    quoted = true;
+
+                    break;
+                }
+                case '{':
+                case '[': {
+                    depth++;
+
+                    break;
+                }
+                case '}':
+                case ']': {
+                    depth--;
+                    if (depth === 0) {
+                        return JSON.parse(script.slice(start, index + 1));
+                    }
+
+                    break;
+                }
+                default:
+                // Do nothing
             }
-        }
     }
     throw new Error(`The admissions catalog contains incomplete ${name} data.`);
 }

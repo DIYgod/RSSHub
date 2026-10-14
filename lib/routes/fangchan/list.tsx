@@ -191,8 +191,8 @@ export const route: Route = {
 若订阅 [数据研究](http://www.fangchan.com/datalist/)，可将分类页 URL 中的 \`datalist\` 填入 \`id\` 参数，对应路由为 [\`/fangchan/list/datalist\`](https://rsshub.app/fangchan/list/datalist)。
 :::
 
-| [数据研究](http://www.fangchan.com/datalist/) | [行业测评](http://www.fangchan.com/industrylist/) | [政策法规](http://www.fangchan.com/policylist/) |
-| ------------------------------------------ | ---------------------------------------------- | -------------------------------------------- |
+| [数据研究](http://www.fangchan.com/datalist/)         | [行业测评](http://www.fangchan.com/industrylist/)             | [政策法规](http://www.fangchan.com/policylist/)           |
+| ----------------------------------------------------- | ------------------------------------------------------------- | --------------------------------------------------------- |
 | [datalist](https://rsshub.app/fangchan/list/datalist) | [industrylist](https://rsshub.app/fangchan/list/industrylist) | [policylist](https://rsshub.app/fangchan/list/policylist) |`,
     categories: ['new-media'],
     features: {

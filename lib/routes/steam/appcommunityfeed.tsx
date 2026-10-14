@@ -44,13 +44,13 @@ export const route: Route = {
     ],
     description: `Query Parameters:
 
-| Name                   | Type   | Description             |
-| ---------------------- | ------ | ----------------------- |
+| Name                   | Type   | Description                                             |
+| ---------------------- | ------ | ------------------------------------------------------- |
 | p                      | string | Compatibility parameter; always requests the first page |
-| rgSections\\[]          | string | rgSections              |
-| filterLanguage         | string | Filter Language         |
-| languageTag            | string | Language Tag            |
-| nMaxInappropriateScore | string | Max Inappropriate Score |
+| rgSections\\[]          | string | rgSections                                              |
+| filterLanguage         | string | Filter Language                                         |
+| languageTag            | string | Language Tag                                            |
+| nMaxInappropriateScore | string | Max Inappropriate Score                                 |
 
 Example:
 

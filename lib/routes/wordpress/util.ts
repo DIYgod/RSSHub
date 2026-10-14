@@ -165,12 +165,24 @@ const bakeSiteSearchParams = (filterPairs: Record<string, Filter[] | string[]>):
         if (!value.length) {
             continue;
         }
-        if (key === 'category') {
-            searchParams.set('cat', (value as Filter[]).map((pair) => pair.id).join(','));
-        } else if (key === 'tag') {
-            searchParams.set('tag', (value as Filter[]).map((pair) => pair.slug).join(','));
-        } else if (key === 'search') {
-            searchParams.set('s', value.join(','));
+        switch (key) {
+            case 'category': {
+                searchParams.set('cat', (value as Filter[]).map((pair) => pair.id).join(','));
+
+                break;
+            }
+            case 'tag': {
+                searchParams.set('tag', (value as Filter[]).map((pair) => pair.slug).join(','));
+
+                break;
+            }
+            case 'search': {
+                searchParams.set('s', value.join(','));
+
+                break;
+            }
+            default:
+            // Do nothing
         }
     }
     return searchParams;

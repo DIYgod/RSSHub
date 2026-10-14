@@ -248,67 +248,67 @@ export const route: Route = {
     url: 'grist.org/articles/',
     description: `Topics from the official category API. Use the category slug as \`topic\`.
 
-| Topic Name | Topic Slug |
-| ---------- | ---------- |
-| Accountability | accountability |
-| Ask Umbra | ask-umbra-series |
-| Buildings | buildings |
-| Business | business |
-| Cities | cities |
-| Climate | climate |
-| Climate & Energy | climate-energy |
-| Climate Fiction | climate-fiction |
-| Climate of Courage | climate-of-courage |
-| Community Engagement | community-engagement |
-| COP26 | cop26 |
-| COP27 | cop27 |
-| COP28 | cop28 |
-| COP29 | cop29 |
-| COP30 | cop30 |
-| Culture | culture |
-| Drought | drought |
-| Economics | economics |
-| Elections | elections |
-| Energy | energy |
-| Equity | equity |
-| Extreme Heat | extreme-heat |
-| Extreme Weather | extreme-weather |
-| Fix | fix |
-| fix-articles | fix-articles |
-| Food and Agriculture | food-and-agriculture |
-| Georgia PSC | georgia-psc |
+| Topic Name                     | Topic Slug                     |
+| ------------------------------ | ------------------------------ |
+| Accountability                 | accountability                 |
+| Ask Umbra                      | ask-umbra-series               |
+| Buildings                      | buildings                      |
+| Business                       | business                       |
+| Cities                         | cities                         |
+| Climate                        | climate                        |
+| Climate & Energy               | climate-energy                 |
+| Climate Fiction                | climate-fiction                |
+| Climate of Courage             | climate-of-courage             |
+| Community Engagement           | community-engagement           |
+| COP26                          | cop26                          |
+| COP27                          | cop27                          |
+| COP28                          | cop28                          |
+| COP29                          | cop29                          |
+| COP30                          | cop30                          |
+| Culture                        | culture                        |
+| Drought                        | drought                        |
+| Economics                      | economics                      |
+| Elections                      | elections                      |
+| Energy                         | energy                         |
+| Equity                         | equity                         |
+| Extreme Heat                   | extreme-heat                   |
+| Extreme Weather                | extreme-weather                |
+| Fix                            | fix                            |
+| fix-articles                   | fix-articles                   |
+| Food and Agriculture           | food-and-agriculture           |
+| Georgia PSC                    | georgia-psc                    |
 | Global Indigenous Affairs Desk | global-indigenous-affairs-desk |
-| Grist | grist |
-| Grist Events | grist-events |
-| Grist News | grist-news |
-| Grist Original Videos | grist-video |
-| Health | health |
-| Housing | housing |
-| Indigenous Affairs | indigenous |
-| International | international |
-| Justice | justice |
-| Labor | labor |
-| Language | language |
-| Migration | migration |
-| Oceans | oceans |
-| Opinion | opinion |
-| Politics | politics |
-| Protest | protest |
-| Race | race |
-| Regulation | regulation |
-| Science | science |
-| Shift Happens Newsletter | shift-happens |
-| Solutions | solutions |
-| Spanish | spanish |
-| Sponsored | sponsored |
-| Technology | technology |
-| Temperature Check | temperature-check |
-| Transportation | transportation |
-| Uncategorized | article |
-| Updates | updates |
-| Video | video |
-| Wildfires | wildfires |
-| Words of the Year | words-of-the-year |`,
+| Grist                          | grist                          |
+| Grist Events                   | grist-events                   |
+| Grist News                     | grist-news                     |
+| Grist Original Videos          | grist-video                    |
+| Health                         | health                         |
+| Housing                        | housing                        |
+| Indigenous Affairs             | indigenous                     |
+| International                  | international                  |
+| Justice                        | justice                        |
+| Labor                          | labor                          |
+| Language                       | language                       |
+| Migration                      | migration                      |
+| Oceans                         | oceans                         |
+| Opinion                        | opinion                        |
+| Politics                       | politics                       |
+| Protest                        | protest                        |
+| Race                           | race                           |
+| Regulation                     | regulation                     |
+| Science                        | science                        |
+| Shift Happens Newsletter       | shift-happens                  |
+| Solutions                      | solutions                      |
+| Spanish                        | spanish                        |
+| Sponsored                      | sponsored                      |
+| Technology                     | technology                     |
+| Temperature Check              | temperature-check              |
+| Transportation                 | transportation                 |
+| Uncategorized                  | article                        |
+| Updates                        | updates                        |
+| Video                          | video                          |
+| Wildfires                      | wildfires                      |
+| Words of the Year              | words-of-the-year              |`,
 };
 
 async function handler(ctx): Promise<Data> {

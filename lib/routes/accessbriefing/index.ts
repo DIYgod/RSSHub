@@ -128,8 +128,8 @@ If you subscribe to [Latest News](https://www.accessbriefing.com/latest/news)，
 
 #### Latest
 
-| Category                                                                               | ID                                                                                              |
-| -------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------- |
+| Category                                                                               | ID                                                                                                 |
+| -------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- |
 | [News](https://www.accessbriefing.com/latest/news)                                     | [latest/news](https://rsshub.app/accessbriefing/latest/news)                                       |
 | [Products & Technology](https://www.accessbriefing.com/latest/products-and-technology) | [latest/products-and-technology](https://rsshub.app/accessbriefing/latest/products-and-technology) |
 | [Rental News](https://www.accessbriefing.com/latest/rental-news)                       | [latest/rental-news](https://rsshub.app/accessbriefing/latest/rental-news)                         |
@@ -140,8 +140,8 @@ If you subscribe to [Latest News](https://www.accessbriefing.com/latest/news)，
 
 #### Insight
 
-| Category                                                                          | ID                                                                                        |
-| --------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- |
+| Category                                                                          | ID                                                                                           |
+| --------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
 | [Interviews](https://www.accessbriefing.com/insight/interviews)                   | [insight/interviews](https://rsshub.app/accessbriefing/insight/interviews)                   |
 | [Longer reads](https://www.accessbriefing.com/insight/longer-reads)               | [insight/longer-reads](https://rsshub.app/accessbriefing/insight/longer-reads)               |
 | [Videos and podcasts](https://www.accessbriefing.com/insight/videos-and-podcasts) | [insight/videos-and-podcasts](https://rsshub.app/accessbriefing/insight/videos-and-podcasts) |`,

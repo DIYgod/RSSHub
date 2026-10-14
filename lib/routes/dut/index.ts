@@ -32,8 +32,7 @@ export const route: Route = {
 
 官网改版前的快捷路径保持兼容：\`/dut/news/ttgz\` 订阅当前主页新闻，\`/dut/news/rcpy\` 和 \`/dut/news/xwjj01/rcpy\` 均订阅当前[人才培养](https://news.dlut.edu.cn/rcpy.htm)栏目。
 
-大部分大学分站可按此规则订阅；需要校园内网或登录的正文页面可能只能返回公开列表中的信息。
-`,
+大部分大学分站可按此规则订阅；需要校园内网或登录的正文页面可能只能返回公开列表中的信息。`,
 };
 
 function getCurrentListDate($: CheerioAPI, item: Cheerio<Element>): Date | undefined {

@@ -39,7 +39,7 @@ export const route: Route = {
     handler,
     description: `| 校区要闻 | 媒体报道 | 综合新闻 | 校园动态 | 讲座论坛 | 热点专题 | 招标信息 | 重要关注 |
 | -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- |
-| id-116   | id-80    | id-75    | id-77    | id-78    | id-79    | id-81 | id-124   |`,
+| id-116   | id-80    | id-75    | id-77    | id-78    | id-79    | id-81    | id-124   |`,
 };
 
 const categories: Record<string, string> = {

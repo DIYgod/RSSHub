@@ -48,19 +48,19 @@ export const route: Route = {
     name: '研究生院',
     maintainers: ['E1nzbern'],
     handler,
-    description: `| 文章来源            | 参数         |
-| ------------------- | ------------ |
-| 通知公告\\_招生      | noti\\_zs     |
-| 通知公告            | noti         |
-| 新闻动态            | news         |
-| 培养                | py           |
-| 学位                | xw           |
-| 博士招生 - 招生专题 | bszs\\_zszt   |
-| 硕士招生 - 招生专题 | sszs\\_zszt   |
-| 招生简章 - 招生专题 | zsjz\\_zszt   |
+    description: `| 文章来源            | 参数       |
+| ------------------- | ---------- |
+| 通知公告\\_招生      | noti\\_zs   |
+| 通知公告            | noti       |
+| 新闻动态            | news       |
+| 培养                | py         |
+| 学位                | xw         |
+| 博士招生 - 招生专题 | bszs\\_zszt |
+| 硕士招生 - 招生专题 | sszs\\_zszt |
+| 招生简章 - 招生专题 | zsjz\\_zszt |
 
 ::: tip
-文章来源的命名均来自研究生院网站标题。官网改版后，当前支持 noti_zs、noti、news、py、xw、bszs_zszt、sszs_zszt 和 zsjz_zszt；其余旧栏目没有可验证的对应列表。
+文章来源的命名均来自研究生院网站标题。官网改版后，当前支持 noti\\_zs、noti、news、py、xw、bszs\\_zszt、sszs\\_zszt 和 zsjz\\_zszt；其余旧栏目没有可验证的对应列表。
 最常用的几项有 “通知公告\\_招生”、“通知公告”、“博士招生 - 招生专题”、“硕士招生 - 招生专题”。
 :::`,
 };
