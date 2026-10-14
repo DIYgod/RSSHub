@@ -10,15 +10,23 @@ export const route: Route = {
     example: '/wallpaperhub',
     radar: [
         {
-            source: ['wallpaperhub.app/wallpaperhub', 'wallpaperhub.app/'],
+            source: ['wallpaperhub.app/wallpapers', 'wallpaperhub.app/'],
             target: '',
         },
     ],
     name: 'Wallpapers',
     maintainers: ['nczitzk'],
     handler,
-    url: 'wallpaperhub.app/wallpaperhub',
+    url: 'wallpaperhub.app/wallpapers',
 };
+
+function parseSourceTime(value: unknown) {
+    if ((typeof value !== 'number' && typeof value !== 'string') || (typeof value === 'string' && !value.trim())) {
+        return;
+    }
+    const date = parseDate(value);
+    return Number.isFinite(date.getTime()) ? date : undefined;
+}
 
 async function handler() {
     const link = 'https://wallpaperhub.app/api/v1/wallpapers/?limit=20&page=&query=&width=&height=&tags=';
@@ -27,17 +35,21 @@ async function handler() {
         url: link,
     });
 
-    const list = response.data.entities.map((item) => ({
-        title: item.entity.title,
-        description: renderToString(
-            <>
-                <p>{item.entity.description}</p>
-                <img src={item.entity.variations[0].resolutions[0].url || item.entity.thumbnail} />
-            </>
-        ),
-        pubDate: parseDate(item.entity.created),
-        link: `https://wallpaperhub.app/wallpapers/${item.entity.id}`,
-    }));
+    const list = response.data.entities.map((item) => {
+        const imageUrl = item.entity.variations?.[0]?.resolutions?.[0]?.url || item.entity.thumbnail;
+        return {
+            title: item.entity.title,
+            description: renderToString(
+                <>
+                    <p>{item.entity.description}</p>
+                    {imageUrl ? <img src={imageUrl} /> : null}
+                </>
+            ),
+            pubDate: parseSourceTime(item.entity.created),
+            category: item.entity.tags,
+            link: `https://wallpaperhub.app/wallpapers/${item.entity.id}`,
+        };
+    });
 
     return {
         title: 'WallpaperHub',
