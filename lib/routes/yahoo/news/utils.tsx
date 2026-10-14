@@ -1,4 +1,4 @@
-import { load } from 'cheerio';
+import { type CheerioAPI, load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
 
 import { config } from '@/config';
@@ -37,7 +37,6 @@ const regionConfig = {
         },
     },
 };
-
 const getArchive = async (region, limit, tags?: string[], providerId?) => {
     const { spaceId, lang } = regionConfig[region];
     const params = new URLSearchParams({
@@ -60,32 +59,27 @@ const getArchive = async (region, limit, tags?: string[], providerId?) => {
             params.append('tag', tag);
         }
     }
-
     const { data: response } = await got(`https://tw-gw-news.media.yahoo.com/api/v1/gql/saved_query?${params.toString()}`);
     return response.data.stream.contents;
 };
-
 const getList = async (region, listId) => {
     const { data: response } = await got(`https://${region}.news.yahoo.com/_td-news/api/resource/StreamService;category=LISTID%3A${listId};useNCP=true`);
     return response;
 };
-
 const getCategories = (region) =>
     cache.tryGet(`yahoo:${region}:categoryMap`, async () => {
         const { PageStore } = await getStores(region);
-
         const { Col1: col1 } = PageStore.pagesConfigRaw.base.section.regions;
         const { categoryMap } = col1.find((c) => c.name === 'ArchiveFilterBar').props;
-        for (const [key, value] of Object.entries(categoryMap)) {
+        const streamLines = Object.entries(categoryMap);
+        for (const [key, value] of streamLines) {
             categoryMap[key] = {
                 name: value,
                 yctMap: col1.find((c) => c.name === 'StreamContainerArchive').props.yctMap[key],
             };
         }
-
         return categoryMap;
     });
-
 const getProviderList = async (region) => {
     const stores = await getStores(region);
     return stores.providerList.map((provider) => ({
@@ -94,7 +88,6 @@ const getProviderList = async (region) => {
         link: new URL(`${provider.key}--所有類別/archive`, `https://${region}.news.yahoo.com`).href,
     }));
 };
-
 const findStoresObject = (node) => {
     if (!(node instanceof Object)) {
         return null;
@@ -102,7 +95,8 @@ const findStoresObject = (node) => {
     if ('breakingNews' in node) {
         return node;
     }
-    for (const value of Object.values(node)) {
+    const streamLines = Object.values(node);
+    for (const value of streamLines) {
         const found = findStoresObject(value);
         if (found) {
             return found;
@@ -110,24 +104,19 @@ const findStoresObject = (node) => {
     }
     return null;
 };
-
 const getStores = (region) =>
     cache.tryGet(`yahoo:${region}:stores`, async () => {
         const { data: response } = await got(`https://${region}.news.yahoo.com/archive`);
         const $ = load(response);
-
         const script = $('script:contains("pageBenjiConfig")').text();
         const rscText = script.match(/self\.__next_f\.push\(\[1,"\d:(.*)"\]\)/)?.[1];
         const rscData = JSON.parse(JSON.parse(`"${rscText}"`));
-
         const stores = findStoresObject(rscData);
         if (!stores) {
             throw new Error(`Unable to locate stores data for region ${region}`);
         }
-
         return stores;
     });
-
 const parseList = (region, response) =>
     response.map((item) => ({
         title: item.title,
@@ -136,78 +125,127 @@ const parseList = (region, response) =>
         pubDate: item.published_at ? parseDate(item.published_at, 'X') : item.pubDate ? parseDate(item.pubDate) : undefined,
         author: item.provider_name ?? item.provider?.displayName ?? item.publisher,
     }));
-
-const parseItem = (item) =>
-    cache.tryGet(item.link, async () => {
-        const { data: response } = await got(item.link, {
-            headers: {
-                'User-Agent': config.trueUA,
-            },
-        });
-        const $ = load(response);
-
-        const ldJsonEle = $('script[type="application/ld+json"]')
-            .toArray()
-            .find((ele) => $(ele).text().includes('"@type":"NewsArticle"'));
-        const ldJson = JSON.parse((ldJsonEle && $(ldJsonEle).text()) || '{}');
-        const author = ldJson.author?.name;
-        const body = $('.atoms').length ? $('.atoms') : $('.article-detail').length ? $('.article-detail') : $('.bodyItems-wrapper');
-
-        body.find('noscript, .recommendation-contents, .text-gandalf, [id^="sda-inbody-"]').remove();
-        // remove padding
-        body.find('.caas-figure-with-pb, .caas-img-container').each((_, ele) => {
-            const $ele = $(ele);
-            $ele.removeAttr('style');
-        });
-
-        body.find('img').each((_, ele) => {
-            const $ele = $(ele);
-            let dataSrc = $ele.attr('data-src');
-
-            if (!dataSrc) {
-                return;
+function getStructuredData(content: CheerioAPI) {
+    return content('script[type="application/ld+json"]')
+        .toArray()
+        .flatMap((element) => {
+            try {
+                const data = JSON.parse(content(element).text());
+                const entries = Array.isArray(data) ? data : [data];
+                return entries.flatMap((entry) => (entry && typeof entry === 'object' ? [entry, ...(Array.isArray(entry['@graph']) ? entry['@graph'] : [])] : []));
+            } catch {
+                return [];
             }
-
-            const match = dataSrc.match(/.*--\/.*--\/(.*)/);
-            if (match?.[1]) {
-                dataSrc = match?.[1];
-            }
-            $ele.attr('src', dataSrc);
-            $ele.removeAttr('data-src');
-        });
-        // fix blockquote iframe
-        body.find('.caas-iframe').each((_, ele) => {
-            const $ele = $(ele);
-            if ($ele.data('type') !== 'youtube') {
-                return;
-            }
-
-            const blockquoteSrc = $ele.find('blockquote').attr('data-src')!;
-            $ele.replaceWith(
-                renderToString(
-                    <iframe
-                        width="560"
-                        height="315"
-                        src={`https://www.youtube-nocookie.com/embed/${blockquoteSrc.split('/').pop()?.split('?', 1)?.[0]}`}
-                        frameborder="0"
-                        allow="encrypted-media; picture-in-picture; web-share"
-                        allowfullscreen
-                        referrerpolicy="strict-origin-when-cross-origin"
-                    ></iframe>
-                )
-            );
-        });
-
-        item.description = body
+        })
+        .filter((entry) => entry && typeof entry === 'object');
+}
+function parseArticleDate(value: unknown) {
+    if (typeof value !== 'string' || !value) {
+        return;
+    }
+    const date = parseDate(value);
+    return Number.isFinite(date.getTime()) ? date : undefined;
+}
+function parseArticleImage(value: unknown) {
+    if (typeof value === 'string' && URL.canParse(value) && ['http:', 'https:'].includes(new URL(value).protocol)) {
+        return value;
+    }
+}
+function getYoutubeVideoId(value: string | undefined) {
+    if (!value || !URL.canParse(value)) {
+        return;
+    }
+    const url = new URL(value);
+    if (!['http:', 'https:'].includes(url.protocol)) {
+        return;
+    }
+    const videoId = ['youtu.be', 'www.youtu.be'].includes(url.hostname)
+        ? url.pathname.split('/', 2)[1]
+        : ['youtube.com', 'www.youtube.com', 'm.youtube.com', 'youtube-nocookie.com', 'www.youtube-nocookie.com'].includes(url.hostname)
+          ? url.pathname === '/watch'
+              ? url.searchParams.get('v')
+              : url.pathname.match(/^\/(?:embed|shorts|live)\/([^/]+)/)?.[1]
+          : undefined;
+    return videoId && /^[\w-]{11}$/.test(videoId) ? videoId : undefined;
+}
+async function fetchItem(link: string) {
+    const { data: response } = await got(link, {
+        headers: {
+            'User-Agent': config.trueUA,
+        },
+    });
+    const $ = load(response);
+    const ldJson = getStructuredData($).find((entry) => entry['@type'] === 'NewsArticle') ?? {};
+    const author = ldJson.author?.name;
+    const body = $('.atoms').length ? $('.atoms') : $('.article-detail').length ? $('.article-detail') : $('.bodyItems-wrapper');
+    body.find('noscript, .recommendation-contents, .text-gandalf, [id^="sda-inbody-"], [data-testid="inarticle-ad"]').remove();
+    // remove padding
+    body.find('.caas-figure-with-pb, .caas-img-container').each((_, ele) => {
+        const $ele = $(ele);
+        $ele.removeAttr('style');
+    });
+    body.find('img').each((_, ele) => {
+        const $ele = $(ele);
+        let dataSrc = $ele.attr('data-src');
+        if (!dataSrc) {
+            return;
+        }
+        const match = dataSrc.match(/.*--\/.*--\/(.*)/);
+        if (match?.[1]) {
+            dataSrc = match?.[1];
+        }
+        $ele.attr('src', dataSrc);
+        $ele.removeAttr('data-src');
+    });
+    // fix blockquote iframe
+    body.find('.caas-iframe').each((_, ele) => {
+        const $ele = $(ele);
+        if ($ele.data('type') !== 'youtube') {
+            return;
+        }
+        const videoId = getYoutubeVideoId($ele.find('blockquote').attr('data-src'));
+        if (!videoId) {
+            return;
+        }
+        $ele.replaceWith(
+            renderToString(
+                <iframe
+                    width="560"
+                    height="315"
+                    src={`https://www.youtube-nocookie.com/embed/${videoId}`}
+                    frameborder="0"
+                    allow="encrypted-media; picture-in-picture; web-share"
+                    allowfullscreen
+                    referrerpolicy="strict-origin-when-cross-origin"
+                ></iframe>
+            )
+        );
+    });
+    return {
+        description: body
             .toArray()
             .map((ele) => $(ele).html())
-            .join('');
-        item.author = author ?? item.author;
-        item.category = ldJson.keywords;
-        item.pubDate = ldJson.datePublished ? parseDate(ldJson.datePublished) : item.pubDate;
-        item.updated = ldJson.dateModified ? parseDate(ldJson.dateModified) : item.updated;
-
-        return item;
-    });
-
+            .join(''),
+        author,
+        image: parseArticleImage(ldJson.image?.url),
+        category:
+            typeof ldJson.articleSection === 'string' && ldJson.articleSection
+                ? [ldJson.articleSection, ...(Array.isArray(ldJson.keywords) ? ldJson.keywords : typeof ldJson.keywords === 'string' ? [ldJson.keywords] : [])]
+                : ldJson.keywords,
+        pubDate: parseArticleDate(ldJson.datePublished),
+        updated: parseArticleDate(ldJson.dateModified),
+    };
+}
+const parseItem = async (item) => {
+    const details = await cache.tryGet(`yahoo:news:article:v5:${item.link}`, () => fetchItem(item.link));
+    return {
+        ...item,
+        description: details.description ?? item.description,
+        author: details.author ?? item.author,
+        image: details.image ?? item.image,
+        category: details.category ?? item.category,
+        pubDate: details.pubDate ?? item.pubDate,
+        updated: details.updated ?? item.updated,
+    };
+};
 export { getArchive, getCategories, getList, getProviderList, getStores, parseItem, parseList, regionConfig };

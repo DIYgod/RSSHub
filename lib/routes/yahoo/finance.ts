@@ -22,7 +22,8 @@ async function handler(ctx) {
     const link = `https://finance.yahoo.com/topic/${topic}/`;
     const response = await ofetch(link);
     const $ = load(response);
-    const limit = Number(ctx.req.query('limit')) || 20;
+    const requestedLimit = Number(ctx.req.query('limit'));
+    const limit = Number.isSafeInteger(requestedLimit) && requestedLimit > 0 ? requestedLimit : 20;
     const seen = new Set<string>();
     const items = $('a[data-ylk*="topic-stream"]:has(h3)')
         .toArray()
