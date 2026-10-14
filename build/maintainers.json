@@ -6991,6 +6991,9 @@
   "/ps/monthly-games": [
     "justjustCC"
   ],
+  "/ps/price/:id/:locale?": [
+    "pseudoyu"
+  ],
   "/ps/trophy/:id": [
     "DIYgod"
   ],

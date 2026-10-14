@@ -2774,6 +2774,7 @@ export type RoutePath =
   | `/projectjav/actress/:id`
   | `/proletar/:type?/:id?`
   | `/ps/monthly-games`
+  | `/ps/price/:id/:locale?`
   | `/ps/trophy/:id`
   | `/psnine/`
   | `/psnine/game`

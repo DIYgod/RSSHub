@@ -41220,6 +41220,17 @@
         ],
         "target": "/ps/monthly-games"
       }
+    ],
+    "store": [
+      {
+        "title": "Game Price",
+        "docs": "https://docs.rsshub.app/routes/ps",
+        "source": [
+          "/:locale/concept/:id",
+          "/:locale/product/:id"
+        ],
+        "target": "/ps/price/:id/:locale"
+      }
     ]
   },
   "psnine.com": {
