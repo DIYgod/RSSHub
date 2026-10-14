@@ -5,7 +5,8 @@ import pMap from 'p-map';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
+import { getRouteLimit } from '@/utils/route-limit';
 
 const baseUrl = 'https://www.poxiao.com';
 
@@ -19,8 +20,8 @@ export const route: Route = {
     handler,
 };
 
-function getItem(item: DataItem) {
-    return cache.tryGet(item.link!, async () => {
+async function getItem(item: DataItem) {
+    const detail = await cache.tryGet(`poxiao:article:v2:${item.link}`, async () => {
         const { data: response } = await got(item.link!, { responseType: 'buffer' });
         const $ = load(iconv.decode(response, 'gbk'));
         const content = $('.inner_content');
@@ -33,22 +34,22 @@ function getItem(item: DataItem) {
             .filter((element) => /^(?:magnet:\?xt=urn:btih:[a-z0-9]{32,40}|https?:\/\/|ed2k:\/\/)/i.test($(element).attr('href')!))
             .map((element) => $.html(element))
             .join('<br>');
-        item.description = (content.html() || '') + downloads;
-        item.category = $('.channel a').last().text();
-        return item;
+        return { description: (content.html() || '') + downloads, category: $('.channel a').last().text() };
     });
+    return { ...item, ...detail };
 }
 
 async function handler(ctx) {
     const { data: response } = await got(baseUrl, { responseType: 'buffer' });
     const $ = load(iconv.decode(response, 'gbk'));
     const seen = new Set<string>();
-    const limit = Number(ctx.req.query('limit')) || 20;
+    const limit = getRouteLimit(ctx, 20);
     const items = $('li:has(.date)')
         .toArray()
         .map((element) => {
             const anchor = $(element).find('a[href]').last();
-            return { title: anchor.text(), link: new URL(anchor.attr('href')!, baseUrl).href, pubDate: parseDate($(element).find('.date').text()) };
+            const date = $(element).find('.date').text();
+            return { title: anchor.text(), link: new URL(anchor.attr('href')!, baseUrl).href, pubDate: date ? parseDateInTimezone(date, 8) : undefined };
         })
         .filter((item) => {
             if (seen.has(item.link)) {
