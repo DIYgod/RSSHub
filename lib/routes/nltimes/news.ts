@@ -48,7 +48,11 @@ export const route: Route = {
 
 async function handler(ctx) {
     const category = ctx.req.param('category') ?? 'top-stories';
-    const suffix = map.get(category)!.suffix;
+    const selectedCategory = map.get(category);
+    if (!selectedCategory) {
+        throw new Error(`Unknown NL Times category: ${category}. Expected one of: ${map.keys().toArray().join(', ')}.`);
+    }
+    const suffix = selectedCategory.suffix;
 
     const rootUrl = 'https://www.nltimes.nl';
     const apiUrl = rootUrl + suffix;
