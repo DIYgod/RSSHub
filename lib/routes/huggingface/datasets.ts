@@ -4,6 +4,14 @@ import type { DataItem, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
+function getPublicationDate(value?: string) {
+    if (!value) {
+        return;
+    }
+    const date = parseDate(value);
+    return Number.isNaN(date.getTime()) ? undefined : date;
+}
+
 export const route: Route = {
     path: '/datasets/:author',
     name: 'Datasets by author',
@@ -48,7 +56,7 @@ async function handler(ctx: Context) {
         title: item.id,
         link: `https://huggingface.co/datasets/${item.id}`,
         author: item.author,
-        pubDate: item.createdAt ? parseDate(item.createdAt) : undefined,
+        pubDate: getPublicationDate(item.createdAt),
         description: item.description,
         category: item.cardData?.task_categories,
     }));
