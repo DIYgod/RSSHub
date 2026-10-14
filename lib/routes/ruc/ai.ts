@@ -1,16 +1,16 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
 
 export const route: Route = {
     path: '/ai/:category?',
     categories: ['university'],
     example: '/ruc/ai',
-    parameters: { category: '分类，见下方说明，默认为首页公告' },
+    parameters: { category: '分类，见下方说明，默认为学院公告（xwgg-xygg）' },
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -21,69 +21,53 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['ai.ruc.edu.cn/'],
+            source: ['ai.ruc.edu.cn/', 'ai.ruc.edu.cn/xwgg/xygg/index.htm'],
+            target: '/ai',
         },
     ],
     name: '高瓴人工智能学院',
     maintainers: ['yinhanyan'],
     handler: async (ctx) => {
-        const category = ctx.req.param('category')?.replaceAll('-', '/') ?? 'newslist/notice';
-        const baseURL = `http://ai.ruc.edu.cn/${category}/`;
-        const indexUrl = baseURL + 'index.htm';
-        const response = await ofetch(indexUrl);
+        const aliases = { 'newslist/notice': 'xwgg/xygg', 'newslist/newsdetail': 'xwgg/xyxw' };
+        const requestedCategory = ctx.req.param('category')?.replaceAll('-', '/') ?? 'xwgg/xygg';
+        const category = aliases[requestedCategory] ?? requestedCategory;
+        const indexUrl = `https://ai.ruc.edu.cn/${category}/index.htm`;
+        const response = await ofetch<string>(indexUrl);
         const $ = load(response);
-        const pageTitle = $('title').text();
-        const list = $('div.fr li')
+        const list = $('.listBox > ul > li > a')
             .toArray()
-            .map((item): DataItem & { link: string } => {
-                const $item = $(item);
-                const a = $item.find('a').first();
-                const link = baseURL + a.attr('href');
-                return {
-                    link,
-                    title: '',
-                };
+            .flatMap((element): Array<DataItem & { link: string }> => {
+                const $element = $(element);
+                const href = $element.attr('href');
+                const title = $element.find('h6').text();
+                if (!href || !title) {
+                    return [];
+                }
+                const month = $element.find('.time p').text();
+                const day = $element.find('.time b').text();
+                return [{ title, link: new URL(href, indexUrl).href, pubDate: month && day ? parseDateInTimezone(`${month}-${day}`, 8) : undefined }];
             });
-
-        const items = await Promise.all(
-            list.map((item) =>
-                cache.tryGet(item.link, async () => {
-                    try {
-                        const response = await ofetch(item.link);
-                        const $ = load(response);
-                        const title = $('title').text();
-                        item.title = title;
-                        const titleDiv = $('div.tit');
-                        const date = titleDiv.find('span').first().text();
-                        item.pubDate = timezone(parseDate(/\d+-\d+-\d+/.exec(date)![0]), 8);
-                        const frame = $('div.fr');
-                        item.description = frame
-                            .children()
-                            .slice(3)
-                            .toArray()
-                            .map((el) => $.html(el))
-                            .join('');
-                    } catch {
-                        item.description = '';
-                    }
-
-                    return item;
-                })
-            )
+        const items = await pMap(
+            list,
+            async (item) => {
+                const detail = await cache.tryGet(item.link, async () => {
+                    const response = await ofetch<string>(item.link);
+                    const content = load(response);
+                    const body = content('.articleCon');
+                    body.find('style, script').remove();
+                    const date = content('.articleTit .author')
+                        .text()
+                        .match(/\d{4}-\d{2}-\d{2}/)?.[0];
+                    return { description: body.html(), pubDate: date ? parseDateInTimezone(date, 8) : undefined };
+                });
+                return { ...item, ...detail, pubDate: detail.pubDate ?? item.pubDate };
+            },
+            { concurrency: 3 }
         );
-
-        return {
-            title: pageTitle,
-            link: indexUrl,
-            icon: 'https://www.ruc.edu.cn/favicon.ico',
-            logo: 'http://ai.ruc.edu.cn/images/cn_ruc_logo.png',
-            item: items,
-        };
+        return { title: $('title').text(), link: indexUrl, icon: 'https://www.ruc.edu.cn/favicon.ico', item: items };
     },
     url: 'ai.ruc.edu.cn/',
-    description: `::: tip
-分类字段处填写的是对应中国人民大学高瓴人工智能学院分类页网址中介于 **\`http://ai.ruc.edu.cn/\`** 和 **/index.htm** 中间的一段，并将其中的 \`/\` 修改为 \`-\`。
+    description: `分类参数填写分类页地址中介于 \`https://ai.ruc.edu.cn/\` 和 \`/index.htm\` 之间的路径，并将 \`/\` 替换为 \`-\`。
 
-如 [中国人民大学高瓴人工智能学院 - 新闻公告 - 学院新闻](http://ai.ruc.edu.cn/newslist/newsdetail/index.htm) 的网址为 \`http://ai.ruc.edu.cn/newslist/newsdetail/index.htm\` 其中介于 **\`http://ai.ruc.edu.cn/\`** 和 **/index.htm** 中间的一段为 \`newslist/newsdetail\`。随后，并将其中的 \`/\` 修改为 \`-\`，可以得到 \`newslist-newsdetail\`。所以最终我们的路由为 [\`/ruc/ai/newslist-newsdetail\`](https://rsshub.app/ruc/ai/newslist-newsdetail)
-:::`,
+例如 [学院公告](https://ai.ruc.edu.cn/xwgg/xygg/index.htm) 对应 \`xwgg-xygg\`；[学院新闻](https://ai.ruc.edu.cn/xwgg/xyxw/index.htm) 对应 \`xwgg-xyxw\`。旧参数 \`newslist-notice\` 和 \`newslist-newsdetail\` 分别映射到当前公告和新闻分类。`,
 };
