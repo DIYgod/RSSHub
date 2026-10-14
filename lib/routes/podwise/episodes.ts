@@ -1,14 +1,11 @@
-import { load } from 'cheerio';
-import dayjs from 'dayjs';
-import duration from 'dayjs/plugin/duration.js';
+import { type CheerioAPI, load } from 'cheerio';
+import { escape } from 'entities/escape';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
-import ofetch from '@/utils/ofetch'; // 统一使用的请求库
+import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
-
-dayjs.extend(duration);
 
 export const route: Route = {
     path: '/explore/:type',
@@ -25,98 +22,181 @@ export const route: Route = {
     handler: async (ctx) => {
         const type = ctx.req.param('type');
         const link = `https://podwise.ai/explore/${type}`;
-        const response = await ofetch(link);
-        const $ = load(response);
-        const content = $('#navigator').next();
-        // header/[div => content]/footer, content>div(2)>h1
-        const title = content.find('h1').first().text();
-        const description = content.find('p').eq(1).text();
-
-        const list = content
-            .find('.group')
-            .toArray()
-            .map((item): DataItem => {
-                const $item = $(item);
-                const link = $item.find('a').first().attr('href');
-                const description = $item.find('p').first().text();
-                const pubDate = $item.find('a').next().children('span').text();
-
-                return {
-                    link: `https://podwise.ai${link}`,
-                    description,
-                    pubDate: timezone(parseDate(pubDate, 'DD MMM YYYY', 'en'), 8),
-                    title: '',
-                };
-            });
-
-        const items = await Promise.all(
-            list.map((item) =>
-                cache.tryGet(item.link!, async () => {
-                    const response = await ofetch(item.link!);
-                    const $ = load(response);
-
-                    item.description = $('summary').first().html() ?? '';
-
-                    // duration
-                    const $cover = $('img[alt="Podcast cover"]').eq(1);
-                    const $duration = $cover.next().find('span').eq(2);
-
-                    const nextData = JSON.parse(
-                        $('script:contains("podName")')
-                            .first()
-                            .text()
-                            .match(/self\.__next_f\.push\((.+)\)/)?.[1] ?? ''
-                    );
-                    const podcastData = JSON.parse(nextData[1].slice(2))[1][3].children[3].episode;
-
-                    // rss feed
-                    item.title = podcastData.title;
-                    item.author = podcastData.podName;
-
-                    // podcast feed
-                    item.itunes_item_image = podcastData.cover;
-                    item.itunes_duration = parseDuration($duration.text());
-                    item.enclosure_url = podcastData.link;
-                    // item.enclosure_length: nothing can convert to.
-                    item.enclosure_type = toEnclosureType(podcastData.linkType);
-
-                    return item;
-                })
-            )
+        const pageSource1 = await ofetch(link);
+        const $ = load(pageSource1);
+        const links = [
+            ...new Set(
+                $('main a.group[href^="/episodes/"]')
+                    .toArray()
+                    .map((item) => new URL($(item).attr('href')!, link).href)
+            ),
+        ];
+        const items = await pMap(
+            links,
+            async (episodeLink): Promise<DataItem> => ({
+                link: episodeLink,
+                ...(await cache.tryGet(`podwise:episode:v5:${episodeLink}`, async () => {
+                    const pageSource2 = await ofetch(episodeLink);
+                    const $ = load(pageSource2);
+                    const data = parseEpisodeData($);
+                    const episode = data.episode;
+                    const enclosureType = toEnclosureType(episode.LinkType);
+                    const date = episode.PublishTime?.replace(/^\$D/, '');
+                    return {
+                        title: episode.Title,
+                        author: episode.PodName,
+                        language: toEpisodeLanguage(episode.Language),
+                        description: renderEpisodeDescription(episode.Description || data.previewContent?.summary),
+                        pubDate: date ? parseDate(date) : undefined,
+                        itunes_item_image: episode.EpImg || episode.Img,
+                        itunes_duration: parseDuration(episode.Duration),
+                        ...(enclosureType && episode.Link && { enclosure_url: episode.Link, enclosure_type: enclosureType }),
+                    };
+                })),
+            }),
+            { concurrency: 3 }
         );
-
         return {
-            title,
-            description,
+            title: $('main h1').first().text(),
+            description: $('meta[name="description"]').attr('content'),
             link,
             item: items,
         };
     },
 };
 
-function parseDuration(durationStr) {
-    const matches = durationStr.match(/(\d+h)?(\d+m)?/);
-    const hours = matches[1] ? Number.parseInt(matches[1]) : 0;
-    const minutes = matches[2] ? Number.parseInt(matches[2]) : 0;
-
-    // 使用 dayjs 的 duration 创建持续时间对象
-    return dayjs
-        .duration({
-            hours,
-            minutes,
-        })
-        .asSeconds();
+interface EpisodeData {
+    episode: {
+        Title: string;
+        Description?: string;
+        Language?: string | null;
+        PodName?: string;
+        Link?: string;
+        LinkType?: string;
+        PublishTime?: string;
+        Img?: string;
+        EpImg?: string;
+        Duration?: string;
+    };
+    previewContent?: { summary?: string };
 }
 
-function toEnclosureType(linkType: string): string {
+function parseEpisodeData($: CheerioAPI): EpisodeData {
+    const stream = $('script')
+        .toArray()
+        .flatMap((script) => {
+            const match = $(script)
+                .text()
+                .match(/self\.__next_f\.push\(([\s\S]+)\)/);
+            if (!match) {
+                return [];
+            }
+            const frame = JSON.parse(match[1]);
+            return frame[0] === 1 && typeof frame[1] === 'string' ? [frame[1]] : [];
+        })
+        .join('');
+    const bytes = Buffer.from(stream, 'utf8');
+    const textRecords = new Map<string, string>();
+    const records: Array<[unknown, unknown, unknown, { data?: EpisodeData }?]> = [];
+    let offset = 0;
+    while (offset < bytes.length) {
+        const colon = bytes.indexOf(':', offset);
+        const newline = bytes.indexOf('\n', offset);
+        if (colon === -1 || !/^[a-f\d]+$/i.test(bytes.subarray(offset, colon).toString())) {
+            offset = newline === -1 ? bytes.length : newline + 1;
+            continue;
+        }
+        const id = bytes.subarray(offset, colon).toString();
+        if (bytes[colon + 1] === 84) {
+            const comma = bytes.indexOf(',', colon + 2);
+            const size = bytes.subarray(colon + 2, comma).toString();
+            if (comma === -1 || !/^[a-f\d]+$/i.test(size)) {
+                throw new Error('Podwise contains an invalid public text record.');
+            }
+            const end = comma + 1 + Number.parseInt(size, 16);
+            if (end > bytes.length) {
+                throw new Error('Podwise contains an incomplete public text record.');
+            }
+            textRecords.set(id, bytes.subarray(comma + 1, end).toString('utf8'));
+            offset = end;
+            if (bytes[offset] === 10) {
+                offset++;
+            }
+            continue;
+        }
+        const record = bytes.subarray(colon + 1, newline === -1 ? bytes.length : newline).toString('utf8');
+        if (record.startsWith('[')) {
+            try {
+                records.push(JSON.parse(record));
+            } catch {
+                // Other public transport records are not episode metadata.
+            }
+        }
+        offset = newline === -1 ? bytes.length : newline + 1;
+    }
+    for (const record of records) {
+        const data: EpisodeData | undefined = record[3]?.data;
+        if (data?.episode?.Title) {
+            return {
+                ...data,
+                episode: { ...data.episode, Description: resolveFlightText(data.episode.Description, textRecords) },
+                previewContent: data.previewContent ? { ...data.previewContent, summary: resolveFlightText(data.previewContent.summary, textRecords) } : undefined,
+            };
+        }
+    }
+    throw new Error('Podwise episode metadata was not found in the public page.');
+}
+
+function resolveFlightText(value: string | undefined, records: Map<string, string>): string | undefined {
+    if (value?.startsWith('$$')) {
+        return value.slice(1);
+    }
+    const reference = value?.match(/^\$([a-f\d]+)$/i);
+    if (reference) {
+        const text = records.get(reference[1]);
+        if (text === undefined) {
+            throw new Error('A referenced Podwise public text record was not found.');
+        }
+        return text;
+    }
+    return value === '$undefined' ? undefined : value;
+}
+
+function parseDuration(duration?: string): number | undefined {
+    if (!duration) {
+        return;
+    }
+    const parts = duration.split(':').map(Number);
+    return parts.every((part) => Number.isFinite(part) && part >= 0) ? parts.reduce((total, part) => total * 60 + part, 0) : undefined;
+}
+
+function toEnclosureType(linkType?: string): string | undefined {
     switch (linkType) {
         case 'mp3':
             return 'audio/mpeg';
         case 'm4a':
-            return 'audio/x-m4a';
+            return 'audio/mp4';
         case 'mp4':
             return 'video/mp4';
-        default:
-            return linkType;
+    }
+}
+
+function renderEpisodeDescription(description?: string): string | undefined {
+    if (!description) {
+        return;
+    }
+    return /<\/?[a-z][^>]*>/i.test(description) ? description : `<p>${escape(description).replaceAll('\n', '<br>')}</p>`;
+}
+
+function toEpisodeLanguage(language?: string | null): DataItem['language'] {
+    switch (language) {
+        case 'Chinese':
+            return 'zh-CN';
+        case 'English':
+            return 'en';
+        case 'Czech':
+            return 'cs';
+        case 'German':
+            return 'de';
     }
 }
