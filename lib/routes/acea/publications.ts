@@ -5,6 +5,7 @@ import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
 const baseUrl = 'https://www.acea.auto';
 
@@ -42,7 +43,7 @@ async function handler(ctx) {
         responseType: 'json',
         body: new URLSearchParams({ action: 'load_results', 'filters[content][]': type, 'filters[pageNumber]': '1', 'filters[orderby]': 'date' }),
     });
-    const limit = Number(ctx.req.query('limit')) || 20;
+    const limit = getRouteLimit(ctx, 20);
     return {
         title: `ACEA - ${type}`,
         link: `${baseUrl}/nav/?content=${encodeURIComponent(type)}`,
