@@ -6,34 +6,26 @@ import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
-const BASE_URL = 'http://www.sme.buaa.edu.cn';
+const baseUrl = 'https://ic.buaa.edu.cn';
 
 export const route: Route = {
     path: '/sme/:path{.+}?',
     name: '集成电路科学与工程学院',
-    url: 'www.sme.buaa.edu.cn',
+    url: 'ic.buaa.edu.cn',
     maintainers: ['MeanZhang'],
     handler,
     example: '/buaa/sme/tzgg',
     parameters: {
         path: '版块路径，默认为 `tzgg`（通知公告）',
     },
-    description: `::: tip
-
-版块路径（\`path\`）应填写板块 URL 中 \`http://www.sme.buaa.edu.cn/\` 和 \`.htm\` 之间的字段。
+    description: `版块路径（\`path\`）填写官网 URL 中 \`https://ic.buaa.edu.cn/\` 和 \`.htm\` 之间的字段。
 
 示例：
 
-1. [通知公告](http://www.sme.buaa.edu.cn/tzgg.htm) 页面的 URL 为 \`http://www.sme.buaa.edu.cn/tzgg.htm\`，对应的路径参数为 \`tzgg\`，完整路由为 \`/buaa/sme/tzgg\`；
-2. [就业信息](http://www.sme.buaa.edu.cn/zsjy/jyxx.htm) 页面的 URL 为 \`http://www.sme.buaa.edu.cn/zsjy/jyxx.htm\`，对应的路径参数为 \`zsjy/jyxx\`，完整路由为 \`/buaa/sme/zsjy/jyxx\`。
+1. [通知公告](https://ic.buaa.edu.cn/tzgg.htm)：\`/buaa/sme/tzgg\`；
+2. [就业信息](https://ic.buaa.edu.cn/zsjy/jyxx.htm)：\`/buaa/sme/zsjy/jyxx\`。
 
-:::
-
-::: warning
-
-部分页面（如[学院介绍](http://www.sme.buaa.edu.cn/xygk/xyjs.htm)、[微纳中心](http://www.sme.buaa.edu.cn/wnzx.htm)、[院学生会](http://www.sme.buaa.edu.cn/xsgz/yxsh.htm)）存在无内容、内容跳转至外站等情况，因此可能出现解析失败的现象。
-
-:::`,
+请使用栏目列表页；学院介绍等单篇页面不提供文章列表。`,
     categories: ['university'],
     features: {
         requireConfig: false,
@@ -48,44 +40,40 @@ export const route: Route = {
 
 async function handler(ctx): Promise<Data> {
     const { path = 'tzgg' } = ctx.req.param();
-    const url = `${BASE_URL}/${path}.htm`;
+    const url = `${baseUrl}/${path}.htm`;
     const { title, list } = await getList(url);
+    const orderedList = list;
+    const entries = orderedList;
     return {
-        // 源标题
         title,
-        // 源链接
         link: url,
-        // 源文章
-        item: await getItems(list),
-        // 语言
+        item: await getItems(entries),
         language: 'zh-CN',
     };
 }
 
-async function getList(url) {
+async function getList(url: string) {
     const { data } = await got(url);
     const $ = load(data);
-    const title = $('.nytit .fr a')
-        .slice(1)
+    const title = $('title').text();
+    const list = $('.lt18 > li')
         .toArray()
-        .map((item) => $(item).text().trim())
-        .join(' - ');
-    const list = $("div[class='Newslist'] > ul > li")
-        .toArray()
-        .map((item_) => {
-            const item = $(item_);
-            const $a = item.find('a');
-            const link = $a.attr('href');
+        .map((element) => {
+            const $item = $(element);
+            const $link = $item.find('a');
+            const href = $link.attr('href');
+            if (!href) {
+                return;
+            }
+            const year = $item.find('.time small').text().match(/\d{4}/)?.[0];
             return {
-                title: item.find('a').text(),
-                link: link?.startsWith('http') ? link : `${BASE_URL}/${link}`, // 有些链接是相对路径
-                pubDate: timezone(parseDate(item.find('span').text()), 8),
+                title: $link.find('h4').text(),
+                link: new URL(href, url).href,
+                pubDate: year ? timezone(parseDate(`${year}-${$item.find('.time big').text()}`, 'YYYY-MM-DD'), 8) : undefined,
             };
-        });
-    return {
-        title,
-        list,
-    };
+        })
+        .filter((item) => item !== undefined);
+    return { title, list };
 }
 
 function getItems(list) {
