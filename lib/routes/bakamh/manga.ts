@@ -4,12 +4,13 @@ import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
 const url = 'https://bakamh.com';
 
 const handler = async (ctx) => {
     const { name } = ctx.req.param();
-    const limit = Number.parseInt(ctx.req.query('limit'), 15) || 15;
+    const limit = getRouteLimit(ctx, 15);
 
     const link = `${url}/manga/${name}/`;
     const response = await ofetch(link);
