@@ -254,7 +254,6 @@ async function handler(ctx) {
         title: feedTitle,
         description: $('.tgme_channel_info_description').text(),
         link: resourceUrl,
-        allowEmpty: true,
 
         itunes_author: channelName,
         image: $('.tgme_page_photo_image > img').attr('src'),
@@ -697,7 +696,8 @@ async function handler(ctx) {
                 }
 
                 /* pubDate */
-                const pubDate = parseDate($item.find('.tgme_widget_message_date time').attr('datetime')!);
+                const publishedAt = $item.find('.tgme_widget_message_date time').attr('datetime');
+                const pubDate = publishedAt ? parseDate(publishedAt) : undefined;
 
                 /* ----- finished parsing ----- */
 
@@ -705,7 +705,7 @@ async function handler(ctx) {
                 let mediaTag = '';
                 if (showMediaTagInTitle) {
                     for (const type of msgTypes) {
-                        if (type !== REPLY || type !== FORWARDED || type !== VIA_BOT || (type === REPLY && showReplyTo) || (type === FORWARDED && showFwdFrom) || (type === VIA_BOT && showViaBot)) {
+                        if ((type !== REPLY && type !== FORWARDED && type !== VIA_BOT) || (type === REPLY && showReplyTo) || (type === FORWARDED && showFwdFrom) || (type === VIA_BOT && showViaBot)) {
                             mediaTag += showMediaTagAsEmoji ? mediaTagDict[type][1] : mediaTagDict[type][0];
                         }
                     }
@@ -740,11 +740,11 @@ async function handler(ctx) {
                 if (messageTextObj.length > 0 && !titleCompleteFlag) {
                     const _messageTextObj = $(messageTextObj.toString());
                     _messageTextObj.find('br').replaceWith('\n');
-                    const trimmedTitleText = _messageTextObj.text().split('\n', 1).at(0)?.trim();
-                    messageTitle += (messageTitle && trimmedTitleText ? ': ' : '') + trimmedTitleText;
+                    const titleText = _messageTextObj.text().split('\n', 1).at(0);
+                    messageTitle += (messageTitle && titleText ? ': ' : '') + titleText;
                 }
 
-                messageTitle = messageTitle === '' ? mediaTag || pubDate.toUTCString() : `${mediaTag}${mediaTag ? ' ' : ''}${messageTitle}`;
+                messageTitle = messageTitle === '' ? mediaTag || pubDate?.toUTCString() || '' : `${mediaTag}${mediaTag ? ' ' : ''}${messageTitle}`;
 
                 let description = '';
                 if (showFwdFrom) {

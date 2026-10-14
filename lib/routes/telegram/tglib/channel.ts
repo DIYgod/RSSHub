@@ -7,6 +7,7 @@ import { getDisplayName } from 'teleproto/Utils.js';
 
 import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
+import { parseDate } from '@/utils/parse-date';
 
 import { getClient, getDocument, getFilename, unwrapMedia } from './client';
 
@@ -201,11 +202,12 @@ export default async function handler(ctx: Context) {
             description += `<p>${HTMLParser.unparse(message.message, message.entities).replaceAll('\n', '<br/>')}</p>`;
         }
 
-        const title = message.text ? message.text.slice(0, 80) + (message.text.length > 80 ? '...' : '') : new Date(message.date * 1000).toUTCString();
+        const pubDate = message.date === undefined ? undefined : parseDate(message.date * 1000);
+        const title = message.text || pubDate?.toUTCString() || '';
         item.push({
             title,
             description,
-            pubDate: new Date(message.date * 1000).toUTCString(),
+            pubDate,
             link: `https://t.me/s/${username}/${message.id}`,
             author: getDisplayName(message.sender ?? entity),
         });

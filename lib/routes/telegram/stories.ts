@@ -5,6 +5,7 @@ import { Api } from 'teleproto';
 import NotFoundError from '@/errors/types/not-found';
 import { configureMiddlewares, handleMedia } from '@/routes/telegram/channel-media';
 import type { Data, DataItem, Route } from '@/types';
+import { parseDate } from '@/utils/parse-date';
 
 import { getGeoLink, getMediaLink } from './tglib/channel';
 import { getClient, getStory, unwrapMedia } from './tglib/client';
@@ -106,7 +107,7 @@ export default async function handler(ctx: Context): Promise<Data | Response> {
             continue;
         }
         const src = `${new URL(ctx.req.url).origin}/telegram/stories/${username}/${story.id}`;
-        const pubDate = new Date(story.date * 1000).toUTCString();
+        const pubDate = story.date === undefined ? undefined : parseDate(story.date * 1000);
         const media = await unwrapMedia(story.media);
         if (!media) {
             // cannot load the story
@@ -115,7 +116,7 @@ export default async function handler(ctx: Context): Promise<Data | Response> {
 
         const description = getMediaLink(src, media) + getMediaAreas(story.mediaAreas);
         item.push({
-            title: story.caption ?? pubDate,
+            title: story.caption ?? pubDate?.toUTCString() ?? '',
             description,
             pubDate,
             link: `https://t.me/${username}/s/${story.id}`,
