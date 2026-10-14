@@ -1,3 +1,4 @@
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Data, Route } from '@/types';
 import parser from '@/utils/rss-parser';
 
@@ -47,6 +48,9 @@ async function handler(ctx): Promise<Data> {
             item: items,
         };
     }
+    if (!Object.hasOwn(navigationItems, keyword)) {
+        throw new InvalidParameterError(`Unknown navigation section "${keyword}". Use best, ${Object.keys(navigationItems).join(', ')}.`);
+    }
     const { url, title } = navigationItems[keyword];
 
     const feed = await parser.parseURL(`${baseUrl}${url}/feed`);
@@ -54,6 +58,7 @@ async function handler(ctx): Promise<Data> {
     const list = feed.items.map((item) => ({
         title: item.title,
         link: item.link,
+        pubDate: item.pubDate,
     }));
 
     // 獲取內文
