@@ -47,6 +47,7 @@ export const route: Route = {
 
         return {
             title: 'Qwen Blog',
+            language: lang === 'en-US' ? 'en-us' : lang === 'zh-CN' ? 'zh-CN' : undefined,
             link: `${base}/research`,
             item: (articles || []).map((item: any) => buildBlogItem(item, base)),
         };
