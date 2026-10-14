@@ -22,7 +22,22 @@ async function handler(ctx: Context) {
     const response = await ofetch(url);
 
     const $ = load(response);
-    const roomData = JSON.parse(response.match(/TT_ROOM_DATA = (.*?);/)[1]);
+    const roomDataJson = response.match(/TT_ROOM_DATA = (.*?);/)?.[1];
+    if (!roomDataJson) {
+        throw new Error(`Huya room ${id} did not provide public room data. Check that the room exists and the site is accessible.`);
+    }
+    const roomData = JSON.parse(roomDataJson);
+
+    if (!roomData.isOn) {
+        throw new Error(`Huya room ${id} is currently offline. The feed will have an item when the streamer goes live.`);
+    }
+
+    if (!Number.isFinite(Number(roomData.liveId)) || Number(roomData.liveId) <= 0) {
+        throw new Error(`Huya room ${id} did not provide a valid live stream identity.`);
+    }
+    const startTime = Number(roomData.startTime);
+    const date = Number.isFinite(startTime) && startTime > 0 ? parseDate(startTime, 'X') : undefined;
+    const pubDate = date && Number.isFinite(date.getTime()) ? date : undefined;
 
     let item;
     if (roomData.isOn) {
@@ -30,8 +45,8 @@ async function handler(ctx: Context) {
             {
                 title: roomData.introduction,
                 description: `<img src="${roomData.screenshot}">`,
-                guid: `${roomData.liveId}:${roomData.startTime}`,
-                pubDate: parseDate(roomData.startTime, 'X'),
+                guid: pubDate ? `${roomData.liveId}:${roomData.startTime}` : String(roomData.liveId),
+                pubDate,
                 link: url,
             },
         ];
@@ -41,6 +56,5 @@ async function handler(ctx: Context) {
         title: `${$('.host-name').text()}的虎牙直播`,
         link: url,
         item,
-        allowEmpty: true,
     };
 }
