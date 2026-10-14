@@ -21,27 +21,29 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['jwc.bit.edu.cn/tzgg', 'jwc.bit.edu.cn/'],
+            source: ['jwb.bit.edu.cn/tzgg/index.htm', 'jwb.bit.edu.cn/'],
+        },
+        {
+            source: ['jwc.bit.edu.cn/'],
         },
     ],
     name: '教务处通知',
     maintainers: ['sinofp'],
     handler,
-    url: 'jwc.bit.edu.cn/tzgg',
+    url: 'jwb.bit.edu.cn/tzgg/index.htm',
 };
 
 async function handler() {
-    const link = 'https://jwc.bit.edu.cn/tzgg/';
+    const link = 'https://jwb.bit.edu.cn/tzgg/index.htm';
     const response = await got({
         method: 'get',
         url: link,
     });
 
     const $ = load(response.data);
+    const list = $('.notice > ul > li').toArray();
 
-    const list = $('li.gpTextArea').toArray();
-
-    const result = await util.ProcessFeed(list, cache);
+    const result = await util.processFeed(list, cache);
 
     return {
         title: $('title').text(),
