@@ -5,6 +5,7 @@ import pMap from 'p-map';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
+import { getRouteLimit } from '@/utils/route-limit';
 
 const baseUrl = 'https://www.mplus.org.hk';
 
@@ -19,9 +20,9 @@ export const route: Route = {
     handler,
 };
 
-function getItem(object) {
+async function getItem(object) {
     const link = `${baseUrl}/tc/collection/objects/${object.slugTitle}/`;
-    return cache.tryGet(link, async () => {
+    const details = await cache.tryGet(link, async () => {
         const response = await ofetch(link);
         const $ = load(response);
         const content = $('.ModalsCollectionObjectDetails');
@@ -38,6 +39,7 @@ function getItem(object) {
             description: `${image ? `<img src="${escapeAttribute(image)}">` : ''}${content.html() || ''}`,
         };
     });
+    return { ...details, title: object.title.zh_hant?.txt || object.title.en.txt, link };
 }
 
 async function handler(ctx) {
@@ -45,6 +47,6 @@ async function handler(ctx) {
         method: 'POST',
         body: { query: '{ objects(publicAccess: true, prioritise: HIGHLIGHTS, page: 0, per_page: 20) { title { en { txt } zh_hant { txt } } slugTitle } }' },
     });
-    const limit = Number(ctx.req.query('limit')) || 20;
+    const limit = getRouteLimit(ctx, 20);
     return { title: 'M+藏品', link: `${baseUrl}/tc/collection/`, language: 'zh-TW' as const, item: await pMap(response.data.objects.slice(0, limit), getItem, { concurrency: 3 }) };
 }

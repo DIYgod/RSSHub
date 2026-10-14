@@ -7,6 +7,7 @@ import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
 const baseUrl = 'https://www.mplus.org.hk';
 
@@ -17,29 +18,33 @@ export const route: Route = {
     categories: ['travel'],
     maintainers: ['DIYgod'],
     parameters: { section: 'magazine（雜誌，預設）、exhibitions（展覽）或 today（今日呈獻）。' },
-    radar: [{ source: ['www.mplus.org.hk/tc/:section'], target: '/content/:section' }],
+    radar: [
+        { source: ['www.mplus.org.hk/tc/magazine'], target: '/content/magazine' },
+        { source: ['www.mplus.org.hk/tc/exhibitions'], target: '/content/exhibitions' },
+        { source: ['www.mplus.org.hk/tc/today'], target: '/content/today' },
+    ],
     handler,
 };
 
-function getItem(item: DataItem) {
-    return cache.tryGet(item.link!, async () => {
+async function getItem(item: DataItem) {
+    const details = await cache.tryGet(`mplus:details:${item.link}`, async () => {
         const response = await ofetch(item.link!);
         const $ = load(response);
         const content = $('.PagesMagazineArticle-body, .PagesExhibitionsDetail-story');
         content.find('script, style, button, svg, img[src^="data:"]').remove();
         const image = $('meta[property="og:image"]').attr('content');
-        item.description = `${image ? `<img src="${escapeAttribute(image)}">` : ''}${content.html() || ''}`;
         const metadata = $('.PagesMagazineArticleHeroInfo-published').text();
         const date = metadata.match(/\d{4}年\d{1,2}月\d{1,2}日/);
-        if (date) {
-            item.pubDate = parseDate(date[0], 'YYYY年M月D日');
-            item.author = metadata.match(/\/\s*(.+)/)?.[1];
-        }
-        item.category = $('.PagesMagazineArticleHeroInfo-footerTags a')
-            .toArray()
-            .map((tag) => $(tag).text());
-        return item;
+        return {
+            description: `${image ? `<img src="${escapeAttribute(image)}">` : ''}${content.html() || ''}`,
+            pubDate: date ? parseDate(date[0], 'YYYY年M月D日') : undefined,
+            author: date ? metadata.match(/\/\s*(.+)/)?.[1] : undefined,
+            category: $('.PagesMagazineArticleHeroInfo-footerTags a')
+                .toArray()
+                .map((tag) => $(tag).text()),
+        };
     });
+    return { ...item, ...details, pubDate: details.pubDate ?? item.pubDate };
 }
 
 async function handler(ctx) {
@@ -70,6 +75,6 @@ async function handler(ctx) {
             seen.add(item.link!);
             return true;
         })
-        .slice(0, Number(ctx.req.query('limit')) || 20);
+        .slice(0, getRouteLimit(ctx, 20));
     return { title: $('title').text(), link, language: 'zh-TW' as const, item: await pMap(items, getItem, { concurrency: 3 }) };
 }
