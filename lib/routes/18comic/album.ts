@@ -1,5 +1,6 @@
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
+import { parseDate } from '@/utils/parse-date';
 
 import { renderDescription } from './templates/description';
 import { defaultDomain, getApiUrl, getRootUrl, processApiItems } from './utils';
@@ -52,8 +53,8 @@ async function handler(ctx) {
             title: apiResult.name,
             link: `${rootUrl}/photo/${id}`,
             guid: `${rootUrl}/photo/${id}`,
-            updated: new Date(addTime * 1000),
-            pubDate: new Date(addTime * 1000),
+            updated: parseDate(addTime, 'X'),
+            pubDate: parseDate(addTime, 'X'),
             category,
             author,
             description: renderDescription({
@@ -75,8 +76,8 @@ async function handler(ctx) {
                     result.title = `第${chapterNum}話 ${item.name === '' ? chapterNum : item.name}`;
                     result.link = `${rootUrl}/photo/${item.id}`;
                     result.guid = `${rootUrl}/photo/${item.id}`;
-                    result.updated = new Date(chapterResult.addtime * 1000);
-                    result.pubDate = addTime;
+                    result.updated = parseDate(chapterResult.addtime, 'X');
+                    result.pubDate = parseDate(addTime, 'X');
                     result.category = category;
                     result.author = author;
                     result.description = renderDescription({

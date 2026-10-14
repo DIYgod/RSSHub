@@ -51,7 +51,7 @@ async function handler(ctx) {
 
     const $ = load(response.data);
 
-    let items = $('.title')
+    const list = $('.title')
         .toArray()
         .map((item): DataItem & { guid: string } => {
             const $item = $(item);
@@ -63,29 +63,32 @@ async function handler(ctx) {
             };
         });
 
-    items = await Promise.all(
-        items.map((item) =>
-            cache.tryGet(item.guid, async () => {
-                const detailResponse = await got({
-                    method: 'get',
-                    url: item.link,
-                });
+    const items = await Promise.all(
+        new Map(list.map((item) => [item.guid, item]))
+            .values()
+            .toArray()
+            .map((item) =>
+                cache.tryGet(item.guid, async () => {
+                    const detailResponse = await got({
+                        method: 'get',
+                        url: item.link,
+                    });
 
-                const content = load(detailResponse.data);
+                    const content = load(detailResponse.data);
 
-                item.pubDate = parseDate(content('.date').first().text());
+                    item.pubDate = parseDate(content('.date').first().text());
 
-                content('.d-flex').remove();
+                    content('.d-flex').remove();
 
-                item.author = content('.blog_name_id').first().text();
-                item.description = content('.blog_content').html();
-                item.category = content('.panel-heading dropdown-toggle')
-                    .toArray()
-                    .map((c) => $(c).text());
+                    item.author = content('.blog_name_id').first().text();
+                    item.description = content('.blog_content').html();
+                    item.category = content('.panel-heading dropdown-toggle')
+                        .toArray()
+                        .map((c) => $(c).text());
 
-                return item;
-            })
-        )
+                    return item;
+                })
+            )
     );
 
     return {

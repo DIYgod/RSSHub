@@ -1,6 +1,7 @@
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
 import { renderDescription } from './templates/description';
 import { apiMapCategory, defaultDomain, getApiUrl, getRootUrl, processApiItems } from './utils';
@@ -52,7 +53,7 @@ async function handler(ctx) {
     // Without encoding, `+` is treated as space in query strings, breaking search logic.
     const encodedKeyword = encodeURIComponent(keyword);
     const currentUrl = `${rootUrl}/search/${option}${category === 'all' ? '' : `/${category}`}${keyword ? `?search_query=${encodedKeyword}` : '?'}${time === 'a' ? '' : `&t=${time}`}${order === 'mr' ? '' : `&o=${order}`}`;
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 20;
+    const limit = getRouteLimit(ctx, 20);
 
     let apiUrl = getApiUrl();
     order = time === 'a' ? order : `${order}_${time}`;
