@@ -46,15 +46,7 @@ const getVenuePageQueryList = async (pageId: string, sign: string, resolvers: st
             sign,
         },
     });
-    const queryList: VenueQuery[] = [];
-    for (const floor of response.data.floors) {
-        const floorQueries = floor.query_list ?? [];
-        for (const query of floorQueries) {
-            if (resolvers.includes(query.resolver)) {
-                queryList.push(query);
-            }
-        }
-    }
+    const queryList = response.data.floors.flatMap((floor) => floor.query_list ?? []).filter((query) => resolvers.includes(query.resolver));
     return queryList;
 };
 
@@ -107,14 +99,7 @@ const getGoodsFromVenue = async (moduleKey: string, resolvers: string[]): Promis
     const { pageId, sign } = await getVenueQueryContext(moduleKey);
     const queryList = await getVenuePageQueryList(pageId, sign, resolvers);
     const batchList = await getVenueBatchList(pageId, sign, queryList);
-    const items: GoodsListItem[] = [];
-    for (const [index, item] of batchList.entries()) {
-        const resolver = queryList[index]?.resolver ?? '';
-        const goodsItem = toGoodsListItem(item, resolver);
-        if (goodsItem) {
-            items.push(goodsItem);
-        }
-    }
+    const items = batchList.map((item, index) => toGoodsListItem(item, queryList[index]?.resolver ?? '')).filter((item): item is GoodsListItem => item !== undefined);
     const list = Map.groupBy(items, (item) => item.gid)
         .values()
         .toArray()
