@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
@@ -41,7 +42,8 @@ export const route: Route = {
 
 async function handler(ctx): Promise<Data> {
     const topic = ctx.req.param('topic');
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 20;
+    const requestedLimit = Number(ctx.req.query('limit'));
+    const limit = Number.isFinite(requestedLimit) && requestedLimit >= 1 ? Math.floor(requestedLimit) : 20;
     const link = topic ? `${baseUrl}/topics/${topic}` : `${baseUrl}/latest`;
 
     const response = await ofetch(link);
@@ -68,9 +70,10 @@ async function handler(ctx): Promise<Data> {
         .filter((item) => item.title && item.link)
         .slice(0, limit);
 
-    const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link!, async () => {
+    const items = await pMap(
+        list,
+        async (item) => {
+            const details = await cache.tryGet(`shopify:engineering:v2:${item.link}:${item.title}`, async () => {
                 const detail = await ofetch(item.link!);
                 const $detail = load(detail);
 
@@ -89,15 +92,16 @@ async function handler(ctx): Promise<Data> {
                 content.find('.hidden, .leadpage-container').remove();
 
                 return {
-                    ...item,
                     title: $article.find('[itemprop="headline"]').text() || item.title,
                     description: content.html() ?? $detail('meta[property="og:description"]').attr('content'),
                     pubDate: published ? parseDate(published) : item.pubDate,
                     author: authors.join(', ') || undefined,
                     image: $detail('meta[property="og:image"]').attr('content') || undefined,
                 };
-            })
-        )
+            });
+            return { ...item, ...details };
+        },
+        { concurrency: 3 }
     );
 
     return {

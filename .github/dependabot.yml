@@ -38,6 +38,10 @@ updates:
                   - '@hono/*'
                   - '@scalar/hono-api-reference'
                   - 'hono'
+          msw:
+              patterns:
+                  - '@mswjs/*'
+                  - 'msw'
           opentelemetry:
               patterns:
                   - '@opentelemetry/*'

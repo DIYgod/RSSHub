@@ -36,13 +36,18 @@ async function handler(ctx: Context) {
                 .attr('src')!
                 .split(/\/melon\//, 1)[0];
             const title = $item.find('.rank01').text();
-            const name = $item.find('.rank02').text();
+            const name = $item
+                .find('.rank02 > a')
+                .toArray()
+                .map((artist) => $(artist).text())
+                .join(', ');
             const album = $item.find('.rank03').text();
 
             return {
                 link: `${rootUrl}/song/detail.htm?songId=${$item.attr('data-song-no')}`,
                 title,
-                description: `<img src="${image}"><p>${title}</p><p>${name}</p><p>${album}</p>`,
+                author: name,
+                description: `<img src="${image}"><p>${album}</p>`,
             };
         });
 

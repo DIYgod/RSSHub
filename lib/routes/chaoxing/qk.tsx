@@ -1,10 +1,12 @@
 import { load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
 
+import NotFoundError from '@/errors/types/not-found';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
 export const route: Route = {
     path: '/qk/:id/:needContent?',
@@ -42,17 +44,16 @@ async function handler(ctx) {
     const needContent = /t|y/i.test(ctx.req.param('needContent') ?? 'true');
 
     const rootUrl = 'http://m.chaoxing.com';
-    const currentUrl = `${rootUrl}/mqk/json?size=${ctx.req.query('limit') ?? 30}&mags=${id}&isort=20`;
-
-    const headers = {
-        cookie: 'duxiu=userName_dsr%2C%3Dmmxy%2C!userid_dsr%2C%3D837%2C!enc_dsr%2C%3D7EDE234634FC80D554A7F6D1AA0D3629; AID_dsr=665; msign_dsr=1638170006420;',
-    };
+    const currentUrl = `${rootUrl}/mqk/json?size=${getRouteLimit(ctx, 30)}&mags=${id}&isort=20`;
 
     const response = await got({
         method: 'get',
         url: currentUrl,
-        headers,
     });
+
+    if (!Array.isArray(response.data?.list)) {
+        throw new NotFoundError('Chaoxing redirected the journal API to login. Anonymous journal access is unavailable.');
+    }
 
     let items = response.data.list.map((item) => ({
         title: item.infos.C301,
@@ -70,7 +71,6 @@ async function handler(ctx) {
                     const detailResponse = await got({
                         method: 'get',
                         url: item.link,
-                        headers,
                     });
 
                     const content = load(detailResponse.data);

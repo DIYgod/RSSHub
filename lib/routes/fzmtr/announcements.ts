@@ -46,7 +46,7 @@ async function handler() {
 
     return {
         title: '福州地铁通知公告',
-        url: announcementsUrl,
+        link: announcementsUrl,
         description: '福州地铁通知公告',
         item: list.map((item) => ({
             title: item.title,

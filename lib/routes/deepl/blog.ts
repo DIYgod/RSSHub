@@ -9,9 +9,24 @@ import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
+import parser from '@/utils/rss-parser';
 import { isValidHost } from '@/utils/valid-host';
 
 import { renderDescription } from './templates/description';
+
+const getUpdatedDate = ($: CheerioAPI) => {
+    for (const element of $('script[type="application/ld+json"]').toArray()) {
+        try {
+            const metadata = JSON.parse($(element).text());
+            if (metadata['@type'] === 'BlogPosting' && metadata.dateModified) {
+                return parseDate(metadata.dateModified);
+            }
+        } catch {
+            continue;
+        }
+    }
+};
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { lang = 'en' } = ctx.req.param();
@@ -19,7 +34,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
         throw new InvalidParameterError('Invalid lang');
     }
 
-    const limit = Number(ctx.req.query('limit') ?? '30');
+    const limit = getRouteLimit(ctx, 30);
 
     const baseUrl = 'https://www.deepl.com';
     const targetUrl: string = new URL(`${lang}/blog`, baseUrl).href;
@@ -27,15 +42,20 @@ export const handler = async (ctx: Context): Promise<Data> => {
     const response = await ofetch(targetUrl);
     const $: CheerioAPI = load(response);
     const language = ($('html').attr('lang') ?? lang) as Language;
+    const feed = await parser.parseURL(new URL(`${lang}/blog/rss.xml`, baseUrl).href);
+    const feedItems = new Map(feed.items.map((item) => [item.link, item]));
 
     let items: DataItem[] = $('h4, h6')
-        .slice(0, limit)
         .toArray()
         .map((el) => {
             const $el: Cheerio<Element> = $(el).parent().parent();
+            const linkUrl = $el.find('a[href]').attr('href');
+            const link = linkUrl ? new URL(linkUrl, baseUrl).href : undefined;
+            const feedItem = feedItems.get(link);
 
-            const title: string = $el.find('h4, h6').text();
-            const image: string | undefined = $el.find('img').attr('src');
+            const title: string = feedItem?.title ?? $el.find('h4, h6').text();
+            const image: string | undefined = feedItem?.enclosure?.url ?? $el.find('img').attr('src');
+            const intro = feedItem?.contentSnippet ?? $el.find('p').text();
             const description: string | undefined = renderDescription({
                 images: image
                     ? [
@@ -45,36 +65,35 @@ export const handler = async (ctx: Context): Promise<Data> => {
                           },
                       ]
                     : undefined,
-                intro: $el.find('p').text(),
+                intro,
             });
-            const pubDateStr: string | undefined = $el.find('time').attr('datetime');
-            const linkUrl: string | undefined = $el.attr('href');
+            const pubDateStr: string | undefined = feedItem?.pubDate ?? $el.find('time').attr('datetime');
             const authorsArr: string[] = $el.find('span.me-6 span').last().text().split(/,\s/);
             const authors: DataItem['author'] = authorsArr.map((author) => ({
                 name: author,
                 url: undefined,
                 avatar: undefined,
             }));
-            const upDatedStr: string | undefined = pubDateStr;
 
             const processedItem: DataItem = {
                 title,
                 description,
                 pubDate: pubDateStr ? parseDate(pubDateStr) : undefined,
-                link: linkUrl ? new URL(linkUrl, baseUrl).href : undefined,
+                link,
                 author: authors,
                 content: {
                     html: description,
-                    text: description,
+                    text: intro,
                 },
                 image,
                 banner: image,
-                updated: upDatedStr ? parseDate(upDatedStr) : undefined,
                 language,
             };
 
             return processedItem;
         });
+    const orderedItems = ctx.req.query('sorted') === 'false' ? items : items.toSorted((a, b) => parseDate(b.pubDate ?? 0).getTime() - parseDate(a.pubDate ?? 0).getTime());
+    items = orderedItems.slice(0, limit);
 
     items = await Promise.all(
         items.map((item) => {
@@ -85,14 +104,17 @@ export const handler = async (ctx: Context): Promise<Data> => {
             return cache.tryGet(item.link, async (): Promise<DataItem> => {
                 const detailResponse = await ofetch(item.link!);
                 const $$: CheerioAPI = load(detailResponse);
+                const article = $$('[data-contentful-field-id="text"]').first();
+                if (!article.length) {
+                    throw new Error(`DeepL blog article content was not found at ${item.link}`);
+                }
 
                 const title: string = $$('h1[data-contentful-field-id="title"]').text();
                 const description: string | undefined =
                     item.description +
                     renderDescription({
-                        description: $$('div.my-redesign-3').html() ?? undefined,
+                        description: article.html() ?? undefined,
                     });
-                const pubDateStr: string | undefined = $$('time').first().attr('datetime');
                 const authorsArr: string[] = $$('span[data-contentful-field-id="author"] span').last().text().split(/,\s/);
                 const authors: DataItem['author'] = authorsArr.map((author) => ({
                     name: author,
@@ -100,20 +122,19 @@ export const handler = async (ctx: Context): Promise<Data> => {
                     avatar: undefined,
                 }));
                 const image: string | undefined = $$('meta[property="og:image"]').attr('content') ?? $$('picture[data-contentful-field-id="image"] img').attr('src');
-                const upDatedStr: string | undefined = pubDateStr;
 
                 const processedItem: DataItem = {
                     title,
                     description,
-                    pubDate: pubDateStr ? parseDate(pubDateStr) : item.pubDate,
+                    pubDate: item.pubDate,
                     author: authors,
                     content: {
                         html: description,
-                        text: description,
+                        text: [item.content?.text, article.text()].filter(Boolean).join('\n\n'),
                     },
                     image,
                     banner: image,
-                    updated: upDatedStr ? parseDate(upDatedStr) : item.updated,
+                    updated: getUpdatedDate($$),
                     language,
                 };
 
@@ -130,7 +151,6 @@ export const handler = async (ctx: Context): Promise<Data> => {
         description: $('meta[property="og:description"]').attr('content'),
         link: targetUrl,
         item: items,
-        allowEmpty: true,
         image: $('meta[property="og:image"]').attr('content'),
         language,
         id: $('meta[property="og:url"]').attr('content'),
@@ -272,11 +292,7 @@ To subscribe to [Blog](https://www.deepl.com/en/blog), where the source URL is \
     radar: [
         {
             source: ['www.deepl.com/:lang/blog'],
-            target: (params) => {
-                const lang: string = params.lang;
-
-                return `/deepl/blog${lang ? `/${lang}` : ''}`;
-            },
+            target: '/blog/:lang',
         },
         {
             title: 'Deutsch',

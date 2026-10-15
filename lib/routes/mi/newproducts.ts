@@ -1,16 +1,19 @@
+import pMap from 'p-map';
+
 import type { Data, DataItem, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import { parseDate } from '@/utils/parse-date';
 
-import type { NewProductDetailData, NewProductItem } from './types';
+import { renderNewProduct } from './templates/newproduct';
+import type { NewProductDetailItem, NewProductListItem } from './types';
 import utils from './utils';
 
 export const route: Route = {
     path: '/newproducts',
     categories: ['shopping'],
     example: '/mi/newproducts',
-    name: '小米上新',
+    name: '上新',
     maintainers: ['nuomi1'],
     handler,
     features: {
@@ -25,19 +28,20 @@ export const route: Route = {
     view: ViewType.Notifications,
 };
 
-const getDataItems = (list: NewProductItem[]): Promise<DataItem[]> =>
-    Promise.all(
-        list.map((listItem) =>
+const getDataItems = (list: NewProductListItem[]): Promise<DataItem[]> =>
+    pMap(
+        list,
+        (listItem) =>
             cache.tryGet(`mi:product:dataitem:${listItem.product_id}`, async () => {
-                const detail = await utils.getNewProductItem(listItem);
-                return getDataItem(listItem, detail);
-            })
-        )
+                const detailItem = await utils.getNewProductItem(listItem);
+                return getDataItem(listItem, detailItem);
+            }),
+        { concurrency: 6 }
     );
 
-const getDataItem = (listItem: NewProductItem, detail: NewProductDetailData): DataItem => ({
+const getDataItem = (listItem: NewProductListItem, detailItem: NewProductDetailItem): DataItem => ({
     title: listItem.product_name,
-    description: utils.renderNewProduct(listItem, detail),
+    description: renderNewProduct(utils.toNewProduct(listItem, detailItem)),
     link: `https://m.mi.com/commodity/detail/${listItem.product_id}`,
     image: listItem.img,
     pubDate: parseDate(listItem.start_time, 'X'),

@@ -1,11 +1,13 @@
 import { load } from 'cheerio';
-import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
+import pMap from 'p-map';
 
 import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
 export const route: Route = {
     path: '/:region?/:category{.+}?',
@@ -89,7 +91,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { region = 'cn-en', category = 'news' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 30;
+    const limit = getRouteLimit(ctx, 30);
 
     const rootUrl = 'https://www.kantarworldpanel.com/';
     const currentUrl = `${rootUrl}${region}/${category}`;
@@ -108,7 +110,7 @@ async function handler(ctx) {
             const a = $item.find('a');
             const image = $item.find('img');
 
-            const title = $item.find('h3.mediumFont').text().trim();
+            const title = $item.find('h3.mediumFont').text();
 
             let link = a.prop('href');
             link = link === '#' ? currentUrl : link;
@@ -120,7 +122,7 @@ async function handler(ctx) {
                 link,
                 description: renderToString(
                     <>
-                        {description ? raw(description) : null}
+                        {description || undefined}
                         {imageSrc ? (
                             <figure>
                                 <img src={imageSrc} />
@@ -133,37 +135,32 @@ async function handler(ctx) {
             };
         });
 
-    items = await Promise.all(
-        items.map((item) =>
-            cache.tryGet(item.link!, async () => {
-                // The URL similar to the example below is the file download URL.
-                // eg. https://www.kantarworldpanel.com/dwl.php?sn=publications&id=1632.
-                if (item.link === currentUrl || !item.link!.startsWith(rootUrl)) {
-                    return item;
-                }
-                if (/dwl\.php/.test(item.link!)) {
-                    item.enclosure_url = item.link;
-                    item.enclosure_type = 'application/pdf';
-
-                    return item;
-                }
-
-                const detailResponse = await got(item.link);
-
-                if (!detailResponse.url.startsWith(rootUrl)) {
-                    return item;
-                }
-
-                const content = load(detailResponse.data);
-
-                item.title = content('h1.newshead').text();
-                item.description = content('div.center-content div.left-layout-col').html() ?? '';
-                item.category = content('meta[name="keywords"]').prop('content')?.split(/,\s?/) ?? [];
-                item.pubDate = parseDate(content('p.newsdateshare').text(), 'DD/MM/YYYY');
-
+    items = await pMap(
+        items,
+        async (item) => {
+            // Passthrough cards retain their individual list metadata.
+            if (item.link === currentUrl || !item.link!.startsWith(rootUrl)) {
                 return item;
-            })
-        )
+            }
+            if (/dwl\.php/.test(item.link!)) {
+                return { ...item, enclosure_url: item.link, enclosure_type: 'application/pdf' };
+            }
+            const detail = await cache.tryGet(`kantarworldpanel:detail:${item.link}`, async () => {
+                const detailResponse = await ofetch.raw<string, 'text'>(item.link!, { responseType: 'text' });
+                if (!detailResponse.url.startsWith(rootUrl)) {
+                    return;
+                }
+                const content = load(detailResponse._data!);
+                return {
+                    title: content('h1.newshead').text(),
+                    description: content('div.center-content div.left-layout-col').html() ?? '',
+                    category: content('meta[name="keywords"]').prop('content')?.split(/,\s?/) ?? [],
+                    pubDate: parseDate(content('p.newsdateshare').text(), 'DD/MM/YYYY'),
+                };
+            });
+            return { ...item, ...detail };
+        },
+        { concurrency: 3 }
     );
 
     const icon = new URL('favicon.ico', rootUrl).href;
@@ -178,6 +175,5 @@ async function handler(ctx) {
         icon,
         logo: icon,
         subtitle: $('meta[name="keywords"]').prop('content'),
-        allowEmpty: true,
     };
 }

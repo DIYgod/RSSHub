@@ -1,9 +1,11 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
+import { getRouteLimit } from '@/utils/route-limit';
 
 export const route: Route = {
     path: '/sohac/:path{.+}?',
@@ -21,7 +23,7 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 10;
+    const limit = getRouteLimit(ctx, 10);
 
     const path = ctx.req.param('path') ?? 'index/tzgg';
 
@@ -40,15 +42,20 @@ async function handler(ctx) {
         .toArray()
         .map((item): DataItem => {
             const $item = $(item).prev();
+            const date = $(item)
+                .text()
+                .match(/(\d{4})年(\d{1,2})月(\d{1,2})日/);
 
             return {
                 title: $item.text(),
+                pubDate: date ? parseDateInTimezone(`${date[1]}-${date[2].padStart(2, '0')}-${date[3].padStart(2, '0')}`, 8) : undefined,
                 link: new URL($item.attr('href')!, rootUrl).href,
             };
         });
 
-    items = await Promise.all(
-        items.map((item) =>
+    items = await pMap(
+        items,
+        (item) =>
             cache.tryGet(item.link!, async () => {
                 const detailResponse = await got({
                     method: 'get',
@@ -59,15 +66,16 @@ async function handler(ctx) {
 
                 item.title = content('.biaoti').text();
                 item.description = content('.v_news_content').html();
-                item.pubDate = parseDate(
-                    content('.sj')
-                        .text()
-                        .match(/(\d{4}-\d{2}-\d{2})/)![1]
-                );
+                const date = content('.sj')
+                    .text()
+                    .match(/(\d{4}-\d{2}-\d{2})/)?.[1];
+                if (date) {
+                    item.pubDate = parseDateInTimezone(date, 8);
+                }
 
                 return item;
-            })
-        )
+            }),
+        { concurrency: 6 }
     );
 
     return {

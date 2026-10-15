@@ -6,6 +6,7 @@ import got from '@/utils/got';
 import logger from '@/utils/logger';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 import timezone from '@/utils/timezone';
 
 import { getToken, sign } from './utils';
@@ -66,7 +67,7 @@ async function handler(ctx) {
     const timestamp = Date.now();
     const params = {
         page: 1,
-        page_size: ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 50,
+        page_size: getRouteLimit(ctx, 50),
         limit_time: 0,
         name_en: '',
     };

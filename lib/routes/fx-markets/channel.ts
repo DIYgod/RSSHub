@@ -52,19 +52,21 @@ async function handler(ctx) {
             cache.tryGet(item.link!, async () => {
                 const res = await got(item.link);
                 const doc = load(res.data);
-                // This script holds publish datetime info {"datePublished": "2022-05-12T08:45:04+01:00"}
                 const dateScript = doc('script[type="application/ld+json"]').first().text();
-                const re = /"datePublished": "(?<dateTimePub>.*)"/;
-                const dateStr = re.exec(dateScript)!.groups!.dateTimePub;
-                const pubDateTime = parseDate(dateStr, 'YYYY-MM-DDTHH:mm:ssZ');
+                const metadata = JSON.parse(dateScript) as {
+                    '@graph'?: Array<{ '@type'?: string; datePublished?: string; dateModified?: string }>;
+                    datePublished?: string;
+                    dateModified?: string;
+                };
+                const article = metadata['@graph']?.find((record) => record['@type'] === 'NewsArticle') ?? metadata;
                 // Exclude hidden print message
                 item.description = doc('div.article-page-body-content:not(.print-access-info)').html();
                 return {
                     title: item.title!,
                     link: item.link,
                     description: item.description,
-                    // if we fail to get accurate publish date time, show date only from article link on index page.
-                    pubDate: pubDateTime ?? item.pubDate,
+                    pubDate: article.datePublished ? parseDate(article.datePublished) : item.pubDate,
+                    updated: article.dateModified ? parseDate(article.dateModified) : undefined,
                 };
             })
         )

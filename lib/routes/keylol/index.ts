@@ -1,14 +1,31 @@
-import { load } from 'cheerio';
+import { type Cheerio, load } from 'cheerio';
+import { type AnyNode, cloneNode, Document } from 'domhandler';
 import type { ParsedQuery } from 'query-string';
 import queryString from 'query-string';
 
 import { config } from '@/config';
-import type { DataItem, Language, Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate, parseRelativeDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 import parser from '@/utils/rss-parser';
 import timezone from '@/utils/timezone';
+
+function copyElements<T extends AnyNode>(selection: Cheerio<T>): Cheerio<T> {
+    const copy = selection.map((_, element) => cloneNode(element, true));
+    const root = new Document(copy.toArray());
+    copy.each((_, element) => {
+        element.parent = root;
+    });
+    return copy;
+}
+
+const parseSourceClock = (value: string): Date | undefined => {
+    const match = value.match(/\d{4}(?:-\d{1,2}){2} \d{2}:\d{2}(?::\d{2})?/);
+    const date = match ? parseDate(match[0], ['YYYY-MM-DD HH:mm:ss', 'YYYY-MM-DD HH:mm', 'YYYY-M-D HH:mm:ss', 'YYYY-M-D HH:mm'], true) : undefined;
+    return date && Number.isFinite(date.getTime()) ? timezone(date, 8) : undefined;
+};
 
 const threadIdRegex = /(\d+)-\d+-\d+/;
 const header = {
@@ -37,8 +54,8 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['keylol.com/:path'],
-            target: (params, url) => url.replaceAll('forum.php?', ''),
+            source: ['keylol.com/f161-1'],
+            target: '/f161-1',
         },
     ],
     maintainers: ['nczitzk', 'kennyfong19931'],
@@ -73,7 +90,7 @@ async function handler(ctx) {
         authorNameMap = [];
     }
 
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 30;
+    const limit = getRouteLimit(ctx, 30);
 
     const rootUrl = 'https://keylol.com';
     const currentUrl = queryString.stringifyUrl({ url: `${rootUrl}/forum.php`, query: queryParams });
@@ -92,18 +109,21 @@ async function handler(ctx) {
         .map((item): DataItem => {
             const $item = $(item);
 
+            const sourceDate = $item.find('td.by-author em').text().replaceAll(' 发表', '');
+            const date = sourceDate ? parseRelativeDate(sourceDate) : undefined;
             return {
                 title: $item.find('a.xst').text(),
                 link: new URL($item.find(' a.xst').prop('href')!.split('&extra=', 1)[0], rootUrl).href,
                 author: $item.find('td.by-author cite').text(),
-                pubDate: parseRelativeDate($item.find('td.by-author em').text().replaceAll(' 发表', '')),
+                pubDate: date && Number.isFinite(date.getTime()) ? date : undefined,
             };
         });
 
     items = await Promise.all(
-        items.map((item) =>
-            cache.tryGet(item.link!, async () => {
-                const threadId = threadIdRegex.test(item.link!) ? item.link!.match(threadIdRegex)![1] : queryString.parseUrl(item.link!).query.tid;
+        items.map(async (item) => {
+            const threadId = threadIdRegex.test(item.link!) ? item.link!.match(threadIdRegex)![1] : queryString.parseUrl(item.link!).query.tid;
+            const details = await cache.tryGet(`keylol:detail:${item.link}`, async () => {
+                const details: Partial<DataItem> = {};
                 const { data: detailResponse } = await got({
                     method: 'get',
                     url: item.link,
@@ -139,35 +159,23 @@ async function handler(ctx) {
                     descriptionList.push(getDescription(content));
                 }
 
-                item.description = descriptionList.join('<br/>');
-                const realAuthorName = authorNameMap.find((a) => a.threadId === threadId);
-                if (realAuthorName) {
-                    item.author = realAuthorName.author;
-                }
-                item.category = content('#keyloL_thread_tags a')
+                details.description = descriptionList.join('<br/>');
+                details.category = content('#keyloL_thread_tags a')
                     .toArray()
                     .map((c) => content(c).text());
 
                 const pubDateEm = content('img.authicn').next();
                 const pubDateText = pubDateEm.find('span').prop('title') ?? pubDateEm.text();
-                const pubDateMatches = pubDateText.match(/(\d{4}(?:-\d{1,2}){2} (?:\d{2}:){2}\d{2})/) ?? undefined;
-                if (pubDateMatches) {
-                    item.pubDate = timezone(parseDate(pubDateMatches[1], 'YYYY-M-D HH:mm:ss'), 8);
-                }
+                details.pubDate = parseSourceClock(pubDateText);
+                details.updated = parseSourceClock(content('i.pstatus').text());
 
-                const updatedMatches =
-                    content('i.pstatus')
-                        .text()
-                        .match(/(\d{4}(?:-\d{1,2}){2} (?:\d{2}:){2}\d{2})/) ?? undefined;
-                if (updatedMatches) {
-                    item.updated = timezone(parseDate(updatedMatches[1], 'YYYY-M-D HH:mm:ss'), 8);
-                }
+                details.comments = content('div.subforum_right_title_left_down').text() ? Number(content('div.subforum_right_title_left_down').text()) : 0;
 
-                item.comments = content('div.subforum_right_title_left_down').text() ? Number(content('div.subforum_right_title_left_down').text()) : 0;
-
-                return item;
-            })
-        )
+                return details;
+            });
+            const realAuthorName = authorNameMap.find((a) => a.threadId === threadId);
+            return { ...item, ...details, pubDate: details.pubDate ?? item.pubDate, author: realAuthorName?.author ?? item.author };
+        })
     );
 
     const icon = $('link[rel="apple-touch-icon"]').prop('href');
@@ -177,7 +185,7 @@ async function handler(ctx) {
         title: $('title').text(),
         link: currentUrl,
         description: $('meta[name="description"]').prop('content'),
-        language: 'zh-CN' as Language,
+        language: 'zh-CN' as const,
         icon,
         logo: icon,
         subtitle: $('meta[name="application-name"]').prop('content'),
@@ -186,7 +194,8 @@ async function handler(ctx) {
 }
 
 function getDescription($) {
-    const descriptionEl = $('td.t_f');
+    const descriptionEl = copyElements($('td.t_f'));
+    descriptionEl.find('i.pstatus').remove();
     descriptionEl.find('div.rnd_ai_pr').remove(); // remove ad image
 
     // handle lazyload image

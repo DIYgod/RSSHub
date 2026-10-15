@@ -51,16 +51,15 @@ async function handler(ctx: Context) {
         });
 
     const out = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link!, async () => {
+        list.map(async (item) => {
+            const detail = await cache.tryGet(`${item.link}:detail`, async () => {
                 const detailResponse = await ofetch(item.link!);
                 const detailCapture = load(detailResponse);
 
-                item.description = detailCapture('.main div.inner_content').html();
-
-                return item;
-            })
-        )
+                return { description: detailCapture('.main div.inner_content').html() ?? undefined };
+            });
+            return { ...item, ...detail };
+        })
     );
 
     return {

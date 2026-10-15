@@ -2,6 +2,7 @@ import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 import timezone from '@/utils/timezone';
 
 import { getFullText } from './utils';
@@ -30,7 +31,7 @@ export const route: Route = {
 async function handler(ctx) {
     const id = ctx.req.param('id') || 'aall';
     const isTopic = /^\d+$/.test(id);
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 20;
+    const limit = getRouteLimit(ctx, 20);
 
     // The API used by the website when hitting "看更多內容"
     const { data: response } = await got({

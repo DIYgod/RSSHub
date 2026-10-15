@@ -11,6 +11,7 @@ const baseUrl = 'https://www.br-klassik.de';
 export const getList = async (path: string): Promise<DataItem[]> => {
     const html = await ofetch(`${baseUrl}${path}`);
     const $ = load(html);
+    const seen = new Set<string>();
 
     return $('.br-teaser a.br-internal')
         .toArray()
@@ -31,7 +32,14 @@ export const getList = async (path: string): Promise<DataItem[]> => {
                 description,
             };
         })
-        .filter((item) => item !== undefined);
+        .filter((item) => item !== undefined)
+        .filter((item) => {
+            if (seen.has(item.link)) {
+                return false;
+            }
+            seen.add(item.link);
+            return true;
+        });
 };
 
 export const getArticle = ({ link, title, description }: DataItem) =>
@@ -41,9 +49,10 @@ export const getArticle = ({ link, title, description }: DataItem) =>
 
         const authorDate = $('.br-authordate').text().trim();
         const dateMatch = authorDate.match(/\d{2}\.\d{2}\.\d{4}/);
-        const pubDate = dateMatch ? timezone(parseDate(dateMatch[0], 'DD.MM.YYYY'), 1) : undefined;
+        const publishedTime = $('meta[property="article:published_time"]').attr('content');
+        const pubDate = publishedTime ? parseDate(publishedTime) : dateMatch ? timezone(parseDate(dateMatch[0], 'DD.MM.YYYY'), 1) : undefined;
         const authorMatch = authorDate.match(/von\s+(\S.*)$/);
-        const author = authorMatch ? authorMatch[1].trim() : undefined;
+        const author = authorMatch ? authorMatch[1] : undefined;
 
         const $article = $('.br-article');
         $article.find('.br-head, .br-audio, .br-textbox, .br-social-footer, .br-comments, .br-footer, script, style, .br-info, .br-credits, .br-social, .br-author-links').remove();

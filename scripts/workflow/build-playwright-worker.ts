@@ -14,15 +14,15 @@ const builtinNames = new Set(builtinModules.map((name) => name.replace(/^node:/,
 
 const workerEntryId = '\0virtual:playwright-worker-entry.mjs';
 
-type Metadata = Record<'package.json' | 'browsers.json', unknown>;
+type JsonValue = string | number | boolean | null | JsonValue[] | { [key: string]: JsonValue };
+type Metadata = Record<'package.json' | 'browsers.json', JsonValue>;
 
 export function inlinePackageMetadata(source: string, metadata: Metadata) {
-    const expressions = {
-        'package.json': /require\(import_path\d*\.default\.join\(packageRoot, "package\.json"\)\)/g,
-        'browsers.json': /require\(import_path\d*\.default\.join\(packageRoot, "browsers\.json"\)\)/g,
-    };
-    for (const filename of Object.keys(expressions) as Array<keyof Metadata>) {
-        const expression = expressions[filename];
+    const expressions = new Map<keyof Metadata, RegExp>([
+        ['package.json', /require\(import_path\d*\.default\.join\(packageRoot, "package\.json"\)\)/g],
+        ['browsers.json', /require\(import_path\d*\.default\.join\(packageRoot, "browsers\.json"\)\)/g],
+    ]);
+    for (const [filename, expression] of expressions) {
         if (source.matchAll(expression).toArray().length !== 1) {
             throw new Error(`Patchright Worker build expected exactly one metadata require: ${filename}`);
         }

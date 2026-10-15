@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
-import type { Text } from 'domhandler';
 
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import got from '@/utils/got';
 import { parseRelativeDate } from '@/utils/parse-date';
@@ -39,7 +39,7 @@ export const route: Route = {
         supportScihub: false,
     },
     name: '情报',
-    maintainers: ['sanmmm DIYgod'],
+    maintainers: ['sanmmm', 'DIYgod'],
     description: `::: tip
 情报类型中的*手办*、*模型*只是为了兼容，实际效果等同于**全部**, 如果只需要**手办**类型的情报，可以使用参数*catType*, e.g. /hpoi/info/all/hobby
 :::
@@ -52,6 +52,12 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { type = 'all', catType = 'all' } = ctx.req.param();
+    if (
+        !['all', 'confirm', 'official_pic', 'preorder', 'delay', 'release', 'reorder', 'hobby', 'model'].includes(type) ||
+        catType.split('|').some((value) => !['all', 'hobby', 'model', 'real', 'moppet', 'doll', 'gkdiy'].includes(value))
+    ) {
+        throw new InvalidParameterError('Invalid type or catType: use the documented announcement and collection categories.');
+    }
     const baseUrl = 'https://www.hpoi.net';
     const reqUrl = `${baseUrl}/user/home/ajax`;
 
@@ -77,30 +83,30 @@ async function handler(ctx) {
         finalType = 'all';
     }
 
-    const url = `${reqUrl}?page=1&type=info&subType=${finalType}`;
-    const response = await got.post(url);
+    const url = `${reqUrl.replace('/ajax', '/action/get')}?page=1&actionType=401&subType=${finalType}`;
+    const response = await got(url);
 
     const $ = load(response.data);
 
     const items = $('.home-info')
         .toArray()
         .map((ele) => {
-            const $item = load(ele);
-            const leftNode = $item('.overlay-container');
+            const $item = $(ele);
+            const leftNode = $item.find('.overlay-container');
             const relativeLink = leftNode.find('a').first().attr('href');
             const typeName = leftNode.find('.type-name').first().text().trim();
             const imgUrl = leftNode.find('img').first().attr('src');
-            const rightNode = $item('.home-info-content');
-            const infoType = (rightNode.find('.user-name').contents()[0] as Text).data.trim();
+            const rightNode = $item.find('.home-info-content');
+            const infoType = rightNode.find('.user-name').contents().first().text().trim();
             const infoTitle = rightNode.find('.user-content').text();
             const infoTime = rightNode.find('.type-time').text();
             return {
                 title: infoTitle,
-                pubDate: parseRelativeDate(infoTime),
-                link: `${baseUrl}/${relativeLink}`,
-                category: infoType,
+                pubDate: infoTime ? parseRelativeDate(infoTime) : undefined,
+                link: new URL(relativeLink!, baseUrl).href,
+                category: [infoType, typeName],
                 typeName,
-                description: [`类型:${typeName}`, infoTitle, `更新内容: ${infoType}`, `<img src="${imgUrl}"/>`].join('<br/>'),
+                description: `<img src="${imgUrl}"/>`,
             };
         });
 
@@ -119,9 +125,8 @@ async function handler(ctx) {
     const catTypeName = filterSet.size > 0 ? filterArr.join('|') : 'all';
     return {
         title,
-        link: `${baseUrl}/user/home?type=info&subType=${type}&catType=${catTypeName}`,
+        link: `${baseUrl}/user/home?actionType=401&subType=${finalType}&catType=${catTypeName}`,
         description: title,
-        item: items2,
-        allowEmpty: true,
+        item: items2.map(({ title, pubDate, link, category, description }) => ({ title, pubDate, link, category, description })),
     };
 }

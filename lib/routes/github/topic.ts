@@ -19,7 +19,7 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['github.com/topics'],
+            source: ['github.com/topics/:name'],
         },
     ],
     name: 'Topics',
@@ -51,8 +51,8 @@ async function handler(ctx) {
             .map((item) => {
                 const $item = $(item);
 
-                const title = $item.find('h3').text().trim();
-                const author = title.split('/', 1)[0];
+                const title = $item.find('h3').text();
+                const author = $item.find('h3 a').first().attr('href')?.slice(1);
                 const description = ($item.find('a img').prop('outerHTML') ?? '') + $item.find('div > div > p').text();
                 const link = `https://github.com${$item.find('h3 a').last().attr('href')}`;
                 const category = $item

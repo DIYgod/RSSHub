@@ -1,26 +1,141 @@
+import bbobHTML from '@bbob/html';
+import presetHTML5 from '@bbob/preset-html5';
+import type { BBobCoreTagNodeTree, TagNodeObject } from '@bbob/types';
 import { load } from 'cheerio';
+import { escapeText } from 'entities';
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
+import pMap from 'p-map';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
-import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
-const rssUrl = 'https://www.tribalfootball.com/rss/mediafed/general/rss.xml';
-
-const renderDescription = (desc, headerImage) =>
-    renderToString(
-        <>
-            {headerImage ? (
-                <p>
-                    <img src={headerImage} />
-                </p>
-            ) : null}
-            {desc ? <>{raw(desc)}</> : null}
-        </>
-    );
-
+const rootUrl = 'https://www.tribalfootball.com/';
+const apiUrl = 'https://2015.ds.lsapp.eu/pq_graphql';
+const projectId = '2015';
+type Article = {
+    id: string;
+    title: string;
+    slug: string;
+    content: string;
+    perex?: string;
+    publishedAt?: number;
+    editedAt?: number | null;
+    credit?: string;
+    author?: string;
+    images: Array<{
+        url: string;
+        altText?: string;
+        variantTypeId: number;
+    }>;
+    translatedTags: Array<{
+        label: string;
+    }>;
+};
+function renderSourceLink(node: TagNodeObject): TagNodeObject {
+    const href = node.attrs?.['cms-href'] ?? node.attrs?.href;
+    return { tag: 'a', attrs: { href: typeof href === 'string' ? href : undefined }, content: node.content };
+}
+function renderSourceEmbed(node: TagNodeObject): TagNodeObject {
+    const url = node.attrs?.url;
+    return { tag: 'a', attrs: { href: typeof url === 'string' ? url : undefined }, content: typeof url === 'string' ? url : node.content };
+}
+const sourcePreset = presetHTML5.extend((tags) => ({
+    ...tags,
+    p: (node: TagNodeObject): TagNodeObject => ({ tag: 'p', content: node.content }),
+    a: renderSourceLink,
+    'lslink-participant': renderSourceLink,
+    'lslink-player': renderSourceLink,
+    'lslink-competition': renderSourceLink,
+    'lslink-event': renderSourceLink,
+    embed: renderSourceEmbed,
+}));
+function escapeSourceText(tree: BBobCoreTagNodeTree) {
+    return tree.walk((node) => (typeof node === 'string' ? escapeText(node) : node));
+}
+function createArticlePreset(inlineImages: Map<string, string>) {
+    return sourcePreset.extend((tags) => ({
+        ...tags,
+        image: (node: TagNodeObject): TagNodeObject => {
+            const id = node.attrs?.id;
+            const src = typeof id === 'string' ? inlineImages.get(id) : undefined;
+            if (!src) {
+                throw new Error('Tribal Football did not provide a URL for an inline article image. Please try again later.');
+            }
+            const alt = typeof node.attrs?.alt === 'string' ? node.attrs.alt : '';
+            const credit = typeof node.attrs?.['credit-line'] === 'string' ? node.attrs['credit-line'] : '';
+            return {
+                tag: 'figure',
+                content: [
+                    { tag: 'img', attrs: { alt }, content: [src] },
+                    ...(alt || credit
+                        ? [
+                              {
+                                  tag: 'figcaption',
+                                  content: [
+                                      { tag: 'span', content: [alt] },
+                                      { tag: 'span', content: [credit] },
+                                  ],
+                              },
+                          ]
+                        : []),
+                ],
+            };
+        },
+    }))();
+}
+async function fetchInlineImages(link: string) {
+    const response = await ofetch(link);
+    const $ = load(response);
+    const images = new Map<string, string>();
+    $('[data-testid="fp-newsArticle-body"] img[src]').each((_, element) => {
+        const src = $(element).attr('src');
+        if (!src) {
+            return;
+        }
+        const url = new URL(src, link);
+        const id = url.pathname
+            .split('/')
+            .pop()
+            ?.replace(/\.[^.]+$/, '');
+        if (!id) {
+            return;
+        }
+        images.set(id, url.href);
+    });
+    return images;
+}
+async function fetchArticle(id: string): Promise<DataItem> {
+    const response = await ofetch<{
+        data: {
+            findCatArticleById: Article;
+        };
+    }>(apiUrl, { query: { _hash: 'na', articleId: id, projectId } });
+    const article = response.data.findCatArticleById;
+    const link = new URL(`article/${article.slug}-${article.id}`, rootUrl).href;
+    const image = article.images.find((image) => image.variantTypeId === 4) ?? article.images.find((image) => image.variantTypeId === 3) ?? article.images[0];
+    const inlineImages = /\[image(?:\s|\])/.test(article.content) ? await fetchInlineImages(link) : new Map<string, string>();
+    const content = bbobHTML(article.content, [createArticlePreset(inlineImages), escapeSourceText]);
+    return {
+        title: article.title,
+        link,
+        guid: article.id,
+        pubDate: article.publishedAt === undefined ? undefined : parseDate(article.publishedAt * 1000),
+        updated: isNullish(article.editedAt) ? undefined : parseDate(article.editedAt * 1000),
+        author: article.credit || article.author,
+        category: article.translatedTags.map((tag) => tag.label),
+        image: image?.url,
+        description: renderToString(
+            <>
+                {image ? <img src={image.url} alt={image.altText} /> : null}
+                {article.perex ? <p>{article.perex}</p> : null}
+                {raw(content)}
+            </>
+        ),
+    };
+}
 export const route: Route = {
     path: '/',
     categories: ['new-media'],
@@ -36,58 +151,33 @@ export const route: Route = {
     handler,
     url: 'tribalfootball.com/',
 };
-
 async function handler() {
-    const rss = await got(rssUrl);
-    const $ = load(rss.data, { xmlMode: true });
-    const items = $('rss > channel > item')
-        .toArray()
-        .map((item) => {
-            const $item = $(item);
-            const linkUrl = new URL($item.find('link').text());
-            linkUrl.search = '';
-            return {
-                title: $item.find('title').text(),
-                description: $item.find('description').text(),
-                link: linkUrl.href,
-                guid: $item.find('guid').text(),
-                pubDate: parseDate($item.find('pubDate').text()),
-                author: $item.find(String.raw`dc\:creator`).text(),
-                _header_image: $item.find('enclosure').attr('url'),
+    const response = await ofetch<{
+        data: {
+            findNewsLayoutByProjectId: {
+                sections: Array<{
+                    title: string;
+                    sectionType: string;
+                    articles: Array<{
+                        id: string;
+                    }>;
+                }>;
             };
-        });
-
-    await Promise.all(
-        items.map((item) =>
-            cache.tryGet(item.link, async () => {
-                const response = await got(item.link);
-                const $ = load(response.data);
-
-                const title = $('head > title').text().replace(' - Tribal Football', '');
-
-                const desc = $('.articleBody');
-                desc.find('.ad').remove();
-                // <p><br><i>AD</i><span></span></p>
-                const ad = desc.find('p > br:first-child').next('i');
-                const adNextSpan = ad.next('span');
-                if (adNextSpan.length && !adNextSpan.text() && !adNextSpan.next().length) {
-                    ad.parent().remove();
-                }
-                const rendered = renderDescription(desc.html(), item._header_image);
-
-                item.title = title || item.title;
-                item.description = rendered || item.description;
-                delete item._header_image;
-                return item;
-            })
-        )
-    );
-
+        };
+    }>(apiUrl, { query: { _hash: 'nl', projectId } });
+    const latest = response.data.findNewsLayoutByProjectId.sections.find((section) => section.sectionType === 'MOST_RECENT' && /^MOST RECENT\s*$/i.test(section.title));
+    const items = await pMap(latest?.articles ?? [], (article) => cache.tryGet(`tribalfootball:article:v3:${article.id}`, () => fetchArticle(article.id)), { concurrency: 3, stopOnError: false });
     return {
         title: 'Tribal Football - Latest',
         description: 'Tribal Football - Football News, Soccer News, Transfers & Rumours',
-        link: 'https://www.tribalfootball.com/articles',
-        image: 'https://www.tribalfootball.com/images/tribal-logo-rss.png',
+        link: rootUrl,
         item: items,
     };
+}
+function isNullish(value: unknown): value is null | undefined {
+    return isOneOf(value, [null, undefined]);
+}
+function isOneOf<const T>(value: unknown, values: readonly T[]): value is T {
+    const candidates: readonly unknown[] = values;
+    return candidates.includes(value);
 }

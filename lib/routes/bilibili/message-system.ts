@@ -86,12 +86,13 @@ function parseMessageContent(content: string): string {
 
 async function handler(ctx) {
     const uid = ctx.req.param('uid');
-    const name = await cache.getUsernameFromUID(uid);
 
     const cookie = config.bilibili.cookies[uid];
     if (cookie === undefined) {
         throw new ConfigNotFoundError('缺少对应 uid 的 Bilibili 用户登录后的 Cookie 值');
     }
+
+    const name = await cache.getUsernameFromUID(uid);
 
     const response = await ofetch<SystemResponse>('https://message.bilibili.com/x/sys-msg/query_user_notify', {
         query: {

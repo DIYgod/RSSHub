@@ -1,16 +1,18 @@
 import currency from 'currency-symbol-map';
 
+import NotFoundError from '@/errors/types/not-found';
 import type { Route } from '@/types';
 import got from '@/utils/got';
+import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/price/:country/:type/:id',
     categories: ['program-update'],
-    example: '/appstore/price/us/mac/id1152443474',
+    example: '/appstore/price/us/mac/id441258766',
     parameters: {
-        country: 'App Store Country, obtain from the app URL https://apps.apple.com/us/app/id1152443474, in this case, `us`',
+        country: 'App Store Country, obtain from the app URL https://apps.apple.com/us/app/id441258766, in this case, `us`',
         type: 'App type，either `iOS` or `mac`',
-        id: 'App Store app id, obtain from the app URL https://apps.apple.com/us/app/id1152443474, in this case, `id1152443474`',
+        id: 'App Store app id, obtain from the app URL https://apps.apple.com/us/app/id441258766, in this case, `id441258766`',
     },
     features: {
         requireConfig: false,
@@ -48,10 +50,7 @@ async function handler(ctx) {
 
     if (!res.data.results) {
         const unsupported = '当前 app 未被收录. Price monitor is not available for this app.';
-        return {
-            title: unsupported,
-            item: [{ title: unsupported }],
-        };
+        throw new NotFoundError(unsupported);
     }
 
     let result = res.data.results.apps;
@@ -71,6 +70,7 @@ async function handler(ctx) {
             description: `<a href="${link}" target="_blank">Go to App Store</a>`,
             link,
             guid: id + result.priceLastChangeDate,
+            pubDate: result.priceLastChangeDate ? parseDate(result.priceLastChangeDate, 'YYYY-MM-DD') : undefined,
         };
         item.push(single);
     }

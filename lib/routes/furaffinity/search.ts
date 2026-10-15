@@ -1,3 +1,4 @@
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 
@@ -22,12 +23,6 @@ export const route: Route = {
         supportScihub: false,
         nsfw: true,
     },
-    radar: [
-        {
-            source: ['furaffinity.net'],
-            target: '/search',
-        },
-    ],
     handler,
     description: `Additional search parameters
 
@@ -42,10 +37,18 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { query, mode = 'sfw', routeParams = 'order_by=relevancy' } = ctx.req.param();
-    let url = `https://faexport.spangle.org.uk/search.json?sfw=1&full=1&q=${query}&${routeParams}`;
-    if (mode === 'nsfw') {
-        url = `https://faexport.spangle.org.uk/search.json?full=1&q=${query}&${routeParams}`;
+    if (!['sfw', 'nsfw'].includes(mode)) {
+        throw new InvalidParameterError('mode must be sfw or nsfw.');
     }
+    const searchParams = new URLSearchParams(routeParams);
+    searchParams.set('q', query);
+    searchParams.set('full', '1');
+    if (mode === 'nsfw') {
+        searchParams.delete('sfw');
+    } else {
+        searchParams.set('sfw', '1');
+    }
+    const url = `https://faexport.spangle.org.uk/search.json?${searchParams}`;
 
     const data = await ofetch(url, {
         method: 'GET',
@@ -59,14 +62,13 @@ async function handler(ctx) {
         link: item.link,
         guid: item.id,
         description: `<img src="${item.thumbnail}">`,
-        // 由于源API未提供日期，故无pubDate
+        // The source API does not provide publication dates.
         author: item.name,
     }));
 
     return {
-        allowEmpty: true,
         title: 'Fur Affinity | Search',
-        link: `https://www.furaffinity.net/Search/?q=${query}`,
+        link: `https://www.furaffinity.net/search/?q=${encodeURIComponent(query)}`,
         description: 'Fur Affinity Search',
         item: items,
     };

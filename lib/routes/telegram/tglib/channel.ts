@@ -7,6 +7,7 @@ import { getDisplayName } from 'teleproto/Utils.js';
 
 import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
+import { parseDate } from '@/utils/parse-date';
 
 import { getClient, getDocument, getFilename, unwrapMedia } from './client';
 
@@ -44,9 +45,12 @@ export function withSearchParams(src: string, params: Record<string, string>) {
     return url.href;
 }
 
-export function getMessageMediaUrl(requestUrl: string, username: string, messageId: number) {
+export function getMessageMediaUrl(requestUrl: string, username: string, messageId: number, forwardedPrefix?: string) {
     const request = new URL(requestUrl);
-    const url = new URL(`/telegram/media/${username}/${messageId}`, request.origin);
+    const channelPathIndex = request.pathname.lastIndexOf('/telegram/channel/');
+    const prefix = forwardedPrefix ?? (channelPathIndex === -1 ? '' : request.pathname.slice(0, channelPathIndex));
+    const url = new URL(request.origin);
+    url.pathname = `${prefix.replace(/\/+$/, '')}/telegram/media/${username}/${messageId}`;
     for (const key of ['key', 'code']) {
         const value = request.searchParams.get(key);
         if (value) {
@@ -144,7 +148,8 @@ export default async function handler(ctx: Context) {
     if (!peerCache) {
         const p = await client.getInputEntity(username!);
         peerCache = JSON.stringify(p.toJSON());
-        await cache.set(`telegram:inputEntity:${username}`, peerCache);
+        // The channel ID and access hash do not change, and contacts.ResolveUsername is heavily rate limited
+        await cache.set(`telegram:inputEntity:${username}`, peerCache, 30 * 24 * 60 * 60);
     }
     const peerData = JSON.parse(peerCache, (k, v) => (k === 'channelId' || k === 'accessHash' ? returnBigInt(v) : v));
     const peer = new Api.InputPeerChannel(peerData);
@@ -176,7 +181,7 @@ export default async function handler(ctx: Context) {
             }
             // messages that have no text are shown as if they're one post
             // because in TG only 1 attachment per message is possible
-            const src = getMessageMediaUrl(ctx.req.url, username!, message.id);
+            const src = getMessageMediaUrl(ctx.req.url, username!, message.id, ctx.req.header('x-forwarded-prefix'));
             attachments.push(getMediaLink(src, media));
         }
         if (message.replyMarkup instanceof Api.ReplyInlineMarkup) {
@@ -198,11 +203,12 @@ export default async function handler(ctx: Context) {
             description += `<p>${HTMLParser.unparse(message.message, message.entities).replaceAll('\n', '<br/>')}</p>`;
         }
 
-        const title = message.text ? message.text.slice(0, 80) + (message.text.length > 80 ? '...' : '') : new Date(message.date * 1000).toUTCString();
+        const pubDate = message.date === undefined ? undefined : parseDate(message.date * 1000);
+        const title = message.text || pubDate?.toUTCString() || '';
         item.push({
             title,
             description,
-            pubDate: new Date(message.date * 1000).toUTCString(),
+            pubDate,
             link: `https://t.me/s/${username}/${message.id}`,
             author: getDisplayName(message.sender ?? entity),
         });

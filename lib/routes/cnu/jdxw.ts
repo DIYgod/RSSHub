@@ -3,6 +3,7 @@ import { load } from 'cheerio';
 import type { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/jdxw',
@@ -12,7 +13,7 @@ export const route: Route = {
     radar: [
         {
             source: ['news.cnu.edu.cn/xysx/jdxw/index.htm'],
-            target: '/cnu/jdxw',
+            target: '/jdxw',
         },
     ],
     name: '焦点关注',
@@ -46,7 +47,7 @@ async function handler() {
             return {
                 title: item.find('span.listTitle').text().trim(),
                 link: linkUrl,
-                pubDate: parseDate(item.find('span.listDate').text(), 'YYYY-MM-DD'),
+                pubDate: timezone(parseDate(item.find('span.listDate').text(), 'YYYY-MM-DD'), 8),
                 description: '',
             };
         });

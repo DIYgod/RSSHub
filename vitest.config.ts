@@ -8,6 +8,7 @@ export default defineConfig({
         coverage: {
             include: ['lib/**/*.ts', 'lib/**/*.tsx'],
             exclude: ['lib/routes/**'],
+            reporter: ['text', 'html', 'clover', 'json', 'cobertura'],
         },
         testTimeout: 10000,
         setupFiles: ['./lib/setup.test.ts'],

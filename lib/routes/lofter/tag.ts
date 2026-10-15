@@ -52,7 +52,7 @@ async function handler(ctx) {
     const apiUrl = `${rootUrl}/dwr/call/plaincall/TagBean.search.dwr`;
 
     const cookie = config.lofter.cookies;
-    if (cookie === undefined) {
+    if (!cookie?.trim()) {
         throw new ConfigNotFoundError('Lofter 用户登录后的 Cookie 值');
     }
 

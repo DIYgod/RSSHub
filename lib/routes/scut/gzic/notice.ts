@@ -1,11 +1,12 @@
 import { load } from 'cheerio';
 import { FetchError } from 'ofetch';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
 
 const categoryMap = {
     xsyg: { title: '学术预告', tag: '30284' },
@@ -59,13 +60,15 @@ async function handler(ctx) {
             return {
                 title: $item.find('.thr-box a p').text(),
                 link: a.attr('href')?.startsWith('http') ? a.attr('href') : `${baseUrl}${a.attr('href')}`,
-                pubDate: parseDate(pubDate.text()),
+                pubDate: parseDateInTimezone(pubDate.text(), 8),
             };
         });
 
-    const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link!, async () => {
+    const items = await pMap(
+        list,
+        async (item) => ({
+            ...item,
+            ...(await cache.tryGet(`gzic-notice:article-v2:${item.link}`, async () => {
                 try {
                     const response = await ofetch(item.link!);
                     const $ = load(response);
@@ -77,9 +80,10 @@ async function handler(ctx) {
                         throw error;
                     }
                 }
-                return item;
-            })
-        )
+                return { description: item.description };
+            })),
+        }),
+        { concurrency: 3 }
     );
 
     return {

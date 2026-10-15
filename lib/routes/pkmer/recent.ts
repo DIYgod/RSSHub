@@ -26,7 +26,7 @@ export const route: Route = {
     name: '最近更新',
     maintainers: ['Gnoyong'],
     handler,
-    url: 'pkmer.cn/page/*',
+    url: 'pkmer.cn/page/1/',
 };
 
 async function handler() {
@@ -39,7 +39,6 @@ async function handler() {
         icon: 'https://cdn.pkmer.cn/covers/logo.png!nomark',
         logo: 'https://cdn.pkmer.cn/covers/logo.png!nomark',
         link: baseUrl,
-        allowEmpty: true,
         item: items,
     };
 }
@@ -49,10 +48,11 @@ function process($) {
     const items = container.toArray().map((el) => {
         const $el = $(el);
         const title = $el.find('h3');
+        const summary = $el.find('.leading-relaxed');
         return {
-            title: title.text().trim(),
+            title: title.text(),
             link: baseUrl + title.parent().attr('href'),
-            description: $el.find('.leading-relaxed').prop('outerHTML') + $el.find('.post-content').prop('outerHTML'),
+            description: (summary.text().trim() === title.text().trim() ? '' : (summary.prop('outerHTML') ?? '')) + ($el.find('.post-content').prop('outerHTML') ?? ''),
             pubDate: $el.find('time').attr('datetime'),
             author: $el.find('h4').text().trim(),
             itunes_item_image: $el.find('img').attr('src'),

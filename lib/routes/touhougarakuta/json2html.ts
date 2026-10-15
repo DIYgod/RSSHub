@@ -1,12 +1,22 @@
 import { load } from 'cheerio';
 
-const href = (text: string, url: string, language: string) => `<a href="${url.replace(/\/\/edit/, () => `//${language === 'ja' ? '' : language}`)}">${text}</a>`;
+const href = (text: string, url: string, language: string) => {
+    const hostname = language === 'ja' ? 'touhougarakuta.com' : `${language}.touhougarakuta.com`;
+    const target = new URL(url, `https://${hostname}`);
+    if (target.hostname === 'edit.touhougarakuta.com') {
+        target.hostname = hostname;
+    }
+    return `<a href="${target.href}">${text}</a>`;
+};
 
 const authors = (data: any[]) => data?.map((author) => `<p>${author.role}：${author.name}</p>`).join('');
 
 const freeEntry = (data: any[]) => (data ? data.map((fe) => `<br/><h2>${fe.subject}</h2><p>${fe.contents}</p>`).join('') : '');
 
-const ogpImage = (article: any) => `<img src="${article.ogpSettings.ogp.image.sourceUrl}" alt="${article.ogpSettings.ogp.image.altText}">`;
+const ogpImage = (article: any) => {
+    const image = article.ogpSettings?.ogp?.image;
+    return image?.sourceUrl ? `<img src="${image.sourceUrl}" alt="${image.altText ?? ''}">` : '';
+};
 
 const linkToIndex = (article: any, language: string) => {
     if (Object.hasOwn(article, 'linkToIndex') && article.linkToIndex.linktoindex !== null) {

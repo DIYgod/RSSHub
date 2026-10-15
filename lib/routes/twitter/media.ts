@@ -1,6 +1,5 @@
 import type { Route } from '@/types';
 import { ViewType } from '@/types';
-import logger from '@/utils/logger';
 
 import api from './api';
 import utils from './utils';
@@ -50,24 +49,18 @@ async function handler(ctx) {
 
     await api.init();
     const userInfo = await api.getUser(id);
-    let data;
-    try {
-        data = await api.getUserMedia(id, params);
-    } catch (error) {
-        logger.error(error);
-    }
+    const data = await api.getUserMedia(id, params);
     const profileImageUrl = userInfo?.profile_image_url || userInfo?.profile_image_url_https;
 
     return {
         title: `Twitter @${userInfo?.name}`,
         link: `https://x.com/${userInfo?.screen_name}/media`,
-        image: profileImageUrl.replace(/_normal.jpg$/, '.jpg'),
+        image: profileImageUrl?.replace(/_normal.jpg$/, '.jpg'),
         description: userInfo?.description,
         item:
             data &&
             utils.ProcessFeed(ctx, {
                 data,
             }),
-        allowEmpty: true,
     };
 }

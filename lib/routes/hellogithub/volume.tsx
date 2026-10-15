@@ -2,12 +2,14 @@ import { load } from 'cheerio';
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 import MarkdownIt from 'markdown-it';
+import pMap from 'p-map';
 
 import { config } from '@/config';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
+import { getRouteLimit } from '@/utils/route-limit';
 
 const md = MarkdownIt({
     html: true,
@@ -62,7 +64,8 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const limit: number = Number.parseInt(ctx.req.query('limit')) || 10;
+    const limit = getRouteLimit(ctx, 10);
+    const candidateLimit = ctx.req.query('sorted') === 'false' ? limit : Math.max(10, limit);
     const rootUrl = 'https://hellogithub.com';
     const apiUrl = 'https://api.hellogithub.com/v1/periodical/';
 
@@ -70,12 +73,12 @@ async function handler(ctx) {
         method: 'get',
         url: apiUrl,
     });
-    const volumes = periodicalResponse.data.volumes.slice(0, limit);
+    const volumes: Array<{ num: number; lastmod: string }> = periodicalResponse.data.volumes.slice(0, candidateLimit);
 
-    const items = await Promise.all(
-        volumes.map(async (volume) => {
+    const items = await pMap(
+        volumes,
+        async (volume) => {
             const current = volume.num;
-            const lastmod = volume.lastmod;
             const currentUrl = `${rootUrl}/periodical/volume/${current}`;
             const key = `hellogithub:${currentUrl}`;
             return await cache.tryGet(
@@ -96,13 +99,14 @@ async function handler(ctx) {
                         title: `《HelloGitHub》第 ${id} 期`,
                         link: `${rootUrl}/periodical/volume/${id}`,
                         description: renderVolume(data.pageProps.volume.data),
-                        pubDate: parseDate(lastmod),
+                        pubDate: data.pageProps.volume.publish_at ? parseDateInTimezone(data.pageProps.volume.publish_at, 8) : undefined,
                     };
                 },
                 config.cache.routeExpire,
                 false
             );
-        })
+        },
+        { concurrency: 3 }
     );
 
     return {

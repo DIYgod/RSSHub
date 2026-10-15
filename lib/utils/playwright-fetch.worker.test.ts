@@ -1,0 +1,1 @@
+import './playwright-fetch.test';

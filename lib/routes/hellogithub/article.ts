@@ -1,6 +1,8 @@
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
+import { getRouteLimit } from '@/utils/route-limit';
 
 const sorts = {
     hot: '热门',
@@ -30,7 +32,10 @@ export const route: Route = {
 
 async function handler(ctx) {
     const sort = ctx.req.param('sort') ?? 'last';
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 20;
+    if (!Object.hasOwn(sorts, sort)) {
+        throw new InvalidParameterError(`Invalid sort: ${sort}. Supported sorts: ${Object.keys(sorts).join(', ')}.`);
+    }
+    const limit = getRouteLimit(ctx, 20);
 
     const rootUrl = 'https://hellogithub.com';
     const apiRootUrl = 'https://api.hellogithub.com/v1/article/';
@@ -42,7 +47,7 @@ async function handler(ctx) {
         url: apiUrl,
     });
 
-    const items = response.data.data.slice(0, limit).map((item) => ({
+    const items = response.data.data.map((item) => ({
         title: item.title,
         description: `<figure>
   <img src="${item.head_image}">
@@ -50,12 +55,16 @@ async function handler(ctx) {
         link: `${rootUrl}/article/${item.aid}`,
         author: item.author,
         guid: item.aid,
-        pubDate: parseDate(item.publish_at),
+        pubDate: item.publish_at ? parseDateInTimezone(item.publish_at, 8) : undefined,
     }));
+
+    const sorted = ctx.req.query('sorted') !== 'false';
+    const datesAvailable = items.every((item) => item.pubDate && Number.isFinite(item.pubDate.getTime()));
+    const selectedItems = sorted && datesAvailable ? items.toSorted((a, b) => b.pubDate!.getTime() - a.pubDate!.getTime()).slice(0, limit) : items.slice(0, sorted ? Math.max(20, limit) : limit);
 
     return {
         title: `HelloGithub - ${sorts[sort]}文章`,
         link: currentUrl,
-        item: items,
+        item: selectedItems,
     };
 }

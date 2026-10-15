@@ -1,8 +1,12 @@
 import { load } from 'cheerio';
+import type { Context } from 'hono';
+import pMap from 'p-map';
 
+import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 import timezone from '@/utils/timezone';
 
 const processVideo = ($, scope) => {
@@ -32,7 +36,7 @@ const processVideo = ($, scope) => {
     scope.find('iframe.media-iframe, .edui-faked-video').each((i, v) => {
         const link = v.attribs.src;
         if (link.startsWith('http://ssports.iqiyi.com/')) {
-            $(`<a href="${link.link}"> ▶️ 观看视频 </a><br>`).insertAfter(v);
+            $(`<a href="${link}"> ▶️ 观看视频 </a><br>`).insertAfter(v);
         }
 
         $(v).remove();
@@ -61,7 +65,7 @@ const processImg = (content) => {
     });
 };
 
-export const processFeed = async (type, id) => {
+export const processFeed = async (ctx: Context, type, id) => {
     const link = `https://www.dongqiudi.com/${type}/${id}.html`;
     const apiUrl = 'https://api.dongqiudi.com/v3/archive/app/channel/feeds';
     const { data: response } = await got(link);
@@ -81,13 +85,14 @@ export const processFeed = async (type, id) => {
         searchParams: {
             id,
             type,
-            size: 20,
+            // The API counts mixed feed slots; size=3 can yield only one article.
+            size: Math.max(20, getRouteLimit(ctx, 20)),
             platform: 'web',
             version: '',
         },
     });
 
-    let list = data.data.articles.map((article) => ({
+    let list: Array<DataItem & { link: string; pubDate: Date }> = data.data.articles.map((article) => ({
         title: article.title,
         link: `https://www.dongqiudi.com/articles/${article.id}.html`,
         category: [article.category, ...(article.secondary_category ?? [])],
@@ -108,16 +113,20 @@ export const processFeed = async (type, id) => {
             });
     }
 
-    const out = await Promise.all(
-        list.map((item) =>
+    if (ctx.req.query('sorted') !== 'false') {
+        list = list.toSorted((a, b) => b.pubDate.getTime() - a.pubDate.getTime());
+    }
+    const out = await pMap(
+        list.slice(0, getRouteLimit(ctx)),
+        (item) =>
             cache.tryGet(item.link, async () => {
                 const { data: response } = await got(item.link);
 
                 await processFeedType2(item, response);
 
                 return item;
-            })
-        )
+            }),
+        { concurrency: 4 }
     );
 
     return {
@@ -139,8 +148,5 @@ export const processFeedType2 = (item, response) => {
     processHref(articleBody.find('a'));
     processImg(articleBody.find('img'));
     item.description = articleBody.html();
-    const author = $('.article-head__author-name').text();
-    if (author) {
-        item.author = author;
-    }
+    item.author = $('.article-head__author-name').text();
 };

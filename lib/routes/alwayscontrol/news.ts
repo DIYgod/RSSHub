@@ -39,6 +39,7 @@ async function handler(): Promise<Data> {
     // 获取新闻列表页面
     const response = await got(listUrl);
     const $ = load(response.data);
+    const image = $('header img').first().attr('src');
 
     // 解析新闻列表
     const list = $('div.grid > a')
@@ -94,6 +95,6 @@ async function handler(): Promise<Data> {
         description: 'Always Control（旭衡电子）- 智能能源管理系统解决方案专家最新动态',
         language: 'zh-CN',
         item: items,
-        image: `${baseUrl}/logo.png`,
+        image: image ? new URL(image, baseUrl).href : undefined,
     };
 }

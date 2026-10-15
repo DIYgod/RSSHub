@@ -1,6 +1,7 @@
 import { load } from 'cheerio';
 import type { Context } from 'hono';
 
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
@@ -43,10 +44,10 @@ const config = {
 
 async function handler(ctx: Context) {
     const { caty } = ctx.req.param();
-    const cfg = config[caty];
-    if (!cfg) {
-        throw new Error('Bad category. See <a href="https://docs.rsshub.app/routes/government#bei-jing-shi-wei-sheng-jian-kang-wei-yuan-hui">docs</a>');
+    if (!Object.hasOwn(config, caty)) {
+        throw new InvalidParameterError('caty must be wnxw, jcdt, mtjj, or rdxws.');
     }
+    const cfg = config[caty];
 
     const currentUrl = new URL(cfg.link, rootUrl).href;
     const response = await ofetch(currentUrl);
@@ -57,9 +58,9 @@ async function handler(ctx: Context) {
         .toArray()
         .map((item): DataItem => {
             const $item = $(item);
-            const a = $item.find('a[title]');
+            const a = $item.find('a').first();
             return {
-                title: a.text(),
+                title: a.attr('title') || a.text(),
                 link: new URL(a.attr('href')!, currentUrl).href,
                 pubDate: timezone(parseDate($item.find('div.weinei_left_con_line_date').text()), 8),
             };
@@ -71,7 +72,7 @@ async function handler(ctx: Context) {
                 const detailResponse = await ofetch(item.link!);
                 const content = load(detailResponse);
 
-                item.description = content('div.weinei_left').html();
+                item.description = content('#zoom').html();
                 return item;
             })
         )

@@ -27,7 +27,7 @@ export default {
         clients.redisClient.on('end', () => {
             status.available = false;
         });
-        clients.redisClient.on('connect', () => {
+        clients.redisClient.on('ready', () => {
             status.available = true;
             logger.info('Redis connected.');
         });

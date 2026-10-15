@@ -5,9 +5,11 @@ import type { Context } from 'hono';
 import type { Data, DataItem, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
+import timezone from '@/utils/timezone';
 
 const handler = async (ctx: Context): Promise<Data> => {
-    const limit = Number(ctx.req.query('limit') ?? '25');
+    const limit = getRouteLimit(ctx, 25);
 
     const baseUrl = 'https://code.claude.com';
     const targetUrl = `${baseUrl}/docs/en/changelog`;
@@ -35,7 +37,7 @@ const handler = async (ctx: Context): Promise<Data> => {
                 title: version,
                 description,
                 link,
-                pubDate: dateText ? parseDate(dateText) : undefined,
+                pubDate: dateText ? timezone(parseDate(dateText), 0) : undefined,
                 guid: `claude-code-${version}`,
                 id: `claude-code-${version}`,
             };
@@ -47,7 +49,6 @@ const handler = async (ctx: Context): Promise<Data> => {
         description: 'Changelog for Claude Code CLI',
         link: targetUrl,
         item: items,
-        allowEmpty: true,
     };
 };
 

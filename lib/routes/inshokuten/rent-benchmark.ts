@@ -75,19 +75,16 @@ const parseDetail = (html: string, base: Pick<RentBenchmarkExtra, 'area_kind' | 
         .map((tr) => clean($(tr).text()))
         .filter((t): t is string => t !== null && /^\d{4}年/.test(t))
         .join(' / ');
-    const raw: RentBenchmarkExtra['raw'] = Object.fromEntries(
-        (
-            [
-                ['avg', cell('平均坪単価')],
-                ['max', cell('最高坪単価')],
-                ['min', cell('最低坪単価')],
-                ['top_floor', cell('一番多い階')],
-                ['distribution', buckets.length > 0 ? buckets.join(',') : null],
-                ['distribution_buckets', clean($('.right-graf-ex').text())],
-                ['trend', trend === '' ? null : trend],
-            ] as Array<[string, string | null]>
-        ).filter((e): e is [string, string] => e[1] !== null)
-    );
+    const entries: Array<[string, string | null]> = [
+        ['avg', cell('平均坪単価')],
+        ['max', cell('最高坪単価')],
+        ['min', cell('最低坪単価')],
+        ['top_floor', cell('一番多い階')],
+        ['distribution', buckets.length > 0 ? buckets.join(',') : null],
+        ['distribution_buckets', clean($('.right-graf-ex').text())],
+        ['trend', trend === '' ? null : trend],
+    ];
+    const raw: RentBenchmarkExtra['raw'] = Object.fromEntries(entries.filter((e): e is [string, string] => e[1] !== null));
     return {
         source: 'inshokuten',
         ...base,
@@ -119,7 +116,7 @@ const toItem = (target: Target, kind: RentBenchmarkExtra['area_kind'], pref: str
         async (): Promise<DataItem> => {
             const extra = parseDetail(await ofetch(target.url), { area_kind: kind, area_name: target.name, pref });
             return {
-                title: `${extra.area_name} 賃料相場 ${extra.period ?? ''}`.trim(),
+                title: `${extra.area_name} 賃料相場 ${extra.period ?? ''}`,
                 link: `${target.url}#rate-total`,
                 guid: target.url,
                 description: describe(extra),
@@ -127,7 +124,7 @@ const toItem = (target: Target, kind: RentBenchmarkExtra['area_kind'], pref: str
             };
         },
         DETAIL_CACHE_SECONDS
-    ) as Promise<DataItem>;
+    );
 
 export const handler = async (ctx): Promise<Data> => {
     const slug: string = ctx.req.param('area') ?? '23ward';

@@ -46,12 +46,21 @@ async function handler() {
         throw new InvalidParameterError('软件信息不存在，请报告这个问题');
     }
 
-    let data = result.recentSoftwareList.map((item) => ({
-        title: item.title,
-        description: util.generateImageLink(item.imgUrl),
-        link: item.jumpUrl.startsWith('http') ? item.jumpUrl : `${software_url}${item.jumpUrl}`,
-        pubDate: parseDate(item.publishTime, 'YYYY.MM.DD'),
-    }));
+    const seen = new Set<string>();
+    let data = result.recentSoftwareList
+        .map((item) => ({
+            title: item.title,
+            description: util.generateImageLink(item.imgUrl),
+            link: item.jumpUrl.startsWith('http') ? item.jumpUrl : `${software_url}${item.jumpUrl}`,
+            pubDate: parseDate(item.publishTime, 'YYYY.MM.DD'),
+        }))
+        .filter((item) => {
+            if (seen.has(item.link)) {
+                return false;
+            }
+            seen.add(item.link);
+            return true;
+        });
 
     data = await util.ProcessItemChina(data, cache);
 

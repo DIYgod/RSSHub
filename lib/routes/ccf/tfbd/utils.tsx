@@ -27,7 +27,7 @@ const fetchAllArticles = (data) => {
     const info = articles.toArray().map((e) => {
         const c = $(e);
         const r = {
-            title: c.find('h3 a[href]').text().trim(),
+            title: c.find('h3 a[href]').text(),
             link: base + c.find('h3 a[href]').attr('href'),
             pubDate: timezone(parseDate(c.find('p').text().trim(), 'YYYY-MM-DD'), 8),
         };

@@ -1,9 +1,10 @@
+import type { CheerioAPI } from 'cheerio';
 import { load } from 'cheerio';
+import { escapeUTF8 } from 'entities';
+import pMap from 'p-map';
 
-import { config } from '@/config';
 import type { Data, DataItem } from '@/types';
 import cache from '@/utils/cache';
-import logger from '@/utils/logger';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import parser from '@/utils/rss-parser';
@@ -11,20 +12,18 @@ import parser from '@/utils/rss-parser';
 const rootUrl = 'https://www.dr.dk';
 const feedUrl = (slug: string) => `${rootUrl}/nyheder/service/feeds/${slug}`;
 
-const escapeHtml = (text: string) => text.replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('"', '&quot;').replaceAll("'", '&#39;');
-
 const renderInline = (nodes: any[] = []): string =>
     nodes
         .map((node) => {
             switch (node.type) {
                 case 'Text':
-                    return escapeHtml(node.text ?? '');
+                    return escapeUTF8(node.text ?? '');
                 case 'Italic':
                     return `<em>${renderInline(node.body)}</em>`;
                 case 'Bold':
                     return `<strong>${renderInline(node.body)}</strong>`;
                 case 'Link':
-                    return `<a href="${escapeHtml(node.url ?? '')}">${renderInline(node.body)}</a>`;
+                    return `<a href="${escapeUTF8(node.url ?? '')}">${renderInline(node.body)}</a>`;
                 default:
                     return '';
             }
@@ -36,15 +35,15 @@ const renderImage = (image: any, { credit = false }: { credit?: boolean } = {}):
         return '';
     }
     const alt = image.altText ?? image.description ?? '';
-    let caption = image.description ? escapeHtml(image.description) : '';
+    let caption = image.description ? escapeUTF8(image.description) : '';
     if (credit) {
         const attribution = [image.photographer, image.copyright].filter(Boolean).join(' / ');
         if (attribution) {
-            caption += `${caption ? ' ' : ''}<small>${escapeHtml(attribution)}</small>`;
+            caption += `${caption ? ' ' : ''}<small>${escapeUTF8(attribution)}</small>`;
         }
     }
     const figcaption = caption ? `<figcaption>${caption}</figcaption>` : '';
-    return `<figure><img src="${escapeHtml(image.url)}" alt="${escapeHtml(alt)}">${figcaption}</figure>`;
+    return `<figure><img src="${escapeUTF8(image.url)}" alt="${escapeUTF8(alt)}">${figcaption}</figure>`;
 };
 
 // FactBox bodies use lowercase block node types (Paragraph, UnorderedList, ...) instead of the
@@ -72,10 +71,10 @@ const renderBody = (components: any[] = []): string =>
                 case 'ParagraphComponent':
                     return `<p>${renderInline(component.body)}</p>`;
                 case 'HeadingComponent':
-                    return `<h2>${escapeHtml(component.text ?? '')}</h2>`;
+                    return `<h2>${escapeUTF8(component.text ?? '')}</h2>`;
                 case 'QuoteComponent': {
-                    const quote = component.body ? `<p>${escapeHtml(component.body)}</p>` : '';
-                    const citation = component.citation ? `<footer>${escapeHtml(component.citation)}</footer>` : '';
+                    const quote = component.body ? `<p>${escapeUTF8(component.body)}</p>` : '';
+                    const citation = component.citation ? `<footer>${escapeUTF8(component.citation)}</footer>` : '';
                     return `<blockquote>${quote}${citation}</blockquote>`;
                 }
                 case 'ImageComponent':
@@ -85,8 +84,8 @@ const renderBody = (components: any[] = []): string =>
                     if (!poster) {
                         return '';
                     }
-                    const caption = component.caption ? `<figcaption>${escapeHtml(component.caption)}</figcaption>` : '';
-                    return `<figure><img src="${escapeHtml(poster)}" alt="${escapeHtml(component.caption ?? '')}">${caption}</figure>`;
+                    const caption = component.caption ? `<figcaption>${escapeUTF8(component.caption)}</figcaption>` : '';
+                    return `<figure><img src="${escapeUTF8(poster)}" alt="${escapeUTF8(component.caption ?? '')}">${caption}</figure>`;
                 }
                 case 'ImageCollectionComponent':
                     return (component.images ?? [])
@@ -96,7 +95,7 @@ const renderBody = (components: any[] = []): string =>
                 case 'FactBoxComponent': {
                     const expression = component.expression ?? {};
                     const image = renderImage(expression.image?.default, { credit: true });
-                    const title = expression.title ? `<h3>${escapeHtml(expression.title)}</h3>` : '';
+                    const title = expression.title ? `<h3>${escapeUTF8(expression.title)}</h3>` : '';
                     const body = renderFactBoxBody(expression.body);
                     return image || title || body ? `<aside>${image}${title}${body}</aside>` : '';
                 }
@@ -111,11 +110,57 @@ const renderBody = (components: any[] = []): string =>
         .filter(Boolean)
         .join('\n');
 
-export const extractDRArticle = (html: string) => {
+const findArticleResource = (value: any, pathname: string): Record<string, any> | undefined => {
+    if (!value || typeof value !== 'object') {
+        return;
+    }
+    if (value.urlPathId === pathname && Array.isArray(value.body)) {
+        return value;
+    }
+    for (const child of Object.values(value)) {
+        const resource = findArticleResource(child, pathname);
+        if (resource) {
+            return resource;
+        }
+    }
+};
+
+const extractFlightArticle = ($: CheerioAPI, link: string) => {
+    const pathname = new URL(link, rootUrl).pathname;
+    for (const script of $('script').toArray()) {
+        const payload = $(script)
+            .text()
+            .match(/self\.__next_f\.push\((\[.*\])\)/s)?.[1];
+        if (!payload) {
+            continue;
+        }
+        const chunk = JSON.parse(payload);
+        if (chunk[0] !== 1 || typeof chunk[1] !== 'string') {
+            continue;
+        }
+        const records = chunk[1].split('\n');
+        for (const record of records) {
+            const json = record.slice(record.indexOf(':') + 1);
+            if (!json.startsWith('{') && !json.startsWith('[')) {
+                continue;
+            }
+            try {
+                const resource = findArticleResource(JSON.parse(json), pathname);
+                if (resource) {
+                    return resource;
+                }
+            } catch {
+                // Ignore non-JSON React Flight records and retain the official RSS fallback.
+            }
+        }
+    }
+};
+
+export const extractDRArticle = (html: string, link?: string) => {
     const $ = load(html);
     const nextData = JSON.parse($('script#__NEXT_DATA__').text() || '{}');
     const viewProps = nextData.props?.pageProps?.viewProps;
-    const resource = viewProps?.resource ?? viewProps?.article;
+    const resource = viewProps?.resource ?? viewProps?.article ?? extractFlightArticle($, link ?? $('link[rel="canonical"]').attr('href') ?? rootUrl);
     if (!resource) {
         return null;
     }
@@ -133,66 +178,53 @@ export const extractDRArticle = (html: string) => {
         content,
         author: author || undefined,
         category: resource.site?.title,
-        image: image ?? undefined,
+        image,
         // `resource.published` is a boolean, so only `startDate` can be parsed as a date.
         pubDate: resource.startDate ? parseDate(resource.startDate) : undefined,
     };
 };
 
-const fetchDRArticle = async (link: string) => {
+type FeedItem = Awaited<ReturnType<typeof parser.parseURL>>['items'][number];
+
+const fetchDRArticle = async (item: FeedItem) => {
+    const base = {
+        title: item.title,
+        link: item.link,
+        guid: item.guid ?? item.link,
+        pubDate: item.pubDate ? parseDate(item.pubDate) : undefined,
+    };
+
     try {
-        return await cache.tryGet(`dr:article:${link}`, async () => {
-            const html = await ofetch(link, {
-                headers: {
-                    'User-Agent': config.trueUA,
-                },
-            });
-            const article = extractDRArticle(html);
+        return await cache.tryGet(`dr:article:${item.link}`, async () => {
+            const html = await ofetch(item.link!);
+            const article = extractDRArticle(html, item.link);
             if (!article) {
-                throw new Error(`Unable to extract the full article from ${link}`);
+                throw new Error(`Unable to extract the full article from ${item.link}`);
             }
-            return article;
+
+            return {
+                ...base,
+                pubDate: article.pubDate ?? base.pubDate,
+                description: article.content,
+                author: article.author,
+                category: article.category ?? item.category,
+                image: article.image,
+            } as DataItem;
         });
-    } catch (error) {
-        // Throwing inside the cache callback keeps the RSS summary fallback out of the cache,
-        // so a temporary DR outage does not poison the cached article.
-        logger.error(`Failed to fetch DR article ${link}: ${error}`);
-        return null;
+    } catch {
+        // Fall back to the official RSS description when the full article cannot be extracted.
+        return {
+            ...base,
+            description: item.contentSnippet ?? item.content,
+        } as DataItem;
     }
 };
 
 export const getNews = async (slug: string): Promise<Data> => {
     const feed = await parser.parseURL(feedUrl(slug));
 
-    const items = await Promise.all(
-        feed.items.map(async (item) => {
-            const base = {
-                title: item.title,
-                link: item.link,
-                guid: item.guid ?? item.link,
-                pubDate: item.pubDate ? parseDate(item.pubDate) : undefined,
-            };
-
-            const article = await fetchDRArticle(item.link!);
-
-            if (article?.content) {
-                return {
-                    ...base,
-                    pubDate: article.pubDate ?? base.pubDate,
-                    description: article.content,
-                    author: article.author,
-                    category: article.category ?? item.category,
-                    image: article.image,
-                } as DataItem;
-            }
-
-            // Fall back to the official RSS description when the full article cannot be extracted.
-            return {
-                ...base,
-                description: item.contentSnippet ?? item.content,
-            } as DataItem;
-        })
-    );
+    const list = feed.items;
+    const items = await pMap(list, (item) => fetchDRArticle(item), { concurrency: 4 });
 
     return {
         title: feed.title ?? '',

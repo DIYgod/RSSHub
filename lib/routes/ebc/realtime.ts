@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { Language, Route } from '@/types';
 import cache from '@/utils/cache';
@@ -26,8 +27,8 @@ export const route: Route = {
     description: '',
     radar: [
         {
-            source: ['news.ebc.net.tw/realtime/:category'],
-            target: '/:category',
+            source: ['news.ebc.net.tw/realtime/:category?'],
+            target: '/realtime/:category?',
         },
     ],
 };
@@ -51,8 +52,10 @@ async function handler(ctx) {
     const feed = $('div.list > a')
         .toArray()
         .map((item) => new URL($(item).attr('href') ?? '', 'https://news.ebc.net.tw').href);
-    const items = await Promise.all(
-        feed.map((url) =>
+    const candidates = feed;
+    const items = await pMap(
+        candidates,
+        (url) =>
             cache.tryGet(url, async () => {
                 const response = await got(url);
                 const $ = load(response.data);
@@ -83,8 +86,8 @@ async function handler(ctx) {
                     description: cover.html()! + content.html()!,
                     category: metadata.keywords ? [metadata.articleSection, ...metadata.keywords.split(',')] : [metadata.articleSection],
                 };
-            })
-        )
+            }),
+        { concurrency: 3 }
     );
     return {
         title: '東森新聞|即時',

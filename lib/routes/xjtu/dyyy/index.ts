@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
@@ -19,7 +20,8 @@ export const route: Route = {
 
 async function handler(ctx) {
     const path = ctx.req.param('path');
-    const response = await got(`${baseUrl}/${path}.htm`);
+    const targetUrl = `${baseUrl}/${path}.htm`;
+    const response = await got(targetUrl);
 
     const $ = load(response.data);
 
@@ -29,29 +31,35 @@ async function handler(ctx) {
             const $item = $(item);
             return {
                 title: $item.find('a').attr('title')!,
-                link: new URL($item.find('a').attr('href')!, response.url).href,
+                link: new URL($item.find('a').attr('href')!, targetUrl).href,
                 pubDate: parseDate($item.find('.data').text()),
             };
         });
 
-    await Promise.all(
-        items.map((item) =>
-            cache.tryGet(item.link!, async () => {
+    const enrichedItems = await pMap(
+        items,
+        async (item) => {
+            const detail = await cache.tryGet(`xjtu:dyyy:content:v1:${item.link}`, async () => {
                 const { data: response } = await got(item.link);
                 const $ = load(response);
 
-                item.author = $('.content_source')
+                const author = $('.content_source')
                     .text()
-                    .match(/责任编辑：(.*)\(点击/)![1];
-                item.description = $('.content_con').html();
-                return item;
-            })
-        )
+                    .match(/责任编辑：(.*)\(点击/)?.[1];
+                const description = $('.content_con').html();
+                if (!description?.trim()) {
+                    throw new Error(`Unable to find article content at ${item.link}`);
+                }
+                return { author, description };
+            });
+            return { ...item, ...detail };
+        },
+        { concurrency: 3, stopOnError: false }
     );
 
     return {
         title: $('head title').text(),
-        link: `${baseUrl}/${path}.htm`,
-        item: items,
+        link: targetUrl,
+        item: enrichedItems,
     };
 }

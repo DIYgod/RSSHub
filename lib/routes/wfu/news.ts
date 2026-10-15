@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
@@ -6,45 +7,66 @@ import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
-// 参考 whu/news 武汉大学页面写成
+// Adapted from the university news route.
 
 const baseUrl = 'https://www.wfu.edu.cn';
 const sizeTitle = '--潍坊学院新闻';
 
-const catrgoryMap = {
+const categoryMap = {
     wyyw: ['/50/list.htm', '潍院要闻'],
     zhxw: ['/52/list.htm', '综合新闻'],
     xszh: ['/xszh/list.htm', '学术纵横'],
 };
 
-// 专门定义一个function用于加载文章内容
+// Fetch the main article content.
 async function loadContent(link) {
-    let description = '';
-
-    let response;
-    // 如果不是 大学的站点, 直接返回简单的标题即可
-    // 判断 是否外站链接,如果是 则直接返回页面 不做单独的解析
-    const https_reg = /^https:\/\/www\.wfu\.edu\.cn\/.*/;
-    if (!https_reg.test(link)) {
-        return { description };
+    const httpsPattern = /^https:\/\/www\.wfu\.edu\.cn\/.*/;
+    if (!httpsPattern.test(link)) {
+        return { description: '' };
     }
-    try {
-        // 异步请求文章
-        response = await got.get(link);
-    } catch (error) {
-        // 如果网络问题 直接出错
-        if (error instanceof Error && ['HTTPError', 'RequestError', 'FetchError'].includes(error.name)) {
-            description = 'Page 404 Please Check!';
-        }
-        return { description };
-    }
-    // 加载文章内容
+    const response = await got.get(link);
     const $ = load(response.data);
+    const body = $('div.wp_articlecontent');
+    if (body.length !== 1) {
+        throw new Error(`Article body not found at ${link}`);
+    }
+    const author = extractArticleAuthor($, body);
+    return { description: body.html() ?? undefined, author };
+}
 
-    // 提取文章内容
-    description = $('div.wp_articlecontent').html() ?? '';
-    // 返回解析的结果
-    return { description };
+function parseFooterAuthor(text: string) {
+    const prefix = /^【作者(?:\/编辑)?[：:]\s*/.exec(text);
+    if (!prefix) {
+        return;
+    }
+    const remainder = text.slice(prefix[0].length);
+    const firstLineBreak = remainder.search(/[\r\n\u{2028}\u{2029}]/u);
+    for (const marker of remainder.matchAll(/(?:摄影|审核|编辑|责编|终审)[：:]|】$/g)) {
+        let boundary = marker.index;
+        if (marker[0] !== '】') {
+            while (boundary > 0 && /\s/.test(remainder[boundary - 1])) {
+                boundary--;
+            }
+        }
+        if (firstLineBreak === -1 || boundary <= firstLineBreak) {
+            const author = remainder.slice(0, boundary);
+            return author.replaceAll(/\s+/g, ' ').trim() || undefined;
+        }
+    }
+}
+
+function extractArticleAuthor($, body) {
+    const footer = body
+        .find('p')
+        .filter((_, element) => $(element).text().trim())
+        .last();
+    const text = footer.text().trim();
+    if (!/^【(?:作者(?:\/编辑)?|摄影|审核|编辑|责编|终审)[：:][\s\S]*】$/.test(text)) {
+        return;
+    }
+    const author = parseFooterAuthor(text);
+    footer.remove();
+    return author || undefined;
 }
 
 export const route: Route = {
@@ -65,11 +87,23 @@ export const route: Route = {
             source: ['news.wfu.edu.cn/'],
             target: '/news',
         },
+        {
+            source: ['www.wfu.edu.cn/50/list.htm'],
+            target: '/news/wyyw',
+        },
+        {
+            source: ['www.wfu.edu.cn/52/list.htm'],
+            target: '/news/zhxw',
+        },
+        {
+            source: ['www.wfu.edu.cn/xszh/list.htm'],
+            target: '/news/xszh',
+        },
     ],
     name: '新闻',
     maintainers: ['cccht'],
     handler,
-    url: 'news.wfu.edu.cn/',
+    url: 'www.wfu.edu.cn/50/list.htm',
     description: `| **内容** | **参数** |
 | :------: | :------: |
 | 潍院要闻 |   wyyw   |
@@ -77,48 +111,75 @@ export const route: Route = {
 | 学术纵横 |   xszh   |`,
 };
 
+function parsePublicationDate(value: string | undefined) {
+    if (!value?.trim()) {
+        return;
+    }
+    const calendarDate = /^\d{4}-\d{2}-\d{2}$/.test(value.trim());
+    const date = calendarDate ? parseDate(value.trim(), 'YYYY-MM-DD', true) : parseDate(value);
+    // UTC midnight encodes a calendar day, not a source publication instant.
+    return Number.isFinite(date.getTime()) ? timezone(date, calendarDate ? 0 : 8) : undefined;
+}
+
+async function unwrapFirstFailure<T>(promise: Promise<T>): Promise<T> {
+    try {
+        return await promise;
+    } catch (error) {
+        throw error instanceof AggregateError ? error.errors[0] : error;
+    }
+}
+
 async function handler(ctx) {
-    // 默认 潍院要闻 然后获取列表页面
+    // Fetch the first page of the selected category.
     const type = ctx.req.param('type') ?? 'wyyw';
-    const listPageUrl = baseUrl + catrgoryMap[type][0];
+    const listPageUrl = baseUrl + categoryMap[type][0];
     const response = await got({
         method: 'get',
         url: listPageUrl,
     });
     const $ = load(response.data);
 
-    // 获取当前页面的 list
+    // Read the first-page article list.
     const list = $('div[frag=窗口1]>ul>li');
 
-    const result = await Promise.all(
-        // 遍历每一篇文章
-        list.toArray().map(async (item) => {
-            const $ = load(item); // 将列表项加载成 html
-            const $item_url = 'https://www.wfu.edu.cn' + $('a').attr('href'); // 获取 每一项的url
-            const $title = $('a>div.txt>h1').text(); // 获取每个的标题
-            const $pubdate = timezone(parseDate($('a>div.txt>span.date').text().split('：', 2)[1]), 8); // 获取发布时间
+    const result = await unwrapFirstFailure(
+        pMap(
+            list.toArray(),
+            async (item) => {
+                const $item = $(item);
+                const itemUrl = new URL($item.find('a').attr('href')!, listPageUrl).href; // Resolve the article URL.
+                const itemTitle = $item.find('a>div.txt>h1').text(); // Read the list title.
+                const pubDate = parsePublicationDate($item.find('a>div.txt>span.date').text().split('：', 2)[1]); // Read the source publication date.
 
-            // 列表上提取到的信息
-            // 标题 链接
-            const single = {
-                title: $title,
-                pubDate: $pubdate,
-                link: $item_url,
-                guid: $item_url,
-            };
+                // Keep the current list metadata.
+                // Keep the title and link.
+                const single = {
+                    title: itemTitle,
+                    pubDate,
+                    link: itemUrl,
+                    guid: itemUrl,
+                };
 
-            // 对于列表的每一项, 单独获取 时间与详细内容
+                // Cache the article body and author separately from list metadata.
 
-            const other = await cache.tryGet($item_url, () => loadContent($item_url));
-            // 合并解析后的结果集作为该篇文章最终的输出结果
-            return { ...single, ...other };
-        })
+                try {
+                    const other = await cache.tryGet(`wfu:news:authored-content:${itemUrl}`, () => loadContent(itemUrl));
+                    return { ...single, description: other.description, author: other.author };
+                } catch (error) {
+                    if (error instanceof Error && error.name === 'FetchError') {
+                        return single;
+                    }
+                    throw error;
+                }
+            },
+            { concurrency: 3, stopOnError: false }
+        )
     );
 
     return {
-        title: catrgoryMap[type][1] + sizeTitle,
+        title: categoryMap[type][1] + sizeTitle,
         link: baseUrl,
-        description: catrgoryMap[type][1] + sizeTitle,
+        description: categoryMap[type][1] + sizeTitle,
         item: result,
     };
 }

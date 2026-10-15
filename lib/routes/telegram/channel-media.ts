@@ -48,7 +48,6 @@ function ExpandInlineBytes(bytes: Buffer) {
     footer.copy(real, header.length + bytes.length, 0);
     return real;
 }
-
 function sortThumb(thumb: Api.TypePhotoSize) {
     if (thumb instanceof Api.PhotoStrippedSize || thumb instanceof Api.PhotoCachedSize) {
         return thumb.bytes.length;
@@ -61,12 +60,10 @@ function sortThumb(thumb: Api.TypePhotoSize) {
     }
     return 0;
 }
-
 function chooseLargestThumb(thumbs: Api.TypePhotoSize[]) {
-    thumbs = [...thumbs].toSorted((a, b) => sortThumb(a) - sortThumb(b));
+    thumbs = thumbs.toSorted((a, b) => sortThumb(a) - sortThumb(b));
     return thumbs.pop();
 }
-
 export async function* streamThumbnail(client: TelegramClient, doc: Api.Document) {
     if ((doc.thumbs?.length ?? 0) > 0) {
         const size = chooseLargestThumb(doc.thumbs!);
@@ -79,11 +76,12 @@ export async function* streamThumbnail(client: TelegramClient, doc: Api.Document
     }
     throw new Error('no thumbnails available');
 }
-
 export async function* streamDocument(client: TelegramClient, obj: Api.Document, thumbSize = '', offset?: bigInt.BigInteger, limit?: bigInt.BigInteger) {
     const requestSize = 512 * 1024; // MAX_CHUNK_SIZE
-    let skip = offset ? offset.mod(requestSize).toJSNumber() : 0;
-    const alignedOffset = offset?.subtract(skip);
+    const start = offset ?? bigInt(0);
+    let skip = start.mod(requestSize).toJSNumber();
+    const alignedOffset = start.subtract(skip);
+    let remaining = limit ? limit.subtract(start).add(1).toJSNumber() : undefined;
     // console.log('starting iterDownload');
     const chunks = client.iterDownload(
         new Api.InputDocumentFileLocation({
@@ -96,7 +94,7 @@ export async function* streamDocument(client: TelegramClient, obj: Api.Document,
             requestSize,
             dcId: obj.dcId,
             offset: alignedOffset,
-            limit: limit && alignedOffset ? limit.subtract(alignedOffset).add(1).valueOf() : undefined,
+            limit: limit ? Math.ceil(limit.subtract(alignedOffset).add(1).toJSNumber() / requestSize) : undefined,
         }
     );
     for await (const chunk of chunks) {
@@ -104,11 +102,18 @@ export async function* streamDocument(client: TelegramClient, obj: Api.Document,
             skip -= chunk.length;
             continue;
         }
-        yield skip ? chunk.subarray(skip) : chunk;
+        const available = chunk.subarray(skip);
+        const content = remaining === undefined ? available : available.subarray(0, remaining);
+        yield content;
+        if (remaining !== undefined) {
+            remaining -= content.length;
+            if (remaining === 0) {
+                break;
+            }
+        }
         skip = 0;
     }
 }
-
 function parseRange(range: string, length: bigInt.BigInteger) {
     if (!range) {
         return [];
@@ -117,31 +122,45 @@ function parseRange(range: string, length: bigInt.BigInteger) {
     if (typ !== 'bytes') {
         throw new InvalidParameterError(`unsupported range: ${typ}`);
     }
+    if (!segstr || length.lesserOrEquals(0)) {
+        return;
+    }
     const segs = segstr.split(',').map((s) => s.trim());
     const parsedSegs: bigInt.BigInteger[][] = [];
     for (const seg of segs) {
-        const range = seg
-            .split('-', 2)
-            .filter((v) => !!v)
-            .map((v) => bigInt(v));
-        if (range.length < 2) {
-            if (seg.startsWith('-')) {
-                range.unshift(bigInt(0));
-            } else {
-                range.push(length.subtract(bigInt(1)));
-            }
+        const match = seg.match(/^(\d*)-(\d*)$/);
+        if (!match || (!match[1] && !match[2])) {
+            return;
         }
-        parsedSegs.push(range);
+        const last = length.subtract(1);
+        let start: bigInt.BigInteger;
+        let end: bigInt.BigInteger;
+        if (match[1]) {
+            start = bigInt(match[1]);
+            end = match[2] ? bigInt(match[2]) : last;
+            if (start.greaterOrEquals(length) || end.lesser(start)) {
+                return;
+            }
+            if (end.greater(last)) {
+                end = last;
+            }
+        } else {
+            const suffix = bigInt(match[2]);
+            if (suffix.isZero()) {
+                return;
+            }
+            start = suffix.greater(length) ? bigInt(0) : length.subtract(suffix);
+            end = last;
+        }
+        parsedSegs.push([start, end]);
     }
     return parsedSegs;
 }
-
 export async function configureMiddlewares(ctx: Context) {
     // media is too heavy to cache in memory or redis, and lock-up is not needed
     await cacheModule.set(ctx.get('cacheControlKey'), '0', config.cache.requestTimeout);
     ctx.req.raw.headers.delete('Accept-Encoding'); // avoid hono compress() middleware detecting Accept-Encoding on req
 }
-
 function streamResponse(c: Context, bodyIter: AsyncGenerator<Buffer>) {
     return stream(c, async (stream) => {
         let aborted = false;
@@ -156,10 +175,8 @@ function streamResponse(c: Context, bodyIter: AsyncGenerator<Buffer>) {
             // console.log(`writing ${chunk.length / 1024}kB`);
             await stream.write(chunk);
         }
-        // console.log(`done streamResponse`);
     });
 }
-
 export const route: Route = {
     path: '/media/:entityName/:messageId',
     categories: ['social-media'],
@@ -187,13 +204,11 @@ export const route: Route = {
 Serves telegram media like pictures, video or files.
 :::`,
 };
-
 export async function handleMedia(media: Api.TypeMessageMedia, client: TelegramClient, ctx: Context) {
     if (media instanceof Api.MessageMediaPhoto) {
         const buf = await client.downloadMedia(media);
         return new Response(buf as BodyInit, { headers: { 'Content-Type': 'image/jpeg' } });
     }
-
     const doc = getDocument(media);
     if (doc) {
         if ('thumb' in ctx.req.query()) {
@@ -203,13 +218,12 @@ export async function handleMedia(media: Api.TypeMessageMedia, client: TelegramC
         ctx.header('Content-Type', doc.mimeType);
         ctx.header('Accept-Ranges', 'bytes');
         ctx.header('Content-Security-Policy', "default-src 'self'; script-src 'none'");
-
         const rangeHeader = ctx.req.header('Range') ?? '';
         const range = parseRange(rangeHeader, doc.size);
-        if (range.length > 1) {
+        if (!range || range.length > 1) {
+            ctx.header('Content-Range', `bytes */${doc.size}`);
             return ctx.text('Not Satisfiable', 416);
         }
-
         if (range.length === 0) {
             ctx.header('Content-Length', doc.size.toString());
             if (!doc.mimeType.startsWith('video/') && !doc.mimeType.startsWith('audio/') && !doc.mimeType.startsWith('image/')) {
@@ -224,14 +238,11 @@ export async function handleMedia(media: Api.TypeMessageMedia, client: TelegramC
         ctx.header('Content-Range', `bytes ${offset}-${limit}/${doc.size}`);
         return streamResponse(ctx, streamDocument(client, doc, '', offset, limit));
     }
-
     return ctx.text(media.className, 415);
 }
-
 export default async function handler(ctx: Context) {
     await configureMiddlewares(ctx);
     const client = await getClient();
-
     const { entityName, messageId } = ctx.req.param();
     const entity = await client.getInputEntity(entityName);
     const msgs = await client.getMessages(entity, {
@@ -241,6 +252,5 @@ export default async function handler(ctx: Context) {
     if (!media) {
         return ctx.text('Unknown media', 404);
     }
-
     return await handleMedia(media, client, ctx);
 }

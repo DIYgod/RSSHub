@@ -1,13 +1,13 @@
 import type { SecureVersion } from 'node:tls';
 
 import type { HeaderGeneratorOptions } from 'header-generator';
-import { useRegisterRequest } from 'node-network-devtools';
 import { RateLimiterMemory, RateLimiterQueue } from 'rate-limiter-flexible';
 import type { Agent, Dispatcher, RequestInfo, RequestInit, Response } from 'undici';
 import undici, { Request } from 'undici';
 
 import { config } from '@/config';
 import { generatedHeaders as HEADER_LIST, generateHeaders } from '@/utils/header-generator';
+import { waitForHostRateLimit } from '@/utils/host-rate-limit';
 import logger from '@/utils/logger';
 import proxy from '@/utils/proxy';
 
@@ -23,7 +23,7 @@ const limiterQueue = new RateLimiterQueue(limiter, {
 
 undici.setGlobalDispatcher(
     new undici.Agent({
-        connect: { preferH2: true },
+        connect: { preferH2: true, autoSelectFamily: config.requestAutoSelectFamily },
     })
 );
 
@@ -33,20 +33,23 @@ const tlsAgents = new Map<SecureVersion, Agent>();
 const getTlsAgent = (minVersion: SecureVersion) => {
     let agent = tlsAgents.get(minVersion);
     if (!agent) {
-        agent = new undici.Agent({ connect: { preferH2: true, minVersion } });
+        agent = new undici.Agent({ connect: { preferH2: true, minVersion, autoSelectFamily: config.requestAutoSelectFamily } });
         tlsAgents.set(minVersion, agent);
     }
     return agent;
 };
 
-export const useCustomHeader = (headers: Iterable<[string, string]>) => {
-    process.env.NODE_ENV === 'dev' &&
-        useRegisterRequest((req) => {
-            for (const [key, value] of headers) {
-                req.requestHeaders[key] = value;
-            }
-            return req;
-        });
+export const useCustomHeader = async (headers: Iterable<[string, string]>) => {
+    if (process.env.NODE_ENV !== 'dev') {
+        return;
+    }
+    const { useRegisterRequest } = await import('node-network-devtools');
+    useRegisterRequest((req) => {
+        for (const [key, value] of headers) {
+            req.requestHeaders[key] = value;
+        }
+        return req;
+    });
 };
 
 const wrappedFetch: typeof undici.fetch = async (input: RequestInfo, init?: RequestInit & { headerGeneratorOptions?: Partial<HeaderGeneratorOptions>; allowH2?: boolean; minVersion?: SecureVersion }) => {
@@ -89,7 +92,9 @@ const wrappedFetch: typeof undici.fetch = async (input: RequestInfo, init?: Requ
         request.headers.delete('x-prefer-proxy');
     }
 
-    config.enableRemoteDebugging && useCustomHeader(request.headers);
+    if (config.enableRemoteDebugging) {
+        await useCustomHeader(request.headers);
+    }
 
     // proxy
     if (!init?.dispatcher && (proxy.proxyObj.strategy !== 'on_retry' || isRetry)) {
@@ -122,6 +127,7 @@ const wrappedFetch: typeof undici.fetch = async (input: RequestInfo, init?: Requ
     const maxRetries = proxy.multiProxy?.allProxies.length || 1;
 
     const attemptRequest = async (attempt: number): Promise<Response> => {
+        await waitForHostRateLimit(request.url, config.requestRateLimits, request.signal);
         try {
             if (init?.allowH2 === false) {
                 return await undici.fetch(request, {

@@ -1,5 +1,6 @@
 import { load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
@@ -77,8 +78,9 @@ export const route: Route = {
         });
 
         // get location and fullDuration from the detail page of each exhibition
-        const items: DataItem[] = await Promise.all(
-            listItems.map((item: ExhibitionListItem) =>
+        const items: DataItem[] = await pMap(
+            listItems,
+            (item: ExhibitionListItem) =>
                 cache.tryGet(item.itemlink, async () => {
                     const detailResponse = await got({
                         method: 'get',
@@ -133,8 +135,8 @@ export const route: Route = {
                             endDate,
                         },
                     };
-                })
-            )
+                }),
+            { concurrency: 3 }
         );
 
         return {

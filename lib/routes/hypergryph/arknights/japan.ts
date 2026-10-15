@@ -3,37 +3,14 @@ import type { Context } from 'hono';
 import type { Data, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
-
-type ContentItem = {
-    key: string;
-    value: string;
-    bannerUrl: string;
-    bannerUrlMobile: string;
-    digest: string;
-    imgCount: number;
-    imgInfo: any[];
-    ext_0: string;
-    ext_1: string;
-    ext_2: string;
-    ext_3: string;
-    ext_4: string;
-    ext_5: string;
-    ext_6: string;
-    ext_7: string;
-    ext_8: string;
-    ext_9: string;
-};
+import { getRouteLimit } from '@/utils/route-limit';
 
 type NewsDetail = {
-    id: string;
+    id: number;
     title: string;
-    category: number;
-    content: ContentItem[];
-    lang: string;
-    highlight: number;
-    publishedAt: string;
-    ext1: null | string;
-    ext2: null | string;
+    type: string;
+    content: string;
+    publishTime: number;
 };
 
 export const route: Route = {
@@ -42,30 +19,35 @@ export const route: Route = {
     example: '/hypergryph/arknights/japan',
     radar: [
         {
-            source: ['ak.arknights.jp/news', 'ak.arknights.jp/'],
+            source: ['www.arknights.jp/news', 'www.arknights.jp/'],
         },
     ],
     name: 'アークナイツ (日服新闻)',
     maintainers: ['ofyark'],
     handler,
-    url: 'ak.arknights.jp/news',
+    url: 'www.arknights.jp/news',
+};
+
+const parsePublicationDate = (value: number) => {
+    const date = Number.isFinite(value) && value > 0 ? parseDate(value) : undefined;
+    return date && Number.isFinite(date.getTime()) ? date : undefined;
 };
 
 async function handler(ctx: Context): Promise<Data> {
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 9;
+    const limit = getRouteLimit(ctx, 9);
 
-    const response = await ofetch<{ data: { items: NewsDetail[] } }>('https://www.arknights.jp:10014/news', {
+    const response = await ofetch<{ data: { rows: NewsDetail[] } }>('https://www.arknights.jp/api/resource/news/list', {
         query: {
-            lang: 'ja',
-            limit,
-            page: 1,
+            index: 1,
+            size: limit,
+            type: 'latest',
         },
     });
 
-    const newsList = response.data.items.map((item) => ({
+    const newsList = response.data.rows.map((item) => ({
         title: item.title,
-        description: item.content[0].value,
-        pubDate: parseDate(item.publishedAt),
+        description: item.content,
+        pubDate: parsePublicationDate(item.publishTime),
         link: `https://www.arknights.jp/news/${item.id}`,
     }));
 

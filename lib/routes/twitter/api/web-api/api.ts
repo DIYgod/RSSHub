@@ -8,6 +8,8 @@ import { baseUrl, gqlFeatures, gqlMap, initGqlMap } from './constants';
 import type { ApiParams } from './utils';
 import { gatherLegacyFromData, paginationTweets, twitterGot } from './utils';
 
+const isRestId = (value: unknown): value is string => typeof value === 'string' && value.length > 0;
+
 const getUserResult = (response: any) => {
     const errors = response?.errors;
     if (errors !== undefined && errors !== null && (!Array.isArray(errors) || errors.length > 0)) {
@@ -32,7 +34,7 @@ const getUserResult = (response: any) => {
     if (result?.__typename === 'UserUnavailable') {
         throw new InvalidParameterError('Twitter user is unavailable');
     }
-    if (!result || typeof result.rest_id !== 'string' || result.rest_id.length === 0) {
+    if (!result || !isRestId(result.rest_id)) {
         throw new Error('Twitter API returned an incomplete user response');
     }
     return result;

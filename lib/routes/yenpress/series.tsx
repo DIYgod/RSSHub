@@ -2,6 +2,7 @@ import { load } from 'cheerio';
 import type { Context } from 'hono';
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
@@ -9,7 +10,31 @@ import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
-const render = (data: { cover?: string; bookInfo?: any[] }) => renderToString(<SeriesDescription {...data} />);
+function getImageUrl(value: string | undefined, baseUrl: string): string | undefined {
+    if (!value) {
+        return;
+    }
+    try {
+        const url = new URL(value, baseUrl);
+        if (['http:', 'https:'].includes(url.protocol) && !url.username && !url.password) {
+            return url.href;
+        }
+    } catch {
+        // Ignore unsupported source image URLs.
+    }
+    return;
+}
+
+function getReleaseDate(value: string | undefined): Date | undefined {
+    if (!value?.trim()) {
+        return;
+    }
+    const date = parseDate(value);
+    // UTC midnight represents the release calendar day, not a publication instant.
+    return Number.isFinite(date.getTime()) ? timezone(date, 0) : undefined;
+}
+
+const render = (data: { cover?: string }) => renderToString(<SeriesDescription {...data} />);
 
 export const route: Route = {
     path: '/series/:name',
@@ -39,18 +64,19 @@ async function handler(ctx: Context) {
         .map((item): DataItem => {
             const $item = $(item);
             return {
-                title: $item.find('span').text().trim(),
+                title: $item.find('span').text(),
                 link: new URL($item.find('a').attr('href')!, baseUrl).href,
             };
         });
 
-    const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link!, async () => {
+    const items = await pMap(
+        list,
+        async (item) => {
+            const { description, pubDate, category, author } = await cache.tryGet<Pick<DataItem, 'description' | 'pubDate' | 'category' | 'author'>>(`yenpress:book:v5:${item.link}`, async () => {
                 const response = await ofetch(item.link!);
                 const $ = load(response);
 
-                item.category = $('.detail-labels.mobile-only')
+                const category = $('.detail-labels.mobile-only')
                     .eq(0)
                     .find('a')
                     .toArray()
@@ -58,6 +84,15 @@ async function handler(ctx: Context) {
 
                 $('svg, .social-share, .desktop-only, .detail-labels').remove();
 
+                $('.book-info img').each((_, node) => {
+                    const image = $(node);
+                    const src = getImageUrl(image.attr('src') || image.attr('data-src'), item.link!);
+                    if (src) {
+                        image.attr('src', src).removeAttr('data-src');
+                    } else {
+                        image.remove();
+                    }
+                });
                 const cover = $('.book-info').find('.book-cover-img').html();
 
                 const bookInfo = $('.buy-info .deliver')
@@ -90,28 +125,40 @@ async function handler(ctx: Context) {
                     }));
 
                 const info = $('.book-info');
-                info.find('.buy-info, .series-cover').remove();
+                const credits = info
+                    .children('.story-details.mobile-only')
+                    .find('p')
+                    .toArray()
+                    .map((node) => $(node).text())
+                    .filter((text) => text.trim());
+                const author = credits.length ? credits.join('; ') : undefined;
+                info.find('.buy-info, .series-cover, .story-details.mobile-only').remove();
 
-                item.description = render({
+                const description = render({
                     cover: cover! + info.html(),
-                    bookInfo,
                 });
-                item.pubDate = timezone(parseDate(bookInfo[0].detail.find((d) => d.key === 'Release Date')!.value), 0);
-
-                return item;
-            })
-        )
+                const releaseDate = bookInfo[0]?.detail.find((d) => d.key === 'Release Date')?.value;
+                return {
+                    description,
+                    category,
+                    pubDate: getReleaseDate(releaseDate),
+                    author,
+                };
+            });
+            return { ...item, description, pubDate: pubDate ?? undefined, category, author };
+        },
+        { concurrency: 3, stopOnError: false }
     );
 
     return {
-        title: $('head title').text().trim(),
+        title: $('head title').text(),
         description: $('.social-share p').text().trim(),
         link,
         item: items,
     };
 }
 
-const SeriesDescription = ({ cover, bookInfo }: { cover?: string; bookInfo?: any[] }) => (
+const SeriesDescription = ({ cover }: { cover?: string }) => (
     <>
         {cover ? (
             <>
@@ -119,30 +166,5 @@ const SeriesDescription = ({ cover, bookInfo }: { cover?: string; bookInfo?: any
                 <br />
             </>
         ) : null}
-        {bookInfo?.map((info) => (
-            <>
-                <p>
-                    {info.deliver}: {info.price}
-                </p>
-                Buy from:
-                <ul>
-                    {info.from?.map((f) => (
-                        <li>
-                            <a href={f.link}>{f.name}</a>
-                        </li>
-                    ))}
-                </ul>
-                <b>FULL DETAILS</b>
-                <table>
-                    {info.detail?.map((d) => (
-                        <tr>
-                            <td>{d.key}</td>
-                            <td>{d.value}</td>
-                        </tr>
-                    ))}
-                </table>
-                <br />
-            </>
-        ))}
     </>
 );

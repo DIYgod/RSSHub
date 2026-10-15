@@ -1,10 +1,9 @@
-import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
-import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import ofetch from '@/utils/ofetch';
+import { getRouteLimit } from '@/utils/route-limit';
 
 import { rootUrl } from './utils';
 
@@ -23,58 +22,32 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['0daily.com/activityPage', '0daily.com/'],
+            source: ['www.odaily.news/:locale/activity', 'www.odaily.news/activity', 'www.odaily.news/'],
         },
     ],
     name: '活动',
     maintainers: ['nczitzk'],
     handler,
-    url: '0daily.com/activityPage',
+    url: 'www.odaily.news/zh-CN/activity',
 };
 
+type Activity = { id: number; title: string };
+type ActivityDetail = { content?: string; tags: Array<{ name: string }> };
+
 async function handler(ctx) {
-    const currentUrl = `${rootUrl}/service/scheme/group/8?page=1&per_page=${ctx.req.query('limit') ?? 25}`;
-
-    const response = await got({
-        method: 'get',
-        url: currentUrl,
-    });
-
-    let items = response.data.data.items.data.map((item) => ({
-        title: item.title,
-        link: `${rootUrl}/activity/${item.id}`,
-        pubDate: timezone(parseDate(item.published_at), 8),
-    }));
-
-    items = await Promise.all(
-        items.map((item) =>
-            cache.tryGet(item.link, async () => {
-                const detailResponse = await got({
-                    method: 'get',
-                    url: item.link,
-                });
-
-                const content = load(detailResponse.data.match(/"content":"(.*)"\}\},"secondaryList":/)[1]);
-
-                content('img').each((_, el) => {
-                    content(el).attr(
-                        'src',
-                        content(el)
-                            .attr('src')!
-                            .replaceAll(String.raw`\"`, '')
-                    );
-                });
-
-                item.description = content.html();
-
-                return item;
-            })
-        )
+    const query = new URLSearchParams({ page: '1', size: String(getRouteLimit(ctx, 25)) });
+    const response = await ofetch<{ data: { list: Activity[] } }>(`https://web-api.odaily.news/activity/page?${query}`);
+    const items = await pMap(
+        response.data.list,
+        async (item) => {
+            const link = `${rootUrl}/activity/${item.id}`;
+            const detail = await cache.tryGet(link + ':body', async () => {
+                const response = await ofetch<{ data: ActivityDetail }>(`https://web-api.odaily.news/activity/detail/${item.id}`);
+                return { description: response.data.content, category: response.data.tags.map((tag) => tag.name) };
+            });
+            return { title: item.title, link, ...detail };
+        },
+        { concurrency: 3 }
     );
-
-    return {
-        title: '活动 - Odaily星球日报',
-        link: `${rootUrl}/activityPage`,
-        item: items,
-    };
+    return { title: '活动 - Odaily星球日报', link: `${rootUrl}/zh-CN/activity`, item: items };
 }

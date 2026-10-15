@@ -56,11 +56,10 @@ async function handler(ctx) {
     const authorFeed = await getAuthorFeed(DID, filter);
 
     const items = authorFeed.feed.map(({ post }) => ({
-        title: post.record.text.split('\n', 1)[0],
+        title: post.record.text,
         description: renderPost({
-            text: post.record.text.replaceAll('\n', '<br>'),
+            text: post.record.text,
             embed: post.embed,
-            // embed.$type "app.bsky.embed.record#view" and "app.bsky.embed.recordWithMedia#view" are not handled
         }),
         author: post.author.displayName,
         pubDate: parseDate(post.record.createdAt),

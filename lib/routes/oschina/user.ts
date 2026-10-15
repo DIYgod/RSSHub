@@ -1,3 +1,5 @@
+import pMap from 'p-map';
+
 import { config } from '@/config';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
@@ -5,7 +7,7 @@ import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
-import { apiBaseUrl, blogBaseUrl, getBlog } from './utils';
+import { apiBaseUrl, blogBaseUrl, getBlog, getLimit } from './utils';
 
 export const route: Route = {
     path: '/u/:uid',
@@ -103,9 +105,11 @@ interface Blog {
     userVo: UserVo;
 }
 
+class ContentUnavailableError extends Error {}
+
 async function handler(ctx) {
     const { uid } = ctx.req.param();
-    const limit = Number(ctx.req.query('limit') ?? 10);
+    const limit = getLimit(ctx.req.query('limit'), 10);
     const isNumericId = /^\d+$/.test(uid);
     let userId = uid;
 
@@ -138,9 +142,9 @@ async function handler(ctx) {
     });
 
     const blogData = await cache.tryGet(
-        `oschina:user:${userId}:blogs`,
+        `oschina:user:${userId}:blogs:${limit}`,
         async () => {
-            const response = await ofetch<{ result: { list: Blog[] } }>(`${apiBaseUrl}/oschinapi/blog/otherUser/web`, {
+            const response = await ofetch<{ result: { records: Blog[] } }>(`${apiBaseUrl}/oschinapi/blog/otherUser/web`, {
                 query: {
                     userId,
                     pageNum: 1,
@@ -154,7 +158,7 @@ async function handler(ctx) {
         false
     );
 
-    const list = blogData.result.list.map((item) => ({
+    const list = blogData.result.records.map((item) => ({
         title: item.title,
         description: item.detail,
         link: `${blogBaseUrl}/u/${userId}/blog/${item.id}`,
@@ -165,16 +169,26 @@ async function handler(ctx) {
         image: item.imgUrl,
     }));
 
-    const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.guid, async () => {
-                const response = await getBlog(item.detailId);
-
-                item.description = response.code === 200 ? response.result.content : item.description;
-
-                return item;
-            })
-        )
+    const items = await pMap(
+        list,
+        async (item) => {
+            try {
+                const description = await cache.tryGet(`oschina:article:body:${item.guid}`, async () => {
+                    const response = await getBlog(item.detailId);
+                    if (response.code !== 200) {
+                        throw new ContentUnavailableError('Blog content is unavailable');
+                    }
+                    return response.result.content;
+                });
+                return { ...item, description };
+            } catch (error) {
+                if (error instanceof ContentUnavailableError) {
+                    return item;
+                }
+                throw error;
+            }
+        },
+        { concurrency: 3 }
     );
 
     return {

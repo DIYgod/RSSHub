@@ -3,6 +3,7 @@ import { renderToString } from 'hono/jsx/dom/server';
 import type { Route } from '@/types';
 import { ViewType } from '@/types';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
 import { baseUrl, getTribeDetail, getTribeSets } from './utils';
 
@@ -19,7 +20,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const id = ctx.req.param('id');
-    const limit = Number.parseInt(ctx.req.query('limit')) || 100;
+    const limit = getRouteLimit(ctx, 100);
 
     const { tribe } = await getTribeDetail(id);
     const tribeSets = await getTribeSets(id, limit);

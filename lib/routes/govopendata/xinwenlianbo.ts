@@ -29,11 +29,12 @@ async function handler() {
             const $item = $(item);
             const a = $item.find('h2.news-title a');
             const title = a.text().trim();
+            const date = /(\d{4}-\d+-\d+)/.exec(title)?.[1];
             return {
                 title,
                 link: new URL(a.attr('href')!, rootUrl).href,
                 description: $item.find('ul').html(),
-                pubDate: timezone(parseDate(`${/(\d{4}-\d+-\d+)/.exec(title)![1]} 19:00`), 8),
+                pubDate: date ? timezone(parseDate(`${date} 19:00`), 8) : undefined,
             };
         });
 

@@ -1,14 +1,13 @@
 // oxlint-disable no-useless-concat unicorn-js/no-useless-concat
 import { load } from 'cheerio';
 import Parser from 'rss-parser';
-import { afterEach, describe, expect, it, vi } from 'vitest';
+import { afterEach, assert, describe, expect, it } from 'vitest';
 
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import { exportedForTestingOnly, fetchArticle, finishArticleItem, fixArticleContent, normalizeUrl, WeChatMpError } from '@/utils/wechat-mp';
 
 const { toggleWerror, ExtractMetadata, showTypeMapReverse } = exportedForTestingOnly;
 
-vi.mock('@/utils/request-rewriter', () => ({ default: null }));
 const { default: app } = await import('@/app');
 const parser = new Parser();
 
@@ -407,8 +406,8 @@ describe('wechat-mp', () => {
             await fetchArticle('https://mp.weixin.qq.com/s/rsshub_test_hit_waf');
             expect.unreachable('Should throw an error');
         } catch (error) {
-            expect(error).toBeInstanceOf(WeChatMpError);
-            const { message } = error as WeChatMpError;
+            assert.instanceOf(error, WeChatMpError);
+            const { message } = error;
             expect(message).not.toContain('console.log');
             expect(message).not.toContain('.style');
             expect(message).not.toContain('Consider raise an issue');
@@ -425,8 +424,8 @@ describe('wechat-mp', () => {
             await fetchArticle(unknownPageUrl);
             expect.unreachable('Should throw an error');
         } catch (error) {
-            expect(error).toBeInstanceOf(WeChatMpError);
-            const { message } = error as WeChatMpError;
+            assert.instanceOf(error, WeChatMpError);
+            const { message } = error;
             expect(message).not.toContain('console.log');
             expect(message).not.toContain('.style');
             expect(message).toContain('Consider raise an issue');
@@ -443,8 +442,8 @@ describe('wechat-mp', () => {
             await fetchArticle(deletedPageUrl);
             expect.unreachable('Should throw an error');
         } catch (error) {
-            expect(error).toBeInstanceOf(WeChatMpError);
-            const { message } = error as WeChatMpError;
+            assert.instanceOf(error, WeChatMpError);
+            const { message } = error;
             expect(message).not.toContain('console.log');
             expect(message).not.toContain('.style');
             expect(message).not.toContain('Consider raise an issue');
@@ -469,7 +468,7 @@ describe('wechat-mp', () => {
         const responseShort = await app.request('/test/wechat-mp/rsshub_test');
         const parsedShort = await parser.parseString(await responseShort.text());
         const expectedItemShort = {
-            author: expectedItem.author,
+            creator: expectedItem.author,
             title: expectedItem.title,
             link: 'https://mp.weixin.qq.com/s/rsshub_test',
         };

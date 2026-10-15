@@ -2,9 +2,9 @@ import { load } from 'cheerio';
 
 import type { Language, Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
-import { domain, getMeta, processItems, processMeta } from './util';
+import { domain, getMeta, parseCalendarDate, processItems, processMeta } from './util';
 
 export const route: Route = {
     path: '/hyxt/:category{.+}?',
@@ -58,7 +58,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { category = 'tzgg' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 30;
+    const limit = getRouteLimit(ctx, 30);
 
     const rootUrl = `https://hyxt.${domain}`;
     const currentUrl = `${rootUrl}/${category}.htm`;
@@ -67,24 +67,25 @@ async function handler(ctx) {
 
     const $ = load(response);
 
-    let items = $('tr.content-title')
+    let items = $('tr.content-title, li:has(.date):has(a[href])')
         .slice(0, limit)
         .toArray()
         .map((item) => {
             const $item = $(item);
 
-            const a = $item.find('td a');
+            const a = $item.find('a[href]').first();
+            const date = $item.find('.date');
 
             return {
-                title: a.text(),
+                title: a.attr('title') || a.find('h3').text() || a.text(),
                 link: new URL(a.prop('href')!, rootUrl).href,
-                pubDate: parseDate($item.find('td').last().text()),
+                pubDate: parseCalendarDate(date.length ? `${date.find('.year').text()}-${date.find('.day').text()}` : $item.find('td').last().text()),
             };
         });
 
     items = await processItems(items, rootUrl);
 
-    const meta = processMeta(response);
+    const meta = processMeta($);
     const siteName = getMeta(meta, 'SiteName');
     const columnName = getMeta(meta, 'ColumnName');
 
@@ -96,9 +97,8 @@ async function handler(ctx) {
         link: currentUrl,
         description: getMeta(meta, 'ColumnKeywords'),
         language,
-        image: new URL($('div.top-logo img').prop('src')!, rootUrl).href,
+        image: new URL($('div.top-logo img, .logo img').first().prop('src') || '/favicon.ico', rootUrl).href,
         subtitle: columnName,
         author: siteName,
-        allowEmpty: true,
     };
 }

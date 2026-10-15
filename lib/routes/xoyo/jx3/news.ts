@@ -1,6 +1,7 @@
 import type { Context } from 'hono';
+import pMap from 'p-map';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -55,10 +56,33 @@ export const route: Route = {
     url: 'jx3.xoyo.com',
 };
 
+type DetailQuery = { action: string; game?: string; kid?: string; catid?: string; id?: string };
+
+function parseArticleDate(value?: string | number | null) {
+    if (value === undefined || value === null || (typeof value === 'string' && !value.trim())) {
+        return;
+    }
+    const timestamp = Number(value);
+    if (!Number.isFinite(timestamp)) {
+        return;
+    }
+    const date = parseDate(timestamp, 'X');
+    return Number.isNaN(date.getTime()) ? undefined : date;
+}
+
+async function fetchArticleContent(detailQuery: DetailQuery): Promise<Pick<DataItem, 'description'>> {
+    const detail = await ofetch('https://jx3.xoyo.com/api.php', {
+        query: { op: 'search_api', ...detailQuery },
+        responseType: 'json',
+    });
+    return { description: ('kid' in detailQuery ? detail.data : detail.data[0])?.content };
+}
+
 async function handler(ctx: Context) {
     const { caty = 'latest' } = ctx.req.param();
     const category = categories[caty];
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 30;
+    const parsedLimit = Number.parseInt(ctx.req.query('limit') ?? '');
+    const limit = Number.isSafeInteger(parsedLimit) && parsedLimit > 0 ? parsedLimit : 30;
 
     const rootUrl = 'https://jx3.xoyo.com';
     const response = await ofetch(`${rootUrl}/api.php`, {
@@ -68,34 +92,27 @@ async function handler(ctx: Context) {
             num: limit,
             ...category.query,
         },
-        parseResponse: JSON.parse,
+        responseType: 'json',
     });
 
-    const list = response.data.list.map((article) => {
+    const list: Array<DataItem & { link: string; detailQuery: DetailQuery }> = response.data.list.map((article) => {
         const isCustomer = article.catid === '0';
         return {
             title: article.title,
             link: `${rootUrl}/index/index.html#/article-details?${isCustomer ? `kid=${article.id}` : `catid=${article.catid}&id=${article.id}`}`,
             description: article.description,
-            pubDate: parseDate(article.inputtime, 'X'),
+            pubDate: parseArticleDate(article.inputtime),
             detailQuery: isCustomer ? { action: 'get_customer_article_detail', game: 'jx3', kid: article.id } : { action: 'get_article_detail', catid: article.catid, id: article.id },
         };
     });
 
-    const items = await Promise.all(
-        list.map(({ detailQuery, ...item }) =>
-            cache.tryGet(item.link, async () => {
-                const detail = await ofetch(`${rootUrl}/api.php`, {
-                    query: {
-                        op: 'search_api',
-                        ...detailQuery,
-                    },
-                    parseResponse: JSON.parse,
-                });
-                item.description = ('kid' in detailQuery ? detail.data : detail.data[0])?.content || item.description;
-                return item;
-            })
-        )
+    const items = await pMap(
+        list,
+        async ({ detailQuery, ...item }) => {
+            const detail = await cache.tryGet(`xoyo:jx3:article:${item.link}`, () => fetchArticleContent(detailQuery));
+            return { ...item, description: detail.description || item.description };
+        },
+        { concurrency: 3 }
     );
 
     return {

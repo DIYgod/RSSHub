@@ -2,6 +2,7 @@ import type { Route } from '@/types';
 import { ViewType } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
 export const route: Route = {
     path: '/:id',
@@ -24,10 +25,10 @@ export const route: Route = {
 
 async function handler(ctx) {
     const id = ctx.req.param('id');
-    const limit = ctx.req.param('limit') ?? 25;
+    const limit = getRouteLimit(ctx, 25);
     const playListAPI = `https://a.ajmide.com/v3/getBrandContentList.php?brandId=${id}&c=${limit}&i=0`;
     const response = await got.get(playListAPI);
-    const data = response.data.data.filter((item) => !item.contentType);
+    const data = response.data.data.filter((item) => item.audioAttach?.[0]?.liveUrl);
 
     const items = data.map((item) => ({
         title: item.subject,
@@ -37,7 +38,7 @@ async function handler(ctx) {
         itunes_item_image: item.brandImgPath,
         enclosure_url: item.audioAttach[0].liveUrl,
         itunes_duration: item.audioAttach[0].audioTime,
-        enclosure_type: 'audio/x-m4a',
+        enclosure_type: 'audio/mp4',
     }));
 
     return {

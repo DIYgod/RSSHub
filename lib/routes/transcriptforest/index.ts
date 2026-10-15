@@ -1,6 +1,7 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
-import type { Language, Route } from '@/types';
+import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -11,14 +12,11 @@ const bakeTimestamp = (seconds) => {
     const hours = Math.floor(seconds / 3600);
     const minutes = Math.floor((seconds % 3600) / 60);
     const remainingSeconds = Math.floor(seconds % 60);
-
     const formattedHours = String(hours).padStart(2, '0');
     const formattedMinutes = String(minutes).padStart(2, '0');
     const formattedSeconds = String(remainingSeconds).padStart(2, '0');
-
     return `${formattedHours}:${formattedMinutes}:${formattedSeconds}`;
 };
-
 export const route: Route = {
     path: '/:channel?',
     categories: ['multimedia'],
@@ -33,6 +31,10 @@ export const route: Route = {
         {
             source: ['www.transcriptforest.com/en/channel'],
             target: '',
+        },
+        {
+            source: ['www.transcriptforest.com/en/channel/:channel'],
+            target: '/:channel',
         },
     ],
     name: 'Channel',
@@ -92,33 +94,37 @@ export const route: Route = {
 | [The Bootstrapped Founder](https://www.transcriptforest.com/en/channel/the-bootstrapped-founder)                                               | [the-bootstrapped-founder](https://rsshub.app/transcriptforest/the-bootstrapped-founder)                                               |
 | [The Boyscast with Ryan Long](https://www.transcriptforest.com/en/channel/the-boyscast-with-ryan-long)                                         | [the-boyscast-with-ryan-long](https://rsshub.app/transcriptforest/the-boyscast-with-ryan-long)                                         |`,
 };
-
+function parsePubDate(value?: string) {
+    if (!value) {
+        return;
+    }
+    const date = parseDate(value);
+    return Number.isFinite(date.getTime()) ? date : undefined;
+}
 async function handler(ctx) {
     const channel = ctx.req.param('channel');
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 10;
-
+    const requestedLimit = Number(ctx.req.query('limit'));
+    const limit = Number.isFinite(requestedLimit) && requestedLimit >= 1 ? Math.floor(requestedLimit) : 10;
     const rootUrl = 'https://www.transcriptforest.com';
-
     const { data: firstResponse } = await got(rootUrl);
-
     const data = JSON.parse(firstResponse.match(/(\{"props".*"scriptLoader":\[\]\})<\/script>/)?.[1]);
-
     const buildId = data.buildId;
     const defaultLocale = data.defaultLocale;
     const channels = data.props.pageProps.listChannel;
     const selected = channel ? channels.find((c) => c.channel_id === channel || c.channel_name === channel) : undefined;
-
     const apiUrl = new URL(`_next/data/${buildId}/en${selected ? `/channel/${selected.channel_id}` : ''}.json`, rootUrl).href;
     const currentUrl = new URL(selected ? `${defaultLocale}/channel/${selected.channel_id}` : '', rootUrl).href;
-
     const { data: response } = await got(apiUrl, {
         searchParams: {
             channelName: selected ? selected.channel_id : '',
             offset: 0,
         },
     });
-
-    let items = response.pageProps.listEpisode.data.slice(0, limit).map((item) => ({
+    let items: Array<
+        DataItem & {
+            detailUrl?: string;
+        }
+    > = response.pageProps.listEpisode.data.slice(0, limit).map((item) => ({
         title: item.episode_name,
         link: new URL(`${defaultLocale}/${item.channel_id}/${item.episode_id}`, rootUrl).href,
         detailUrl: new URL(`_next/data/${buildId}/${defaultLocale}/${item.channel_id}/${item.episode_id}.json`, rootUrl).href,
@@ -129,56 +135,44 @@ async function handler(ctx) {
         }),
         author: item.channel_name,
         guid: item.id,
-        pubDate: parseDate(item.published_at),
-        updated: parseDate(item.updated_at),
+        pubDate: parsePubDate(item.published_at),
+        updated: parsePubDate(item.updated_at),
         itunes_item_image: item.episode_cover.split(/\?/, 1)[0],
         itunes_duration: item.episode_duration,
         enclosure_url: item.source_media,
         enclosure_type: 'audio/mpeg',
     }));
-
-    items = await Promise.all(
-        items.map((item) =>
-            cache.tryGet(item.link, async () => {
-                const { data: detailResponse } = await got(item.detailUrl);
+    items = await pMap(
+        items,
+        async (item) => {
+            const detail = await cache.tryGet(`transcriptforest:detail:${item.link}`, async () => {
+                const { data: detailResponse } = await got(item.detailUrl!);
                 const { data: textResponse } = await got(detailResponse.pageProps.currentEpisode.ps4_url);
-
-                item.description =
-                    renderDescription({
-                        audios: [
-                            {
-                                src: detailResponse.pageProps.currentEpisode.media,
-                                type: 'audio/mpeg',
-                            },
-                        ],
-                    }) +
-                    item.description +
-                    renderDescription({
+                return {
+                    audio: renderDescription({
+                        audios: [{ src: detailResponse.pageProps.currentEpisode.media, type: 'audio/mpeg' }],
+                    }),
+                    transcript: renderDescription({
                         texts: textResponse.map((t) => ({
                             startTime: bakeTimestamp(t.startTime),
                             endTime: bakeTimestamp(t.endTime),
                             text: t.readOnlyText,
                         })),
-                    });
-
-                delete item.detailUrl;
-
-                return item;
-            })
-        )
+                    }),
+                };
+            });
+            const metadata = omitInternalField(item, 'detailUrl');
+            return { ...metadata, description: detail.audio + (item.description ?? '') + detail.transcript };
+        },
+        { concurrency: 3 }
     );
-
     const { data: currentResponse } = await got(currentUrl);
-
     const $ = load(currentResponse);
-
     const title = $('title').text();
     const image = $('meta[property="og:image"]').prop('content');
     const icon = new URL($('link[rel="apple-touch-icon"]').prop('href')!, rootUrl).href;
     const author = title.split(/\|/, 1)[0].trim();
-
     const language = $('html').prop('lang') as Language;
-
     return {
         item: items,
         title,
@@ -190,6 +184,10 @@ async function handler(ctx) {
         logo: icon,
         author,
         itunes_author: author,
-        allowEmpty: true,
     };
+}
+function omitInternalField<T extends object, K extends keyof T>(item: T, key: K): Omit<T, K> {
+    const metadata = { ...item };
+    delete metadata[key];
+    return metadata;
 }

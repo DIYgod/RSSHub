@@ -1,39 +1,15 @@
+import { load } from 'cheerio';
+
 import type { Language, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
-interface PlayerOptions {
-    link: string;
-    image: string;
-    flashplayer: string;
-    width: string;
-    height: string;
-    aspectratio: string;
+interface Publication {
     title: string;
+    url: string;
     description: string;
-    autostart: boolean;
-}
-
-interface Element {
-    index: number;
-    href: string;
-    relativeHref: string;
-    text: string;
-    thumbnailText: string;
-    title: string;
-    image: string;
-    tags: string[];
-    filterTags: string;
     publishDate: string;
-    playerOptions: PlayerOptions;
-    damSize: string;
-    template: string;
-    itemUrl: string;
-    itemWidth: string;
-    itemHeight: string;
-    isPage: boolean;
-    isVideo: boolean;
-    itemVideoTranscriptLink: string;
+    contentTheme: string[];
 }
 
 export const route: Route = {
@@ -43,6 +19,9 @@ export const route: Route = {
     radar: [
         {
             source: ['strategyand.pwc.com/at/en/functions/sustainability-strategy/publications.html', 'strategyand.pwc.com/'],
+        },
+        {
+            source: ['www.strategyand.pwc.com/at/en/functions/sustainability-strategy/publications.html'],
         },
     ],
     name: 'Sustainability',
@@ -56,24 +35,16 @@ async function handler() {
     const feedLang: Language = 'en';
     const feedDescription = 'Sustainability Publications from PwC Strategy&';
 
-    const response = await ofetch<{ elements: string }>(
-        'https://www.strategyand.pwc.com/content/pwc/03/en/functions/sustainability-strategy/publications/jcr:content/root/container/content-free-container/section_545483788/collection_v2.filter-dynamic.html',
-        {
-            query: {
-                currentPagePath: '/content/pwc/03/en/functions/sustainability-strategy/publications',
-                list: { menu_0: [] },
-                defaultImagePath: '/content/dam/pwc/network/strategyand-collection-fallback-images',
-            },
-        }
-    );
-    const elements: Element[] = JSON.parse(response.elements);
+    const response = await ofetch(baseUrl, { responseType: 'text' });
+    const $ = load(response);
+    const collection: { listItemCollection: Publication[] } = JSON.parse($('collection-v3-listing').attr('filter1')!);
 
-    const items = elements.map((item) => ({
+    const items = collection.listItemCollection.map((item) => ({
         title: item.title,
-        link: item.href,
-        pubDate: parseDate(item.publishDate, 'DD/MM/YY'),
-        description: item.text,
-        category: item.tags,
+        link: item.url,
+        pubDate: item.publishDate ? parseDate(`${item.publishDate} +0000`, 'DD/MM/YY ZZ') : undefined,
+        description: item.description,
+        category: item.contentTheme,
     }));
 
     // TODO: Add full text support

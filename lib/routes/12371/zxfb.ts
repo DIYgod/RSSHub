@@ -4,11 +4,12 @@ import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 import timezone from '@/utils/timezone';
 
 const handler = async (ctx) => {
     const { category = 'zxfb' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 15;
+    const limit = getRouteLimit(ctx, 15);
 
     const rootUrl = 'https://www.12371.cn/';
     const currentUrl = `${rootUrl}${category}/`;

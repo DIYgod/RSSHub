@@ -3,11 +3,34 @@ import { load } from 'cheerio';
 import type { Element } from 'domhandler';
 import type { Context } from 'hono';
 import { renderToString } from 'hono/jsx/dom/server';
+import pMap from 'p-map';
 
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Data, DataItem, Language, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
+
+const categoryPaths = {
+    '0': '',
+    '1': 'shooting',
+    '2': 'casual',
+    '3': 'action',
+    '4': 'sports_racing',
+    '5': 'adventure',
+    '6': 'simulation',
+    '7': 'r18',
+    '8': 'rpg',
+    '9': 'strategy',
+    '10': 'fighting',
+    '11': 'horror',
+    '12': 'rts',
+    '13': 'card',
+    '14': 'indie',
+    '15': 'lan',
+};
 
 type DescriptionImage = {
     src?: string;
@@ -29,17 +52,22 @@ const renderDescription = (images?: DescriptionImage[]) =>
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { category = '0', sort = 'latest' } = ctx.req.param();
-    const limit = Number(ctx.req.query('limit') ?? '30');
+    const limit = getRouteLimit(ctx, 30);
+    const candidateLimit = ctx.req.query('sorted') === 'false' ? limit : Math.max(30, limit);
 
-    const baseUrl = 'https://koyso.to';
-    const targetUrl: string = new URL(`?${category === '0' ? '' : `category=${category}&`}sort=${sort}`, baseUrl).href;
+    const baseUrl = 'https://playzip.com';
+    if (!Object.hasOwn(categoryPaths, category)) {
+        throw new InvalidParameterError('Unknown game category: use an ID from the category table.');
+    }
+    const targetUrl = new URL(category === '0' ? '/' : `/category/${categoryPaths[category]}`, baseUrl);
+    targetUrl.searchParams.set('sort', sort);
 
-    const response = await ofetch(targetUrl);
+    const response = await ofetch(targetUrl.href);
     const $: CheerioAPI = load(response);
     const language = ($('html').attr('lang') ?? 'en') as Language;
 
     let items: DataItem[] = $('a.game_item')
-        .slice(0, limit)
+        .slice(0, candidateLimit)
         .toArray()
         .map((el) => {
             const $el: Cheerio<Element> = $(el);
@@ -64,7 +92,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 link: linkUrl ? new URL(linkUrl, baseUrl).href : undefined,
                 content: {
                     html: description,
-                    text: description,
+                    text: '',
                 },
                 image,
                 banner: image,
@@ -74,8 +102,9 @@ export const handler = async (ctx: Context): Promise<Data> => {
             return processedItem;
         });
 
-    items = await Promise.all(
-        items.map((item) => {
+    items = await pMap(
+        items,
+        (item) => {
             if (!item.link) {
                 return item;
             }
@@ -91,14 +120,19 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
                 $$('h1.content_title').remove();
 
-                const description: string | undefined = item.description + ($$('div.game_content').html() || '');
+                const published = $$('meta[property="article:published_time"]').attr('content');
+                const modified = $$('meta[property="article:modified_time"]').attr('content');
+                const content = $$('div.content_body').length ? $$('div.content_body') : $$('div.game_content');
+                const description = item.description + (content.html() || '');
 
                 const processedItem: DataItem = {
                     title,
                     description,
+                    pubDate: published ? parseDate(published) : undefined,
+                    updated: modified ? parseDate(modified) : undefined,
                     content: {
                         html: description,
-                        text: description,
+                        text: content.text(),
                     },
                     language,
                 };
@@ -108,7 +142,8 @@ export const handler = async (ctx: Context): Promise<Data> => {
                     ...processedItem,
                 };
             });
-        })
+        },
+        { concurrency: 3 }
     );
 
     const categoryName: string = $(`ul.category li#category_${category}`).text();
@@ -117,24 +152,23 @@ export const handler = async (ctx: Context): Promise<Data> => {
     return {
         title: `${$('title').text()} - ${categoryName} - ${sortName}`,
         description: $('meta[name="description"]').attr('content'),
-        link: targetUrl,
+        link: targetUrl.href,
         item: items,
-        allowEmpty: true,
         language,
-        id: targetUrl,
+        id: targetUrl.href,
     };
 };
 
 export const route: Route = {
     path: '/:category?/:sort?',
     name: '游戏',
-    url: 'koyso.to',
+    url: 'playzip.com',
     maintainers: ['nczitzk'],
     handler,
     example: '/koyso/0/latest',
     parameters: {
         category: {
-            description: '排序，默认为 `0`，即全部，可在对应分类页 URL 中找到',
+            description: '分类，默认为 `0`，即全部，ID 对应下表分类',
             options: [
                 {
                     label: '全部游戏',
@@ -217,36 +251,36 @@ export const route: Route = {
         },
     },
     description: `::: tip
-订阅 [最新动作游戏](https://koyso.to/?category=3\\&sort=latest)，其源网址为 \`https://koyso.to/?category=3&sort=latest\`，请参考该 URL 指定部分构成参数，此时路由为 [\`/koyso/3/latest\`](https://koyso.to/?category=3\\&sort=latest)。
+订阅 [最新动作游戏](https://playzip.com/category/action?sort=latest)，其源网址为 \`https://playzip.com/category/action?sort=latest\`，请参考该 URL 指定部分构成参数，此时路由为 [\`/koyso/3/latest\`](https://playzip.com/category/action?sort=latest)。
 :::
 
 #### 分类
 
-| 分类                                        | ID                                |
-| ------------------------------------------- | --------------------------------- |
-| [全部游戏](https://koyso.to/)               | [0](https://rsshub.app/koyso/0)   |
-| [动作游戏](https://koyso.to/?category=3)    | [3](https://rsshub.app/koyso/3)   |
-| [冒险游戏](https://koyso.to/?category=5)    | [5](https://rsshub.app/koyso/5)   |
-| [绅士游戏](https://koyso.to/?category=7)    | [7](https://rsshub.app/koyso/7)   |
-| [射击游戏](https://koyso.to/?category=1)    | [1](https://rsshub.app/koyso/1)   |
-| [休闲游戏](https://koyso.to/?category=2)    | [2](https://rsshub.app/koyso/2)   |
-| [体育竞速](https://koyso.to/?category=4)    | [4](https://rsshub.app/koyso/4)   |
-| [模拟经营](https://koyso.to/?category=6)    | [6](https://rsshub.app/koyso/6)   |
-| [角色扮演](https://koyso.to/?category=8)    | [8](https://rsshub.app/koyso/8)   |
-| [策略游戏](https://koyso.to/?category=9)    | [9](https://rsshub.app/koyso/9)   |
-| [格斗游戏](https://koyso.to/?category=10)   | [10](https://rsshub.app/koyso/10) |
-| [恐怖游戏](https://koyso.to/?category=11)   | [11](https://rsshub.app/koyso/11) |
-| [即时战略](https://koyso.to/?category=12)   | [12](https://rsshub.app/koyso/12) |
-| [卡牌游戏](https://koyso.to/?category=13)   | [13](https://rsshub.app/koyso/13) |
-| [独立游戏](https://koyso.to/?category=14)   | [14](https://rsshub.app/koyso/14) |
-| [局域网联机](https://koyso.to/?category=15) | [15](https://rsshub.app/koyso/15) |
+| 分类                                                   | ID                                |
+| ------------------------------------------------------ | --------------------------------- |
+| [全部游戏](https://playzip.com/)                       | [0](https://rsshub.app/koyso/0)   |
+| [动作游戏](https://playzip.com/category/action)        | [3](https://rsshub.app/koyso/3)   |
+| [冒险游戏](https://playzip.com/category/adventure)     | [5](https://rsshub.app/koyso/5)   |
+| [绅士游戏](https://playzip.com/category/r18)           | [7](https://rsshub.app/koyso/7)   |
+| [射击游戏](https://playzip.com/category/shooting)      | [1](https://rsshub.app/koyso/1)   |
+| [休闲游戏](https://playzip.com/category/casual)        | [2](https://rsshub.app/koyso/2)   |
+| [体育竞速](https://playzip.com/category/sports_racing) | [4](https://rsshub.app/koyso/4)   |
+| [模拟经营](https://playzip.com/category/simulation)    | [6](https://rsshub.app/koyso/6)   |
+| [角色扮演](https://playzip.com/category/rpg)           | [8](https://rsshub.app/koyso/8)   |
+| [策略游戏](https://playzip.com/category/strategy)      | [9](https://rsshub.app/koyso/9)   |
+| [格斗游戏](https://playzip.com/category/fighting)      | [10](https://rsshub.app/koyso/10) |
+| [恐怖游戏](https://playzip.com/category/horror)        | [11](https://rsshub.app/koyso/11) |
+| [即时战略](https://playzip.com/category/rts)           | [12](https://rsshub.app/koyso/12) |
+| [卡牌游戏](https://playzip.com/category/card)          | [13](https://rsshub.app/koyso/13) |
+| [独立游戏](https://playzip.com/category/indie)         | [14](https://rsshub.app/koyso/14) |
+| [局域网联机](https://playzip.com/category/lan)         | [15](https://rsshub.app/koyso/15) |
 
 #### 排序
 
-| 排序                                  | ID                                          |
-| ------------------------------------- | ------------------------------------------- |
-| [热度](https://koyso.to/?sort=views)  | [views](https://rsshub.app/koyso/0/views)   |
-| [最新](https://koyso.to/?sort=latest) | [latest](https://rsshub.app/koyso/0/latest) |`,
+| 排序                                     | ID                                          |
+| ---------------------------------------- | ------------------------------------------- |
+| [热度](https://playzip.com/?sort=views)  | [views](https://rsshub.app/koyso/0/views)   |
+| [最新](https://playzip.com/?sort=latest) | [latest](https://rsshub.app/koyso/0/latest) |`,
     categories: ['game'],
     features: {
         requireConfig: false,
@@ -260,18 +294,12 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['koyso.to'],
-            target: (_, url) => {
-                const urlObj: URL = new URL(url);
-                const category: string | undefined = urlObj.searchParams.get('category') ?? undefined;
-                const sort: string | undefined = urlObj.searchParams.get('sort') ?? undefined;
-
-                return `/koyso${category ? `/${category}` : '0'}${sort ? `/${sort}` : ''}`;
-            },
-        },
-        {
             title: '全部游戏',
             source: ['koyso.to'],
+            target: '/0',
+        },
+        {
+            source: ['playzip.com/'],
             target: '/0',
         },
         {
@@ -280,8 +308,16 @@ export const route: Route = {
             target: '/3',
         },
         {
+            source: ['playzip.com/category/action'],
+            target: '/3',
+        },
+        {
             title: '冒险游戏',
             source: ['koyso.to'],
+            target: '/5',
+        },
+        {
+            source: ['playzip.com/category/adventure'],
             target: '/5',
         },
         {
@@ -290,8 +326,16 @@ export const route: Route = {
             target: '/7',
         },
         {
+            source: ['playzip.com/category/r18'],
+            target: '/7',
+        },
+        {
             title: '射击游戏',
             source: ['koyso.to'],
+            target: '/1',
+        },
+        {
+            source: ['playzip.com/category/shooting'],
             target: '/1',
         },
         {
@@ -300,8 +344,16 @@ export const route: Route = {
             target: '/2',
         },
         {
+            source: ['playzip.com/category/casual'],
+            target: '/2',
+        },
+        {
             title: '体育竞速',
             source: ['koyso.to'],
+            target: '/4',
+        },
+        {
+            source: ['playzip.com/category/sports_racing'],
             target: '/4',
         },
         {
@@ -310,8 +362,16 @@ export const route: Route = {
             target: '/6',
         },
         {
+            source: ['playzip.com/category/simulation'],
+            target: '/6',
+        },
+        {
             title: '角色扮演',
             source: ['koyso.to'],
+            target: '/8',
+        },
+        {
+            source: ['playzip.com/category/rpg'],
             target: '/8',
         },
         {
@@ -320,8 +380,16 @@ export const route: Route = {
             target: '/9',
         },
         {
+            source: ['playzip.com/category/strategy'],
+            target: '/9',
+        },
+        {
             title: '格斗游戏',
             source: ['koyso.to'],
+            target: '/10',
+        },
+        {
+            source: ['playzip.com/category/fighting'],
             target: '/10',
         },
         {
@@ -330,8 +398,16 @@ export const route: Route = {
             target: '/11',
         },
         {
+            source: ['playzip.com/category/horror'],
+            target: '/11',
+        },
+        {
             title: '即时战略',
             source: ['koyso.to'],
+            target: '/12',
+        },
+        {
+            source: ['playzip.com/category/rts'],
             target: '/12',
         },
         {
@@ -340,13 +416,25 @@ export const route: Route = {
             target: '/13',
         },
         {
+            source: ['playzip.com/category/card'],
+            target: '/13',
+        },
+        {
             title: '独立游戏',
             source: ['koyso.to'],
             target: '/14',
         },
         {
+            source: ['playzip.com/category/indie'],
+            target: '/14',
+        },
+        {
             title: '局域网联机',
             source: ['koyso.to'],
+            target: '/15',
+        },
+        {
+            source: ['playzip.com/category/lan'],
             target: '/15',
         },
     ],

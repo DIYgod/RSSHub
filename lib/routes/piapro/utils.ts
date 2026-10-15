@@ -10,7 +10,7 @@ export const parseContent = (htmlString: string) => {
     const author = $('.contents_creator_txt');
     const time = $('.contents_info')
         .text()
-        .match(/\d+\/\d+\/\d+ \d+:\d+:\d+/)![0];
+        .match(/\d+\/\d+\/\d+ \d+:\d+:\d+/)?.[0];
 
     const audioUrl = htmlString.match(/"url":\s*"(https:\/\/cdn\.piapro\.jp\/mp3_a\/[^"]+)"/)?.[1];
 
@@ -23,7 +23,10 @@ export const parseContent = (htmlString: string) => {
     return {
         title: title.text(),
         author: author.text(),
+        category: $('.contents_taglist .tag, .contents_info_item a[href*="categoryId="]')
+            .toArray()
+            .map((element) => $(element).text().replace(/^#/, '')),
         description,
-        pubDate: timezone(parseDate(time), 9),
+        pubDate: time ? timezone(parseDate(time), 9) : undefined,
     };
 };

@@ -69,7 +69,7 @@ export const parseJpy = (text: string | null): number | null => {
 const round2 = (n: number): number => Math.round(n * 100) / 100;
 
 /** '16.55坪 (54.74㎡)' / '70㎡' → { tsubo, area_m2 }, the missing side converted at 3.30579. */
-export const parseArea = (text: string | null): { tsubo: number | null; area_m2: number | null } => {
+export const parseArea = (text: string | null) => {
     if (text === null) {
         return { tsubo: null, area_m2: null };
     }

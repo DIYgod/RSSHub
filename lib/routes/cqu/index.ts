@@ -4,6 +4,8 @@ import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { getPlaywrightPage } from '@/utils/playwright';
+import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/jwc/:path{.+}?',
@@ -11,13 +13,13 @@ export const route: Route = {
     example: '/cqu/jwc/index/tzgg',
     parameters: {
         path: {
-            description: '路径参数，默认为 `index/tzgg`',
+            description: '路径参数，默认为 `index/tzgg`，也支持官网的 `index/tzgg.htm` 路径',
             default: 'index/tzgg',
         },
     },
     features: {
         requireConfig: false,
-        requirePuppeteer: false,
+        requirePuppeteer: true,
         antiCrawler: true,
         supportBT: false,
         supportPodcast: false,
@@ -25,8 +27,8 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['jwc.cqu.edu.cn/:path'],
-            target: '/jwc/:path',
+            source: ['jwc.cqu.edu.cn/index/:filename'],
+            target: '/jwc/index/:filename',
         },
     ],
     name: '本科教学信息网通知',
@@ -36,10 +38,23 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { path = 'index/tzgg' } = ctx.req.param();
-    const baseUrl = 'http://jwc.cqu.edu.cn';
-    const url = `${baseUrl}/${path}.htm`;
+    const baseUrl = 'https://jwc.cqu.edu.cn';
+    const url = `${baseUrl}/${path.replace(/\.htm$/, '')}.htm`;
 
-    const response = await ofetch(url);
+    const { page, destroy } = await getPlaywrightPage(url, {
+        onBeforeLoad: async (page) => {
+            await page.route('**/*', (route) => (['document', 'script'].includes(route.request().resourceType()) ? route.continue() : route.abort()));
+        },
+    });
+    let response: string;
+    let cookieString: string;
+    try {
+        await page.waitForSelector('div.page-contner.fl li.pot-r a.no-wrap');
+        response = await page.content();
+        cookieString = (await page.context().cookies()).map((cookie) => `${cookie.name}=${cookie.value}`).join('; ');
+    } finally {
+        await destroy();
+    }
     const $ = load(response);
 
     const list = $('div.page-contner.fl li.pot-r')
@@ -51,18 +66,17 @@ async function handler(ctx) {
             return {
                 title: a.attr('title')!,
                 link,
-                pubDate: parseDate($item.find('span.fr').text()),
+                pubDate: timezone(parseDate($item.find('span.fr').text(), 'YYYY-MM-DD'), 8),
             };
         });
 
     const items = await Promise.all(
         list.map((item) =>
             cache.tryGet(item.link, async () => {
-                const response = await ofetch(item.link);
+                const response = await ofetch(item.link, { headers: { Cookie: cookieString } });
                 const $ = load(response);
 
-                const content = $('form[name="_newscontent_fromname"] div#vsb_content');
-                item.description = content.find('div.v_news_content').html();
+                item.description = $('form[name="_newscontent_fromname"] div.v_news_content').html();
                 return item;
             })
         )

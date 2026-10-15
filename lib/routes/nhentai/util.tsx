@@ -1,5 +1,6 @@
 import { load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
+import { FetchError } from 'ofetch';
 
 import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
@@ -8,6 +9,14 @@ import { parseDate } from '@/utils/parse-date';
 import { getPlaywrightPage } from '@/utils/playwright';
 
 const baseUrl = 'https://nhentai.net';
+
+function parsePublicationDate(value?: string) {
+    if (!value) {
+        return;
+    }
+    const date = parseDate(value);
+    return Number.isNaN(date.getTime()) ? undefined : date;
+}
 
 const getCookie = async (username, password, cache) => {
     const loginUrl = 'https://nhentai.net/login/';
@@ -77,8 +86,7 @@ const fetchPage = async (url: string): Promise<string> => {
     try {
         return await ofetch(url);
     } catch (error: unknown) {
-        const { status, statusCode } = error as { status?: number; statusCode?: number };
-        if ((status ?? statusCode) === 403) {
+        if (error instanceof FetchError && error.statusCode === 403) {
             const { page, destroy } = await getPlaywrightPage(url, {
                 onBeforeLoad: async (page) => {
                     const allowedTypes = new Set(['document', 'script', 'xhr', 'fetch']);
@@ -162,7 +170,7 @@ const getDetail = async (simple) => {
     return {
         ...simple,
         title: $('div#info > h2').text() || $('div#info > h1').text(),
-        pubDate: parseDate($('time').attr('datetime')!),
+        pubDate: parsePublicationDate($('time').attr('datetime')),
         description: renderDescription(galleryImgs.length, galleryImgs),
     };
 };

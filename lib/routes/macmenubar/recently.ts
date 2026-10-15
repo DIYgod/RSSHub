@@ -1,5 +1,6 @@
 import type { Route } from '@/types';
 import got from '@/utils/got';
+import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
 
 async function getCategoryId(categories) {
     const baseUrl = 'https://macmenubar.com/wp-json/wp/v2/categories';
@@ -44,9 +45,9 @@ async function handler(ctx) {
     const items = response.data.map((post) => {
         const title = post.title.rendered;
         const link = post.link;
-        const pubDate = post.date_gmt;
+        const pubDate = post.date_gmt ? parseDateInTimezone(post.date_gmt, 0) : undefined;
         const description = post.content.rendered;
-        const tags = post.tag_info.map((tag) => tag.name);
+        const tags = (Array.isArray(post.tag_info) ? post.tag_info : []).map((tag) => tag.name);
         const categories = post.category_info.map((category) => category.name);
         return {
             title,

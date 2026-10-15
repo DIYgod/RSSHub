@@ -1,3 +1,3 @@
-const rootUrl = 'https://www.gitpod.io';
+const rootUrl = 'https://ona.com';
 
 export { rootUrl };

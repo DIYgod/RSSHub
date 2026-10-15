@@ -1,8 +1,10 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
@@ -12,30 +14,46 @@ async function getNoticeList(ctx, url, host, listSelector, titleSelector, conten
 
     const list = $(listSelector)
         .toArray()
-        .map((item): DataItem => {
+        .flatMap((item): Array<DataItem & { link: string }> => {
             const $item = $(item);
-            return {
-                title: $item.find(titleSelector).attr('title')!,
-                link: host + $item.find(titleSelector).attr('href'),
-            };
+            const href = $item.find(titleSelector).attr('href');
+            if (!href) {
+                return [];
+            }
+            const date = $item
+                .find('.news_meta')
+                .text()
+                .match(/\d{4}-\d{2}-\d{2}/)?.[0];
+            return [
+                {
+                    pubDate: date ? timezone(parseDate(date), 8) : undefined,
+                    title: $item.find(titleSelector).attr('title')!,
+                    link: new URL(href, host).href,
+                },
+            ];
         });
 
-    const out = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link!, async () => {
-                const response = await got(item.link);
-                if (response.redirectUrls.length) {
-                    item.link = response.redirectUrls[0];
-                    item.description = '该通知无法直接预览，请点击原文链接↑查看';
-                } else {
-                    const $ = load(response.data);
-                    item.title = $(contentSelector.title).text();
-                    item.description = $(contentSelector.content).html()!.trim();
-                    item.pubDate = timezone(parseDate($(contentSelector.date).text()), 8);
+    const out = await pMap(
+        list,
+        (item) =>
+            cache.tryGet(item.link, async () => {
+                const response = await ofetch.raw(item.link, { responseType: 'text' });
+                if (response.url) {
+                    item.link = response.url;
+                }
+                const $ = load(response._data ?? '');
+                const title = $(contentSelector.title).text();
+                item.title = title || item.title;
+                item.description = $(contentSelector.content).html() ?? item.description;
+                const date = $(contentSelector.date)
+                    .text()
+                    .match(/\d{4}-\d{2}-\d{2}/)?.[0];
+                if (date) {
+                    item.pubDate = timezone(parseDate(date), 8);
                 }
                 return item;
-            })
-        )
+            }),
+        { concurrency: 6 }
     );
 
     return out;

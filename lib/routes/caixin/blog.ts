@@ -5,6 +5,7 @@ import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 import { isValidHost } from '@/utils/valid-host';
 
 import { parseBlogArticle } from './utils';
@@ -30,7 +31,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const column = ctx.req.param('column');
-    const { limit = 20 } = ctx.req.query();
+    const limit = getRouteLimit(ctx, 20);
     if (column) {
         if (!isValidHost(column)) {
             throw new InvalidParameterError('Invalid column');
@@ -53,7 +54,7 @@ async function handler(ctx) {
         } = await got('https://blog.caixin.com/blog-api/post/posts', {
             searchParams: {
                 page: 1,
-                size: ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 20,
+                size: limit,
                 content: '',
                 authorId,
                 sort: 'publishTime',

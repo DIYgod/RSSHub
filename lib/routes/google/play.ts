@@ -1,6 +1,7 @@
 import gPlay from 'google-play-scraper';
 import type { Context } from 'hono';
 
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import { parseDate } from '@/utils/parse-date';
 
@@ -71,7 +72,10 @@ const keywords = {
 
 async function handler(ctx: Context) {
     const id = ctx.req.param('id');
-    const lang = ctx.req.param('lang') ?? 'en-us';
+    const lang = (ctx.req.param('lang') ?? 'en-us').toLowerCase();
+    if (!/^[a-z]{2,3}-(?:[a-z]{2}|\d{3})$/i.test(lang)) {
+        throw new InvalidParameterError('Google Play language must include a language and country, for example en-us or zh-cn.');
+    }
     const baseurl = 'https://play.google.com/store/apps';
     const hl = lang.split('-', 1)[0].toLowerCase();
     const gl = lang.split('-', 2)[1].toLowerCase();
@@ -90,7 +94,7 @@ async function handler(ctx: Context) {
     const whatsNew = appInfo.recentChanges;
 
     const feedContent = `
-            <h2>${keywords.whatsNew[lang]}</h2>
+            <h2>${keywords.whatsNew[lang] ?? keywords.whatsNew['en-us']}</h2>
             <p>${whatsNew ?? 'No release notes'}</p>
         `;
 

@@ -1,15 +1,16 @@
 import { load } from 'cheerio';
 import type { Context } from 'hono';
+import pMap from 'p-map';
 
 import InvalidParameterError from '@/errors/types/invalid-parameter';
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import { generateHeaders } from '@/utils/header-generator';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
 import { generate_a_bogus } from './a-bogus';
-import type { Feed, UserInfoCell32 } from './types';
+import type { Feed } from './types';
 
 const channels = {
     recommend: { id: '0', name: '推荐' },
@@ -84,9 +85,9 @@ async function handler(ctx: Context) {
             const categories = [...new Set(Object.keys(JSON.parse(item.optional_data?.mm_category_three ?? '{}')).flatMap((key) => key.split('/')))];
             if (item.cell_type === 32) {
                 // microblog post
-                const user = item.user as UserInfoCell32 | undefined;
+                const user = item.user && 'name' in item.user ? item.user : undefined;
                 return {
-                    title: item.content.split('\n', 1)[0],
+                    title: item.content,
                     description: item.rich_content + (item.large_image_list ?? []).map((image) => `<img src="${image.url}">`).join(''),
                     link: `https://www.toutiao.com/w/${item.id}/`,
                     pubDate: parseDate(item.publish_time, 'X'),
@@ -106,21 +107,27 @@ async function handler(ctx: Context) {
             };
         });
 
-    const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link, async () => {
-                if (item.groupId) {
-                    const { data } = await ofetch<{ data: { content: string } | null }>(`https://m.toutiao.com/i${item.groupId}/info/`);
-                    if (data) {
-                        const $ = load(data.content, null, false);
-                        $('.tt-video-box').remove();
-                        item.description = $.html();
-                    }
-                    item.description = (item.image ? `<img src="${item.image}">` : '') + item.description;
-                }
+    const items = await pMap(
+        list,
+        async (item: (typeof list)[number]) => {
+            if (!item.groupId) {
                 return item;
-            })
-        )
+            }
+            const detail = await cache.tryGet<Pick<DataItem, 'description'>>(`toutiao:channel:detail:v2:${item.link}`, async () => {
+                const { data } = await ofetch<{ data: { content: string } | null }>(`https://m.toutiao.com/i${item.groupId}/info/`);
+                if (!data) {
+                    return {};
+                }
+                const $ = load(data.content, null, false);
+                $('.tt-video-box').remove();
+                return { description: $.html() };
+            });
+            return {
+                ...item,
+                description: (item.image ? `<img src="${item.image}">` : '') + (detail.description ?? item.description),
+            };
+        },
+        { concurrency: 3, stopOnError: false }
     );
 
     return {

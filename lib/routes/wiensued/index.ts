@@ -74,7 +74,6 @@ leading up to the listing (e.g. \`wohnen/sofort-verfuegbar\`)`,
             title,
             language: FEED_LANGUAGE,
             logo: FEED_LOGO,
-            allowEmpty: true,
             item: items,
             link,
         } satisfies Data;

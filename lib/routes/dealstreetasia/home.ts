@@ -63,11 +63,19 @@ async function fetchPage(): Promise<Data> {
         category: item.category_link ? item.category_link.replaceAll(/(<([^>]+)>)/g, '') : '', // Clean HTML if category_link exists
         image: item.image_url ? item.image_url.replace(/\?.*$/, '') : '', // Remove query parameters if image_url exists
     }));
+    const seenLinks = new Set<string>();
+    const items = list.filter((item) => {
+        if (!item.link || seenLinks.has(item.link)) {
+            return false;
+        }
+        seenLinks.add(item.link);
+        return true;
+    });
 
     return {
         title: 'Deal Street Asia',
         language: 'en',
-        item: list,
+        item: items,
         link: 'https://dealstreetasia.com/',
     };
 }

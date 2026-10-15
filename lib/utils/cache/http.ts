@@ -12,6 +12,10 @@ const cacheHitSchema = z.object({
     value: z.string(),
 });
 
+const cacheMissSchema = z.object({
+    hit: z.literal(false),
+});
+
 const status = { available: false };
 
 let baseUrl: string | undefined;
@@ -108,7 +112,7 @@ export default {
         if (response.status === 404) {
             try {
                 const data = await response.json();
-                if (data && typeof data === 'object' && 'hit' in data && data.hit === false) {
+                if (cacheMissSchema.safeParse(data).success) {
                     return '';
                 }
             } catch {

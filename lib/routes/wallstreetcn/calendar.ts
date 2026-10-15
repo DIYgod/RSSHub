@@ -28,7 +28,7 @@ export const route: Route = {
 
 const rootUrl = 'https://wallstreetcn.com';
 
-const MacrodataSuffix = {
+const macrodataSuffix = {
     CA: 'CA10YR.OTC',
     CN: 'USDCNH.OTC',
     DE: 'DE30.OTC',
@@ -40,7 +40,22 @@ const MacrodataSuffix = {
     US: 'DXY.OTC',
 };
 
-const getMacrodataUrl = (countryId, wscnTicker) => `${rootUrl}/data-analyse/${wscnTicker}/${MacrodataSuffix[countryId]}`;
+const getMacrodataUrl = (countryId, wscnTicker) => `${rootUrl}/data-analyse/${wscnTicker}/${macrodataSuffix[countryId]}`;
+
+const hasValue = (value: unknown) => value !== undefined && value !== null && value !== '';
+const formatValue = (value: unknown, unit: string = '') => (hasValue(value) ? `${value}${unit}` : '-');
+
+function parseSourceTime(value: unknown) {
+    if ((typeof value !== 'number' && typeof value !== 'string') || (typeof value === 'string' && !value.trim())) {
+        return;
+    }
+    const seconds = Number(value);
+    if (!Number.isFinite(seconds)) {
+        return;
+    }
+    const date = parseDate(seconds * 1000);
+    return Number.isFinite(date.getTime()) ? date : undefined;
+}
 
 async function handler(ctx) {
     const { section = 'macrodatas' } = ctx.req.param();
@@ -48,13 +63,15 @@ async function handler(ctx) {
     const link = `${rootUrl}/calendar`;
     const apiRootUrl = section === 'macrodatas' ? 'https://api-one-wscn.awtmt.com' : 'https://api-ddc-wscn.awtmt.com';
     const apiUrl = section === 'macrodatas' ? `${apiRootUrl}/apiv1/finance/macrodatas` : `${apiRootUrl}/finance/report/list`;
+    const today = new Date().toLocaleDateString('sv-SE', { timeZone: 'Asia/Shanghai' });
+    const start = parseDate(`${today}T00:00:00+08:00`).getTime() / 1000;
 
     const response = await ofetch(apiUrl, {
         query:
             section === 'macrodatas'
                 ? {
-                      start: new Date().setHours(0, 0, 0, 0) / 1000,
-                      end: Math.trunc(new Date().setHours(23, 59, 59, 999) / 1000),
+                      start,
+                      end: start + 86399,
                   }
                 : undefined,
     });
@@ -63,10 +80,10 @@ async function handler(ctx) {
         section === 'macrodatas'
             ? response.data.items.map((item) => ({
                   title: `${item.country}${item.title}`,
-                  description: `${item.country}${item.title} 重要性: ${'★'.repeat(item.importance)} 今值: ${item.actual || '-'}${item.actual && item.unit} 预期: ${item.forecast || '-'}${item.forecast && item.unit} 前值: ${item.revised || item.previous || '-'}${(item.revised || item.previous) && item.unit}`,
-                  link: item.uri && MacrodataSuffix[item.country_id] && getMacrodataUrl(item.country_id, item.wscn_ticker),
+                  description: `重要性: ${'★'.repeat(item.importance)} 今值: ${formatValue(item.actual, item.unit)} 预期: ${formatValue(item.forecast, item.unit)} 前值: ${formatValue(hasValue(item.revised) ? item.revised : item.previous, item.unit)}${item.foresight ? `\n${item.foresight}` : ''}`,
+                  link: item.uri && macrodataSuffix[item.country_id] && getMacrodataUrl(item.country_id, item.wscn_ticker),
                   guid: item.id,
-                  pubDate: parseDate(item.public_date, 'X'),
+                  pubDate: parseSourceTime(item.public_date),
                   category: item.country,
               }))
             : // report
@@ -74,10 +91,10 @@ async function handler(ctx) {
                   .map((item) => Object.fromEntries(response.data.fields.map((field, index) => [field, item[index]])))
                   .map((item) => ({
                       title: `${item.company_name} ${item.observation_date}`,
-                      description: `${item.code} ${item.company_name} ${item.observation_date} 预期EPS: ${item.eps_estimate === 0 ? '-' : item.eps_estimate} 实际EPS: ${item.reported_eps === 0 ? '-' : item.reported_eps} 差异度: ${item.surprise === 0 || item.surprise === -1 ? '-' : (item.surprise * 100).toFixed(2) + '%'}`,
+                      description: `${item.code} 预期EPS: ${formatValue(item.eps_estimate)} 实际EPS: ${formatValue(item.reported_eps)} 差异度: ${!hasValue(item.surprise) || item.surprise === -1 ? '-' : (item.surprise * 100).toFixed(2) + '%'}`,
                       link,
                       guid: item.id,
-                      pubDate: parseDate(item.public_date, 'X'),
+                      pubDate: parseSourceTime(item.public_date),
                   }));
 
     return {

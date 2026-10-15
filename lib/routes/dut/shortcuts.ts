@@ -1,7 +1,9 @@
 export default {
     news: {
+        ttgz: 'zyxw',
         xwjj: 'xwjj01',
-        rcpy: 'xwjj01/rcpy',
+        rcpy: 'rcpy',
+        'xwjj01/rcpy': 'rcpy',
         kxyj: 'xwjj01/kxyj',
         jlhz: 'xwjj01-kxyj',
         yxfc: 'yxfc1',
@@ -41,22 +43,26 @@ export default {
         xyfc: 'index/xyfc',
         xsdt: 'index/xsdt',
         mtbd: 'index/mtbd',
-        gg: 'index/gg',
+        gg: 'tzgg',
+        'index/gg': 'tzgg',
     },
     xsgzb: {
-        zytz: 'index/zytz',
+        zytz: 'index/tzgg',
+        'index/zytz': 'index/tzgg',
         xgdt: 'index/xgdt',
         gsgonggao: 'index/gsgonggao',
     },
     pjteach: {
-        xwkd: 'index/xwkd',
+        xwkd: 'index/gzdt',
+        'index/xwkd': 'index/gzdt',
         zytz: 'index/zytz',
         xkyks: 'index/xkyks',
         jxwj: 'index/jxwj',
         cjwt: 'index/cjwt',
     },
     pjxqzwb: {
-        tzgg: 'index/tzgg',
+        tzgg: 'index/gztz',
+        'index/tzgg': 'index/gztz',
         zwkx: 'index/zwkx',
     },
     tjpj: {

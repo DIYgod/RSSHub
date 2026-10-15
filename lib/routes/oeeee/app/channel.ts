@@ -1,7 +1,8 @@
-import type { Route } from '@/types';
+import pMap from 'p-map';
+
+import type { DataItem, Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
 
 import { renderDescription } from '../templates/description';
 import { parseArticle } from '../utils';
@@ -31,7 +32,7 @@ async function handler(ctx) {
 
     const { data: response } = await got(currentUrl);
 
-    const list = response.data
+    const list: Array<DataItem & { link: string }> = response.data
         .filter((i) => i.url) // Remove banner and sticky articles.
         .map((item) => ({
             title: item.title,
@@ -39,14 +40,13 @@ async function handler(ctx) {
                 thumb: item.titleimg.replaceAll(/\?x-oss-process=.*/g, ''),
                 description: item.summary,
             }),
-            pubDate: timezone(parseDate(item.ptime * 1000), 8),
+            pubDate: item.ptime !== undefined && item.ptime !== null && item.ptime !== '' ? parseDate(Number(item.ptime) * 1000) : undefined,
             link: item.url,
-            channel: item.author,
         }));
 
-    const channel = list[1] ? list[1].channel : '';
+    const channel = response.data.find((item) => item.url)?.author ?? '';
 
-    const items = await Promise.all(list.map((item) => parseArticle(item)));
+    const items = await pMap(list, (item) => parseArticle(item), { concurrency: 3 });
 
     return {
         title: `南方都市报客户端 - ${channel}`,

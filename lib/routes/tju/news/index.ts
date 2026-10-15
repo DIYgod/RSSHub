@@ -1,14 +1,49 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
-const news_base_url = 'http://news.tju.edu.cn/';
-const repo_url = 'https://github.com/DIYgod/RSSHub/issues';
-
+const newsBaseUrl = 'http://news.tju.edu.cn/';
+const getArticle = async (link: string) => {
+    try {
+        const response = await got(link);
+        const $ = load(response.data);
+        const dateText =
+            $('.arc-info time').first().text().trim() ||
+            $('.contentTime')
+                .text()
+                .match(/\d{4}-\d{2}-\d{2}/)?.[0];
+        const streamLines = $('.v_news_content script').toArray();
+        for (const element of streamLines) {
+            const match = $(element)
+                .text()
+                .match(/showVsbVideo\(\s*("(?:\\.|[^"\\])*")/);
+            if (!match) {
+                continue;
+            }
+            const videoUrl = new URL(JSON.parse(match[1]), link);
+            if (isOneOf(videoUrl.protocol, ['http:', 'https:'])) {
+                $(element).replaceWith($('<video controls></video>').attr('src', videoUrl.href));
+            }
+        }
+        return {
+            pubDate: dateText ? timezone(parseDate(dateText, ['YYYY/MM/DD', 'YYYY-MM-DD']), 8) : undefined,
+            author:
+                $('.arc-info')
+                    .text()
+                    .match(/作者：([\s\S]*?)编辑：/)?.[1]
+                    .trim() || undefined,
+            description: $('.v_news_content').html() ?? undefined,
+        };
+    } catch {
+        // Keep the source listing when an article detail is unavailable.
+        return {};
+    }
+};
 const pageType = (href) => {
     if (href === undefined) {
         return 'unknown';
@@ -19,7 +54,6 @@ const pageType = (href) => {
     const url = new URL(href);
     return url.hostname === 'news.tju.edu.cn' ? 'tju-news' : 'unknown';
 };
-
 export const route: Route = {
     path: '/news/:type?',
     categories: ['university'],
@@ -40,11 +74,9 @@ export const route: Route = {
 | :----------: | :----------: | :-----------: | :----------: | :-------------: |
 |     focus    |    general   |    internal   |     media    |     picture     |`,
 };
-
 async function handler(ctx) {
     const type = ctx.req.param('type');
     let path, subtitle;
-
     switch (type) {
         case 'focus':
             subtitle = '聚焦天大';
@@ -52,7 +84,7 @@ async function handler(ctx) {
             break;
         case 'general':
             subtitle = '综合新闻';
-            path = 'zhxw.htm';
+            path = 'xw/zhxw.htm';
             break;
         case 'internal':
             subtitle = '校内新闻';
@@ -60,91 +92,71 @@ async function handler(ctx) {
             break;
         case 'media':
             subtitle = '媒体报道';
-            path = 'mtbd.htm';
+            path = 'mtjj.htm';
             break;
         case 'picture':
             subtitle = '图说天大';
-            path = 'tstd.htm';
+            path = 'yx/tstd.htm';
             break;
         default:
             subtitle = '聚焦天大';
             path = 'jjtd.htm';
     }
-    let response: any = null;
-    try {
-        response = await got(news_base_url + path, {
-            headers: {
-                Referer: news_base_url,
-            },
-        });
-    } catch {
-        // ignore error handler
-        // console.log(e);
-    }
-
-    if (response === null) {
-        return {
-            title: '天津大学新闻网 - ' + subtitle,
-            link: news_base_url + path,
-            description: '链接失效' + news_base_url + path,
-            item: [
-                {
-                    title: '提示信息',
-                    link: repo_url,
-                    description: `<h2>请到<a href=${repo_url}>此处</a>提交Issue</h2>`,
-                },
-            ],
-        };
-    }
-    const $ = load(response.data);
-
-    let list;
-    list = type === 'picture' ? $('.picList > li').toArray() : $('.indexList > li').toArray();
-
-    list = list.map((item) => {
-        const href = $('h4 > a', item).attr('href');
-        const type = pageType(href);
-        return {
-            title: $('h4 > a', item).text(),
-            link: type === 'in-site' ? news_base_url + href : href,
-            type,
-        };
+    const listUrl = new URL(path, newsBaseUrl).href;
+    const response = await got(listUrl, {
+        headers: {
+            Referer: newsBaseUrl,
+        },
     });
-
-    const items = await Promise.all(
-        list.map((item) => {
+    const $ = load(response.data);
+    let elements = $('.nylist-a > li, .nylist-b > li, .nylist-c > li').toArray();
+    if (!elements.length) {
+        elements = type === 'picture' ? $('.picList > li').toArray() : $('.indexList > li').toArray();
+    }
+    const list = elements.map(
+        (
+            item
+        ): DataItem & {
+            type?: string;
+        } => {
+            const $item = $(item);
+            const anchor = $item.find('h4 > a').first().length ? $item.find('h4 > a').first() : $item.find('a').first();
+            const href = anchor.attr('href');
+            const type = pageType(href);
+            return {
+                title: anchor.find('h4').first().length ? anchor.find('h4').first().text() : anchor.text(),
+                link: type === 'in-site' ? new URL(href!, listUrl).href : href,
+                type,
+            };
+        }
+    );
+    const items = await pMap(
+        list,
+        async (item) => {
             switch (item.type) {
                 case 'tju-news':
-                case 'in-site':
-                    return cache.tryGet(item.link, async () => {
-                        try {
-                            delete item.type;
-                            const detailResponse = await got(item.link);
-                            const content = load(detailResponse.data);
-                            item.pubDate = timezone(
-                                parseDate(
-                                    content('.contentTime')
-                                        .text()
-                                        .match(/\d{4}-\d{2}-\d{2}/)![0],
-                                    'YYYY-MM-DD'
-                                ),
-                                8
-                            );
-                            item.description = content('.v_news_content').html();
-                        } catch {
-                            // ignore error handler
-                        }
-                        return item;
-                    });
+                case 'in-site': {
+                    const listing = omitInternalField(item, 'type');
+                    return { ...listing, ...(await cache.tryGet(`tju:news:article:v3:${item.link}`, () => getArticle(item.link!))) };
+                }
                 default:
                     return item;
             }
-        })
+        },
+        { concurrency: 3 }
     );
-
     return {
         title: '天津大学新闻网 - ' + subtitle,
-        link: news_base_url + path,
+        link: listUrl,
         item: items,
     };
+}
+function isOneOf<const T>(value: unknown, values: readonly T[]): value is T {
+    const candidates: readonly unknown[] = values;
+    return candidates.includes(value);
+}
+function omitInternalField<T extends object, K extends keyof T>(item: T, key: K): Omit<T, K> {
+    const metadata = { ...item };
+    delete metadata[key];
+    return metadata;
 }

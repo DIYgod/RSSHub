@@ -4,7 +4,7 @@ import type { Context } from 'hono';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import { parseDate } from '@/utils/parse-date';
-import playwright from '@/utils/playwright';
+import { getPlaywrightPage } from '@/utils/playwright';
 import timezone from '@/utils/timezone';
 
 export const route: Route = {
@@ -50,62 +50,65 @@ async function handler(ctx: Context) {
         throw new Error(`Unknown college: ${type}`);
     }
 
-    const context = await playwright();
-    const page = await context.newPage();
-    await page.route('**/*', (route) => {
-        const request = route.request();
-        request.resourceType() === 'document' || request.resourceType() === 'script' ? route.continue() : route.abort();
-    });
-    await page.goto(college.url, {
-        waitUntil: 'networkidle',
-    });
-    const content = await page.content();
+    const { context, page, destroy } = await getPlaywrightPage(college.url, { noGoto: true, closeTimeout: 0 });
+    try {
+        await page.route('**/*', (route) => {
+            const request = route.request();
+            request.resourceType() === 'document' || request.resourceType() === 'script' ? route.continue() : route.abort();
+        });
+        await page.goto(college.url, {
+            waitUntil: 'networkidle',
+            timeout: 12000,
+        });
+        const content = await page.content();
 
-    const $ = load(content);
+        const $ = load(content);
 
-    const list = $('a[href*="/info/"]')
-        .toArray()
-        .map((item): DataItem => {
-            const $item = $(item);
-            const $parent = $item.closest('li, dd');
-            const text = $parent.text();
-            let date: string | undefined;
-            const full = /(20\d{2})[-./年]\s*(\d{1,2})[-./月]\s*(\d{1,2})/.exec(text);
-            if (full) {
-                date = `${full[1]}-${full[2]}-${full[3]}`;
-            } else {
-                const split = /(\d{1,2})\s*(20\d{2})[-./]\s*(\d{1,2})/.exec(text);
-                if (split) {
-                    date = `${split[2]}-${split[3]}-${split[1]}`;
+        const list = $('a[href*="/info/"]')
+            .toArray()
+            .map((item): DataItem => {
+                const $item = $(item);
+                const $parent = $item.closest('li, dd');
+                const text = $parent.text();
+                let date: string | undefined;
+                const full = /(20\d{2})[-./年]\s*(\d{1,2})[-./月]\s*(\d{1,2})/.exec(text);
+                if (full) {
+                    date = `${full[1]}-${full[2]}-${full[3]}`;
+                } else {
+                    const split = /(\d{1,2})\s*(20\d{2})[-./]\s*(\d{1,2})/.exec(text);
+                    if (split) {
+                        date = `${split[2]}-${split[3]}-${split[1]}`;
+                    }
                 }
-            }
 
-            return {
-                title: $item.attr('title') ?? ($item.find('h3, font, .bt').text() || $item.text()).trim(),
-                link: new URL($item.attr('href')!, college.url).href,
-                pubDate: date ? timezone(parseDate(date, 'YYYY-M-D'), 8) : undefined,
-            };
-        })
-        .filter((item) => item.pubDate);
-
-    const result = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link!, async () => {
-                const response = await context.request.get(item.link!);
-                const detail = await response.text();
-                const $ = load(detail);
-                $('.v_news_content style').remove();
-                item.description = $('.v_news_content').html();
-                return item;
+                return {
+                    title: $item.attr('title') ?? ($item.find('h3, font, .bt').text() || $item.text()).trim(),
+                    link: new URL($item.attr('href')!, college.url).href,
+                    pubDate: date ? timezone(parseDate(date, 'YYYY-M-D'), 8) : undefined,
+                };
             })
-        )
-    );
+            .filter((item) => item.pubDate);
+        const orderedList = list;
+        const entries = orderedList;
+        const result = await Promise.all(
+            entries.map((item) =>
+                cache.tryGet(item.link!, async () => {
+                    const response = await context.request.get(item.link!, { timeout: 12000 });
+                    const detail = await response.text();
+                    const $ = load(detail);
+                    $('.v_news_content style').remove();
+                    item.description = $('.v_news_content').html();
+                    return item;
+                })
+            )
+        );
 
-    await context.close();
-
-    return {
-        title: $('title').text(),
-        link: college.url,
-        item: result,
-    };
+        return {
+            title: $('title').text(),
+            link: college.url,
+            item: result,
+        };
+    } finally {
+        await destroy();
+    }
 }

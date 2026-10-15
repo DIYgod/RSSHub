@@ -1,9 +1,21 @@
-import { load } from 'cheerio';
+import { type Cheerio, load } from 'cheerio';
+import { type AnyNode, cloneNode, Document } from 'domhandler';
 import { CookieJar } from 'tough-cookie';
 
+import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
+
+function copyElements<T extends AnyNode>(selection: Cheerio<T>): Cheerio<T> {
+    const copy = selection.map((_, element) => cloneNode(element, true));
+    const root = new Document(copy.toArray());
+    copy.each((_, element) => {
+        element.parent = root;
+    });
+    return copy;
+}
 
 const baseUrl = 'https://www.nature.com';
 
@@ -48,40 +60,72 @@ const fixFigure = (html) => {
     });
 };
 
-const getArticleList = (html) =>
+const getArticleList = (html): DataItem[] =>
     html('.app-article-list-row__item')
         .toArray()
         .map((item) => {
             const $item = html(item);
+            const publishedAt = $item.find('.c-meta time').attr('datetime');
             return {
                 title: $item.find('a').text(),
                 link: baseUrl + $item.find('a').attr('href'),
-                pubDate: parseDate($item.find('.c-meta time').attr('datetime'), 'YYYY-MM-DD'),
+                pubDate: publishedAt ? timezone(parseDate(publishedAt, 'YYYY-MM-DD'), 0) : undefined,
             };
         });
 
-const getArticle = (item) =>
-    cache.tryGet(item.link, async () => {
-        const response = await ofetch(item.link);
+const getArticle = async (item: DataItem) => {
+    const detail = await cache.tryGet(`nature:article:v4:${item.link}`, async () => {
+        const detail: Pick<DataItem, 'doi' | 'author' | 'pubDate' | 'category' | 'description'> = {};
+        const response = await ofetch.raw(item.link!, { responseType: 'text' });
 
-        const $ = load(response);
+        const $ = load(response._data ?? '');
 
-        if (new URL(item.link).pathname.startsWith('/immersive/')) {
-            const meta = getDataLayer($);
-            item.doi = meta.content.article?.doi;
-            item.author = meta.content.contentInfo.authors.join(', ');
-            item.pubDate = parseDate(meta.content.contentInfo.publishedAt, 'X') || item.pubDate;
+        if (new URL(response.url).pathname.startsWith('/immersive/')) {
+            if ($('script[data-test=dataLayer]').length) {
+                const meta = getDataLayer($);
+                detail.doi = meta.content.article?.doi;
+                detail.author = meta.content.contentInfo.authors.join(', ');
+                const publishedAt = meta.content.contentInfo.publishedAt;
+                if (publishedAt) {
+                    detail.pubDate = parseDate(publishedAt, 'X');
+                }
+            } else {
+                detail.author = $('.b-credits p')
+                    .toArray()
+                    .map((author) => $(author).text())
+                    .join(', ');
+                const publishedAt = $('time[itemprop="datePublished"]').attr('datetime') ?? $('meta[property="article:published"]').attr('content');
+                if (publishedAt) {
+                    detail.pubDate = parseDate(/^\d{4}-\d{2}-\d{2}$/.test(publishedAt) ? `${publishedAt}T00:00:00Z` : publishedAt);
+                }
+            }
+
+            const $article = copyElements($('main'));
+            $article.find('header, nav, button, input, script, style').remove();
+            $article.find('[href], [src], [poster]').each((_, element) => {
+                const $element = $(element);
+                for (const attribute of ['href', 'src', 'poster']) {
+                    const value = $element.attr(attribute);
+                    if (value) {
+                        $element.attr(attribute, new URL(value, response.url).href);
+                    }
+                }
+            });
+            detail.description = $article.html();
         } else {
             const meta = JSON.parse($('script[type="application/ld+json"]').html() ?? '');
             const freeAccess = meta.mainEntity.isAccessibleForFree;
             let description;
 
             if (meta.mainEntity.sameAs.startsWith('https://doi.org/')) {
-                item.doi = meta.mainEntity.sameAs.replace('https://doi.org/', '');
+                detail.doi = meta.mainEntity.sameAs.replace('https://doi.org/', '');
             }
-            item.author = meta.mainEntity.author.map((author) => author.name.replace(', ', ' ')).join(', ');
-            item.category = meta.mainEntity.keywords;
-            item.pubDate = parseDate(meta.mainEntity.datePublished) || item.pubDate;
+            detail.author = meta.mainEntity.author.map((author) => author.name.replace(', ', ' ')).join(', ');
+            detail.category = meta.mainEntity.keywords;
+            if (meta.mainEntity.datePublished) {
+                const publishedAt = meta.mainEntity.datePublished;
+                detail.pubDate = parseDate(/^\d{4}-\d{2}-\d{2}$/.test(publishedAt) ? `${publishedAt}T00:00:00Z` : publishedAt);
+            }
 
             fixFigure($);
 
@@ -95,7 +139,7 @@ const getArticle = (item) =>
                 $('div.c-article-access-provider, h2#access-options, div[data-component=entitlement-box],div[class^=LiveAreaSection-], nav.c-access-options').remove();
                 description =
                     $('.c-article-body').html() ||
-                    ($('.c-article-teaser-text').html() ?? '') + ($('div.u-clear-both.c-article-wide-figure').html() ?? '') + $('.article__teaser').html() + ($('.c-article-references__container').html() ?? '');
+                    ($('.c-article-teaser-text').html() ?? '') + ($('div.u-clear-both.c-article-wide-figure').html() ?? '') + ($('.article__teaser').html() ?? '') + ($('.c-article-references__container').html() ?? '');
             }
 
             if ($('div.c-pdf-download').length) {
@@ -104,10 +148,12 @@ const getArticle = (item) =>
                 description += `<a href="${$('div.c-pdf-download a').attr('href')}">Download PDF</a>`;
             }
 
-            item.description = description;
+            detail.description = description;
         }
-        return item;
+        return detail;
     });
+    return { ...item, ...detail };
+};
 
 const getDataLayer = (html) =>
     JSON.parse(

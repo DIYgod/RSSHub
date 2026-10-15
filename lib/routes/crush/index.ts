@@ -56,12 +56,14 @@ async function handler(ctx): Promise<Data> {
             const postedAtText = publishedRaw.replace('Published at: ', '');
             const pubDate = timezone(parseDate(postedAtText), 0);
 
-            const guid = `${targetUrl}#${md5(description)}`;
+            const nativeTag = $el.attr('ng-click')?.match(/^tag\('([^']+)'\)$/)?.[1];
+            const guid = nativeTag ? `crush:${nativeTag}` : `${targetUrl}#${md5(description)}`;
 
             const item: DataItem = {
                 title: description,
                 description,
                 pubDate,
+                link: targetUrl,
                 guid,
             };
 

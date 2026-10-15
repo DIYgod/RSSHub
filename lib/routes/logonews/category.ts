@@ -9,8 +9,8 @@ export const route: Route = {
     parameters: { category: '分类，可在对应分类页 URL 中找到', type: '类型，可在对应分类页 URL 中找到' },
     radar: [
         {
-            source: ['logonews.cn/category/:category/:type?'],
-            target: '/category/:category/:type?',
+            source: ['logonews.cn/category/:category/:type'],
+            target: '/category/:category/:type',
         },
     ],
     name: '文章分类',

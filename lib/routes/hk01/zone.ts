@@ -29,7 +29,7 @@ async function handler(ctx) {
         url: apiUrl,
     });
 
-    const items = await ProcessItems(response.data.items, ctx.req.query('limit'));
+    const items = await ProcessItems(response.data.items, ctx);
 
     return {
         title: `${response.data.category.publishName} | 香港01`,

@@ -1,6 +1,8 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
-import type { Language, Route } from '@/types';
+import NotFoundError from '@/errors/types/not-found';
+import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -38,7 +40,6 @@ export const route: Route = {
 | -------- | -------- | -------- | -------- | -------- | -------- | -------- |
 | 106      | 107      | 108      | 109      | 110      | 111      | 113      |`,
     categories: ['new-media'],
-
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -48,94 +49,93 @@ export const route: Route = {
         supportScihub: false,
     },
 };
-
+const rootUrl = 'https://xd.x6d.com';
+async function fetchDetail(link: string): Promise<Pick<DataItem, 'description' | 'pubDate' | 'category' | 'author' | 'content' | 'image' | 'banner'>> {
+    const { data: detailResponse } = await got(link);
+    const $ = load(detailResponse);
+    const description = $('div.article-content').html();
+    const imageSrc = $('div.article-content img').first().attr('src');
+    const image = imageSrc ? new URL(imageSrc, rootUrl).href : undefined;
+    const rawDate = $('time').text();
+    const pubDate = rawDate ? timezone(parseDate(rawDate, ['YYYY-MM-DD HH:mm', 'YYYY-MM-DD HH:mm:ss', 'YYYY-MM-DD'], true), 8) : undefined;
+    return {
+        description,
+        pubDate: pubDate && Number.isFinite(pubDate.getTime()) ? pubDate : undefined,
+        category: $('b.bq-wg')
+            .toArray()
+            .map((element) => $(element).text()),
+        author: $('span.bq-zz').text(),
+        content: { html: description, text: $('div.article-content').text() },
+        image,
+        banner: image,
+    };
+}
 export async function handler(ctx) {
     const { id = 'latest' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 22;
-
-    const rootUrl = 'https://xd.x6d.com';
-
+    const requestedLimit = Number(ctx.req.query('limit') ?? '22');
+    const limit = Number.isFinite(requestedLimit) && requestedLimit >= 1 ? Math.floor(requestedLimit) : 22;
     let currentUrl = new URL(id === 'latest' ? '' : `html/${id}.html`, rootUrl).href;
-
     const { data: firstResponse } = await got(currentUrl);
-
     let $;
-
     if (/<meta\s/.test(firstResponse)) {
         $ = load(firstResponse);
     } else {
-        currentUrl = new URL(
-            id === 'latest'
-                ? ''
-                : firstResponse
-                      .match(/'([\w./=?]+)'/g)
-                      .toReversed()
-                      .join('')
-                      .replaceAll("'", ''),
-            rootUrl
-        ).href;
-
+        const redirectParts = id === 'latest' ? [] : firstResponse.match(/'([\w./=?]+)'/g);
+        if (!redirectParts) {
+            throw new NotFoundError('Could not resolve the category redirect from the source page');
+        }
+        currentUrl = new URL(id === 'latest' ? '' : redirectParts.toReversed().join('').replaceAll("'", ''), rootUrl).href;
         const { data: response } = await got(currentUrl);
-
         $ = load(response);
     }
-
     $('i.rj').remove();
-
     const language = 'zh' as const satisfies Language;
-
     const query = id === 'latest' ? $('#newslist ul').first().find('li').not('li.addd').find('a').slice(0, limit) : $('a.soft-title').slice(0, limit);
-
-    let items = query.toArray().map((item) => {
-        const $item = $(item);
-
-        return {
-            title: $item.prop('title') ?? $item.text(),
-            link: new URL($item.prop('href'), rootUrl).href,
-            language,
-        };
-    });
-
-    items = await Promise.all(
-        items.map((item) =>
-            cache.tryGet(item.link, async () => {
-                const { data: detailResponse } = await got(item.link);
-
-                const $$ = load(detailResponse);
-
-                const title = $$('h1.article-title').text();
-                const description = $$('div.article-content').html();
-                const image = new URL($$('div.article-content img').first().prop('src')!, rootUrl).href;
-
-                item.title = title;
-                item.description = description;
-                item.pubDate = timezone(parseDate($$('time').text()), 8);
-                item.category = $$('b.bq-wg')
-                    .toArray()
-                    .map((c) => $$(c).text());
-                item.author = $$('span.bq-zz').text();
-                item.content = {
-                    html: description,
-                    text: $$('div.article-content').text(),
-                };
-                item.image = image;
-                item.banner = image;
-                item.language = language;
-
-                return item;
-            })
-        )
+    let items: Array<
+        DataItem & {
+            link: string;
+        }
+    > = query
+        .toArray()
+        .filter((item) => $(item).attr('href'))
+        .map((item) => {
+            const $item = $(item);
+            return {
+                title: $item.prop('title') ?? $item.text(),
+                link: new URL($item.prop('href'), rootUrl).href,
+                language,
+            };
+        });
+    items = await pMap(
+        items,
+        (item) =>
+            mapResolvedValue(
+                cache.tryGet(`x6d:detail:v4:${item.link}`, () => fetchDetail(item.link)),
+                (detail) => ({
+                    ...item,
+                    description: detail.description,
+                    pubDate: detail.pubDate,
+                    category: detail.category,
+                    author: detail.author,
+                    content: detail.content,
+                    image: detail.image,
+                    banner: detail.banner,
+                })
+            ),
+        { concurrency: 3, stopOnError: false }
     );
-
-    const image = new URL($('div.header-logo img').prop('src'), rootUrl).href;
-
+    const imageSrc = $('div.header-logo img').attr('src');
+    const image = imageSrc ? new URL(imageSrc, rootUrl).href : undefined;
     return {
         title: $('title').text().split(/\s-/, 1)[0],
         description: $('meta[name="description"]').prop('content'),
         link: currentUrl,
         item: items,
-        allowEmpty: true,
         image,
         language,
     };
+}
+async function mapResolvedValue<T, U>(promise: Promise<T>, mapper: (value: T) => U | Promise<U>): Promise<U> {
+    const value = await promise;
+    return mapper(value);
 }

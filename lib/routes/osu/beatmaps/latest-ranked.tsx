@@ -229,7 +229,7 @@ async function handler(ctx): Promise<Data> {
 
     let upperLimit = 99; // Osu! will never have maps with 99+ star rating right?
     let lowerLimit = 0;
-    if (difficultyLimits && difficultyLimits.length > 0 && difficultyLimits.length < 2) {
+    if (difficultyLimits && difficultyLimits.length > 0) {
         for (const dfLimit of difficultyLimits) {
             if (dfLimit.startsWith('U')) {
                 upperLimit = Number(dfLimit.slice(1));

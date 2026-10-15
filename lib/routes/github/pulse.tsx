@@ -1,10 +1,10 @@
 import { load } from 'cheerio';
-import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
 import md5 from '@/utils/md5';
+import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
@@ -34,65 +34,90 @@ export const route: Route = {
     handler,
 };
 
+interface PulseEntry {
+    title: string;
+    number: number | string;
+    path: string;
+    createdAt: string;
+    mergedAt?: string;
+    closedAt?: string;
+    commentCount?: number;
+}
+
+interface PulseOverview {
+    period: string;
+    rangeLabel: string;
+    totalPullRequests: number;
+    totalIssues: number;
+    mergedPulls: PulseEntry[];
+    newPulls: PulseEntry[];
+    closedIssues: PulseEntry[];
+    newIssues: PulseEntry[];
+    discussions: PulseEntry[];
+    releases: PulseEntry[];
+}
+
+interface PulseDiffstat {
+    authorsWithCommits: number;
+    filesChanged: number;
+    additions: number;
+    deletions: number;
+    masterCommits: number;
+    totalCommits: number;
+    defaultBranch: string;
+    comparePathUrl: string;
+}
+
+interface PulseCommitter {
+    name?: string;
+    login: string;
+    commits: number;
+}
+
 async function handler(ctx) {
     const { user, repo, period } = ctx.req.param();
-
     const periods = ['daily', 'halfweekly', 'weekly', 'monthly'];
     const pulsePeriod = periods.includes(period) ? period : periods[2];
-
-    const link = `https://github.com/${user}/${repo}/pulse/${pulsePeriod}`;
+    const baseUrl = 'https://github.com';
+    const link = `${baseUrl}/${user}/${repo}/pulse/${pulsePeriod}`;
     const { data: pulsePage } = await got(link);
     const $ = load(pulsePage);
-
-    const $mainSections = $('main .Layout-main').children();
-
-    const $subheading = $mainSections.eq(0);
-    const [periodFrom, periodTo] = $subheading.find('h2').text().split('–', 2);
-
-    const $overview = $mainSections.eq(1);
-    const overviewItems = $overview
-        .find('ul ul li')
-        .toArray()
-        .map((el) => $(el).text());
-
-    const $commitActivity = $mainSections.eq(2);
-    let commitActivity;
-    const $contributionData = $commitActivity.find('.js-pulse-contribution-data');
-    if ($contributionData.length) {
-        const summaryUrl = $contributionData.attr('data-pulse-diffstat-summary-url');
-        commitActivity = (await got(`https://github.com${summaryUrl}`)).data;
-    } else {
-        commitActivity = $commitActivity.text();
+    const embeddedData = $('react-app[app-name="repos-pulse"] script[data-target="react-app.embeddedData"]').text();
+    if (!embeddedData) {
+        throw new Error('GitHub Pulse page does not provide the expected public data endpoints.');
     }
-
-    const $githubActivity = $mainSections.eq(3);
-    let githubActivity;
-    const $sections = $githubActivity.find('h3');
-    if ($sections.length) {
-        githubActivity = $sections.toArray().map((section) => {
-            const $section = $(section);
-            const $sectionSiblings = $section.nextUntil('h3');
-            const $paragraph = $section.nextUntil('ul');
-            const $list = $sectionSiblings.last();
-            return {
-                heading: $section.text(),
-                paragraph: $paragraph.length > 0 ? $paragraph.text() : undefined,
-                items: $list
-                    .children()
-                    .toArray()
-                    .map((item) => {
-                        const $item = $(item);
-                        const $link = $item.find('a');
-                        const $details = $item.find('p');
-                        const $relativeTime = $details.find('relative-time');
-                        $relativeTime.replaceWith($relativeTime.attr('datetime') ?? '');
-                        return {
-                            link: { text: $link.text(), url: $link.attr('href') },
-                            details: $details.text(),
-                        };
-                    }),
-            };
-        });
+    const paths = JSON.parse(embeddedData).payload?.pulseRoute;
+    if (!paths?.overviewDataPath || !paths.diffstatSummaryPath || !paths.committerDataPath) {
+        throw new Error('GitHub Pulse page is missing its public data endpoints.');
+    }
+    const options = { headers: { Accept: 'application/json' } };
+    const [overview, diffstat, committers] = await Promise.all([
+        ofetch<PulseOverview>(new URL(`${paths.overviewDataPath}/${pulsePeriod}`, baseUrl).href, options),
+        ofetch<PulseDiffstat>(new URL(`${paths.diffstatSummaryPath}/${pulsePeriod}`, baseUrl).href, options),
+        ofetch<PulseCommitter[]>(new URL(`${paths.committerDataPath}/${pulsePeriod}`, baseUrl).href, options),
+    ]);
+    const [periodFrom, periodTo] = overview.rangeLabel?.split(' – ', 2) ?? [];
+    const pubDate = periodTo ? parseDate(`${periodTo} UTC`) : undefined;
+    const sections = [
+        { heading: 'Releases', entries: overview.releases, dateField: 'createdAt' },
+        { heading: 'Merged pull requests', entries: overview.mergedPulls, dateField: 'mergedAt' },
+        { heading: 'Opened pull requests', entries: overview.newPulls, dateField: 'createdAt' },
+        { heading: 'Closed issues', entries: overview.closedIssues, dateField: 'closedAt' },
+        { heading: 'Opened issues', entries: overview.newIssues, dateField: 'createdAt' },
+        { heading: 'Discussions', entries: overview.discussions, dateField: 'createdAt' },
+    ] as const;
+    if (
+        overview.period !== pulsePeriod ||
+        !periodFrom ||
+        !pubDate ||
+        !Number.isFinite(pubDate.getTime()) ||
+        !Number.isFinite(overview.totalPullRequests) ||
+        !Number.isFinite(overview.totalIssues) ||
+        !Number.isFinite(diffstat.totalCommits) ||
+        !Array.isArray(committers) ||
+        sections.some(({ entries }) => !Array.isArray(entries))
+    ) {
+        throw new Error('GitHub Pulse returned incomplete statistics or an invalid date range.');
     }
 
     return {
@@ -100,26 +125,37 @@ async function handler(ctx) {
         link,
         item: [
             {
-                guid: md5(`${user}${repo}${period}${periodFrom}${periodTo}`),
+                guid: md5(`${user}${repo}${pulsePeriod}${periodFrom}${periodTo}`),
                 title: `${periodFrom} - ${periodTo}`,
+                link,
                 description: renderToString(
                     <>
                         <h2>Overview</h2>
                         <ul>
-                            {overviewItems.map((item) => (
-                                <li>{item}</li>
+                            <li>{overview.totalPullRequests} pull requests</li>
+                            <li>{overview.totalIssues} issues</li>
+                        </ul>
+                        <h2>Commit activity</h2>
+                        <p>
+                            {diffstat.authorsWithCommits} authors made {diffstat.masterCommits} commits to {diffstat.defaultBranch} and {diffstat.totalCommits} commits across all branches.
+                            {diffstat.filesChanged} files changed with {diffstat.additions} additions and {diffstat.deletions} deletions.
+                        </p>
+                        <a href={new URL(diffstat.comparePathUrl, baseUrl).href}>Compare changes</a>
+                        <ul>
+                            {committers.map((committer) => (
+                                <li>
+                                    <a href={`${baseUrl}/${committer.login}`}>{committer.name || committer.login}</a>: {committer.commits} commits
+                                </li>
                             ))}
                         </ul>
-                        {commitActivity ? raw(commitActivity) : null}
-                        {(githubActivity ?? []).map((activity) => (
+                        {sections.map((section) => (
                             <>
-                                <h2>{activity.heading}</h2>
-                                {activity.paragraph ? <p>{activity.paragraph}</p> : null}
+                                <h2>{section.heading}</h2>
                                 <ul>
-                                    {activity.items.map((item) => (
+                                    {section.entries.map((entry) => (
                                         <li>
-                                            <a href={item.link.url}>{item.link.text}</a>
-                                            <p>{item.details}</p>
+                                            <a href={new URL(entry.path, baseUrl).href}>{entry.title}</a> #{entry.number}
+                                            <p>{entry[section.dateField]}</p>
                                         </li>
                                     ))}
                                 </ul>
@@ -127,7 +163,7 @@ async function handler(ctx) {
                         ))}
                     </>
                 ),
-                pubDate: parseDate(periodTo),
+                pubDate,
             },
         ],
     };

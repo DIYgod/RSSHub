@@ -2,11 +2,14 @@ import crypto from 'node:crypto';
 
 import { load } from 'cheerio';
 import type { Context } from 'hono';
+import pMap from 'p-map';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
+import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/news',
@@ -23,33 +26,35 @@ export const route: Route = {
     url: 'iapp.org/news',
 };
 
+const extractSearchConfig = (source: string) => {
+    const embedded = source.match(/\\"appID\\":\\"(\w+)\\",\\"apiKey\\":\\"(\w+)\\"/);
+    const client = source.includes('algolia.net') ? source.match(/\(["']([A-Z0-9]{10})["'],["']([a-f0-9]{32})["']\)/) : undefined;
+    const match = embedded ?? client;
+    return match ? { appId: match[1], apiKey: match[2] } : undefined;
+};
+
 async function handler(ctx: Context) {
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')!) : 20;
+    const limit = getRouteLimit(ctx, 20);
     const baseUrl = 'https://iapp.org';
     const link = `${baseUrl}/news`;
 
     const { appId, apiKey, description } = await cache.tryGet('iapp:algolia-credentials', async () => {
         const html = await ofetch(link);
         const $ = load(html);
-        let appId: string | undefined;
-        let apiKey: string | undefined;
-        $('script').each((_, el) => {
-            const text = $(el).text();
-            const match = text.match(/\\"appID\\":\\"(\w+)\\",\\"apiKey\\":\\"(\w+)\\"/);
-            if (!match) {
-                return;
-            }
-
-            appId = match[1];
-            apiKey = match[2];
-            return false;
-        });
-        if (!appId || !apiKey) {
-            throw new Error('Failed to extract Algolia credentials from iapp.org');
+        let searchConfig = extractSearchConfig(html);
+        if (!searchConfig) {
+            const scripts = $('script[src]')
+                .toArray()
+                .map((el) => new URL($(el).attr('src')!, baseUrl))
+                .filter((url) => url.origin === baseUrl && url.pathname.startsWith('/_next/static/'));
+            const configurations = await pMap(scripts, async (url) => extractSearchConfig(await ofetch<string, 'text'>(url.href, { responseType: 'text' })), { concurrency: 3 });
+            searchConfig = configurations.find((configuration) => configuration !== undefined);
+        }
+        if (!searchConfig) {
+            throw new Error('Failed to extract the public Algolia search configuration from iapp.org');
         }
         return {
-            appId,
-            apiKey,
+            ...searchConfig,
             description: $('meta[name="description"]').attr('content'),
         };
     });
@@ -68,7 +73,7 @@ async function handler(ctx: Context) {
                 {
                     indexName: 'all_article_date_desc',
                     clickAnalytics: true,
-                    facets: ['news_tags.domains.domains', 'news_tags.industry.industry', 'news_tags.law_and_regulation.law_and_regulation', 'news_tags.subject.subject'],
+                    facets: ['domains.domains', 'industry.industry', 'law_and_regulation.law_and_regulation', 'subject.subject'],
                     filters: '_content_type:news_article',
                     highlightPostTag: '__/ais-highlight__',
                     highlightPreTag: '__ais-highlight__',
@@ -82,15 +87,22 @@ async function handler(ctx: Context) {
         },
     });
 
-    const items = response.results[0].hits.map((hit) => ({
-        title: hit.article_details.headline,
-        description: hit.article_body?.map((block) => block.rte?.rich_text_editor).join('') || hit.entry_summary,
-        link: new URL(hit.url, baseUrl).href,
-        pubDate: parseDate(hit.article_details.date),
-        author: hit.article_details.author?.map((a) => a.title).join(', '),
-        category: [...(hit.news_tags?.domains?.domains || []), ...(hit.news_tags?.subject?.subject || []), ...(hit.tags_group?.internal_class || [])],
-        image: hit.main_image?.url,
-    }));
+    const items = response.results[0].hits.map((hit) => {
+        const date = hit.article_details.date;
+        const pubDate = typeof date === 'string' ? parseDate(date, 'YYYY-MM-DD', true) : undefined;
+        const tags = hit.news_tags ?? hit;
+        return {
+            title: hit.article_details.headline,
+            description: hit.article_body?.map((block) => block.rte?.rich_text_editor).join('') || hit.entry_summary,
+            link: new URL(hit.url, baseUrl).href,
+            pubDate: pubDate && Number.isFinite(pubDate.getTime()) ? timezone(pubDate, 0) : undefined,
+            author: hit.article_details.author?.map((a) => a.title).join(', '),
+            category: [
+                ...new Set([...(tags.domains?.domains || []), ...(tags.subject?.subject || []), ...(tags.industry?.industry || []), ...(tags.law_and_regulation?.law_and_regulation || []), ...(hit.tags_group?.internal_class || [])]),
+            ],
+            image: hit.main_image?.url,
+        };
+    });
 
     return {
         title: 'IAPP - News',

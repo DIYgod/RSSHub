@@ -70,6 +70,16 @@ const redirectGot = (url) =>
         }),
     });
 
+const getFeedItemFallback = (item) => ({
+    title: item.title,
+    link: item.link,
+    guid: item.guid,
+    pubDate: item.pubDate,
+    description: item.description || item.content,
+    author: item.author || item.creator,
+    category: item.category || item.categories,
+});
+
 const parseArticle = (item) =>
     cache.tryGet(item.link, async () => {
         const group = regex
@@ -79,7 +89,7 @@ const parseArticle = (item) =>
         if (group) {
             const { page, link } = group;
             if (Object.hasOwn(apiEndpoints, page)) {
-                const api = { ...apiEndpoints[page] };
+                const api = apiEndpoints[page];
                 let res;
 
                 try {
@@ -87,30 +97,19 @@ const parseArticle = (item) =>
                     res = await redirectGot(apiUrl);
                 } catch (error) {
                     // fallback
-                    const err = error as Error;
-                    if (err.name && ['HTTPError', 'RequestError', 'FetchError'].includes(err.name)) {
+                    if (error instanceof Error && ['HTTPError', 'RequestError', 'FetchError'].includes(error.name)) {
                         try {
                             res = await redirectGot(item.link);
                         } catch {
                             // return the default one
-                            return {
-                                title: item.title,
-                                link: item.link,
-                                pubDate: item.pubDate,
-                                description: item.description,
-                            };
+                            return getFeedItemFallback(item);
                         }
                     }
                 }
 
                 // Blocked by PX3, or 404 by both api and direct link, return the default
                 if ((res.redirected && new URL(res.url).pathname === '/tosv2.html') || res.status === 404) {
-                    return {
-                        title: item.title,
-                        link: item.link,
-                        pubDate: item.pubDate,
-                        description: item.description,
-                    };
+                    return getFeedItemFallback(item);
                 }
 
                 switch (page) {
@@ -127,7 +126,7 @@ const parseArticle = (item) =>
                 }
             }
         }
-        return item;
+        return getFeedItemFallback(item);
     });
 
 const parseAudioPage = async (res, api, item) => {
@@ -138,7 +137,7 @@ const parseAudioPage = async (res, api, item) => {
         link: audio_json.pageInfo.canonicalUrl || item.link,
         guid: `bloomberg:${episode.id}`,
         description: (await processBody(episode.articleBody, audio_json)).replaceAll(emptyRegex, ''),
-        pubDate: parseDate(episode.publishedAt) || item.pubDate,
+        pubDate: episode.publishedAt ? parseDate(episode.publishedAt) : item.pubDate,
         author: audio_json.hero.showTitle,
         media: {
             content: { url: episode.image },
@@ -167,7 +166,7 @@ const parseVideoPage = async (res, api, item) => {
             link: video_story.url || item.link,
             guid: `bloomberg:${video_story.id}`,
             description: renderVideoMedia(desc),
-            pubDate: parseDate(video_story.publishedAt) || item.pubDate,
+            pubDate: video_story.publishedAt ? parseDate(video_story.publishedAt) : item.pubDate,
             media: {
                 content: { url: video_story.video?.thumbnail.url || '' },
                 thumbnails: { url: video_story.video?.thumbnail.url || '' },
@@ -212,16 +211,11 @@ const parseReactRendererPage = async (res, api, item) => {
     const story_id = JSON.parse(json)[api.prop];
     try {
         const res = await redirectGot(`${idUrl}${story_id}`);
-        return await parseStoryJson(res._data, item);
+        return await parseStoryJson(res._data.data, item);
     } catch (error) {
         // fallback
-        const err = error as Error;
-        if (err.name && ['HTTPError', 'RequestError', 'FetchError'].includes(err.name)) {
-            return {
-                title: item.title,
-                link: item.link,
-                pubDate: item.pubDate,
-            };
+        if (error instanceof Error && ['HTTPError', 'RequestError', 'FetchError'].includes(error.name)) {
+            return getFeedItemFallback(item);
         }
     }
 };
@@ -233,7 +227,7 @@ const parseStoryJson = async (story_json, item) => {
         link: story_json.url || item.link,
         guid: `bloomberg:${story_json.id}`,
         description: processHeadline(story_json) + (await processLedeMedia(story_json)) + (await documentToHtmlString(story_json.body || '')),
-        pubDate: parseDate(story_json.publishedAt) || item.pubDate,
+        pubDate: story_json.publishedAt ? parseDate(story_json.publishedAt) : item.pubDate,
         author: story_json.authors?.map((a) => a.name).join(', ') ?? [],
         category: story_json.mostRelevantTags ?? [],
         media: {
@@ -245,7 +239,7 @@ const parseStoryJson = async (story_json, item) => {
 };
 
 const processHeadline = (story_json) => {
-    const dek = story_json.dek || story_json.summary || story_json.headline || '';
+    const dek = story_json.dek || story_json.summary || '';
     const abs = story_json.abstract?.map((a) => `<li>${a}</li>`).join('');
     return abs ? dek + `<ul>${abs}</ul>` : dek;
 };
@@ -288,7 +282,7 @@ const processLedeMedia = async (story_json) => {
         return '';
     }
     if (story_json.type !== 'Lede') {
-        return;
+        return '';
     }
 
     const props = story_json.props;
@@ -459,7 +453,7 @@ const nodeRenderers = {
             const s = node.data.security.identifiers.parsekey;
             if (s) {
                 const c = s.split(' ');
-                const href = [...'https://www.bloomberg.com/quote/'.concat(c[0], ':'), c[1]];
+                const href = `https://www.bloomberg.com/quote/${c[0]}:${c[1]}`;
                 return `<a href="${href}" target="_blank">${await nextNode(node.content)}</a>`;
             }
         }
@@ -561,7 +555,7 @@ const nodeRenderers = {
                 type: e.dataType,
             }))
             .map((e) => `<th colspan=${e.span}>${e.title}</th>`);
-        return `<tr>${cols}</tr>`;
+        return `<tr>${cols.join('')}</tr>`;
     },
     row: async (node, nextNode) => `<tr>${await nextNode(node.content)}</tr>`,
     cell: async (node, nextNode) => {

@@ -1,5 +1,7 @@
 import { load } from 'cheerio';
+import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
+import pMap from 'p-map';
 
 import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
@@ -73,39 +75,28 @@ export const route: Route = {
                                 <img src={imgUrl} />
                                 <br />
                                 <p>
-                                    <b>地点：</b>
-                                    {location || '参考详情'}
+                                    <small>原始展期：{fullDuration}</small>
                                 </p>
-                                <p>
-                                    <b>开展：</b>
-                                    {startDate || '未定/常设'}
-                                </p>
-                                <p>
-                                    <b>闭展：</b>
-                                    {endDate || '未定/常设'}
-                                </p>
-                                {fullDuration && (
-                                    <p>
-                                        <small>原始展期：{fullDuration}</small>
-                                    </p>
-                                )}
-                            </div>
-                        );
+                            )}
+                            {raw($detail('.zlcontent_xx .text').html() ?? '')}
+                        </div>
+                    );
 
-                        return {
-                            title,
-                            link,
-                            pubDate,
-                            description,
-                            _extra: {
-                                museumName,
-                                location,
-                                startDate,
-                                endDate,
-                            },
-                        };
-                    });
-                })
+                    return {
+                        title,
+                        link,
+                        pubDate,
+                        description,
+                        _extra: {
+                            museumName,
+                            location,
+                            startDate,
+                            endDate,
+                        },
+                    };
+                });
+            },
+            { concurrency: 6 }
         );
 
         return {

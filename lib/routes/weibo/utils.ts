@@ -55,6 +55,34 @@ const formatDescriptionText = (html, { showEmojiInDescription, showLinkIconInDes
     return formattedHtml;
 };
 
+const needsCompletePictures = (status) => Number(status.pic_num) > Object.values(status.pics || {}).length || (status.retweeted_status && needsCompletePictures(status.retweeted_status));
+
+const mergeDesktopStatus = (status, desktopStatus) => {
+    const pictures = desktopStatus.pic_ids
+        ?.map((id) => desktopStatus.pic_infos?.[id])
+        .filter(Boolean)
+        .map((picture) => {
+            const large = picture.largest || picture.original || picture.large;
+            return {
+                ...picture,
+                pid: picture.pic_id,
+                url: picture.bmiddle?.url || large?.url,
+                large: large && { ...large, geo: { width: large.width, height: large.height } },
+            };
+        });
+
+    return {
+        ...desktopStatus,
+        ...status,
+        text: desktopStatus.text,
+        bid: desktopStatus.mblogid || status?.bid,
+        pics: pictures?.length ? pictures : status?.pics,
+        ...(desktopStatus.retweeted_status && {
+            retweeted_status: mergeDesktopStatus(status?.retweeted_status, desktopStatus.retweeted_status),
+        }),
+    };
+};
+
 const weiboUtils = {
     apiHeaders: {
         'MWeibo-Pwa': 1,
@@ -425,13 +453,34 @@ const weiboUtils = {
     },
     getShowData: async (uid, bid) => {
         const link = `https://m.weibo.cn/statuses/show?id=${bid}`;
-        const itemResponse = await got.get(link, {
-            headers: {
-                Referer: `https://m.weibo.cn/u/${uid}`,
-                ...weiboUtils.apiHeaders,
-            },
+        return await weiboUtils.tryWithCookies(async (cookies, verifier) => {
+            const itemResponse = await got.get(link, {
+                headers: {
+                    Cookie: cookies,
+                    Referer: `https://m.weibo.cn/u/${uid}`,
+                    ...weiboUtils.apiHeaders,
+                },
+            });
+            verifier(itemResponse);
+            const status = itemResponse.data.data;
+            if (status?.text && !needsCompletePictures(status)) {
+                return status;
+            }
+
+            const desktopResponse = await got('https://weibo.com/ajax/statuses/show', {
+                searchParams: { id: bid, isGetLongText: true },
+                headers: {
+                    Cookie: cookies,
+                    Referer: `https://weibo.com/${uid}/${bid}`,
+                },
+            });
+            verifier(desktopResponse);
+            const desktopStatus = desktopResponse.data;
+            if (desktopStatus?.ok !== 1 || !desktopStatus.text) {
+                throw new Error('Unable to retrieve the Weibo post. Please verify that it is visible and update WEIBO_COOKIES if login is required.');
+            }
+            return mergeDesktopStatus(status, desktopStatus);
         });
-        return itemResponse.data.data;
     },
     formatVideo: (itemDesc, status) => {
         const pageInfo = status.page_info;

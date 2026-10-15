@@ -121,6 +121,7 @@ LABEL org.opencontainers.image.authors="https://github.com/DIYgod/RSSHub"
 
 ENV NODE_ENV=production
 ENV TZ=Asia/Shanghai
+ENV PLAYWRIGHT_BROWSERS_PATH=/app/node_modules/.cache/ms-playwright
 
 WORKDIR /app
 

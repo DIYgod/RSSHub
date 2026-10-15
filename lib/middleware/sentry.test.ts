@@ -3,7 +3,7 @@ import { afterEach, describe, expect, it, vi } from 'vitest';
 
 type Scope = { setTag: ReturnType<typeof vi.fn> };
 
-const makeContext = (path: string) => new Context(new Request(`http://localhost${path}`), { env: {}, path });
+const makeContext = () => new Context(new Request('http://localhost/test/slow'), { env: {}, path: '/test/slow' });
 
 afterEach(() => {
     vi.resetModules();
@@ -44,7 +44,7 @@ describe('sentry middleware', () => {
         process.env.SENTRY = '';
 
         const { default: middleware } = await import('@/middleware/sentry');
-        await middleware(makeContext('/test/slow'), async () => {});
+        await middleware(makeContext(), async () => {});
 
         expect(sentryFactory).not.toHaveBeenCalled();
     });
@@ -59,7 +59,7 @@ describe('sentry middleware', () => {
         expect(scope.setTag).toHaveBeenCalledWith('node_name', 'node-a');
         expect(infoSpy).toHaveBeenCalledWith('Sentry inited.');
 
-        const ctx = makeContext('/test/slow');
+        const ctx = makeContext();
         const nowSpy = vi.spyOn(Date, 'now');
         nowSpy.mockReturnValueOnce(0).mockReturnValueOnce(100);
 

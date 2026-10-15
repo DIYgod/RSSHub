@@ -1,17 +1,15 @@
 import { load } from 'cheerio';
-import pMap from 'p-map';
 
 import type { ListingExtra } from '@/routes/temposmart/utils';
 import { clean, normalizeFloor, parseArea, parseCondition, parseHeavyFood, parseJpy, parseWalkMin, parseWard, parseYmd, summarize, tsuboUnit } from '@/routes/temposmart/utils';
 import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
-import logger from '@/utils/logger';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 import timezone from '@/utils/timezone';
 
 const HOST = 'https://www.abc-tenpo.com';
-const DETAIL_CONCURRENCY = 2;
 const PAGE_SIZE = 20;
 
 /** `pref[]` values of the search form (Kanto edition). */
@@ -87,7 +85,7 @@ const parseList = (html: string): ListCard[] => {
             const address = clean(raw.area_header?.split('/', 1)[0])?.replaceAll(' ', '') ?? null;
             const rentJpy = parseJpy(raw.rent);
             const { tsubo, area_m2 } = parseArea(raw.area);
-            const image = $el.find('.c-property-box-main__img img[src^="/img/bukken/"]').first().attr('src');
+            const image = $el.find('.c-property-box-main__img img[src^="/img/bukken/"]').attr('src');
 
             return {
                 title,
@@ -153,14 +151,9 @@ const mergeDetail = (base: ListingExtra, d: DetailFields): ListingExtra => {
     };
 };
 
-/** A failed detail page keeps the list fields instead of breaking the feed. */
 const enrich = async (card: ListCard): Promise<ListingExtra> => {
-    try {
-        return mergeDetail(card.extra, parseDetail(await ofetch(card.link)));
-    } catch (error) {
-        logger.warn(`abc-tenpo: detail fetch failed for ${card.link}: ${String(error)}`);
-        return { ...card.extra, raw: { ...card.extra.raw, detail_error: String(error) } };
-    }
+    const html = await ofetch(card.link);
+    return mergeDetail(card.extra, parseDetail(html));
 };
 
 export const handler = async (ctx): Promise<Data> => {
@@ -169,14 +162,13 @@ export const handler = async (ctx): Promise<Data> => {
     if (pref !== undefined && !prefecture) {
         throw new Error(`Unknown prefecture "${pref}", expected one of ${PREFECTURES.map((p) => p.slug).join(', ')}`);
     }
-    const limit = Math.min(ctx.req.query('limit') ? Number(ctx.req.query('limit')) : PAGE_SIZE, PAGE_SIZE);
+    const limit = Math.min(getRouteLimit(ctx, PAGE_SIZE), PAGE_SIZE);
     // sort=1 is 新着順.
     const listUrl = `${HOST}/property/search?sort=1${prefecture ? `&pref%5B%5D=${prefecture.code}` : ''}`;
 
     const cards = parseList(await ofetch(listUrl)).slice(0, limit);
-    const items = await pMap(
-        cards,
-        (card) =>
+    const items = await Promise.all(
+        cards.map((card) =>
             cache.tryGet(card.link, async (): Promise<DataItem> => {
                 const extra = await enrich(card);
                 return {
@@ -188,8 +180,8 @@ export const handler = async (ctx): Promise<Data> => {
                     image: card.image,
                     _extra: extra,
                 };
-            }) as Promise<DataItem>,
-        { concurrency: DETAIL_CONCURRENCY }
+            })
+        )
     );
 
     return {

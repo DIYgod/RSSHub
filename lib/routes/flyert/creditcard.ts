@@ -23,15 +23,18 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: [
-        {
-            source: ['flyert.com.cn/'],
-        },
-    ],
+    radar: ['flyert.com.cn', 'www.flyert.com.cn'].flatMap((domain) =>
+        ['creditcard', 'pufa', 'zhaoshang', 'zhongxin', 'jiaotong', 'zhonghang', 'gongshang', 'guangfa', 'nongye', 'jianshe', 'huifeng', 'mingsheng', 'xingye', 'huaqi', 'shanghai', 'wuka', '137', '145', 'intcreditcard'].map(
+            (bank) => ({
+                source: [`${domain}/forum-${bank}-1.html`],
+                target: `/creditcard/${bank}`,
+            })
+        )
+    ),
     name: '信用卡',
     maintainers: ['nicolaszf'],
     handler,
-    url: 'flyert.com/',
+    url: 'www.flyert.com.cn/',
     description: `| 信用卡模块 | bank          |
 | ---------- | ------------- |
 | 国内信用卡 | creditcard    |
@@ -130,7 +133,7 @@ async function handler(ctx) {
 
     const list = $("[id*='normalthread']").toArray();
 
-    const result = await util.ProcessFeed(list, cache);
+    const result = await util.processFeed(list, cache);
 
     return {
         title: `飞客茶馆信用卡 - ${bankname}`,

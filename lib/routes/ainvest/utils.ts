@@ -37,13 +37,15 @@ export const fetchContentStream = (streamId, limit) =>
 
 export const fetchContentItems = async (streamIds, limit) => {
     const streams = await Promise.all(streamIds.map((streamId) => fetchContentStream(streamId, limit)));
-    const list = streams.flat().map((item) => normalizeItem(item));
+    const list = streams
+        .flat()
+        .slice(0, limit)
+        .map((item) => normalizeItem(item));
 
     return Promise.all(
         list.map((item) =>
             cache.tryGet(item.link!, async () => {
-                const response = await ofetch(`${contentPageUrl}/${item.seoKey}`);
-                const { data } = response;
+                const { data } = await ofetch(`${contentPageUrl}/${item.seoKey}`);
 
                 item.description = data.pageInfo.structuredContent.map((c) => c.content).join('');
                 item.image = data.contentInfo.coverImage;

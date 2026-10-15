@@ -1,9 +1,11 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
-import type { Data, Route } from '@/types';
+import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 import parser from '@/utils/rss-parser';
 
 export const route: Route = {
@@ -32,34 +34,30 @@ export const route: Route = {
 };
 
 async function handler(ctx): Promise<Data> {
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 20;
+    const limit = getRouteLimit(ctx, 20);
     const rssUrl = 'https://decrypt.co/feed';
 
     const feed = await parser.parseURL(rssUrl);
 
-    const items = await Promise.all(
-        feed.items
-            .filter((item) => item && item.link && !item.link.includes('/videos'))
-            .slice(0, limit)
-            .map((item) =>
-                cache.tryGet(`decrypt:article:${item.link}`, async () => {
-                    if (!item.link) {
-                        return {};
-                    }
-
-                    const result = await extractFullText(item.link);
-                    return {
-                        title: item.title || 'Untitled',
-                        link: item.link.split('?', 1)[0], // Clean URL by removing query parameters
-                        pubDate: item.pubDate ? parseDate(item.pubDate) : undefined,
-                        description: result?.fullText ?? item.content,
-                        author: item.creator || 'Decrypt',
-                        category: result?.tags ? [...new Set([...(item.categories ?? []), ...result.tags])] : item.categories || [],
-                        guid: item.guid || item.link,
-                        image: result?.featuredImage ?? item.enclosure?.url,
-                    };
-                })
-            )
+    const pool = feed.items.filter((item): item is (typeof feed.items)[number] & { link: string } => item && !!item.link && !item.link.includes('/videos')).slice(0, Math.max(20, limit));
+    const orderedItems = ctx.req.query('sorted') === 'false' ? pool : pool.toSorted((a, b) => parseDate(b.pubDate ?? 0).getTime() - parseDate(a.pubDate ?? 0).getTime());
+    const items = await pMap(
+        orderedItems.slice(0, limit),
+        (item) =>
+            cache.tryGet(`decrypt:article:${item.link}`, async (): Promise<DataItem> => {
+                const result = await extractFullText(item.link);
+                return {
+                    title: item.title || 'Untitled',
+                    link: item.link.split('?', 1)[0], // Clean URL by removing query parameters
+                    pubDate: item.pubDate ? parseDate(item.pubDate) : undefined,
+                    description: result?.fullText ?? item.content,
+                    author: item.creator || 'Decrypt',
+                    category: result?.tags ? [...new Set([...(item.categories ?? []), ...result.tags])] : item.categories || [],
+                    guid: item.guid || item.link,
+                    image: result?.featuredImage ?? item.enclosure?.url,
+                };
+            }),
+        { concurrency: 3 }
     );
 
     return {
@@ -69,7 +67,7 @@ async function handler(ctx): Promise<Data> {
         item: items,
         language: feed.language || 'en',
         image: feed.image?.url,
-    } as Data;
+    };
 }
 
 async function extractFullText(url: string): Promise<{ fullText: string; featuredImage: string; tags: string[] } | null> {

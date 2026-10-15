@@ -3,6 +3,7 @@ import { load } from 'cheerio';
 import type { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/physics',
@@ -12,7 +13,7 @@ export const route: Route = {
     radar: [
         {
             source: ['physics.cnu.edu.cn/news/index.htm'],
-            target: '/cnu/physics',
+            target: '/physics',
         },
     ],
     name: '物理系院系新闻',
@@ -43,30 +44,30 @@ async function handler() {
             const span = item.find('span');
             const a = item.find('a');
 
-            // 提取日期 [YYYY-MM-DD]
+            // Extract the date in [YYYY-MM-DD] format.
             const dateText = span.text();
             const dateMatch = dateText.match(/\[(\d{4}-\d{2}-\d{2})\]/);
-            const pubDate = dateMatch ? parseDate(dateMatch[1], 'YYYY-MM-DD') : undefined;
+            const pubDate = dateMatch ? timezone(parseDate(dateMatch[1], 'YYYY-MM-DD'), 8) : undefined;
 
-            // 提取标题
+            // Extract the title.
             const title = a.text().trim() || a.attr('title') || '';
 
-            // 从 onclick 属性中提取链接
+            // 从 onclick 属性中Extract the link.
             const onclick = a.attr('onclick') || '';
             const hrefMatch = onclick.match(/checkXnwk\(['"]([^'"]+)['"]/);
             const href = hrefMatch ? hrefMatch[1] : '';
 
-            // 处理相对路径
+            // Resolve relative paths.
             let linkUrl = '';
             if (href) {
                 if (href.startsWith('http')) {
                     linkUrl = href;
                 } else {
-                    // 使用 URL 构造函数处理所有类型的相对路径（包括 '../' 和 '../..' 等）
+                    // Resolve parent-directory paths with the URL constructor.
                     try {
                         linkUrl = new URL(href, `${baseUrl}/news/`).href;
                     } catch {
-                        // 如果 URL 构造失败，回退到简单拼接
+                        // Use the existing concatenation fallback if URL parsing fails.
                         linkUrl = href.startsWith('../') ? `${baseUrl}/${href.replaceAll('../', '')}` : `${baseUrl}/news/${href}`;
                     }
                 }
@@ -79,7 +80,7 @@ async function handler() {
                 description: '',
             };
         })
-        .filter((item) => item.title && item.link); // 过滤掉导航链接
+        .filter((item) => item.title && item.link); // Exclude navigation links.
 
     return {
         title: '首都师范大学物理系 - 院系新闻',

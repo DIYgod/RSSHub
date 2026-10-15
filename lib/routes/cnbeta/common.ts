@@ -1,13 +1,16 @@
 import { load } from 'cheerio';
 
+import { getSubPath } from '@/utils/common-utils';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 import timezone from '@/utils/timezone';
 
 import { ProcessItems, rootUrl } from './utils';
 
 export async function handler(ctx) {
-    const { type, id } = ctx.req.param();
+    const type = getSubPath(ctx).split('/', 2)[1];
+    const id = ctx.req.param('id')?.replace(/\.htm$/, '');
 
     const currentUrl = type ? `${rootUrl}/${type}/${id}.htm` : rootUrl;
 
@@ -38,6 +41,6 @@ export async function handler(ctx) {
     return {
         title: $('title').text(),
         link: currentUrl,
-        item: await ProcessItems(items, ctx.req.query('limit')),
+        item: await ProcessItems(items, getRouteLimit(ctx, 60)),
     };
 }

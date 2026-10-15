@@ -3,6 +3,7 @@ import { load } from 'cheerio';
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/scveto',
@@ -19,6 +20,7 @@ async function handler() {
     const response = await ofetch(url);
 
     const $ = load(response);
+    const vetoCounts = new Map<string, number>();
     const items = $('.tablefont > tbody > tr')
         .slice(3, -1)
         .toArray()
@@ -35,13 +37,16 @@ async function handler() {
             const agenda = content.find('td:nth-child(4)');
             const country = content.find('td:nth-child(5)');
             country.find('br').replaceWith(' and ');
+            const guid = `scveto:${resolution.text()}`;
+            const vetoNumber = (vetoCounts.get(guid) ?? 0) + 1;
+            vetoCounts.set(guid, vetoNumber);
 
             return {
                 title: `${country.text()} vetoed a Resolution`,
                 description: `${country.html()} vetoed ${agenda.html()}. <br/> <br/> <b>Resolution: </b> ${resolution.html()}<br/><br/>  <b>Meeting Record: </b> ${meeting.html()}`,
                 link: resolution.find('a').attr('href'),
-                guid: `scveto:${resolution.text()}`,
-                pubDate: parseDate(date),
+                guid: vetoNumber === 1 ? guid : `${guid}:${vetoNumber}`,
+                pubDate: date ? timezone(parseDate(date), 0) : undefined,
             };
         });
 

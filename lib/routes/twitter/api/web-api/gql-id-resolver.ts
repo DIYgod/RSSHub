@@ -17,6 +17,7 @@ export const fallbackIds = {
     SearchTimeline: 'BGd0T_j7oVwlW5U79tO_0A',
     ListLatestTweetsTimeline: 'jW040BLUjh8X6Tw2ODQufA',
     TweetDetail: '559hs_YZNV4IgA3Z6zIIuw',
+    AudioSpaceById: 'ipEqgz4P_bZCGY3fBnfsxQ',
 };
 
 const operationNames = Object.keys(fallbackIds);

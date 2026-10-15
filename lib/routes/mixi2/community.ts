@@ -2,11 +2,12 @@ import type { Context } from 'hono';
 
 import type { Data, Route } from '@/types';
 import { ViewType } from '@/types';
+import { getRouteLimit } from '@/utils/route-limit';
 
 import { CONFIG_OPTIONS, generatePostDataItem, getClient, postFilter } from './utils';
 
 const handler = async (ctx: Context): Promise<Data> => {
-    const limit = Number(ctx.req.query('limit') ?? '20');
+    const limit = getRouteLimit(ctx, 20);
     const communityId = ctx.req.param('id');
     const mediaOnly = ctx.req.param('media') === 'media';
 

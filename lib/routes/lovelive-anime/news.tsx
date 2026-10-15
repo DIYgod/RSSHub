@@ -1,12 +1,17 @@
 import { load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
+import pMap from 'p-map';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
+
+interface NewsItem extends DataItem {
+    link: string;
+}
 
 const renderDescription = (desc: { imglink: string }) => renderToString(<img src={desc.imglink} />);
 
@@ -74,11 +79,11 @@ async function handler(ctx) {
 
     const data = await ofetch(url);
 
-    const articles = data.data.article_list.map((item) => ({
+    const articles: NewsItem[] = data.data.article_list.map((item) => ({
         title: item.title,
         link: item.url,
         description: renderDescription({
-            imglink: 'https://www.lovelive-anime.jp' + item.thumbnail,
+            imglink: new URL(item.thumbnail, 'https://www.lovelive-anime.jp').href,
         }),
         pubDate: timezone(parseDate(item.dspdate), 9),
         category: item.categories.subcategory.map((category) => category.name),
@@ -87,20 +92,23 @@ async function handler(ctx) {
     let items = articles;
 
     if (isDetail) {
-        items = await Promise.all(
-            articles.map((item) =>
-                cache.tryGet(item.link, async () => {
+        items = await pMap(
+            articles,
+            async (item) => ({
+                ...item,
+                description: await cache.tryGet('lovelive-anime:article:' + item.link, async () => {
                     const detailResp = await got(item.link);
                     const $ = load(detailResp.data);
-
                     const content = $('.p-article__content');
-                    for (const v of content.find('img')) {
-                        v.attribs.src = 'https://www.lovelive-anime.jp' + v.attribs.src;
+                    for (const image of content.find('img')) {
+                        if (image.attribs.src) {
+                            image.attribs.src = new URL(image.attribs.src, item.link).href;
+                        }
                     }
-                    item.description = content.html();
-                    return item;
-                })
-            )
+                    return content.html();
+                }),
+            }),
+            { concurrency: 3 }
         );
     }
 

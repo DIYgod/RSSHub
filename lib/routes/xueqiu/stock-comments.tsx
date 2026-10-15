@@ -30,15 +30,16 @@ export const route: Route = {
     maintainers: ['zytomorrow'],
     handler,
 };
-
 async function handler(ctx) {
     const id = ctx.req.param('id');
-
     const res = await got({
         method: 'get',
         url: `https://xueqiu.com/query/v1/symbol/search/status?u=11111&count=100&comment=0&symbol=${id}&source=all&sort=time`,
     });
-
+    const data = res.data.list;
+    if (!Array.isArray(data)) {
+        throw new TypeError('Xueqiu stock comments API did not return a list. Check whether the source requires verification or is limiting requests.');
+    }
     // 获取stock_name
     const stock_name = await cache.tryGet(`stock_name_${id}`, async () => {
         const res = await got({
@@ -48,15 +49,14 @@ async function handler(ctx) {
         const $ = load(res.data); // 使用 cheerio 加载返回的 HTML
         return $('.stock-name').text().split('(', 1)[0];
     });
-
-    const data = res.data.list;
     return {
         title: `${id} ${stock_name} - 评论`,
         link: `https://xueqiu.com/S/${id}`,
         description: `${stock_name} - 评论`,
         item: data.map((item) => {
-            let link = `https://xueqiu.com${item.target}`;
-            if (item.quote_cards) {
+            const commentUrl = `https://xueqiu.com${item.target}`;
+            let link = commentUrl;
+            if (item.quote_cards?.[0]?.target_url) {
                 link = item.quote_cards[0].target_url;
             }
             const description = renderToString(
@@ -81,6 +81,7 @@ async function handler(ctx) {
             return {
                 title: item.title || sanitizeHtml(item.text, { allowedTags: [], allowedAttributes: {} }),
                 description,
+                guid: commentUrl,
                 pubDate: parseDate(item.created_at),
                 link,
             };

@@ -1,3 +1,4 @@
+import pMap from 'p-map';
 import { z } from 'zod';
 
 import type { DataItem } from '@/types';
@@ -70,8 +71,9 @@ async function fetchTopic(uid: string): Promise<ReadhubItem> {
 }
 
 const processItems = (items: ReadhubItem[]): Promise<ReadhubItem[]> =>
-    Promise.all(
-        items.map((item) => {
+    pMap(
+        items,
+        (item) => {
             const url = new URL(item.link);
             const topicPath = /^\/topic\/([^/]+)\/?$/.exec(url.pathname);
             if (url.origin !== rootUrl || !topicPath) {
@@ -81,7 +83,8 @@ const processItems = (items: ReadhubItem[]): Promise<ReadhubItem[]> =>
             // Keep failed enrichment out of the cache, including old summary-only entries.
             const uid = decodeURIComponent(topicPath[1]);
             return cache.tryGet(`readhub:topic:v2:${uid}`, () => fetchTopic(uid));
-        })
+        },
+        { concurrency: 6 }
     );
 
 export { apiRootUrl, apiTopicUrl, processItems, rootUrl };

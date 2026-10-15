@@ -32,24 +32,30 @@ async function handler(ctx: Context): Promise<Data> {
     const baseUrl = 'https://news.buaa.edu.cn';
     const type = ctx.req.param('type');
 
-    const { data: response, url: link } = await got(`${baseUrl}/${type}.htm`);
+    const link = `${baseUrl}/${type}.htm`;
+    const { data: response } = await got(link);
 
     const $ = load(response);
-    const title = $('.subnav span').text().trim();
-    const list: DataItem[] = $('.mainleft > .listlefttop > .listleftop1')
+    const title = $('.position-box a').last().text() || $('.subnav span').text();
+    const list: DataItem[] = $('.twlist > ul > li, .mainleft > .listlefttop > .listleftop1')
         .toArray()
         .map((item_) => {
             const item = $(item_);
-            const title = item.find('h2 > a');
+            const title = item.find('.pub_info h3, h2 > a');
+            const link = item.find('a').first();
+            const yearMonth = item.find('.pub_date span').text();
+            const day = item.find('.pub_date b').text();
+            const date = yearMonth && day ? `${yearMonth.replace('.', '-')}-${day}` : item.find('h2 em').text().replaceAll(/[[\]]/g, '');
             return {
                 title: title.text(),
-                link: new URL(title.attr('href')!, baseUrl).href,
-                pubDate: timezone(parseDate(item.find('h2 em').text(), '[YYYY-MM-DD]'), 8),
+                link: new URL(link.attr('href')!, baseUrl).href,
+                pubDate: date ? timezone(parseDate(date, 'YYYY-MM-DD'), 8) : undefined,
             };
         });
-
+    const orderedList = list;
+    const entries = orderedList;
     const result = await Promise.all(
-        list.map((item) =>
+        entries.map((item) =>
             cache.tryGet(item.link!, async () => {
                 const response = await got(item.link);
                 const $ = load(response.data);

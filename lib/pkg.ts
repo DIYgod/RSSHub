@@ -30,11 +30,11 @@ export async function init(conf?: ConfigEnv) {
     app = (await import('@/app')).default;
 }
 
-export async function request(path: RoutePath | (string & {})) {
+export async function request(path: RoutePath | (string & {})): Promise<Data> {
     ensureAppInitialized(app);
 
     const res = await app.request(path);
-    return res.json() as Promise<Data>;
+    return res.json();
 }
 
 export async function registerRoute(namespace: string, route: Route, namespaceConfig?: Namespace) {

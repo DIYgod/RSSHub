@@ -5,7 +5,7 @@ import { parseDate } from '@/utils/parse-date';
 export const route: Route = {
     path: '/nictation',
     categories: ['new-media'],
-    example: '/tmtpost/word',
+    example: '/tmtpost/nictation',
     parameters: {},
     features: {
         requireConfig: false,

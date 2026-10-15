@@ -62,11 +62,12 @@ async function handler(ctx) {
     const embed = fallback(undefined, queryToBoolean(routeParams.embed), true);
     const displayArticle = fallback(undefined, queryToBoolean(routeParams.displayArticle), false);
 
-    const name = await cache.getUsernameFromUID(uid);
     const cookie = config.bilibili.cookies[uid];
     if (cookie === undefined) {
         throw new ConfigNotFoundError('缺少对应 uid 的 Bilibili 用户登录后的 Cookie 值');
     }
+
+    const name = await cache.getUsernameFromUID(uid);
 
     const response = await got({
         method: 'get',

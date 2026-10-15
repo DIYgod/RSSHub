@@ -1,11 +1,12 @@
 import { load } from 'cheerio';
 
-import type { DataItem, Route } from '@/types';
+import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
 const host = 'http://www.rodong.rep.kp';
+const languages: Record<string, Language> = { cn: 'zh-CN', en: 'en', ko: 'ko' };
 
 export const route: Route = {
     path: '/news/:language?',
@@ -21,10 +22,9 @@ export const route: Route = {
         supportScihub: false,
     },
     radar: [
-        {
-            source: ['rodong.rep.kp/cn/index.php', 'rodong.rep.kp/en/index.php', 'rodong.rep.kp/ko/index.php', 'rodong.rep.kp/cn', 'rodong.rep.kp/en', 'rodong.rep.kp/ko'],
-            target: '/news',
-        },
+        { source: ['rodong.rep.kp/cn/index.php', 'rodong.rep.kp/cn'], target: '/news/cn' },
+        { source: ['rodong.rep.kp/en/index.php', 'rodong.rep.kp/en'], target: '/news/en' },
+        { source: ['rodong.rep.kp/ko/index.php', 'rodong.rep.kp/ko'], target: '/news/ko' },
     ],
     name: 'News',
     maintainers: ['TonyRL'],
@@ -69,6 +69,7 @@ async function handler(ctx) {
 
     return {
         title: $('head title').text(),
+        language: languages[language],
         description: $('head meta[name="description"]').attr('content'),
         link,
         item: items,

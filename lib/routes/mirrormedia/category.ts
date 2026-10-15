@@ -1,6 +1,9 @@
-import type { Route } from '@/types';
+import pMap from 'p-map';
+
+import type { DataItem, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
 import { getArticle } from './utils';
 
@@ -29,7 +32,7 @@ async function handler(ctx) {
         method: 'POST',
         body: {
             variables: {
-                take: ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 24,
+                take: getRouteLimit(ctx, 24),
                 skip: 0,
                 orderBy: { publishedDate: 'desc' },
                 filter: {
@@ -85,17 +88,17 @@ async function handler(ctx) {
         },
     });
 
-    const items = response.data.posts.map((e) => ({
+    const items: DataItem[] = response.data.posts.map((e) => ({
         title: e.title,
         pubDate: parseDate(e.publishedDate),
         category: [...(e.sections ?? []).map((_) => `section:${_.name}`), ...(e.categories ?? []).map((_) => `category:${_.name}`)],
         link: `${rootUrl}/story/${e.slug}`,
     }));
 
-    const list = await Promise.all(items.map((item) => getArticle(item)));
+    const list = await pMap(items, (item) => getArticle(item), { concurrency: 3 });
 
     return {
-        title: `鏡週刊 Mirror Media - ${category}`,
+        title: `鏡週刊 Mirror Media - ${category ?? section}`,
         link: rootUrl,
         item: list,
     };

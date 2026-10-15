@@ -6,6 +6,7 @@ import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import { parseDateRange } from '@/utils/parse-date-range';
+import timezone from '@/utils/timezone';
 
 import { namespace } from './namespace';
 
@@ -73,7 +74,7 @@ export const route: Route = {
                         .find((text) => text.includes('发布日期'))!
                         .replaceAll('发布日期:', '')
                         .trim();
-                    const pubDate = parseDate(pubDateRaw);
+                    const pubDate = timezone(parseDate(pubDateRaw, 'YYYY-MM-DD'), 8);
 
                     // Default path: return as news, no detail information for return
                     if (!isSpecial) {
@@ -102,9 +103,9 @@ export const route: Route = {
                     }
 
                     const location = texts
-                        .find((text) => text.includes('展览地点：'))
-                        ?.replaceAll('展览地点：', '')
-                        ?.trim();
+                        .find((text) => /^展览地点\s*[:：]/.test(text))
+                        ?.replace(/^展览地点\s*[:：]\s*/, '')
+                        .trim();
 
                     const fullDuration = texts
                         .find((text) => text.includes('展览时间：') || text.includes('开展时间：'))
@@ -118,10 +119,12 @@ export const route: Route = {
                         <div>
                             <img src={imgUrl} />
                             <br />
-                            <p>
-                                <b>地点：</b>
-                                {location}
-                            </p>
+                            {location && (
+                                <p>
+                                    <b>地点：</b>
+                                    {location}
+                                </p>
+                            )}
                             <p>
                                 <b>开展：</b>
                                 {startDate ?? '未定/常设'}

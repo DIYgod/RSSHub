@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-import type { Route } from '@/types';
+import type { Data, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 
@@ -139,6 +139,23 @@ const GAME_MAP = {
     },
 };
 
+const languages: Partial<Record<string, Language>> = {
+    'de-de': 'de-de',
+    'en-us': 'en-us',
+    'en-gb': 'en-gb',
+    'es-es': 'es-es',
+    'es-mx': 'es-mx',
+    'fr-fr': 'fr-fr',
+    'it-it': 'it-it',
+    'pt-br': 'pt-br',
+    'pl-pl': 'pl',
+    'ru-ru': 'ru-ru',
+    'ko-kr': 'ko',
+    'th-th': 'th',
+    'ja-jp': 'ja',
+    'zh-tw': 'zh-TW',
+};
+
 function getSearchParams(category = 'all') {
     return category === 'all'
         ? Object.values(GAME_MAP)
@@ -147,7 +164,7 @@ function getSearchParams(category = 'all') {
         : `feedCxpProductIds[]=${GAME_MAP[category].id}`;
 }
 
-async function handler(ctx) {
+async function handler(ctx): Promise<Data> {
     const category = GAME_MAP[ctx.req.param('category')]?.key || 'all';
     const language = ctx.req.param('language') || 'en-us';
     const rootUrl = `https://news.blizzard.com/${language}`;
@@ -173,14 +190,14 @@ async function handler(ctx) {
             pubDate: content.lastUpdated,
         };
     });
-
+    const selectedList = list;
     const items = await Promise.all(
-        list.map((item) =>
+        selectedList.map((item) =>
             cache.tryGet(item.link, async () => {
                 try {
                     const { data: response } = await got(item.link);
                     const $ = load(response);
-                    item.description = $('.Content').html();
+                    item.description = $('.Content .blog').html() ?? item.description;
                     return item;
                 } catch {
                     return item;
@@ -192,6 +209,7 @@ async function handler(ctx) {
     return {
         title: rssTitle,
         link: currentUrl,
+        language: languages[feed.context.locale.toLowerCase()],
         item: items,
     };
 }

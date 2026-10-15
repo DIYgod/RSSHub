@@ -1,9 +1,11 @@
 import { load } from 'cheerio';
+import { FetchError } from 'ofetch';
+import pMap from 'p-map';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
 
 export const route: Route = {
     path: '/yjs',
@@ -33,36 +35,33 @@ export const route: Route = {
         const $ = load(response);
         const list = $('.n_bt li').slice(0, 10).toArray();
 
-        const items = await Promise.all(
-            list.map((item) => {
+        const items = await pMap(
+            list,
+            async (item) => {
                 const $item = $(item);
-                const $link = $item.find('a').first();
+                const $link = $item.find('a');
                 const link = new URL($link.attr('href') || '', url).href;
 
-                const pubDate = parseDate($link.find('em').text());
+                const date = $link.find('em').text();
+                const pubDate = date ? parseDateInTimezone(date, 8) : undefined;
                 const title = $link.attr('title') || $link.find('p').text() || $link.text();
 
-                return cache.tryGet(link, async () => {
-                    try {
+                const metadata = { title, link, pubDate };
+                try {
+                    const detail = await cache.tryGet(link, async () => {
                         const detailResponse = await ofetch(link);
                         const $$ = load(detailResponse);
-                        const description = $$('.v_news_content').html() || $$('#vsb_content').html();
-
-                        return {
-                            title,
-                            link,
-                            description,
-                            pubDate,
-                        };
-                    } catch {
-                        return {
-                            title,
-                            link,
-                            pubDate,
-                        };
+                        return { description: $$('.v_news_content').html() || $$('#vsb_content').html() };
+                    });
+                    return { ...metadata, ...detail };
+                } catch (error) {
+                    if (error instanceof FetchError) {
+                        return metadata;
                     }
-                });
-            })
+                    throw error;
+                }
+            },
+            { concurrency: 3 }
         );
 
         return {

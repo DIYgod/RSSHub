@@ -1,9 +1,11 @@
 import MarkdownIt from 'markdown-it';
+import pMap from 'p-map';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
 import { renderDescription } from './templates/desc';
 
@@ -11,6 +13,16 @@ const md = MarkdownIt({
     html: true,
     linkify: true,
 });
+const defaultImageRenderer = md.renderer.rules.image;
+md.renderer.rules.image = (tokens, index, options, env, self) => {
+    const image = tokens[index].attrGet('src');
+    const repositoryUrl = env?.repositoryUrl;
+    if (typeof image === 'string' && image && typeof repositoryUrl === 'string' && !/^(?:[a-z][a-z\d+.-]*:|\/\/)/i.test(image)) {
+        const query = new URLSearchParams({ Revision: 'master', FilePath: image, View: 'true' });
+        tokens[index].attrSet('src', `${repositoryUrl}?${query}`);
+    }
+    return defaultImageRenderer ? defaultImageRenderer(tokens, index, options, env, self) : self.renderToken(tokens, index, options);
+};
 
 export const route: Route = {
     path: '/datasets',
@@ -42,15 +54,15 @@ async function handler(ctx) {
 
     const { data } = await got(`${baseUrl}/api/v1/dolphin/datasets`, {
         searchParams: {
-            PageSize: ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 36,
+            PageSize: getRouteLimit(ctx, 36),
             PageNumber: 1,
             Target: '',
             Sort: 'gmt_modified',
         },
     });
 
-    const datasets = data.Data.map((dataset) => ({
-        title: dataset.ChineseName,
+    const datasets: Array<DataItem & { link: string; slug: string }> = data.Data.map((dataset) => ({
+        title: dataset.ChineseName || dataset.Name,
         description: dataset.Description,
         author: dataset.CreatedBy,
         link: `${link}/${dataset.Namespace}/${dataset.Name}`,
@@ -59,19 +71,18 @@ async function handler(ctx) {
         slug: `/${dataset.Namespace}/${dataset.Name}`,
     }));
 
-    const items = await Promise.all(
-        datasets.map((item) =>
-            cache.tryGet(item.link, async () => {
-                const { data } = await got(`${baseUrl}/api/v1/datasets${item.slug}`);
+    const items = await pMap(
+        datasets,
+        async ({ slug, ...item }) => {
+            const body = await cache.tryGet(`${item.link}:readme-images`, async () => {
+                const { data } = await got(`${baseUrl}/api/v1/datasets${slug}`);
 
-                const content = data.Data.ReadmeContent.replaceAll(/img src="(?!http)(.*?)"/g, (_match, p1) => `img src="${baseUrl}/api/v1/datasets${item.slug}/repo?Revision=master&FilePath=${p1}&View=true"`);
-                item.description = renderDescription({
-                    description: item.description,
-                    md: md.render(content),
-                });
-                return item;
-            })
-        )
+                const content = (data.Data.ReadmeContent ?? '').replaceAll(/img src="(?!http)(.*?)"/g, (_match, p1) => `img src="${baseUrl}/api/v1/datasets${slug}/repo?Revision=master&FilePath=${p1}&View=true"`);
+                return { content: md.render(content, { repositoryUrl: `${baseUrl}/api/v1/datasets${slug}/repo` }) };
+            });
+            return { ...item, description: renderDescription({ description: item.description ?? undefined, md: body.content }) };
+        },
+        { concurrency: 3 }
     );
 
     return {

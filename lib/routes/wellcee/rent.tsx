@@ -12,6 +12,7 @@ import { baseUrl, getCitys, getDistricts } from './utils';
 const render = (item: House) =>
     renderToString(
         <>
+            {item.personalDesc && <p>{item.personalDesc}</p>}
             租金: {item.rent}
             <br />
             {item.dailyRent ? (
@@ -87,14 +88,17 @@ async function handler(ctx: Context) {
         },
     });
 
-    const items = response.data.list.map((item) => ({
-        title: item.address,
-        link: `${baseUrl}/rent-apartment/${item.id}`,
-        description: render(item),
-        pubDate: parseDate(item.loginTime, 'X'),
-        author: item.userInfo.name,
-        category: [...item.tags, ...item.typeTags],
-    }));
+    const items = response.data.list.map((item) => {
+        const date = Number.isFinite(item.loginTime) ? parseDate(item.loginTime, 'X') : undefined;
+        return {
+            title: item.address,
+            link: `${baseUrl}/rent-apartment/${item.id}`,
+            description: render(item),
+            pubDate: date && Number.isFinite(date.getTime()) ? date : undefined,
+            author: item.userInfo.name,
+            category: [...item.tags, ...item.typeTags],
+        };
+    });
 
     return {
         title: `${city}${districtInfo?.name ?? ''}租房信息 - Wellcee`,

@@ -1,17 +1,17 @@
-import type { Cheerio, CheerioAPI } from 'cheerio';
-import { load } from 'cheerio';
-import type { Element } from 'domhandler';
+import { type Cheerio, type CheerioAPI, load } from 'cheerio';
+import { type AnyNode, cloneNode, Document, type Element } from 'domhandler';
 import type { Context } from 'hono';
+import pMap from 'p-map';
 
-import type { Data, DataItem, Language, Route } from '@/types';
-import { ViewType } from '@/types';
+import { type Data, type DataItem, type Language, type Route, ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { id = 'xwdt/gzdt' } = ctx.req.param();
-    const limit = Number(ctx.req.query('limit') ?? '17');
+    const limit = getRouteLimit(ctx, 17);
 
     const baseUrl = 'https://www.samrdprc.org.cn';
     const targetUrl = `${baseUrl}/${id.endsWith('/') ? id : `${id}/`}`;
@@ -30,21 +30,20 @@ export const handler = async (ctx: Context): Promise<Data> => {
             const title: string = $aEl.text();
             const pubDateStr: string | undefined = $el.find('span').text();
             const linkUrl: string | undefined = $aEl.attr('href');
-            const upDatedStr: string | undefined = pubDateStr;
 
             const processedItem: DataItem = {
                 title,
-                pubDate: pubDateStr ? parseDate(pubDateStr) : undefined,
+                pubDate: pubDateStr ? parseDate(`${pubDateStr.trim()}T00:00:00Z`) : undefined,
                 link: linkUrl ? new URL(linkUrl, targetUrl).href : undefined,
-                updated: upDatedStr ? parseDate(upDatedStr) : undefined,
                 language,
             };
 
             return processedItem;
         });
 
-    items = await Promise.all(
-        items.map((item) => {
+    items = await pMap(
+        items,
+        (item) => {
             if (!item.link) {
                 return item;
             }
@@ -54,21 +53,22 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 const $$: CheerioAPI = load(detailResponse);
 
                 const title: string = $$('div.show_tit').text();
-                const description = $$('div.TRS_Editor div.TRS_Editor').html();
+                const body = $$('div.show_txt > div.TRS_Editor');
+                const description = body.html();
+                const textBody = copyNodes(body);
+                textBody.find('script, style').remove();
                 const pubDateStr: string | undefined = $$('div.show_tit2').text().split(/：/).pop()?.trim();
                 const categories: string[] = $$('meta[name="keywords"]').attr('content')?.split(/,/) ?? [];
-                const upDatedStr: string | undefined = pubDateStr;
 
                 const processedItem: DataItem = {
                     title,
                     description,
-                    pubDate: pubDateStr ? parseDate(pubDateStr) : item.pubDate,
+                    pubDate: pubDateStr ? parseDate(`${pubDateStr}T00:00:00Z`) : item.pubDate,
                     category: categories,
                     content: {
                         html: description,
-                        text: description,
+                        text: textBody.text(),
                     },
-                    updated: upDatedStr ? parseDate(upDatedStr) : item.updated,
                     language,
                 };
 
@@ -77,7 +77,8 @@ export const handler = async (ctx: Context): Promise<Data> => {
                     ...processedItem,
                 };
             });
-        })
+        },
+        { concurrency: 3 }
     );
 
     return {
@@ -238,3 +239,12 @@ export const route: Route = {
     ],
     view: ViewType.Articles,
 };
+
+function copyNodes<T extends AnyNode>(selection: Cheerio<T>): Cheerio<T> {
+    const copy = selection.map((_, node) => cloneNode(node, true));
+    const root = new Document(copy.toArray());
+    for (const node of copy) {
+        node.parent = root;
+    }
+    return copy;
+}

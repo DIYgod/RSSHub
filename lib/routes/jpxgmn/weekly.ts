@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
@@ -39,7 +40,6 @@ async function handler() {
                 link: new URL($(item).find('a').attr('href')!, baseUrl).href,
             };
             if (result !== null) {
-                ret.title = result[1];
                 ret.pubDate = parseDate(result[2]);
             }
             return ret;
@@ -47,13 +47,13 @@ async function handler() {
     return {
         title: '极品性感美女 - 本周热门推荐',
         link: response.url,
-        item: await Promise.all(
-            items.map((item) =>
-                cache.tryGet(item.link!, async () => {
-                    item.description = await getArticleDesc(item.link);
-                    return item;
-                })
-            )
+        item: await pMap(
+            items,
+            async (item) => ({
+                ...item,
+                description: await cache.tryGet(`jpxgmn:article:${item.link}`, () => getArticleDesc(item.link)),
+            }),
+            { concurrency: 3 }
         ),
     };
 }

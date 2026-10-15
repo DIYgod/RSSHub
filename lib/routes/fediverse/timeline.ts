@@ -1,8 +1,13 @@
+import { html } from 'hono/html';
+import pMap from 'p-map';
+
 import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import { ViewType } from '@/types';
+import cache from '@/utils/cache';
+import logger from '@/utils/logger';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import parser from '@/utils/rss-parser';
@@ -29,6 +34,15 @@ export const route: Route = {
 const allowedDomain = new Set(['mastodon.social', 'pawoo.net', config.mastodon.apiHost].filter(Boolean));
 const activityPubTypes = new Set(['application/activity+json', 'application/ld+json; profile="https://www.w3.org/ns/activitystreams"']);
 
+function renderAttachment(attachment) {
+    if (attachment.mediaType?.startsWith('video/')) {
+        return html`<video controls src="${attachment.url}"></video>`;
+    }
+    const width = attachment.width ? html` width="${attachment.width}"` : '';
+    const height = attachment.height ? html` height="${attachment.height}"` : '';
+    return html`<img src="${attachment.url}" ${width}${height} />`;
+}
+
 async function handler(ctx) {
     const account = ctx.req.param('account');
     const domain = account.split('@', 2)[1];
@@ -54,7 +68,12 @@ async function handler(ctx) {
     });
     const jsonLink = acc.links.find((link) => link.rel === 'self' && activityPubTypes.has(link.type))?.href;
     const link = acc.links.find((link) => link.rel === 'http://webfinger.net/rel/profile-page')?.href;
-    const officialFeed = await parser.parseURL(`${link}.rss`);
+    let officialFeed;
+    try {
+        officialFeed = await parser.parseURL(`${link}.rss`);
+    } catch (error) {
+        logger.debug(`The official RSS feed is unavailable; trying the public ActivityPub outbox: ${error}`);
+    }
 
     if (officialFeed) {
         return {
@@ -66,7 +85,7 @@ async function handler(ctx) {
                 title: item.title!,
                 description: item.content,
                 link: item.link,
-                pubDate: item.pubDate ? parseDate(item.pubDate) : null,
+                pubDate: item.pubDate ? parseDate(item.pubDate) : undefined,
                 guid: item.guid,
             })),
         };
@@ -78,27 +97,9 @@ async function handler(ctx) {
     const outbox = await ofetch(self.outbox, requestOptions);
     const firstOutbox = await ofetch(outbox.first, requestOptions);
 
-    const items = firstOutbox.orderedItems;
-
-    const itemResolvers: Array<Promise<any>> = [];
-
-    for (const item of items) {
-        if (!['Announce', 'Create', 'Update'].includes(item.type)) {
-            continue;
-        }
-        if (item.object.type) {
-            itemResolvers.push(Promise.resolve(item));
-        } else {
-            itemResolvers.push(
-                (async (item) => {
-                    item.object = await ofetch(item.object, requestOptions);
-                    return item;
-                })(item)
-            );
-        }
-    }
-
-    const resolvedItems = await Promise.all(itemResolvers);
+    const items = firstOutbox.orderedItems.filter((item) => ['Announce', 'Create', 'Update'].includes(item.type)).map((item) => ({ ...item, pubDate: item.published ? parseDate(item.published) : undefined }));
+    const candidates = items;
+    const resolvedItems = await pMap(candidates, async (item: any) => ({ ...item, object: item.object.type ? item.object : await cache.tryGet(item.object, () => ofetch(item.object, requestOptions)) }), { concurrency: 3 });
 
     return {
         title: `${self.name || self.preferredUsername} (Fediverse@${account})`,
@@ -107,9 +108,9 @@ async function handler(ctx) {
         link,
         item: resolvedItems.map((item) => ({
             title: item.object.content.replaceAll(/<[^<]*>/g, ''),
-            description: `${item.object.content}\n${item.object.attachment?.map((attachment) => `<img src="${attachment.url}" width="${attachment.width}" height="${attachment.height}" />`).join('\n') || ''}`,
-            link: item.object.url,
-            pubDate: parseDate(item.published),
+            description: `${item.object.content}\n${item.object.attachment?.map(renderAttachment).join('\n') || ''}`,
+            link: item.object.url || item.object.id,
+            pubDate: item.pubDate,
             guid: item.id,
         })),
     };

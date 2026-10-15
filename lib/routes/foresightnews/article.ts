@@ -27,11 +27,9 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 50;
-
     const apiUrl = new URL('v1/articles', apiRootUrl).href;
 
-    const { items } = await processItems(apiUrl, limit);
+    const { items } = await processItems(apiUrl, ctx);
 
     return {
         item: items,
@@ -42,7 +40,6 @@ async function handler(ctx) {
         image,
         icon,
         logo: icon,
-        subtitle: '文章',
         author: 'Foresight News',
     };
 }

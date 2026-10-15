@@ -4,6 +4,7 @@ import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/iitb/tzgg',
@@ -16,7 +17,6 @@ export const route: Route = {
 };
 
 async function handler() {
-    // The TLS cert is invalid, we are limited to use HTTP unfortunately.
     const baseUrl = 'https://iitb.hainan.gov.cn';
     const targetUrl = `${baseUrl}/iitb/tzgg/list2.shtml`;
 
@@ -40,8 +40,8 @@ async function handler() {
 
         return {
             title,
-            link: new URL(link, baseUrl).href,
-            pubDate: parseDate(dateText),
+            link: new URL(link, targetUrl).href,
+            pubDate: dateText ? timezone(parseDate(dateText), 8) : undefined,
             category: department,
         };
     });
@@ -61,7 +61,9 @@ async function handler() {
                 const content = $('ucapcontent').html();
 
                 item.author = author;
-                item.pubDate = parseDate(pubDate);
+                if (pubDate) {
+                    item.pubDate = timezone(parseDate(pubDate), 8);
+                }
                 item.description = content;
 
                 return item;

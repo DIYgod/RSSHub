@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
@@ -38,26 +39,31 @@ async function handler(ctx) {
     const $ = load(response);
     const list = $('#column_content > ul > li')
         .toArray()
+        .filter((item) => $(item).find('a').attr('href'))
         .map((item): DataItem & { link: string } => {
             const $item = $(item);
+            const dateText = $item.find('em').text().trim();
+            const date = dateText ? parseDate(dateText, /^\d{4}-\d{2}-\d{2}$/.test(dateText) ? 'YYYY-MM-DD' : undefined, true) : undefined;
+            const articleUrl = new URL($item.find('a').attr('href')!, link);
+            articleUrl.pathname = articleUrl.pathname.replace('ArticleDetail.do', 'InternalArticleDetail.do');
             return {
-                title: $item.find('a').attr('title')!,
-                link: `${baseUrl}${$item.find('a').attr('href')!.replace('ArticleDetail.do', 'InternalArticleDetail.do?')}`,
-                pubDate: timezone(parseDate($item.find('em').text()), 8),
+                title: $item.find('a').attr('title') || $item.find('a').text(),
+                link: articleUrl.href,
+                pubDate: date && Number.isFinite(date.getTime()) ? timezone(date, 8) : undefined,
             };
         });
 
-    const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link, async () => {
+    const items = await pMap(
+        list,
+        async (item) => {
+            const description = await cache.tryGet(`hunanpea:content:${item.link}`, async () => {
                 const { data: response } = await got(item.link);
                 const $ = load(response);
-
-                item.description = $('.content_area').html();
-
-                return item;
-            })
-        )
+                return $('.content_area').html();
+            });
+            return { ...item, description };
+        },
+        { concurrency: 3 }
     );
 
     return {

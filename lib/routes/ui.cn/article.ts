@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
@@ -25,7 +26,7 @@ async function handler() {
         .toArray()
         .map((item) => {
             const a = $(item).find('.ellipsis');
-            const link = baseUrl + a.attr('href');
+            const link = new URL(a.attr('href')!, `${baseUrl}/`).href;
             return {
                 title: a.text(),
                 link,
@@ -33,19 +34,23 @@ async function handler() {
             };
         });
 
-    const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link, async () => {
+    const items = await pMap(
+        list,
+        async (item) => {
+            const detailData = await cache.tryGet(`ui.cn:article:detail:v2:${item.link}`, async () => {
                 const detail = await ofetch(item.link);
                 const $detail = load(detail);
+                const date = $detail('.works-top .time em').text().replaceAll('更新于：', '');
+                const pubDate = date ? parseDate(date) : undefined;
 
                 return {
-                    ...item,
                     description: $detail('.exp-content').html(),
-                    pubDate: timezone(parseDate($detail('.works-top .time em').text().replaceAll('更新于：', '')), 8),
+                    pubDate: pubDate && !Number.isNaN(pubDate.getTime()) ? timezone(pubDate, 8) : undefined,
                 };
-            })
-        )
+            });
+            return { ...item, ...detailData };
+        },
+        { concurrency: 3 }
     );
 
     return {

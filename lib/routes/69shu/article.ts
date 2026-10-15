@@ -3,6 +3,8 @@ import { load } from 'cheerio';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/article/:id',
@@ -35,7 +37,7 @@ export const route: Route = {
         const item = await Promise.all(
             $('.qustime li>a')
                 .toArray()
-                .map((chapter) => createItem(chapter.attribs.href))
+                .map((chapter) => createItem(new URL(chapter.attribs.href, link).href))
         );
 
         return {
@@ -56,15 +58,37 @@ const createItem = (url: string) =>
         const $ = load(html);
         const { articleid, chapterid, chaptername } = parseObject(/bookinfo\s?=\s?\{[\s\S]+?\}/, $('head>script:not([src])').text());
         const decryptionMap = parseObject(/_\d+\s?=\s?\{[\s\S]+?\}/, $('.txtnav+script').text());
+        const content = $('.txtnav');
+        const encryptedContent = content.html() || '';
+        const title = chaptername || content.find('h1').text() || $('h1').first().text();
+        const pubDate = content
+            .find('.txtinfo span')
+            .first()
+            .text()
+            .match(/\d{4}-\d{2}-\d{2}/)?.[0];
+        const author =
+            content
+                .find('.txtinfo span')
+                .eq(1)
+                .text()
+                .replace(/^作者[：:]\s*/, '') || undefined;
+
+        content.find('h1, .txtinfo, #txtright, .bottom-ad, script').remove();
+        content
+            .contents()
+            .filter((_, node) => node.type === 'text' && $(node).text().trim() === title)
+            .remove();
 
         return {
-            title: chaptername,
-            description: decrypt($('.txtnav').html() || '', articleid, chapterid, decryptionMap),
+            title,
+            description: Object.keys(decryptionMap).length ? decrypt(encryptedContent, articleid, chapterid, decryptionMap) : content.html(),
+            pubDate: pubDate ? timezone(parseDate(pubDate, 'YYYY-MM-DD'), 8) : undefined,
+            author,
             link: url,
         };
     });
 
-const get = async (url: string, encoding = 'gbk') => new TextDecoder(encoding).decode(await ofetch(url, { responseType: 'arrayBuffer' }));
+const get = async (url: string) => new TextDecoder('gbk').decode(await ofetch(url, { responseType: 'arrayBuffer' }));
 
 const parseObject = (reg: RegExp, str: string) => {
     const obj: Record<string, string> = {};
@@ -96,7 +120,7 @@ const decrypt = (txt: string, articleid: string, chapterid: string, decryptionMa
         .split('<br><br>')
         .flatMap((line, index, array) => {
             const mapped = lineMap[index];
-            return (mapped ? array[mapped] : line).split('<br>');
+            return (mapped === undefined ? line : array[mapped]).split('<br>');
         })
         .slice(1, -2)
         .join('<br><br>');

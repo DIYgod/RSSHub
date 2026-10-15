@@ -31,7 +31,6 @@ async function handler() {
 
             return {
                 title,
-                description: title,
                 pubDate: timezone(parseDate($item.find('.gpArticleDate').text()), 8),
                 link: new URL(href, link).href,
             };

@@ -6,7 +6,6 @@ import type { Route } from '@/types';
 import { ViewType } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
 import { isValidHost } from '@/utils/valid-host';
 
 const md = MarkdownIt({
@@ -47,7 +46,7 @@ export const route: Route = {
             return {
                 title: item.subject,
                 description,
-                pubDate: timezone(parseDate(item.publishAt, 'YYYY-MM-DDTHH:mm:ss.SSS[Z]'), 0),
+                pubDate: item.publishAt ? parseDate(item.publishAt) : undefined,
                 link: `${baseUrl}/i/${item.urlFriendlyName}`,
             };
         });

@@ -1,8 +1,6 @@
-import { config } from '@/config';
-import type { Route } from '@/types';
-import cache from '@/utils/cache';
-import got from '@/utils/got';
+import type { DataItem, Route } from '@/types';
 import { parseDate } from '@/utils/parse-date';
+import parser from '@/utils/rss-parser';
 
 export const route: Route = {
     path: '/blog',
@@ -30,25 +28,14 @@ export const route: Route = {
 
 async function handler() {
     const baseUrl = 'https://delta.io';
-    const dataUrl = `${baseUrl}/page-data/blog/page-data.json`;
-
-    const data = await cache.tryGet(
-        dataUrl,
-        async () => {
-            const { data } = await got(dataUrl);
-            return data;
-        },
-        config.cache.routeExpire,
-        false
-    );
-
-    const items = data.result.data.allMdx.edges.map(({ node }) => ({
-        title: node.frontmatter.title,
-        description: node.frontmatter.description,
-        author: node.frontmatter.author,
-        pubDate: parseDate(node.frontmatter.date),
-        link: `${baseUrl}${node.fields.slug}`,
-        itunes_item_image: `${baseUrl}${node.frontmatter.thumbnail.childImageSharp.gatsbyImageData.images.fallback.src}`,
+    const feed = await parser.parseURL(`${baseUrl}/rss.xml`);
+    const items: DataItem[] = feed.items.map((item) => ({
+        title: item.title!,
+        description: item.content,
+        author: item.creator,
+        pubDate: item.pubDate ? parseDate(item.pubDate) : undefined,
+        link: item.link,
+        guid: item.guid,
     }));
 
     return {

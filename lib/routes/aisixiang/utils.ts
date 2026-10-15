@@ -20,9 +20,19 @@ const ProcessFeed = (limit, items) =>
                     .text()
                     .match(/评论（\d+）/);
 
-                item.title = content('h3').first().text().split('：').pop();
+                const title = content('h3').first().text();
+                const author = content('div.about strong').first().text();
+                const authors = content('div.about strong')
+                    .first()
+                    .parent()
+                    .find('strong')
+                    .toArray()
+                    .map((element) => content(element).text())
+                    .join(' ');
+                const authorPrefix = `${authors}：`;
+                item.title = author && title.startsWith(authorPrefix) ? title.slice(authorPrefix.length) : title;
                 item.description = content('div.article-content').html();
-                item.author = content('div.about strong').first().text();
+                item.author = author;
                 item.category = content('u')
                     .first()
                     .parent()

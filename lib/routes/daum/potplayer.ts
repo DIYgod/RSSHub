@@ -1,50 +1,59 @@
 import type { Context } from 'hono';
 
-import type { Data, DataItem, Route } from '@/types';
+import type { Data, DataItem, Language, Route } from '@/types';
 import { ViewType } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
+
+const languageCodes: Record<string, Language> = {
+    '': 'ko',
+    Chs: 'zh-CN',
+    Cht: 'zh-TW',
+    Eng: 'en',
+    Kor: 'ko',
+    Pol: 'pl',
+    Rus: 'ru',
+};
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { lang } = ctx.req.param();
-    const limit = Number(ctx.req.query('limit') ?? '500');
+    const limit = getRouteLimit(ctx, 500);
 
     const baseUrl = 'https://t1.daumcdn.net';
-    const targetUrl: string = new URL(`potplayer/PotPlayer/v4/Update2/Update${lang ?? ''}.html`, baseUrl).href;
+    const languageSuffix = lang === 'Kor' ? '' : (lang ?? '');
+    const targetUrl: string = new URL(`potplayer/PotPlayer/v4/Update2/Update${languageSuffix}.html`, baseUrl).href;
 
     const response: string = await ofetch(targetUrl);
 
-    // Updated regex to capture blocks:
-    // Group 1: Leading hyphens (unused, but for context)
-    // Group 2: Version and optional date line (e.g., "[1.4.20199]        2009/10/22" or "[250514]")
-    // Group 3: Trailing hyphens (unused, but for context)
-    // Group 4: Update content
-    // Uses global and multiline flags for all matches and line start/end anchors
-    const updateRegex = /^-+[^\S\n]*\n(.*)\r?\n-+[^\S\n]*\n([\s\S]*?)(?=\n-{2}|<\/p>)/gm;
+    // Capture a nonempty version/date header and its notes between separator lines.
+    const updateRegex = /^-+[^\S\n]*\n([^\S\r\n]*\S[^\r\n]*)\r?\n-+[^\S\n]*\n([\s\S]*?)(?=\n-{2}|<\/p>)/gm;
 
-    const items: DataItem[] = [];
+    const items = new Map<string, DataItem>();
     let match: RegExpExecArray | null;
 
-    while ((match = updateRegex.exec(response)) !== null && items.length < limit) {
+    while ((match = updateRegex.exec(response)) !== null) {
         const headerLine: string | undefined = match[1].trim();
         const description: string | undefined = match[2].trim()?.replaceAll(/(\s[+-])/g, '<br>$1');
 
-        let version = 'N/A';
+        // Historical translations also use unbracketed and compound version headers.
+        const versionMatch = headerLine.match(/^\[?(\d+(?:\.\d+)*)/);
+        if (!versionMatch) {
+            continue;
+        }
+        const version = versionMatch[1];
         let pubDateStr: string | undefined = undefined;
 
-        // Regex to extract version (e.g., [1.4.20199] or [250514])
-        const versionMatch = headerLine.match(/\[([\d.]+)\]/);
-        if (versionMatch && versionMatch[1]) {
-            version = versionMatch[1];
-        }
-
-        // Regex to extract date (either YYYY/MM/DD or YYMMDD from the headerLine)
+        // Extract dates without treating dotted version numbers as calendar dates.
         const specificDateMatch = headerLine.match(/(\d{4}\/\d{1,2}\/\d{1,2})/); // YYYY/MM/DD format
+        const europeanDateMatch = headerLine.match(/(?:^|\s)(\d{1,2})\.(\d{1,2})\.(\d{4})(?=\s|$)/); // DD.MM.YYYY format
         const numericDateMatch = headerLine.match(/(\d{6})/); // YYMMDD format
 
         if (specificDateMatch && specificDateMatch[1]) {
             // Found YYYY/MM/DD format
             pubDateStr = specificDateMatch[1].replaceAll('/', '-'); // Format to YYYY-MM-DD
+        } else if (europeanDateMatch) {
+            pubDateStr = `${europeanDateMatch[3]}-${europeanDateMatch[2]}-${europeanDateMatch[1]}`;
         } else if (numericDateMatch && numericDateMatch[1]) {
             const rawDate = numericDateMatch[1];
             if (rawDate.length === 6 && (version === rawDate || !specificDateMatch)) {
@@ -57,29 +66,36 @@ export const handler = async (ctx: Context): Promise<Data> => {
         }
 
         const guid = `potplayer-${lang}-${version}`;
+        const existingItem = items.get(guid);
+        if (existingItem) {
+            if (existingItem.description !== description) {
+                existingItem.description = [existingItem.description, description].filter(Boolean).join('<br>');
+                existingItem.content = { html: existingItem.description };
+            }
+            continue;
+        }
 
         const processedItem: DataItem = {
             title: version,
             description,
-            pubDate: pubDateStr ? parseDate(pubDateStr) : undefined,
+            // The source provides calendar dates only; keep their UTC date anchor stable.
+            pubDate: pubDateStr ? parseDate(`${pubDateStr} +0000`, 'YYYY-M-D ZZ') : undefined,
             link: targetUrl,
             guid,
             id: guid,
             content: {
                 html: description,
-                text: description,
             },
-            updated: pubDateStr ? parseDate(pubDateStr) : undefined,
         };
 
-        items.push(processedItem);
+        items.set(guid, processedItem);
     }
 
     return {
         title: 'PotPlayer Update History',
+        language: languageCodes[lang ?? ''],
         link: targetUrl,
-        item: items,
-        allowEmpty: true,
+        item: items.values().toArray().slice(0, limit),
         id: targetUrl,
     };
 };
@@ -93,7 +109,7 @@ export const route: Route = {
     example: '/daum/potplayer',
     parameters: {
         lang: {
-            description: 'Language, Korean by default',
+            description: 'Language, Korean by default; Kor is an alias for the default changelog',
             options: [
                 {
                     label: '한국어',
@@ -109,10 +125,6 @@ export const route: Route = {
                 },
                 {
                     label: 'English',
-                    value: 'Eng',
-                },
-                {
-                    label: 'Українська',
                     value: 'Eng',
                 },
                 {
@@ -136,9 +148,8 @@ To subscribe to [Potplayer Update History](https://t1.daumcdn.net/potplayer/PotP
 | [中文 (简体)](https://t1.daumcdn.net/potplayer/PotPlayer/v4/Update2/UpdateChs.html) | [Chs](https://rsshub.app/daum/potplayer/Chs) |
 | [中文 (繁体)](https://t1.daumcdn.net/potplayer/PotPlayer/v4/Update2/UpdateCht.html) | [Cht](https://rsshub.app/daum/potplayer/Cht) |
 | [ENGLISH](https://t1.daumcdn.net/potplayer/PotPlayer/v4/Update2/UpdateEng.html)     | [Eng](https://rsshub.app/daum/potplayer/Eng) |
-| [Українська](https://t1.daumcdn.net/potplayer/PotPlayer/v4/Update2/UpdateEng.html)  | [Eng](https://rsshub.app/daum/potplayer/Eng) |
-| [РУССКИЙ](https://t1.daumcdn.net/potplayer/PotPlayer/v4/Update2/UpdateRus.html)     | [Eng](https://rsshub.app/daum/potplayer/Rus) |
-| [Polski](https://t1.daumcdn.net/potplayer/PotPlayer/v4/Update2/UpdatePol.html)      | [Eng](https://rsshub.app/daum/potplayer/Pol) |`,
+| [РУССКИЙ](https://t1.daumcdn.net/potplayer/PotPlayer/v4/Update2/UpdateRus.html)     | [Rus](https://rsshub.app/daum/potplayer/Rus) |
+| [Polski](https://t1.daumcdn.net/potplayer/PotPlayer/v4/Update2/UpdatePol.html)      | [Pol](https://rsshub.app/daum/potplayer/Pol) |`,
     categories: ['program-update'],
     features: {
         requireConfig: false,
@@ -151,13 +162,34 @@ To subscribe to [Potplayer Update History](https://t1.daumcdn.net/potplayer/PotP
     },
     radar: [
         {
+            title: '한국어',
             source: ['potplayer.daum.net'],
-            target: (_, url) => {
-                const urlObj: URL = new URL(url);
-                const lang: string | undefined = urlObj.searchParams.get('lang') ?? undefined;
-
-                return `/daum/potplayer${lang ? `/${lang}` : ''}`;
-            },
+            target: '/potplayer',
+        },
+        {
+            title: '中文(简体)',
+            source: ['potplayer.daum.net'],
+            target: '/potplayer/Chs',
+        },
+        {
+            title: '中文(繁体)',
+            source: ['potplayer.daum.net'],
+            target: '/potplayer/Cht',
+        },
+        {
+            title: 'English',
+            source: ['potplayer.daum.net'],
+            target: '/potplayer/Eng',
+        },
+        {
+            title: 'Русский',
+            source: ['potplayer.daum.net'],
+            target: '/potplayer/Rus',
+        },
+        {
+            title: 'Polski',
+            source: ['potplayer.daum.net'],
+            target: '/potplayer/Pol',
         },
         {
             title: '한국어',
@@ -180,11 +212,6 @@ To subscribe to [Potplayer Update History](https://t1.daumcdn.net/potplayer/PotP
             target: '/potplayer/Eng',
         },
         {
-            title: 'Українська',
-            source: ['t1.daumcdn.net/potplayer/PotPlayer/v4/Update2/UpdateEng.html'],
-            target: '/potplayer/Eng',
-        },
-        {
             title: 'Русский',
             source: ['t1.daumcdn.net/potplayer/PotPlayer/v4/Update2/UpdateRus.html'],
             target: '/potplayer/Rus',
@@ -193,6 +220,11 @@ To subscribe to [Potplayer Update History](https://t1.daumcdn.net/potplayer/PotP
             title: 'Polski',
             source: ['t1.daumcdn.net/potplayer/PotPlayer/v4/Update2/UpdatePol.html'],
             target: '/potplayer/Pol',
+        },
+        {
+            title: '한국어',
+            source: ['t1.daumcdn.net/potplayer/PotPlayer/Version/Latest/PotPlayerSetup.exe', 't1.daumcdn.net/potplayer/PotPlayer/Version/Latest/PotPlayerSetup64.exe'],
+            target: '/potplayer',
         },
     ],
     view: ViewType.Articles,
@@ -203,10 +235,10 @@ To subscribe to [Potplayer Update History](https://t1.daumcdn.net/potplayer/PotP
         url: 'potplayer.daum.net',
         maintainers: ['nczitzk'],
         handler,
-        example: '/daum/potplayer/zh_CN',
+        example: '/daum/potplayer/Chs',
         parameters: {
             lang: {
-                description: '语言，默认为韩语，可在对应页 URL 中找到',
+                description: '语言，默认为韩语；Kor 为默认韩语日志的别名，其他语言可在对应页 URL 中找到',
                 options: [
                     {
                         label: '한국어',
@@ -222,10 +254,6 @@ To subscribe to [Potplayer Update History](https://t1.daumcdn.net/potplayer/PotP
                     },
                     {
                         label: 'English',
-                        value: 'Eng',
-                    },
-                    {
-                        label: 'Українська',
                         value: 'Eng',
                     },
                     {
@@ -249,8 +277,7 @@ To subscribe to [Potplayer Update History](https://t1.daumcdn.net/potplayer/PotP
 | [中文 (简体)](https://t1.daumcdn.net/potplayer/PotPlayer/v4/Update2/UpdateChs.html) | [Chs](https://rsshub.app/daum/potplayer/Chs) |
 | [中文 (繁体)](https://t1.daumcdn.net/potplayer/PotPlayer/v4/Update2/UpdateCht.html) | [Cht](https://rsshub.app/daum/potplayer/Cht) |
 | [ENGLISH](https://t1.daumcdn.net/potplayer/PotPlayer/v4/Update2/UpdateEng.html)     | [Eng](https://rsshub.app/daum/potplayer/Eng) |
-| [Українська](https://t1.daumcdn.net/potplayer/PotPlayer/v4/Update2/UpdateEng.html)  | [Eng](https://rsshub.app/daum/potplayer/Eng) |
-| [РУССКИЙ](https://t1.daumcdn.net/potplayer/PotPlayer/v4/Update2/UpdateRus.html)     | [Eng](https://rsshub.app/daum/potplayer/Rus) |
-| [Polski](https://t1.daumcdn.net/potplayer/PotPlayer/v4/Update2/UpdatePol.html)      | [Eng](https://rsshub.app/daum/potplayer/Pol) |`,
+| [РУССКИЙ](https://t1.daumcdn.net/potplayer/PotPlayer/v4/Update2/UpdateRus.html)     | [Rus](https://rsshub.app/daum/potplayer/Rus) |
+| [Polski](https://t1.daumcdn.net/potplayer/PotPlayer/v4/Update2/UpdatePol.html)      | [Pol](https://rsshub.app/daum/potplayer/Pol) |`,
     },
 };

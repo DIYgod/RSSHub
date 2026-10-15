@@ -1,10 +1,11 @@
 import { load } from 'cheerio';
-import type { Element } from 'domhandler';
 import { renderToString } from 'hono/jsx/dom/server';
+import pMap from 'p-map';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/parse-date';
 
 const renderMedia = (media) => {
     const video = {
@@ -24,7 +25,7 @@ const renderMedia = (media) => {
         <>
             {video.src ? (
                 <>
-                    <video controls preload="metadata" width="100%" height="auto" cover={video.cover}>
+                    <video controls preload="metadata" width="100%" height="auto" poster={video.cover}>
                         <source src={video.src} type="video/mp4" />
                     </video>
                     {video.title || video.description ? (
@@ -52,6 +53,8 @@ const renderMedia = (media) => {
 
 const junkPattern = /inline\d+|alsosee/;
 const mediaPattern = /(photo|video)(\d+)/;
+const sportPaths: Record<string, string> = { ncb: 'mens-college-basketball', ncf: 'college-football' };
+const radarSports = ['nba', 'wnba', 'nfl', 'mlb', 'nhl', 'ncb', 'ncf', 'rugby', 'tennis', 'golf', 'cricket', 'soccer', 'f1', 'mma', 'ufl', 'poker'];
 
 export const route: Route = {
     path: '/news/:sport',
@@ -72,12 +75,13 @@ export const route: Route = {
 | ⛹️ College Basketball | ncb   | 🥊 MMA     | mma     |
 | 🏟️️ College Football   | ncf   | 🏈 UFL     | ufl     |
 | 🏉 Rugby              | rugby | 🃏 Poker   | poker   |`,
-    radar: [
-        {
-            source: ['espn.com/:sport*'],
-            target: '/news/:sport',
-        },
-    ],
+    radar: radarSports.map((sport) => {
+        const path = sport === 'poker' ? 'sports-betting' : (sportPaths[sport] ?? sport);
+        return {
+            source: [`www.espn.com/${path}`, `www.espn.com/${path}/*path`],
+            target: `/news/${sport}`,
+        };
+    }),
     handler: async (ctx) => {
         const { sport = 'nba' } = ctx.req.param();
         const response = await ofetch(`https://onefeed.fan.api.espn.com/apis/v3/cached/contentEngine/oneFeed/leagues/${sport}?offset=0`, {
@@ -86,8 +90,8 @@ export const route: Route = {
             },
         });
 
-        const handledTypes = new Set(['HeadlineNews', 'Story', 'Media', 'Shortstop']);
-        const list = response.feed
+        const handledTypes = new Set(['HeadlineNews', 'Story', 'Columnist', 'Recap', 'Media', 'Shortstop']);
+        const list: Array<{ title: string; link: string; author?: string; pubDate?: Date; description: string }> = response.feed
             .filter((item) => handledTypes.has(item.data.now[0].type))
             .map((item) => {
                 const itemDetail = item.data.now[0];
@@ -97,14 +101,15 @@ export const route: Route = {
                     title: itemDetail.headline,
                     link: itemDetail.links.web.href,
                     author: itemDetail.byline,
-                    pubDate: item.date,
+                    pubDate: item.date ? parseDate(item.date) : undefined,
                     // for videos and shortstops, no need to extract full text below
                     description: itemType === 'Media' ? renderMedia(itemDetail.video[0]) : itemType === 'Shortstop' ? itemDetail.headline : '',
                 };
             });
 
-        const items = await Promise.all(
-            list.map((item) =>
+        const items = await pMap(
+            list,
+            (item) =>
                 cache.tryGet(item.link, async () => {
                     if (item.description === '') {
                         const article = await ofetch(`${item.link}?xhr=1`, {
@@ -113,9 +118,22 @@ export const route: Route = {
                             },
                         });
 
+                        if (typeof article === 'string') {
+                            const $ = load(article);
+                            const content = $('.Story__Body');
+                            if (!content.length) {
+                                throw new Error(`ESPN did not return the article body for ${item.link}`);
+                            }
+                            item.description = content.html() ?? '';
+                            return item;
+                        }
+
                         const $ = load(article.content.story, null, false);
                         $('*').each((_, ele) => {
-                            const { name } = ele as Element;
+                            if (ele.nodeType !== 1) {
+                                return;
+                            }
+                            const { name } = ele;
                             if (junkPattern.test(name)) {
                                 $(ele).remove();
                             }
@@ -137,13 +155,13 @@ export const route: Route = {
                     }
 
                     return item;
-                })
-            )
+                }),
+            { concurrency: 3 }
         );
 
         return {
             title: `ESPN ${sport.toUpperCase()} News`,
-            link: `https://www.espn.com/espn/rss/${sport}/news`,
+            link: `https://www.espn.com/${sportPaths[sport] ?? sport}/`,
             item: items,
         };
     },

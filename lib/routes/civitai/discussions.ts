@@ -15,6 +15,7 @@ export const route: Route = {
             {
                 name: 'CIVITAI_COOKIE',
                 description: '',
+                optional: true,
             },
         ],
         requirePuppeteer: false,
@@ -42,8 +43,11 @@ async function handler(ctx) {
     const modelId = Number.parseInt(params.modelId);
 
     const { data } = await got(
-        `https://civitai.com/api/trpc/review.getAll,comment.getAll?batch=1&input=${encodeURIComponent(
-            `{"0":{"json":{"modelId":${modelId},"limit":12,"sort":"newest","cursor":null},"meta":{"values":{"cursor":["undefined"]}}},"1":{"json":{"modelId":${modelId},"limit":12,"sort":"newest","cursor":null},"meta":{"values":{"cursor":["undefined"]}}}}`
+        `https://civitai.com/api/trpc/resourceReview.getInfinite,comment.getAll?batch=1&input=${encodeURIComponent(
+            JSON.stringify({
+                0: { json: { modelId, limit: 12, sort: 'Newest' } },
+                1: { json: { modelId, limit: 12, sort: 'newest' } },
+            })
         )}`,
         {
             headers: {
@@ -53,16 +57,19 @@ async function handler(ctx) {
         }
     );
 
-    const items: DataItem[] = [...data[0].result.data.json.reviews, ...data[1].result.data.json.comments]
+    const items: DataItem[] = [
+        ...data[0].result.data.json.items.map((item) => ({ ...item, content: item.details, discussionType: 'review' })),
+        ...data[1].result.data.json.comments.map((item) => ({ ...item, discussionType: 'comment' })),
+    ]
         .map((item) =>
             item.images?.length || item.content
                 ? {
                       title: item.content ? load(item.content).text() : 'Image',
-                      link: `https://civitai.com/models/${params.modelId}`,
+                      link: `https://civitai.com/models/${params.modelId}?dialog=${item.discussionType === 'review' ? 'resourceReview' : 'commentThread'}&${item.discussionType === 'review' ? 'reviewId' : 'commentId'}=${item.id}`,
                       description: `${(item.images || []).map((image) => `<image src="https://imagecache.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/${image.url}/width=${image.width}/${image.id}">`).join('\n')}${item.content}`,
                       pubDate: parseDate(item.createdAt),
                       author: item.user?.username,
-                      guid: item.id,
+                      guid: `${item.discussionType}:${item.id}`,
                   }
                 : null
         )

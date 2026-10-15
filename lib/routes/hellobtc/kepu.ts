@@ -1,8 +1,11 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
+import { parseDate } from '@/utils/parse-date';
 
 const rootUrl = 'https://www.hellobtc.com';
 
@@ -46,13 +49,17 @@ export const route: Route = {
     name: '科普',
     maintainers: ['Fatpandac'],
     handler,
-    description: `| latest | bitcoin | ethereum | defi | inter\\_blockchain | mining | safety | satoshi\\_nakomoto | public\\_blockchain |
+    description: `| latest | bitcoin | ethereum | defi | inter\\_blockchain | mining | safety | satoshi\\_nakamoto | public\\_blockchain |
 | ------ | ------- | -------- | ---- | ----------------- | ------ | ------ | ----------------- | ------------------ |
 | 最新   | 比特币  | 以太坊   | DeFi | 跨链              | 挖矿   | 安全   | 中本聪            | 公链               |`,
 };
 
 async function handler(ctx) {
-    const channel = ctx.req.param('channel') ?? 'latest';
+    const parameter = ctx.req.param('channel') ?? 'latest';
+    const channel = parameter === 'satoshi_nakomoto' ? 'satoshi_nakamoto' : parameter;
+    if (!Object.hasOwn(channelSelector, channel)) {
+        throw new InvalidParameterError(`Invalid channel: ${parameter}. Supported channels: ${Object.keys(channelSelector).join(', ')}.`);
+    }
     const url = `${rootUrl}/kepu.html`;
 
     const response = await got(url);
@@ -65,19 +72,22 @@ async function handler(ctx) {
             link: $(item).find('a').attr('href'),
         }));
 
-    const items = await Promise.all(
-        list.map((item) =>
+    const items = await pMap(
+        list,
+        (item) =>
             cache.tryGet(item.link!, async () => {
                 const detailResponse = await got(item.link);
                 const content = load(detailResponse.data);
 
+                const published = detailResponse.data.match(/\bvar\s+ct\s*=\s*["'](\d+)["']/)?.[1];
+                item.pubDate = published ? parseDate(published, 'X') : undefined;
                 item.description = content('#js_content')
                     .html()!
                     .replaceAll(/(<img.*?)data-src(.*?>)/g, '$1src$2');
 
                 return item;
-            })
-        )
+            }),
+        { concurrency: 3 }
     );
 
     return {

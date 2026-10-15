@@ -37,6 +37,10 @@ describe('unify-proxy', () => {
     it('proxy-obj invalid protocol', () => {
         nullExpect(unifyProxy('', { ...emptyProxyObj, protocol: 'ftp', host: 'rsshub.proxy', port: '2333' }));
     });
+    it('proxy-uri socks4 unsupported', () => {
+        nullExpect(unifyProxy('socks4://rsshub.proxy:2333', emptyProxyObj));
+        nullExpect(unifyProxy('socks4a://rsshub.proxy:2333', emptyProxyObj));
+    });
 
     const httpNoPortUri = 'http://rsshub.proxy';
     const httpNoPortObj = { ...emptyProxyObj, protocol: 'http', host: 'rsshub.proxy' };

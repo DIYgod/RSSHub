@@ -3,6 +3,7 @@ import type { Context } from 'hono';
 
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
+import { parseRelativeDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/:type?',
@@ -36,7 +37,14 @@ async function handler(ctx: Context) {
         .toArray()
         .map((ele) => {
             const $item = $(ele);
-            const author = $item.find('.glyphicon-user').text();
+            const author = $item.find('.glyphicon-user').next('a').text() || undefined;
+            const date = $item
+                .find('.glyphicon-time')
+                .parent()
+                .contents()
+                .filter((_, node) => node.type === 'text')
+                .text()
+                .trim();
             const baseInfoNode = $item.find('.first > a');
             const langs = $item
                 .find('.lang > img')
@@ -46,7 +54,8 @@ async function handler(ctx: Context) {
                 title: baseInfoNode.attr('title') ?? '',
                 link: `${baseUrl}${baseInfoNode.attr('href')}`,
                 author,
-                description: `语言: ${langs.join(' | ')}`,
+                pubDate: date ? parseRelativeDate(date) : undefined,
+                category: langs,
             };
         });
 

@@ -1,10 +1,18 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
-import type { Data, Route } from '@/types';
+import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+
+interface HazyPost {
+    title: string;
+    author: string;
+    slug: string;
+    dateString?: string;
+    external?: string;
+}
 
 export const route: Route = {
     path: '/hazyresearch/blog',
@@ -40,32 +48,36 @@ async function handler(): Promise<Data> {
     const nextDataRaw = $('script#__NEXT_DATA__').text();
     const nextData = JSON.parse(nextDataRaw);
 
-    const posts = nextData.props.pageProps.posts || [];
+    const posts: HazyPost[] = nextData.props.pageProps.posts || [];
     const buildId = nextData.buildId;
+    const externalLinks = new Map(posts.flatMap((post): Array<[string, string]> => (post.external?.startsWith('/') ? [[`${baseUrl}/blog/${post.slug}`, new URL(post.external, baseUrl).href]] : [])));
 
-    const list = posts.map((post) => ({
+    const list: Array<DataItem & { link: string; api: string }> = posts.map((post) => ({
         title: post.title,
         link: `${baseUrl}/blog/${post.slug}`,
         api: `${baseUrl}/_next/data/${buildId}/blog/${post.slug}.json`,
-        author: post.author,
-        pubDate: timezone(parseDate(post.dateString, 'MMM D, YYYY'), -7),
+        author: load(post.author, undefined, false).text(),
+        pubDate: post.dateString ? parseDate(`${post.dateString} +0000`, 'MMM D, YYYY ZZ') : undefined,
     }));
 
-    const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link, async () => {
-                // ✅ For full content, request real HTML page
+    const items = await pMap(
+        list,
+        async (item) => {
+            const detail = await cache.tryGet(`stanford:body:v3:${item.link}`, async () => {
                 const { data: html } = await got(item.link);
                 const $post = load(html);
-
-                // Adjust the selector to match your page structure!
-                const content = $post('main [class^="Post_content"]').html();
-
-                item.description = content || '';
-
-                return item;
-            })
-        )
+                let content = $post('main [class^="Post_content"]').html();
+                const externalUrl = externalLinks.get(item.link);
+                if (!content && externalUrl) {
+                    const { data: externalHtml } = await got(externalUrl);
+                    const $external = load(externalHtml);
+                    content = [$external('main img').first().toString(), $external('main [class^="Post_description"]').toString(), $external('main [class^="Post_content"]').html()].filter(Boolean).join('');
+                }
+                return { description: content || '' };
+            });
+            return { ...item, ...detail };
+        },
+        { concurrency: 3 }
     );
 
     return {

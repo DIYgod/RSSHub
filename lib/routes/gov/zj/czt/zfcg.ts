@@ -1,10 +1,11 @@
 import { load } from 'cheerio';
 import type { Context } from 'hono';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
 import { getCategories, signHeaders, zfcgBaseUrl } from './utils';
 
@@ -23,7 +24,8 @@ export const route: Route = {
 
 async function handler(ctx: Context) {
     const { code = '110-600268' } = ctx.req.param();
-    const limit = Number(ctx.req.query('limit')) || 15;
+    const limit = getRouteLimit(ctx);
+    const pageSize = Math.max(15, getRouteLimit(ctx, 15));
 
     const categories = await getCategories();
     const name = categories.find((category) => category.code === code)?.name ?? code;
@@ -31,7 +33,7 @@ async function handler(ctx: Context) {
     const path = '/portal/category';
     const body = JSON.stringify({
         pageNo: 1,
-        pageSize: limit,
+        pageSize,
         categoryCode: code,
         isGov: true,
         excludeDistrictPrefix: ['90', '006011', 'H0', '001111'],
@@ -43,14 +45,22 @@ async function handler(ctx: Context) {
         body,
     });
 
-    const list = result.data.data.map((article) => ({
+    let list: Array<DataItem & { link: string; articleId: string }> = result.data.data.map((article) => ({
         title: article.title,
         link: `${zfcgBaseUrl}/site/detail?categoryCode=${code}&articleId=${encodeURIComponent(article.articleId)}`,
-        pubDate: parseDate(article.publishDate),
+        pubDate: article.publishDate !== undefined && article.publishDate !== null ? parseDate(article.publishDate) : undefined,
         category: article.pathName,
         author: article.author,
         articleId: article.articleId,
     }));
+
+    const datesKnown = list.every((item) => item.pubDate instanceof Date && Number.isFinite(item.pubDate.getTime()));
+    if (ctx.req.query('sorted') !== 'false' && datesKnown) {
+        list.sort((a, b) => Number(b.pubDate) - Number(a.pubDate));
+    }
+    if (limit !== undefined && (ctx.req.query('sorted') === 'false' || datesKnown)) {
+        list = list.slice(0, limit);
+    }
 
     const items = await Promise.all(
         list.map((item) =>
@@ -66,7 +76,7 @@ async function handler(ctx: Context) {
                 $('.ann-block [class], .ann-block [style]').removeAttr('class').removeAttr('style');
                 return {
                     ...item,
-                    description: $('.ann-block').html(),
+                    description: $('.ann-block').length ? $('.ann-block').html() : $.root().html(),
                     category: [...new Set([item.category, data.projectName, ...data.categoryNames])],
                 };
             })

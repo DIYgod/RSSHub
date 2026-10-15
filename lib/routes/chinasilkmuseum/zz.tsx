@@ -6,6 +6,7 @@ import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import { parseDateRange } from '@/utils/parse-date-range';
+import timezone from '@/utils/timezone';
 
 import { namespace } from './namespace';
 
@@ -52,7 +53,7 @@ export const route: Route = {
                     const location = $d('div.detail_text p').first().text().replace('展览地点：', '').trim();
                     const fullDuration = $d('div.detail_text p').eq(1).text().replace('展览时间：', '').trim();
                     const { startDate, endDate } = parseDateRange(fullDuration);
-                    const pubDate = startDate ? parseDate(startDate) : undefined;
+                    const pubDate = startDate ? timezone(parseDate(startDate, 'YYYY-MM-DD'), 8) : undefined;
 
                     const description = renderToString(
                         <div>

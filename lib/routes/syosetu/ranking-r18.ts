@@ -4,9 +4,11 @@ import { NarouNovelFetch, SearchBuilderR18 } from 'narou';
 
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Data, Route } from '@/types';
+import { getRouteLimit } from '@/utils/route-limit';
 
 import { renderDescription } from './templates/description';
 import { NovelType, novelTypeToJapanese, periodToJapanese, periodToOrder, RankingPeriod, SyosetuSub, syosetuSubToJapanese, syosetuSubToNocgenre } from './types/ranking-r18';
+import { getNovelDates } from './utils';
 
 /**
  * Implementation of "Syosetu" R18 Rankings
@@ -144,7 +146,7 @@ async function handler(ctx: Context): Promise<Data> {
     const rankingUrl = `${baseUrl}/rank/list/type/${type}`;
     const api = new NarouNovelFetch();
 
-    const limit = Math.min(Number(ctx.req.query('limit') ?? 300), 300);
+    const limit = Math.min(getRouteLimit(ctx, 300), 300);
     const { period, novelType } = parseRankingType(type);
 
     const searchParams: SearchParams = {
@@ -170,6 +172,7 @@ async function handler(ctx: Context): Promise<Data> {
         title: `#${index + 1} ${novel.title}`,
         link: `https://novel18.syosetu.com/${novel.ncode.toLowerCase()}`,
         description: renderDescription({ novel }),
+        ...getNovelDates(novel),
         author: novel.writer,
         category: novel.keyword.split(/[\s/\u{FF0F}]/u).filter(Boolean),
     }));
@@ -178,6 +181,7 @@ async function handler(ctx: Context): Promise<Data> {
         title: `小説家になろう (${sub}) - ${getRankingTitle(type, limit)}`,
         link: rankingUrl,
         item: items,
+        sortItems: false,
         language: 'ja',
     };
 }

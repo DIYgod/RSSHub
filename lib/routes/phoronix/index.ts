@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 import dayjs from 'dayjs';
 import timezone from 'dayjs/plugin/timezone.js';
 import utc from 'dayjs/plugin/utc.js';
-import type { Text } from 'domhandler';
+import pMap from 'p-map';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
@@ -19,6 +19,13 @@ const articleCacheKey = 'phoronix:articles';
 
 const baseUrl = 'https://www.phoronix.com';
 const rssUrl = `${baseUrl}/rss.php`;
+
+type ArticleItem = {
+    link?: string;
+    title?: string;
+    pubDate?: string;
+    category?: string | string[];
+};
 
 const feedFetch = async () => {
     const feedStr = await ofetch(rssUrl);
@@ -160,8 +167,11 @@ async function handler(ctx) {
             break;
     }
 
-    feed.item = await Promise.all(
-        feed.item.map((item) =>
+    const list: ArticleItem[] = feed.item;
+    const articles = list.filter((item): item is ArticleItem & { link: string } => typeof item.link === 'string' && item.link.length > 0);
+    feed.item = await pMap(
+        articles,
+        (item) =>
             cache.tryGet(`${articleCacheKey}:${item.link}`, async () => {
                 const response = await got(item.link);
                 const html = response.body;
@@ -188,7 +198,8 @@ async function handler(ctx) {
                 let pubDate;
                 if (!item.pubDate) {
                     // the text next to the category is the date
-                    let pubDateReadable = categorySelector.length && (categorySelector[0].nextSibling as Text | null)?.nodeValue;
+                    const dateNode = categorySelector.get(0)?.nextSibling;
+                    let pubDateReadable = dateNode?.nodeType === 3 && dateNode.nodeValue;
                     if (pubDateReadable) {
                         pubDateReadable = pubDateReadable.replaceAll(/on|at|\./g, '').trim();
                         pubDate = /\d{4}$/.test(pubDateReadable)
@@ -262,8 +273,8 @@ async function handler(ctx) {
                     image: $('meta[name="twitter:image"]').attr('content'),
                     category: item.category || category,
                 };
-            })
-        )
+            }),
+        { concurrency: 3 }
     );
 
     return feed;

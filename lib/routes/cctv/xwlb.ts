@@ -1,7 +1,9 @@
 import { load } from 'cheerio';
 import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat.js';
+import type { Context } from 'hono';
 
+import NotFoundError from '@/errors/types/not-found';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
@@ -38,6 +40,7 @@ export const route: Route = {
     radar: [
         {
             source: ['tv.cctv.com/lm/xwlb', 'tv.cctv.com/'],
+            target: '/tv/lm/xwlb',
         },
     ],
     name: '新闻联播',
@@ -49,22 +52,19 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { site, category, name } = ctx.req.param();
-    let responseData;
-    if (site === 'tv' && category === 'lm' && name === 'xwlb') {
-        responseData = await getXWLB();
+    if (site !== 'tv' || category !== 'lm' || name !== 'xwlb') {
+        throw new NotFoundError('Unsupported broadcast route. Use /cctv/tv/lm/xwlb.');
     }
-    return responseData;
+    return await getXWLB(ctx);
 }
 
-const getXWLB = async () => {
+const getXWLB = async (ctx: Context) => {
     const res = await got({ method: 'get', url: 'https://tv.cctv.com/lm/xwlb/' });
     const $ = load(res.data);
-    // 解析最新一期新闻联播的日期
+    // Read the latest broadcast date from the native calendar.
     const latestDate = dayjs($('.rilititle p').text(), 'YYYY-MM-DD');
-    const count: number[] = [];
-    for (let i = 0; i < 20; i++) {
-        count.push(i);
-    }
+    const limit = Number(ctx.req.query('limit'));
+    const count = Array.from({ length: limit > 0 ? Math.min(20, limit) : 20 }, (_, index) => index);
     const resultItems = await Promise.all(
         count.map(async (i) => {
             const newsDate = latestDate.subtract(i, 'days').hour(19);

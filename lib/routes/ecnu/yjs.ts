@@ -1,5 +1,6 @@
 import { load } from 'cheerio';
 
+import { fetchItems } from '@/routes/ecnu/utils';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
@@ -43,16 +44,15 @@ async function handler() {
             };
         });
 
-    const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link, async () => {
-                const { data: response } = await got(item.link);
-                const $ = load(response);
-                item.description = $('.articleCon').html();
-                item.pubDate = parseDate($('.outer_utime').text());
-                return item;
-            })
-        )
+    const items = await fetchItems(list, (item) =>
+        cache.tryGet(item.link, async () => {
+            const { data: response } = await got(item.link);
+            const $ = load(response);
+            item.description = $('.articleCon').html();
+            const dateText = $('.outer_utime').text().trim();
+            item.pubDate = dateText ? parseDate(/^\d{4}-\d{2}-\d{2}$/.test(dateText) ? `${dateText}T00:00:00Z` : dateText) : undefined;
+            return item;
+        })
     );
 
     return {

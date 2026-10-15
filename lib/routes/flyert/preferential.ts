@@ -1,5 +1,6 @@
 import { load } from 'cheerio';
 import iconv from 'iconv-lite';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
@@ -8,7 +9,7 @@ import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
 const gbk2utf8 = (s) => iconv.decode(s, 'gbk');
-const host = 'https://www.flyert.com';
+const host = 'https://www.flyert.com.cn';
 const target = `${host}/forum.php?mod=forumdisplay&sum=all&fid=all&catid=322`;
 
 export const route: Route = {
@@ -32,7 +33,7 @@ export const route: Route = {
     name: '优惠信息',
     maintainers: ['howel52'],
     handler,
-    url: 'flyert.com/',
+    url: 'www.flyert.com.cn/',
 };
 
 async function handler() {
@@ -49,9 +50,10 @@ async function handler() {
             description: $(item).find('.wznr > div:first-child').text(),
         }));
 
-    const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link!, async () => {
+    const items = await pMap(
+        list,
+        async (item): Promise<DataItem> => {
+            const detail = await cache.tryGet(`flyert:preferential-body:${item.link}`, async () => {
                 const detailResponse = await got(item.link, {
                     responseType: 'buffer',
                 });
@@ -60,15 +62,18 @@ async function handler() {
                 // remove top ad
                 content('div.artical_top').remove();
 
-                item.description = content('#artMain').html() ?? '';
-                item.pubDate = timezone(parseDate(content('p.xg1 > span:nth-child(1)').attr('title') || content('p.xg1').text().split('|', 1)[0], 'YYYY-M-D HH:mm'), 8);
-                return item;
-            })
-        )
+                return {
+                    description: content('#artMain').html() ?? '',
+                    pubDate: timezone(parseDate(content('p.xg1 > span:nth-child(1)').attr('title') || content('p.xg1').text().split('|', 1)[0], 'YYYY-M-D HH:mm'), 8),
+                };
+            });
+            return { ...item, ...detail };
+        },
+        { concurrency: 3 }
     );
     return {
         title: '飞客茶馆优惠',
-        link: 'https://www.flyert.com/',
+        link: target,
         description: '飞客茶馆优惠',
         item: items,
     };

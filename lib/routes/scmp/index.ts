@@ -1,11 +1,11 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
-import type { Language, Route } from '@/types';
-import cache from '@/utils/cache';
+import type { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
-import { parseItem } from './utils';
+import { parseCachedItem } from './utils';
 
 export const route: Route = {
     path: '/:category_id',
@@ -75,7 +75,7 @@ async function handler(ctx) {
             };
         });
 
-    const items = await Promise.all(list.map((item) => cache.tryGet(item.link, () => parseItem(item))));
+    const items = await pMap(list, (item) => parseCachedItem(item), { concurrency: 3 });
 
     ctx.set('json', {
         items,
@@ -86,7 +86,7 @@ async function handler(ctx) {
         link: $('channel > link').text(),
         description: $('channel > description').text(),
         item: items,
-        language: 'en-hk' as Language,
+        language: 'en' as const,
         icon: 'https://assets.i-scmp.com/static/img/icons/scmp-icon-256x256.png',
         logo: 'https://customerservice.scmp.com/img/logo_scmp@2x.png',
         image: $('channel > image > url').text(),

@@ -25,6 +25,12 @@ type DescriptionData = {
     attachments?: Attachment[];
 };
 
+function getVideoMimeType(src: string) {
+    const extension = new URL(src).pathname.split('.').pop()?.toLowerCase();
+    const types: Record<string, string> = { mp4: 'video/mp4', webm: 'video/webm', ogv: 'video/ogg' };
+    return extension ? types[extension] : undefined;
+}
+
 export const renderDescription = ({ description, image, video, attachments }: DescriptionData): string =>
     renderToString(
         <>
@@ -36,7 +42,7 @@ export const renderDescription = ({ description, image, video, attachments }: De
             ) : null}
             {video ? (
                 <video controls width={video.width} height={video.height}>
-                    <source src={video.src} type={`video/${video.src.split('.').pop()}`} />
+                    <source src={video.src} type={getVideoMimeType(video.src)} />
                 </video>
             ) : null}
             {attachments?.length ? (

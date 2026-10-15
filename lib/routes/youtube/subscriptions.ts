@@ -78,7 +78,7 @@ async function handler(ctx) {
     const ret = {
         title: 'Subscriptions - YouTube',
         description: 'YouTube Subscriptions',
-        link: 'www.youtube.com/feed/subscriptions',
+        link: 'https://www.youtube.com/feed/subscriptions',
         item: items,
     };
 

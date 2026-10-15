@@ -1,20 +1,19 @@
 import { load } from 'cheerio';
-import { CookieJar } from 'tough-cookie';
 
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
-import got from '@/utils/got';
-import { parseDate, parseRelativeDate } from '@/utils/parse-date';
+import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
-const cookieJar = new CookieJar();
 const baseUrl = 'https://www.chinathinktanks.org.cn';
 
 export const route: Route = {
     path: '/:id',
     categories: ['study'],
     example: '/chinathinktanks/57',
-    parameters: { id: '见下表，亦可在网站 url 里找到' },
+    parameters: { id: '新版网站分类 URL 中的 UUID，见下表。旧 id 57、46 分别保留为智库资讯、研究报告。' },
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -26,94 +25,71 @@ export const route: Route = {
     name: '观点与实践',
     maintainers: ['Aeliu'],
     handler,
-    description: `| \`:id\` | 专题名称 |
-| ----- | -------- |
-| 2     | 党的建设 |
-| 3     | 社会     |
-| 4     | 生态     |
-| 5     | 政治     |
-| 6     | 经济     |
-| 7     | 文化     |
-| 9     | 热点专题 |
-| 10    | 国际关系 |
-| 13    | 国外智库 |
-| 46    | 智库报告 |
-| 57    | 智库要闻 |
-| 126   | 世界经济 |
-| 127   | 宏观经济 |
-| 128   | 区域经济 |
-| 129   | 产业企业 |
-| 130   | 三农问题 |
-| 131   | 财政金融 |
-| 132   | 科技创新 |
-| 133   | 民主     |
-| 134   | 法治     |
-| 135   | 行政     |
-| 136   | 国家治理 |
-| 137   | 社会事业 |
-| 138   | 社会保障 |
-| 139   | 民族宗教 |
-| 140   | 人口就业 |
-| 141   | 社会治理 |
-| 142   | 文化产业 |
-| 143   | 公共文化 |
-| 144   | 文化体制 |
-| 145   | 文化思想 |
-| 146   | 资源     |
-| 147   | 能源     |
-| 148   | 环境     |
-| 149   | 生态文明 |
-| 150   | 思想建设 |
-| 151   | 作风建设 |
-| 152   | 组织建设 |
-| 153   | 制度建设 |
-| 154   | 反腐倡廉 |
-| 155   | 中国外交 |
-| 156   | 全球治理 |
-| 157   | 大国关系 |
-| 158   | 地区政治 |
-| 181   | 执政能力 |`,
+    description: `网站已迁移，其他旧数字分类已下线，请使用新版分类 URL 中的 UUID。
+
+| id                                   | 分类     |
+| ------------------------------------ | -------- |
+| 87e1e7e4-ffcb-401d-aa8a-c086b9eccec1 | 智库资讯 |
+| 54a1eca3-4e67-464d-bad3-eae6ac25c96a | 研究成果 |
+| 4e93db34-5604-41c0-96e7-51dcebcf6735 | 全球经济 |
+| 74af5bf8-131d-4b73-b7ec-83013608388e | 调研数据 |`,
 };
 
 async function handler(ctx) {
-    const link = `https://www.chinathinktanks.org.cn/content/list?id=${ctx.req.param('id')}&pt=1`;
-
-    const response = await got(link, {
-        cookieJar,
-    });
-    const $ = load(response.data);
-
-    let items = $('.main-content-left-list-item')
+    const id = ctx.req.param('id');
+    let categoryId = id;
+    if (id === '57') {
+        categoryId = '87e1e7e4-ffcb-401d-aa8a-c086b9eccec1';
+    } else if (id === '46') {
+        categoryId = '54a1eca3-4e67-464d-bad3-eae6ac25c96a';
+    } else if (/^\d+$/.test(id)) {
+        throw new InvalidParameterError('This numeric category was retired by China Think Tanks. Use the UUID from a current /category/ page URL.');
+    }
+    const url = new URL(`category/${categoryId}`, baseUrl);
+    if (id === '46') {
+        url.searchParams.set('categoryBId', '27392229-7fb7-4518-956c-8882e4c49937');
+    }
+    const link = url.href;
+    const response = await ofetch(link);
+    const $ = load(response);
+    const list = $('a[href^="/article/"]')
+        .filter((_, element) => $(element).find('article').length > 0)
         .toArray()
-        .map((e): DataItem => {
-            const $e = $(e);
-            const pubDateText = $e.find('.author-time').text();
+        .map((element): DataItem => {
+            const node = $(element);
+            const date = node.find('article .border-t span').last().text();
             return {
-                title: $e.find('.title span').text(),
-                link: baseUrl + $e.attr('href'),
-                author: $e.find('.author-by span').text(),
-                pubDate: pubDateText.includes('-') ? timezone(parseDate(pubDateText, 'YYYY-MM-DD'), 8) : parseRelativeDate(pubDateText),
+                title: node.find('h3').first().text(),
+                link: new URL(node.attr('href')!, baseUrl).href,
+                author: node.find('article .border-t span').first().text() || undefined,
+                pubDate: date ? timezone(parseDate(date, 'YYYY-MM-DD'), 8) : undefined,
             };
         });
-
-    items = await Promise.all(
-        items.map((item) =>
+    const items = await Promise.all(
+        list.map((item) =>
             cache.tryGet(item.link!, async () => {
-                const response = await got({
-                    url: item.link,
-                    cookieJar,
-                });
-                const $ = load(response.data);
-                const content = $('#art');
-                item.description = content.html();
-
+                const response = await ofetch(item.link!);
+                const content = load(response);
+                const article = content('article').first();
+                const date = article.find('header time').text();
+                item.title = article.find('h1').text() || item.title;
+                item.description = article.find('.article-content').html();
+                item.author = article.find('header .lucide-user').parent().text() || item.author;
+                item.category = article
+                    .find('header > div')
+                    .first()
+                    .find('span')
+                    .toArray()
+                    .map((element) => content(element).text());
+                if (date) {
+                    item.pubDate = timezone(parseDate(date, 'YYYY-MM-DD'), 8);
+                }
                 return item;
             })
         )
     );
-
     return {
-        title: `中国智库网 —— ${$('title').text().split('_中国智库网', 1)[0]}`,
+        title: `中国智库网 —— ${$('h1').first().text()}`,
         link,
         item: items,
     };

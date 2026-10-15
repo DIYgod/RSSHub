@@ -26,6 +26,10 @@ export const route: Route = {
         {
             source: ['inewsweek.cn/:channel', 'inewsweek.cn/'],
         },
+        ...['cover', 'politics', 'society', 'finance', 'world', 'survey', 'people'].map((channel) => ({
+            source: [`news.inewsweek.cn/${channel}`],
+            target: `/${channel}`,
+        })),
     ],
     name: '栏目',
     maintainers: ['changren-wcr'],
@@ -47,32 +51,29 @@ async function handler(ctx) {
     const items = await Promise.all(
         $('div.grid-item')
             .toArray()
-            .map((item) => {
+            .map(async (item) => {
                 const $item = $(item);
                 const href = $item.find('a').attr('href');
                 const articleLink = `${rootUrl}${href}`;
-                return cache.tryGet(articleLink, async () => {
+                const detail = await cache.tryGet(articleLink, async () => {
                     const response = await got(articleLink, {
                         responseType: 'buffer',
                     });
 
                     const $ = load(iconv.decode(response.data, 'gbk'));
                     const fullText = $('div.contenttxt').html();
-                    const time = timezone(
-                        parseDate(
-                            $('div.editor')
-                                .html()!
-                                .split(/(\s{2,})/, 3)[2]
-                        ),
-                        8
-                    );
+                    const editor = $('div.editor').text();
+                    const published = editor.match(/\b\d{4}-\d{2}-\d{2}\s+\d{2}:\d{2}:\d{2}\b/)?.[0];
+                    const author = published ? editor.slice(0, editor.indexOf(published)).trim() || undefined : undefined;
+                    const date = published ? parseDate(published, 'YYYY-MM-DD HH:mm:ss', true) : undefined;
+                    const time = date && Number.isFinite(date.getTime()) ? timezone(date, 8) : undefined;
                     return {
-                        title: $item.find('p').text(),
                         description: fullText,
-                        link: articleLink,
+                        author,
                         pubDate: time,
                     };
                 });
+                return { ...detail, title: $item.find('p').text(), link: articleLink };
             })
     );
 

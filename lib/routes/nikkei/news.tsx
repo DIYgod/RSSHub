@@ -1,6 +1,7 @@
 import { load } from 'cheerio';
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
@@ -15,7 +16,7 @@ export const route: Route = {
     radar: [
         {
             source: ['www.nikkei.com/:category/archive', 'www.nikkei.com/:category'],
-            target: '/:category',
+            target: '/news/:category',
         },
     ],
     name: 'News',
@@ -78,31 +79,33 @@ async function handler(ctx) {
         categoryName = $('h1.l-miH11_title').text().trim();
     }
 
-    const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link!, async () => {
+    const items = await pMap(
+        list,
+        async (item) => ({
+            ...item,
+            ...(await cache.tryGet(`nikkei:news:details:v2:${item.link}`, async () => {
                 const { data: response } = await got(item.link);
                 const $ = load(response);
-
                 $('.notFloated_n1oadkwi').remove();
-
-                item.pubDate = parseDate($('meta[property="article:published_time"]').attr('content')!);
+                const pubDate = parseDate($('meta[property="article:published_time"]').attr('content')!);
                 const description = $('section[class^=container_]').html();
-                item.description = renderToString(
-                    <>
-                        {item.paywall && item.image ? (
-                            <>
-                                {raw(item.image)}
-                                <br />
-                            </>
-                        ) : null}
-                        {description ? raw(description) : null}
-                    </>
-                );
-
-                return item;
-            })
-        )
+                return {
+                    pubDate,
+                    description: renderToString(
+                        <>
+                            {item.paywall && item.image ? (
+                                <>
+                                    {raw(item.image)}
+                                    <br />
+                                </>
+                            ) : null}
+                            {description ? raw(description) : null}
+                        </>
+                    ),
+                };
+            })),
+        }),
+        { concurrency: 3 }
     );
 
     return {

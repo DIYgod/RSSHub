@@ -9,6 +9,7 @@ import cache from '@/utils/cache';
 import got from '@/utils/got';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/whpj/:format?',
@@ -26,6 +27,10 @@ export const route: Route = {
     radar: [
         {
             source: ['cib.com.cn/'],
+            target: '/whpj',
+        },
+        {
+            source: ['personalbank.cib.com.cn/pers/main/pubinfo/ifxQuotationQuery.do'],
             target: '/whpj',
         },
     ],
@@ -91,7 +96,8 @@ async function handler(ctx) {
 
             return {
                 title: formatTitle(name, xhmr, xcmr, xhmc, xcmc, content, format),
-                pubDate: parseDate(date, 'YYYY年MM月DD日 HH:mm:ss'),
+                link: `https://personalbank.cib.com.cn/pers/main/pubinfo/ifxQuotationQuery.do#${item.id}`,
+                pubDate: timezone(parseDate(date, 'YYYY年MM月DD日 HH:mm:ss'), 8),
                 description: content.replaceAll(/\s/g, '<br>'),
                 guid: `${item.cell[0]} ${item.cell[1]} ${date}`,
             };

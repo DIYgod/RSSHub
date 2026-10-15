@@ -1,9 +1,11 @@
 import { renderToString } from 'hono/jsx/dom/server';
 
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import { parseDateRange } from '@/utils/parse-date-range';
+import timezone from '@/utils/timezone';
 
 import { namespace } from './namespace';
 
@@ -23,6 +25,7 @@ interface Exhibit {
     imgSrc?: string[];
     position?: string;
     timedesc: string;
+    describe?: string;
 }
 
 interface ExhibitList {
@@ -55,6 +58,9 @@ export const route: Route = {
     ],
     handler: async (ctx) => {
         const typeParam = ctx.req.param('type') || 'default';
+        if (!Object.hasOwn(TYPE_MAP, typeParam)) {
+            throw new InvalidParameterError('Unsupported exhibition type. Use review, abroad, virtual, forecast, or default.');
+        }
         const currentType = TYPE_MAP[typeParam];
 
         const baseUrl = 'https://www.njmuseum.com';
@@ -83,15 +89,16 @@ export const route: Route = {
             const title = item.title;
             const itemLink = `${baseUrl}/zh/${item.link}?id=${item.id}`;
             const imgPath = item.imgSrc?.[0];
-            const imgUrl = `${resourceUrl}${imgPath}`;
+            const imgUrl = imgPath ? new URL(imgPath, resourceUrl).href : undefined;
             const location = item.position;
             const fullDuration = item.timedesc;
-            const { startDate, endDate } = parseDateRange(fullDuration);
-            const pubDate = startDate ? parseDate(startDate) : undefined; // use start date as publication date if publication date is notavailable
+            const { startDate, endDate } = extractDates(fullDuration);
+            const pubDate = startDate ? timezone(startDate, 8) : undefined;
 
             const description = renderToString(
                 <div>
-                    <img src={imgUrl} />
+                    {item.describe && <div dangerouslySetInnerHTML={{ __html: item.describe }} />}
+                    {imgUrl && <img src={imgUrl} />}
                     <br />
                     <p>
                         <b>地点：</b>

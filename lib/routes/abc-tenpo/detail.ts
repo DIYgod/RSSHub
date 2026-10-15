@@ -128,7 +128,10 @@ export const handler = async (ctx): Promise<Data> => {
     }
     const link = `${HOST}/property/view/${id}`;
 
-    const item = (await cache.tryGet(`abc-tenpo:detail:${id}`, async () => parseDetail(await ofetch(link, { responseType: 'text' }), id))) as DataItem | null;
+    const item = await cache.tryGet(`abc-tenpo:detail:${id}`, async () => {
+        const html = await ofetch(link);
+        return parseDetail(html, id);
+    });
     if (item === null) {
         throw new Error(`abc-tenpo: listing ${id} could not be read; it may have been delisted`);
     }

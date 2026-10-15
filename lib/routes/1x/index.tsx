@@ -4,10 +4,11 @@ import { renderToString } from 'hono/jsx/dom/server';
 
 import type { Language, Route } from '@/types';
 import got from '@/utils/got';
+import { getRouteLimit } from '@/utils/route-limit';
 
 export const handler = async (ctx) => {
     const { category = 'latest/awarded' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 30;
+    const limit = getRouteLimit(ctx, 30);
 
     const rootUrl = 'https://1x.com';
     const currentUrl = new URL(`gallery/${category}`, rootUrl).href;
@@ -31,6 +32,7 @@ export const handler = async (ctx) => {
 
             const title = $item.find('span.photos-feed-data-title').first().text() || 'Untitled';
             const image = $item.find('img').prop('src');
+            const imageExtension = image ? new URL(image, rootUrl).pathname.split('.').pop() : undefined;
             const author = $item.find('span.photos-feed-data-name').first().text();
 
             const text = `${title} by ${author}`;
@@ -64,7 +66,7 @@ export const handler = async (ctx) => {
                 banner: image,
                 language,
                 enclosure_url: image,
-                enclosure_type: image ? `image/${image.split(/\./).pop()}` : undefined,
+                enclosure_type: imageExtension ? `image/${imageExtension === 'jpg' ? 'jpeg' : imageExtension}` : undefined,
                 enclosure_title: title,
             };
         });
@@ -98,7 +100,7 @@ If you subscribe to [Abstract Awarded](https://1x.com/gallery/abstract/awarded),
 
 If you subscribe to [Wildlife Published](https://1x.com/gallery/wildlife/published), you should fill in the path with the part \`wildlife/published\` from the page URL \`https://1x.com/gallery/wildlife/published\`. In this case, the route will be [\`/1x/wildlife/published\`](https://rsshub.app/1x/wildlife/published).
 :::`,
-    categories: ['design', 'picture'],
+    categories: ['picture'],
 
     features: {
         requireConfig: false,

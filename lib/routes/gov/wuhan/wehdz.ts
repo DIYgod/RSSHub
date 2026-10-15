@@ -5,6 +5,7 @@ import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/wehdz/:caty',
@@ -13,7 +14,7 @@ export const route: Route = {
     parameters: {
         caty: '类别',
     },
-    name: '武汉东湖新技术开发区 - 光谷新闻',
+    name: '东湖新技术开发区 - 光谷新闻',
     maintainers: ['tudou027'],
     handler,
     description: `|  通知公告 |   光谷要闻  |   产业动态  |
@@ -36,10 +37,12 @@ async function handler(ctx: Context) {
         .map((item): DataItem => {
             const $item = $(item);
             const a = $item.find('a[href]');
+            const date = $item.find('span').text().trim();
+            const pubDate = date ? timezone(parseDate(date, 'YYYY-MM-DD', true), 8) : undefined;
             return {
                 title: a.text(),
                 link: new URL(a.attr('href')!, currentUrl).href,
-                pubDate: parseDate($item.find('span').text(), 'YYYY-MM-DD'),
+                pubDate: pubDate && Number.isFinite(pubDate.getTime()) ? pubDate : undefined,
             };
         });
 
@@ -48,8 +51,11 @@ async function handler(ctx: Context) {
             cache.tryGet(item.link!, async () => {
                 const res = await ofetch(item.link!);
                 const content = load(res);
+                const date = content('meta[name="PubDate"]').attr('content');
+                const pubDate = date ? timezone(parseDate(date, ['YYYY-MM-DD HH:mm:ss', 'YYYY-MM-DD HH:mm'], true), 8) : undefined;
 
                 item.description = content('div.content_article').html();
+                item.pubDate = pubDate && Number.isFinite(pubDate.getTime()) ? pubDate : item.pubDate;
                 return item;
             })
         )

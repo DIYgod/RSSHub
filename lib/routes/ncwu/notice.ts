@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
 
 const baseUrl = 'https://www.ncwu.edu.cn/xxtz.htm';
 
@@ -34,15 +34,22 @@ async function handler() {
     const response = await got(baseUrl);
 
     const $ = load(response.data);
-    const list = $('div.news-item')
+    const list = $('div.list-media')
         .toArray()
-        .map((item) => {
+        .flatMap((item) => {
             const $item = $(item);
+            const $links = $item.find('h5.title a');
+            const $article = $links.last();
+            const href = $article.attr('href');
+            if (!href) {
+                return [];
+            }
+            const date = $item.find('.time span').last().text() + '-' + $item.find('.time .puls').text();
             return {
-                title: '「' + $item.find('a.dw').text() + '」' + $item.find('a.dw').next().text(),
-                description: $item.find('div.detail').text(),
-                pubDate: parseDate($item.find('div.month').text() + '-' + $item.find('div.day').text(), 'YYYY-MM-DD'),
-                link: $item.find('a.dw').next().attr('href'),
+                title: '「' + $links.first().text() + '」' + $article.text(),
+                description: $item.find('p.summary').text(),
+                pubDate: parseDateInTimezone(date, 8),
+                link: new URL(href, baseUrl).href,
             };
         });
 

@@ -120,17 +120,24 @@ const visitorId = () => {
         sum += Number.parseInt(ch, 16) % 10;
     }
     const head = String(sum).slice(0, 3).padStart(3, '0');
-    const parts = uuid.split('-');
-    parts.splice(1, 0, head + randomString(8 - head.length));
-    return parts.join('-');
+    return uuid
+        .split('-')
+        .toSpliced(1, 0, head + randomString(8 - head.length))
+        .join('-');
 };
 
+const isString = (value: unknown): value is string => typeof value === 'string';
+
 const buildCookies = (c: Challenge, encStr: string) => {
-    const cfg = JSON.parse(aes(encStr.slice(0, 4) + c.salt).decrypt(encStr.slice(4))) as Record<string, unknown>;
-    const serverTime = Object.values(cfg).find((v) => typeof v === 'string' && /^\d{10}$/.test(v)) as string | undefined;
-    const envKey = cfg[c.envKey];
-    const queryKey = cfg[c.queryKey];
-    if (!serverTime || typeof envKey !== 'string' || typeof queryKey !== 'string') {
+    const decrypted = aes(encStr.slice(0, 4) + c.salt).decrypt(encStr.slice(4));
+    const cfg = new Map<string, unknown>(Object.entries(JSON.parse(decrypted)));
+    const serverTime = cfg
+        .values()
+        .filter((v) => isString(v))
+        .find((v) => /^\d{10}$/.test(v));
+    const envKey = cfg.get(c.envKey);
+    const queryKey = cfg.get(c.queryKey);
+    if (!serverTime || !isString(envKey) || !isString(queryKey)) {
         throw new Error('CT2-WAAP: challenge config changed');
     }
     const last2 = serverTime.slice(-2);
@@ -142,8 +149,7 @@ const buildCookies = (c: Challenge, encStr: string) => {
 };
 
 export const fetchPage = async (pageUrl: string): Promise<string> => {
-    const first = await ofetch.raw(pageUrl, {
-        responseType: 'text',
+    const first = await ofetch.raw<string>(pageUrl, {
         ignoreResponseError: true,
     });
     const html = first._data ?? '';
@@ -180,9 +186,8 @@ export const fetchPage = async (pageUrl: string): Promise<string> => {
         .map(([k, v]) => `${k}=${v}`)
         .join('; ');
 
-    const second = await ofetch.raw(pageUrl, {
+    const second = await ofetch.raw<string>(pageUrl, {
         headers: { Cookie: cookie },
-        responseType: 'text',
         ignoreResponseError: true,
     });
     if (second.status !== 200) {

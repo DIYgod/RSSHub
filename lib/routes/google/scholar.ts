@@ -33,9 +33,9 @@ async function handler(ctx) {
     let query = params;
     let description = `Google Scholar Monitor Query: ${query}`;
 
-    if (params.includes('as_q=')) {
-        const reg = /as_q=(.*?)&/;
-        query = reg.exec(params)![1];
+    const searchParams = new URLSearchParams(params);
+    if (searchParams.has('as_q')) {
+        query = searchParams.get('as_q')!;
         description = `Google Scholar Monitor Advanced Query: ${query}`;
     } else {
         params = 'q=' + params;
@@ -52,12 +52,12 @@ async function handler(ctx) {
     const list = $('#gs_res_ccl_mid .gs_r.gs_or.gs_scl .gs_ri').toArray();
 
     const out = list.map((item) => {
-        const $ = load(item);
-        const itemUrl = $('h3 a').attr('href');
+        const $item = $(item);
+        const itemUrl = $item.find('h3 a').attr('href');
         return {
-            title: $('h3 a').text(),
-            author: $('.gs_a').text(),
-            description: $('.gs_rs').text(),
+            title: $item.find('h3 a').text(),
+            author: $item.find('.gs_a').text(),
+            description: $item.find('.gs_rs').text(),
             link: itemUrl,
             guid: itemUrl,
         };

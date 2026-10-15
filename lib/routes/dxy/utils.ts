@@ -34,8 +34,8 @@ const sign = (params) => {
     return CryptoJS.SHA1(searchParams.toString()).toString();
 };
 
-const getPost = (item) =>
-    cache.tryGet(item.link, async () => {
+const getPost = async (item) => {
+    const content = await cache.tryGet(`dxy:post:content:${item.postId}`, async () => {
         const postParams = {
             postId: item.postId,
             serverTimestamp: Date.now(),
@@ -43,7 +43,7 @@ const getPost = (item) =>
             noncestr: generateNonce(8, 'number'),
         };
 
-        const post = await ofetch<PostData>('https://www.dxy.cn/bbs/newweb/post/detail', {
+        const post = await ofetch<PostData>(`${phoneBaseUrl}/bbsapi/bbs/post/detail`, {
             query: {
                 ...postParams,
                 sign: sign(postParams),
@@ -71,12 +71,28 @@ const getPost = (item) =>
             $img.removeAttr('data-osrc');
         });
 
-        item.description = $.html();
-        item.pubDate = parseDate(post.data.createTime, 'x');
-        item.updated = post.data.lastEditTime ? parseDate(post.data.lastEditTime, 'x') : item.pubDate;
-        item.category = [...new Set([...item.category, ...post.data.tagInfos.map((tag) => tag.tagName)])];
+        $('img[data-video-source]').each((_, img) => {
+            const $img = $(img);
+            const videoUrl = $img.attr('data-video-source');
+            if (!videoUrl) {
+                return;
+            }
+            const video = $('<video controls></video>').attr('src', videoUrl);
+            const poster = $img.attr('data-bgimg') ?? $img.attr('src');
+            if (poster) {
+                video.attr('poster', poster);
+            }
+            $img.replaceWith(video);
+        });
 
-        return item;
+        return {
+            description: $.html(),
+            pubDate: parseDate(post.data.createTime, 'x'),
+            updated: post.data.lastEditTime ? parseDate(post.data.lastEditTime, 'x') : undefined,
+            category: post.data.tagInfos.map((tag) => tag.tagName),
+        };
     });
+    return { ...item, ...content, category: [...new Set([...item.category, ...content.category])] };
+};
 
 export { generateNonce, getPost, phoneBaseUrl, sign, webBaseUrl };

@@ -9,6 +9,7 @@ import cache from '@/utils/cache';
 import { generateHeaders, PRESETS } from '@/utils/header-generator';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
 const abdrKey = 'F617E80F5BD64F5A';
 const abdrIv = '636014d173e04409';
@@ -73,6 +74,8 @@ const fingerprint = {
 
 const sha1 = () => createHash('sha1').update(randomUUID()).digest('hex');
 
+const isImageUrl = (image: string | { src: string }): image is string => typeof image === 'string';
+
 export const route: Route = {
     path: '/baijiahao/:id/:tab?',
     categories: ['new-media'],
@@ -97,7 +100,7 @@ export const route: Route = {
 
 async function handler(ctx: Context) {
     const { id, tab = 'main' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ?? 20;
+    const limit = getRouteLimit(ctx, 20);
     const link = `https://baijiahao.baidu.com/u?app_id=${id}`;
 
     const page = await ofetch(link, { headerGeneratorOptions: PRESETS.MODERN_IOS });
@@ -158,7 +161,7 @@ async function handler(ctx: Context) {
         .filter((item) => item.itemData.url)
         .map((item) => {
             const { title, url, imgSrc, vertical_cover: cover, rmb_videoInfoExt: videoInfo } = item.itemData;
-            const images = [imgSrc ?? cover ?? []].flat().map((image) => (typeof image === 'string' ? image : image.src));
+            const images = [imgSrc ?? cover ?? []].flat().map((image) => (isImageUrl(image) ? image : image.src));
             const video = videoInfo ? JSON.parse(videoInfo) : undefined;
             const quality = video && ['1080p', 'sc', 'hd', 'default', '360p'].find((name) => video[name]);
             const source = quality && (video[quality][`${quality}UrlHttps`] ?? video[quality][`${quality}UrlHttp`])?.replace('http://', 'https://');

@@ -3,50 +3,67 @@ import { load } from 'cheerio';
 import type { Element } from 'domhandler';
 import type { Context } from 'hono';
 
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Data, DataItem, Language, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
+import timezone from '@/utils/timezone';
 
 import { renderDescription } from './templates/description';
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { category = 'zxyw' } = ctx.req.param();
-    const limit = Number(ctx.req.query('limit') ?? '11');
+    const requestedLimit = ctx.req.query('limit');
+    const limit = getRouteLimit(ctx, 11);
 
     const rootUrl = 'https://www.chinacdc.cn';
-    const targetUrl = `${rootUrl}/${category.endsWith('/') ? category : `${category}/`}`;
+    let targetUrl = `${rootUrl}/${category.endsWith('/') ? category : `${category}/`}`;
 
     const response = await ofetch(targetUrl);
-    const $: CheerioAPI = load(response);
+    let $: CheerioAPI = load(response);
+    const redirect = $('script')
+        .text()
+        .match(/\blocation\.replace\(\s*['"]([^'"]+)['"]\s*\)/);
+    if (!$('ul.xw_list li').length && redirect) {
+        const redirectUrl = new URL(redirect[1], targetUrl);
+        if (redirectUrl.origin === rootUrl && redirectUrl.href !== targetUrl) {
+            targetUrl = redirectUrl.href;
+            const redirectResponse = await ofetch(targetUrl);
+            $ = load(redirectResponse);
+        }
+    }
     const language = $('html').prop('lang') as Language;
 
     let items: DataItem[] = $('ul.xw_list li')
-        .slice(0, limit)
+        .filter((_, item) => ($(item).find('a').first().prop('href') ?? '').trim().length > 0)
         .toArray()
         .map((item): DataItem => {
             const $item: Cheerio<Element> = $(item);
 
             const aEl: Cheerio<Element> = $item.find('a');
-            const title: string = aEl.prop('title') === undefined ? aEl.text() : aEl.prop('title');
+            const spanText = $item.find('span').text().trim();
+            aEl.find('span')
+                .filter((_, span) => /^\s*\d{4}-\d{2}-\d{2}\s*$/.test($(span).text()))
+                .remove();
+            const title: string = aEl.prop('title') ?? aEl.text();
 
             const dateMatch = title.match(/(\d{4}-\d{2}-\d{2})$/);
             let pubDate;
-            let cleanTitle = title;
 
             if (dateMatch) {
-                pubDate = parseDate(dateMatch[0]);
-                cleanTitle = title.replace(/\d{4}-\d{2}-\d{2}$/, '').trim();
+                pubDate = timezone(parseDate(dateMatch[0]), 8);
             } else {
-                const spanText = $item.find('span').text().trim();
-                pubDate = spanText ? parseDate(spanText) : undefined;
+                pubDate = spanText ? timezone(parseDate(spanText), 8) : undefined;
             }
 
             const description: string = renderDescription({
                 intro: $item.find('p.zy').text(),
             });
 
+            const href = aEl.prop('href');
             const imageSrc: string | undefined = $item.find('img').prop('src');
             const imageType: string | undefined = imageSrc?.split(/\./).pop();
             const image: string | undefined = imageSrc ? new URL(imageSrc, targetUrl).href : undefined;
@@ -57,10 +74,10 @@ export const handler = async (ctx: Context): Promise<Data> => {
             }
 
             return {
-                title: cleanTitle,
+                title,
                 description,
                 pubDate,
-                link: new URL(aEl.prop('href') as string, targetUrl).href,
+                link: href ? new URL(href, targetUrl).href : undefined,
                 content: {
                     html: description,
                     text: $item.find('p.zy').text(),
@@ -72,6 +89,11 @@ export const handler = async (ctx: Context): Promise<Data> => {
             };
         });
 
+    if (requestedLimit && limit > 0 && ctx.req.query('sorted') !== 'false') {
+        items.sort((a, b) => +new Date(b.pubDate || 0) - +new Date(a.pubDate || 0));
+    }
+    items = items.slice(0, limit);
+
     items = (
         await Promise.all(
             items.map((item) => {
@@ -80,16 +102,23 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 }
 
                 return cache.tryGet(item.link, async (): Promise<DataItem> => {
+                    if (new URL(item.link!).pathname.toLowerCase().endsWith('.pdf')) {
+                        return { ...item, enclosure_url: item.link, enclosure_type: 'application/pdf' };
+                    }
                     const detailResponse = await ofetch(item.link!);
                     const $$: CheerioAPI = load(detailResponse);
 
                     const detailTitle: string = $$('h5').text();
+                    let article = $$('div.TRS_Editor, div.TRS_UEDITOR').first();
+                    if (!article.length) {
+                        article = $$('#articleCon').first();
+                    }
                     const description: string = renderDescription({
-                        description: $$('div.TRS_Editor').html() || undefined,
+                        description: article.html() || undefined,
                     });
 
-                    const detailDate = $$('span.fb em').text().trim();
-                    const pubDate = detailDate ? parseDate(detailDate) : item.pubDate;
+                    const detailDate = $$('span.fb em').text();
+                    const pubDate = detailDate ? timezone(parseDate(detailDate), 8) : item.pubDate;
 
                     return {
                         title: detailTitle || item.title, // Use original title as fallback
@@ -98,7 +127,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                         pubDate,
                         content: {
                             html: description,
-                            text: $$('div.TRS_Editor').text(),
+                            text: article.text(),
                         },
                         image: item.image,
                         banner: item.banner,
@@ -110,16 +139,20 @@ export const handler = async (ctx: Context): Promise<Data> => {
         )
     ).filter((_): _ is DataItem => true);
 
+    if (items.length && items.every((item) => item.link && new URL(item.link).pathname.endsWith('/') && !item.pubDate && !item.description && !item.image && !item.enclosure_url)) {
+        throw new InvalidParameterError(`The selected page contains only subsection links. Open ${targetUrl} and use an article-list subsection as category.`);
+    }
+
     const author: string = $('title').text();
     const title: string = $('div.erjiCurNav').text();
-    const feedImage: string = new URL($('img.logo').prop('src') as string, targetUrl).href;
+    const logoSrc = $('img.logo').prop('src');
+    const feedImage = logoSrc ? new URL(logoSrc, targetUrl).href : undefined;
 
     return {
         title: `${author} - ${title}`,
         description: title,
         link: targetUrl,
         item: items,
-        allowEmpty: true,
         image: feedImage,
         author,
         language,
@@ -150,7 +183,7 @@ export const route: Route = {
 
 #### [党建园地](https://www.chinacdc.cn/dqgz/djgz/)
 
-| [党建工作](https://www.chinacdc.cn/dqgz/djgz/)     | [廉政文化](https://www.chinacdc.cn/djgz_13611/)                 | [工会工作](https://www.chinacdc.cn/ghgz/)          | [团青工作](https://www.chinacdc.cn/tqgz/)          | [理论学习](https://www.chinacdc.cn/tqgz_13618/)                 |
+| [党建工作](https://www.chinacdc.cn/dqgz/djgz/)     | [廉政文化](https://www.chinacdc.cn/dqgz/djgz_13611/)            | [工会工作](https://www.chinacdc.cn/dqgz/ghgz/)     | [团青工作](https://www.chinacdc.cn/dqgz/tqgz/)     | [理论学习](https://www.chinacdc.cn/dqgz/tqgz_13618/)            |
 | -------------------------------------------------- | --------------------------------------------------------------- | -------------------------------------------------- | -------------------------------------------------- | --------------------------------------------------------------- |
 | [dqgz/djgz](https://rsshub.app/chinacdc/dqgz/djgz) | [dqgz/djgz\\_13611](https://rsshub.app/chinacdc/dqgz/djgz_13611) | [dqgz/ghgz](https://rsshub.app/chinacdc/dqgz/ghgz) | [dqgz/tqgz](https://rsshub.app/chinacdc/dqgz/tqgz) | [dqgz/tqgz\\_13618](https://rsshub.app/chinacdc/dqgz/tqgz_13618) |
 
@@ -225,14 +258,6 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['www.chinacdc.cn/:category'],
-            target: (params) => {
-                const category = params.category;
-
-                return `/chinacdc${category ? `/${category}` : ''}`;
-            },
-        },
-        {
             title: '中心要闻',
             source: ['www.chinacdc.cn/zxyw/'],
             target: '/zxyw',
@@ -243,33 +268,28 @@ export const route: Route = {
             target: '/tzgg',
         },
         {
-            title: '党建园地 - 廉政文化',
-            source: ['www.chinacdc.cn/djgz_13611/'],
-            target: '/dqgz/djgz_13611',
-        },
-        {
             title: '党建园地 - 党建工作',
-            source: ['www.chinacdc.cn/dqgz/'],
+            source: ['www.chinacdc.cn/dqgz/', 'www.chinacdc.cn/dqgz/djgz/'],
             target: '/dqgz/djgz',
         },
         {
             title: '党建园地 - 廉政文化',
-            source: ['www.chinacdc.cn/djgz_13611/'],
+            source: ['www.chinacdc.cn/dqgz/djgz_13611/'],
             target: '/dqgz/djgz_13611',
         },
         {
             title: '党建园地 - 工会工作',
-            source: ['www.chinacdc.cn/ghgz/'],
+            source: ['www.chinacdc.cn/dqgz/ghgz/'],
             target: '/dqgz/ghgz',
         },
         {
             title: '党建园地 - 团青工作',
-            source: ['www.chinacdc.cn/tqgz/'],
+            source: ['www.chinacdc.cn/dqgz/tqgz/'],
             target: '/dqgz/tqgz',
         },
         {
             title: '党建园地 - 理论学习',
-            source: ['www.chinacdc.cn/tqgz_13618/'],
+            source: ['www.chinacdc.cn/dqgz/tqgz_13618/'],
             target: '/dqgz/tqgz_13618',
         },
         {

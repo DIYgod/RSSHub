@@ -1,12 +1,13 @@
 import InvalidParameterError from '@/errors/types/invalid-parameter';
-import type { Route } from '@/types';
+import type { Data, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
+import { getRouteLimit } from '@/utils/route-limit';
 
 import { baseUrl, parseItem, parsePost } from './utils';
 
-const handler = async (ctx) => {
+const handler = async (ctx): Promise<Data> => {
     const { category } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : undefined;
+    const limit = Math.min(getRouteLimit(ctx, 10), 100);
     const isNumericCategory = !Number.isNaN(Number(category));
 
     const categoryResponse = await ofetch(`${baseUrl}/wp-json/wp/v2/categories${isNumericCategory ? `/${category}` : ''}`, {
@@ -25,15 +26,16 @@ const handler = async (ctx) => {
 
     const postsResponse = await parsePost(limit, categoryInfo.id);
     const items = parseItem(postsResponse);
+    const image = categoryInfo.yoast_head_json.og_image?.[0]?.url;
 
     return {
         title: categoryInfo.yoast_head_json.title,
         description: categoryInfo.yoast_head_json.og_site_name,
-        image: categoryInfo.yoast_head_json.og_image[0].url,
-        logo: categoryInfo.yoast_head_json.og_image[0].url,
-        icon: categoryInfo.yoast_head_json.og_image[0].url,
+        image,
+        logo: image,
+        icon: image,
         link: categoryInfo.link,
-        lang: 'zh-TW',
+        language: 'zh-TW',
         item: items,
     };
 };
@@ -44,7 +46,7 @@ export const route: Route = {
     example: '/tfc-taiwan/category/weekly-top-ten-rumors',
     path: '/category/:category',
     parameters: {
-        category: '分類，見下表，預設為 `weekly-top-ten-rumors`',
+        category: '分類，見下表',
     },
     handler,
     url: 'tfc-taiwan.org.tw/category/rumor-mill/',

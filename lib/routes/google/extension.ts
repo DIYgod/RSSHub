@@ -42,9 +42,9 @@ async function handler(ctx) {
         item: [
             {
                 title: version,
-                description: $('.JJ3H1e').html(),
+                description: $('.mN52G').html(),
                 link: `https://chrome.google.com/webstore/detail/${id}`,
-                pubDate: parseDate($('.uBIrad div').last().text()),
+                pubDate: parseDate(`${$('.uBIrad div').last().text()} UTC`),
                 guid: version,
                 author: $('.cJI8ee').text(),
             },

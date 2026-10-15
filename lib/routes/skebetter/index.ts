@@ -67,7 +67,7 @@ async function handler(ctx): Promise<Data> {
     const url = `${baseUrl}?type=${type}`;
 
     const items = await cache.tryGet(
-        url,
+        `skebetter:titles:v3:${url}`,
         async () => {
             const data = await fetchData(url);
             return processItems(data, 'index');

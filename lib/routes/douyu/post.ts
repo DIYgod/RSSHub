@@ -40,16 +40,9 @@ async function handler(ctx) {
     });
 
     const data = detailResponse.data.data;
-    let apiUrl = `${rootUrl}/wbapi/web/post/comments/${id}?group_id=${data.group_id}&sink=1&page=1`;
+    const apiUrl = `${rootUrl}/wbapi/web/post/comments/${id}?group_id=${data.group_id}&sink=1&page=1`;
 
-    let response = await got({
-        method: 'get',
-        url: apiUrl,
-    });
-
-    apiUrl = `${rootUrl}/wbapi/web/post/comments/${id}?group_id=${data.group_id}&sink=1&page=${response.data.page_total}`;
-
-    response = await got({
+    const response = await got({
         method: 'get',
         url: apiUrl,
     });

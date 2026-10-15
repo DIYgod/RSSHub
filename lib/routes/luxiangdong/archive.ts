@@ -30,24 +30,24 @@ async function handler() {
     const { data } = await got(`https://www.luxiangdong.com/content.json?t=${Date.now()}`);
 
     const items = data.posts.map((item) => ({
-        // 文章标题
+        // Article title
         title: item.title,
-        // 文章链接
+        // Article link
         link: item.permalink,
-        // 文章发布日期
+        // Article publication date
         pubDate: parseDate(item.date),
-        // 如果有的话，文章作者
+        // Article author, when available
         author: data.meta.author,
-        // 如果有的话，文章分类
+        // Article categories, when available
         category: item.tags.map((tag) => tag.name),
     }));
 
     return {
-        // 源标题
+        // Feed title
         title: '土猛的员外',
-        // 源链接
+        // Feed link
         link: 'https://www.luxiangdong.com/',
-        // 源文章
+        // Feed entries
         item: items,
     };
 }

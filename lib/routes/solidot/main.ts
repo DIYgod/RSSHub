@@ -1,4 +1,5 @@
 import { load } from 'cheerio'; // html parser
+import pMap from 'p-map';
 
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
@@ -71,10 +72,13 @@ async function handler(ctx) {
 
     // get urls
     const a = $('div.block_m').find('div.bg_htit > h2 > a');
-    const urls = Array.from(a, (element) => $(element).attr('href'));
+    const urls = [...a].flatMap((element) => {
+        const href = $(element).attr('href');
+        return href ? { link: href, title: $(element).text() } : [];
+    });
 
     // get articles
-    const msg_list = await Promise.all(urls.map((u) => cache.tryGet(u!, () => get_article(u))));
+    const msg_list = await pMap(urls, async (item) => ({ ...(await cache.tryGet(item.link, () => get_article(item.link))), title: item.title }), { concurrency: 3 });
 
     // feed the data
     return {

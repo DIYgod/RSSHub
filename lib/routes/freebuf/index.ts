@@ -72,7 +72,7 @@ async function handler(ctx) {
     };
 }
 
-// 阿里云 WAF 会对被风控的 IP 返回 405 JS 质询，需计算 acw_sc__v2 Cookie 后重试
+// Retry the supported Aliyun WAF challenge only when its required arg1 is present.
 async function fetchWithAcwChallenge(url, options) {
     try {
         return await ofetch(url, options);
@@ -80,6 +80,9 @@ async function fetchWithAcwChallenge(url, options) {
         const challengeBody = error instanceof FetchError ? String(error.data) : '';
         const arg1 = challengeBody.match(/var arg1='(.*?)';/)?.[1];
         if (!arg1) {
+            if (error instanceof FetchError && error.response?.status === 405) {
+                throw new Error('FreeBuf returned HTTP 405 without the arg1 required by its supported WAF challenge. The public category API is currently unavailable from this RSSHub instance.', { cause: error });
+            }
             throw error;
         }
         return await ofetch(url, {

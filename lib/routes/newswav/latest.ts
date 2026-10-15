@@ -1,6 +1,7 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -36,7 +37,7 @@ async function handler() {
         },
     });
 
-    const list = response.data.content
+    const list: Array<DataItem & { link: string; permalink: string }> = response.data.content
         .filter((i) => i.contentId !== 'AD')
         .map((i) => ({
             title: i.title,
@@ -49,23 +50,22 @@ async function handler() {
             image: i.thumbnailUrl,
         }));
 
-    const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link, async () => {
+    const items = await pMap(
+        list,
+        async (item) => {
+            const details = await cache.tryGet(`${item.link}:article-body`, async () => {
                 const response = await ofetch(`https://api.newswav.com/v4/api/v1/web/contents/${item.permalink}`);
 
                 if (response.contentType === 'video') {
                     const video = response.meta.video;
-                    item.description = `<video controls preload="metadata" poster="${video.thumbnailUrl}"><source src="${video.videoUrl}" type="${video.mimeType}"></video><br>${video.content}`;
+                    const description = `<video controls preload="metadata" poster="${video.thumbnailUrl}"><source src="${video.videoUrl}" type="${video.mimeType}"></video><br>${video.content}`;
 
-                    return item;
+                    return { description };
                 }
                 if (response.contentType === 'podcast') {
                     const podcast = response.meta.podcast;
-                    item.description = `<audio controls"><source src="${podcast.url}" type="audio/mpeg"></audio><br>${podcast.content}`;
-                    item.enclosure_type = 'audio/mpeg';
-
-                    return item;
+                    const description = `<audio controls><source src="${podcast.url}" type="audio/mpeg"></audio><br>${podcast.content}`;
+                    return { description, enclosure_type: 'audio/mpeg' };
                 }
 
                 const article = response.meta.article;
@@ -83,14 +83,13 @@ async function handler() {
                     }
                 });
 
-                item.description = $.html();
-
-                const image = new URL(article.originalUrl);
-                item.image = image.pathname.startsWith('/1000x0,q50=/') ? image.pathname.replace('/1000x0,q50=/', '') : image.pathname;
-
-                return item;
-            })
-        )
+                return { description: $.html(), image: article.originalUrl || undefined };
+            });
+            const metadata = { ...item };
+            Reflect.deleteProperty(metadata, 'permalink');
+            return { ...metadata, ...details, image: details.image || item.image };
+        },
+        { concurrency: 3 }
     );
 
     return {

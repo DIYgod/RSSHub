@@ -2,7 +2,8 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import { parseDate } from '@/utils/parse-date';
-import playwright from '@/utils/playwright';
+import { getPlaywrightPage } from '@/utils/playwright';
+import timezone from '@/utils/timezone';
 
 const baseIndexUrl = 'https://www.auto.uestc.edu.cn/xwgg/tzgs.htm';
 
@@ -30,17 +31,22 @@ export const route: Route = {
 };
 
 async function handler() {
-    const context = await playwright();
-    const page = await context.newPage();
-    await page.route('**/*', (route) => {
-        const request = route.request();
-        request.resourceType() === 'document' || request.resourceType() === 'script' ? route.continue() : route.abort();
+    const { page, destroy } = await getPlaywrightPage(baseIndexUrl, {
+        closeTimeout: 0,
+        gotoConfig: { waitUntil: 'networkidle' },
+        onBeforeLoad: async (page) => {
+            await page.route('**/*', (route) => {
+                const request = route.request();
+                request.resourceType() === 'document' || request.resourceType() === 'script' ? route.continue() : route.abort();
+            });
+        },
     });
-    await page.goto(baseIndexUrl, {
-        waitUntil: 'networkidle',
-    });
-    const content = await page.content();
-    await context.close();
+    let content: string;
+    try {
+        content = await page.content();
+    } finally {
+        await destroy();
+    }
 
     const $ = load(content);
 
@@ -50,15 +56,16 @@ async function handler() {
         .toArray()
         .map((item) => {
             const $item = $(item);
-            const newsTitle = $item.attr('title') ?? $item.find('h3').text().trim();
+            const newsTitle = $item.attr('title') ?? $item.find('h3').text();
             const newsLink = new URL($item.attr('href') ?? '', baseIndexUrl).href;
             const newsPubDate = $item.find('.date').text().trim();
+            const pubDate = parseDate(`${newsPubDate.slice(0, 4)}-${newsPubDate.slice(4)}`, 'YYYY-MM-DD', true);
 
             return {
                 title: newsTitle,
                 description: $item.find('.p1').text().trim(),
                 link: newsLink,
-                pubDate: parseDate(`${newsPubDate.slice(0, 4)}-${newsPubDate.slice(4)}`),
+                pubDate: Number.isNaN(pubDate.getTime()) ? undefined : timezone(pubDate, 8),
             };
         });
 

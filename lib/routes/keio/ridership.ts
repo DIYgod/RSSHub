@@ -23,15 +23,16 @@ interface StationRow {
  * A row whose 駅名 is parenthesised (（井の頭線乗換） (151,951) …) is the transfer count of the station above it, not a
  * station; a blank spacer row and the 全線計 row are skipped. Neither 順位 nor 前年比 is printed.
  */
-const parseTable = ($: CheerioAPI, table: Element): { line: string | null; years: number[]; rows: StationRow[] } => {
+const parseTable = ($: CheerioAPI, table: Element) => {
     const trs = $(table).find('tr').toArray();
     const line = cellText($(trs[0]).find('th').text()) || null;
     const headerCells = $(trs[1])
         .find('td')
         .toArray()
         .map((td) => cellText($(td).text()));
-    const years = headerCells.slice(1).map((h) => parseFiscalYear(h));
-    if (headerCells[0] !== '駅名' || years.some((y) => y === null)) {
+    const parsedYears = headerCells.slice(1).map((h) => parseFiscalYear(h));
+    const years = parsedYears.filter((y) => y !== null);
+    if (headerCells[0] !== '駅名' || years.length !== parsedYears.length) {
         return { line, years: [], rows: [] };
     }
 
@@ -46,17 +47,17 @@ const parseTable = ($: CheerioAPI, table: Element): { line: string | null; years
         }
         const last = rows.at(-1);
         if (/^[（(]/.test(station) && last) {
-            rows[rows.length - 1] = { ...last, note: [station, ...values].join(' ').trim() };
+            rows[rows.length - 1] = { ...last, note: [station, ...values].join(' ') };
             continue;
         }
         rows.push({ station, values, note: '' });
     }
-    return { line, years: years as number[], rows };
+    return { line, years, rows };
 };
 
 const round1 = (n: number): number => Math.round(n * 10) / 10;
 
-const parsePage = (html: string): { years: number[]; items: Array<ReturnType<typeof ridershipItem>> } => {
+const parsePage = (html: string) => {
     const $ = load(html);
     const tables = $('table.h-b-table')
         .toArray()
@@ -95,7 +96,10 @@ const parsePage = (html: string): { years: number[]; items: Array<ReturnType<typ
 };
 
 export const handler = async (): Promise<Data> => {
-    const page = (await cache.tryGet(LINK, async () => parsePage(await ofetch(LINK)))) as ReturnType<typeof parsePage>;
+    const page = await cache.tryGet(LINK, async () => {
+        const html = await ofetch(LINK);
+        return parsePage(html);
+    });
     return {
         title: `京王電鉄 駅別 一日平均乗降人員（${page.years.map((y) => `${y}年度`).join('・')}）`,
         link: LINK,

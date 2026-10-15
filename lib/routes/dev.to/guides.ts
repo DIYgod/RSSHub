@@ -40,7 +40,7 @@ async function handler(): Promise<Data> {
         .map((element) => {
             const $element = $(element);
             return {
-                title: $element.text().trim(),
+                title: $element.text(),
                 link: baseUrl + $element.attr('href'),
             };
         });

@@ -4,7 +4,7 @@ import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
 import type { Data, Route } from '@/types';
 import got from '@/utils/got';
-import { fallback, queryToInteger } from '@/utils/readable-social';
+import { getRouteLimit } from '@/utils/route-limit';
 
 import utils from './utils';
 
@@ -25,10 +25,12 @@ export const route: Route = {
             {
                 name: 'TUMBLR_CLIENT_SECRET',
                 description: 'Please see above for details.',
+                optional: true,
             },
             {
                 name: 'TUMBLR_REFRESH_TOKEN',
                 description: 'Please see above for details.',
+                optional: true,
             },
         ],
         requirePuppeteer: false,
@@ -48,7 +50,7 @@ async function handler(ctx: Context): Promise<Data> {
     }
 
     const tag = ctx.req.param('tag');
-    const limit = fallback(undefined, queryToInteger(ctx.req.query('limit')), 20);
+    const limit = getRouteLimit(ctx, 20);
 
     const response = await got.get('https://api.tumblr.com/v2/tagged', {
         searchParams: {
@@ -66,6 +68,5 @@ async function handler(ctx: Context): Promise<Data> {
         description: `Tumblr posts tagged #${tag}`,
         link: `https://tumblr.com/tagged/${tag}`,
         item: posts,
-        allowEmpty: true,
     };
 }

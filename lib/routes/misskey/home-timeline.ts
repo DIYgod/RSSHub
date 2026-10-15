@@ -6,6 +6,7 @@ import type { Route } from '@/types';
 import { ViewType } from '@/types';
 import got from '@/utils/got';
 import { queryToBoolean } from '@/utils/readable-social';
+import { getRouteLimit } from '@/utils/route-limit';
 
 import utils from './utils';
 
@@ -53,6 +54,7 @@ Examples:
     radar: [
         {
             source: ['misskey.io'],
+            target: '/timeline/home/misskey.io',
         },
     ],
     name: 'Home Timeline',
@@ -64,8 +66,8 @@ This route is only available for self-hosted instances.
 };
 
 async function handler(ctx) {
-    const access_token = config.misskey.accessToken;
-    if (!access_token) {
+    const accessToken = config.misskey.accessToken;
+    if (!accessToken) {
         throw new ConfigNotFoundError('Missing access token for Misskey API. Please set `MISSKEY_ACCESS_TOKEN` environment variable.');
     }
 
@@ -77,14 +79,16 @@ async function handler(ctx) {
     // docs on: https://misskey.io/api-doc#tag/notes/operation/notes___timeline
     const url = `https://${site}/api/notes/timeline`;
     const routeParams = querystring.parse(ctx.req.param('routeParams'));
+    const pathLimit = Number(routeParams.limit ?? 10);
+    const defaultLimit = Number.isSafeInteger(pathLimit) && pathLimit > 0 ? Math.min(pathLimit, 100) : 10;
     const response = await got({
         method: 'post',
         url,
         headers: {
-            Authorization: `Bearer ${access_token}`,
+            Authorization: `Bearer ${accessToken}`,
         },
         json: {
-            limit: Number(routeParams.limit ?? 10),
+            limit: Math.min(getRouteLimit(ctx, defaultLimit), 100),
             withFiles: queryToBoolean(routeParams.withFiles ?? false),
             withRenotes: queryToBoolean(routeParams.withRenotes ?? true),
             allowPartial: queryToBoolean(routeParams.allowPartial ?? true),

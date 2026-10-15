@@ -52,9 +52,6 @@ async function handler(ctx) {
 
     const response = await ofetch.raw('https://music.163.com/api/user/playlist', {
         method: 'POST',
-        headers: {
-            Referer: 'https://music.163.com/',
-        },
         body: new URLSearchParams({
             uid,
             limit: '1000',
@@ -66,9 +63,7 @@ async function handler(ctx) {
 
     const playlist = response._data.playlist || [];
 
-    const creator = (playlist[0] || {}).creator;
-
-    const { nickname, signature, avatarUrl } = creator;
+    const { nickname, signature, avatarUrl } = (playlist[0] || {}).creator;
 
     return {
         title: `${nickname} 的所有歌单`,

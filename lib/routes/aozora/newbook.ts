@@ -65,7 +65,7 @@ async function handler(ctx: Context) {
                     }
                 }
                 if (titleSub !== '') {
-                    title += '　——　' + titleSub;
+                    title += '\u{3000}——\u{3000}' + titleSub;
                 }
 
                 const pubDateRaw = $detail('table[summary="底本データ"] > tbody > tr:nth-child(3) > td:nth-child(2)').text();

@@ -2,11 +2,13 @@ import { load } from 'cheerio';
 import type { Context } from 'hono';
 import iconv from 'iconv-lite';
 
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import { getPlaywrightPage } from '@/utils/playwright';
+import { getRouteLimit } from '@/utils/route-limit';
 import timezone from '@/utils/timezone';
 
 const baseUrl = 'https://www.csc.edu.cn';
@@ -38,6 +40,8 @@ const typeMap = {
     },
 };
 
+const isNoticeType = (type: string): type is keyof typeof typeMap => Object.hasOwn(typeMap, type);
+
 export const route: Route = {
     path: '/notice/:type?',
     categories: ['study'],
@@ -64,19 +68,27 @@ export const route: Route = {
 
 async function handler(ctx: Context): Promise<Data> {
     const { type = 'lxtz' } = ctx.req.param();
-    const limit = Number(ctx.req.query('limit') ?? 10);
-    const link = baseUrl + typeMap[type as keyof typeof typeMap].url;
+    const limit = getRouteLimit(ctx, 10);
+    if (!isNoticeType(type)) {
+        throw new InvalidParameterError(`Invalid type: ${type}. Use one of ${Object.keys(typeMap).join(', ')}.`);
+    }
+    const link = baseUrl + typeMap[type].url;
     const { page, destroy } = await getPlaywrightPage(link, {
         onBeforeLoad: async (page) => {
             await page.route('**/*', (route) => (['document', 'script'].includes(route.request().resourceType()) ? route.continue() : route.abort()));
         },
         gotoConfig: { waitUntil: 'domcontentloaded' },
     });
-    await page.waitForSelector('.list-a li');
-    const html = await page.content();
-    const cookies = await page.context().cookies();
-    await destroy();
-    const headers = { cookie: cookies.map((c) => `${c.name}=${c.value}`).join('; ') };
+    let html: string;
+    let headers: { cookie: string };
+    try {
+        await page.waitForSelector('.list-a li');
+        html = await page.content();
+        const cookies = await page.context().cookies();
+        headers = { cookie: cookies.map((c) => `${c.name}=${c.value}`).join('; ') };
+    } finally {
+        await destroy();
+    }
     const $ = load(html);
 
     const list = $('.list-a li')

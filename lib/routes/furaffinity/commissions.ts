@@ -1,5 +1,8 @@
+import { load } from 'cheerio';
+
 import type { Route } from '@/types';
-import ofetch from '@/utils/ofetch';
+
+import { getCommissions } from './utils';
 
 export const route: Route = {
     path: '/commissions/:username',
@@ -29,25 +32,21 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { username } = ctx.req.param();
-    const url = `https://faexport.spangle.org.uk/user/${username}/commissions.json?full=1`;
-
-    const data = await ofetch(url, {
-        method: 'GET',
-        headers: {
-            Referer: 'https://faexport.spangle.org.uk/',
-        },
+    const data = await getCommissions(username);
+    const items = data.map((item) => {
+        const $ = load(item.description, undefined, false);
+        const typeName = $('h4').first().text() || item.title;
+        $('h4').first().remove();
+        return {
+            title: typeName,
+            link: item.submission.link,
+            guid: `${item.submission.id ?? 'commission'}:${typeName}`,
+            description: `${$.root().html() ?? ''}${item.submission.thumbnail ? `<br><img src="${item.submission.thumbnail}">` : ''}`,
+            author: username,
+        };
     });
 
-    const items = data.map((item) => ({
-        title: item.title,
-        link: item.submission.link,
-        guid: item.submission.id,
-        description: `${item.description} <br> <img src="${item.submission.thumbnail}">`,
-        author: username,
-    }));
-
     return {
-        allowEmpty: true,
         title: `Fur Affinity | ${username}'s Commissions`,
         link: `https://www.furaffinity.net/commissions/${username}`,
         description: `Fur Affinity ${username}'s Commissions`,

@@ -9,6 +9,8 @@ import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
+import timezone from '@/utils/timezone';
 import { isValidHost } from '@/utils/valid-host';
 
 export const handler = async (ctx: Context): Promise<Data> => {
@@ -17,7 +19,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
         throw new InvalidParameterError('Invalid category');
     }
 
-    const limit = Number(ctx.req.query('limit') ?? '20');
+    const limit = getRouteLimit(ctx, 20);
 
     const baseUrl = 'https://www.cnljxh.org.cn';
     const targetUrl: string = new URL(`${category}/?classid=${id}`, baseUrl).href;
@@ -40,9 +42,9 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
             const processedItem: DataItem = {
                 title,
-                pubDate: pubDateStr ? parseDate(pubDateStr) : undefined,
+                pubDate: pubDateStr ? timezone(parseDate(pubDateStr, 'YYYY-MM-DD'), 8) : undefined,
                 link: linkUrl ? new URL(linkUrl, baseUrl).href : undefined,
-                updated: upDatedStr ? parseDate(upDatedStr) : undefined,
+                updated: upDatedStr ? timezone(parseDate(upDatedStr, 'YYYY-MM-DD'), 8) : undefined,
                 language,
             };
 
@@ -74,7 +76,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                     language,
                 };
 
-                const $enclosureEl: Cheerio<Element> = $$('div.content_div embed').first();
+                const $enclosureEl: Cheerio<Element> = $$('div.content_div embed');
                 const enclosureUrl: string | undefined = $enclosureEl.attr('src');
 
                 if (enclosureUrl) {
@@ -101,7 +103,6 @@ export const handler = async (ctx: Context): Promise<Data> => {
         description: $('meta[name="description"]').attr('content'),
         link: targetUrl,
         item: items,
-        allowEmpty: true,
         image: imageUrl ? new URL(imageUrl, targetUrl).href : undefined,
         author: $('meta[name="keywords"]').attr('content'),
         language,
@@ -362,14 +363,8 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['www.cnljxh.org.cn/:category'],
-            target: (params, url) => {
-                const urlObj: URL = new URL(url);
-                const category: string = params.category;
-                const id: string | undefined = urlObj.searchParams.get('classid') ?? undefined;
-
-                return `/cnljxh${category ? `/${category}${id ? `/${id}` : ''}` : ''}`;
-            },
+            source: ['www.cnljxh.org.cn/'],
+            target: '/news/10',
         },
         {
             title: '协会专区 - 协会简介',

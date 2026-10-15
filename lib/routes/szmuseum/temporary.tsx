@@ -6,6 +6,7 @@ import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import { parseDateRange } from '@/utils/parse-date-range';
+import timezone from '@/utils/timezone';
 
 import { namespace } from './namespace';
 
@@ -78,7 +79,7 @@ export const route: Route = {
                     ({ startDate, endDate } = parseDateRange(fullDuration));
                 }
 
-                const pubDate = startDate ? parseDate(startDate) : undefined;
+                const pubDate = startDate ? timezone(parseDate(startDate), 8) : undefined;
 
                 const description = renderToString(
                     <div>

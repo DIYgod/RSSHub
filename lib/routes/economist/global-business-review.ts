@@ -1,6 +1,20 @@
+import pMap from 'p-map';
+
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
+import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
+
+interface ReviewArticle {
+    article_id: string | number;
+    publication_date?: string | number;
+    body: {
+        title: Array<{ lang: string; text: string }>;
+        fly_title: Array<{ lang: string; text: string }>;
+    };
+}
 
 const ALLOW_LANGUAGE = {
     en: 'en_GB',
@@ -20,13 +34,13 @@ const DESCRIPTION = {
     tw: '《經濟學人·商論》是經濟學人集團官方中英雙語電子APP，萃取《經濟學人》在商業、金融、科技等領域的精華文章，為中國讀者呈現全球視角的深度分析，並鼓勵中國的讀者批判性地思考中國和全球的重大議題。',
 };
 
-const parseContent = function (item, article_id, language) {
+const parseContent = function (item, articleId, language) {
     switch (item.type) {
         case 'paragraph':
             return parseParagraph(item.data, language);
 
         case 'image':
-            return parseImage(item.data, article_id, language);
+            return parseImage(item.data, articleId, language);
 
         case 'subtitle':
             return parseParagraph(item.data, language, 'h3');
@@ -46,13 +60,13 @@ const parseParagraph = function (data, language, type = 'p') {
     return `<div>${language.map((item) => `<${type}>${content[ALLOW_LANGUAGE[item]]}</${type}>`).join('')}</div>`;
 };
 
-const parseImage = function (data, article_id, language) {
+const parseImage = function (data, articleId, language) {
     const content = Object.assign({}, ...data.map((x) => ({ [x.lang]: x.image_path })));
-    return `<div><img src="https://businessreviewglobal-cdn.com/article_images/${article_id}/${encodeURIComponent(content[ALLOW_LANGUAGE[language[0]]])}"/></div>`;
+    return `<div><img src="https://businessreviewglobal-cdn.com/article_images/${articleId}/${encodeURIComponent(content[ALLOW_LANGUAGE[language[0]]])}"/></div>`;
 };
 
-const getArticleDetail = (article_id, language) => {
-    const link = `https://api.hummingbird.businessreview.global/api/article/index?id=${article_id}`;
+const getArticleDetail = (articleId, language) => {
+    const link = `https://api.hummingbird.businessreview.global/api/article/index?id=${articleId}`;
     return cache.tryGet(`${link}:${language.join('-')}`, async () => {
         const response = await got({
             method: 'get',
@@ -61,7 +75,7 @@ const getArticleDetail = (article_id, language) => {
         const data = response.data.body;
         let content = '';
         content += parseParagraph(data.rubric, language);
-        content += data.content.map((item) => parseContent(item, article_id, language)).join('');
+        content += data.content.map((item) => parseContent(item, articleId, language)).join('');
         return content;
     });
 };
@@ -96,29 +110,36 @@ async function handler(ctx) {
         ctx.req
             .param('language')
             .split('-')
-            .filter((item, index, arr) => ALLOW_LANGUAGE[item] && arr.indexOf(item, 0) === index)) || ['cn', 'en'];
-    const main_language = language[0];
+            .filter((item, index, arr) => Object.hasOwn(ALLOW_LANGUAGE, item) && arr.indexOf(item, 0) === index)) || ['cn', 'en'];
+    if (!language.length) {
+        throw new InvalidParameterError('Choose one or more supported languages: cn, en, or tw.');
+    }
+    const mainLanguage = language[0];
 
     const response = await got({
         method: 'get',
         url: 'https://api.hummingbird.businessreview.global/api/toc/get_articles',
     });
 
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 10;
-    const items = await Promise.all(
-        response.data.articles.new.slice(0, limit).map(async (item) => ({
-            title: parseTitle(item.body.title, [main_language]),
+    const articles: ReviewArticle[] = response.data.articles.new;
+    const limit = getRouteLimit(ctx, 10);
+    const detailLimit = ctx.req.query('sorted') === 'false' ? limit : Math.max(10, limit);
+    const items = await pMap(
+        articles.slice(0, detailLimit),
+        async (item) => ({
+            title: parseTitle(item.body.title, [mainLanguage]),
             description: await getArticleDetail(item.article_id, language),
-            category: parseTitle(item.body.fly_title, [main_language]),
+            category: parseTitle(item.body.fly_title, [mainLanguage]),
             link: `https://www.businessreview.global/latest/${item.article_id}`,
-            pubDate: item.publication_date,
-        }))
+            pubDate: item.publication_date ? parseDate(item.publication_date) : undefined,
+        }),
+        { concurrency: 3 }
     );
 
     return {
-        title: TITLE[main_language],
+        title: TITLE[mainLanguage],
         link: 'https://www.businessreview.global',
-        description: DESCRIPTION[main_language],
+        description: DESCRIPTION[mainLanguage],
         item: items,
     };
 }

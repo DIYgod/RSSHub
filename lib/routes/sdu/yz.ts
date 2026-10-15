@@ -1,9 +1,10 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
 
 const host = 'https://www.yz.sdu.edu.cn';
 
@@ -40,7 +41,7 @@ async function handler(ctx) {
         .map((element) => {
             const $element = $(element);
             let itemDate = $element.find('.times').text();
-            itemDate = itemDate.slice(2) + '.' + itemDate.slice(0, 2);
+            itemDate = (itemDate.slice(2) + '-' + itemDate.slice(0, 2)).replaceAll('.', '-').replaceAll(/\s/g, '');
             const aTag = $element.find('a');
             const title = aTag.attr('title') || aTag.text().trim();
             const itemPath = aTag.attr('href') ?? '';
@@ -48,13 +49,15 @@ async function handler(ctx) {
             return {
                 title,
                 link,
-                pubDate: parseDate(itemDate),
+                pubDate: parseDateInTimezone(itemDate, 8),
             };
         });
 
-    list = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link, async () => {
+    list = await pMap(
+        list,
+        async (item) => ({
+            ...item,
+            ...(await cache.tryGet(`yz:article-v2:${item.link}`, async () => {
                 const response = await got(item.link);
                 const $ = load(response.data);
 
@@ -68,11 +71,11 @@ async function handler(ctx) {
                     description += attachments.html()?.trim() ?? '';
                 }
                 return {
-                    ...item,
                     description,
                 };
-            })
-        )
+            })),
+        }),
+        { concurrency: 3 }
     );
 
     return {

@@ -4,12 +4,13 @@ import type { Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
 import { renderDescription } from './templates/description';
 
 export const handler = async (ctx) => {
     const { category = 'latest/news' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 30;
+    const limit = getRouteLimit(ctx, 30);
 
     const rootUrl = 'https://www.accessbriefing.com';
     const currentUrl = `${rootUrl}/${category}`;
@@ -127,23 +128,23 @@ If you subscribe to [Latest News](https://www.accessbriefing.com/latest/news)，
 
 #### Latest
 
-| Category                                                                               | ID                                                                                              |
-| -------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------- |
-| [News](https://www.accessbriefing.com/latest/news)                                     | [latest/news](https://rsshub.app/target/site/latest/news)                                       |
-| [Products & Technology](https://www.accessbriefing.com/latest/products-and-technology) | [latest/products-and-technology](https://rsshub.app/target/site/latest/products-and-technology) |
-| [Rental News](https://www.accessbriefing.com/latest/rental-news)                       | [latest/rental-news](https://rsshub.app/target/site/latest/rental-news)                         |
-| [People](https://www.accessbriefing.com/latest/people)                                 | [latest/people](https://rsshub.app/target/site/latest/people)                                   |
-| [Regualtions & Safety](https://www.accessbriefing.com/latest/regualtions-safety)       | [latest/regualtions-safety](https://rsshub.app/target/site/latest/regualtions-safety)           |
-| [Finance](https://www.accessbriefing.com/latest/finance)                               | [latest/finance](https://rsshub.app/target/site/latest/finance)                                 |
-| [Sustainability](https://www.accessbriefing.com/latest/sustainability)                 | [latest/sustainability](https://rsshub.app/target/site/latest/sustainability)                   |
+| Category                                                                               | ID                                                                                                 |
+| -------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- |
+| [News](https://www.accessbriefing.com/latest/news)                                     | [latest/news](https://rsshub.app/accessbriefing/latest/news)                                       |
+| [Products & Technology](https://www.accessbriefing.com/latest/products-and-technology) | [latest/products-and-technology](https://rsshub.app/accessbriefing/latest/products-and-technology) |
+| [Rental News](https://www.accessbriefing.com/latest/rental-news)                       | [latest/rental-news](https://rsshub.app/accessbriefing/latest/rental-news)                         |
+| [People](https://www.accessbriefing.com/latest/people)                                 | [latest/people](https://rsshub.app/accessbriefing/latest/people)                                   |
+| [Regualtions & Safety](https://www.accessbriefing.com/latest/regualtions-safety)       | [latest/regualtions-safety](https://rsshub.app/accessbriefing/latest/regualtions-safety)           |
+| [Finance](https://www.accessbriefing.com/latest/finance)                               | [latest/finance](https://rsshub.app/accessbriefing/latest/finance)                                 |
+| [Sustainability](https://www.accessbriefing.com/latest/sustainability)                 | [latest/sustainability](https://rsshub.app/accessbriefing/latest/sustainability)                   |
 
 #### Insight
 
-| Category                                                                          | ID                                                                                        |
-| --------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- |
-| [Interviews](https://www.accessbriefing.com/insight/interviews)                   | [insight/interviews](https://rsshub.app/target/site/insight/interviews)                   |
-| [Longer reads](https://www.accessbriefing.com/insight/longer-reads)               | [insight/longer-reads](https://rsshub.app/target/site/insight/longer-reads)               |
-| [Videos and podcasts](https://www.accessbriefing.com/insight/videos-and-podcasts) | [insight/videos-and-podcasts](https://rsshub.app/target/site/insight/videos-and-podcasts) |`,
+| Category                                                                          | ID                                                                                           |
+| --------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
+| [Interviews](https://www.accessbriefing.com/insight/interviews)                   | [insight/interviews](https://rsshub.app/accessbriefing/insight/interviews)                   |
+| [Longer reads](https://www.accessbriefing.com/insight/longer-reads)               | [insight/longer-reads](https://rsshub.app/accessbriefing/insight/longer-reads)               |
+| [Videos and podcasts](https://www.accessbriefing.com/insight/videos-and-podcasts) | [insight/videos-and-podcasts](https://rsshub.app/accessbriefing/insight/videos-and-podcasts) |`,
     categories: ['new-media'],
 
     features: {

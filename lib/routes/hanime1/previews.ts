@@ -1,8 +1,10 @@
 import { load } from 'cheerio';
+import { escape } from 'entities';
 
 import { config } from '@/config';
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/previews/:date?',
@@ -23,14 +25,14 @@ export const route: Route = {
     radar: [
         {
             source: ['hanime1.me/previews/:date', 'hanime1.me/previews'],
-            target: '/previews/:date',
+            target: '/previews/:date?',
         },
     ],
     handler: async (ctx) => {
         const baseUrl = 'https://hanime1.me';
         let { date } = ctx.req.param();
         if (!date) {
-            // 默认使用当前日期
+            // Use the current calendar month by default.
             const now = new Date();
             const year = now.getFullYear();
             const month = now.getMonth() + 1;
@@ -52,22 +54,27 @@ export const route: Route = {
             .toArray()
             .map((el) => {
                 const row = $(el);
-                // 中文标题
-                const title = row.find('.preview-info-content h4').first().text().trim();
+                // Chinese title.
+                const title = row.find('.preview-info-content h4').first().text();
 
-                // 预览图
+                // Preview image.
                 const previewImageSrc = row.find('.preview-info-cover img').attr('src') || '';
 
-                // 发布时间 MMDD
+                // Release calendar day (month and day).
                 const rawDate = row.find('.preview-info-cover div').text().trim();
-                // 视频 选中模态框全局查找
+                const releaseDate = /(\d{1,2})月(\d{1,2})日/.exec(rawDate);
+                const period = /^(\d{4})(\d{2})$/.exec(date);
+                const releaseCalendar = period && releaseDate && Number(period[2]) === Number(releaseDate[1]) ? `${period[1]}-${releaseDate[1].padStart(2, '0')}-${releaseDate[2].padStart(2, '0')}` : undefined;
+                const parsedDate = releaseCalendar ? parseDate(`${releaseCalendar}T00:00:00Z`) : undefined;
+                const pubDate = parsedDate && Number.isFinite(parsedDate.getTime()) && parsedDate.toISOString().startsWith(releaseCalendar!) ? parsedDate : undefined;
+                // Find the video in the selected trailer modal.
                 const modalSelector = row.find('.trailer-modal-trigger').attr('data-target') || '';
                 const previewVideoLink = modalSelector ? $(`${modalSelector} video source`).attr('src') || '' : '';
 
-                // 简介
+                // Synopsis.
                 const description = row.find('.caption').first().text().trim();
 
-                // 标签
+                // Tags.
                 const tags = row
                     .find('.single-video-tag a')
                     .toArray()
@@ -76,17 +83,15 @@ export const route: Route = {
                 return {
                     title,
                     description: `
-                    <p>${description} </p>
-                    <p>Tags: [${tags.join(', ')}]</p>
-                    <video controls width="100%" poster="${previewImageSrc}">
-                        <source src="${previewVideoLink}" type="video/mp4">
-                        Your browser does not support the video tag.
-                    </video>
+                    <p>${escape(description)} </p>
+                    ${previewVideoLink ? `<video controls width="100%" poster="${previewImageSrc}"><source src="${previewVideoLink}" type="video/mp4"></video>` : `<img src="${previewImageSrc}">`}
                     `,
-                    enclosure_url: previewImageSrc,
-                    enclosure_type: 'image/jpeg',
-                    link: previewVideoLink,
-                    guid: `hanime1-${rawDate}-${title}`, // 上映时间和标题
+                    pubDate,
+                    category: tags,
+                    enclosure_url: previewVideoLink || undefined,
+                    enclosure_type: previewVideoLink ? 'video/mp4' : undefined,
+                    link: modalSelector ? `${link}${modalSelector}` : undefined,
+                    guid: `hanime1-${date}-${rawDate}-${title}`, // Release day and title.
                 };
             });
 

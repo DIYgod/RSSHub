@@ -8,11 +8,7 @@ const pacProxy = (pacUri: Config['pacUri'], pacScript: Config['pacScript'], prox
 
     // Validate PAC_URI / PAC_SCRIPT
     if (pacScript) {
-        if (typeof pacScript === 'string') {
-            pacUri = 'data:text/javascript;charset=utf-8,' + encodeURIComponent(pacScript);
-        } else {
-            logger.error('Invalid PAC_SCRIPT, use PAC_URI instead');
-        }
+        pacUri = 'data:text/javascript;charset=utf-8,' + encodeURIComponent(pacScript);
     }
     if (pacUri) {
         try {

@@ -1,5 +1,6 @@
 import type { Route } from '@/types';
 import { ViewType } from '@/types';
+import { getRouteLimit } from '@/utils/route-limit';
 
 import { getArticleItems, rootUrl } from './utils';
 
@@ -29,7 +30,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const items = await getArticleItems({
-        limit: ctx.req.query('limit') ?? 50,
+        limit: getRouteLimit(ctx, 50),
     });
 
     return {

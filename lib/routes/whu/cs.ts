@@ -1,4 +1,6 @@
-import { load } from 'cheerio';
+import { type Cheerio, type CheerioAPI, load } from 'cheerio';
+import { type AnyNode, cloneNode, Document } from 'domhandler';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
@@ -7,7 +9,24 @@ import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
 const baseUrl = 'https://cs.whu.edu.cn';
-
+class ArticleAccessError extends Error {}
+function parseCalendarDate(value: string | undefined) {
+    if (!value?.trim()) {
+        return;
+    }
+    const date = parseDate(value.trim(), 'YYYY-MM-DD', true);
+    return Number.isFinite(date.getTime()) ? timezone(date, 0) : undefined;
+}
+function parsePublicationDate(value: string | undefined) {
+    if (!value?.trim()) {
+        return;
+    }
+    if (/^\d{4}-\d{2}-\d{2}$/.test(value.trim())) {
+        return parseCalendarDate(value);
+    }
+    const date = parseDate(value.trim(), ['YYYY-MM-DD HH:mm:ss', 'YYYY-MM-DD HH:mm'], true);
+    return Number.isFinite(date.getTime()) ? timezone(date, 8) : undefined;
+}
 export const route: Route = {
     path: '/cs/:type',
     categories: ['university'],
@@ -28,93 +47,136 @@ export const route: Route = {
 | -------- | -------- | -------- | -------- | -------- |
 | 参数     | 0        | 1        | 2        | 3        |`,
 };
-
 async function handler(ctx) {
     const type = Number.parseInt(ctx.req.param('type'));
-
     let link;
     switch (type) {
         case 0:
-            link = `${baseUrl}/xwdt/xyxw.htm`; // 学院新闻
-
+            link = `${baseUrl}/xwdt/xyxw.htm`; // School news
             break;
-
         case 1:
-            link = `${baseUrl}/kxyj/xsjl.htm`; // 学术交流
-
+            link = `${baseUrl}/kxyj/xsjl.htm`; // Academic exchanges
             break;
-
         case 2:
-            link = `${baseUrl}/xwdt/tzgg.htm`; // 通知公告
-
+            link = `${baseUrl}/xwdt/tzgg.htm`; // Notices
             break;
-
         case 3:
-            link = `${baseUrl}/kxyj/kyjz.htm`; // 科研进展
-
+            link = `${baseUrl}/kxyj/kyjz.htm`; // Research progress
             break;
-
         default:
             throw new Error(`Unknown type: ${type}`);
     }
-
     const response = await got(link);
     const $ = load(response.data);
-
     const list = $('div.study ul li')
         .toArray()
-        .map((item): DataItem & { link: string } => {
-            const $item = $(item);
-            return {
-                title: $item.find('a p').text().trim(),
-                pubDate: parseDate($item.find('span').text()),
-                link: new URL($item.find('a').attr('href')!, link).href,
-            };
-        });
-
-    const results = (await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link, async (): Promise<any> => {
-                let response;
+        .map(
+            (
+                item
+            ): DataItem & {
+                link: string;
+            } => {
+                const $item = $(item);
+                return {
+                    title: $item.find('a p').text(),
+                    pubDate: parseCalendarDate($item.find('span').text()),
+                    link: new URL($item.find('a').attr('href')!, link).href,
+                };
+            }
+        );
+    const results = await unwrapFirstFailure(
+        pMap(
+            list,
+            async (item) => {
                 try {
-                    // 实测发现有些链接无法访问
-                    response = await got(item.link);
-                } catch {
-                    return null;
-                }
-                const $ = load(response.data);
-
-                if ($('.prompt').length) {
-                    item.description = $('.prompt').html();
-                    return item;
-                }
-
-                const content = $('.content');
-
-                content.find('img').each((_, e) => {
-                    const $e = $(e);
-                    if (!$e.attr('orisrc')) {
-                        return;
+                    const detail = await cache.tryGet(`whu:cs:main-content:${item.link}`, async () => {
+                        const response = await got(item.link);
+                        const $ = load(response.data);
+                        if ($('.prompt').length || ($('title').text() === '用户验证' && $('body').text().includes('验证码'))) {
+                            throw new ArticleAccessError(`Article access permission or verification required at ${item.link}`);
+                        }
+                        const content = $('.v_news_content');
+                        if (content.length !== 1) {
+                            throw new Error(`Article body not found at ${item.link}`);
+                        }
+                        content.find('script, style').remove();
+                        const downloads = $('.content a[href*="news.DownloadAttachUrl"]').filter((_, element) => $(element).parents('.v_news_content').length === 0);
+                        content.find('img').each((_, element) => {
+                            const image = $(element);
+                            const src = image.attr('orisrc') ?? image.attr('src');
+                            if (src) {
+                                image.attr('src', new URL(src, item.link).href);
+                            }
+                            image.removeAttr('orisrc');
+                            image.removeAttr('vurl');
+                        });
+                        content
+                            .find('a[href]')
+                            .add(downloads)
+                            .each((_, element) => {
+                                const anchor = $(element);
+                                const href = anchor.attr('href');
+                                if (href) {
+                                    anchor.attr('href', new URL(href, item.link).href);
+                                }
+                            });
+                        const attachments = $('<ul></ul>');
+                        downloads.each((_, element) => {
+                            const attachmentWrapper1 = $('<li></li>');
+                            attachmentWrapper1.append(copyContent($(element), $));
+                            attachments.append(attachmentWrapper1);
+                        });
+                        const category = $('meta[name="Keywords"]').attr('content')?.split(/\s+/).filter(Boolean);
+                        return {
+                            category: category?.length ? category : undefined,
+                            description: content.html()! + (downloads.length ? `\n${$.html(attachments)}` : ''),
+                            publicationDate: $('meta[name="PubDate"]').attr('content'),
+                            listDate: isNullish(item.pubDate) ? undefined : parseDate(item.pubDate).getTime(),
+                        };
+                    });
+                    const listDate = isNullish(item.pubDate) ? undefined : parseDate(item.pubDate).getTime();
+                    return {
+                        ...item,
+                        description: detail.description,
+                        category: detail.category,
+                        pubDate: detail.listDate === listDate ? (parsePublicationDate(detail.publicationDate) ?? item.pubDate) : item.pubDate,
+                    };
+                } catch (error) {
+                    if (error instanceof ArticleAccessError || (error instanceof Error && error.name === 'FetchError')) {
+                        return item;
                     }
-
-                    const newUrl = new URL($e.attr('orisrc')!, 'https://cs.whu.edu.cn');
-                    $e.attr('src', newUrl.href);
-                    $e.removeAttr('orisrc');
-                    $e.removeAttr('vurl');
-                });
-
-                item.description = content.html();
-                item.pubDate = $('meta[name="PubDate"]').length ? timezone(parseDate($('meta[name="PubDate"]').attr('content')!), 8) : item.pubDate;
-
-                return item;
-            })
+                    throw error;
+                }
+            },
+            { concurrency: 3, stopOnError: false }
         )
-    )) as Array<DataItem | null>;
-    const items = results.filter((item) => item !== null);
-
+    );
+    const items = results;
     return {
         title: $('title').text(),
         link,
         item: items,
     };
+}
+async function unwrapFirstFailure<T>(promise: Promise<T>): Promise<T> {
+    try {
+        return await promise;
+    } catch (error) {
+        throw error instanceof AggregateError ? error.errors[0] : error;
+    }
+}
+function copyContent<T extends AnyNode>(selection: Cheerio<T>, $: CheerioAPI): Cheerio<T> {
+    const nodes = selection.toArray().map((node) => cloneNode(node, true));
+    const root = new Document(nodes);
+    for (const node of nodes) {
+        node.parent = root;
+    }
+    return $(nodes);
+}
+function isNullish(value: unknown): value is null | undefined {
+    return isOneOf(value, [null, undefined]);
+}
+function isOneOf<const T>(value: unknown, values: readonly T[]): value is T {
+    const candidates: readonly unknown[] = values;
+    return candidates.includes(value);
 }

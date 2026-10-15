@@ -13,7 +13,8 @@ export const route: Route = {
     parameters: { section: 'target section' },
     radar: [
         {
-            source: ['dealstreetasia.com/'],
+            source: ['dealstreetasia.com/section/:section/'],
+            target: '/section/:section',
         },
     ],
     name: 'Section',
