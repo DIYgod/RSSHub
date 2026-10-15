@@ -27,7 +27,9 @@ const parsePageQuery = (url?: string): { pageId: string; sign: string } => {
 };
 
 const getVenueQueryContext = async (moduleKey: string): Promise<{ pageId: string; sign: string }> => {
-    const response = await ofetch<HomepageMainResponse>('https://m.xiaomiyoupin.com/homepage/main/v1005');
+    const response = await ofetch<HomepageMainResponse>('https://m.xiaomiyoupin.com/homepage/main/v1005', {
+        responseType: 'json',
+    });
     const floor = response.data.homepage.floors.find((item) => item.module_key === moduleKey);
     const url = floor?.data.jump_url ?? floor?.data.pic_jump_url;
     return parsePageQuery(url);
