@@ -34,7 +34,10 @@ const getHeaders = async (cookieJar: CookieJar) => {
     };
 };
 
-export const checkLogin = async (cookieJar: CookieJar) => {
+export const checkLogin = async (cookieJar: CookieJar, bootstrapPage?: () => Promise<unknown>) => {
+    if (!(await getCSRFTokenFromJar(cookieJar))) {
+        await bootstrapPage?.();
+    }
     const response = await ofetch(`${baseUrl}/api/v1/web/fxcal/ig_sso_users/`, {
         headers: {
             'content-type': 'application/x-www-form-urlencoded',
@@ -116,19 +119,27 @@ const getGuestUser = (html: string) => {
         .find((user) => user?.full_name !== undefined);
 };
 
-export const getPage = async (username: string, cookieJar: CookieJar) => {
-    const page = await ofetch.raw(`${baseUrl}/${username}/`, {
+export const getSessionPage = async (link: string, cookieJar: CookieJar) => {
+    const page = await ofetch.raw(link, {
         headers: {
             cookie: await cookieJar.getCookieString(baseUrl),
         },
     });
+    await Promise.all(page.headers.getSetCookie().map((c) => cookieJar.setCookie(c, baseUrl)));
+    const html: string = page._data;
+    const csrfToken = html.match(/"csrf_token":"([A-Za-z0-9]+)"/)?.[1];
+    if (csrfToken && !(await getCSRFTokenFromJar(cookieJar))) {
+        await cookieJar.setCookie(`csrftoken=${csrfToken}; Path=/; Secure`, baseUrl);
+    }
+    return { html, url: page.url };
+};
+
+export const getPage = async (username: string, cookieJar: CookieJar) => {
+    const page = await getSessionPage(`${baseUrl}/${username}/`, cookieJar);
     if (page.url.includes('/accounts/login/')) {
         throw new ConfigNotFoundError(page.url.includes('is_from_rle') ? 'Please set `INSTAGRAM_COOKIE`' : 'Invalid cookie');
     }
-
-    await Promise.all(page.headers.getSetCookie().map((c) => cookieJar.setCookie(c, baseUrl)));
-
-    const html: string = page._data;
+    const { html } = page;
     const profileId = html.match(/"profile_id":"(\d+)"/)?.[1];
     if (!profileId) {
         throw new NotFoundError(`Instagram user @${username} not found`);
