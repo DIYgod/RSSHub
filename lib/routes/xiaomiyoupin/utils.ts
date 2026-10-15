@@ -121,7 +121,7 @@ const getGoodsFromVenue = async (moduleKey: string, resolvers: string[]): Promis
 
 export const getCrowdfundingList = (): Promise<GoodsListItem[]> => getGoodsFromVenue('crowd_funding', ['crowd-funding']);
 
-export const getNewProductList = (): Promise<GoodsListItem[]> => getGoodsFromVenue('new_product', ['leek-super', 'leek-selective']);
+export const getNewProductList = (): Promise<GoodsListItem[]> => getGoodsFromVenue('product_hot', ['leek-super', 'leek-selective']);
 
 const getGoodsItem = async (gid: number): Promise<GoodsDetailItem> => {
     const response = await ofetch<GoodsDetailResponse>('https://m.xiaomiyoupin.com/api/gateway/detail', {
