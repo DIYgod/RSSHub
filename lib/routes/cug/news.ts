@@ -9,6 +9,7 @@ import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
 import timezone from '@/utils/timezone';
+import { fixArticleContent } from '@/utils/wechat-mp';
 
 dayjs.extend(utc);
 
@@ -75,12 +76,13 @@ async function handler(ctx) {
     const limit = getRouteLimit(ctx);
     const out = await Promise.all(
         articles.slice(0, limit).map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(`cug:news:article:v2:${item.link}`, async () => {
                 try {
                     const response = await ofetch(item.link);
                     const $ = load(response);
-                    const contentSelector = new URL(item.link).hostname === 't.m.youth.cn' ? '#content' : '.v_news_content';
-                    item.description = $(contentSelector).html() ?? item.description;
+                    const hostname = new URL(item.link).hostname;
+                    const contentSelector = hostname === 't.m.youth.cn' ? '#content' : '.v_news_content';
+                    item.description = hostname === 'mp.weixin.qq.com' ? fixArticleContent($('#js_content')) || item.description : ($(contentSelector).html() ?? item.description);
                 } catch (error) {
                     if (!(error instanceof Error) || !('statusCode' in error) || error.statusCode !== 404) {
                         throw error;
