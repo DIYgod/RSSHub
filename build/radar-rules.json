@@ -265,6 +265,20 @@
       }
     ]
   },
+  "bbcnewslabs.co.uk": {
+    "_name": "BBC News Labs",
+    ".": [
+      {
+        "title": "News",
+        "docs": "https://docs.rsshub.app/routes/bbcnewslabs",
+        "source": [
+          "/",
+          "/rdnewslabs/news/"
+        ],
+        "target": "/bbcnewslabs/news"
+      }
+    ]
+  },
   "binance.com": {
     "_name": "Binance",
     "www": [
@@ -959,37 +973,6 @@
           "/ResearchResults"
         ],
         "target": "/ke/researchResults"
-      }
-    ]
-  },
-  "last.fm": {
-    "_name": "Last.fm",
-    "www": [
-      {
-        "title": "用户 Love 记录",
-        "docs": "https://docs.rsshub.app/routes/last.fm",
-        "source": [
-          "/user/:user",
-          "/user/:user/*"
-        ],
-        "target": "/last.fm/loved/:user"
-      },
-      {
-        "title": "用户播放记录",
-        "docs": "https://docs.rsshub.app/routes/last.fm",
-        "source": [
-          "/user/:user",
-          "/user/:user/*"
-        ],
-        "target": "/last.fm/recent/:user"
-      },
-      {
-        "title": "站内 Top 榜单",
-        "docs": "https://docs.rsshub.app/routes/last.fm",
-        "source": [
-          "/charts"
-        ],
-        "target": "/last.fm/top"
       }
     ]
   },
@@ -1738,19 +1721,6 @@
           "/"
         ],
         "target": "/bnext/"
-      }
-    ]
-  },
-  "bse.cn": {
-    "_name": "北京证券交易所",
-    ".": [
-      {
-        "title": "栏目",
-        "docs": "https://docs.rsshub.app/routes/bse",
-        "source": [
-          "/"
-        ],
-        "target": "/bse/:category?/:keyword?"
       }
     ]
   },
@@ -3170,6 +3140,19 @@
       }
     ]
   },
+  "bse.cn": {
+    "_name": "北京证券交易所",
+    ".": [
+      {
+        "title": "栏目",
+        "docs": "https://docs.rsshub.app/routes/bse",
+        "source": [
+          "/"
+        ],
+        "target": "/bse/:category?/:keyword?"
+      }
+    ]
+  },
   "cbre.com.cn": {
     "_name": "世邦魏理仕 CBRE",
     "www": [
@@ -4481,6 +4464,19 @@
           "/works"
         ],
         "target": "/openalex/:journals/:type?/:ids?"
+      }
+    ]
+  },
+  "openwrt.org": {
+    "_name": "OpenWrt",
+    ".": [
+      {
+        "title": "Releases",
+        "docs": "https://docs.rsshub.app/routes/openwrt",
+        "source": [
+          "/toh/:brand/:model"
+        ],
+        "target": "/openwrt/releases/:brand/:model"
       }
     ]
   },
@@ -8394,29 +8390,6 @@
       }
     ]
   },
-  "6parkbbs.com": {
-    "_name": "留园网",
-    "club": [
-      {
-        "title": "首页",
-        "docs": "https://docs.rsshub.app/routes/6park",
-        "source": [
-          "/:id/index.php",
-          "/"
-        ],
-        "target": "/6park/index/:id?"
-      },
-      {
-        "title": "新闻栏目",
-        "docs": "https://docs.rsshub.app/routes/6park",
-        "source": [
-          "/:id/index.php",
-          "/"
-        ],
-        "target": "/6park/:id?"
-      }
-    ]
-  },
   "78dm.net": {
     "_name": "78 动漫",
     "www": [
@@ -9182,19 +9155,6 @@
           "/u/:uid"
         ],
         "target": "/acfun/user/video/:uid"
-      }
-    ]
-  },
-  "acgvinyl.com": {
-    "_name": "ACG Vinyl - 黑胶",
-    "www": [
-      {
-        "title": "News",
-        "docs": "https://docs.rsshub.app/routes/acgvinyl",
-        "source": [
-          "/"
-        ],
-        "target": "/acgvinyl/news"
       }
     ]
   },
@@ -12939,19 +12899,6 @@
       }
     ]
   },
-  "bbcnewslabs.co.uk": {
-    "_name": "BBC News Labs",
-    ".": [
-      {
-        "title": "News",
-        "docs": "https://docs.rsshub.app/routes/bbcnewslabs",
-        "source": [
-          "/"
-        ],
-        "target": "/bbcnewslabs/news"
-      }
-    ]
-  },
   "bcg.com": {
     "_name": "Boston Consulting Group",
     "www": [
@@ -14093,19 +14040,6 @@
           "/news"
         ],
         "target": "/capitalmuseum/news"
-      }
-    ]
-  },
-  "cartoonmad.com": {
-    "_name": "動漫狂",
-    ".": [
-      {
-        "title": "漫画更新",
-        "docs": "https://docs.rsshub.app/routes/cartoonmad",
-        "source": [
-          "/comic/:id"
-        ],
-        "target": "/cartoonmad/comic/:id"
       }
     ]
   },
@@ -19952,38 +19886,6 @@
           "/"
         ],
         "target": "/docschina/weekly"
-      }
-    ]
-  },
-  "xlmp4.com": {
-    "_name": "DoMP4 影视",
-    "www": [
-      {
-        "title": "剧集订阅",
-        "docs": "https://docs.rsshub.app/routes/domp4",
-        "source": [
-          "/html/:id",
-          "/detail/:id"
-        ],
-        "target": "/domp4/detail/:id"
-      },
-      {
-        "title": "最近更新的电源BT列表",
-        "docs": "https://docs.rsshub.app/routes/domp4",
-        "source": [
-          "/",
-          "/custom/update.html"
-        ],
-        "target": "/domp4/latest_movie_bt"
-      },
-      {
-        "title": "最近更新",
-        "docs": "https://docs.rsshub.app/routes/domp4",
-        "source": [
-          "/",
-          "/custom/update.html"
-        ],
-        "target": "/domp4/latest/:type?"
       }
     ]
   },
@@ -34793,13 +34695,15 @@
       }
     ]
   },
-  "mox.moe": {
-    "_name": "Mox.moe",
+  "kxx.moe": {
+    "_name": "Kmoe",
     ".": [
       {
         "title": "首頁",
         "docs": "https://docs.rsshub.app/routes/mox",
         "source": [
+          "/l/:category",
+          "/",
           "/l/:category",
           "/"
         ],
@@ -37791,19 +37695,6 @@
           "/"
         ],
         "target": "/onet/news"
-      }
-    ]
-  },
-  "openwrt.org": {
-    "_name": "OpenWrt",
-    ".": [
-      {
-        "title": "Releases",
-        "docs": "https://docs.rsshub.app/routes/openwrt",
-        "source": [
-          "/toh/:brand/:model"
-        ],
-        "target": "/openwrt/releases/:brand/:model"
       }
     ]
   },
@@ -49427,6 +49318,100 @@
       }
     ]
   },
+  "wainao.me": {
+    "_name": "歪脑",
+    "www": [
+      {
+        "title": "主题",
+        "docs": "https://docs.rsshub.app/routes/wainao",
+        "source": [
+          "/topics/:id"
+        ],
+        "target": "/wainao/topics/:id"
+      },
+      {
+        "title": "热点",
+        "docs": "https://docs.rsshub.app/routes/wainao",
+        "source": [
+          "/topics/hotspot"
+        ],
+        "target": "/wainao/topics/hotspot"
+      },
+      {
+        "title": "人物",
+        "docs": "https://docs.rsshub.app/routes/wainao",
+        "source": [
+          "/topics/people"
+        ],
+        "target": "/wainao/topics/people"
+      },
+      {
+        "title": "身份",
+        "docs": "https://docs.rsshub.app/routes/wainao",
+        "source": [
+          "/topics/identity"
+        ],
+        "target": "/wainao/topics/identity"
+      },
+      {
+        "title": "政治",
+        "docs": "https://docs.rsshub.app/routes/wainao",
+        "source": [
+          "/topics/politics"
+        ],
+        "target": "/wainao/topics/politics"
+      },
+      {
+        "title": "社会",
+        "docs": "https://docs.rsshub.app/routes/wainao",
+        "source": [
+          "/topics/society"
+        ],
+        "target": "/wainao/topics/society"
+      },
+      {
+        "title": "文化",
+        "docs": "https://docs.rsshub.app/routes/wainao",
+        "source": [
+          "/topics/culture"
+        ],
+        "target": "/wainao/topics/culture"
+      },
+      {
+        "title": "经济",
+        "docs": "https://docs.rsshub.app/routes/wainao",
+        "source": [
+          "/topics/economics"
+        ],
+        "target": "/wainao/topics/economics"
+      },
+      {
+        "title": "环境",
+        "docs": "https://docs.rsshub.app/routes/wainao",
+        "source": [
+          "/topics/environment"
+        ],
+        "target": "/wainao/topics/environment"
+      },
+      {
+        "title": "FUN",
+        "docs": "https://docs.rsshub.app/routes/wainao",
+        "source": [
+          "/topics/fun"
+        ],
+        "target": "/wainao/topics/fun"
+      },
+      {
+        "title": "读",
+        "docs": "https://docs.rsshub.app/routes/wainao",
+        "source": [
+          "/",
+          "/wainao-reads"
+        ],
+        "target": "/wainao/wainao-reads"
+      }
+    ]
+  },
   "wallhaven.cc": {
     "_name": "wallhaven",
     ".": [
@@ -58800,6 +58785,37 @@
       }
     ]
   },
+  "last.fm": {
+    "_name": "Last.fm",
+    "www": [
+      {
+        "title": "站内 Top 榜单",
+        "docs": "https://docs.rsshub.app/routes/last.fm",
+        "source": [
+          "/charts"
+        ],
+        "target": "/last.fm/top"
+      },
+      {
+        "title": "用户 Love 记录",
+        "docs": "https://docs.rsshub.app/routes/last.fm",
+        "source": [
+          "/user/:user",
+          "/user/:user/*"
+        ],
+        "target": "/last.fm/loved/:user"
+      },
+      {
+        "title": "用户播放记录",
+        "docs": "https://docs.rsshub.app/routes/last.fm",
+        "source": [
+          "/user/:user",
+          "/user/:user/*"
+        ],
+        "target": "/last.fm/recent/:user"
+      }
+    ]
+  },
   "leiphone.com": {
     "_name": "雷峰网",
     ".": [
@@ -61142,100 +61158,6 @@
           "/explore"
         ],
         "target": "/voronoiapp/search/:keyword"
-      }
-    ]
-  },
-  "wainao.me": {
-    "_name": "歪脑",
-    "www": [
-      {
-        "title": "主题",
-        "docs": "https://docs.rsshub.app/routes/wainao",
-        "source": [
-          "/topics/:id"
-        ],
-        "target": "/wainao/topics/:id"
-      },
-      {
-        "title": "热点",
-        "docs": "https://docs.rsshub.app/routes/wainao",
-        "source": [
-          "/topics/hotspot"
-        ],
-        "target": "/wainao/topics/hotspot"
-      },
-      {
-        "title": "人物",
-        "docs": "https://docs.rsshub.app/routes/wainao",
-        "source": [
-          "/topics/people"
-        ],
-        "target": "/wainao/topics/people"
-      },
-      {
-        "title": "身份",
-        "docs": "https://docs.rsshub.app/routes/wainao",
-        "source": [
-          "/topics/identity"
-        ],
-        "target": "/wainao/topics/identity"
-      },
-      {
-        "title": "政治",
-        "docs": "https://docs.rsshub.app/routes/wainao",
-        "source": [
-          "/topics/politics"
-        ],
-        "target": "/wainao/topics/politics"
-      },
-      {
-        "title": "社会",
-        "docs": "https://docs.rsshub.app/routes/wainao",
-        "source": [
-          "/topics/society"
-        ],
-        "target": "/wainao/topics/society"
-      },
-      {
-        "title": "文化",
-        "docs": "https://docs.rsshub.app/routes/wainao",
-        "source": [
-          "/topics/culture"
-        ],
-        "target": "/wainao/topics/culture"
-      },
-      {
-        "title": "经济",
-        "docs": "https://docs.rsshub.app/routes/wainao",
-        "source": [
-          "/topics/economics"
-        ],
-        "target": "/wainao/topics/economics"
-      },
-      {
-        "title": "环境",
-        "docs": "https://docs.rsshub.app/routes/wainao",
-        "source": [
-          "/topics/environment"
-        ],
-        "target": "/wainao/topics/environment"
-      },
-      {
-        "title": "FUN",
-        "docs": "https://docs.rsshub.app/routes/wainao",
-        "source": [
-          "/topics/fun"
-        ],
-        "target": "/wainao/topics/fun"
-      },
-      {
-        "title": "读",
-        "docs": "https://docs.rsshub.app/routes/wainao",
-        "source": [
-          "/",
-          "/wainao-reads"
-        ],
-        "target": "/wainao/wainao-reads"
       }
     ]
   },

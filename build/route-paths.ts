@@ -79,14 +79,10 @@ export type RoutePath =
   | `/51read/article/:id`
   | `/52hrtt/:area?/:type?`
   | `/52hrtt/symposium/:id?/:classId?`
-  | `/56kog/class/:category?`
-  | `/56kog/top/:category?`
   | `/591/:country/rent/:query?`
   | `/5eplay/article`
   | `/5music/new-releases/:category?`
   | `/69shu/article/:id`
-  | `/6park/index/:id?/:type?/:keyword?`
-  | `/6park/news/:site?/:id?/:keyword?`
   | `/6v123/:category{.+}?`
   | `/6v123/latestMovies`
   | `/6v123/latestTVSeries`
@@ -127,7 +123,6 @@ export type RoutePath =
   | `/acfun/user/article/:uid`
   | `/acfun/user/video/:uid/:embed?`
   | `/acg17/post/all`
-  | `/acgvinyl/news`
   | `/acm/amturingaward`
   | `/acpaa/:id?/:name?`
   | `/acs/journal/:id`
@@ -532,7 +527,6 @@ export type RoutePath =
   | `/carnegieendowment/expert/:expert{.+}?`
   | `/carnegieendowment/region/:region?`
   | `/carousell/:region/:keyword`
-  | `/cartoonmad/comic/:id`
   | `/cas/cg/:caty?`
   | `/cas/genetics/:path{.+}`
   | `/cas/ia/yjs`
@@ -965,9 +959,6 @@ export type RoutePath =
   | `/dockerhub/tag/:owner/:image/:limits?`
   | `/docschina/weekly/:category?`
   | `/dol/announce/:owner?/:province?/:office?`
-  | `/domp4/detail/:id`
-  | `/domp4/latest_movie_bt`
-  | `/domp4/latest/:type?`
   | `/dongmanmanhua/:category/:name/:id`
   | `/dongqiudi/daily`
   | `/dongqiudi/player_news/:id`
