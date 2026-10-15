@@ -2,10 +2,9 @@ import { load } from 'cheerio';
 import pMap from 'p-map';
 
 import type { Route } from '@/types';
-import got from '@/utils/got';
 import { getRouteLimit } from '@/utils/route-limit';
 
-import { renderPostDetail, rootUrl } from './util';
+import { getPage, renderPostDetail, rootUrl } from './util';
 
 export const route: Route = {
     path: '/blog/:id',
@@ -13,7 +12,13 @@ export const route: Route = {
     example: '/taoguba/blog/252069',
     parameters: { id: '博客 id，可在对应博客页中找到' },
     features: {
-        requireConfig: false,
+        requireConfig: [
+            {
+                name: 'TAOGUBA_COOKIE',
+                optional: true,
+                description: 'Your own www.tgb.cn Cookie for articles that require login. Anonymous excerpts remain available without it.',
+            },
+        ],
         requirePuppeteer: false,
         antiCrawler: false,
         supportBT: false,
@@ -35,10 +40,7 @@ async function handler(ctx) {
 
     const currentUrl = `${rootUrl}/blog/${id}`;
 
-    const response = await got({
-        method: 'get',
-        url: currentUrl,
-    });
+    const response = await getPage(currentUrl);
 
     const $ = load(response.data);
     const author = $('meta[property="og:author"]').attr('content');

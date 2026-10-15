@@ -218,6 +218,7 @@ type ConfigEnvKeys =
     | 'SPOTIFY_CLIENT_SECRET'
     | 'SPOTIFY_REFRESHTOKEN'
     | 'SSPAI_BEARERTOKEN'
+    | 'TAOGUBA_COOKIE'
     | 'TELEGRAM_TOKEN'
     | 'TELEGRAM_SESSION'
     | 'TELEGRAM_API_ID'
@@ -673,6 +674,9 @@ export type Config = {
     };
     sspai: {
         bearertoken?: string;
+    };
+    taoguba: {
+        cookie?: string;
     };
     telegram: {
         token?: string;
@@ -1224,6 +1228,9 @@ const calculateValue = () => {
         },
         sspai: {
             bearertoken: envs.SSPAI_BEARERTOKEN,
+        },
+        taoguba: {
+            cookie: envs.TAOGUBA_COOKIE,
         },
         telegram: {
             token: envs.TELEGRAM_TOKEN,
