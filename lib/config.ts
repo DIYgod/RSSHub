@@ -200,6 +200,7 @@ type ConfigEnvKeys =
     | 'PKUBBS_COOKIE'
     | 'QINGTING_ID'
     | 'READWISE_ACCESS_TOKEN'
+    | 'REUTERS_AUTH_TOKEN'
     | 'SARABA1ST_COOKIE'
     | 'SARABA1ST_HOST'
     | 'SEHUATANG_COOKIE'
@@ -631,6 +632,9 @@ export type Config = {
     };
     readwise: {
         accessToken?: string;
+    };
+    reuters: {
+        authToken?: string;
     };
     saraba1st: {
         cookie?: string;
@@ -1179,6 +1183,9 @@ const calculateValue = () => {
         },
         readwise: {
             accessToken: envs.READWISE_ACCESS_TOKEN,
+        },
+        reuters: {
+            authToken: envs.REUTERS_AUTH_TOKEN,
         },
         saraba1st: {
             cookie: envs.SARABA1ST_COOKIE,
