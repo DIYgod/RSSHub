@@ -35402,114 +35402,6 @@ export default {
     ],
     "lang": "zh-CN"
   },
-  "bandcamp": {
-    "routes": {
-      "/live": {
-        "path": "/live",
-        "categories": [
-          "multimedia"
-        ],
-        "example": "/bandcamp/live",
-        "parameters": {},
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "radar": [
-          {
-            "source": [
-              "bandcamp.com/live_schedule",
-              "bandcamp.com/live"
-            ]
-          }
-        ],
-        "name": "Upcoming Live Events",
-        "maintainers": [
-          "nczitzk"
-        ],
-        "url": "bandcamp.com/live",
-        "location": "live.tsx",
-        "module": () => import('@/routes/bandcamp/live.tsx')
-      },
-      "/weekly": {
-        "path": "/weekly",
-        "categories": [
-          "multimedia"
-        ],
-        "example": "/bandcamp/weekly",
-        "parameters": {},
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "radar": [
-          {
-            "source": [
-              "bandcamp.com/"
-            ]
-          }
-        ],
-        "name": "Weekly",
-        "maintainers": [
-          "nczitzk"
-        ],
-        "url": "bandcamp.com/",
-        "location": "weekly.tsx",
-        "module": () => import('@/routes/bandcamp/weekly.tsx')
-      },
-      "/tag/:tag?": {
-        "path": "/tag/:tag?",
-        "categories": [
-          "multimedia"
-        ],
-        "example": "/bandcamp/tag/united-kingdom",
-        "parameters": {
-          "tag": "Tag, can be found in URL. All music by default."
-        },
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "radar": [
-          {
-            "source": [
-              "bandcamp.com/tag/:tag",
-              "bandcamp.com/discover/:tag"
-            ],
-            "target": "/tag/:tag"
-          },
-          {
-            "source": [
-              "bandcamp.com/discover"
-            ],
-            "target": "/tag"
-          }
-        ],
-        "name": "Tag",
-        "maintainers": [
-          "nczitzk"
-        ],
-        "location": "tag.tsx",
-        "module": () => import('@/routes/bandcamp/tag.tsx')
-      }
-    },
-    "apiRoutes": {},
-    "name": "Bandcamp",
-    "url": "bandcamp.com",
-    "lang": "en"
-  },
   "bandisoft": {
     "routes": {
       "/history/:id?/:language?": {
@@ -134660,6 +134552,139 @@ export default {
     "name": "Asian to lick",
     "url": "asiantolick.com",
     "lang": "zh-CN"
+  },
+  "bandcamp": {
+    "routes": {
+      "/live": {
+        "path": "/live",
+        "categories": [
+          "multimedia"
+        ],
+        "example": "/bandcamp/live",
+        "parameters": {},
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "bandcamp.com/live_schedule",
+              "bandcamp.com/live"
+            ]
+          }
+        ],
+        "name": "Upcoming Live Events",
+        "maintainers": [
+          "nczitzk"
+        ],
+        "url": "bandcamp.com/live",
+        "location": "live.tsx",
+        "module": () => import('@/routes/bandcamp/live.tsx')
+      },
+      "/weekly": {
+        "path": "/weekly",
+        "categories": [
+          "multimedia"
+        ],
+        "example": "/bandcamp/weekly",
+        "parameters": {},
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "bandcamp.com/"
+            ]
+          }
+        ],
+        "name": "Weekly",
+        "maintainers": [
+          "nczitzk"
+        ],
+        "url": "bandcamp.com/",
+        "location": "weekly.tsx",
+        "module": () => import('@/routes/bandcamp/weekly.tsx')
+      },
+      "/artist/:artist": {
+        "path": "/artist/:artist",
+        "categories": [
+          "multimedia"
+        ],
+        "example": "/bandcamp/artist/radiohead",
+        "parameters": {
+          "artist": "Subdomain of the artist or label, such as `radiohead` in `https://radiohead.bandcamp.com`"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "name": "Artist Releases",
+        "maintainers": [
+          "pseudoyu"
+        ],
+        "description": "Releases on the music page of an artist or label, in the order the page shows them (newest first unless the artist reorders them). Returns the latest 10 by default, use `limit` for more. Artists on a custom domain still have a bandcamp.com subdomain.",
+        "location": "artist.tsx",
+        "module": () => import('@/routes/bandcamp/artist.tsx')
+      },
+      "/tag/:tag?": {
+        "path": "/tag/:tag?",
+        "categories": [
+          "multimedia"
+        ],
+        "example": "/bandcamp/tag/united-kingdom",
+        "parameters": {
+          "tag": "Tag, can be found in URL. All music by default."
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "bandcamp.com/tag/:tag",
+              "bandcamp.com/discover/:tag"
+            ],
+            "target": "/tag/:tag"
+          },
+          {
+            "source": [
+              "bandcamp.com/discover"
+            ],
+            "target": "/tag"
+          }
+        ],
+        "name": "Tag",
+        "maintainers": [
+          "nczitzk"
+        ],
+        "location": "tag.tsx",
+        "module": () => import('@/routes/bandcamp/tag.tsx')
+      }
+    },
+    "apiRoutes": {},
+    "name": "Bandcamp",
+    "url": "bandcamp.com",
+    "lang": "en"
   },
   "bangumi.tv": {
     "routes": {

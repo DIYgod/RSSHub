@@ -2649,15 +2649,6 @@
   "/bakamh/manga/:name": [
     "yoyobase"
   ],
-  "/bandcamp/live": [
-    "nczitzk"
-  ],
-  "/bandcamp/weekly": [
-    "nczitzk"
-  ],
-  "/bandcamp/tag/:tag?": [
-    "nczitzk"
-  ],
   "/bandisoft/history/:id?/:language?": [
     "nczitzk"
   ],
@@ -9714,6 +9705,18 @@
     "nczitzk"
   ],
   "/asiantolick/tag/:id": [
+    "nczitzk"
+  ],
+  "/bandcamp/live": [
+    "nczitzk"
+  ],
+  "/bandcamp/weekly": [
+    "nczitzk"
+  ],
+  "/bandcamp/artist/:artist": [
+    "pseudoyu"
+  ],
+  "/bandcamp/tag/:tag?": [
     "nczitzk"
   ],
   "/bangumi.tv/user/collections/:id/:subjectType/:type": [
