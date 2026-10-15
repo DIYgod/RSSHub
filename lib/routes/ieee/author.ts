@@ -8,7 +8,7 @@ import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
 
 import { renderDescription } from './templates/description';
-import { fetchArticleMetadata } from './utils';
+import { fetchArticleMetadata, withArticleMetadataBrowser } from './utils';
 
 export const route: Route = {
     name: 'Author Articles',
@@ -21,7 +21,7 @@ export const route: Route = {
     },
     features: {
         requireConfig: false,
-        requirePuppeteer: false,
+        requirePuppeteer: true,
         antiCrawler: false,
         supportBT: false,
         supportPodcast: false,
@@ -63,18 +63,20 @@ async function handler(ctx) {
         abstract: load(item.abstract ?? '').text(),
     }));
 
-    const items = await pMap(
-        list,
-        async (item) => {
-            const metadata = item.abstract ? await fetchArticleMetadata(item.link) : undefined;
-            const article = {
-                ...item,
-                abstract: metadata?.abstract || item.abstract,
-                pubDate: metadata?.insertDate ? parseDate(metadata.insertDate) : undefined,
-            };
-            return { ...article, description: renderDescription(article) };
-        },
-        { concurrency: 3 }
+    const items = await withArticleMetadataBrowser((getBrowser) =>
+        pMap(
+            list,
+            async (item) => {
+                const metadata = item.abstract ? await fetchArticleMetadata(item.link, getBrowser) : undefined;
+                const article = {
+                    ...item,
+                    abstract: metadata?.abstract || item.abstract,
+                    pubDate: metadata?.insertDate ? parseDate(metadata.insertDate) : undefined,
+                };
+                return { ...article, description: renderDescription(article) };
+            },
+            { concurrency: 3 }
+        )
     );
 
     return {
