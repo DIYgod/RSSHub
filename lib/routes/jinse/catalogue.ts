@@ -3,6 +3,7 @@ import { load } from 'cheerio';
 import type { Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
 
@@ -65,7 +66,7 @@ async function handler(ctx) {
 
     let items = response.list.slice(0, limit).map((item) => ({
         title: item.title,
-        link: item.extra.topic_url,
+        link: item.extra.topic_url.replace(/\/\/(?:www\.|m\.)?jinse\.com(?:\.cn)?(?=\/)/, '//www.jinse.com.cn'),
         description: renderDescription({
             images:
                 item.extra.thumbnails_pics.length > 0
@@ -106,11 +107,11 @@ async function handler(ctx) {
         )
     );
 
-    const { data: currentResponse } = await got(currentUrl);
+    const currentResponse = await ofetch.raw<string>(currentUrl, { redirect: 'manual' });
+    const metadataHtml = currentResponse.status === 200 ? (currentResponse._data ?? '') : '';
+    const $ = load(metadataHtml);
 
-    const $ = load(currentResponse);
-
-    const author = $('meta[name="author"]').prop('content');
+    const author = $('meta[name="author"]').prop('content') || '金色财经';
     const image = $('a.js-logoBox img').prop('src');
     const iconHref = $('link[rel="favicon"]').prop('href');
     const icon = iconHref ? new URL(iconHref, rootUrl).href : undefined;
@@ -120,7 +121,7 @@ async function handler(ctx) {
         title: `${author} - ${Object.hasOwn(categories, category) ? categories[category] : category}`,
         link: currentUrl,
         description: $('meta[name="description"]').prop('content'),
-        language: $('html').prop('lang') as Language,
+        language: ($('html').prop('lang') || 'zh-CN') as Language,
         image,
         icon,
         logo: icon,

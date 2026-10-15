@@ -4,6 +4,7 @@ import type { Language, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
 
@@ -125,11 +126,11 @@ async function handler(ctx) {
         )
     );
 
-    const { data: currentResponse } = await got(currentUrl);
+    const currentResponse = await ofetch.raw<string>(currentUrl, { redirect: 'manual' });
+    const metadataHtml = currentResponse.status === 200 ? (currentResponse._data ?? '') : '';
+    const $ = load(metadataHtml);
 
-    const $ = load(currentResponse);
-
-    const author = $('meta[name="author"]').prop('content');
+    const author = $('meta[name="author"]').prop('content') || '金色财经';
     const image = $('a.js-logoBox img').prop('src');
     const iconHref = $('link[rel="favicon"]').prop('href');
     const icon = iconHref ? new URL(iconHref, rootUrl).href : undefined;
@@ -139,7 +140,7 @@ async function handler(ctx) {
         title: `${author} - ${category}`,
         link: currentUrl,
         description: $('meta[name="description"]').prop('content'),
-        language: $('html').prop('lang') as Language,
+        language: ($('html').prop('lang') || 'zh-CN') as Language,
         image,
         icon,
         logo: icon,
