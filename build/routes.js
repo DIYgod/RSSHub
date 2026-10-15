@@ -97517,6 +97517,49 @@ export default {
     "url": "p-articles.com",
     "lang": "zh-TW"
   },
+  "p-bandai": {
+    "routes": {
+      "/new": {
+        "path": "/new",
+        "categories": [
+          "shopping"
+        ],
+        "example": "/p-bandai/new",
+        "parameters": {},
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "p-bandai.jp/new_itemlist"
+            ],
+            "target": "/new"
+          }
+        ],
+        "name": "New Items",
+        "maintainers": [
+          "pseudoyu"
+        ],
+        "url": "p-bandai.jp/new_itemlist/",
+        "description": "Items added in the last 10 days, with the image, the price and the start of sales or reservations.\n\n::: warning\nPremium Bandai redirects visitors outside Japan to its international site, so the instance needs a Japanese IP. You can send only these requests through a Japanese proxy with `PROXY_URI` and `PROXY_URL_REGEX=p-bandai\\.jp`.\n\nThe list shortens long item names, and the item pages are behind a browser check, so full names and delivery dates are not included.\n:::",
+        "location": "new.tsx",
+        "module": () => import('@/routes/p-bandai/new.tsx')
+      }
+    },
+    "apiRoutes": {},
+    "name": "Premium Bandai",
+    "url": "p-bandai.jp",
+    "lang": "ja",
+    "ja": {
+      "name": "プレミアムバンダイ"
+    }
+  },
   "pacilution": {
     "routes": {
       "/latest": {

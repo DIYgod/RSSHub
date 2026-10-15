@@ -2662,6 +2662,7 @@ export type RoutePath =
   | `/outagereport/:name/:count?`
   | `/p-articles/contributors/:author`
   | `/p-articles/section/:section`
+  | `/p-bandai/new`
   | `/pacilution/latest`
   | `/panewslab/author/:id`
   | `/panewslab/column/:id`
