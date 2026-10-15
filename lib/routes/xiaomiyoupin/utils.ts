@@ -33,7 +33,7 @@ const getVenueQueryContext = async (moduleKey: string): Promise<{ pageId: string
     return parsePageQuery(url);
 };
 
-const getVenuePageQueryList = async (pageId: string, sign: string, resolvers: string[]): Promise<{ queryList: VenueQuery[]; floorStartTime: number }> => {
+const getVenuePageQueryList = async (pageId: string, sign: string, resolvers: string[]): Promise<VenueQuery[]> => {
     const response = await ofetch<VenuePageResponse>('https://m.xiaomiyoupin.com/mtop/navi/venue/page', {
         query: {
             page_id: pageId,
@@ -42,21 +42,15 @@ const getVenuePageQueryList = async (pageId: string, sign: string, resolvers: st
         },
     });
     const queryList: VenueQuery[] = [];
-    let floorStartTime = 0;
     for (const floor of response.data.floors) {
-        const start = floor.data?.start_time;
         const floorQueries = floor.query_list ?? [];
         for (const query of floorQueries) {
-            if (!resolvers.includes(query.resolver)) {
-                continue;
-            }
-            queryList.push(query);
-            if (start && floorStartTime === 0) {
-                floorStartTime = Math.floor(start / 1000);
+            if (resolvers.includes(query.resolver)) {
+                queryList.push(query);
             }
         }
     }
-    return { queryList, floorStartTime };
+    return queryList;
 };
 
 const getVenueBatchList = async (pageId: string, sign: string, queryList: VenueQuery[]): Promise<VenueBatchListItem[]> => {
@@ -76,7 +70,7 @@ const getVenueBatchList = async (pageId: string, sign: string, queryList: VenueQ
 
 const isVenueGoodsItem = (item: VenueBatchListItem): item is Extract<VenueBatchListItem, { value: { goods: VenueGoods } }> => 'value' in item && 'goods' in item.value;
 
-const toGoodsListItem = (item: VenueBatchListItem, resolver: string, fallbackStartTime: number): GoodsListItem | undefined => {
+const toGoodsListItem = (item: VenueBatchListItem, resolver: string): GoodsListItem | undefined => {
     if (resolver === 'leek-super' && !isVenueGoodsItem(item)) {
         if (!item.gid || !item.new_product_name) {
             return undefined;
@@ -86,7 +80,6 @@ const toGoodsListItem = (item: VenueBatchListItem, resolver: string, fallbackSta
             name: item.new_product_name,
             jumpUrl: item.jump_url,
             image: item.picture_url,
-            firstReleaseTime: fallbackStartTime,
         };
     }
     if (!isVenueGoodsItem(item)) {
@@ -101,18 +94,18 @@ const toGoodsListItem = (item: VenueBatchListItem, resolver: string, fallbackSta
         name: goods.name,
         jumpUrl: goods.jump_url,
         image: goods.img_square || goods.img800s || goods.img_horizon,
-        firstReleaseTime: goods.fist_release_time || goods.first_release_time || fallbackStartTime,
+        firstReleaseTime: goods.fist_release_time || goods.first_release_time,
     };
 };
 
 const getGoodsFromVenue = async (moduleKey: string, resolvers: string[]): Promise<GoodsListItem[]> => {
     const { pageId, sign } = await getVenueQueryContext(moduleKey);
-    const { queryList, floorStartTime } = await getVenuePageQueryList(pageId, sign, resolvers);
+    const queryList = await getVenuePageQueryList(pageId, sign, resolvers);
     const batchList = await getVenueBatchList(pageId, sign, queryList);
     const items: GoodsListItem[] = [];
     for (const [index, item] of batchList.entries()) {
         const resolver = queryList[index]?.resolver ?? '';
-        const goodsItem = toGoodsListItem(item, resolver, floorStartTime);
+        const goodsItem = toGoodsListItem(item, resolver);
         if (goodsItem) {
             items.push(goodsItem);
         }

@@ -46,7 +46,7 @@ const getDataItem = (listItem: GoodsListItem, detailItem: GoodsDetailItem): Data
     description: renderNewProduct(utils.toNewProduct(listItem, detailItem)),
     link: listItem.jumpUrl,
     image: listItem.image,
-    pubDate: parseDate(listItem.firstReleaseTime, 'X'),
+    pubDate: listItem.firstReleaseTime ? parseDate(listItem.firstReleaseTime, 'X') : undefined,
     language: 'zh-CN',
 });
 

@@ -25,9 +25,6 @@ export interface VenueQuery {
 export type VenuePageResponse = DataResponse<{
     floors: Array<{
         module_key: string;
-        data: {
-            start_time: number;
-        };
         query_list: VenueQuery[];
     }>;
 }>;
@@ -68,7 +65,7 @@ export interface GoodsListItem {
     name: string;
     jumpUrl: string;
     image: string;
-    firstReleaseTime: number;
+    firstReleaseTime?: number;
 }
 
 export interface ProductInfoItem {
