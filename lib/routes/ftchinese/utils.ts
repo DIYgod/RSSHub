@@ -1,4 +1,4 @@
-import { load } from 'cheerio';
+import { type CheerioAPI, load } from 'cheerio';
 import pMap from 'p-map';
 
 import cache from '@/utils/cache';
@@ -43,6 +43,22 @@ const processFeed = (i, $, link) => {
     return { content, author, title };
 };
 
+const processQuiz = ($: CheerioAPI) => {
+    const questions = $('#mbagym-container .gym-slides')
+        .children('span')
+        .filter((_, element) => $(element).find('.quizlist').length > 0);
+    if (questions.length === 0) {
+        return;
+    }
+
+    questions.find('script, style, .pagetitle').remove();
+    questions.find('[onclick]').removeAttr('onclick');
+    return questions
+        .toArray()
+        .map((element) => $.html(element))
+        .join('');
+};
+
 const getData = async ({ site = 'www', channel }) => {
     let feed;
 
@@ -76,9 +92,17 @@ const getData = async ({ site = 'www', channel }) => {
                     results.push(processFeed(i, $, item.link));
                 }
 
-                item.title = results[0].title;
-                item.description = results.map((result) => result.content).join('');
-                item.author = results[0].author;
+                if (results.length > 0) {
+                    item.title = results[0].title;
+                    item.description = results.map((result) => result.content).join('');
+                    item.author = results[0].author;
+                } else {
+                    const quizContent = processQuiz($);
+                    if (!quizContent) {
+                        throw new Error(`FT Chinese page did not contain a supported public article or quiz: ${item.link}`);
+                    }
+                    item.description = quizContent;
+                }
                 return item;
             }),
         { concurrency: 1 }
