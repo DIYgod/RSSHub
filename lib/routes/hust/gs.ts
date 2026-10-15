@@ -37,7 +37,7 @@ export const handler = async (ctx) => {
 
     items = await Promise.all(
         items.map((item) =>
-            cache.tryGet(item.link!, async () => {
+            cache.tryGet(`hust:gs:article:v2:${item.link}`, async () => {
                 try {
                     const { data: detailResponse } = await got(item.link);
 
@@ -45,7 +45,7 @@ export const handler = async (ctx) => {
 
                     const description = $$('div.v_news_content').html();
 
-                    item.title = $$('div.article_title h1, h5').text();
+                    item.title = $$('div.article_title h1, .show01 > h5').text() || item.title;
                     item.description = description;
                     item.content = {
                         html: description,
