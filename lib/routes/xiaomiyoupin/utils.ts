@@ -3,6 +3,7 @@ import localizedFormat from 'dayjs/plugin/localizedFormat.js';
 import timezone from 'dayjs/plugin/timezone.js';
 import utc from 'dayjs/plugin/utc.js';
 
+import NotFoundError from '@/errors/types/not-found';
 import type { Crowdfunding } from '@/routes/mi/templates/crowdfunding';
 import type { NewProduct } from '@/routes/mi/templates/newproduct';
 import ofetch from '@/utils/ofetch';
@@ -14,14 +15,16 @@ dayjs.extend(timezone);
 dayjs.extend(utc);
 
 const parsePageQuery = (url?: string): { pageId: string; sign: string } => {
-    if (!url) {
-        throw new Error('Failed to get pageid or sign from homepage');
+    let searchParams: URLSearchParams | undefined;
+    try {
+        searchParams = url ? new URL(url).searchParams : undefined;
+    } catch {
+        searchParams = undefined;
     }
-    const parsed = new URL(url);
-    const pageId = parsed.searchParams.get('pageid');
-    const sign = parsed.searchParams.get('sign');
+    const pageId = searchParams?.get('pageid');
+    const sign = searchParams?.get('sign');
     if (!pageId || !sign) {
-        throw new Error('Failed to get pageid or sign from homepage');
+        throw new NotFoundError('Failed to get pageid or sign from xiaomiyoupin homepage');
     }
     return { pageId, sign };
 };
