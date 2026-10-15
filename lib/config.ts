@@ -105,6 +105,7 @@ type ConfigEnvKeys =
     | 'BUKENAVI_EMAIL'
     | 'BUKENAVI_PASSWORD'
     | 'CAIXIN_COOKIE'
+    | 'CARA_COOKIE'
     | 'CIVITAI_COOKIE'
     | 'COOMER_ASSETS_URL'
     | 'COOMER_ROOT_URL'
@@ -408,6 +409,9 @@ export type Config = {
         portal_cookie?: string;
     };
     caixin: {
+        cookie?: string;
+    };
+    cara: {
         cookie?: string;
     };
     civitai: {
@@ -957,6 +961,9 @@ const calculateValue = () => {
         },
         caixin: {
             cookie: envs.CAIXIN_COOKIE,
+        },
+        cara: {
+            cookie: envs.CARA_COOKIE,
         },
         civitai: {
             cookie: envs.CIVITAI_COOKIE,

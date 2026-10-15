@@ -4,7 +4,7 @@ import { getRouteLimit } from '@/utils/route-limit';
 
 import { API_HOST, CDN_HOST, HOST } from './constant';
 import type { PortfolioResponse } from './types';
-import { customFetch, fetchPortfolioItem, parseUserData } from './utils';
+import { customFetch, fetchPortfolioItem, getCacheKey, parseUserData } from './utils';
 
 export const route: Route = {
     path: '/portfolio/:user',
@@ -31,7 +31,7 @@ async function handler(ctx): Promise<Data> {
 
     const portfolioResponse = await customFetch<PortfolioResponse>(api);
 
-    const items = await Promise.all(portfolioResponse.data.map((item) => cache.tryGet(`${HOST}/post/${item.postId}`, async () => await fetchPortfolioItem(item))));
+    const items = await Promise.all(portfolioResponse.data.map((item) => cache.tryGet(getCacheKey(`post:${item.postId}`), async () => await fetchPortfolioItem(item))));
 
     return {
         title: `Portfolio - ${userInfo.name}`,
