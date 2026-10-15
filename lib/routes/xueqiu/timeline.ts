@@ -3,6 +3,7 @@ import ConfigNotFoundError from '@/errors/types/config-not-found';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
+import md5 from '@/utils/md5';
 import { parseDate } from '@/utils/parse-date';
 
 const rootUrl = 'https://xueqiu.com';
@@ -41,10 +42,11 @@ async function handler(ctx) {
         throw new ConfigNotFoundError('缺少雪球用户登录后的 Cookie 值');
     }
     const cookie: string = config.xueqiu.cookies;
+    const sessionKey = md5(cookie);
     const data = await fetchTimeline(cookie, usergroupId);
     const items = await Promise.all(
         data.home_timeline.map((item) =>
-            cache.tryGet(item.target, () => {
+            cache.tryGet(`xueqiu:timeline:${sessionKey}:${item.target}`, () => {
                 const retweetedStatus = item.retweeted_status ? `<blockquote>${item.retweeted_status.user.screen_name}:&nbsp;${item.retweeted_status.description}</blockquote>` : '';
                 const description = item.description + retweetedStatus;
                 return Promise.resolve({
@@ -63,13 +65,23 @@ async function handler(ctx) {
     };
 }
 async function fetchTimeline(cookie: string, usergroupId = -1) {
-    const url = `https://xueqiu.com/v4/statuses/system/home_timeline.json?source=user&usergroup_id=${usergroupId}`;
+    const groupId = String(usergroupId);
+    const searchParams = new URLSearchParams({ source: 'user' });
+    if (groupId !== '-1') {
+        searchParams.set('usergroup_id', groupId);
+    }
+    const endpoint = groupId === '-2' ? 'system/home_timeline.json' : 'home_timeline.json';
+    const url = `https://www.xueqiu.com/v4/statuses/${endpoint}?${searchParams}`;
     const response = await got({
         method: 'get',
         url,
+        redirect: 'manual',
         headers: {
             Cookie: cookie,
         },
     });
+    if (!Array.isArray(response.data?.home_timeline)) {
+        throw new TypeError('The Xueqiu following API did not return a timeline. Refresh XUEQIU_COOKIES and verify access to the selected group.');
+    }
     return response.data;
 }
