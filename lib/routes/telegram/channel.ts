@@ -3,11 +3,13 @@ import querystring from 'node:querystring';
 import { load } from 'cheerio';
 import { FetchError } from 'ofetch';
 import pMap from 'p-map';
+import { errors } from 'teleproto';
 
 import { config } from '@/config';
 import type { DataItem, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
+import logger from '@/utils/logger';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import { fallback, queryToBoolean } from '@/utils/readable-social';
@@ -159,7 +161,15 @@ When a reverse proxy removes a public URL prefix (for example, \`/rss\`), set it
 async function handler(ctx) {
     const useWeb = ctx.req.param('routeParams') || !config.telegram.session;
     if (!useWeb) {
-        return tglibchannel(ctx);
+        try {
+            return await tglibchannel(ctx);
+        } catch (error) {
+            // A flood wait blocks the account for minutes to hours, while the public web preview still works
+            if (!(error instanceof errors.FloodWaitError)) {
+                throw error;
+            }
+            logger.warn(`Telegram MTProto requires a wait of ${error.seconds} seconds, falling back to the web preview`);
+        }
     }
 
     const username = ctx.req.param('username');

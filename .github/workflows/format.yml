@@ -23,6 +23,24 @@ jobs:
             - run: pnpm i
             - run: npm run format:description
             - run: npm run format
+            # oxlint applies fixes in a single pass, so a fix can leave problems that only the next pass fixes or reports
+            # Repeat on the changed files until they stop changing, and fail instead of committing what lint rejects
+            # https://github.com/oxc-project/oxc/issues/16118
+            - name: Apply chained fixes
+              run: |
+                  files=()
+                  while IFS= read -r file; do files+=("$file"); done < <(git diff --name-only -- '*.js' '*.mjs' '*.ts' '*.tsx')
+                  if [ ${#files[@]} -gt 0 ]; then
+                      for _ in 1 2 3 4 5; do
+                          before=$(git diff | git hash-object --stdin)
+                          pnpm exec oxlint --type-aware --fix "${files[@]}" || true
+                          pnpm exec oxfmt "${files[@]}"
+                          if [ "$(git diff | git hash-object --stdin)" = "$before" ]; then
+                              break
+                          fi
+                      done
+                      pnpm exec oxlint --type-aware "${files[@]}"
+                  fi
             - name: Commit files
               run: |
                   git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"

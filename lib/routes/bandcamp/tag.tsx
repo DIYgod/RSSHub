@@ -1,13 +1,10 @@
-import { load } from 'cheerio';
-import { raw } from 'hono/html';
-import { renderToString } from 'hono/jsx/dom/server';
 import pMap from 'p-map';
 
 import type { Route } from '@/types';
-import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
+
+import { getRelease } from './utils';
 
 export const route: Route = {
     path: '/tag/:tag?',
@@ -63,40 +60,7 @@ async function handler(ctx) {
         return { title: item.title, link: link.href, author: item.album_artist || item.band_name };
     });
 
-    const items = await pMap(
-        list,
-        (item) =>
-            cache.tryGet(item.link, async () => {
-                const detailResponse = await got(item.link);
-                const content = load(detailResponse.data);
-                const data = JSON.parse(content('[data-tralbum]').attr('data-tralbum')!);
-                const image = content('#tralbumArt img').attr('src');
-                const about = content('.tralbum-about').html() ?? '';
-                const tracks = data.trackinfo as Array<{ title: string; title_link?: string }>;
-
-                return {
-                    ...item,
-                    image,
-                    pubDate: data.current.publish_date ? parseDate(data.current.publish_date) : undefined,
-                    category: content('.tralbum-tags a.tag')
-                        .toArray()
-                        .map((tag) => content(tag).text()),
-                    description: renderToString(
-                        <>
-                            {image ? <img src={image} /> : null}
-                            <div>{raw(about)}</div>
-                            {data.current.credits ? <p style="white-space: pre-line">{data.current.credits}</p> : null}
-                            <ol>
-                                {tracks.map((track) => (
-                                    <li>{track.title_link ? <a href={new URL(track.title_link, item.link).href}>{track.title}</a> : track.title}</li>
-                                ))}
-                            </ol>
-                        </>
-                    ),
-                };
-            }),
-        { concurrency: 3 }
-    );
+    const items = await pMap(list, async (item) => ({ ...(await getRelease(item.link)), ...item }), { concurrency: 3 });
 
     return {
         title: `Bandcamp${tag ? ` - ${tag}` : ''}`,

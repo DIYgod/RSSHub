@@ -148,7 +148,8 @@ export default async function handler(ctx: Context) {
     if (!peerCache) {
         const p = await client.getInputEntity(username!);
         peerCache = JSON.stringify(p.toJSON());
-        await cache.set(`telegram:inputEntity:${username}`, peerCache);
+        // The channel ID and access hash do not change, and contacts.ResolveUsername is heavily rate limited
+        await cache.set(`telegram:inputEntity:${username}`, peerCache, 30 * 24 * 60 * 60);
     }
     const peerData = JSON.parse(peerCache, (k, v) => (k === 'channelId' || k === 'accessHash' ? returnBigInt(v) : v));
     const peer = new Api.InputPeerChannel(peerData);

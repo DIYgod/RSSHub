@@ -80,6 +80,30 @@ describe('proxy', () => {
         expect(requestTlsOf(proxy.dispatcher!).ALPNProtocols).toEqual(['h2', 'http/1.1']);
     });
 
+    it('creates a socks5 dispatcher for socks5h proxies', async () => {
+        const proxy = await loadProxy({
+            PROXY_URI: 'socks5h://proxy.local:1080',
+            PROXY_URIS: '',
+            PAC_URI: '',
+        });
+
+        expect(proxy.agent).toBeInstanceOf(SocksProxyAgent);
+        expect(proxy.dispatcher).toBeInstanceOf(ProxyAgent);
+        expect(proxy.getCurrentProxy()?.uri).toBe('socks5h://proxy.local:1080');
+    });
+
+    it('disables socks4 proxies instead of failing to start', async () => {
+        const proxy = await loadProxy({
+            PROXY_URI: 'socks4://proxy.local:1080',
+            PROXY_URIS: '',
+            PAC_URI: '',
+        });
+
+        expect(proxy.agent).toBeNull();
+        expect(proxy.dispatcher).toBeNull();
+        expect(proxy.getCurrentProxy()).toBeNull();
+    });
+
     it('prefers h2 on the http proxy dispatcher', async () => {
         const proxy = await loadProxy({
             PROXY_URI: 'http://proxy.local:8080',
