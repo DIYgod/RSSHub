@@ -10,7 +10,8 @@ import { getRouteLimit } from '@/utils/route-limit';
 
 const rootUrl = 'https://www.iguoguo.net';
 
-const imageMimeTypes: Record<string, string> = { jpg: 'image/jpeg', jpeg: 'image/jpeg', png: 'image/png', gif: 'image/gif', webp: 'image/webp', avif: 'image/avif', svg: 'image/svg+xml' };
+const imageMimeTypes = { jpg: 'image/jpeg', jpeg: 'image/jpeg', png: 'image/png', gif: 'image/gif', webp: 'image/webp', avif: 'image/avif', svg: 'image/svg+xml' } satisfies Record<string, string>;
+const isImageExtension = (key: string): key is keyof typeof imageMimeTypes => Object.hasOwn(imageMimeTypes, key);
 
 const getCategoryIdFromSlug = (slug) =>
     cache.tryGet(`iguoguo:category:${slug}`, async () => {
@@ -77,7 +78,7 @@ async function handler(ctx: Context) {
         const cover = $('p > img').first().attr('src');
         const mediaContent: Record<string, string> | undefined = cover ? { url: new URL(cover, rootUrl).href } : undefined;
         const extension = cover ? new URL(cover, rootUrl).pathname.split('.').pop()?.toLowerCase() : undefined;
-        const imageMimeType = mediaContent && extension ? imageMimeTypes[extension] : undefined;
+        const imageMimeType = mediaContent && extension && isImageExtension(extension) ? imageMimeTypes[extension] : undefined;
         if (imageMimeType && mediaContent) {
             mediaContent.type = imageMimeType;
         }

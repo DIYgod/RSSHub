@@ -9,7 +9,7 @@ import { parseDate } from '@/utils/parse-date';
 import type { Item } from './types';
 
 const parsePublicationDate = (value: string | number | undefined, format?: string) => {
-    if (isOneOf(value, [undefined, null]) || value === '') {
+    if (typeof value !== 'number' && !value) {
         return;
     }
     const date = parseDate(value, format);
@@ -122,9 +122,4 @@ async function unwrapFirstFailure<T>(promise: Promise<T>): Promise<T> {
     } catch (error) {
         throw error instanceof AggregateError ? error.errors[0] : error;
     }
-}
-
-function isOneOf<const T>(value: unknown, values: readonly T[]): value is T {
-    const candidates: readonly unknown[] = values;
-    return candidates.includes(value);
 }

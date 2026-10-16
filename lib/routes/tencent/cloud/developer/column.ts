@@ -17,9 +17,11 @@ const markdown = new MarkdownIt({ html: true });
 const sourceOrigin = 'https://cloud.tencent.com';
 type SourceBrowser = Awaited<ReturnType<typeof getPlaywrightPage>>;
 type GetSourceBrowser = (link?: string) => Promise<SourceBrowser>;
+type SourceBody = { classifyId: string | number; page: number; pagesize: number; type: string } | { scene: number };
 class SourceBrowserInitializationError extends Error {}
 
-const isSourceChallenge = (error: unknown) => error instanceof CaptchaError || (error instanceof FetchError && error.status === 567 && typeof error.data === 'string' && error.data.includes('已被该站点的安全策略拦截'));
+const isSourceChallenge = (error: unknown): error is CaptchaError | FetchError =>
+    error instanceof CaptchaError || (error instanceof FetchError && error.status === 567 && typeof error.data === 'string' && error.data.includes('已被该站点的安全策略拦截'));
 
 async function createSourceBrowser(link: string) {
     let browser: SourceBrowser | undefined;
@@ -68,7 +70,7 @@ async function withSourceBrowser<T>(callback: (getBrowser: GetSourceBrowser) => 
     }
 }
 
-async function getSourceJson<T>(link: string, body: Record<string, unknown>, getBrowser: GetSourceBrowser): Promise<T> {
+async function getSourceJson<T>(link: string, body: SourceBody, getBrowser: GetSourceBrowser): Promise<T> {
     try {
         return await ofetch<T>(link, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body });
     } catch (error) {

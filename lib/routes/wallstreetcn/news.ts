@@ -52,7 +52,7 @@ export const route: Route = {
 | medicine     | 医药  |`,
 };
 
-function parseSourceTime(value: unknown) {
+function parseSourceTime(value?: string | number | null) {
     if ((typeof value !== 'number' && typeof value !== 'string') || (typeof value === 'string' && !value.trim())) {
         return;
     }

@@ -43,7 +43,7 @@ export const route: Route = {
 
 type SearchResult = { title: string; pub_url: string; pub_date: string };
 
-const categoryPaths: Record<string, string> = {
+const categoryPaths = {
     Politics: 'politics',
     Economy: 'economy',
     Society: 'society',
@@ -55,7 +55,7 @@ const categoryPaths: Record<string, string> = {
     'japan-glances': 'japan-glances',
     People: 'people',
     Announcements: 'announcements',
-};
+} satisfies Record<string, string>;
 
 async function handler(ctx) {
     const category = ctx.req.param('category') ?? 'Politics';

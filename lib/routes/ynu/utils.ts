@@ -37,7 +37,7 @@ function restorePdfContent($: CheerioAPI, link: string) {
         }
         const content = $('<span></span>').append($('<a>PDF</a>').attr('href', pdfUrl));
         const pagesJson = /var\s+vsb_pdf_image_data\s*=\s*(\[[\s\S]*?\])/.exec(script)?.[1];
-        let pages: unknown = [];
+        let pages: string[] = [];
         if (pagesJson) {
             try {
                 pages = JSON.parse(pagesJson);

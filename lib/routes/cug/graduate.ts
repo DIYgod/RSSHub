@@ -9,7 +9,7 @@ import { parseDate } from '@/utils/parse-date';
 import { getPlaywrightPage } from '@/utils/playwright';
 import timezone from '@/utils/timezone';
 
-function isExpiredCertificate(error: unknown): boolean {
+function isExpiredCertificate(error: unknown): error is Error {
     return error instanceof Error && (('code' in error && error.code === 'CERT_HAS_EXPIRED') || isExpiredCertificate(error.cause));
 }
 

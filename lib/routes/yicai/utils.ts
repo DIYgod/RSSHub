@@ -30,6 +30,10 @@ type Channel = {
     slug: string;
     items?: SourceArticle[];
 };
+type BreadcrumbChannel = {
+    id: number;
+    name: string;
+};
 type NavigationChannel = {
     name: string;
     slug: string;
@@ -52,7 +56,7 @@ const videoMimeTypes = new Map([
     ['webm', 'video/webm'],
     ['ogv', 'video/ogg'],
 ]);
-function getVideo(value: unknown):
+function getVideo(value?: string):
     | {
           src: string;
           type?: string;
@@ -73,7 +77,7 @@ function getVideo(value: unknown):
     const extension = url.pathname.match(/\.([a-z\d]+)$/i)?.[1].toLowerCase();
     return { src: value, type: extension ? videoMimeTypes.get(extension) : undefined };
 }
-function getPublicationDate(value: unknown): Date | undefined {
+function getPublicationDate(value?: string | number): Date | undefined {
     if (typeof value !== 'number' && (typeof value !== 'string' || !value.trim())) {
         return;
     }
@@ -126,13 +130,7 @@ function getNavigationChannels(html: string, section: 'news' | 'video'): Navigat
             return { name: anchor.text(), slug: parts[1], url: url.href };
         });
 }
-function getBreadcrumbChannel(
-    html: string,
-    section: 'news' | 'video'
-): {
-    id: number;
-    name: string;
-} {
+function getBreadcrumbChannel(html: string, section: 'news' | 'video'): BreadcrumbChannel {
     const content = load(html);
     const script = content('script')
         .toArray()
@@ -155,7 +153,7 @@ async function getChannel(section: 'news' | 'video', id: string, limit: number):
     const navigation: unknown = response.data.header?.[section];
     if (Array.isArray(navigation)) {
         const channel = navigation.find((entry) => entry.EnglishName === id || String(entry.ChannelID) === id);
-        if (channel && isOneOf(typeof channel.ChannelID, ['string', 'number']) && typeof channel.ChannelName === 'string' && typeof channel.EnglishName === 'string') {
+        if (channel && (typeof channel.ChannelID === 'string' || typeof channel.ChannelID === 'number') && typeof channel.ChannelName === 'string' && typeof channel.EnglishName === 'string') {
             return { id: channel.ChannelID, name: channel.ChannelName, slug: channel.EnglishName };
         }
         throw new InvalidParameterError(`Unknown Yicai ${section} channel: ${id}`);
@@ -252,7 +250,3 @@ function fetchFullArticles(items: ListedArticleItem[]): Promise<ArticleItem[]> {
     );
 }
 export { fetchFullArticles, getChannel, getVideo, processItems, rootUrl };
-function isOneOf<const T>(value: unknown, values: readonly T[]): value is T {
-    const candidates: readonly unknown[] = values;
-    return candidates.includes(value);
-}

@@ -54,7 +54,7 @@ export const route: Route = {
 | gjhzj-xmzn | gjhzj-csjg | gjhzj-pztz | gjhzj-jcjb | gjhzj-xxgk |`,
 };
 
-const currentPaths: Record<string, string> = {
+const currentPaths = {
     '/publish/portal0/tab440': '/p1/3381/2821/jjyw11.html',
     '/publish/portal0/tab442': '/p1/3381/2822/tzsm1.html',
     '/publish/portal0/tab445': '/p1/3381/2823/bmdt.html',
@@ -66,7 +66,9 @@ const currentPaths: Record<string, string> = {
     '/publish/portal0/tab1212': '/p1/2857/3203/glkxbtzgg.html',
     '/publish/portal0/tab1213': '/p1/2857/3204/glkxbzzcg.html',
     '/publish/portal0/tab1366': '/p1/2828/2833/jcjb.html',
-};
+} satisfies Record<string, string>;
+
+const isLegacyPath = (key: string): key is keyof typeof currentPaths => Object.hasOwn(currentPaths, key);
 
 async function handler(ctx) {
     const path = ctx.req.param('path');
@@ -84,7 +86,8 @@ async function handler(ctx) {
     }
 
     const rootUrl = 'https://www.nsfc.gov.cn';
-    thePath = currentPaths[thePath.replace(/\/$/, '') || '/publish/portal0/tab442'] ?? thePath;
+    const legacyPath = thePath.replace(/\/$/, '') || '/publish/portal0/tab442';
+    thePath = isLegacyPath(legacyPath) ? currentPaths[legacyPath] : thePath;
     const currentUrl = `${rootUrl}${thePath.endsWith('/more') ? `${thePath}.htm` : thePath}`;
 
     const { data: response } = await got(currentUrl);

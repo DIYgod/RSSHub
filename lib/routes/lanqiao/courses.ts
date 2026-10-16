@@ -51,7 +51,7 @@ async function handler(ctx) {
 
     const items = await pMap(
         data,
-        async (item: Record<string, unknown>) => {
+        async (item: { id: number }) => {
             const course = await cache.tryGet(`lanqiao:course:${item.id}`, async () => {
                 const courseResponse = await got({
                     method: 'get',
@@ -60,7 +60,7 @@ async function handler(ctx) {
                 return courseResponse.data;
             });
             return {
-                ...item,
+                id: String(item.id),
                 title: `${course.name} [${courseType[course.fee_type]}]`,
                 description: utils.courseDesc(course.picture_url, md.render(course.long_description || course.description || '')),
                 author: course.teacher.name,

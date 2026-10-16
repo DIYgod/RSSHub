@@ -15,7 +15,12 @@ interface Breach {
     DataClasses: string[];
 }
 
-function getBreaches($: CheerioAPI): { breaches: Breach[]; payload: string } {
+interface BreachCatalogue {
+    breaches: Breach[];
+    payload: string;
+}
+
+function getBreaches($: CheerioAPI): BreachCatalogue {
     const payload = $('script')
         .toArray()
         .flatMap((script) => {

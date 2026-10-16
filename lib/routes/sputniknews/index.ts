@@ -39,7 +39,7 @@ const languages = {
     portuguese: 'https://br.sputniknews.com',
 };
 
-const languageCodes: Record<string, Language> = {
+const languageCodes = {
     english: 'en',
     spanish: 'es',
     german: 'de',
@@ -56,7 +56,8 @@ const languageCodes: Record<string, Language> = {
     japanese: 'ja',
     chinese: 'zh-CN',
     portuguese: 'pt-br',
-};
+} satisfies Record<string, Language>;
+const isLanguageCodeKey = (key: string): key is keyof typeof languageCodes => Object.hasOwn(languageCodes, key);
 
 export const route: Route = {
     path: '/:category?/:language?',
@@ -184,7 +185,7 @@ async function handler(ctx) {
     return {
         title: `${category} - Sputnik News`,
         link: `${rootUrl}/${category}`,
-        language: languageCodes[language] ?? 'other',
+        language: isLanguageCodeKey(language) ? languageCodes[language] : ('other' as const),
         item: items,
     };
 }

@@ -27,7 +27,7 @@ export const route: Route = {
     handler,
 };
 
-const getPublicationDate = (value: unknown): Date | undefined => {
+const getPublicationDate = (value?: string): Date | undefined => {
     if (typeof value !== 'string' || !/\S/.test(value)) {
         return undefined;
     }

@@ -8,7 +8,7 @@ import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
 
 function parseGmtDate(value: number | string | undefined) {
-    if (isOneOf(value, [undefined, ''])) {
+    if (value === undefined || value === '') {
         return;
     }
     return parseDate(typeof value === 'string' && !/(?:Z|[+-]\d{2}:?\d{2})$/i.test(value) ? `${value}Z` : value);
@@ -104,8 +104,3 @@ export const route: Route = {
     ],
     view: ViewType.Articles,
 };
-
-function isOneOf<const T>(value: unknown, values: readonly T[]): value is T {
-    const candidates: readonly unknown[] = values;
-    return candidates.includes(value);
-}

@@ -92,7 +92,7 @@ export async function getPostItems(params: {
     return items;
 }
 const cdnUrl = 'https://cdn.voronoiapp.com/public/';
-function parsePostDate(timestamp: unknown) {
+function parsePostDate(timestamp?: number | string) {
     return (typeof timestamp === 'number' && Number.isFinite(timestamp)) || (typeof timestamp === 'string' && timestamp && Number.isFinite(Date.parse(timestamp))) ? parseDate(timestamp) : undefined;
 }
 type SearchDetails = {
@@ -103,14 +103,15 @@ type SearchDetails = {
     upvotes?: number;
     comments?: number;
 };
-function parseJson(text: string): unknown {
+type JsonValue = string | number | boolean | null | JsonValue[] | { [key: string]: JsonValue };
+function parseJson(text: string): JsonValue | undefined {
     try {
         return JSON.parse(text);
     } catch {
         return undefined;
     }
 }
-function collectSearchDetails(value: unknown, post: SearchPost, details: SearchDetails): void {
+function collectSearchDetails(value: JsonValue | undefined, post: SearchPost, details: SearchDetails): void {
     if (!value || typeof value !== 'object') {
         return;
     }

@@ -5,11 +5,13 @@ import { parseDate } from '@/utils/parse-date';
 const appFeedUrl = 'https://raw.githubusercontent.com/Squidly271/AppFeed/master/applicationFeed.json';
 const defaultLimit = 20;
 
-function sortIdentityFields(_key: string, value: unknown) {
+type JsonValue = string | number | boolean | null | JsonValue[] | { [key: string]: JsonValue };
+
+function sortIdentityFields(_key: string, value: JsonValue) {
     return value && typeof value === 'object' && !Array.isArray(value) ? Object.fromEntries(Object.entries(value).sort(([left], [right]) => left.localeCompare(right))) : value;
 }
 
-function getAppIdentity(app: Record<string, unknown>) {
+function getAppIdentity(app: { [key: string]: JsonValue }) {
     const fields = Object.fromEntries(Object.entries(app).filter(([field]) => !['TemplateURL', 'TemplatePath', 'Repo'].includes(field)));
     return JSON.stringify(fields, sortIdentityFields);
 }

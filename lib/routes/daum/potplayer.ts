@@ -6,7 +6,7 @@ import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
 
-const languageCodes: Record<string, Language> = {
+const languageCodes = {
     '': 'ko',
     Chs: 'zh-CN',
     Cht: 'zh-TW',
@@ -14,13 +14,16 @@ const languageCodes: Record<string, Language> = {
     Kor: 'ko',
     Pol: 'pl',
     Rus: 'ru',
-};
+} satisfies Record<string, Language>;
+
+const isLanguageCode = (key: string): key is keyof typeof languageCodes => Object.hasOwn(languageCodes, key);
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { lang } = ctx.req.param();
     const limit = getRouteLimit(ctx, 500);
 
     const baseUrl = 'https://t1.daumcdn.net';
+    const languageKey = lang ?? '';
     const languageSuffix = lang === 'Kor' ? '' : (lang ?? '');
     const targetUrl: string = new URL(`potplayer/PotPlayer/v4/Update2/Update${languageSuffix}.html`, baseUrl).href;
 
@@ -93,7 +96,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
     return {
         title: 'PotPlayer Update History',
-        language: languageCodes[lang ?? ''],
+        language: isLanguageCode(languageKey) ? languageCodes[languageKey] : undefined,
         link: targetUrl,
         item: items.values().toArray().slice(0, limit),
         id: targetUrl,

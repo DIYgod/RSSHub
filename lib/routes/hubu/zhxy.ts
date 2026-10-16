@@ -13,7 +13,7 @@ import timezone from '@/utils/timezone';
 const rootUrl = 'https://zhxy.hubu.edu.cn';
 const allowedResourceTypes = new Set(['document', 'xhr', 'fetch']);
 
-function isHttp2ProtocolError(error: unknown): boolean {
+function isHttp2ProtocolError(error: unknown): error is Error {
     return error instanceof Error && (error.message.includes('NGHTTP2_PROTOCOL_ERROR') || isHttp2ProtocolError(error.cause));
 }
 

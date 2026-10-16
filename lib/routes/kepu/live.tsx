@@ -33,9 +33,12 @@ export const route: Route = {
     url: 'live.kepu.net.cn/replay/index',
 };
 
+type ReplayMedia = { url?: string; mimeType?: string };
+type ReplayDetail = { enclosureUrl?: string };
+
 type ReplayItem = DataItem & { guid: string; link: string; description: string; itunes_item_image: string };
 
-function getReplayMedia(url?: string): { url?: string; mimeType?: string } {
+function getReplayMedia(url?: string): ReplayMedia {
     if (!url) {
         return {};
     }
@@ -82,9 +85,9 @@ async function handler(ctx) {
     items = await pMap(
         items,
         async (item) => {
-            let detail: { enclosureUrl?: string } = {};
+            let detail: ReplayDetail = {};
             try {
-                detail = await cache.tryGet<{ enclosureUrl?: string }>(`kepu:replay:${item.link}`, async () => {
+                detail = await cache.tryGet<ReplayDetail>(`kepu:replay:${item.link}`, async () => {
                     const apiReplayUrl = new URL('index.php/front/live/replay_url', apiRootUrl).href;
 
                     const { data: detailResponse } = await got.post(apiReplayUrl, {
