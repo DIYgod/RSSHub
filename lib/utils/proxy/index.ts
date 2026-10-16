@@ -62,7 +62,8 @@ const createDispatcherForProxy = (uri: string, proxyObj: Config['proxy'], minVer
     }
     if (uri.startsWith('socks')) {
         return new ProxyAgent({
-            uri,
+            // undici only accepts socks5: and socks:, and its SOCKS5 client already lets the proxy resolve host names
+            uri: uri.replace(/^socks5h:/, 'socks5:'),
             requestTls: {
                 ALPNProtocols: ['h2', 'http/1.1'],
                 minVersion,

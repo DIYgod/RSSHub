@@ -7,7 +7,7 @@ import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
 import { renderDescription } from './templates/description';
-import { fetchArticleMetadata } from './utils';
+import { fetchArticleMetadata, withArticleMetadataBrowser } from './utils';
 
 const ieeeHost = 'https://ieeexplore.ieee.org';
 
@@ -21,6 +21,7 @@ export const route: Route = {
         earlyAccess: 'Optional, set any value to get early access articles',
     },
     example: '/ieee/journal/6287639/preprint',
+    features: { requirePuppeteer: true },
     handler,
 };
 
@@ -41,14 +42,16 @@ async function handler(ctx) {
         return mappedItem;
     });
 
-    const items = await pMap(
-        list,
-        async (item) => {
-            const metadata = await fetchArticleMetadata(item.link);
-            const article = { ...item, abstract: metadata.abstract || item.abstract, pubDate: metadata.insertDate ? parseDate(metadata.insertDate) : undefined };
-            return { ...article, description: renderDescription(article) };
-        },
-        { concurrency: 3 }
+    const items = await withArticleMetadataBrowser((getBrowser) =>
+        pMap(
+            list,
+            async (item) => {
+                const metadata = await fetchArticleMetadata(item.link, getBrowser);
+                const article = { ...item, abstract: metadata.abstract || item.abstract, pubDate: metadata.insertDate ? parseDate(metadata.insertDate) : undefined };
+                return { ...article, description: renderDescription(article) };
+            },
+            { concurrency: 3 }
+        )
     );
 
     return {

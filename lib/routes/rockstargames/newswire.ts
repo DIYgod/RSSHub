@@ -106,6 +106,8 @@ type Image = {
     sources?: Record<string, string | { desktop?: string; mobile?: string }>;
 };
 
+type JsonValue = string | number | boolean | null | undefined | JsonValue[] | { [key: string]: JsonValue };
+
 type Block = {
     _template?: string;
     _memoq?: { content?: string; description?: string; text?: string; title?: string; to?: string };
@@ -122,7 +124,7 @@ type Block = {
     name?: string;
 };
 
-const isBlock = (node: unknown): node is Block => node !== null && typeof node === 'object';
+const isBlock = (node: JsonValue): node is Block => node !== null && typeof node === 'object';
 
 const renderImage = (image?: Image): string => {
     const sources = image?.sources?.[locale];
@@ -130,7 +132,7 @@ const renderImage = (image?: Image): string => {
     return source ? `<img src="${escapeAttribute(new URL(source, mediaUrl).href)}" alt="${escapeAttribute(image?._memoq?.alt ?? image?.alt ?? '')}">` : '';
 };
 
-const collectVideoIds = (node: unknown): string[] => {
+const collectVideoIds = (node: JsonValue): string[] => {
     if (Array.isArray(node)) {
         return node.flatMap((child) => collectVideoIds(child));
     }
@@ -140,7 +142,7 @@ const collectVideoIds = (node: unknown): string[] => {
     return [...(node._template === 'RockstarVideoPlayer' && node.id ? [node.id] : []), ...Object.values(node).flatMap((child) => collectVideoIds(child))];
 };
 
-const renderBlocks = (node: unknown, videos: Map<string, Video | undefined>): string => {
+const renderBlocks = (node: JsonValue, videos: Map<string, Video | undefined>): string => {
     if (Array.isArray(node)) {
         return node.map((child) => renderBlocks(child, videos)).join('');
     }

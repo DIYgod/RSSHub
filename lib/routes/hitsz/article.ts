@@ -42,7 +42,7 @@ export const route: Route = {
 | id-116   | id-80    | id-75    | id-77    | id-78    | id-79    | id-81    | id-124   |`,
 };
 
-const categories: Record<string, string> = {
+const categories = {
     'id-116': '6',
     'id-80': '7',
     'id-75': '9',
@@ -50,7 +50,9 @@ const categories: Record<string, string> = {
     'id-78': 'jzlt',
     'id-79': '11',
     'id-124': '12',
-};
+} satisfies Record<string, string>;
+
+const isCategory = (key: string): key is keyof typeof categories => Object.hasOwn(categories, key);
 
 function parseCalendarDate(value: string) {
     if (!value) {
@@ -66,7 +68,7 @@ async function handler(ctx: Context): Promise<Data> {
     if (category === 'id-81') {
         return getTenderFeed();
     }
-    if (!Object.hasOwn(categories, category)) {
+    if (!isCategory(category)) {
         throw new InvalidParameterError('Unknown news category. Use one of the supported category IDs documented for this route.');
     }
     const link = new URL(`/news/${categories[category]}/list.htm`, host).href;

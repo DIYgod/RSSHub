@@ -44,6 +44,7 @@ async function handler(ctx) {
     const id = ctx.req.param('id');
 
     const stockResponse = await ofetch(`https://stock.xueqiu.com/v5/stock/portfolio/stock/list.json?category=1&size=1000&uid=${id}`, {
+        redirect: 'manual',
         headers: {
             Cookie: cookie,
             Referer: `https://xueqiu.com/u/${id}`,
@@ -54,7 +55,8 @@ async function handler(ctx) {
         throw new TypeError('Unable to retrieve the Xueqiu watchlist. Verify that the user is accessible and refresh XUEQIU_COOKIES.');
     }
 
-    const userResponse = await ofetch('https://xueqiu.com/statuses/original/show.json', {
+    const userResponse = await ofetch('https://www.xueqiu.com/statuses/original/show.json', {
+        redirect: 'manual',
         query: {
             user_id: id,
         },

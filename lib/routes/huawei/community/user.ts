@@ -31,7 +31,7 @@ export const route: Route = {
     handler,
 };
 
-async function requestApi(path: string, body: object, appId: string) {
+async function requestApi(path: string, body: { threadId: string; pageIndex: number; pageSize: number; orderBy: number } | { site: string; userId: string; pageSize: number; curPage: number }, appId: string) {
     const response = await ofetch(`${apiUrl}/${path}`, {
         method: 'POST',
         headers: { 'SGW-APP-ID': appId, Origin: baseUrl, Referer: `${baseUrl}/` },

@@ -4,7 +4,7 @@ import { renderToString } from 'hono/jsx/dom/server';
 import { parseDate } from '@/utils/parse-date';
 import { fallback, queryToBoolean, queryToInteger } from '@/utils/readable-social';
 
-const getPublicationDate = (value: unknown): Date | undefined => {
+const getPublicationDate = (value?: string | number | Date): Date | undefined => {
     if ((typeof value !== 'string' && typeof value !== 'number' && !(value instanceof Date)) || (typeof value === 'string' && !value.trim())) {
         return undefined;
     }

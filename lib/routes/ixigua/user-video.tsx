@@ -5,14 +5,10 @@ import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
-function isMissingPublicationValue(value: unknown): value is null | undefined | '' {
-    return ([undefined, null, ''] as unknown[]).includes(value);
-}
-
 const host = 'https://www.ixigua.com';
 
 const parsePublishTime = (value?: number | string | null) => {
-    if (isMissingPublicationValue(value)) {
+    if (!value && value !== 0) {
         return;
     }
     const date = parseDate(value, 'X');

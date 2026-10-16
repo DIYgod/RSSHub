@@ -63,22 +63,28 @@ async function handler() {
 
     const item = $('.dy_content_li')
         .toArray()
-        .map((item) => {
+        .flatMap((item) => {
             const imageUrl = $(item).find('img').attr('src');
-            const chapterTitle = $(item).find('.co_1.c_space').first().text();
             const title = $(item).find('img').attr('alt');
-            const link = $(item).find('.co_1.c_space').first().children().attr('href');
+            const chapter = $(item).find('.co_1.c_space').first();
+            const href = chapter.children('a[href]').attr('href');
+            const itemLink = href ? URL.parse(href, webUrl) : undefined;
+            if (!title || !/\S/.test(title) || !imageUrl || !itemLink || !['http:', 'https:'].includes(itemLink.protocol)) {
+                return [];
+            }
+
+            const chapterTitle = chapter.text();
             const description = renderToString(
                 <>
                     <h1>{chapterTitle}</h1>
                     <img src={imageUrl} />
                 </>
             );
-            const pubDate = $(item).find('.co_1.c_space').first().next().text().trim();
+            const pubDate = chapter.next().text().trim();
             const publishDate = pubDate ? parseRelativeDate(pubDate) : undefined;
             const single = {
-                title: title!,
-                link,
+                title,
+                link: itemLink.href,
                 description,
                 pubDate: publishDate,
             };

@@ -12,7 +12,7 @@ import timezone from '@/utils/timezone';
 
 import weiboUtils from './utils';
 
-const getPostTime = (pubDate: DataItem['pubDate']) => (isNullish(pubDate) || pubDate === '' ? NaN : new Date(pubDate).getTime());
+const getPostTime = (pubDate: DataItem['pubDate']) => (typeof pubDate !== 'number' && !pubDate ? NaN : new Date(pubDate).getTime());
 export const route: Route = {
     path: '/user/:uid/:routeParams?',
     categories: ['social-media'],
@@ -208,9 +208,6 @@ async function handler(ctx) {
         item: resultItems,
         allowEmpty: resultItems.length === 0 && cards.some((item) => item.mblog),
     });
-}
-function isNullish(value: unknown): value is null | undefined {
-    return isOneOf(value, [null, undefined]);
 }
 
 function isOneOf<const T>(value: unknown, values: readonly T[]): value is T {

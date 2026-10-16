@@ -17,7 +17,7 @@ const columns = {
     visualization: 4,
 };
 
-function getPublicationDate(value: unknown): Date | undefined {
+function getPublicationDate(value?: string | number): Date | undefined {
     if (typeof value !== 'number' && (typeof value !== 'string' || !value.trim())) {
         return;
     }

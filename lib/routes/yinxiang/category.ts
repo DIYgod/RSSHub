@@ -12,7 +12,7 @@ type ListedItem = DataItem & {
     link: string;
 };
 type NoteDetails = Pick<DataItem, 'category' | 'description' | 'pubDate'>;
-function parsePublishTime(value: unknown): Date | undefined {
+function parsePublishTime(value?: string | number): Date | undefined {
     if (typeof value !== 'number' && (typeof value !== 'string' || !value.trim())) {
         return;
     }
@@ -110,7 +110,7 @@ function extractNoteContent(description: string, noteGuid: string): string {
     }
     return content;
 }
-function parseTags(value: unknown): string[] | undefined {
+function parseTags(value?: string): string[] | undefined {
     if (typeof value !== 'string') {
         return;
     }

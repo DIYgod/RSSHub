@@ -35,7 +35,7 @@ export const route: Route = {
     description: 'Provides a better reading experience (full articles) over the official ones.',
     view: ViewType.Notifications,
 };
-function parseSourceTime(value: unknown) {
+function parseSourceTime(value?: string | number | null) {
     if ((typeof value !== 'number' && typeof value !== 'string') || (typeof value === 'string' && !value.trim())) {
         return;
     }

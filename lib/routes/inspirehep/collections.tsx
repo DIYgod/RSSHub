@@ -38,14 +38,14 @@ interface CollectionRecord {
     };
 }
 
-const collectionNames: Record<string, string> = {
+const collectionNames = {
     jobs: 'Jobs',
     seminars: 'Seminars',
     conferences: 'Conferences',
     institutions: 'Institutions',
     experiments: 'Experiments',
     journals: 'Journals',
-};
+} satisfies Record<string, string>;
 
 export const route: Route = {
     path: '/:collection{jobs|seminars|conferences|institutions|experiments|journals}/:q?',
@@ -70,7 +70,7 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const collection = ctx.req.param('collection');
+    const collection: keyof typeof collectionNames = ctx.req.param('collection');
     const q = ctx.req.param('q');
     const limit = getRouteLimit(ctx, 25);
     const sort = collection === 'jobs' ? 'mostrecent' : ['seminars', 'conferences'].includes(collection) ? 'datedesc' : undefined;

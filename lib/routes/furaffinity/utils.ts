@@ -44,12 +44,14 @@ interface Commission {
     };
 }
 
-const gallerySelectors: Record<string, string> = {
+const gallerySelectors = {
     artwork: '#gallery-frontpage-submissions',
     writing: '#gallery-frontpage-writing',
     music: '#gallery-frontpage-music',
     crafts: '#gallery-frontpage-crafts',
-};
+} satisfies Record<string, string>;
+
+const isGalleryCategory = (key: string): key is keyof typeof gallerySelectors => Object.hasOwn(gallerySelectors, key);
 
 export async function getCommissions(username: string): Promise<Commission[]> {
     try {
@@ -148,7 +150,7 @@ export async function getArtwork(apiUrl: string, link: string, mode: string, cat
         }
         const html = await ofetch(link, { responseType: 'text' });
         const $ = load(html);
-        const gallery = category ? $(gallerySelectors[category]) : $.root();
+        const gallery = category ? $(isGalleryCategory(category) ? gallerySelectors[category] : undefined) : $.root();
         return gallery
             .find('figure[id^="sid-"].r-general')
             .toArray()

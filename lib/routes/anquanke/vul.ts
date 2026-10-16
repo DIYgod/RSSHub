@@ -3,7 +3,8 @@ import { load } from 'cheerio';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
-const handler = async () => {
+// TODO: missing route export
+export default async function handler() {
     const url = 'https://www.anquanke.com';
 
     const response = await got(`${url}/vul`);
@@ -32,7 +33,4 @@ const handler = async () => {
         link: 'https://www.anquanke.com/vul',
         item: items,
     };
-};
-
-// TODO: missing route export
-export default handler;
+}

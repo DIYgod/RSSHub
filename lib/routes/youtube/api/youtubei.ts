@@ -23,9 +23,8 @@ const getInnertube = () => {
                     });
                 },
             }),
-            (error) => {
+            () => {
                 innertubePromise = undefined;
-                throw error;
             }
         );
     }
@@ -174,10 +173,11 @@ export const getShowsByChannelId = async (channelId: string): Promise<Data> => {
             }),
     };
 };
-async function recoverFailure<T, U>(promise: Promise<T>, recover: (error: unknown) => U | Promise<U>): Promise<T | U> {
+async function recoverFailure<T>(promise: Promise<T>, onFailure: () => void): Promise<T> {
     try {
         return await promise;
     } catch (error) {
-        return recover(error);
+        onFailure();
+        throw error;
     }
 }

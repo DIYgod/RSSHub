@@ -42,10 +42,10 @@ const macrodataSuffix = {
 
 const getMacrodataUrl = (countryId, wscnTicker) => `${rootUrl}/data-analyse/${wscnTicker}/${macrodataSuffix[countryId]}`;
 
-const hasValue = (value: unknown) => value !== undefined && value !== null && value !== '';
-const formatValue = (value: unknown, unit: string = '') => (hasValue(value) ? `${value}${unit}` : '-');
+const hasValue = (value?: string | number | null) => value !== undefined && value !== null && value !== '';
+const formatValue = (value?: string | number | null, unit: string = '') => (hasValue(value) ? `${value}${unit}` : '-');
 
-function parseSourceTime(value: unknown) {
+function parseSourceTime(value?: string | number | null) {
     if ((typeof value !== 'number' && typeof value !== 'string') || (typeof value === 'string' && !value.trim())) {
         return;
     }

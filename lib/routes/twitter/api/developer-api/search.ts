@@ -1,7 +1,8 @@
 import utils from '../../utils';
 import api from './api';
 
-const handler = async (ctx) => {
+// TODO: missing route export
+export default async function handler(ctx) {
     const keyword = ctx.req.param('keyword');
     const limit = ctx.req.query('limit') ?? 50;
     await api.init();
@@ -15,6 +16,4 @@ const handler = async (ctx) => {
         }),
         allowEmpty: true,
     };
-};
-// TODO: missing route export
-export default handler;
+}

@@ -9,9 +9,12 @@ import { parseDate } from '@/utils/parse-date';
 
 const cookieJar = new CookieJar();
 
-const isRecord = (value: unknown): value is Record<string, unknown> => !!value && typeof value === 'object' && !Array.isArray(value);
+// Values in a Nuxt payload; `undefined` comes from the -1 reference.
+type PayloadValue = string | number | boolean | null | undefined | PayloadValue[] | { [key: string]: PayloadValue };
 
-const decodePayload = (payload: unknown[], index: number, decoded = new Map<number, unknown>()): unknown => {
+const isRecord = (value: PayloadValue): value is { [key: string]: PayloadValue } => !!value && typeof value === 'object' && !Array.isArray(value);
+
+const decodePayload = (payload: PayloadValue[], index: number, decoded = new Map<number, PayloadValue>()): PayloadValue => {
     if (index === -1) {
         return undefined;
     }
@@ -20,16 +23,16 @@ const decodePayload = (payload: unknown[], index: number, decoded = new Map<numb
     }
     const value = payload[index];
     if (Array.isArray(value)) {
-        if (['Reactive', 'ShallowReactive', 'Ref', 'ShallowRef'].includes(value[0])) {
+        if (typeof value[0] === 'string' && ['Reactive', 'ShallowReactive', 'Ref', 'ShallowRef'].includes(value[0]) && typeof value[1] === 'number') {
             return decodePayload(payload, value[1], decoded);
         }
-        const result: unknown[] = [];
+        const result: PayloadValue[] = [];
         decoded.set(index, result);
-        result.push(...value.map((reference) => decodePayload(payload, reference, decoded)));
+        result.push(...value.map((reference) => (typeof reference === 'number' ? decodePayload(payload, reference, decoded) : undefined)));
         return result;
     }
     if (isRecord(value)) {
-        const result: Record<string, unknown> = {};
+        const result: { [key: string]: PayloadValue } = {};
         decoded.set(index, result);
         for (const [key, reference] of Object.entries(value)) {
             if (typeof reference !== 'number') {
@@ -42,7 +45,7 @@ const decodePayload = (payload: unknown[], index: number, decoded = new Map<numb
     return value;
 };
 
-const parseIssueArticles = (payload: unknown[], issueUrl: string): DataItem[] => {
+const parseIssueArticles = (payload: PayloadValue[], issueUrl: string): DataItem[] => {
     const issuePath = new URL(issueUrl).pathname;
     const keyPrefix = `issue-articles-${issuePath.split('/').filter(Boolean).join('-')}-`;
     const state = payload.find((entry) => isRecord(entry) && Object.keys(entry).some((key) => key.startsWith(keyPrefix) && key.endsWith('-1')));
@@ -55,7 +58,7 @@ const parseIssueArticles = (payload: unknown[], issueUrl: string): DataItem[] =>
     if (!isRecord(data) || !Array.isArray(data.articles)) {
         throw new Error('The current journal issue contains invalid article data');
     }
-    return data.articles.map((article: unknown) => {
+    return data.articles.map((article) => {
         if (!isRecord(article) || typeof article.title !== 'string' || typeof article.identifier !== 'string' || typeof article.fullAbstract !== 'string' || !Array.isArray(article.authors)) {
             throw new Error('A journal article is missing its title, identifier, abstract, or authors');
         }

@@ -51,7 +51,7 @@ function handleDuplicates(array) {
     return Object.values(objects);
 }
 
-function parseSourceTime(value: unknown) {
+function parseSourceTime(value?: string | number | null) {
     if ((typeof value !== 'number' && typeof value !== 'string') || (typeof value === 'string' && !value.trim())) {
         return;
     }

@@ -8,7 +8,7 @@ import { queryToBoolean } from '@/utils/readable-social';
 export const profileUrl = (user: string) => `https://www.threads.com/@${user}`;
 export const threadUrl = (code: string) => `https://www.threads.com/t/${code}`;
 
-export const getPubDate = (takenAt: unknown): Date | undefined => {
+export const getPubDate = (takenAt?: number | string): Date | undefined => {
     if ((typeof takenAt !== 'number' && typeof takenAt !== 'string') || (typeof takenAt === 'string' && !takenAt.trim()) || !Number.isFinite(Number(takenAt))) {
         return undefined;
     }

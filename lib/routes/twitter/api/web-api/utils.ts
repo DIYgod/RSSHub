@@ -1,7 +1,8 @@
 import { cookie as HttpCookieAgentCookie, CookieAgent } from 'http-cookie-agent/undici';
 import queryString from 'query-string';
 import { Cookie, CookieJar } from 'tough-cookie';
-import undici, { ProxyAgent } from 'undici';
+import type { ProxyAgent } from 'undici';
+import undici from 'undici';
 
 import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
@@ -26,11 +27,7 @@ const token2Cookie = async (token) => {
     const jar = new CookieJar();
     await jar.setCookie(`auth_token=${token}`, 'https://x.com');
     try {
-        const agent = proxy.proxyUri
-            ? new ProxyAgent({
-                  uri: proxy.proxyUri,
-              }).compose(HttpCookieAgentCookie({ jar }))
-            : new CookieAgent({ cookies: { jar } });
+        const agent = proxy.dispatcher ? proxy.dispatcher.compose(HttpCookieAgentCookie({ jar })) : new CookieAgent({ cookies: { jar } });
         if (token) {
             await ofetch('https://x.com', {
                 dispatcher: agent,
@@ -109,12 +106,8 @@ export const twitterGot = async (
     if (cookie) {
         logger.debug('twitter debug: got twitter cookie');
         const jar = CookieJar.deserializeSync(JSON.parse(cookie));
-        const agent = proxy.proxyUri
-            ? new ProxyAgent({
-                  uri: proxy.proxyUri,
-              }).compose(HttpCookieAgentCookie({ jar }))
-            : new CookieAgent({ cookies: { jar } });
-        if (proxy.proxyUri) {
+        const agent = proxy.dispatcher ? proxy.dispatcher.compose(HttpCookieAgentCookie({ jar })) : new CookieAgent({ cookies: { jar } });
+        if (proxy.dispatcher) {
             logger.debug(`twitter debug: Proxying request: ${requestUrl}`);
         }
         dispatchers = {

@@ -1,4 +1,4 @@
-import { load } from 'cheerio';
+import { type CheerioAPI, load } from 'cheerio';
 import dayjs from 'dayjs';
 import { FetchError } from 'ofetch';
 import pMap from 'p-map';
@@ -7,6 +7,68 @@ import type { Data, DataItem, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
+import { getPlaywrightPage, type Page } from '@/utils/playwright';
+
+const articleSelector = '.article-main > .article-content, .blkContainerSblk.collectionContainer';
+
+class ArticleUnavailableError extends Error {}
+
+class ArticleSource {
+    private browser?: Awaited<ReturnType<typeof getPlaywrightPage>>;
+    private initializingBrowser?: Promise<Awaited<ReturnType<typeof getPlaywrightPage>>>;
+
+    private async createBrowser(link: string) {
+        const browser = await getPlaywrightPage(link, {
+            noGoto: true,
+            closeTimeout: 0,
+            onBeforeLoad: async (_page, context) => {
+                await context!.route('**/*', (route) => (['document', 'script', 'xhr', 'fetch', 'stylesheet'].includes(route.request().resourceType()) ? route.continue() : route.abort()));
+            },
+        });
+        this.browser = browser;
+        await browser.page.close();
+        return browser;
+    }
+
+    async get(link: string) {
+        if (!this.initializingBrowser) {
+            try {
+                const response = await got(link);
+                return load(response.data);
+            } catch (error) {
+                if (!(error instanceof FetchError) || (error.status !== 403 && error.status !== 429)) {
+                    throw error;
+                }
+            }
+        }
+        this.initializingBrowser ??= this.createBrowser(link);
+        const { context } = await this.initializingBrowser;
+        const page = await context.newPage();
+        try {
+            return await fetchBrowserArticle(page, link);
+        } finally {
+            await page.close();
+        }
+    }
+
+    async close() {
+        await this.browser?.destroy();
+    }
+}
+
+async function fetchBrowserArticle(page: Page, link: string, retry = true): Promise<CheerioAPI> {
+    const response = await page.goto(link, { waitUntil: 'domcontentloaded', timeout: 20000 });
+    try {
+        await page.waitForSelector(articleSelector, { state: 'attached', timeout: 10000 });
+    } catch (error) {
+        if (retry && error instanceof Error && error.name === 'TimeoutError' && (response?.status() === 403 || response?.status() === 429)) {
+            return fetchBrowserArticle(page, link, false);
+        }
+        throw error;
+    }
+    const html = await page.content();
+    return load(html);
+}
 
 export const route: Route = {
     path: '/latest',
@@ -21,6 +83,7 @@ export const route: Route = {
     ],
     name: '近期文章汇总',
     maintainers: ['g0ngjie'],
+    features: { requirePuppeteer: true, antiCrawler: true },
     handler,
     url: 'www.yilinzazhi.com',
     description: '最近一期的文章汇总',
@@ -36,13 +99,12 @@ type Catalog = {
     tables: DataItem[];
 };
 
-async function fetchDescription(link: string): Promise<Pick<DataItem, 'description' | 'author'>> {
-    const response = await got(link);
-    const $ = load(response.data);
+async function fetchDescription(link: string, source: ArticleSource): Promise<Pick<DataItem, 'description' | 'author'>> {
+    const $ = await source.get(link);
     const currentContainer = $('.article-main > .article-content');
     const detailContainer = currentContainer.length ? currentContainer : $('.blkContainerSblk.collectionContainer');
-    if (!detailContainer.length) {
-        throw new Error(`Article content is unavailable at ${link}`);
+    if (!detailContainer.text().trim()) {
+        throw new ArticleUnavailableError(`Article content is unavailable at ${link}`);
     }
     const author = $('.article-header .article-meta .author').text();
     return { description: detailContainer.html()!, author: author.trim() ? author : undefined };
@@ -112,25 +174,30 @@ async function handler(): Promise<Data> {
 
     const contents: DataItem[] = catalogs.flatMap((catalog) => catalog.tables.map((table) => ({ ...table, category: catalog.title.trim() ? [catalog.title] : undefined })));
 
-    const items = await pMap(
-        contents,
-        async (target) => {
-            try {
-                const detail = await cache.tryGet<Pick<DataItem, 'description' | 'author'>>(`yilinzazhi:article:${target.link}`, () => fetchDescription(target.link!));
-                return { ...target, description: detail.description, author: detail.author };
-            } catch (error) {
-                if (error instanceof FetchError && error.status === 429) {
-                    return target;
+    const source = new ArticleSource();
+    try {
+        const items = await pMap(
+            contents,
+            async (target) => {
+                try {
+                    const detail = await cache.tryGet<Pick<DataItem, 'description' | 'author'>>(`yilinzazhi:article:v2:${target.link}`, () => fetchDescription(target.link!, source));
+                    return { ...target, description: detail.description, author: detail.author };
+                } catch (error) {
+                    if (error instanceof ArticleUnavailableError || error instanceof FetchError || (error instanceof Error && (error.name === 'TimeoutError' || error.message.startsWith('page.goto:')))) {
+                        return target;
+                    }
+                    throw error;
                 }
-                throw error;
-            }
-        },
-        { concurrency: 3, stopOnError: false }
-    );
+            },
+            { concurrency: 3, stopOnError: false }
+        );
 
-    return {
-        title: '意林 - 近期文章汇总',
-        link: stage.link,
-        item: items,
-    };
+        return {
+            title: '意林 - 近期文章汇总',
+            link: stage.link,
+            item: items,
+        };
+    } finally {
+        await source.close();
+    }
 }

@@ -10,10 +10,6 @@ import { getRouteLimit } from '@/utils/route-limit';
 import { KEMONO_API_URL, KEMONO_ASSETS_URL, KEMONO_ROOT_URL, MIME_TYPE_MAP } from './const';
 import type { DiscordMessage, KemonoFile, KemonoPost } from './types';
 
-function isMissingPublicationValue(value: unknown): value is null | undefined | '' {
-    return ([undefined, null, ''] as unknown[]).includes(value);
-}
-
 const headers = { Accept: 'text/css' };
 
 export const route: Route = {
@@ -83,7 +79,7 @@ interface KemonoAttachment {
 }
 
 function parsePublishedDate(value?: string | number | null) {
-    if (isMissingPublicationValue(value)) {
+    if (!value && value !== 0) {
         return;
     }
     const date = parseDate(value);

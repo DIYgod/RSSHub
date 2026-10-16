@@ -1,8 +1,54 @@
+import { FetchError } from 'ofetch';
+
 import type { DataItem, Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { getPlaywrightPage } from '@/utils/playwright';
 import { getRouteLimit } from '@/utils/route-limit';
 import timezone from '@/utils/timezone';
+
+const resourceTypes = new Set(['document', 'script', 'stylesheet', 'xhr', 'fetch']);
+
+async function fetchList(url: string, form: Record<string, string | number | undefined>, pageUrl: string): Promise<string> {
+    try {
+        const response = await got(url, { method: 'POST', form });
+        return response.data;
+    } catch (error) {
+        if (!(error instanceof FetchError) || !error.message.includes('redirect count exceeded')) {
+            throw error;
+        }
+    }
+
+    const { page, destroy } = await getPlaywrightPage(pageUrl, { noGoto: true, closeTimeout: 0 });
+    try {
+        await page.route('**/*', (route) => (resourceTypes.has(route.request().resourceType()) ? route.continue() : route.abort()));
+        const apiPath = new URL(url).pathname;
+        await Promise.all([
+            page.waitForResponse((response) => {
+                const responseUrl = new URL(response.url());
+                return responseUrl.origin === 'https://www.bse.cn' && responseUrl.pathname === apiPath && response.request().method() === 'POST';
+            }),
+            page.goto(pageUrl, { waitUntil: 'domcontentloaded' }),
+        ]);
+        if (new URL(page.url()).origin !== 'https://www.bse.cn') {
+            throw new Error('BSE did not provide its public website page.');
+        }
+        const body = new URLSearchParams(Object.entries(form).map(([key, value]) => [key, String(value)])).toString();
+        const response = await page.evaluate(
+            async ({ apiPath, body }) => {
+                const response = await fetch(apiPath, { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body });
+                return { status: response.status, text: await response.text() };
+            },
+            { apiPath, body }
+        );
+        if (response.status !== 200) {
+            throw new Error(`BSE public API returned HTTP ${response.status}: ${apiPath}`);
+        }
+        return response.text;
+    } finally {
+        await destroy();
+    }
+}
 
 const nodes = {
     important_news: {
@@ -128,7 +174,7 @@ export const route: Route = {
     parameters: { category: '分类，见下表，默认为本所要闻', keyword: '关键字，默认为空' },
     features: {
         requireConfig: false,
-        requirePuppeteer: false,
+        requirePuppeteer: true,
         antiCrawler: false,
         supportBT: false,
         supportPodcast: false,
@@ -169,22 +215,22 @@ async function handler(ctx) {
     const keyword = ctx.req.param('keyword') ?? '';
 
     const type = nodes[category].type;
-    const rootUrl = 'http://www.bse.cn';
+    const rootUrl = 'https://www.bse.cn';
     const currentUrl = `${rootUrl}${type}.do`;
 
-    const response = await got({
-        method: 'post',
-        url: currentUrl,
-        form: {
+    const response = await fetchList(
+        currentUrl,
+        {
             page: 0,
             pageSize: getRouteLimit(ctx, 50),
             keywords: keyword,
             'nodeIds[]': type === '/info/listse' ? nodes[category].id : undefined,
             disclosureSubtype: type === '/info/listse' ? undefined : nodes[category].id,
         },
-    });
+        `${rootUrl}${nodes[category].url}`
+    );
 
-    const data = JSON.parse(response.data.match(/null\(\[(\{.*\})\]\)/)[1]);
+    const data = JSON.parse(response.match(/null\(\[(\{.*\})\]\)/)![1]);
 
     let items: DataItem[];
 

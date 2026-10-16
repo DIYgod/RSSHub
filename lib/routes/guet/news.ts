@@ -33,13 +33,15 @@ const paths = {
     xsxx: 'xsxx',
 };
 
-const externalContentSelectors: Record<string, string> = {
+const externalContentSelectors = {
     'mp.weixin.qq.com': '#js_content',
     'www.stdaily.com': '.content',
     'app.gmdaily.cn': '.article-content',
     'gx.people.com.cn': '#rm_txt_zw',
     'guangxi.eol.cn': '.TRS_Editor',
-};
+} satisfies Record<string, string>;
+
+const isExternalHost = (key: string): key is keyof typeof externalContentSelectors => Object.hasOwn(externalContentSelectors, key);
 
 async function getArticle(link: string, articleHost: string) {
     const result = await ofetch(link, { responseType: 'text' });
@@ -55,7 +57,7 @@ async function getArticle(link: string, articleHost: string) {
         }
         return { description: $.html(video), pubDate: undefined };
     }
-    const content = $(externalContentSelectors[articleHost] ?? '.wp_articlecontent');
+    const content = $(isExternalHost(articleHost) ? externalContentSelectors[articleHost] : '.wp_articlecontent');
     content.find('script, style').remove();
     content.find('img[data-src]').each((_, image) => {
         const element = $(image);
@@ -107,7 +109,7 @@ async function handler(ctx: Context) {
         list,
         async (item) => {
             const articleHost = new URL(item.link).hostname;
-            if (articleHost !== new URL(host).hostname && !Object.hasOwn(externalContentSelectors, articleHost) && articleHost !== 'v.gltvs.com') {
+            if (articleHost !== new URL(host).hostname && !isExternalHost(articleHost) && articleHost !== 'v.gltvs.com') {
                 return item;
             }
             const article = await cache.tryGet(`guet:article:${item.link}`, () => getArticle(item.link, articleHost));

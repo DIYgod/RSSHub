@@ -10,7 +10,7 @@ import { parseDate } from '@/utils/parse-date';
 
 import { getRssFeed } from './utils';
 
-const getCategory = (category: unknown): string[] => {
+const getCategory = (category: string | { _?: string }): string[] => {
     if (typeof category === 'string') {
         return [category];
     }

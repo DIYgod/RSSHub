@@ -1,10 +1,14 @@
+import pMap from 'p-map';
+
 import { config } from '@/config';
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
+import md5 from '@/utils/md5';
 import { parseDate } from '@/utils/parse-date';
 
+import { generateData } from './pin/utils';
 import type { Collection, CollectionItem } from './types';
 import { header } from './utils';
 
@@ -38,6 +42,20 @@ export const route: Route = {
     handler,
 };
 
+function generateCollectionItem(item: CollectionItem): DataItem & { link: string } {
+    const content = item.content;
+    const data =
+        content.type === 'pin'
+            ? generateData([content])[0]
+            : {
+                  title: (content.type === 'article' || content.type === 'zvideo' ? content.title : content.question!.title)!,
+                  link: content.url,
+                  description: content.type === 'zvideo' ? `<img src=${content.video!.url}/>` : content.content,
+                  pubDate: parseDate((content.type === 'article' ? content.updated : content.updated_time)! * 1000),
+              };
+    return { ...data, guid: data.link, category: [item.collectionTitle!] };
+}
+
 async function handler(ctx) {
     const id = ctx.req.param('id');
     const apiPath = `https://api.zhihu.com/people/${id}/collections`;
@@ -50,49 +68,32 @@ async function handler(ctx) {
     });
 
     const collections: Collection[] = response.data.data;
+    const sessionKey = md5(config.zhihu.cookies ?? '');
 
-    const allCollectionItems = await Promise.all(
-        collections.map(async (collection) => {
-            const firstPageResponse = await got(`https://www.zhihu.com/api/v4/collections/${collection.id}/items?offset=0&limit=20`, {
-                headers: {
-                    ...header,
-                    cookie: config.zhihu.cookies,
-                    Referer: `https://www.zhihu.com/collection/${collection.id}`,
-                },
+    const allCollectionItems = await pMap(
+        collections,
+        async (collection) => {
+            const items = await cache.tryGet<CollectionItem[]>(`zhihu:all-collections:first-page:v1:${sessionKey}:${collection.id}`, async () => {
+                const response = await got(`https://www.zhihu.com/api/v4/collections/${collection.id}/items?offset=0&limit=20`, {
+                    headers: {
+                        ...header,
+                        cookie: config.zhihu.cookies,
+                        Referer: `https://www.zhihu.com/collection/${collection.id}`,
+                    },
+                });
+                if (!Array.isArray(response.data.data)) {
+                    throw new TypeError(`Zhihu collection ${collection.id} did not return a first-page list.`);
+                }
+                return response.data.data;
             });
-
-            const {
-                data: items,
-                paging: { totals },
-            }: { data: CollectionItem[]; paging: { totals: number } } = firstPageResponse.data;
-
-            if (totals > 20) {
-                const offsetList = Array.from({ length: Math.ceil(totals / 20) - 1 }, (_, index) => (index + 1) * 20);
-
-                const otherPages = await Promise.all(
-                    offsetList.map((offset) =>
-                        cache.tryGet(`https://www.zhihu.com/api/v4/collections/${collection.id}/items?offset=${offset}&limit=20`, async () => {
-                            const response = await got(`https://www.zhihu.com/api/v4/collections/${collection.id}/items?offset=${offset}&limit=20`, {
-                                headers: {
-                                    ...header,
-                                    cookie: config.zhihu.cookies,
-                                    Referer: `https://www.zhihu.com/collection/${collection.id}`,
-                                },
-                            });
-                            return response.data.data;
-                        })
-                    )
-                );
-
-                items.push(...otherPages.flat());
-            }
 
             return {
                 collectionId: collection.id,
                 collectionTitle: collection.title,
                 items,
             };
-        })
+        },
+        { concurrency: 3 }
     );
 
     const items = allCollectionItems.flatMap((collection) =>
@@ -101,20 +102,20 @@ async function handler(ctx) {
             collectionTitle: collection.collectionTitle,
         }))
     );
+    const uniqueItems = new Map<string, DataItem & { link: string }>();
+    for (const item of items) {
+        const data = generateCollectionItem(item);
+        const previous = uniqueItems.get(data.link);
+        if (previous) {
+            previous.category = [...new Set([...(previous.category ?? []), ...(data.category ?? [])])];
+        } else {
+            uniqueItems.set(data.link, data);
+        }
+    }
 
     return {
         title: `${collections[0].creator.name}的知乎收藏`,
         link: `https://www.zhihu.com/people/${id}/collections`,
-        item: items.map((item) => {
-            const content = item.content;
-
-            return {
-                title: (content.type === 'article' || content.type === 'zvideo' ? content.title : content.question!.title)!,
-                link: content.url,
-                description: content.type === 'zvideo' ? `<img src=${content.video!.url}/>` : content.content,
-                pubDate: parseDate((content.type === 'article' ? content.updated : content.updated_time)! * 1000),
-                category: [item.collectionTitle!],
-            };
-        }),
+        item: uniqueItems.values().toArray(),
     };
 }

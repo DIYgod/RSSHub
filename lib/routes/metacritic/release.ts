@@ -3,7 +3,8 @@ import { load } from 'cheerio';
 import { toTitleCase } from '@/utils/common-utils';
 import got from '@/utils/got';
 
-const handler = async (ctx) => {
+// TODO: missing route export
+export default async function handler(ctx) {
     let type = 'new-releases';
     let title = 'New Releases';
 
@@ -54,6 +55,4 @@ const handler = async (ctx) => {
             link: item.url,
         })),
     };
-};
-// TODO: missing route export
-export default handler;
+}

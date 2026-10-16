@@ -7,14 +7,15 @@ import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
 const baseUrl = 'http://www.vom.mn';
-const languages: Record<string, Language> = {
+const languages = {
     en: 'en',
     ja: 'ja',
     // The shared Language union does not include the site's ISO 639 code for Mongolian.
     mn: 'mn' as Language,
     ru: 'ru',
     zh: 'zh',
-};
+} satisfies Record<string, Language>;
+const isLanguageKey = (key: string): key is keyof typeof languages => Object.hasOwn(languages, key);
 
 export const route: Route = {
     path: '/featured/:lang?',
@@ -62,7 +63,7 @@ async function handler(ctx) {
     return {
         title: $('meta[name=description]').attr('content')!,
         link: `${baseUrl}/${lang}`,
-        language: languages[lang],
+        language: isLanguageKey(lang) ? languages[lang] : undefined,
         image: 'http://www.vom.mn/dist/images/vom-logo.png',
         item: items,
     };

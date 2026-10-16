@@ -1,21 +1,66 @@
 import { load } from 'cheerio';
+import { FetchError } from 'ofetch';
 import pMap from 'p-map';
 
 import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { getPlaywrightPage, type Page } from '@/utils/playwright';
 import { getRouteLimit } from '@/utils/route-limit';
 import timezone from '@/utils/timezone';
 
+const rootUrl = 'https://zhxy.hubu.edu.cn';
+const allowedResourceTypes = new Set(['document', 'xhr', 'fetch']);
+
+function isHttp2ProtocolError(error: unknown): error is Error {
+    return error instanceof Error && (error.message.includes('NGHTTP2_PROTOCOL_ERROR') || isHttp2ProtocolError(error.cause));
+}
+
+async function fetchHtml(url: string, page?: Page): Promise<string> {
+    if (!page) {
+        const { data } = await got(url);
+        return data;
+    }
+    return await page.evaluate(async (url) => {
+        const response = await fetch(url);
+        if (!response.ok) {
+            throw new Error(`HUBU resource and environment college returned HTTP ${response.status}.`);
+        }
+        return await response.text();
+    }, url);
+}
+
 export const handler = async (ctx) => {
+    try {
+        return await fetchFeed(ctx);
+    } catch (error) {
+        if (!(error instanceof FetchError) || !isHttp2ProtocolError(error)) {
+            throw error;
+        }
+    }
+    const { category = 'index/tzgg' } = ctx.req.param();
+    const url = `${rootUrl}/${category}.htm`;
+    const { page, destroy } = await getPlaywrightPage(url, { noGoto: true, closeTimeout: 0 });
+    try {
+        await page.route('**/*', (route) => (allowedResourceTypes.has(route.request().resourceType()) ? route.continue() : route.abort()));
+        const response = await page.goto(url, { waitUntil: 'domcontentloaded' });
+        if (!response?.ok() || new URL(page.url()).origin !== rootUrl) {
+            throw new Error('HUBU resource and environment college did not provide its public website.');
+        }
+        return await fetchFeed(ctx, page);
+    } finally {
+        await destroy();
+    }
+};
+
+const fetchFeed = async (ctx, page?: Page) => {
     const { category = 'index/tzgg' } = ctx.req.param();
     const limit = getRouteLimit(ctx, 20);
 
-    const rootUrl = 'https://zhxy.hubu.edu.cn';
     const currentUrl = `${rootUrl}/${category}.htm`;
 
-    const { data: response } = await got(currentUrl);
+    const response = await fetchHtml(currentUrl, page);
 
     const $ = load(response);
 
@@ -49,7 +94,7 @@ export const handler = async (ctx) => {
         items,
         async (item) => {
             const detail = await cache.tryGet(`hubu:content:${item.link}`, async () => {
-                const { data: detailResponse } = await got(item.link);
+                const detailResponse = await fetchHtml(item.link, page);
                 const $$ = load(detailResponse);
                 const title = $$('div.ar_title h1').text();
                 if (!title) {
@@ -133,7 +178,7 @@ export const route: Route = {
 
     features: {
         requireConfig: false,
-        requirePuppeteer: false,
+        requirePuppeteer: true,
         antiCrawler: false,
         supportRadar: true,
         supportBT: false,

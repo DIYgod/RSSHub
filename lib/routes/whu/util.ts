@@ -11,17 +11,18 @@ import { renderDescription } from './templates/description';
 
 class ArticleAccessError extends Error {}
 const domain = 'whu.edu.cn';
-const attachmentMimeTypes: Record<string, string> = {
+const attachmentMimeTypes = {
     doc: 'application/msword',
     docx: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
     pdf: 'application/pdf',
     txt: 'text/plain',
     xlsx: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
     zip: 'application/zip',
-};
+} satisfies Record<string, string>;
+const isAttachmentExtension = (key: string): key is keyof typeof attachmentMimeTypes => Object.hasOwn(attachmentMimeTypes, key);
 function getAttachmentMimeType(title: string) {
     const extension = title.split('.').pop()?.toLowerCase();
-    return extension ? attachmentMimeTypes[extension] : undefined;
+    return extension && isAttachmentExtension(extension) ? attachmentMimeTypes[extension] : undefined;
 }
 function parseCalendarDate(value: string | undefined, format: string | string[] = 'YYYY-MM-DD') {
     if (!value?.trim()) {

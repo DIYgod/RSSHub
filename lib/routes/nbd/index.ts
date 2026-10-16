@@ -18,7 +18,7 @@ async function settleQueueRequest(request: Promise<unknown>): Promise<void> {
     }
 }
 
-const isClosedConnection = (error: unknown) => {
+const isClosedConnection = (error: unknown): error is object => {
     const visited = new Set<object>();
     let cause = error;
     while (cause && typeof cause === 'object' && !visited.has(cause)) {

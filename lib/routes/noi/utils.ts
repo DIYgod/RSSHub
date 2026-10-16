@@ -3,7 +3,7 @@ import { load } from 'cheerio';
 import ofetch from '@/utils/ofetch';
 import { getPlaywrightPage } from '@/utils/playwright';
 
-const isTlsError = (error: unknown): boolean => {
+const isTlsError = (error: unknown): error is Error => {
     if (!(error instanceof Error)) {
         return false;
     }

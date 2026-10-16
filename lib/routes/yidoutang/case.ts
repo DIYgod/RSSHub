@@ -69,7 +69,7 @@ async function handler(ctx: Context) {
     };
 }
 
-function getImageUrl(value: unknown, baseUrl: string): string | undefined {
+function getImageUrl(value: string | undefined, baseUrl: string): string | undefined {
     if (typeof value !== 'string' || !value) {
         return;
     }
