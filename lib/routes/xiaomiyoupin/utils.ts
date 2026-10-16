@@ -66,33 +66,22 @@ export const getCrowdfundingGid = (item: CrowdfundingBatchListItem): number => {
     if (isVenueGoodsBatchItem(item)) {
         return item.value.goods.gid;
     }
-    return item.gid ?? 0;
+    return item.gid!;
 };
 
 export const getCrowdfundingName = (item: CrowdfundingBatchListItem): string => {
     if (isVenueGoodsBatchItem(item)) {
         return item.value.goods.name;
     }
-    return item.goodsInfo?.name ?? item.content.titleConfig.titleText;
-};
-
-export const getCrowdfundingJumpUrl = (item: CrowdfundingBatchListItem): string => {
-    if (isVenueGoodsBatchItem(item)) {
-        return item.value.goods.jump_url;
-    }
-    return item.goodsInfo?.jump_url ?? (item.content.online.jumpUrl || item.content.notGidJump);
+    return item.goodsInfo.name;
 };
 
 export const getCrowdfundingImage = (item: CrowdfundingBatchListItem): string => {
     if (isVenueGoodsBatchItem(item)) {
         const goods = item.value.goods;
-        return goods.img_square || goods.img800s || goods.img_horizon;
+        return goods.img_square;
     }
-    if (item.goodsInfo) {
-        const goods = item.goodsInfo;
-        return goods.img_square || goods.img800s || goods.img_horizon;
-    }
-    return item.content.goodImageConfig.goodImage;
+    return item.goodsInfo.img_square;
 };
 
 const getCrowdfundingFirstReleaseTime = (item: CrowdfundingBatchListItem): number | undefined => {
@@ -272,7 +261,6 @@ export default {
     getCrowdfundingList,
     getCrowdfundingGid,
     getCrowdfundingName,
-    getCrowdfundingJumpUrl,
     getCrowdfundingImage,
     getNewProductList,
     getCrowdfundingItem,

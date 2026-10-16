@@ -44,7 +44,7 @@ const getDataItems = (list: CrowdfundingBatchListItem[]): Promise<DataItem[]> =>
 const getDataItem = (listItem: CrowdfundingBatchListItem, detailItem: GoodsDetailItem): DataItem => ({
     title: utils.getCrowdfundingName(listItem),
     description: renderCrowdfunding(utils.toCrowdfunding(listItem, detailItem)),
-    link: utils.getCrowdfundingJumpUrl(listItem),
+    link: `https://m.xiaomiyoupin.com/detail?gid=${utils.getCrowdfundingGid(listItem)}`,
     image: utils.getCrowdfundingImage(listItem),
     pubDate: parseDate(detailItem.crowdFunding.startTime, 'X'),
     language: 'zh-CN',

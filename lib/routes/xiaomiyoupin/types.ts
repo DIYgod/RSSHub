@@ -85,8 +85,8 @@ export interface VenueReservationGoods {
 
 export interface VenueReservationBatchItem {
     content: VenueReservationContent;
-    gid?: number | null;
-    goodsInfo?: VenueReservationGoods;
+    gid?: number;
+    goodsInfo: VenueReservationGoods;
     id: string;
     name: string;
     startTime: number;
