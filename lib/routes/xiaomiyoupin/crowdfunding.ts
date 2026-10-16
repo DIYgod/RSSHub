@@ -4,7 +4,7 @@ import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import { parseDate } from '@/utils/parse-date';
 
-import type { GoodsDetailItem, GoodsListItem } from './types';
+import type { CrowdfundingBatchListItem, GoodsDetailItem } from './types';
 import utils from './utils';
 
 export const route: Route = {
@@ -31,21 +31,21 @@ export const route: Route = {
     view: ViewType.Notifications,
 };
 
-const getDataItems = (list: GoodsListItem[]): Promise<DataItem[]> =>
+const getDataItems = (list: CrowdfundingBatchListItem[]): Promise<DataItem[]> =>
     Promise.all(
         list.map((listItem) =>
-            cache.tryGet(`xiaomiyoupin:crowdfunding:dataitem:${listItem.gid}`, async () => {
+            cache.tryGet(`xiaomiyoupin:crowdfunding:dataitem:${utils.getCrowdfundingGid(listItem)}`, async () => {
                 const detailItem = await utils.getCrowdfundingItem(listItem);
                 return getDataItem(listItem, detailItem);
             })
         )
     );
 
-const getDataItem = (listItem: GoodsListItem, detailItem: GoodsDetailItem): DataItem => ({
-    title: listItem.name,
+const getDataItem = (listItem: CrowdfundingBatchListItem, detailItem: GoodsDetailItem): DataItem => ({
+    title: utils.getCrowdfundingName(listItem),
     description: renderCrowdfunding(utils.toCrowdfunding(listItem, detailItem)),
-    link: listItem.jumpUrl,
-    image: listItem.image,
+    link: utils.getCrowdfundingJumpUrl(listItem),
+    image: utils.getCrowdfundingImage(listItem),
     pubDate: parseDate(detailItem.crowdFunding.startTime, 'X'),
     language: 'zh-CN',
 });

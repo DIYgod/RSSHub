@@ -40,24 +40,75 @@ export interface VenueGoods {
     first_release_time: number;
 }
 
-export type VenueBatchListItem =
-    | {
-          value: {
-              goods: VenueGoods;
-          };
-      }
-    | {
-          gid: number;
-          jump_url: string;
-          picture_url: string;
-          new_product_name: string;
-          new_product_desc: string;
-      };
+// 众筹与上新共用的 venue batch 商品项
+export interface VenueGoodsBatchItem {
+    type: string;
+    value: {
+        goods: VenueGoods;
+    };
+}
 
-export type VenueBatchResponse = DataResponse<{
-    result_list: Array<{
-        list: VenueBatchListItem[];
-    }>;
+// 上新 leek-super 轮播 banner 项
+export interface VenueBannerBatchItem {
+    gid: number;
+    jump_url: string;
+    picture_url: string;
+    new_product_name: string;
+    new_product_desc: string;
+}
+
+export type NewProductBatchListItem = VenueGoodsBatchItem | VenueBannerBatchItem;
+
+// 众筹 reservation 预约项；gid / goodsInfo 仅在预约已关联具体商品时存在，用于过滤
+export interface VenueReservationContent {
+    titleConfig: {
+        titleText: string;
+    };
+    goodImageConfig: {
+        goodImage: string;
+    };
+    online: {
+        jumpUrl: string;
+    };
+    notGidJump: string;
+}
+
+export interface VenueReservationGoods {
+    gid: number;
+    name: string;
+    jump_url: string;
+    img_square: string;
+    img800s: string;
+    img_horizon: string;
+    fist_release_time: number;
+}
+
+export interface VenueReservationBatchItem {
+    content: VenueReservationContent;
+    gid?: number | null;
+    goodsInfo?: VenueReservationGoods;
+    id: string;
+    name: string;
+    startTime: number;
+    endTime: number;
+    goodsType: number;
+    orderCount: number;
+    ordered: boolean;
+    status: number;
+}
+
+export type CrowdfundingBatchListItem = VenueGoodsBatchItem | VenueReservationBatchItem;
+
+export interface VenueBatchListResult<Item> {
+    list: Item[];
+}
+
+export type CrowdfundingBatchResponse = DataResponse<{
+    result_list: Array<VenueBatchListResult<CrowdfundingBatchListItem> | VenueReservationBatchItem>;
+}>;
+
+export type NewProductBatchResponse = DataResponse<{
+    result_list: Array<VenueBatchListResult<NewProductBatchListItem>>;
 }>;
 
 export interface GoodsListItem {

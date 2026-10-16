@@ -8,7 +8,20 @@ import type { Crowdfunding } from '@/routes/mi/templates/crowdfunding';
 import type { NewProduct } from '@/routes/mi/templates/newproduct';
 import ofetch from '@/utils/ofetch';
 
-import type { GoodsDetailItem, GoodsDetailResponse, GoodsListItem, HomepageMainResponse, VenueBatchListItem, VenueBatchResponse, VenueGoods, VenuePageResponse, VenueQuery } from './types';
+import type {
+    CrowdfundingBatchListItem,
+    CrowdfundingBatchResponse,
+    GoodsDetailItem,
+    GoodsDetailResponse,
+    GoodsListItem,
+    HomepageMainResponse,
+    NewProductBatchListItem,
+    NewProductBatchResponse,
+    VenueGoodsBatchItem,
+    VenuePageResponse,
+    VenueQuery,
+    VenueReservationBatchItem,
+} from './types';
 
 dayjs.extend(localizedFormat);
 dayjs.extend(timezone);
@@ -45,8 +58,60 @@ const getVenuePageQueryList = async (pageId: string, sign: string, resolvers: st
     return queryList;
 };
 
-const getVenueBatchList = async (pageId: string, sign: string, queryList: VenueQuery[]): Promise<VenueBatchListItem[]> => {
-    const response = await ofetch<VenueBatchResponse>('https://m.xiaomiyoupin.com/mtop/navi/venue/batch', {
+type VenueBatchItem = NewProductBatchListItem | VenueReservationBatchItem;
+
+const isVenueGoodsBatchItem = (item: VenueBatchItem): item is VenueGoodsBatchItem => 'value' in item;
+
+export const getCrowdfundingGid = (item: CrowdfundingBatchListItem): number => {
+    if (isVenueGoodsBatchItem(item)) {
+        return item.value.goods.gid;
+    }
+    return item.gid ?? 0;
+};
+
+export const getCrowdfundingName = (item: CrowdfundingBatchListItem): string => {
+    if (isVenueGoodsBatchItem(item)) {
+        return item.value.goods.name;
+    }
+    return item.goodsInfo?.name ?? item.content.titleConfig.titleText;
+};
+
+export const getCrowdfundingJumpUrl = (item: CrowdfundingBatchListItem): string => {
+    if (isVenueGoodsBatchItem(item)) {
+        return item.value.goods.jump_url;
+    }
+    return item.goodsInfo?.jump_url ?? (item.content.online.jumpUrl || item.content.notGidJump);
+};
+
+export const getCrowdfundingImage = (item: CrowdfundingBatchListItem): string => {
+    if (isVenueGoodsBatchItem(item)) {
+        const goods = item.value.goods;
+        return goods.img_square || goods.img800s || goods.img_horizon;
+    }
+    if (item.goodsInfo) {
+        const goods = item.goodsInfo;
+        return goods.img_square || goods.img800s || goods.img_horizon;
+    }
+    return item.content.goodImageConfig.goodImage;
+};
+
+const getCrowdfundingFirstReleaseTime = (item: CrowdfundingBatchListItem): number | undefined => {
+    if (isVenueGoodsBatchItem(item)) {
+        return item.value.goods.fist_release_time || item.value.goods.first_release_time;
+    }
+    return item.goodsInfo?.fist_release_time;
+};
+
+const dedupeByGid = <Item>(items: Item[], getGid: (item: Item) => number): Item[] => {
+    const list = Map.groupBy(items, (item) => getGid(item))
+        .values()
+        .toArray()
+        .map((group) => group[0]);
+    return list;
+};
+
+const getCrowdfundingBatchList = async (pageId: string, sign: string, queryList: VenueQuery[]): Promise<CrowdfundingBatchListItem[]> => {
+    const response = await ofetch<CrowdfundingBatchResponse>('https://m.xiaomiyoupin.com/mtop/navi/venue/batch', {
         method: 'POST',
         query: {
             page_id: pageId,
@@ -57,13 +122,20 @@ const getVenueBatchList = async (pageId: string, sign: string, queryList: VenueQ
             query_list: queryList,
         },
     });
-    return response.data.result_list.flatMap((result) => result.list ?? []);
+    const list = response.data.result_list.flatMap((result): CrowdfundingBatchListItem[] => {
+        if ('list' in result) {
+            return result.list.filter((item): item is VenueGoodsBatchItem => isVenueGoodsBatchItem(item) && item.type === 'goods');
+        }
+        if (result.gid === undefined || result.gid === null) {
+            return [];
+        }
+        return [result];
+    });
+    return list;
 };
 
-const isVenueGoodsItem = (item: VenueBatchListItem): item is Extract<VenueBatchListItem, { value: { goods: VenueGoods } }> => 'value' in item && 'goods' in item.value;
-
-const toGoodsListItem = (item: VenueBatchListItem, resolver: string): GoodsListItem | undefined => {
-    if (resolver === 'leek-super' && !isVenueGoodsItem(item)) {
+const toGoodsListItem = (item: NewProductBatchListItem, resolver: string): GoodsListItem | undefined => {
+    if (resolver === 'leek-super' && !isVenueGoodsBatchItem(item)) {
         if (!item.gid || !item.new_product_name) {
             return undefined;
         }
@@ -74,11 +146,11 @@ const toGoodsListItem = (item: VenueBatchListItem, resolver: string): GoodsListI
             image: item.picture_url,
         };
     }
-    if (!isVenueGoodsItem(item)) {
+    if (!isVenueGoodsBatchItem(item)) {
         return undefined;
     }
     const goods = item.value.goods;
-    if (!goods?.gid || !goods.name) {
+    if (!goods.gid || !goods.name) {
         return undefined;
     }
     return {
@@ -90,21 +162,40 @@ const toGoodsListItem = (item: VenueBatchListItem, resolver: string): GoodsListI
     };
 };
 
-const getGoodsFromVenue = async (moduleKey: string, resolvers: string[]): Promise<GoodsListItem[]> => {
-    const { pageId, sign } = await getVenueQueryContext(moduleKey);
-    const queryList = await getVenuePageQueryList(pageId, sign, resolvers);
-    const batchList = await getVenueBatchList(pageId, sign, queryList);
-    const items = batchList.map((item, index) => toGoodsListItem(item, queryList[index]?.resolver ?? '')).filter((item): item is GoodsListItem => item !== undefined);
-    const list = Map.groupBy(items, (item) => item.gid)
-        .values()
-        .toArray()
-        .map((group) => group[0]);
+const getNewProductBatchList = async (pageId: string, sign: string, queryList: VenueQuery[]): Promise<NewProductBatchListItem[]> => {
+    const response = await ofetch<NewProductBatchResponse>('https://m.xiaomiyoupin.com/mtop/navi/venue/batch', {
+        method: 'POST',
+        query: {
+            page_id: pageId,
+            pdl: 'jianyu',
+            sign,
+        },
+        body: {
+            query_list: queryList,
+        },
+    });
+    const list = response.data.result_list.flatMap((result) => result.list);
     return list;
 };
 
-export const getCrowdfundingList = (): Promise<GoodsListItem[]> => getGoodsFromVenue('crowd_funding', ['crowd-funding']);
+export const getCrowdfundingList = async (): Promise<CrowdfundingBatchListItem[]> => {
+    const { pageId, sign } = await getVenueQueryContext('crowd_funding');
+    const queryList = await getVenuePageQueryList(pageId, sign, ['crowd-funding', 'reservation']);
+    const batchList = await getCrowdfundingBatchList(pageId, sign, queryList);
+    const list = dedupeByGid(batchList, (item) => getCrowdfundingGid(item));
+    return list;
+};
 
-export const getNewProductList = (): Promise<GoodsListItem[]> => getGoodsFromVenue('product_hot', ['leek-super', 'leek-selective']);
+const getNewProductFromVenue = async (): Promise<GoodsListItem[]> => {
+    const { pageId, sign } = await getVenueQueryContext('product_hot');
+    const queryList = await getVenuePageQueryList(pageId, sign, ['leek-super', 'leek-selective']);
+    const batchList = await getNewProductBatchList(pageId, sign, queryList);
+    const items = batchList.map((item, index) => toGoodsListItem(item, queryList[index]?.resolver ?? '')).filter((item): item is GoodsListItem => item !== undefined);
+    const list = dedupeByGid(items, (item) => item.gid);
+    return list;
+};
+
+export const getNewProductList = (): Promise<GoodsListItem[]> => getNewProductFromVenue();
 
 const getGoodsItem = async (gid: number): Promise<GoodsDetailItem> => {
     const response = await ofetch<GoodsDetailResponse>('https://m.xiaomiyoupin.com/api/gateway/detail', {
@@ -123,7 +214,7 @@ const getGoodsItem = async (gid: number): Promise<GoodsDetailItem> => {
     return response.data.goods;
 };
 
-export const getCrowdfundingItem = (item: GoodsListItem): Promise<GoodsDetailItem> => getGoodsItem(item.gid);
+export const getCrowdfundingItem = (item: CrowdfundingBatchListItem): Promise<GoodsDetailItem> => getGoodsItem(getCrowdfundingGid(item));
 
 export const getNewProductItem = (item: GoodsListItem): Promise<GoodsDetailItem> => getGoodsItem(item.gid);
 
@@ -149,13 +240,13 @@ const toSupportList = (detailItem: GoodsDetailItem): Crowdfunding['supportList']
     return supportList;
 };
 
-export const toCrowdfunding = (listItem: GoodsListItem, detailItem: GoodsDetailItem): Crowdfunding => ({
-    image: detailItem.goodsInfo.imgSquare || listItem.image,
+export const toCrowdfunding = (listItem: CrowdfundingBatchListItem, detailItem: GoodsDetailItem): Crowdfunding => ({
+    image: detailItem.goodsInfo.imgSquare || getCrowdfundingImage(listItem),
     sellPointList: toSellPointList(detailItem.goodsInfo),
     sellPoint: detailItem.goodsInfo.summary,
     price: String((detailItem.goodsInfo.priceMin ?? 0) / 100),
     marketPrice: String((detailItem.goodsInfo.marketPrice ?? 0) / 100),
-    startTime: new Date((detailItem.crowdFunding?.startTime || listItem.firstReleaseTime || 0) * 1000),
+    startTime: new Date((detailItem.crowdFunding?.startTime || getCrowdfundingFirstReleaseTime(listItem) || 0) * 1000),
     endTime: new Date((detailItem.crowdFunding?.endTime || 0) * 1000),
     sendInfo: detailItem.crowdFunding?.estimateSendtime
         ? `预计 ${dayjs(detailItem.crowdFunding.estimateSendtime * 1000)
@@ -179,6 +270,10 @@ export const toNewProduct = (listItem: GoodsListItem, detailItem: GoodsDetailIte
 
 export default {
     getCrowdfundingList,
+    getCrowdfundingGid,
+    getCrowdfundingName,
+    getCrowdfundingJumpUrl,
+    getCrowdfundingImage,
     getNewProductList,
     getCrowdfundingItem,
     getNewProductItem,
