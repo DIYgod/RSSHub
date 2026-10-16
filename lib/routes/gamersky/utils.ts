@@ -69,7 +69,7 @@ export const parseArticleList = (response: string) => {
         .filter((item) => item !== undefined) satisfies DataItem[];
 };
 
-export const getArticle = async (item: DataItem): Promise<DataItem> => {
+const getArticle = async (item: DataItem): Promise<DataItem> => {
     const detail = await cache.tryGet(`${item.link}#article-body`, async () => {
         const response = await ofetch(item.link!);
         const $ = load(response);

@@ -166,7 +166,7 @@ const extractFlightArticle = ($: CheerioAPI, link: string) => {
     }
 };
 
-export const extractDRArticle = (html: string, link?: string) => {
+const extractDRArticle = (html: string, link?: string) => {
     const $ = load(html);
     const nextData = JSON.parse($('script#__NEXT_DATA__').text() || '{}');
     const viewProps = nextData.props?.pageProps?.viewProps;

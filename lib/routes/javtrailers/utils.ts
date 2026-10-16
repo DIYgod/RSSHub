@@ -69,7 +69,7 @@ export const getList = async (url: string, key: 'cast' | 'category' | 'studio') 
     return data;
 };
 
-export const hdGallery = (gallery) =>
+const hdGallery = (gallery) =>
     gallery.map((item) => {
         if (item.startsWith('https://pics.dmm.co.jp/')) {
             return item.replace(/-(\d+)\.jpg$/, 'jp-$1.jpg');

@@ -9,7 +9,7 @@ const HOST = 'https://www.jfnet.or.jp';
 const INDEX = `${HOST}/industry_report/?c=29&y=0`; // c=29 → 月次レポート only
 const MEDIA_API = `${HOST}/wp-json/wp/v2/media?search=getujidata&per_page=100&_fields=date,date_gmt,source_url`;
 
-export interface MarketReportExtra {
+interface MarketReportExtra {
     source: 'jfnet';
     survey: '外食産業市場動向調査';
     month: string; // 'YYYY-MM' (survey month, 〜月度)

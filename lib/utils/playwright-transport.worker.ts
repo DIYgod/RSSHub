@@ -83,7 +83,7 @@ export function installNativeTransport(server: TransportServer, { handshakeTimeo
     };
 }
 
-export class NativeTransport {
+class NativeTransport {
     private pendingMessages: Message[] = [];
     private closed = false;
     private closing = false;

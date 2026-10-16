@@ -134,30 +134,11 @@ export interface HupuApiResponse {
 }
 
 /**
- * Type guards for page variants
- */
-export function isHomePageProps(pageProps: HomePageProps | CategoryPageProps): pageProps is HomePageProps {
-    return 'res' in pageProps;
-}
-
-export function isBasketballPageProps(pageProps: CategoryPageProps): pageProps is BasketballPageProps {
-    return 'newsData' in pageProps && 'leagueType' in pageProps;
-}
-
-export function isSoccerPageProps(pageProps: CategoryPageProps): pageProps is SoccerPageProps {
-    return 'news' in pageProps && 'schedules' in pageProps;
-}
-
-/**
  * Type guards for item variants
  */
 export function isHomePostItem(item: HomePostItem | NewsDataItem): item is HomePostItem {
     return 'url' in item && 'isNews' in item;
 }
 
-export function isNewsDataItem(item: HomePostItem | NewsDataItem): item is NewsDataItem {
-    return 'nid' in item && 'link' in item && 'publishTime' in item;
-}
-
 // Export concrete types for other modules
-export type { ApiResponseProps, Badge, BasketballPageProps, CategoryPageProps, HomePageProps, HomePostItem, NewsDataItem, RecommendMatch, SoccerPageProps };
+export type { HomePostItem, NewsDataItem };

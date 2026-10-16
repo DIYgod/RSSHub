@@ -20,13 +20,13 @@ export interface ListItem {
     media?: Media[];
     watch_count?: number;
 }
-export interface Channel {
+interface Channel {
     icon: string;
     id: string;
     name: string;
 }
 
-export interface Media {
+interface Media {
     type: string;
     id: string;
     url: string;

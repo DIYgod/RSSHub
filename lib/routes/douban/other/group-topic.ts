@@ -52,7 +52,7 @@ function parseReplies($: CheerioAPI, link: string, pageUrl = link): DataItem[] {
 
 type GroupTopic = { title: string; item: DataItem[]; lastPageStart?: string };
 
-export function parseGroupTopic(html: string, link: string): GroupTopic {
+function parseGroupTopic(html: string, link: string): GroupTopic {
     const $ = load(html);
     const title = $('h1').text();
     const content = $('.topic-content .rich-content').html();

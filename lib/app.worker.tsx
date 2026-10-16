@@ -19,8 +19,8 @@ import template from '@/middleware/template';
 import trace from '@/middleware/trace';
 import registry from '@/registry';
 import { setKVNamespace } from '@/utils/cache/index.worker';
-import { setBrowserBinding, setPlaywrightServiceBinding } from '@/utils/playwright';
-import { setBrowserSessionBinding } from '@/utils/playwright.worker';
+import { setBrowserBinding } from '@/utils/playwright';
+import { setBrowserSessionBinding, setPlaywrightServiceBinding } from '@/utils/playwright.worker';
 
 // Define Worker environment bindings
 type Bindings = {

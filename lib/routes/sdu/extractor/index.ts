@@ -24,7 +24,6 @@ async function getExamArticle(link: string) {
     return { description: $('#UCAP-CONTENT, .txt').first().html() ?? undefined, exactDate: date ? parseDateInTimezone(date, 8) : undefined };
 }
 
-// TODO: missing route export
 export default function index(link) {
     if (link.startsWith('https://xinwen.wh.sdu.edu.cn/')) {
         return news(link);

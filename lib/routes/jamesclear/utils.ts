@@ -3,7 +3,7 @@ import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
 export const rootUrl = 'https://jamesclear.com';
-export const apiUrl = `${rootUrl}/wp-json/wp/v2`;
+const apiUrl = `${rootUrl}/wp-json/wp/v2`;
 
 export async function fetchContent(endpoint: string) {
     const response = await ofetch(`${apiUrl}/${endpoint}`);

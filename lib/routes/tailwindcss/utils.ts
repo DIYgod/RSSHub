@@ -8,7 +8,7 @@ import ofetch from '@/utils/ofetch';
 import { BASE_URL } from './constants';
 
 /** Fetch the content of a given article. */
-export const fetchArticleContent = async (url: string): Promise<string> => {
+const fetchArticleContent = async (url: string): Promise<string> => {
     const data = await ofetch(url, { responseType: 'text' });
     const $ = load(data);
 

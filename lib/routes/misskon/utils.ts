@@ -38,4 +38,4 @@ const getTags = async (slug) => {
         description: data[0].description,
     };
 };
-export { ENDPOINT, getPosts, getTags };
+export { getPosts, getTags };

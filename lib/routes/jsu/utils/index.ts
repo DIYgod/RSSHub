@@ -6,17 +6,6 @@ import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
 /** Read article content and source metadata from the selected elements. */
-async function getPageItem(selector, pageUrl) {
-    const response = await got(pageUrl);
-    const $ = load(response.data);
-    const page = $(selector);
-    if (!page.length) {
-        throw new Error(`Jishou University article content was not found: ${pageUrl}`);
-    }
-    return page.html();
-}
-
-/** Read article content and source metadata from the selected elements. */
 async function getPageDetails(selector, pageUrl, titleSelector, dateSelector, dateHander = (date) => date) {
     const response = await got(pageUrl);
     const $ = load(response.data);
@@ -30,7 +19,7 @@ async function getPageDetails(selector, pageUrl, titleSelector, dateSelector, da
 }
 const getPageItemAndDate = getPageDetails;
 
-export { getPageItem, getPageItemAndDate };
+export { getPageItemAndDate };
 
 const parseCmsDate = (text: string) => {
     const value = text.match(/\d{4}-\d{2}-\d{2}/)?.[0];

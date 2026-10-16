@@ -20,7 +20,7 @@ interface DetailSelectors {
 }
 
 // Date formats vary across sites: 2026-03-30, 2026/05/06 or 2026年03月30日 14:37, often prefixed with a label such as "发布时间："
-export function parsePubDate(text?: string): Date | undefined {
+function parsePubDate(text?: string): Date | undefined {
     const match = text?.match(/(\d{4})[-/.年]\s*(\d{1,2})[-/.月]\s*(\d{1,2})/);
     if (!match) {
         return undefined;

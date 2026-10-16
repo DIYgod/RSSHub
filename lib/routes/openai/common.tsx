@@ -10,7 +10,7 @@ import { parseDate } from '@/utils/parse-date';
 export const BASE_URL = new URL('https://openai.com');
 
 /** Fetch the details of an article. */
-export const fetchArticleDetails = async (url: string) => {
+const fetchArticleDetails = async (url: string) => {
     // Ensure trailing slash to avoid 301 redirect
     const articleUrl = new URL(url);
     if (!articleUrl.pathname.endsWith('/')) {

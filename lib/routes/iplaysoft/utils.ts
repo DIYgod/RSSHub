@@ -22,9 +22,6 @@ const fetchTaxonomy = async (slug: string, type: 'categories' | 'tags') => {
     return cachedTaxonomy;
 };
 
-const fetchCategory = async (categorySlug: string) => await fetchTaxonomy(categorySlug, 'categories');
-const fetchTag = async (tagSlug: string) => await fetchTaxonomy(tagSlug, 'tags');
-
 async function fetchNewsItems(apiUrl: string) {
     const data = await ofetch(apiUrl);
 
@@ -85,4 +82,4 @@ async function fetchArchive(slug: string, type: 'categories' | 'tags') {
     return { name: feed.title?.replace(/\s*[–-]\s*异次元软件世界$/, ''), items };
 }
 
-export { fetchArchive, fetchCategory, fetchNewsItems, fetchTag };
+export { fetchArchive };

@@ -17,7 +17,7 @@ const parseSourceDate = (value?: string) => {
 /**
  * Extract page ID from script tags and title
  */
-export const extractPageMeta = (url: string) =>
+const extractPageMeta = (url: string) =>
     cache.tryGet(`jandan:pageMeta:${url}`, async () => {
         const response = await ofetch(url);
 

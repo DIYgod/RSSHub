@@ -13,7 +13,7 @@ const rssEncodings = new Set<BufferEncoding>(['ascii', 'utf8', 'utf16le', 'ucs2'
 const rssEncodingAliases = { 'utf-8': 'utf8', 'iso-8859-1': 'latin1' } satisfies Record<string, BufferEncoding>;
 const isRssEncodingAlias = (key: string): key is keyof typeof rssEncodingAliases => Object.hasOwn(rssEncodingAliases, key);
 
-export const getRssFeed = async (feedUrl: string, redirectCount = 0): Promise<Awaited<ReturnType<typeof parser.parseString>>> => {
+const getRssFeed = async (feedUrl: string, redirectCount = 0): Promise<Awaited<ReturnType<typeof parser.parseString>>> => {
     const response = await ofetch.raw<ArrayBuffer, 'arrayBuffer'>(feedUrl, {
         method: 'GET',
         headers: { Accept: 'application/rss+xml', 'User-Agent': config.ua },

@@ -15,7 +15,7 @@ export function getHeaders() {
     };
 }
 
-export function getCookieString() {
+function getCookieString() {
     const sessionid = config.fanbox.session;
     return sessionid ? `FANBOXSESSID=${sessionid}` : '';
 }
