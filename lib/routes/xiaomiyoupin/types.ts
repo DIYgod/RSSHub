@@ -128,6 +128,10 @@ export interface ProductInfoItem {
     img800s: string;
     img: string;
     picURL: string;
+    attributeValues: string[];
+    onHandPrice: Array<{
+        price: number;
+    }>;
 }
 
 export interface GoodsDetailItem {
@@ -143,8 +147,18 @@ export interface GoodsDetailItem {
         img800s: string;
         firstTime: number;
         scheduleOnSaleTime: number;
+        imgHorizon: string;
+        pids: number[];
     };
     productInfo: Record<string, ProductInfoItem>;
+    priceInfo: {
+        priceInfo: {
+            marketPrice: number;
+            onHandPrice?: {
+                price: number;
+            };
+        };
+    };
     crowdFunding: {
         startTime: number;
         endTime: number;

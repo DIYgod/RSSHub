@@ -7,6 +7,7 @@ import NotFoundError from '@/errors/types/not-found';
 import type { Crowdfunding } from '@/routes/mi/templates/crowdfunding';
 import type { NewProduct } from '@/routes/mi/templates/newproduct';
 import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/parse-date';
 
 import type {
     CrowdfundingBatchListItem,
@@ -26,6 +27,8 @@ import type {
 dayjs.extend(localizedFormat);
 dayjs.extend(timezone);
 dayjs.extend(utc);
+
+const formatDate = (date: Date): string => dayjs(date).tz('Asia/Shanghai').locale('zh-cn').format('ll');
 
 const parsePageQuery = (url?: string): { pageId: string; sign: string } => {
     const searchParams = url ? new URL(url).searchParams : null;
@@ -82,13 +85,6 @@ export const getCrowdfundingImage = (item: CrowdfundingBatchListItem): string =>
         return goods.img_square;
     }
     return item.goodsInfo.img_square;
-};
-
-const getCrowdfundingFirstReleaseTime = (item: CrowdfundingBatchListItem): number | undefined => {
-    if (isVenueGoodsBatchItem(item)) {
-        return item.value.goods.fist_release_time || item.value.goods.first_release_time;
-    }
-    return item.goodsInfo?.fist_release_time;
 };
 
 const dedupeByGid = <Item>(items: Item[], getGid: (item: Item) => number): Item[] => {
@@ -208,41 +204,36 @@ export const getCrowdfundingItem = (item: CrowdfundingBatchListItem): Promise<Go
 export const getNewProductItem = (item: GoodsListItem): Promise<GoodsDetailItem> => getGoodsItem(item.gid);
 
 const toSellPointList = (goodsInfo: GoodsDetailItem['goodsInfo']): string[] =>
-    [goodsInfo.firstSellPoint, goodsInfo.secondSellPoint, goodsInfo.thirdSellPoint].map((point) => point?.trim()).filter((point): point is string => Boolean(point));
+    [goodsInfo.firstSellPoint, goodsInfo.secondSellPoint, goodsInfo.thirdSellPoint].map((point) => point.trim()).filter((point): point is string => Boolean(point));
 
 const toSupportList = (detailItem: GoodsDetailItem): Crowdfunding['supportList'] => {
-    const supportList = Object.values(detailItem.productInfo ?? {}).map((product) => ({
-        image: product.img800s || product.img || product.picURL,
-        name: product.name,
-        price: String((product.price ?? 0) / 100),
-        description: product.summary,
-    }));
-    const groupBuyGood = detailItem.oneYuanSupport?.groupBuyInfo?.good;
-    if (groupBuyGood) {
-        supportList.push({
-            image: groupBuyGood.img,
-            name: groupBuyGood.name || '1元支持',
-            price: String((groupBuyGood.groupbuy_price ?? 0) / 100),
-            description: groupBuyGood.groupbuy_summary,
-        });
-    }
+    const supportList = detailItem.goodsInfo.pids.map((pid) => {
+        const product = detailItem.productInfo[pid];
+        return {
+            image: product.img,
+            name: product.attributeValues.join(' '),
+            price: String((product.onHandPrice[0]?.price ?? product.price) / 100),
+            description: product.name,
+        };
+    });
+    const groupBuyGood = detailItem.oneYuanSupport.groupBuyInfo.good;
+    supportList.push({
+        image: groupBuyGood.img,
+        name: '1元支持',
+        price: String(groupBuyGood.groupbuy_price / 100),
+        description: groupBuyGood.groupbuy_summary,
+    });
     return supportList;
 };
 
 export const toCrowdfunding = (listItem: CrowdfundingBatchListItem, detailItem: GoodsDetailItem): Crowdfunding => ({
-    image: detailItem.goodsInfo.imgSquare || getCrowdfundingImage(listItem),
+    image: detailItem.goodsInfo.imgHorizon,
     sellPointList: toSellPointList(detailItem.goodsInfo),
-    sellPoint: detailItem.goodsInfo.summary,
-    price: String((detailItem.goodsInfo.priceMin ?? 0) / 100),
-    marketPrice: String((detailItem.goodsInfo.marketPrice ?? 0) / 100),
-    startTime: new Date((detailItem.crowdFunding?.startTime || getCrowdfundingFirstReleaseTime(listItem) || 0) * 1000),
-    endTime: new Date((detailItem.crowdFunding?.endTime || 0) * 1000),
-    sendInfo: detailItem.crowdFunding?.estimateSendtime
-        ? `预计 ${dayjs(detailItem.crowdFunding.estimateSendtime * 1000)
-              .tz('Asia/Shanghai')
-              .locale('zh-cn')
-              .format('lll')} 前发货`
-        : '',
+    price: String((detailItem.priceInfo.priceInfo.onHandPrice?.price ?? detailItem.priceInfo.priceInfo.marketPrice) / 100),
+    marketPrice: String(detailItem.priceInfo.priceInfo.marketPrice / 100),
+    startTime: parseDate(detailItem.crowdFunding.startTime, 'X'),
+    endTime: parseDate(detailItem.crowdFunding.endTime, 'X'),
+    sendInfo: `预计${formatDate(parseDate(detailItem.crowdFunding.estimateSendtime, 'X'))}前发货`,
     supportList: toSupportList(detailItem),
 });
 
