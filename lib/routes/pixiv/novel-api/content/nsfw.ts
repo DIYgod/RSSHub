@@ -4,6 +4,7 @@ import queryString from 'query-string';
 import cache from '@/utils/cache';
 import { evaluateScriptCallback } from '@/utils/evaluate-script';
 import { parseDate } from '@/utils/parse-date';
+import { parseScriptSource } from '@/utils/parse-js';
 
 import { maskHeader } from '../../constants';
 import got from '../../pixiv-got';
@@ -32,8 +33,13 @@ export async function getNSFWNovelContent(novelId: string, token: string): Promi
         if (!script) {
             throw new Error('No novel data found');
         }
-        // The page defines its data with Object.defineProperty(window, 'pixiv', { value: { novel } })
-        const novelDetail = (await evaluateScriptCallback<{ value?: { novel?: NSFWNovelDetail } }>(script, 'Object.defineProperty')).value?.novel;
+        // The page defines its data with Object.defineProperty(window, 'pixiv', { value: { novel } }) among other
+        // defineProperty calls, and the callback reader keeps the last call, so read only that statement
+        const { program } = await parseScriptSource(script);
+        const definition = program.body.find(
+            (node) => node.type === 'ExpressionStatement' && node.expression.type === 'CallExpression' && node.expression.arguments[1]?.type === 'Literal' && node.expression.arguments[1].value === 'pixiv'
+        );
+        const novelDetail = definition ? (await evaluateScriptCallback<{ value?: { novel?: NSFWNovelDetail } }>(script.slice(definition.start, definition.end), 'Object.defineProperty')).value?.novel : undefined;
 
         if (!novelDetail) {
             throw new Error('No novel data found');
