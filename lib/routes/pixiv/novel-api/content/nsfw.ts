@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 import queryString from 'query-string';
 
 import cache from '@/utils/cache';
-import { evaluateScriptData } from '@/utils/evaluate-script';
+import { evaluateScriptCallback } from '@/utils/evaluate-script';
 import { parseDate } from '@/utils/parse-date';
 
 import { maskHeader } from '../../constants';
@@ -32,7 +32,8 @@ export async function getNSFWNovelContent(novelId: string, token: string): Promi
         if (!script) {
             throw new Error('No novel data found');
         }
-        const novelDetail = await evaluateScriptData<NSFWNovelDetail | undefined>(script, 'window.pixiv.novel');
+        // The page defines its data with Object.defineProperty(window, 'pixiv', { value: { novel } })
+        const novelDetail = (await evaluateScriptCallback<{ value?: { novel?: NSFWNovelDetail } }>(script, 'Object.defineProperty')).value?.novel;
 
         if (!novelDetail) {
             throw new Error('No novel data found');
