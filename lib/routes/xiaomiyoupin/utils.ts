@@ -101,14 +101,14 @@ const dedupeByGid = <Item>(items: Item[], getGid: (item: Item) => number): Item[
 
 const getCrowdfundingBatchList = async (pageId: string, sign: string, queryList: VenueQuery[]): Promise<CrowdfundingBatchListItem[]> => {
     const response = await ofetch<CrowdfundingBatchResponse>('https://m.xiaomiyoupin.com/mtop/navi/venue/batch', {
+        body: {
+            query_list: queryList,
+        },
         method: 'POST',
         query: {
             page_id: pageId,
             pdl: 'jianyu',
             sign,
-        },
-        body: {
-            query_list: queryList,
         },
     });
     const list = response.data.result_list.flatMap((result): CrowdfundingBatchListItem[] => {
@@ -153,14 +153,14 @@ const toGoodsListItem = (item: NewProductBatchListItem, resolver: string): Goods
 
 const getNewProductBatchList = async (pageId: string, sign: string, queryList: VenueQuery[]): Promise<NewProductBatchListItem[]> => {
     const response = await ofetch<NewProductBatchResponse>('https://m.xiaomiyoupin.com/mtop/navi/venue/batch', {
+        body: {
+            query_list: queryList,
+        },
         method: 'POST',
         query: {
             page_id: pageId,
             pdl: 'jianyu',
             sign,
-        },
-        body: {
-            query_list: queryList,
         },
     });
     const list = response.data.result_list.flatMap((result) => result.list);
@@ -188,17 +188,17 @@ export const getNewProductList = (): Promise<GoodsListItem[]> => getNewProductFr
 
 const getGoodsItem = async (gid: number): Promise<GoodsDetailItem> => {
     const response = await ofetch<GoodsDetailResponse>('https://m.xiaomiyoupin.com/api/gateway/detail', {
-        method: 'POST',
         body: {
+            channel: '',
+            debug: false,
             groupName: 'details',
             groupParams: [[String(gid)]],
             methods: [],
-            version: '1.0.0',
-            debug: false,
-            channel: '',
-            vipMode: true,
             system: '2',
+            version: '1.0.0',
+            vipMode: true,
         },
+        method: 'POST',
     });
     return response.data.goods;
 };
