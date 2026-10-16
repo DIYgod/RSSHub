@@ -20057,6 +20057,31 @@ export default {
     "url": "www.4gamers.com.tw",
     "lang": "zh-TW"
   },
+  "500px": {
+    "routes": {
+      "/tribe/set/:id": {
+        "path": "/tribe/set/:id",
+        "categories": [
+          "picture"
+        ],
+        "view": 2,
+        "example": "/500px/tribe/set/f5de0b8aa6d54ec486f5e79616418001",
+        "parameters": {
+          "id": "部落 ID"
+        },
+        "name": "部落影集",
+        "maintainers": [
+          "TonyRL"
+        ],
+        "location": "tribe-set.tsx",
+        "module": () => import('@/routes/500px/tribe-set.tsx')
+      }
+    },
+    "apiRoutes": {},
+    "name": "500px 摄影社区",
+    "url": "500px.com.cn",
+    "lang": "zh-CN"
+  },
   "8kcos": {
     "routes": {
       "/cat/:cat?": {
@@ -124807,6 +124832,288 @@ export default {
     ],
     "lang": "en"
   },
+  "wechat": {
+    "routes": {
+      "/wechat2rss/:id": {
+        "path": "/wechat2rss/:id",
+        "categories": [
+          "new-media"
+        ],
+        "example": "/wechat/wechat2rss/5b925323244e9737c39285596c53e3a2f4a30774",
+        "parameters": {
+          "id": "公众号 id，打开 `https://wechat2rss.xlab.app/posts/list/`，在 URL 中找到 id；注意不是公众号页的 id，而是订阅的 id"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "name": "公众号（Wechat2RSS 来源）",
+        "maintainers": [
+          "TonyRL"
+        ],
+        "location": "wechat2rss.ts",
+        "module": () => import('@/routes/wechat/wechat2rss.ts')
+      },
+      "/announce": {
+        "path": "/announce",
+        "categories": [
+          "programming"
+        ],
+        "example": "/wechat/announce",
+        "parameters": {},
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "mp.weixin.qq.com/cgi-bin/announce"
+            ]
+          }
+        ],
+        "name": "公众平台系统公告栏目",
+        "maintainers": [
+          "xyqfer"
+        ],
+        "url": "mp.weixin.qq.com/cgi-bin/announce",
+        "location": "announce.ts",
+        "module": () => import('@/routes/wechat/announce.ts')
+      },
+      "/ce/:id": {
+        "path": "/ce/:id",
+        "categories": [
+          "new-media"
+        ],
+        "example": "/wechat/ce/595a5b14d7164e53908f1606",
+        "parameters": {
+          "id": "公众号 id，在 [CareerEngine](https://search.careerengine.us/) 搜索公众号，通过 URL 中找到对应的公众号 id"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": true,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "cimidata.com/a/:id"
+            ]
+          }
+        ],
+        "name": "公众号（CareerEngine 来源）",
+        "maintainers": [
+          "HenryQW"
+        ],
+        "location": "ce.ts",
+        "module": () => import('@/routes/wechat/ce.ts')
+      },
+      "/data258/:id?": {
+        "path": "/data258/:id?",
+        "categories": [
+          "new-media"
+        ],
+        "example": "/wechat/data258/gh_cbbad4c1d33c",
+        "parameters": {
+          "id": "公众号 id 或分类 id，可在公众号页或分类页 URL 中找到；若略去，则抓取首页"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": true,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "mp.data258.com/",
+              "mp.data258.com/article/category/:id"
+            ]
+          }
+        ],
+        "name": "公众号（微阅读来源）",
+        "maintainers": [
+          "Rongronggg9"
+        ],
+        "url": "mp.data258.com/",
+        "description": "::: warning\n由于使用了一些针对反爬的缓解措施，本路由响应较慢。默认只抓取前 5 条，可通过 `?limit=` 改变（不推荐，容易被反爬）。\n\n该网站使用 IP 甄别访客，且应用严格的每日阅读量限额（约 15 次），请自建并确保正确配置缓存；如使用内存缓存而非 Redis 缓存，请增大缓存容量。该限额足够订阅至少 3 个公众号（假设公众号每日仅更新一次）；首页 / 分类页更新相当频繁，不推荐订阅。\n:::",
+        "location": "data258.ts",
+        "module": () => import('@/routes/wechat/data258.ts')
+      },
+      "/ershicimi/:id": {
+        "path": "/ershicimi/:id",
+        "categories": [
+          "new-media"
+        ],
+        "example": "/wechat/ershicimi/813oxJOl",
+        "parameters": {
+          "id": "公众号id，打开公众号页，在 URL 中找到 id"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": true,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "name": "公众号（二十次幂来源）",
+        "maintainers": [
+          "sanmmm"
+        ],
+        "location": "ershcimi.ts",
+        "module": () => import('@/routes/wechat/ershcimi.ts')
+      },
+      "/mp/homepage/:biz/:hid/:cid?": {
+        "path": "/mp/homepage/:biz/:hid/:cid?",
+        "categories": [
+          "new-media"
+        ],
+        "example": "/wechat/mp/homepage/MzA3MDM3NjE5NQ==/16",
+        "parameters": {
+          "biz": "公众号id",
+          "hid": "分页id",
+          "cid": "页内栏目"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": true,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "name": "公众号栏目 (非推送 & 历史消息)",
+        "maintainers": [
+          "MisteryMonster"
+        ],
+        "description": "只适用拥有首页模板 (分享链接带有 homepage) 的公众号。例如从公众号分享出来的链接为 `https://mp.weixin.qq.com/mp/homepage?__biz=MzA3MDM3NjE5NQ==&hid=4`，`biz` 为 `MzA3MDM3NjE5NQ==`，`hid` 为 `4`。\n\n有些页面里会有分栏， `cid` 可以通过元素选择器选中栏目查看`data-index`。如[链接](https://mp.weixin.qq.com/mp/homepage?__biz=MzA3MDM3NjE5NQ==\\&hid=4)里的 `京都职人` 栏目的 `cid` 为 `0`，`文艺时光` 栏目的 `cid` 为 `2`。如果不清楚的话最左边的栏目为`0`，其右方栏目依次递增 `1`。",
+        "location": "mp.ts",
+        "module": () => import('@/routes/wechat/mp.ts')
+      },
+      "/mp/msgalbum/:biz/:aid": {
+        "path": "/mp/msgalbum/:biz/:aid",
+        "categories": [
+          "new-media"
+        ],
+        "example": "/wechat/mp/msgalbum/MzA3MDM3NjE5NQ==/1375870284640911361",
+        "parameters": {
+          "biz": "公众号id",
+          "aid": "Tag id"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": true,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "name": "公众号文章话题 Tag",
+        "maintainers": [
+          "MisteryMonster"
+        ],
+        "description": "一些公众号（如看理想）会在微信文章里添加 Tag ，点入 Tag 的链接如 `https://mp.weixin.qq.com/mp/appmsgalbum?__biz=MzA3MDM3NjE5NQ==&action=getalbum&album_id=1375870284640911361`，其中`biz` 为 `MzA3MDM3NjE5NQ==`，`aid` 为 `1375870284640911361`。",
+        "location": "msgalbum.ts",
+        "module": () => import('@/routes/wechat/msgalbum.ts')
+      },
+      "/sogou/:id": {
+        "path": "/sogou/:id",
+        "categories": [
+          "new-media"
+        ],
+        "example": "/wechat/sogou/qimao0908",
+        "parameters": {
+          "id": "公众号 id, 打开 weixin.sogou.com 并搜索相应公众号， 在 URL 中找到 id"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": true,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "name": "公众号（搜狗来源）",
+        "maintainers": [
+          "IvanWng97",
+          "pseudoyu"
+        ],
+        "location": "sogou.ts",
+        "module": () => import('@/routes/wechat/sogou.ts')
+      },
+      "/tgchannel/:id/:mpName?/:searchQueryType?": {
+        "path": "/tgchannel/:id/:mpName?/:searchQueryType?",
+        "categories": [
+          "new-media"
+        ],
+        "example": "/wechat/tgchannel/lifeweek",
+        "parameters": {
+          "id": "公众号绑定频道 id",
+          "mpName": "欲筛选的公众号全名（URL-encoded，精确匹配），在频道订阅了多个公众号时可选用",
+          "searchQueryType": "搜索查询类型，见下表"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "name": "公众号（Telegram 频道来源）",
+        "maintainers": [
+          "LogicJake",
+          "Rongronggg9"
+        ],
+        "description": "| 搜索查询类型 | 将使用的搜索关键字 |            适用于           |\n| :----------: | :----------------: | :-------------------------: |\n|      `0`     |     (禁用搜索)     |       所有情况 (默认)       |\n|      `1`     |     公众号全名     | 未启用 efb-patch-middleware |\n|      `2`     |     #公众号全名    | 已启用 efb-patch-middleware |\n\n::: tip\n启用搜索有助于在订阅了过多公众号的频道里有效筛选，不易因为大量公众号同时推送导致一些公众号消息被遗漏，但必须正确选择搜索查询类型，否则会搜索失败。\n:::\n\n::: warning\n该方法需要通过 efb 进行频道绑定，具体操作见 <https://github.com/DIYgod/RSSHub/issues/2172>\n:::",
+        "location": "tgchannel.ts",
+        "module": () => import('@/routes/wechat/tgchannel.ts')
+      },
+      "/uread/:userid": {
+        "path": "/uread/:userid",
+        "categories": [
+          "new-media"
+        ],
+        "example": "/wechat/uread/shensing",
+        "parameters": {
+          "userid": "公众号的微信号, 可在 微信-公众号-更多资料 中找到。并不是所有的都支持，能不能用随缘"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "name": "公众号（优读来源）",
+        "maintainers": [
+          "kt286"
+        ],
+        "location": "uread.ts",
+        "module": () => import('@/routes/wechat/uread.ts')
+      }
+    },
+    "apiRoutes": {},
+    "name": "微信小程序",
+    "url": "posts.careerengine.us",
+    "description": "::: tip\n公众号直接抓取困难，故目前提供几种间接抓取方案，请自行选择\n:::",
+    "lang": "zh-CN"
+  },
   "weidian": {
     "routes": {
       "/goods/:id": {
@@ -132908,31 +133215,6 @@ export default {
     "url": "4kup.net",
     "description": "4KUP - Beautiful Girls Collection",
     "lang": "en"
-  },
-  "500px": {
-    "routes": {
-      "/tribe/set/:id": {
-        "path": "/tribe/set/:id",
-        "categories": [
-          "picture"
-        ],
-        "view": 2,
-        "example": "/500px/tribe/set/f5de0b8aa6d54ec486f5e79616418001",
-        "parameters": {
-          "id": "部落 ID"
-        },
-        "name": "部落影集",
-        "maintainers": [
-          "TonyRL"
-        ],
-        "location": "tribe-set.tsx",
-        "module": () => import('@/routes/500px/tribe-set.tsx')
-      }
-    },
-    "apiRoutes": {},
-    "name": "500px 摄影社区",
-    "url": "500px.com.cn",
-    "lang": "zh-CN"
   },
   "6v123": {
     "routes": {
@@ -156211,6 +156493,33 @@ export default {
   },
   "metacritic": {
     "routes": {
+      "/release/:platform/:type?/:sort?": {
+        "path": "/release/:platform/:type?/:sort?",
+        "categories": [
+          "game"
+        ],
+        "example": "/metacritic/release/nintendo-switch/coming",
+        "parameters": {
+          "platform": "console platform, see below, `all` for every platform",
+          "type": "release type, default to `new`",
+          "sort": "sorting type, default to `date`"
+        },
+        "description": "Platforms supported:\n\n| PS5 | Xbox Series X | Switch 2          | Switch          | PC | Mobile | Meta Quest | PS4 | Xbox One | Wii U | 3DS | PS Vita |\n| --- | ------------- | ----------------- | --------------- | -- | ------ | ---------- | --- | -------- | ----- | --- | ------- |\n| ps5 | xbox-series-x | nintendo-switch-2 | nintendo-switch | pc | mobile | meta-quest | ps4 | xbox-one | wii-u | 3ds | ps-vita |\n\nRelease types, default to `new`:\n\n| New Releases | Coming Soon |\n| ------------ | ----------- |\n| new          | coming      |\n\nSorting types, default to `date`:\n\n| Date | Metacritic Score | User Score |\n| ---- | ---------------- | ---------- |\n| date | metascore        | userscore  |",
+        "radar": [
+          {
+            "source": [
+              "metacritic.com/browse/game/:platform"
+            ],
+            "target": "/release/:platform"
+          }
+        ],
+        "name": "Game Releases",
+        "maintainers": [
+          "HenryQW"
+        ],
+        "location": "release.ts",
+        "module": () => import('@/routes/metacritic/release.ts')
+      },
       "/game/:sort?/:filter?": {
         "path": "/game/:sort?/:filter?",
         "categories": [
@@ -163346,288 +163655,6 @@ export default {
     "name": "web.dev",
     "url": "web.dev",
     "lang": "en"
-  },
-  "wechat": {
-    "routes": {
-      "/wechat2rss/:id": {
-        "path": "/wechat2rss/:id",
-        "categories": [
-          "new-media"
-        ],
-        "example": "/wechat/wechat2rss/5b925323244e9737c39285596c53e3a2f4a30774",
-        "parameters": {
-          "id": "公众号 id，打开 `https://wechat2rss.xlab.app/posts/list/`，在 URL 中找到 id；注意不是公众号页的 id，而是订阅的 id"
-        },
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "name": "公众号（Wechat2RSS 来源）",
-        "maintainers": [
-          "TonyRL"
-        ],
-        "location": "wechat2rss.ts",
-        "module": () => import('@/routes/wechat/wechat2rss.ts')
-      },
-      "/announce": {
-        "path": "/announce",
-        "categories": [
-          "programming"
-        ],
-        "example": "/wechat/announce",
-        "parameters": {},
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "radar": [
-          {
-            "source": [
-              "mp.weixin.qq.com/cgi-bin/announce"
-            ]
-          }
-        ],
-        "name": "公众平台系统公告栏目",
-        "maintainers": [
-          "xyqfer"
-        ],
-        "url": "mp.weixin.qq.com/cgi-bin/announce",
-        "location": "announce.ts",
-        "module": () => import('@/routes/wechat/announce.ts')
-      },
-      "/ce/:id": {
-        "path": "/ce/:id",
-        "categories": [
-          "new-media"
-        ],
-        "example": "/wechat/ce/595a5b14d7164e53908f1606",
-        "parameters": {
-          "id": "公众号 id，在 [CareerEngine](https://search.careerengine.us/) 搜索公众号，通过 URL 中找到对应的公众号 id"
-        },
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": true,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "radar": [
-          {
-            "source": [
-              "cimidata.com/a/:id"
-            ]
-          }
-        ],
-        "name": "公众号（CareerEngine 来源）",
-        "maintainers": [
-          "HenryQW"
-        ],
-        "location": "ce.ts",
-        "module": () => import('@/routes/wechat/ce.ts')
-      },
-      "/data258/:id?": {
-        "path": "/data258/:id?",
-        "categories": [
-          "new-media"
-        ],
-        "example": "/wechat/data258/gh_cbbad4c1d33c",
-        "parameters": {
-          "id": "公众号 id 或分类 id，可在公众号页或分类页 URL 中找到；若略去，则抓取首页"
-        },
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": true,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "radar": [
-          {
-            "source": [
-              "mp.data258.com/",
-              "mp.data258.com/article/category/:id"
-            ]
-          }
-        ],
-        "name": "公众号（微阅读来源）",
-        "maintainers": [
-          "Rongronggg9"
-        ],
-        "url": "mp.data258.com/",
-        "description": "::: warning\n由于使用了一些针对反爬的缓解措施，本路由响应较慢。默认只抓取前 5 条，可通过 `?limit=` 改变（不推荐，容易被反爬）。\n\n该网站使用 IP 甄别访客，且应用严格的每日阅读量限额（约 15 次），请自建并确保正确配置缓存；如使用内存缓存而非 Redis 缓存，请增大缓存容量。该限额足够订阅至少 3 个公众号（假设公众号每日仅更新一次）；首页 / 分类页更新相当频繁，不推荐订阅。\n:::",
-        "location": "data258.ts",
-        "module": () => import('@/routes/wechat/data258.ts')
-      },
-      "/ershicimi/:id": {
-        "path": "/ershicimi/:id",
-        "categories": [
-          "new-media"
-        ],
-        "example": "/wechat/ershicimi/813oxJOl",
-        "parameters": {
-          "id": "公众号id，打开公众号页，在 URL 中找到 id"
-        },
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": true,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "name": "公众号（二十次幂来源）",
-        "maintainers": [
-          "sanmmm"
-        ],
-        "location": "ershcimi.ts",
-        "module": () => import('@/routes/wechat/ershcimi.ts')
-      },
-      "/mp/homepage/:biz/:hid/:cid?": {
-        "path": "/mp/homepage/:biz/:hid/:cid?",
-        "categories": [
-          "new-media"
-        ],
-        "example": "/wechat/mp/homepage/MzA3MDM3NjE5NQ==/16",
-        "parameters": {
-          "biz": "公众号id",
-          "hid": "分页id",
-          "cid": "页内栏目"
-        },
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": true,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "name": "公众号栏目 (非推送 & 历史消息)",
-        "maintainers": [
-          "MisteryMonster"
-        ],
-        "description": "只适用拥有首页模板 (分享链接带有 homepage) 的公众号。例如从公众号分享出来的链接为 `https://mp.weixin.qq.com/mp/homepage?__biz=MzA3MDM3NjE5NQ==&hid=4`，`biz` 为 `MzA3MDM3NjE5NQ==`，`hid` 为 `4`。\n\n有些页面里会有分栏， `cid` 可以通过元素选择器选中栏目查看`data-index`。如[链接](https://mp.weixin.qq.com/mp/homepage?__biz=MzA3MDM3NjE5NQ==\\&hid=4)里的 `京都职人` 栏目的 `cid` 为 `0`，`文艺时光` 栏目的 `cid` 为 `2`。如果不清楚的话最左边的栏目为`0`，其右方栏目依次递增 `1`。",
-        "location": "mp.ts",
-        "module": () => import('@/routes/wechat/mp.ts')
-      },
-      "/mp/msgalbum/:biz/:aid": {
-        "path": "/mp/msgalbum/:biz/:aid",
-        "categories": [
-          "new-media"
-        ],
-        "example": "/wechat/mp/msgalbum/MzA3MDM3NjE5NQ==/1375870284640911361",
-        "parameters": {
-          "biz": "公众号id",
-          "aid": "Tag id"
-        },
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": true,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "name": "公众号文章话题 Tag",
-        "maintainers": [
-          "MisteryMonster"
-        ],
-        "description": "一些公众号（如看理想）会在微信文章里添加 Tag ，点入 Tag 的链接如 `https://mp.weixin.qq.com/mp/appmsgalbum?__biz=MzA3MDM3NjE5NQ==&action=getalbum&album_id=1375870284640911361`，其中`biz` 为 `MzA3MDM3NjE5NQ==`，`aid` 为 `1375870284640911361`。",
-        "location": "msgalbum.ts",
-        "module": () => import('@/routes/wechat/msgalbum.ts')
-      },
-      "/sogou/:id": {
-        "path": "/sogou/:id",
-        "categories": [
-          "new-media"
-        ],
-        "example": "/wechat/sogou/qimao0908",
-        "parameters": {
-          "id": "公众号 id, 打开 weixin.sogou.com 并搜索相应公众号， 在 URL 中找到 id"
-        },
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": true,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "name": "公众号（搜狗来源）",
-        "maintainers": [
-          "IvanWng97",
-          "pseudoyu"
-        ],
-        "location": "sogou.ts",
-        "module": () => import('@/routes/wechat/sogou.ts')
-      },
-      "/tgchannel/:id/:mpName?/:searchQueryType?": {
-        "path": "/tgchannel/:id/:mpName?/:searchQueryType?",
-        "categories": [
-          "new-media"
-        ],
-        "example": "/wechat/tgchannel/lifeweek",
-        "parameters": {
-          "id": "公众号绑定频道 id",
-          "mpName": "欲筛选的公众号全名（URL-encoded，精确匹配），在频道订阅了多个公众号时可选用",
-          "searchQueryType": "搜索查询类型，见下表"
-        },
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "name": "公众号（Telegram 频道来源）",
-        "maintainers": [
-          "LogicJake",
-          "Rongronggg9"
-        ],
-        "description": "| 搜索查询类型 | 将使用的搜索关键字 |            适用于           |\n| :----------: | :----------------: | :-------------------------: |\n|      `0`     |     (禁用搜索)     |       所有情况 (默认)       |\n|      `1`     |     公众号全名     | 未启用 efb-patch-middleware |\n|      `2`     |     #公众号全名    | 已启用 efb-patch-middleware |\n\n::: tip\n启用搜索有助于在订阅了过多公众号的频道里有效筛选，不易因为大量公众号同时推送导致一些公众号消息被遗漏，但必须正确选择搜索查询类型，否则会搜索失败。\n:::\n\n::: warning\n该方法需要通过 efb 进行频道绑定，具体操作见 <https://github.com/DIYgod/RSSHub/issues/2172>\n:::",
-        "location": "tgchannel.ts",
-        "module": () => import('@/routes/wechat/tgchannel.ts')
-      },
-      "/uread/:userid": {
-        "path": "/uread/:userid",
-        "categories": [
-          "new-media"
-        ],
-        "example": "/wechat/uread/shensing",
-        "parameters": {
-          "userid": "公众号的微信号, 可在 微信-公众号-更多资料 中找到。并不是所有的都支持，能不能用随缘"
-        },
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "name": "公众号（优读来源）",
-        "maintainers": [
-          "kt286"
-        ],
-        "location": "uread.ts",
-        "module": () => import('@/routes/wechat/uread.ts')
-      }
-    },
-    "apiRoutes": {},
-    "name": "微信小程序",
-    "url": "posts.careerengine.us",
-    "description": "::: tip\n公众号直接抓取困难，故目前提供几种间接抓取方案，请自行选择\n:::",
-    "lang": "zh-CN"
   },
   "weibo": {
     "routes": {

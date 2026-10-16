@@ -1178,6 +1178,16 @@
         "target": "/qq/news/:uid"
       }
     ],
+    "mp.weixin": [
+      {
+        "title": "公众平台系统公告栏目",
+        "docs": "https://docs.rsshub.app/routes/wechat",
+        "source": [
+          "/cgi-bin/announce"
+        ],
+        "target": "/wechat/announce"
+      }
+    ],
     "pd": [
       {
         "title": "腾讯频道",
@@ -1301,16 +1311,6 @@
           "/news/index.shtml"
         ],
         "target": "/qq/lol/news/28"
-      }
-    ],
-    "mp.weixin": [
-      {
-        "title": "公众平台系统公告栏目",
-        "docs": "https://docs.rsshub.app/routes/wechat",
-        "source": [
-          "/cgi-bin/announce"
-        ],
-        "target": "/wechat/announce"
       }
     ]
   },
@@ -49874,6 +49874,33 @@
       }
     ]
   },
+  "cimidata.com": {
+    "_name": "微信小程序",
+    ".": [
+      {
+        "title": "公众号（CareerEngine 来源）",
+        "docs": "https://docs.rsshub.app/routes/wechat",
+        "source": [
+          "/a/:id"
+        ],
+        "target": "/wechat/ce/:id"
+      }
+    ]
+  },
+  "data258.com": {
+    "_name": "微信小程序",
+    "mp": [
+      {
+        "title": "公众号（微阅读来源）",
+        "docs": "https://docs.rsshub.app/routes/wechat",
+        "source": [
+          "/",
+          "/article/category/:id"
+        ],
+        "target": "/wechat/data258/:id?"
+      }
+    ]
+  },
   "wenxuecity.com": {
     "_name": "文学城",
     "bbs": [
@@ -59289,6 +59316,14 @@
     "_name": "Metacritic",
     ".": [
       {
+        "title": "Game Releases",
+        "docs": "https://docs.rsshub.app/routes/metacritic",
+        "source": [
+          "/browse/game/:platform"
+        ],
+        "target": "/metacritic/release/:platform"
+      },
+      {
         "title": "Games",
         "docs": "https://docs.rsshub.app/routes/metacritic",
         "source": [
@@ -61200,33 +61235,6 @@
           "/series/:seriesName"
         ],
         "target": "/web/series/:seriesName"
-      }
-    ]
-  },
-  "cimidata.com": {
-    "_name": "微信小程序",
-    ".": [
-      {
-        "title": "公众号（CareerEngine 来源）",
-        "docs": "https://docs.rsshub.app/routes/wechat",
-        "source": [
-          "/a/:id"
-        ],
-        "target": "/wechat/ce/:id"
-      }
-    ]
-  },
-  "data258.com": {
-    "_name": "微信小程序",
-    "mp": [
-      {
-        "title": "公众号（微阅读来源）",
-        "docs": "https://docs.rsshub.app/routes/wechat",
-        "source": [
-          "/",
-          "/article/category/:id"
-        ],
-        "target": "/wechat/data258/:id?"
       }
     ]
   },

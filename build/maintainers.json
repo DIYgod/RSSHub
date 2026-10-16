@@ -1710,6 +1710,9 @@
   "/4gamers/": [
     "TonyRL"
   ],
+  "/500px/tribe/set/:id": [
+    "TonyRL"
+  ],
   "/8kcos/cat/:cat?": [
     "KotoriK"
   ],
@@ -8796,6 +8799,38 @@
   "/webtoons/:lang/:category/:name/:id": [
     "machsix"
   ],
+  "/wechat/wechat2rss/:id": [
+    "TonyRL"
+  ],
+  "/wechat/announce": [
+    "xyqfer"
+  ],
+  "/wechat/ce/:id": [
+    "HenryQW"
+  ],
+  "/wechat/data258/:id?": [
+    "Rongronggg9"
+  ],
+  "/wechat/ershicimi/:id": [
+    "sanmmm"
+  ],
+  "/wechat/mp/homepage/:biz/:hid/:cid?": [
+    "MisteryMonster"
+  ],
+  "/wechat/mp/msgalbum/:biz/:aid": [
+    "MisteryMonster"
+  ],
+  "/wechat/sogou/:id": [
+    "IvanWng97",
+    "pseudoyu"
+  ],
+  "/wechat/tgchannel/:id/:mpName?/:searchQueryType?": [
+    "LogicJake",
+    "Rongronggg9"
+  ],
+  "/wechat/uread/:userid": [
+    "kt286"
+  ],
   "/weidian/goods/:id": [
     "LogicJake"
   ],
@@ -9561,9 +9596,6 @@
   ],
   "/4kup/tag/:tag": [
     "AiraNadih"
-  ],
-  "/500px/tribe/set/:id": [
-    "TonyRL"
   ],
   "/6v123/:category{.+}?": [
     "nczitzk"
@@ -11537,6 +11569,9 @@
   "/medium/tag/:user/:tag": [
     "ImSingee"
   ],
+  "/metacritic/release/:platform/:type?/:sort?": [
+    "HenryQW"
+  ],
   "/metacritic/game/:sort?/:filter?": [
     "HenryQW",
     "nczitzk"
@@ -12194,38 +12229,6 @@
   ],
   "/web/series/:seriesName": [
     "KarasuShin"
-  ],
-  "/wechat/wechat2rss/:id": [
-    "TonyRL"
-  ],
-  "/wechat/announce": [
-    "xyqfer"
-  ],
-  "/wechat/ce/:id": [
-    "HenryQW"
-  ],
-  "/wechat/data258/:id?": [
-    "Rongronggg9"
-  ],
-  "/wechat/ershicimi/:id": [
-    "sanmmm"
-  ],
-  "/wechat/mp/homepage/:biz/:hid/:cid?": [
-    "MisteryMonster"
-  ],
-  "/wechat/mp/msgalbum/:biz/:aid": [
-    "MisteryMonster"
-  ],
-  "/wechat/sogou/:id": [
-    "IvanWng97",
-    "pseudoyu"
-  ],
-  "/wechat/tgchannel/:id/:mpName?/:searchQueryType?": [
-    "LogicJake",
-    "Rongronggg9"
-  ],
-  "/wechat/uread/:userid": [
-    "kt286"
   ],
   "/weibo/fresh/:id": [
     "DIYgod"

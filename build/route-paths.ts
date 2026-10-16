@@ -2269,6 +2269,7 @@ export type RoutePath =
   | `/meta/ai/blog`
   | `/metacritic/game/:sort?/:filter?`
   | `/metacritic/movie/:sort?/:filter?`
+  | `/metacritic/release/:platform/:type?/:sort?`
   | `/metacritic/tv/:sort?/:filter?`
   | `/meteoblue/weathernews`
   | `/meteor/:board?`
