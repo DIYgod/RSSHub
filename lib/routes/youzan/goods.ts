@@ -6,7 +6,7 @@ import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
-const parsePublicationDate = (value: unknown): Date | undefined => {
+const parsePublicationDate = (value?: number): Date | undefined => {
     if (typeof value !== 'number' || !Number.isFinite(value)) {
         return;
     }

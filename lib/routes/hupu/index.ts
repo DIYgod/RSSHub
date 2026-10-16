@@ -30,7 +30,7 @@ const isCategory = (key: string): key is keyof typeof categories => Object.hasOw
 
 type PagePropsData = Partial<Record<(typeof categories)[keyof typeof categories]['data'], Array<HomePostItem | NewsDataItem>>>;
 
-const parsePublishTime = (value: unknown): Date | undefined => {
+const parsePublishTime = (value?: string): Date | undefined => {
     if (typeof value !== 'string' || !/^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$/.test(value)) {
         return;
     }

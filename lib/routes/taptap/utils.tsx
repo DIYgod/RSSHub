@@ -11,8 +11,9 @@ const X_UA = (lang = 'zh_CN') => `X-UA=${encodeURIComponent(`V=1&PN=WebApp&VN=0.
 
 const getRootUrl = (isIntl = false) => (isIntl ? 'https://www.taptap.io' : 'https://www.taptap.cn');
 
-const languageMap: Record<string, Language> = { zh_CN: 'zh-CN', zh_TW: 'zh-TW', en_US: 'en', ja_JP: 'ja', ko_KR: 'ko' };
-const getLanguage = (lang: string): Language | undefined => languageMap[lang];
+const languageMap = { zh_CN: 'zh-CN', zh_TW: 'zh-TW', en_US: 'en', ja_JP: 'ja', ko_KR: 'ko' } satisfies Record<string, Language>;
+const isLanguageMapKey = (key: string): key is keyof typeof languageMap => Object.hasOwn(languageMap, key);
+const getLanguage = (lang: string): Language | undefined => (isLanguageMapKey(lang) ? languageMap[lang] : undefined);
 
 const appDetail = (appId, lang = 'zh_CN', isIntl = false) =>
     cache.tryGet(`taptap:appDetail:${appId}:${lang}:${isIntl}`, async () => {

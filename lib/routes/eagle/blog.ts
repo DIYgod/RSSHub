@@ -2,13 +2,13 @@ import { load } from 'cheerio';
 import pMap from 'p-map';
 
 import InvalidParameterError from '@/errors/types/invalid-parameter';
-import type { Data, DataItem, Route } from '@/types';
+import type { Data, DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
 const cateList = new Set(['all', 'design-resources', 'learn-design', 'inside-eagle', 'why-eagle']);
-const languages: Record<string, Data['language']> = { cn: 'zh-CN', tw: 'zh-TW', en: 'en', jp: 'ja', kr: 'ko', es: 'es', de: 'de', ru: 'ru' };
+const languages = { cn: 'zh-CN', tw: 'zh-TW', en: 'en', jp: 'ja', kr: 'ko', es: 'es', de: 'de', ru: 'ru' } satisfies Record<string, Language>;
 
 export const route: Route = {
     path: '/blog/:cate?/:language?',

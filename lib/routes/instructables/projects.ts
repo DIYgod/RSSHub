@@ -4,10 +4,6 @@ import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
-function isMissingPublicationValue(value: unknown): value is null | undefined | '' {
-    return ([undefined, null, ''] as unknown[]).includes(value);
-}
-
 export const route: Route = {
     path: '/projects/:category?',
     categories: ['other'],
@@ -41,7 +37,7 @@ export const route: Route = {
 };
 
 const parsePublicationDate = (value?: string | number) => {
-    if (isMissingPublicationValue(value)) {
+    if (value === undefined || value === '') {
         return;
     }
     const date = parseDate(value);

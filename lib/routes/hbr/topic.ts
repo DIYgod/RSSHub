@@ -99,13 +99,15 @@ async function handler(ctx) {
     };
 }
 
+type JsonValue = string | number | boolean | null | JsonValue[] | { [key: string]: JsonValue };
+
 interface TopicPage {
     coveoAccessToken: string;
     topicFilterExpression: string;
     topicDisplayName: string;
     appConfig: { storeBaseUrl: string };
     staticState: {
-        searchAction: { payload: { requestExecuted: Record<string, unknown> & { url: string } } };
+        searchAction: { payload: { requestExecuted: { [key: string]: JsonValue } & { url: string } } };
     };
 }
 

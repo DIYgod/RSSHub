@@ -89,7 +89,7 @@ async function handler(ctx) {
         false
     );
 
-    const audioList = await cache.tryGet(
+    const { radioCover, list } = await cache.tryGet(
         `tingtingfm:play_audio:${programId}:${latestAudio.h_audio_id}`,
         async () => {
             const playAudioParams = {
@@ -114,8 +114,6 @@ async function handler(ctx) {
         config.cache.routeExpire,
         false
     );
-
-    const { radioCover, list } = audioList;
 
     const items = list.map((audio) => ({
         title: audio.title,

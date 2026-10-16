@@ -53,7 +53,8 @@ const renderMedia = (media) => {
 
 const junkPattern = /inline\d+|alsosee/;
 const mediaPattern = /(photo|video)(\d+)/;
-const sportPaths: Record<string, string> = { ncb: 'mens-college-basketball', ncf: 'college-football' };
+const sportPaths = { ncb: 'mens-college-basketball', ncf: 'college-football' } satisfies Record<string, string>;
+const isSportPathKey = (key: string): key is keyof typeof sportPaths => Object.hasOwn(sportPaths, key);
 const radarSports = ['nba', 'wnba', 'nfl', 'mlb', 'nhl', 'ncb', 'ncf', 'rugby', 'tennis', 'golf', 'cricket', 'soccer', 'f1', 'mma', 'ufl', 'poker'];
 
 export const route: Route = {
@@ -76,7 +77,7 @@ export const route: Route = {
 | 🏟️️ College Football   | ncf   | 🏈 UFL     | ufl     |
 | 🏉 Rugby              | rugby | 🃏 Poker   | poker   |`,
     radar: radarSports.map((sport) => {
-        const path = sport === 'poker' ? 'sports-betting' : (sportPaths[sport] ?? sport);
+        const path = sport === 'poker' ? 'sports-betting' : isSportPathKey(sport) ? sportPaths[sport] : sport;
         return {
             source: [`www.espn.com/${path}`, `www.espn.com/${path}/*path`],
             target: `/news/${sport}`,
@@ -161,7 +162,7 @@ export const route: Route = {
 
         return {
             title: `ESPN ${sport.toUpperCase()} News`,
-            link: `https://www.espn.com/${sportPaths[sport] ?? sport}/`,
+            link: `https://www.espn.com/${isSportPathKey(sport) ? sportPaths[sport] : sport}/`,
             item: items,
         };
     },

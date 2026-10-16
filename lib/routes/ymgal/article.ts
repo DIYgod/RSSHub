@@ -13,13 +13,13 @@ const types = {
     news: '?type=NEWS&page=1',
     column: '?type=COLUMN&page=1',
 };
-function getPublicationTimestamp(value: unknown): number {
+function getPublicationTimestamp(value?: string | number): number {
     if (typeof value === 'number' || (typeof value === 'string' && value.trim())) {
         return parseDate(value).getTime();
     }
     return NaN;
 }
-function getPublicationDate(value: unknown): Date | undefined {
+function getPublicationDate(value?: string | number): Date | undefined {
     const timestamp = getPublicationTimestamp(value);
     if (Number.isFinite(timestamp)) {
         return timezone(parseDate(timestamp), 8);

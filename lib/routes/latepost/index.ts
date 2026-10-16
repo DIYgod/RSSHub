@@ -21,7 +21,7 @@ const arrayToDictionary = (arr) => Object.fromEntries(arr.map(({ id, ...rest }) 
 
 const allowedResourceTypes = new Set(['document', 'xhr', 'fetch']);
 
-function isCertificateTrustError(error: unknown): boolean {
+function isCertificateTrustError(error: unknown): error is Error {
     return error instanceof Error && (('code' in error && (error.code === 'UNABLE_TO_GET_ISSUER_CERT_LOCALLY' || error.code === 'UNABLE_TO_VERIFY_LEAF_SIGNATURE')) || isCertificateTrustError(error.cause));
 }
 

@@ -211,10 +211,10 @@ function isOneOf<const T>(value: unknown, values: readonly T[]): value is T {
     const candidates: readonly unknown[] = values;
     return candidates.includes(value);
 }
-function getClockText(value: unknown): string {
+function getClockText(value: string | number): string {
     return String(value).trim();
 }
 
-function isFiniteClock(value: unknown): boolean {
+function isFiniteClock(value: string | number): boolean {
     return Number.isFinite(Number(value));
 }

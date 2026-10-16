@@ -6,7 +6,7 @@ import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
-const parseSourceDate = (value: unknown) => {
+const parseSourceDate = (value?: string) => {
     if (typeof value !== 'string' || !value || !Number.isFinite(parseDate(value.slice(0, 19), value.length === 10 ? 'YYYY-MM-DD' : 'YYYY-MM-DDTHH:mm:ss', true).getTime())) {
         return;
     }

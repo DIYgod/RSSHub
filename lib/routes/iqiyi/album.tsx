@@ -6,10 +6,6 @@ import type { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
-function isMissingPublicationValue(value: unknown): value is null | undefined | '' {
-    return ([undefined, null, ''] as unknown[]).includes(value);
-}
-
 export const route: Route = {
     path: '/album/:id',
     categories: ['multimedia'],
@@ -32,7 +28,7 @@ export const route: Route = {
 };
 
 function parseIssueTime(value: string | number | null | undefined) {
-    if (isMissingPublicationValue(value)) {
+    if (!value && value !== 0) {
         return;
     }
     const date = parseDate(value);

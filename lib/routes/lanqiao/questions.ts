@@ -49,7 +49,7 @@ async function handler(ctx) {
     const md = new MarkdownIt();
     const items = await pMap(
         data.filter(isUnpinnedQuestion),
-        (item: Record<string, unknown>) =>
+        (item: { id: number }) =>
             cache.tryGet(`https://www.lanqiao.cn/api/v2/questions/${item.id}/`, async () => {
                 const questionResponse = await got({
                     method: 'get',
@@ -58,7 +58,7 @@ async function handler(ctx) {
                 const question = questionResponse.data;
 
                 return {
-                    ...item,
+                    id: String(item.id),
                     title: question.title,
                     description: md.render(question.content),
                     author: question.author.name,

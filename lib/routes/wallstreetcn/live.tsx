@@ -42,7 +42,7 @@ export const route: Route = {
 | global | a-stock | us-stock | hk-stock | forex | commodity | financing |`,
 };
 
-function parseSourceTime(value: unknown) {
+function parseSourceTime(value?: string | number | null) {
     if ((typeof value !== 'number' && typeof value !== 'string') || (typeof value === 'string' && !value.trim())) {
         return;
     }

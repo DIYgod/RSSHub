@@ -4,7 +4,7 @@ import type { DataItem } from '@/types';
 
 type Attachment = NonNullable<DataItem['attachments']>[number];
 
-const mimeTypes: Record<string, string> = {
+const mimeTypes = {
     avif: 'image/avif',
     gif: 'image/gif',
     jpeg: 'image/jpeg',
@@ -24,7 +24,8 @@ const mimeTypes: Record<string, string> = {
     webm: 'video/webm',
     webp: 'image/webp',
     zip: 'application/zip',
-};
+} satisfies Record<string, string>;
+const isMimeTypeKey = (key: string): key is keyof typeof mimeTypes => Object.hasOwn(mimeTypes, key);
 
 export const getItemAttachments = (item: DataItem): Attachment[] => {
     const attachments = [...(item.attachments || [])];
@@ -62,7 +63,7 @@ export const extractAttachments = ($: CheerioAPI, item: DataItem, hideImages = f
         }
         const extension = url.pathname.split('.').at(-1)?.toLowerCase();
         const declaredType = node.attr('type')?.split(';', 1)[0].trim().toLowerCase();
-        const mimeType = declaredType && /^(?:audio|video|image|application)\/[a-z0-9][a-z0-9.+-]*$/.test(declaredType) ? declaredType : extension && Object.hasOwn(mimeTypes, extension) ? mimeTypes[extension] : undefined;
+        const mimeType = declaredType && /^(?:audio|video|image|application)\/[a-z0-9][a-z0-9.+-]*$/.test(declaredType) ? declaredType : extension && isMimeTypeKey(extension) ? mimeTypes[extension] : undefined;
         if (!mimeType || mimeType === 'application/xhtml+xml' || (hideImages && mimeType.startsWith('image/'))) {
             continue;
         }

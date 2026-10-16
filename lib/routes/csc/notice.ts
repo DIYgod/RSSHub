@@ -66,6 +66,8 @@ export const route: Route = {
 | lxtz     | xmzl         | wtjd         | lqgg     | xwzx     | xwgg     |`,
 };
 
+type CookieHeaders = { cookie: string };
+
 async function handler(ctx: Context): Promise<Data> {
     const { type = 'lxtz' } = ctx.req.param();
     const limit = getRouteLimit(ctx, 10);
@@ -80,7 +82,7 @@ async function handler(ctx: Context): Promise<Data> {
         gotoConfig: { waitUntil: 'domcontentloaded' },
     });
     let html: string;
-    let headers: { cookie: string };
+    let headers: CookieHeaders;
     try {
         await page.waitForSelector('.list-a li');
         html = await page.content();

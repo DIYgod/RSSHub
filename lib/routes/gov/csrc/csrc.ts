@@ -6,7 +6,7 @@ import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
 
-const enclosureTypes: Record<string, string> = {
+const enclosureTypes = {
     pdf: 'application/pdf',
     doc: 'application/msword',
     docx: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
@@ -14,11 +14,13 @@ const enclosureTypes: Record<string, string> = {
     xlsx: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
     ppt: 'application/vnd.ms-powerpoint',
     pptx: 'application/vnd.openxmlformats-officedocument.presentationml.presentation',
-};
+} satisfies Record<string, string>;
+
+const isEnclosureExtension = (key: string): key is keyof typeof enclosureTypes => Object.hasOwn(enclosureTypes, key);
 
 function getEnclosureType(filePath: string) {
     const extension = new URL(filePath, 'http://www.csrc.gov.cn').pathname.split('.').pop()?.toLowerCase();
-    return extension && Object.hasOwn(enclosureTypes, extension) ? enclosureTypes[extension] : 'application/octet-stream';
+    return extension && isEnclosureExtension(extension) ? enclosureTypes[extension] : 'application/octet-stream';
 }
 
 export const handler = async (ctx) => {

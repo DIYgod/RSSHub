@@ -6,7 +6,7 @@ import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
 const host = 'http://www.rodong.rep.kp';
-const languages: Record<string, Language> = { cn: 'zh-CN', en: 'en', ko: 'ko' };
+const languages = { cn: 'zh-CN', en: 'en', ko: 'ko' } satisfies Record<string, Language>;
 
 export const route: Route = {
     path: '/news/:language?',

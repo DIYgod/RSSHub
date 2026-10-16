@@ -35,6 +35,7 @@ export const route: Route = {
 };
 
 type NewsItem = DataItem & { link: string; description: string };
+type Detail = { description?: string };
 
 function parsePublishedTime(value: string | number | null | undefined) {
     if ([undefined, null, ''].includes(value as string | null | undefined)) {
@@ -84,9 +85,9 @@ async function handler(ctx) {
     items = await pMap(
         items,
         async (item) => {
-            let detail: { description?: string } = {};
+            let detail: Detail = {};
             try {
-                detail = await cache.tryGet<{ description?: string }>(`news:detail:${item.link}`, async () => {
+                detail = await cache.tryGet<Detail>(`news:detail:${item.link}`, async () => {
                     const { data: detailResponse } = await got(item.link);
                     const content = load(detailResponse);
                     return { description: content('#detailContent').html() ?? undefined };
