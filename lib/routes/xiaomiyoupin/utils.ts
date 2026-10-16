@@ -15,12 +15,7 @@ dayjs.extend(timezone);
 dayjs.extend(utc);
 
 const parsePageQuery = (url?: string): { pageId: string; sign: string } => {
-    let searchParams: URLSearchParams | undefined;
-    try {
-        searchParams = url ? new URL(url).searchParams : undefined;
-    } catch {
-        searchParams = undefined;
-    }
+    const searchParams = url ? new URL(url).searchParams : null;
     const pageId = searchParams?.get('pageid');
     const sign = searchParams?.get('sign');
     if (!pageId || !sign) {
