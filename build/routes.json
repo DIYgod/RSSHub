@@ -61443,6 +61443,106 @@
     "url": "getdr.com",
     "lang": "zh-TW"
   },
+  "gfqh": {
+    "routes": {
+      "/report/:variety?/:category?": {
+        "path": "/report/:variety?/:category?",
+        "categories": [
+          "finance"
+        ],
+        "example": "/gfqh/report/100005",
+        "parameters": {
+          "variety": {
+            "description": "交易品种",
+            "default": "0",
+            "options": [
+              {
+                "value": "0",
+                "label": "全部"
+              },
+              {
+                "value": "100002",
+                "label": "能源化工"
+              },
+              {
+                "value": "100004",
+                "label": "金融"
+              },
+              {
+                "value": "100005",
+                "label": "农产品"
+              },
+              {
+                "value": "100009",
+                "label": "综合"
+              },
+              {
+                "value": "100010",
+                "label": "黑色金属"
+              },
+              {
+                "value": "100011",
+                "label": "有色金属"
+              }
+            ]
+          },
+          "category": {
+            "description": "报告类型",
+            "default": "0",
+            "options": [
+              {
+                "value": "0",
+                "label": "全部"
+              },
+              {
+                "value": "100001",
+                "label": "常规报告"
+              },
+              {
+                "value": "100003",
+                "label": "专题报告"
+              },
+              {
+                "value": "100004",
+                "label": "其他报告"
+              },
+              {
+                "value": "100005",
+                "label": "调研报告"
+              },
+              {
+                "value": "100006",
+                "label": "热点点评"
+              }
+            ]
+          }
+        },
+        "radar": [
+          {
+            "source": [
+              "rd.gfqh.cn/RDInformation/menu/235"
+            ],
+            "target": "/report"
+          }
+        ],
+        "name": "研究报告",
+        "maintainers": [
+          "pseudoyu"
+        ],
+        "url": "rd.gfqh.cn/RDInformation/menu/235",
+        "description": "例如农产品常规报告使用 `/gfqh/report/100005/100001`。报告正文多为 PDF 附件，附件链接列在条目内容末尾。只读取第一页。",
+        "location": "report.tsx",
+        "module": "() => import('@/routes/gfqh/report.tsx')"
+      }
+    },
+    "apiRoutes": {},
+    "name": "广发期货",
+    "url": "rd.gfqh.cn",
+    "categories": [
+      "finance"
+    ],
+    "lang": "zh-CN"
+  },
   "ghisler": {
     "routes": {
       "/whatsnew": {

@@ -22682,6 +22682,19 @@
       }
     ]
   },
+  "gfqh.cn": {
+    "_name": "广发期货",
+    "rd": [
+      {
+        "title": "研究报告",
+        "docs": "https://docs.rsshub.app/routes/gfqh",
+        "source": [
+          "/RDInformation/menu/235"
+        ],
+        "target": "/gfqh/report"
+      }
+    ]
+  },
   "gigazine.net": {
     "_name": "GIGAZINE",
     ".": [

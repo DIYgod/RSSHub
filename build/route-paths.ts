@@ -1323,6 +1323,7 @@ export type RoutePath =
   | `/getitfree/tag/:id{.+}?`
   | `/gettr/user/:id`
   | `/gf-cn/news/:category?`
+  | `/gfqh/report/:variety?/:category?`
   | `/ghisler/whatsnew`
   | `/gigazine/en`
   | `/gihyo/list/group/:id`
