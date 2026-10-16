@@ -10,7 +10,7 @@ import { getRouteLimit } from '@/utils/route-limit';
 import timezone from '@/utils/timezone';
 
 const parsePublicationDate = (value: string | number | undefined) => {
-    if (isOneOf(value, [undefined, null]) || value === '') {
+    if (typeof value !== 'number' && !value) {
         return;
     }
     const date = timezone(parseDate(value), 8);
@@ -102,9 +102,4 @@ async function unwrapFirstFailure<T>(promise: Promise<T>): Promise<T> {
     } catch (error) {
         throw error instanceof AggregateError ? error.errors[0] : error;
     }
-}
-
-function isOneOf<const T>(value: unknown, values: readonly T[]): value is T {
-    const candidates: readonly unknown[] = values;
-    return candidates.includes(value);
 }

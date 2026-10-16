@@ -15,7 +15,7 @@ export function getGeoLink(geo: Api.GeoPoint) {
     return `<a href="https://www.google.com/maps/search/?api=1&query=${geo.lat}%2C${geo.long}" target="_blank">Geo LatLon: ${geo.lat}, ${geo.long}</a>`;
 }
 
-export async function getPollResults(client, message, m: Api.MessageMediaPoll) {
+async function getPollResults(client, message, m: Api.MessageMediaPoll) {
     const resultsUpdateResponse = await client.invoke(new Api.messages.GetPollResults({ peer: message.peerId, msgId: message.id }));
     let results: Api.PollResults;
     if (resultsUpdateResponse?.updates[0] instanceof Api.UpdateMessagePoll) {
@@ -37,7 +37,7 @@ export async function getPollResults(client, message, m: Api.MessageMediaPoll) {
     return txt;
 }
 
-export function withSearchParams(src: string, params: Record<string, string>) {
+function withSearchParams(src: string, params: Record<string, string>) {
     const url = new URL(src);
     for (const [key, value] of Object.entries(params)) {
         url.searchParams.set(key, value);
@@ -45,7 +45,7 @@ export function withSearchParams(src: string, params: Record<string, string>) {
     return url.href;
 }
 
-export function getMessageMediaUrl(requestUrl: string, username: string, messageId: number, forwardedPrefix?: string) {
+function getMessageMediaUrl(requestUrl: string, username: string, messageId: number, forwardedPrefix?: string) {
     const request = new URL(requestUrl);
     const channelPathIndex = request.pathname.lastIndexOf('/telegram/channel/');
     const prefix = forwardedPrefix ?? (channelPathIndex === -1 ? '' : request.pathname.slice(0, channelPathIndex));
@@ -111,7 +111,7 @@ function humanFileSize(size: number) {
     return (size / Math.pow(1024, i)).toFixed(2) + ' ' + ['B', 'kB', 'MB', 'GB', 'TB'][i];
 }
 
-export function getAudioTitle(x: Api.TypeMessageMedia) {
+function getAudioTitle(x: Api.TypeMessageMedia) {
     if (x instanceof Api.MessageMediaDocument && x.document instanceof Api.Document) {
         const attr = x.document.attributes.find((x) => x instanceof Api.DocumentAttributeAudio);
         if (attr) {
@@ -121,7 +121,7 @@ export function getAudioTitle(x: Api.TypeMessageMedia) {
     return getFilename(x);
 }
 
-export function humanDuration(seconds: number) {
+function humanDuration(seconds: number) {
     const hours = Math.floor(seconds / 3600);
     const minutes = Math.floor((seconds % 3600) / 60);
     const remainingSeconds = seconds % 60;

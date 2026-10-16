@@ -7,7 +7,7 @@ import ofetch from '@/utils/ofetch';
 import { parseDate, parseRelativeDate } from '@/utils/parse-date';
 
 export const parseSourceDate = (value?: string | number) => {
-    if (isOneOf(value, [undefined, null]) || value === '') {
+    if (value === undefined || value === '') {
         return;
     }
     const sourceValue = typeof value === 'string' && /^\d{4}-\d{2}-\d{2}[ T]\d{2}:\d{2}:\d{2}(?:\.\d+)?$/.test(value) ? `${value.replace(' ', 'T')}+08:00` : value;
@@ -138,8 +138,3 @@ const ThepaperImageDetail = ({
         ))}
     </>
 );
-
-function isOneOf<const T>(value: unknown, values: readonly T[]): value is T {
-    const candidates: readonly unknown[] = values;
-    return candidates.includes(value);
-}

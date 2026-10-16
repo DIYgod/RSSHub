@@ -6,7 +6,7 @@ import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
-const parseSourceDate = (value: unknown) => {
+const parseSourceDate = (value?: string) => {
     if (typeof value !== 'string' || !value || !Number.isFinite(parseDate(value.slice(0, 19), value.length === 10 ? 'YYYY-MM-DD' : 'YYYY-MM-DDTHH:mm:ss', true).getTime())) {
         return;
     }
@@ -17,7 +17,7 @@ const parseSourceDate = (value: unknown) => {
 /**
  * Extract page ID from script tags and title
  */
-export const extractPageMeta = (url: string) =>
+const extractPageMeta = (url: string) =>
     cache.tryGet(`jandan:pageMeta:${url}`, async () => {
         const response = await ofetch(url);
 

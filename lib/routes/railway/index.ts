@@ -31,7 +31,7 @@ async function handler(ctx: Context) {
     };
 }
 
-export const fetchArticles = async (limit: number): Promise<DataItem[]> => {
+const fetchArticles = async (limit: number): Promise<DataItem[]> => {
     const page = await ofetch('https://blog.railway.com/rss.xml', {
         responseType: 'text',
     });
@@ -64,7 +64,7 @@ export const fetchArticles = async (limit: number): Promise<DataItem[]> => {
     );
 };
 
-export const fetchArticleDetails = async (url: string) => {
+const fetchArticleDetails = async (url: string) => {
     const page = await ofetch(url);
     const $ = load(page);
 

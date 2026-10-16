@@ -10,9 +10,10 @@ import parser from '@/utils/rss-parser';
 import { renderDescription } from './templates/description';
 
 const rssEncodings = new Set<BufferEncoding>(['ascii', 'utf8', 'utf16le', 'ucs2', 'base64', 'latin1', 'binary', 'hex']);
-const rssEncodingAliases: Record<string, BufferEncoding> = { 'utf-8': 'utf8', 'iso-8859-1': 'latin1' };
+const rssEncodingAliases = { 'utf-8': 'utf8', 'iso-8859-1': 'latin1' } satisfies Record<string, BufferEncoding>;
+const isRssEncodingAlias = (key: string): key is keyof typeof rssEncodingAliases => Object.hasOwn(rssEncodingAliases, key);
 
-export const getRssFeed = async (feedUrl: string, redirectCount = 0): Promise<Awaited<ReturnType<typeof parser.parseString>>> => {
+const getRssFeed = async (feedUrl: string, redirectCount = 0): Promise<Awaited<ReturnType<typeof parser.parseString>>> => {
     const response = await ofetch.raw<ArrayBuffer, 'arrayBuffer'>(feedUrl, {
         method: 'GET',
         headers: { Accept: 'application/rss+xml', 'User-Agent': config.ua },
@@ -36,7 +37,7 @@ export const getRssFeed = async (feedUrl: string, redirectCount = 0): Promise<Aw
             .get('content-type')
             ?.match(/(encoding|charset)\s*=\s*(\S+)/)?.[2]
             .toLowerCase() || '';
-    const encoding = rssEncodingAliases[charset] || (rssEncodings.has(charset as BufferEncoding) ? (charset as BufferEncoding) : 'utf8');
+    const encoding = (isRssEncodingAlias(charset) && rssEncodingAliases[charset]) || (rssEncodings.has(charset as BufferEncoding) ? (charset as BufferEncoding) : 'utf8');
     return parser.parseString(Buffer.from(response._data!).toString(encoding));
 };
 
@@ -44,7 +45,7 @@ const pdfUrlGenerators = {
     arxiv: (id: string) => `https://arxiv.org/pdf/${id}.pdf`,
 };
 
-const getPublicationDate = (value: unknown): Date | undefined => {
+const getPublicationDate = (value?: string | number | null): Date | undefined => {
     if ((typeof value !== 'string' || !/\S/.test(value)) && typeof value !== 'number') {
         return undefined;
     }

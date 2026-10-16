@@ -7,7 +7,7 @@ import { parseDate } from '@/utils/parse-date';
 const baseUrl = 'https://yamap.com/activities/';
 const host = 'https://api.yamap.com/v3/activities?page=1&per=24';
 
-function parseUnixDate(value: unknown) {
+function parseUnixDate(value?: number) {
     if (typeof value !== 'number' || !Number.isFinite(value)) {
         return;
     }

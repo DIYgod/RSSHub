@@ -7,7 +7,7 @@ import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
-const getPublicationDate = (value: unknown): Date | undefined => {
+const getPublicationDate = (value?: string | number | null): Date | undefined => {
     if ((typeof value !== 'string' || !/\S/.test(value)) && typeof value !== 'number') {
         return undefined;
     }

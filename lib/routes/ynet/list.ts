@@ -173,7 +173,7 @@ export const route: Route = {
     view: ViewType.Articles,
 };
 
-function getPublicationDate(value: unknown): Date | undefined {
+function getPublicationDate(value?: string): Date | undefined {
     if (typeof value !== 'string' || !value.trim()) {
         return;
     }

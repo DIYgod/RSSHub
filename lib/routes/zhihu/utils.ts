@@ -70,8 +70,6 @@ const getCookieValueFrom = (cookieStr: string | undefined, key: string) =>
         .find((e) => e.startsWith(key + '='))
         ?.slice(key.length + 1) || '';
 
-export const getCookieValueByKey = (key: string) => getCookieValueFrom(config.zhihu.cookies, key);
-
 export type ZhihuClient = {
     get<T = any>(apiPath: string): Promise<T>;
     getPage(): Promise<string>;

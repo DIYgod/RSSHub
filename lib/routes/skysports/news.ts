@@ -1,5 +1,6 @@
 import { type Cheerio, type CheerioAPI, load } from 'cheerio';
 import { type AnyNode, cloneNode, Document } from 'domhandler';
+import { escapeUTF8 } from 'entities/escape';
 import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
@@ -12,7 +13,12 @@ interface ArticleSchema {
     '@graph'?: ArticleSchema[];
     datePublished?: string;
     articleBody?: string;
+    liveBlogUpdate?: Array<{ articleBody?: string }>;
     author?: Array<{ name?: string }> | { name?: string };
+}
+
+function getLiveBlogDescription(schema?: ArticleSchema) {
+    return schema?.liveBlogUpdate?.flatMap((update) => (typeof update.articleBody === 'string' && update.articleBody.trim() ? `<p>${escapeUTF8(update.articleBody)}</p>` : [])).join('') || undefined;
 }
 
 function getArticleSchema(content: CheerioAPI) {
@@ -74,7 +80,7 @@ async function handler(ctx) {
     items = await pMap(
         items,
         async (item) => {
-            const details = await cache.tryGet(`skysports:article:v4:${item.link}`, async () => {
+            const details = await cache.tryGet(`skysports:article:v5:${item.link}`, async () => {
                 const detailResponse = await got({
                     method: 'get',
                     url: item.link,
@@ -93,7 +99,7 @@ async function handler(ctx) {
                     video.append(poster, caption);
                 });
 
-                const description = content('.sdc-article-body, .polaris-tile-group-separator').html() ?? content('.sdc-site-video').first().html() ?? schema?.articleBody;
+                const description = content('.sdc-article-body, .polaris-tile-group-separator').html() ?? content('.sdc-site-video').first().html() ?? schema?.articleBody ?? getLiveBlogDescription(schema);
                 const pubDate = schema?.datePublished ? parseDate(schema.datePublished) : undefined;
                 const author = Array.isArray(schema?.author) ? schema.author.flatMap((author) => (author.name ? { name: author.name } : [])) : schema?.author?.name;
 

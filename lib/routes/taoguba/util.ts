@@ -1,19 +1,44 @@
+import { createHash } from 'node:crypto';
+
 import { load } from 'cheerio';
 
+import { config } from '@/config';
 import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
-import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
 const rootUrl = 'https://www.tgb.cn';
 
+const getPage = async (url: string, redirectsRemaining = 3): Promise<{ data: string; url: string }> => {
+    const parsedUrl = new URL(url);
+    if (parsedUrl.origin !== rootUrl || parsedUrl.username || parsedUrl.password) {
+        throw new Error('Taoguba requests must use https://www.tgb.cn.');
+    }
+
+    const cookie = config.taoguba.cookie?.trim();
+    const response = await ofetch.raw<string, 'text'>(url, {
+        headers: cookie ? { Cookie: cookie } : undefined,
+        responseType: 'text',
+        redirect: 'manual',
+    });
+    if (response.status >= 300 && response.status < 400) {
+        const location = response.headers.get('location');
+        if (!location || redirectsRemaining === 0) {
+            throw new Error('Taoguba returned an invalid or repeated redirect.');
+        }
+        return getPage(new URL(location, url).href, redirectsRemaining - 1);
+    }
+
+    return { data: response._data!, url: response.url };
+};
+
 const renderPostDetail = async <T extends DataItem>(item: T) => {
-    const details = await cache.tryGet(`${item.link}:details:v2`, async (): Promise<Pick<DataItem, 'description' | 'pubDate' | 'category'>> => {
-        const detailResponse = await got({
-            method: 'get',
-            url: item.link,
-        });
+    const cookie = config.taoguba.cookie?.trim();
+    const sessionKey = cookie ? createHash('sha256').update(cookie).digest('hex') : 'anonymous';
+    const details = await cache.tryGet(`${item.link}:details:v3:${sessionKey}`, async (): Promise<Pick<DataItem, 'description' | 'pubDate' | 'category'>> => {
+        const detailResponse = await getPage(item.link!);
 
         const content = load(detailResponse.data);
 
@@ -51,4 +76,4 @@ const renderPostDetail = async <T extends DataItem>(item: T) => {
     return { ...item, ...details };
 };
 
-export { renderPostDetail, rootUrl };
+export { getPage, renderPostDetail, rootUrl };

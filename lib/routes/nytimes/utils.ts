@@ -10,7 +10,8 @@ import { parseDate } from '@/utils/parse-date';
 import parser from '@/utils/rss-parser';
 
 const rssEncodings = new Set<BufferEncoding>(['ascii', 'utf8', 'utf16le', 'ucs2', 'base64', 'latin1', 'binary', 'hex']);
-const rssEncodingAliases: Record<string, BufferEncoding> = { 'utf-8': 'utf8', 'iso-8859-1': 'latin1' };
+const rssEncodingAliases = { 'utf-8': 'utf8', 'iso-8859-1': 'latin1' } satisfies Record<string, BufferEncoding>;
+const isRssEncodingAlias = (key: string): key is keyof typeof rssEncodingAliases => Object.hasOwn(rssEncodingAliases, key);
 
 export const getRssFeed = async (feedUrl: string, redirectCount = 0): Promise<Awaited<ReturnType<typeof parser.parseString>>> => {
     const response = await ofetch.raw<ArrayBuffer, 'arrayBuffer'>(feedUrl, {
@@ -36,7 +37,7 @@ export const getRssFeed = async (feedUrl: string, redirectCount = 0): Promise<Aw
             .get('content-type')
             ?.match(/(encoding|charset)\s*=\s*(\S+)/)?.[2]
             .toLowerCase() || '';
-    const encoding = rssEncodingAliases[charset] || (rssEncodings.has(charset as BufferEncoding) ? (charset as BufferEncoding) : 'utf8');
+    const encoding = (isRssEncodingAlias(charset) && rssEncodingAliases[charset]) || (rssEncodings.has(charset as BufferEncoding) ? (charset as BufferEncoding) : 'utf8');
     return parser.parseString(Buffer.from(response._data!).toString(encoding));
 };
 

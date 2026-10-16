@@ -117,10 +117,10 @@ async function mapResolvedValue<T, U>(promise: Promise<T>, mapper: (value: T) =>
 function mapElements<T, U>(selection: Cheerio<T>, mapper: (index: number, node: T) => U | U[] | null | undefined): U[] {
     return selection.toArray().flatMap((node, index) => mapper(index, node) ?? []);
 }
-async function recoverFailure<T, U>(promise: Promise<T>, recover: (error: unknown) => U | Promise<U>): Promise<T | U> {
+async function recoverFailure<T, U>(promise: Promise<T>, recover: () => U | Promise<U>): Promise<T | U> {
     try {
         return await promise;
-    } catch (error) {
-        return recover(error);
+    } catch {
+        return recover();
     }
 }

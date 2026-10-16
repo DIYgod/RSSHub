@@ -25,4 +25,3 @@ const provider = new BasicTracerProvider({
 trace.setGlobalTracerProvider(provider);
 
 export const tracer = provider.getTracer('rsshub');
-export const mainSpan = tracer.startSpan('main');

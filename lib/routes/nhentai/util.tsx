@@ -189,4 +189,4 @@ const renderDescription = (length: number, images: string[]): string =>
         </>
     );
 
-export { baseUrl, getDetails, getSimple, getTorrents };
+export { getDetails, getSimple, getTorrents };

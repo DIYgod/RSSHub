@@ -20,7 +20,7 @@ export const route: Route = {
     url: 'wallpaperhub.app/wallpapers',
 };
 
-function parseSourceTime(value: unknown) {
+function parseSourceTime(value?: string | number) {
     if ((typeof value !== 'number' && typeof value !== 'string') || (typeof value === 'string' && !value.trim())) {
         return;
     }

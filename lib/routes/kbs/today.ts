@@ -2,13 +2,14 @@ import { load } from 'cheerio';
 import pMap from 'p-map';
 
 import InvalidParameterError from '@/errors/types/invalid-parameter';
-import type { Data, DataItem, Route } from '@/types';
+import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
-const languages: Record<string, Data['language']> = { k: 'ko', c: 'zh-CN', e: 'en', f: 'fr', g: 'de', i: 'id', j: 'ja', r: 'ru', s: 'es', v: 'vi' };
+const languages = { k: 'ko', c: 'zh-CN', e: 'en', f: 'fr', g: 'de', i: 'id', j: 'ja', r: 'ru', s: 'es', v: 'vi' } satisfies Record<string, Language>;
+const isLanguageKey = (key: string): key is keyof typeof languages => Object.hasOwn(languages, key);
 
 export const route: Route = {
     path: '/today/:language?',
@@ -92,7 +93,7 @@ async function handler(ctx) {
     return {
         title: 'Latest News | KBS WORLD',
         link: currentUrl,
-        language: languages[language],
+        language: isLanguageKey(language) ? languages[language] : undefined,
         item: items,
     };
 }

@@ -51,9 +51,10 @@ type BodyBlock = {
     sliderCollection?: { items: Array<{ slideImage?: Image; noteHtml1?: string; notePlain1?: string }> };
     softwareListCollection?: { items: Software[] };
 };
+type JsonValue = string | number | boolean | null | undefined | JsonValue[] | { [key: string]: JsonValue };
 type Article = { title: string; displayDate: string; category: string; bodyCollection: { items: BodyBlock[] } };
 
-function isArticle(value: unknown): value is Article {
+function isArticle(value: JsonValue): value is Article {
     return (
         !!value &&
         typeof value === 'object' &&
@@ -69,7 +70,7 @@ function isArticle(value: unknown): value is Article {
     );
 }
 
-function resolveFlightValue(value: unknown, records: Map<string, unknown>, seen = new Set<string>()): unknown {
+function resolveFlightValue(value: JsonValue, records: Map<string, JsonValue>, seen = new Set<string>()): JsonValue {
     if (typeof value === 'string') {
         const reference = /^\$([\da-f]+)$/.exec(value);
         if (reference && records.has(reference[1]) && !seen.has(reference[1])) {
@@ -86,7 +87,7 @@ function resolveFlightValue(value: unknown, records: Map<string, unknown>, seen 
     return value;
 }
 
-function findArticle(value: unknown, records: Map<string, unknown>): Article | undefined {
+function findArticle(value: JsonValue, records: Map<string, JsonValue>): Article | undefined {
     if (!value || typeof value !== 'object') {
         return;
     }
@@ -118,7 +119,7 @@ function readArticle($: CheerioAPI): Article {
             return chunk[0] === 1 && typeof chunk[1] === 'string' ? [chunk[1]] : [];
         });
     const bytes = Buffer.from(chunks.join(''));
-    const records = new Map<string, unknown>();
+    const records = new Map<string, JsonValue>();
     let position = 0;
     while (position < bytes.length) {
         const colon = bytes.indexOf(':', position);

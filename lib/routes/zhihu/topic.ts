@@ -2,6 +2,7 @@ import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import { parseDate } from '@/utils/parse-date';
 
+import { generateData } from './pin/utils';
 import { processImage, withZhihuClient } from './utils';
 
 export const route: Route = {
@@ -55,6 +56,9 @@ function handler(ctx) {
             let author = '';
 
             switch (type) {
+                case 'pin':
+                    return { ...generateData([item])[0], guid: item.id.toString() };
+
                 case 'answer':
                     title = `${item.question.title}-${item.author.name}的回答：${item.excerpt}`;
                     description = processImage(item.content);

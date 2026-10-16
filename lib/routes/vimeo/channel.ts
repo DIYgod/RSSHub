@@ -64,8 +64,8 @@ async function handler(ctx) {
                     $2('span').remove();
                     return $2.html();
                 }),
-                (error: unknown) => {
-                    if (error instanceof FetchError && error.response?.status === 451) {
+                (error) => {
+                    if (error.response?.status === 451) {
                         // The public channel summary remains available when the description is legally unavailable.
                         return $item.find('.description').html() ?? '';
                     }
@@ -96,10 +96,13 @@ async function handler(ctx) {
         }),
     };
 }
-async function recoverFailure<T, U>(promise: Promise<T>, recover: (error: unknown) => U | Promise<U>): Promise<T | U> {
+async function recoverFailure<T, U>(promise: Promise<T>, recover: (error: FetchError) => U | Promise<U>): Promise<T | U> {
     try {
         return await promise;
     } catch (error) {
+        if (!(error instanceof FetchError)) {
+            throw error;
+        }
         return recover(error);
     }
 }

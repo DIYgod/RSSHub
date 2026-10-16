@@ -65,7 +65,7 @@ const getBoards = () =>
         }));
     });
 
-export { apiUrl, getBoards, renderDesc, renderSections, rootUrl, token };
+export { apiUrl, getBoards, renderDesc, rootUrl, token };
 
 const renderRefArticle = (refArticle): string =>
     renderToString(

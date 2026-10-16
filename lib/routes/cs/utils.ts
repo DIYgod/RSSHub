@@ -5,7 +5,7 @@ import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
-export const currentCategoryPaths: Record<string, string> = {
+export const currentCategoryPaths = {
     xwzx: '/yaowen.html',
     ssgs: '/gongsi.html',
     gppd: '/shichang.html',

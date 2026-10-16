@@ -46,9 +46,33 @@ jobs:
                       const invalid = await invalidIssue({ github, context, core })
                       core.setOutput('closed', invalid ? 'true' : 'false')
 
+    agentscan:
+        name: AgentScan
+        runs-on: ubuntu-slim
+        timeout-minutes: 10
+        permissions:
+            issues: write
+        if: ${{ github.event_name == 'issues' && github.event.action == 'opened' && github.event.sender.login != 'issuehunt-oss[bot]' && github.repository == 'DIYgod/RSSHub' }}
+        outputs:
+            flagged: ${{ steps.scan.outputs.flagged }}
+        steps:
+            - name: AgentScan
+              id: scan
+              uses: MatteoGabriele/agentscan-action@8112fb79b33fafb8506159df20129a34209ac410 # v2.5.0
+              with:
+                  github-token: ${{ secrets.GITHUB_TOKEN }}
+                  scan-pull-requests: false
+                  scan-issues: true
+                  trusted-author-associations: 'collaborator,member,owner'
+                  label-community-flagged: spam
+                  label-mixed: spam
+                  label-automation: spam
+                  auto-close: true
+                  auto-close-classifications: automation,mixed
+
     callMaintainers:
         name: Call maintainers
-        needs: [checkIssue]
+        needs: [checkIssue, agentscan]
         runs-on: ubuntu-slim
         timeout-minutes: 5
         permissions:
@@ -58,7 +82,8 @@ jobs:
             github.event_name == 'issues' &&
             github.event.sender.login != 'issuehunt-oss[bot]' &&
             (needs.checkIssue.result == 'success' || needs.checkIssue.result == 'skipped') &&
-            needs.checkIssue.outputs.closed != 'true'
+            needs.checkIssue.outputs.closed != 'true' &&
+            needs.agentscan.outputs.flagged != 'true'
         steps:
             - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
             - uses: pnpm/action-setup@ea17c68df8912ef543352723c149a84f56e3d413 # v6.1.0

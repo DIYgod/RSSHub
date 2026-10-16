@@ -8,7 +8,7 @@ import type { NewProductDetailItem, NewProductDetailResponse, NewProductListItem
  *
  * @returns {Promise<NewProductListItem[]>} The new product list.
  */
-export const getNewProductList = async (): Promise<NewProductListItem[]> => {
+const getNewProductList = async (): Promise<NewProductListItem[]> => {
     const response = await ofetch<NewProductListResponse>('https://carshop-api.retail.xiaomiev.com/mtop/carlife/home/index/v2', {
         body: [
             {
@@ -35,7 +35,7 @@ export const getNewProductList = async (): Promise<NewProductListItem[]> => {
  * @param {NewProductListItem} item - New product list item.
  * @returns {Promise<NewProductDetailItem>} New product details.
  */
-export const getNewProductItem = async (item: NewProductListItem): Promise<NewProductDetailItem> => {
+const getNewProductItem = async (item: NewProductListItem): Promise<NewProductDetailItem> => {
     const response = await ofetch<NewProductDetailResponse>('https://carshop-api.retail.xiaomiev.com/mtop/carlife/product/info/v2', {
         body: [
             {},
@@ -60,7 +60,7 @@ export const getNewProductItem = async (item: NewProductListItem): Promise<NewPr
  * @param {NewProductDetailItem} detailItem - New product detail item.
  * @returns {NewProduct} New product template props.
  */
-export const toNewProduct = (listItem: NewProductListItem, detailItem: NewProductDetailItem): NewProduct => ({
+const toNewProduct = (listItem: NewProductListItem, detailItem: NewProductDetailItem): NewProduct => ({
     image: listItem.img800s,
     sellPointList: detailItem.product.sellPointList,
     goodsList: [...detailItem.goodsInfo.goodsList, ...detailItem.batchedSsuList, ...Object.values(detailItem.batchedInfoMap ?? {}).flatMap(({ batchedSsuList }) => batchedSsuList)].map((goods) => ({

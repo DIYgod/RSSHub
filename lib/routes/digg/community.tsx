@@ -35,7 +35,7 @@ export const route: Route = {
     url: 'digg.com/',
 };
 
-interface Story {
+type Story = {
     clusterId: string;
     clusterUrlId: string;
     createdAt: string;
@@ -46,15 +46,17 @@ interface Story {
     image?: {
         src: string;
     };
-}
+};
 
-interface FeedPage {
+type FeedPage = {
     posts: Story[];
-}
+};
 
 const baseUrl = 'https://digg.com';
 
-function findFirstPage(value: unknown): FeedPage | undefined {
+type JsonValue = string | number | boolean | null | JsonValue[] | { [key: string]: JsonValue };
+
+function findFirstPage(value: JsonValue): FeedPage | undefined {
     if (!value || typeof value !== 'object') {
         return;
     }

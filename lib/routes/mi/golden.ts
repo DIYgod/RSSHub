@@ -11,10 +11,10 @@ export const route: Route = {
 };
 
 async function handler() {
-    const link = 'https://app.market.xiaomi.com/apm/subject/169449?os=1.1.1&sdk=19';
+    const apiUrl = 'https://app.market.xiaomi.com/apm/subject/169449?os=1.1.1&sdk=19';
     const response = await got({
         method: 'get',
-        url: link,
+        url: apiUrl,
     });
 
     const list = response.data.listApp.map((item) => ({
@@ -25,7 +25,7 @@ async function handler() {
 
     return {
         title: '金米奖 - 小米应用商店',
-        link,
+        link: 'https://app.mi.com/subject/169449',
         item: list,
         description: response.data.description,
     };

@@ -66,20 +66,6 @@ const getList = async (region, listId) => {
     const { data: response } = await got(`https://${region}.news.yahoo.com/_td-news/api/resource/StreamService;category=LISTID%3A${listId};useNCP=true`);
     return response;
 };
-const getCategories = (region) =>
-    cache.tryGet(`yahoo:${region}:categoryMap`, async () => {
-        const { PageStore } = await getStores(region);
-        const { Col1: col1 } = PageStore.pagesConfigRaw.base.section.regions;
-        const { categoryMap } = col1.find((c) => c.name === 'ArchiveFilterBar').props;
-        const streamLines = Object.entries(categoryMap);
-        for (const [key, value] of streamLines) {
-            categoryMap[key] = {
-                name: value,
-                yctMap: col1.find((c) => c.name === 'StreamContainerArchive').props.yctMap[key],
-            };
-        }
-        return categoryMap;
-    });
 const getProviderList = async (region) => {
     const stores = await getStores(region);
     return stores.providerList.map((provider) => ({
@@ -139,14 +125,14 @@ function getStructuredData(content: CheerioAPI) {
         })
         .filter((entry) => entry && typeof entry === 'object');
 }
-function parseArticleDate(value: unknown) {
+function parseArticleDate(value?: string) {
     if (typeof value !== 'string' || !value) {
         return;
     }
     const date = parseDate(value);
     return Number.isFinite(date.getTime()) ? date : undefined;
 }
-function parseArticleImage(value: unknown) {
+function parseArticleImage(value?: string) {
     if (typeof value === 'string' && URL.canParse(value) && ['http:', 'https:'].includes(new URL(value).protocol)) {
         return value;
     }
@@ -248,4 +234,4 @@ const parseItem = async (item) => {
         updated: details.updated ?? item.updated,
     };
 };
-export { getArchive, getCategories, getList, getProviderList, getStores, parseItem, parseList, regionConfig };
+export { getArchive, getList, getProviderList, parseItem, parseList, regionConfig };

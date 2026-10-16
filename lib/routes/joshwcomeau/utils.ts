@@ -33,7 +33,7 @@ export async function processList(list: PostLink[]): Promise<DataItem[]> {
     return await pMap(list, (item) => cache.tryGet(`joshwcomeau:${item.url}`, () => getPostContent(item)), { concurrency: 3 });
 }
 
-export async function getPostContent({ url, cardTitle }: PostLink): Promise<DataItem> {
+async function getPostContent({ url, cardTitle }: PostLink): Promise<DataItem> {
     const articleUrl = new URL(url, rootUrl);
     if (articleUrl.origin !== new URL(rootUrl).origin) {
         return {

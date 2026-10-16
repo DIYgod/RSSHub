@@ -10,7 +10,7 @@ import type { CrowdfundingDetailItem, CrowdfundingDetailResponse, CrowdfundingLi
  *
  * @returns {Promise<CrowdfundingListItem[]>} The merged crowdfunding project list.
  */
-export const getCrowdfundingList = async (): Promise<CrowdfundingListItem[]> => {
+const getCrowdfundingList = async (): Promise<CrowdfundingListItem[]> => {
     // oxlint-disable-next-line unicorn/consistent-function-scoping
     const fetch = (query?: Record<string, number>) =>
         ofetch<CrowdfundingListResponse>('https://m.mi.com/v1/crowd/crowd_home', {
@@ -32,7 +32,7 @@ export const getCrowdfundingList = async (): Promise<CrowdfundingListItem[]> => 
  * @param {CrowdfundingListItem} item - Crowdfunding item.
  * @returns {Promise<CrowdfundingDetailItem>} Crowdfunding item details.
  */
-export const getCrowdfundingItem = async (item: CrowdfundingListItem): Promise<CrowdfundingDetailItem> => {
+const getCrowdfundingItem = async (item: CrowdfundingListItem): Promise<CrowdfundingDetailItem> => {
     const response = await ofetch<CrowdfundingDetailResponse>('https://m.mi.com/v1/crowd/crowd_detail', {
         method: 'POST',
         query: {
@@ -47,7 +47,7 @@ export const getCrowdfundingItem = async (item: CrowdfundingListItem): Promise<C
  *
  * @returns {Promise<NewProductListItem[]>} The merged new product list.
  */
-export const getNewProductList = async (): Promise<NewProductListItem[]> => {
+const getNewProductList = async (): Promise<NewProductListItem[]> => {
     const response = await ofetch<NewProductListResponse>('https://api.m.mi.com/v1/home/product_channel_get_list', {
         method: 'POST',
     });
@@ -65,7 +65,7 @@ export const getNewProductList = async (): Promise<NewProductListItem[]> => {
  * @param {NewProductListItem} item - New product list item.
  * @returns {Promise<NewProductDetailItem>} New product details.
  */
-export const getNewProductItem = async (item: NewProductListItem): Promise<NewProductDetailItem> => {
+const getNewProductItem = async (item: NewProductListItem): Promise<NewProductDetailItem> => {
     const response = await ofetch<NewProductDetailResponse>('https://m.mi.com/mtop/xiaomishop/product/info', {
         body: [{}, { productId: item.product_id }],
         method: 'POST',
@@ -80,7 +80,7 @@ export const getNewProductItem = async (item: NewProductListItem): Promise<NewPr
  * @param {CrowdfundingDetailItem} detailItem - Crowdfunding detail item.
  * @returns {Crowdfunding} Crowdfunding template props.
  */
-export const toCrowdfunding = (listItem: CrowdfundingListItem, detailItem: CrowdfundingDetailItem): Crowdfunding => ({
+const toCrowdfunding = (listItem: CrowdfundingListItem, detailItem: CrowdfundingDetailItem): Crowdfunding => ({
     image: detailItem.big_image,
     sellPoint: detailItem.project_desc,
     price: detailItem.price,
@@ -103,7 +103,7 @@ export const toCrowdfunding = (listItem: CrowdfundingListItem, detailItem: Crowd
  * @param {NewProductDetailItem} detailItem - New product detail item.
  * @returns {NewProduct} New product template props.
  */
-export const toNewProduct = (listItem: NewProductListItem, detailItem: NewProductDetailItem): NewProduct => ({
+const toNewProduct = (listItem: NewProductListItem, detailItem: NewProductDetailItem): NewProduct => ({
     image: listItem.img,
     sellPointList: detailItem.product.sellPointList,
     goodsList: [...(detailItem.goodsInfo.goodsList ?? []), ...(detailItem.relationBatchedInfo?.relationBatchedList.flatMap((relation) => relation.goodsInfo) ?? [])].map((goods) => ({

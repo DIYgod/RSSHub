@@ -39,29 +39,29 @@ interface BlogCard {
     publishedDate?: string;
 }
 
-function isBlogCard(value: unknown): value is BlogCard {
-    if (!value || typeof value !== 'object') {
+type JsonValue = string | number | boolean | null | JsonValue[] | { [key: string]: JsonValue };
+
+function isBlogCard(value: JsonValue): value is BlogCard & { [key: string]: JsonValue } {
+    if (!value || typeof value !== 'object' || Array.isArray(value)) {
         return false;
     }
-    const card = value as Record<string, unknown>;
-    return typeof card.title === 'string' && typeof card.url === 'string' && card.url.startsWith('/posts/');
+    return typeof value.title === 'string' && typeof value.url === 'string' && value.url.startsWith('/posts/');
 }
 
-function findBlogCards(value: unknown): BlogCard[] {
+function findBlogCards(value: JsonValue): BlogCard[] {
     if (!value || typeof value !== 'object') {
         return [];
     }
     if (Array.isArray(value)) {
         return value.flatMap(findBlogCards);
     }
-    const data = value as Record<string, unknown>;
-    if (Array.isArray(data.cards) && data.cards.every(isBlogCard)) {
-        return data.cards;
+    if (Array.isArray(value.cards) && value.cards.every(isBlogCard)) {
+        return value.cards;
     }
-    return Object.values(data).flatMap(findBlogCards);
+    return Object.values(value).flatMap(findBlogCards);
 }
 
-function parsePublishedDate(value: unknown) {
+function parsePublishedDate(value?: string) {
     if (typeof value !== 'string' || !value) {
         return;
     }

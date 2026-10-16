@@ -85,7 +85,7 @@ function getMediaAreas(mediaAreas?: Api.TypeMediaArea[]) {
     return description;
 }
 
-export default async function handler(ctx: Context): Promise<Data | Response> {
+async function handler(ctx: Context): Promise<Data | Response> {
     const c = await getClient();
     const { username, story } = ctx.req.param();
     if (!username) {

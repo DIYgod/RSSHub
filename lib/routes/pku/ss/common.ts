@@ -4,8 +4,6 @@ import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
-const baseUrl = 'https://www.ss.pku.edu.cn';
-
 const getSingleRecord = async (url) => {
     const res = await got(url);
 
@@ -35,4 +33,4 @@ const getArticle = async (item) => {
     return { ...item, ...article };
 };
 
-export { baseUrl, getArticle, getSingleRecord };
+export { getArticle, getSingleRecord };

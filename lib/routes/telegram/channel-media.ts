@@ -64,7 +64,7 @@ function chooseLargestThumb(thumbs: Api.TypePhotoSize[]) {
     thumbs = thumbs.toSorted((a, b) => sortThumb(a) - sortThumb(b));
     return thumbs.pop();
 }
-export async function* streamThumbnail(client: TelegramClient, doc: Api.Document) {
+async function* streamThumbnail(client: TelegramClient, doc: Api.Document) {
     if ((doc.thumbs?.length ?? 0) > 0) {
         const size = chooseLargestThumb(doc.thumbs!);
         if (size instanceof Api.PhotoCachedSize || size instanceof Api.PhotoStrippedSize) {
@@ -76,7 +76,7 @@ export async function* streamThumbnail(client: TelegramClient, doc: Api.Document
     }
     throw new Error('no thumbnails available');
 }
-export async function* streamDocument(client: TelegramClient, obj: Api.Document, thumbSize = '', offset?: bigInt.BigInteger, limit?: bigInt.BigInteger) {
+async function* streamDocument(client: TelegramClient, obj: Api.Document, thumbSize = '', offset?: bigInt.BigInteger, limit?: bigInt.BigInteger) {
     const requestSize = 512 * 1024; // MAX_CHUNK_SIZE
     const start = offset ?? bigInt(0);
     let skip = start.mod(requestSize).toJSNumber();
@@ -240,7 +240,7 @@ export async function handleMedia(media: Api.TypeMessageMedia, client: TelegramC
     }
     return ctx.text(media.className, 415);
 }
-export default async function handler(ctx: Context) {
+async function handler(ctx: Context) {
     await configureMiddlewares(ctx);
     const client = await getClient();
     const { entityName, messageId } = ctx.req.param();

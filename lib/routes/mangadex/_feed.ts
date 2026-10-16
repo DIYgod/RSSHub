@@ -220,4 +220,4 @@ const getMangaDetails = async (id: string, needCover: boolean = true, lang?: str
     return { ...meta, chapters };
 };
 
-export { getMangaChapters, getMangaDetails, getMangaMeta };
+export { getMangaChapters, getMangaDetails };

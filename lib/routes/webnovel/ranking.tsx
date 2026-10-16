@@ -1,9 +1,11 @@
 import { load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
+import { FetchError } from 'ofetch';
 
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
+import { getPlaywrightPage } from '@/utils/playwright';
 
 const rankings = {
     power: 'bi_annual/power_rank',
@@ -29,8 +31,33 @@ export const route: Route = {
     name: 'Novel rankings',
     maintainers: ['DIYgod'],
     radar: [{ source: ['webnovel.com/ranking'], target: '/ranking' }],
+    features: { requirePuppeteer: true, antiCrawler: true },
     handler,
 };
+
+async function fetchRanking(link: string) {
+    try {
+        return await ofetch<string>(link);
+    } catch (error) {
+        if (!(error instanceof FetchError) || (error.status !== 403 && error.status !== 429)) {
+            throw error;
+        }
+    }
+
+    const { page, destroy } = await getPlaywrightPage(link, {
+        closeTimeout: 0,
+        gotoConfig: { waitUntil: 'domcontentloaded', timeout: 20000 },
+        onBeforeLoad: async (page) => {
+            await page.route('**/*', (route) => (['document', 'script', 'xhr', 'fetch', 'stylesheet'].includes(route.request().resourceType()) ? route.continue() : route.abort()));
+        },
+    });
+    try {
+        await page.waitForSelector('.j_rank_wrapper section', { state: 'attached', timeout: 15000 });
+        return await page.content();
+    } finally {
+        await destroy();
+    }
+}
 
 async function handler(ctx) {
     const type = ctx.req.param('type') ?? 'power';
@@ -38,7 +65,7 @@ async function handler(ctx) {
         throw new InvalidParameterError(`Unknown ranking. Supported types: ${Object.keys(rankings).join(', ')}.`);
     }
     const link = `https://www.webnovel.com/ranking/novel/${rankings[type]}`;
-    const response = await ofetch(link);
+    const response = await fetchRanking(link);
     const $ = load(response);
     return {
         title: `WebNovel - ${type} ranking`,

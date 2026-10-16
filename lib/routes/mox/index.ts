@@ -4,9 +4,55 @@ import { escapeUTF8 } from 'entities/escape';
 import pMap from 'p-map';
 
 import { config } from '@/config';
+import ConfigNotFoundError from '@/errors/types/config-not-found';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
-import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
+
+const rootUrl = 'https://kxx.moe';
+
+function getItemLink(href: string | undefined, currentUrl: string): string | undefined {
+    if (!href) {
+        return;
+    }
+    try {
+        const link = new URL(href, currentUrl);
+        if (link.origin === rootUrl && !link.username && !link.password) {
+            return link.href;
+        }
+    } catch {
+        return;
+    }
+}
+
+async function getPage(url: string, cookie: string | undefined, redirects = 0): Promise<string> {
+    const target = new URL(url);
+    if (target.origin !== rootUrl || target.username || target.password) {
+        throw new Error('Kmoe content must be requested from https://kxx.moe.');
+    }
+
+    const response = await ofetch.raw<string, 'text'>(target.href, {
+        headers: cookie ? { cookie } : undefined,
+        redirect: 'manual',
+        responseType: 'text',
+    });
+    if (response.status >= 300 && response.status < 400) {
+        const location = response.headers.get('location');
+        const nextUrl = location ? new URL(location, target) : undefined;
+        if (!nextUrl || nextUrl.origin !== rootUrl || nextUrl.username || nextUrl.password) {
+            throw new Error('Kmoe redirected outside https://kxx.moe; the configured Cookie was not forwarded.');
+        }
+        if (nextUrl.pathname === '/login.php') {
+            throw new ConfigNotFoundError('This Kmoe category requires a valid MOX_COOKIE from https://kxx.moe.');
+        }
+        if (redirects >= 3) {
+            throw new Error('Kmoe returned too many redirects.');
+        }
+        return getPage(nextUrl.href, cookie, redirects + 1);
+    }
+
+    return response._data ?? '';
+}
 
 function copyElements<T extends AnyNode>(selection: Cheerio<T>): Cheerio<T> {
     const copy = selection.map((_, element) => cloneNode(element, true));
@@ -27,14 +73,14 @@ export const route: Route = {
             {
                 name: 'MOX_COOKIE',
                 optional: true,
-                description: '注册用户登录后的 Cookie, 可以从浏览器开发者工具Network面板中的mox页面请求获取，Cookie内容形如VOLSKEY=xxxxxx; VLIBSID=xxxxxx; VOLSESS=xxxxxx',
+                description: 'Kmoe（kxx.moe）登录后的 Cookie，可从该站浏览器开发者工具的 Network 请求中获取。原 mox.moe 现跳转至该站；Cookie 仅发送到 kxx.moe。',
             },
         ],
         antiCrawler: true,
     },
     radar: [
         {
-            source: ['mox.moe/l/:category', 'mox.moe/'],
+            source: ['kxx.moe/l/:category', 'kxx.moe/', 'mox.moe/l/:category', 'mox.moe/'],
         },
     ],
     name: '首頁',
@@ -43,11 +89,11 @@ export const route: Route = {
     description: `::: tip
 在首页将分类参数选择确定后跳转到的分类页面 URL 中，\`/l/\` 后的字段即为分类参数。
 
-如 [科幻 + 日語 + 日本 + 長篇 + 完結 + 最近更新](https://mox.moe/l/CAT%2A科幻,日本,完結,lastupdate,jpn,l,BL) 的 URL 为 [https://mox.moe/l/CAT%2A 科幻，日本，完結，lastupdate,jpn,l,BL](https://mox.moe/l/CAT%2A科幻,日本,完結,lastupdate,jpn,l,BL)，此时 \`/l/\` 后的字段为 \`CAT%2A科幻,日本,完結,lastupdate,jpn,l,BL\`。最终获得路由为 [\`/mox/CAT%2A科幻,日本,完結,lastupdate,jpn,l,BL\`](https://rsshub.app/mox/CAT%2A科幻,日本,完結,lastupdate,jpn,l,BL)
+如 [科幻 + 日語 + 日本 + 長篇 + 完結 + 最近更新](https://kxx.moe/l/CAT%2A科幻,日本,完結,lastupdate,jpn,l,BL) 的 URL 为 [https://kxx.moe/l/CAT%2A 科幻，日本，完結，lastupdate,jpn,l,BL](https://kxx.moe/l/CAT%2A科幻,日本,完結,lastupdate,jpn,l,BL)，此时 \`/l/\` 后的字段为 \`CAT%2A科幻,日本,完結,lastupdate,jpn,l,BL\`。最终获得路由为 [\`/mox/CAT%2A科幻,日本,完結,lastupdate,jpn,l,BL\`](https://rsshub.app/mox/CAT%2A科幻,日本,完結,lastupdate,jpn,l,BL)
 :::
 
 ::: warning
-由于 mox.moe 对非登录用户屏蔽了部分漫画详情内容的获取，且极易触发反爬机制，导致访问 ip 被重定向至 google.com，因此在未配置\`MOX_COOKIE\`参数的情况下路由只会返回漫画标题和封面，不会对详情内容进行抓取。
+原 mox.moe 现跳转至 kxx.moe。未配置 \`MOX_COOKIE\` 时只获取首页漫画标题和封面，不请求详情；部分分类需要登录。配置该站有效登录 Cookie 后才获取详情，Cookie 不会随跳转发送到其他站点。
 :::`,
 };
 
@@ -59,27 +105,19 @@ function getDescription(content: string): string {
 async function handler(ctx) {
     const category = ctx.req.param('category') ?? '';
 
-    const rootUrl = 'https://mox.moe';
     const currentUrl = `${rootUrl}${category ? `/l/${category}` : ''}`;
 
     const cookie = config.mox.cookie;
-
-    const response = await got({
-        method: 'get',
-        url: currentUrl,
-        headers: {
-            cookie,
-        },
-    });
-
-    const $ = load(response.data);
+    const page = await getPage(currentUrl, cookie);
+    const $ = load(page);
 
     let items: DataItem[] = $('.listbg td')
         .toArray()
         .map((item) => {
             const lastItem = $(item).find('a').last();
 
-            const guid = lastItem.attr('href')?.split('/').pop();
+            const link = getItemLink(lastItem.attr('href'), currentUrl);
+            const guid = link ? new URL(link).pathname.split('/').pop() : undefined;
 
             const cover = $(item)
                 .find('a div div')
@@ -89,7 +127,7 @@ async function handler(ctx) {
             return {
                 title: lastItem.text(),
                 description: cover ? `<img src="${cover}">` : undefined,
-                link: lastItem.attr('href'),
+                link,
                 guid,
             };
         })
@@ -105,17 +143,20 @@ async function handler(ctx) {
                         .matchAll(/disp_divinfo\(\s*"div_info_"\s*\+\s*"\d+",([\s\S]*?)\);/g),
                     (match) => {
                         const values = Array.from(match[1].matchAll(/"(?:\\.|[^"\\])*"/g), (value) => JSON.parse(value[0]));
-                        const link = new URL(values[0], currentUrl).href;
-                        return {
-                            title: values[8],
-                            author: values[9] || undefined,
-                            link,
-                            guid: new URL(link).pathname.split('/').pop(),
-                            description: values[1] ? `<img src="${escapeUTF8(values[1])}">` : undefined,
-                        };
+                        const link = getItemLink(values[0], currentUrl);
+                        return link
+                            ? {
+                                  title: values[8],
+                                  author: values[9] || undefined,
+                                  link,
+                                  guid: new URL(link).pathname.split('/').pop(),
+                                  description: values[1] ? `<img src="${escapeUTF8(values[1])}">` : undefined,
+                              }
+                            : undefined;
                     }
                 )
-            );
+            )
+            .filter((item) => item !== undefined);
     }
 
     if (cookie) {
@@ -123,19 +164,12 @@ async function handler(ctx) {
             items,
             async (item) => {
                 const details = await cache.tryGet(`${item.link}:article`, async () => {
-                    const detailResponse = await got({
-                        method: 'get',
-                        url: item.link,
-                        headers: {
-                            cookie,
-                        },
-                    });
-
-                    const content = load(detailResponse.data);
+                    const detailPage = await getPage(item.link!, cookie);
+                    const content = load(detailPage);
 
                     const author = content('.author .text_bglight font a')
                         .toArray()
-                        .map((i) => $(i).text())
+                        .map((i) => content(i).text())
                         .filter(Boolean)
                         .join('、');
 
@@ -147,7 +181,7 @@ async function handler(ctx) {
                         .map((element) => content(element).text().trim())
                         .filter(Boolean);
                     const cover = content('.img_book').attr('src');
-                    const desc = getDescription(detailResponse.data);
+                    const desc = getDescription(detailPage);
                     const description = `${cover ? `<img src="${escapeUTF8(cover)}"><br>` : ''}${desc}`;
 
                     return { author, description, category };
@@ -159,7 +193,7 @@ async function handler(ctx) {
     }
 
     return {
-        title: 'Mox.moe',
+        title: 'Kmoe',
         link: currentUrl,
         item: items,
     };

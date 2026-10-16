@@ -58,7 +58,7 @@ async function handler(ctx) {
     };
 }
 
-function getPublicationDate(value: unknown, dateKey: unknown, time: unknown): Date | undefined {
+function getPublicationDate(value?: string, dateKey?: string, time?: string): Date | undefined {
     if (typeof value === 'string' && value.trim()) {
         const hasOffset = /(?:Z|[+-]\d{2}:?\d{2})$/i.test(value);
         const date = hasOffset ? parseDate(value) : parseDate(value, ['YYYY-MM-DDTHH:mm:ss', 'YYYY-MM-DDTHH:mm:ss.SSS'], true);
@@ -73,7 +73,7 @@ function getPublicationDate(value: unknown, dateKey: unknown, time: unknown): Da
     return Number.isFinite(date.getTime()) ? timezone(date, 8) : undefined;
 }
 
-function getImageUrl(value: unknown): string | undefined {
+function getImageUrl(value?: string): string | undefined {
     if (typeof value !== 'string' || !value) {
         return;
     }

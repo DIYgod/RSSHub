@@ -7,6 +7,8 @@ import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
+const articleHosts = new Set(['gcxy.cug.edu.cn', 'wenming.cug.edu.cn']);
+
 export const route: Route = {
     path: '/gcxy/:type?',
     categories: ['university'],
@@ -65,7 +67,7 @@ async function handler(ctx: Context) {
     const items = await Promise.all(
         articles.map((item) =>
             cache.tryGet(item.link!, async () => {
-                if (new URL(item.link!).hostname === 'gcxy.cug.edu.cn') {
+                if (articleHosts.has(new URL(item.link!).hostname)) {
                     const response = await ofetch(item.link!);
                     item.description = load(response)('.v_news_content').html();
                 }

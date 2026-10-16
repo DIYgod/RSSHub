@@ -111,4 +111,4 @@ const processItems = async (apiUrl, ctx: Context, ...parameters) => {
     return { items, info };
 };
 
-export { apiRootUrl, icon, image, imgRootUrl, processItems, rootUrl };
+export { apiRootUrl, icon, image, processItems, rootUrl };

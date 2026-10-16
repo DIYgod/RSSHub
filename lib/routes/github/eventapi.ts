@@ -5,7 +5,7 @@ import { parseDate } from '@/utils/parse-date';
 
 const md = MarkdownIt({ html: true, linkify: true });
 
-export const eventTypeMapping = {
+const eventTypeMapping = {
     create: 'CreateEvent',
     delete: 'DeleteEvent',
     issuecomm: 'IssueCommentEvent',

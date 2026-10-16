@@ -4,7 +4,7 @@ import NotFoundError from '@/errors/types/not-found';
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 
-const categories: Record<string, { section: string }> = {
+const categories = {
     featured: { section: 'Featured' },
     trending: { section: 'Trending Weekly' },
     trending_w: { section: 'Trending Weekly' },
@@ -12,7 +12,8 @@ const categories: Record<string, { section: string }> = {
     trending_m: { section: 'Trending Monthly' },
     popular: { section: 'Most Popular' },
     new: { section: 'Recently Added' },
-};
+} satisfies Record<string, { section: string }>;
+const isCategory = (key: string): key is keyof typeof categories => Object.hasOwn(categories, key);
 
 export const route: Route = {
     path: '/marketplace/:type?',
@@ -30,7 +31,7 @@ export const route: Route = {
 async function handler(ctx: Context) {
     const { type = 'featured' } = ctx.req.param();
 
-    const category = Object.hasOwn(categories, type) ? categories[type] : undefined;
+    const category = isCategory(type) ? categories[type] : undefined;
     if (!category) {
         throw new NotFoundError('Unknown Marketplace category. Use a category listed in the route documentation.');
     }

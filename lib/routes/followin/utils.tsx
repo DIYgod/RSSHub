@@ -139,4 +139,4 @@ const processList = (list, lang: string, ctx: Context, defaultLimit: number) => 
     return pMap(items, (item) => parseItem(item, lang), { concurrency: 3 });
 };
 
-export { apiUrl, baseUrl, favicon, getApi, getBParam, getGToken, getPoolSize, parseItem, parseList, processList };
+export { baseUrl, favicon, getApi, getPoolSize, processList };

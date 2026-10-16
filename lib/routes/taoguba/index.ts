@@ -2,16 +2,24 @@ import { load } from 'cheerio';
 import pMap from 'p-map';
 
 import type { Route } from '@/types';
-import got from '@/utils/got';
 import { getRouteLimit } from '@/utils/route-limit';
 
-import { renderPostDetail, rootUrl } from './util';
+import { getPage, renderPostDetail, rootUrl } from './util';
 
 export const route: Route = {
     path: '/:category?',
     categories: ['finance'],
     example: '/taoguba',
     parameters: { category: '分类，见下表，默认为社区总版' },
+    features: {
+        requireConfig: [
+            {
+                name: 'TAOGUBA_COOKIE',
+                optional: true,
+                description: 'Your own www.tgb.cn Cookie for articles that require login. Anonymous excerpts remain available without it.',
+            },
+        ],
+    },
     name: '淘股论坛',
     maintainers: ['nczitzk'],
     handler,
@@ -25,10 +33,7 @@ async function handler(ctx) {
 
     const currentUrl = `${rootUrl}/${category}/`;
 
-    const response = await got({
-        method: 'get',
-        url: currentUrl,
-    });
+    const response = await getPage(currentUrl);
 
     const $ = load(response.data);
 

@@ -17,7 +17,7 @@ const normalizeItem = (item): DataItem & { seoKey?: string } => ({
     seoKey: item.seo_key,
 });
 
-export const fetchContentStream = (streamId, limit) =>
+const fetchContentStream = (streamId, limit) =>
     cache.tryGet(
         `ainvest:news:${streamId}:${limit}`,
         async () => {

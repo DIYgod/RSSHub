@@ -12,7 +12,7 @@ async function settleQueueRequest(request: Promise<unknown>): Promise<void> {
     }
 }
 
-function isNoResponseTimeout(error: unknown) {
+function isNoResponseTimeout(error: unknown): error is FetchError {
     if (!(error instanceof FetchError) || error.response) {
         return false;
     }

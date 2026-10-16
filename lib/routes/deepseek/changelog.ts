@@ -6,7 +6,7 @@ import type { Data, DataItem, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
-export const extractChangelogItems = ($: CheerioAPI, updatesUrl: string): DataItem[] =>
+const extractChangelogItems = ($: CheerioAPI, updatesUrl: string): DataItem[] =>
     $('.theme-doc-markdown > div > div > h2')
         .toArray()
         .map((heading) => {

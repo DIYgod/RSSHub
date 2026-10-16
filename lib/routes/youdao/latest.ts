@@ -13,7 +13,7 @@ type Collection = {
     shareKey: string;
     type: 'note' | 'notebook';
 };
-function parsePublishedDate(value: unknown) {
+function parsePublishedDate(value?: number) {
     if (typeof value !== 'number' || !Number.isFinite(value)) {
         return;
     }
