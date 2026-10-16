@@ -1,4 +1,4 @@
-/* eslint-disable unicorn/prefer-code-point */
+/* oxlint-disable unicorn/prefer-code-point */
 import { inflateSync } from 'node:zlib';
 
 const unzip = (b64Data) => {
