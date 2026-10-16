@@ -59,7 +59,7 @@ export const route: Route = {
         requirePuppeteer: false,
     },
     name: 'My News',
-    maintainers: [],
+    maintainers: ['dzx-dzx'],
     handler,
     description: "The first page of the configured Reuters account's personalized My News feed. Requires a self-hosted instance with `REUTERS_AUTH_TOKEN` configured.",
 };
