@@ -80,7 +80,7 @@ const renderArticleField = (field) =>
                 .join('')
           : '';
 
-export const parseItem = async (item) => {
+const parseItem = async (item) => {
     const { _data: response, url } = await ofetch.raw(item.link);
 
     if (new URL(url).hostname !== 'www.scmp.com') {

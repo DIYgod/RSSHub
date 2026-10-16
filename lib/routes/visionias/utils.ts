@@ -182,11 +182,3 @@ function extractArticle(articleDiv: Cheerio<AnyNode>): string {
 function parseArticleDate(value?: string) {
     return value && Number.isFinite(Date.parse(value)) ? parseDate(value) : undefined;
 }
-
-export function flattenNews<T>(results: Array<PromiseSettledResult<T | T[]>>): T[] {
-    const failure = results.find((result) => result.status === 'rejected');
-    if (failure) {
-        throw failure.reason;
-    }
-    return results.flatMap((result) => (result.status === 'fulfilled' ? result.value : []));
-}
