@@ -5,6 +5,7 @@ import type { Data, DataItem, Route } from '@/types';
 import { ViewType } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
 type Article = {
     id: string;
@@ -67,7 +68,7 @@ export const route: Route = {
 async function handler(ctx): Promise<Data> {
     const authToken = config.reuters.authToken;
     if (!authToken) {
-        throw new ConfigNotFoundError('Set REUTERS_AUTH_TOKEN to the bearer token from a signed-in Reuters My News getFeed request.');
+        throw new ConfigNotFoundError('Set REUTERS_AUTH_TOKEN to the bearer token.');
     }
 
     const response = await ofetch<FeedResponse>('https://www.reuters.com/service/graphql', {
@@ -78,7 +79,7 @@ async function handler(ctx): Promise<Data> {
         },
         body: {
             operationName: 'getFeed',
-            variables: { endCursor: '', size: ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 15 },
+            variables: { endCursor: '', size: getRouteLimit(ctx, 15) },
             query: feedQuery,
         },
     });
@@ -110,7 +111,7 @@ async function handler(ctx): Promise<Data> {
     return {
         title: 'My News | Reuters',
         description: 'Personalized Reuters news feed',
-        link: 'https://www.reuters.com/my-news/',
-        item: items.filter((item, index) => items.findIndex((entry) => entry.link === item.link) === index),
+        link: 'https://www.reuters.com/my-news/feed',
+        item: items,
     };
 }
