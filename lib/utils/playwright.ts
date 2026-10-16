@@ -4,7 +4,6 @@ import { chromium } from 'patchright';
 import { config } from '@/config';
 
 import logger from './logger';
-import type { PlaywrightService } from './playwright-remote.worker';
 import proxy from './proxy';
 
 type GotoOptions = Parameters<Page['goto']>[1];
@@ -134,7 +133,6 @@ export default async function outPlaywright() {
 
 // No-op in Node.js environment (used by Worker build via alias)
 export const setBrowserBinding = (_binding: any) => {};
-export const setPlaywrightServiceBinding = (_binding?: PlaywrightService, _origin?: string) => {};
 
 /**
  * @returns Playwright page

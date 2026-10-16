@@ -33,8 +33,6 @@ export const indexInterview = (article: any, language: string) => (Object.hasOwn
 
 export const indexComic = (article: any, language: string) => ogpImage(article) + article.index.about + authors(article.index.authors) + `<img src="${article.indexCover.cover.sourceUrl}">` + index(article, language);
 
-export const indexNovel = indexComic;
-
 const removeSrcset = (html: string) => {
     const $ = load(html, null, false);
     $('img').removeAttr('srcset');

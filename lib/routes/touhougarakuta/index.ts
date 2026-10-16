@@ -4,7 +4,7 @@ import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
-import { comic, indexComic, indexInterview, indexNovel, interview, novel, uncategorized } from './json2html';
+import { comic, indexComic, indexInterview, interview, novel, uncategorized } from './json2html';
 
 export const route: Route = {
     path: '/:language/:type',
@@ -66,10 +66,8 @@ async function handler(ctx: Context) {
                         description = indexInterview(article, language);
                         break;
                     case 'index_comic':
-                        description = indexComic(article, language);
-                        break;
                     case 'index_novel':
-                        description = indexNovel(article, language);
+                        description = indexComic(article, language);
                         break;
                     case 'interview':
                     case 'report':
