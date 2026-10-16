@@ -24,7 +24,8 @@ async function getExamArticle(link: string) {
     return { description: $('#UCAP-CONTENT, .txt').first().html() ?? undefined, exactDate: date ? parseDateInTimezone(date, 8) : undefined };
 }
 
-const index = (link) => {
+// TODO: missing route export
+export default function index(link) {
     if (link.startsWith('https://xinwen.wh.sdu.edu.cn/')) {
         return news(link);
     }
@@ -41,6 +42,4 @@ const index = (link) => {
         return getExamArticle(link);
     }
     return Promise.resolve({});
-};
-// TODO: missing route export
-export default index;
+}
