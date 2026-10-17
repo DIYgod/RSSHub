@@ -126,7 +126,7 @@ const toItem = (target: Target, kind: RentBenchmarkExtra['area_kind'], pref: str
         DETAIL_CACHE_SECONDS
     );
 
-export const handler = async (ctx): Promise<Data> => {
+const handler = async (ctx): Promise<Data> => {
     const slug: string = ctx.req.param('area') ?? '23ward';
     const lineId: string | undefined = ctx.req.param('line');
     const area = AREAS.find((a) => a.slug === slug);

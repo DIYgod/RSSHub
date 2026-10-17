@@ -27,7 +27,7 @@ interface EventResponse {
     };
 }
 
-export const handler = async (ctx: Context): Promise<Data> => {
+const handler = async (ctx: Context): Promise<Data> => {
     const { category = 'latest' } = ctx.req.param();
     const limit = getLimit(ctx.req.query('limit'), 30);
     const baseUrl = 'https://www.oschina.net';

@@ -30,7 +30,7 @@ export const route: Route = {
     handler,
 };
 
-export async function handler(ctx): Promise<Data> {
+async function handler(ctx): Promise<Data> {
     const selName = ctx.req.param('selName');
     const link = `https://newsupport.lenovo.com.cn/api/drive/drive_listnew?searchKey=${selName}`;
 

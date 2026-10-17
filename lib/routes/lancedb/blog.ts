@@ -6,7 +6,7 @@ import { ViewType } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
-export const handler = async (ctx: Context): Promise<Data> => {
+const handler = async (ctx: Context): Promise<Data> => {
     const { category } = ctx.req.param();
     const baseUrl = 'https://lancedb.com';
     const url = category ? `${baseUrl}/blog/category/${encodeURIComponent(category)}` : `${baseUrl}/blog`;

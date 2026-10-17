@@ -147,7 +147,7 @@ export const route: Route = {
     handler,
 };
 
-export async function handler(ctx: Context) {
+async function handler(ctx: Context) {
     const { type, subtype } = ctx.req.param();
 
     if (!Object.hasOwn(sections, type) || !Object.hasOwn(sections[type], subtype)) {

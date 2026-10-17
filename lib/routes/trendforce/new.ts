@@ -13,7 +13,7 @@ function parseGmtDate(value: number | string | undefined) {
     }
     return parseDate(typeof value === 'string' && !/(?:Z|[+-]\d{2}:?\d{2})$/i.test(value) ? `${value}Z` : value);
 }
-export const handler = async (ctx: Context): Promise<Data> => {
+const handler = async (ctx: Context): Promise<Data> => {
     const limit = getRouteLimit(ctx, 10);
     const apiSlug = 'wp-json/wp/v2';
     const baseUrl = 'https://www.trendforce.com';

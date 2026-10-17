@@ -69,7 +69,7 @@ const findMainIds = (data: readonly Racer[], searchKey?: string): MainIdsResult 
     return recurse(data);
 };
 
-export const handler = async (ctx: Context): Promise<Data> => {
+const handler = async (ctx: Context): Promise<Data> => {
     const { type = '2', key } = ctx.req.param();
     const limit = getRouteLimit(ctx, 30);
 

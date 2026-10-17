@@ -16,7 +16,7 @@ import { renderDescription } from './templates/description';
 
 const parseVideoDate = (date: string) => (/^\d{4}-\d{2}-\d{2}/.test(date) ? timezone(parseDate(date), 8) : parseRelativeDate(date));
 
-export const handler = async (ctx: Context): Promise<Data> => {
+const handler = async (ctx: Context): Promise<Data> => {
     const limit = getRouteLimit(ctx, 18);
 
     const baseUrl = 'https://www.dgtle.com';

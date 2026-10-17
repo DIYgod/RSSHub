@@ -19,7 +19,7 @@ const parseCalendarDate = (value: string): Date | undefined => {
     return Number.isFinite(date.getTime()) ? timezone(date, 0) : undefined;
 };
 
-export const handler = async (ctx: Context): Promise<Data> => {
+const handler = async (ctx: Context): Promise<Data> => {
     const limit = getRouteLimit(ctx, 30);
 
     const baseUrl = 'https://kiro.dev';

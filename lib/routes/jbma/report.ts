@@ -17,7 +17,7 @@ const parseGmtDate = (value: string | undefined) => {
     return Number.isNaN(date.getTime()) ? undefined : date;
 };
 
-export const handler = async (ctx: Context): Promise<Data> => {
+const handler = async (ctx: Context): Promise<Data> => {
     const { filter } = ctx.req.param();
     const limit = Math.min(getRouteLimit(ctx, 50), 100);
 

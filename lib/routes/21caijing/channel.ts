@@ -42,7 +42,7 @@ const processMenu = (data: any[]) => {
     return result;
 };
 
-export const handler = async (ctx: Context): Promise<Data> => {
+const handler = async (ctx: Context): Promise<Data> => {
     const { name = '热点' } = ctx.req.param();
     const limit = getRouteLimit(ctx, 30);
 

@@ -176,7 +176,7 @@ const enrich = async (card: ListCard): Promise<ListingExtra> => {
     }
 };
 
-export const handler = async (ctx): Promise<Data> => {
+const handler = async (ctx): Promise<Data> => {
     const pref: string | undefined = ctx.req.param('pref');
     const prefCode = pref === undefined ? undefined : (PREFECTURES.get(pref) ?? pref);
     if (prefCode !== undefined && !/^(?:[1-9]|[1-3]\d|4[0-7])$/.test(prefCode)) {

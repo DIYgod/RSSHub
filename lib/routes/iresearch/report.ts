@@ -206,7 +206,7 @@ interface ReportItem extends DataItem {
     detailId?: string | number;
 }
 
-export const handler = async (ctx: Context): Promise<Data> => {
+const handler = async (ctx: Context): Promise<Data> => {
     const { type: paramType = defaultType, id: paramId = '' } = ctx.req.param();
     const limit = getRouteLimit(ctx, 50);
 

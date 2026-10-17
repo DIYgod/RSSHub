@@ -35,7 +35,7 @@ function parsePublicationDate(value?: string) {
     return Number.isNaN(date.getTime()) ? undefined : timezone(date, 8);
 }
 
-export const handler = async (ctx: Context): Promise<Data> => {
+const handler = async (ctx: Context): Promise<Data> => {
     const { id = 'tzgg' } = ctx.req.param();
     if (!isValidHost(id)) {
         throw new InvalidParameterError('Invalid id');

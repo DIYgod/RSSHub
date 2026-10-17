@@ -270,7 +270,7 @@ const toItem = (b: Bukken, d: Detail | null): (DataItem & { _extra: ListingExtra
     };
 };
 
-export const handler = async (ctx): Promise<Data> => {
+const handler = async (ctx): Promise<Data> => {
     const pref: string = ctx.req.param('pref');
     const city: string = ctx.req.param('city');
     const slugs = Object.entries({ pref, city });

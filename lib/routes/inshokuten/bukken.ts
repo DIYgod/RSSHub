@@ -121,7 +121,7 @@ const parseList = (html: string): DataItem[] => {
         .filter((item): item is DataItem => item !== null);
 };
 
-export const handler = async (ctx): Promise<Data> => {
+const handler = async (ctx): Promise<Data> => {
     const slug: string = ctx.req.param('area') ?? 'kanto';
     const area = AREAS.find((a) => a.slug === slug);
     if (!area) {

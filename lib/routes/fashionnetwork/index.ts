@@ -10,7 +10,7 @@ import timezone from '@/utils/timezone';
 
 import { renderDescription } from './templates/description';
 
-export const handler = async (ctx) => {
+const handler = async (ctx) => {
     const { id = '0' } = ctx.req.param();
     const limit = getRouteLimit(ctx, 20);
     const poolSize = ctx.req.query('sorted') === 'false' ? limit : Math.max(20, limit);

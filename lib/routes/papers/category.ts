@@ -25,7 +25,7 @@ const getPdfUrl = (element: Cheerio<Element>): string | undefined => {
     }
 };
 
-export const handler = async (ctx: Context): Promise<Data> => {
+const handler = async (ctx: Context): Promise<Data> => {
     const { id } = ctx.req.param();
     const limit = getRouteLimit(ctx, 50);
 

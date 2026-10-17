@@ -211,7 +211,7 @@ const enrich = async (card: ListCard): Promise<ListingExtra> => {
     return mergeDetail(card.extra, parseDetail(html));
 };
 
-export const handler = async (ctx): Promise<Data> => {
+const handler = async (ctx): Promise<Data> => {
     const pref: string = ctx.req.param('pref') ?? 'tokyo';
     const prefecture = PREFECTURES.find((p) => p.slug === pref);
     if (!prefecture) {

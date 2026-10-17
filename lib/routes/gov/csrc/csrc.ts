@@ -23,7 +23,7 @@ function getEnclosureType(filePath: string) {
     return extension && isEnclosureExtension(extension) ? enclosureTypes[extension] : 'application/octet-stream';
 }
 
-export const handler = async (ctx) => {
+const handler = async (ctx) => {
     const { id = 'c101972' } = ctx.req.param();
     const limit = getRouteLimit(ctx, 50);
 

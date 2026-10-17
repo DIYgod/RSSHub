@@ -3,7 +3,7 @@ import { ViewType } from '@/types';
 
 import { fetchCategory, fetchNewsItems } from './utils';
 
-export const handler = async (ctx): Promise<Data> => {
+const handler = async (ctx): Promise<Data> => {
     const slug = ctx.req.param('slug');
 
     const { id, name } = await fetchCategory(slug);

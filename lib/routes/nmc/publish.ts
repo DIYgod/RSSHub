@@ -12,7 +12,7 @@ import timezone from '@/utils/timezone';
 
 import { renderDescription } from './templates/description';
 
-export const handler = async (ctx: Context): Promise<Data> => {
+const handler = async (ctx: Context): Promise<Data> => {
     const { id = 'observations/hourly-temperature/html' } = ctx.req.param();
     const productId = id.replace(/\.(html|htm)$/, '/$1');
     const limit = getRouteLimit(ctx, 50);

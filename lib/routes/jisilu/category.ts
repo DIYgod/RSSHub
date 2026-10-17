@@ -10,7 +10,7 @@ import { getRouteLimit } from '@/utils/route-limit';
 
 import { processItems, rootUrl } from './util';
 
-export const handler = async (ctx: Context): Promise<Data> => {
+const handler = async (ctx: Context): Promise<Data> => {
     const { id } = ctx.req.param();
 
     if (!id) {

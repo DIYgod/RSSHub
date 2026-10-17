@@ -35,7 +35,7 @@ export const route: Route = {
     },
 };
 
-export async function handler(ctx) {
+async function handler(ctx) {
     const { period = '1d' } = ctx.req.param();
     const titles = {
         '1d': 'Last 24 hours',

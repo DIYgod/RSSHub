@@ -156,7 +156,7 @@ const enrich = async (card: ListCard): Promise<ListingExtra> => {
     return mergeDetail(card.extra, parseDetail(html));
 };
 
-export const handler = async (ctx): Promise<Data> => {
+const handler = async (ctx): Promise<Data> => {
     const pref: string | undefined = ctx.req.param('pref');
     const prefecture = pref === undefined ? undefined : PREFECTURES.find((p) => p.slug === pref || p.code === pref);
     if (pref !== undefined && !prefecture) {

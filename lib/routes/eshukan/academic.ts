@@ -10,7 +10,7 @@ import timezone from '@/utils/timezone';
 
 import { renderDescription } from './templates/description';
 
-export const handler = async (ctx) => {
+const handler = async (ctx) => {
     const { id = '1' } = ctx.req.param();
     const limit = getRouteLimit(ctx, 10);
 

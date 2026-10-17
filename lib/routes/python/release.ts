@@ -8,7 +8,7 @@ import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
-export const handler = async (ctx: Context): Promise<Data> => {
+const handler = async (ctx: Context): Promise<Data> => {
     const requestedLimit = Number(ctx.req.query('limit'));
     // oxlint-disable-next-line unicorn-js/prefer-number-is-safe-integer -- Preserve the existing positive-integer limit acceptance range and default.
     const limit = Number.isInteger(requestedLimit) && requestedLimit > 0 ? requestedLimit : 30;

@@ -13,7 +13,7 @@ function parseTimestamp(value: number | string) {
     return date && Number.isFinite(date.getTime()) ? date : undefined;
 }
 
-export const handler = async (ctx: Context): Promise<Data> => {
+const handler = async (ctx: Context): Promise<Data> => {
     const limit = getRouteLimit(ctx, 20);
 
     const baseUrl = 'https://www.ifanr.com';

@@ -5,7 +5,7 @@ import cache from '@/utils/cache';
 import got from '@/utils/got';
 import timezone from '@/utils/timezone';
 
-import { baseUrl } from '.';
+export const baseUrl = 'https://www.infzm.com/contents';
 
 export async function fetchArticles(data) {
     return await Promise.all(

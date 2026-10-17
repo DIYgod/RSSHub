@@ -6,7 +6,7 @@ import ofetch from '@/utils/ofetch';
 
 import { parseItems } from './parser';
 
-export const handler = async (ctx: Context): Promise<Data | null> => {
+const handler = async (ctx: Context): Promise<Data | null> => {
     const { tag } = ctx.req.param();
     const baseUrl = `https://collabo-cafe.com/events/tag/${tag}`;
     const res = await ofetch(baseUrl);

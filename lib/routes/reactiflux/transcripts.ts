@@ -23,7 +23,7 @@ export const route: Route = {
     ],
 };
 
-export async function handler(ctx) {
+async function handler(ctx) {
     const limit = getRouteLimit(ctx, 30);
 
     const rootUrl = 'https://www.reactiflux.com';

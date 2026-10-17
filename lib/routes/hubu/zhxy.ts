@@ -31,7 +31,7 @@ async function fetchHtml(url: string, page?: Page): Promise<string> {
     }, url);
 }
 
-export const handler = async (ctx) => {
+const handler = async (ctx) => {
     try {
         return await fetchFeed(ctx);
     } catch (error) {

@@ -46,7 +46,7 @@ const md = MarkdownIt({
     linkify: true,
 });
 
-export const handler = async (ctx: Context): Promise<Data> => {
+const handler = async (ctx: Context): Promise<Data> => {
     const { type = 'new', origin = 'all', projectTag } = ctx.req.param();
     const requestedLimit = Number(ctx.req.query('limit') ?? 15);
     const limit = Number.isFinite(requestedLimit) && requestedLimit >= 1 ? Math.floor(requestedLimit) : 15;

@@ -100,7 +100,7 @@ async function getArticleDescription(link: string, slug: string): Promise<string
     return details.description;
 }
 
-export const handler = async (ctx: Context): Promise<Data> => {
+const handler = async (ctx: Context): Promise<Data> => {
     const { category = 'latest' } = ctx.req.param();
     const requestedLimit = Number(ctx.req.query('limit') ?? '20');
     const limit = Number.isFinite(requestedLimit) && Math.floor(requestedLimit) > 0 ? Math.floor(requestedLimit) : 20;

@@ -62,7 +62,7 @@ Sorting types, default to \`date\`:
     handler,
 };
 
-export async function handler(ctx) {
+async function handler(ctx) {
     const { platform, type = 'new', sort = 'date' } = ctx.req.param();
     if (platform !== 'all' && !Object.hasOwn(platformIds, platform)) {
         throw new InvalidParameterError(`Unknown platform; use all or one of ${Object.keys(platformIds).join(', ')}.`);
