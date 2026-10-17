@@ -11,7 +11,7 @@ import { isValidHost } from '@/utils/valid-host';
 
 import { renderDescription } from './templates/description';
 
-export const handler = async (ctx) => {
+const handler = async (ctx) => {
     const { language = 'CN', category = 'paper' } = ctx.req.param();
     if (!isValidHost(language)) {
         throw new InvalidParameterError('Invalid language');

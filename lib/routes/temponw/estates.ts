@@ -173,7 +173,7 @@ const listUrlFor = (area: string | undefined, page: number): string => {
     return `${HOST}/area_search/result?${query.toString()}`;
 };
 
-export const handler = async (ctx): Promise<Data> => {
+const handler = async (ctx): Promise<Data> => {
     const area: string | undefined = ctx.req.param('area');
     if (area !== undefined && area !== 'tokyo') {
         throw new Error(`Unknown area "${area}", expected "tokyo" or none`);

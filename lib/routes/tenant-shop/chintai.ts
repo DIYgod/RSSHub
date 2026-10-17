@@ -188,7 +188,7 @@ const enrich = async (card: ListCard): Promise<ListingExtra> => {
     }
 };
 
-export const handler = async (ctx): Promise<Data> => {
+const handler = async (ctx): Promise<Data> => {
     const pref: string = ctx.req.param('pref') ?? 'tokyo';
     const prefecture = PREFECTURES.find((p) => p.slug === pref || p.code === pref);
     if (!prefecture) {

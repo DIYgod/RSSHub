@@ -13,7 +13,7 @@ import { getRouteLimit } from '@/utils/route-limit';
 import timezone from '@/utils/timezone';
 import { isValidHost } from '@/utils/valid-host';
 
-export const handler = async (ctx: Context): Promise<Data> => {
+const handler = async (ctx: Context): Promise<Data> => {
     const { category = 'news', id = '10' } = ctx.req.param();
     if (!isValidHost(category)) {
         throw new InvalidParameterError('Invalid category');

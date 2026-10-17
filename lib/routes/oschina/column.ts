@@ -26,7 +26,7 @@ interface NewsResponse {
     };
 }
 
-export const handler = async (ctx: Context): Promise<Data> => {
+const handler = async (ctx: Context): Promise<Data> => {
     const { id } = ctx.req.param();
     const limit = getLimit(ctx.req.query('limit'), 10);
     const baseUrl = 'https://www.oschina.net';

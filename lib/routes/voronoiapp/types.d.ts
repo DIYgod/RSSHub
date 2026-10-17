@@ -1,11 +1,11 @@
-export interface Social {
+interface Social {
     website?: string;
     x?: string;
     linkedin?: string;
     instagram?: string;
 }
 
-export interface Author {
+interface Author {
     first_name: string;
     last_name: string;
     preferred_username: string;

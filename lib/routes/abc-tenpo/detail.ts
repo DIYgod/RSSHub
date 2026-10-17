@@ -121,7 +121,7 @@ const parseDetail = (html: string, id: string): DataItem | null => {
     };
 };
 
-export const handler = async (ctx): Promise<Data> => {
+const handler = async (ctx): Promise<Data> => {
     const id: string = ctx.req.param('id');
     if (!/^\d+$/.test(id)) {
         throw new Error(`Invalid id "${id}", expected the numeric 物件 id from a /property/view/{id} URL`);

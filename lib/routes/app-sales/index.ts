@@ -11,7 +11,7 @@ import { isValidHost } from '@/utils/valid-host';
 
 import { baseUrl, fetchItems } from './util';
 
-export const handler = async (ctx: Context): Promise<Data> => {
+const handler = async (ctx: Context): Promise<Data> => {
     const { category = 'highlights', country = 'us' } = ctx.req.param();
     if (!isValidHost(category)) {
         throw new InvalidParameterError('Invalid category');

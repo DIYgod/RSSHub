@@ -79,7 +79,7 @@ const buildDescription = (attributes: any, title: string | undefined, enclosureU
         description: attributes.content ? parseContent(JSON.parse(attributes.content)) : undefined,
     });
 
-export const handler = async (ctx: Context): Promise<Data> => {
+const handler = async (ctx: Context): Promise<Data> => {
     const { id } = ctx.req.param();
     const limit = Number(ctx.req.query('limit') ?? '30');
 

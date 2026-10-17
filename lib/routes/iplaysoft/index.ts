@@ -8,7 +8,7 @@ import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
 import parser from '@/utils/rss-parser';
 
-export const handler = async (ctx): Promise<Data> => {
+const handler = async (ctx): Promise<Data> => {
     const feed = await parser.parseURL('https://feed.iplaysoft.com');
     const limit = getRouteLimit(ctx, 20);
 

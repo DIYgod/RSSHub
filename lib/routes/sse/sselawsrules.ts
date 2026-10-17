@@ -7,7 +7,7 @@ import got from '@/utils/got';
 import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
 import { getRouteLimit } from '@/utils/route-limit';
 
-export const handler = async (ctx) => {
+const handler = async (ctx) => {
     const { category = 'latest' } = ctx.req.param();
     const limit = getRouteLimit(ctx, 30);
 

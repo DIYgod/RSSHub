@@ -19,7 +19,7 @@ import { renderDescription } from './templates/description';
 dayjs.extend(utc);
 dayjs.extend(timezonePlugin);
 
-export const handler = async (ctx: Context): Promise<Data> => {
+const handler = async (ctx: Context): Promise<Data> => {
     const limit = getRouteLimit(ctx, 10);
 
     const baseUrl = 'https://musikguru.de';

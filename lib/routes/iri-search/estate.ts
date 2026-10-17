@@ -183,7 +183,7 @@ const enrich = async (card: ListCard): Promise<ListingExtra> => {
     return mergeDetail(card.extra, parseDetail(html));
 };
 
-export const handler = async (ctx): Promise<Data> => {
+const handler = async (ctx): Promise<Data> => {
     const area: string | undefined = ctx.req.param('area');
     const region = area === undefined ? undefined : REGIONS.find((r) => r.slug === area);
     const prefCode = area === undefined || region ? undefined : (PREFECTURES.get(area) ?? (PREFECTURES.values().toArray().includes(area) ? area : undefined));

@@ -12,7 +12,7 @@ import { renderDescription } from './templates/description';
 
 type ArticleDetails = Omit<DataItem, 'title' | 'link' | 'pubDate'>;
 
-export const handler = async (ctx: Context): Promise<Data> => {
+const handler = async (ctx: Context): Promise<Data> => {
     const { id } = ctx.req.param();
     const requestedLimit = Number(ctx.req.query('limit'));
     const limit = Number.isFinite(requestedLimit) && requestedLimit >= 1 ? Math.floor(requestedLimit) : 12;

@@ -98,7 +98,7 @@ const getContent = (item: DataItem & { link: string }) =>
         return item;
     });
 
-export const handler = async (ctx) => {
+const handler = async (ctx) => {
     const { category = 'all' } = ctx.req.param();
     const cate = categories[category] || categories.all;
     const currentUrl = `${rootUrl}/3g/other/focus/${cate.path}index.html`;

@@ -7,7 +7,7 @@ import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
 
-export const handler = async (ctx) => {
+const handler = async (ctx) => {
     const limit = getRouteLimit(ctx, 10);
 
     const rootUrl = 'https://junhe.com';

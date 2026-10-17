@@ -8,7 +8,7 @@ import ofetch from '@/utils/ofetch';
 
 import { baseUrl, ProcessItems } from './util';
 
-export const handler = async (ctx: Context): Promise<Data> => {
+const handler = async (ctx: Context): Promise<Data> => {
     const { id = '0' } = ctx.req.param();
 
     const targetUrl: string = new URL('news', baseUrl).href;

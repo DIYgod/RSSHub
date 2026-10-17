@@ -50,7 +50,7 @@ const parseIndex = (html: string): Array<Omit<MarketReportExtra, 'released_at'> 
         .filter((r): r is NonNullable<typeof r> => r !== null);
 };
 
-export const handler = async (): Promise<Data> => {
+const handler = async (): Promise<Data> => {
     const [entries, media] = await Promise.all([
         cache.tryGet(INDEX, async () => {
             const html = await ofetch(INDEX);

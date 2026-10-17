@@ -10,7 +10,7 @@ import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
-export const handler = async (ctx: Context): Promise<Data> => {
+const handler = async (ctx: Context): Promise<Data> => {
     const { category = 'cardgame' } = ctx.req.param();
     const requestedLimit = Number(ctx.req.query('limit'));
     const limit = Number.isSafeInteger(requestedLimit) && requestedLimit > 0 ? requestedLimit : 18;

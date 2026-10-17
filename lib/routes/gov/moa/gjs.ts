@@ -22,7 +22,7 @@ const documentMimeTypes = {
     ofd: 'application/octet-stream',
 };
 
-export const handler = async (ctx: Context): Promise<Data> => {
+const handler = async (ctx: Context): Promise<Data> => {
     const { category = 'gzdt' } = ctx.req.param();
     const limit = getRouteLimit(ctx, 30);
 

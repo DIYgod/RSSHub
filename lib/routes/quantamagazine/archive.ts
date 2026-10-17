@@ -66,7 +66,7 @@ const processArticleContent = (html: string | null, articleLink?: string): strin
     return processed;
 };
 
-export const handler = async (ctx) => {
+const handler = async (ctx) => {
     const requestedLimit = Number(ctx.req.query('limit'));
     const limit = Number.isSafeInteger(requestedLimit) && requestedLimit > 0 ? Math.min(requestedLimit, 100) : 20;
 

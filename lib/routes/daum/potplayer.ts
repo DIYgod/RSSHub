@@ -18,7 +18,7 @@ const languageCodes = {
 
 const isLanguageCode = (key: string): key is keyof typeof languageCodes => Object.hasOwn(languageCodes, key);
 
-export const handler = async (ctx: Context): Promise<Data> => {
+const handler = async (ctx: Context): Promise<Data> => {
     const { lang } = ctx.req.param();
     const limit = getRouteLimit(ctx, 500);
 

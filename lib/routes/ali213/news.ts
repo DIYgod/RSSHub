@@ -27,7 +27,7 @@ const parseListDate = (value: string, link?: string) => {
     return Number.isNaN(pubDate.getTime()) ? undefined : pubDate;
 };
 
-export const handler = async (ctx: Context): Promise<Data> => {
+const handler = async (ctx: Context): Promise<Data> => {
     const { category = 'new' } = ctx.req.param();
     const limit = getRouteLimit(ctx, 30);
 

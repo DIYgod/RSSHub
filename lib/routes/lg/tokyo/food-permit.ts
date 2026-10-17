@@ -214,7 +214,7 @@ const fetchSource = async (source: Source, limit: number): Promise<Array<DataIte
     return items.slice(0, limit);
 };
 
-export const handler = async (ctx): Promise<Data> => {
+const handler = async (ctx): Promise<Data> => {
     const ward: string | undefined = ctx.req.param('ward');
     const sources: Source[] = ward === undefined ? Object.keys(SOURCES).filter((s) => isSource(s)) : isSource(ward) ? [ward] : [];
     if (sources.length === 0) {

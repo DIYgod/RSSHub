@@ -28,7 +28,7 @@ const getUpdatedDate = ($: CheerioAPI) => {
     }
 };
 
-export const handler = async (ctx: Context): Promise<Data> => {
+const handler = async (ctx: Context): Promise<Data> => {
     const { lang = 'en' } = ctx.req.param();
     if (!isValidHost(lang)) {
         throw new InvalidParameterError('Invalid lang');

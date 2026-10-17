@@ -70,7 +70,7 @@ async function fetchDetail(link: string): Promise<Pick<DataItem, 'description' |
         banner: image,
     };
 }
-export async function handler(ctx) {
+async function handler(ctx) {
     const { id = 'latest' } = ctx.req.param();
     const requestedLimit = Number(ctx.req.query('limit') ?? '22');
     const limit = Number.isFinite(requestedLimit) && requestedLimit >= 1 ? Math.floor(requestedLimit) : 22;

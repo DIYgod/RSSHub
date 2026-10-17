@@ -125,7 +125,7 @@ function parseLimit(value: string | undefined, defaultLimit: number) {
     const limit = Number(value);
     return Number.isFinite(limit) && limit >= 1 ? Math.floor(limit) : defaultLimit;
 }
-export const handler = async (ctx: Context): Promise<Data> => {
+const handler = async (ctx: Context): Promise<Data> => {
     const { id = 'hotspot' } = ctx.req.param();
     const limit = parseLimit(ctx.req.query('limit'), 30);
     const baseUrl = 'https://www.wainao.me';

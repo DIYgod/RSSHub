@@ -12,7 +12,7 @@ function parseGmtDate(value: number | string) {
     return Number.isFinite(date.getTime()) ? date : undefined;
 }
 
-export const handler = async (ctx: Context): Promise<Data> => {
+const handler = async (ctx: Context): Promise<Data> => {
     const { category } = ctx.req.param();
     const requestedLimit = Number(ctx.req.query('limit') ?? '50');
     const limit = Number.isSafeInteger(requestedLimit) && requestedLimit > 0 ? requestedLimit : 50;

@@ -16,7 +16,7 @@ function parsePublicationDate(value?: string) {
     return Number.isNaN(date.getTime()) ? undefined : timezone(date, 8);
 }
 
-export const handler = async () => {
+const handler = async () => {
     const baseUrl = 'http://due.hitsz.edu.cn';
     const baseListPath = 'index/tzggqb';
 

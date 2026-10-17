@@ -85,7 +85,7 @@ const parsePage = (html: string, link: string) => {
     return { fiscalYear, items, years };
 };
 
-export const handler = async (ctx): Promise<Data> => {
+const handler = async (ctx): Promise<Data> => {
     const year: string | undefined = ctx.req.param('year');
     const indexLink = `${BASE}index.html`;
     const latest = await cache.tryGet(indexLink, async () => {

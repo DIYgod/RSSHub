@@ -37,7 +37,7 @@ const fetchMobileChinanewsArticle = async (articleId: string) => {
     };
 };
 
-export const handler = async (ctx) => {
+const handler = async (ctx) => {
     const { category = 'index/tzgg' } = ctx.req.param();
     const limit = getRouteLimit(ctx, 20);
 

@@ -10,7 +10,7 @@ import { getRouteLimit } from '@/utils/route-limit';
 
 import { baseUrl, fetchItems } from './util';
 
-export const handler = async (ctx: Context): Promise<Data> => {
+const handler = async (ctx: Context): Promise<Data> => {
     const { time = '24h', country = 'us' } = ctx.req.param();
     if (!['24h', 'week', 'alltime'].includes(time)) {
         throw new InvalidParameterError('Invalid chart period. Use 24h, week, or alltime.');

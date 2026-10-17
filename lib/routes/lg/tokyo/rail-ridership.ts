@@ -79,7 +79,7 @@ const toItem = (row: Row, table: Table) => {
     return ridershipItem(extra, `${LANDING}#${table}`);
 };
 
-export const handler = async (ctx): Promise<Data> => {
+const handler = async (ctx): Promise<Data> => {
     const table: string = ctx.req.param('table') ?? 'private';
     if (!isTable(table)) {
         throw new Error(`Unknown table "${table}", expected one of ${Object.keys(TABLES).join(', ')}`);

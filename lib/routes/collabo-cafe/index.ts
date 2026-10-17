@@ -5,7 +5,7 @@ import ofetch from '@/utils/ofetch';
 
 import { parseItems } from './parser';
 
-export const handler = async (): Promise<Data | null> => {
+const handler = async (): Promise<Data | null> => {
     const baseUrl = 'https://collabo-cafe.com/';
     const res = await ofetch(baseUrl);
     const $ = load(res);
