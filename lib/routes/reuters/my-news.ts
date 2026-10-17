@@ -26,7 +26,7 @@ type FeedResponse = {
     errors?: Array<{ message: string }>;
 };
 
-const feedQuery = `query getFeed($size: Int!, $endCursor: String = "") {
+const feedQuery = /* GraphQL */ `query getFeed($size: Int!, $endCursor: String = "") {
     feed: myFeed(
         input: {first: $size, after: $endCursor, feedPreference: [TAG, SECTION, LAW_FIRM, COMPANY, AUTHOR]}
     ) {
