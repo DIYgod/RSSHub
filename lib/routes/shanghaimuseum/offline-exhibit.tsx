@@ -6,6 +6,7 @@ import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { parseDateRange } from '@/utils/parse-date-range';
 import timezone from '@/utils/timezone';
 
 import { namespace } from './namespace';
@@ -72,34 +73,38 @@ export const route: Route = {
 
         const museumName = namespace.zh?.name || namespace.name;
 
-        const items = await pMap(
-            rawItems,
-            async (item) => {
-                const title = item.name;
-                const itemLink = `${baseUrl}/mu/frontend/pg/article/id/${item.code}`;
-                const imgUrl = item.picPath ? `${baseUrl}/mu/${item.picPath}` : '';
-                const location = item.exhibitPlace || '上海博物馆';
-                const pubDate = timezone(parseDate(item.issueTime), 8);
+        const items = rawItems.map((item) => {
+            const title = item.name;
+            const itemLink = `${baseUrl}/mu/frontend/pg/article/id/${item.code}`;
+            const imgUrl = item.picPath ? `${baseUrl}/mu/${item.picPath}` : '';
+            const location = item.exhibitPlace || '上海博物馆';
+            const pubDate = timezone(parseDate(item.issueTime), 8);
 
-                const fullDuration = item.exhibitDateRange || '';
-                const [startDate, endDate] = fullDuration.includes(' - ') ? fullDuration.split(' - ') : [fullDuration, ''];
+            const fullDuration = item.exhibitDateRange || '';
+            const { startDate, endDate } = parseDateRange(fullDuration);
 
-                const description = renderToString(
-                    <div>
-                        {imgUrl && (
-                            <>
-                                <img src={imgUrl} />
-                                <br />
-                            </>
-                        )}
-                        <p>
-                            <b>地点：</b>
-                            {location}
-                        </p>
-                        <p>
-                            <b>开展：</b>
-                            {startDate ?? '未定/常设'}
-                        </p>
+            const description = renderToString(
+                <div>
+                    {imgUrl && (
+                        <>
+                            <img src={imgUrl} />
+                            <br />
+                        </>
+                    )}
+                    <p>
+                        <b>地点：</b>
+                        {location}
+                    </p>
+                    <p>
+                        <b>开展：</b>
+                        {startDate ?? '未定/常设'}
+                    </p>
+                    <p>
+                        <b>闭展：</b>
+                        {endDate ?? '未定/常设'}
+                    </p>
+
+                    {fullDuration && (
                         <p>
                             <b>闭展：</b>
                             {endDate ?? '未定/常设'}
