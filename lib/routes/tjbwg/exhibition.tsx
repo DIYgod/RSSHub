@@ -11,6 +11,12 @@ import timezone from '@/utils/timezone';
 
 import { namespace } from './namespace';
 
+const getExhibitionContent = async (link: string) => {
+    const response = await ofetch(link);
+    const $ = load(response);
+    return { description: $('.exhUs_r').first().html() ?? '' };
+};
+
 export const route: Route = {
     path: '/exhibition',
     categories: ['travel'],

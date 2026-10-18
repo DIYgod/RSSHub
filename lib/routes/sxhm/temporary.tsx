@@ -76,7 +76,7 @@ export const route: Route = {
                     }
                 }
 
-                const { startDate, endDate } = extractDates(fullDuration);
+                const { startDate, endDate } = parseDateRange(fullDuration);
                 const pubDate = startDate ? timezone(parseDate(startDate), 8) : undefined;
 
                 const description = renderToString(
