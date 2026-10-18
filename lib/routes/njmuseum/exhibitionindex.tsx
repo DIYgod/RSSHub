@@ -3,6 +3,7 @@ import { renderToString } from 'hono/jsx/dom/server';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import got from '@/utils/got';
+import { parseDate } from '@/utils/parse-date';
 import { parseDateRange } from '@/utils/parse-date-range';
 import timezone from '@/utils/timezone';
 
@@ -92,7 +93,7 @@ export const route: Route = {
             const location = item.position;
             const fullDuration = item.timedesc;
             const { startDate, endDate } = parseDateRange(fullDuration);
-            const pubDate = startDate ? timezone(startDate, 8) : undefined;
+            const pubDate = startDate ? timezone(parseDate(startDate), 8) : undefined;
 
             const description = renderToString(
                 <div>

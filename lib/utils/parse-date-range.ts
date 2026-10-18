@@ -47,19 +47,19 @@ const EN_END_KEYWORDS = ['closed', 'closes', 'closing', 'until', 'through', 'thr
 // ============================================================
 
 /** Maps common Chinese number characters to their numeric values. */
-const CN_NUM_MAP: Record<string, number> = {
-    一: 1,
-    二: 2,
-    两: 2,
-    三: 3,
-    四: 4,
-    五: 5,
-    六: 6,
-    七: 7,
-    八: 8,
-    九: 9,
-    十: 10,
-};
+const CN_NUM_MAP = new Map([
+    ['一', 1],
+    ['二', 2],
+    ['两', 2],
+    ['三', 3],
+    ['四', 4],
+    ['五', 5],
+    ['六', 6],
+    ['七', 7],
+    ['八', 8],
+    ['九', 9],
+    ['十', 10],
+]);
 
 /**
  * Tries to extract an **exact day count** from a duration suffix in the input text.
@@ -79,7 +79,7 @@ const parseExactDays = (text: string): number | undefined => {
     const cnMatch = text.match(/展期[约大概共]*(\d+|[一二三四五六七八九十两]+)个?[天日](?!期)/);
     if (cnMatch) {
         const rawNum = cnMatch[1];
-        const value = /^\d+$/.test(rawNum) ? Number(rawNum) : (CN_NUM_MAP[rawNum] ?? 0);
+        const value = /^\d+$/.test(rawNum) ? Number(rawNum) : (CN_NUM_MAP.get(rawNum) ?? 0);
         if (value > 0) {
             return value;
         }
