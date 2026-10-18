@@ -70,7 +70,7 @@ const ids = {
     },
 };
 
-function isVerificationPage(data: unknown) {
+function isVerificationPage(data?: string) {
     if (typeof data !== 'string') {
         return false;
     }

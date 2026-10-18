@@ -131,7 +131,7 @@ async function fetchStoryBody(uri: string, getReactStory: (url: string) => Promi
     };
 }
 
-function parseSourceTime(value: unknown) {
+function parseSourceTime(value?: string | number) {
     if ((typeof value !== 'number' && typeof value !== 'string') || (typeof value === 'string' && !value.trim())) {
         return;
     }

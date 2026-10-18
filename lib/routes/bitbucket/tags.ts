@@ -23,11 +23,13 @@ export const route: Route = {
     handler,
 };
 
+type RequestHeaders = { Accept: string; Authorization?: string };
+
 async function handler(ctx) {
     const workspace = ctx.req.param('workspace');
     const repo_slug = ctx.req.param('repo_slug');
 
-    const headers: Record<string, string> = {
+    const headers: RequestHeaders = {
         Accept: 'application/json',
     };
     if (config.bitbucket && config.bitbucket.username && config.bitbucket.password) {

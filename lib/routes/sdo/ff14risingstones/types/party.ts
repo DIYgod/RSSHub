@@ -1,7 +1,7 @@
 import type { NoviceNetworkIdentity } from '../constant';
 import type { DateFormat, DateTimeFormat, TeamPosition, Timestamp } from './other';
 
-export interface BaseParty {
+interface BaseParty {
     area_name: string;
     begin_time: Timestamp;
     character_name: string;
@@ -73,10 +73,6 @@ export interface RolePlayParty extends BaseParty {
     rp_type: Array<'0' | '1' | '2' | '3'>; // 0: 无 RP 元素, 1: 轻 RP 元素, 2: 中 RP 元素, 3: 重 RP 元素
     create_time: DateFormat;
     cover_pic: string;
-}
-
-export interface RolePlayPartyDetail extends RolePlayParty {
-    updated_at: DateTimeFormat | null;
 }
 
 // 部队招募

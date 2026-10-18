@@ -26,14 +26,16 @@ export const route: Route = {
 type PublicationPost = { title: string; slug: { current: string }; publishedOn: string };
 type PublicationSection = { title?: string; posts?: PublicationPost[] };
 
-function findPageSections(value: unknown): PublicationSection[] {
+type JsonValue = string | number | boolean | null | JsonValue[] | { [key: string]: JsonValue };
+
+function findPageSections(value: JsonValue): PublicationSection[] {
     if (Array.isArray(value)) {
         return value.flatMap((item) => findPageSections(item));
     }
     if (!value || typeof value !== 'object') {
         return [];
     }
-    const page = (value as { page?: { sections?: PublicationSection[] } }).page;
+    const page = value.page as { sections?: PublicationSection[] } | undefined;
     return Array.isArray(page?.sections) ? page.sections : Object.values(value).flatMap((item) => findPageSections(item));
 }
 

@@ -5,7 +5,7 @@ import { parseDate } from '@/utils/parse-date';
 
 const md = MarkdownIt({ html: true, linkify: true });
 
-export const eventTypeMapping = {
+const eventTypeMapping = {
     create: 'CreateEvent',
     delete: 'DeleteEvent',
     issuecomm: 'IssueCommentEvent',
@@ -38,12 +38,12 @@ function formatEventItem(event: any) {
             const commitCount = payload.size ? `${payload.size} commit(s) ` : '';
             description = escapeText(`Pushed ${commitCount}to ${branch} in ${repo.name}`);
 
+            // Use the pre-push tip as the base to include the first pushed commit's changes.
+            link = `https://github.com/${repo.name}/compare/${payload.before}..${payload.head}`;
+
             const latestCommit = payload.commits?.at(-1);
             if (latestCommit) {
-                link = `https://github.com/${repo.name}/commit/${latestCommit.sha}`;
                 description += `<br><strong>Latest commit:</strong> ${escapeText(latestCommit.message)}`;
-            } else {
-                link = `https://github.com/${repo.name}/commit/${payload.head}`;
             }
             break;
         }

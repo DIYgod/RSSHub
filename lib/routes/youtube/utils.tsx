@@ -97,7 +97,7 @@ export const getSubscriptions = async (part, cache) => {
     youtubeOAuth2Client.setCredentials({ access_token: accessToken, refresh_token: config.youtube.refreshToken });
     return cache.tryGet('youtube:getSubscriptions', () => getSubscriptionsRecusive(part), config.cache.routeExpire, false);
 };
-export async function getSubscriptionsRecusive(part, nextPageToken?) {
+async function getSubscriptionsRecusive(part, nextPageToken?) {
     const res = await googleYoutube('v3').subscriptions.list({
         auth: youtubeOAuth2Client,
         part,

@@ -10,8 +10,10 @@ import timezone from '@/utils/timezone';
 
 import { namespace } from './namespace';
 
+type ExhibitionDuration = { startDate: string | undefined; endDate: string | undefined };
+
 // Convert "YYYY年M月D日（-/——/—/至）[YYYY年]M月D日" into YYYY-MM-DD start/end dates
-const parseExhibitionDuration = (raw: string): { startDate: string | undefined; endDate: string | undefined } => {
+const parseExhibitionDuration = (raw: string): ExhibitionDuration => {
     const m = raw.match(/(\d{4})年(\d{1,2})月(\d{1,2})日[-—至]+(?:(\d{4})年)?(\d{1,2})月(\d{1,2})日/);
     if (!m) {
         return { startDate: undefined, endDate: undefined };

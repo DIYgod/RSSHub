@@ -34,7 +34,7 @@ const getHeaders = async (cookieJar: CookieJar) => {
     };
 };
 
-export const checkLogin = async (cookieJar: CookieJar, bootstrapPage?: () => Promise<unknown>) => {
+export const checkLogin = async (cookieJar: CookieJar, bootstrapPage?: () => Promise<{ html: string }>) => {
     if (!(await getCSRFTokenFromJar(cookieJar))) {
         await bootstrapPage?.();
     }

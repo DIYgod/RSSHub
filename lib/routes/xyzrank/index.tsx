@@ -7,7 +7,7 @@ import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
 function parseSourceDate(value: string | number | Date | undefined) {
-    if (isOneOf(value, [undefined, null]) || value === '') {
+    if (value === undefined || value === '') {
         return;
     }
     const date = parseDate(value);
@@ -123,9 +123,4 @@ export async function handler(ctx) {
         item: items,
         description: $('meta[property="og:description"]').attr('content'),
     };
-}
-
-function isOneOf<const T>(value: unknown, values: readonly T[]): value is T {
-    const candidates: readonly unknown[] = values;
-    return candidates.includes(value);
 }

@@ -1,34 +1,8 @@
 import { load } from 'cheerio';
-import { CookieJar } from 'tough-cookie';
 
 import { config } from '@/config';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-
-const cookieJar = new CookieJar();
-
-async function doGot(num, host, link) {
-    if (num > 4) {
-        throw new Error('The number of attempts has exceeded 5 times');
-    }
-    const response = await got.get(link, {
-        cookieJar,
-    });
-    const body: string = response.body;
-    let data;
-    try {
-        data = JSON.parse(body);
-    } catch {
-        const regex = /document\.cookie\s*=\s*"([^"]*)"/;
-        const match = body.match(regex);
-        if (!match) {
-            throw new Error('api error');
-        }
-        cookieJar.setCookieSync(match[1], host);
-        return doGot(num + 1, host, link);
-    }
-    return data;
-}
 
 const getApiData = async (host: string, endpoint: string, params: Record<string, string | number>) => {
     const credentials = await cache.tryGet(
@@ -90,4 +64,4 @@ const genSize = (sizeStr) => {
     return bytes;
 };
 
-export { doGot, genSize, getApiData };
+export { genSize, getApiData };

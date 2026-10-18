@@ -15,7 +15,7 @@ type Note = {
     upt: number;
     id: string;
 };
-function parsePublishedDate(value: unknown) {
+function parsePublishedDate(value?: number) {
     if (typeof value !== 'number' || !Number.isFinite(value)) {
         return;
     }

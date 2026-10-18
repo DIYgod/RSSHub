@@ -100,7 +100,7 @@ const b64V2Enc = (data: Uint8Array, variant: number) => {
 
 // Based on https://github.com/SocialSisterYi/bilibili-API-collect/issues/1168#issuecomment-2620749895
 // https://s1.hdslb.com/bfs/manga-static/manga-pc/6732b1bf426cfc634293.wasm
-export const genReqSign = (query: string, body: string, ts: number) => {
+const genReqSign = (query: string, body: string, ts: number) => {
     const params = new URLSearchParams(query);
     const keys = [...new Set(params.keys())].filter((k) => k !== 'ultra_sign').toSorted((a, b) => Number(a > b) - Number(a < b));
     const acc = keys.map((k) => k + params.getAll(k).join('')).join('');

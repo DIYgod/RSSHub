@@ -84,10 +84,12 @@ async function getItem(entry: Entry): Promise<DataItem> {
     };
 }
 
+type ApiQuery = { page: number; per_page: number; book_ids?: string; attribute_ids?: string };
+
 async function handler(ctx) {
     const limit = getRouteLimit(ctx, 50);
     const path = ctx.req.param('path') ?? '';
-    const query: Record<string, string | number> = { page: 1, per_page: Math.max(limit, 50) };
+    const query: ApiQuery = { page: 1, per_page: Math.max(limit, 50) };
     let filterName: string | undefined;
     let kinds: Array<Entry['kind']> = ['monsters', 'articles', 'announcements'];
     let currentUrl = rootUrl;

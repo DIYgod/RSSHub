@@ -11,14 +11,15 @@ import { getPlaywrightPage } from '@/utils/playwright';
 import { getRouteLimit } from '@/utils/route-limit';
 import { isValidHost } from '@/utils/valid-host';
 
-const audioTypes: Record<string, string> = {
+const audioTypes = {
     aac: 'audio/aac',
     flac: 'audio/flac',
     m4a: 'audio/mp4',
     mp3: 'audio/mpeg',
     ogg: 'audio/ogg',
     wav: 'audio/vnd.wave',
-};
+} satisfies Record<string, string>;
+const isAudioExtension = (key: string): key is keyof typeof audioTypes => Object.hasOwn(audioTypes, key);
 
 async function fetchList(url: string) {
     const response = await ofetch<string>(url);
@@ -88,10 +89,11 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
             if (enclosureUrl) {
                 const enclosure = new URL(enclosureUrl, baseUrl);
+                const extension = enclosure.pathname.split('.').pop()?.toLowerCase() ?? '';
                 processedItem = {
                     ...processedItem,
                     enclosure_url: enclosure.href,
-                    enclosure_type: audioTypes[enclosure.pathname.split('.').pop()?.toLowerCase() ?? ''],
+                    enclosure_type: isAudioExtension(extension) ? audioTypes[extension] : undefined,
                     enclosure_title: title,
                     enclosure_length: undefined,
                     itunes_duration: undefined,

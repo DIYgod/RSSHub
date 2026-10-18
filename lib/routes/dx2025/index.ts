@@ -10,7 +10,7 @@ import { getPlaywrightPage, type Page } from '@/utils/playwright';
 
 const sourceOrigins = new Set(['https://www.dx2025.com', 'https://www.dx2035.cn']);
 
-function isExpiredCertificate(error: unknown): boolean {
+function isExpiredCertificate(error: unknown): error is Error {
     return error instanceof Error && (('code' in error && error.code === 'CERT_HAS_EXPIRED') || isExpiredCertificate(error.cause));
 }
 

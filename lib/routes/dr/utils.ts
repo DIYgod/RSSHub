@@ -110,7 +110,17 @@ const renderBody = (components: any[] = []): string =>
         .filter(Boolean)
         .join('\n');
 
-const findArticleResource = (value: any, pathname: string): Record<string, any> | undefined => {
+interface ArticleResource {
+    urlPathId: string;
+    body: Parameters<typeof renderBody>[0];
+    title?: string;
+    startDate?: string;
+    site?: { title?: string };
+    teaserImage?: { default?: { url?: string; managedUrl?: string } };
+    contributions?: Array<{ agent?: { name?: string } }>;
+}
+
+const findArticleResource = (value: any, pathname: string): ArticleResource | undefined => {
     if (!value || typeof value !== 'object') {
         return;
     }
@@ -156,7 +166,7 @@ const extractFlightArticle = ($: CheerioAPI, link: string) => {
     }
 };
 
-export const extractDRArticle = (html: string, link?: string) => {
+const extractDRArticle = (html: string, link?: string) => {
     const $ = load(html);
     const nextData = JSON.parse($('script#__NEXT_DATA__').text() || '{}');
     const viewProps = nextData.props?.pageProps?.viewProps;

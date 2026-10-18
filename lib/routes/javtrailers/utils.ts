@@ -15,7 +15,10 @@ interface ListingData {
     studio: Video['studio'] & { hotDvdIds?: string[] };
 }
 
-const decodePayload = (payload: unknown[], index: number, decoded = new Map<number, unknown>()): unknown => {
+// Values in a Nuxt payload; `undefined` comes from the -1 reference.
+type PayloadValue = string | number | boolean | null | undefined | PayloadValue[] | { [key: string]: PayloadValue };
+
+const decodePayload = (payload: PayloadValue[], index: number, decoded = new Map<number, PayloadValue>()): PayloadValue => {
     if (index === -1) {
         return undefined;
     }
@@ -24,16 +27,16 @@ const decodePayload = (payload: unknown[], index: number, decoded = new Map<numb
     }
     const value = payload[index];
     if (Array.isArray(value)) {
-        if (['Reactive', 'ShallowReactive', 'Ref', 'ShallowRef'].includes(value[0])) {
+        if (typeof value[0] === 'string' && ['Reactive', 'ShallowReactive', 'Ref', 'ShallowRef'].includes(value[0]) && typeof value[1] === 'number') {
             return decodePayload(payload, value[1], decoded);
         }
-        const result: unknown[] = [];
+        const result: PayloadValue[] = [];
         decoded.set(index, result);
-        result.push(...value.map((reference) => decodePayload(payload, reference, decoded)));
+        result.push(...value.map((reference) => (typeof reference === 'number' ? decodePayload(payload, reference, decoded) : undefined)));
         return result;
     }
     if (value && typeof value === 'object') {
-        const result: Record<string, unknown> = {};
+        const result: { [key: string]: PayloadValue } = {};
         decoded.set(index, result);
         for (const [key, reference] of Object.entries(value)) {
             if (typeof reference !== 'number') {
@@ -49,7 +52,7 @@ const decodePayload = (payload: unknown[], index: number, decoded = new Map<numb
 const getPageData = async <T>(url: string, key: 'cast' | 'category' | 'studio' | 'video'): Promise<T> => {
     const html = await ofetch(url, { responseType: 'text' });
     const $ = load(html);
-    const payload: unknown[] = JSON.parse($('#__NUXT_DATA__').text());
+    const payload: PayloadValue[] = JSON.parse($('#__NUXT_DATA__').text());
     const index = payload.findIndex((entry) => entry && typeof entry === 'object' && !Array.isArray(entry) && Object.hasOwn(entry, key) && (key === 'video' || Object.hasOwn(entry, 'videos')));
     if (index === -1) {
         throw new Error(`The public page ${url} no longer contains ${key} data.`);
@@ -66,7 +69,7 @@ export const getList = async (url: string, key: 'cast' | 'category' | 'studio') 
     return data;
 };
 
-export const hdGallery = (gallery) =>
+const hdGallery = (gallery) =>
     gallery.map((item) => {
         if (item.startsWith('https://pics.dmm.co.jp/')) {
             return item.replace(/-(\d+)\.jpg$/, 'jp-$1.jpg');

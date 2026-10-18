@@ -30,7 +30,7 @@ export const route: Route = {
 :::`,
 };
 
-function isForbiddenChallenge(error: unknown) {
+function isForbiddenChallenge(error: unknown): error is FetchError {
     if (!(error instanceof FetchError) || error.status !== 403 || typeof error.data?.body !== 'string') {
         return false;
     }

@@ -9,7 +9,7 @@ import { parseDate } from '@/utils/parse-date';
 
 import { parseJSONP } from './jsonp-helper';
 
-const parseMediaDate = (date: unknown): Date | undefined => {
+const parseMediaDate = (date?: string): Date | undefined => {
     if (typeof date !== 'string' || !/^\d{4}\.\d{1,2}\.\d{1,2}$/.test(date)) {
         return;
     }

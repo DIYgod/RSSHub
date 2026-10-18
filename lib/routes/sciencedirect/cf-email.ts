@@ -10,16 +10,6 @@ const decodeCFEmail = (encoded) => {
     return decoded;
 };
 
-const encodeCFEmail = (email) => {
-    const key = Math.floor(Math.random() * 256);
-    let encoded = ('0' + key.toString(16)).slice(-2);
-    for (let position = 0; position < email.length; position++) {
-        const byte = email.charCodeAt(position) ^ key;
-        encoded += ('0' + byte.toString(16)).slice(-2);
-    }
-    return encoded;
-};
-
 /**
  * The alogrithm is well-explained in https://andrewlock.net/simple-obfuscation-of-email-addresses-using-javascript/
  */
@@ -30,10 +20,4 @@ export {
      * @returns decoded email address
      */
     decodeCFEmail,
-    /**
-     * Returns CloudFlare protected email address.
-     * @param {String} email - email in plaintext
-     * @returns obfuscated email
-     */
-    encodeCFEmail,
 };

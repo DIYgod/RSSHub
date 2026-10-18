@@ -24,7 +24,7 @@ type PostsQuery = {
 const baseUrl = 'https://www.im2maker.com';
 const allowedResourceTypes = new Set(['document', 'xhr', 'fetch']);
 
-function isCertificateTrustError(error: unknown): boolean {
+function isCertificateTrustError(error: unknown): error is Error {
     return error instanceof Error && (('code' in error && (error.code === 'UNABLE_TO_VERIFY_LEAF_SIGNATURE' || error.code === 'UNABLE_TO_GET_ISSUER_CERT_LOCALLY')) || isCertificateTrustError(error.cause));
 }
 

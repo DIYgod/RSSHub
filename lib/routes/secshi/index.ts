@@ -5,7 +5,7 @@ import type { Data, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { getPlaywrightPage } from '@/utils/playwright';
 
-const isExpiredCertificate = (error: unknown): boolean => error instanceof Error && (('code' in error && error.code === 'CERT_HAS_EXPIRED') || isExpiredCertificate(error.cause));
+const isExpiredCertificate = (error: unknown): error is Error => error instanceof Error && (('code' in error && error.code === 'CERT_HAS_EXPIRED') || isExpiredCertificate(error.cause));
 
 async function getBrowserContent(link: string) {
     const { page, destroy } = await getPlaywrightPage(link, { noGoto: true, closeTimeout: 0 });

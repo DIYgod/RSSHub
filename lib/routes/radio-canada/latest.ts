@@ -36,7 +36,7 @@ export const route: Route = {
 async function handler(ctx) {
     const language = ctx.req.param('language') ?? 'en';
 
-    const feedLanguages: Record<string, Language | undefined> = { en: 'en', fr: 'fr', es: 'es', 'zh-hans': 'zh-CN', 'zh-hant': 'zh-TW' };
+    const feedLanguages = { en: 'en', fr: 'fr', es: 'es', 'zh-hans': 'zh-CN', 'zh-hant': 'zh-TW' } satisfies Record<string, Language | undefined>;
     const rootUrl = 'https://ici.radio-canada.ca';
     const apiRootUrl = 'https://services.radio-canada.ca';
     const currentUrl = `${apiRootUrl}/neuro/sphere/v1/rci/${language}/continuous-feed?pageSize=50`;

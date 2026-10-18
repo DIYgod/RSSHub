@@ -9,7 +9,7 @@ import { parseDate } from '@/utils/parse-date';
 
 import { processContent } from './utils';
 
-const languageMap: Record<string, Language> = { en: 'en', zh: 'zh-CN', 'zh-tw': 'zh-TW', ko: 'ko', ja: 'ja' };
+const languageMap = { en: 'en', zh: 'zh-CN', 'zh-tw': 'zh-TW', ko: 'ko', ja: 'ja' } satisfies Record<string, Language>;
 
 export const route: Route = {
     path: '/:lang/:category?',

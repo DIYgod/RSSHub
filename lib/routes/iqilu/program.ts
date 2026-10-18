@@ -42,15 +42,17 @@ export const route: Route = {
     handler,
 };
 
-const videoMimeTypes: Record<string, string> = {
+const videoMimeTypes = {
     mp4: 'video/mp4',
     webm: 'video/webm',
     ogv: 'video/ogg',
     m3u8: 'application/vnd.apple.mpegurl',
-};
+} satisfies Record<string, string>;
+const isVideoExtension = (key: string): key is keyof typeof videoMimeTypes => Object.hasOwn(videoMimeTypes, key);
 
 function getVideoMimeType(url?: string) {
-    return url ? videoMimeTypes[new URL(url, 'http://v.iqilu.com').pathname.split('.').pop()!.toLowerCase()] : undefined;
+    const extension = url ? new URL(url, 'http://v.iqilu.com').pathname.split('.').pop()!.toLowerCase() : undefined;
+    return extension && isVideoExtension(extension) ? videoMimeTypes[extension] : undefined;
 }
 
 async function handler(ctx) {

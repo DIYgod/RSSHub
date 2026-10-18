@@ -4,9 +4,12 @@ import { parseDate } from '@/utils/parse-date';
 
 import { renderDescription } from './templates/description';
 
+const types = { mp3: 'audio/mpeg', mp4: 'audio/mp4', m4a: 'audio/mp4', m3u8: 'application/vnd.apple.mpegurl' } satisfies Record<string, string>;
+const isAudioExtension = (key: string): key is keyof typeof types => Object.hasOwn(types, key);
+
 export const getAudioType = (url: string) => {
-    const types: Record<string, string | undefined> = { mp3: 'audio/mpeg', mp4: 'audio/mp4', m4a: 'audio/mp4', m3u8: 'application/vnd.apple.mpegurl' };
-    return types[new URL(url).pathname.split('.').pop()?.toLowerCase() ?? ''];
+    const extension = new URL(url).pathname.split('.').pop()?.toLowerCase() ?? '';
+    return isAudioExtension(extension) ? types[extension] : undefined;
 };
 
 export const route: Route = {

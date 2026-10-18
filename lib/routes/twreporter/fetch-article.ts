@@ -172,7 +172,7 @@ function format(type, content) {
     }
     return block;
 }
-export default async function fetch(slug: string): Promise<Pick<DataItem, 'author' | 'description'>> {
+async function fetch(slug: string): Promise<Pick<DataItem, 'author' | 'description'>> {
     const url = `https://go-api.twreporter.org/v2/posts/${slug}?full=true`;
     const post = await cache.tryGet(`twreporter:post:${slug}`, async () => {
         const response = await ofetch(url);

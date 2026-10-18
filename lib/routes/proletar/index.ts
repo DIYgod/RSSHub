@@ -73,7 +73,7 @@ async function handler(ctx: Context) {
     };
 }
 
-function parseSourceDate(value: unknown): Date | undefined {
+function parseSourceDate(value?: string): Date | undefined {
     if (typeof value !== 'string' || !value) {
         return;
     }

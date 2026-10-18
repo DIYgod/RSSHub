@@ -139,7 +139,7 @@ const GAME_MAP = {
     },
 };
 
-const languages: Partial<Record<string, Language>> = {
+const languages = {
     'de-de': 'de-de',
     'en-us': 'en-us',
     'en-gb': 'en-gb',
@@ -154,7 +154,9 @@ const languages: Partial<Record<string, Language>> = {
     'th-th': 'th',
     'ja-jp': 'ja',
     'zh-tw': 'zh-TW',
-};
+} satisfies Record<string, Language>;
+
+const isLanguageKey = (key: string): key is keyof typeof languages => Object.hasOwn(languages, key);
 
 function getSearchParams(category = 'all') {
     return category === 'all'
@@ -206,10 +208,11 @@ async function handler(ctx): Promise<Data> {
         )
     );
 
+    const locale = feed.context.locale.toLowerCase();
     return {
         title: rssTitle,
         link: currentUrl,
-        language: languages[feed.context.locale.toLowerCase()],
+        language: isLanguageKey(locale) ? languages[locale] : undefined,
         item: items,
     };
 }

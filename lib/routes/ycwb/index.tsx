@@ -205,14 +205,14 @@ async function fetchArticleDetails(link: string, getVerifiedContent: (link: stri
     $('.space10, .ddf').remove();
     return { description: $('.main_article').html() ?? '', author, nodeLinks };
 }
-function getPublicationDate(value: unknown) {
+function getPublicationDate(value?: string | number) {
     if (!((typeof value === 'string' && value.trim()) || (typeof value === 'number' && Number.isFinite(value)))) {
         return;
     }
     const date = parseDate(value);
     return Number.isFinite(date.getTime()) ? timezone(date, 8) : undefined;
 }
-function isImageUrl(value: unknown): value is string {
+function isImageUrl(value?: string): value is string {
     if (typeof value !== 'string' || !value) {
         return false;
     }
@@ -223,7 +223,7 @@ function isImageUrl(value: unknown): value is string {
         return false;
     }
 }
-function getPictureUrls(picLinks: unknown, pictures: unknown): string[] {
+function getPictureUrls(picLinks?: string, pictures?: Array<{ attpath?: string } | null>): string[] {
     if (isImageUrl(picLinks)) {
         return [picLinks];
     }

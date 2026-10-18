@@ -29,7 +29,7 @@ interface Notice {
     content?: string;
 }
 
-function getNoticeData<T>(method: string, params: Record<string, unknown>) {
+function getNoticeData<T>(method: string, params: { templateId: string } | { offset: number; limit: number }) {
     return ofetch<{ code: number; result: T }>(`https://app-api.shop.ele.me/arena/invoke/?method=NoticeKeeperService.${method}`, {
         method: 'POST',
         body: {

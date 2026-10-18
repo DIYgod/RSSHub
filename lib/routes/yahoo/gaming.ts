@@ -31,7 +31,7 @@ function getStructuredData(content: CheerioAPI) {
         .filter((entry) => entry && typeof entry === 'object');
 }
 
-function parseArticleDate(value: unknown) {
+function parseArticleDate(value?: string) {
     if (typeof value !== 'string' || !value) {
         return;
     }
@@ -40,7 +40,7 @@ function parseArticleDate(value: unknown) {
     return Number.isFinite(date.getTime()) ? date : undefined;
 }
 
-function parseArticleImage(value: unknown) {
+function parseArticleImage(value?: string) {
     if (typeof value === 'string' && URL.canParse(value) && ['http:', 'https:'].includes(new URL(value).protocol)) {
         return value;
     }

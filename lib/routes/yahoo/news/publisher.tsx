@@ -20,7 +20,7 @@ function getStructuredData(content: CheerioAPI) {
         .filter((entry) => entry && typeof entry === 'object');
 }
 
-function parsePublicationDate(value: unknown) {
+function parsePublicationDate(value?: string) {
     if (typeof value !== 'string' || !value) {
         return;
     }

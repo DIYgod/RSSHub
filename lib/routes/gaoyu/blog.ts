@@ -79,7 +79,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 const image: string | undefined = $$('meta[property="og:image"]').attr('content');
                 const articleMetadata = $$('script[type="application/ld+json"]')
                     .toArray()
-                    .map((el) => destr<Record<string, unknown>>($$(el).text()))
+                    .map((el) => destr<{ '@type'?: string; dateModified?: string }>($$(el).text()))
                     .find((metadata) => metadata?.['@type'] === 'BlogPosting');
                 const updatedStr = articleMetadata?.dateModified;
 

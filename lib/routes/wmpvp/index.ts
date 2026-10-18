@@ -7,7 +7,7 @@ import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
 const parsePublicationDate = (value: string | number | undefined, format?: string) => {
-    if (isOneOf(value, [undefined, null]) || value === '') {
+    if (typeof value !== 'number' && !value) {
         return;
     }
     const date = parseDate(value, format);

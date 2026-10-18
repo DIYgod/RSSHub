@@ -72,7 +72,10 @@ async function handler(ctx) {
             page: 1,
         },
     });
-    const data = !configuredCookie && isBrowserVerification(response.data) ? await getAnonymousTimeline(`${baseUrl}/statuses/original/timeline.json?${new URLSearchParams({ user_id: id, page: '1' })}`, pageUrl) : response.data;
+    const data =
+        !configuredCookie && typeof response.data === 'string' && isBrowserVerification(response.data)
+            ? await getAnonymousTimeline(`${baseUrl}/statuses/original/timeline.json?${new URLSearchParams({ user_id: id, page: '1' })}`, pageUrl)
+            : response.data;
 
     if (!Array.isArray(data?.list)) {
         throw new TypeError('The Xueqiu column API did not return a timeline. Refresh XUEQIU_COOKIES and verify access to the column on Xueqiu.');
@@ -127,10 +130,7 @@ async function getAnonymousTimeline(url: string, pageUrl: string) {
     }
 }
 
-function isBrowserVerification(data: unknown) {
-    if (typeof data !== 'string') {
-        return false;
-    }
+function isBrowserVerification(data: string) {
     const $ = load(data);
     try {
         const payload = JSON.parse($('#renderData').text());

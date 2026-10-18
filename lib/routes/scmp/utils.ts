@@ -5,7 +5,7 @@ import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
-export const renderHTML = (node) => {
+const renderHTML = (node) => {
     if (!node) {
         return '';
     }
@@ -80,7 +80,7 @@ const renderArticleField = (field) =>
                 .join('')
           : '';
 
-export const parseItem = async (item) => {
+const parseItem = async (item) => {
     const { _data: response, url } = await ofetch.raw(item.link);
 
     if (new URL(url).hostname !== 'www.scmp.com') {
