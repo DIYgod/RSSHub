@@ -31567,6 +31567,28 @@
       }
     ]
   },
+  "lowendtalk.com": {
+    "_name": "LowEndTalk",
+    ".": [
+      {
+        "title": "Discussion",
+        "docs": "https://docs.rsshub.app/routes/lowendtalk",
+        "source": [
+          "/discussion/:id/*",
+          "/discussion/:id"
+        ],
+        "target": "/lowendtalk/discussion/:id"
+      },
+      {
+        "title": "User Discussions / Comments",
+        "docs": "https://docs.rsshub.app/routes/lowendtalk",
+        "source": [
+          "/profile/:type/:username"
+        ],
+        "target": "/lowendtalk/profile/:type/:username"
+      }
+    ]
+  },
   "lrepacks.net": {
     "_name": "REPACK скачать",
     ".": [

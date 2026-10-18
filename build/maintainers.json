@@ -5751,6 +5751,12 @@
     "axojhf",
     "zhaoweizhong"
   ],
+  "/lowendtalk/discussion/:id": [
+    "nczitzk"
+  ],
+  "/lowendtalk/profile/:type/:username": [
+    "TonyRL"
+  ],
   "/lrepacks/:category?": [
     "nczitzk"
   ],

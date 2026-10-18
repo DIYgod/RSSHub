@@ -81595,6 +81595,84 @@
     "url": "www.lovelive-anime.jp",
     "lang": "ja"
   },
+  "lowendtalk": {
+    "routes": {
+      "/discussion/:id": {
+        "path": "/discussion/:id",
+        "categories": [
+          "bbs"
+        ],
+        "example": "/lowendtalk/discussion/168480",
+        "parameters": {
+          "id": "Discussion id, can be found in the URL"
+        },
+        "radar": [
+          {
+            "source": [
+              "lowendtalk.com/discussion/:id/*",
+              "lowendtalk.com/discussion/:id"
+            ]
+          }
+        ],
+        "name": "Discussion",
+        "maintainers": [
+          "nczitzk"
+        ],
+        "url": "lowendtalk.com",
+        "location": "discussion.ts",
+        "module": "() => import('@/routes/lowendtalk/discussion.ts')"
+      },
+      "/profile/:type/:username": {
+        "path": "/profile/:type/:username",
+        "categories": [
+          "bbs"
+        ],
+        "example": "/lowendtalk/profile/discussions/Ikoula",
+        "parameters": {
+          "type": {
+            "description": "Content type",
+            "options": [
+              {
+                "value": "discussions",
+                "label": "Discussions"
+              },
+              {
+                "value": "comments",
+                "label": "Comments"
+              }
+            ]
+          },
+          "username": "Username, can be found in the profile URL"
+        },
+        "features": {
+          "requireConfig": [
+            {
+              "name": "LOWENDTALK_COOKIE",
+              "description": "The `Cookie` header of a logged-in session. Profile pages are only visible to signed-in users."
+            }
+          ]
+        },
+        "radar": [
+          {
+            "source": [
+              "lowendtalk.com/profile/:type/:username"
+            ]
+          }
+        ],
+        "name": "User Discussions / Comments",
+        "maintainers": [
+          "TonyRL"
+        ],
+        "url": "lowendtalk.com",
+        "location": "profile.ts",
+        "module": "() => import('@/routes/lowendtalk/profile.ts')"
+      }
+    },
+    "apiRoutes": {},
+    "name": "LowEndTalk",
+    "url": "lowendtalk.com",
+    "lang": "en"
+  },
   "lrepacks": {
     "routes": {
       "/:category?": {
