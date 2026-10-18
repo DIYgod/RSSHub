@@ -161,6 +161,7 @@ type ConfigEnvKeys =
     | 'LORIENTLEJOUR_TOKEN'
     | 'LORIENTLEJOUR_USERNAME'
     | 'LORIENTLEJOUR_PASSWORD'
+    | 'LOWENDTALK_COOKIE'
     | 'MALAYSIAKINI_EMAIL'
     | 'MALAYSIAKINI_PASSWORD'
     | 'MALAYSIAKINI_REFRESHTOKEN'
@@ -550,6 +551,9 @@ export type Config = {
         token?: string;
         username?: string;
         password?: string;
+    };
+    lowendtalk: {
+        cookie?: string;
     };
     malaysiakini: {
         email?: string;
@@ -1104,6 +1108,9 @@ const calculateValue = () => {
             token: envs.LORIENTLEJOUR_TOKEN,
             username: envs.LORIENTLEJOUR_USERNAME,
             password: envs.LORIENTLEJOUR_PASSWORD,
+        },
+        lowendtalk: {
+            cookie: envs.LOWENDTALK_COOKIE,
         },
         malaysiakini: {
             email: envs.MALAYSIAKINI_EMAIL,
