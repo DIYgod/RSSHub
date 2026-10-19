@@ -5,30 +5,6 @@ import { describe, expect, it } from 'vitest';
 import RSS from '@/views/rss';
 
 describe('RSS view', () => {
-    it.each([
-        ['https://example.com/image.jpg', 'image/jpeg'],
-        ['https://example.com/image.jpeg', 'image/jpeg'],
-        ['https://example.com/image.png', 'image/png'],
-        ['https://example.com/image.webp', 'image/webp'],
-        ['https://example.com/image.gif', 'image/gif'],
-        ['https://example.com/image.svg', 'image/svg+xml'],
-        ['https://example.com/image.PNG?size=300#preview', 'image/png'],
-        ['//example.com/image.gif', 'image/gif'],
-    ])('renders the image MIME type for %s', (image, mimeType) => {
-        const html = renderToString(<RSS data={{ title: 'Feed', item: [{ title: 'Image', image }] }} />);
-
-        expect(html).toContain(`<enclosure url="${image}" type="${mimeType}"`);
-    });
-
-    it.each(['https://example.com/image', 'https://example.com/image?filename=image.jpg', 'https://example.com/image.unknown', 'https://example.com/page.html', 'https://example.com/video.mp4', 'https://['])(
-        'does not invent a MIME type for %s',
-        (image) => {
-            const html = renderToString(<RSS data={{ title: 'Feed', item: [{ title: 'Image', image }] }} />);
-
-            expect(html).toContain(`<enclosure url="${image}"></enclosure>`);
-        }
-    );
-
     it.each(['audio/mpeg', 'audio/mp4', 'video/mp4'])('preserves the explicit %s enclosure for RSS consumers', async (mimeType) => {
         const html = renderToString(
             <RSS

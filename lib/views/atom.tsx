@@ -1,13 +1,19 @@
+import { html } from 'hono/html';
 import type { FC } from 'hono/jsx';
 
 import type { Data } from '@/types';
 import { getItemAttachments } from '@/utils/attachments';
 
+const Link: FC<Record<string, string | number | undefined>> = (props) =>
+    html`<link${Object.entries(props)
+        .filter(([, value]) => value !== undefined)
+        .map(([name, value]) => html` ${name}="${value}"`)} />`;
+
 const RSS: FC<{ data: Data }> = ({ data }) => (
     <feed xmlns="http://www.w3.org/2005/Atom" xmlns:rsshub="http://rsshub.app/xml/schemas" xml:lang={data.language || 'en'}>
-        <title>{data.title || 'RSSHub'}</title>
-        <link rel="alternate" href={data.link || 'https://docs.rsshub.app'} />
-        <link rel="self" href={data.atomlink} type="application/atom+xml" />
+        {html`<title>${data.title || 'RSSHub'}</title>`}
+        <Link rel="alternate" href={data.link || 'https://docs.rsshub.app'} />
+        <Link rel="self" href={data.atomlink} type="application/atom+xml" />
         <id>{data.id || data.link}</id>
         <subtitle>{data.description || data.title} - Powered by RSSHub</subtitle>
         <generator>RSSHub</generator>
@@ -20,11 +26,11 @@ const RSS: FC<{ data: Data }> = ({ data }) => (
 
         {data.item?.map((item) => (
             <entry>
-                <title>{item.title}</title>
+                {html`<title>${item.title}</title>`}
                 {item.description ? <content type="html">{item.description}</content> : item.content?.text ? <content type="text">{item.content.text}</content> : <content src={item.link} type="text/html" />}
-                <link href={item.link} />
+                <Link href={item.link} />
                 {getItemAttachments(item).map((attachment) => (
-                    <link rel="enclosure" href={attachment.url} type={attachment.mime_type} length={attachment.size_in_bytes} title={attachment.title} />
+                    <Link rel="enclosure" href={attachment.url} type={attachment.mime_type} length={attachment.size_in_bytes} title={attachment.title} />
                 ))}
                 <id>{item.guid || item.link || item.title}</id>
                 {item.pubDate && <published>{new Date(item.pubDate).toISOString()}</published>}
