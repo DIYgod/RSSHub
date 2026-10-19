@@ -90,8 +90,9 @@ export const route: Route = {
                     let fullDuration = '';
                     $d('.zhengwen p').each((_, el) => {
                         const text = $d(el).text().trim();
-                        if (text.includes('展览时间：')) {
-                            fullDuration = text.split('展览时间：', 2)[1];
+                        const match = text.match(/(?:展览时间|展期)：(.*)/);
+                        if (match) {
+                            fullDuration = match[1];
                         }
                     });
 
