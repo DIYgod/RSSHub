@@ -39,8 +39,8 @@ importers:
         specifier: 4.4.1
         version: 4.4.1
       '@googleapis/youtube':
-        specifier: 40.0.0
-        version: 40.0.0
+        specifier: 40.0.1
+        version: 40.0.1
       '@honeybadger-io/js':
         specifier: 6.16.6
         version: 6.16.6
@@ -1151,8 +1151,8 @@ packages:
       '@noble/hashes':
         optional: true
 
-  '@googleapis/youtube@40.0.0':
-    resolution: {integrity: sha512-t6arIbY75ZxbryTCMkKiV2jCcRzHaUk/dS1RjR6HAewkbI3HobnlaSWqaxiQKRCxqswXq02aeBS8/I+dW10qvw==}
+  '@googleapis/youtube@40.0.1':
+    resolution: {integrity: sha512-PUdZI/Hb1AXQ97xGFM68DyclCpwmWvkk72wlRPpgO+ukQFgXvkW0OBjXwfyo/cFTvyeXq7h3lBMe4bLm9LTiKg==}
     engines: {node: '>=22.0.0'}
 
   '@honeybadger-io/core@6.11.2':
@@ -4150,12 +4150,12 @@ packages:
     engines: {node: ^8.16.0 || ^10.6.0 || >=11.0.0}
     os: [darwin]
 
-  gaxios@7.3.1:
-    resolution: {integrity: sha512-kB3rzJV7d9juLZh8/56QTXCwQfxyhdOMdyYk1HdQKFtF8TJTDTZQJtixWIwXdE9Jji91mC41DUNpjleo4L4eAQ==}
-    engines: {node: '>=18'}
+  gaxios@8.3.1:
+    resolution: {integrity: sha512-h4/R7ay7JFXU5kmAkp/Y4Y4Vmm7m83tD579GUgfQQsRRGQ4TzSedyHla6XgTWohQuVffT3ldN4FF6uCqlRGaEA==}
+    engines: {node: '>=22'}
 
-  gcp-metadata@9.0.4:
-    resolution: {integrity: sha512-p6WvbXOhfwnVtv/MyPq5kBiVhfV/qglMIxwwTVNEI1Ha1HmOgz5uHYHtYO6SfGckFaXe8blA11IJJ3wqXmvmBA==}
+  gcp-metadata@9.2.1:
+    resolution: {integrity: sha512-5/LvxarRKbGCA5LJ+ha2aV1iVm7/aALIW4PzeXnQR5dyXiNMWbeA4UOBnqERInLfH/xSFp0ZREcxodUzxhEw2Q==}
     engines: {node: '>=22'}
 
   generative-bayesian-network@2.1.88:
@@ -4214,19 +4214,19 @@ packages:
   globrex@0.1.2:
     resolution: {integrity: sha512-uHJgbwAMwNFf5mLst7IWLNg14x1CkeqglJb/K3doi4dw6q2IvAAmM/Y81kevy83wP+Sst+nutFTYOGg3d1lsxg==}
 
-  google-auth-library@11.1.0:
-    resolution: {integrity: sha512-YIBq5KNoHQrZ9PM4PeodDBqqBGlSTIxh1zibN8u3zNIO9UJg8gvKuCpdKV7fWXhsZ2zRkU6FhGrgKNgLJ2IRgw==}
+  google-auth-library@11.3.1:
+    resolution: {integrity: sha512-mQS0R2Ev/DKkzuWSYtDeq15uhDeaWuT2qzLYqJ41LmooxVKHmn5ut3pc6dlHY6wfHW/D7FBmOYjAtkjaD1A7qA==}
     engines: {node: '>=22'}
 
-  google-logging-utils@2.0.1:
-    resolution: {integrity: sha512-HMhaQghlOTvbcb3c4T5jmmOMtG3JUF1iOQMezaJXL86CDS+Tm2vHd0IeLFRAx3+ewd+bo9E1HFHoy17X5aJa9A==}
+  google-logging-utils@2.1.0:
+    resolution: {integrity: sha512-1R6uiq6XhXW2ZrcGtZpGgVDsYGzSmveVOn8Pp37qe1fbThHZ34e3t3eXj5mVu6PFSVx9fvB1KNVnYgVtq/BRcA==}
     engines: {node: '>=22'}
 
   google-play-scraper@10.1.3:
     resolution: {integrity: sha512-T5zkrPqTvDoKx8jHGx8ZRca2viJQS0KpfFNMMMAR5Q/4/8Wl8GBG9HxuvfqtnKAZ8TzufnLN1N+8ShvHpSt6+g==}
 
-  googleapis-common@9.1.0:
-    resolution: {integrity: sha512-UJBElspYPJb0+fI8q0LxARw1hPnwd9yd5NqhKqEUPxjhnB1jdsRP7rlRTBp69JS5Vo10bCiRE9+ISsIG2A+Ttg==}
+  googleapis-common@9.3.1:
+    resolution: {integrity: sha512-wtv/e7JYgmtpIPcSez2EFD/Wx49DPsRX2rj15D7hTwc7tDsP82dcwoX/I4+zE38mu6S9PcghizzzADLf+ZMunA==}
     engines: {node: '>=22'}
 
   got@14.6.6:
@@ -5332,8 +5332,8 @@ packages:
     resolution: {integrity: sha512-V/yCWTTF7VJ9hIh18Ugr2zhJMP01MY7c5kh4J870L7imm6/DIzBsNLTXzMwUA3yZ5b/KBqLx8Kp3uRvd7xSe3Q==}
     engines: {node: '>=0.6'}
 
-  qs@6.16.0:
-    resolution: {integrity: sha512-h6fhOIaRrID2CbEY2fqs+7t+UXZo+MLAnU5gRIq85uFtdiUPCdsApMlHhXogKVM4HM2DVbIjGNTTYH2OcmP1vA==}
+  qs@6.16.1:
+    resolution: {integrity: sha512-5Px6J7rfHBAGUhNQ3es4YzcOdBBw0SDcVtThJml4RdnKw4tKs2epA0kPZ+K8X+WiHktT93RHVcQ/3ym5aTCgtg==}
     engines: {node: '>=0.6'}
 
   quansync@1.0.0:
@@ -6877,9 +6877,9 @@ snapshots:
     optionalDependencies:
       '@noble/hashes': 2.3.0
 
-  '@googleapis/youtube@40.0.0':
+  '@googleapis/youtube@40.0.1':
     dependencies:
-      googleapis-common: 9.1.0
+      googleapis-common: 9.3.1
     transitivePeerDependencies:
       - supports-color
 
@@ -9393,7 +9393,7 @@ snapshots:
   fsevents@2.3.3:
     optional: true
 
-  gaxios@7.3.1:
+  gaxios@8.3.1:
     dependencies:
       extend: 3.0.2
       https-proxy-agent: 7.0.6
@@ -9401,10 +9401,10 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  gcp-metadata@9.0.4:
+  gcp-metadata@9.2.1:
     dependencies:
-      gaxios: 7.3.1
-      google-logging-utils: 2.0.1
+      gaxios: 8.3.1
+      google-logging-utils: 2.1.0
       json-bigint: 1.0.0
     transitivePeerDependencies:
       - supports-color
@@ -9464,18 +9464,18 @@ snapshots:
 
   globrex@0.1.2: {}
 
-  google-auth-library@11.1.0:
+  google-auth-library@11.3.1:
     dependencies:
       base64-js: 1.5.1
       ecdsa-sig-formatter: 1.0.11
-      gaxios: 7.3.1
-      gcp-metadata: 9.0.4
-      google-logging-utils: 2.0.1
+      gaxios: 8.3.1
+      gcp-metadata: 9.2.1
+      google-logging-utils: 2.1.0
       jws: 4.0.1
     transitivePeerDependencies:
       - supports-color
 
-  google-logging-utils@2.0.1: {}
+  google-logging-utils@2.1.0: {}
 
   google-play-scraper@10.1.3:
     dependencies:
@@ -9488,13 +9488,13 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  googleapis-common@9.1.0:
+  googleapis-common@9.3.1:
     dependencies:
       extend: 3.0.2
-      gaxios: 7.3.1
-      google-auth-library: 11.1.0
-      google-logging-utils: 2.0.1
-      qs: 6.16.0
+      gaxios: 8.3.1
+      google-auth-library: 11.3.1
+      google-logging-utils: 2.1.0
+      qs: 6.16.1
       url-template: 2.0.8
     transitivePeerDependencies:
       - supports-color
@@ -10860,7 +10860,7 @@ snapshots:
     dependencies:
       side-channel: '@nolyfill/side-channel@1.0.44'
 
-  qs@6.16.0:
+  qs@6.16.1:
     dependencies:
       es-define-property: 1.0.1
       side-channel: '@nolyfill/side-channel@1.0.44'
