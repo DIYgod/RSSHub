@@ -37,15 +37,17 @@ export function addBuiltinRequireMap(source: string) {
         throw new Error('Playwright Worker build expected exactly one createRequire import');
     }
     source = source.replace(importLine, '');
-    const helperPattern = /^var __require = .*createRequire\(import\.meta\.url\).*;$/gm;
-    if (source.matchAll(helperPattern).toArray().length !== 1) {
+    // Rolldown renames the helper (e.g. __require$1) when the bundled code declares its own __require
+    const helperPattern = /^var (__require(?:\$\d+)?) = .*createRequire\(import\.meta\.url\).*;$/gm;
+    const helpers = source.matchAll(helperPattern).toArray();
+    if (helpers.length !== 1) {
         throw new Error('Playwright Worker build expected exactly one createRequire runtime helper');
     }
-    source = source.replace(helperPattern, 'var __require = (...args) => require(...args);');
+    source = source.replace(helperPattern, () => `var ${helpers[0][1]} = (...args) => require(...args);`);
     const usedBuiltins = [
         ...new Set(
             source
-                .matchAll(/(?:__require|require)\(["']([^"'\n]+)["']\)/g)
+                .matchAll(/(?:__require(?:\$\d+)?|require)\(["']([^"'\n]+)["']\)/g)
                 .toArray()
                 .map((match) => match[1].replace(/^node:/, ''))
                 .filter((name) => builtinNames.has(name))
