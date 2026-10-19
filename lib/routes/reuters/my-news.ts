@@ -26,23 +26,23 @@ type FeedResponse = {
     errors?: Array<{ message: string }>;
 };
 
-const feedQuery = /* GraphQL */ `query getFeed($size: Int!, $endCursor: String = "") {
-    feed: myFeed(
-        input: {first: $size, after: $endCursor, feedPreference: [TAG, SECTION, LAW_FIRM, COMPANY, AUTHOR]}
-    ) {
-        edges {
-            node {
-                id
-                canonicalUrl
-                title
-                description
-                displayTime
-                category
-                sectionCategory
+const feedQuery = /* GraphQL */ `
+    query getFeed($size: Int!, $endCursor: String = "") {
+        feed: myFeed(input: { first: $size, after: $endCursor, feedPreference: [TAG, SECTION, LAW_FIRM, COMPANY, AUTHOR] }) {
+            edges {
+                node {
+                    id
+                    canonicalUrl
+                    title
+                    description
+                    displayTime
+                    category
+                    sectionCategory
+                }
             }
         }
     }
-}`;
+`;
 
 export const route: Route = {
     path: '/my-news',
