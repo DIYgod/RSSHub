@@ -1,3 +1,4 @@
+import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 import Parser from 'rss-parser';
 import { describe, expect, it } from 'vitest';
@@ -113,6 +114,7 @@ describe('RSS view', () => {
         );
         expect(html.match(/<enclosure /g)).toHaveLength(1);
         expect(html).toContain('<enclosure url="https://example.com/audio.mp3" length="0" type="audio/mpeg"');
+        expect(html).not.toContain('xmlns:dc');
     });
 
     it('emits a single enclosure when the thumbnail is also an attachment', () => {
@@ -132,5 +134,16 @@ describe('RSS view', () => {
         );
         expect(html.match(/<enclosure /g)).toHaveLength(1);
         expect(html).toContain('<enclosure url="https://example.com/cover.png" length="0" type="image/png"');
+    });
+
+    it('does not let hono hoist feed titles and links as document metadata', () => {
+        const html = String(
+            <probe>
+                {raw('</head>')}
+                <RSS data={{ title: 'Feed', item: [{ title: 'Item', link: 'https://example.com/item' }] }} />
+            </probe>
+        );
+
+        expect(html).toMatch(/^<probe><\/head><rss/);
     });
 });
