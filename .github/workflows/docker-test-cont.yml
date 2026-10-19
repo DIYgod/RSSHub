@@ -6,7 +6,7 @@ on:
         types: [completed]
 
 jobs:
-    testRoute:
+    test-route:
         name: Route test
         runs-on: ubuntu-latest
         permissions:
