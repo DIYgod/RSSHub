@@ -2379,6 +2379,7 @@ export type RoutePath =
   | `/mysql/release/:version?`
   | `/naceweb/blog/:sort?`
   | `/namoc/zhanlan`
+  | `/nanhua/index-research/:category?`
   | `/nanhua/report/:type1/:type2`
   | `/nankai/ai/:type?`
   | `/nankai/cc/:type?`

@@ -1439,6 +1439,9 @@
   "/mymusicsheet/user/sheets/:username/:iso?/:freeOnly?": [
     "Freddd13"
   ],
+  "/nanhua/index-research/:category?": [
+    "pseudoyu"
+  ],
   "/nanhua/report/:type1/:type2": [
     "TonyRL"
   ],

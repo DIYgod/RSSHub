@@ -16859,6 +16859,64 @@ export default {
   },
   "nanhua": {
     "routes": {
+      "/index-research/:category?": {
+        "path": "/index-research/:category?",
+        "categories": [
+          "finance"
+        ],
+        "example": "/nanhua/index-research/daily",
+        "parameters": {
+          "category": {
+            "description": "报告类型",
+            "default": "daily",
+            "options": [
+              {
+                "value": "daily",
+                "label": "指数日报"
+              },
+              {
+                "value": "weekly",
+                "label": "指数周报"
+              },
+              {
+                "value": "quarterly",
+                "label": "指数季报"
+              }
+            ]
+          }
+        },
+        "radar": [
+          {
+            "title": "指数日报",
+            "source": [
+              "www.nanhua.net/subpage/research/nawaaindex/indexresearch/index-daily.html"
+            ],
+            "target": "/index-research/daily"
+          },
+          {
+            "title": "指数周报",
+            "source": [
+              "www.nanhua.net/subpage/research/nawaaindex/indexresearch/index-weekly.html"
+            ],
+            "target": "/index-research/weekly"
+          },
+          {
+            "title": "指数季报",
+            "source": [
+              "www.nanhua.net/subpage/research/nawaaindex/indexresearch/seminar.html"
+            ],
+            "target": "/index-research/quarterly"
+          }
+        ],
+        "name": "南华指数研究",
+        "maintainers": [
+          "pseudoyu"
+        ],
+        "url": "www.nanhua.net/subpage/research/nawaaindex/indexresearch/index-daily.html",
+        "description": "报告正文为 PDF，条目链接直接指向 PDF 文件。",
+        "location": "index-research.ts",
+        "module": () => import('@/routes/nanhua/index-research.ts')
+      },
       "/report/:type1/:type2": {
         "path": "/report/:type1/:type2",
         "categories": [

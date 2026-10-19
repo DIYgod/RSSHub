@@ -4378,6 +4378,32 @@
   },
   "nanhua.net": {
     "_name": "南华期货",
+    "www": [
+      {
+        "title": "指数日报",
+        "docs": "https://docs.rsshub.app/routes/nanhua",
+        "source": [
+          "/subpage/research/nawaaindex/indexresearch/index-daily.html"
+        ],
+        "target": "/nanhua/index-research/daily"
+      },
+      {
+        "title": "指数周报",
+        "docs": "https://docs.rsshub.app/routes/nanhua",
+        "source": [
+          "/subpage/research/nawaaindex/indexresearch/index-weekly.html"
+        ],
+        "target": "/nanhua/index-research/weekly"
+      },
+      {
+        "title": "指数季报",
+        "docs": "https://docs.rsshub.app/routes/nanhua",
+        "source": [
+          "/subpage/research/nawaaindex/indexresearch/seminar.html"
+        ],
+        "target": "/nanhua/index-research/quarterly"
+      }
+    ],
     "mall": [
       {
         "title": "研报",
