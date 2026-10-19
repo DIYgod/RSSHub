@@ -201,8 +201,8 @@ importers:
         specifier: 1.63.0
         version: 1.63.0
       postal-mime:
-        specifier: 4.0.5
-        version: 4.0.5
+        specifier: 4.0.7
+        version: 4.0.7
       query-string:
         specifier: 9.5.1
         version: 9.5.1
@@ -5274,8 +5274,8 @@ packages:
     resolution: {integrity: sha512-Nc3IT5yHzflTfbjgqWcCPpo7DaKy4FnpB0l/zCAW0Tc7jxAiuqSxHasntB3D7887LSrA93kDJ9IXovxJYxyLCA==}
     engines: {node: '>=4'}
 
-  postal-mime@4.0.5:
-    resolution: {integrity: sha512-fWu1Cmo2ef6LCwgHU1fVrqo55eyFP31F7hH0j/wMWkQYYdh+H8zz3nBf3EYRQelkmTfDrbDfTvPUQEBT8DS/jw==}
+  postal-mime@4.0.7:
+    resolution: {integrity: sha512-6iBsSWv8bd9ss+lp9hzKITHj+h7HyDSum7MC8P6XH5/HEuEzZxk8+6u/MpfX7mLstMw6dQ9MvPEMP/SOcGQnFg==}
     engines: {node: '>=20'}
 
   postcss@8.5.28:
@@ -10783,7 +10783,7 @@ snapshots:
 
   pluralize@8.0.0: {}
 
-  postal-mime@4.0.5: {}
+  postal-mime@4.0.7: {}
 
   postcss@8.5.28:
     dependencies:
