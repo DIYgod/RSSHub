@@ -2913,6 +2913,7 @@ export type RoutePath =
   | `/resonac/products`
   | `/reuters/:category/:topic?`
   | `/reuters/investigates`
+  | `/reuters/my-news`
   | `/rfa/:language?/:channel?/:subChannel?`
   | `/rfi/:path{.+}?`
   | `/right/forum/:id?`

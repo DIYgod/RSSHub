@@ -7260,6 +7260,9 @@
   "/resonac/products": [
     "valuex"
   ],
+  "/reuters/my-news": [
+    "dzx-dzx"
+  ],
   "/reuters/:category/:topic?": [
     "LyleLee",
     "HenryQW",

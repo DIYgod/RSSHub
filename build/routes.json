@@ -104312,6 +104312,31 @@
   },
   "reuters": {
     "routes": {
+      "/my-news": {
+        "path": "/my-news",
+        "categories": [
+          "traditional-media"
+        ],
+        "view": 0,
+        "example": "/reuters/my-news",
+        "features": {
+          "requireConfig": [
+            {
+              "name": "REUTERS_AUTH_TOKEN",
+              "optional": false,
+              "description": "Sign in to Reuters and open Browser Devtools to find `rt_token` from Local Storage."
+            }
+          ],
+          "requirePuppeteer": false
+        },
+        "name": "My News",
+        "maintainers": [
+          "dzx-dzx"
+        ],
+        "description": "The first page of the configured Reuters account's personalized My News feed. Requires a self-hosted instance with `REUTERS_AUTH_TOKEN` configured.",
+        "location": "my-news.ts",
+        "module": "() => import('@/routes/reuters/my-news.ts')"
+      },
       "/:category/:topic?": {
         "path": "/:category/:topic?",
         "categories": [
