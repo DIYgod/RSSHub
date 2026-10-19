@@ -14,7 +14,7 @@ import { isValidHost } from '@/utils/valid-host';
 
 import { renderDescription } from './templates/security-releases';
 
-export const handler = async (ctx: Context): Promise<Data> => {
+const handler = async (ctx: Context): Promise<Data> => {
     const { language: languageParam = 'en-us' } = ctx.req.param();
     if (!isValidHost(languageParam)) {
         throw new InvalidParameterError('Invalid language');

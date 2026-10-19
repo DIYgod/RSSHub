@@ -63,7 +63,7 @@ export const route: Route = {
     handler,
 };
 
-export async function handler(ctx: Context) {
+async function handler(ctx: Context) {
     const type = ctx.req.param?.('type') || 'gyyw';
     if (!Object.hasOwn(newsTypes, type)) {
         throw new InvalidParameterError(`Unknown news type "${type}". Available types: ${Object.keys(newsTypes).join(', ')}.`);

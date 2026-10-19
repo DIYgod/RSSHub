@@ -50,7 +50,7 @@ const renderDescription = (images?: DescriptionImage[]) =>
         </>
     );
 
-export const handler = async (ctx: Context): Promise<Data> => {
+const handler = async (ctx: Context): Promise<Data> => {
     const { category = '0', sort = 'latest' } = ctx.req.param();
     const limit = getRouteLimit(ctx, 30);
     const candidateLimit = ctx.req.query('sorted') === 'false' ? limit : Math.max(30, limit);

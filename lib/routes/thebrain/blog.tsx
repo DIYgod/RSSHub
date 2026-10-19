@@ -198,7 +198,7 @@ const enrichItem = async (item: DataItem): Promise<DataItem> => {
     };
 };
 
-export const handler = async (ctx: Context): Promise<Data> => {
+const handler = async (ctx: Context): Promise<Data> => {
     const limit = getRouteLimit(ctx, 30);
 
     const targetUrl: string = new URL('blog', baseUrl).href;

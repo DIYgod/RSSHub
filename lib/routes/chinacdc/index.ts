@@ -14,7 +14,7 @@ import timezone from '@/utils/timezone';
 
 import { renderDescription } from './templates/description';
 
-export const handler = async (ctx: Context): Promise<Data> => {
+const handler = async (ctx: Context): Promise<Data> => {
     const { category = 'zxyw' } = ctx.req.param();
     const requestedLimit = ctx.req.query('limit');
     const limit = getRouteLimit(ctx, 11);

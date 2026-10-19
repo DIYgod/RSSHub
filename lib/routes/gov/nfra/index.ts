@@ -9,7 +9,7 @@ import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
 import timezone from '@/utils/timezone';
 
-export const handler = async (ctx) => {
+const handler = async (ctx) => {
     const { id = '915' } = ctx.req.param();
     if (!/^[1-9]\d*$/.test(id)) {
         throw new InvalidParameterError('Category id must be a positive integer from the NFRA category page URL.');

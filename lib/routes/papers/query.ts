@@ -53,7 +53,7 @@ const getPublicationDate = (value?: string | number | null): Date | undefined =>
     return Number.isFinite(date.getTime()) ? date : undefined;
 };
 
-export const handler = async (ctx) => {
+const handler = async (ctx) => {
     const { keyword = 'query/Detection' } = ctx.req.param();
     const limit = getRouteLimit(ctx, 150);
 

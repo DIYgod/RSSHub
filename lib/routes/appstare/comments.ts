@@ -1,7 +1,7 @@
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 
-export const handler = async (ctx) => {
+const handler = async (ctx) => {
     const country = ctx.req.param('country');
     const appid = ctx.req.param('appid');
     const url = `https://monitor.appstare.net/spider/appComments?country=${country}&appId=${appid}`;

@@ -10,7 +10,7 @@ import { parseItems } from './util';
 const rootUrl = 'https://www.1lou.me';
 const apiUrl = 'https://www.1lou.me/search/api/search.php';
 
-export const handler = async (ctx: Context) => {
+const handler = async (ctx: Context) => {
     const { params } = ctx.req.param();
     const limit = getRouteLimit(ctx, 50);
 

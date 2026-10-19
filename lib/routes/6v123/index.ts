@@ -42,7 +42,7 @@ const getBestMagnet = ($: CheerioAPI): Cheerio<Element> => {
     return best ? $(best) : magnets;
 };
 
-export const handler = async (ctx: Context): Promise<Data> => {
+const handler = async (ctx: Context): Promise<Data> => {
     const { category = 'dy' } = ctx.req.param();
     const limit = getRouteLimit(ctx, 25);
 

@@ -98,7 +98,7 @@ const fetchItems = async (limit: number): Promise<Array<DataItem & { _extra: Per
         .map((r) => toItem(r.raw));
 };
 
-export const handler = async (ctx): Promise<Data> => {
+const handler = async (ctx): Promise<Data> => {
     const limit = Math.min(getRouteLimit(ctx, DEFAULT_LIMIT), MAX_LIMIT);
     const items = await cache.tryGet(`lg/osaka/food-permit:${limit}`, () => fetchItems(limit));
     return {

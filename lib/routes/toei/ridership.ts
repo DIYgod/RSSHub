@@ -58,7 +58,7 @@ const parseCsv = (buf: ArrayBuffer, line: string, fiscalYear: number, link: stri
     });
 };
 
-export const handler = async (): Promise<Data> => {
+const handler = async (): Promise<Data> => {
     const pkg = await cache.tryGet(PACKAGE_API, async () => {
         const body = await ofetch(PACKAGE_API);
         const resources: Resource[] = body?.result?.resources ?? [];

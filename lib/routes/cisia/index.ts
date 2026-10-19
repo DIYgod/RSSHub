@@ -31,7 +31,7 @@ async function getResponse(url: string, cookieJar: CookieJar) {
     return response.data;
 }
 
-export const handler = async (ctx) => {
+const handler = async (ctx) => {
     const { id = '9' } = ctx.req.param();
     const limit = getRouteLimit(ctx, 20);
 

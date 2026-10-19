@@ -34,7 +34,7 @@ const renderDescription = ({ images, description }) =>
             {description ? <>{raw(description)}</> : null}
         </>
     );
-export const handler = async (ctx) => {
+const handler = async (ctx) => {
     const { category = 'fgw_zxxxgk' } = ctx.req.param();
     const limit = getRouteLimit(ctx, 20);
 

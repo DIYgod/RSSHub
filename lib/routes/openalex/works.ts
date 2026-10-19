@@ -30,7 +30,7 @@ const filterTypeMap = {
     domain: 'primary_topic.domain.id',
 };
 
-export const handler = async (ctx) => {
+const handler = async (ctx) => {
     const { journals, type, ids } = ctx.req.param();
 
     // Get date 14 days ago (2 weeks)

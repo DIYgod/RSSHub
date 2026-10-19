@@ -12,7 +12,7 @@ import { getRouteLimit } from '@/utils/route-limit';
 
 import { renderDescription } from './templates/description';
 
-export const handler = async (ctx: Context): Promise<Data> => {
+const handler = async (ctx: Context): Promise<Data> => {
     const limit = getRouteLimit(ctx, 30);
 
     const baseUrl = 'https://asiafruitchina.net';

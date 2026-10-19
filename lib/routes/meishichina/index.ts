@@ -9,7 +9,7 @@ import { getRouteLimit } from '@/utils/route-limit';
 
 const isChinese = (text: string): boolean => /^[\u{4E00}-\u{9FA5}]+$/u.test(text);
 
-export const handler = async (ctx) => {
+const handler = async (ctx) => {
     const DEFAULT_CATEGORY = '最新推荐';
     const DEFAULT_CLASSID = 0;
     const DEFAULT_ORDERBY = 'hot';

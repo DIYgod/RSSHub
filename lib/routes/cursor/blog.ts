@@ -31,7 +31,7 @@ const getBlogContent = (url: string) =>
         };
     });
 
-export const handler = async (ctx: Context): Promise<Data> => {
+const handler = async (ctx: Context): Promise<Data> => {
     const { topic, locale } = ctx.req.param();
     if (locale && !isValidHost(locale)) {
         throw new InvalidParameterError('Invalid locale');

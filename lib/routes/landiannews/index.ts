@@ -3,7 +3,7 @@ import { ViewType } from '@/types';
 
 import { fetchNewsItems } from './utils';
 
-export const handler = async (): Promise<Data> => {
+const handler = async (): Promise<Data> => {
     const rootUrl = 'https://www.landiannews.com/';
     const postApiUrl = `${rootUrl}wp-json/wp/v2/posts?_embed=author,wp:term`;
 

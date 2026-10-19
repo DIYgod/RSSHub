@@ -27,7 +27,7 @@ async function getArticle(link: string): Promise<Pick<DataItem, 'title' | 'descr
     };
 }
 
-export const handler = async (ctx) => {
+const handler = async (ctx) => {
     const { channel = 'allrules/bussiness' } = ctx.req.param();
     const limit = getRouteLimit(ctx, 30);
 

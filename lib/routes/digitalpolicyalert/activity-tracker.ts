@@ -16,7 +16,7 @@ const createSearchParams = (queryString: string, limit: number = 30): URLSearchP
     return params;
 };
 
-export const handler = async (ctx: Context): Promise<Data> => {
+const handler = async (ctx: Context): Promise<Data> => {
     const { filters } = ctx.req.param();
     const limit = getRouteLimit(ctx, 30);
     const params: URLSearchParams = createSearchParams(filters, ctx.req.query('sorted') === 'false' ? limit : Math.max(30, limit));

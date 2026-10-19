@@ -32,6 +32,8 @@ jobs:
             - parallel:
                   - name: Typecheck
                     run: pnpm typecheck
+                  - name: Knip
+                    run: pnpm knip --reporter github-actions
                   - name: Lint
                     run: pnpm exec oxlint --type-aware --config=.oxlintrc.ci.json
                         --format=json | oxlint-json-to-sarif > oxlint-results.sarif

@@ -4,13 +4,12 @@ import { renderToString } from 'hono/jsx/dom/server';
 import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
 import type { DataItem } from '@/types';
-import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
 import { getDutiesRecruitDetail, getFreeCompanyRecruitDetail, getNoviceNetworkRecruitDetail, getPostsDetail } from './api';
 import { DynamicSource, INDEX_URL, JOB, NoviceNetworkIdentity, PLAY_STYLE } from './constant';
-import type { BaseResponse, DutiesPartyDetail, FreeCompanyPartyDetail, NoviceNetworkParty, PostDetail, UserDynamic, UserPost } from './types';
+import type { DutiesPartyDetail, FreeCompanyPartyDetail, NoviceNetworkParty, PostDetail, UserDynamic, UserPost } from './types';
 
 const renderNoviceNetworkParty = ({ detail_mask, weekday_time, weekend_time, styles, target }) =>
     renderToString(
@@ -114,26 +113,6 @@ export function checkConfig() {
     if (!config.sdo.ff14risingstones || !config.sdo.ua) {
         throw new ConfigNotFoundError('ff14risingstones RSS is disabled due to the lack of relevant config');
     }
-}
-
-function request<T>(url: string, options?: RequestInit) {
-    return ofetch<T>(url, {
-        ...options,
-        headers: {
-            Cookie: `ff14risingstones=${config.sdo.ff14risingstones}`,
-            'User-Agent': config.sdo.ua!,
-            ...options?.headers,
-        },
-    });
-}
-
-export async function requestAPI<T = any>(url: string, options?: RequestInit) {
-    const response = await request<BaseResponse<T>>(url, options);
-
-    if (response.code !== 10000) {
-        throw new Error(response.msg);
-    }
-    return response.data;
 }
 
 export async function generatePostFeeds(posts: UserPost[]) {

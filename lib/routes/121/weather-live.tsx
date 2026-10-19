@@ -25,7 +25,7 @@ const renderDescription = (description, images) =>
         </>
     );
 
-export const handler = async (ctx: Context): Promise<Data> => {
+const handler = async (ctx: Context): Promise<Data> => {
     const limit = getRouteLimit(ctx, 100);
 
     const baseUrl = 'https://tf.121.com.cn';
