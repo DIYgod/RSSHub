@@ -51,6 +51,9 @@ const getVenueQueryContext = async (moduleKey: string): Promise<{ pageId: string
 
 const getVenuePageQueryList = async (pageId: string, sign: string, resolvers: string[]): Promise<VenueQuery[]> => {
     const response = await ofetch<VenuePageResponse>('https://m.xiaomiyoupin.com/mtop/navi/venue/page', {
+        headers: {
+            accept: '*/*',
+        },
         query: {
             page_id: pageId,
             pdl: 'jianyu',
@@ -194,6 +197,9 @@ const getGoodsItem = async (gid: number): Promise<GoodsDetailItem> => {
             version: '1.0.0',
             vipMode: true,
         },
+        headers: {
+            'X-User-Agent': 'channel/youpin platform/youpin.m',
+        },
         method: 'POST',
     });
     return response.data.goods;
@@ -212,17 +218,19 @@ const toSupportList = (detailItem: GoodsDetailItem): Crowdfunding['supportList']
         return {
             image: product.img,
             name: product.attributeValues.join(' '),
-            price: String((product.onHandPrice[0]?.price ?? product.price) / 100),
+            price: String((product.onHandPrice?.at(0)?.price ?? product.price) / 100),
             description: product.name,
         };
     });
-    const groupBuyGood = detailItem.oneYuanSupport.groupBuyInfo.good;
-    supportList.push({
-        image: groupBuyGood.img,
-        name: '1元支持',
-        price: String(groupBuyGood.groupbuy_price / 100),
-        description: groupBuyGood.groupbuy_summary,
-    });
+    const groupBuyGood = detailItem.oneYuanSupport.groupBuyInfo?.good;
+    if (groupBuyGood) {
+        supportList.push({
+            image: groupBuyGood.img,
+            name: '1元支持',
+            price: String(groupBuyGood.groupbuy_price / 100),
+            description: groupBuyGood.groupbuy_summary,
+        });
+    }
     return supportList;
 };
 

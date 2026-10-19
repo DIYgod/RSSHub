@@ -129,7 +129,7 @@ export interface ProductInfoItem {
     img: string;
     picURL: string;
     attributeValues: string[];
-    onHandPrice: Array<{
+    onHandPrice?: Array<{
         price: number;
     }>;
 }
@@ -167,7 +167,7 @@ export interface GoodsDetailItem {
         saledCount: number;
     };
     oneYuanSupport: {
-        groupBuyInfo: {
+        groupBuyInfo?: {
             good: {
                 name: string;
                 img: string;
