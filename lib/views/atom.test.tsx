@@ -1,3 +1,4 @@
+import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 import { describe, expect, it } from 'vitest';
 
@@ -79,5 +80,16 @@ describe('Atom view', () => {
         expect(html.match(/rel="enclosure"/g)).toHaveLength(2);
         expect(html).toContain('href="https://example.com/audio.mp3" type="audio/mpeg" length="123" title="Audio &amp; notes"');
         expect(html).toContain('href="https://example.com/cover.png" type="image/png"');
+    });
+
+    it('does not let hono hoist feed titles and links as document metadata', () => {
+        const html = String(
+            <probe>
+                {raw('</head>')}
+                <Atom data={{ title: 'Feed', item: [{ title: 'Item', link: 'https://example.com/item' }] }} />
+            </probe>
+        );
+
+        expect(html).toMatch(/^<probe><\/head><feed/);
     });
 });

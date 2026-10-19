@@ -766,6 +766,45 @@ describe('show_image', () => {
     });
 });
 
+describe('image enclosure type', () => {
+    it.each([
+        ['https://example.com/image.jpg', 'image/jpeg'],
+        ['https://example.com/image.jpeg', 'image/jpeg'],
+        ['https://example.com/image.png', 'image/png'],
+        ['https://example.com/image.webp', 'image/webp'],
+        ['https://example.com/image.gif', 'image/gif'],
+        ['https://example.com/image.svg', 'image/svg+xml'],
+        ['https://example.com/image.PNG?size=300#preview', 'image/png'],
+        ['//example.com/image.gif', 'image/gif'],
+    ])('infers %s as %s', async (image, mimeType) => {
+        const data = await runMiddleware({ item: [{ title: 'Image', image }] }, {});
+        expect(data.item[0].enclosure_type).toBe(mimeType);
+        expect(data.item[0].enclosure_url).toBeUndefined();
+    });
+
+    it.each(['https://example.com/image', 'https://example.com/image?filename=image.jpg', 'https://example.com/image.unknown', 'https://example.com/page.html', 'https://example.com/video.mp4', 'https://['])(
+        'does not invent a MIME type for %s',
+        async (image) => {
+            const data = await runMiddleware({ item: [{ title: 'Image', image }] }, {});
+            expect(data.item[0].enclosure_type).toBeUndefined();
+        }
+    );
+
+    it('leaves explicit enclosures and attachments alone', async () => {
+        const data = await runMiddleware(
+            {
+                item: [
+                    { title: 'Media', image: 'https://example.com/thumbnail.jpg', enclosure_url: 'https://example.com/audio.mp3', enclosure_type: 'audio/mpeg' },
+                    { title: 'Attachment', image: 'https://example.com/cover.png', attachments: [{ url: 'https://example.com/audio.mp3', mime_type: 'audio/mpeg' }] },
+                ],
+            },
+            {}
+        );
+        expect(data.item[0].enclosure_type).toBe('audio/mpeg');
+        expect(data.item[1].enclosure_type).toBeUndefined();
+    });
+});
+
 describe('enclosure', () => {
     it('extracts direct media and downloads, preserving metadata and rejecting unsafe or untyped links', async () => {
         const data = await runMiddleware(

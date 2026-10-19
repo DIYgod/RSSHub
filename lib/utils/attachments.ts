@@ -1,4 +1,5 @@
 import type { CheerioAPI } from 'cheerio';
+import { getMimeType } from 'hono/utils/mime';
 
 import type { DataItem } from '@/types';
 
@@ -26,6 +27,15 @@ const mimeTypes = {
     zip: 'application/zip',
 } satisfies Record<string, string>;
 const isMimeTypeKey = (key: string): key is keyof typeof mimeTypes => Object.hasOwn(mimeTypes, key);
+
+export const getImageMimeType = (image: string) => {
+    try {
+        const mimeType = getMimeType(new URL(image, 'https://rsshub.app').pathname)?.split(';', 1)[0];
+        return mimeType?.startsWith('image/') ? mimeType : undefined;
+    } catch {
+        return;
+    }
+};
 
 export const getItemAttachments = (item: DataItem): Attachment[] => {
     const attachments = [...(item.attachments || [])];

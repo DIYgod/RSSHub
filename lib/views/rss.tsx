@@ -1,33 +1,25 @@
+import { html } from 'hono/html';
 import type { FC } from 'hono/jsx';
-import { getMimeType } from 'hono/utils/mime';
 
 import type { Data } from '@/types';
-
-const getImageMimeType = (image: string) => {
-    try {
-        const mimeType = getMimeType(new URL(image, 'https://rsshub.app').pathname)?.split(';', 1)[0];
-        return mimeType?.startsWith('image/') ? mimeType : undefined;
-    } catch {
-        return;
-    }
-};
 
 const RSS: FC<{ data: Data }> = ({ data }) => {
     const hasItunes = data.itunes_author || data.itunes_category || (data.item && data.item.some((i) => i.itunes_item_image || i.itunes_duration));
     const hasMedia = data.item?.some((i) => i.media);
+    const hasAuthor = data.item?.some((i) => i.author);
     const isTelegramLink = data.link?.startsWith('https://t.me/s/');
 
     return (
         <rss
             xmlns:atom="http://www.w3.org/2005/Atom"
-            xmlns:dc="http://purl.org/dc/elements/1.1/"
+            xmlns:dc={hasAuthor ? 'http://purl.org/dc/elements/1.1/' : undefined}
             xmlns:itunes={hasItunes ? 'http://www.itunes.com/dtds/podcast-1.0.dtd' : undefined}
             xmlns:media={hasMedia ? 'http://search.yahoo.com/mrss/' : undefined}
             version="2.0"
         >
             <channel>
-                <title>{data.title || 'RSSHub'}</title>
-                <link>{data.link || 'https://docs.rsshub.app'}</link>
+                {html`<title>${data.title || 'RSSHub'}</title>`}
+                {html`<link>${data.link || 'https://docs.rsshub.app'}</link>`}
                 <atom:link href={data.atomlink} rel="self" type="application/rss+xml" />
                 <description>{data.description || data.title} - Powered by RSSHub</description>
                 <generator>RSSHub</generator>
@@ -39,8 +31,8 @@ const RSS: FC<{ data: Data }> = ({ data }) => {
                 {data.image && (
                     <image>
                         <url>{data.image}</url>
-                        <title>{data.title || 'RSSHub'}</title>
-                        <link>{data.link}</link>
+                        {html`<title>${data.title || 'RSSHub'}</title>`}
+                        {html`<link>${data.link}</link>`}
                         {isTelegramLink && (
                             <>
                                 <height>31</height>
@@ -53,13 +45,13 @@ const RSS: FC<{ data: Data }> = ({ data }) => {
                 <ttl>{data.ttl}</ttl>
                 {data.item?.map((item) => (
                     <item>
-                        <title>{item.title}</title>
+                        {html`<title>${item.title}</title>`}
                         <description>{item.description}</description>
-                        <link>{item.link}</link>
+                        {html`<link>${item.link}</link>`}
                         <guid isPermaLink="false">{item.guid || item.link || item.title}</guid>
                         {item.pubDate && <pubDate>{item.pubDate}</pubDate>}
                         {item.author && <dc:creator>{item.author}</dc:creator>}
-                        {item.image && !item.enclosure_url && !item.attachments?.length && <enclosure url={item.image} type={getImageMimeType(item.image)} />}
+                        {item.image && !item.enclosure_url && !item.attachments?.length && <enclosure url={item.image} type={item.enclosure_type} />}
                         {item.itunes_item_image && <itunes:image href={item.itunes_item_image} />}
                         {item.enclosure_url && <enclosure url={item.enclosure_url} length={item.enclosure_length} type={item.enclosure_type} />}
                         {!item.enclosure_url && item.attachments?.slice(0, 1).map((attachment) => <enclosure url={attachment.url} length={attachment.size_in_bytes ?? 0} type={attachment.mime_type} />)}
