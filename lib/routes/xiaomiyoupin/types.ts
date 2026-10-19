@@ -99,8 +99,14 @@ export interface VenueReservationBatchItem {
 
 export type CrowdfundingBatchListItem = VenueGoodsBatchItem | VenueReservationBatchItem;
 
+export interface VenueBatchPaging {
+    limit: number;
+    offset: number;
+}
+
 export interface VenueBatchListResult<Item> {
     list: Item[];
+    paging?: VenueBatchPaging;
 }
 
 export type CrowdfundingBatchResponse = DataResponse<{
@@ -110,14 +116,6 @@ export type CrowdfundingBatchResponse = DataResponse<{
 export type NewProductBatchResponse = DataResponse<{
     result_list: Array<VenueBatchListResult<NewProductBatchListItem>>;
 }>;
-
-export interface GoodsListItem {
-    gid: number;
-    name: string;
-    jumpUrl: string;
-    image: string;
-    firstReleaseTime?: number;
-}
 
 export interface ProductInfoItem {
     pid: number;

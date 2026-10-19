@@ -14,10 +14,10 @@ import type {
     CrowdfundingBatchResponse,
     GoodsDetailItem,
     GoodsDetailResponse,
-    GoodsListItem,
     HomepageMainResponse,
     NewProductBatchListItem,
     NewProductBatchResponse,
+    VenueBannerBatchItem,
     VenueGoodsBatchItem,
     VenuePageResponse,
     VenueQuery,
@@ -68,6 +68,10 @@ type VenueBatchItem = NewProductBatchListItem | VenueReservationBatchItem;
 
 const isVenueGoodsBatchItem = (item: VenueBatchItem): item is VenueGoodsBatchItem => 'value' in item;
 
+const isVenueGoodsTypeBatchItem = (item: VenueBatchItem): item is VenueGoodsBatchItem => isVenueGoodsBatchItem(item) && item.type === 'goods';
+
+const isVenueBannerBatchItem = (item: VenueBatchItem): item is VenueBannerBatchItem => 'new_product_name' in item;
+
 export const getCrowdfundingGid = (item: CrowdfundingBatchListItem): number => {
     if (isVenueGoodsBatchItem(item)) {
         return item.value.goods.gid;
@@ -89,6 +93,22 @@ export const getCrowdfundingImage = (item: CrowdfundingBatchListItem): string =>
     }
     return item.goodsInfo.img_square;
 };
+
+export const getNewProductGid = (item: NewProductBatchListItem): number => (isVenueGoodsBatchItem(item) ? item.value.goods.gid : item.gid);
+
+export const getNewProductName = (item: NewProductBatchListItem): string => (isVenueGoodsBatchItem(item) ? item.value.goods.name : item.new_product_name);
+
+export const getNewProductJumpUrl = (item: NewProductBatchListItem): string => (isVenueGoodsBatchItem(item) ? item.value.goods.jump_url : item.jump_url);
+
+export const getNewProductImage = (item: NewProductBatchListItem): string => {
+    if (isVenueGoodsBatchItem(item)) {
+        const goods = item.value.goods;
+        return goods.img_square || goods.img800s || goods.img_horizon;
+    }
+    return item.picture_url;
+};
+
+export const getNewProductFirstReleaseTime = (item: NewProductBatchListItem): number | undefined => (isVenueGoodsBatchItem(item) ? item.value.goods.fist_release_time || item.value.goods.first_release_time : undefined);
 
 const dedupeByGid = <Item>(items: Item[], getGid: (item: Item) => number): Item[] => {
     const list = Map.groupBy(items, (item) => getGid(item))
@@ -112,7 +132,7 @@ const getCrowdfundingBatchList = async (pageId: string, sign: string, queryList:
     });
     const list = response.data.result_list.flatMap((result): CrowdfundingBatchListItem[] => {
         if ('list' in result) {
-            return result.list.filter((item): item is VenueGoodsBatchItem => isVenueGoodsBatchItem(item) && item.type === 'goods');
+            return result.list.filter((item): item is VenueGoodsBatchItem => isVenueGoodsTypeBatchItem(item));
         }
         if (result.gid === undefined || result.gid === null) {
             return [];
@@ -120,34 +140,6 @@ const getCrowdfundingBatchList = async (pageId: string, sign: string, queryList:
         return [result];
     });
     return list;
-};
-
-const toGoodsListItem = (item: NewProductBatchListItem, resolver: string): GoodsListItem | undefined => {
-    if (resolver === 'leek-super' && !isVenueGoodsBatchItem(item)) {
-        if (!item.gid || !item.new_product_name) {
-            return undefined;
-        }
-        return {
-            gid: item.gid,
-            name: item.new_product_name,
-            jumpUrl: item.jump_url,
-            image: item.picture_url,
-        };
-    }
-    if (!isVenueGoodsBatchItem(item)) {
-        return undefined;
-    }
-    const goods = item.value.goods;
-    if (!goods.gid || !goods.name) {
-        return undefined;
-    }
-    return {
-        gid: goods.gid,
-        name: goods.name,
-        jumpUrl: goods.jump_url,
-        image: goods.img_square || goods.img800s || goods.img_horizon,
-        firstReleaseTime: goods.fist_release_time || goods.first_release_time,
-    };
 };
 
 const getNewProductBatchList = async (pageId: string, sign: string, queryList: VenueQuery[]): Promise<NewProductBatchListItem[]> => {
@@ -162,7 +154,15 @@ const getNewProductBatchList = async (pageId: string, sign: string, queryList: V
             sign,
         },
     });
-    const list = response.data.result_list.flatMap((result) => result.list);
+    const list = response.data.result_list.flatMap((result) => result.list).filter((item): item is NewProductBatchListItem => isVenueGoodsTypeBatchItem(item) || isVenueBannerBatchItem(item));
+    return list;
+};
+
+export const getNewProductList = async (): Promise<NewProductBatchListItem[]> => {
+    const { pageId, sign } = await getVenueQueryContext('product_hot');
+    const queryList = await getVenuePageQueryList(pageId, sign, ['leek-super', 'leek-selective']);
+    const batchList = await getNewProductBatchList(pageId, sign, queryList);
+    const list = dedupeByGid(batchList, (item) => getNewProductGid(item));
     return list;
 };
 
@@ -173,17 +173,6 @@ export const getCrowdfundingList = async (): Promise<CrowdfundingBatchListItem[]
     const list = dedupeByGid(batchList, (item) => getCrowdfundingGid(item));
     return list;
 };
-
-const getNewProductFromVenue = async (): Promise<GoodsListItem[]> => {
-    const { pageId, sign } = await getVenueQueryContext('product_hot');
-    const queryList = await getVenuePageQueryList(pageId, sign, ['leek-super', 'leek-selective']);
-    const batchList = await getNewProductBatchList(pageId, sign, queryList);
-    const items = batchList.map((item, index) => toGoodsListItem(item, queryList[index]?.resolver ?? '')).filter((item): item is GoodsListItem => item !== undefined);
-    const list = dedupeByGid(items, (item) => item.gid);
-    return list;
-};
-
-export const getNewProductList = (): Promise<GoodsListItem[]> => getNewProductFromVenue();
 
 const getGoodsItem = async (gid: number): Promise<GoodsDetailItem> => {
     const response = await ofetch<GoodsDetailResponse>('https://m.xiaomiyoupin.com/api/gateway/detail', {
@@ -207,7 +196,7 @@ const getGoodsItem = async (gid: number): Promise<GoodsDetailItem> => {
 
 export const getCrowdfundingItem = (item: CrowdfundingBatchListItem): Promise<GoodsDetailItem> => getGoodsItem(getCrowdfundingGid(item));
 
-export const getNewProductItem = (item: GoodsListItem): Promise<GoodsDetailItem> => getGoodsItem(item.gid);
+export const getNewProductItem = (item: NewProductBatchListItem): Promise<GoodsDetailItem> => getGoodsItem(getNewProductGid(item));
 
 const toSellPointList = (goodsInfo: GoodsDetailItem['goodsInfo']): string[] =>
     [goodsInfo.firstSellPoint, goodsInfo.secondSellPoint, goodsInfo.thirdSellPoint].map((point) => point.trim()).filter((point): point is string => Boolean(point));
@@ -245,8 +234,8 @@ export const toCrowdfunding = (listItem: CrowdfundingBatchListItem, detailItem: 
     supportList: toSupportList(detailItem),
 });
 
-export const toNewProduct = (listItem: GoodsListItem, detailItem: GoodsDetailItem): NewProduct => ({
-    image: detailItem.goodsInfo.imgSquare || listItem.image,
+export const toNewProduct = (listItem: NewProductBatchListItem, detailItem: GoodsDetailItem): NewProduct => ({
+    image: detailItem.goodsInfo.imgSquare || getNewProductImage(listItem),
     sellPointList: toSellPointList(detailItem.goodsInfo),
     goodsList: Object.values(detailItem.productInfo ?? {}).map((product) => ({
         image: product.img800s || product.img || product.picURL,
@@ -262,6 +251,11 @@ export default {
     getCrowdfundingName,
     getCrowdfundingImage,
     getNewProductList,
+    getNewProductGid,
+    getNewProductName,
+    getNewProductJumpUrl,
+    getNewProductImage,
+    getNewProductFirstReleaseTime,
     getCrowdfundingItem,
     getNewProductItem,
     toCrowdfunding,

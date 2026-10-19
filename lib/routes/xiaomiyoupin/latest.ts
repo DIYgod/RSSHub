@@ -4,7 +4,7 @@ import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import { parseDate } from '@/utils/parse-date';
 
-import type { GoodsDetailItem, GoodsListItem } from './types';
+import type { GoodsDetailItem, NewProductBatchListItem } from './types';
 import utils from './utils';
 
 export const route: Route = {
@@ -31,24 +31,27 @@ export const route: Route = {
     view: ViewType.Notifications,
 };
 
-const getDataItems = (list: GoodsListItem[]): Promise<DataItem[]> =>
+const getDataItems = (list: NewProductBatchListItem[]): Promise<DataItem[]> =>
     Promise.all(
         list.map((listItem) =>
-            cache.tryGet(`xiaomiyoupin:product:dataitem:${listItem.gid}`, async () => {
+            cache.tryGet(`xiaomiyoupin:product:dataitem:${utils.getNewProductGid(listItem)}`, async () => {
                 const detailItem = await utils.getNewProductItem(listItem);
                 return getDataItem(listItem, detailItem);
             })
         )
     );
 
-const getDataItem = (listItem: GoodsListItem, detailItem: GoodsDetailItem): DataItem => ({
-    title: listItem.name,
-    description: renderNewProduct(utils.toNewProduct(listItem, detailItem)),
-    link: listItem.jumpUrl,
-    image: listItem.image,
-    pubDate: listItem.firstReleaseTime ? parseDate(listItem.firstReleaseTime, 'X') : undefined,
-    language: 'zh-CN',
-});
+const getDataItem = (listItem: NewProductBatchListItem, detailItem: GoodsDetailItem): DataItem => {
+    const firstReleaseTime = utils.getNewProductFirstReleaseTime(listItem);
+    return {
+        title: utils.getNewProductName(listItem),
+        description: renderNewProduct(utils.toNewProduct(listItem, detailItem)),
+        link: utils.getNewProductJumpUrl(listItem),
+        image: utils.getNewProductImage(listItem),
+        pubDate: firstReleaseTime ? parseDate(firstReleaseTime, 'X') : undefined,
+        language: 'zh-CN',
+    };
+};
 
 async function handler(): Promise<Data> {
     const list = await utils.getNewProductList();
