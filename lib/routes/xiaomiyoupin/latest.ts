@@ -1,3 +1,5 @@
+import pMap from 'p-map';
+
 import { renderNewProduct } from '@/routes/mi/templates/newproduct';
 import type { Data, DataItem, Route } from '@/types';
 import { ViewType } from '@/types';
@@ -32,13 +34,14 @@ export const route: Route = {
 };
 
 const getDataItems = (list: NewProductBatchListItem[]): Promise<DataItem[]> =>
-    Promise.all(
-        list.map((listItem) =>
+    pMap(
+        list,
+        (listItem) =>
             cache.tryGet(`xiaomiyoupin:product:dataitem:${utils.getNewProductGid(listItem)}`, async () => {
                 const detailItem = await utils.getNewProductItem(listItem);
                 return getDataItem(listItem, detailItem);
-            })
-        )
+            }),
+        { concurrency: 6 }
     );
 
 const getDataItem = (listItem: NewProductBatchListItem, detailItem: GoodsDetailItem): DataItem => {

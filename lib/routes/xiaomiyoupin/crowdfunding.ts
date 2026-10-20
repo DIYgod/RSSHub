@@ -1,3 +1,5 @@
+import pMap from 'p-map';
+
 import { renderCrowdfunding } from '@/routes/mi/templates/crowdfunding';
 import type { Data, DataItem, Route } from '@/types';
 import { ViewType } from '@/types';
@@ -32,13 +34,14 @@ export const route: Route = {
 };
 
 const getDataItems = (list: CrowdfundingBatchListItem[]): Promise<DataItem[]> =>
-    Promise.all(
-        list.map((listItem) =>
+    pMap(
+        list,
+        (listItem) =>
             cache.tryGet(`xiaomiyoupin:crowdfunding:dataitem:${utils.getCrowdfundingGid(listItem)}`, async () => {
                 const detailItem = await utils.getCrowdfundingItem(listItem);
                 return getDataItem(listItem, detailItem);
-            })
-        )
+            }),
+        { concurrency: 6 }
     );
 
 const getDataItem = (listItem: CrowdfundingBatchListItem, detailItem: GoodsDetailItem): DataItem => ({
