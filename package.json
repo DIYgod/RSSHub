@@ -93,7 +93,7 @@
         "etag": "1.8.1",
         "fanfou-sdk": "6.0.0",
         "google-play-scraper": "10.1.3",
-        "header-generator": "2.1.88",
+        "header-generator": "2.1.89",
         "hono": "4.13.13",
         "html-to-text": "10.0.1",
         "http-cookie-agent": "8.0.0",
@@ -235,12 +235,14 @@
             "wrangler"
         ],
         "overrides": {
+            "browserslist@4.28.9>caniuse-lite": "1.0.30001810",
             "difflib": "https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed",
             "es-set-tostringtag": "npm:@nolyfill/es-set-tostringtag@^1",
             "google-play-scraper>got": "^14.6.4",
             "google-play-scraper>ramda": "^0.32.0",
             "google-play-scraper>tough-cookie": "^6.0.0",
             "hasown": "npm:@nolyfill/hasown@^1",
+            "header-generator>browserslist": "4.28.9",
             "rss-parser@3.13.0>entities": "^8.1.0",
             "rss-parser@3.13.0>xml2js": "^0.6.2",
             "safe-buffer": "npm:@nolyfill/safe-buffer@^1",
