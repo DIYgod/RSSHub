@@ -130,6 +130,9 @@ export interface ProductInfoItem {
     onHandPrice?: Array<{
         price: number;
     }>;
+    singlePrice?: Array<{
+        price: number;
+    }>;
 }
 
 export interface GoodsDetailItem {
