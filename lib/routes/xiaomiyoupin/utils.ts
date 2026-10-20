@@ -73,39 +73,17 @@ const isVenueGoodsTypeBatchItem = (item: VenueBatchItem): item is VenueGoodsBatc
 
 const isVenueBannerBatchItem = (item: VenueBatchItem): item is VenueBannerBatchItem => 'new_product_name' in item;
 
-export const getCrowdfundingGid = (item: CrowdfundingBatchListItem): number => {
-    if (isVenueGoodsBatchItem(item)) {
-        return item.value.goods.gid;
-    }
-    return item.gid!;
-};
+export const getCrowdfundingGid = (item: CrowdfundingBatchListItem): number => (isVenueGoodsBatchItem(item) ? item.value.goods.gid : item.gid!);
 
-export const getCrowdfundingName = (item: CrowdfundingBatchListItem): string => {
-    if (isVenueGoodsBatchItem(item)) {
-        return item.value.goods.name;
-    }
-    return item.goodsInfo.name;
-};
+export const getCrowdfundingName = (item: CrowdfundingBatchListItem): string => (isVenueGoodsBatchItem(item) ? item.value.goods.name : item.goodsInfo.name);
 
-export const getCrowdfundingImage = (item: CrowdfundingBatchListItem): string => {
-    if (isVenueGoodsBatchItem(item)) {
-        const goods = item.value.goods;
-        return goods.img_square;
-    }
-    return item.goodsInfo.img_square;
-};
+export const getCrowdfundingImage = (item: CrowdfundingBatchListItem): string => (isVenueGoodsBatchItem(item) ? item.value.goods.img_square : item.goodsInfo.img_square);
 
 export const getNewProductGid = (item: NewProductBatchListItem): number => (isVenueGoodsBatchItem(item) ? item.value.goods.gid : item.gid);
 
 export const getNewProductName = (item: NewProductBatchListItem): string => (isVenueGoodsBatchItem(item) ? item.value.goods.name : item.new_product_name);
 
-export const getNewProductImage = (item: NewProductBatchListItem): string => {
-    if (isVenueGoodsBatchItem(item)) {
-        const goods = item.value.goods;
-        return goods.img_square;
-    }
-    return item.picture_url;
-};
+export const getNewProductImage = (item: NewProductBatchListItem): string => (isVenueGoodsBatchItem(item) ? item.value.goods.img_square : item.picture_url);
 
 export const getNewProductFirstReleaseTime = (item: NewProductBatchListItem): number | undefined => (isVenueGoodsBatchItem(item) ? item.value.goods.fist_release_time : undefined);
 
