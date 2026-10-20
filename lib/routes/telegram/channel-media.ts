@@ -8,6 +8,7 @@ import { config } from '@/config';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import cacheModule from '@/utils/cache/index';
+import { isWorker } from '@/utils/is-worker';
 
 import { getClient, getDocument, getFilename, unwrapMedia } from './tglib/client';
 
@@ -159,7 +160,10 @@ function parseRange(range: string, length: bigInt.BigInteger) {
 export async function configureMiddlewares(ctx: Context) {
     // media is too heavy to cache in memory or redis, and lock-up is not needed
     await cacheModule.set(ctx.get('cacheControlKey'), '0', config.cache.requestTimeout);
-    ctx.req.raw.headers.delete('Accept-Encoding'); // avoid hono compress() middleware detecting Accept-Encoding on req
+    // Workers have no compress() middleware and their request headers are immutable
+    if (!isWorker) {
+        ctx.req.raw.headers.delete('Accept-Encoding'); // avoid hono compress() middleware detecting Accept-Encoding on req
+    }
 }
 function streamResponse(c: Context, bodyIter: AsyncGenerator<Buffer>) {
     return stream(c, async (stream) => {
