@@ -228,7 +228,7 @@ const toGoodsList = (detailItem: GoodsDetailItem): NewProduct['goodsList'] =>
             image: product.img,
             name: product.attributeValues.join(' '),
             marketPrice: String(product.marketPrice / 100),
-            price: String(product.price / 100),
+            price: String((product.onHandPrice?.at(0)?.price ?? product.price) / 100),
         };
     });
 
