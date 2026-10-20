@@ -221,6 +221,17 @@ const toSupportList = (detailItem: GoodsDetailItem): Crowdfunding['supportList']
     return supportList;
 };
 
+const toGoodsList = (detailItem: GoodsDetailItem): NewProduct['goodsList'] =>
+    detailItem.goodsInfo.pids.map((pid) => {
+        const product = detailItem.productInfo[pid];
+        return {
+            image: product.img,
+            name: product.attributeValues.join(' '),
+            marketPrice: String(product.marketPrice / 100),
+            price: String(product.price / 100),
+        };
+    });
+
 export const toCrowdfunding = (listItem: CrowdfundingBatchListItem, detailItem: GoodsDetailItem): Crowdfunding => ({
     image: detailItem.goodsInfo.imgHorizon,
     sellPointList: toSellPointList(detailItem.goodsInfo),
@@ -233,14 +244,9 @@ export const toCrowdfunding = (listItem: CrowdfundingBatchListItem, detailItem: 
 });
 
 export const toNewProduct = (listItem: NewProductBatchListItem, detailItem: GoodsDetailItem): NewProduct => ({
-    image: detailItem.goodsInfo.imgSquare || getNewProductImage(listItem),
+    image: detailItem.goodsInfo.imgHorizon,
     sellPointList: toSellPointList(detailItem.goodsInfo),
-    goodsList: Object.values(detailItem.productInfo ?? {}).map((product) => ({
-        image: product.img800s || product.img || product.picURL,
-        name: product.name,
-        marketPrice: String((product.marketPrice ?? 0) / 100),
-        price: String((product.price ?? 0) / 100),
-    })),
+    goodsList: toGoodsList(detailItem),
 });
 
 export default {
