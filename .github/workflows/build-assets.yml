@@ -43,6 +43,10 @@ jobs:
                   keep_files: true
 
             # docs
+            - name: Fetch history
+              # build-docs dates each route by the commit that added its file. Only this commit's history, as fetch-depth: 0
+              # would also download every other branch, gh-pages included.
+              run: git fetch --unshallow --no-tags origin "$GITHUB_SHA"
             - name: Build docs
               run: pnpm exec tsx scripts/workflow/build-docs.ts
             - id: check-docs-env

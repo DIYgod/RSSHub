@@ -1,3 +1,4 @@
+import { execFileSync } from 'node:child_process';
 import fs from 'node:fs';
 import path from 'node:path';
 
@@ -29,6 +30,42 @@ const foloAnalysisTop100 = Object.entries(foloAnalysisResult)
 
 const __dirname = getCurrentPath(import.meta.url);
 
+const git = (...args: string[]) =>
+    execFileSync('git', args, {
+        cwd: path.join(__dirname, '../..'),
+        encoding: 'utf8',
+        maxBuffer: 64 * 1024 * 1024,
+    });
+
+/**
+ * When each file under lib/routes was first committed, followed through renames so that a moved or converted file
+ * keeps its date. The /rsshub/routes feed dates its items with this. A shallow clone would date every file to its
+ * oldest fetched commit and announce all routes as new, so the full history is required.
+ */
+const getRouteFileAddedAt = () => {
+    if (git('rev-parse', '--is-shallow-repository').trim() === 'true') {
+        throw new Error('Dating routes needs the full git history, run `git fetch --unshallow` first');
+    }
+
+    const log = git('-c', 'core.quotePath=false', '-c', 'diff.renameLimit=0', 'log', '-M', '--name-status', '--diff-filter=AR', '--format=%x00%cI', '--', 'lib/routes');
+    const addedAt = new Map<string, string>();
+    // git log lists the newest commit first; replay from the oldest so that a rename hands its date to the new path
+    for (const commit of log.split('\0').toReversed()) {
+        const [date, ...changes] = commit.split('\n');
+        for (const change of changes) {
+            const [status, from, to] = change.split('\t', 3);
+            if (status === 'A' && !addedAt.has(from)) {
+                addedAt.set(from, new Date(date).toISOString());
+            } else if (status.startsWith('R')) {
+                addedAt.set(to, addedAt.get(from) ?? new Date(date).toISOString());
+            }
+        }
+    }
+    return addedAt;
+};
+
+const routeFileAddedAt = getRouteFileAddedAt();
+
 // Build namespace-centric data structure
 interface NamespaceData {
     name: string;
@@ -56,6 +93,8 @@ interface RouteData {
     radar?: any[];
     view?: number;
     location?: string;
+    /** ISO time of the commit that added the route's file */
+    addedAt?: string;
     heat: number;
     topFeeds: any[];
     zh?: {
@@ -164,6 +203,7 @@ for (const namespace in namespaces) {
             radar: routeData.radar,
             view: routeData.view,
             location: routeData.location,
+            addedAt: routeFileAddedAt.get(`lib/routes/${namespace}/${routeData.location}`),
             heat,
             topFeeds: foloAnalysisResult[realPath]?.topFeeds || [],
             zh: routeData.zh
