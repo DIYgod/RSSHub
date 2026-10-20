@@ -73,18 +73,60 @@ const isVenueGoodsTypeBatchItem = (item: VenueBatchItem): item is VenueGoodsBatc
 
 const isVenueBannerBatchItem = (item: VenueBatchItem): item is VenueBannerBatchItem => 'new_product_name' in item;
 
+/**
+ * Read the goods id from a crowdfunding batch item, whether it is a nested venue goods entry or a flat entry.
+ *
+ * @param {CrowdfundingBatchListItem} item - Crowdfunding batch item.
+ * @returns {number} Goods id.
+ */
 export const getCrowdfundingGid = (item: CrowdfundingBatchListItem): number => (isVenueGoodsBatchItem(item) ? item.value.goods.gid : item.gid!);
 
+/**
+ * Read the goods name from a crowdfunding batch item.
+ *
+ * @param {CrowdfundingBatchListItem} item - Crowdfunding batch item.
+ * @returns {string} Goods name.
+ */
 export const getCrowdfundingName = (item: CrowdfundingBatchListItem): string => (isVenueGoodsBatchItem(item) ? item.value.goods.name : item.goodsInfo.name);
 
+/**
+ * Read the square image URL from a crowdfunding batch item.
+ *
+ * @param {CrowdfundingBatchListItem} item - Crowdfunding batch item.
+ * @returns {string} Square image URL.
+ */
 export const getCrowdfundingImage = (item: CrowdfundingBatchListItem): string => (isVenueGoodsBatchItem(item) ? item.value.goods.img_square : item.goodsInfo.img_square);
 
+/**
+ * Read the goods id from a new product batch item.
+ *
+ * @param {NewProductBatchListItem} item - New product batch item.
+ * @returns {number} Goods id.
+ */
 export const getNewProductGid = (item: NewProductBatchListItem): number => (isVenueGoodsBatchItem(item) ? item.value.goods.gid : item.gid);
 
+/**
+ * Read the goods name from a new product batch item.
+ *
+ * @param {NewProductBatchListItem} item - New product batch item.
+ * @returns {string} Goods name.
+ */
 export const getNewProductName = (item: NewProductBatchListItem): string => (isVenueGoodsBatchItem(item) ? item.value.goods.name : item.new_product_name);
 
+/**
+ * Read the square image URL from a new product batch item.
+ *
+ * @param {NewProductBatchListItem} item - New product batch item.
+ * @returns {string} Square image URL.
+ */
 export const getNewProductImage = (item: NewProductBatchListItem): string => (isVenueGoodsBatchItem(item) ? item.value.goods.img_square : item.picture_url);
 
+/**
+ * Read the first release timestamp from a new product batch item.
+ *
+ * @param {NewProductBatchListItem} item - New product batch item.
+ * @returns {number | undefined} First release timestamp, or `undefined` when the item does not provide one.
+ */
 export const getNewProductFirstReleaseTime = (item: NewProductBatchListItem): number | undefined => (isVenueGoodsBatchItem(item) ? item.value.goods.fist_release_time : undefined);
 
 const getCrowdfundingBatchList = async (pageId: string, sign: string, queryList: VenueQuery[]): Promise<CrowdfundingBatchListItem[]> => {
@@ -127,6 +169,11 @@ const getNewProductBatchList = async (pageId: string, sign: string, queryList: V
     return list;
 };
 
+/**
+ * Fetch the new product list from the `product_hot` homepage floor.
+ *
+ * @returns {Promise<NewProductBatchListItem[]>} Deduplicated new product batch items.
+ */
 export const getNewProductList = async (): Promise<NewProductBatchListItem[]> => {
     const { pageId, sign } = await getVenueQueryContext('product_hot');
     const queryList = await getVenuePageQueryList(pageId, sign, ['leek-super', 'leek-selective']);
@@ -135,6 +182,11 @@ export const getNewProductList = async (): Promise<NewProductBatchListItem[]> =>
     return list;
 };
 
+/**
+ * Fetch the crowdfunding list from the `crowd_funding` homepage floor.
+ *
+ * @returns {Promise<CrowdfundingBatchListItem[]>} Deduplicated crowdfunding batch items.
+ */
 export const getCrowdfundingList = async (): Promise<CrowdfundingBatchListItem[]> => {
     const { pageId, sign } = await getVenueQueryContext('crowd_funding');
     const queryList = await getVenuePageQueryList(pageId, sign, ['crowd-funding', 'reservation']);
@@ -163,8 +215,20 @@ const getGoodsItem = async (gid: number): Promise<GoodsDetailItem> => {
     return response.data.goods;
 };
 
+/**
+ * Fetch crowdfunding goods details by the goods id of a batch item.
+ *
+ * @param {CrowdfundingBatchListItem} item - Crowdfunding batch item.
+ * @returns {Promise<GoodsDetailItem>} Goods detail.
+ */
 export const getCrowdfundingItem = (item: CrowdfundingBatchListItem): Promise<GoodsDetailItem> => getGoodsItem(getCrowdfundingGid(item));
 
+/**
+ * Fetch new product goods details by the goods id of a batch item.
+ *
+ * @param {NewProductBatchListItem} item - New product batch item.
+ * @returns {Promise<GoodsDetailItem>} Goods detail.
+ */
 export const getNewProductItem = (item: NewProductBatchListItem): Promise<GoodsDetailItem> => getGoodsItem(getNewProductGid(item));
 
 const toSellPointList = (goodsInfo: GoodsDetailItem['goodsInfo']): string[] =>
@@ -203,6 +267,13 @@ const toGoodsList = (detailItem: GoodsDetailItem): NewProduct['goodsList'] =>
         };
     });
 
+/**
+ * Convert a crowdfunding batch item and its goods detail into Crowdfunding template props.
+ *
+ * @param {CrowdfundingBatchListItem} listItem - Crowdfunding batch item.
+ * @param {GoodsDetailItem} detailItem - Goods detail.
+ * @returns {Crowdfunding} Crowdfunding template props.
+ */
 export const toCrowdfunding = (listItem: CrowdfundingBatchListItem, detailItem: GoodsDetailItem): Crowdfunding => ({
     image: detailItem.goodsInfo.imgHorizon,
     sellPointList: toSellPointList(detailItem.goodsInfo),
@@ -214,6 +285,13 @@ export const toCrowdfunding = (listItem: CrowdfundingBatchListItem, detailItem: 
     supportList: toSupportList(detailItem),
 });
 
+/**
+ * Convert a new product batch item and its goods detail into NewProduct template props.
+ *
+ * @param {NewProductBatchListItem} listItem - New product batch item.
+ * @param {GoodsDetailItem} detailItem - Goods detail.
+ * @returns {NewProduct} New product template props.
+ */
 export const toNewProduct = (listItem: NewProductBatchListItem, detailItem: GoodsDetailItem): NewProduct => ({
     image: detailItem.goodsInfo.imgHorizon,
     sellPointList: toSellPointList(detailItem.goodsInfo),
