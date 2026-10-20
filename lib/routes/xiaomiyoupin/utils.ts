@@ -98,17 +98,15 @@ export const getNewProductGid = (item: NewProductBatchListItem): number => (isVe
 
 export const getNewProductName = (item: NewProductBatchListItem): string => (isVenueGoodsBatchItem(item) ? item.value.goods.name : item.new_product_name);
 
-export const getNewProductJumpUrl = (item: NewProductBatchListItem): string => (isVenueGoodsBatchItem(item) ? item.value.goods.jump_url : item.jump_url);
-
 export const getNewProductImage = (item: NewProductBatchListItem): string => {
     if (isVenueGoodsBatchItem(item)) {
         const goods = item.value.goods;
-        return goods.img_square || goods.img800s || goods.img_horizon;
+        return goods.img_square;
     }
     return item.picture_url;
 };
 
-export const getNewProductFirstReleaseTime = (item: NewProductBatchListItem): number | undefined => (isVenueGoodsBatchItem(item) ? item.value.goods.fist_release_time || item.value.goods.first_release_time : undefined);
+export const getNewProductFirstReleaseTime = (item: NewProductBatchListItem): number | undefined => (isVenueGoodsBatchItem(item) ? item.value.goods.fist_release_time : undefined);
 
 const dedupeByGid = <Item>(items: Item[], getGid: (item: Item) => number): Item[] => {
     const list = Map.groupBy(items, (item) => getGid(item))
@@ -253,7 +251,6 @@ export default {
     getNewProductList,
     getNewProductGid,
     getNewProductName,
-    getNewProductJumpUrl,
     getNewProductImage,
     getNewProductFirstReleaseTime,
     getCrowdfundingItem,

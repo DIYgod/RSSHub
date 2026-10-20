@@ -42,13 +42,13 @@ const getDataItems = (list: NewProductBatchListItem[]): Promise<DataItem[]> =>
     );
 
 const getDataItem = (listItem: NewProductBatchListItem, detailItem: GoodsDetailItem): DataItem => {
-    const firstReleaseTime = utils.getNewProductFirstReleaseTime(listItem);
+    const pubDate = utils.getNewProductFirstReleaseTime(listItem);
     return {
         title: utils.getNewProductName(listItem),
         description: renderNewProduct(utils.toNewProduct(listItem, detailItem)),
-        link: utils.getNewProductJumpUrl(listItem),
+        link: `https://m.xiaomiyoupin.com/detail?gid=${utils.getNewProductGid(listItem)}`,
         image: utils.getNewProductImage(listItem),
-        pubDate: firstReleaseTime ? parseDate(firstReleaseTime, 'X') : undefined,
+        pubDate: pubDate ? parseDate(pubDate, 'X') : undefined,
         language: 'zh-CN',
     };
 };
