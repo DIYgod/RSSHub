@@ -94662,6 +94662,38 @@ export default {
         "description": "Enhance the official EN RSS feed",
         "location": "rss.ts",
         "module": () => import('@/routes/nytimes/rss.ts')
+      },
+      "/wirecutter": {
+        "path": "/wirecutter",
+        "categories": [
+          "traditional-media"
+        ],
+        "view": 0,
+        "example": "/nytimes/wirecutter",
+        "parameters": {},
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": true,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "www.nytimes.com/wirecutter",
+              "www.nytimes.com/wirecutter/reviews/:slug"
+            ]
+          }
+        ],
+        "name": "Wirecutter",
+        "maintainers": [
+          "IvanWng97"
+        ],
+        "description": "The official feed only carries the opening few paragraphs; this route returns the whole review, including the picks and their photos.",
+        "location": "wirecutter.ts",
+        "module": () => import('@/routes/nytimes/wirecutter.ts')
       }
     },
     "apiRoutes": {},

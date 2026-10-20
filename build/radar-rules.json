@@ -37618,6 +37618,17 @@
         ],
         "target": "/nytimes/rss/:cat?"
       }
+    ],
+    "www": [
+      {
+        "title": "Wirecutter",
+        "docs": "https://docs.rsshub.app/routes/nytimes",
+        "source": [
+          "/wirecutter",
+          "/wirecutter/reviews/:slug"
+        ],
+        "target": "/nytimes/wirecutter"
+      }
     ]
   },
   "obsidian.md": {
