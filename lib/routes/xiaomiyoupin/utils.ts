@@ -6,6 +6,7 @@ import utc from 'dayjs/plugin/utc.js';
 import NotFoundError from '@/errors/types/not-found';
 import type { Crowdfunding } from '@/routes/mi/templates/crowdfunding';
 import type { NewProduct } from '@/routes/mi/templates/newproduct';
+import { dedupeByKey } from '@/routes/mi/utils';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
@@ -108,14 +109,6 @@ export const getNewProductImage = (item: NewProductBatchListItem): string => {
 
 export const getNewProductFirstReleaseTime = (item: NewProductBatchListItem): number | undefined => (isVenueGoodsBatchItem(item) ? item.value.goods.fist_release_time : undefined);
 
-const dedupeByGid = <Item>(items: Item[], getGid: (item: Item) => number): Item[] => {
-    const list = Map.groupBy(items, (item) => getGid(item))
-        .values()
-        .toArray()
-        .map((group) => group[0]);
-    return list;
-};
-
 const getCrowdfundingBatchList = async (pageId: string, sign: string, queryList: VenueQuery[]): Promise<CrowdfundingBatchListItem[]> => {
     const response = await ofetch<CrowdfundingBatchResponse>('https://m.xiaomiyoupin.com/mtop/navi/venue/batch', {
         body: {
@@ -160,7 +153,7 @@ export const getNewProductList = async (): Promise<NewProductBatchListItem[]> =>
     const { pageId, sign } = await getVenueQueryContext('product_hot');
     const queryList = await getVenuePageQueryList(pageId, sign, ['leek-super', 'leek-selective']);
     const batchList = await getNewProductBatchList(pageId, sign, queryList);
-    const list = dedupeByGid(batchList, (item) => getNewProductGid(item));
+    const list = dedupeByKey(batchList, (item) => getNewProductGid(item));
     return list;
 };
 
@@ -168,7 +161,7 @@ export const getCrowdfundingList = async (): Promise<CrowdfundingBatchListItem[]
     const { pageId, sign } = await getVenueQueryContext('crowd_funding');
     const queryList = await getVenuePageQueryList(pageId, sign, ['crowd-funding', 'reservation']);
     const batchList = await getCrowdfundingBatchList(pageId, sign, queryList);
-    const list = dedupeByGid(batchList, (item) => getCrowdfundingGid(item));
+    const list = dedupeByKey(batchList, (item) => getCrowdfundingGid(item));
     return list;
 };
 
