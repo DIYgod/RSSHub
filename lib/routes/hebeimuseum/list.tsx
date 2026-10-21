@@ -135,14 +135,10 @@ export const route: Route = {
 
                     rawText = rawText.replaceAll(/\s+/g, '');
 
-                    const texts = rawText.split(/(?=展览名称：|展览时间：|时间：|展览地点：|展出地点：|地点：)/);
+                    const texts = rawText.split(/(?=展览名称：|展览时间：|展览日期：|时间：|展览地点：|展出地点：|地点：)/);
 
                     // use fullDration to extract startDate and endDate, if fullDuration is not exist, return empty data
-                    const fullDuration = texts.find((text) => text.includes('时间：'))?.replaceAll(/(?:展览)?时间：/g, '');
-
-                    if (!fullDuration) {
-                        return { title: item.title, link: item.itemLink, pubDate, description: content('.content.f16').html() ?? undefined };
-                    }
+                    const fullDuration = texts.find((text) => text.includes('时间：') || text.includes('日期：'))?.replaceAll(/(?:展览)?(?:时间|日期)：/g, '') || '';
 
                     let location = texts.find((text) => text.includes('地点：'))?.replaceAll(/(?:展(?:览|出))?地点：/g, '') || '';
 
@@ -150,10 +146,33 @@ export const route: Route = {
 
                     location = locMatch[0];
 
-                    const title = item.title;
+                    if (!location) {
+                        location = rawText.match(/(河北博物院[^，。；：“”]*?厅)/)?.[1] || '';
+                    }
+
+                    let title = texts
+                        .find((text) => /^【?展览名称[】：]/.test(text))
+                        ?.replace(/^【?展览名称[】：]/, '')
+                        .replaceAll(/^[“《]|[”》]$/g, '');
+
+                    // Some exhibition titles are not in the format of "展览名称: xxx", try to extract title from the original list title if the above method failed
+                    if (!title) {
+                        // try get the title between “” or 《》, if not exist, get the text after '|' in the original list title
+                        const quoteMatch = item.title.match(/[“《](.*?)[”》]/);
+
+                        if (quoteMatch) {
+                            title = quoteMatch[1];
+                        } else if (/[|｜]/.test(item.title)) {
+                            const pipeParts = item.title.split(/[|｜]/);
+                            title = pipeParts.at(-1)?.trim();
+                        } else {
+                            title = item.title;
+                        }
+                    }
 
                     const { startDate, endDate } = extractDates(fullDuration);
                     const { imgUrl, itemLink } = item;
+                    const articleContent = content('.content.f16').html();
 
                     const description = renderToString(
                         <div>
@@ -171,9 +190,13 @@ export const route: Route = {
                                 <b>闭展：</b>
                                 {endDate ?? '未定/常设'}
                             </p>
-                            <p>
-                                <small>原始展期：{fullDuration}</small>
-                            </p>
+                            {fullDuration ? (
+                                <p>
+                                    <small>原始展期：{fullDuration}</small>
+                                </p>
+                            ) : (
+                                <div>{articleContent}</div>
+                            )}
                         </div>
                     );
 
