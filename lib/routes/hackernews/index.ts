@@ -10,7 +10,7 @@ import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
 
 export const route: Route = {
-    path: '/:section?/:type?/:value?',
+    path: '/:section?/:type?/:value?/:minComments?',
     categories: ['programming'],
     view: ViewType.Articles,
     example: '/hackernews/threads/comments_list/dang',
@@ -22,7 +22,12 @@ export const route: Route = {
             description: 'Content format, default to `sources`. `sources` links to original articles, `comments` fetches full comment threads, `comments_list` shows parent story with single comment',
         },
         value: {
-            description: 'For `threads`/`submitted` sections, set user ID. For `over` section, set minimum points threshold (default 100). For other sections, appended as `?id=<value>` (e.g. `value=dang` → `?id=dang`)',
+            description:
+                'For `threads`/`submitted` sections, set user ID. For `over` section, set minimum points threshold (default 100). For other sections, appended as `?id=<value>` (e.g. `value=dang` → `?id=dang`). In story-listing sections (`index`, `best`, `front`, `active`, `newest`, `ask`, `show`, `shownew`, `asknew`, `noobstories`, `pool`, `classic`, `launches`, `news`, `invited`), a purely numeric value acts as minimum comment count instead (same as `minComments`)',
+        },
+        minComments: {
+            description:
+                'Minimum comment count, items below it are filtered out. Works with any story-listing section, e.g. `/hackernews/over/sources/100/10`. For sections where `value` is unused (`index`, `best`, `front`, `active`, `newest`, `ask`, `show`, `shownew`, `asknew`, `noobstories`, `pool`, `classic`, `launches`, `news`, `invited`), the number may be placed in `value` instead, e.g. `/hackernews/index/sources/10`. Ignored on sections without story comment counts (`jobs`, `threads`, `newcomments`, `bestcomments`, `noobcomments`, `highlights`)',
         },
     },
     features: {
@@ -46,13 +51,13 @@ export const route: Route = {
     name: 'Stories',
     maintainers: ['nczitzk', 'xie-dongping'],
     handler,
-    description: `Subscribe to Hacker News content by section, user, or minimum points
+    description: `Subscribe to Hacker News content by section, user, minimum points, or minimum comments
 
 Examples:
 
-| HN100              | User submitted                       | User threads                       | Comments list                            |
-| ------------------ | ------------------------------------ | ---------------------------------- | ---------------------------------------- |
-| \`/hackernews/over\` | \`/hackernews/submitted/sources/dang\` | \`/hackernews/threads/sources/dang\` | \`/hackernews/threads/comments_list/dang\` |`,
+| HN100              | User submitted                       | User threads                       | Comments list                            | Min comments                   |
+| ------------------ | ------------------------------------ | ---------------------------------- | ---------------------------------------- | ------------------------------ |
+| \`/hackernews/over\` | \`/hackernews/submitted/sources/dang\` | \`/hackernews/threads/sources/dang\` | \`/hackernews/threads/comments_list/dang\` | \`/hackernews/index/sources/10\` |`,
 };
 
 type Story = Omit<DataItem, 'comments' | 'upvotes'> & {
@@ -63,6 +68,38 @@ type Story = Omit<DataItem, 'comments' | 'upvotes'> & {
     currentComment: string;
 };
 
+const parseComments = (text: string): Story['comments'] => {
+    if (text === 'discuss') {
+        return text;
+    }
+
+    const match = text.match(/^(\d+)\s+comments?$/);
+    return match ? Number.parseInt(match[1]) : '';
+};
+
+const rootUrl = 'https://news.ycombinator.com';
+
+function getListingOptions(section: string, value: string, explicitMinComments?: string) {
+    // Story-listing sections where `value` has no dedicated meaning; a purely numeric value there doubles as the
+    // minimum comment count. Everywhere else numeric values stay HN IDs passed through as `?id=` (e.g. `/item`)
+    const numericThresholdSections = ['index', 'best', 'front', 'active', 'newest', 'ask', 'show', 'shownew', 'asknew', 'noobstories', 'pool', 'classic', 'launches', 'news', 'invited'];
+    // Sections whose rows carry no parseable story comment counts (comment listings or curated link pages),
+    // so the filter cannot apply there
+    const sectionsWithoutCommentCounts = ['jobs', 'threads', 'newcomments', 'bestcomments', 'noobcomments', 'highlights'];
+    const valueIsThreshold = numericThresholdSections.includes(section) && /^\d+$/.test(value);
+    const rawMinComments = explicitMinComments ?? (valueIsThreshold ? value : '');
+    const minComments = /^\d+$/.test(rawMinComments) && !sectionsWithoutCommentCounts.includes(section) ? Number.parseInt(rawMinComments) : 0;
+
+    const sectionUrl = section === 'index' ? '' : `/${section}`;
+    let optUrl = value !== '' && !valueIsThreshold ? `?${new URLSearchParams({ id: value })}` : '';
+
+    if (section === 'over') {
+        optUrl = `?${new URLSearchParams({ points: value || '100' })}`;
+    }
+
+    return { currentUrl: `${rootUrl}${sectionUrl}${optUrl}`, minComments };
+}
+
 async function handler(ctx) {
     const section = ctx.req.param('section') ?? 'index';
     const type = ctx.req.param('type') ?? 'sources';
@@ -70,23 +107,14 @@ async function handler(ctx) {
     if (!['sources', 'comments', 'comments_list'].includes(type)) {
         throw new InvalidParameterError('Invalid Hacker News content format. Use sources, comments, or comments_list.');
     }
+    const { currentUrl, minComments } = getListingOptions(section, value, ctx.req.param('minComments'));
 
-    const rootUrl = 'https://news.ycombinator.com';
-    const sectionUrl = section === 'index' ? '' : `/${section}`;
-    let optUrl = value === '' ? '' : `?${new URLSearchParams({ id: value })}`;
-
-    if (section === 'over') {
-        optUrl = `?${new URLSearchParams({ points: value || '100' })}`;
-    }
-
-    const currentUrl = `${rootUrl}${sectionUrl}${optUrl}`;
     const response = await got(currentUrl);
 
     const $ = load(response.data);
     let onStory = '';
 
     const list = $('.athing')
-        .slice(0, getRouteLimit(ctx, 30))
         .toArray()
         .map((thing) => {
             const $thing = $(thing);
@@ -109,7 +137,9 @@ async function handler(ctx) {
                 origin: origin ? new URL(origin, rootUrl).href : undefined,
                 onStory,
 
-                comments: $thing.next().find('a').last().text().split('\u{A0}comment', 1)[0],
+                // Only a "N comments" link carries the count; other trailing links (e.g. an age like "22 days ago"
+                // on /invited) must not be misparsed as one
+                comments: parseComments($thing.next().find('a').last().text()),
                 upvotes: $thing.next().find('.score').text().split(' point', 1)[0],
 
                 currentComment: $thing.find('.commtext').html() ?? '',
@@ -120,7 +150,9 @@ async function handler(ctx) {
             item.description = `<a href="${item.link}">Comments on Hacker News</a>${item.origin ? ` | <a href="${item.origin}">Source</a>` : ''}`;
 
             return item;
-        });
+        })
+        .filter((item) => minComments === 0 || Number(item.comments) >= minComments)
+        .slice(0, getRouteLimit(ctx, 30));
 
     const items = await pMap(
         list,
