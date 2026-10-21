@@ -1,5 +1,5 @@
 import { escapeAttribute, escapeText } from 'entities';
-import { Innertube, YTNodes } from 'youtubei.js';
+import { type Helpers, Innertube, YTNodes } from 'youtubei.js';
 
 import { config } from '@/config';
 import type { Data, DataItem } from '@/types';
@@ -31,7 +31,7 @@ const getInnertube = () => {
     return innertubePromise;
 };
 type VideoLockupView = YTNodes.LockupView & { content_id: string };
-const isVideoLockup = (video: object): video is VideoLockupView => video instanceof YTNodes.LockupView && video.content_id !== undefined;
+const isVideoLockup = (video: Helpers.YTNode): video is VideoLockupView => video instanceof YTNodes.LockupView && video.content_id !== undefined;
 const getThumbnailBadges = (video: YTNodes.LockupView) => {
     const thumbnail = video.content_image?.is(YTNodes.ThumbnailView) ? video.content_image : undefined;
     return thumbnail?.overlays.filter((overlay) => overlay.is(YTNodes.ThumbnailBottomOverlayView)).flatMap((overlay) => overlay.badges ?? []) ?? [];
