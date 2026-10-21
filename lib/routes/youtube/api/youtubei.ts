@@ -70,8 +70,6 @@ const lockupViewToItem = (video: VideoLockupView, embed: boolean, description = 
     const img = `https://i.ytimg.com/vi/${videoId}/maxresdefault.jpg`;
     const metadataRows = (video.metadata?.metadata?.metadata_rows ?? []).filter((row) => row.metadata_parts?.length);
     const publishedText = getMetadataTexts(video).findLast((text) => text?.endsWith('ago'));
-    // A duration is grouped for readability once it reaches a thousand hours, e.g. `20,772:51:34`
-    const durationText = getThumbnailBadges(video).find((badge) => /^[\d,]+(?::\d+)+$/.test(badge.text))?.text;
     return {
         title: video.metadata?.title?.text || `YouTube Video ${videoId}`,
         description: renderYoutube(embed, videoId, img, formatDescription(description)),
@@ -83,7 +81,7 @@ const lockupViewToItem = (video: VideoLockupView, embed: boolean, description = 
             {
                 url: getVideoUrl(videoId),
                 mime_type: 'text/html',
-                duration_in_seconds: durationText ? durationText.split(':').reduce((acc, part) => acc * 60 + Number(part.replaceAll(',', '')), 0) : undefined,
+                duration_in_seconds: video.duration.seconds || undefined,
             },
         ],
     };
