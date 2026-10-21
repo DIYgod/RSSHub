@@ -55,7 +55,7 @@ async function handler() {
                 return {
                     ...item,
                     description: $detail('div.Article_Content').html() ?? '',
-                    author: $detail('.info_xx .Article_Author').text().trim() || undefined,
+                    author: $detail('.info_xx .Article_Author').text() || undefined,
                 };
             })
         )
