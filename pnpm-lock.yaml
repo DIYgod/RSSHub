@@ -281,8 +281,8 @@ importers:
         specifier: 1.10.2
         version: 1.10.2
       youtubei.js:
-        specifier: 18.1.0
-        version: 18.1.0
+        specifier: 18.2.0
+        version: 18.2.0
       zod:
         specifier: 4.6.7
         version: 4.6.7
@@ -603,8 +603,8 @@ packages:
     resolution: {integrity: sha512-0GEz8qJWokkUVYQYRukmkSHIFNoBH8QTreeHrAFbvz1XFYc3Y+puhMs8PQ5x8GNugiC2l5jvDBXKLbBIByeSBw==}
     hasBin: true
 
-  '@bufbuild/protobuf@2.15.0':
-    resolution: {integrity: sha512-DAheWUkVr/SJTWCc+lg9dhY0eN4SaWlf4+bG1KzHeXbnqt0AfB/NX0Z+VunGlM1ki1B4zVvye27MpKh/svySUA==}
+  '@bufbuild/protobuf@2.16.0':
+    resolution: {integrity: sha512-FWa0sPlqYGJgpTs6OxBRcL/AW4JT0OIO+W1ajerluoTVh8CV0B7XM1qsNCRgnkSCkRCgOICKHRQlY17jrsm0+Q==}
 
   '@cacheable/memory@2.2.0':
     resolution: {integrity: sha512-CTLKqLItRCEixEAewD3/j9DB3/o96gpTPD4eJ1v+DGOlxZRZncRQkGYqqnAGCscYd6RNeXfGeiuCphsPtqyIfQ==}
@@ -4785,8 +4785,8 @@ packages:
   merge-stream@2.0.0:
     resolution: {integrity: sha512-abv/qOcuPfk3URPfDzmZU1LKmuw8kT+0nIHvKrKgFrwifol/doWcdA4ZqsWQ8ENrFKkd67Mfpo/LovbIUsbt3w==}
 
-  meriyah@7.3.3:
-    resolution: {integrity: sha512-uE5cnoNj+UYhoMdZDuymCzr5TzEuE3ZF2C4kn6Z76rLhkwnvZ/+6dUZnM41T3fifyuhW0+n8vK7eq6DKJxUfPA==}
+  meriyah@7.4.0:
+    resolution: {integrity: sha512-4npg8C/aeb+kOZo8/6XZrwzo+neA+NQU7U6BHP3KxqTzprtYQb+Fs752GRuvsJLREvblRjQng4F76DEe2QKblQ==}
     engines: {node: '>=20.0.0'}
 
   micromark-core-commonmark@2.0.4:
@@ -6255,8 +6255,8 @@ packages:
     resolution: {integrity: sha512-G/WSJStuTrWiqXZ5PpmMtS6LInCQueN/47lz5dNUnIPm7cRIX0RGI+fhkuNEipavQprQH6m2URBn5Xc0jhh1wA==}
     engines: {node: '>=18.0.0'}
 
-  youtubei.js@18.1.0:
-    resolution: {integrity: sha512-4Goo3ZeO6/kE8Mq67eC8Z9K1rijeqRwyKxf/YM4lqf8bB4r/s8JC0V3YFx7+l/AJR3LnAsulTsiIj+AFe0cduA==}
+  youtubei.js@18.2.0:
+    resolution: {integrity: sha512-4xvEEOk7ezu/MrYcQUABzWGKn4I2hRgjtrS8EYJmZsNXTirpF02y856tp4ART4F1tvb9XCitAYPnCFQSlz0XYA==}
 
   yuku-ast@0.19.0:
     resolution: {integrity: sha512-PyCsiScaelhxBGzL8dyeJkLqvRZycoh78R31Vrt/WqYrm0hMFoKwIw/X7Dx5mBKLWAMlV9I9HEyBOHnj2gZVyw==}
@@ -6487,7 +6487,7 @@ snapshots:
     dependencies:
       css-tree: 3.2.1
 
-  '@bufbuild/protobuf@2.15.0': {}
+  '@bufbuild/protobuf@2.16.0': {}
 
   '@cacheable/memory@2.2.0':
     dependencies:
@@ -10081,7 +10081,7 @@ snapshots:
 
   merge-stream@2.0.0: {}
 
-  meriyah@7.3.3: {}
+  meriyah@7.4.0: {}
 
   micromark-core-commonmark@2.0.4:
     dependencies:
@@ -11759,11 +11759,11 @@ snapshots:
       he: 1.2.0
       striptags: 3.2.0
 
-  youtubei.js@18.1.0:
+  youtubei.js@18.2.0:
     dependencies:
-      '@bufbuild/protobuf': 2.15.0
+      '@bufbuild/protobuf': 2.16.0
       fflate: 0.8.3
-      meriyah: 7.3.3
+      meriyah: 7.4.0
 
   yuku-ast@0.19.0:
     dependencies:
