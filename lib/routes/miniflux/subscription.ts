@@ -1,7 +1,10 @@
+import { escapeUTF8 } from 'entities/escape';
+
 import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
 import type { Route } from '@/types';
 import got from '@/utils/got';
+import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/subscription/:parameters?',
@@ -66,8 +69,9 @@ async function handler(ctx) {
         subscription.push({
             title: item.title,
             link: item.site_url,
-            pubData: item.last_modified_header,
-            description: `Feed URL: <a href=${item.feed_url}>${item.feed_url}</a>`,
+            guid: `miniflux:${instance}:feed:${item.id}`,
+            pubDate: item.last_modified_header ? parseDate(item.last_modified_header) : undefined,
+            description: `Feed URL: <a href="${escapeUTF8(item.feed_url)}">${escapeUTF8(item.feed_url)}</a>`,
         });
     }
 
@@ -121,6 +125,5 @@ async function handler(ctx) {
         link: instance,
         description: 'A subscription tracking feed.',
         item: subscription,
-        allowEmpty: true,
     };
 }

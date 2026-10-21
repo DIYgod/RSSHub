@@ -1,7 +1,7 @@
 // Worker-specific app configuration
 // Keep feed processing and API routes aligned with app-bootstrap.tsx.
 
-import type { KVNamespace } from '@cloudflare/workers-types';
+import type { DurableObjectNamespace, KVNamespace } from '@cloudflare/workers-types';
 import { Hono } from 'hono';
 import { jsxRenderer } from 'hono/jsx-renderer';
 import { trimTrailingSlash } from 'hono/trailing-slash';
@@ -20,10 +20,14 @@ import trace from '@/middleware/trace';
 import registry from '@/registry';
 import { setKVNamespace } from '@/utils/cache/index.worker';
 import { setBrowserBinding } from '@/utils/playwright';
+import { setBrowserSessionBinding, setPlaywrightServiceBinding } from '@/utils/playwright.worker';
 
 // Define Worker environment bindings
 type Bindings = {
+    PLAYWRIGHT_SERVICE?: any; // Optional remote Playwright service binding
+    PLAYWRIGHT_SERVICE_ORIGIN?: string;
     BROWSER?: any; // Browser Rendering API binding
+    BROWSER_SESSIONS?: DurableObjectNamespace;
     CACHE?: KVNamespace; // KV namespace for caching
 };
 
@@ -31,9 +35,9 @@ const app = new Hono<{ Bindings: Bindings }>();
 
 // Set browser and KV bindings
 app.use(async (c, next) => {
-    if (c.env?.BROWSER) {
-        setBrowserBinding(c.env.BROWSER);
-    }
+    setBrowserBinding(c.env?.BROWSER);
+    setBrowserSessionBinding(c.env?.BROWSER_SESSIONS);
+    setPlaywrightServiceBinding(c.env?.PLAYWRIGHT_SERVICE, c.env?.PLAYWRIGHT_SERVICE_ORIGIN);
     if (c.env?.CACHE) {
         setKVNamespace(c.env.CACHE);
     }

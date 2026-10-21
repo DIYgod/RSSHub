@@ -32,13 +32,16 @@ async function handler(ctx: Context) {
     return {
         title: '中国庭审公开网 - 庭审回顾',
         link: `${host}/search/full?address=/page/review/screenPage&dataType=2&pageSize=10`,
-        item: data.resultList.map((item) => ({
-            title: item.title,
-            description: `<img src="${item.videoThumbnail}"><br>开庭法院：${item.courtName}<br>案号：${item.caseNo}<br>案由：${item.caseCause}<br>${item.judge}`,
-            pubDate: parseDate(item.beginTime),
-            link: `${host}/live/${item.caseId}`,
-            author: item.courtName,
-            category: item.caseCause,
-        })),
+        item: data.resultList.map((item) => {
+            const date = item.beginTime !== undefined && item.beginTime !== null ? parseDate(item.beginTime) : undefined;
+            return {
+                title: item.title,
+                description: `<img src="${item.videoThumbnail}"><br>案号：${item.caseNo}<br>${item.judge}`,
+                pubDate: date && !Number.isNaN(date.getTime()) ? date : undefined,
+                link: `${host}/live/${item.caseId}`,
+                author: item.courtName,
+                category: item.caseCause,
+            };
+        }),
     };
 }

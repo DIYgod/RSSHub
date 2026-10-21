@@ -12,7 +12,7 @@ function jsonGet(obj, attr: string | null) {
     // a.b.c
     // a.b[0].c => a.b.0.c
     for (const key of attr.split('.')) {
-        obj = obj[key];
+        obj = obj?.[key];
     }
     return obj;
 }
@@ -99,9 +99,8 @@ async function handler(ctx) {
         if (link && linkPrefix) {
             link = `${linkPrefix}${link}`;
         }
-        // 补全绝对链接
-        if (link && !link.startsWith('http')) {
-            link = `${new URL(url).origin}${link}`;
+        if (link) {
+            link = new URL(link, url).href;
         }
         return {
             title: jsonGet(item, routeParams.get('itemTitle')),

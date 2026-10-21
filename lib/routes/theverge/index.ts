@@ -1,15 +1,26 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/parse-date';
 import parser from '@/utils/rss-parser';
 
 import { renderHeader } from './templates/header';
 
-const excludeTypes = new Set(['NewsletterBlockType', 'RelatedPostsBlockType', 'ProductsTableBlockType', 'TableOfContentsBlockType']);
+const excludeTypes = new Set(['ActionBoxBlockType', 'FeaturedProductsBlockType', 'NewsletterBlockType', 'ProductsTableBlockType', 'RelatedPostsBlockType', 'TableOfContentsBlockType']);
 
 const shouldKeep = (b: any) => !excludeTypes.has(b.__typename);
+
+// Paragraphs and stream excerpts carry `paragraphContents`; headings, list items and pullquotes carry a single `contents`
+const renderContents = (b: any): string => (b.paragraphContents ?? [b.contents]).map((c) => c?.html ?? '').join('');
+
+const renderBlocks = (blocks: any[] | undefined, separator: string): string =>
+    (blocks ?? [])
+        .map((b) => renderBlock(b))
+        .filter(Boolean)
+        .join(separator);
 
 export const route: Route = {
     path: '/:hub?',
@@ -26,26 +37,41 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['theverge.com/:hub', 'theverge.com/'],
+            source: ['theverge.com/:hub'],
         },
     ],
     name: 'Category',
     maintainers: ['HenryQW', 'vbali'],
     handler,
-    description: `| Hub         | Hub name            |
-| ----------- | ------------------- |
-|             | All Posts           |
-| android     | Android             |
-| apple       | Apple               |
-| apps        | Apps & Software     |
-| blackberry  | BlackBerry          |
-| culture     | Culture             |
-| gaming      | Gaming              |
-| hd          | HD & Home           |
-| microsoft   | Microsoft           |
-| photography | Photography & Video |
-| policy      | Policy & Law        |
-| web         | Web & Social        |
+    description: `| Hub            | Hub name       |
+| -------------- | -------------- |
+|                | All Posts      |
+| amazon         | Amazon         |
+| android        | Android        |
+| apple          | Apple          |
+| apps           | Apps           |
+| blackberry     | BlackBerry     |
+| business       | Business       |
+| creators       | Creators       |
+| culture        | Culture        |
+| entertainment  | Entertainment  |
+| film           | Film           |
+| games          | Gaming         |
+| google         | Google         |
+| health         | Health         |
+| meta           | Meta           |
+| microsoft      | Microsoft      |
+| music          | Music          |
+| policy         | Policy         |
+| reviews        | Reviews        |
+| samsung        | Samsung        |
+| science        | Science        |
+| space          | Space          |
+| streaming      | Streaming      |
+| tech           | Tech           |
+| transportation | Transportation |
+| tv             | TV Shows       |
+| web            | Web            |
 
 Provides a better reading experience (full text articles) over the official one.`,
 };
@@ -60,23 +86,24 @@ const renderBlock = (b) => {
         case 'CoreGalleryBlockType':
             return b.images.map((i) => `<figure><img src="${i.image.thumbnails.horizontal.url.split('?', 1)[0]}" alt="${i.alt}" /><figcaption>${i.caption.html}</figcaption></figure>`).join('');
         case 'CoreHeadingBlockType':
-            return `<h${b.level}>${b.contents.html}</h${b.level}>`;
+            return `<h${b.level}>${renderContents(b)}</h${b.level}>`;
         case 'CoreHTMLBlockType':
             return b.markup;
         case 'CoreImageBlockType':
             return `<figure><img src="${b.thumbnail.url.split('?', 1)[0]}" alt="${b.alt}" /><figcaption>${b.caption.html}</figcaption></figure>`;
         case 'CoreListBlockType':
-            return `${b.ordered ? '<ol>' : '<ul>'}${b.items.map((i) => `<li>${i.contents.html}</li>`).join('')}${b.ordered ? '</ol>' : '</ul>'}`;
+            // a list nested in a quote comes through the GraphQL payload with no fields beyond __typename
+            return b.items?.length ? `${b.ordered ? '<ol>' : '<ul>'}${b.items.map((i) => `<li>${renderContents(i)}</li>`).join('')}${b.ordered ? '</ol>' : '</ul>'}` : '';
         case 'CoreParagraphBlockType':
-            return b.tempContents.map((c) => c.html).join('');
+            return renderContents(b);
         case 'CorePullquoteBlockType':
-            return `<blockquote>${b.contents.html}</blockquote>`;
+            return `<blockquote>${renderContents(b)}</blockquote>`;
         case 'CoreQuoteBlockType':
-            return `<blockquote>${b.children.map((child) => renderBlock(child)).join('')}</blockquote>`;
+            return `<blockquote>${renderBlocks(b.children, '')}</blockquote>`;
         case 'CoreSeparatorBlockType':
             return '<hr>';
         case 'HighlightBlockType':
-            return b.children.map((c) => renderBlock(c)).join('');
+            return renderBlocks(b.children, '');
         case 'ImageCompareBlockType':
             return `<figure><img src="${b.leftImage.thumbnails.horizontal.url.split('?', 1)[0]}" alt="${b.leftImage.alt}" /><img src="${b.rightImage.thumbnails.horizontal.url.split('?', 1)[0]}" alt="${b.rightImage.alt}" /><figcaption>${b.caption.html}</figcaption></figure>`;
         case 'ImageSliderBlockType':
@@ -89,6 +116,8 @@ const renderBlock = (b) => {
         }
         case 'TableBlockType':
             return `<table><tr>${b.header.map((cell) => `<th>${cell}</th>`).join('')}</tr>${b.rows.map((row) => `<tr>${row.map((cell) => `<td>${cell}</td>`).join('')}</tr>`).join('')}</table>`;
+        case 'VideoBlockType':
+            return `<figure><iframe src="https://volume.vox-cdn.com/embed/${b.video.volumeUuid}" allowfullscreen></iframe>${b.caption?.html ? `<figcaption>${b.caption.html}</figcaption>` : ''}</figure>`;
         default:
             throw new Error(`Unsupported block type: ${b.__typename}`);
     }
@@ -99,9 +128,12 @@ async function handler(ctx) {
 
     const feed = await parser.parseURL(link);
 
-    const items = await Promise.all(
-        feed.items.map((item) =>
-            cache.tryGet(item.link!, async () => {
+    const items = await pMap(
+        feed.items,
+        async (item) => ({
+            ...item,
+            pubDate: item.pubDate ? parseDate(item.pubDate) : undefined,
+            ...(await cache.tryGet(item.link!, async () => {
                 const response = await ofetch(item.link!);
 
                 const $ = load(response);
@@ -114,7 +146,7 @@ async function handler(ctx) {
                     ledeMediaData: node.ledeMediaData,
                 });
 
-                description += node.blocks.map((b) => renderBlock(b)).join('<br><br>');
+                description += renderBlocks(node.blocks, '<br><br>');
 
                 if (node.__typename === 'StreamResourceType') {
                     description += node.posts.edges
@@ -126,10 +158,10 @@ async function handler(ctx) {
                                 });
                             switch (n.__typename) {
                                 case 'PostResourceType':
-                                    d += n.excerpt.map((e) => e.contents.html).join('<br>');
+                                    d += n.excerpt.map((e) => renderContents(e)).join('<br>');
                                     break;
                                 case 'QuickPostResourceType':
-                                    d += n.blocks.map((b) => renderBlock(b)).join('<br>');
+                                    d += renderBlocks(n.blocks, '<br>');
                                     break;
                                 default:
                                     break;
@@ -139,12 +171,10 @@ async function handler(ctx) {
                         .join('<br>');
                 }
 
-                item.description = description;
-                item.category = node.categories;
-
-                return item;
-            })
-        )
+                return { description, category: node.categories?.map((category) => category.title), updated: node.updatedAt ? parseDate(node.updatedAt) : undefined };
+            })),
+        }),
+        { concurrency: 3 }
     );
 
     return {

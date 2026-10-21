@@ -4,45 +4,30 @@ import { renderToString } from 'hono/jsx/dom/server';
 
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate, parseRelativeDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 const baseUrl = 'https://www.dcfever.com';
 
-const renderTradeDescription = (info, description, photo) =>
+const parseTradeDate = (value: string) => {
+    if (!value) {
+        return;
+    }
+    return /^\d{4}-\d{2}-\d{2}/.test(value) ? timezone(parseDate(value), 8) : parseRelativeDate(value.replaceAll('小時', '小时'));
+};
+
+const renderTradeDescription = (info, description, photo, details) =>
     renderToString(
         <>
-            <h2>{info.find('.trading_item_title').text()}</h2>
-            {info.find('.trading_item_type_tag').text()} {info.find('.trading_item_price').text()}
+            {info.find('.trading_item_price').text()}
             <br />
             <table>
-                <tr>
-                    <th>賣家</th>
-                    <td>{info.find('.clearfix .content').eq(0).text()}</td>
-                </tr>
-                <tr>
-                    <th>查詢次數</th>
-                    <td>{info.find('.clearfix .content').eq(1).text()}</td>
-                </tr>
-                <tr>
-                    <th>瀏覽次數</th>
-                    <td>{info.find('.clearfix .content').eq(2).text()}</td>
-                </tr>
-                <tr>
-                    <th>刊登日期</th>
-                    <td>{info.find('.clearfix .content').eq(3).text()}</td>
-                </tr>
-                <tr>
-                    <th>最後更新</th>
-                    <td>{info.find('.clearfix .content').eq(4).text()}</td>
-                </tr>
-                <tr>
-                    <th>刊登期至</th>
-                    <td>{info.find('.clearfix .content').eq(5).text()}</td>
-                </tr>
-                <tr>
-                    <th>刊登狀態</th>
-                    <td>{info.find('.clearfix .content').eq(6).text()}</td>
-                </tr>
+                {details.map((detail) => (
+                    <tr key={detail.label}>
+                        <th>{detail.label}</th>
+                        <td>{detail.value}</td>
+                    </tr>
+                ))}
             </table>
             <br />
             {description ? <>{raw(description)}</> : null}
@@ -57,6 +42,15 @@ const parseItem = (item) =>
         const response = await ofetch(item.link);
         const $ = load(response);
         const content = $('div[itemprop="articleBody"], .column_article_content_html');
+        const authorLine = content.find('p').first();
+        const authorMatch = authorLine
+            .text()
+            .trim()
+            .match(/^文(?:、攝影)?[：:](.+)$/);
+        if (authorMatch) {
+            item.author = authorMatch[1].trim();
+            authorLine.remove();
+        }
 
         const pageLinks = $('.article_multi_page a')
             .not('.selected')
@@ -128,7 +122,21 @@ const parseTradeItem = (item) =>
             }
         });
 
-        item.description = renderTradeDescription($('.info_col'), $('.description_text').html(), $photo('.desktop_photo_selector').html());
+        const details = $('.info_col .trading_item_line')
+            .toArray()
+            .map((element) => ({
+                label: $(element).children('.title').text(),
+                value: $(element).children('.content').text(),
+            }))
+            .filter((detail) => detail.label && !['賣家', '買家', '刊登日期', '最後更新'].includes(detail.label));
+        item.description = renderTradeDescription($('.info_col'), $('.description_text').html(), $photo('.desktop_photo_selector').html(), details);
+        item.category = $('.info_col .trading_item_type_tag')
+            .toArray()
+            .map((element) => $(element).text());
+        const published = $('.info_col .trading_item_line').filter((_, element) => $(element).children('.title').text() === '刊登日期');
+        const updated = $('.info_col .trading_item_line').filter((_, element) => $(element).children('.title').text() === '最後更新');
+        item.pubDate = parseTradeDate(published.children('.content').text());
+        item.updated = parseTradeDate(updated.children('.content').text());
 
         return item;
     });

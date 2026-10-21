@@ -1,6 +1,7 @@
 import { load } from 'cheerio';
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
+import pMap from 'p-map';
 import { CookieJar } from 'tough-cookie';
 
 import type { Data, DataItem, Route } from '@/types';
@@ -68,64 +69,77 @@ async function handler(ctx): Promise<Data> {
 
     const context = await playwright();
 
-    const out = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link, async () => {
-                const page = await context.newPage();
-                await setCookies(page, await cookieJar.getCookieString(item.link), '.pnas.org');
-                await page.route('**/*', (route) => {
-                    const request = route.request();
-                    request.resourceType() === 'document' ? route.continue() : route.abort();
-                });
-                logger.http(`Requesting ${item.link}`);
-                await page.goto(item.link, {
-                    waitUntil: 'domcontentloaded',
-                    referer: link,
-                });
-                await page.waitForSelector('.core-container');
+    const browser = context.browser();
+    let out: DataItem[];
+    try {
+        out = await pMap(
+            list,
+            (item) =>
+                cache.tryGet(item.link, async () => {
+                    const page = await context.newPage();
+                    let res: string;
+                    try {
+                        await setCookies(page, await cookieJar.getCookieString(item.link), '.pnas.org');
+                        await page.route('**/*', (route) => {
+                            const request = route.request();
+                            request.resourceType() === 'document' ? route.continue() : route.abort();
+                        });
+                        logger.http(`Requesting ${item.link}`);
+                        await page.goto(item.link, {
+                            waitUntil: 'domcontentloaded',
+                            referer: link,
+                        });
+                        await page.waitForSelector('.core-container');
 
-                const res = await page.evaluate(() => document.documentElement.getHTML());
-                await page.close();
+                        res = await page.evaluate(() => document.documentElement.getHTML());
+                    } finally {
+                        await page.close();
+                    }
 
-                const $ = load(res);
-                const PNASdataLayer = JSON.parse(
-                    $('script')
-                        .text()
-                        .match(/PNASdataLayer =(.*?);/)![1]
-                );
+                    const $ = load(res);
+                    const PNASdataLayer = JSON.parse(
+                        $('script')
+                            .text()
+                            .match(/PNASdataLayer =(.*?);/)![1]
+                    );
 
-                $('.signup-alert-ad, .citations-truncation button').remove();
+                    $('.signup-alert-ad, .citations-truncation button').remove();
 
-                const { keywords, topic } = PNASdataLayer.page.attributes;
+                    const { keywords, topic } = PNASdataLayer.page.attributes;
 
-                item.category = [...keywords, topic];
-                item.author = PNASdataLayer.page.pageInfo.author;
-                item.doi = PNASdataLayer.page.pageInfo.DOI;
-                const access = PNASdataLayer.user.access === 'yes';
-                const abstracts = $('#abstracts .core-container').html();
-                const articleBody = $('[property=articleBody]').html();
-                const dataAvailability = $('#data-availability').html();
-                const acknowledgments = $('#acknowledgments').html();
-                const supplementaryMaterials = $('#supplementary-materials').html();
-                const bibliography = $('#bibliography').html();
+                    item.category = [...keywords, topic];
+                    item.author = PNASdataLayer.page.pageInfo.author;
+                    item.doi = PNASdataLayer.page.pageInfo.DOI;
+                    const access = PNASdataLayer.user.access === 'yes';
+                    const abstracts = $('#abstracts .core-container').html();
+                    const articleBody = $('[property=articleBody]').html();
+                    const dataAvailability = $('#data-availability').html();
+                    const acknowledgments = $('#acknowledgments').html();
+                    const supplementaryMaterials = $('#supplementary-materials').html();
+                    const bibliography = $('#bibliography').html();
 
-                item.description = renderToString(
-                    <>
-                        {abstracts ? raw(abstracts) : null}
-                        {access && articleBody ? raw(articleBody) : null}
-                        {dataAvailability ? raw(dataAvailability) : null}
-                        {acknowledgments ? raw(acknowledgments) : null}
-                        {supplementaryMaterials ? raw(supplementaryMaterials) : null}
-                        {bibliography ? raw(bibliography) : null}
-                    </>
-                );
+                    item.description = renderToString(
+                        <>
+                            {abstracts ? raw(abstracts) : null}
+                            {access && articleBody ? raw(articleBody) : null}
+                            {dataAvailability ? raw(dataAvailability) : null}
+                            {acknowledgments ? raw(acknowledgments) : null}
+                            {supplementaryMaterials ? raw(supplementaryMaterials) : null}
+                            {bibliography ? raw(bibliography) : null}
+                        </>
+                    );
 
-                return item;
-            })
-        )
-    );
-
-    await context.close();
+                    return item;
+                }),
+            { concurrency: 3, stopOnError: false }
+        );
+    } finally {
+        try {
+            await context.close();
+        } finally {
+            await browser?.close();
+        }
+    }
 
     return {
         title: `${$('.banner-widget__content h1').text()} - PNAS`,

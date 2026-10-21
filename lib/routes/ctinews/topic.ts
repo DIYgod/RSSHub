@@ -4,7 +4,6 @@ import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/topic/:topic?',
@@ -63,11 +62,15 @@ async function handler(ctx): Promise<Data> {
             }),
         ...$('.news-section .news-link.absolute')
             .toArray()
-            .map((item) => {
+            .flatMap((item) => {
                 const $item = $(item);
+                const title = $item.attr('title');
+                if (!title) {
+                    return [];
+                }
                 const href = $item.attr('href');
                 return {
-                    title: $item.attr('title')?.replace('點擊觀看', '') as string,
+                    title: title.replace('點擊觀看', ''),
                     link: href?.startsWith('http') ? href : baseUrl + href,
                 };
             }),
@@ -91,12 +94,12 @@ async function handler(ctx): Promise<Data> {
                 const $ = load(response);
                 if (item.link?.includes('/videos/')) {
                     const ldJson = JSON.parse($('script[type="application/ld+json"]:contains("VideoObject")').text());
-                    const videoId = ldJson.embedUrl.match(/embed\/([\w-]+)/)?.[1];
+                    const videoId = ldJson.embedUrl.match(/\/(?:embed|v)\/([\w-]+)/)?.[1];
 
                     item.description =
                         `<iframe id="ytplayer" type="text/html" width="640" height="360" src="https://www.youtube-nocookie.com/embed/${videoId}" frameborder="0" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe><br>` +
                         ldJson.description.replaceAll('\n', '<br>');
-                    item.pubDate = timezone(parseDate(ldJson.uploadDate), 8);
+                    item.pubDate = parseDate(ldJson.uploadDate);
                     item.image = ldJson.thumbnailUrl[0];
 
                     return item;

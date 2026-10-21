@@ -1,10 +1,10 @@
+import { load } from 'cheerio';
 import type { Context } from 'hono';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/:id?',
@@ -14,6 +14,10 @@ export const route: Route = {
     radar: [
         {
             source: ['topbook.cc/content', 'topbook.cc/'],
+            target: '',
+        },
+        {
+            source: ['topbook.cc/content/:id'],
             target: '/:id',
         },
     ],
@@ -21,6 +25,27 @@ export const route: Route = {
     maintainers: ['nczitzk'],
     handler,
 };
+
+function renderContent(content: string) {
+    const $ = load(content, null, false);
+    $('oembed[url]').each((_, element) => {
+        const embed = $(element);
+        const url = new URL(embed.attr('url')!);
+        if (!['http:', 'https:'].includes(url.protocol)) {
+            return;
+        }
+        embed.replaceWith(url.pathname.endsWith('.mp4') ? $('<video controls>').attr('src', url.href) : $('<iframe allowfullscreen>').attr('src', url.href));
+    });
+    return $.html();
+}
+
+function parsePubDate(value?: string) {
+    if (!value) {
+        return;
+    }
+    const date = parseDate(`${value} +08:00`, 'YYYY-MM-DD HH:mm:ss Z');
+    return Number.isFinite(date.getTime()) ? date : undefined;
+}
 
 async function handler(ctx: Context) {
     const { id } = ctx.req.param();
@@ -31,8 +56,8 @@ async function handler(ctx: Context) {
     const items = response.data.items.map((item) => ({
         title: item.title,
         author: item.nickname,
-        description: item.content,
-        pubDate: timezone(parseDate(item.createTime), 8),
+        description: renderContent(item.content),
+        pubDate: parsePubDate(item.createTime),
         link: `${rootUrl}/article/${item.articleId}`,
     }));
 

@@ -2,6 +2,7 @@ import { load } from 'cheerio';
 
 import type { Data, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/developer/blog',
@@ -22,32 +23,72 @@ export const route: Route = {
             target: '/developer/blog',
         },
     ],
-    name: 'Goldman Sachs Developer Blog',
+    name: 'Developer Blog',
     zh: {
-        name: '高盛开发者博客',
+        name: '开发者博客',
     },
     maintainers: ['chesha1'],
     handler: handlerRoute,
 };
 
+interface BlogCard {
+    title: string;
+    url: string;
+    authors?: string;
+    description?: string;
+    publishedDate?: string;
+}
+
+type JsonValue = string | number | boolean | null | JsonValue[] | { [key: string]: JsonValue };
+
+function isBlogCard(value: JsonValue): value is BlogCard & { [key: string]: JsonValue } {
+    if (!value || typeof value !== 'object' || Array.isArray(value)) {
+        return false;
+    }
+    return typeof value.title === 'string' && typeof value.url === 'string' && value.url.startsWith('/posts/');
+}
+
+function findBlogCards(value: JsonValue): BlogCard[] {
+    if (!value || typeof value !== 'object') {
+        return [];
+    }
+    if (Array.isArray(value)) {
+        return value.flatMap(findBlogCards);
+    }
+    if (Array.isArray(value.cards) && value.cards.every(isBlogCard)) {
+        return value.cards;
+    }
+    return Object.values(value).flatMap(findBlogCards);
+}
+
+function parsePublishedDate(value?: string) {
+    if (typeof value !== 'string' || !value) {
+        return;
+    }
+    const date = parseDate(value);
+    return Number.isNaN(date.getTime()) ? undefined : date;
+}
+
 async function handlerRoute(): Promise<Data> {
     const response = await ofetch('https://developer.gs.com/blog/posts');
     const $ = load(response);
 
+    const nextData = JSON.parse($('script#__NEXT_DATA__').text());
+    const cards = new Map(findBlogCards(nextData).map((card) => [new URL('/blog' + card.url, 'https://developer.gs.com').href, card]));
     const items = $('div[data-cy="blog-card-grid"] a')
         .toArray()
         .map((item) => {
-            const link = 'https://developer.gs.com' + $(item).attr('href');
-            const title = $(item).find('span').eq(1).text();
-            const author = $(item).find('span').eq(2).text();
-            const description = $(item).find('span').eq(3).text();
-            const pubDate = $(item).find('span').eq(0).text();
+            const link = new URL($(item).attr('href')!, 'https://developer.gs.com').href;
+            const card = cards.get(link);
+            if (!card) {
+                throw new Error('Blog card metadata is missing for ' + link);
+            }
             return {
-                title,
+                title: card.title,
                 link,
-                author,
-                description,
-                pubDate,
+                author: typeof card.authors === 'string' && card.authors ? card.authors : undefined,
+                description: typeof card.description === 'string' ? card.description : undefined,
+                pubDate: parsePublishedDate(card.publishedDate),
             };
         });
 

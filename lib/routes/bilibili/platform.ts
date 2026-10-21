@@ -37,9 +37,9 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const { area = -1, type = '全部类型', uid } = ctx.req.param();
+    const { area = -1, p_type: type = '全部类型', uid } = ctx.req.param();
     const cookie = config.bilibili.cookies[uid];
-    const link = 'https://show.bilibili.com/api/ticket/project/listV2';
+    const apiUrl = 'https://show.bilibili.com/api/ticket/project/listV2';
 
     const headers = {
         Referer: 'https://space.bilibili.com',
@@ -48,7 +48,7 @@ async function handler(ctx) {
 
     const { data: response } = await got({
         method: 'get',
-        url: `${link}?version=134&page=1&pagesize=16&area=${area}&filter=&platform=web&p_type=${type}`,
+        url: `${apiUrl}?version=134&page=1&pagesize=16&area=${area}&filter=&platform=web&p_type=${type}`,
         headers,
     });
     // 列表
@@ -58,12 +58,17 @@ async function handler(ctx) {
         const bodyHtml = `<img src="${item.cover}"></img>`;
         const coordinate = `<div>活动地点: ${item.city} ${item.venue_name}</div>`;
         const liveTime = `<div>活动时间: ${item.tlabel}</div>`;
-        const staff = `<div>参展览嘉宾: ${item.staff}</div>`;
-        const countdown = `<div>结束日期: ${item.countdown}</div>`;
+        const guestNames = item.guests
+            ?.map((guest) => guest.name)
+            .filter(Boolean)
+            .join('、');
+        const staff = guestNames ? `<div>参展嘉宾: ${guestNames}</div>` : '';
+        const countdown = `<div>售票状态: ${item.countdown}</div>`;
         const price = `<div>最低价: ${item.price_low / 100} ; 最高价: ${item.price_high / 100}</div>`;
         return {
             title: item.project_name,
-            link: item.url,
+            link: item.jump_url,
+            guid: `bilibili-ticket-${item.project_id}`,
             description: bodyHtml + coordinate + liveTime + staff + countdown + price,
             pubDate: parseDate(item.sale_start_time * 1000),
         };
@@ -71,7 +76,7 @@ async function handler(ctx) {
 
     return {
         title: `bilibili会员购票务-${area}`,
-        link,
+        link: 'https://show.bilibili.com/platform/home.html',
         item: items,
     };
 }

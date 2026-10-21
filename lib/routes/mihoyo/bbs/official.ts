@@ -1,3 +1,4 @@
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
@@ -104,13 +105,13 @@ const getPostContent = async (row, default_gid = '2') => {
 
 const getPostContents = async (list, default_gid = '2') => {
     const items = await Promise.all(
-        list.map((item) => {
+        list.map(async (item) => {
             try {
-                return getPostContent(item, default_gid);
+                return await getPostContent(item, default_gid);
             } catch (error) {
                 if (error instanceof MiHoYoOfficialError) {
                     logger.error(error.message);
-                    return null; // skip it now and pray that it will be available next time
+                    return;
                 }
                 throw error;
             }
@@ -123,7 +124,7 @@ export const route: Route = {
     path: '/bbs/official/:gids/:type?/:page_size?/:last_id?',
     categories: ['game'],
     example: '/mihoyo/bbs/official/2/3/20/',
-    parameters: { gids: '游戏id', type: '公告类型，默认为 2(即 活动)', page_size: '分页大小，默认为 20 ', last_id: '跳过的公告数，例如指定为 40 就是从第 40 条公告开始，可用于分页' },
+    parameters: { gids: '游戏id', type: '公告类型，默认为 2(即 活动)', page_size: '分页大小，默认为 20 ', last_id: '首屏游标，仅支持省略或 0' },
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -150,6 +151,15 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { gids, type = '2', page_size = '20', last_id = '' } = ctx.req.param();
+    if (!Object.hasOwn(GITS_MAP, gids) || !Object.hasOwn(TYPE_MAP, type)) {
+        throw new InvalidParameterError('Unknown game ID or notice type; use a documented combination.');
+    }
+    if (!Number.isSafeInteger(Number(page_size)) || Number(page_size) <= 0) {
+        throw new InvalidParameterError('page_size must be a positive safe integer.');
+    }
+    if (last_id && last_id !== '0') {
+        throw new InvalidParameterError('Only the first page is supported; omit last_id or use 0.');
+    }
 
     const list = await getNewsList({ gids, type, page_size, last_id });
     const items = await getPostContents(list, gids);

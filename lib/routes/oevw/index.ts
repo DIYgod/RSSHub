@@ -13,7 +13,7 @@ const API_URL = `${BASE_URL}/filter` as const;
 const csrfTokenRegex = /csrfToken\s*=\s*['"](.*?)["']/;
 
 export const route: Route = {
-    name: FEED_TITLE,
+    name: 'Suche',
     example: '/oevw/%7B%22rooms%22%3A%5B%222%22%2C%223%22%5D%7D',
     path: '/:json?',
     maintainers: ['sk22'],
@@ -27,7 +27,7 @@ for this route.`,
     },
 
     async handler(ctx) {
-        const json = JSON.parse(decodeURIComponent(ctx.req.param('json') || '{}'));
+        const json = JSON.parse(ctx.req.param('json') || '{}');
 
         // first, get https://www.oevw.at/suche to extract csrf token and cookies
         const res = await ofetch.raw(BASE_URL);
@@ -64,7 +64,7 @@ for this route.`,
                     title: `${subtitle} – ${title}`,
                     link,
                     description: (badge ? `${badge}, ` : '') + description,
-                    image: `${ORIGIN_URL}/${image}`,
+                    image: image ? new URL(image, ORIGIN_URL).href : undefined,
                     category: badge ? [badge] : undefined,
                     // no pubDate :(
                 } satisfies DataItem;

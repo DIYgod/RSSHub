@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 import iconv from 'iconv-lite';
 
 import type { Route } from '@/types';
-import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
 import { baseUrl, fixImage, fixVideo } from './utils';
@@ -33,12 +33,12 @@ export const route: Route = {
 async function handler(ctx) {
     const name = ctx.req.param('name');
     const link = `${baseUrl}/${name}`;
-    const response = await got(link, {
-        responseType: 'buffer',
+    const response = await ofetch.raw(link, {
+        responseType: 'arrayBuffer',
     });
 
-    const charset = response.headers['content-type'].match(/charset=([\w-]+)/)[1]; // windows-1251
-    const $ = load(iconv.decode(response.data, charset));
+    const charset = response.headers.get('content-type')!.match(/charset=([\w-]+)/)![1]; // windows-1251
+    const $ = load(iconv.decode(Buffer.from(response._data!), charset));
 
     const items = $('.story__main')
         .not('.story__placeholder')
@@ -47,6 +47,7 @@ async function handler(ctx) {
             const $story = $(story);
 
             const a = $story.find('.story__title a');
+            const date = $story.find('time').attr('datetime');
             fixImage($story);
             $story.find('.player').each((_, elem) => {
                 const $elem = $(elem);
@@ -55,9 +56,14 @@ async function handler(ctx) {
             return {
                 title: a.text(),
                 link: a.attr('href'),
-                pubDate: parseDate($story.find('time').attr('datetime')!),
+                pubDate: date ? parseDate(date) : undefined,
                 description: $story.find('.story__content-inner').html(),
                 author: $story.find('.user__nick').text(),
+                category: $story
+                    .find('.tags__tag[data-tag]')
+                    .toArray()
+                    .map((tag) => $(tag).attr('data-tag'))
+                    .filter((tag): tag is string => Boolean(tag)),
             };
         });
 

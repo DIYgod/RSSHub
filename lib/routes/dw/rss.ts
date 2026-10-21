@@ -10,7 +10,7 @@ export const route: Route = {
     categories: ['traditional-media'],
     example: '/dw/rss/rss-en-all',
     parameters: {
-        category: 'RSS Feed Channel, see below, `rss-en-all` by default',
+        channel: 'RSS Feed Channel, see below, `rss-en-all` by default',
     },
     features: {
         requirePuppeteer: false,

@@ -1,5 +1,6 @@
 import queryString from 'query-string';
 
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { DataItem, Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -49,6 +50,9 @@ async function handler(ctx) {
             'https://jw.nju.edu.cn/_s414/24774/list.psp',
         ],
     };
+    if (!Object.hasOwn(type_dict, type)) {
+        throw new InvalidParameterError('Unsupported type. Use ggtz or jxdt.');
+    }
     const { data } = await got({
         method: 'post',
         url: 'https://jw.nju.edu.cn/_wp3services/generalQuery?queryObj=articles',

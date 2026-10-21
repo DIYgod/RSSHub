@@ -10,6 +10,7 @@ const templateRegex = /\$\{([^{}]+)\}/g;
 const urlProperties = ['hash', 'host', 'hostname', 'href', 'origin', 'password', 'pathname', 'port', 'protocol', 'search', 'searchParams', 'username'] as const;
 type UrlProperty = (typeof urlProperties)[number];
 const allowedUrlProperties = new Set<string>(urlProperties);
+const isUrlProperty = (prop: string): prop is UrlProperty => allowedUrlProperties.has(prop);
 
 // match path or sub-path
 const matchPath = (path: string, paths: string[]) => {
@@ -36,7 +37,10 @@ const interpolate = (str: string, url: URL) =>
             prop = prop.slice(0, -3);
             needEncode = true;
         }
-        const value = String(url[prop as UrlProperty]);
+        if (!isUrlProperty(prop)) {
+            throw new Error(`Invalid URL property: ${prop}`);
+        }
+        const value = String(url[prop]);
         return needEncode ? encodeURIComponent(value) : value;
     });
 const parseUrl = (str: string) => {
@@ -50,36 +54,40 @@ const parseUrl = (str: string) => {
     return url;
 };
 
-const replaceUrl = (template?: string, url?: string) => {
+const matchesDomain = (url: URL, domains?: string[]) => !domains?.length || domains.includes(url.hostname.toLowerCase());
+
+const replaceUrl = (template?: string, url?: string, domains?: string[]) => {
     if (!template || !url) {
         return url;
     }
     const oldUrl = parseUrl(url);
-    if (oldUrl && oldUrl.protocol !== 'data:') {
+    if (oldUrl && oldUrl.protocol !== 'data:' && matchesDomain(oldUrl, domains)) {
         return interpolate(template, oldUrl);
     }
     return url;
 };
 
-const replaceUrls = ($: CheerioAPI, selector: string, template: string, attribute = 'src') => {
+const replaceUrls = ($: CheerioAPI, selector: string, template: string, attribute = 'src', domains?: string[]) => {
     $(selector).each((_, el) => {
         const oldSrc = $(el).attr(attribute);
-        if (oldSrc) {
-            const url = parseUrl(oldSrc);
-            if (url && url.protocol !== 'data:') {
-                // Cheerio will do the right thing to prohibit XSS.
-                $(el).attr(attribute, interpolate(template, url));
-            }
+        if (!oldSrc) {
+            return;
+        }
+
+        const url = parseUrl(oldSrc);
+        if (url && url.protocol !== 'data:' && matchesDomain(url, domains)) {
+            // Cheerio will do the right thing to prohibit XSS.
+            $(el).attr(attribute, interpolate(template, url));
         }
     });
 };
 
-const process = (html: string, image_hotlink_template?: string, multimedia_hotlink_template?: string) => {
+const process = (html: string, image_hotlink_template?: string, multimedia_hotlink_template?: string, imageDomains?: string[]) => {
     const $ = load(html, undefined, false);
     if (image_hotlink_template) {
-        replaceUrls($, 'img, picture > source', image_hotlink_template);
-        replaceUrls($, 'video[poster]', image_hotlink_template, 'poster');
-        replaceUrls($, '*[data-rsshub-image="href"]', image_hotlink_template, 'href');
+        replaceUrls($, 'img, picture > source', image_hotlink_template, 'src', imageDomains);
+        replaceUrls($, 'video[poster]', image_hotlink_template, 'poster', imageDomains);
+        replaceUrls($, '*[data-rsshub-image="href"]', image_hotlink_template, 'href', imageDomains);
     }
     if (multimedia_hotlink_template) {
         replaceUrls($, 'video, video > source, audio, audio > source', multimedia_hotlink_template);
@@ -107,6 +115,7 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
 
     let imageHotlinkTemplate: string | undefined;
     let multimediaHotlinkTemplate: string | undefined;
+    let imageDomains: string[] | undefined;
 
     // Read params if enabled
     if (config.feature.allow_user_hotlink_template) {
@@ -117,10 +126,16 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
         // but only in their personal-use feed URL.
         multimediaHotlinkTemplate = ctx.req.query('multimedia_hotlink_template');
         imageHotlinkTemplate = ctx.req.query('image_hotlink_template');
+        imageDomains = ctx.req
+            .query('image_hotlink_domains')
+            ?.split(',')
+            .map((domain) => domain.trim().toLowerCase())
+            .filter(Boolean);
     }
 
     // Force config hotlink template on conflict
     if (config.hotlink.template) {
+        imageDomains = undefined;
         imageHotlinkTemplate = filterPath(ctx.req.path) ? config.hotlink.template : undefined;
         multimediaHotlinkTemplate = filterPath(ctx.req.path) ? config.hotlink.template : undefined;
     }
@@ -137,37 +152,39 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
     // Use Cheerio to load the description as html and filter all
     // image link
     const data: Data = ctx.get('data');
-    if (data) {
-        if (data.image) {
-            data.image = replaceUrl(imageHotlinkTemplate, data.image);
-        }
-        if (data.description) {
-            data.description = process(data.description, imageHotlinkTemplate, multimediaHotlinkTemplate);
-        }
+    if (!data) {
+        return;
+    }
 
-        if (data.item) {
-            for (const item of data.item) {
-                if (item.description) {
-                    item.description = process(item.description, imageHotlinkTemplate, multimediaHotlinkTemplate);
-                }
-                if (item.enclosure_url && item.enclosure_type) {
-                    if (item.enclosure_type.startsWith('image/')) {
-                        item.enclosure_url = replaceUrl(imageHotlinkTemplate, item.enclosure_url);
-                    } else if (/^(?:video|audio)\//.test(item.enclosure_type)) {
-                        item.enclosure_url = replaceUrl(multimediaHotlinkTemplate, item.enclosure_url);
-                    }
-                }
-                if (item.image) {
-                    item.image = replaceUrl(imageHotlinkTemplate, item.image);
-                }
-                if (item.itunes_item_image) {
-                    item.itunes_item_image = replaceUrl(imageHotlinkTemplate, item.itunes_item_image);
+    if (data.image) {
+        data.image = replaceUrl(imageHotlinkTemplate, data.image, imageDomains);
+    }
+    if (data.description) {
+        data.description = process(data.description, imageHotlinkTemplate, multimediaHotlinkTemplate, imageDomains);
+    }
+
+    if (data.item) {
+        for (const item of data.item) {
+            if (item.description) {
+                item.description = process(item.description, imageHotlinkTemplate, multimediaHotlinkTemplate, imageDomains);
+            }
+            if (item.enclosure_url && item.enclosure_type) {
+                if (item.enclosure_type.startsWith('image/')) {
+                    item.enclosure_url = replaceUrl(imageHotlinkTemplate, item.enclosure_url, imageDomains);
+                } else if (/^(?:video|audio)\//.test(item.enclosure_type)) {
+                    item.enclosure_url = replaceUrl(multimediaHotlinkTemplate, item.enclosure_url);
                 }
             }
+            if (item.image) {
+                item.image = replaceUrl(imageHotlinkTemplate, item.image, imageDomains);
+            }
+            if (item.itunes_item_image) {
+                item.itunes_item_image = replaceUrl(imageHotlinkTemplate, item.itunes_item_image, imageDomains);
+            }
         }
-
-        ctx.set('data', data);
     }
+
+    ctx.set('data', data);
 };
 
 export default middleware;

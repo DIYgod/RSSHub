@@ -1,10 +1,21 @@
+import { createHash } from 'node:crypto';
+
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/parse-date';
 
 import { parseJSONP } from './jsonp-helper';
+
+const parseMediaDate = (date?: string): Date | undefined => {
+    if (typeof date !== 'string' || !/^\d{4}\.\d{1,2}\.\d{1,2}$/.test(date)) {
+        return;
+    }
+    const parsedDate = parseDate(date, ['YYYY.MM.DD', 'YYYY.M.D', 'YYYY.MM.D', 'YYYY.M.DD'], true);
+    return Number.isFinite(parsedDate.getTime()) ? parsedDate : undefined;
+};
 
 export const route: Route = {
     path: '/media',
@@ -31,27 +42,30 @@ export const route: Route = {
 };
 
 async function handler() {
-    const ARTIST = 'YOASOBI',
-        BASEURL = 'https://www.sonymusic.co.jp/json/v2/artist',
-        POSTFIX = 'start/0/count/-1';
+    const artist = 'YOASOBI',
+        baseUrl = 'https://www.sonymusic.co.jp/json/v2/artist',
+        postfix = 'start/0/count/-1';
 
-    const api = `${BASEURL}/${ARTIST}/media/${POSTFIX}`;
+    const api = `${baseUrl}/${artist}/media/${postfix}`;
     const officialUrl = 'https://www.yoasobi-music.jp/media';
     const title = 'LATEST MEDIA';
 
-    const response = await ofetch(api);
+    const response = await ofetch<string, 'text'>(api, { responseType: 'text' });
 
-    const data = Object.values<Array<{ date: string; youbi: string; startTime?: string; endTime?: string; media: string; program?: string; note: string }>>(parseJSONP(response.data).items)
-        .flat()
+    const data = Object.entries<Array<{ date: string; youbi: string; startTime?: string; endTime?: string; media: string; program?: string; note: string }>>(parseJSONP(response).items)
+        .flatMap(([mediaType, items]) => items.map((item) => ({ ...item, mediaType })))
         .toSorted((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
         .map((item) => ({
             date: item.date,
             weekDay: item.youbi,
-            startTime: item.startTime || null,
-            endTime: item.endTime || null,
-            tvStation: item.media || null,
+            startTime: item.startTime || undefined,
+            endTime: item.endTime || undefined,
+            tvStation: item.media || undefined,
             title: item.program || item.media,
             description: item.note,
+            guid: `yoasobi:media:${createHash('sha256')
+                .update(JSON.stringify([item.mediaType, item.date, item.media || '', item.program || '', item.startTime || '', item.endTime || '']))
+                .digest('hex')}`,
         }));
 
     return {
@@ -66,22 +80,21 @@ async function handler() {
             // the article title
             title: i.title,
             // the article content
-            description: renderDescription(i.date, i.weekDay, i.startTime && i.endTime && i.tvStation ? `${i.startTime} ~ ${i.endTime} ${i.tvStation}` : null, i.description),
-            // no pubDate
-            pubDate: i.date,
+            description: renderDescription(i.date, i.weekDay, i.startTime && i.endTime && i.tvStation ? `${i.startTime} ~ ${i.endTime} ${i.tvStation}` : undefined, i.description),
+            pubDate: parseMediaDate(i.date),
             // specify guid because the link is not unique
-            guid: i.title + i.date,
+            guid: i.guid,
             // the article link
             link: officialUrl,
         })),
     };
 }
 
-const renderDescription = (date: string, weekDay: string, postFix: string | null, description: string): string =>
+const renderDescription = (date: string, weekDay: string, postFix: string | undefined, description: string): string =>
     renderToString(
         <>
             <p>
-                {date} [{weekDay}] {postFix || null}
+                {date} [{weekDay}] {postFix || undefined}
             </p>
             {raw(description)}
         </>

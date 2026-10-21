@@ -1,12 +1,15 @@
 import { load } from 'cheerio';
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
+import pMap from 'p-map';
 
-import type { Route } from '@/types';
+import CaptchaError from '@/errors/types/captcha';
+import type { DataItem, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { getPlaywrightPage } from '@/utils/playwright';
 
 const ids = {
     recommend: {
@@ -67,6 +70,15 @@ const ids = {
     },
 };
 
+function isVerificationPage(data?: string) {
+    if (typeof data !== 'string') {
+        return false;
+    }
+
+    const $ = load(data);
+    return /^\s*check\(\)\s*;?$/.test($('body').attr('onload') ?? '') && $('input[name="parm_0"]').length > 0 && $('input[name="parm_1"]').length > 0;
+}
+
 export const route: Route = {
     path: '/:id?/:category?',
     categories: ['finance'],
@@ -75,7 +87,7 @@ export const route: Route = {
     parameters: { id: '栏目 id，可在对应栏目页 URL 中找到，默认为 recommend，即推荐', category: '分类 id，可在对应栏目子分类页 URL 中找到，默认为全部' },
     features: {
         requireConfig: false,
-        requirePuppeteer: false,
+        requirePuppeteer: true,
         antiCrawler: false,
         supportBT: false,
         supportPodcast: false,
@@ -112,50 +124,109 @@ async function handler(ctx) {
     const currentUrl = `${rootUrl}/${ids[id].url}.html${category === '' ? '' : `?category_key=${category}`}`;
     const apiUrl = `${rootUrl}/${ids[id].url}.html?data_type=1&page=1${category === '' ? '' : `&category_key=${category}`}`;
 
-    const response = await got({
-        method: 'get',
-        url: apiUrl,
-    });
-
-    let items = response.data.data.slice(0, limit).map((item) => ({
-        title: item.title,
-        link: `${rootUrl}${item.url}`,
-        description: item.digest,
-        author: item.author_info.author_name,
-        pubDate: parseDate((item.create_time ?? Number.parseInt(item.original_time)) * 1000),
-        category: [...(item.keywords?.split(',') ?? []), item.category_name ?? item.type_tag],
-    }));
-
-    items = await Promise.all(
-        items.map((item) =>
-            cache.tryGet(item.link, async () => {
-                const detailResponse = await got({
-                    method: 'get',
-                    url: item.link,
-                });
-
-                const content = load(detailResponse.data);
-
-                content('#subscribe-vip-box').remove();
-                content('#news-content').remove();
-
-                const digest = content('.digetst-box').html() || content('.telegram-origin-contentn').html();
-                const description = content('.news-body-content').html();
-                item.description = renderToString(
-                    <>
-                        {digest ? raw(digest) : null}
-                        {description ? raw(description) : null}
-                    </>
+    let browserPromise: ReturnType<typeof getPlaywrightPage> | undefined;
+    const getBrowserContent = async (url: string, json = false) => {
+        browserPromise ??= getPlaywrightPage(apiUrl, {
+            noGoto: true,
+            closeTimeout: 0,
+            onBeforeLoad: async (_, context) => {
+                await context!.route('**/*', (route) => (['document', 'script', 'xhr', 'fetch', 'stylesheet'].includes(route.request().resourceType()) ? route.continue() : route.abort()));
+            },
+        });
+        const { context } = await browserPromise;
+        const page = await context.newPage();
+        try {
+            await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 20000 });
+            if (json) {
+                await page.waitForFunction(
+                    () => {
+                        try {
+                            return typeof JSON.parse(document.body.textContent ?? '') === 'object';
+                        } catch {
+                            return false;
+                        }
+                    },
+                    undefined,
+                    { timeout: 15000 }
                 );
-
-                return item;
-            })
-        )
-    );
-
-    return {
-        title: `智通财经 - ${ids[id].title}`,
-        link: currentUrl,
-        item: items,
+                return (await page.locator('body').textContent()) ?? '';
+            }
+            await page.waitForSelector('.telegram-origin-contentn, .news-body-content', { state: 'attached', timeout: 15000 });
+            return await page.content();
+        } finally {
+            await page.close();
+        }
     };
+
+    try {
+        const response = await got({
+            method: 'get',
+            url: apiUrl,
+        });
+        const data = isVerificationPage(response.data) ? JSON.parse(await getBrowserContent(apiUrl, true)) : response.data;
+        if (data?.status !== 'success' || !Array.isArray(data.data)) {
+            throw new TypeError('Zhitong Caijing did not return a successful article list.');
+        }
+
+        const list: Array<DataItem & { link: string }> = data.data.slice(0, limit).map((item) => ({
+            title: item.title,
+            link: `${rootUrl}${item.url}`,
+            description: item.digest,
+            author: item.author_info.author_name,
+            pubDate: parseDate((item.create_time ?? Number.parseInt(item.original_time)) * 1000),
+            category: [...(item.keywords?.split(',') ?? []), item.category_name ?? item.type_tag],
+        }));
+
+        const items = await pMap(
+            list,
+            async (item) => {
+                try {
+                    const detail = await cache.tryGet(`zhitongcaijing:article:v1:${item.link}`, async () => {
+                        let source: string;
+                        if (browserPromise) {
+                            source = await getBrowserContent(item.link);
+                        } else {
+                            const detailResponse = await got(item.link);
+                            source = isVerificationPage(detailResponse.data) ? await getBrowserContent(item.link) : detailResponse.data;
+                        }
+                        const content = load(source);
+
+                        content('#subscribe-vip-box').remove();
+                        content('#news-content').remove();
+
+                        const main = content('.news-body-content').first();
+                        const article = main.length ? main : content('.telegram-origin-contentn').first();
+                        if (!article.text().trim() && !article.find('img, video, audio, iframe, pre, table').length) {
+                            throw new CaptchaError('Zhitong Caijing did not expose an article body; verify access to the article on the source website.');
+                        }
+                        const digest = content('.digetst-box').html();
+                        const description = article.html();
+                        const body = renderToString(
+                            <>
+                                {digest ? raw(digest) : null}
+                                {description ? raw(description) : null}
+                            </>
+                        );
+
+                        return { description: body };
+                    });
+                    return { ...item, ...detail };
+                } catch (error) {
+                    if (error instanceof CaptchaError || (error instanceof Error && error.name === 'TimeoutError')) {
+                        return item;
+                    }
+                    throw error;
+                }
+            },
+            { concurrency: 3, stopOnError: false }
+        );
+
+        return {
+            title: `智通财经 - ${ids[id].title}`,
+            link: currentUrl,
+            item: items,
+        };
+    } finally {
+        await (await browserPromise)?.destroy();
+    }
 }

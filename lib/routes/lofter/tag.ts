@@ -3,9 +3,9 @@ import { load } from 'cheerio';
 import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
 import type { Route } from '@/types';
+import { evaluateScriptCallback } from '@/utils/evaluate-script';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-import { parseScriptCallback } from '@/utils/parse-script-data';
 
 export const route: Route = {
     path: '/tag/:name?/:type?',
@@ -52,7 +52,7 @@ async function handler(ctx) {
     const apiUrl = `${rootUrl}/dwr/call/plaincall/TagBean.search.dwr`;
 
     const cookie = config.lofter.cookies;
-    if (cookie === undefined) {
+    if (!cookie?.trim()) {
         throw new ConfigNotFoundError('Lofter 用户登录后的 Cookie 值');
     }
 
@@ -83,7 +83,7 @@ async function handler(ctx) {
         },
     });
 
-    const data = parseScriptCallback<any[]>(response.data, 'dwr.engine._remoteHandleCallback');
+    const data = await evaluateScriptCallback<any[]>(response.data, 'dwr.engine._remoteHandleCallback');
 
     const title =
         {

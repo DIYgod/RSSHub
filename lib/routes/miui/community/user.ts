@@ -1,5 +1,6 @@
 import type { Data, Route } from '@/types';
 import got from '@/utils/got';
+import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/community/user/:uid',
@@ -50,7 +51,7 @@ async function handler(ctx): Promise<Data> {
             return {
                 title: item.title || `${authorName} 的动态`,
                 description: item.textContent,
-                pubDate: new Date(item.createTime).toUTCString(),
+                pubDate: item.createTime === undefined || item.createTime === null ? undefined : parseDate(item.createTime),
                 author: item.author.name,
                 link: `${pageRoot}?postId=${item.id}`,
                 image: item.pic || item.cover || '',

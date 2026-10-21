@@ -1,5 +1,5 @@
 import type { Route } from '@/types';
-import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
@@ -17,34 +17,31 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['www.research.ke.com/researchResults'],
+            source: ['research.ke.com/ResearchResults'],
+            target: '/researchResults',
         },
     ],
     name: '研究成果',
     maintainers: ['shaomingbo'],
     handler,
-    url: 'www.research.ke.com/researchResults',
+    url: 'research.ke.com/ResearchResults',
 };
 
 async function handler() {
-    const response = await got({
-        method: 'post',
-        url: 'https://research.ke.com/apis/consumer-access/index/contents/page',
+    const response = await ofetch.raw('https://research.ke.com/apis/consumer-access/index/contents/page', {
+        method: 'POST',
         headers: {
             Referer: 'https://research.ke.com/ResearchResults',
         },
-        json: {
+        body: {
             pageIndex: 1,
             pageSize: 9,
         },
     });
-
-    const { status, statusMessage, data } = response;
-    if (status !== 200) {
-        throw new Error(statusMessage);
+    const list = response._data?.data?.list;
+    if (!Array.isArray(list)) {
+        throw new TypeError('The research API did not return a report list. Check that the source is available.');
     }
-
-    const { list } = data.data;
 
     return {
         title: '房地产行业研究报告',
@@ -55,7 +52,7 @@ async function handler() {
             link: `https://research.ke.com/${item.contentTypeId}/ArticleDetail?id=${item.id}`,
             author: item.author,
             description: item.guideReading,
-            pubDate: parseDate(item.publishTime),
+            pubDate: item.publishTime ? parseDate(item.publishTime) : undefined,
         })),
     };
 }

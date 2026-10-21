@@ -3,6 +3,7 @@ import { load } from 'cheerio';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
 import { decodeCFEmail } from './cf-email';
@@ -36,12 +37,9 @@ async function handler(ctx) {
     const rootUrl = 'https://www.sciencedirect.com';
     const currentUrl = `${rootUrl}/journal/${id}/articles-in-press`;
 
-    const response = await got({
-        method: 'get',
-        url: currentUrl,
-    });
+    const response = await ofetch.raw(currentUrl);
 
-    const issn = response.data.match(/ISSN(\w{8})'/)[1];
+    const issn = response._data.match(/ISSN(\w{8})'/)[1];
 
     const apiUrl = `${rootUrl}/journal/${issn}/articles-in-press/articles?path=/journal/${id}/articles-in-press&title=${id}`;
 
@@ -49,7 +47,10 @@ async function handler(ctx) {
         method: 'get',
         url: apiUrl,
         headers: {
-            cookie: response.headers['set-cookie'].map((cookie) => cookie.split(';Version=1;', 1)[0]).join('; '),
+            cookie: response.headers
+                .getSetCookie()
+                .map((cookie) => cookie.split(';Version=1;', 1)[0])
+                .join('; '),
         },
     });
 
@@ -89,7 +90,7 @@ async function handler(ctx) {
     );
 
     return {
-        title: `${response.data.match(/\\"displayName\\":\\"(.*?)\\",\\"/)[1]} - ScienceDirect`,
+        title: `${response._data.match(/\\"displayName\\":\\"(.*?)\\",\\"/)[1]} - ScienceDirect`,
         link: currentUrl,
         item: items,
     };

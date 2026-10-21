@@ -7,6 +7,7 @@ import type { Context } from 'hono';
 import type { Data, DataItem, Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
 export const route: Route = {
     path: '/news/:appid/:language?',
@@ -79,6 +80,7 @@ const langMap = {
     french: 'fr',
     italian: 'it',
     korean: 'ko',
+    koreana: 'ko',
     spanish: 'es',
     schinese: 'zh-Hans',
     tchinese: 'zh-Hant',
@@ -107,8 +109,7 @@ const langMap = {
 
 async function handler(ctx: Context): Promise<Data> {
     const { appid = '958260', language = 'english' } = ctx.req.param();
-    const limitQuery = ctx.req.query('limit');
-    const limit = limitQuery ? Number(limitQuery) : 100;
+    const limit = getRouteLimit(ctx, 100);
 
     const rootUrl = 'https://steamcommunity.com';
     const apiRootUrl = 'https://store.steampowered.com';
@@ -144,14 +145,14 @@ async function handler(ctx: Context): Promise<Data> {
         return {
             title,
             description,
-            pubDate: parseDate(item.announcement_body.posttime, 'X'),
+            pubDate: item.announcement_body.posttime === undefined || item.announcement_body.posttime === null ? undefined : parseDate(item.announcement_body.posttime, 'X'),
             link: new URL(`games/${appid}/announcements/detail/${item.announcement_body.gid}`, rootUrl).href,
             category: item.announcement_body.tags,
             content: {
                 html: description,
                 text: item.announcement_body.body,
             },
-            updated: parseDate(item.announcement_body.updatetime, 'X'),
+            updated: item.announcement_body.updatetime === undefined || item.announcement_body.updatetime === null ? undefined : parseDate(item.announcement_body.updatetime, 'X'),
             image: capsuleImage ? new URL(`images/${item.announcement_body.clanid}/${capsuleImage}`, clanRootUrl).href : undefined,
             banner: titleImage ? new URL(`images/${item.announcement_body.clanid}/${titleImage}`, clanRootUrl).href : undefined,
         };
@@ -162,7 +163,7 @@ async function handler(ctx: Context): Promise<Data> {
         link: new URL(`app/${appid}/allnews/`, rootUrl).href,
         image: new URL(`store_item_assets/steam/apps/${appid}/hero_capsule.jpg`, sharedRootUrl).href,
         item: items,
-        language: langMap[language] || null,
+        language: langMap[language],
     };
 }
 
@@ -255,7 +256,6 @@ const customPreset: PresetFactory = presetHTML5.extend((tags) => ({
             title: 'YouTube video player',
             frameborder: '0',
             allowFullScreen: '1',
-            refererpolicy: 'strict-origin-when-cross-origin',
         },
     }),
     video: (node, { render }) => ({

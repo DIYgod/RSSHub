@@ -34,7 +34,8 @@ const filters = {
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { query = 's=2&d=1&n=true&dm=true&o=true' } = ctx.req.param();
-    const limit = Number(ctx.req.query('limit') ?? '50');
+    const requestedLimit = Number(ctx.req.query('limit'));
+    const limit = Number.isFinite(requestedLimit) && requestedLimit >= 1 ? Math.floor(requestedLimit) : 50;
 
     const baseUrl = 'https://scoop.sh';
     const apiBaseUrl = 'https://scoopsearch.search.windows.net';
@@ -56,7 +57,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
         parseResponse: (txt) => txt,
     });
 
-    const key: string = scriptResponse.match(/VITE_APP_AZURESEARCH_KEY:"(.*?)"/)?.[1];
+    const key = scriptResponse.match(/VITE_APP_AZURESEARCH_KEY\s*:\s*(["'`])([^"'`]+)\1/)?.[2];
 
     if (!key) {
         throw new Error('Key not found.');
@@ -98,7 +99,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
         const title = `${item.Name} ${item.Version} in ${repositoryName}`;
         const description: string | undefined = renderToString(<ScoopDescription item={item} />);
         const pubDate: number | string = item.Metadata.Committed;
-        const linkUrl: string | undefined = item.Homepage;
+        const linkUrl = `${item.Metadata.Repository}/blob/${item.Metadata.Sha}/${item.Metadata.FilePath}`;
         const authors: DataItem['author'] = [
             {
                 name: repositoryName,
@@ -135,7 +136,6 @@ export const handler = async (ctx: Context): Promise<Data> => {
         description: undefined,
         link: targetUrl,
         item: items,
-        allowEmpty: true,
         author,
         language,
         id: targetUrl,
@@ -174,7 +174,7 @@ const ScoopDescription = ({ item }: { item: any }) => {
                     <tr>
                         <th>Version</th>
                         <td>
-                            <a href={`${item.Metadata.Repository}/blob/${item.Metadata.FilePath}`}>v{item.Version}</a>
+                            <a href={`${item.Metadata.Repository}/blob/${item.Metadata.Sha}/${item.Metadata.FilePath}`}>v{item.Version}</a>
                         </td>
                     </tr>
                 ) : null}
@@ -198,10 +198,10 @@ const ScoopDescription = ({ item }: { item: any }) => {
                         <td>{item.License}</td>
                     </tr>
                 ) : null}
-                {item.Note ? (
+                {item.Notes ? (
                     <tr>
                         <th>Note</th>
-                        <td>{item.Note}</td>
+                        <td>{item.Notes}</td>
                     </tr>
                 ) : null}
             </tbody>
@@ -234,16 +234,6 @@ To subscribe to [Apps](https://scoop.sh/#/apps?s=2\\&d=1\\&n=true\\&dm=true\\&o=
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: [
-        {
-            source: ['scoop.sh/#/apps', 'scoop.sh'],
-            target: (_, url) => {
-                const urlObj: URL = new URL(url);
-                const query: string | undefined = urlObj.searchParams.toString() ?? undefined;
-
-                return `/scoop/apps${query ? `/${query}` : ''}`;
-            },
-        },
-    ],
+    radar: [{ source: ['scoop.sh'], target: '/apps' }],
     view: ViewType.Notifications,
 };

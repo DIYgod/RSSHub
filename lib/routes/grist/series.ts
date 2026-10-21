@@ -1,3 +1,4 @@
+import NotFoundError from '@/errors/types/not-found';
 import type { Data, Route } from '@/types';
 
 import { getData, getList } from './utils';
@@ -31,15 +32,18 @@ async function handler(ctx): Promise<Data> {
     const searchRoute = '/wp-json/wp/v2/series?slug=';
     const articleRoute = '/wp-json/wp/v2/posts?series=';
     const series = ctx.req.param('series');
-    const id = (await getData(`${baseUrl}${searchRoute}${series}`))[0].id;
-    const data = await getData(`${baseUrl}${articleRoute}${id}&_embed`);
+    const seriesData = (await getData(`${baseUrl}${searchRoute}${encodeURIComponent(series)}`))[0];
+    if (!seriesData) {
+        throw new NotFoundError(`Grist did not return a series for '${series}'. Check the series slug in the source URL.`);
+    }
+    const data = await getData(`${baseUrl}${articleRoute}${seriesData.id}&_embed`);
     const items = await getList(data);
 
     return {
-        title: `${series[0].toUpperCase() + series.slice(1)} - Gist Articles`,
-        link: `${baseUrl}/${series}`,
+        title: `${seriesData.name} - Grist Articles`,
+        link: seriesData.link,
         item: items,
-        description: `${series[0].toUpperCase() + series.slice(1)} Articles on grist.org`,
+        description: `${seriesData.name} Articles on grist.org`,
         logo: 'https://grist.org/wp-content/uploads/2021/03/cropped-Grist-Favicon.png?w=192',
         icon: 'https://grist.org/wp-content/uploads/2021/03/cropped-Grist-Favicon.png?w=32',
         language: 'en-us',

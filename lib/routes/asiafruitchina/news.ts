@@ -8,11 +8,12 @@ import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
 import { renderDescription } from './templates/description';
 
 export const handler = async (ctx: Context): Promise<Data> => {
-    const limit = Number(ctx.req.query('limit') ?? '30');
+    const limit = getRouteLimit(ctx, 30);
 
     const baseUrl = 'https://asiafruitchina.net';
     const targetUrl: string = new URL('category/news', baseUrl).href;
@@ -48,7 +49,6 @@ export const handler = async (ctx: Context): Promise<Data> => {
             const pubDateStr: string | undefined = $el.find('span.date').text();
             const linkUrl: string | undefined = $aEl.attr('href');
             const image: string | undefined = $el.find('a.image img').attr('src');
-            const upDatedStr: string | undefined = pubDateStr;
 
             const processedItem: DataItem = {
                 title,
@@ -61,7 +61,6 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 },
                 image,
                 banner: image,
-                updated: upDatedStr ? parseDate(upDatedStr) : undefined,
                 language,
             };
 
@@ -90,7 +89,6 @@ export const handler = async (ctx: Context): Promise<Data> => {
                             ?.split(/,/)
                             .map((c) => c.trim()) ?? [];
                     const authors: DataItem['author'] = $$('span.author').first().text();
-                    const upDatedStr: string | undefined = pubDateStr;
 
                     let processedItem: DataItem = {
                         title,
@@ -102,7 +100,6 @@ export const handler = async (ctx: Context): Promise<Data> => {
                             html: description,
                             text: description,
                         },
-                        updated: upDatedStr ? parseDate(upDatedStr) : item.updated,
                         language,
                     };
 
@@ -144,7 +141,6 @@ export const handler = async (ctx: Context): Promise<Data> => {
         description: $('meta[name="description"]').attr('content'),
         link: targetUrl,
         item: items,
-        allowEmpty: true,
         image: $('img.logo').attr('src'),
         author: title.split(/-/).pop(),
         language,
@@ -174,7 +170,7 @@ export const route: Route = {
     radar: [
         {
             source: ['asiafruitchina.net/category/news'],
-            target: '/asiafruitchina/news',
+            target: '/news',
         },
     ],
     view: ViewType.Articles,

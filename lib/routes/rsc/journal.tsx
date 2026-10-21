@@ -34,7 +34,9 @@ All journals at [Current journals](https://pubs.rsc.org/en/journals)
 
 async function handler(ctx) {
     const { id, category = 'allrecentarticles' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 50;
+    const queryLimit = ctx.req.query('limit');
+    const requestedLimit = queryLimit?.trim() ? Number(queryLimit) : NaN;
+    const limit = Number.isFinite(requestedLimit) && requestedLimit >= 0 ? Math.floor(requestedLimit) : 50;
 
     const rootUrl = 'https://pubs.rsc.org';
     const currentUrl = new URL(`en/journals/journalissues/${id}#!recentarticles`, rootUrl).href;

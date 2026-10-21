@@ -1,7 +1,10 @@
-import { load } from 'cheerio';
+import { type Cheerio, type CheerioAPI, load } from 'cheerio';
 import dayjs from 'dayjs';
+import { type AnyNode, cloneNode, Document } from 'domhandler';
+import pMap from 'p-map';
 
-import type { Data, Route } from '@/types';
+import NotFoundError from '@/errors/types/not-found';
+import type { Data, DataItem, Route } from '@/types';
 import logger from '@/utils/logger';
 import ofetch from '@/utils/ofetch';
 
@@ -38,24 +41,23 @@ export const route: Route = {
     maintainers: ['Rjnishant530'],
     handler,
 };
-
 async function handler(ctx): Promise<Data> {
     const filter = ctx.req.param('filter') ?? 'latest';
     const currentYear = dayjs().year();
     const currentMonth = dayjs().month() + 1;
     logger.debug(`Getting news for month ${currentMonth} and year ${currentYear}`);
-    const response = await ofetch(`${baseUrl}/current-affairs/news-today/getbymonth?year=${currentYear}&month=${currentMonth}`);
-
-    let items: any = [];
-    // let title = 'News Today';
-
+    const response = await ofetch<
+        Array<{
+            url: string;
+        }>
+    >(`${baseUrl}/current-affairs/news-today/getbymonth?year=${currentYear}&month=${currentMonth}`);
+    let items: DataItem[] = [];
     if (response.length !== 0) {
         if (filter === 'latest') {
             const currentUrl = response[0].url;
-            // title = response[0].formatted_published_at;
             items = await processCurrentNews(currentUrl);
         } else {
-            const results = await Promise.all(response.map((element) => processCurrentNews(element.url)));
+            const results = await pMap(response, (element) => processCurrentNews(element.url), { concurrency: 1, stopOnError: false });
             items.push(...results.flat());
         }
     }
@@ -68,24 +70,33 @@ async function handler(ctx): Promise<Data> {
         image: `${baseUrl}/current-affairs/images/news-today-logo.svg`,
         icon: 'https://cdn.visionias.in/new-system-assets/images/home_page/home/vision-logo-footer.png',
         logo: 'https://cdn.visionias.in/new-system-assets/images/home_page/home/vision-logo-footer.png',
-        allowEmpty: true,
     };
 }
-
-async function processCurrentNews(currentUrl) {
-    const response = await ofetch(`${baseUrl}${currentUrl}`);
+async function processCurrentNews(currentUrl: string) {
+    const response = await ofetch(new URL(currentUrl, baseUrl).href);
     const $ = load(response);
     const items = $('#table-of-content > ul > li > a')
         .toArray()
         .map((item) => {
-            const link = $(item).attr('href');
-            const title = $(item).children('span').remove().end().text().trim();
+            const href = $(item).attr('href');
+            if (!href) {
+                throw new NotFoundError('A VisionIAS News Today table of contents entry has no article link');
+            }
+            const titleElement = $(item).children('span.flex-1');
+            const title = titleElement.length ? titleElement.text() : copyContent($(item), $).children('span').remove().end().text();
             return {
                 title,
-                link: title === 'Also in News' ? link : `${baseUrl}${link}`,
-                guid: link,
+                link: new URL(href, baseUrl).href,
             };
         });
-    const newsPromises = await Promise.allSettled(items.map((item) => extractNews(item, 'main > div > div.mt-6 > div.flex > div.flex.mt-6')));
-    return newsPromises.flatMap((news) => (news.status === 'fulfilled' ? (Array.isArray(news.value) ? news.value : [news.value]) : [{ title: 'Error Parse News' }]));
+    const news = await pMap(items, (item) => extractNews(item, 'main > div > div.mt-6 > div.flex > div.flex.mt-6'), { concurrency: 3, stopOnError: false });
+    return news.flat();
+}
+function copyContent<T extends AnyNode>(selection: Cheerio<T>, $: CheerioAPI): Cheerio<T> {
+    const nodes = selection.toArray().map((node) => cloneNode(node, true));
+    const root = new Document(nodes);
+    for (const node of nodes) {
+        node.parent = root;
+    }
+    return $(nodes);
 }

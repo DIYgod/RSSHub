@@ -45,7 +45,7 @@ async function handler(ctx) {
     const feed = await parser.parseString(response.data);
 
     const items = await Promise.all(
-        feed.items.splice(0, 10).map((item) => {
+        feed.items.slice(0, 10).map((item) => {
             // generally speaking, changing `item.link` of an existing route could potentially break `item.guid`
             // but since the route has been down for at least 8 months, it's probably safe
             item.link = item.link!.replace(/^http:\/\//, 'https://');

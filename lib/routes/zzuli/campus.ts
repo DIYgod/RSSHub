@@ -1,9 +1,11 @@
 import { load } from 'cheerio';
 import type { Context } from 'hono';
 
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
 export const route: Route = {
     path: '/campus/:type',
@@ -32,20 +34,24 @@ const map = new Map([
 
 async function handler(ctx: Context) {
     const type = Number.parseInt(ctx.req.param('type') ?? '');
-    const { title, link } = map.get(type)!;
+    const category = map.get(type);
+    if (!category) {
+        throw new InvalidParameterError('Unsupported campus category. Use a type from 0 to 8.');
+    }
+    const { title, link } = category;
 
     const response = await ofetch(link);
     const $ = load(response);
 
     const items = $('.lists tr')
-        .slice(0, 10)
+        .slice(0, Math.max(10, getRouteLimit(ctx, 10)))
         .toArray()
         .map((item) => {
             const $item = $(item);
             return {
                 title: $item.find('td a').attr('title') ?? '',
                 link: $item.find('td a').attr('href'),
-                pubDate: parseDate($item.find('td div').text()),
+                pubDate: getPublicationDate($item.find('td div').text()),
             };
         });
 
@@ -54,4 +60,12 @@ async function handler(ctx: Context) {
         link,
         item: items,
     };
+}
+
+function getPublicationDate(value: string) {
+    if (!value.trim()) {
+        return;
+    }
+    const date = parseDate(value);
+    return Number.isFinite(date.getTime()) ? date : undefined;
 }

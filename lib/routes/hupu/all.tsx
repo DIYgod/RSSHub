@@ -5,8 +5,8 @@ import { renderToString } from 'hono/jsx/dom/server';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate, parseRelativeDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+
+import { extractForumThreadDates } from './utils';
 
 export const route: Route = {
     path: '/all/:id?',
@@ -23,8 +23,8 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['m.hupu.com/:category', 'm.hupu.com/'],
-            target: '/:category',
+            source: ['bbs.hupu.com/topic-daily'],
+            target: '/all/topic-daily',
         },
     ],
     name: '热帖',
@@ -47,6 +47,7 @@ async function handler(ctx) {
     });
 
     const $ = load(response.data);
+    const threadDates = extractForumThreadDates($);
 
     let items = $('div.t-info > a, a.p-title')
         .toArray()
@@ -56,7 +57,7 @@ async function handler(ctx) {
             return {
                 title: $item.text(),
                 link: `https://m.hupu.com/bbs${$item.attr('href')}`,
-                pubDate: timezone(parseDate($item.parent().parent().find('.post-time').text(), 'MM-DD HH:mm'), 8),
+                pubDate: threadDates.get($item.attr('href')!),
             };
         });
 
@@ -81,7 +82,6 @@ async function handler(ctx) {
                     });
 
                     item.author = content('.bbs-user-wrapper-content-name-span').first().text();
-                    item.pubDate ??= timezone(parseRelativeDate(content('.second-line-user-info').first().text()), 8);
                     const description = content('.bbs-content').first().html();
                     item.description = renderToString(
                         <>

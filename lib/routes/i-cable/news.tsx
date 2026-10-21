@@ -6,6 +6,8 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
+import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
+import { getRouteLimit } from '@/utils/route-limit';
 
 export const route: Route = {
     path: '/news/:category?',
@@ -41,7 +43,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const category = ctx.req.param('category') ?? '新聞資訊';
-    const limit = ctx.req.query('limit') ?? 20;
+    const limit = getRouteLimit(ctx, 20);
     const root = 'https://www.i-cable.com/wp-json/wp/v2';
 
     const response = await cache.tryGet(`${root}/categories?slug=${category}`, async () => await got(`${root}/categories?slug=${category}`), config.cache.routeExpire, false);
@@ -67,7 +69,8 @@ async function handler(ctx) {
         return {
             title: item.title.rendered,
             link: item.link,
-            pubDate: item.date_gmt,
+            // WordPress date_gmt is UTC even when its string omits the Z suffix.
+            pubDate: item.date_gmt ? parseDateInTimezone(item.date_gmt, 0) : undefined,
             description,
             category: item._embedded['wp:term'][0].map((term) => term.name) ?? [],
         };

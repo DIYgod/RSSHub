@@ -407,11 +407,12 @@ async function fetchFeedData(communityId: number, community: string, session: st
             }
 
             const existing = items.get(item.link);
-            if (existing) {
-                existing.category = [...new Set([...(existing.category ?? []), ...(item.category ?? [])])];
-                existing.description ||= item.description;
-                existing.itunes_item_image ||= item.itunes_item_image;
+            if (!existing) {
+                continue;
             }
+            existing.category = [...new Set([...(existing.category ?? []), ...(item.category ?? [])])];
+            existing.description ||= item.description;
+            existing.itunes_item_image ||= item.itunes_item_image;
         }
     }
 

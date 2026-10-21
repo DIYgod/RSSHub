@@ -1,8 +1,20 @@
-import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
-import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
+
+import { getBmkgApiHeaders } from './utils';
+
+interface NewsArticle {
+    slug: string;
+    date: string;
+    title: string;
+    author: string;
+    content: string;
+}
 
 export const route: Route = {
     path: '/news',
@@ -19,51 +31,42 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['bmkg.go.id/', 'bmkg.go.id/berita'],
+            source: ['bmkg.go.id/', 'bmkg.go.id/berita/utama'],
         },
     ],
     name: 'News',
     maintainers: ['Shinanory'],
     handler,
-    url: 'bmkg.go.id/',
+    url: 'bmkg.go.id/berita/utama',
 };
 
 async function handler(): Promise<Data> {
-    const url = 'https://www.bmkg.go.id';
-    const response = await got(url);
-    const $ = load(response.data);
-    const list = $('div .ms-slide')
-        .toArray()
-        .map((item): DataItem => {
-            const $item = $(item);
-            const a = $item.find('a');
-            const img = $item.find('img');
-
-            return {
-                title: a.text(),
-                link: `${url}/${a.attr('href')}`,
-                itunes_item_image: img.attr('data-src'),
-            };
-        });
-
-    const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link!, async () => {
-                const response = await got(item.link);
-                const $ = load(response.data);
-                const p = $('div .blog-grid').find('p');
-                item.description = p.text();
-
-                return item;
-            })
-        )
+    const url = 'https://www.bmkg.go.id/berita/utama';
+    const headers = await getBmkgApiHeaders(url);
+    const articles = await ofetch<NewsArticle[]>('https://www.bmkg.go.id/api/content/list-tag/11/12/0', { headers });
+    const items = await pMap(
+        articles,
+        (article) => {
+            const link = `${url}/${article.slug}`;
+            return cache.tryGet<DataItem>(link, async () => {
+                const detail = await ofetch<NewsArticle>(`https://www.bmkg.go.id/api/content/single/${article.slug}`, { headers });
+                return {
+                    title: detail.title,
+                    link,
+                    description: detail.content,
+                    author: detail.author,
+                    pubDate: detail.date ? timezone(parseDate(detail.date, 'YYYY-MM-DD HH:mm:ss'), 7) : undefined,
+                };
+            });
+        },
+        { concurrency: 3 }
     );
 
     return {
-        title: $('title').text(),
+        title: 'Berita Utama - BMKG',
         link: url,
         description: '印尼气象气候和地球物理局 新闻 | BMKG news',
         item: items,
-        language: 'in',
+        language: 'id',
     };
 }

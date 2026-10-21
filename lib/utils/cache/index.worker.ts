@@ -6,7 +6,7 @@ import { config } from '@/config';
 import type CacheModule from './base';
 import { stringify } from './base';
 import http from './http';
-import kv, { getKVNamespace } from './kv';
+import kv, { getKVNamespace, toKVTtl } from './kv';
 
 const cacheModule: CacheModule = config.cache.type === 'http' ? http : kv;
 
@@ -15,6 +15,7 @@ if (cacheModule === http) {
 }
 
 type GlobalCache = {
+    supportsAtomicClaims: boolean;
     get: (key: string) => Promise<string | null | undefined> | string | null | undefined;
     has: (key: string) => Promise<boolean> | boolean;
     set: <T>(key: string, value?: string | T, maxAge?: number) => any;
@@ -26,6 +27,8 @@ type GlobalCache = {
 };
 
 const globalCache: GlobalCache = {
+    // HTTP and KV reads can be stale, so neither can coordinate request locks.
+    supportsAtomicClaims: false,
     get: async (key) => {
         if (cacheModule === http) {
             if (key && cacheModule.status.available) {
@@ -52,7 +55,7 @@ const globalCache: GlobalCache = {
         }
         const stored = stringify(value);
         if (key) {
-            await getKVNamespace()!.put(key, stored, { expirationTtl: maxAge });
+            await getKVNamespace()!.put(key, stored, { expirationTtl: toKVTtl(maxAge) });
         }
     },
     claim: async (key, maxAge) => {

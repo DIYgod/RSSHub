@@ -9,7 +9,7 @@ export const route: Route = {
     path: '/blog',
     categories: ['new-media'],
     example: '/keyakizaka46/blog',
-    name: 'Keyakizaka46 Blog 欅坂 46 博客',
+    name: 'Blog 博客',
     maintainers: ['yj-qin'],
     handler,
 };
@@ -21,17 +21,18 @@ async function handler() {
     const $ = load(response);
 
     return {
-        allowEmpty: true,
         title: '欅坂46官网 博客',
         link,
         item: $('div.box-newposts div.slider ul li')
             .toArray()
             .map((item) => {
                 const $item = $(item);
+                const sourceDate = $item.find('div.box-blog time').text().trim();
+                const date = sourceDate ? parseDate(sourceDate, 'YYYY.MM.DD HH:mm', true) : undefined;
                 return {
-                    title: $item.find('p.ttl').text().trim(),
+                    title: $item.find('p.ttl').text(),
                     link: $item.find('a').attr('href'),
-                    pubDate: timezone(parseDate($item.find('div.box-blog time').text()), 9),
+                    pubDate: date && Number.isFinite(date.getTime()) ? timezone(date, 9) : undefined,
                     author: $item.find('p.ttl').next().text().trim(),
                     description: `<img src="${$item.find('img.js-replaceImage').attr('src')}">`,
                 };

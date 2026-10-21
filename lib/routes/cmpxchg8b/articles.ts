@@ -22,13 +22,14 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['lock.cmpxchg8b.com/articles'],
+            source: ['lock.cmpxchg8b.com/'],
+            target: '/articles',
         },
     ],
     name: 'Articles',
     maintainers: ['yuguorui'],
     handler,
-    url: 'lock.cmpxchg8b.com/articles',
+    url: 'lock.cmpxchg8b.com',
 };
 
 async function handler() {
@@ -36,26 +37,26 @@ async function handler() {
 
     const $ = load(response);
     const author = $('p.author').text().trim();
-    const list = $('section#articles section')
+    const list = $('section#articles li')
         .toArray()
         .map((item): DataItem & { link: string } => {
             const $item = $(item);
             return {
-                title: $item.find('li').text(),
-                link: new URL($item.find('li a').attr('href')!, baseUrl).href,
+                title: $item.text(),
+                link: new URL($item.find('a').attr('href')!, baseUrl).href,
                 author,
             };
         });
-
+    const selected = list;
     const items = await Promise.all(
-        list.map((item) =>
+        selected.map((item) =>
             cache.tryGet(item.link, async () => {
                 const { data: response } = await got(item.link);
                 const $ = load(response);
 
                 // extract the body but removing <nav> and <footer>
                 const body = $('body');
-                body.find('nav, footer').remove();
+                body.find('nav, footer, #title-block-header').remove();
                 item.description = body.html();
                 return item;
             })

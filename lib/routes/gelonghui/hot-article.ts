@@ -1,5 +1,6 @@
 import { load } from 'cheerio';
 
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import { ViewType } from '@/types';
 import got from '@/utils/got';
@@ -41,7 +42,11 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const type = ctx.req.param('type') === 'week' ? 1 : 0;
+    const period = ctx.req.param('type') ?? 'day';
+    if (period !== 'day' && period !== 'week') {
+        throw new InvalidParameterError('type must be day or week.');
+    }
+    const type = period === 'week' ? 1 : 0;
     const baseUrl = 'https://www.gelonghui.com';
     const { data: response } = await got(baseUrl);
     const $ = load(response);

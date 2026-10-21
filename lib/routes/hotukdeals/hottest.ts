@@ -1,8 +1,8 @@
 import { load } from 'cheerio';
 
 import type { Route } from '@/types';
+import { evaluateScriptData } from '@/utils/evaluate-script';
 import got from '@/utils/got';
-import { parseScriptData } from '@/utils/parse-script-data';
 
 export const route: Route = {
     path: '/hottest',
@@ -37,7 +37,7 @@ async function handler() {
         .map((element) => $(element).text())
         .filter((source) => source.includes('__INITIAL_STATE__'))
         .join('\n');
-    const { widgets } = parseScriptData<{
+    const { widgets } = await evaluateScriptData<{
         widgets: {
             hottestWidget: {
                 threads: Array<{ title: string; mainImage: { path: string; name: string }; temperature: number; displayPrice: string; url: string }>;
@@ -51,7 +51,7 @@ async function handler() {
         link: 'https://www.hotukdeals.com/',
         item: threads.map((item) => ({
             title: item.title,
-            description: `<img src="https://images.hotukdeals.com/${item.mainImage.path}/${item.mainImage.name}/re/768x768/qt/60/${item.mainImage.name}.jpg"><br>${item.temperature}° ${item.title}<br>${item.displayPrice}`,
+            description: `<img src="https://images.hotukdeals.com/${item.mainImage.path}/${item.mainImage.name}/re/768x768/qt/60/${item.mainImage.name}.jpg"><br>${item.temperature}°<br>${item.displayPrice}`,
             link: item.url,
         })),
     };

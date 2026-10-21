@@ -55,6 +55,34 @@ const formatDescriptionText = (html, { showEmojiInDescription, showLinkIconInDes
     return formattedHtml;
 };
 
+const needsCompletePictures = (status) => Number(status.pic_num) > Object.values(status.pics || {}).length || (status.retweeted_status && needsCompletePictures(status.retweeted_status));
+
+const mergeDesktopStatus = (status, desktopStatus) => {
+    const pictures = desktopStatus.pic_ids
+        ?.map((id) => desktopStatus.pic_infos?.[id])
+        .filter(Boolean)
+        .map((picture) => {
+            const large = picture.largest || picture.original || picture.large;
+            return {
+                ...picture,
+                pid: picture.pic_id,
+                url: picture.bmiddle?.url || large?.url,
+                large: large && { ...large, geo: { width: large.width, height: large.height } },
+            };
+        });
+
+    return {
+        ...desktopStatus,
+        ...status,
+        text: desktopStatus.text,
+        bid: desktopStatus.mblogid || status?.bid,
+        pics: pictures?.length ? pictures : status?.pics,
+        ...(desktopStatus.retweeted_status && {
+            retweeted_status: mergeDesktopStatus(status?.retweeted_status, desktopStatus.retweeted_status),
+        }),
+    };
+};
+
 const weiboUtils = {
     apiHeaders: {
         'MWeibo-Pwa': 1,
@@ -64,9 +92,74 @@ const weiboUtils = {
     RenewWeiboCookiesError,
     getCookies: (() => {
         const url = 'https://m.weibo.cn/';
+        const cacheKey = 'weibo:visitor-cookies';
         const coolingDownMessage = `Cooling down before new visitor Cookies from ${url} may be fetched`;
         let coolingDown = false;
         let visitorCookiesPromise: Promise<string> | undefined;
+
+        const fetchVisitorCookies = async (renew: any = false) => {
+            if (visitorCookiesPromise) {
+                return await visitorCookiesPromise;
+            }
+            if (coolingDown) {
+                if (renew?.message) {
+                    logger.warn(coolingDownMessage);
+                    throw renew;
+                }
+                throw new Error(coolingDownMessage);
+            }
+            coolingDown = true;
+            setTimeout(() => {
+                coolingDown = false;
+            }, config.cache.routeExpire * 1000);
+
+            if (renew) {
+                logger.warn(`Renewing visitor Cookies from ${url}`);
+            } else {
+                logger.info(`Fetching visitor Cookies from ${url}`);
+            }
+            visitorCookiesPromise = (async () => {
+                let times = 0;
+                const { page, destroy } = await getPlaywrightPage(url, {
+                    onBeforeLoad: async (page) => {
+                        const expectResourceTypes = new Set(['document', 'script', 'xhr', 'fetch']);
+                        await page.setExtraHTTPHeaders({ 'User-Agent': weiboUtils.apiHeaders['User-Agent'] });
+                        await page.route('**/*', (route) => {
+                            const request = route.request();
+                            // 1st: initial request, 302 to visitor.passport.weibo.cn; 2nd: auth ok
+                            if (!expectResourceTypes.has(request.resourceType()) || times >= 2) {
+                                route.abort();
+                                return;
+                            }
+                            if (request.url().startsWith(url)) {
+                                times++;
+                            }
+                            route.continue();
+                        });
+                    },
+                    gotoConfig: { waitUntil: 'networkidle' },
+                });
+                let cookies: string;
+                try {
+                    cookies = await getCookies(page, 'weibo.cn');
+                    if (times < 2 || !cookies) {
+                        throw new Error(`Unable to fetch visitor cookies. Please set WEIBO_COOKIES. Redirection: ${times}, last URL: ${page.url()}`);
+                    }
+                } finally {
+                    await destroy();
+                }
+                if (renew) {
+                    await cache.set(cacheKey, cookies);
+                }
+                return cookies;
+            })();
+
+            try {
+                return await visitorCookiesPromise;
+            } finally {
+                visitorCookiesPromise = undefined;
+            }
+        };
 
         return async (renew: any = false) => {
             if (config.weibo.cookies) {
@@ -76,66 +169,10 @@ const weiboUtils = {
                 return config.weibo.cookies;
             }
 
-            const cacheKey = 'weibo:visitor-cookies';
             if (renew) {
-                cache.set(cacheKey, '', 1);
+                return await fetchVisitorCookies(renew);
             }
-            return await cache.tryGet(cacheKey, async () => {
-                if (visitorCookiesPromise) {
-                    return await visitorCookiesPromise;
-                }
-                if (coolingDown) {
-                    if (renew?.message) {
-                        logger.warn(coolingDownMessage);
-                        throw renew;
-                    }
-                    throw new Error(coolingDownMessage);
-                }
-                coolingDown = true;
-                setTimeout(() => {
-                    coolingDown = false;
-                }, config.cache.routeExpire * 1000);
-
-                if (renew) {
-                    logger.warn(`Renewing visitor Cookies from ${url}`);
-                } else {
-                    logger.info(`Fetching visitor Cookies from ${url}`);
-                }
-                visitorCookiesPromise = (async () => {
-                    let times = 0;
-                    const { page, destroy } = await getPlaywrightPage(url, {
-                        onBeforeLoad: async (page) => {
-                            const expectResourceTypes = new Set(['document', 'script', 'xhr', 'fetch']);
-                            await page.setExtraHTTPHeaders({ 'User-Agent': weiboUtils.apiHeaders['User-Agent'] });
-                            await page.route('**/*', (route) => {
-                                const request = route.request();
-                                // 1st: initial request, 302 to visitor.passport.weibo.cn; 2nd: auth ok
-                                if (!expectResourceTypes.has(request.resourceType()) || times >= 2) {
-                                    route.abort();
-                                    return;
-                                }
-                                if (request.url().startsWith(url)) {
-                                    times++;
-                                }
-                                route.continue();
-                            });
-                        },
-                        gotoConfig: { waitUntil: 'networkidle' },
-                    });
-                    const cookies: string = await getCookies(page, 'weibo.cn');
-                    await destroy();
-                    if (times < 2 || !cookies) {
-                        throw new Error(`Unable to fetch visitor cookies. Please set WEIBO_COOKIES. Redirection: ${times}, last URL: ${page.url()}`);
-                    }
-                    return cookies;
-                })();
-
-                try {
-                    return await visitorCookiesPromise;
-                } finally {
-                    visitorCookiesPromise = undefined;
-                }
-            });
+            return await cache.tryGet(cacheKey, fetchVisitorCookies);
         };
     })(),
     tryWithCookies: (() => {
@@ -152,7 +189,7 @@ const weiboUtils = {
                 if (error.message?.includes('WEIBO_COOKIES')) {
                     throw error;
                 }
-                if (errors > 10) {
+                if (errors > 10 && !config.weibo.cookies) {
                     logger.warn(`Too many errors while fetching data from weibo API, renewing Cookies: ${error.message}`);
                     logger.info('Please open an issue on GitHub if renewing Cookies fixes the error');
                 } else if ((error.name === 'HTTPError' || error.name === 'FetchError') && error.status === 432) {
@@ -416,13 +453,34 @@ const weiboUtils = {
     },
     getShowData: async (uid, bid) => {
         const link = `https://m.weibo.cn/statuses/show?id=${bid}`;
-        const itemResponse = await got.get(link, {
-            headers: {
-                Referer: `https://m.weibo.cn/u/${uid}`,
-                ...weiboUtils.apiHeaders,
-            },
+        return await weiboUtils.tryWithCookies(async (cookies, verifier) => {
+            const itemResponse = await got.get(link, {
+                headers: {
+                    Cookie: cookies,
+                    Referer: `https://m.weibo.cn/u/${uid}`,
+                    ...weiboUtils.apiHeaders,
+                },
+            });
+            verifier(itemResponse);
+            const status = itemResponse.data.data;
+            if (status?.text && !needsCompletePictures(status)) {
+                return status;
+            }
+
+            const desktopResponse = await got('https://weibo.com/ajax/statuses/show', {
+                searchParams: { id: bid, isGetLongText: true },
+                headers: {
+                    Cookie: cookies,
+                    Referer: `https://weibo.com/${uid}/${bid}`,
+                },
+            });
+            verifier(desktopResponse);
+            const desktopStatus = desktopResponse.data;
+            if (desktopStatus?.ok !== 1 || !desktopStatus.text) {
+                throw new Error('Unable to retrieve the Weibo post. Please verify that it is visible and update WEIBO_COOKIES if login is required.');
+            }
+            return mergeDesktopStatus(status, desktopStatus);
         });
-        return itemResponse.data.data;
     },
     formatVideo: (itemDesc, status) => {
         const pageInfo = status.page_info;
@@ -603,13 +661,14 @@ const weiboUtils = {
                             if (matches) {
                                 for (const match of matches) {
                                     const hrefMatch = match.match(/href="https:\/\/weibo\.cn\/sinaurl\?u=([^"]+)"/);
-                                    if (hrefMatch) {
-                                        // 获取并解码 href 中的图片 URL
-                                        const imgSrc = decodeURIComponent(hrefMatch[1]);
-                                        const imgTag = `<img src="${imgSrc}" style="width: 1rem; height: 1rem;">`;
-                                        // 用替换后的 img 标签替换原来的 <a> 标签部分
-                                        replyText = replyText.replaceAll(match, () => imgTag);
+                                    if (!hrefMatch) {
+                                        continue;
                                     }
+                                    // 获取并解码 href 中的图片 URL
+                                    const imgSrc = decodeURIComponent(hrefMatch[1]);
+                                    const imgTag = `<img src="${imgSrc}" style="width: 1rem; height: 1rem;">`;
+                                    // 用替换后的 img 标签替换原来的 <a> 标签部分
+                                    replyText = replyText.replaceAll(match, () => imgTag);
                                 }
                             }
                             replyText = formatDescriptionText(replyText, descriptionRenderParams);

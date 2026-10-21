@@ -4,13 +4,14 @@ import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 import timezone from '@/utils/timezone';
 
 import { renderDescription } from './templates/description';
 
 export const handler = async (ctx) => {
     const { category = 'news/All' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 15;
+    const limit = getRouteLimit(ctx, 15);
 
     const rootUrl = 'http://www.a9vg.com';
     const currentUrl = new URL(`list/${category}`, rootUrl).href;
@@ -57,19 +58,10 @@ export const handler = async (ctx) => {
 
                 $$('ignore_js_op img, p img').each((_, el) => {
                     const $el = $$(el);
-
-                    $el.parent().replaceWith(
-                        renderDescription({
-                            images: $el.prop('file')
-                                ? [
-                                      {
-                                          src: $el.prop('file'),
-                                          alt: $el.next().find('div.xs0 p').first().text(),
-                                      },
-                                  ]
-                                : undefined,
-                        })
-                    );
+                    const imageUrl = $el.prop('file') || $el.prop('src');
+                    if (imageUrl) {
+                        $el.attr('src', imageUrl);
+                    }
                 });
 
                 item.title = $$('h1.ts, div.c-article-main_content-title').text();
@@ -154,12 +146,8 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['www.a9vg.com/list/:category'],
-            target: (params) => {
-                const category = params.category;
-
-                return category ? `/${category}` : '';
-            },
+            source: ['www.a9vg.com/list/*category'],
+            target: '/:category',
         },
         {
             title: 'All',

@@ -1,10 +1,10 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
-import type { Language, Route } from '@/types';
+import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
-import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/devblog',
@@ -29,49 +29,58 @@ export const route: Route = {
     handler,
 };
 
+interface Post {
+    id: number;
+    title: string;
+    slug: string;
+    publication_date?: string;
+    categories: string[];
+    short_content?: string;
+    content?: string;
+    main_image?: string;
+}
+
+const baseUrl = 'https://blog.worldofwarships.com/';
+
+function parsePublicationDate(value?: string) {
+    if (!value || !/^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$/.test(value)) {
+        return;
+    }
+    const date = parseDate(value, 'YYYY-MM-DD HH:mm:ss', true);
+    return Number.isNaN(date.getTime()) ? undefined : date;
+}
+
 async function handler() {
-    const url = 'https://blog.worldofwarships.com/';
-
-    const { data: response } = await got(url);
-    const $ = load(response);
-
-    const face = $('[rel=apple-touch-icon]').last();
-
-    const list = $('article')
-        .toArray()
-        .map((item) => {
-            const $item = $(item);
-            const time = $item.find('div').first().find('time').first();
-            const tag = $item.find('div').first().find('ul').first().find('li').first();
-            const title = $item.find('h2').first().find('a').first();
-            const content = $item.find('h2').first().next();
-            const timestamp = Number(time.attr('data-timestamp')) * 1000;
+    // The public website requests six entries on its initial page.
+    const response = await ofetch<{ items: Post[] }>(new URL('api/posts/?limit=6', baseUrl).href);
+    const items = await pMap(
+        response.items,
+        async (post) => {
+            const link = new URL(`blog/${encodeURIComponent(post.slug)}`, baseUrl).href;
+            const detail = await cache.tryGet(link, async () => {
+                const article = await ofetch<Post>(new URL(`api/posts/${encodeURIComponent(post.slug)}/`, baseUrl).href);
+                const $ = load(article.content || '', null, false);
+                if (article.main_image) {
+                    $.root().prepend($('<img>').attr('src', article.main_image));
+                }
+                return { description: $.root().html() || undefined } satisfies Pick<DataItem, 'description'>;
+            });
             return {
-                title: title.attr('title')!,
-                link: title.attr('href'),
-                pubDate: timezone(parseDate(timestamp), 0),
-                category: tag.text(),
+                title: post.title,
+                link,
+                pubDate: parsePublicationDate(post.publication_date),
+                category: post.categories,
                 author: 'Wargaming',
-                description: content.html(),
+                description: detail.description || post.short_content,
             };
-        });
-
-    const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link!, async () => {
-                const { data: response } = await got(item.link);
-                const $ = load(response);
-                item.description = $('.article__content').first().html();
-                return item;
-            })
-        )
+        },
+        { concurrency: 3 }
     );
 
     return {
         title: 'World of Warships - Development Blog',
-        link: url,
+        link: baseUrl,
         item: items,
-        image: 'https:' + face.attr('href'),
         language: 'en' as const satisfies Language,
         author: 'Wargaming',
     };

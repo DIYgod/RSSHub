@@ -49,21 +49,21 @@ async function handler() {
     const list = $('record');
 
     return {
-        title: '济南卫建委-执业考试通知',
+        title: '济南市卫生健康委员会 - 执业考试通知',
         link: `${baseUrl}/col/col14418/index.html`,
         item: list.toArray().map((item) => {
-            // 获取每个item对应的html字符串
+            // Extract the HTML fragment from each XML record.
             const $item = $(item).text();
 
-            // 解析上一步中的html
+            // Parse the record HTML.
             const html = load($item);
 
             const title = html('td[width="620"] a').attr('title');
-            const link = html('td[width="620"] a').attr('href');
-            const date = timezone(parseDate(html('td[width="100"]').text()), 8);
+            const link = new URL(html('td[width="620"] a').attr('href')!, `${baseUrl}/col/col14418/index.html`).href;
+            const dateText = html('td[width="100"]').text();
+            const date = dateText ? timezone(parseDate(dateText), 8) : undefined;
             return {
                 title: title!,
-                description: title,
                 pubDate: date,
                 link,
                 author: '济南市卫生健康委员会',

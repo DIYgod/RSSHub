@@ -55,30 +55,31 @@ async function handler(ctx) {
         false
     );
 
-    const item = data.map((item) => {
-        const titleMatch = item.data.content.match(/^【(.*?)】/);
-        let title;
-        let content = item.data.content;
-        if (titleMatch) {
-            title = titleMatch[1];
-            content = content.replace(titleMatch[0], '');
-        } else {
-            title = item.data.vip_title || item.data.content;
-        }
+    const item = data
+        .filter((item) => !important || item.important)
+        .map((item) => {
+            const titleMatch = item.data.content.match(/^【(.*?)】/);
+            let title;
+            let content = item.data.content;
+            if (titleMatch) {
+                title = titleMatch[1];
+                content = content.replace(titleMatch[0], '');
+            } else {
+                title = item.data.vip_title || item.data.content;
+            }
 
-        return {
-            title,
-            description: renderDescription(content, item.data.pic),
-            pubDate: timezone(parseDate(item.time), 8),
-            link: item.data.link,
-            guid: `jin10:index:${item.id}`,
-            important: item.important,
-        };
-    });
+            return {
+                title,
+                description: renderDescription(content, item.data.pic),
+                pubDate: timezone(parseDate(item.time), 8),
+                link: item.data.link,
+                guid: `jin10:index:${item.id}`,
+            };
+        });
 
     return {
         title: '金十数据',
         link: 'https://www.jin10.com/',
-        item: important ? item.filter((item) => item.important) : item,
+        item,
     };
 }

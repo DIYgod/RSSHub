@@ -1,6 +1,7 @@
 import { FetchError } from 'ofetch';
+import pMap from 'p-map';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -31,18 +32,18 @@ async function handler(ctx) {
     const id = ctx.req.param('id');
     const { data: response } = await got(`https://www.dongqiudi.com/api/old/columns/${id}`);
 
-    const list = response.data.map((item) => ({
+    const list: Array<DataItem & { link: string; pubDate: Date }> = response.data.map((item) => ({
         title: item.title,
         link: `https://www.dongqiudi.com/articles/${item.aid}.html`,
         pubDate: parseDate(item.show_time, 'X'),
     }));
-
-    const out = await Promise.all(
-        list.map((item) =>
+    const out = await pMap(
+        list,
+        (item) =>
             cache.tryGet(item.link, async () => {
                 try {
                     const { data: response } = await got(item.link);
-                    processFeedType2(item, response);
+                    await processFeedType2(item, response);
                 } catch (error) {
                     if (!(error instanceof FetchError) || error.statusCode !== 404) {
                         throw error;
@@ -50,8 +51,8 @@ async function handler(ctx) {
                     // Keep the list item when the article page is gone or temporarily unavailable.
                 }
                 return item;
-            })
-        )
+            }),
+        { concurrency: 4 }
     );
 
     return {

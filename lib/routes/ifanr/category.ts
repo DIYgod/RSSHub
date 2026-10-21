@@ -1,3 +1,4 @@
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -27,20 +28,27 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: [
-        {
-            source: ['www.ifanr.com/category/:name'],
-        },
-    ],
+    radar: Object.entries(PATH_LIST).map(([name, path]) => ({
+        source: [`www.ifanr.com/category/${path}`],
+        target: `/category/${name}`,
+    })),
     name: '分类',
     maintainers: ['donghongfei'],
     handler,
     description: '支持分类：早报、评测、糖纸众测、产品',
 };
 
+function parseTimestamp(value: number | string) {
+    const date = value ? parseDate(value, 'X') : undefined;
+    return date && Number.isFinite(date.getTime()) ? date : undefined;
+}
+
 async function handler(ctx) {
     const name = ctx.req.param('name');
-    const nameEncode = encodeURIComponent(decodeURIComponent(name));
+    if (!Object.hasOwn(PATH_LIST, name)) {
+        throw new InvalidParameterError(`Unsupported category ${name}. Choose one of: ${Object.keys(PATH_LIST).join(', ')}.`);
+    }
+    const nameEncode = encodeURIComponent(name);
     const apiUrl = `https://sso.ifanr.com/api/v5/wp/article/?post_category=${nameEncode}&limit=20&offset=0`;
     const resp = await got({
         method: 'get',
@@ -58,10 +66,10 @@ async function handler(ctx) {
             description += item.post_content;
 
             return {
-                title: item.post_title.trim(),
+                title: item.post_title,
                 description,
                 link: item.post_url,
-                pubDate: parseDate(item.published_at * 1000),
+                pubDate: parseTimestamp(item.published_at),
                 author: item.created_by.name,
             };
         })

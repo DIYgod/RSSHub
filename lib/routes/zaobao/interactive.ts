@@ -25,12 +25,13 @@ async function handler() {
         link: new URL(i.href, baseUrl).href,
         pubDate: parseDate(i.timestamp, 'X'),
         image: i.thumbnail,
+        category: i.category_label ? [i.category_label] : undefined,
     }));
 
     return {
-        title: response.seoMetaInfo.seoTitle,
+        title: response.response.seoMetaInfo.seoTitle,
         link: baseUrl + sectionLink,
-        description: response.seoMetaInfo.seoDescription,
+        description: response.response.seoMetaInfo.seoDescription,
         image: logo,
         item: items,
     };

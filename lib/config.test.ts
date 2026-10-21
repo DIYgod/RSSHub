@@ -22,6 +22,24 @@ describe('config', () => {
         delete process.env.BILIBILI_COOKIE_34;
     });
 
+    it('unix socket', async () => {
+        process.env.SOCKET = '/tmp/rsshub.sock';
+
+        const { config } = await import('./config');
+        expect(config.connect.socket).toBe('/tmp/rsshub.sock');
+
+        delete process.env.SOCKET;
+    });
+
+    it('unix socket defaults to undefined', async () => {
+        process.env.SOCKET = '';
+
+        const { config } = await import('./config');
+        expect(config.connect.socket).toBeUndefined();
+
+        delete process.env.SOCKET;
+    });
+
     it('email config', async () => {
         process.env['EMAIL_CONFIG_xx.qq.com'] = 'token1';
         process.env['EMAIL_CONFIG_oo.qq.com'] = 'token2';
@@ -106,6 +124,56 @@ describe('config', () => {
 
         delete process.env.CACHE_HTTP_URL;
         delete process.env.CACHE_HTTP_TOKEN;
+    });
+
+    it('Kemono and Coomer root URLs', async () => {
+        process.env.KEMONO_ROOT_URL = 'https://kemono.example.com/';
+        process.env.COOMER_ROOT_URL = 'https://coomer.example.com///';
+
+        const { config } = await import('./config');
+        expect(config.kemono.rootUrl).toBe('https://kemono.example.com');
+        expect(config.kemono.assetsUrl).toBe('https://img.kemono.example.com');
+        expect(config.coomer.rootUrl).toBe('https://coomer.example.com');
+        expect(config.coomer.assetsUrl).toBe('https://img.coomer.example.com');
+
+        delete process.env.KEMONO_ROOT_URL;
+        delete process.env.COOMER_ROOT_URL;
+    });
+
+    it('Kemono and Coomer inferred asset URLs preserve root paths', async () => {
+        process.env.KEMONO_ROOT_URL = 'https://kemono.example.com/mirror/';
+        process.env.COOMER_ROOT_URL = 'https://coomer.example.com/mirror///';
+
+        const { config } = await import('./config');
+        expect(config.kemono.assetsUrl).toBe('https://img.kemono.example.com/mirror');
+        expect(config.coomer.assetsUrl).toBe('https://img.coomer.example.com/mirror');
+
+        delete process.env.KEMONO_ROOT_URL;
+        delete process.env.COOMER_ROOT_URL;
+    });
+
+    it('Kemono and Coomer asset URL subdomains', async () => {
+        process.env.KEMONO_ASSETS_URL = 'https://assets.kemono.example.com/';
+        process.env.COOMER_ASSETS_URL = 'https://assets.coomer.example.com///';
+
+        const { config } = await import('./config');
+        expect(config.kemono.assetsUrl).toBe('https://assets.kemono.example.com');
+        expect(config.coomer.assetsUrl).toBe('https://assets.coomer.example.com');
+
+        delete process.env.KEMONO_ASSETS_URL;
+        delete process.env.COOMER_ASSETS_URL;
+    });
+
+    it('Kemono and Coomer asset URL path prefixes', async () => {
+        process.env.KEMONO_ASSETS_URL = 'https://kemono.example.com/assets/';
+        process.env.COOMER_ASSETS_URL = 'https://coomer.example.com/assets///';
+
+        const { config } = await import('./config');
+        expect(config.kemono.assetsUrl).toBe('https://kemono.example.com/assets');
+        expect(config.coomer.assetsUrl).toBe('https://coomer.example.com/assets');
+
+        delete process.env.KEMONO_ASSETS_URL;
+        delete process.env.COOMER_ASSETS_URL;
     });
 
     it('remote config', async () => {

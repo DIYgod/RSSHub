@@ -1,10 +1,11 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
 
 export const route: Route = {
     path: '/gzic/news',
@@ -42,25 +43,29 @@ async function handler() {
             return {
                 title: $item.find('.li-img a p').text(),
                 link: a.attr('href')?.startsWith('http') ? a.attr('href') : `${baseUrl}${a.attr('href')}`,
-                pubDate: parseDate(
+                pubDate: parseDateInTimezone(
                     pubDate
                         .text()
                         .replaceAll(/年|月/g, '-')
-                        .replaceAll('日', '')
+                        .replaceAll('日', ''),
+                    8
                 ),
                 itunes_item_image: `${baseUrl}${$item.find('.li-img img').attr('src')}`,
             };
         });
 
-    const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link!, async () => {
+    const items = await pMap(
+        list,
+        async (item) => ({
+            ...item,
+            ...(await cache.tryGet(`gzic-news:article-v2:${item.link}`, async () => {
                 const response = await ofetch(item.link!);
                 const $ = load(response);
                 item.description = item.link!.startsWith('https://mp.weixin.qq.com/') ? $('div.rich_media_content section').html() : $('div.wp_articlecontent').html();
-                return item;
-            })
-        )
+                return { description: item.description };
+            })),
+        }),
+        { concurrency: 3 }
     );
 
     return {

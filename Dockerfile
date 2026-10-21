@@ -121,6 +121,7 @@ LABEL org.opencontainers.image.authors="https://github.com/DIYgod/RSSHub"
 
 ENV NODE_ENV=production
 ENV TZ=Asia/Shanghai
+ENV PLAYWRIGHT_BROWSERS_PATH=/app/node_modules/.cache/ms-playwright
 
 WORKDIR /app
 
@@ -133,7 +134,7 @@ RUN \
     set -ex && \
     apt-get update && \
     apt-get install -yq --no-install-recommends \
-        dumb-init git curl \
+        dumb-init git curl libjemalloc2 \
     ; \
     if [ "$PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD" = 0 ]; then \
         if [ "$TARGETPLATFORM" = 'linux/amd64' ]; then \
@@ -169,6 +170,8 @@ RUN \
     fi;
 
 COPY --from=docker-minifier /app /app
+
+ENV LD_PRELOAD=libjemalloc.so.2
 
 EXPOSE 1200
 ENTRYPOINT ["dumb-init", "--"]

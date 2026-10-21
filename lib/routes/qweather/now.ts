@@ -62,18 +62,19 @@ async function handler(ctx) {
 
     const timeObj = parseDate(responseData.updateTime);
 
-    const time_show = timeObj.toLocaleString();
-
     return {
         title: ctx.req.param('location') + '实时天气',
         description: ctx.req.param('location') + '实时天气状况',
-        item: data.map((item: NowItem) => ({
-            title: '观测时间：' + time_show,
-            description: renderNowDescription(item),
-            pubDate: timeObj,
-            guid: '位置:' + ctx.req.param('location') + '--时间：' + time_show,
-            link: responseData.fxLink,
-        })),
+        item: data.map((item: NowItem) => {
+            const observationTime = parseDate(item.obsTime || responseData.updateTime).toISOString();
+            return {
+                title: '观测时间：' + observationTime,
+                description: renderNowDescription(item),
+                pubDate: timeObj,
+                guid: '位置:' + ctx.req.param('location') + '--时间：' + observationTime,
+                link: responseData.fxLink,
+            };
+        }),
         link: responseData.fxLink,
     };
 }

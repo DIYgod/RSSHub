@@ -3,6 +3,7 @@ import { gunzip as gunzipCallback } from 'node:zlib';
 
 import { load } from 'cheerio';
 import markdownit from 'markdown-it';
+import pMap from 'p-map';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
@@ -31,12 +32,22 @@ export const route: Route = {
     url: 'www.typeless.com/help/release-notes',
 };
 
+function getReleaseDate(value: string | undefined) {
+    if (typeof value !== 'string' || !/^\d{4}-\d{2}-\d{2}$/.test(value)) {
+        return;
+    }
+    // Preserve the source calendar day without introducing the host timezone.
+    const date = parseDate(`${value}T00:00:00Z`);
+    return Number.isFinite(date.getTime()) && date.toISOString().startsWith(`${value}T`) ? date : undefined;
+}
+
 async function handler() {
     const baseUrl = 'https://www.typeless.com';
     const platforms = ['macos', 'windows', 'ios', 'android'];
 
-    const decompressedData = await Promise.all(
-        platforms.map(async (platform) => {
+    const decompressedData = await pMap(
+        platforms,
+        async (platform) => {
             const link = `${baseUrl}/help/release-notes/${platform}`;
 
             const response = await ofetch(link);
@@ -57,7 +68,8 @@ async function handler() {
                     decompressedData: Object.values<any>(changelogData),
                 };
             });
-        })
+        },
+        { concurrency: 3 }
     );
 
     const items = decompressedData.flatMap((platform) =>
@@ -66,8 +78,8 @@ async function handler() {
             return {
                 title: features.title,
                 description: md.render(features.content),
-                pubDate: parseDate(item.date),
-                link: features.learnMore ? `${baseUrl}${features.learnMore}` : undefined,
+                pubDate: getReleaseDate(item.date),
+                link: features.learnMore ? new URL(features.learnMore, baseUrl).href : undefined,
                 category: [platform.appPlatform],
                 guid: `typeless:${platform.appPlatform}:${item.version}`,
             };

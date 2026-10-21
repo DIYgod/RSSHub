@@ -1,5 +1,6 @@
 import { load } from 'cheerio';
 import type { Context } from 'hono';
+import pMap from 'p-map';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
@@ -34,9 +35,10 @@ async function handler(ctx: Context) {
     const rssUrl = `https://rthk.hk/rthk/news/rss/${languageUrlKey}_expressnews_${category}.xml`;
     const feed = await parser.parseURL(rssUrl);
 
-    const items = await Promise.all(
-        feed.items.map((item) =>
-            cache.tryGet(item.guid!, async () => {
+    const items = await pMap(
+        feed.items,
+        async (item) => {
+            const detail = await cache.tryGet(item.guid!, async () => {
                 const response = await ofetch(item.guid!);
                 const $ = load(response);
 
@@ -59,15 +61,17 @@ async function handler(ctx: Context) {
                     })
                     .join('');
 
-                return {
-                    title: item.title ?? '',
-                    description: media + item.content!.replaceAll('\r\n', '<br>'),
-                    pubDate: item.pubDate,
-                    link: item.guid,
-                    category: [language === 'en' ? 'Latest News' : '即時新聞', response.match(/class="pathway">([^'<]+)<\/a>/)?.[1]].filter((c) => c !== undefined),
-                };
-            })
-        )
+                return { media, category: response.match(/class="pathway">([^'<]+)<\/a>/)?.[1] };
+            });
+            return {
+                title: item.title ?? '',
+                description: detail.media + item.content!.replaceAll('\r\n', '<br>'),
+                pubDate: item.pubDate,
+                link: item.guid,
+                category: [language === 'en' ? 'Latest News' : '即時新聞', detail.category].filter((c) => c !== undefined),
+            };
+        },
+        { concurrency: 3 }
     );
 
     return {

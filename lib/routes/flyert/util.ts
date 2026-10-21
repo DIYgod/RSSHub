@@ -21,7 +21,7 @@ const parseArticleList = ($: CheerioAPI, limit: number) =>
         .map((item) => {
             const $item = $(item);
 
-            const title = $item.find('div.wzbt').text().trim();
+            const title = $item.find('div.wzbt').text();
             const image = $item.find('div.wzpic img').prop('src');
             const description = renderDescription({
                 images: image
@@ -93,7 +93,7 @@ const parsePostList = ($: CheerioAPI, limit: number) =>
             const pubDate = $item.find('span.author_b span').prop('title') || undefined;
 
             return {
-                title: aEl.text().trim(),
+                title: aEl.text(),
                 pubDate: pubDate ? parseDate(pubDate) : undefined,
                 link: new URL(aEl.prop('href')!, rootUrl).href,
                 author: $item.find('a.author_t').text().trim(),
@@ -107,7 +107,7 @@ const parsePostList = ($: CheerioAPI, limit: number) =>
  * @returns The parsed article object.
  */
 const parseArticle = ($$: CheerioAPI, item) => {
-    const title = $$('h1.ph').text().trim();
+    const title = $$('h1.ph').text();
     const description = renderDescription({
         intro: $$('div.s').text() || undefined,
         description: $$('div#artMain').html() ?? undefined,

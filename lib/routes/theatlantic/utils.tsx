@@ -64,6 +64,7 @@ const getArticleDetails = async (items) => {
                     pubDate: parseDate(item.pubDate),
                     link: item.link,
                     description: item.description,
+                    category: item.category,
                 };
             })
         )

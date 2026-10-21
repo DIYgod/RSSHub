@@ -4,7 +4,7 @@ import type { DataItem, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate, parseRelativeDate } from '@/utils/parse-date';
 
-import { fetchDataItemCached } from './fetcher';
+import { fetchDataItemCached, getArticleList } from './fetcher';
 
 export const route: Route = {
     path: '/category/:category',
@@ -19,7 +19,7 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    name: '游研社 - 分类文章',
+    name: '分类文章',
     maintainers: ['betta-cyber', 'dousha'],
     handler,
     description: `| 推游      | 游戏史  | 大事件 | 文化    | 趣闻 | 经典回顾 | 业界     |
@@ -34,7 +34,7 @@ function getDescription(items: ArticleEntry[]): Promise<DataItem[]> {
         items.map((item) =>
             fetchDataItemCached(item.link, (pageContent) => {
                 const $ = load(pageContent);
-                const articleContent = $('.doc-content.rel').html() || '';
+                const articleContent = $('.doc-content.rel > div').first().html() || '';
 
                 const assembledItem: DataItem = { ...item, description: articleContent };
                 return assembledItem;
@@ -76,7 +76,8 @@ async function handler(ctx) {
             return info;
         });
 
-    const entries = [...firstPart, ...secondPart];
+    const currentEntries = getArticleList($);
+    const entries = currentEntries.length ? currentEntries : [...firstPart, ...secondPart];
 
     const items = await getDescription(entries);
     return {

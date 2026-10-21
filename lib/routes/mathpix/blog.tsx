@@ -1,115 +1,67 @@
-import type { Cheerio, CheerioAPI } from 'cheerio';
 import { load } from 'cheerio';
-import type { Element } from 'domhandler';
 import type { Context } from 'hono';
 import { renderToString } from 'hono/jsx/dom/server';
+import pMap from 'p-map';
 
 import type { Data, DataItem, Language, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
+import { getRouteLimit } from '@/utils/route-limit';
 
 export const handler = async (ctx: Context): Promise<Data> => {
-    const limit = Number(ctx.req.query('limit') ?? '30');
-
+    const limit = getRouteLimit(ctx, 30);
     const baseUrl = 'https://mathpix.com';
-    const targetUrl: string = new URL('blog', baseUrl).href;
-
+    const targetUrl = new URL('blog', baseUrl).href;
     const response = await ofetch(targetUrl);
-    const $: CheerioAPI = load(response);
+    const $ = load(response);
     const language = ($('html').attr('lang') ?? 'en') as Language;
 
-    const categoryMap = {};
-
-    $('div.navbar-menu a.blog-category').each((_, el) => {
-        const $el: Cheerio<Element> = $(el);
-
-        const id: string = $el.attr('data-category')!;
-        const name: string = $el.text()?.trim();
-
-        if (id && name) {
-            categoryMap[id] = name;
-        }
-    });
-
-    let items: DataItem[] = $('li.articles__item')
+    let items: DataItem[] = $('.blog-grid a.blog-post')
         .slice(0, limit)
         .toArray()
-        .map((el) => {
-            const $el: Cheerio<Element> = $(el);
-
-            const title: string = $el.find('a.articles__title').text();
-            const srcset: string | undefined = $el.find('div.articles__image img').attr('srcset');
-            const image: string | undefined = srcset ? new URL(srcset, baseUrl).href : undefined;
-            const description: string | undefined = renderToString(
+        .map((element) => {
+            const card = $(element);
+            const title = card.find('h3').text();
+            const imageUrl = card.find('img').attr('src');
+            const image = imageUrl ? new URL(imageUrl, baseUrl).href : undefined;
+            const description = renderToString(
                 <>
-                    {image ? (
+                    {image && (
                         <figure>
                             <img src={image} alt={title} />
                         </figure>
-                    ) : null}
-                    {$el.find('div.articles__text').text() ? <blockquote>{$el.find('div.articles__text').text()}</blockquote> : null}
+                    )}
+                    {card.find('p').text() && <blockquote>{card.find('p').text()}</blockquote>}
                 </>
             );
-            const pubDateStr: string | undefined = $el.find('time.articles__date').attr('datetime');
-            const linkUrl: string | undefined = $el.find('a.articles__title').attr('href');
-            const categoryIds: string[] =
-                $el
-                    .attr('data-category')
-                    ?.split(/,\s/)
-                    .map((category) => category.trim()) ?? [];
-            const categories: string[] = categoryIds.map((id) => categoryMap[id]).filter(Boolean);
-            const upDatedStr: string | undefined = pubDateStr;
-
-            const processedItem: DataItem = {
+            const date = card.find('h3').prev('div').text();
+            const pubDate = date ? parseDateInTimezone(date, 0) : undefined;
+            return {
                 title,
                 description,
-                pubDate: pubDateStr ? parseDate(pubDateStr) : undefined,
-                link: linkUrl ? new URL(linkUrl, baseUrl).href : undefined,
-                category: categories,
-                content: {
-                    html: description,
-                    text: description,
-                },
+                pubDate,
+                link: new URL(card.attr('href')!, baseUrl).href,
+                category: [],
+                content: { html: description, text: card.find('p').text() },
                 image,
                 banner: image,
-                updated: upDatedStr ? parseDate(upDatedStr) : undefined,
                 language,
             };
-
-            return processedItem;
         });
 
-    items = await Promise.all(
-        items.map((item) => {
-            if (!item.link) {
-                return item;
-            }
-
-            return cache.tryGet(item.link, async (): Promise<DataItem> => {
-                const detailResponse = await ofetch(item.link!);
-                const $$: CheerioAPI = load(detailResponse);
-
-                const title: string = $$('h1.article__title').text();
-                const description: string | undefined = $$('div#setText').html() ?? undefined;
-
-                const processedItem: DataItem = {
-                    title,
-                    description,
-                    content: {
-                        html: description,
-                        text: description,
-                    },
-                    language,
-                };
-
-                return {
-                    ...item,
-                    ...processedItem,
-                };
+    items = await pMap(
+        items,
+        async (item) => {
+            const description = await cache.tryGet(`mathpix:article:${item.link}`, async () => {
+                const response = await ofetch(item.link!);
+                const detail = load(response);
+                return detail('#setText').html() ?? undefined;
             });
-        })
+            return { ...item, description, content: { html: description, text: description ? load(description).text() : undefined } };
+        },
+        { concurrency: 3 }
     );
 
     return {
@@ -117,7 +69,6 @@ export const handler = async (ctx: Context): Promise<Data> => {
         description: $('meta[property="og:description"]').attr('content'),
         link: targetUrl,
         item: items,
-        allowEmpty: true,
         image: $('meta[property="og:image"]').attr('content'),
         language,
         id: $('meta[property="og:url"]').attr('content'),

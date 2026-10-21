@@ -1,7 +1,9 @@
 import { load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
+import pMap from 'p-map';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
+import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
@@ -42,6 +44,14 @@ export const route: Route = {
 The \`pubDate\` provided under UTC time zone, so please ignore the specific time!!!`,
 };
 
+function parseSourceTime(value: string) {
+    if (!value.trim()) {
+        return;
+    }
+    const date = parseDate(value.trim(), 'D MMMM YYYY', 'en', true);
+    return Number.isFinite(date.getTime()) ? timezone(date, 0) : undefined;
+}
+
 async function handler() {
     const rootUrl = 'https://warthunder.com/en/news/';
 
@@ -49,12 +59,11 @@ async function handler() {
 
     const $ = load(response);
 
-    const pageFace = $('div.showcase__item.widget')
+    const list = $('div.showcase__item.widget')
         .toArray()
         .map((item) => {
             const $item = $(item);
-            let pubDate = parseDate($item.find('div.widget__content > ul > li.widget-meta__item.widget-meta__item--right').text(), 'D MMMM YYYY', 'en');
-            pubDate = timezone(pubDate, 0);
+            const pubDate = parseSourceTime($item.find('div.widget__content > ul > li.widget-meta__item.widget-meta__item--right').text());
             const category: string[] = [];
             if ($item.find('div.widget__pin').length !== 0) {
                 category.push('pinned');
@@ -77,9 +86,31 @@ async function handler() {
             };
         });
 
+    const items = await pMap(
+        list,
+        async (item) => {
+            const details = await cache.tryGet<Pick<DataItem, 'description'>>(`warthunder:detail:${item.link}`, async () => {
+                const response = await ofetch(item.link);
+                const $ = load(response);
+                const content = $('section.article').first();
+                if (!content.length) {
+                    throw new Error(`War Thunder article has no body: ${item.link}`);
+                }
+                content.find('script, style').remove();
+                content.find('img[data-src]').each((_, element) => {
+                    const image = $(element);
+                    image.attr('src', image.attr('data-src')!);
+                });
+                return { description: content.html() || undefined };
+            });
+            return { ...item, ...details };
+        },
+        { concurrency: 3 }
+    );
+
     return {
         title: 'War Thunder News',
         link: 'https://warthunder.com/en/news/',
-        item: pageFace,
+        item: items,
     };
 }

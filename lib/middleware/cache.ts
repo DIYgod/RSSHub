@@ -5,6 +5,7 @@ import { config } from '@/config';
 import RequestInProgressError from '@/errors/types/request-in-progress';
 import type { Data } from '@/types';
 import cacheModule from '@/utils/cache/index';
+import { hasItemFilters } from '@/utils/route-limit';
 
 const bypassList = new Set(['/', '/robots.txt', '/logo.png', '/favicon.ico']);
 
@@ -21,15 +22,23 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
     const requestPath = ctx.req.path;
     const format = `:${ctx.req.query('format') || config.format}`;
     const limit = ctx.req.query('limit') ? `:${ctx.req.query('limit')}` : '';
-    const key = 'rsshub:koa-redis-cache:' + h64ToString(requestPath + format + limit);
-    const controlKey = 'rsshub:path-requested:' + h64ToString(requestPath + format + limit);
+    // Routes may select entries before fetching details according to this option.
+    const sortedQuery = ctx.req.query('sorted');
+    const sorted = sortedQuery === undefined ? '' : sortedQuery === 'false' ? ':sorted=false' : ':sorted=true';
+    const filtered = hasItemFilters(ctx) ? ':filtered' : '';
+    const requestKey = h64ToString(requestPath + format + limit + sorted + filtered);
+    const key = 'rsshub:koa-redis-cache:' + requestKey;
+    const controlKey = 'rsshub:path-requested:' + requestKey;
 
     let value = await cacheModule.globalCache.get(key);
 
-    // Doesn't hit the cache? Try to become the fetcher and let others know!
+    // Only atomic backends can coordinate fetchers. HTTP/KV may return stale
+    // control keys after a completed request, while their feed cache stays useful.
     let isRequesting = false;
-    if (!value) {
-        isRequesting = !(await cacheModule.globalCache.claim(controlKey, config.cache.requestTimeout));
+    let ownsClaim = false;
+    if (!value && cacheModule.globalCache.supportsAtomicClaims) {
+        ownsClaim = await cacheModule.globalCache.claim(controlKey, config.cache.requestTimeout);
+        isRequesting = !ownsClaim;
     }
 
     if (isRequesting) {
@@ -61,31 +70,34 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
 
     if (isRequesting) {
         // waited out a stale claim without finding a cache entry, take over the fetch
-        await cacheModule.globalCache.set(controlKey, '1', config.cache.requestTimeout);
+        ownsClaim = await cacheModule.globalCache.claim(controlKey, config.cache.requestTimeout);
+        if (!ownsClaim) {
+            throw new RequestInProgressError('This path is currently fetching, please come back later!');
+        }
     }
 
     // let routers control cache
     ctx.set('cacheKey', key);
-    ctx.set('cacheControlKey', controlKey);
+    if (ownsClaim) {
+        ctx.set('cacheControlKey', controlKey);
+    }
 
     try {
         await next();
-    } catch (error) {
-        await cacheModule.globalCache.set(controlKey, '0', config.cache.requestTimeout);
-        throw error;
-    }
 
-    const data: Data = ctx.get('data');
-    if (ctx.res.headers.get('Cache-Control') !== 'no-cache' && data) {
-        data.lastBuildDate = new Date().toUTCString();
-        ctx.set('data', data);
-        const body = JSON.stringify(data);
-        await cacheModule.globalCache.set(key, body, config.cache.routeExpire);
+        const data: Data = ctx.get('data');
+        if (ctx.res.headers.get('Cache-Control') !== 'no-cache' && data) {
+            data.lastBuildDate = new Date().toUTCString();
+            ctx.set('data', data);
+            const body = JSON.stringify(data);
+            await cacheModule.globalCache.set(key, body, config.cache.routeExpire);
+        }
+    } finally {
+        // Release after writing the feed, including failures after the route ran.
+        if (ownsClaim) {
+            await cacheModule.globalCache.set(controlKey, '0', config.cache.requestTimeout);
+        }
     }
-
-    // We need to let it go, even no cache set.
-    // Wait to set cache so the next request could be handled correctly
-    await cacheModule.globalCache.set(controlKey, '0', config.cache.requestTimeout);
 };
 
 export default middleware;

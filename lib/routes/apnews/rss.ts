@@ -27,8 +27,8 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['apnews.com/:rss'],
-            target: '/rss/:rss',
+            source: ['apnews.com/:category'],
+            target: '/rss/:category',
         },
     ],
     name: 'News',
@@ -37,11 +37,11 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const { rss = 'index' } = ctx.req.param();
-    const url = `${HOME_PAGE}/${rss}.rss`;
+    const { category = 'index' } = ctx.req.param();
+    const url = `${HOME_PAGE}/${category}.rss`;
     const res = await parser.parseURL(url);
 
-    const items = ctx.req.query('fulltext') === 'true' ? await Promise.all(res.items.map((item) => fetchArticle(item))) : res;
+    const items = ctx.req.query('fulltext') === 'true' ? await Promise.all(res.items.map((item) => fetchArticle(item))) : res.items;
 
     return {
         ...res,

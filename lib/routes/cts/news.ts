@@ -1,10 +1,31 @@
-import { load } from 'cheerio';
 import pMap from 'p-map';
 
-import type { Route } from '@/types';
+import type { Data, Route } from '@/types';
 import cache from '@/utils/cache';
-import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
+import timezone from '@/utils/timezone';
+
+type NewsArticle = {
+    title: string;
+    author: string;
+    content: string;
+    category: string;
+    tags: string[];
+    publishTime: string;
+    youtubeId?: string;
+    coverImage?: { imageUrl: string } | null;
+};
+
+type NewsListResponse = {
+    data: { articles: Array<{ id: string; link: string }> };
+};
+
+const getArticles = async (url: string, limit: number) => {
+    const response = await ofetch<NewsListResponse>(url, { query: { page: 1, limit } });
+    return response.data.articles;
+};
 
 export const route: Route = {
     path: '/:category',
@@ -21,6 +42,14 @@ export const route: Route = {
     },
     radar: [
         {
+            source: ['news.cts.com.tw/breaking/list'],
+            target: '/real',
+        },
+        {
+            source: ['news.cts.com.tw/:category/list'],
+            target: '/:category',
+        },
+        {
             source: ['news.cts.com.tw/:category/index.html'],
         },
     ],
@@ -32,29 +61,32 @@ export const route: Route = {
 | real | weather | politics | international | society | sports | life | money | taiwanese | local | pr   | general | arts | entertain |`,
 };
 
-async function handler(ctx) {
+async function handler(ctx): Promise<Data> {
     const category = ctx.req.param('category');
-    const currentUrl = `https://news.cts.com.tw/${category}/index.html`;
-    const response = await got(currentUrl);
-    const $ = load(response.data);
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 20;
+    const rootUrl = 'https://news.cts.com.tw';
+    const currentUrl = `${rootUrl}/${category === 'real' ? 'breaking' : category}/list`;
+    const limit = getRouteLimit(ctx, 20);
+    const listPath = category === 'real' || category === 'breaking' ? 'breaking-list' : category === 'taiwanese' ? 'taiwanese-list' : `${category}/list`;
+    const apiUrl = `${rootUrl}/api/news/${listPath}`;
+    let articles = await getArticles(apiUrl, limit);
+    if (!articles.length && limit !== 20) {
+        articles = await getArticles(apiUrl, 20);
+    }
     const items = await pMap(
-        $('#newslist-top a[title]').slice(0, limit),
+        articles.slice(0, limit),
         (item) => {
-            const $item = $(item);
-            const link = $item.attr('href');
-            return cache.tryGet(link!, async () => {
-                const response = await got(link);
-                const $ = load(response.data);
-                const author = $('.artical-content p:eq(0)').text().trim();
-                $('.artical-content p:eq(0), .artical-content .flexbox').remove();
-
+            const link = new URL(item.link, rootUrl).href;
+            return cache.tryGet(link, async () => {
+                const response = await ofetch<{ data: { article: NewsArticle } }>(`${rootUrl}/api/news/${item.id}`);
+                const article = response.data.article;
+                const video = article.youtubeId ? `<iframe src="https://www.youtube-nocookie.com/embed/${article.youtubeId}" allowfullscreen></iframe>` : '';
                 return {
-                    title: $item.attr('title')!,
-                    author,
-                    description: $('.artical-content').html(),
-                    category: $('meta[property="article:section"]').attr('content'),
-                    pubDate: parseDate($('meta[property="article:published_time"]').attr('content')!),
+                    title: article.title,
+                    author: article.author,
+                    description: video + article.content,
+                    category: [article.category, ...article.tags].filter(Boolean),
+                    pubDate: timezone(parseDate(article.publishTime), 8),
+                    image: article.coverImage?.imageUrl,
                     link,
                 };
             });
@@ -63,9 +95,9 @@ async function handler(ctx) {
     );
 
     return {
-        title: $('title').text(),
+        title: `華視新聞網 - ${category === 'real' || category === 'breaking' ? '即時' : category === 'taiwanese' ? '台語' : (items[0]?.category[0] ?? category)}`,
         link: currentUrl,
-        description: $('meta[name="description"]').attr('content'),
+        language: 'zh-TW',
         item: items,
     };
 }

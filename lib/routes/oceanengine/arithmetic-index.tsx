@@ -10,7 +10,7 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import { parseDate } from '@/utils/parse-date';
-import playwright from '@/utils/playwright';
+import { getPlaywrightPage } from '@/utils/playwright';
 import timezone from '@/utils/timezone';
 
 // Parameters
@@ -25,28 +25,29 @@ const getMultiKeywordHotTrend = async (page, keyword, start_date, end_date, app_
         data: JSON.stringify({ keyword_list: [keyword], start_date, end_date, app_name }),
     };
 
-    const res = await page.evaluate(async (e) => {
-        function queryData() {
-            const p = new Promise((resolve) => {
+    const res = await page.evaluate(
+        async (e) =>
+            await new Promise<string>((resolve, reject) => {
                 const req = new XMLHttpRequest();
                 req.open(e.method, e.url, true);
                 req.setRequestHeader('accept', 'application/json, text/plain, */*');
                 req.setRequestHeader('content-type', 'application/json;charset=UTF-8');
                 req.setRequestHeader('tea-uid', '7054893410171930123');
-                req.addEventListener('readystatechange', () => {
-                    if (req.readyState === 4 && req.status === 200) {
+                req.timeout = 30000;
+                req.addEventListener('load', () => {
+                    if (req.status >= 200 && req.status < 300) {
                         resolve(req.responseText);
                     } else {
-                        return;
+                        reject(new Error(`Oceanengine API returned HTTP ${req.status}`));
                     }
                 });
+                req.addEventListener('error', () => reject(new Error('Oceanengine API request failed')));
+                req.addEventListener('timeout', () => reject(new Error('Oceanengine API request timed out')));
                 req.send(e.data);
-            });
-            return p;
-        }
-        return await queryData();
-    }, e);
-    return res[0];
+            }),
+        e
+    );
+    return res;
 };
 
 // Decrypt Data
@@ -119,15 +120,20 @@ export async function handler(ctx) {
     const item = await cache.tryGet(
         link,
         async () => {
-            const context = await playwright();
-            const page = await context.newPage();
-            await page.route('**/*', (route) => {
-                const request = route.request();
-                request.resourceType() === 'document' || request.resourceType() === 'script' || request.resourceType() === 'xhr' ? route.continue() : route.abort();
+            const { page, destroy } = await getPlaywrightPage('https://trendinsight.oceanengine.com/arithmetic-index', {
+                noGoto: true,
+                closeTimeout: 0,
             });
-            await page.goto('https://trendinsight.oceanengine.com/arithmetic-index');
-            const res = await getMultiKeywordHotTrend(page, keyword, start_date, end_date, channel);
-            await context.close();
+            let res: string;
+            try {
+                await page.route('**/*', (route) => {
+                    ['document', 'script', 'xhr'].includes(route.request().resourceType()) ? route.continue() : route.abort();
+                });
+                await page.goto('https://trendinsight.oceanengine.com/arithmetic-index');
+                res = await getMultiKeywordHotTrend(page, keyword, start_date, end_date, channel);
+            } finally {
+                await destroy();
+            }
 
             const rawData = JSON.parse(res).data;
             const data = decrypt(rawData).hot_list[0];

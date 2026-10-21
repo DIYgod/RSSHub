@@ -1,6 +1,7 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
-import type { Route } from '@/types';
+import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -20,7 +21,8 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['ici.radio-canada.ca/rci/:lang', 'ici.radio-canada.ca/'],
+            source: ['ici.radio-canada.ca/rci/:language', 'ici.radio-canada.ca/'],
+            target: '/latest/:language?',
         },
     ],
     name: 'Latest News',
@@ -34,22 +36,25 @@ export const route: Route = {
 async function handler(ctx) {
     const language = ctx.req.param('language') ?? 'en';
 
+    const feedLanguages = { en: 'en', fr: 'fr', es: 'es', 'zh-hans': 'zh-CN', 'zh-hant': 'zh-TW' } satisfies Record<string, Language | undefined>;
     const rootUrl = 'https://ici.radio-canada.ca';
     const apiRootUrl = 'https://services.radio-canada.ca';
     const currentUrl = `${apiRootUrl}/neuro/sphere/v1/rci/${language}/continuous-feed?pageSize=50`;
 
     const response = await ofetch(currentUrl);
 
-    const list = response.data.lineup.items.map((item) => ({
+    const list: Array<DataItem & { link: string }> = response.data.lineup.items.map((item) => ({
         title: item.title,
         category: item.kicker,
         link: `${rootUrl}${item.url}`,
         pubDate: parseDate(item.date),
     }));
 
-    const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link, async () => {
+    const items = await pMap(
+        list,
+        async (item) => ({
+            ...item,
+            description: await cache.tryGet(`radio-canada:article:v4:${item.link}`, async () => {
                 const detailResponse = await ofetch(item.link);
 
                 const $ = load(detailResponse);
@@ -58,15 +63,15 @@ async function handler(ctx) {
                     .text()
                     .match(/window\._rcState_ = (.*);/)?.[1];
 
-                item.description = rcState ? parseDescriptionFromState(rcState) : ($('div[data-testid="newsStoryMedia"]').html() ?? '') + ($('article > main').html() ?? '');
-
-                return item;
-            })
-        )
+                return rcState ? parseDescriptionFromState(rcState) : ($('div[data-testid="newsStoryMedia"]').html() ?? '') + ($('article > main').html() ?? '');
+            }),
+        }),
+        { concurrency: 3 }
     );
 
     return {
         title: response.meta.title,
+        language: feedLanguages[language],
         link: response.metric.metrikContent.omniture.url,
         item: items,
     };
@@ -85,7 +90,7 @@ type RadioCanadaPage = {
             primer?: string;
             body?: {
                 html?: string;
-                attachments?: Array<{ picture?: RadioCanadaPicture; dimensionRatio?: string }>;
+                attachments?: Array<{ picture?: RadioCanadaPicture; dimensionRatio?: string; html?: string }>;
             };
         };
     };
@@ -102,15 +107,16 @@ const parseDescriptionFromState = (rcState: string) => {
     const headerImg = news?.data?.newsStory?.headerMultimediaItem?.picture;
     const headerImgUrl = headerImg?.pattern ? headerImg?.pattern.replace('/q_auto,w_{width}', '').replace('{ratio}', '16x9') : '';
     const header = `<figure><picture><img src="${headerImgUrl}" alt="${headerImg?.alt ?? ''}"></picture><figcaption>${headerImg?.legend ?? ''}</figcaption></figure>`;
-    const primer = news?.data?.newsStory?.primer?.replaceAll(String.raw`\n`, '') ?? '';
-    const body = news?.data?.newsStory?.body?.html?.replaceAll(String.raw`\n`, '') ?? '';
+    const primer = news?.data?.newsStory?.primer ?? '';
+    const body = news?.data?.newsStory?.body?.html ?? '';
     let bodyWithImg = body;
     const attachments = news?.data?.newsStory?.body?.attachments ?? [];
     for (const [index, attachment] of attachments.entries()) {
         const placeholder = `<!--body:attachment:${index}-->`;
         const picture = attachment?.picture;
         const imageUrl = picture?.pattern ? picture?.pattern.replace('/q_auto,w_{width}', '').replace('{ratio}', () => attachment?.dimensionRatio ?? '16x9') : '';
-        bodyWithImg = bodyWithImg.replace(placeholder, () => `<figure><picture><img src="${imageUrl}" alt="${picture?.alt ?? ''}"></picture><figcaption>${picture?.legend ?? ''}</figcaption></figure>`);
+        const content = imageUrl ? `<figure><picture><img src="${imageUrl}" alt="${picture?.alt ?? ''}"></picture><figcaption>${picture?.legend ?? ''}</figcaption></figure>` : (attachment.html ?? '');
+        bodyWithImg = bodyWithImg.replace(placeholder, () => content);
     }
     return header + primer + bodyWithImg;
 };

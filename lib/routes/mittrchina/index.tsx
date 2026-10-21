@@ -1,9 +1,13 @@
 import { renderToString } from 'hono/jsx/dom/server';
+import { getMimeType } from 'hono/utils/mime';
+import pMap from 'p-map';
 
-import type { Route } from '@/types';
+import InvalidParameterError from '@/errors/types/invalid-parameter';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
 export const route: Route = {
     path: '/:type?',
@@ -47,7 +51,10 @@ async function handler(ctx) {
     };
 
     const { type = 'index' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 10;
+    if (!Object.hasOwn(typeMap, type)) {
+        throw new InvalidParameterError(`Invalid article type: ${type}. Use breaking, hot, index, or video.`);
+    }
+    const limit = getRouteLimit(ctx, 10);
 
     const link = `https://apii.web.mittrchina.com${typeMap[type].apiPath}`;
     const { data: response } =
@@ -66,7 +73,7 @@ async function handler(ctx) {
 
     const articles = type === 'hot' ? response.data : response.data.items;
 
-    const list = articles.map((article) => ({
+    const list: Array<DataItem & { id: number }> = articles.map((article) => ({
         title: article.name || article.title,
         author: (article.authors || article.author || []).map((author) => author.username).join(', '),
         category: article.typeName,
@@ -77,7 +84,7 @@ async function handler(ctx) {
                           poster={article.img}
                           video={{
                               address: article.address,
-                              type: article.address.split('.').pop(),
+                              type: getMimeType(new URL(article.address, 'https://www.mittrchina.com').pathname),
                           }}
                       />
                   )
@@ -91,30 +98,28 @@ async function handler(ctx) {
 
     let items = list;
     if (type !== 'video' && type !== 'breaking') {
-        items = await Promise.all(
-            list.map((item) =>
-                cache.tryGet(item.link, async () => {
+        items = await pMap(
+            list,
+            async (item) => {
+                const details = await cache.tryGet(`mittrchina:article-details:v1:${item.link}`, async () => {
                     const {
                         data: { data: details },
                     } = await got(`https://apii.web.mittrchina.com/information/details?id=${item.id}`);
 
-                    item.description = details.content;
-
-                    if (!item.author) {
-                        item.author = details.authors.map((a) => a.username).join(', ');
-                    }
-                    if (!item.pubDate) {
-                        item.pubDate = parseDate(details.start_time, 'X');
-                    }
-
-                    if (details.cover) {
-                        item.enclosure_url = details.cover;
-                        item.enclosure_type = `image/${details.cover.split('.').pop()}`;
-                    }
-
-                    return item;
-                })
-            )
+                    return details;
+                });
+                return {
+                    ...item,
+                    description: details.content,
+                    author: item.author || details.authors.map((author) => author.username).join(', '),
+                    pubDate: item.pubDate || (details.start_time ? parseDate(details.start_time, 'X') : undefined),
+                    ...(details.cover && {
+                        enclosure_url: details.cover,
+                        enclosure_type: getMimeType(new URL(details.cover, 'https://www.mittrchina.com').pathname),
+                    }),
+                };
+            },
+            { concurrency: 3 }
         );
     }
 

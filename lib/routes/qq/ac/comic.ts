@@ -3,7 +3,7 @@ import { load } from 'cheerio';
 import type { Route } from '@/types';
 import got from '@/utils/got';
 
-import { mobileRootUrl, rootUrl } from './utils';
+import { mobileRootUrl, parseComicPage, rootUrl } from './utils';
 
 export const route: Route = {
     path: '/ac/comic/:id?',
@@ -36,28 +36,18 @@ async function handler(ctx) {
 
     const $ = load(response.data);
 
-    const author = $('.author-wr')
-        .toArray()
-        .map((a) => $(a).text().trim())
-        .join(', ');
-
-    const items = $('.reverse .bottom-chapter-item .chapter-link')
-        .toArray()
-        .map((item) => {
-            const $item = $(item);
-
-            return {
-                author,
-                title: $item.text(),
-                description: `<img src="${$item.find('.cover-image').attr('src')}">`,
-                link: `${rootUrl}${$item.attr('href')!.replace(/chapter/, 'ComicView')}`,
-            };
-        });
+    const info = parseComicPage($);
+    const items = info.chapters.map((chapter) => ({
+        author: info.author,
+        title: chapter.title,
+        description: chapter.image ? `<img src="${chapter.image}">` : undefined,
+        link: chapter.link,
+    }));
 
     return {
         title: `${$('h1').text()} - 腾讯动漫`,
         link: currentUrl,
         item: items,
-        description: `<p>${$('.head-info-desc').text()}</p>`,
+        description: `<p>${info.description}</p>`,
     };
 }

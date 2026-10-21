@@ -4,10 +4,12 @@ import { renderToString } from 'hono/jsx/dom/server';
 import { FetchError } from 'ofetch';
 
 import { config } from '@/config';
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 import timezone from '@/utils/timezone';
 
 const key = '3d5_f6A(S$G_FD=2S(Dr6%7BW_h37@rE';
@@ -85,9 +87,17 @@ async function viewCategory(category: string) {
     return response.data.data[0];
 }
 
+function getCategoryId(category: string) {
+    const match = category.match(/^(\d+)/);
+    if (!match) {
+        throw new InvalidParameterError('Category must start with its numeric ID, for example 977-lebanon. Separate multiple categories with |.');
+    }
+    return match[1];
+}
+
 async function handler(ctx) {
-    const categoryId = (ctx.req.param('category') ?? '977-Lebanon').split('|').map((item) => item.match(/^(\d+)/)[0] ?? item);
-    const limit = ctx.req.query('limit') ?? 25;
+    const categoryId = (ctx.req.param('category') ?? '977-Lebanon').split('|').map(getCategoryId);
+    const limit = getRouteLimit(ctx, 25);
 
     let token;
     const cacheIn = await cache.get('lorientlejour:token');
@@ -161,10 +171,12 @@ async function handler(ctx) {
             article.find('.inlineImage').each((_, el) => {
                 const inlineImageSrc = $(el).attr('src');
                 const inlineAttachment = item.inline_attachments.find((inlineAttachment) => inlineAttachment.url === inlineImageSrc);
-                if (inlineAttachment && inlineAttachment.description) {
-                    $(el).wrap('<figure></figure>');
-                    $(el).after(`<figcaption>${inlineAttachment.description}</figcaption>`);
+                if (!(inlineAttachment && inlineAttachment.description)) {
+                    return;
                 }
+
+                $(el).wrap('<figure></figure>');
+                $(el).after(`<figcaption>${inlineAttachment.description}</figcaption>`);
             });
         }
         item.description = renderToString(

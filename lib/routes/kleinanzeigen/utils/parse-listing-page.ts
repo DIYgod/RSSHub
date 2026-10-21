@@ -11,12 +11,14 @@ import { getProductPage } from './get-product-page';
  */
 export const parseListingPage = ($: CheerioAPI): Promise<DataItem[]> =>
     Promise.all(
-        $('li.ad-listitem.fully-clickable-card')
+        $('#srchrslt-results li')
             .not('.badge-topad')
             .toArray()
             .map((item) => {
                 const $item = $(item);
                 const article = $item.find('article');
-                return getProductPage(`https://www.kleinanzeigen.de${article.attr('data-href')}`);
+                return article.attr('data-href');
             })
+            .filter((href) => href !== undefined)
+            .map((href) => getProductPage(`https://www.kleinanzeigen.de${href}`))
     );

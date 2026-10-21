@@ -1,33 +1,21 @@
 import dayjs from 'dayjs';
+import utc from 'dayjs/plugin/utc.js';
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
-
-type Author = {
-    name?: string;
-    link?: string;
-};
-
-type LinkItem = {
-    text?: string;
-    link?: string;
-};
 
 type DescriptionData = {
     detail: any;
     images?: string[];
-    authors?: Author[];
     discountRate?: string;
     discountEndDate?: Date;
-    updatedDate?: Date;
-    pubDate?: Date;
-    workCategories?: LinkItem[];
-    searchTags?: LinkItem[];
     description?: string;
 };
 
-const formatDate = (date?: Date) => (date ? dayjs(date).format('YYYY-MM-DD HH:mm') : '');
+dayjs.extend(utc);
 
-export const renderDescription = ({ detail, images, authors, discountRate, discountEndDate, updatedDate, pubDate, workCategories, searchTags, description }: DescriptionData) => {
+export const formatDate = (date?: Date) => (date ? dayjs(date).utcOffset(9).format('YYYY-MM-DD HH:mm') : '');
+
+export const renderDescription = ({ detail, images, discountRate, discountEndDate, description }: DescriptionData) => {
     const localePrices = detail.locale_price_str ?? {};
     const localeOfficialPrices = detail.locale_official_price_str ?? {};
     const hasOfficialPrice = Boolean(detail.official_price_str);
@@ -123,52 +111,6 @@ export const renderDescription = ({ detail, images, authors, discountRate, disco
                         <tr>
                             <th>ポイント</th>
                             <td>{detail.default_point_str}&nbsp;pt</td>
-                        </tr>
-                    ) : null}
-                    {authors?.length ? (
-                        <tr>
-                            <th>作者</th>
-                            <td>
-                                {authors.map((author) => (
-                                    <a href={author.link}>{author.name}</a>
-                                ))}
-                            </td>
-                        </tr>
-                    ) : null}
-                    {updatedDate ? (
-                        <tr>
-                            <th>発売日</th>
-                            <td>{formatDate(updatedDate)}</td>
-                        </tr>
-                    ) : null}
-                    {pubDate ? (
-                        <tr>
-                            <th>販売日</th>
-                            <td>{formatDate(pubDate)}</td>
-                        </tr>
-                    ) : null}
-                    {workCategories?.length ? (
-                        <tr>
-                            <th>作品形式</th>
-                            <td>
-                                {workCategories.map((category) => (
-                                    <>
-                                        <a href={category.link}>{category.text}</a>,&nbsp;
-                                    </>
-                                ))}
-                            </td>
-                        </tr>
-                    ) : null}
-                    {searchTags?.length ? (
-                        <tr>
-                            <th>ジャンル</th>
-                            <td>
-                                {searchTags.map((tag) => (
-                                    <>
-                                        <a href={tag.link}>{tag.text}</a>,&nbsp;
-                                    </>
-                                ))}
-                            </td>
                         </tr>
                     ) : null}
                     {description ? (

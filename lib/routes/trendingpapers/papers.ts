@@ -19,7 +19,7 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    name: 'Trending Papers on arXiv',
+    name: 'arXiv paper ranking',
     maintainers: ['CookiePieWw'],
     handler,
 };
@@ -38,7 +38,7 @@ async function handler(ctx) {
         const url = _.url;
         const arxivId = _.arxiv_id;
 
-        const pubDate = parseDate(_.pub_date);
+        const pubDate = _.pub_date ? parseDate(_.pub_date) : undefined;
         const summaryCategories = _.summary_categories;
 
         return {
@@ -53,7 +53,7 @@ async function handler(ctx) {
 
     return {
         title: `Trending Papers on arXiv.org | ${category} | ${time} | ${cited} | `,
-        link: currentUrl,
+        link: rootUrl,
         item: papers,
     };
 }

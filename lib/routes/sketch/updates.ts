@@ -31,12 +31,13 @@ async function handler(): Promise<Data> {
             const $item = $(item);
             const content = $item.find('.detail__content');
             content.find('button').remove();
+            const released = $item.find('.detail__date').attr('datetime');
 
             return {
                 title: $item.find('h2.detail__title').text(),
                 description: content.html(),
                 link: $item.find('.detail__date button').attr('data-update-url'),
-                pubDate: parseDate($item.find('.detail__date').attr('datetime')!),
+                pubDate: released ? parseDate(released) : undefined,
                 category: $item
                     .find('.detail__apps .pill')
                     .toArray()

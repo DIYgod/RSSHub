@@ -8,7 +8,7 @@ export const route: Route = {
     path: '/new-releases/:category?',
     categories: ['shopping'],
     example: '/5music/new-releases',
-    parameters: { category: 'Category, see below, defaults to all' },
+    parameters: { category: 'Category, see below, defaults to A (華語)' },
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -67,11 +67,7 @@ async function handler(ctx) {
             return {
                 title: `${artist} - ${album}`,
                 description: `
-                    <p>艺人: ${artist}</p>
-                    <p>专辑: ${album}</p>
                     <p>发行公司: ${company}</p>
-                    <p>格式: ${format}</p>
-                    <p>发行日期: ${releaseDate}</p>
                 `,
                 link: albumLink ? `https://www.5music.com.tw/${albumLink}` : url,
                 pubDate: parseDate(releaseDate),

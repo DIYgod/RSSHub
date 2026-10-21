@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
@@ -83,8 +84,8 @@ async function handler(ctx): Promise<Data> {
                 .filter((_, node) => node.type === 'text')
                 .text();
             const author = $item.find('span.article--post__author-name a').text();
-            const time = $('p.article--post__teaser time').attr('datetime');
-            const pubDate = parseDate(time!, 'YYYY-MM-DD');
+            const time = $item.find('p.article--post__teaser time').attr('datetime');
+            const pubDate = time ? parseDate(`${time}T00:00:00Z`) : undefined;
             return {
                 title: a.text(),
                 link: `${baseUrl}${a.attr('href')}`,
@@ -94,27 +95,26 @@ async function handler(ctx): Promise<Data> {
             };
         });
 
-    const items = await Promise.all(
-        listItems.map((item) =>
-            cache.tryGet(item.link, async () => {
+    const items = await pMap(
+        listItems,
+        async (item) => {
+            const detail = await cache.tryGet(item.link, async () => {
                 const { data: response } = await got(item.link);
                 const $ = load(response);
-                item.category = $('li.meta-box--tags a')
+                const category = $('li.meta-box--tags a')
                     .toArray()
                     .map((item) => $(item).text());
-                const header = $('div#article__content header.article-header').children('ul').remove().end().html();
-                const summary = $('div#article__content section.article__summary').html();
-                const descr = $('div#article__content div.c-garfield-the-cat')
-                    .children('div')
-                    .remove()
-                    .end()
-                    .toArray()
-                    .map((element) => $(element).html());
-                item.description = [header, summary, ...descr].join('');
-
-                return item;
-            })
-        )
+                const content = $('div#article__content div.c-garfield-the-cat');
+                content
+                    .children(
+                        '.c-garfield-header, .meta-box--article, .c-garfield-aside--meta, .c-garfield-native-panel, .c-garfield-native-panel__right, .feature-panel-container, .partners__lead-place, .sponsor-panel, .category__related--alt'
+                    )
+                    .remove();
+                return { description: content.html(), category };
+            });
+            return { ...item, ...detail };
+        },
+        { concurrency: 3 }
     );
 
     return {

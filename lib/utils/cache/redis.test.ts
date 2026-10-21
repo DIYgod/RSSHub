@@ -6,34 +6,13 @@ import logger from '@/utils/logger';
 const errorSpy = vi.spyOn(logger, 'error').mockImplementation(() => logger);
 
 class RedisMock {
-    private readonly listeners = new Map<string, Array<(error?: Error) => void>>();
-
     mget = vi.fn();
     expire = vi.fn();
     exists = vi.fn();
     set = vi.fn();
-
-    on(event: string, listener: (error?: Error) => void) {
-        const handlers = this.listeners.get(event) ?? [];
-        handlers.push(listener);
-        this.listeners.set(event, handlers);
-        return this;
-    }
-
-    emit(event: string, error?: Error) {
-        const handlers = this.listeners.get(event) ?? [];
-        for (const listener of handlers) {
-            listener(error);
-        }
-        return true;
-    }
 }
 
 const asRedisClient = (mock: Pick<Redis, 'exists' | 'expire' | 'mget' | 'set'>) => mock as Redis;
-
-vi.mock('ioredis', () => ({
-    default: RedisMock,
-}));
 
 describe('redis cache module', () => {
     it('throws on reserved cache ttl key', async () => {
@@ -70,5 +49,6 @@ describe('redis cache module', () => {
 
         expect(redisCache.status.available).toBe(false);
         expect(errorSpy).toHaveBeenCalled();
+        redisCache.clients.redisClient?.disconnect();
     });
 });

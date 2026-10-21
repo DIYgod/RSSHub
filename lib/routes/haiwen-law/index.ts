@@ -40,18 +40,20 @@ async function handler() {
         });
 
     const out = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link, async () => {
+        list.map(async (item) => ({
+            ...item,
+            ...(await cache.tryGet(item.link, async () => {
                 const response = await ofetch(item.link);
                 const $ = load(response);
-                item.description = $('.yjwzwz_section .text1').html()?.trim();
-                item.author = $('.wordsbox .zz span')
-                    .toArray()
-                    .map((e) => $(e).text().trim())
-                    .join(', ');
-                return item;
-            })
-        )
+                return {
+                    description: $('.yjwzwz_section .text1').html()?.trim(),
+                    author: $('.wordsbox .zz span')
+                        .toArray()
+                        .map((e) => $(e).text().trim())
+                        .join(', '),
+                };
+            })),
+        }))
     );
 
     return {

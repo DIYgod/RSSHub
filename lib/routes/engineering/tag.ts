@@ -39,12 +39,16 @@ async function handler(ctx) {
             const $item = $(item);
             const a = $item.find('a').eq(2);
             const description = $item.find('.leading-relaxed');
-            const author = $item.find('.truncate');
+            const author = $item.find('.truncate').text();
             return {
                 title: a.text(),
                 link: a.attr('href'),
                 description: description.text(),
-                author: author.text(),
+                author: author || undefined,
+                category: $item
+                    .find('a[href^="/tag/"]')
+                    .toArray()
+                    .map((element) => $(element).text()),
             };
         });
 

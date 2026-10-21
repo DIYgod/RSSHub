@@ -1,20 +1,11 @@
-import { load } from 'cheerio';
+import { parseDate } from '@/utils/parse-date';
 
-import got from '@/utils/got';
-
-export const loadArticle = async (link) => {
-    const resp = await got(link);
-    const article = load(resp.body);
-
-    const title = article('h2.entry-title').text().trim();
-    const description = article('.wp-block-image')
-        .toArray()
-        .map((element) => article.html(element))
-        .join('');
-
-    return {
-        title,
-        description,
-        link,
-    };
-};
+export const loadArticle = (post) => ({
+    title: post.title.rendered,
+    description: post.content.rendered,
+    pubDate: post.date_gmt ? parseDate(`${post.date_gmt}Z`) : undefined,
+    updated: post.modified_gmt ? parseDate(`${post.modified_gmt}Z`) : undefined,
+    link: post.link,
+    author: post._embedded?.author?.[0]?.name,
+    category: post._embedded?.['wp:term']?.flat().map((term) => term.name) ?? [],
+});

@@ -48,7 +48,7 @@ const routeNested = createRoute({
 
 const handler: RouteHandler<typeof route> = async (ctx) => {
     await ensureAllLoaded();
-    const { namespace, sub } = ctx.req.valid('param') as { namespace: string; sub?: string };
+    const { namespace, sub }: { namespace: string; sub?: string } = ctx.req.valid('param');
     return ctx.json(namespaces[[namespace, sub].filter(Boolean).join('/')]);
 };
 

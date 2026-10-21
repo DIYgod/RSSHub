@@ -4,16 +4,17 @@ import type { Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
 import { renderDescription } from './templates/description';
 
 export const handler = async (ctx) => {
     const { category = '' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 18;
+    const limit = getRouteLimit(ctx, 18);
 
     const domain = '423down.com';
     const rootUrl = `https://www.${domain}`;
-    const currentUrl = new URL(category, rootUrl).href;
+    const currentUrl = `${rootUrl}/${category}`;
 
     const { data: response } = await got(currentUrl);
 

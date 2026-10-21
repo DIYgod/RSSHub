@@ -1,5 +1,7 @@
 import type { Route } from '@/types';
 import got from '@/utils/got';
+import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
 export const route: Route = {
     path: '/user/:username',
@@ -27,10 +29,19 @@ export const route: Route = {
 
 async function handler(ctx) {
     const username = ctx.req.param('username');
+    const limit = Math.min(getRouteLimit(ctx, 50), 50);
 
-    const user = (await got(`https://client.warpcast.com/v2/user-by-username?username=${username}`)).data.result.user;
+    const user = (
+        await got('https://client.warpcast.com/v2/user-by-username', {
+            searchParams: { username },
+        })
+    ).data.result.user;
 
-    const casts = (await got(`https://client.warpcast.com/v2/casts?fid=${user.fid}&limit=100`)).data.result.casts;
+    const casts = (
+        await got('https://client.warpcast.com/v2/casts', {
+            searchParams: { fid: user.fid, limit },
+        })
+    ).data.result.casts;
 
     return {
         title: `${user.displayName} on Farcaster`,
@@ -38,8 +49,8 @@ async function handler(ctx) {
         item: casts.map((item) => ({
             title: item.text,
             description: `${item.parentAuthor ? `Replying to @${item.parentAuthor.username}: ` : ''}${item.text} ${item.embeds?.urls?.map((url) => `<a href="${url.openGraph.url}">${url.openGraph.title}</a>`).join(' ') || ''} ${item.embeds?.images?.map((image) => `<img src="${image.url}" />`).join(' ') || ''}`,
-            link: `https://warpcast.com/${username}/cast/${item.hash}`,
-            pubDate: new Date(item.timestamp).toUTCString(),
+            link: `https://farcaster.xyz/${user.username}/${item.hash.slice(0, 10)}`,
+            pubDate: parseDate(item.timestamp),
             guid: item.hash,
         })),
     };

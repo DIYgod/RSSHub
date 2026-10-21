@@ -1,3 +1,5 @@
+import pMap from 'p-map';
+
 import type { Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
@@ -20,14 +22,28 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['www.ifanr.com/index'],
+            source: ['www.ifanr.com/'],
         },
     ],
     name: '首页',
     maintainers: ['donghongfei'],
     handler,
-    url: 'www.ifanr.com/index',
+    url: 'www.ifanr.com',
 };
+
+interface FeedArticle {
+    id: string | number;
+    post_id: string | number;
+    post_title: string;
+    post_url: string;
+    created_at: number;
+    created_by: { name: string };
+}
+
+function parseTimestamp(value: number | string) {
+    const date = value ? parseDate(value, 'X') : undefined;
+    return date && Number.isFinite(date.getTime()) ? date : undefined;
+}
 
 async function handler() {
     const apiUrl = 'https://sso.ifanr.com/api/v5/wp/web-feed/?limit=20&offset=0';
@@ -35,31 +51,25 @@ async function handler() {
         method: 'get',
         url: apiUrl,
     });
-    const items = await Promise.all(
-        resp.data.objects.map((item) => {
-            const link = `https://sso.ifanr.com/api/v5/wp/article/?post_id=${item.post_id}`;
-            let description = '';
-
-            const key = `ifanr:${item.id}`;
-
-            return cache.tryGet(key, async () => {
-                const response = await got({ method: 'get', url: link });
+    const list: FeedArticle[] = resp.data.objects.filter((item) => item.post_type !== 'column');
+    const items = await pMap(
+        list,
+        async (item) => {
+            const description = await cache.tryGet(`ifanr:article:${item.post_id}`, async () => {
+                const response = await got(`https://sso.ifanr.com/api/v5/wp/article/?post_id=${item.post_id}`);
                 const articleData = response.data.objects[0];
                 const banner = articleData.post_cover_image;
-                if (banner) {
-                    description = `<img src="${banner}" alt="Article Cover Image" style="display: block; margin: 0 auto;"><br>`;
-                }
-                description += articleData.post_content;
-
-                return {
-                    title: item.post_title.trim(),
-                    description,
-                    link: item.post_url,
-                    pubDate: parseDate(item.created_at * 1000),
-                    author: item.created_by.name,
-                };
+                return `${banner ? `<img src="${banner}" alt="Article Cover Image" style="display: block; margin: 0 auto;"><br>` : ''}${articleData.post_content}`;
             });
-        })
+            return {
+                title: item.post_title,
+                description,
+                link: item.post_url,
+                pubDate: parseTimestamp(item.created_at),
+                author: item.created_by.name,
+            };
+        },
+        { concurrency: 3 }
     );
 
     return {

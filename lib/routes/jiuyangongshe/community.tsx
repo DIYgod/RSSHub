@@ -6,6 +6,7 @@ import { ViewType } from '@/types';
 import md5 from '@/utils/md5';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 import timezone from '@/utils/timezone';
 
 interface User {
@@ -131,7 +132,7 @@ async function handler(ctx: Context): Promise<Data> {
         },
         body: {
             category_id: '',
-            limit: ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 30,
+            limit: getRouteLimit(ctx, 30),
             order: 0,
             start: 1,
             type: 0,
@@ -143,7 +144,7 @@ async function handler(ctx: Context): Promise<Data> {
         title: item.title,
         description: render({ cover: item.cover, content: item.content }),
         link: `${link}/a/${item.article_id}`,
-        pubDate: timezone(parseDate(item.create_time, 'YYYY-MM-DD HH:mm:ss'), 8),
+        pubDate: parseCreatedAt(item.create_time),
         author: item.user.nickname,
         category: item.stock_list.map((stock) => stock.name),
     }));
@@ -154,4 +155,9 @@ async function handler(ctx: Context): Promise<Data> {
         language: 'zh-CN',
         item: items,
     };
+}
+
+function parseCreatedAt(value?: string): Date | undefined {
+    const date = value ? parseDate(value, 'YYYY-MM-DD HH:mm:ss', true) : undefined;
+    return date && Number.isFinite(date.getTime()) ? timezone(date, 8) : undefined;
 }

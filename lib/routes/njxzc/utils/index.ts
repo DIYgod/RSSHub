@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
@@ -48,5 +49,5 @@ async function fetchArticle(item: NoticeItem): Promise<DataItem> {
 }
 
 export function resolveArticles(list: NoticeItem[]): Promise<DataItem[]> {
-    return Promise.all(list.map((item) => cache.tryGet(item.link, () => fetchArticle(item))));
+    return pMap(list, (item) => cache.tryGet(item.link, () => fetchArticle(item)), { concurrency: 6 });
 }

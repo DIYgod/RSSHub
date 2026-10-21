@@ -1,13 +1,20 @@
-import { load } from 'cheerio';
+import { escapeText } from 'entities';
 
 import type { Route } from '@/types';
-import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
 
 const baseUrl = 'https://yamap.com/activities/';
 const host = 'https://api.yamap.com/v3/activities?page=1&per=24';
+
+function parseUnixDate(value?: number) {
+    if (typeof value !== 'number' || !Number.isFinite(value)) {
+        return;
+    }
+
+    const date = parseDate(value * 1000);
+    return Number.isFinite(date.getTime()) ? date : undefined;
+}
 
 export const route: Route = {
     path: '/',
@@ -32,27 +39,16 @@ async function handler() {
     const link = host;
     const response = await got(link);
     const metadata = response.data;
-    // const recordNum = metadata.activities.length - 1 ;
-
-    const lists = metadata.activities.map((item) => ({
-        title: item.title,
+    const items = metadata.activities.map((item) => ({
+        title: item.title + '-' + (item.map?.name || 'Japan'),
         link: baseUrl + item.id.toString(),
-        pubDate: parseDate(item.created_at),
-        location: item.map.name || 'Japan',
+        pubDate: parseUnixDate(item.public_at),
+        updated: parseUnixDate(item.updated_at),
+        author: typeof item.user?.name === 'string' ? item.user.name : undefined,
+        category: typeof item.activity_type?.name === 'string' && item.activity_type.name ? [item.activity_type.name] : undefined,
+        image: typeof item.image?.url === 'string' && item.image.url ? item.image.url : undefined,
+        description: typeof item.description === 'string' && item.description ? `<p>${escapeText(item.description).replaceAll('\n', '<br>\n')}</p>` : undefined,
     }));
-
-    const items = await Promise.all(
-        lists.map((item) =>
-            cache.tryGet(item.link, async () => {
-                const response = await got(item.link);
-                const $ = load(response.data);
-                item.title = item.title + '-' + item.location;
-                item.description = $('div.ActivitiesId__Body main').html();
-                item.pubDate = timezone(parseDate($('span[class=ActivityDetailTabLayout__Middle__Date]').text()), 8);
-                return item;
-            })
-        )
-    );
 
     return {
         title: 'Yamap',

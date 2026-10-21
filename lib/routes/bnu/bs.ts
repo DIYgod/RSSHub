@@ -4,6 +4,7 @@ import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/bs/:category?',
@@ -52,7 +53,7 @@ async function handler(ctx) {
 
             return {
                 title: $item.attr('title')!,
-                pubDate: parseDate($item.prev().text()),
+                pubDate: timezone(parseDate($item.prev().text()), 8),
                 link: `${rootUrl}/${category}/${$item.attr('href')}`,
             };
         });

@@ -143,18 +143,19 @@ export default async function callMaintainer({ github, context, core }) {
             continue;
         }
 
-        if (main.length > 0) {
-            const pingStr = main
-                .map((e) => {
-                    if (dndUsernames.has(e)) {
-                        return `\`@${e}\``; // Wrap in an inline code block to make sure no mention will be sent
-                    }
-                    return `@${e}`;
-                })
-                .join(' ');
-            comments += `- \`${route}\`: ${pingStr}\n`;
-            successCount += 1;
+        if (main.length === 0) {
+            continue;
         }
+        const pingStr = main
+            .map((e) => {
+                if (dndUsernames.has(e)) {
+                    return `\`@${e}\``; // Wrap in an inline code block to make sure no mention will be sent
+                }
+                return `@${e}`;
+            })
+            .join(' ');
+        comments += `- \`${route}\`: ${pingStr}\n`;
+        successCount += 1;
     }
 
     const labels = [''];

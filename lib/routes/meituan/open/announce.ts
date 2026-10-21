@@ -1,3 +1,5 @@
+import pMap from 'p-map';
+
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
@@ -12,14 +14,21 @@ export const route: Route = {
     handler,
 };
 
+interface SourceAnnouncement {
+    docKey: string;
+    title: string;
+    modifyTime: number;
+}
+
 async function handler() {
-    const response = await ofetch('https://developer.meituan.com/api/v4/front/announcement/menu-page?docKey=anno-all&pageSize=15&pageNum=1&count=0');
+    const response = await ofetch<{ data: { docList: SourceAnnouncement[] } }>('https://developer.meituan.com/api/v4/front/announcement/menu-page?docKey=anno-all&pageSize=15&pageNum=1&count=0');
     const docList = response.data.docList;
 
     const url = 'https://developer.meituan.com/api/v1/doc/content';
 
-    const item = await Promise.all(
-        docList.map((item) => {
+    const item = await pMap(
+        docList,
+        (item) => {
             const articleUrl = `${url}?docKey=${item.docKey}`;
 
             return cache.tryGet(`${articleUrl}_${item.modifyTime}`, async () => {
@@ -31,7 +40,8 @@ async function handler() {
                     pubDate: parseDate(item.modifyTime, 'X'),
                 };
             });
-        })
+        },
+        { concurrency: 3 }
     );
 
     return {

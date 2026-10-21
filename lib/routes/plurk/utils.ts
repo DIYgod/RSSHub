@@ -32,19 +32,21 @@ const getPlurk = (plurkGuid, item, author) => {
     $('img').each((_, e) => {
         const $e = $(e);
         $e.removeAttr('height').removeAttr('width');
-        if ($e.attr('alt') && $e.attr('alt')!.startsWith('http')) {
-            $e.attr('src', $e.attr('alt'));
-            $e.removeAttr('alt');
+        if (!($e.attr('alt') && $e.attr('alt')!.startsWith('http'))) {
+            return;
         }
+
+        $e.attr('src', $e.attr('alt'));
+        $e.removeAttr('alt');
     });
 
     return {
         title: item.content_raw ?? ($.text() || plurkGuid),
         description: $.html(),
         guid: plurkGuid,
-        link: item.rendered ? item.link_url : null,
-        author,
-        pubDate: parseDate(item.posted),
+        link: item.link_url || (item.plurk_id === undefined ? undefined : `${baseUrl}/p/${BigInt(item.plurk_id).toString(36)}`),
+        author: author || undefined,
+        pubDate: item.posted ? parseDate(item.posted) : undefined,
     };
 };
 

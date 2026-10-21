@@ -1,9 +1,10 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
 
 export const route: Route = {
     path: '/',
@@ -25,38 +26,38 @@ async function handler() {
 
     const $ = load(response.data);
 
-    const alist = $(
-        '#kt_wrapper > div.main-content-area > div.container.container-fluid > div:nth-child(1) > div.col-xs-12.col-sm-6.col-md-8.post-listing > div.row.flex-row-fluid > div:nth-child(2) > div > div > div.card-body.pt-2 > div.d-flex'
-    );
+    const list = $('.tita a[rel="bookmark"]')
+        .toArray()
+        .flatMap((element): Array<DataItem & { link: string }> => {
+            const a = $(element);
+            const href = a.attr('href');
+            if (!href) {
+                return [];
+            }
+            return [{ title: a.text(), link: new URL(href, baseUrl).href }];
+        });
 
-    const list = alist.toArray().map((item): DataItem => {
-        const $item = $(item);
-
-        const path = $item.find('a').attr('href');
-        const link = `${baseUrl}${path}`;
-        const title = $item.find('a').text();
-
-        return {
-            title,
-            link,
-        };
-    });
-
-    const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link!, async () => {
+    const items = await pMap(
+        list,
+        async (item) => {
+            const detail = await cache.tryGet(`techsir:article-content:v1:${item.link}`, async () => {
                 const response = await got({
                     method: 'get',
                     url: item.link,
                 });
 
                 const $ = load(response.data);
-                item.description = $('.kg-card-markdown').html();
-                item.pubDate = parseDate($('time.time').text());
-                item.author = $('a.author').text();
-                return item;
-            })
-        )
+                const description = $('#article-content').html() || $('.kg-card-markdown').html();
+                const date = $('time[itemprop="datePublished"]').attr('datetime') || $('meta[property="article:published_time"]').attr('content') || $('time.time').text();
+                return {
+                    description,
+                    pubDate: date ? parseDateInTimezone(date, 8) : undefined,
+                    author: $('[itemprop="author"]').first().text() || $('a.author').text(),
+                };
+            });
+            return { ...item, ...detail };
+        },
+        { concurrency: 3 }
     );
 
     return {

@@ -93,35 +93,41 @@ const createMultiProxy = (proxyUris: string[], proxyObj: Config['proxy']): Multi
 
     const markProxyFailed = (proxyUri: string) => {
         const proxy = proxies.find((p) => p.uri === proxyUri);
-        if (proxy) {
-            proxy.failureCount++;
-            proxy.lastFailureTime = Date.now();
-            if (proxy.failureCount >= maxFailures) {
-                proxy.isActive = false;
-                logger.warn(`Proxy ${proxyUri} marked as inactive after ${maxFailures} failures`);
-            } else {
-                logger.warn(`Proxy ${proxyUri} failed (${proxy.failureCount}/${maxFailures})`);
-            }
+        if (!proxy) {
+            return;
+        }
 
-            const activeProxies = proxies.filter((p) => p.isActive);
-            if (activeProxies.length > 0) {
-                currentProxyIndex = (currentProxyIndex + 1) % activeProxies.length;
-                const nextProxy = getNextProxy();
-                if (nextProxy) {
-                    logger.info(`Switching to proxy: ${nextProxy.uri}`);
-                }
-            }
+        proxy.failureCount++;
+        proxy.lastFailureTime = Date.now();
+        if (proxy.failureCount >= maxFailures) {
+            proxy.isActive = false;
+            logger.warn(`Proxy ${proxyUri} marked as inactive after ${maxFailures} failures`);
+        } else {
+            logger.warn(`Proxy ${proxyUri} failed (${proxy.failureCount}/${maxFailures})`);
+        }
+
+        const activeProxies = proxies.filter((p) => p.isActive);
+        if (activeProxies.length === 0) {
+            return;
+        }
+
+        currentProxyIndex = (currentProxyIndex + 1) % activeProxies.length;
+        const nextProxy = getNextProxy();
+        if (nextProxy) {
+            logger.info(`Switching to proxy: ${nextProxy.uri}`);
         }
     };
 
     const resetProxy = (proxyUri: string) => {
         const proxy = proxies.find((p) => p.uri === proxyUri);
-        if (proxy) {
-            proxy.isActive = true;
-            proxy.failureCount = 0;
-            delete proxy.lastFailureTime;
-            logger.info(`Proxy ${proxyUri} manually reset`);
+        if (!proxy) {
+            return;
         }
+
+        proxy.isActive = true;
+        proxy.failureCount = 0;
+        delete proxy.lastFailureTime;
+        logger.info(`Proxy ${proxyUri} manually reset`);
     };
 
     const currentProxy = getNextProxy();

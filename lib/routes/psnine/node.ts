@@ -1,10 +1,23 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDate, parseRelativeDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
+
+function parseNodeDate(date: string) {
+    if (!date) {
+        return;
+    }
+    const relative = /^(\d+天前|今天|昨天|前天)\s+(\d{1,2}:\d{2})$/.exec(date);
+    if (relative) {
+        const day = parseRelativeDate(relative[1]).toLocaleDateString('en-CA', { timeZone: 'Asia/Shanghai' });
+        return timezone(parseDate(`${day} ${relative[2]}`, 'YYYY-MM-DD HH:mm'), 8);
+    }
+    return timezone(parseDate(date, ['YYYY-MM-DD HH:mm', 'MM-DD HH:mm']), 8);
+}
 
 const handler = async (ctx) => {
     const { id = 'news', order = 'obdate' } = ctx.req.param();
@@ -25,33 +38,32 @@ const handler = async (ctx) => {
             return {
                 title: $item.text(),
                 link: $item.attr('href'),
-                pubDate: timezone(
-                    parseDate(
-                        meta
-                            .contents()
-                            .filter((_, i) => i.nodeType === 3)
-                            .text()
-                            .trim()
-                            .split(/\s{2,}/, 1)[0],
-                        ['YYYY-MM-DD HH:mm', 'MM-DD HH:mm']
-                    ),
-                    8
+                pubDate: parseNodeDate(
+                    meta
+                        .contents()
+                        .filter((_, i) => i.nodeType === 3)
+                        .text()
+                        .trim()
+                        .split(/\s{2,}/, 1)[0]
                 ),
             };
         });
 
-    const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link!, async () => {
+    const items = await pMap(
+        list,
+        async (item) => {
+            const details = await cache.tryGet(item.link!, async () => {
                 const detailResponse = await ofetch(item.link!);
                 const $ = load(detailResponse);
 
-                item.author = $('a[itemprop="author"]').eq(0).text();
-                item.description = $('div[itemprop="articleBody"]').html();
-
-                return item;
-            })
-        )
+                return {
+                    author: $('a[itemprop="author"]').eq(0).text(),
+                    description: $('div[itemprop="articleBody"]').html(),
+                };
+            });
+            return { ...item, ...details };
+        },
+        { concurrency: 3 }
     );
 
     return {

@@ -1,4 +1,4 @@
-import type { Route } from '@/types';
+import type { Data, Route } from '@/types';
 import { ViewType } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -25,9 +25,10 @@ export const route: Route = {
     handler,
 };
 
-async function handler(ctx) {
+async function handler(ctx): Promise<Data> {
     const { keyword, img } = ctx.req.param();
-    const currentUrl = `${defaultDomain}/webmasters/search?search=${keyword}`;
+    const searchParams = new URLSearchParams({ search: keyword });
+    const currentUrl = `${defaultDomain}/webmasters/search?${searchParams}`;
     const response = await got(currentUrl);
 
     const showImages = img === 'img=1';
@@ -42,7 +43,8 @@ async function handler(ctx) {
 
     return {
         title: `Pornhub - ${keyword}`,
-        link: currentUrl,
+        link: `${defaultDomain}/video/search?${searchParams}`,
+        language: 'en',
         item: list,
     };
 }

@@ -36,7 +36,7 @@ describe('useCustomHeader', () => {
         process.env.NODE_ENV = originalEnv;
     });
 
-    test('should register request with custom headers in dev environment', () => {
+    test('should register request with custom headers in dev environment', async () => {
         process.env.NODE_ENV = Env.dev;
 
         const headers = new Headers();
@@ -51,7 +51,7 @@ describe('useCustomHeader', () => {
             isAborted: false,
         });
 
-        useCustomHeader(headers);
+        await useCustomHeader(headers);
 
         const cell = getCurrentCell();
         expect(cell).toBeDefined();
@@ -66,7 +66,7 @@ describe('useCustomHeader', () => {
         expect(request.requestHeaders[headerText]).toEqual(headerValue);
     });
 
-    test('should not register request in non-dev environment', () => {
+    test('should not register request in non-dev environment', async () => {
         process.env.NODE_ENV = Env.production;
 
         const headers = new Headers();
@@ -81,7 +81,7 @@ describe('useCustomHeader', () => {
             pipes: [],
             isAborted: false,
         });
-        useCustomHeader(headers);
+        await useCustomHeader(headers);
 
         const cell = getCurrentCell();
         expect(cell).toBeDefined();
@@ -104,6 +104,12 @@ describe('wrappedFetch', () => {
         await expect(wrappedFetch('http://example.com')).rejects.toThrow('boom');
 
         fetchSpy.mockRestore();
+    });
+
+    test('installs a global dispatcher that prefers h2 in ALPN', () => {
+        const dispatcher = undici.getGlobalDispatcher();
+        const optionsKey = Object.getOwnPropertySymbols(dispatcher).find((s) => s.description === 'options')!;
+        expect(dispatcher[optionsKey].connect.preferH2).toBe(true);
     });
 });
 
@@ -173,7 +179,7 @@ describe('request-rewriter fetch retry', () => {
         expect(response).toBeInstanceOf(undici.Response);
         expect(fetchSpy).toHaveBeenCalledTimes(2);
         expect(markProxyFailedSpy).toHaveBeenCalledWith('http://proxy1.test');
-        expect(getDispatcherForProxySpy).toHaveBeenCalledWith(proxies[1]);
+        expect(getDispatcherForProxySpy).toHaveBeenCalledWith(proxies[1], undefined);
 
         const requestArg = fetchSpy.mock.calls[0][0];
         if (!(requestArg instanceof Request)) {

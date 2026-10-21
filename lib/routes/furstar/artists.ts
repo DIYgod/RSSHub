@@ -2,7 +2,6 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 
 import utils from './utils';
 
@@ -37,19 +36,18 @@ async function handler(ctx) {
     const $ = load(res.data);
     const artists = $('.filter-item')
         .toArray()
-        .map((e) => utils.authorDetail(e));
+        .map((e) => utils.authorDetail($(e)));
     artists.shift(); // the first one is "show all"
 
     return {
         title: 'furstar 所有画家',
         link: 'https://furstar.jp',
         description: 'Furstar 所有画家列表',
-        language: ctx.req.param('lang'),
+        language: utils.language(ctx.req.param('lang')),
         item: artists.map((e) => ({
             title: e.name!,
             author: e.name ?? undefined,
             description: `<img src="${e.avatar}"/><a href="${base}/${e.link}">${e.name}</a>`,
-            pubDate: parseDate(new Date().toISOString()), // No Time for now
             link: `${base}/${e.link}`,
         })),
     };

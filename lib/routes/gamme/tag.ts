@@ -42,8 +42,8 @@ async function handler(ctx) {
         });
 
     const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link!, async () => {
+        list.map(async (item) => {
+            const detail = await cache.tryGet(`${item.link}#gamme-tag-detail`, async () => {
                 const { data } = await got(item.link);
                 const $ = load(data);
 
@@ -57,17 +57,21 @@ async function handler(ctx) {
                     delete img.attribs['data-src'];
                 });
 
-                item.author = $('.author_name').text().trim();
-                item.category = $('.tags a')
+                const author = $('.author_name').text().trim();
+                const category = $('.tags a')
                     .toArray()
                     .map((tag) => $(tag).text());
                 $('.social_block, .tags').remove();
-                item.pubDate = parseDate($('.postDate').attr('content')!);
-                item.description = $('.entry').html();
-
-                return item;
-            })
-        )
+                const pubDate = $('.postDate').attr('content');
+                return {
+                    author,
+                    category,
+                    pubDate: pubDate ? parseDate(pubDate) : undefined,
+                    description: $('.entry').html(),
+                };
+            });
+            return { ...item, ...detail };
+        })
     );
 
     return {

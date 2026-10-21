@@ -1,5 +1,6 @@
 import { load } from 'cheerio';
 
+import NotFoundError from '@/errors/types/not-found';
 import type { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -38,11 +39,16 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const type = Number.parseInt(ctx.req.param('type'));
-    const id = map.get(type)!.id;
+    const type = Number.parseInt(ctx.req.param('type') ?? '0');
+    const channel = map.get(type);
+    if (!channel) {
+        throw new NotFoundError('Invalid notification type. Supported types are 0 through 6.');
+    }
+    const id = channel.id;
+    const currentUrl = `${host}/${id}.htm`;
     const res = await got({
         method: 'get',
-        url: `${host}/${id}.htm`,
+        url: currentUrl,
     });
 
     const $ = load(res.data);
@@ -58,8 +64,8 @@ async function handler(ctx) {
         });
 
     return {
-        title: map.get(type)!.title,
-        link: `${host}${id}`,
+        title: channel.title,
+        link: currentUrl,
         item: items,
     };
 }

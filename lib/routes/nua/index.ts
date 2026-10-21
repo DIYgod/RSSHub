@@ -17,7 +17,7 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['index.nua.edu.cn/:type/list.htm'],
+            source: ['www.nua.edu.cn/:type/list.htm'],
         },
     ],
     name: 'Official Information',

@@ -1,7 +1,9 @@
+import NotFoundError from '@/errors/types/not-found';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
 export const route: Route = {
     path: '/:tags{.+}?',
@@ -9,6 +11,9 @@ export const route: Route = {
     example: '/bangumi.moe',
     parameters: {
         tags: 'Tags, empty by default, multiple tags separated by `/`',
+    },
+    features: {
+        supportBT: true,
     },
     radar: [
         {
@@ -52,7 +57,7 @@ async function handler(ctx) {
     }
 
     let items =
-        response.data.torrents?.slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 30).map((item) => ({
+        response.data.torrents?.slice(0, getRouteLimit(ctx, 30)).map((item) => ({
             title: item.title,
             link: `${rootUrl}/torrent/${item._id}`,
             description: item.introduction,
@@ -90,7 +95,6 @@ async function handler(ctx) {
         title: '萌番组 Bangumi Moe',
         link: isLatest || items.length === 0 ? rootUrl : searchLink,
         item: items,
-        allowEmpty: true,
     };
 }
 
@@ -110,7 +114,10 @@ async function searchTagIds(tags, rootUrl): Promise<string[]> {
                     },
                 });
 
-                return paramResponse.data.found ? paramResponse.data.tag.map((tag) => tag._id)[0] : '';
+                if (!paramResponse.data.found || !paramResponse.data.tag.length) {
+                    throw new NotFoundError(`Bangumi Moe tag "${param}" was not found. Use an existing tag from the official site.`);
+                }
+                return paramResponse.data.tag[0]._id;
             })
         )
     );

@@ -24,12 +24,11 @@ export const route: Route = {
 
 async function handler() {
     const url = `${rootURL}/reports/`;
-
     const response = await got(url);
     const $ = load(response.data);
-    const list = $('div.report-item')
+    const list: DataItem[] = $('div.report-item')
         .toArray()
-        .map((item): DataItem & { parseDate?: Date } => ({
+        .map((item): DataItem => ({
             title: $(item).find('a.report-item__link').attr('title')!,
             link: $(item).find('a.report-item__link').attr('href'),
         }));
@@ -40,8 +39,11 @@ async function handler() {
                 const detailResponse = await got(item.link);
                 const content = load(detailResponse.data);
 
-                item.parseDate = parseDate(content('p.is-style-spaced-uppercase').text().split(':', 2)[1]);
-                item.description = content('article > div.has-background').html();
+                const publicationDate = content('meta[property="article:published_time"]').attr('content') || content('p.is-style-spaced-uppercase').text().split(':', 2)[1];
+                item.pubDate = publicationDate ? parseDate(publicationDate) : undefined;
+                const article = content('article');
+                article.find('.social-share').remove();
+                item.description = article.html();
 
                 return item;
             })

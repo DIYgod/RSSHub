@@ -1,7 +1,8 @@
 import { cookie as HttpCookieAgentCookie, CookieAgent } from 'http-cookie-agent/undici';
 import queryString from 'query-string';
 import { Cookie, CookieJar } from 'tough-cookie';
-import undici, { ProxyAgent } from 'undici';
+import type { ProxyAgent } from 'undici';
+import undici from 'undici';
 
 import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
@@ -10,6 +11,7 @@ import logger from '@/utils/logger';
 import ofetch from '@/utils/ofetch';
 import proxy from '@/utils/proxy';
 
+import { getClientTransactionId } from './client-transaction-id';
 import { baseUrl, bearerToken, gqlFeatures, gqlMap, thirdPartySupportedAPI } from './constants';
 // import login from './login';
 
@@ -25,11 +27,7 @@ const token2Cookie = async (token) => {
     const jar = new CookieJar();
     await jar.setCookie(`auth_token=${token}`, 'https://x.com');
     try {
-        const agent = proxy.proxyUri
-            ? new ProxyAgent({
-                  uri: proxy.proxyUri,
-              }).compose(HttpCookieAgentCookie({ jar }))
-            : new CookieAgent({ cookies: { jar } });
+        const agent = proxy.dispatcher ? proxy.dispatcher.compose(HttpCookieAgentCookie({ jar })) : new CookieAgent({ cookies: { jar } });
         if (token) {
             await ofetch('https://x.com', {
                 dispatcher: agent,
@@ -55,18 +53,18 @@ const token2Cookie = async (token) => {
 const lockPrefix = 'twitter:lock-token1:';
 
 const getAuth = async (retry: number) => {
-    if (!config.twitter.authToken || retry <= 0) {
+    if (!config.twitter.authToken?.length || retry <= 0) {
         return;
     }
     const index = authTokenIndex++ % config.twitter.authToken.length;
     const token = config.twitter.authToken[index];
     const lock = await cache.get(`${lockPrefix}${token}`, false);
     if (lock) {
-        logger.debug(`twitter debug: twitter cookie for token ${token} is locked, retry: ${retry}`);
+        logger.debug(`twitter debug: twitter cookie is locked, retry: ${retry}`);
         await new Promise((resolve) => setTimeout(resolve, Math.random() * 500 + 500));
         return await getAuth(retry - 1);
     }
-    logger.debug(`twitter debug: lock twitter cookie for token ${token}`);
+    logger.debug('twitter debug: lock twitter cookie');
     await cache.set(`${lockPrefix}${token}`, '1', 20);
     return {
         token,
@@ -106,14 +104,10 @@ export const twitterGot = async (
           }
         | undefined;
     if (cookie) {
-        logger.debug(`twitter debug: got twitter cookie for token ${auth?.token}`);
+        logger.debug('twitter debug: got twitter cookie');
         const jar = CookieJar.deserializeSync(JSON.parse(cookie));
-        const agent = proxy.proxyUri
-            ? new ProxyAgent({
-                  uri: proxy.proxyUri,
-              }).compose(HttpCookieAgentCookie({ jar }))
-            : new CookieAgent({ cookies: { jar } });
-        if (proxy.proxyUri) {
+        const agent = proxy.dispatcher ? proxy.dispatcher.compose(HttpCookieAgentCookie({ jar })) : new CookieAgent({ cookies: { jar } });
+        if (proxy.dispatcher) {
             logger.debug(`twitter debug: Proxying request: ${requestUrl}`);
         }
         dispatchers = {
@@ -121,7 +115,7 @@ export const twitterGot = async (
             agent,
         };
     } else if (auth) {
-        throw new ConfigNotFoundError(`Twitter cookie for token ${auth?.token?.replace(/(\w{8})(\w+)/, (_, v1, v2) => v1 + '*'.repeat(v2.length))} is not valid`);
+        throw new ConfigNotFoundError('Twitter authentication cookie is not valid. Check TWITTER_AUTH_TOKEN.');
     }
     const jsonCookie = dispatchers
         ? Object.fromEntries(
@@ -147,6 +141,8 @@ export const twitterGot = async (
     // Because undici.fetch is the standard Fetch API and does not support ofetch's
     // `onResponse` callback, the rate-limit and auth error handling that was
     // previously in `onResponse` is now inlined below.
+    const pathname = new URL(url).pathname;
+    const clientTransactionId = /\/(?:UserTweetsAndReplies|SearchTimeline)$/.test(pathname) ? await getClientTransactionId('GET', pathname) : undefined;
     const response = await undici.fetch(requestUrl, {
         headers: {
             authority: 'x.com',
@@ -168,6 +164,9 @@ export const twitterGot = async (
                 : {
                       'x-guest-token': jsonCookie.gt,
                   }),
+            ...(clientTransactionId && {
+                'x-client-transaction-id': clientTransactionId,
+            }),
         },
         dispatcher: dispatchers?.agent,
     });
@@ -183,17 +182,15 @@ export const twitterGot = async (
     const remaining = response.headers.get('x-rate-limit-remaining');
     const remainingInt = Number.parseInt(remaining || '0');
     const reset = response.headers.get('x-rate-limit-reset');
-    logger.debug(
-        `twitter debug: twitter rate limit remaining for token ${auth?.token} is ${remaining} and reset at ${reset}, auth: ${JSON.stringify(auth)}, status: ${response.status}, data: ${JSON.stringify(responseData?.data)}, cookie: ${JSON.stringify(dispatchers?.jar.serializeSync())}`
-    );
+    logger.debug(`twitter debug: twitter rate limit remaining is ${remaining} and reset at ${reset}, status: ${response.status}`);
     if (auth) {
         if (remaining && remainingInt < 2 && reset) {
             const resetTime = new Date(Number.parseInt(reset) * 1000);
             const delay = (resetTime.getTime() - Date.now()) / 1000;
-            logger.debug(`twitter debug: twitter rate limit exceeded for token ${auth.token} with status ${response.status}, will unlock after ${delay}s`);
+            logger.debug(`twitter debug: twitter rate limit exceeded with status ${response.status}, will unlock after ${delay}s`);
             await cache.set(`${lockPrefix}${auth.token}`, '1', Math.ceil(delay) * 2);
         } else if (response.status === 429 || JSON.stringify(responseData?.data) === '{"user":{}}') {
-            logger.debug(`twitter debug: twitter rate limit exceeded for token ${auth.token} with status ${response.status}`);
+            logger.debug(`twitter debug: twitter rate limit exceeded with status ${response.status}`);
             await cache.set(`${lockPrefix}${auth.token}`, '1', 2000);
         } else if (response.status === 403 || response.status === 401) {
             // const newCookie = await login({
@@ -202,31 +199,22 @@ export const twitterGot = async (
             //     authenticationSecret: auth.authenticationSecret,
             // });
             // if (newCookie) {
-            //     logger.debug(`twitter debug: reset twitter cookie for token ${auth.token}, ${newCookie}`);
+            //     logger.debug('twitter debug: reset twitter cookie');
             //     await cache.set(`twitter:cookie:${auth.token}`, newCookie, config.cache.contentExpire);
             //     await cache.set(`${lockPrefix}${auth.token}`, '', 1);
             // } else {
-            const tokenIndex = config.twitter.authToken?.indexOf(auth.token);
-            if (tokenIndex !== undefined && tokenIndex !== -1) {
-                config.twitter.authToken?.splice(tokenIndex, 1);
-            }
+            config.twitter.authToken = config.twitter.authToken?.filter((token) => token !== auth.token);
             // if (auth.username) {
-            //     const usernameIndex = config.twitter.username?.indexOf(auth.username);
-            //     if (usernameIndex !== undefined && usernameIndex !== -1) {
-            //         config.twitter.username?.splice(usernameIndex, 1);
-            //     }
+            //     config.twitter.username = config.twitter.username?.filter((username) => username !== auth.username);
             // }
             // if (auth.password) {
-            //     const passwordIndex = config.twitter.password?.indexOf(auth.password);
-            //     if (passwordIndex !== undefined && passwordIndex !== -1) {
-            //         config.twitter.password?.splice(passwordIndex, 1);
-            //     }
+            //     config.twitter.password = config.twitter.password?.filter((password) => password !== auth.password);
             // }
-            logger.debug(`twitter debug: delete twitter cookie for token ${auth.token} with status ${response.status}, remaining tokens: ${config.twitter.authToken?.length}`);
+            logger.debug(`twitter debug: delete twitter cookie with status ${response.status}, remaining tokens: ${config.twitter.authToken?.length}`);
             await cache.set(`${lockPrefix}${auth.token}`, '1', 3600);
             // }
         } else {
-            logger.debug(`twitter debug: unlock twitter cookie with success for token ${auth.token}`);
+            logger.debug('twitter debug: unlock twitter cookie with success');
             await cache.set(`${lockPrefix}${auth.token}`, '', 1);
         }
     }
@@ -236,7 +224,7 @@ export const twitterGot = async (
     }
 
     if (auth?.token) {
-        logger.debug(`twitter debug: update twitter cookie for token ${auth.token}`);
+        logger.debug('twitter debug: update twitter cookie');
         await cache.set(`twitter:cookie:${auth.token}`, JSON.stringify(dispatchers?.jar.serializeSync()), config.cache.contentExpire);
     }
 
@@ -289,10 +277,11 @@ export const paginationTweets = async (endpoint: string, userId: number | undefi
     }
 
     const moduleItems = instructions.find((i) => i.type === 'TimelineAddToModule')?.moduleItems;
-    const entries = instructions.find((i) => i.type === 'TimelineAddEntries')?.entries;
+    const entries = instructions.find((i) => i.type === 'TimelineAddEntries')?.entries ?? [];
     const gridEntries = entries.find((i) => i.entryId === 'profile-grid-0')?.content?.items;
 
-    return gridEntries || moduleItems || entries || [];
+    const pinnedEntries = instructions.filter((instruction) => instruction.type === 'TimelinePinEntry' && instruction.entry).map((instruction) => instruction.entry);
+    return new Map([...pinnedEntries, ...(gridEntries || moduleItems || entries)].map((entry) => [entry.entryId, entry])).values().toArray();
 };
 
 const hydrateLegacyUser = (legacy: any, tweet: any) => {
@@ -310,16 +299,18 @@ const hydrateLegacyUser = (legacy: any, tweet: any) => {
 
 export function gatherLegacyFromData(entries: any[], filterNested?: string[], userId?: number | string) {
     const tweets: any[] = [];
+    const contextTweets = new Map<string, any>();
     const filteredEntries: any[] = [];
     for (const entry of entries) {
         const entryId = entry.entryId;
-        if (entryId) {
-            if (entryId.startsWith('tweet-') || entryId.startsWith('profile-grid-0-tweet-')) {
-                filteredEntries.push(entry);
-            }
-            if (filterNested && filterNested.some((f) => entryId.startsWith(f))) {
-                filteredEntries.push(...entry.content.items);
-            }
+        if (!entryId) {
+            continue;
+        }
+        if (entryId.startsWith('tweet-') || entryId.startsWith('profile-grid-0-tweet-')) {
+            filteredEntries.push(entry);
+        }
+        if (filterNested && filterNested.some((f) => entryId.startsWith(f))) {
+            filteredEntries.push(...entry.content.items);
         }
     }
     for (const entry of filteredEntries) {
@@ -354,39 +345,49 @@ export function gatherLegacyFromData(entries: any[], filterNested?: string[], us
         if (tweet && tweet.tweet) {
             tweet = tweet.tweet;
         }
-        if (tweet) {
-            const retweet = tweet.legacy?.retweeted_status_result?.result;
-            for (const t of [tweet, retweet]) {
-                if (!t?.legacy) {
-                    continue;
-                }
-                hydrateLegacyUser(t.legacy, t);
-                t.legacy.id_str = t.rest_id; // avoid falling back to conversation_id_str elsewhere
-                const quote = t.quoted_status_result?.result?.tweet || t.quoted_status_result?.result;
-                if (quote?.legacy) {
-                    t.legacy.quoted_status = quote.legacy;
-                    hydrateLegacyUser(t.legacy.quoted_status, quote);
-                }
-                if (t.note_tweet) {
-                    const tmp = t.note_tweet.note_tweet_results.result;
-                    t.legacy.entities.hashtags = tmp.entity_set.hashtags;
-                    t.legacy.entities.symbols = tmp.entity_set.symbols;
-                    t.legacy.entities.urls = tmp.entity_set.urls;
-                    t.legacy.entities.user_mentions = tmp.entity_set.user_mentions;
-                    t.legacy.full_text = tmp.text;
-                }
+        if (!tweet) {
+            continue;
+        }
+        const retweet = tweet.legacy?.retweeted_status_result?.result;
+        for (const t of [tweet, retweet]) {
+            if (!t?.legacy) {
+                continue;
             }
-            const legacy = tweet.legacy;
-            if (legacy) {
-                if (retweet) {
-                    legacy.retweeted_status = retweet.legacy;
-                }
-                if (userId === undefined || legacy.user_id_str === userId + '') {
-                    tweets.push(legacy);
-                }
+            hydrateLegacyUser(t.legacy, t);
+            t.legacy.id_str = t.rest_id; // avoid falling back to conversation_id_str elsewhere
+            contextTweets.set(t.rest_id, t.legacy);
+            const quote = t.quoted_status_result?.result?.tweet || t.quoted_status_result?.result;
+            if (quote?.legacy) {
+                t.legacy.quoted_status = quote.legacy;
+                hydrateLegacyUser(t.legacy.quoted_status, quote);
             }
+            if (!t.note_tweet) {
+                continue;
+            }
+            const tmp = t.note_tweet.note_tweet_results.result;
+            t.legacy.entities.hashtags = tmp.entity_set.hashtags;
+            t.legacy.entities.symbols = tmp.entity_set.symbols;
+            t.legacy.entities.urls = tmp.entity_set.urls;
+            t.legacy.entities.user_mentions = tmp.entity_set.user_mentions;
+            t.legacy.full_text = tmp.text;
+        }
+        const legacy = tweet.legacy;
+        if (!legacy) {
+            continue;
+        }
+        if (retweet) {
+            legacy.retweeted_status = retweet.legacy;
+        }
+        if (userId === undefined || legacy.user_id_str === userId + '') {
+            tweets.push(legacy);
         }
     }
 
+    for (const tweet of contextTweets.values()) {
+        const parent = contextTweets.get(tweet.in_reply_to_status_id_str);
+        if (parent && parent !== tweet) {
+            tweet.in_reply_to_status = parent;
+        }
+    }
     return tweets;
 }

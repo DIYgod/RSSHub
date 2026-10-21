@@ -1,9 +1,35 @@
 {
     "$schema": "./node_modules/oxlint/configuration_schema.json",
     "extends": ["./.oxlintrc.json"],
-    // extends doesn't extend ignorePatterns, oxc-project/oxc#10223, oxc-project/oxc#16079
-    "ignorePatterns": ["**/coverage", "**/.vscode", "**/docker-compose.yml", "!.github", "assets/build", "dist", "dist-lib", "dist-worker"],
+    // extends doesn't extend ignorePatterns and env, oxc-project/oxc#10223, oxc-project/oxc#16079
+    "ignorePatterns": ["**/coverage", "**/.vscode", "**/docker-compose.yml", "!.github", "assets/build", "eslint-plugins/anti-slop/**", "dist", "dist-lib", "dist-worker"],
+    "env": {
+        "builtin": true,
+        "browser": true,
+        "es2026": true,
+        "node": true
+    },
     "options": {
         "respectEslintDisableDirectives": false
+    },
+    "rules": {
+        // "anti-slop/no-array-filter-map": "error",
+        // "anti-slop/no-chained-type-assertions": "error",
+        "anti-slop/no-conditional-empty-object-spread": "error",
+        "anti-slop/no-known-value-widening": "error",
+        // "anti-slop/no-module-mocking": "error",
+        "anti-slop/no-object-parameters": "error",
+        "anti-slop/no-reduce-accumulator-copy": "error",
+        "anti-slop/no-reflect-apply": "error",
+        "anti-slop/no-reflect-get": "error",
+        // "anti-slop/no-runtime-typeof": ["error", { "allowInTypeGuards": true }],
+        "anti-slop/no-shape-in-symbol-names": "error",
+        "anti-slop/no-unknown-parameters": "error",
+        "anti-slop/no-unknown-returns": "error",
+        "anti-slop/no-unknown-type-aliases": "error",
+        "anti-slop/no-unsafe-dictionary-type": "error",
+        "anti-slop/no-widen-then-assert": "error"
+        // "anti-slop/require-readable-spacing": "error",
+        // "anti-slop/require-safety-comment-for-type-assertion": "error"
     }
 }

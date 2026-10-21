@@ -1,6 +1,7 @@
 import { load } from 'cheerio';
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
@@ -27,26 +28,29 @@ async function handler() {
     const baseUrl = 'https://www.gameapps.hk';
     const feed = await parser.parseURL(`${baseUrl}/rss`);
 
-    const items = await Promise.all(
-        feed.items.map((item) =>
+    const list = feed.items;
+
+    const items = await pMap(
+        list,
+        (item) =>
             cache.tryGet(item.link!, async () => {
                 const response = await ofetch(item.link!);
                 const $ = load(response);
 
                 item.title = ($('meta[property="og:title"]').attr('content') ?? $('.news-title h1').text()).replace(' - 香港手機遊戲網 GameApps.hk', '');
-                item.category = $('.tags-wrap .tag-item')
+                item.category = $('.news-meta-row > .news-tags .tag-item')
                     .toArray()
-                    .map((el) => $(el).text().trim().replace(/^#/, ''));
+                    .map((el) => $(el).text().slice(1));
 
-                $('.pages, .article-ad, .social-actions, .news-footer').remove();
+                $('.pages, .article-ad, .social-actions, .news-footer, .article-action-bar, .news-tags').remove();
 
                 // remove unwanted key value
                 delete item.content;
                 delete item.contentSnippet;
                 delete item.isoDate;
 
-                const intro = $('div.introduction.media.news-intro div.media-body').html()?.trim();
-                const desc = $('.article-content, .news-content').html()?.trim();
+                const intro = $('div.introduction.media.news-intro div.media-body').html();
+                const desc = $('.article-content, .news-content').html();
                 item.description = renderToString(
                     <>
                         {intro ? raw(intro) : null}
@@ -58,8 +62,8 @@ async function handler() {
                 item.enclosure_type = 'image/jpeg';
 
                 return { ...item, pubDate: parseDate(item.pubDate!) };
-            })
-        )
+            }),
+        { concurrency: 3 }
     );
 
     return {

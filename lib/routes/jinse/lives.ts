@@ -4,6 +4,7 @@ import type { Language, Route } from '@/types';
 import { ViewType } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
 import { renderDescription } from './templates/description';
 
@@ -46,7 +47,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { category = '0' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 100;
+    const limit = getRouteLimit(ctx, 100);
 
     const rootUrl = 'https://jinse.com.cn';
     const rootApiUrl = 'https://api.jinse.com.cn';
@@ -87,7 +88,7 @@ async function handler(ctx) {
             }),
             author: item.show_source_name,
             guid: `jinse-lives-${item.id}`,
-            pubDate: parseDate(item.created_at, 'X'),
+            pubDate: parseTimestamp(item.created_at),
             upvotes: item.up_counts ?? 0,
             downvotes: item.down_counts ?? 0,
             comments: item.comment_count ?? 0,
@@ -99,7 +100,8 @@ async function handler(ctx) {
 
     const author = $('meta[name="author"]').prop('content');
     const image = $('a.js-logoBox img').prop('src');
-    const icon = new URL($('link[rel="favicon"]').prop('href')!, rootUrl).href;
+    const iconHref = $('link[rel="favicon"]').prop('href');
+    const icon = iconHref ? new URL(iconHref, rootUrl).href : undefined;
 
     return {
         item: items,
@@ -112,6 +114,10 @@ async function handler(ctx) {
         logo: icon,
         subtitle: $('meta[name="keywords"]').prop('content'),
         author,
-        allowEmpty: true,
     };
+}
+
+function parseTimestamp(value?: number | string): Date | undefined {
+    const date = value !== undefined && value !== null && value !== '' ? parseDate(value, 'X') : undefined;
+    return date && Number.isFinite(date.getTime()) ? date : undefined;
 }

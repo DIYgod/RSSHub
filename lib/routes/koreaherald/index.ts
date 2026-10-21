@@ -1,10 +1,10 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/:category{.+}?',
@@ -39,14 +39,15 @@ async function handler(ctx) {
     const category = ctx.req.param('category') ?? 'National';
     const baseUrl = 'https://www.koreaherald.com/';
 
-    const response = await got(new URL(category, baseUrl).href);
+    const response = await got(`${baseUrl}${category}`);
     const $ = load(response.data);
     const title = $('ul.gnb').find('[class="on"]').length > 0 ? $('ul.gnb').find('[class="on"]').text() : $('div.nav_area > a.category').text();
     const list = $('article.recent_news > ul.news_list > li')
         .toArray()
         .map((item) => new URL($(item).find('a').attr('href')!, baseUrl).href);
-    const items = await Promise.all(
-        list.map((url) =>
+    const items = await pMap(
+        list,
+        (url) =>
             cache.tryGet(url, async () => {
                 const response = await got(url);
                 const $ = load(response.data);
@@ -54,16 +55,17 @@ async function handler(ctx) {
                 return {
                     title: metadata.headline,
                     link: url,
-                    pubDate: timezone(parseDate(metadata.datePublished), 9),
+                    pubDate: metadata.datePublished ? parseDate(metadata.datePublished) : undefined,
+                    updated: metadata.dateModified ? parseDate(metadata.dateModified) : undefined,
                     author: metadata.author.name,
                     description: $('article.article-body').html(),
                 };
-            })
-        )
+            }),
+        { concurrency: 3 }
     );
     return {
         title: `The Korea Herald - ${title}`,
-        link: new URL(category, baseUrl).href,
+        link: `${baseUrl}${category}`,
         item: items,
     };
 }

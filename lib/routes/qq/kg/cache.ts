@@ -1,8 +1,8 @@
 import { load } from 'cheerio';
 
 import cache from '@/utils/cache';
+import { evaluateScriptData } from '@/utils/evaluate-script';
 import got from '@/utils/got';
-import { parseScriptData } from '@/utils/parse-script-data';
 
 export default {
     getPlayInfo: async (ctx, shareId, ksong_mid = '') => {
@@ -16,7 +16,7 @@ export default {
                 .map((element) => $(element).text())
                 .filter((source) => source.includes('__DATA__'))
                 .join('\n');
-            const data = parseScriptData<{
+            const data = await evaluateScriptData<{
                 detail: {
                     song_name: string;
                     content: string;
@@ -34,7 +34,7 @@ export default {
             const itunes_item_image = data.detail.cover;
 
             const enclosure_url = data.detail.playurl;
-            ksong_mid ??= data.detail.ksong_mid;
+            ksong_mid ||= data.detail.ksong_mid;
             const ctime = data.detail.ctime;
             const comments = data.detail.comments;
 

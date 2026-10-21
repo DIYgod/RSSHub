@@ -1,6 +1,7 @@
 import { load } from 'cheerio';
 import iconv from 'iconv-lite';
 
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import got from '@/utils/got';
 
@@ -24,6 +25,9 @@ export const route: Route = {
 
 async function handler(ctx) {
     const id = ctx.req.param('id');
+    if (!/^\d+$/.test(id) || !Number.isSafeInteger(Number(id)) || Number(id) <= 0) {
+        throw new InvalidParameterError('id must be a positive integer novel ID.');
+    }
     const index = Number.parseInt(String(id / 1000));
 
     const response = await got({
@@ -38,10 +42,10 @@ async function handler(ctx) {
 
     const name = $('#title').text();
 
-    const chapter_item: any[] = [];
+    const chapterItems: any[] = [];
 
     $('.ccss>a').each((_, el) => {
-        chapter_item.push({
+        chapterItems.push({
             title: $(el).text(),
             link: `https://www.wenku8.net/novel/${index}/${id}/` + $(el).attr('href'),
         });
@@ -50,6 +54,6 @@ async function handler(ctx) {
     return {
         title: `轻小说文库 ${name}`,
         link: `https://www.wenku8.net/book/${id}.htm`,
-        item: chapter_item,
+        item: chapterItems,
     };
 }

@@ -4,6 +4,7 @@ import sanitizeHtml from 'sanitize-html';
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/release-note',
@@ -42,17 +43,16 @@ async function handler() {
         .toArray()
         .map((item) => {
             const $item = $(item);
+            const date = $item.next().find('kbd').text().split('day, ', 2)[1]?.trim();
 
             return {
                 title: $item.text(),
-                description: $item
-                    .next()
-                    .nextUntil('hr')
+                description: (date ? $item.next().nextUntil('hr') : $item.nextUntil('hr'))
                     .toArray()
                     .map((el) => $.html(el))
                     .join(''),
                 link: `${link}#${$item.prev().find('a[id]').attr('id')}`,
-                pubDate: parseDate($item.next().find('kbd').text()?.split('day, ', 2)[1].trim(), 'MMMM Do, YYYY', 'en'),
+                pubDate: date ? timezone(parseDate(date, 'MMMM Do, YYYY', 'en'), 0) : undefined,
             };
         });
 

@@ -4,6 +4,7 @@ import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 import timezone from '@/utils/timezone';
 
 export const route: Route = {
@@ -42,7 +43,7 @@ async function handler(ctx) {
     const response = await got.get(pageUrl);
     const $ = load(response.data);
     let title = '';
-    const titleLinks = $('.container .regsiter a').toArray().slice(1); // what a typo... drop "首页"
+    const titleLinks = $('.container .regsiter a').slice(1).toArray(); // what a typo... drop "首页"
     for (const link of titleLinks) {
         const linkText = $(link).text();
         title = title ? `${title} - ${linkText}` : linkText;
@@ -87,7 +88,7 @@ async function handler(ctx) {
             uniqueItems.push(item!);
         }
     }
-    items = uniqueItems.toSorted((a, b) => Number(b.pubDate) - Number(a.pubDate)).slice(0, ctx.req.query('limit') || 20);
+    items = uniqueItems.toSorted((a, b) => Number(b.pubDate) - Number(a.pubDate)).slice(0, getRouteLimit(ctx, 20));
 
     items = await Promise.all(
         items.map((item) =>
@@ -115,7 +116,7 @@ async function handler(ctx) {
                         });
                 } else {
                     // http://rail.ally.net.cn/html/2022/InviteTen_0407/4686.html
-                    description = $('div.content div').first().html() ?? '';
+                    description = $('div.content div').html() ?? '';
                 }
 
                 description = description.replace(/\s*<br ?\/?>\s*$/, ''); // trim <br> at the end

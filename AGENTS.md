@@ -6,9 +6,9 @@
 
 2. **Route Name**: Do not repeat the namespace name in the route name. The namespace is already defined in `namespace.ts`.
 
-3. **Radar Source Format**: Use relative paths without `https://` prefix in `radar[]. source`. Example: `source: ['www.example.com/path']` instead of `source: ['https://www.example.com/path']`.
+3. **Radar Source Format**: Use relative paths without `https://` prefix in `radar[].source`. Example: `source: ['www.example.com/path']` instead of `source: ['https://www.example.com/path']`.
 
-4. **Radar Target**: The `radar[].target` must match the route path. If the source URL does not contain a path parameter, do not include it in the target.
+4. **Radar Target**: The `radar[].target` may be empty. If present, it must match the route path and its parameters.
 
 5. **Namespace URL**: In `namespace.ts`, the `url` field should not include the `https://` protocol prefix.
 
@@ -16,7 +16,7 @@
 
 7. **Unnecessary Files**: Do not create separate `README.md` or `radar.ts` files. Put descriptions in `Route['description']` and radar rules in `Route['radar']`.
 
-8. **Features Accuracy**: Set `requirePuppeteer: true` only if your route actually uses Puppeteer. Do not mismatch feature flags.
+8. **Features Accuracy**: Set `requirePuppeteer: true` only if your route actually uses browser automation (`@/utils/playwright`). Do not mismatch feature flags.
 
 9. **Maintainer GitHub ID**: The `maintainers` field must contain valid GitHub usernames. Verify that the username exists before adding it.
 
@@ -28,7 +28,7 @@
 
 12. **Avoid Loading HTML Twice**: Do not call `load()` from cheerio multiple times on the same content. Reuse the initial `$` object.
 
-13. **Async/Await in Close**: When closing Puppeteer pages/browsers, use `await page.close()` and `await browser.close()` instead of non-awaited calls.
+13. **Async/Await in Close**: When closing a Playwright page or context, use `await page.close()`, `await context.close()`, or `await destroy()` instead of non-awaited calls.
 
 14. **No Explicit Null**: No need to explicitly set a property to `null` if it does not exist - just omit it.
 
@@ -40,7 +40,7 @@
 
 17. **Use Cache**: Always [cache](https://docs.rsshub.app/joinus/advanced/use-cache) the returned results when fetching article details in a loop using `cache.tryGet()`.
 
-18. **Description Content**: The `description` field should contain ONLY the main article content. Do not include `title`, `author`, `pubDate`, or tags in `description` - they have their own dedicated fields.
+18. **Description Content**: The `description` field should contain only the main article content. Do not include `title`, `author`, `pubDate`, or tags in `description` - they have their own dedicated fields.
 
 19. **Category Field**: Extract tags/categories from articles and place them in the `category` field, not in `description`.
 
@@ -80,13 +80,13 @@
 
 35. **No Referrer Policy in Routes**: Do not add `referrerpolicy` attributes to images/videos - RSSHub middleware handles this automatically.
 
-### Puppeteer Usage
+### Browser Automation
 
-36. **Limit Request Types**: Do not allow every type of request through Puppeteer. Explicitly provide a list of allowed request types (e.g., `document`) to avoid wasting resources on images, scripts, etc.
+36. **Limit Request Types**: Do not allow every type of request through the browser. Use `page.route()` with an explicit allowlist of resource types (e.g., `document`) and abort everything else. Do not use a blocklist that aborts only known types such as images or fonts.
 
 37. **Use Selectors, Not Delays**: Do not use fixed `setTimeout` delays. Use `page.waitForSelector()` instead to wait for specific elements.
 
-38. **Avoid Multiple Sessions**: Do not call Puppeteer inside `Promise.all()` loops - this creates multiple browser sessions and dramatically increases resource usage.
+38. **Avoid Multiple Sessions**: Do not call `playwright()` or `getPlaywrightPage()` inside `Promise.all()` loops - this creates multiple browser sessions and dramatically increases resource usage.
 
 39. **Do Not Bypass Empty Checks**: Do not return empty arrays with custom messages to bypass RSSHub's [internal checks](https://github.com/DIYgod/RSSHub/blob/master/lib/middleware/parameter.ts) for empty items. This makes it hard for users and maintainers to know if a feed is broken.
 
@@ -102,7 +102,7 @@
 
 43. **Error Messages**: Use clear, actionable error messages that help users understand what went wrong.
 
-44. **Resolve All Review Comments**: Before requesting re-review, ensure ALL previous review comments are addressed, not just some of them.
+44. **Resolve All Review Comments**: Before requesting re-review, ensure all previous review comments are addressed, not just some of them.
 
 ### Code Organization
 
@@ -115,3 +115,5 @@
 48. **Comments Language**: Write code comments in English for consistency and accessibility.
 
 49. **Parentheses in Arrow Functions**: Always use parentheses around arrow function parameters, even for single parameters.
+
+50. **No Tests for Routes**: Do not write test files for routes under `lib/routes/`. Route tests only encode the author's assumptions about the target site and go stale when it changes. Routes are verified through automatic route testing on pull requests, which runs the route examples against the live site.

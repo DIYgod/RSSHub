@@ -5,7 +5,6 @@
 .env
 .eslintcache
 .idea
-.pre-commit-config.yaml
 .log
 .now
 .roomodes
@@ -27,8 +26,10 @@ memory-bank/
 node_modules
 tmp
 dist
+dist-container
 dist-lib
 dist-worker
+.vitest
 .wrangler
 
 Session.vim
@@ -40,5 +41,3 @@ package-lock.json
 # pnpm-lock.yaml
 yarn.lock
 yarn-error.log
-
-dist-container

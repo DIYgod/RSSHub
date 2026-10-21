@@ -51,3 +51,8 @@ export const getNews = (detailId: number) =>
             id: detailId,
         },
     });
+
+export const getLimit = (value: string | undefined, defaultValue: number) => {
+    const limit = Number(value ?? defaultValue);
+    return Number.isFinite(limit) && limit >= 1 ? Math.floor(limit) : defaultValue;
+};

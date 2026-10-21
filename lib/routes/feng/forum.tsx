@@ -1,7 +1,10 @@
 import { renderToString } from 'hono/jsx/dom/server';
+import pMap from 'p-map';
 
-import type { Route } from '@/types';
+import InvalidParameterError from '@/errors/types/invalid-parameter';
+import type { DataItem, Route } from '@/types';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
 import { baseUrl, getForumMeta, getThread, getThreads } from './utils';
 
@@ -19,12 +22,7 @@ const renderImages = (images?: string[]) =>
         </>
     );
 
-const deletedDescription = renderToString(
-    <>
-        <img src="https://www.feng.com/_nuxt/img/yishanchu.368ead2.png" alt="威锋" />
-        <div align="center">帖子已被删除</div>
-    </>
-);
+const threadTypes = new Set(['all', 'newest', 'hot', 'essence']);
 
 export const route: Route = {
     path: '/forum/:id/:type?',
@@ -56,10 +54,19 @@ export const route: Route = {
 async function handler(ctx) {
     const topicId = Number(ctx.req.param('id'));
     const { type = 'all' } = ctx.req.param();
+    if (!Number.isSafeInteger(topicId) || topicId <= 0) {
+        throw new InvalidParameterError('The forum ID must be a positive integer from the forum URL.');
+    }
+    if (!threadTypes.has(type)) {
+        throw new InvalidParameterError('Unsupported thread ordering. Choose all, newest, hot, or essence.');
+    }
 
     const forumMeta = await getForumMeta(topicId);
+    if (!forumMeta) {
+        throw new InvalidParameterError(`Forum ${topicId} was not found in the current public forum list.`);
+    }
     const topicMeta = forumMeta.dataList.find((data) => data.topicId === topicId);
-    const threads = (await getThreads(topicId, type)).data.dataList.map((data) => ({
+    const threads: Array<DataItem & { tid: number; pubDate: Date }> = (await getThreads(topicId, type)).data.dataList.map((data) => ({
         title: data.title,
         pubDate: parseDate(data.dateline * 1000),
         author: data.userBaseInfo.userName,
@@ -67,18 +74,24 @@ async function handler(ctx) {
         tid: data.tid,
     }));
 
-    const posts = await Promise.all(
-        threads.map(async (item) => {
-            const thread = await getThread(item.tid, topicId);
+    const limit = getRouteLimit(ctx);
+    const sorted = ctx.req.query('sorted') !== 'false';
+    const candidates =
+        limit === undefined || (sorted && threads.some((item) => !Number.isFinite(item.pubDate.getTime()))) ? threads : (sorted ? threads.toSorted((a, b) => b.pubDate.getTime() - a.pubDate.getTime()) : threads).slice(0, limit);
+    const posts = await pMap(
+        candidates,
+        async (item) => {
+            const { tid, ...post } = item;
+            const thread = await getThread(tid, topicId);
             if (thread.status.code === 0) {
                 const img = renderImages(thread.data.thread.fengTalkImage.length ? thread.data.thread.fengTalkImage : undefined);
-                item.description = thread.data.thread.message + img;
+                post.description = thread.data.thread.message + img;
             } else {
-                item.description = deletedDescription;
+                throw new Error(`The forum did not provide thread ${tid}: ${thread.status.message} (code ${thread.status.code}). Check that ${post.link} is public.`);
             }
-            delete item.tid;
-            return item;
-        })
+            return post;
+        },
+        { concurrency: 3 }
     );
 
     return {

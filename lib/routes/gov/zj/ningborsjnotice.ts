@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
 
 export const route: Route = {
     path: '/ningborsjnotice/:colId?',
@@ -29,15 +29,16 @@ export const route: Route = {
         const { data: response } = await got(url);
         const noticeCate = load(response)('.titel.bgcolor01').text();
         const reg = /<li class="news_line">.*<\/li>/g;
-        const item = response.match(reg).map((line) => {
+        const item = (response.match(reg) ?? []).map((line) => {
             const $ = load(line);
             const title = $('.news_titel');
+            const href = title.attr('href');
+            const date = $('.news_date').text().replaceAll(/\[|\]/g, '').trim();
             return {
                 title: `宁波人社公告-${noticeCate}:${title.text()}`,
-                link: `http://rsj.ningbo.gov.cn${title.attr('href')}`,
-                pubDate: parseDate($('.news_date').text().replaceAll(/\[|\]/g, '')),
+                link: href ? new URL(href, url).href : undefined,
+                pubDate: date ? parseDateInTimezone(date, 8) : undefined,
                 author: '宁波市人力资源和社会保障局',
-                description: title.text(),
             };
         });
         return {

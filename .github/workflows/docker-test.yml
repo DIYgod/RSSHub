@@ -30,7 +30,7 @@ jobs:
               uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
             - name: Set up Docker Buildx # needed by `cache-from`
-              uses: docker/setup-buildx-action@37fe631027851001ddb9b187196cc803df7f5f0e # v4.3.0
+              uses: docker/setup-buildx-action@594f3bf4285d9ea8dc53c9a0c9c4092420091003 # v4.4.0
 
             - name: Extract Docker metadata
               id: meta
@@ -40,7 +40,7 @@ jobs:
                   flavor: latest=true
 
             - name: Build Docker image
-              uses: docker/build-push-action@53b7df96c91f9c12dcc8a07bcb9ccacbed38856a # v7.3.0
+              uses: docker/build-push-action@c3c9e263c25d99ce0380d002d59b67737d91b0dc # v7.4.0
               with:
                   context: .
                   build-args: PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=0 # also test bundling Chromium
@@ -65,6 +65,12 @@ jobs:
                           issue_number: ${{ github.event.pull_request.number }},
                           labels: ['auto: DO NOT merge'],
                       })
+                      await github.rest.issues.removeLabel({
+                          owner: context.repo.owner,
+                          repo: context.repo.repo,
+                          issue_number: ${{ github.event.pull_request.number }},
+                          name: 'auto: ready to review',
+                      }).catch((error) => core.warning(error))
 
             - name: Test Docker image
               run: bash scripts/docker/test-docker.sh
@@ -73,7 +79,7 @@ jobs:
               run: docker save rsshub:latest | zstdmt -o rsshub.tar.zst
 
             - name: Upload Docker image
-              uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+              uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
               with:
                   archive: false
                   path: rsshub.tar.zst

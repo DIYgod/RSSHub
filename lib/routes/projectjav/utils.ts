@@ -1,12 +1,13 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
-import type { DataItem } from '@/types';
+import type { Data, DataItem } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
 const rootUrl = 'https://projectjav.com';
-const processItems = async (currentUrl: string) => {
+const processItems = async (currentUrl: string): Promise<Data> => {
     const response = await got({
         method: 'get',
         url: currentUrl,
@@ -26,9 +27,12 @@ const processItems = async (currentUrl: string) => {
         })
         .filter((item) => item.link && /\/movie\/.*/.test(item.link));
 
-    items = await Promise.all(
-        items.map((item) =>
-            cache.tryGet(item.link!, async () => {
+    items = await pMap(
+        items,
+        async (item) => ({
+            ...item,
+            ...(await cache.tryGet(`projectjav:article:v2:${item.link}`, async () => {
+                const detail: Partial<DataItem> = {};
                 const detailResponse = await got({
                     method: 'get',
                     url: item.link,
@@ -43,9 +47,9 @@ const processItems = async (currentUrl: string) => {
                 const mainContent = content('main');
 
                 // Extract title
-                const h1Title = mainContent.find('h1').text().trim();
+                const h1Title = mainContent.find('h1').text();
                 if (h1Title) {
-                    item.title = h1Title;
+                    detail.title = h1Title;
                 }
 
                 // Extract categories
@@ -55,7 +59,7 @@ const processItems = async (currentUrl: string) => {
                     .map((v) => content(v).text().trim())
                     .filter(Boolean);
                 if (categories.length > 0) {
-                    item.category = categories;
+                    detail.category = categories;
                 }
 
                 // Extract author/actress (support multiple actresses)
@@ -65,7 +69,7 @@ const processItems = async (currentUrl: string) => {
                     .map((v) => content(v).text().trim())
                     .filter(Boolean);
                 if (actresses.length > 0) {
-                    item.author = actresses.join(', ');
+                    detail.author = actresses.join(', ');
                 }
 
                 // Extract date
@@ -76,20 +80,29 @@ const processItems = async (currentUrl: string) => {
                 const dateText = dateEl ? content(dateEl).next().text().trim() : null;
                 if (dateText) {
                     // ProjectJAV uses DD/MM/YYYY format
-                    item.pubDate = parseDate(dateText, 'DD/MM/YYYY');
+                    detail.pubDate = parseDate(dateText, 'DD/MM/YYYY');
+                }
+
+                // Metadata belongs in the item fields rather than the article body.
+                mainContent.find('h1, div.badge, div.actress-item').remove();
+                if (dateEl) {
+                    content(dateEl).next().remove();
+                    content(dateEl).remove();
                 }
 
                 // Get description
-                item.description = mainContent.html();
+                detail.description = mainContent.html();
 
-                return item;
-            })
-        )
+                return detail;
+            })),
+        }),
+        { concurrency: 3 }
     );
 
     return {
         title: $('title').text() || 'ProjectJAV',
         link: currentUrl,
+        language: 'en',
         item: items,
     };
 };

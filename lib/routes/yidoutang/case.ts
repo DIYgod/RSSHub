@@ -1,6 +1,8 @@
 import { load } from 'cheerio';
+import { encodeXML } from 'entities';
 import type { Context } from 'hono';
 
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 
@@ -33,6 +35,9 @@ const typeLabelMap = {
 
 async function handler(ctx: Context) {
     const { type = 'default' } = ctx.req.param();
+    if (!Object.hasOwn(urlPathMap, type)) {
+        throw new InvalidParameterError('Invalid case type: use default, hot, or new');
+    }
 
     const url = `http://www.yidoutang.com/case${urlPathMap[type]}`;
     const response = await ofetch(url);
@@ -44,12 +49,12 @@ async function handler(ctx: Context) {
             const $item = $(ele);
             const baseInfoNode = $item.find('.info > .text');
             const desc = baseInfoNode.find('.desc').text();
-            const thumbnail = $item.find('.img-box img').attr('src');
+            const thumbnail = getImageUrl($item.find('.img-box img').attr('src'), url);
 
             return {
                 title: baseInfoNode.find('.title').text(),
                 link: baseInfoNode.find('a').attr('href'),
-                description: [`简介: ${desc}`, `<img src="${thumbnail}"/>`].join('<br/>'),
+                description: [`简介: ${encodeXML(desc)}`, thumbnail ? `<img src="${encodeXML(thumbnail)}"/>` : undefined].filter(Boolean).join('<br/>'),
                 author: $item.find('.user a').text(),
             };
         });
@@ -62,4 +67,19 @@ async function handler(ctx: Context) {
         link: url,
         item: items,
     };
+}
+
+function getImageUrl(value: string | undefined, baseUrl: string): string | undefined {
+    if (typeof value !== 'string' || !value) {
+        return;
+    }
+    try {
+        const url = new URL(value, baseUrl);
+        if (['http:', 'https:'].includes(url.protocol) && !url.username && !url.password) {
+            return url.href;
+        }
+    } catch {
+        // Ignore unsupported source image URLs.
+    }
+    return;
 }

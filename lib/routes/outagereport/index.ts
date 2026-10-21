@@ -1,5 +1,6 @@
 import type { Route } from '@/types';
-import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/parse-date';
 
 const baseUrl = 'https://outage.report/';
 
@@ -22,50 +23,39 @@ export const route: Route = {
     description: 'Please skip the local service area code for `name`, for example `https://outage.report/us/verizon-wireless` to `verizon-wireless`.',
 };
 
+interface StatusCard {
+    card: {
+        summary: string;
+        signalBuckets: Array<{ ts: number; count: number }>;
+    };
+}
+
 async function handler(ctx) {
-    const serviceName = ctx.req.param('name'); // Which service do you want to monitor? Have to be the same as what it appears in URL.
-    const watchCount = ctx.req.param('count') || 10; // How many reports is received during last 20 minutes? 10 reports as default.
+    const serviceName = ctx.req.param('name');
+    const threshold = Number(ctx.req.param('count') ?? 10);
+    const watchCount = Number.isFinite(threshold) && threshold > 0 ? threshold : 10;
     const url = `${baseUrl}${serviceName}`;
-    const response = await got({
-        method: 'get',
-        url,
-    });
-
-    const html = response.data;
-
-    // use RegExp because of irregular class name
-    const gaugeRegexp = /class="Gauge__Count.*?>(\d+)<\/text>/; // Core Pattern
-    const gaugeTextRegexp = /class="Gauge__MessageWrapper.*?class="Gauge__Message[^>]*>(.*?)<\/span>/; // Core Pattern
-    const rssDescribeRegexp = /<p class="PageSubheader[^>]*>(.*?)<\/p>/;
-
-    // data to be shown on RSS feed and RSS items
-    const gaugeCount = Number(html.match(gaugeRegexp)[1]);
-    const gaugeText = html.match(gaugeTextRegexp)[1];
-    const rssDescribe = html.match(rssDescribeRegexp)[1];
-
-    // list ("Array" in js, though) of items
-    const outageHistory: any[] = [];
-
-    // 2020-09-17 output as long as it exists, avoid reporting errors
-    // compatible with optional variables
-    if (gaugeCount >= watchCount) {
-        // alert only when it counts
-        const outageReportItem = {
-            title: `${serviceName} appear to be (partially) down`,
-            description: String(gaugeCount) + ' ' + gaugeText,
-            pubDate: new Date().toUTCString(),
-            guid: Date.now(),
-            link: url,
-        };
-        outageHistory.push(outageReportItem);
-    }
-
-    // how this RSS feed looks like
+    const { card } = await ofetch<StatusCard>(`${baseUrl}api/card/${serviceName}`);
+    const now = Date.now();
+    const recentBuckets = card.signalBuckets.filter((bucket) => bucket.ts >= now - 20 * 60 * 1000 && bucket.ts < now);
+    const reportCount = recentBuckets.reduce((total, bucket) => total + bucket.count, 0);
+    const latestReport = Math.max(...recentBuckets.map((bucket) => bucket.ts));
     return {
         title: `Is ${serviceName} Down Right Now?`,
         link: url,
-        description: rssDescribe,
-        item: outageHistory,
+        description: card.summary.replaceAll(/\{\{([^|}]+)\|[^}]+\}\}/g, '$1'),
+        item:
+            reportCount >= watchCount
+                ? [
+                      {
+                          title: `${serviceName} appear to be (partially) down`,
+                          description: `${reportCount} reports in the last 20 minutes`,
+                          pubDate: parseDate(latestReport, 'x'),
+                          guid: `${serviceName}:${latestReport}`,
+                          link: url,
+                      },
+                  ]
+                : [],
         allowEmpty: true,
     };
 }

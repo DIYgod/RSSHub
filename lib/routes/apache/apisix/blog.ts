@@ -8,18 +8,17 @@ async function getArticles() {
     const url = 'https://apisix.apache.org/zh/blog/';
     const { data: res } = await got(url);
     const $ = load(res);
-    const articles = $('section.sec_gjjg').eq(1).find('article');
+    const articles = $('a.post-card');
     return articles.toArray().map((elem) => {
-        const a = $(elem).find('header > a');
+        const a = $(elem);
+        const [date, author] = a.find('.meta').text().split('·', 2);
         return {
-            title: a.find('h2').text(),
-            description: a.find('p').text(),
-            link: a.attr('href'),
-            pubDate: parseDate($(elem).find('footer').find('time').attr('datetime')!),
-            category: $(elem)
-                .find('header div a')
-                .toArray()
-                .map((elem) => $(elem).text()),
+            title: a.find('h3').text(),
+            description: a.find('.desc').text(),
+            link: new URL(a.attr('href')!, url).href,
+            pubDate: parseDate(date.trim(), 'YYYY年M月D日'),
+            author: author?.trim(),
+            category: a.find('.cover-fallback span').text() || undefined,
         };
     });
 }

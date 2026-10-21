@@ -7,9 +7,9 @@ import timezone from '@/utils/timezone';
 
 const rootUrl = 'https://www.cnbeta.com.tw';
 
-const ProcessItems = (items, limit) =>
+const ProcessItems = (items, limit: number = 60) =>
     Promise.all(
-        items.slice(0, limit ? Number.parseInt(limit) : 60).map((item) =>
+        items.slice(0, limit).map((item) =>
             cache.tryGet(item.link, async () => {
                 const detailResponse = await got(item.link);
 

@@ -2,6 +2,7 @@ import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
 export const route: Route = {
     path: '/',
@@ -19,22 +20,23 @@ export const route: Route = {
     url: 'cbnweek.com/',
 };
 
-async function handler() {
-    const rootUrl = 'https://www2021.cbnweek.com';
-    const apiRootUrl = 'https://api2021.cbnweek.com';
-    const currentUrl = `${apiRootUrl}/v4/first_page_infos?per=1`;
+async function handler(ctx) {
+    const rootUrl = 'https://www.cbnweek.com';
+    const apiRootUrl = 'https://api.cbnweek.com';
+    const limit = getRouteLimit(ctx, 1);
+    const currentUrl = `${apiRootUrl}/v5/first_page_infos?per=${limit}&page=1`;
 
     const response = await got({
         method: 'get',
         url: currentUrl,
     });
 
-    let items = response.data.data.map((item) => {
+    let items = response.data.data.slice(0, limit).map((item) => {
         const post = item.data[0];
         return {
             guid: post.id,
             title: post.title,
-            link: `${rootUrl}/#/article_detail/${post.id}`,
+            link: `${rootUrl}/article-detail/${post.id}`,
             pubDate: parseDate(post.display_time),
             author: post.authors?.map((a) => a.name).join(', '),
             category: post.topics?.map((t) => t.name),
@@ -46,10 +48,13 @@ async function handler() {
             cache.tryGet(item.link, async () => {
                 const detailResponse = await got({
                     method: 'get',
-                    url: `${apiRootUrl}/v4/articles/${item.guid}`,
+                    url: `${apiRootUrl}/v5/articles/${item.guid}`,
                 });
 
-                item.description = detailResponse.data.data.content;
+                const detail = detailResponse.data.data;
+                item.description = detail.content;
+                item.author = detail.authors?.map((a) => a.name).join(', ');
+                item.category = detail.topics?.map((t) => t.name);
 
                 return item;
             })

@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
@@ -31,7 +32,7 @@ const getArticleDetail = (link) =>
         // handle multiple audios
         for (const x of $('.audio-module').toArray()) {
             const audioLink = $($(x).find('.audio-tool-download a')).attr('href');
-            const audio_tag = `<audio controls><source src="${audioLink}" type="audio/mp3"></audio>`;
+            const audio_tag = `<audio controls><source src="${audioLink}" type="audio/mpeg"></audio>`;
             $(x).replaceWith(audio_tag);
         }
 
@@ -91,7 +92,7 @@ export const route: Route = {
     name: 'News',
     maintainers: ['bennyyip'],
     handler,
-    description: 'Provide full article RSS for CBC topics.',
+    description: 'Provide full article RSS for NPR topics.',
 };
 
 async function handler(ctx) {
@@ -99,8 +100,9 @@ async function handler(ctx) {
     const feed = await parser.parseURL(`https://feeds.npr.org/${endpoint}/rss.xml`);
 
     const items = (
-        await Promise.all(
-            feed.items.map(async (item) => {
+        await pMap(
+            feed.items,
+            async (item) => {
                 const itemDetails = await getArticleDetail(item.link);
                 if (itemDetails === null) {
                     return null;
@@ -110,7 +112,8 @@ async function handler(ctx) {
                     description: itemDetails.article,
                     category: itemDetails.categories,
                 };
-            })
+            },
+            { concurrency: 3 }
         )
     ).filter((item) => item !== null);
 

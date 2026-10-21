@@ -23,13 +23,13 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['k.caixin.com/web', 'k.caixin.com/'],
+            source: ['database.caixin.com/news/', 'database.caixin.com/'],
         },
     ],
     name: '财新数据通',
     maintainers: ['nczitzk'],
     handler,
-    url: 'k.caixin.com/web',
+    url: 'database.caixin.com/news/',
 };
 
 async function handler() {

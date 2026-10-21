@@ -1,6 +1,7 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
-import type { DataItem, Route } from '@/types';
+import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -26,7 +27,7 @@ export const route: Route = {
   - news: SISU TODAY English site.`,
 };
 
-async function process(baseUrl: string, section: any) {
+async function process(baseUrl: string, section: any): Promise<Data> {
     const r = await ofetch(`${baseUrl}/resources/${section}/`);
     const $ = load(r);
     const itemsoup = $('.tab-con:nth-child(1) ul li')
@@ -38,25 +39,31 @@ async function process(baseUrl: string, section: any) {
             return {
                 title: i.find('h3>a').text(),
                 link,
-                pubDate: parseDate(i.find('p.time').text()),
+                pubDate: i.find('p.time').text() ? parseDate(`${i.find('p.time').text()} +0800`, 'DD MMMM YYYY ZZ') : undefined,
                 itunes_item_image: `${baseUrl}${img}`,
             };
         });
-    const items = await Promise.all(
-        itemsoup.map((j) =>
-            cache.tryGet(j.link, async () => {
-                const r = await ofetch(j.link);
+    const items = await pMap(
+        itemsoup,
+        async (item) => ({
+            ...item,
+            ...(await cache.tryGet(item.link, async () => {
+                const r = await ofetch(item.link);
                 const $ = load(r);
-                j.description = $('.details-con')
-                    .html()!
-                    .replaceAll(/<o:p>[\s\S]*?<\/o:p>/g, '')
-                    .replaceAll(/(<p[^>]*>&nbsp;<\/p>\s*)+/g, '<p>&nbsp;</p>');
-                return j;
-            })
-        )
+                return {
+                    author: /\|\s*By\s+([^|]+)/i.exec($('.time').text())?.[1]?.trim(),
+                    description: $('.details-con')
+                        .html()!
+                        .replaceAll(/<o:p>[\s\S]*?<\/o:p>/g, '')
+                        .replaceAll(/(<p[^>]*>&nbsp;<\/p>\s*)+/g, '<p>&nbsp;</p>'),
+                };
+            })),
+        }),
+        { concurrency: 3 }
     );
     return {
         title: String(section) === 'features' ? 'FEATURED STORIES' : 'SISU TODAY',
+        language: 'en',
         link: `${url}/resources/${section}/`,
         item: items,
     };

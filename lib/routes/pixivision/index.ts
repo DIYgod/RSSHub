@@ -1,12 +1,15 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
-import type { Data, DataItem, Route } from '@/types';
+import type { Data, DataItem, Language, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
 import { processContent } from './utils';
+
+const languageMap = { en: 'en', zh: 'zh-CN', 'zh-tw': 'zh-TW', ko: 'ko', ja: 'ja' } satisfies Record<string, Language>;
 
 export const route: Route = {
     path: '/:lang/:category?',
@@ -61,28 +64,30 @@ async function handler(ctx): Promise<Data> {
             link: new URL($(elem).attr('href') ?? '', baseUrl).href,
         }));
 
-    const items = await Promise.all(
-        list.map(async (item) => {
-            const result = await cache.tryGet(item.link, async (): Promise<DataItem> => {
+    const items = await pMap(
+        list,
+        async (item): Promise<DataItem> => {
+            const detail = await cache.tryGet(`pixivision:article:v3:${item.link}`, async () => {
                 const { data: articleData } = await got(item.link, headers);
                 const $article = load(articleData);
 
                 const processedDescription = processContent($article, lang);
+                const date = $article('time').attr('datetime');
 
                 return {
-                    title: item.title,
                     description: processedDescription,
-                    link: item.link,
-                    pubDate: parseDate($article('time').attr('datetime') ?? ''),
+                    pubDate: date ? parseDate(/^\d{4}-\d{2}-\d{2}$/.test(date) ? `${date}T00:00:00Z` : date) : undefined,
                 };
             });
-            return result;
-        })
+            return { ...item, ...detail };
+        },
+        { concurrency: 3 }
     );
 
     return {
         title: `${$('.ssc__header').length ? $('.ssc__header').text() : 'New'} - pixivision`,
         link: url,
+        language: languageMap[lang],
         item: items.filter((item): item is DataItem => !!item),
     };
 }

@@ -1,36 +1,30 @@
 import { load } from 'cheerio';
+import type { Context } from 'hono';
+import pMap from 'p-map';
 
+import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-import { parseScriptData } from '@/utils/parse-script-data';
+import { getRouteLimit } from '@/utils/route-limit';
 import timezone from '@/utils/timezone';
 
-const readNuxtData = (response: string) => {
-    const $ = load(response);
-    const script = $('script')
-        .toArray()
-        .map((element) => $(element).text())
-        .find((source) => /\b__NUXT__\s*=/.test(source));
-    return script ? parseScriptData<{ data?: any[] } | undefined>(script, '__NUXT__')?.data?.[0] : undefined;
-};
-
-const processVideo = (content) => {
-    content('div.video').each((i, v) => {
+const processVideo = ($, scope) => {
+    scope.find('div.video').each((i, v) => {
         let link = new URL(v.attribs.src);
         if (link.host === 'm.miguvideo.com') {
-            content(`<a href="${link.href}"> ▶️ 观看视频 </a><br>`).insertAfter(v);
-            content(v).remove();
+            $(`<a href="${link.href}"> ▶️ 观看视频 </a><br>`).insertAfter(v);
+            $(v).remove();
         } else {
             link = v.attribs.src;
             switch (v.attribs.site) {
                 case 'qiniu':
-                    content(`<video width="100%" controls="controls"> <source src="${link}" type="video/mp4"> Your RSS reader does not support video playback. </video>`).insertAfter(v);
-                    content(v).remove();
+                    $(`<video width="100%" controls="controls"> <source src="${link}" type="video/mp4"> Your RSS reader does not support video playback. </video>`).insertAfter(v);
+                    $(v).remove();
                     break;
                 case 'youku':
-                    content(`<iframe height='100%' width='100%' src='${link}' frameborder=0 scrolling=no webkitallowfullscreen=true allowfullscreen=true></iframe>`).insertAfter(v);
-                    content(v).remove();
+                    $(`<iframe height='100%' width='100%' src='${link}' frameborder=0 scrolling=no webkitallowfullscreen=true allowfullscreen=true></iframe>`).insertAfter(v);
+                    $(v).remove();
                     break;
                 default:
                     break;
@@ -39,16 +33,14 @@ const processVideo = (content) => {
     });
 
     // Process iframes
-    content('iframe.media-iframe, .edui-faked-video').each((i, v) => {
+    scope.find('iframe.media-iframe, .edui-faked-video').each((i, v) => {
         const link = v.attribs.src;
         if (link.startsWith('http://ssports.iqiyi.com/')) {
-            content(`<a href="${link.link}"> ▶️ 观看视频 </a><br>`).insertAfter(v);
+            $(`<a href="${link}"> ▶️ 观看视频 </a><br>`).insertAfter(v);
         }
 
-        content(v).remove();
+        $(v).remove();
     });
-
-    return content;
 };
 
 const processHref = (content) => {
@@ -73,36 +65,34 @@ const processImg = (content) => {
     });
 };
 
-export const processFeed = async (type, id) => {
+export const processFeed = async (ctx: Context, type, id) => {
     const link = `https://www.dongqiudi.com/${type}/${id}.html`;
     const apiUrl = 'https://api.dongqiudi.com/v3/archive/app/channel/feeds';
     const { data: response } = await got(link);
+    const $ = load(response);
 
-    const nuxtData = readNuxtData(response);
-    if (!nuxtData) {
-        throw new Error('Unable to extract Dongqiudi page data');
-    }
     let name;
     let image;
     if (type === 'team') {
-        name = nuxtData.teamInfo.name;
-        image = nuxtData.teamInfo.logo;
+        name = $('h1.tp-hero__name').text();
+        image = $('.tp-hero__logo').attr('src');
     } else {
-        name = nuxtData.detail.base_info.person_name;
-        image = nuxtData.detail.base_info.person_logo;
+        name = $('h1.pp-hero__name').text().trim();
+        image = $('.pp-hero__avatar').attr('src');
     }
 
     const { data } = await got(apiUrl, {
         searchParams: {
             id,
             type,
-            size: 20,
+            // The API counts mixed feed slots; size=3 can yield only one article.
+            size: Math.max(20, getRouteLimit(ctx, 20)),
             platform: 'web',
             version: '',
         },
     });
 
-    let list = data.data.articles.map((article) => ({
+    let list: Array<DataItem & { link: string; pubDate: Date }> = data.data.articles.map((article) => ({
         title: article.title,
         link: `https://www.dongqiudi.com/articles/${article.id}.html`,
         category: [article.category, ...(article.secondary_category ?? [])],
@@ -110,24 +100,33 @@ export const processFeed = async (type, id) => {
     }));
 
     if (type === 'team' && list.length === 0) {
-        list = nuxtData.newsList.map((news) => ({
-            title: news.title,
-            link: `https://www.dongqiudi.com/articles/${news.id}.html`,
-            category: [news.category],
-            pubDate: timezone(parseDate(news.time), 8),
-        }));
+        list = $('.tp-news-item')
+            .toArray()
+            .map((element) => {
+                const news = $(element);
+                return {
+                    title: news.find('.tp-news-item__title').text(),
+                    link: new URL(news.attr('href')!, link).href,
+                    category: [news.find('.tp-news-item__tag').text()],
+                    pubDate: timezone(parseDate(news.find('.tp-news-item__time').text(), 'YYYY-MM-DD HH:mm'), 8),
+                };
+            });
     }
 
-    const out = await Promise.all(
-        list.map((item) =>
+    if (ctx.req.query('sorted') !== 'false') {
+        list = list.toSorted((a, b) => b.pubDate.getTime() - a.pubDate.getTime());
+    }
+    const out = await pMap(
+        list.slice(0, getRouteLimit(ctx)),
+        (item) =>
             cache.tryGet(item.link, async () => {
                 const { data: response } = await got(item.link);
 
-                processFeedType2(item, response);
+                await processFeedType2(item, response);
 
                 return item;
-            })
-        )
+            }),
+        { concurrency: 4 }
     );
 
     return {
@@ -139,16 +138,15 @@ export const processFeed = async (type, id) => {
 };
 
 export const processFeedType2 = (item, response) => {
-    const data = readNuxtData(response)?.article;
-
-    // filter out undefined item
-    if (!data) {
+    const $ = load(response);
+    const articleBody = $('.article-body');
+    if (!articleBody.length) {
         return;
     }
 
-    const body = processVideo(load(data.rawBody, null, false));
-    processHref(body('a'));
-    processImg(body('img'));
-    item.description = body.html();
-    item.author = data.author;
+    processVideo($, articleBody);
+    processHref(articleBody.find('a'));
+    processImg(articleBody.find('img'));
+    item.description = articleBody.html();
+    item.author = $('.article-head__author-name').text();
 };

@@ -1,11 +1,14 @@
 import { load } from 'cheerio';
 import iconv from 'iconv-lite';
 
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 import timezone from '@/utils/timezone';
+import { isValidHost } from '@/utils/valid-host';
 
 export const route: Route = {
     path: '/:category?',
@@ -30,7 +33,11 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { category = 'xxkd' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 30;
+    if (!isValidHost(category)) {
+        throw new InvalidParameterError('Invalid category');
+    }
+
+    const limit = getRouteLimit(ctx, 30);
 
     const rootUrl = 'http://www.auto-stats.org.cn';
     const currentUrl = new URL(`${category}.asp`, rootUrl).href;
@@ -48,7 +55,7 @@ async function handler(ctx) {
             const $item = $(item);
 
             const title = $item.text();
-            const pubDate = title.match(/(\d{4}(?:\/\d{1,2}){2}\s\d{1,2}(?::\d{2}){2})/)?.[1] ?? undefined;
+            const pubDate = title.match(/(\d{4}(?:\/\d{1,2}){2}\s\d{1,2}(?::\d{2}){2})/)?.[1];
 
             return {
                 title: title.replace(/●/, '').split(/（\d+/, 1)[0],

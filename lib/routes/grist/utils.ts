@@ -16,9 +16,9 @@ const getList = (data) =>
             link,
             itunes_item_image: image.source_url,
             category: _embedded['wp:term'][0].map((v) => v.name),
-            author: author?.map((v) => v.name).join(', '),
-            pubDate: timezone(parseDate(date_gmt), 0),
-            updated: timezone(parseDate(modified_gmt), 0),
+            author: value.parsely?.meta?.creator?.join(', ') || author?.map((v) => v.name).join(', '),
+            pubDate: date_gmt ? timezone(parseDate(date_gmt), 0) : undefined,
+            updated: modified_gmt ? timezone(parseDate(modified_gmt), 0) : undefined,
         };
     });
 

@@ -1,10 +1,13 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
+import { isValidHost } from '@/utils/valid-host';
 
 export const route: Route = {
     path: '/:category?',
@@ -34,7 +37,12 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { category = '' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 10;
+    if (category && !isValidHost(category)) {
+        throw new InvalidParameterError('Invalid category');
+    }
+
+    const requestedLimit = Number(ctx.req.query('limit'));
+    const limit = Number.isSafeInteger(requestedLimit) && requestedLimit > 0 ? requestedLimit : 10;
 
     const rootUrl = 'https://qqorw.cn';
     const currentUrl = new URL(category, rootUrl).href;
@@ -64,8 +72,9 @@ async function handler(ctx) {
             };
         });
 
-    items = await Promise.all(
-        items.map((item) =>
+    items = await pMap(
+        items,
+        (item) =>
             cache.tryGet(item.link!, async () => {
                 const { data: detailResponse } = await got(item.link);
 
@@ -74,7 +83,7 @@ async function handler(ctx) {
                 content('div.contenttxt').prev().nextAll().remove();
 
                 item.title = content('h1.article-title').text();
-                item.description = content('article.article-content').html() ?? '';
+                item.description = content('article.article-content').html();
                 item.author = content('i.fa-user').parent().text().trim();
                 item.category = content('#mute-category')
                     .toArray()
@@ -83,8 +92,8 @@ async function handler(ctx) {
                 item.upvotes = content('#Addlike span.count').text() ? Number(content('#Addlike span.count').text()) : item.upvotes;
 
                 return item;
-            })
-        )
+            }),
+        { concurrency: 3 }
     );
 
     const author = '早报网';

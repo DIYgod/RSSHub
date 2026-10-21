@@ -55,7 +55,9 @@ async function handler(ctx: Context): Promise<Data> {
             cache.tryGet(item.link, async () => {
                 const response = await ofetch(item.link);
                 const $ = load(response);
-                item.pubDate = timezone(parseDate($('.gray').text().replace('发布时间：', ''), 'YYYY-MM-DD'), 8);
+                const sourceDate = $('.gray').text().replace('发布时间：', '').trim();
+                const date = sourceDate ? parseDate(sourceDate, 'YYYY-MM-DD', true) : undefined;
+                item.pubDate = date && Number.isFinite(date.getTime()) ? timezone(date, 8) : undefined;
                 item.description = $('.v_news_content').html();
                 return item;
             })

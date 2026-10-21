@@ -7,7 +7,9 @@ import { config } from '@/config';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/whpj/:format?',
@@ -27,6 +29,10 @@ export const route: Route = {
             source: ['cib.com.cn/'],
             target: '/whpj',
         },
+        {
+            source: ['personalbank.cib.com.cn/pers/main/pubinfo/ifxQuotationQuery.do'],
+            target: '/whpj',
+        },
     ],
     name: '外汇牌价',
     maintainers: ['Qixingchen'],
@@ -43,10 +49,13 @@ async function handler(ctx) {
         secureOptions: crypto.constants.SSL_OP_LEGACY_SERVER_CONNECT,
     });
 
-    const response = await got('https://personalbank.cib.com.cn/pers/main/pubinfo/ifxQuotationQuery.do', { agent: { https: agent } });
-    const cookies = response.headers['set-cookie'].map((item) => item.split(';', 1)[0]).join(';');
+    const response = await ofetch.raw('https://personalbank.cib.com.cn/pers/main/pubinfo/ifxQuotationQuery.do', { agent: { https: agent } });
+    const cookies = response.headers
+        .getSetCookie()
+        .map((item) => item.split(';', 1)[0])
+        .join(';');
 
-    const $ = load(response.data);
+    const $ = load(response._data);
     let date = $('div.main-body').find('div.labe_text').text();
     date = date.split('\n\t', 2)[1].replace('日期：', '').trim();
     date = date.slice(0, 11) + date.slice(15);
@@ -87,7 +96,8 @@ async function handler(ctx) {
 
             return {
                 title: formatTitle(name, xhmr, xcmr, xhmc, xcmc, content, format),
-                pubDate: parseDate(date, 'YYYY年MM月DD日 HH:mm:ss'),
+                link: `https://personalbank.cib.com.cn/pers/main/pubinfo/ifxQuotationQuery.do#${item.id}`,
+                pubDate: timezone(parseDate(date, 'YYYY年MM月DD日 HH:mm:ss'), 8),
                 description: content.replaceAll(/\s/g, '<br>'),
                 guid: `${item.cell[0]} ${item.cell[1]} ${date}`,
             };

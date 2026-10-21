@@ -30,6 +30,11 @@ export const route: Route = {
     radar: [
         {
             source: ['www.cuit.edu.cn/index/:category'],
+            target: '/cxxww/:category',
+        },
+        {
+            source: ['www.cuit.edu.cn/index/cxwh/whhd.htm'],
+            target: '/cxxww/cxwh/whhd',
         },
     ],
     name: '成信新闻网',
@@ -56,8 +61,9 @@ async function handler(ctx: Context): Promise<Data> {
             };
         });
 
+    const articles = list;
     const items = await Promise.all(
-        list.map((item) =>
+        articles.map((item) =>
             cache.tryGet(item.link!, async () => {
                 const response = await ofetch(item.link!);
                 const $ = load(response);

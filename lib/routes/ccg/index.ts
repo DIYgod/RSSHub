@@ -3,17 +3,24 @@ import { load } from 'cheerio';
 import type { Element } from 'domhandler';
 import type { Context } from 'hono';
 
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Data, DataItem, Language, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
+import { isValidHost } from '@/utils/valid-host';
 
 import { renderDescription } from './templates/description';
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { category = 'news' } = ctx.req.param();
-    const limit = Number(ctx.req.query('limit') ?? '7');
+    if (!isValidHost(category)) {
+        throw new InvalidParameterError('Invalid category');
+    }
+
+    const limit = getRouteLimit(ctx, 7);
 
     const baseUrl = 'http://www.ccg.org.cn';
     const targetUrl: string = new URL(category, baseUrl).href;

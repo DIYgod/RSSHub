@@ -1,6 +1,7 @@
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
 export const route: Route = {
     path: '/scratch/user-projects/:username',
@@ -26,7 +27,7 @@ export const route: Route = {
     handler: async (ctx) => {
         const { username } = ctx.req.param();
 
-        const limit = Math.min(Number(ctx.req.query('limit')) || 40, 40);
+        const limit = Math.min(getRouteLimit(ctx, 40), 40);
 
         const apiUrl = `https://api.scratch.mit.edu/users/${username}/projects/?limit=${limit}`;
 
@@ -39,7 +40,7 @@ export const route: Route = {
             return {
                 title: item.title,
                 description: descriptionText,
-                // 公開日（共有日時）
+                // Publication date (when the project was shared).
                 pubDate: parseDate(item.history.shared),
                 link: `https://scratch.mit.edu/projects/${item.id}/`,
                 guid: `scratch-project-${item.id}`,

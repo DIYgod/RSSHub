@@ -7,18 +7,15 @@ type DescriptionData = {
     images?: string[];
 };
 
-export const renderDescription = ({ cover, category = [], introduction, images = [] }: DescriptionData): string =>
+export const renderDescription = ({ cover, introduction, images = [] }: DescriptionData): string =>
     renderToString(
         <>
             {cover ? <img src={cover} /> : null}
-            <p>
-                {category.map((item) => (
-                    <code>{item}</code>
-                ))}
-            </p>
             <p>{introduction}</p>
-            {images.map((image) => (
-                <img src={image} />
-            ))}
+            {images
+                .filter((image) => image !== cover)
+                .map((image) => (
+                    <img src={image} />
+                ))}
         </>
     );

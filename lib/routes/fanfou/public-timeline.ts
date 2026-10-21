@@ -12,7 +12,7 @@ export const route: Route = {
     categories: ['social-media'],
     example: '/fanfou/public_timeline/RSSHub',
     parameters: { keyword: '关键字' },
-    name: '饭否搜索',
+    name: '搜索',
     maintainers: ['junbaor'],
     features: {
         requireConfig: [
@@ -50,7 +50,7 @@ async function handler(ctx: Context) {
 
     return {
         title: `饭否搜索-${keyword}`,
-        link: `https://fanfou.com/q/${keyword}`,
+        link: `https://fanfou.com/q/${encodeURIComponent(keyword)}`,
         description: `饭否搜索-${keyword}`,
         item: result,
     };

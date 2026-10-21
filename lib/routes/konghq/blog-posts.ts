@@ -1,6 +1,7 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 // Get the lastest blog posts of https://konghq.com/
 import got from '@/utils/got';
@@ -41,13 +42,13 @@ async function handler() {
     const { data: response } = await got(url);
     const $ = load(response);
     const nextData = JSON.parse($('#__NEXT_DATA__').text());
-    const posts = nextData.props.pageProps.cardsPaged.cards.map((item) => {
+    const posts: Array<DataItem & { link: string }> = nextData.props.pageProps.cardsPaged.cards.map((item) => {
         const title = item.title;
         const author = item.authors.map((author) => author.title).join(', ');
         const category = item.term.title;
 
-        const link = `${BASE_URL}${item.link.href}`;
-        const pubDate = parseDate(item.publishedAt);
+        const link = new URL(item.link.href, BASE_URL).href;
+        const pubDate = item.publishedAt ? parseDate(item.publishedAt) : undefined;
         return {
             title,
             link,
@@ -58,17 +59,25 @@ async function handler() {
     });
 
     // Request each post to get the details content as "description"
-    const items = await Promise.all(
-        posts.map((item) =>
+    const items = await pMap(
+        posts,
+        (item) =>
             cache.tryGet(item.link, async () => {
                 const { data: response } = await got(item.link);
                 const $ = load(response);
 
                 // Update the description to post's main content
-                item.description = $('section[class^="blog_sections"]').first().html();
+                $('.agent, .tt-none').remove();
+                const sections = $('.toc-body > section[id]');
+                item.description = sections.length
+                    ? sections
+                          .toArray()
+                          .map((section) => $(section).html())
+                          .join('')
+                    : $('section[class^="blog_sections"]').first().html();
                 return item;
-            })
-        )
+            }),
+        { concurrency: 3 }
     );
 
     return {

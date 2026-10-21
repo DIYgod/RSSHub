@@ -103,7 +103,7 @@ const renderShopItemDescription = (detail: ShopItemDetail) =>
                     <td>カテゴリー</td>
                     <td>
                         {' '}
-                        {[...detail.productDetail.categories]
+                        {detail.productDetail.categories
                             .toReversed()
                             .map((item) => item.displayName)
                             .join(' > ')}{' '}
@@ -204,8 +204,8 @@ function derDecode(der: Buffer): DerSignature {
     }
 
     return {
-        r: fixBufferLength(r, 32),
-        s: fixBufferLength(s, 32),
+        r: fixBufferLength(r),
+        s: fixBufferLength(s),
     };
 }
 
@@ -226,7 +226,8 @@ function readDerLength(buf: Buffer, offset: number): DerLength {
     return { length, bytesRead: 1 + bytesCount };
 }
 
-function fixBufferLength(buffer: Buffer, length: number): Buffer {
+function fixBufferLength(buffer: Buffer): Buffer {
+    const length = 32;
     if (buffer.length > length) {
         const start = buffer.length - length;
         return buffer.subarray(start);
@@ -407,26 +408,26 @@ const formatItemDetail = (detail: ItemDetail | ShopItemDetail): DataItem => {
         return {
             title: detail.displayName,
             description: renderShopItemDescription(detail),
-            pubDate: parseDate(detail.createTime),
+            pubDate: detail.createTime ? parseDate(detail.createTime) : undefined,
             guid: detail.name,
             link: `${rootShopProductURL}${detail.name}`,
             image: detail.thumbnail,
             language: 'ja',
             author: detail.productDetail.shop.displayName,
-            updated: parseDate(detail.updateTime),
+            updated: detail.updateTime ? parseDate(detail.updateTime) : undefined,
         };
     }
 
     return {
         title: detail.data.name,
         description: renderItemDescription(detail.data),
-        pubDate: parseDate(detail.data.created * 1000),
+        pubDate: detail.data.created !== undefined && detail.data.created !== null ? parseDate(detail.data.created * 1000) : undefined,
         guid: detail.data.id,
         link: `${rootProductURL}${detail.data.id}`,
         image: detail.data.thumbnails[0],
         language: 'ja',
         author: detail.data.seller.name,
-        updated: parseDate(detail.data.updated * 1000),
+        updated: detail.data.updated !== undefined && detail.data.updated !== null ? parseDate(detail.data.updated * 1000) : undefined,
     };
 };
 

@@ -22,3 +22,10 @@ describe('api/radar/rules/one', () => {
         expect(text).toBe('');
     });
 });
+
+describe('api/radar/rules/docs', () => {
+    it('links docs to the route namespace page', async () => {
+        const rules = await getRadarRules();
+        expect(rules['github.com']['.'][0].docs).toBe('https://docs.rsshub.app/routes/github');
+    });
+});

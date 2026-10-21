@@ -2,6 +2,7 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
 const rootUrl = 'https://liuyan.people.com.cn';
 const apiUrl = `${rootUrl}/threads/queryThreadsList`;
@@ -74,7 +75,7 @@ async function handler(ctx) {
         throw new InvalidParameterError(`Invalid state '${state}'`);
     }
 
-    const limit = Number(ctx.req.query('limit') ?? 30);
+    const limit = getRouteLimit(ctx, 30);
     const forumUrl = `${rootUrl}/threads/list?fid=${fid}`;
     const currentUrl = `${forumUrl}#state=${state}`;
     const apiResponse = await ofetch<ApiResponse>(apiUrl, {

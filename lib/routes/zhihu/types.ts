@@ -1,4 +1,4 @@
-export interface Profile {
+interface Profile {
     id: string;
     url_token: string;
     name: string;

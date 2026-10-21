@@ -1,11 +1,12 @@
 import { load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
+import pMap from 'p-map';
 
 import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
+import { getRouteLimit } from '@/utils/route-limit';
 
 const baseUrl = 'https://web.cmc.hebtv.com/cms/rmt0336/19/19js/st/ds/nmpd/nbszxd/index.shtml';
 
@@ -37,7 +38,7 @@ export const route: Route = {
         requireConfig: false,
         requirePuppeteer: false,
         antiCrawler: false,
-        supportBT: true,
+        supportBT: false,
         supportPodcast: true,
         supportScihub: false,
     },
@@ -53,7 +54,8 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 40;
+    const limit = getRouteLimit(ctx, 40);
+    const candidateLimit = ctx.req.query('sorted') === 'false' ? limit : Math.max(40, limit);
 
     const apiRootUrl = 'http://api.cmc.hebtv.com';
     const apiUrl = new URL('cmsback/api/article/getMyArticleDetail', apiRootUrl).href;
@@ -61,7 +63,7 @@ async function handler(ctx) {
     const response = await got(baseUrl);
     const $ = load(response.data);
 
-    // 获取当前页面的 list
+    // Read the current list page.
     const list = $('.video_box .tv_items')
         .first()
         .children()
@@ -74,15 +76,16 @@ async function handler(ctx) {
 
             return {
                 title: a.text(),
-                // `link` 需要一个绝对 URL，但 `a.attr('href')` 返回一个相对 URL。
+                // Resolve the relative article link against the list page.
                 link: `${baseUrl}/../${a.attr('href')}`,
-                pubDate: timestr ? timezone(parseDate(timestr, 'YYYYMMDD'), 8) : null,
+                pubDate: timestr ? parseDateInTimezone(timestr, 8) : undefined,
                 author: '时间|' + timestr,
             };
         });
 
-    const items = await Promise.all(
-        list.slice(0, limit).map((item) =>
+    const items = await pMap(
+        list.slice(0, candidateLimit),
+        (item) =>
             cache.tryGet(item.link!, async () => {
                 const { data: detailResponse } = await got(item.link);
 
@@ -106,15 +109,15 @@ async function handler(ctx) {
                 item.title = data.title;
                 item.author = data.source;
                 item.guid = `hebtv-nbszxd-${articleId}`;
-                item.pubDate = timezone(parseDate(data.publishDate), 8);
-                item.updated = timezone(parseDate(data.modifyTime), 8);
+                item.pubDate = data.publishDate ? parseDateInTimezone(data.publishDate, 8) : item.pubDate;
+                item.updated = data.modifyTime ? parseDateInTimezone(data.modifyTime, 8) : undefined;
 
                 if (videoData) {
                     item.itunes_item_image = videoData.poster;
-                    item.itunes_duration = data.articleContentDto?.videoEditDtoList[0]?.sourceMediaInfo?.duration;
-                    item.enclosure_url = videoData.formats[0]?.url;
-                    item.enclosure_length = data.articleContentDto?.videoEditDtoList[0].sourceMediaInfo?.fileSize;
-                    item.enclosure_type = item.enclosure_url ? `video/${item.enclosure_url?.split(/\./)?.pop()}` : undefined;
+                    const duration = data.articleContentDto?.videoEditDtoList?.[0]?.sourceMediaInfo?.duration;
+                    item.itunes_duration = duration ? Number(duration) / 1000 : undefined;
+                    item.enclosure_url = videoData.formats?.[0]?.url;
+                    item.enclosure_type = item.enclosure_url ? `video/${new URL(item.enclosure_url).pathname.split('.').at(-1)}` : undefined;
                 }
 
                 item.description = renderDescription(
@@ -129,12 +132,12 @@ async function handler(ctx) {
                 );
 
                 return item;
-            })
-        )
+            }),
+        { concurrency: 3 }
     );
 
     const description = $('meta[name="description"]').prop('content');
-    const author = description.split(/,/, 1)[0];
+    const author = description?.split(/,/, 1)[0];
     const icon = $('link[rel="shortcut icon"]').prop('href');
     const language = $('html').prop('lang') as Language;
 
@@ -151,6 +154,5 @@ async function handler(ctx) {
         author,
         itunes_author: author,
         itunes_category: 'News',
-        allowEmpty: true,
     };
 }

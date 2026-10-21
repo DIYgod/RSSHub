@@ -1,3 +1,5 @@
+import pMap from 'p-map';
+
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
@@ -43,6 +45,14 @@ export const route: Route = {
     handler,
 };
 
+interface SourceArticle {
+    id: number;
+    title: string;
+    tags?: Array<{ title: string }>;
+    released_at: number;
+    author: { nickname: string; slug: string };
+}
+
 async function handler(ctx) {
     const id = /^\d+$/.test(ctx.req.param('id')) ? ctx.req.param('id') : await getUserId(ctx.req.param('id'));
     const api_url = `https://sspai.com/api/v1/articles?offset=0&limit=20&author_ids=${id}&include_total=false`;
@@ -50,16 +60,17 @@ async function handler(ctx) {
         method: 'get',
         url: api_url,
     });
-    const data = resp.data.list;
+    const data: SourceArticle[] = resp.data.list;
     const author_slug = data[0].author.slug;
     const author_nickname = data[0].author.nickname;
-    const items = await Promise.all(
-        data.map((item) => {
+    const items = await pMap(
+        data,
+        async (item) => {
             const link = `https://sspai.com/api/v1/article/info/get?id=${item.id}&view=second&support_webp=true`;
             let description = '';
 
-            const key = `sspai: ${item.id}`;
-            return cache.tryGet(key, async () => {
+            const key = `sspai:author:body:v2:${item.id}`;
+            const resolvedValue1 = await cache.tryGet(key, async () => {
                 const response = await got(link);
                 // description = response.data.data.body;
                 const articleData = response.data.data;
@@ -69,15 +80,21 @@ async function handler(ctx) {
                 }
                 description += articleData.body;
 
+                return { description };
+            });
+            {
+                const details = resolvedValue1;
                 return {
-                    title: item.title.trim(),
-                    description,
+                    title: item.title,
                     link: `https://sspai.com/post/${item.id}`,
                     pubDate: parseDate(item.released_at * 1000),
                     author: item.author.nickname,
+                    category: item.tags?.map((tag) => tag.title),
+                    ...details,
                 };
-            });
-        })
+            }
+        },
+        { concurrency: 3 }
     );
 
     return {
