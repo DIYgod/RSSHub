@@ -3,15 +3,15 @@ interface DataResponse<Data> {
 }
 
 export interface HomepageFloor {
-    module_key: string;
     data: {
         items: Array<{
             item: {
-                title: string;
                 jump_url: string;
+                title: string;
             };
         }>;
     };
+    module_key: string;
 }
 
 export type HomepageMainResponse = DataResponse<{
@@ -21,27 +21,22 @@ export type HomepageMainResponse = DataResponse<{
 }>;
 
 export interface VenueQuery {
+    parameter: string;
     resolver: string;
     sign: string;
-    parameter: string;
 }
 
 export type VenuePageResponse = DataResponse<{
     floors: Array<{
-        module_key: string;
         query_list: VenueQuery[];
     }>;
 }>;
 
 export interface VenueGoods {
-    gid: number;
-    name: string;
-    jump_url: string;
-    img_square: string;
-    img800s: string;
-    img_horizon: string;
     fist_release_time: number;
-    first_release_time: number;
+    gid: number;
+    img_square: string;
+    name: string;
 }
 
 // 众筹与上新共用的 venue batch 商品项
@@ -55,62 +50,26 @@ export interface VenueGoodsBatchItem {
 // 上新 leek-super 轮播 banner 项
 export interface VenueBannerBatchItem {
     gid: number;
-    jump_url: string;
-    picture_url: string;
     new_product_name: string;
-    new_product_desc: string;
+    picture_url: string;
 }
 
 export type NewProductBatchListItem = VenueGoodsBatchItem | VenueBannerBatchItem;
 
-// 众筹 reservation 预约项；gid / goodsInfo 仅在预约已关联具体商品时存在，用于过滤
-export interface VenueReservationContent {
-    titleConfig: {
-        titleText: string;
-    };
-    goodImageConfig: {
-        goodImage: string;
-    };
-    online: {
-        jumpUrl: string;
-    };
-    notGidJump: string;
-}
-
 export interface VenueReservationGoods {
-    gid: number;
-    name: string;
-    jump_url: string;
     img_square: string;
-    img800s: string;
-    img_horizon: string;
-    fist_release_time: number;
+    name: string;
 }
 
 export interface VenueReservationBatchItem {
-    content: VenueReservationContent;
     gid?: number;
     goodsInfo: VenueReservationGoods;
-    id: string;
-    name: string;
-    startTime: number;
-    endTime: number;
-    goodsType: number;
-    orderCount: number;
-    ordered: boolean;
-    status: number;
 }
 
 export type CrowdfundingBatchListItem = VenueGoodsBatchItem | VenueReservationBatchItem;
 
-export interface VenueBatchPaging {
-    limit: number;
-    offset: number;
-}
-
 export interface VenueBatchListResult<Item> {
     list: Item[];
-    paging?: VenueBatchPaging;
 }
 
 export type VenueBatchResponse<Result> = DataResponse<{
@@ -122,40 +81,41 @@ export type CrowdfundingBatchResult = VenueBatchListResult<CrowdfundingBatchList
 export type NewProductBatchResult = VenueBatchListResult<NewProductBatchListItem>;
 
 export interface ProductInfoItem {
-    pid: number;
-    name: string;
-    summary: string;
-    marketPrice: number;
-    price: number;
-    img800s: string;
-    img: string;
-    picURL: string;
     attributeValues: string[];
+    img: string;
+    marketPrice: number;
+    name: string;
     onHandPrice?: Array<{
         price: number;
     }>;
+    price: number;
     singlePrice?: Array<{
         price: number;
     }>;
 }
 
 export interface GoodsDetailItem {
+    crowdFunding: {
+        endTime: number;
+        estimateSendtime: number;
+        startTime: number;
+    };
     goodsInfo: {
-        name: string;
-        summary: string;
         firstSellPoint: string;
-        secondSellPoint: string;
-        thirdSellPoint: string;
-        priceMin: number;
-        marketPrice: number;
-        imgSquare: string;
-        img800s: string;
-        firstTime: number;
-        scheduleOnSaleTime: number;
         imgHorizon: string;
         pids: number[];
+        secondSellPoint: string;
+        thirdSellPoint: string;
     };
-    productInfo: Record<string, ProductInfoItem>;
+    oneYuanSupport: {
+        groupBuyInfo?: {
+            good: {
+                groupbuy_price: number;
+                groupbuy_summary: string;
+                img: string;
+            };
+        };
+    };
     priceInfo: {
         priceInfo: {
             marketPrice: number;
@@ -164,23 +124,7 @@ export interface GoodsDetailItem {
             };
         };
     };
-    crowdFunding: {
-        startTime: number;
-        endTime: number;
-        estimateSendtime: number;
-        progress: number;
-        saledCount: number;
-    };
-    oneYuanSupport: {
-        groupBuyInfo?: {
-            good: {
-                name: string;
-                img: string;
-                groupbuy_price: number;
-                groupbuy_summary: string;
-            };
-        };
-    };
+    productInfo: Record<string, ProductInfoItem>;
 }
 
 export type GoodsDetailResponse = DataResponse<{
