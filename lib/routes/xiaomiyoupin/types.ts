@@ -113,13 +113,13 @@ export interface VenueBatchListResult<Item> {
     paging?: VenueBatchPaging;
 }
 
-export type CrowdfundingBatchResponse = DataResponse<{
-    result_list: Array<VenueBatchListResult<CrowdfundingBatchListItem> | VenueReservationBatchItem>;
+export type VenueBatchResponse<Result> = DataResponse<{
+    result_list: Result[];
 }>;
 
-export type NewProductBatchResponse = DataResponse<{
-    result_list: Array<VenueBatchListResult<NewProductBatchListItem>>;
-}>;
+export type CrowdfundingBatchResult = VenueBatchListResult<CrowdfundingBatchListItem> | VenueReservationBatchItem;
+
+export type NewProductBatchResult = VenueBatchListResult<NewProductBatchListItem>;
 
 export interface ProductInfoItem {
     pid: number;

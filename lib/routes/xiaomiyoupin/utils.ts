@@ -12,13 +12,14 @@ import { parseDate } from '@/utils/parse-date';
 
 import type {
     CrowdfundingBatchListItem,
-    CrowdfundingBatchResponse,
+    CrowdfundingBatchResult,
     GoodsDetailItem,
     GoodsDetailResponse,
     HomepageMainResponse,
     NewProductBatchListItem,
-    NewProductBatchResponse,
+    NewProductBatchResult,
     VenueBannerBatchItem,
+    VenueBatchResponse,
     VenueGoodsBatchItem,
     VenuePageResponse,
     VenueQuery,
@@ -139,8 +140,8 @@ export const getNewProductImage = (item: NewProductBatchListItem): string => (is
  */
 export const getNewProductFirstReleaseTime = (item: NewProductBatchListItem): number | undefined => (isVenueGoodsBatchItem(item) ? item.value.goods.fist_release_time : undefined);
 
-const getCrowdfundingBatchList = async (pageId: string, sign: string, queryList: VenueQuery[]): Promise<CrowdfundingBatchListItem[]> => {
-    const response = await ofetch<CrowdfundingBatchResponse>('https://m.xiaomiyoupin.com/mtop/navi/venue/batch', {
+const getVenueBatchResultList = async <Result>(pageId: string, sign: string, queryList: VenueQuery[]): Promise<Result[]> => {
+    const response = await ofetch<VenueBatchResponse<Result>>('https://m.xiaomiyoupin.com/mtop/navi/venue/batch', {
         body: {
             query_list: queryList,
         },
@@ -151,32 +152,7 @@ const getCrowdfundingBatchList = async (pageId: string, sign: string, queryList:
             sign,
         },
     });
-    const list = response.data.result_list.flatMap((result): CrowdfundingBatchListItem[] => {
-        if ('list' in result) {
-            return result.list.filter((item): item is VenueGoodsBatchItem => isVenueGoodsTypeBatchItem(item));
-        }
-        if (result.gid === undefined || result.gid === null) {
-            return [];
-        }
-        return [result];
-    });
-    return list;
-};
-
-const getNewProductBatchList = async (pageId: string, sign: string, queryList: VenueQuery[]): Promise<NewProductBatchListItem[]> => {
-    const response = await ofetch<NewProductBatchResponse>('https://m.xiaomiyoupin.com/mtop/navi/venue/batch', {
-        body: {
-            query_list: queryList,
-        },
-        method: 'POST',
-        query: {
-            page_id: pageId,
-            pdl: 'jianyu',
-            sign,
-        },
-    });
-    const list = response.data.result_list.flatMap((result) => result.list).filter((item): item is NewProductBatchListItem => isVenueGoodsTypeBatchItem(item) || isVenueBannerBatchItem(item));
-    return list;
+    return response.data.result_list;
 };
 
 /**
@@ -187,7 +163,8 @@ const getNewProductBatchList = async (pageId: string, sign: string, queryList: V
 export const getNewProductList = async (): Promise<{ list: NewProductBatchListItem[]; jumpUrl: string }> => {
     const { pageId, sign, jumpUrl } = await getVenueQueryContext('上新精选');
     const queryList = await getVenuePageQueryList(pageId, sign, ['leek-super', 'leek-selective']);
-    const batchList = await getNewProductBatchList(pageId, sign, queryList);
+    const resultList = await getVenueBatchResultList<NewProductBatchResult>(pageId, sign, queryList);
+    const batchList = resultList.flatMap((result) => result.list).filter((item): item is NewProductBatchListItem => isVenueGoodsTypeBatchItem(item) || isVenueBannerBatchItem(item));
     const list = dedupeByKey(batchList, (item) => getNewProductGid(item));
     return { list, jumpUrl };
 };
@@ -200,7 +177,16 @@ export const getNewProductList = async (): Promise<{ list: NewProductBatchListIt
 export const getCrowdfundingList = async (): Promise<{ list: CrowdfundingBatchListItem[]; jumpUrl: string }> => {
     const { pageId, sign, jumpUrl } = await getVenueQueryContext('小米众筹');
     const queryList = await getVenuePageQueryList(pageId, sign, ['crowd-funding', 'reservation']);
-    const batchList = await getCrowdfundingBatchList(pageId, sign, queryList);
+    const resultList = await getVenueBatchResultList<CrowdfundingBatchResult>(pageId, sign, queryList);
+    const batchList = resultList.flatMap((result): CrowdfundingBatchListItem[] => {
+        if ('list' in result) {
+            return result.list.filter((item): item is VenueGoodsBatchItem => isVenueGoodsTypeBatchItem(item));
+        }
+        if (result.gid === undefined || result.gid === null) {
+            return [];
+        }
+        return [result];
+    });
     const list = dedupeByKey(batchList, (item) => getCrowdfundingGid(item));
     return { list, jumpUrl };
 };
