@@ -69,12 +69,11 @@ type Story = Omit<DataItem, 'comments' | 'upvotes'> & {
 };
 
 const parseComments = (text: string): Story['comments'] => {
-    const normalizedText = text.trim();
-    if (normalizedText === 'discuss') {
-        return normalizedText;
+    if (text === 'discuss') {
+        return text;
     }
 
-    const match = normalizedText.match(/^(\d+)\s+comments?$/);
+    const match = text.match(/^(\d+)\s+comments?$/);
     return match ? Number.parseInt(match[1]) : '';
 };
 

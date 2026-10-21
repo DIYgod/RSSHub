@@ -19,6 +19,6 @@
         "resolveJsonModule": true,
         "isolatedModules": true
     },
-    "include": ["./lib/**/*", "./test/**/*"],
+    "include": ["./lib/**/*"],
     "exclude": ["node_modules", "*.test.*"]
 }
