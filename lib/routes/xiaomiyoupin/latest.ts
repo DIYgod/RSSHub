@@ -57,12 +57,12 @@ const getDataItem = (listItem: NewProductBatchListItem, detailItem: GoodsDetailI
 };
 
 async function handler(): Promise<Data> {
-    const list = await utils.getNewProductList();
+    const { list, jumpUrl } = await utils.getNewProductList();
     const items = await getDataItems(list);
 
     return {
         title: '小米有品上新',
-        link: 'https://www.xiaomiyoupin.com/',
+        link: jumpUrl,
         item: items,
         image: 'https://cnbj1.fds.api.xiaomi.com/mijia-m/trade_common/yp_logo.png',
         language: 'zh-CN',

@@ -31,23 +31,33 @@ dayjs.extend(utc);
 
 const formatDate = (date: Date): string => dayjs(date).tz('Asia/Shanghai').locale('zh-cn').format('ll');
 
-const parsePageQuery = (url?: string): { pageId: string; sign: string } => {
-    const searchParams = url ? new URL(url).searchParams : null;
+interface VenueQueryContext {
+    pageId: string;
+    sign: string;
+    jumpUrl: string;
+}
+
+const parsePageQuery = (jumpUrl?: string): VenueQueryContext => {
+    const searchParams = jumpUrl ? new URL(jumpUrl).searchParams : null;
     const pageId = searchParams?.get('pageid');
     const sign = searchParams?.get('sign');
-    if (!pageId || !sign) {
+    if (!jumpUrl || !pageId || !sign) {
         throw new NotFoundError('Failed to get pageid or sign from xiaomiyoupin homepage');
     }
-    return { pageId, sign };
+    return { pageId, sign, jumpUrl };
 };
 
-const getVenueQueryContext = async (moduleKey: string): Promise<{ pageId: string; sign: string }> => {
+const getVenueQueryContext = async (title: string): Promise<VenueQueryContext> => {
     const response = await ofetch<HomepageMainResponse>('https://m.xiaomiyoupin.com/homepage/main/v1005', {
+        method: 'POST',
+        query: {
+            platform: 'm',
+        },
         responseType: 'json',
     });
-    const floor = response.data.homepage.floors.find((item) => item.module_key === moduleKey);
-    const url = floor?.data.jump_url ?? floor?.data.pic_jump_url;
-    return parsePageQuery(url);
+    const floor = response.data.homepage.floors.find((item) => item.module_key === 'kingkong_occupied');
+    const jumpUrl = floor?.data.items.find((entry) => entry.item.title === title)?.item.jump_url;
+    return parsePageQuery(jumpUrl);
 };
 
 const getVenuePageQueryList = async (pageId: string, sign: string, resolvers: string[]): Promise<VenueQuery[]> => {
@@ -170,29 +180,29 @@ const getNewProductBatchList = async (pageId: string, sign: string, queryList: V
 };
 
 /**
- * Fetch the new product list from the `product_hot` homepage floor.
+ * Fetch the new product list from the `kingkong_occupied` homepage floor named `上新精选`.
  *
- * @returns {Promise<NewProductBatchListItem[]>} Deduplicated new product batch items.
+ * @returns {Promise<{ list: NewProductBatchListItem[]; jumpUrl: string }>} Deduplicated new product batch items and the venue page URL.
  */
-export const getNewProductList = async (): Promise<NewProductBatchListItem[]> => {
-    const { pageId, sign } = await getVenueQueryContext('product_hot');
+export const getNewProductList = async (): Promise<{ list: NewProductBatchListItem[]; jumpUrl: string }> => {
+    const { pageId, sign, jumpUrl } = await getVenueQueryContext('上新精选');
     const queryList = await getVenuePageQueryList(pageId, sign, ['leek-super', 'leek-selective']);
     const batchList = await getNewProductBatchList(pageId, sign, queryList);
     const list = dedupeByKey(batchList, (item) => getNewProductGid(item));
-    return list;
+    return { list, jumpUrl };
 };
 
 /**
- * Fetch the crowdfunding list from the `crowd_funding` homepage floor.
+ * Fetch the crowdfunding list from the `kingkong_occupied` homepage floor named `小米众筹`.
  *
- * @returns {Promise<CrowdfundingBatchListItem[]>} Deduplicated crowdfunding batch items.
+ * @returns {Promise<{ list: CrowdfundingBatchListItem[]; jumpUrl: string }>} Deduplicated crowdfunding batch items and the venue page URL.
  */
-export const getCrowdfundingList = async (): Promise<CrowdfundingBatchListItem[]> => {
-    const { pageId, sign } = await getVenueQueryContext('crowd_funding');
+export const getCrowdfundingList = async (): Promise<{ list: CrowdfundingBatchListItem[]; jumpUrl: string }> => {
+    const { pageId, sign, jumpUrl } = await getVenueQueryContext('小米众筹');
     const queryList = await getVenuePageQueryList(pageId, sign, ['crowd-funding', 'reservation']);
     const batchList = await getCrowdfundingBatchList(pageId, sign, queryList);
     const list = dedupeByKey(batchList, (item) => getCrowdfundingGid(item));
-    return list;
+    return { list, jumpUrl };
 };
 
 const getGoodsItem = async (gid: number): Promise<GoodsDetailItem> => {

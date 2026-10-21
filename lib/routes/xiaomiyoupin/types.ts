@@ -5,8 +5,12 @@ interface DataResponse<Data> {
 export interface HomepageFloor {
     module_key: string;
     data: {
-        jump_url?: string;
-        pic_jump_url?: string;
+        items: Array<{
+            item: {
+                title: string;
+                jump_url: string;
+            };
+        }>;
     };
 }
 

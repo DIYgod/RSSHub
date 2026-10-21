@@ -54,12 +54,12 @@ const getDataItem = (listItem: CrowdfundingBatchListItem, detailItem: GoodsDetai
 });
 
 async function handler(): Promise<Data> {
-    const list = await utils.getCrowdfundingList();
+    const { list, jumpUrl } = await utils.getCrowdfundingList();
     const items = await getDataItems(list);
 
     return {
         title: '小米有品众筹',
-        link: 'https://www.xiaomiyoupin.com/',
+        link: jumpUrl,
         item: items,
         image: 'https://cnbj1.fds.api.xiaomi.com/mijia-m/trade_common/yp_logo.png',
         language: 'zh-CN',
