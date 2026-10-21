@@ -64,7 +64,7 @@ const getVenueQueryContext = async (title: string): Promise<VenueQueryContext> =
 const getVenuePageQueryList = async (pageId: string, sign: string, resolvers: string[]): Promise<VenueQuery[]> => {
     const response = await ofetch<VenuePageResponse>('https://m.xiaomiyoupin.com/mtop/navi/venue/page', {
         headers: {
-            accept: '*/*',
+            Accept: '*/*',
         },
         query: {
             page_id: pageId,
