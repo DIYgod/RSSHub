@@ -2,23 +2,25 @@ interface DataResponse<Data> {
     data: Data;
 }
 
-interface HomepageFloor {
-    data: {
-        items: Array<{
-            item: {
-                jump_url: string;
-                title: string;
-            };
-        }>;
-    };
-    module_key: string;
-}
+// Homepage
 
 export type HomepageMainResponse = DataResponse<{
     homepage: {
-        floors: HomepageFloor[];
+        floors: Array<{
+            data: {
+                items: Array<{
+                    item: {
+                        jump_url: string;
+                        title: string;
+                    };
+                }>;
+            };
+            module_key: string;
+        }>;
     };
 }>;
+
+// Venuepage
 
 export interface VenueQuery {
     parameter: string;
@@ -32,17 +34,17 @@ export type VenuePageResponse = DataResponse<{
     }>;
 }>;
 
-interface VenueGoods {
-    fist_release_time: number;
-    gid: number;
-    img_square: string;
-    name: string;
-}
+// ListItem
 
 export interface VenueGoodsBatchItem {
     type: string;
     value: {
-        goods: VenueGoods;
+        goods: {
+            fist_release_time: number;
+            gid: number;
+            img_square: string;
+            name: string;
+        };
     };
 }
 
@@ -54,17 +56,17 @@ export interface VenueBannerBatchItem {
 
 export type NewProductBatchListItem = VenueGoodsBatchItem | VenueBannerBatchItem;
 
-interface VenueReservationGoods {
-    img_square: string;
-    name: string;
-}
-
 export interface VenueReservationBatchItem {
     gid?: number;
-    goodsInfo: VenueReservationGoods;
+    goodsInfo: {
+        img_square: string;
+        name: string;
+    };
 }
 
 export type CrowdfundingBatchListItem = VenueGoodsBatchItem | VenueReservationBatchItem;
+
+// BatchResult
 
 interface VenueBatchListResult<Item> {
     list: Item[];
@@ -78,19 +80,7 @@ export type CrowdfundingBatchResult = VenueBatchListResult<CrowdfundingBatchList
 
 export type NewProductBatchResult = VenueBatchListResult<NewProductBatchListItem>;
 
-interface ProductInfoItem {
-    attributeValues: string[];
-    img: string;
-    marketPrice: number;
-    name: string;
-    onHandPrice?: Array<{
-        price: number;
-    }>;
-    price: number;
-    singlePrice?: Array<{
-        price: number;
-    }>;
-}
+// GoodsDetail
 
 export interface GoodsDetailItem {
     crowdFunding: {
@@ -122,7 +112,22 @@ export interface GoodsDetailItem {
             };
         };
     };
-    productInfo: Record<string, ProductInfoItem>;
+    productInfo: Record<
+        string,
+        {
+            attributeValues: string[];
+            img: string;
+            marketPrice: number;
+            name: string;
+            onHandPrice?: Array<{
+                price: number;
+            }>;
+            price: number;
+            singlePrice?: Array<{
+                price: number;
+            }>;
+        }
+    >;
 }
 
 export type GoodsDetailResponse = DataResponse<{
