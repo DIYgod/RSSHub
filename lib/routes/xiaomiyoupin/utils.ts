@@ -90,7 +90,7 @@ const isVenueBannerBatchItem = (item: VenueBatchItem): item is VenueBannerBatchI
  * @param {CrowdfundingBatchListItem} item - Crowdfunding batch item.
  * @returns {number} Goods id.
  */
-export const getCrowdfundingGid = (item: CrowdfundingBatchListItem): number => (isVenueGoodsBatchItem(item) ? item.value.goods.gid : item.gid!);
+const getCrowdfundingGid = (item: CrowdfundingBatchListItem): number => (isVenueGoodsBatchItem(item) ? item.value.goods.gid : item.gid!);
 
 /**
  * Read the goods name from a crowdfunding batch item.
@@ -98,7 +98,7 @@ export const getCrowdfundingGid = (item: CrowdfundingBatchListItem): number => (
  * @param {CrowdfundingBatchListItem} item - Crowdfunding batch item.
  * @returns {string} Goods name.
  */
-export const getCrowdfundingName = (item: CrowdfundingBatchListItem): string => (isVenueGoodsBatchItem(item) ? item.value.goods.name : item.goodsInfo.name);
+const getCrowdfundingName = (item: CrowdfundingBatchListItem): string => (isVenueGoodsBatchItem(item) ? item.value.goods.name : item.goodsInfo.name);
 
 /**
  * Read the square image URL from a crowdfunding batch item.
@@ -106,7 +106,7 @@ export const getCrowdfundingName = (item: CrowdfundingBatchListItem): string => 
  * @param {CrowdfundingBatchListItem} item - Crowdfunding batch item.
  * @returns {string} Square image URL.
  */
-export const getCrowdfundingImage = (item: CrowdfundingBatchListItem): string => (isVenueGoodsBatchItem(item) ? item.value.goods.img_square : item.goodsInfo.img_square);
+const getCrowdfundingImage = (item: CrowdfundingBatchListItem): string => (isVenueGoodsBatchItem(item) ? item.value.goods.img_square : item.goodsInfo.img_square);
 
 /**
  * Read the goods id from a new product batch item.
@@ -114,7 +114,7 @@ export const getCrowdfundingImage = (item: CrowdfundingBatchListItem): string =>
  * @param {NewProductBatchListItem} item - New product batch item.
  * @returns {number} Goods id.
  */
-export const getNewProductGid = (item: NewProductBatchListItem): number => (isVenueGoodsBatchItem(item) ? item.value.goods.gid : item.gid);
+const getNewProductGid = (item: NewProductBatchListItem): number => (isVenueGoodsBatchItem(item) ? item.value.goods.gid : item.gid);
 
 /**
  * Read the goods name from a new product batch item.
@@ -122,7 +122,7 @@ export const getNewProductGid = (item: NewProductBatchListItem): number => (isVe
  * @param {NewProductBatchListItem} item - New product batch item.
  * @returns {string} Goods name.
  */
-export const getNewProductName = (item: NewProductBatchListItem): string => (isVenueGoodsBatchItem(item) ? item.value.goods.name : item.new_product_name);
+const getNewProductName = (item: NewProductBatchListItem): string => (isVenueGoodsBatchItem(item) ? item.value.goods.name : item.new_product_name);
 
 /**
  * Read the square image URL from a new product batch item.
@@ -130,7 +130,7 @@ export const getNewProductName = (item: NewProductBatchListItem): string => (isV
  * @param {NewProductBatchListItem} item - New product batch item.
  * @returns {string} Square image URL.
  */
-export const getNewProductImage = (item: NewProductBatchListItem): string => (isVenueGoodsBatchItem(item) ? item.value.goods.img_square : item.picture_url);
+const getNewProductImage = (item: NewProductBatchListItem): string => (isVenueGoodsBatchItem(item) ? item.value.goods.img_square : item.picture_url);
 
 /**
  * Read the first release timestamp from a new product batch item.
@@ -138,7 +138,7 @@ export const getNewProductImage = (item: NewProductBatchListItem): string => (is
  * @param {NewProductBatchListItem} item - New product batch item.
  * @returns {number | undefined} First release timestamp, or `undefined` when the item does not provide one.
  */
-export const getNewProductFirstReleaseTime = (item: NewProductBatchListItem): number | undefined => (isVenueGoodsBatchItem(item) ? item.value.goods.fist_release_time : undefined);
+const getNewProductFirstReleaseTime = (item: NewProductBatchListItem): number | undefined => (isVenueGoodsBatchItem(item) ? item.value.goods.fist_release_time : undefined);
 
 const getVenueBatchResultList = async <Result>(pageId: string, sign: string, queryList: VenueQuery[]): Promise<Result[]> => {
     const response = await ofetch<VenueBatchResponse<Result>>('https://m.xiaomiyoupin.com/mtop/navi/venue/batch', {
@@ -160,7 +160,7 @@ const getVenueBatchResultList = async <Result>(pageId: string, sign: string, que
  *
  * @returns {Promise<{ list: NewProductBatchListItem[]; jumpUrl: string }>} Deduplicated new product batch items and the venue page URL.
  */
-export const getNewProductList = async (): Promise<{ list: NewProductBatchListItem[]; jumpUrl: string }> => {
+const getNewProductList = async (): Promise<{ list: NewProductBatchListItem[]; jumpUrl: string }> => {
     const { pageId, sign, jumpUrl } = await getVenueQueryContext('上新精选');
     const queryList = await getVenuePageQueryList(pageId, sign, ['leek-super', 'leek-selective']);
     const resultList = await getVenueBatchResultList<NewProductBatchResult>(pageId, sign, queryList);
@@ -174,7 +174,7 @@ export const getNewProductList = async (): Promise<{ list: NewProductBatchListIt
  *
  * @returns {Promise<{ list: CrowdfundingBatchListItem[]; jumpUrl: string }>} Deduplicated crowdfunding batch items and the venue page URL.
  */
-export const getCrowdfundingList = async (): Promise<{ list: CrowdfundingBatchListItem[]; jumpUrl: string }> => {
+const getCrowdfundingList = async (): Promise<{ list: CrowdfundingBatchListItem[]; jumpUrl: string }> => {
     const { pageId, sign, jumpUrl } = await getVenueQueryContext('小米众筹');
     const queryList = await getVenuePageQueryList(pageId, sign, ['crowd-funding', 'reservation']);
     const resultList = await getVenueBatchResultList<CrowdfundingBatchResult>(pageId, sign, queryList);
@@ -217,7 +217,7 @@ const getGoodsItem = async (gid: number): Promise<GoodsDetailItem> => {
  * @param {CrowdfundingBatchListItem} item - Crowdfunding batch item.
  * @returns {Promise<GoodsDetailItem>} Goods detail.
  */
-export const getCrowdfundingItem = (item: CrowdfundingBatchListItem): Promise<GoodsDetailItem> => getGoodsItem(getCrowdfundingGid(item));
+const getCrowdfundingItem = (item: CrowdfundingBatchListItem): Promise<GoodsDetailItem> => getGoodsItem(getCrowdfundingGid(item));
 
 /**
  * Fetch new product goods details by the goods id of a batch item.
@@ -225,7 +225,7 @@ export const getCrowdfundingItem = (item: CrowdfundingBatchListItem): Promise<Go
  * @param {NewProductBatchListItem} item - New product batch item.
  * @returns {Promise<GoodsDetailItem>} Goods detail.
  */
-export const getNewProductItem = (item: NewProductBatchListItem): Promise<GoodsDetailItem> => getGoodsItem(getNewProductGid(item));
+const getNewProductItem = (item: NewProductBatchListItem): Promise<GoodsDetailItem> => getGoodsItem(getNewProductGid(item));
 
 const toSellPointList = (goodsInfo: GoodsDetailItem['goodsInfo']): string[] =>
     [goodsInfo.firstSellPoint, goodsInfo.secondSellPoint, goodsInfo.thirdSellPoint].map((point) => point.trim()).filter((point): point is string => Boolean(point));
@@ -270,7 +270,7 @@ const toGoodsList = (detailItem: GoodsDetailItem): NewProduct['goodsList'] =>
  * @param {GoodsDetailItem} detailItem - Goods detail.
  * @returns {Crowdfunding} Crowdfunding template props.
  */
-export const toCrowdfunding = (listItem: CrowdfundingBatchListItem, detailItem: GoodsDetailItem): Crowdfunding => ({
+const toCrowdfunding = (listItem: CrowdfundingBatchListItem, detailItem: GoodsDetailItem): Crowdfunding => ({
     image: detailItem.goodsInfo.imgHorizon,
     sellPointList: toSellPointList(detailItem.goodsInfo),
     price: String((detailItem.priceInfo.priceInfo.onHandPrice?.price ?? detailItem.priceInfo.priceInfo.marketPrice) / 100),
@@ -288,7 +288,7 @@ export const toCrowdfunding = (listItem: CrowdfundingBatchListItem, detailItem: 
  * @param {GoodsDetailItem} detailItem - Goods detail.
  * @returns {NewProduct} New product template props.
  */
-export const toNewProduct = (listItem: NewProductBatchListItem, detailItem: GoodsDetailItem): NewProduct => ({
+const toNewProduct = (listItem: NewProductBatchListItem, detailItem: GoodsDetailItem): NewProduct => ({
     image: detailItem.goodsInfo.imgHorizon,
     sellPointList: toSellPointList(detailItem.goodsInfo),
     goodsList: toGoodsList(detailItem),

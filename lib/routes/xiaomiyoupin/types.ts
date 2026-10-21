@@ -2,7 +2,7 @@ interface DataResponse<Data> {
     data: Data;
 }
 
-export interface HomepageFloor {
+interface HomepageFloor {
     data: {
         items: Array<{
             item: {
@@ -32,14 +32,13 @@ export type VenuePageResponse = DataResponse<{
     }>;
 }>;
 
-export interface VenueGoods {
+interface VenueGoods {
     fist_release_time: number;
     gid: number;
     img_square: string;
     name: string;
 }
 
-// 众筹与上新共用的 venue batch 商品项
 export interface VenueGoodsBatchItem {
     type: string;
     value: {
@@ -47,7 +46,6 @@ export interface VenueGoodsBatchItem {
     };
 }
 
-// 上新 leek-super 轮播 banner 项
 export interface VenueBannerBatchItem {
     gid: number;
     new_product_name: string;
@@ -56,7 +54,7 @@ export interface VenueBannerBatchItem {
 
 export type NewProductBatchListItem = VenueGoodsBatchItem | VenueBannerBatchItem;
 
-export interface VenueReservationGoods {
+interface VenueReservationGoods {
     img_square: string;
     name: string;
 }
@@ -68,7 +66,7 @@ export interface VenueReservationBatchItem {
 
 export type CrowdfundingBatchListItem = VenueGoodsBatchItem | VenueReservationBatchItem;
 
-export interface VenueBatchListResult<Item> {
+interface VenueBatchListResult<Item> {
     list: Item[];
 }
 
@@ -80,7 +78,7 @@ export type CrowdfundingBatchResult = VenueBatchListResult<CrowdfundingBatchList
 
 export type NewProductBatchResult = VenueBatchListResult<NewProductBatchListItem>;
 
-export interface ProductInfoItem {
+interface ProductInfoItem {
     attributeValues: string[];
     img: string;
     marketPrice: number;
