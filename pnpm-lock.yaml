@@ -125,8 +125,8 @@ importers:
         specifier: 6.0.0
         version: 6.0.0
       google-play-scraper:
-        specifier: 10.1.3
-        version: 10.1.3
+        specifier: 10.1.4
+        version: 10.1.4
       header-generator:
         specifier: 2.1.89
         version: 2.1.89
@@ -4218,8 +4218,8 @@ packages:
     resolution: {integrity: sha512-1R6uiq6XhXW2ZrcGtZpGgVDsYGzSmveVOn8Pp37qe1fbThHZ34e3t3eXj5mVu6PFSVx9fvB1KNVnYgVtq/BRcA==}
     engines: {node: '>=22'}
 
-  google-play-scraper@10.1.3:
-    resolution: {integrity: sha512-T5zkrPqTvDoKx8jHGx8ZRca2viJQS0KpfFNMMMAR5Q/4/8Wl8GBG9HxuvfqtnKAZ8TzufnLN1N+8ShvHpSt6+g==}
+  google-play-scraper@10.1.4:
+    resolution: {integrity: sha512-rL+I3Ma5FWyBofGlgxnxsors7QHcG2fnS0272rzIGzF4rM+Kd1aw5XWSWOfRErCcohfnf0QRpovRP2TwTDttkQ==}
 
   googleapis-common@9.3.1:
     resolution: {integrity: sha512-wtv/e7JYgmtpIPcSez2EFD/Wx49DPsRX2rj15D7hTwc7tDsP82dcwoX/I4+zE38mu6S9PcghizzzADLf+ZMunA==}
@@ -4292,8 +4292,8 @@ packages:
     resolution: {integrity: sha512-Tz7u1i95/g2x2jz81+x0FBVhBhY5aRTvD3tXXdFaljuNdzDLJ8UGNRrTcj2cgQvAg3iW/h77Fz15nLW0L0CrZw==}
     engines: {node: '>=20.19.0'}
 
-  http-cache-semantics@4.2.0:
-    resolution: {integrity: sha512-dTxcvPXqPvXBQpq5dUr6mEMJX4oIEFv6bwom3FDwKRDsuIjjJGANqhBuoAn9c1RQJIdAKav33ED65E2ys+87QQ==}
+  http-cache-semantics@4.3.0:
+    resolution: {integrity: sha512-M5t5LlJpS1UHMjvwRQVdFHvPISGeLAxNcrWuJkeGh0KxsqCHZ1O3NXZU/8x7cD0BDcGW8kapxMKTvwlqrNkHkA==}
 
   http-cookie-agent@8.0.0:
     resolution: {integrity: sha512-c5A2W4NXYRQR+ZOEA+nzLlWj0K7zXAG21UZaDKfZrFSlmmb1MMXBVDhQJNUNYkYJZwFi0ptlNu4r37tEM45tvg==}
@@ -8565,7 +8565,7 @@ snapshots:
     dependencies:
       '@types/http-cache-semantics': 4.2.0
       get-stream: 9.0.1
-      http-cache-semantics: 4.2.0
+      http-cache-semantics: 4.3.0
       keyv: 5.6.0
       mimic-response: 4.0.0
       normalize-url: 8.1.1
@@ -9442,7 +9442,7 @@ snapshots:
 
   google-logging-utils@2.1.0: {}
 
-  google-play-scraper@10.1.3:
+  google-play-scraper@10.1.4:
     dependencies:
       cheerio: 1.2.0
       debug: 3.2.7
@@ -9546,7 +9546,7 @@ snapshots:
       domutils: 4.0.2
       entities: 8.1.0
 
-  http-cache-semantics@4.2.0: {}
+  http-cache-semantics@4.3.0: {}
 
   http-cookie-agent@8.0.0(tough-cookie@6.0.2)(undici@8.12.2):
     dependencies:
