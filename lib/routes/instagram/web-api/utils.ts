@@ -70,7 +70,7 @@ type JsonObject = { [key: string]: JsonValue };
 const isJsonContainer = (value: JsonValue): value is JsonValue[] | JsonObject => value !== null && typeof value === 'object';
 
 const graphql = async (friendlyName: keyof typeof docIds, variables: JsonObject, tokens: { lsd?: string; dtsg?: string }, cookieJar: CookieJar) => {
-    const text = await ofetch(`${baseUrl}/graphql/query`, {
+    const text = await ofetch(`${baseUrl}/api/graphql`, {
         method: 'POST',
         headers: {
             cookie: await cookieJar.getCookieString(baseUrl),
@@ -138,6 +138,9 @@ export const getPage = async (username: string, cookieJar: CookieJar) => {
     const page = await getSessionPage(`${baseUrl}/${username}/`, cookieJar);
     if (page.url.includes('/accounts/login/')) {
         throw new ConfigNotFoundError(page.url.includes('is_from_rle') ? 'Please set `INSTAGRAM_COOKIE`' : 'Invalid cookie');
+    }
+    if (page.url.includes('/accounts/suspended/')) {
+        throw new ConfigNotFoundError('Instagram account suspended');
     }
     const { html } = page;
     const profileId = html.match(/"profile_id":"(\d+)"/)?.[1];
@@ -230,7 +233,7 @@ export const getHighlightIds = (userId: string, cookieJar: CookieJar, page: () =
         async () => {
             const { tokens } = await page();
             const tray = await graphql('PolarisProfileStoryHighlightsTrayContentQuery', { user_id: userId, first: 12 }, tokens, cookieJar);
-            return tray.highlights.edges.map((edge) => edge.node.id);
+            return tray.highlights.edges.slice(0, 20).map((edge) => edge.node.id);
         },
         config.cache.routeExpire,
         false
