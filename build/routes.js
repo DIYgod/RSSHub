@@ -131564,6 +131564,102 @@ export default {
     ],
     "lang": "zh-CN"
   },
+  "zjnu": {
+    "routes": {
+      "/academic": {
+        "path": "/academic",
+        "categories": [
+          "university"
+        ],
+        "example": "/zjnu/academic",
+        "parameters": {},
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "name": "学术动态",
+        "maintainers": [
+          "gushen610140"
+        ],
+        "location": "academic/index.ts",
+        "module": () => import('@/routes/zjnu/academic/index.ts')
+      },
+      "/general": {
+        "path": "/general",
+        "categories": [
+          "university"
+        ],
+        "example": "/zjnu/general",
+        "parameters": {},
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "name": "综合新闻",
+        "maintainers": [
+          "gushen610140"
+        ],
+        "location": "general/index.ts",
+        "module": () => import('@/routes/zjnu/general/index.ts')
+      },
+      "/media": {
+        "path": "/media",
+        "categories": [
+          "university"
+        ],
+        "example": "/zjnu/media",
+        "parameters": {},
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "name": "媒体视角",
+        "maintainers": [
+          "gushen610140"
+        ],
+        "location": "media/index.ts",
+        "module": () => import('@/routes/zjnu/media/index.ts')
+      },
+      "/news": {
+        "path": "/news",
+        "categories": [
+          "university"
+        ],
+        "example": "/zjnu/news",
+        "parameters": {},
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "name": "浙师要闻",
+        "maintainers": [
+          "gushen610140"
+        ],
+        "location": "news/index.ts",
+        "module": () => import('@/routes/zjnu/news/index.ts')
+      }
+    },
+    "apiRoutes": {},
+    "name": "浙江师范大学",
+    "url": "www.zjnu.edu.cn",
+    "lang": "zh-CN"
+  },
   "zjol": {
     "routes": {
       "/paper/:id?": {

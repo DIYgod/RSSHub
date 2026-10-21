@@ -3962,6 +3962,10 @@ export type RoutePath =
   | `/zjgsu/xszq`
   | `/zjgtjy/:type?`
   | `/zjmuseum/exhibition/:type?`
+  | `/zjnu/academic`
+  | `/zjnu/general`
+  | `/zjnu/media`
+  | `/zjnu/news`
   | `/zjol/paper/:id?`
   | `/zju/career/:type`
   | `/zju/cse/:category?`
