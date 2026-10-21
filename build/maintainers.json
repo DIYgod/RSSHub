@@ -4741,7 +4741,7 @@
   "/gzmtu/tsg": [
     "skyedai910"
   ],
-  "/hackernews/:section?/:type?/:value?": [
+  "/hackernews/:section?/:type?/:value?/:minComments?": [
     "nczitzk",
     "xie-dongping"
   ],

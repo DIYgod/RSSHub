@@ -1596,7 +1596,7 @@ export type RoutePath =
   | `/gzhu/yjs`
   | `/gzmtu/jwc`
   | `/gzmtu/tsg`
-  | `/hackernews/:section?/:type?/:value?`
+  | `/hackernews/:section?/:type?/:value?/:minComments?`
   | `/hackerone/hacktivity`
   | `/hackerone/search/:search`
   | `/hackertalk/`
