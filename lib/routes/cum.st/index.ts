@@ -1,5 +1,6 @@
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { DataItem, Route } from '@/types';
+import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
@@ -91,7 +92,10 @@ const handler: Route['handler'] = async (ctx) => {
     const isDm = service === 'dms' || type === 'dms';
     const kind = isDm ? 'dms' : 'posts';
     const creatorApiPath = isGlobal ? '' : `/${service}/user/${encodeURIComponent(id)}`;
-    const [feed, profile] = await Promise.all([ofetch<Record<typeof kind, ContentItem[]>>(`${API_URL}${creatorApiPath}/${kind}`), isGlobal ? undefined : ofetch<CreatorProfile>(`${API_URL}${creatorApiPath}/profile`)]);
+    const [feed, profile] = await Promise.all([
+        ofetch<Record<typeof kind, ContentItem[]>>(`${API_URL}${creatorApiPath}/${kind}`),
+        isGlobal ? undefined : cache.tryGet<CreatorProfile>(`cum.st:${creatorApiPath}/profile`, () => ofetch<CreatorProfile>(`${API_URL}${creatorApiPath}/profile`)),
+    ]);
     const creatorName = profile?.displayName || profile?.name;
 
     return {
