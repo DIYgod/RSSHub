@@ -1,6 +1,5 @@
 import { load } from 'cheerio';
 
-import { config } from '@/config';
 import type { Data, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -37,7 +36,7 @@ async function handler(ctx): Promise<Data> {
     const link = `http://m.xsw.tw/${bookId}/`;
 
     // 页面 meta 谎报 big5，实际字节为 UTF-8：ofetch/undici 默认按 UTF-8 解码，勿按 meta 转码
-    const html = await ofetch(link, { headers: { 'User-Agent': config.trueUA } });
+    const html = await ofetch(link);
     const $ = load(html);
 
     // 全书无逐章时间戳，站点唯一提供的时间是书页的「更新：…」行（东八区）
