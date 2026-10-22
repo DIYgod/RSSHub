@@ -20,15 +20,12 @@ interface ContentItem {
     creatorId?: string;
     creatorName?: string;
     title?: string | null;
+    captionText?: string | null;
     captionHtml?: string | null;
+    contentText?: string | null;
     contentHtml?: string | null;
     published?: number;
     attachments?: MediaAttachment[];
-}
-
-interface ContentFeed {
-    posts?: ContentItem[];
-    dms?: ContentItem[];
 }
 
 interface CreatorProfile {
@@ -37,13 +34,15 @@ interface CreatorProfile {
 }
 
 const imageUrls = (attachments: MediaAttachment[] = []): string[] =>
-    attachments.flatMap((attachment) => {
-        if (attachment.locked || !['image', 'gif'].includes(attachment.kind ?? '') || !attachment.storageKey) {
-            return [];
-        }
-        const variant = attachment.variants?.find((variant) => variant.name.startsWith('original.')) ?? attachment.variants?.[0];
-        return variant ? [`${MEDIA_URL}/${encodeURIComponent(attachment.storageKey)}/${encodeURIComponent(variant.name)}`] : [];
-    });
+    attachments
+        .map((attachment) => {
+            if (attachment.locked || !['image', 'gif'].includes(attachment.kind ?? '') || !attachment.storageKey) {
+                return;
+            }
+            const variant = attachment.variants?.find((variant) => variant.name.startsWith('original.')) ?? attachment.variants?.[0];
+            return variant && `${MEDIA_URL}/${encodeURIComponent(attachment.storageKey)}/${encodeURIComponent(variant.name)}`;
+        })
+        .filter((url) => url !== undefined);
 
 const makeItem = (item: ContentItem, isDm: boolean, creatorId?: string, creatorName?: string): DataItem => {
     const id = item.creatorId ?? creatorId;
@@ -53,15 +52,16 @@ const makeItem = (item: ContentItem, isDm: boolean, creatorId?: string, creatorN
     const author = item.creatorName ?? creatorName;
     const kind = isDm ? 'dm' : 'post';
     const images = imageUrls(item.attachments);
+    const text = isDm ? item.contentText : item.captionText;
 
     return {
-        title: (!isDm && item.title) || `${isDm ? 'DM' : 'Post'} ${item.id}`,
-        description: ((isDm ? item.contentHtml : item.captionHtml) ?? '') + images.map((url) => `<p><img src="${url}"></p>`).join(''),
+        title: (!isDm && item.title) || text || `${isDm ? 'DM' : 'Post'} ${item.id}`,
+        description: ((isDm ? item.contentHtml : item.captionHtml) ?? (text ? `<p>${text}</p>` : '')) + images.map((url) => `<p><img src="${url}"></p>`).join(''),
         image: images[0],
         author,
         pubDate: item.published === undefined ? undefined : parseDate(item.published, 'X'),
         link: `${BASE_URL}/creators/${item.service}/${encodeURIComponent(id)}/${kind}/${encodeURIComponent(item.id)}`,
-        guid: `onlyheaven:${item.service}:${id}:${kind}:${item.id}`,
+        guid: `cum.st:${item.service}:${id}:${kind}:${item.id}`,
     };
 };
 
@@ -69,30 +69,27 @@ const handler: Route['handler'] = async (ctx) => {
     const { service, id, type } = ctx.req.param();
     const isGlobal = !service || service === 'posts' || service === 'dms';
     if (isGlobal ? id || type : !['onlyfans', 'fansly', 'patreon'].includes(service) || !id || (type && type !== 'dms')) {
-        throw new InvalidParameterError('Use /onlyheaven/posts, /onlyheaven/dms, or /onlyheaven/:service/:id[/dms] (service: onlyfans, fansly, or patreon).');
+        throw new InvalidParameterError('Use /cum.st/posts, /cum.st/dms, or /cum.st/:service/:id[/dms] (service: onlyfans, fansly, or patreon).');
     }
 
     const isDm = service === 'dms' || type === 'dms';
     const kind = isDm ? 'dms' : 'posts';
     const creatorApiPath = isGlobal ? '' : `/${service}/user/${encodeURIComponent(id)}`;
-    const [feed, profile] = await Promise.all([ofetch<ContentFeed>(`${API_URL}${creatorApiPath}/${kind}`), isGlobal ? undefined : ofetch<CreatorProfile>(`${API_URL}${creatorApiPath}/profile`)]);
+    const [feed, profile] = await Promise.all([ofetch<Record<typeof kind, ContentItem[]>>(`${API_URL}${creatorApiPath}/${kind}`), isGlobal ? undefined : ofetch<CreatorProfile>(`${API_URL}${creatorApiPath}/profile`)]);
     const creatorName = profile?.displayName || profile?.name;
-    const entries = isDm ? feed.dms : feed.posts;
-    if (!Array.isArray(entries)) {
-        throw new TypeError(`OnlyHeaven did not return a ${kind} feed.`);
-    }
 
     return {
         title: isGlobal ? `OnlyHeaven ${isDm ? 'DMs' : 'Posts'}` : `${isDm ? 'DMs' : 'Posts'} of ${creatorName} from ${service} | OnlyHeaven`,
-        link: isGlobal ? `${BASE_URL}/${kind}` : `${BASE_URL}/creators/${service}/${encodeURIComponent(id)}${isDm ? '/dms' : ''}`,
-        item: entries.map((item) => makeItem(item, isDm, id, creatorName)),
+        link: isGlobal ? `${BASE_URL}/${kind}` : `${BASE_URL}/creators/${service}/${encodeURIComponent(id)}${isDm ? '?tab=dms' : ''}`,
+        image: isGlobal ? undefined : `https://img.cum.st/creator/${service}/${encodeURIComponent(id)}/avatar.webp`,
+        item: feed[kind].map((item) => makeItem(item, isDm, id, creatorName)),
     };
 };
 
 export const route: Route = {
     path: '/:service?/:id?/:type?',
     categories: ['multimedia'],
-    example: '/onlyheaven/posts',
+    example: '/cum.st/posts',
     parameters: {
         service: 'Platform (`onlyfans`, `fansly`, or `patreon`), or `posts` / `dms` for the latest posts / DMs across all creators (defaults to `posts`)',
         id: 'Creator ID from the creator URL; required when a platform is specified',
@@ -103,7 +100,6 @@ export const route: Route = {
         { source: ['cum.st/posts'], target: '/posts' },
         { source: ['cum.st/dms'], target: '/dms' },
         { source: ['cum.st/creators/:service/:id'], target: '/:service/:id' },
-        { source: ['cum.st/creators/:service/:id/dms'], target: '/:service/:id/dms' },
     ],
     name: 'Posts and DMs',
     maintainers: ['gekangen'],
@@ -115,6 +111,6 @@ export const route: Route = {
 | posts        | dms        | onlyfans         | fansly         | patreon         |
 
 ::: tip
-When **service** is \`posts\` or \`dms\`, **id** is not used. For a creator, use \`/onlyheaven/onlyfans/CREATOR_ID\` for posts or \`/onlyheaven/onlyfans/CREATOR_ID/dms\` for DMs. Replace \`onlyfans\` with \`fansly\` or \`patreon\` for other creators. Available images are included in the feed entries.
+When **service** is \`posts\` or \`dms\`, **id** is not used. For a creator, use \`/cum.st/onlyfans/CREATOR_ID\` for posts or \`/cum.st/onlyfans/CREATOR_ID/dms\` for DMs. Replace \`onlyfans\` with \`fansly\` or \`patreon\` for other creators. Available images are included in the feed entries.
 :::`,
 };
