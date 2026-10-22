@@ -2,6 +2,7 @@ import type { SecureVersion } from 'node:tls';
 
 import type { HeaderGeneratorOptions } from 'header-generator';
 import { createFetch } from 'ofetch';
+import type { ZodType } from 'zod';
 
 import { config } from '@/config';
 import logger from '@/utils/logger';
@@ -19,6 +20,11 @@ declare module 'ofetch' {
          * @default tls.DEFAULT_MIN_VERSION ('TLSv1.2')
          */
         minVersion?: SecureVersion;
+        /**
+         * Parse the response data with this schema.
+         * Only applied to successful (2xx) responses with a body.
+         */
+        schema?: ZodType;
     }
 }
 
@@ -51,9 +57,12 @@ const rofetch = createFetch({ fetch: (input: Parameters<typeof fetch>[0], init?:
             }
         }
     },
-    onResponse({ request, response }) {
+    onResponse({ request, response, options }) {
         if (response.redirected) {
             logger.http(`Redirecting to ${response.url} for ${request}`);
+        }
+        if (options.schema && response.ok && response._data) {
+            response._data = options.schema.parse(response._data);
         }
     },
 });

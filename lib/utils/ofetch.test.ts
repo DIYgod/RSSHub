@@ -3,6 +3,7 @@ import type { AddressInfo } from 'node:net';
 
 import { http as mswHttp, HttpResponse } from 'msw';
 import { afterEach, describe, expect, it, vi } from 'vitest';
+import { z } from 'zod';
 
 const isAddressInfo = (address: string | AddressInfo | null): address is AddressInfo => typeof address === 'object' && address !== null;
 
@@ -77,5 +78,46 @@ describe('ofetch', () => {
         }
 
         expect(httpSpy).toHaveBeenCalled();
+    });
+
+    it('parses response data with the supplied schema', async () => {
+        const { default: server } = await import('@/setup.test');
+        server.use(mswHttp.get('http://rsshub.test/schema-valid', () => HttpResponse.json({ code: 0, data: { list: [] } })));
+
+        const { ofetch } = await loadOfetchWithLogger();
+        const listSchema = z.array(z.string());
+        const schema = z.object({ code: z.literal(0), data: z.object({ list: listSchema }) });
+
+        const response = await ofetch('http://rsshub.test/schema-valid', { schema });
+        expect(response).toEqual({ code: 0, data: { list: [] } });
+    });
+
+    it('rejects response data that does not match the schema', async () => {
+        const { default: server } = await import('@/setup.test');
+        server.use(mswHttp.get('http://rsshub.test/schema-invalid', () => HttpResponse.json({ code: 1 })));
+
+        const { ofetch } = await loadOfetchWithLogger();
+        const schema = z.object({ code: z.literal(0) });
+
+        await expect(ofetch('http://rsshub.test/schema-invalid', { schema })).rejects.toThrow(/code/);
+    });
+
+    it('skips schema validation on error responses', async () => {
+        const { default: server } = await import('@/setup.test');
+        server.use(mswHttp.get('http://rsshub.test/schema-error', () => HttpResponse.text('boom', { status: 500 })));
+
+        const { logger, ofetch } = await loadOfetchWithLogger();
+        const warnSpy = vi.spyOn(logger, 'warn').mockImplementation(() => logger);
+        const schema = z.object({ code: z.literal(0) });
+
+        await expect(
+            ofetch('http://rsshub.test/schema-error', {
+                schema,
+                retry: 1,
+                retryDelay: 0,
+            })
+        ).rejects.toBeDefined();
+
+        expect(warnSpy).toHaveBeenCalled();
     });
 });
