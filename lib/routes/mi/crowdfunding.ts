@@ -49,7 +49,7 @@ const getDataItem = (listItem: CrowdfundingListItem, detailItem: CrowdfundingDet
     title: listItem.product_name,
     description: renderCrowdfunding(utils.toCrowdfunding(listItem, detailItem)),
     link: `https://m.mi.com/crowdfunding/proddetail/${listItem.project_id}`,
-    image: listItem.img_url,
+    image: listItem.img_url_small,
     pubDate: parseDate(detailItem.start_time, 'X'),
     language: 'zh-CN',
 });

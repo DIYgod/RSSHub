@@ -103,7 +103,7 @@ const toCrowdfunding = (listItem: CrowdfundingListItem, detailItem: Crowdfunding
     endTime: parseDate(detailItem.end_time, 'X'),
     sendInfo: detailItem.send_info,
     supportList: detailItem.support_list.map((support) => ({
-        image: support.goods_list[0]?.goods_image ?? '',
+        image: support.goods_list.at(0)!.goods_image,
         name: support.name,
         price: support.price,
         description: support.support_desc,

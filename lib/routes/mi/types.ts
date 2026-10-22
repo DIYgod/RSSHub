@@ -8,7 +8,7 @@ const DataResponseSchema = <Schema extends z.ZodType>(data: Schema) => z.object(
 // Crowdfunding
 
 const CrowdfundingListItemSchema = z.object({
-    img_url: z.string(),
+    img_url_small: z.string(),
     product_market_price: z.string(),
     product_name: z.string(),
     project_id: z.number(),
