@@ -68670,6 +68670,65 @@ export default {
         ],
         "location": "index.ts",
         "module": () => import('@/routes/hotukdeals/index.ts')
+      },
+      "/tag/:tag/:sort?": {
+        "path": "/tag/:tag/:sort?",
+        "categories": [
+          "shopping"
+        ],
+        "example": "/hotukdeals/tag/flight",
+        "parameters": {
+          "tag": "Tag, can be found in URL, e.g. `flight` for `https://www.hotukdeals.com/tag/flight`",
+          "sort": {
+            "description": "Sort order",
+            "default": "new",
+            "options": [
+              {
+                "value": "new",
+                "label": "Most recent"
+              },
+              {
+                "value": "temp",
+                "label": "Hottest"
+              },
+              {
+                "value": "highest_price",
+                "label": "Highest price"
+              },
+              {
+                "value": "lowest_price",
+                "label": "Lowest price"
+              },
+              {
+                "value": "discussion",
+                "label": "Recently commented"
+              }
+            ]
+          }
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": true,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "www.hotukdeals.com/tag/:tag"
+            ],
+            "target": "/tag/:tag"
+          }
+        ],
+        "name": "Tag",
+        "maintainers": [
+          "zhgqthomas"
+        ],
+        "url": "www.hotukdeals.com",
+        "location": "tag.ts",
+        "module": () => import('@/routes/hotukdeals/tag.ts')
       }
     },
     "apiRoutes": {},

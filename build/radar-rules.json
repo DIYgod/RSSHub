@@ -25673,6 +25673,14 @@
           "/"
         ],
         "target": "/hotukdeals/hottest"
+      },
+      {
+        "title": "Tag",
+        "docs": "https://docs.rsshub.app/routes/hotukdeals",
+        "source": [
+          "/tag/:tag"
+        ],
+        "target": "/hotukdeals/tag/:tag"
       }
     ]
   },
