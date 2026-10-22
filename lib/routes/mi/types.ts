@@ -1,5 +1,10 @@
 import { z } from 'zod';
 
+// Response schemas mirror the upstream JSON shape, which nests deeper than the lint limit allows.
+// oxlint-disable unicorn/max-nested-calls
+
+const DataResponseSchema = <Schema extends z.ZodType>(data: Schema) => z.object({ data });
+
 // Crowdfunding
 
 const CrowdfundingListItemSchema = z.object({
@@ -11,28 +16,17 @@ const CrowdfundingListItemSchema = z.object({
 
 export type CrowdfundingListItem = z.infer<typeof CrowdfundingListItemSchema>;
 
-const CrowdfundingListGroupSchema = z.object({
-    items: z.array(CrowdfundingListItemSchema),
-});
-
-export const CrowdfundingListResponseSchema = z.object({
-    data: z.object({
-        list: z.array(CrowdfundingListGroupSchema),
-    }),
-});
+export const CrowdfundingListResponseSchema = DataResponseSchema(
+    z.object({
+        list: z.array(
+            z.object({
+                items: z.array(CrowdfundingListItemSchema),
+            })
+        ),
+    })
+);
 
 export type CrowdfundingListResponse = z.infer<typeof CrowdfundingListResponseSchema>;
-
-const CrowdfundingTierGoodsSchema = z.object({
-    goods_image: z.string(),
-});
-
-const CrowdfundingSupportSchema = z.object({
-    goods_list: z.array(CrowdfundingTierGoodsSchema),
-    name: z.string(),
-    price: z.string(),
-    support_desc: z.string(),
-});
 
 const CrowdfundingDetailItemSchema = z.object({
     big_image: z.string(),
@@ -41,16 +35,27 @@ const CrowdfundingDetailItemSchema = z.object({
     project_desc: z.string(),
     send_info: z.string(),
     start_time: z.number(),
-    support_list: z.array(CrowdfundingSupportSchema),
+    support_list: z.array(
+        z.object({
+            goods_list: z.array(
+                z.object({
+                    goods_image: z.string(),
+                })
+            ),
+            name: z.string(),
+            price: z.string(),
+            support_desc: z.string(),
+        })
+    ),
 });
 
 export type CrowdfundingDetailItem = z.infer<typeof CrowdfundingDetailItemSchema>;
 
-export const CrowdfundingDetailResponseSchema = z.object({
-    data: z.object({
+export const CrowdfundingDetailResponseSchema = DataResponseSchema(
+    z.object({
         crowd_funding_info: CrowdfundingDetailItemSchema,
-    }),
-});
+    })
+);
 
 export type CrowdfundingDetailResponse = z.infer<typeof CrowdfundingDetailResponseSchema>;
 
@@ -65,17 +70,21 @@ const NewProductListItemSchema = z.object({
 
 export type NewProductListItem = z.infer<typeof NewProductListItemSchema>;
 
-const NewProductDateGroupSchema = z.object({
-    product_list: z.array(NewProductListItemSchema),
-});
-
-export const NewProductListResponseSchema = z.object({
-    data: z.object({
-        date_list: z.array(NewProductDateGroupSchema),
-        history_date_list: z.array(NewProductDateGroupSchema),
+export const NewProductListResponseSchema = DataResponseSchema(
+    z.object({
+        date_list: z.array(
+            z.object({
+                product_list: z.array(NewProductListItemSchema),
+            })
+        ),
+        history_date_list: z.array(
+            z.object({
+                product_list: z.array(NewProductListItemSchema),
+            })
+        ),
         new_list: z.array(NewProductListItemSchema),
-    }),
-});
+    })
+);
 
 export type NewProductListResponse = z.infer<typeof NewProductListResponseSchema>;
 
@@ -86,30 +95,26 @@ const NewProductGoodsSchema = z.object({
     price: z.string(),
 });
 
-const NewProductSellPointListSchema = z.array(z.string());
-
-const NewProductRelationBatchedItemSchema = z.object({
-    goodsInfo: z.array(NewProductGoodsSchema),
-});
-
-const NewProductRelationBatchedInfoSchema = z.object({
-    relationBatchedList: z.array(NewProductRelationBatchedItemSchema),
-});
-
 const NewProductDetailItemSchema = z.object({
     goodsInfo: z.object({
         goodsList: z.array(NewProductGoodsSchema),
     }),
     product: z.object({
-        sellPointList: NewProductSellPointListSchema,
+        sellPointList: z.array(z.string()),
     }),
-    relationBatchedInfo: NewProductRelationBatchedInfoSchema.optional(),
+    relationBatchedInfo: z
+        .object({
+            relationBatchedList: z.array(
+                z.object({
+                    goodsInfo: z.array(NewProductGoodsSchema),
+                })
+            ),
+        })
+        .optional(),
 });
 
 export type NewProductDetailItem = z.infer<typeof NewProductDetailItemSchema>;
 
-export const NewProductDetailResponseSchema = z.object({
-    data: NewProductDetailItemSchema,
-});
+export const NewProductDetailResponseSchema = DataResponseSchema(NewProductDetailItemSchema);
 
 export type NewProductDetailResponse = z.infer<typeof NewProductDetailResponseSchema>;
