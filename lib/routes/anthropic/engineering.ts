@@ -30,15 +30,16 @@ async function handler(ctx) {
     const $ = load(response);
     const limit = getRouteLimit(ctx, 20);
 
-    const list: DataItem[] = $('a[class$="cardLink"]')
+    const list: DataItem[] = $('article[class^="AssetItem-module-scss-module__"]')
         .toArray()
         .map((element) => {
             const $e = $(element);
-            const href = $e.attr('href') ?? '';
+            const $link = $e.find('a[class$="__metaTitleLink"]');
+            const href = $link.attr('href') ?? '';
             const fullLink = href.startsWith('http') ? href : `${baseUrl}${href}`;
-            const dateText = $e.find('div[class$="date"]').text();
+            const dateText = $e.find('time').text();
             return {
-                title: $e.find('h2, h3').text(),
+                title: $link.text().trim(),
                 link: fullLink,
                 pubDate: dateText ? parseDate(dateText, 'MMM D, YYYY') : undefined,
             };
