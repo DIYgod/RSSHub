@@ -85,7 +85,7 @@ const Nodes: FC<{ nodes?: any[] }> = ({ nodes }) => (
 
 // hono/jsx only applies void-element rules to literal tags, so a dynamic <Tag> has to be self-closed
 // explicitly: <Tag></Tag> would emit `<br></br>`, which HTML parsers turn into two line breaks
-const Element: FC<{ name: string; attributes?: Record<string, unknown>; nodes?: any[] }> = ({ name, attributes, nodes }) => {
+const Element: FC<{ name: string; attributes?: Record<string, string>; nodes?: any[] }> = ({ name, attributes, nodes }) => {
     const Tag = name as unknown as FC;
     return voidTags.has(name) ? (
         <Tag {...attributes} />
@@ -172,7 +172,7 @@ const Node: FC<{ node: any }> = ({ node }) => {
         const attributes = Object.fromEntries(
             Object.entries(node.attribs ?? {})
                 .filter(([key]) => allowedAttributes.has(key))
-                .map(([key, value]) => [key, key === 'src' ? originalImage(String(value)) : value])
+                .map(([key, value]) => [key, key === 'src' ? originalImage(String(value)) : String(value)])
         );
         return <Element name={name} attributes={attributes} nodes={node.children} />;
     }
