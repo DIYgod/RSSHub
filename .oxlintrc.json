@@ -607,10 +607,6 @@
                 "message": "Usage of .clone() in cheerio is not allowed."
             },
             {
-                "selector": "CallExpression[callee.property.name='empty'][arguments.length=0]",
-                "message": "Usage of .empty() in cheerio is not allowed."
-            },
-            {
                 "selector": "CallExpression[callee.property.name='toArray'] MemberExpression[object.callee.property.name='map']",
                 "message": "Use .toArray() before .map()."
             },

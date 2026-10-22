@@ -35,7 +35,7 @@ const parseArticle = async (link: string, excerpt?: string): Promise<Pick<DataIt
 
             content.find('.share-container, .addthis_tool').remove();
             // The site's YouTube embeds leak their attributes into the iframe as text.
-            content.find('iframe').contents().remove();
+            content.find('iframe').empty();
             content.find('.wp-caption-text').each((_, el) => {
                 $(el).replaceWith($('<figcaption>').append($(el).contents()));
             });

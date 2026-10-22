@@ -103,6 +103,6 @@ function copyContent<T extends AnyNode>(selection: Cheerio<T>, $: CheerioAPI): C
     return $(nodes);
 }
 function clearContent<T extends AnyNode>(selection: Cheerio<T>): Cheerio<T> {
-    selection.contents().remove();
+    selection.empty();
     return selection;
 }

@@ -95,7 +95,7 @@ async function handler(ctx) {
                     const video = content(element);
                     const poster = copyNodes(video.find('.sdc-site-video__poster img').first());
                     const caption = copyNodes(video.find('.sdc-site-video__caption').first());
-                    video.contents().remove();
+                    video.empty();
                     video.append(poster, caption);
                 });
 
