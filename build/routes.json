@@ -128463,6 +128463,48 @@
     "url": "xsijishe.com",
     "lang": "zh-CN"
   },
+  "xsw": {
+    "routes": {
+      "/:bookId": {
+        "path": "/:bookId",
+        "categories": [
+          "reading"
+        ],
+        "example": "/xsw/17301350",
+        "parameters": {
+          "bookId": "书籍编号，见网址如 /17301350/ 中的数字"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "m.xsw.tw/:bookId/"
+            ]
+          }
+        ],
+        "name": "章节目录",
+        "maintainers": [
+          "xbpk3t"
+        ],
+        "location": "index.ts",
+        "module": "() => import('@/routes/xsw/index.ts')"
+      }
+    },
+    "apiRoutes": {},
+    "name": "台湾小说网",
+    "url": "m.xsw.tw",
+    "categories": [
+      "reading"
+    ],
+    "lang": "zh-TW"
+  },
   "xueqiu": {
     "routes": {
       "/user_stock/:id": {

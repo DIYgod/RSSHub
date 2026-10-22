@@ -3790,6 +3790,7 @@ export type RoutePath =
   | `/xoyo/jx3/:caty?`
   | `/xsijishe/forum/:fid`
   | `/xsijishe/rank/:type`
+  | `/xsw/:bookId`
   | `/xuangubao/subject/:subject_id`
   | `/xueqiu/column/:id`
   | `/xueqiu/favorite/:id`

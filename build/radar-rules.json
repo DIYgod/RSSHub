@@ -50649,6 +50649,19 @@
       }
     ]
   },
+  "xsw.tw": {
+    "_name": "台湾小说网",
+    "m": [
+      {
+        "title": "章节目录",
+        "docs": "https://docs.rsshub.app/routes/xsw",
+        "source": [
+          "/:bookId/"
+        ],
+        "target": "/xsw/:bookId"
+      }
+    ]
+  },
   "xueqiu.com": {
     "_name": "雪球",
     ".": [
