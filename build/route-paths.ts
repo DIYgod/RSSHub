@@ -822,6 +822,7 @@ export type RoutePath =
   | `/cugb/news/:channel?`
   | `/cuilingmag/:category?`
   | `/cuit/cxxww/:category{.+}?`
+  | `/cum.st/:service?/:id?/:type?`
   | `/cupl/jwc`
   | `/curiouscat/user/:id`
   | `/curius/links/:name`

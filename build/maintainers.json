@@ -1155,6 +1155,9 @@
   "/cts/:category": [
     "miles170"
   ],
+  "/cum.st/:service?/:id?/:type?": [
+    "gekangen"
+  ],
   "/dahecube/:type?": [
     "linbuxiao"
   ],
