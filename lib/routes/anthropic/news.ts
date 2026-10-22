@@ -28,13 +28,14 @@ async function handler(ctx) {
     const $ = load(response);
     const limit = getRouteLimit(ctx, 10);
 
-    const list: DataItem[] = $('[class^="PublicationList-module-scss-module__"][class$="__list"] a')
+    const list: DataItem[] = $('[class^="TableView-module-scss-module__"][class$="__row"]')
         .toArray()
         .slice(0, limit)
         .map((el) => {
             const $el = $(el);
-            const title = $el.find('[class*="__title"]').text().trim();
-            const href = $el.attr('href') ?? '';
+            const $link = $el.find('a[class$="__title-link"]');
+            const title = $link.text().trim();
+            const href = $link.attr('href') ?? '';
             const pubDate = $el.find('time').text().trim();
             const link = href.startsWith('http') ? href : `https://www.anthropic.com${href}`;
             return {
