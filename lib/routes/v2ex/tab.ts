@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import { FetchError } from 'ofetch';
 import pMap from 'p-map';
 
 import { config } from '@/config';
@@ -60,30 +61,37 @@ async function handler(ctx) {
     const items = await pMap(
         list,
         async (item) => {
-            const details = await cache.tryGet<Pick<DataItem, 'description' | 'author' | 'pubDate'>>(`v2ex:tab:article-details:v3:${item.link}`, async () => {
-                const response = await got({
-                    method: 'get',
-                    url: item.link,
-                    headers: {
-                        'user-agent': config.ua,
-                    },
+            try {
+                const details = await cache.tryGet<Pick<DataItem, 'description' | 'author' | 'pubDate'>>(`v2ex:tab:article-details:v3:${item.link}`, async () => {
+                    const response = await got({
+                        method: 'get',
+                        url: item.link,
+                        headers: {
+                            'user-agent': config.ua,
+                        },
+                    });
+
+                    const $ = load(response.data);
+
+                    return {
+                        description: $('div.topic_content').html() ?? undefined,
+                        author: $('div.header > small > a').text(),
+                        pubDate: parsePublicationDate($('.header small span[title]').attr('title')),
+                    };
                 });
 
-                const $ = load(response.data);
-
                 return {
-                    description: $('div.topic_content').html() ?? undefined,
-                    author: $('div.header > small > a').text(),
-                    pubDate: parsePublicationDate($('.header small span[title]').attr('title')),
+                    ...item,
+                    description: details.description,
+                    author: details.author,
+                    pubDate: details.pubDate,
                 };
-            });
-
-            return {
-                ...item,
-                description: details.description,
-                author: details.author,
-                pubDate: details.pubDate,
-            };
+            } catch (error) {
+                if (error instanceof FetchError && error.statusCode === 404) {
+                    return item;
+                }
+                throw error;
+            }
         },
         { concurrency: 3 }
     );
