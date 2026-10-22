@@ -2,7 +2,6 @@ import { load } from 'cheerio';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
-import { evaluateScriptData } from '@/utils/evaluate-script';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
@@ -68,16 +67,17 @@ export const route: Route = {
     url: 'www.hotukdeals.com',
 };
 
-const getImage = (mainImage: Thread['mainImage']) => (mainImage ? `https://images.hotukdeals.com/${mainImage.path}/${mainImage.name}/re/768x768/qt/60/${mainImage.name}.jpg` : undefined);
+const getImage = (mainImage: Thread['mainImage']) => (mainImage ? `https://images.hotukdeals.com/${mainImage.path}/${mainImage.name}/${mainImage.name}.jpg` : undefined);
 
 const getThreadDetail = async (link: string) => {
     const response = await ofetch(link);
     const $ = load(response);
-    const script = $('script')
-        .toArray()
-        .map((element) => $(element).text())
-        .find((source) => source.includes('__INITIAL_STATE__'));
-    const { threadDetail } = await evaluateScriptData<{ threadDetail: ThreadDetail }>(script ?? '', '__INITIAL_STATE__');
+    const script = $('script:contains("__INITIAL_STATE__")').text();
+    const state = script.match(/__INITIAL_STATE__\s*=\s*(\{.*\});/)?.[1];
+    if (!state) {
+        throw new Error(`No __INITIAL_STATE__ found on ${link}`);
+    }
+    const { threadDetail } = JSON.parse(state) as { threadDetail: ThreadDetail };
     return threadDetail;
 };
 
