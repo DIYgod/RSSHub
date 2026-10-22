@@ -56,8 +56,8 @@
         "vitest:watch": "cross-env NODE_ENV=test vitest --watch",
         "vitest:workerd": "cross-env NODE_ENV=test vitest run --config vitest.workers.config.ts",
         "worker-build": "npm run build:playwright:worker && npm run build:routes:worker && tsdown --config ./tsdown-worker.config.ts",
-        "worker-deploy": "npm run worker-build && wrangler deploy",
-        "worker-dev": "npm run worker-build && wrangler dev",
+        "worker-deploy": "npm run worker-build && cf deploy",
+        "worker-dev": "npm run worker-build && cf dev",
         "worker-test": "npm run build:routes && npm run worker-build && vitest run lib/worker.test.ts"
     },
     "dependencies": {
@@ -176,6 +176,7 @@
         "@typescript-eslint/parser": "8.71.2",
         "@vercel/nft": "1.11.0",
         "@vitest/coverage-v8": "5.0.5",
+        "cf": "1.0.0-beta.20",
         "discord-api-types": "0.38.56",
         "domhandler": "6.0.1",
         "eslint": "10.13.0",

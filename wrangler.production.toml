@@ -1,4 +1,7 @@
 # Cloudflare Workers Builds must use: wrangler deploy --config wrangler.production.toml
+# The cf equivalent is `cf deploy --mode production`, which reads cloudflare.config.ts.
+# Keep this file in sync with the production mode of cloudflare.config.ts,
+# and delete it once Workers Builds deploys with cf.
 name = "rsshub"
 main = "dist-worker/worker.mjs"
 compatibility_date = "2026-09-01"
