@@ -4,6 +4,7 @@ import { parseDate } from '@/utils/parse-date';
 import type { Crowdfunding } from './templates/crowdfunding';
 import type { NewProduct } from './templates/newproduct';
 import type { CrowdfundingDetailItem, CrowdfundingDetailResponse, CrowdfundingListItem, CrowdfundingListResponse, NewProductDetailItem, NewProductDetailResponse, NewProductListItem, NewProductListResponse } from './types';
+import { CrowdfundingDetailResponseSchema, CrowdfundingListResponseSchema, NewProductDetailResponseSchema, NewProductListResponseSchema } from './types';
 
 /**
  * Remove duplicate items by key, keeping the first occurrence of each key.
@@ -29,6 +30,7 @@ const getCrowdfundingList = async (): Promise<CrowdfundingListItem[]> => {
         ofetch<CrowdfundingListResponse>('https://m.mi.com/v1/crowd/crowd_home', {
             method: 'POST',
             query,
+            schema: CrowdfundingListResponseSchema,
         });
     const [response, historyResponse] = await Promise.all([fetch(), fetch({ status: 1 })]);
     const items = [...response.data.list, ...historyResponse.data.list].flatMap((group) => group.items);
@@ -48,6 +50,7 @@ const getCrowdfundingItem = async (item: CrowdfundingListItem): Promise<Crowdfun
         query: {
             project_id: item.project_id,
         },
+        schema: CrowdfundingDetailResponseSchema,
     });
     return response.data.crowd_funding_info;
 };
@@ -60,6 +63,7 @@ const getCrowdfundingItem = async (item: CrowdfundingListItem): Promise<Crowdfun
 const getNewProductList = async (): Promise<NewProductListItem[]> => {
     const response = await ofetch<NewProductListResponse>('https://api.m.mi.com/v1/home/product_channel_get_list', {
         method: 'POST',
+        schema: NewProductListResponseSchema,
     });
     const items = [...response.data.date_list.flatMap((group) => group.product_list), ...response.data.history_date_list.flatMap((group) => group.product_list), ...response.data.new_list];
     const list = dedupeByKey(items, (item) => item.product_id);
@@ -76,6 +80,7 @@ const getNewProductItem = async (item: NewProductListItem): Promise<NewProductDe
     const response = await ofetch<NewProductDetailResponse>('https://m.mi.com/mtop/xiaomishop/product/info', {
         body: [{}, { productId: item.product_id }],
         method: 'POST',
+        schema: NewProductDetailResponseSchema,
     });
     return response.data;
 };
