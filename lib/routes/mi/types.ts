@@ -26,8 +26,6 @@ export const CrowdfundingListResponseSchema = DataResponseSchema(
     })
 );
 
-export type CrowdfundingListResponse = z.infer<typeof CrowdfundingListResponseSchema>;
-
 const CrowdfundingDetailItemSchema = z.object({
     big_image: z.string(),
     end_time: z.number(),
@@ -57,8 +55,6 @@ export const CrowdfundingDetailResponseSchema = DataResponseSchema(
     })
 );
 
-export type CrowdfundingDetailResponse = z.infer<typeof CrowdfundingDetailResponseSchema>;
-
 // NewProduct
 
 const NewProductListItemSchema = z.object({
@@ -85,8 +81,6 @@ export const NewProductListResponseSchema = DataResponseSchema(
         new_list: z.array(NewProductListItemSchema),
     })
 );
-
-export type NewProductListResponse = z.infer<typeof NewProductListResponseSchema>;
 
 const NewProductGoodsSchema = z.object({
     imgUrl: z.string(),
@@ -116,5 +110,3 @@ const NewProductDetailItemSchema = z.object({
 export type NewProductDetailItem = z.infer<typeof NewProductDetailItemSchema>;
 
 export const NewProductDetailResponseSchema = DataResponseSchema(NewProductDetailItemSchema);
-
-export type NewProductDetailResponse = z.infer<typeof NewProductDetailResponseSchema>;

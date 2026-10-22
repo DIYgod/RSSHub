@@ -1,9 +1,11 @@
+import type { z } from 'zod';
+
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
 import type { Crowdfunding } from './templates/crowdfunding';
 import type { NewProduct } from './templates/newproduct';
-import type { CrowdfundingDetailItem, CrowdfundingDetailResponse, CrowdfundingListItem, CrowdfundingListResponse, NewProductDetailItem, NewProductDetailResponse, NewProductListItem, NewProductListResponse } from './types';
+import type { CrowdfundingDetailItem, CrowdfundingListItem, NewProductDetailItem, NewProductListItem } from './types';
 import { CrowdfundingDetailResponseSchema, CrowdfundingListResponseSchema, NewProductDetailResponseSchema, NewProductListResponseSchema } from './types';
 
 /**
@@ -27,7 +29,7 @@ export const dedupeByKey = <Item, Key>(items: Item[], getKey: (item: Item) => Ke
 const getCrowdfundingList = async (): Promise<CrowdfundingListItem[]> => {
     // oxlint-disable-next-line unicorn/consistent-function-scoping
     const fetch = (query?: Record<string, number>) =>
-        ofetch<CrowdfundingListResponse>('https://m.mi.com/v1/crowd/crowd_home', {
+        ofetch<z.infer<typeof CrowdfundingListResponseSchema>>('https://m.mi.com/v1/crowd/crowd_home', {
             method: 'POST',
             query,
             schema: CrowdfundingListResponseSchema,
@@ -45,7 +47,7 @@ const getCrowdfundingList = async (): Promise<CrowdfundingListItem[]> => {
  * @returns {Promise<CrowdfundingDetailItem>} Crowdfunding item details.
  */
 const getCrowdfundingItem = async (item: CrowdfundingListItem): Promise<CrowdfundingDetailItem> => {
-    const response = await ofetch<CrowdfundingDetailResponse>('https://m.mi.com/v1/crowd/crowd_detail', {
+    const response = await ofetch<z.infer<typeof CrowdfundingDetailResponseSchema>>('https://m.mi.com/v1/crowd/crowd_detail', {
         method: 'POST',
         query: {
             project_id: item.project_id,
@@ -61,7 +63,7 @@ const getCrowdfundingItem = async (item: CrowdfundingListItem): Promise<Crowdfun
  * @returns {Promise<NewProductListItem[]>} The merged new product list.
  */
 const getNewProductList = async (): Promise<NewProductListItem[]> => {
-    const response = await ofetch<NewProductListResponse>('https://api.m.mi.com/v1/home/product_channel_get_list', {
+    const response = await ofetch<z.infer<typeof NewProductListResponseSchema>>('https://api.m.mi.com/v1/home/product_channel_get_list', {
         method: 'POST',
         schema: NewProductListResponseSchema,
     });
@@ -77,7 +79,7 @@ const getNewProductList = async (): Promise<NewProductListItem[]> => {
  * @returns {Promise<NewProductDetailItem>} New product details.
  */
 const getNewProductItem = async (item: NewProductListItem): Promise<NewProductDetailItem> => {
-    const response = await ofetch<NewProductDetailResponse>('https://m.mi.com/mtop/xiaomishop/product/info', {
+    const response = await ofetch<z.infer<typeof NewProductDetailResponseSchema>>('https://m.mi.com/mtop/xiaomishop/product/info', {
         body: [{}, { productId: item.product_id }],
         method: 'POST',
         schema: NewProductDetailResponseSchema,
