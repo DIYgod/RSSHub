@@ -10,21 +10,21 @@ const markdown = new MarkdownIt({ html: false, linkify: true, breaks: true });
 interface Post {
     id: number;
     title: string;
-    slug: string | null;
+    slug: string;
     description: string | null;
-    published_at: string | null;
+    published_at: string;
     username: string | null;
     category: string | null;
     tags: Array<{ tag: string }> | null;
 }
 
 export const route: Route = {
-    path: '/newest',
+    path: '/konek/newest',
     categories: ['new-media'],
-    example: '/konek/newest',
-    name: 'Newest posts',
+    example: '/hn.plus/konek/newest',
+    name: 'Deep Web Konek - Newest posts',
     maintainers: ['TungHaHuy'],
-    radar: [{ source: ['konek.hn.plus/newest'], target: '/newest' }],
+    radar: [{ source: ['konek.hn.plus/newest'], target: '/konek/newest' }],
     url: 'konek.hn.plus/newest',
     handler,
 };
@@ -54,17 +54,15 @@ async function handler(): Promise<Data> {
         title: 'Deep Web Konek - Newest',
         link: `${baseUrl}/newest`,
         language: 'en',
-        item: posts
-            .filter((post) => post.published_at)
-            .map((post) => ({
-                title: post.title,
-                link: `${baseUrl}/item/${post.id}${post.slug ? `/${post.slug}` : ''}`,
-                guid: `${baseUrl}/item/${post.id}`,
-                description: markdown.render(post.description ?? ''),
-                author: post.username ?? undefined,
-                // HN+ formats these timestamps with dayjs.utc() in its frontend.
-                pubDate: parseDate(`${post.published_at!.replace(' ', 'T')}Z`),
-                category: [...new Set([post.category, ...(post.tags ?? []).map((tag) => tag.tag)].filter((value): value is string => Boolean(value)))],
-            })),
+        item: posts.map((post) => ({
+            title: post.title,
+            link: `${baseUrl}/item/${post.id}/${post.slug}`,
+            guid: `${baseUrl}/item/${post.id}`,
+            description: markdown.render(post.description ?? ''),
+            author: post.username ?? undefined,
+            // HN+ formats these timestamps with dayjs.utc() in its frontend.
+            pubDate: parseDate(`${post.published_at.replace(' ', 'T')}Z`),
+            category: [...new Set([post.category, ...(post.tags ?? []).map((tag) => tag.tag)].filter((value): value is string => Boolean(value)))],
+        })),
     };
 }
