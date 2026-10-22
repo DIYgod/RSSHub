@@ -2121,6 +2121,19 @@
       }
     ]
   },
+  "hn.plus": {
+    "_name": "HN+",
+    "konek": [
+      {
+        "title": "Deep Web Konek - Newest posts",
+        "docs": "https://docs.rsshub.app/routes/hn.plus",
+        "source": [
+          "/newest"
+        ],
+        "target": "/hn.plus/konek/newest"
+      }
+    ]
+  },
   "hnu.edu.cn": {
     "_name": "湖南大学",
     "scc": [

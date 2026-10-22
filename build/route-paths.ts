@@ -1675,6 +1675,7 @@ export type RoutePath =
   | `/hkushop/vinyl/:cat?`
   | `/hlju/news/:category?`
   | `/hljucm/yjsy/:category?`
+  | `/hn.plus/konek/newest`
   | `/hnmuseum/current-exhibitions/:type?`
   | `/hnmuseum/hnmnews`
   | `/hnrb/:id?`

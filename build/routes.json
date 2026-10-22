@@ -8017,6 +8017,36 @@
     "url": "hashnode.dev",
     "lang": "en"
   },
+  "hn.plus": {
+    "routes": {
+      "/konek/newest": {
+        "path": "/konek/newest",
+        "categories": [
+          "new-media"
+        ],
+        "example": "/hn.plus/konek/newest",
+        "name": "Deep Web Konek - Newest posts",
+        "maintainers": [
+          "TungHaHuy"
+        ],
+        "radar": [
+          {
+            "source": [
+              "konek.hn.plus/newest"
+            ],
+            "target": "/konek/newest"
+          }
+        ],
+        "url": "konek.hn.plus/newest",
+        "location": "newest.ts",
+        "module": "() => import('@/routes/hn.plus/newest.ts')"
+      }
+    },
+    "apiRoutes": {},
+    "name": "HN+",
+    "url": "hn.plus",
+    "lang": "en"
+  },
   "hnu": {
     "routes": {
       "/careers": {
