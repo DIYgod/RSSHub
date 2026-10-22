@@ -1,22 +1,27 @@
 import { renderToString } from 'hono/jsx/dom/server';
+import { z } from 'zod';
 
-export type NewProduct = {
+const GoodsSchema = z.object({
     /** Product image */
-    image: string;
+    image: z.string(),
+    /** Product name */
+    name: z.string(),
+    /** Original price */
+    marketPrice: z.string(),
+    /** Current price */
+    price: z.string(),
+});
+
+const NewProductSchema = z.object({
+    /** Product image */
+    image: z.string(),
     /** Sell point list */
-    sellPointList: string[];
+    sellPointList: z.array(z.string()).nonempty(),
     /** Product list */
-    goodsList: Array<{
-        /** Product image */
-        image: string;
-        /** Product name */
-        name: string;
-        /** Original price */
-        marketPrice: string;
-        /** Current price */
-        price: string;
-    }>;
-};
+    goodsList: z.array(GoodsSchema).nonempty(),
+});
+
+export type NewProduct = z.infer<typeof NewProductSchema>;
 
 const NewProductDescription = ({ newProduct }: { newProduct: NewProduct }) => (
     <>
@@ -59,4 +64,4 @@ const NewProductDescription = ({ newProduct }: { newProduct: NewProduct }) => (
  * @param {NewProduct} newProduct - New product data.
  * @returns {string} Rendered description HTML.
  */
-export const renderNewProduct = (newProduct: NewProduct): string => renderToString(<NewProductDescription newProduct={newProduct} />);
+export const renderNewProduct = (newProduct: NewProduct): string => renderToString(<NewProductDescription newProduct={NewProductSchema.parse(newProduct)} />);
