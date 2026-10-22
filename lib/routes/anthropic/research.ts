@@ -23,77 +23,26 @@ export const route: Route = {
     url: 'www.anthropic.com/research',
 };
 
-type PublicationPost = { title: string; slug: { current: string }; publishedOn: string };
-type PublicationSection = { title?: string; posts?: PublicationPost[] };
-
-type JsonValue = string | number | boolean | null | JsonValue[] | { [key: string]: JsonValue };
-
-function findPageSections(value: JsonValue): PublicationSection[] {
-    if (Array.isArray(value)) {
-        return value.flatMap((item) => findPageSections(item));
-    }
-    if (!value || typeof value !== 'object') {
-        return [];
-    }
-    const page = value.page as { sections?: PublicationSection[] } | undefined;
-    return Array.isArray(page?.sections) ? page.sections : Object.values(value).flatMap((item) => findPageSections(item));
-}
-
 async function handler(ctx) {
     const link = 'https://www.anthropic.com/research';
     const response = await ofetch(link);
     const $ = load(response);
     const limit = getRouteLimit(ctx, 20);
 
-    // self.__next_f.push
-    const regexp = /self\.__next_f\.push\((.+)\)/;
-    const textList: string[] = [];
-    for (const e of $('script').toArray()) {
-        const $e = $(e);
-        const text = $e.text();
-        const match = regexp.exec(text);
-        if (match) {
-            try {
-                const data = JSON.parse(match[1]);
-                if (Array.isArray(data) && data.length === 2 && data[0] === 1) {
-                    textList.push(data[1]);
-                }
-            } catch {
-                // ignore
-            }
-        }
-    }
-
-    const partRegex = /^([0-9a-z]+):([0-9a-z]+)?(\[.*)$/i;
-    const fd = textList
-        .join('')
-        .split('\n')
-        .map((d) => {
-            const matchPart = partRegex.exec(d);
-            if (matchPart) {
-                return {
-                    id: matchPart[1],
-                    tag: matchPart[2],
-                    data: JSON.parse(matchPart[3]),
-                };
-            }
+    const posts = $('article[class^="AssetItem-module-scss-module__"]')
+        .toArray()
+        .slice(0, limit)
+        .map((element): DataItem => {
+            const $e = $(element);
+            const $link = $e.find('a[class$="__metaTitleLink"]');
+            const href = $link.attr('href') ?? '';
+            const dateText = $e.find('time').text();
             return {
-                id: '',
-                tag: '',
-                data: d,
+                title: $link.text().trim(),
+                link: href.startsWith('http') ? href : `https://www.anthropic.com${href}`,
+                pubDate: dateText ? parseDate(dateText, 'MMM D, YYYY') : undefined,
             };
         });
-
-    const sections = fd.flatMap((d) => findPageSections(d.data));
-    const publicationSections = sections.filter((section) => section?.title === 'Publications');
-    const posts = publicationSections
-        .flatMap((section) => section?.posts ?? [])
-        .slice(0, limit)
-        .map((post): DataItem => ({
-            title: post.title,
-            link: `https://www.anthropic.com/research/${post.slug.current}`,
-            pubDate: parseDate(post.publishedOn),
-        }));
 
     const items = await pMap(
         posts,
@@ -102,10 +51,8 @@ async function handler(ctx) {
                 const response = await ofetch(item.link!);
                 const $ = load(response);
 
-                const content = $('#main-content > article');
-                content
-                    .find('[class$="__header"], [class$="__sidebar-container"], [class$="__controls"], [class$="__socialShare"], [class^="LandingPageSection-module-scss-module__"], [class^="SubjectNewsletter-module-scss-module__"]')
-                    .remove();
+                const content = $('#main-content > div > article');
+                content.find('[class$="__Header"], [class$="__ConstellationPanelSlot"]').remove();
                 content.find('img').each((_, e) => {
                     const $e = $(e);
                     $e.removeAttr('style srcset');
