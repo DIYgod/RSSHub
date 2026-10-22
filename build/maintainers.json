@@ -4425,6 +4425,9 @@
   "/gab/user/:username": [
     "zphw"
   ],
+  "/game-wisdom/:category?": [
+    "mcdp-adk"
+  ],
   "/gameapps/": [
     "TonyRL"
   ],

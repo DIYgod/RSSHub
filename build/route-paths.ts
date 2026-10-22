@@ -1254,6 +1254,7 @@ export type RoutePath =
   | `/fzu/:type`
   | `/gab/user/:username`
   | `/galxe/quest/:alias`
+  | `/game-wisdom/:category?`
   | `/gameapps/`
   | `/gamebase/news/:type?/:category?`
   | `/gamegene/news`

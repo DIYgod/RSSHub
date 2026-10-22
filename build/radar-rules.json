@@ -22433,6 +22433,27 @@
       }
     ]
   },
+  "game-wisdom.com": {
+    "_name": "Game Wisdom",
+    ".": [
+      {
+        "title": "Articles",
+        "docs": "https://docs.rsshub.app/routes/game-wisdom",
+        "source": [
+          "/"
+        ],
+        "target": "/game-wisdom/"
+      },
+      {
+        "title": "Articles",
+        "docs": "https://docs.rsshub.app/routes/game-wisdom",
+        "source": [
+          "/category/:category"
+        ],
+        "target": "/game-wisdom/:category"
+      }
+    ]
+  },
   "gameapps.hk": {
     "_name": "GameApps.hk 香港手机游戏网",
     ".": [
