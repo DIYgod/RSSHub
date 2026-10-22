@@ -5,7 +5,8 @@ import { parseDate } from '@/utils/parse-date';
 
 const BASE_URL = 'https://cum.st';
 const API_URL = `${BASE_URL}/api/v1`;
-const MEDIA_URL = 'https://e1.cum.st/media';
+const EDGE_BASE_URLS = ['https://e1.cum.st', 'https://e2.cum.st', 'https://e3.cum.st'];
+const IMG_BASE_URL = 'https://img.cum.st';
 
 interface MediaAttachment {
     locked: boolean;
@@ -33,16 +34,31 @@ interface CreatorProfile {
     displayName: string | null;
 }
 
-const imageUrls = (attachments: MediaAttachment[] = []): string[] =>
+const renderMedia = (attachments: MediaAttachment[] = []): Array<{ html: string; image?: string }> =>
     attachments
         .map((attachment) => {
-            if (attachment.locked || !['image', 'gif'].includes(attachment.kind ?? '') || !attachment.storageKey) {
+            const variant = attachment.variants?.find((variant) => variant.name.startsWith('original.')) ?? attachment.variants?.[0];
+            if (attachment.locked || !attachment.storageKey || !variant) {
                 return;
             }
-            const variant = attachment.variants?.find((variant) => variant.name.startsWith('original.')) ?? attachment.variants?.[0];
-            return variant && `${MEDIA_URL}/${encodeURIComponent(attachment.storageKey)}/${encodeURIComponent(variant.name)}`;
+            const key = encodeURIComponent(attachment.storageKey);
+            const edge = EDGE_BASE_URLS[Math.floor(Math.random() * EDGE_BASE_URLS.length)];
+            const src = `${edge}/media/${key}/${encodeURIComponent(variant.name)}`;
+            switch (attachment.kind) {
+                case 'image':
+                case 'gif':
+                    return { html: `<p><img src="${src}"></p>`, image: src };
+                case 'video': {
+                    const poster = `${IMG_BASE_URL}/thumbnail/${key}/preview.webp`;
+                    return { html: `<p><video controls preload="metadata" src="${src}" poster="${poster}"></video></p>`, image: poster };
+                }
+                case 'audio':
+                    return { html: `<p><audio controls preload="metadata" src="${src}"></audio></p>` };
+                default:
+                    return;
+            }
         })
-        .filter((url) => url !== undefined);
+        .filter((media) => media !== undefined);
 
 const makeItem = (item: ContentItem, isDm: boolean, creatorId?: string, creatorName?: string): DataItem => {
     const id = item.creatorId ?? creatorId;
@@ -51,13 +67,13 @@ const makeItem = (item: ContentItem, isDm: boolean, creatorId?: string, creatorN
     }
     const author = item.creatorName ?? creatorName;
     const kind = isDm ? 'dm' : 'post';
-    const images = imageUrls(item.attachments);
+    const media = renderMedia(item.attachments);
     const text = isDm ? item.contentText : item.captionText;
 
     return {
         title: (!isDm && item.title) || text || `${isDm ? 'DM' : 'Post'} ${item.id}`,
-        description: ((isDm ? item.contentHtml : item.captionHtml) ?? (text ? `<p>${text}</p>` : '')) + images.map((url) => `<p><img src="${url}"></p>`).join(''),
-        image: images[0],
+        description: ((isDm ? item.contentHtml : item.captionHtml) ?? (text ? `<p>${text}</p>` : '')) + media.map((m) => m.html).join(''),
+        image: media.find((m) => m.image)?.image,
         author,
         pubDate: item.published === undefined ? undefined : parseDate(item.published, 'X'),
         link: `${BASE_URL}/creators/${item.service}/${encodeURIComponent(id)}/${kind}/${encodeURIComponent(item.id)}`,
@@ -81,7 +97,7 @@ const handler: Route['handler'] = async (ctx) => {
     return {
         title: isGlobal ? `OnlyHeaven ${isDm ? 'DMs' : 'Posts'}` : `${isDm ? 'DMs' : 'Posts'} of ${creatorName} from ${service} | OnlyHeaven`,
         link: isGlobal ? `${BASE_URL}/${kind}` : `${BASE_URL}/creators/${service}/${encodeURIComponent(id)}${isDm ? '?tab=dms' : ''}`,
-        image: isGlobal ? undefined : `https://img.cum.st/creator/${service}/${encodeURIComponent(id)}/avatar.webp`,
+        image: isGlobal ? undefined : `${IMG_BASE_URL}/creator/${service}/${encodeURIComponent(id)}/avatar.webp`,
         item: feed[kind].map((item) => makeItem(item, isDm, id, creatorName)),
     };
 };
