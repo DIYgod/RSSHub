@@ -1,8 +1,11 @@
+import type { z } from 'zod';
+
 import type { NewProduct } from '@/routes/mi/templates/newproduct';
 import { dedupeByKey } from '@/routes/mi/utils';
 import ofetch from '@/utils/ofetch';
 
-import type { NewProductDetailItem, NewProductDetailResponse, NewProductListItem, NewProductListResponse } from './types';
+import type { NewProductDetailItem, NewProductListItem } from './types';
+import { NewProductDetailResponseSchema, NewProductListResponseSchema } from './types';
 
 /**
  * Fetch the list of new products, extracting goods from every `car_product_list_new` floor.
@@ -10,7 +13,7 @@ import type { NewProductDetailItem, NewProductDetailResponse, NewProductListItem
  * @returns {Promise<NewProductListItem[]>} The new product list.
  */
 const getNewProductList = async (): Promise<NewProductListItem[]> => {
-    const response = await ofetch<NewProductListResponse>('https://carshop-api.retail.xiaomiev.com/mtop/carlife/home/index/v2', {
+    const response = await ofetch<z.infer<typeof NewProductListResponseSchema>>('https://carshop-api.retail.xiaomiev.com/mtop/carlife/home/index/v2', {
         body: [
             {
                 isPreview: false,
@@ -19,6 +22,7 @@ const getNewProductList = async (): Promise<NewProductListItem[]> => {
             },
         ],
         method: 'POST',
+        schema: NewProductListResponseSchema,
     });
     const items = response.data.floors
         .filter((floor) => floor.moduleKey === 'car_product_list_new')
@@ -34,7 +38,7 @@ const getNewProductList = async (): Promise<NewProductListItem[]> => {
  * @returns {Promise<NewProductDetailItem>} New product details.
  */
 const getNewProductItem = async (item: NewProductListItem): Promise<NewProductDetailItem> => {
-    const response = await ofetch<NewProductDetailResponse>('https://carshop-api.retail.xiaomiev.com/mtop/carlife/product/info/v2', {
+    const response = await ofetch<z.infer<typeof NewProductDetailResponseSchema>>('https://carshop-api.retail.xiaomiev.com/mtop/carlife/product/info/v2', {
         body: [
             {},
             {
@@ -47,6 +51,7 @@ const getNewProductItem = async (item: NewProductListItem): Promise<NewProductDe
             'X-User-Agent': 'channel/car platform/carlife.ios',
         },
         method: 'POST',
+        schema: NewProductDetailResponseSchema,
     });
     return response.data;
 };
