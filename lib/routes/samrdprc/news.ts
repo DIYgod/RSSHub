@@ -6,6 +6,15 @@ import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
+import { baseUrl, loadList } from './utils';
+
+// The site redesign moved the recall lists, so keep the documented IDs pointing at their new columns
+const columns: Record<string, string> = {
+    'qczh/gnzhqc': 'zhxx/jdczh/jdczh',
+    'qczh/qczhgg1': 'fzlm/zhgg/qczhgg',
+    'xfpzh/xfpgnzh': 'xfpzh',
+};
+
 export const route: Route = {
     path: '/news/:type1/:type2',
     categories: ['government'],
@@ -22,37 +31,50 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    description: `| 类型中文   | 召回类型 ID1 | 召回类型 ID2 |
-| ---------- | ------------ | ------------ |
-| 消费品召回 | xfpzh        | xfpgnzh      |
-| 汽车召回   | qczh         | gnzhqc       |`,
+    description: `| 类型中文     | 召回类型 ID1 | 召回类型 ID2 |
+| ------------ | ------------ | ------------ |
+| 消费品召回   | xfpzh        | xfpgnzh      |
+| 汽车召回     | qczh         | gnzhqc       |
+| 汽车召回公告 | qczh         | qczhgg1      |
+
+其他召回栏目（如摩托车召回）请使用栏目路由，例如 \`/samrdprc/zhxx/jdczh/mtczh\`。`,
     name: '召回信息',
     maintainers: ['a180285'],
     radar: [
         {
-            source: ['www.samrdprc.org.cn/:type1/:type2'],
-            target: '/news/:type1/:type2',
+            source: ['www.samrdprc.org.cn/xfpzh/index.html'],
+            target: '/news/xfpzh/xfpgnzh',
+        },
+        {
+            source: ['www.samrdprc.org.cn/zhxx/jdczh/jdczh/index.html'],
+            target: '/news/qczh/gnzhqc',
+        },
+        {
+            source: ['www.samrdprc.org.cn/fzlm/zhgg/qczhgg/index.html'],
+            target: '/news/qczh/qczhgg1',
         },
     ],
     handler: async (ctx) => {
-        const baseURL = 'https://www.samrdprc.org.cn';
         const type1 = ctx.req.param('type1');
         const type2 = ctx.req.param('type2');
 
-        const url = `${baseURL}/${type1}/${type2}`;
+        const id = `${type1}/${type2}`;
+        const url = `${baseUrl}/${columns[id] ?? id}/`;
         const response = await got(url);
         const $ = load(response.body);
 
-        const typeName = $('div.box_main > div.boxl.fl > div.boxl_tit > div > span.fl').text();
+        const typeName = $('meta[name="ColumnName"]').attr('content');
 
-        const listSelector = $('div.main > div.box1 > div.box_main > div.boxl.fl > div.boxl_ul > ul > li');
+        const $list = await loadList($);
+        const listSelector = $list('.page-content ul li');
         const items: DataItem[] = await pMap(
             listSelector.toArray(),
             (el) => {
-                const item = $(el);
+                const item = $list(el);
+                const anchor = item.find('a').first();
 
-                const title = item.find('a').text();
-                const link = url + '/' + item.find('a').attr('href');
+                const title = anchor.text();
+                const link = new URL(anchor.attr('href')!, baseUrl).href;
                 const date = item.find('span').text().trim();
                 const pubDate = date ? parseDate(`${date}T00:00:00Z`) : undefined;
 
@@ -60,7 +82,7 @@ export const route: Route = {
                     const detail = await got(link);
                     const $ = load(detail.body);
 
-                    const articleHTML = $('div.show_txt > div.TRS_Editor').html();
+                    const articleHTML = $('#zoom').html();
 
                     return {
                         title,
