@@ -49457,6 +49457,32 @@
     ],
     "lang": "zh-CN"
   },
+  "craigslist": {
+    "routes": {
+      "/:location/:type/:query?": {
+        "path": "/:location/:type/:query?",
+        "categories": [
+          "shopping"
+        ],
+        "example": "/craigslist/sfbay/sso",
+        "parameters": {
+          "location": "Craigslist site, the subdomain of the site you browse, e.g. `sfbay` for `sfbay.craigslist.org`",
+          "type": "Search type, the category abbreviation that follows `/search/` in the Craigslist search URL, e.g. `sso` (sale by owner), `apa` (apartments / housing for rent), `cta` (cars & trucks), `jjj` (all jobs), `sss` (all for sale)",
+          "query": "Search keywords"
+        },
+        "name": "Search",
+        "maintainers": [
+          "TonyRL"
+        ],
+        "location": "search.ts",
+        "module": "() => import('@/routes/craigslist/search.ts')"
+      }
+    },
+    "apiRoutes": {},
+    "name": "Craigslist",
+    "url": "www.craigslist.org",
+    "lang": "en"
+  },
   "creaders": {
     "routes": {
       "/headline": {

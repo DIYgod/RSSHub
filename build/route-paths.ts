@@ -783,6 +783,7 @@ export type RoutePath =
   | `/cqwu/news/:type?`
   | `/crac/:type?`
   | `/crac/exam`
+  | `/craigslist/:location/:type/:query?`
   | `/creaders/headline`
   | `/creative-comic/book/:id/:coverOnly?/:quality?`
   | `/crossbell/feeds/following/:characterId`

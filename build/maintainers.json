@@ -3560,6 +3560,9 @@
   "/crac/:type?": [
     "Misaka13514"
   ],
+  "/craigslist/:location/:type/:query?": [
+    "TonyRL"
+  ],
   "/creaders/headline": [
     "nczitzk"
   ],
