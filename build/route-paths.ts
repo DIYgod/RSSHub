@@ -2668,6 +2668,7 @@ export type RoutePath =
   | `/p-articles/section/:section`
   | `/p-bandai/new`
   | `/pacilution/latest`
+  | `/panasonic/firmware`
   | `/panewslab/author/:id`
   | `/panewslab/column/:id`
   | `/panewslab/news`

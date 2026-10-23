@@ -6770,6 +6770,9 @@
   "/pacilution/latest": [
     "PrinOrange"
   ],
+  "/panasonic/firmware": [
+    "fdkevin0"
+  ],
   "/papers/query/:keyword{.+}?": [
     "Muyun99"
   ],

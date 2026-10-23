@@ -97731,6 +97731,43 @@
     "name": "普世社会科学研究所",
     "url": "www.pacilution.com"
   },
+  "panasonic": {
+    "routes": {
+      "/firmware": {
+        "path": "/firmware",
+        "name": "Camera and lens firmware",
+        "categories": [
+          "program-update"
+        ],
+        "example": "/panasonic/firmware",
+        "maintainers": [
+          "fdkevin0"
+        ],
+        "features": {
+          "supportRadar": true
+        },
+        "radar": [
+          {
+            "source": [
+              "av.jpn.support.panasonic.com/support/global/cs/dsc/download/top.html",
+              "av.jpn.support.panasonic.com/support/global/cs/dsc/download/index4.html",
+              "av.jpn.support.panasonic.com/support/global/cs/dsc/download/index.html",
+              "av.jpn.support.panasonic.com/support/global/cs/dsc/download/index2.html",
+              "av.jpn.support.panasonic.com/support/global/cs/dsc/download/index5.html"
+            ],
+            "target": "/firmware"
+          }
+        ],
+        "description": "Latest listed firmware for camera bodies and interchangeable lenses, including LEICA DG. Historical releases and camera software updates are excluded. Use common parameters to filter models, for example `?filter_title=^DC-S5M2%20`, or lenses with `?filter_title=^(S-|H-)`. Intermediate releases can be missed if a newer version replaces them between polls.",
+        "location": "firmware.ts",
+        "module": "() => import('@/routes/panasonic/firmware.ts')"
+      }
+    },
+    "apiRoutes": {},
+    "name": "Panasonic",
+    "url": "av.jpn.support.panasonic.com",
+    "lang": "en"
+  },
   "papers": {
     "routes": {
       "/query/:keyword{.+}?": {
