@@ -8,6 +8,7 @@ on:
             - 'lib/**'
             - 'package.json'
             - 'pnpm-lock.yaml'
+            - 'pnpm-workspace.yaml'
             - '.github/workflows/test.yml'
     pull_request: {}
 

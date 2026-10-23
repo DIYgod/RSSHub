@@ -10,6 +10,7 @@ on:
             - 'Dockerfile'
             - 'package.json'
             - 'pnpm-lock.yaml'
+            - 'pnpm-workspace.yaml'
         types: [opened, reopened, synchronize, edited]
     # Please, always create a pull request instead of push to master.
 
