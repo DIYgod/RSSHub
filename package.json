@@ -129,7 +129,7 @@
         "sm-crypto-v2": "1.15.1",
         "socks-proxy-agent": "10.1.0",
         "source-map": "0.8.0",
-        "teleproto": "1.230.0",
+        "teleproto": "1.232.0",
         "title": "4.0.1",
         "tldts": "7.4.18",
         "tosource": "2.0.0-alpha.3",
@@ -215,44 +215,5 @@
     "engines": {
         "node": "^22.22.2 || ^24.15.0"
     },
-    "packageManager": "pnpm@10.34.6+sha512.7e1ae66a83a9143c118cc1944f37cc4f2b8acddeda4b001cfa78908f6e46e45e15292739ca6c9d026426cc757e9318cc98c5551d6a16c165097b0028ba87b4e6",
-    "pnpm": {
-        "onlyBuiltDependencies": [
-            "bufferutil",
-            "core-js",
-            "es5-ext",
-            "esbuild",
-            "eslint-nibble",
-            "patchright",
-            "patchright-core",
-            "protobufjs",
-            "rolldown",
-            "sharp",
-            "sleep",
-            "unrs-resolver",
-            "utf-8-validate",
-            "vue-demi",
-            "workerd",
-            "wrangler"
-        ],
-        "overrides": {
-            "browserslist@4.28.9>caniuse-lite": "1.0.30001810",
-            "difflib": "https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed",
-            "es-set-tostringtag": "npm:@nolyfill/es-set-tostringtag@^1",
-            "google-play-scraper>got": "^14.6.4",
-            "google-play-scraper>ramda": "^0.32.0",
-            "google-play-scraper>tough-cookie": "^6.0.0",
-            "hasown": "npm:@nolyfill/hasown@^1",
-            "header-generator>browserslist": "4.28.9",
-            "rss-parser@3.13.0>entities": "^8.1.0",
-            "rss-parser@3.13.0>xml2js": "^0.6.2",
-            "safe-buffer": "npm:@nolyfill/safe-buffer@^1",
-            "safer-buffer": "npm:@nolyfill/safer-buffer@^1",
-            "side-channel": "npm:@nolyfill/side-channel@^1"
-        },
-        "patchedDependencies": {
-            "rss-parser@3.13.0": "patches/rss-parser@3.13.0.patch",
-            "teleproto@1.230.0": "patches/teleproto@1.230.0.patch"
-        }
-    }
+    "packageManager": "pnpm@12.15.0+sha512.b3951d6d6ff4a9f13dc7cf56cd28d2b8eb37dbcc9c68e52e1e1191873ea9f82a017287ab50baadc5ccc494f036c67c0e47eb13608c2fa36f47711b61ea128e61"
 }

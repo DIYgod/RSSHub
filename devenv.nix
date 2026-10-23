@@ -22,7 +22,7 @@
     package = pkgs.nodejs_24;
     pnpm = {
       enable = true;
-      package = pkgs.pnpm_10;
+      package = pkgs.pnpm_12;
     };
   };
 

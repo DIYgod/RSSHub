@@ -18,6 +18,7 @@ RUN \
 
 COPY ./tsconfig.json /app/
 COPY ./patches /app/patches
+COPY ./pnpm-workspace.yaml /app/
 COPY ./pnpm-lock.yaml /app/
 COPY ./package.json /app/
 
