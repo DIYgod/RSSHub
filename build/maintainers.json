@@ -8240,6 +8240,9 @@
     "nczitzk",
     "pseudoyu"
   ],
+  "/theatlantic/author/:id": [
+    "pseudoyu"
+  ],
   "/theatlantic/:category": [
     "IvanWng97",
     "pseudoyu"

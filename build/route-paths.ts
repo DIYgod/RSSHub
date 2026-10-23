@@ -3356,6 +3356,7 @@ export type RoutePath =
   | `/tgbus/list/:category`
   | `/the/:filter{.+}?`
   | `/theatlantic/:category`
+  | `/theatlantic/author/:id`
   | `/theblock/category/:category`
   | `/theblockbeats/:channel?/:original?`
   | `/thebrain/blog`

@@ -118135,6 +118135,38 @@ export default {
   },
   "theatlantic": {
     "routes": {
+      "/author/:id": {
+        "path": "/author/:id",
+        "categories": [
+          "traditional-media"
+        ],
+        "example": "/theatlantic/author/alan-taylor",
+        "parameters": {
+          "id": "Author ID, can be found in the author page URL"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "www.theatlantic.com/author/:id"
+            ],
+            "target": "/author/:id"
+          }
+        ],
+        "name": "Author",
+        "maintainers": [
+          "pseudoyu"
+        ],
+        "location": "author.ts",
+        "module": () => import('@/routes/theatlantic/author.ts')
+      },
       "/:category": {
         "path": "/:category",
         "categories": [

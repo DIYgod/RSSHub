@@ -47675,6 +47675,14 @@
     "_name": "The Atlantic",
     "www": [
       {
+        "title": "Author",
+        "docs": "https://docs.rsshub.app/routes/theatlantic",
+        "source": [
+          "/author/:id"
+        ],
+        "target": "/theatlantic/author/:id"
+      },
+      {
         "title": "News",
         "docs": "https://docs.rsshub.app/routes/theatlantic",
         "source": [
