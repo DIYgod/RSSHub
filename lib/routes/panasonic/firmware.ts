@@ -42,7 +42,7 @@ export const route: Route = {
 
 async function fetchItems(filename: string, category: string) {
     const url = new URL(filename, baseUrl).href;
-    const html = await ofetch(url, { responseType: 'text' });
+    const html = await ofetch(url);
     const $ = load(html);
     const windows = new Map(
         $('script:not([src])')
@@ -52,16 +52,16 @@ async function fetchItems(filename: string, category: string) {
     );
     const items = $('table[id="tb_bdl007"] tr')
         .toArray()
-        .flatMap((row) => {
+        .map((row) => {
             const cells = $(row).children('td');
             const fields = cells.slice(-4);
-            const model = fields.eq(0).text().trim();
-            const download = fields.eq(3).find('a').first();
-            if (!/^(?:DC-|DMC-|S-|H-)/.test(model) || download.text().trimStart().startsWith('Software update')) {
-                return [];
+            const model = fields.eq(0).text();
+            const download = fields.eq(3).find('a');
+            if (!/^(?:DC-|DMC-|S-|H-)/.test(model) || download.text().startsWith('Software update')) {
+                return;
             }
 
-            const version = /^Ver\.?\s*(\d+(?:\.\d+)*)$/.exec(fields.eq(1).text().trim())?.[1];
+            const version = /^Ver\.?\s*(\d+(?:\.\d+)*)$/.exec(fields.eq(1).text())?.[1];
             if (!version) {
                 throw new Error(`Invalid firmware version for ${model} on ${url}`);
             }
@@ -83,7 +83,7 @@ async function fetchItems(filename: string, category: string) {
             }
 
             const isLens = /^(?:S-|H-)/.test(model);
-            const name = isLens ? cells.eq(-5).text().replaceAll(/\s+/g, ' ').trim() : '';
+            const name = isLens ? cells.eq(-5).text().replaceAll(/\s+/g, ' ') : '';
             return {
                 title: `${model}${name ? ` ${name}` : ''} Firmware Ver.${version}`,
                 // RSS3 uses links as IDs, and some models share a download page.
@@ -92,7 +92,8 @@ async function fetchItems(filename: string, category: string) {
                 pubDate,
                 category: isLens ? ['Lens', model.startsWith('S-') ? 'L-mount' : 'Micro Four Thirds'] : ['Camera body', category],
             };
-        });
+        })
+        .filter((item) => item !== undefined);
     if (items.length === 0) {
         throw new Error(`No Panasonic firmware entries found on ${url}`);
     }
@@ -105,6 +106,6 @@ async function handler(): Promise<Data> {
         title: 'Panasonic camera and lens firmware',
         link: new URL('top.html', baseUrl).href,
         language: 'en',
-        item: items.toSorted((a, b) => b.pubDate.getTime() - a.pubDate.getTime()),
+        item: items,
     };
 }
