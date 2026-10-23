@@ -22,16 +22,14 @@ type Insight = {
 };
 
 const getArticleContent = ($: CheerioAPI): string | undefined => {
-    const content = $('.article-content > .row > .col-md-8').first();
+    const content = $('.article-content > .row > .col-md-8');
     if (content.length === 0) {
         return;
     }
 
     // drop the title (already exposed as the item title) and the podcast/video player furniture
     content.find('h1, .podcast-poster, .podcast-logos, .d-flex.justify-content-between, #mediaPlayer').remove();
-    while (content.children('br').first().length > 0) {
-        content.children('br').first().remove();
-    }
+    content.children('br').remove();
 
     return content.html() ?? undefined;
 };
@@ -67,7 +65,7 @@ async function handler(ctx: Context): Promise<Data> {
 
     const html = await ofetch(INSIGHTS_URL);
     const $ = load(html);
-    const rawList = $('.insights-list[data-items]').first().attr('data-items');
+    const rawList = $('.insights-list[data-items]').attr('data-items');
     if (!rawList) {
         throw new Error('Oaktree insights list not found, the page structure may have changed');
     }
