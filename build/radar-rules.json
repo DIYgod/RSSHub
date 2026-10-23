@@ -37702,6 +37702,19 @@
       }
     ]
   },
+  "oaktreecapital.com": {
+    "_name": "Oaktree Capital",
+    "www": [
+      {
+        "title": "Insights",
+        "docs": "https://docs.rsshub.app/routes/oaktree",
+        "source": [
+          "/insights"
+        ],
+        "target": "/oaktree/insights"
+      }
+    ]
+  },
   "obsidian.md": {
     "_name": "Obsidian",
     "publish": [

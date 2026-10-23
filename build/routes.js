@@ -94955,6 +94955,39 @@ export default {
     "url": "nytimes.com",
     "lang": "en"
   },
+  "oaktree": {
+    "routes": {
+      "/insights": {
+        "path": "/insights",
+        "name": "Insights",
+        "url": "www.oaktreecapital.com/insights",
+        "maintainers": [
+          "argsno"
+        ],
+        "example": "/oaktree/insights",
+        "description": "Includes Howard Marks memos, market commentary, education and press mentions. Items are categorised by content type (`memos`, `press`, ...) and media type (`article`, `audio`, `video`), so both can be filtered with the common `filter_category` / `filterout_category` parameters. Full text is fetched from each insight page, while press items link to external websites. The latest 30 entries are returned by default, use the `limit` parameter for more.",
+        "categories": [
+          "finance"
+        ],
+        "radar": [
+          {
+            "source": [
+              "www.oaktreecapital.com/insights"
+            ]
+          }
+        ],
+        "location": "insights.ts",
+        "module": () => import('@/routes/oaktree/insights.ts')
+      }
+    },
+    "apiRoutes": {},
+    "name": "Oaktree Capital",
+    "url": "www.oaktreecapital.com",
+    "categories": [
+      "finance"
+    ],
+    "lang": "en"
+  },
   "obsidian": {
     "routes": {
       "/plugins": {
