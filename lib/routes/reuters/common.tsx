@@ -220,9 +220,9 @@ async function handler(ctx) {
                     headerGeneratorOptions: PRESETS.MODERN_IOS,
                 });
 
+                // The topic API no longer returns the topic itself, so name the feed after the topic in the URL
                 return {
-                    title: `${response.result.topics[0].name} | Reuters`,
-                    description: response.result.topics[0].entity_id,
+                    title: `${topic} | Reuters`,
                     rootUrl,
                     response,
                 };
