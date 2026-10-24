@@ -95,7 +95,7 @@ async function* streamDocument(client: TelegramClient, obj: Api.Document, thumbS
             requestSize,
             dcId: obj.dcId,
             offset: alignedOffset,
-            limit: limit ? Math.ceil(limit.subtract(alignedOffset).add(1).toJSNumber() / requestSize) : undefined,
+            limit: limit ? limit.subtract(alignedOffset).add(1).toJSNumber() : undefined,
         }
     );
     for await (const chunk of chunks) {
@@ -166,6 +166,9 @@ export async function configureMiddlewares(ctx: Context) {
     }
 }
 function streamResponse(c: Context, bodyIter: AsyncGenerator<Buffer>) {
+    if (c.req.method === 'HEAD') {
+        return c.body(null);
+    }
     return stream(c, async (stream) => {
         let aborted = false;
         stream.onAbort(() => {
