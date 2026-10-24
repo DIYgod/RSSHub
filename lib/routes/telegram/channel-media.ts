@@ -166,6 +166,9 @@ export async function configureMiddlewares(ctx: Context) {
     }
 }
 function streamResponse(c: Context, bodyIter: AsyncGenerator<Buffer>) {
+    if (c.req.method === 'HEAD') {
+        return c.body(null);
+    }
     return stream(c, async (stream) => {
         let aborted = false;
         stream.onAbort(() => {
