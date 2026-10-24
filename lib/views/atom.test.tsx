@@ -82,6 +82,36 @@ describe('Atom view', () => {
         expect(html).toContain('href="https://example.com/cover.png" type="image/png"');
     });
 
+    it('renders item links and ignores items without them', () => {
+        const html = renderToString(
+            <Atom
+                data={{
+                    title: 'Item links',
+                    item: [
+                        {
+                            title: 'Item with replies feed',
+                            link: 'https://example.com/thread/1',
+                            links: [
+                                {
+                                    url: 'https://example.com/thread/1?format=atom',
+                                    rel: 'replies',
+                                    type: 'application/atom+xml',
+                                },
+                            ],
+                        },
+                        {
+                            title: 'Item without links',
+                            link: 'https://example.com/thread/2',
+                        },
+                    ],
+                }}
+            />
+        );
+
+        expect(html.match(/rel="replies"/g)).toHaveLength(1);
+        expect(html).toContain('href="https://example.com/thread/1?format=atom" type="application/atom+xml"');
+    });
+
     it('does not let hono hoist feed titles and links as document metadata', () => {
         const html = String(
             <probe>
