@@ -6,24 +6,10 @@ import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { parseDateRange } from '@/utils/parse-date-range';
 import timezone from '@/utils/timezone';
 
 import { namespace } from './namespace';
-
-type ExhibitionDuration = { startDate: string | undefined; endDate: string | undefined };
-
-// Convert "YYYY年M月D日（-/——/—/至）[YYYY年]M月D日" into YYYY-MM-DD start/end dates
-const parseExhibitionDuration = (raw: string): ExhibitionDuration => {
-    const m = raw.match(/(\d{4})年(\d{1,2})月(\d{1,2})日[-—至]+(?:(\d{4})年)?(\d{1,2})月(\d{1,2})日/);
-    if (!m) {
-        return { startDate: undefined, endDate: undefined };
-    }
-    const endYear = m[4] ?? m[1];
-    return {
-        startDate: `${m[1]}-${m[2].padStart(2, '0')}-${m[3].padStart(2, '0')}`,
-        endDate: `${endYear}-${m[5].padStart(2, '0')}-${m[6].padStart(2, '0')}`,
-    };
-};
 
 // Extract exhibition date and location from detail page txt div
 const extractExhibitionMeta = ($detail: CheerioAPI) => {
@@ -81,7 +67,7 @@ export const route: Route = {
                     const detailResponse = await ofetch(item.link);
                     const $detail = load(detailResponse);
                     const { fullDuration, location } = extractExhibitionMeta($detail);
-                    const { startDate, endDate } = parseExhibitionDuration(fullDuration ?? '');
+                    const { startDate, endDate } = parseDateRange(fullDuration ?? '');
                     const dateRaw =
                         $detail('div.n2')
                             .text()

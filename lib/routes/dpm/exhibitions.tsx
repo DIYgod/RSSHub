@@ -7,6 +7,7 @@ import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { parseDateRange } from '@/utils/parse-date-range';
 import timezone from '@/utils/timezone';
 
 import { namespace } from './namespace';
@@ -131,20 +132,7 @@ export const route: Route = {
                     fullDuration = '未定/常设';
                 }
 
-                const cleanDuration = fullDuration.replaceAll(/[./]/g, '-');
-
-                // use YYYY-MM-DD for date format
-                const dateMatches = cleanDuration.match(/\d{4}-\d{2}-\d{2}/g);
-
-                let startDate: string | undefined;
-                let endDate: string | undefined;
-
-                if (dateMatches) {
-                    startDate = dateMatches[0];
-                    if (dateMatches.length >= 2) {
-                        endDate = dateMatches[1];
-                    }
-                }
+                const { startDate, endDate } = parseDateRange(fullDuration);
 
                 const pubDate = startDate ? timezone(parseDate(startDate, 'YYYY-MM-DD'), 8) : undefined;
 
