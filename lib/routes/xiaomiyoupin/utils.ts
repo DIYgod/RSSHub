@@ -11,15 +11,15 @@ import { dedupeByKey } from '@/routes/mi/utils';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
-import type { CrowdfundingBatchListItem, CrowdfundingDetailItem, NewProductBatchListItem, NewProductDetailItem, VenueBannerBatchItem, VenueGoodsBatchItem, VenueQuery, VenueReservationBatchItem } from './types';
+import type { CrowdfundingBatchListItem, CrowdfundingDetailItem, NewProductBatchListItem, NewProductDetailItem, VenueGoodsBatchItem, VenueQuery } from './types';
 import {
     CrowdfundingBatchResultSchema,
     CrowdfundingDetailResponseSchema,
     CrowdfundingGoodsBatchSchema,
     HomepageMainResponseSchema,
+    NewProductBatchListItemSchema,
     NewProductBatchResultSchema,
     NewProductDetailResponseSchema,
-    VenueBannerBatchItemSchema,
     VenueBatchResponseSchema,
     VenueGoodsBatchItemSchema,
     VenueGoodsTypeBatchItemSchema,
@@ -79,13 +79,9 @@ const getVenuePageQueryList = async (pageId: string, sign: string, resolvers: st
     return queryList;
 };
 
-type VenueBatchItem = NewProductBatchListItem | VenueReservationBatchItem;
+type VenueBatchItem = CrowdfundingBatchListItem | NewProductBatchListItem;
 
 const isVenueGoodsBatchItem = (item: VenueBatchItem): item is VenueGoodsBatchItem => VenueGoodsBatchItemSchema.safeParse(item).success;
-
-const isVenueGoodsTypeBatchItem = (item: VenueBatchItem): item is VenueGoodsBatchItem => VenueGoodsTypeBatchItemSchema.safeParse(item).success;
-
-const isVenueBannerBatchItem = (item: VenueBatchItem): item is VenueBannerBatchItem => VenueBannerBatchItemSchema.safeParse(item).success;
 
 /**
  * Keep the items that match the schema, dropping the ones that do not.
@@ -184,7 +180,7 @@ const getNewProductList = async (): Promise<{ list: NewProductBatchListItem[]; j
     const { pageId, sign, jumpUrl } = await getVenueQueryContext('上新精选');
     const queryList = await getVenuePageQueryList(pageId, sign, ['leek-super', 'leek-selective']);
     const resultList = await getVenueBatchResultList(pageId, sign, queryList, NewProductBatchResultSchema);
-    const batchList = resultList.flatMap((result) => result.list).filter((item): item is NewProductBatchListItem => isVenueGoodsTypeBatchItem(item) || isVenueBannerBatchItem(item));
+    const batchList = resultList.flatMap((result) => toSchemaItems(result.list, NewProductBatchListItemSchema));
     const list = dedupeByKey(batchList, (item) => getNewProductGid(item));
     return { list, jumpUrl };
 };

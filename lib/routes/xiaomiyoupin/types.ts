@@ -128,13 +128,17 @@ export const VenueBannerBatchItemSchema = z.object({
 
 export type VenueBannerBatchItem = z.infer<typeof VenueBannerBatchItemSchema>;
 
-const NewProductBatchListItemSchema = z.union([VenueGoodsBatchItemSchema, VenueBannerBatchItemSchema]);
-
-export type NewProductBatchListItem = z.infer<typeof NewProductBatchListItemSchema>;
+// Response members are validated loosely, so an unexpected member never breaks the whole batch.
+const NewProductBatchMemberSchema = z.union([VenueGoodsBatchItemSchema, VenueBannerBatchItemSchema]);
 
 export const NewProductBatchResultSchema = z.object({
-    list: z.array(NewProductBatchListItemSchema),
+    list: z.array(NewProductBatchMemberSchema),
 });
+
+// The rendered list only keeps `goods` members and banners.
+export const NewProductBatchListItemSchema = z.union([VenueGoodsTypeBatchItemSchema, VenueBannerBatchItemSchema]);
+
+export type NewProductBatchListItem = z.infer<typeof NewProductBatchListItemSchema>;
 
 // GoodsDetail
 
