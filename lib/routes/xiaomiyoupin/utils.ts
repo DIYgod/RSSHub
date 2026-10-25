@@ -14,10 +14,11 @@ import { parseDate } from '@/utils/parse-date';
 import type { CrowdfundingBatchListItem, CrowdfundingDetailItem, NewProductBatchListItem, NewProductDetailItem, VenueGoodsTypeBatchItem, VenueQuery } from './types';
 import {
     CrowdfundingBatchResultSchema,
-    CrowdfundingDetailResponseSchema,
+    CrowdfundingDetailItemSchema,
+    GoodsDetailResponseSchema,
     HomepageMainResponseSchema,
     NewProductBatchResultSchema,
-    NewProductDetailResponseSchema,
+    NewProductDetailItemSchema,
     VenueBatchResponseSchema,
     VenueGoodsTypeBatchItemSchema,
     VenuePageResponseSchema,
@@ -182,37 +183,23 @@ const getCrowdfundingList = async (): Promise<{ list: CrowdfundingBatchListItem[
     return { list, jumpUrl };
 };
 
-const GOODS_DETAIL_ENDPOINT = 'https://m.xiaomiyoupin.com/api/gateway/detail';
-
-const getGoodsDetailOptions = (gid: number) => ({
-    body: {
-        channel: '',
-        debug: false,
-        groupName: 'details',
-        groupParams: [[String(gid)]],
-        methods: [],
-        system: '2',
-        version: '1.0.0',
-        vipMode: true,
-    },
-    headers: {
-        'X-User-Agent': 'channel/youpin platform/youpin.m',
-    },
-    method: 'POST' as const,
-});
-
-const getCrowdfundingGoodsItem = async (gid: number): Promise<CrowdfundingDetailItem> => {
-    const response = await ofetch<z.infer<typeof CrowdfundingDetailResponseSchema>>(GOODS_DETAIL_ENDPOINT, {
-        ...getGoodsDetailOptions(gid),
-        schema: CrowdfundingDetailResponseSchema,
-    });
-    return response.data.goods;
-};
-
-const getNewProductGoodsItem = async (gid: number): Promise<NewProductDetailItem> => {
-    const response = await ofetch<z.infer<typeof NewProductDetailResponseSchema>>(GOODS_DETAIL_ENDPOINT, {
-        ...getGoodsDetailOptions(gid),
-        schema: NewProductDetailResponseSchema,
+const getGoodsDetail = async <Goods extends z.ZodType>(gid: number, goodsSchema: Goods): Promise<z.infer<Goods>> => {
+    const response = await ofetch<{ data: { goods: z.infer<Goods> } }>('https://m.xiaomiyoupin.com/api/gateway/detail', {
+        body: {
+            channel: '',
+            debug: false,
+            groupName: 'details',
+            groupParams: [[String(gid)]],
+            methods: [],
+            system: '2',
+            version: '1.0.0',
+            vipMode: true,
+        },
+        headers: {
+            'X-User-Agent': 'channel/youpin platform/youpin.m',
+        },
+        method: 'POST',
+        schema: GoodsDetailResponseSchema(goodsSchema),
     });
     return response.data.goods;
 };
@@ -223,7 +210,7 @@ const getNewProductGoodsItem = async (gid: number): Promise<NewProductDetailItem
  * @param {CrowdfundingBatchListItem} item - Crowdfunding batch item.
  * @returns {Promise<CrowdfundingDetailItem>} Goods detail.
  */
-const getCrowdfundingItem = (item: CrowdfundingBatchListItem): Promise<CrowdfundingDetailItem> => getCrowdfundingGoodsItem(getCrowdfundingGid(item));
+const getCrowdfundingItem = (item: CrowdfundingBatchListItem): Promise<CrowdfundingDetailItem> => getGoodsDetail(getCrowdfundingGid(item), CrowdfundingDetailItemSchema);
 
 /**
  * Fetch new product goods details by the goods id of a batch item.
@@ -231,7 +218,7 @@ const getCrowdfundingItem = (item: CrowdfundingBatchListItem): Promise<Crowdfund
  * @param {NewProductBatchListItem} item - New product batch item.
  * @returns {Promise<NewProductDetailItem>} Goods detail.
  */
-const getNewProductItem = (item: NewProductBatchListItem): Promise<NewProductDetailItem> => getNewProductGoodsItem(getNewProductGid(item));
+const getNewProductItem = (item: NewProductBatchListItem): Promise<NewProductDetailItem> => getGoodsDetail(getNewProductGid(item), NewProductDetailItemSchema);
 
 const toSellPointList = (goodsInfo: CrowdfundingDetailItem['goodsInfo']): string[] =>
     [goodsInfo.firstSellPoint, goodsInfo.secondSellPoint, goodsInfo.thirdSellPoint].map((point) => point.trim()).filter((point): point is string => Boolean(point));

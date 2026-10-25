@@ -214,6 +214,9 @@ const GoodsDetailItemSchema = z.object({
     ),
 });
 
+// The detail endpoint wraps the goods item in a `data` envelope, the same way the venue batch does.
+export const GoodsDetailResponseSchema = <Goods extends z.ZodType>(goods: Goods) => DataResponseSchema(z.object({ goods }));
+
 // Crowdfunding
 
 const CrowdfundingSectionSchema = z.object({
@@ -222,29 +225,17 @@ const CrowdfundingSectionSchema = z.object({
     startTime: z.number(),
 });
 
-const CrowdfundingDetailItemSchema = GoodsDetailItemSchema.extend({
+export const CrowdfundingDetailItemSchema = GoodsDetailItemSchema.extend({
     crowdFunding: CrowdfundingSectionSchema,
 });
 
 export type CrowdfundingDetailItem = z.infer<typeof CrowdfundingDetailItemSchema>;
 
-export const CrowdfundingDetailResponseSchema = DataResponseSchema(
-    z.object({
-        goods: CrowdfundingDetailItemSchema,
-    })
-);
-
 // NewProduct
 
 // New products may still be sold outside a crowdfunding round, so the section may be `null`.
-const NewProductDetailItemSchema = GoodsDetailItemSchema.extend({
+export const NewProductDetailItemSchema = GoodsDetailItemSchema.extend({
     crowdFunding: CrowdfundingSectionSchema.nullable(),
 });
 
 export type NewProductDetailItem = z.infer<typeof NewProductDetailItemSchema>;
-
-export const NewProductDetailResponseSchema = DataResponseSchema(
-    z.object({
-        goods: NewProductDetailItemSchema,
-    })
-);
