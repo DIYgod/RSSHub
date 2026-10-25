@@ -26,7 +26,7 @@ interface ProxyExport {
     getCurrentProxy: () => ProxyState | null;
     markProxyFailed: (proxyUri: string) => void;
     getAgentForProxy: (proxyState: ProxyState) => any;
-    getDispatcherForProxy: (proxyState: ProxyState, minVersion?: SecureVersion) => ProxyAgent | null;
+    getDispatcherForProxy: (proxyState: ProxyState, url: string, minVersion?: SecureVersion) => Promise<ProxyAgent | null>;
 }
 
 let proxyUri: string | undefined;
@@ -141,7 +141,34 @@ const markProxyFailed = (failedProxyUri: string) => {
 
 const getAgentForProxy = (proxyState: ProxyState) => createAgentForProxy(proxyState.uri, proxyObj);
 
-const getDispatcherForProxy = (proxyState: ProxyState, minVersion?: SecureVersion) => createDispatcherForProxy(proxyState.uri, proxyObj, minVersion);
+const resolvePacProxy = async (url: string): Promise<string | null> => {
+    const resolver = await (agent as PacProxyAgent<string>).getResolver();
+    const result = (await resolver(new URL(url))) || 'DIRECT';
+    const [type, target] = result
+        .trim()
+        .split(/\s*;\s*/, 1)[0]
+        .split(/\s+/, 2);
+    switch (type) {
+        case 'PROXY':
+        case 'HTTP':
+            return `http://${target}`;
+        case 'HTTPS':
+            return `https://${target}`;
+        case 'SOCKS':
+        case 'SOCKS5':
+            return `socks5://${target}`;
+        case 'DIRECT':
+            return null;
+        default:
+            logger.warn(`Unsupported PAC proxy type ${type} for ${url}, connecting directly`);
+            return null;
+    }
+};
+
+const getDispatcherForProxy = async (proxyState: ProxyState, url: string, minVersion?: SecureVersion) => {
+    const uri = proxyIsPAC ? await resolvePacProxy(url) : proxyState.uri;
+    return uri ? createDispatcherForProxy(uri, proxyObj, minVersion) : null;
+};
 
 const proxyExport: ProxyExport = {
     agent,

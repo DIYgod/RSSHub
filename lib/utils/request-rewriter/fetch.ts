@@ -109,7 +109,7 @@ const wrappedFetch: typeof undici.fetch = async (input: RequestInfo, init?: Requ
         if (proxyRegex.test(request.url) && request.url.startsWith('http') && !(urlHandler && urlHandler.host === proxy.proxyUrlHandler?.host)) {
             const currentProxy = proxy.getCurrentProxy();
             if (currentProxy) {
-                const dispatcher = proxy.getDispatcherForProxy(currentProxy, init?.minVersion);
+                const dispatcher = await proxy.getDispatcherForProxy(currentProxy, request.url, init?.minVersion);
                 if (dispatcher) {
                     options.dispatcher = dispatcher;
                     logger.debug(`Proxying request via ${currentProxy.uri}: ${request.url}`);
@@ -145,7 +145,7 @@ const wrappedFetch: typeof undici.fetch = async (input: RequestInfo, init?: Requ
 
                     const nextProxy = proxy.getCurrentProxy();
                     if (nextProxy && nextProxy.uri !== currentProxy.uri) {
-                        const nextDispatcher = proxy.getDispatcherForProxy(nextProxy, init?.minVersion);
+                        const nextDispatcher = await proxy.getDispatcherForProxy(nextProxy, request.url, init?.minVersion);
                         if (nextDispatcher) {
                             options.dispatcher = nextDispatcher;
                         }

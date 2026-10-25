@@ -35,6 +35,19 @@ describe('proxy', () => {
         expect(current?.uri).toBe('http://example.com/proxy.pac');
     });
 
+    it('resolves the PAC script per request for the fetch dispatcher', async () => {
+        const proxy = await loadProxy({
+            PAC_SCRIPT: "function FindProxyForURL(url, host) { return host === 'direct.test' ? 'DIRECT' : 'PROXY proxy.local:8080; DIRECT'; }",
+            PAC_URI: '',
+            PROXY_URIS: '',
+            PROXY_URI: '',
+        });
+
+        const current = proxy.getCurrentProxy()!;
+        expect(await proxy.getDispatcherForProxy(current, 'https://direct.test/')).toBeNull();
+        expect(await proxy.getDispatcherForProxy(current, 'https://example.com/')).toBeInstanceOf(ProxyAgent);
+    });
+
     it('handles multi-proxy selection and updates after failures', async () => {
         const proxy = await loadProxy({
             PROXY_URIS: 'http://proxy1.local:8080,http://proxy2.local:8081',
@@ -45,7 +58,7 @@ describe('proxy', () => {
         expect(proxy.multiProxy).toBeDefined();
         const current = proxy.getCurrentProxy();
         expect(current).not.toBeNull();
-        expect(proxy.getDispatcherForProxy(current!)).toBeInstanceOf(ProxyAgent);
+        expect(await proxy.getDispatcherForProxy(current!, 'http://example.com')).toBeInstanceOf(ProxyAgent);
         expect(proxy.getAgentForProxy({ uri: 'socks5://proxy.local:1080', isActive: true, failureCount: 0 })).toBeInstanceOf(SocksProxyAgent);
 
         proxy.markProxyFailed(current!.uri);
@@ -122,7 +135,7 @@ describe('proxy', () => {
             PAC_URI: '',
         });
 
-        const dispatcher = proxy.getDispatcherForProxy(proxy.getCurrentProxy()!, 'TLSv1.3')!;
+        const dispatcher = (await proxy.getDispatcherForProxy(proxy.getCurrentProxy()!, 'http://example.com', 'TLSv1.3'))!;
         expect(requestTlsOf(dispatcher).minVersion).toBe('TLSv1.3');
         expect(requestTlsOf(proxy.dispatcher!).minVersion).toBeUndefined();
     });
