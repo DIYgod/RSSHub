@@ -66,7 +66,7 @@ export const VenuePageResponseSchema = DataResponseSchema(
 
 // VenueBatch
 
-export const VenueGoodsBatchItemSchema = z.object({
+const VenueGoodsBatchItemSchema = z.object({
     type: z.string(),
     value: z.object({
         goods: z.object({
@@ -95,15 +95,13 @@ export const VenueBatchResponseSchema = <Result extends z.ZodType>(result: Resul
 
 // Crowdfunding
 
-export const VenueReservationBatchItemSchema = z.object({
+const VenueReservationBatchItemSchema = z.object({
     gid: z.number(),
     goodsInfo: z.object({
         img_square: z.string(),
         name: z.string(),
     }),
 });
-
-export type VenueReservationBatchItem = z.infer<typeof VenueReservationBatchItemSchema>;
 
 // Content cards share the flat result shape but expose no goods identity, so the route skips them.
 const VenueContentBatchItemSchema = z.object({
@@ -134,19 +132,17 @@ export const CrowdfundingBatchResultSchema = z.union([CrowdfundingGoodsBatchSche
 // NewProduct
 
 // Banner members carry no `type` and no nested goods, they only describe a new product picture.
-export const VenueBannerBatchItemSchema = z.object({
+const VenueBannerBatchItemSchema = z.object({
     gid: z.number(),
     new_product_name: z.string(),
     picture_url: z.string(),
 });
 
-export type VenueBannerBatchItem = z.infer<typeof VenueBannerBatchItemSchema>;
-
 // Response members are validated loosely, so an unexpected member never breaks the whole batch.
 const NewProductBatchMemberSchema = z.union([VenueGoodsBatchItemSchema, VenueBannerBatchItemSchema]);
 
 // The rendered list only keeps `goods` members and banners.
-export const NewProductBatchListItemSchema = z.union([VenueGoodsTypeBatchItemSchema, VenueBannerBatchItemSchema]);
+const NewProductBatchListItemSchema = z.union([VenueGoodsTypeBatchItemSchema, VenueBannerBatchItemSchema]);
 
 export type NewProductBatchListItem = z.infer<typeof NewProductBatchListItemSchema>;
 
