@@ -51,6 +51,12 @@ describe('proxy', () => {
         expect(await proxy.getDispatcher('https://mixed.test/')).toBe(dispatcher);
         await expect(proxy.getDispatcher('https://socks4.test/')).rejects.toThrow('no proxy type undici supports');
         expect(getResolver).toHaveBeenCalledTimes(1);
+
+        (proxy.agent as PacProxyAgent<string>).resolver = () => Promise.resolve('PROXY other.local:9090');
+        const swapped = await proxy.getDispatcher('https://example.com/');
+        expect(swapped).toBeInstanceOf(ProxyAgent);
+        expect(swapped).not.toBe(dispatcher);
+        expect(getResolver).toHaveBeenCalledTimes(1);
     });
 
     it('wraps PAC resolver failures with a clear error', async () => {

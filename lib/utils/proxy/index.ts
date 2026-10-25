@@ -67,22 +67,20 @@ if (proxyIsPAC && proxyUri) {
 }
 
 const PAC_REFRESH_INTERVAL = 60 * 60 * 1000;
-let pacResolver: { promise: ReturnType<PacProxyAgent<string>['getResolver']>; refreshAt: number } | undefined;
+let pacRefreshAt = 0;
 
-const loadPacResolver = async (pacAgent: PacProxyAgent<string>) => {
-    try {
-        return await pacAgent.getResolver();
-    } catch (error) {
-        pacResolver = undefined;
-        throw error;
+const getPacResolver = async (pacAgent: PacProxyAgent<string>) => {
+    if (!pacAgent.resolver || Date.now() > pacRefreshAt) {
+        try {
+            await pacAgent.getResolver();
+        } catch (error) {
+            if (!pacAgent.resolver) {
+                throw error;
+            }
+        }
+        pacRefreshAt = Date.now() + PAC_REFRESH_INTERVAL;
     }
-};
-
-const getPacResolver = (pacAgent: PacProxyAgent<string>) => {
-    if (!pacResolver || Date.now() > pacResolver.refreshAt) {
-        pacResolver = { promise: loadPacResolver(pacAgent), refreshAt: Date.now() + PAC_REFRESH_INTERVAL };
-    }
-    return pacResolver.promise;
+    return pacAgent.resolver!;
 };
 
 const PAC_SCHEMES = new Map<string, string | null>([
