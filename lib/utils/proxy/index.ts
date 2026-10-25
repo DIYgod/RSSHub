@@ -11,7 +11,7 @@ import logger from '@/utils/logger';
 import pacProxy from './pac-proxy';
 import unifyProxy from './unify-proxy';
 
-const proxyIsPAC = config.pacUri || config.pacScript;
+const proxyIsPAC = Boolean(config.pacUri || config.pacScript);
 
 const { proxyUri, proxyObj, proxyUrlHandler } = proxyIsPAC ? pacProxy(config.pacUri, config.pacScript, config.proxy) : unifyProxy(config.proxyUri, config.proxy);
 

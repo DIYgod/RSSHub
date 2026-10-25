@@ -71,6 +71,7 @@ const resetMocks = () => {
     delete process.env.PLAYWRIGHT_WS_ENDPOINT;
     delete process.env.PUPPETEER_WS_ENDPOINT;
     delete process.env.PLAYWRIGHT_CDP_ENDPOINT;
+    delete process.env.PAC_URI;
 };
 
 const initialProxyEnv = Object.fromEntries(['PROXY_URI', 'PROXY_PROTOCOL', 'PROXY_HOST', 'PROXY_PORT', 'PROXY_AUTH', 'PROXY_URL_REGEX'].map((key) => [key, process.env[key]]));
@@ -263,6 +264,37 @@ describe('getPlaywrightPage (mocked)', () => {
         const endpointUrl = connectMock.mock.calls[0][0];
         const launchOptions = JSON.parse(new URL(endpointUrl).searchParams.get('launch') || '{}');
         assertLaunch(launchOptions);
+
+        await result.destroy();
+    });
+
+    it.each([
+        { name: 'local launch', route: 'local', endpointVar: undefined, endpoint: undefined },
+        { name: 'CDP route', route: 'cdp', endpointVar: 'PLAYWRIGHT_CDP_ENDPOINT', endpoint: 'ws://localhost:3000/chromium?token=abc' },
+    ])('passes a PAC url with --proxy-pac-url instead of a proxy server ($name)', async ({ route, endpointVar, endpoint }) => {
+        resetMocks();
+        connectOverCDP.mockResolvedValue(mockBrowser);
+        launch.mockResolvedValue(mockBrowser);
+        mockPage.goto.mockResolvedValue(undefined);
+        mockBrowser.close.mockResolvedValue(undefined);
+        if (endpointVar && endpoint) {
+            process.env[endpointVar] = endpoint;
+        }
+        const pacUri = 'http://pac.local/proxy.pac';
+        process.env.PAC_URI = pacUri;
+        proxyMock.proxyUri = pacUri;
+        proxyMock.proxyUrlHandler = new URL(pacUri);
+
+        const getPlaywrightPage = await loadPlaywright();
+        const result = await getPlaywrightPage('https://example.com', { noGoto: true });
+
+        const launchOptions = route === 'cdp' ? JSON.parse(new URL(connectOverCDP.mock.calls[0][0]).searchParams.get('launch') || '{}') : launch.mock.calls[0][0];
+        expect(launchOptions.proxy).toBeUndefined();
+        expect(launchOptions.args).toContain(`--proxy-pac-url=${pacUri}`);
+        expect(launchOptions.args).not.toContainEqual(expect.stringContaining('--proxy-server='));
+        if (route === 'local') {
+            expect(launchOptions.channel).toBe('chromium');
+        }
 
         await result.destroy();
     });

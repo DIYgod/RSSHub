@@ -14,15 +14,20 @@ interface ProxyState {
 }
 
 const configuredProxy: ProxyState | null = proxy.proxyUri ? { uri: proxy.proxyUri, urlHandler: proxy.proxyUrlHandler } : null;
+const proxyIsPAC = Boolean(config.pacUri || config.pacScript);
 
 const proxyServerFromUrl = (proxyUrl: URL) => {
     const protocol = proxyUrl.protocol.replace('socks5h:', 'socks5:').replace('socks4a:', 'socks4:');
     return `${protocol}//${proxyUrl.host}`;
 };
 
-const getProxyOptions = (currentProxy: ProxyState | null | undefined) => {
+const getProxyOptions = (currentProxy: ProxyState | null | undefined): { args: string[]; proxy?: LaunchOptions['proxy'] } => {
     if (!currentProxy) {
-        return {};
+        return { args: [] };
+    }
+
+    if (proxyIsPAC) {
+        return { args: [`--proxy-pac-url=${currentProxy.uri}`] };
     }
 
     const username = currentProxy.urlHandler?.username;
@@ -30,59 +35,66 @@ const getProxyOptions = (currentProxy: ProxyState | null | undefined) => {
     if (username || password) {
         if (currentProxy.urlHandler!.protocol !== 'http:') {
             logger.warn('SOCKS/HTTPS proxy with authentication is not supported by playwright, continue without proxy');
-            return {};
+            return { args: [] };
         }
 
         return {
+            args: [],
             proxy: {
                 password: decodeURIComponent(password ?? ''),
                 server: proxyServerFromUrl(currentProxy.urlHandler!),
                 username: decodeURIComponent(username ?? ''),
             },
-        } satisfies Pick<LaunchOptions, 'proxy'>;
+        };
     }
 
     return {
+        args: [],
         proxy: {
             server: currentProxy.uri.replace('socks5h://', 'socks5://').replace('socks4a://', 'socks4://').replace(/\/$/, ''),
         },
-    } satisfies Pick<LaunchOptions, 'proxy'>;
+    };
 };
 
 // Patchright already patches playwright's default args (e.g. injects --disable-blink-features=AutomationControlled and strips --enable-automation)
 const COMMON_LAUNCH_ARGS = ['--no-sandbox', '--disable-setuid-sandbox', '--window-position=0,0', '--ignore-certificate-errors', '--ignore-certificate-errors-spki-list'];
 
-const getLaunchOptions = (currentProxy?: ProxyState | null): LaunchOptions => ({
-    args: COMMON_LAUNCH_ARGS,
-    executablePath: config.chromiumExecutablePath || undefined,
-    headless: true,
-    ...getProxyOptions(currentProxy),
-});
+const getLaunchOptions = (currentProxy?: ProxyState | null): LaunchOptions => {
+    const proxyOptions = getProxyOptions(currentProxy);
+    return {
+        args: [...COMMON_LAUNCH_ARGS, ...proxyOptions.args],
+        channel: proxyIsPAC ? 'chromium' : undefined,
+        executablePath: config.chromiumExecutablePath || undefined,
+        headless: true,
+        proxy: proxyOptions.proxy,
+    };
+};
 
 type BrowserlessLaunchOptions = Pick<LaunchOptions, 'args' | 'headless' | 'proxy'>;
 type BrowserlessCdpLaunchOptions = Omit<BrowserlessLaunchOptions, 'proxy'> & { stealth?: boolean };
 
-const toBrowserlessLaunchOptions = (currentProxy?: ProxyState | null): BrowserlessLaunchOptions => ({
-    args: COMMON_LAUNCH_ARGS,
-    headless: true,
-    ...getProxyOptions(currentProxy),
-});
+const toBrowserlessLaunchOptions = (currentProxy?: ProxyState | null): BrowserlessLaunchOptions => {
+    const proxyOptions = getProxyOptions(currentProxy);
+    return {
+        args: [...COMMON_LAUNCH_ARGS, ...proxyOptions.args],
+        headless: true,
+        proxy: proxyOptions.proxy,
+    };
+};
 
 // CDP accepts `stealth` but NOT a `proxy` object.
 const toBrowserlessCDPLaunchOptions = (currentProxy?: ProxyState | null): BrowserlessCdpLaunchOptions => {
-    let proxyServerArgs: string[] = [];
+    const proxyOptions = getProxyOptions(currentProxy);
+    const args = [...COMMON_LAUNCH_ARGS, ...proxyOptions.args];
 
-    if (currentProxy) {
-        if (currentProxy.urlHandler?.username || currentProxy.urlHandler?.password) {
-            logger.warn('Proxy authentication is not supported over CDP (--proxy-server), continue without proxy');
-        } else {
-            const server = currentProxy.uri.replace('socks5h://', 'socks5://').replace('socks4a://', 'socks4://').replace(/\/$/, '');
-            proxyServerArgs = [`--proxy-server=${server}`];
-        }
+    if (proxyOptions.proxy?.username || proxyOptions.proxy?.password) {
+        logger.warn('Proxy authentication is not supported over CDP (--proxy-server), continue without proxy');
+    } else if (proxyOptions.proxy) {
+        args.push(`--proxy-server=${proxyOptions.proxy.server}`);
     }
 
     return {
-        args: [...COMMON_LAUNCH_ARGS, ...proxyServerArgs],
+        args,
         headless: true,
         stealth: true,
     };
@@ -170,7 +182,8 @@ export const getPlaywrightPage = async (
     }
 
     const currentProxyState = allowProxy ? configuredProxy : null;
-    const hasProxy = Boolean(getProxyOptions(currentProxyState).proxy);
+    const proxyOptions = getProxyOptions(currentProxyState);
+    const hasProxy = Boolean(proxyOptions.proxy || proxyOptions.args.length);
     const { browser, context } = await launchBrowser(currentProxyState, instanceOptions.javaScriptEnabled);
     const closeTimer = scheduleClose(browser, instanceOptions.closeTimeout);
     const destroy = async () => {
