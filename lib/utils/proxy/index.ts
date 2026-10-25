@@ -6,7 +6,6 @@ import { SocksProxyAgent } from 'socks-proxy-agent';
 import { ProxyAgent } from 'undici';
 
 import { config } from '@/config';
-import logger from '@/utils/logger';
 
 import pacProxy from './pac-proxy';
 import unifyProxy from './unify-proxy';
@@ -40,6 +39,15 @@ const createDispatcher = (uri: string, minVersion?: SecureVersion): ProxyAgent |
     return null;
 };
 
+const dispatchers = new Map<string, ProxyAgent | null>();
+const getCachedDispatcher = (uri: string, minVersion?: SecureVersion) => {
+    const key = `${minVersion ?? ''} ${uri}`;
+    if (!dispatchers.has(key)) {
+        dispatchers.set(key, createDispatcher(uri, minVersion));
+    }
+    return dispatchers.get(key) ?? null;
+};
+
 let agent: PacProxyAgent<string> | HttpsProxyAgent<string> | SocksProxyAgent | null = null;
 let dispatcher: ProxyAgent | null = null;
 
@@ -55,45 +63,68 @@ if (proxyIsPAC && proxyUri) {
     } else if (proxyUri.startsWith('socks')) {
         agent = new SocksProxyAgent(proxyUri);
     }
-    dispatcher = createDispatcher(proxyUri);
+    dispatcher = getCachedDispatcher(proxyUri);
 }
 
-// Only the first PAC entry is used; undici has no per-connection fallback like pac-proxy-agent
-const resolvePacProxy = async (pacAgent: PacProxyAgent<string>, url: string): Promise<string | null> => {
-    const resolver = await pacAgent.getResolver();
-    const result = (await resolver(new URL(url))) || 'DIRECT';
-    const [type, target] = result
-        .trim()
-        .split(/\s*;\s*/, 1)[0]
-        .split(/\s+/, 2);
-    switch (type) {
-        case 'PROXY':
-        case 'HTTP':
-            return `http://${target}`;
-        case 'HTTPS':
-            return `https://${target}`;
-        case 'SOCKS':
-        case 'SOCKS5':
-            return `socks5://${target}`;
-        case 'DIRECT':
-            return null;
-        default:
-            logger.warn(`Unsupported PAC proxy type ${type} for ${url}, connecting directly`);
-            return null;
+const PAC_REFRESH_INTERVAL = 60 * 60 * 1000;
+let pacResolver: { promise: ReturnType<PacProxyAgent<string>['getResolver']>; refreshAt: number } | undefined;
+
+const loadPacResolver = async (pacAgent: PacProxyAgent<string>) => {
+    try {
+        return await pacAgent.getResolver();
+    } catch (error) {
+        pacResolver = undefined;
+        throw error;
     }
+};
+
+const getPacResolver = (pacAgent: PacProxyAgent<string>) => {
+    if (!pacResolver || Date.now() > pacResolver.refreshAt) {
+        pacResolver = { promise: loadPacResolver(pacAgent), refreshAt: Date.now() + PAC_REFRESH_INTERVAL };
+    }
+    return pacResolver.promise;
+};
+
+const PAC_SCHEMES = new Map<string, string | null>([
+    ['DIRECT', null],
+    ['PROXY', 'http'],
+    ['HTTP', 'http'],
+    ['HTTPS', 'https'],
+    ['SOCKS', 'socks5'],
+    ['SOCKS5', 'socks5'],
+]);
+
+const resolvePacProxy = async (pacAgent: PacProxyAgent<string>, url: string): Promise<string | null> => {
+    let result: string | undefined;
+    try {
+        const resolver = await getPacResolver(pacAgent);
+        result = await resolver(new URL(url));
+    } catch (error) {
+        throw new Error(`PAC proxy resolution failed for ${url}: ${error}`, { cause: error });
+    }
+    const entries = (result || 'DIRECT').trim().split(/\s*;\s*/);
+    for (const entry of entries) {
+        const [type, target] = entry.split(/\s+/, 2);
+        const scheme = PAC_SCHEMES.get(type.toUpperCase());
+        if (scheme !== undefined) {
+            return scheme && `${scheme}://${target}`;
+        }
+    }
+    throw new Error(`PAC returned no proxy type undici supports for ${url}: ${result}`);
 };
 
 const getDispatcher = async (url: string, minVersion?: SecureVersion) => {
     if (agent instanceof PacProxyAgent) {
         const uri = await resolvePacProxy(agent, url);
-        return uri ? createDispatcher(uri, minVersion) : null;
+        return uri ? getCachedDispatcher(uri, minVersion) : null;
     }
-    return minVersion && proxyUri ? createDispatcher(proxyUri, minVersion) : dispatcher;
+    return proxyUri ? getCachedDispatcher(proxyUri, minVersion) : null;
 };
 
 export default {
     agent,
     dispatcher,
+    proxyIsPAC,
     proxyUri,
     proxyObj,
     proxyUrlHandler,

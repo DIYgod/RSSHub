@@ -33,13 +33,34 @@ describe('proxy', () => {
 
     it('resolves the PAC script per request for the fetch dispatcher', async () => {
         const proxy = await loadProxy({
-            PAC_SCRIPT: "function FindProxyForURL(url, host) { return host === 'direct.test' ? 'DIRECT' : 'PROXY proxy.local:8080; DIRECT'; }",
+            PAC_SCRIPT: `function FindProxyForURL(url, host) {
+                if (host === 'direct.test') return 'DIRECT';
+                if (host === 'socks4.test') return 'SOCKS4 a:1080';
+                if (host === 'mixed.test') return 'SOCKS4 a:1080; proxy proxy.local:8080';
+                return 'PROXY proxy.local:8080; DIRECT';
+            }`,
+            PAC_URI: '',
+            PROXY_URI: '',
+        });
+        const getResolver = vi.spyOn(proxy.agent as PacProxyAgent<string>, 'getResolver');
+
+        expect(proxy.proxyIsPAC).toBe(true);
+        expect(await proxy.getDispatcher('https://direct.test/')).toBeNull();
+        const dispatcher = await proxy.getDispatcher('https://example.com/');
+        expect(dispatcher).toBeInstanceOf(ProxyAgent);
+        expect(await proxy.getDispatcher('https://mixed.test/')).toBe(dispatcher);
+        await expect(proxy.getDispatcher('https://socks4.test/')).rejects.toThrow('no proxy type undici supports');
+        expect(getResolver).toHaveBeenCalledTimes(1);
+    });
+
+    it('wraps PAC resolver failures with a clear error', async () => {
+        const proxy = await loadProxy({
+            PAC_SCRIPT: 'function FindProxyForURL(url, host) { throw new Error("boom"); }',
             PAC_URI: '',
             PROXY_URI: '',
         });
 
-        expect(await proxy.getDispatcher('https://direct.test/')).toBeNull();
-        expect(await proxy.getDispatcher('https://example.com/')).toBeInstanceOf(ProxyAgent);
+        await expect(proxy.getDispatcher('https://example.com/')).rejects.toThrow('PAC proxy resolution failed for https://example.com/');
     });
 
     it('creates a socks proxy agent for single proxy settings', async () => {
@@ -86,6 +107,7 @@ describe('proxy', () => {
         expect(proxy.dispatcher).toBeInstanceOf(ProxyAgent);
         expect(requestTlsOf(proxy.dispatcher!).preferH2).toBe(true);
         expect(await proxy.getDispatcher('http://example.com')).toBe(proxy.dispatcher);
+        expect(proxy.proxyIsPAC).toBe(false);
     });
 
     it('applies minVersion to the proxy dispatcher request tls', async () => {
@@ -96,6 +118,7 @@ describe('proxy', () => {
 
         const dispatcher = (await proxy.getDispatcher('http://example.com', 'TLSv1.3'))!;
         expect(requestTlsOf(dispatcher).minVersion).toBe('TLSv1.3');
+        expect(await proxy.getDispatcher('http://other.example', 'TLSv1.3')).toBe(dispatcher);
         expect(requestTlsOf(proxy.dispatcher!).minVersion).toBeUndefined();
     });
 });

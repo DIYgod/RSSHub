@@ -33,12 +33,14 @@ const createBrowserMocks = () => {
 };
 
 interface ProxyMock {
+    proxyIsPAC: boolean;
     proxyUri?: string;
     proxyObj: { url_regex: string };
     proxyUrlHandler: URL;
 }
 
 const proxyMock: ProxyMock = {
+    proxyIsPAC: false,
     proxyObj: { url_regex: '.*' },
     proxyUrlHandler: new URL('http://proxy.local'),
 };
@@ -67,11 +69,11 @@ const resetMocks = () => {
     connect.mockReset();
     connectOverCDP.mockReset();
     launch.mockReset();
+    proxyMock.proxyIsPAC = false;
     proxyMock.proxyUri = undefined;
     delete process.env.PLAYWRIGHT_WS_ENDPOINT;
     delete process.env.PUPPETEER_WS_ENDPOINT;
     delete process.env.PLAYWRIGHT_CDP_ENDPOINT;
-    delete process.env.PAC_URI;
 };
 
 const initialProxyEnv = Object.fromEntries(['PROXY_URI', 'PROXY_PROTOCOL', 'PROXY_HOST', 'PROXY_PORT', 'PROXY_AUTH', 'PROXY_URL_REGEX'].map((key) => [key, process.env[key]]));
@@ -281,7 +283,7 @@ describe('getPlaywrightPage (mocked)', () => {
             process.env[endpointVar] = endpoint;
         }
         const pacUri = 'http://pac.local/proxy.pac';
-        process.env.PAC_URI = pacUri;
+        proxyMock.proxyIsPAC = true;
         proxyMock.proxyUri = pacUri;
         proxyMock.proxyUrlHandler = new URL(pacUri);
 

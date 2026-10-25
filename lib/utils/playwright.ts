@@ -14,19 +14,22 @@ interface ProxyState {
 }
 
 const configuredProxy: ProxyState | null = proxy.proxyUri ? { uri: proxy.proxyUri, urlHandler: proxy.proxyUrlHandler } : null;
-const proxyIsPAC = Boolean(config.pacUri || config.pacScript);
-
 const proxyServerFromUrl = (proxyUrl: URL) => {
     const protocol = proxyUrl.protocol.replace('socks5h:', 'socks5:').replace('socks4a:', 'socks4:');
     return `${protocol}//${proxyUrl.host}`;
 };
 
-const getProxyOptions = (currentProxy: ProxyState | null | undefined): { args: string[]; proxy?: LaunchOptions['proxy'] } => {
+interface ProxyOptions {
+    args: string[];
+    proxy?: LaunchOptions['proxy'];
+}
+
+const getProxyOptions = (currentProxy: ProxyState | null | undefined): ProxyOptions => {
     if (!currentProxy) {
         return { args: [] };
     }
 
-    if (proxyIsPAC) {
+    if (proxy.proxyIsPAC) {
         return { args: [`--proxy-pac-url=${currentProxy.uri}`] };
     }
 
@@ -59,32 +62,25 @@ const getProxyOptions = (currentProxy: ProxyState | null | undefined): { args: s
 // Patchright already patches playwright's default args (e.g. injects --disable-blink-features=AutomationControlled and strips --enable-automation)
 const COMMON_LAUNCH_ARGS = ['--no-sandbox', '--disable-setuid-sandbox', '--window-position=0,0', '--ignore-certificate-errors', '--ignore-certificate-errors-spki-list'];
 
-const getLaunchOptions = (currentProxy?: ProxyState | null): LaunchOptions => {
-    const proxyOptions = getProxyOptions(currentProxy);
-    return {
-        args: [...COMMON_LAUNCH_ARGS, ...proxyOptions.args],
-        channel: proxyIsPAC ? 'chromium' : undefined,
-        executablePath: config.chromiumExecutablePath || undefined,
-        headless: true,
-        proxy: proxyOptions.proxy,
-    };
-};
+const getLaunchOptions = (proxyOptions: ProxyOptions): LaunchOptions => ({
+    args: [...COMMON_LAUNCH_ARGS, ...proxyOptions.args],
+    channel: proxy.proxyIsPAC ? 'chromium' : undefined,
+    executablePath: config.chromiumExecutablePath || undefined,
+    headless: true,
+    proxy: proxyOptions.proxy,
+});
 
 type BrowserlessLaunchOptions = Pick<LaunchOptions, 'args' | 'headless' | 'proxy'>;
 type BrowserlessCdpLaunchOptions = Omit<BrowserlessLaunchOptions, 'proxy'> & { stealth?: boolean };
 
-const toBrowserlessLaunchOptions = (currentProxy?: ProxyState | null): BrowserlessLaunchOptions => {
-    const proxyOptions = getProxyOptions(currentProxy);
-    return {
-        args: [...COMMON_LAUNCH_ARGS, ...proxyOptions.args],
-        headless: true,
-        proxy: proxyOptions.proxy,
-    };
-};
+const toBrowserlessLaunchOptions = (proxyOptions: ProxyOptions): BrowserlessLaunchOptions => ({
+    args: [...COMMON_LAUNCH_ARGS, ...proxyOptions.args],
+    headless: true,
+    proxy: proxyOptions.proxy,
+});
 
 // CDP accepts `stealth` but NOT a `proxy` object.
-const toBrowserlessCDPLaunchOptions = (currentProxy?: ProxyState | null): BrowserlessCdpLaunchOptions => {
-    const proxyOptions = getProxyOptions(currentProxy);
+const toBrowserlessCDPLaunchOptions = (proxyOptions: ProxyOptions): BrowserlessCdpLaunchOptions => {
     const args = [...COMMON_LAUNCH_ARGS, ...proxyOptions.args];
 
     if (proxyOptions.proxy?.username || proxyOptions.proxy?.password) {
@@ -107,14 +103,14 @@ const getContextOptions = (javaScriptEnabled?: boolean): BrowserContextOptions =
 });
 
 // CDP > WS > local
-const launchBrowser = async (currentProxy?: ProxyState | null, javaScriptEnabled?: boolean) => {
+const launchBrowser = async (proxyOptions: ProxyOptions, javaScriptEnabled?: boolean) => {
     let browser: Browser;
     if (config.playwrightCDPEndpoint) {
-        browser = await chromium.connectOverCDP(getBrowserlessEndpoint(config.playwrightCDPEndpoint, toBrowserlessCDPLaunchOptions(currentProxy)));
+        browser = await chromium.connectOverCDP(getBrowserlessEndpoint(config.playwrightCDPEndpoint, toBrowserlessCDPLaunchOptions(proxyOptions)));
     } else if (config.playwrightWSEndpoint) {
-        browser = await chromium.connect(getBrowserlessEndpoint(config.playwrightWSEndpoint, toBrowserlessLaunchOptions(currentProxy)));
+        browser = await chromium.connect(getBrowserlessEndpoint(config.playwrightWSEndpoint, toBrowserlessLaunchOptions(proxyOptions)));
     } else {
-        browser = await chromium.launch(getLaunchOptions(currentProxy));
+        browser = await chromium.launch(getLaunchOptions(proxyOptions));
     }
     try {
         const context = await browser.newContext(getContextOptions(javaScriptEnabled));
@@ -142,7 +138,7 @@ const scheduleClose = (browser: Browser, timeout = 30000) =>
  * @returns Playwright browser context (native `newPage()` shares state across calls)
  */
 export default async function outPlaywright() {
-    const { browser, context } = await launchBrowser(proxy.proxyObj.url_regex === '.*' ? configuredProxy : null);
+    const { browser, context } = await launchBrowser(getProxyOptions(proxy.proxyObj.url_regex === '.*' ? configuredProxy : null));
     scheduleClose(browser);
     return context;
 }
@@ -184,7 +180,7 @@ export const getPlaywrightPage = async (
     const currentProxyState = allowProxy ? configuredProxy : null;
     const proxyOptions = getProxyOptions(currentProxyState);
     const hasProxy = Boolean(proxyOptions.proxy || proxyOptions.args.length);
-    const { browser, context } = await launchBrowser(currentProxyState, instanceOptions.javaScriptEnabled);
+    const { browser, context } = await launchBrowser(proxyOptions, instanceOptions.javaScriptEnabled);
     const closeTimer = scheduleClose(browser, instanceOptions.closeTimeout);
     const destroy = async () => {
         clearTimeout(closeTimer);
@@ -194,8 +190,8 @@ export const getPlaywrightPage = async (
     try {
         const page = await context.newPage();
 
-        if (hasProxy && currentProxyState) {
-            logger.debug(`Proxying request in playwright via ${currentProxyState.uri}: ${url}`);
+        if (hasProxy) {
+            logger.debug(`Proxying request in playwright: ${url}`);
         }
 
         if (instanceOptions.onBeforeLoad) {
