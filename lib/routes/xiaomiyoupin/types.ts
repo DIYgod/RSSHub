@@ -5,6 +5,13 @@ import { z } from 'zod';
 
 const DataResponseSchema = <Schema extends z.ZodType>(data: Schema) => z.object({ data });
 
+// Entries are validated one by one, so an unexpected entry never breaks the whole list.
+const toSchemaItems = <Schema extends z.ZodType>(items: unknown[], schema: Schema): Array<z.infer<Schema>> =>
+    items.flatMap((item) => {
+        const result = schema.safeParse(item);
+        return result.success ? [result.data] : [];
+    });
+
 // Homepage
 
 const HomepageFloorEntrySchema = z.object({
@@ -16,11 +23,7 @@ const HomepageFloorEntrySchema = z.object({
 
 // Floors reuse `data.items` for every module, so entries are validated one by one and the ones
 // without a title are dropped. The key is an array or missing depending on the module.
-const toHomepageFloorEntries = (items: unknown[] = []) =>
-    items.flatMap((entry) => {
-        const result = HomepageFloorEntrySchema.safeParse(entry);
-        return result.success ? [result.data] : [];
-    });
+const toHomepageFloorEntries = (items: unknown[] = []) => toSchemaItems(items, HomepageFloorEntrySchema);
 
 export const HomepageMainResponseSchema = DataResponseSchema(
     z.object({
@@ -76,12 +79,12 @@ export const VenueGoodsBatchItemSchema = z.object({
     }),
 });
 
-export type VenueGoodsBatchItem = z.infer<typeof VenueGoodsBatchItemSchema>;
-
 // Venue results also carry content cards and banners, only `goods` members hold a renderable goods.
 export const VenueGoodsTypeBatchItemSchema = VenueGoodsBatchItemSchema.extend({
     type: z.literal('goods'),
 });
+
+export type VenueGoodsTypeBatchItem = z.infer<typeof VenueGoodsTypeBatchItemSchema>;
 
 export const VenueBatchResponseSchema = <Result extends z.ZodType>(result: Result) =>
     DataResponseSchema(
@@ -109,13 +112,24 @@ const VenueContentBatchItemSchema = z.object({
 });
 
 // Goods results are batched in a `list`, reservation and content results stay flat.
-export const CrowdfundingGoodsBatchSchema = z.object({
+const CrowdfundingGoodsBatchSchema = z.object({
     list: z.array(VenueGoodsBatchItemSchema),
 });
 
-export type CrowdfundingBatchListItem = VenueGoodsBatchItem | VenueReservationBatchItem;
+// Only members carrying a `goods` object are renderable, content cards are dropped.
+const CrowdfundingBatchListItemSchema = z.union([VenueGoodsTypeBatchItemSchema, VenueReservationBatchItemSchema]);
 
-export const CrowdfundingBatchResultSchema = z.union([CrowdfundingGoodsBatchSchema, VenueReservationBatchItemSchema, VenueContentBatchItemSchema]);
+export type CrowdfundingBatchListItem = z.infer<typeof CrowdfundingBatchListItemSchema>;
+
+const toCrowdfundingEntries = (result: unknown): CrowdfundingBatchListItem[] => {
+    const goodsBatch = CrowdfundingGoodsBatchSchema.safeParse(result);
+    if (goodsBatch.success) {
+        return toSchemaItems(goodsBatch.data.list, VenueGoodsTypeBatchItemSchema);
+    }
+    return toSchemaItems([result], VenueReservationBatchItemSchema);
+};
+
+export const CrowdfundingBatchResultSchema = z.union([CrowdfundingGoodsBatchSchema, VenueReservationBatchItemSchema, VenueContentBatchItemSchema]).transform(toCrowdfundingEntries);
 
 // NewProduct
 
@@ -131,14 +145,16 @@ export type VenueBannerBatchItem = z.infer<typeof VenueBannerBatchItemSchema>;
 // Response members are validated loosely, so an unexpected member never breaks the whole batch.
 const NewProductBatchMemberSchema = z.union([VenueGoodsBatchItemSchema, VenueBannerBatchItemSchema]);
 
-export const NewProductBatchResultSchema = z.object({
-    list: z.array(NewProductBatchMemberSchema),
-});
-
 // The rendered list only keeps `goods` members and banners.
 export const NewProductBatchListItemSchema = z.union([VenueGoodsTypeBatchItemSchema, VenueBannerBatchItemSchema]);
 
 export type NewProductBatchListItem = z.infer<typeof NewProductBatchListItemSchema>;
+
+const toNewProductEntries = (items: unknown[]) => toSchemaItems(items, NewProductBatchListItemSchema);
+
+export const NewProductBatchResultSchema = z.object({
+    list: z.array(NewProductBatchMemberSchema).transform(toNewProductEntries),
+});
 
 // GoodsDetail
 

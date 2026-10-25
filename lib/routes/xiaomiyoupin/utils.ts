@@ -11,20 +11,16 @@ import { dedupeByKey } from '@/routes/mi/utils';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
-import type { CrowdfundingBatchListItem, CrowdfundingDetailItem, NewProductBatchListItem, NewProductDetailItem, VenueGoodsBatchItem, VenueQuery } from './types';
+import type { CrowdfundingBatchListItem, CrowdfundingDetailItem, NewProductBatchListItem, NewProductDetailItem, VenueGoodsTypeBatchItem, VenueQuery } from './types';
 import {
     CrowdfundingBatchResultSchema,
     CrowdfundingDetailResponseSchema,
-    CrowdfundingGoodsBatchSchema,
     HomepageMainResponseSchema,
-    NewProductBatchListItemSchema,
     NewProductBatchResultSchema,
     NewProductDetailResponseSchema,
     VenueBatchResponseSchema,
-    VenueGoodsBatchItemSchema,
     VenueGoodsTypeBatchItemSchema,
     VenuePageResponseSchema,
-    VenueReservationBatchItemSchema,
 } from './types';
 
 dayjs.extend(localizedFormat);
@@ -81,20 +77,7 @@ const getVenuePageQueryList = async (pageId: string, sign: string, resolvers: st
 
 type VenueBatchItem = CrowdfundingBatchListItem | NewProductBatchListItem;
 
-const isVenueGoodsBatchItem = (item: VenueBatchItem): item is VenueGoodsBatchItem => VenueGoodsBatchItemSchema.safeParse(item).success;
-
-/**
- * Keep the items that match the schema, dropping the ones that do not.
- *
- * @param {unknown[]} items - Raw items to validate.
- * @param {Schema} schema - Schema every kept item has to match.
- * @returns {Array<z.infer<Schema>>} Validated items.
- */
-const toSchemaItems = <Schema extends z.ZodType>(items: unknown[], schema: Schema): Array<z.infer<Schema>> =>
-    items.flatMap((item) => {
-        const result = schema.safeParse(item);
-        return result.success ? [result.data] : [];
-    });
+const isVenueGoodsTypeBatchItem = (item: VenueBatchItem): item is VenueGoodsTypeBatchItem => VenueGoodsTypeBatchItemSchema.safeParse(item).success;
 
 /**
  * Read the goods id from a crowdfunding batch item, whether it is a nested venue goods entry or a flat entry.
@@ -102,7 +85,7 @@ const toSchemaItems = <Schema extends z.ZodType>(items: unknown[], schema: Schem
  * @param {CrowdfundingBatchListItem} item - Crowdfunding batch item.
  * @returns {number} Goods id.
  */
-const getCrowdfundingGid = (item: CrowdfundingBatchListItem): number => (isVenueGoodsBatchItem(item) ? item.value.goods.gid : item.gid);
+const getCrowdfundingGid = (item: CrowdfundingBatchListItem): number => (isVenueGoodsTypeBatchItem(item) ? item.value.goods.gid : item.gid);
 
 /**
  * Read the goods name from a crowdfunding batch item.
@@ -110,7 +93,7 @@ const getCrowdfundingGid = (item: CrowdfundingBatchListItem): number => (isVenue
  * @param {CrowdfundingBatchListItem} item - Crowdfunding batch item.
  * @returns {string} Goods name.
  */
-const getCrowdfundingName = (item: CrowdfundingBatchListItem): string => (isVenueGoodsBatchItem(item) ? item.value.goods.name : item.goodsInfo.name);
+const getCrowdfundingName = (item: CrowdfundingBatchListItem): string => (isVenueGoodsTypeBatchItem(item) ? item.value.goods.name : item.goodsInfo.name);
 
 /**
  * Read the square image URL from a crowdfunding batch item.
@@ -118,7 +101,7 @@ const getCrowdfundingName = (item: CrowdfundingBatchListItem): string => (isVenu
  * @param {CrowdfundingBatchListItem} item - Crowdfunding batch item.
  * @returns {string} Square image URL.
  */
-const getCrowdfundingImage = (item: CrowdfundingBatchListItem): string => (isVenueGoodsBatchItem(item) ? item.value.goods.img_square : item.goodsInfo.img_square);
+const getCrowdfundingImage = (item: CrowdfundingBatchListItem): string => (isVenueGoodsTypeBatchItem(item) ? item.value.goods.img_square : item.goodsInfo.img_square);
 
 /**
  * Read the goods id from a new product batch item.
@@ -126,7 +109,7 @@ const getCrowdfundingImage = (item: CrowdfundingBatchListItem): string => (isVen
  * @param {NewProductBatchListItem} item - New product batch item.
  * @returns {number} Goods id.
  */
-const getNewProductGid = (item: NewProductBatchListItem): number => (isVenueGoodsBatchItem(item) ? item.value.goods.gid : item.gid);
+const getNewProductGid = (item: NewProductBatchListItem): number => (isVenueGoodsTypeBatchItem(item) ? item.value.goods.gid : item.gid);
 
 /**
  * Read the goods name from a new product batch item.
@@ -134,7 +117,7 @@ const getNewProductGid = (item: NewProductBatchListItem): number => (isVenueGood
  * @param {NewProductBatchListItem} item - New product batch item.
  * @returns {string} Goods name.
  */
-const getNewProductName = (item: NewProductBatchListItem): string => (isVenueGoodsBatchItem(item) ? item.value.goods.name : item.new_product_name);
+const getNewProductName = (item: NewProductBatchListItem): string => (isVenueGoodsTypeBatchItem(item) ? item.value.goods.name : item.new_product_name);
 
 /**
  * Read the square image URL from a new product batch item.
@@ -142,7 +125,7 @@ const getNewProductName = (item: NewProductBatchListItem): string => (isVenueGoo
  * @param {NewProductBatchListItem} item - New product batch item.
  * @returns {string} Square image URL.
  */
-const getNewProductImage = (item: NewProductBatchListItem): string => (isVenueGoodsBatchItem(item) ? item.value.goods.img_square : item.picture_url);
+const getNewProductImage = (item: NewProductBatchListItem): string => (isVenueGoodsTypeBatchItem(item) ? item.value.goods.img_square : item.picture_url);
 
 /**
  * Read the first release timestamp from a new product batch item.
@@ -150,7 +133,7 @@ const getNewProductImage = (item: NewProductBatchListItem): string => (isVenueGo
  * @param {NewProductBatchListItem} item - New product batch item.
  * @returns {number | undefined} First release timestamp, or `undefined` when the item does not provide one.
  */
-const getNewProductFirstReleaseTime = (item: NewProductBatchListItem): number | undefined => (isVenueGoodsBatchItem(item) ? item.value.goods.fist_release_time : undefined);
+const getNewProductFirstReleaseTime = (item: NewProductBatchListItem): number | undefined => (isVenueGoodsTypeBatchItem(item) ? item.value.goods.fist_release_time : undefined);
 
 const getVenueBatchResultList = async <Result extends z.ZodType>(pageId: string, sign: string, queryList: VenueQuery[], resultSchema: Result): Promise<Array<z.infer<Result>>> => {
     if (queryList.length === 0) {
@@ -180,7 +163,7 @@ const getNewProductList = async (): Promise<{ list: NewProductBatchListItem[]; j
     const { pageId, sign, jumpUrl } = await getVenueQueryContext('上新精选');
     const queryList = await getVenuePageQueryList(pageId, sign, ['leek-super', 'leek-selective']);
     const resultList = await getVenueBatchResultList(pageId, sign, queryList, NewProductBatchResultSchema);
-    const batchList = resultList.flatMap((result) => toSchemaItems(result.list, NewProductBatchListItemSchema));
+    const batchList = resultList.flatMap((result) => result.list);
     const list = dedupeByKey(batchList, (item) => getNewProductGid(item));
     return { list, jumpUrl };
 };
@@ -194,13 +177,7 @@ const getCrowdfundingList = async (): Promise<{ list: CrowdfundingBatchListItem[
     const { pageId, sign, jumpUrl } = await getVenueQueryContext('小米众筹');
     const queryList = await getVenuePageQueryList(pageId, sign, ['crowd-funding', 'reservation']);
     const resultList = await getVenueBatchResultList(pageId, sign, queryList, CrowdfundingBatchResultSchema);
-    const batchList = resultList.flatMap((result): CrowdfundingBatchListItem[] => {
-        const goodsBatch = CrowdfundingGoodsBatchSchema.safeParse(result);
-        if (goodsBatch.success) {
-            return toSchemaItems(goodsBatch.data.list, VenueGoodsTypeBatchItemSchema);
-        }
-        return toSchemaItems([result], VenueReservationBatchItemSchema);
-    });
+    const batchList = resultList.flat();
     const list = dedupeByKey(batchList, (item) => getCrowdfundingGid(item));
     return { list, jumpUrl };
 };
