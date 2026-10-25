@@ -8,6 +8,8 @@ import type { NewProduct } from './templates/newproduct';
 import type { CrowdfundingDetailItem, CrowdfundingListItem, NewProductDetailItem, NewProductListItem } from './types';
 import { CrowdfundingDetailResponseSchema, CrowdfundingListResponseSchema, NewProductDetailResponseSchema, NewProductListResponseSchema } from './types';
 
+// Common
+
 /**
  * Remove duplicate items by key, keeping the first occurrence of each key.
  *
@@ -20,6 +22,8 @@ export const dedupeByKey = <Item, Key>(items: Item[], getKey: (item: Item) => Ke
         .values()
         .toArray()
         .map((group) => group[0]);
+
+// Crowdfunding
 
 /**
  * Fetch the list of crowdfunding projects, merging the current projects (primary) with the history projects (supplement).
@@ -57,6 +61,8 @@ const getCrowdfundingItem = async (item: CrowdfundingListItem): Promise<Crowdfun
     return response.data.crowd_funding_info;
 };
 
+// NewProduct
+
 /**
  * Fetch the list of new products, merging `date_list` (primary) with `history_date_list` (supplement) and `new_list` (supplement).
  *
@@ -86,6 +92,8 @@ const getNewProductItem = async (item: NewProductListItem): Promise<NewProductDe
     });
     return response.data;
 };
+
+// Conversion
 
 /**
  * Convert CrowdfundingListItem + CrowdfundingDetailItem to Crowdfunding template props.

@@ -7,6 +7,8 @@ const DataResponseSchema = <Schema extends z.ZodType>(data: Schema) => z.object(
 
 // Crowdfunding
 
+// List
+
 const CrowdfundingListItemSchema = z.object({
     img_url_small: z.string(),
     product_market_price: z.string(),
@@ -25,6 +27,8 @@ export const CrowdfundingListResponseSchema = DataResponseSchema(
         ),
     })
 );
+
+// Detail
 
 const CrowdfundingDetailItemSchema = z.object({
     big_image: z.string(),
@@ -57,6 +61,8 @@ export const CrowdfundingDetailResponseSchema = DataResponseSchema(
 
 // NewProduct
 
+// List
+
 const NewProductListItemSchema = z.object({
     img: z.string(),
     product_id: z.number(),
@@ -81,6 +87,8 @@ export const NewProductListResponseSchema = DataResponseSchema(
         new_list: z.array(NewProductListItemSchema),
     })
 );
+
+// Detail
 
 const NewProductGoodsSchema = z.object({
     imgUrl: z.string(),
