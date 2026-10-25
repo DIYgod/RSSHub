@@ -154,7 +154,7 @@ export const NewProductBatchResultSchema = z.object({
 
 // GoodsDetail
 
-// Upstream reports missing sections and variant prices as `null` instead of omitting the key.
+// Upstream reports variant prices as `null` instead of omitting the key.
 const GoodsDetailItemSchema = z.object({
     goodsInfo: z.object({
         firstSellPoint: z.string(),
@@ -162,17 +162,6 @@ const GoodsDetailItemSchema = z.object({
         pids: z.array(z.number()),
         secondSellPoint: z.string(),
         thirdSellPoint: z.string(),
-    }),
-    oneYuanSupport: z.object({
-        groupBuyInfo: z
-            .object({
-                good: z.object({
-                    groupbuy_price: z.number(),
-                    groupbuy_summary: z.string(),
-                    img: z.string(),
-                }),
-            })
-            .nullable(),
     }),
     priceInfo: z.object({
         priceInfo: z.object({
@@ -215,23 +204,31 @@ export const GoodsDetailResponseSchema = <Goods extends z.ZodType>(goods: Goods)
 
 // Crowdfunding
 
-const CrowdfundingSectionSchema = z.object({
-    endTime: z.number(),
-    estimateSendtime: z.number(),
-    startTime: z.number(),
-});
-
+// Crowdfunding goods always run a funding round, and the one yuan group buy may be absent.
 export const CrowdfundingDetailItemSchema = GoodsDetailItemSchema.extend({
-    crowdFunding: CrowdfundingSectionSchema,
+    crowdFunding: z.object({
+        endTime: z.number(),
+        estimateSendtime: z.number(),
+        startTime: z.number(),
+    }),
+    oneYuanSupport: z.object({
+        groupBuyInfo: z
+            .object({
+                good: z.object({
+                    groupbuy_price: z.number(),
+                    groupbuy_summary: z.string(),
+                    img: z.string(),
+                }),
+            })
+            .nullable(),
+    }),
 });
 
 export type CrowdfundingDetailItem = z.infer<typeof CrowdfundingDetailItemSchema>;
 
 // NewProduct
 
-// New products may still be sold outside a crowdfunding round, so the section may be `null`.
-export const NewProductDetailItemSchema = GoodsDetailItemSchema.extend({
-    crowdFunding: CrowdfundingSectionSchema.nullable(),
-});
+// New products have neither a funding round nor a one yuan group buy, they only need the shared goods fields.
+export const NewProductDetailItemSchema = GoodsDetailItemSchema;
 
 export type NewProductDetailItem = z.infer<typeof NewProductDetailItemSchema>;
