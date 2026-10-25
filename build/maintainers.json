@@ -66,6 +66,9 @@
   "/8264/list/:id?": [
     "nczitzk"
   ],
+  "/10086/b2b/:type?": [
+    "TonyRL"
+  ],
   "/12306/:date/:from/:to/:type?": [
     "Fatpandac"
   ],

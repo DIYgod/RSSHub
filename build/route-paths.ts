@@ -7,6 +7,7 @@ export type RoutePath =
   | `/0x80/blog`
   | `/0xxx/:filter?`
   | `/10000link/info/:category?/:id?`
+  | `/10086/b2b/:type?`
   | `/10jqka/realtimenews/:tag?`
   | `/121/weatherLive`
   | `/12306/:date/:from/:to/:type?`

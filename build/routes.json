@@ -735,6 +735,60 @@
     "url": "8264.com",
     "lang": "zh-CN"
   },
+  "10086": {
+    "routes": {
+      "/b2b/:type?": {
+        "path": "/b2b/:type?",
+        "categories": [
+          "other"
+        ],
+        "example": "/10086/b2b/PROCUREMENT",
+        "parameters": {
+          "type": {
+            "description": "公告类型",
+            "options": [
+              {
+                "value": "PROCUREMENT",
+                "label": "招标采购公告"
+              },
+              {
+                "value": "PURCHASE_SERVICE",
+                "label": "采购服务"
+              },
+              {
+                "value": "VENDOR",
+                "label": "供应商公告"
+              },
+              {
+                "value": "IMPORTANT_NOTICE",
+                "label": "系统通知"
+              }
+            ],
+            "default": "PROCUREMENT"
+          }
+        },
+        "radar": [
+          {
+            "source": [
+              "b2b.10086.cn/"
+            ],
+            "target": "/b2b"
+          }
+        ],
+        "name": "采购与招标网公告",
+        "maintainers": [
+          "TonyRL"
+        ],
+        "url": "b2b.10086.cn",
+        "location": "b2b.ts",
+        "module": "() => import('@/routes/10086/b2b.ts')"
+      }
+    },
+    "apiRoutes": {},
+    "name": "中国移动",
+    "url": "10086.cn",
+    "lang": "zh-CN"
+  },
   "12306": {
     "routes": {
       "/:date/:from/:to/:type?": {

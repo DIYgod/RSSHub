@@ -145,6 +145,19 @@
       }
     ]
   },
+  "10086.cn": {
+    "_name": "中国移动",
+    "b2b": [
+      {
+        "title": "采购与招标网公告",
+        "docs": "https://docs.rsshub.app/routes/10086",
+        "source": [
+          "/"
+        ],
+        "target": "/10086/b2b"
+      }
+    ]
+  },
   "12306.cn": {
     "_name": "12306",
     "www": [
