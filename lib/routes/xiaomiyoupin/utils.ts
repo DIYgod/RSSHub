@@ -12,7 +12,20 @@ import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
 import type { CrowdfundingBatchListItem, CrowdfundingDetailItem, NewProductBatchListItem, NewProductDetailItem, VenueBannerBatchItem, VenueGoodsBatchItem, VenueQuery, VenueReservationBatchItem } from './types';
-import { CrowdfundingBatchResultSchema, CrowdfundingDetailResponseSchema, HomepageMainResponseSchema, NewProductBatchResultSchema, NewProductDetailResponseSchema, VenueBatchResponseSchema, VenuePageResponseSchema } from './types';
+import {
+    CrowdfundingBatchResultSchema,
+    CrowdfundingDetailResponseSchema,
+    CrowdfundingGoodsBatchSchema,
+    HomepageMainResponseSchema,
+    NewProductBatchResultSchema,
+    NewProductDetailResponseSchema,
+    VenueBannerBatchItemSchema,
+    VenueBatchResponseSchema,
+    VenueGoodsBatchItemSchema,
+    VenueGoodsTypeBatchItemSchema,
+    VenuePageResponseSchema,
+    VenueReservationBatchItemSchema,
+} from './types';
 
 dayjs.extend(localizedFormat);
 dayjs.extend(timezone);
@@ -68,11 +81,24 @@ const getVenuePageQueryList = async (pageId: string, sign: string, resolvers: st
 
 type VenueBatchItem = NewProductBatchListItem | VenueReservationBatchItem;
 
-const isVenueGoodsBatchItem = (item: VenueBatchItem): item is VenueGoodsBatchItem => 'value' in item;
+const isVenueGoodsBatchItem = (item: VenueBatchItem): item is VenueGoodsBatchItem => VenueGoodsBatchItemSchema.safeParse(item).success;
 
-const isVenueGoodsTypeBatchItem = (item: VenueBatchItem): item is VenueGoodsBatchItem => isVenueGoodsBatchItem(item) && item.type === 'goods';
+const isVenueGoodsTypeBatchItem = (item: VenueBatchItem): item is VenueGoodsBatchItem => VenueGoodsTypeBatchItemSchema.safeParse(item).success;
 
-const isVenueBannerBatchItem = (item: VenueBatchItem): item is VenueBannerBatchItem => 'new_product_name' in item;
+const isVenueBannerBatchItem = (item: VenueBatchItem): item is VenueBannerBatchItem => VenueBannerBatchItemSchema.safeParse(item).success;
+
+/**
+ * Keep the items that match the schema, dropping the ones that do not.
+ *
+ * @param {unknown[]} items - Raw items to validate.
+ * @param {Schema} schema - Schema every kept item has to match.
+ * @returns {Array<z.infer<Schema>>} Validated items.
+ */
+const toSchemaItems = <Schema extends z.ZodType>(items: unknown[], schema: Schema): Array<z.infer<Schema>> =>
+    items.flatMap((item) => {
+        const result = schema.safeParse(item);
+        return result.success ? [result.data] : [];
+    });
 
 /**
  * Read the goods id from a crowdfunding batch item, whether it is a nested venue goods entry or a flat entry.
@@ -173,13 +199,11 @@ const getCrowdfundingList = async (): Promise<{ list: CrowdfundingBatchListItem[
     const queryList = await getVenuePageQueryList(pageId, sign, ['crowd-funding', 'reservation']);
     const resultList = await getVenueBatchResultList(pageId, sign, queryList, CrowdfundingBatchResultSchema);
     const batchList = resultList.flatMap((result): CrowdfundingBatchListItem[] => {
-        if ('list' in result) {
-            return result.list.filter((item): item is VenueGoodsBatchItem => isVenueGoodsTypeBatchItem(item));
+        const goodsBatch = CrowdfundingGoodsBatchSchema.safeParse(result);
+        if (goodsBatch.success) {
+            return toSchemaItems(goodsBatch.data.list, VenueGoodsTypeBatchItemSchema);
         }
-        if (!('goodsInfo' in result)) {
-            return [];
-        }
-        return [result];
+        return toSchemaItems([result], VenueReservationBatchItemSchema);
     });
     const list = dedupeByKey(batchList, (item) => getCrowdfundingGid(item));
     return { list, jumpUrl };

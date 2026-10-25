@@ -63,7 +63,7 @@ export const VenuePageResponseSchema = DataResponseSchema(
 
 // VenueBatch
 
-const VenueGoodsBatchItemSchema = z.object({
+export const VenueGoodsBatchItemSchema = z.object({
     type: z.string(),
     value: z.object({
         goods: z.object({
@@ -78,6 +78,11 @@ const VenueGoodsBatchItemSchema = z.object({
 
 export type VenueGoodsBatchItem = z.infer<typeof VenueGoodsBatchItemSchema>;
 
+// Venue results also carry content cards and banners, only `goods` members hold a renderable goods.
+export const VenueGoodsTypeBatchItemSchema = VenueGoodsBatchItemSchema.extend({
+    type: z.literal('goods'),
+});
+
 export const VenueBatchResponseSchema = <Result extends z.ZodType>(result: Result) =>
     DataResponseSchema(
         z.object({
@@ -87,7 +92,7 @@ export const VenueBatchResponseSchema = <Result extends z.ZodType>(result: Resul
 
 // Crowdfunding
 
-const VenueReservationBatchItemSchema = z.object({
+export const VenueReservationBatchItemSchema = z.object({
     gid: z.number(),
     goodsInfo: z.object({
         img_square: z.string(),
@@ -103,20 +108,19 @@ const VenueContentBatchItemSchema = z.object({
     id: z.string(),
 });
 
+// Goods results are batched in a `list`, reservation and content results stay flat.
+export const CrowdfundingGoodsBatchSchema = z.object({
+    list: z.array(VenueGoodsBatchItemSchema),
+});
+
 export type CrowdfundingBatchListItem = VenueGoodsBatchItem | VenueReservationBatchItem;
 
-export const CrowdfundingBatchResultSchema = z.union([
-    z.object({
-        list: z.array(VenueGoodsBatchItemSchema),
-    }),
-    VenueReservationBatchItemSchema,
-    VenueContentBatchItemSchema,
-]);
+export const CrowdfundingBatchResultSchema = z.union([CrowdfundingGoodsBatchSchema, VenueReservationBatchItemSchema, VenueContentBatchItemSchema]);
 
 // NewProduct
 
 // Banner members carry no `type` and no nested goods, they only describe a new product picture.
-const VenueBannerBatchItemSchema = z.object({
+export const VenueBannerBatchItemSchema = z.object({
     gid: z.number(),
     new_product_name: z.string(),
     picture_url: z.string(),
