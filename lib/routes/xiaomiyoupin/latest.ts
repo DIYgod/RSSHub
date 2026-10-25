@@ -6,7 +6,7 @@ import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import { parseDate } from '@/utils/parse-date';
 
-import type { GoodsDetailItem, NewProductBatchListItem } from './types';
+import type { NewProductBatchListItem, NewProductDetailItem } from './types';
 import utils from './utils';
 
 export const route: Route = {
@@ -44,7 +44,7 @@ const getDataItems = (list: NewProductBatchListItem[]): Promise<DataItem[]> =>
         { concurrency: 6 }
     );
 
-const getDataItem = (listItem: NewProductBatchListItem, detailItem: GoodsDetailItem): DataItem => {
+const getDataItem = (listItem: NewProductBatchListItem, detailItem: NewProductDetailItem): DataItem => {
     const pubDate = utils.getNewProductFirstReleaseTime(listItem);
     return {
         title: utils.getNewProductName(listItem),

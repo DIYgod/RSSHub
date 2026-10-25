@@ -6,7 +6,7 @@ import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import { parseDate } from '@/utils/parse-date';
 
-import type { CrowdfundingBatchListItem, GoodsDetailItem } from './types';
+import type { CrowdfundingBatchListItem, CrowdfundingDetailItem } from './types';
 import utils from './utils';
 
 export const route: Route = {
@@ -44,7 +44,7 @@ const getDataItems = (list: CrowdfundingBatchListItem[]): Promise<DataItem[]> =>
         { concurrency: 6 }
     );
 
-const getDataItem = (listItem: CrowdfundingBatchListItem, detailItem: GoodsDetailItem): DataItem => ({
+const getDataItem = (listItem: CrowdfundingBatchListItem, detailItem: CrowdfundingDetailItem): DataItem => ({
     title: utils.getCrowdfundingName(listItem),
     description: renderCrowdfunding(utils.toCrowdfunding(listItem, detailItem)),
     link: `https://m.xiaomiyoupin.com/detail?gid=${utils.getCrowdfundingGid(listItem)}`,
