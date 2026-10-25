@@ -1,8 +1,5 @@
 import type { Browser, BrowserContext } from 'patchright';
-import type { Mock } from 'vitest';
 import { afterEach, describe, expect, it, vi } from 'vitest';
-
-import type { MultiProxyResult } from '@/utils/proxy/multi-proxy';
 
 import wait from './wait';
 
@@ -36,21 +33,14 @@ const createBrowserMocks = () => {
 };
 
 interface ProxyMock {
+    proxyUri?: string;
     proxyObj: { url_regex: string };
     proxyUrlHandler: URL;
-    multiProxy: Partial<MultiProxyResult> | undefined;
-    getCurrentProxy: Mock;
-    markProxyFailed: Mock;
-    getDispatcherForProxy: Mock;
 }
 
 const proxyMock: ProxyMock = {
     proxyObj: { url_regex: '.*' },
     proxyUrlHandler: new URL('http://proxy.local'),
-    multiProxy: undefined,
-    getCurrentProxy: vi.fn(),
-    markProxyFailed: vi.fn(),
-    getDispatcherForProxy: vi.fn(),
 };
 
 createBrowserMocks();
@@ -77,9 +67,7 @@ const resetMocks = () => {
     connect.mockReset();
     connectOverCDP.mockReset();
     launch.mockReset();
-    proxyMock.multiProxy = undefined;
-    proxyMock.getCurrentProxy.mockReset();
-    proxyMock.markProxyFailed.mockReset();
+    proxyMock.proxyUri = undefined;
     delete process.env.PLAYWRIGHT_WS_ENDPOINT;
     delete process.env.PUPPETEER_WS_ENDPOINT;
     delete process.env.PLAYWRIGHT_CDP_ENDPOINT;
@@ -160,7 +148,6 @@ describe('getPlaywrightPage (mocked)', () => {
             mockPage.goto.mockResolvedValue(undefined);
             mockBrowser.close.mockResolvedValue(undefined);
             process.env.PLAYWRIGHT_WS_ENDPOINT = 'ws://localhost:3000/?token=abc';
-            proxyMock.getCurrentProxy.mockReturnValue(null);
 
             const getPlaywrightPage = await loadPlaywright();
             const onBeforeLoad = vi.fn();
@@ -199,7 +186,6 @@ describe('getPlaywrightPage (mocked)', () => {
         mockPage.goto.mockResolvedValue(undefined);
         mockBrowser.close.mockResolvedValue(undefined);
         process.env.PLAYWRIGHT_WS_ENDPOINT = `ws://localhost:3000/?token=abc&launch=${encodeURIComponent(JSON.stringify({ stealth: true }))}`;
-        proxyMock.getCurrentProxy.mockReturnValue(null);
 
         const getPlaywrightPage = await loadPlaywright();
         const result = await getPlaywrightPage('https://example.com', { noGoto: true, useConfiguredEndpoint: true });
@@ -267,7 +253,8 @@ describe('getPlaywrightPage (mocked)', () => {
         mockPage.goto.mockResolvedValue(undefined);
         mockBrowser.close.mockResolvedValue(undefined);
         process.env[endpointVar] = endpoint;
-        proxyMock.getCurrentProxy.mockReturnValue({ uri: proxyUri, urlHandler: new URL(proxyUri) });
+        proxyMock.proxyUri = proxyUri;
+        proxyMock.proxyUrlHandler = new URL(proxyUri);
 
         const getPlaywrightPage = await loadPlaywright();
         const result = await getPlaywrightPage('https://example.com', { noGoto: true, useConfiguredEndpoint: true });
@@ -289,7 +276,6 @@ describe('getPlaywrightPage (mocked)', () => {
         mockBrowser.close.mockResolvedValue(undefined);
         process.env.PLAYWRIGHT_WS_ENDPOINT = 'ws://localhost:3000/chromium/playwright?token=abc';
         process.env.PLAYWRIGHT_CDP_ENDPOINT = 'ws://localhost:3000/chromium?token=abc';
-        proxyMock.getCurrentProxy.mockReturnValue(null);
 
         const getPlaywrightPage = await loadPlaywright();
         const result = await getPlaywrightPage('https://example.com', { noGoto: true, useConfiguredEndpoint: true });
@@ -309,7 +295,6 @@ describe('getPlaywrightPage (mocked)', () => {
         resetMocks();
         launch.mockResolvedValue(mockBrowser);
         mockPage.goto.mockResolvedValue(undefined);
-        proxyMock.getCurrentProxy.mockReturnValue(null);
 
         const getPlaywrightPage = await loadPlaywright();
         await getPlaywrightPage('https://example.com');
@@ -336,7 +321,6 @@ describe('getPlaywrightPage (mocked)', () => {
             launch.mockResolvedValue(mockBrowser);
             mockBrowser.close.mockResolvedValue(undefined);
             mockPage.goto.mockResolvedValue(undefined);
-            proxyMock.getCurrentProxy.mockReturnValue(null);
 
             const getPlaywrightPage = await loadPlaywright();
             const close = mockBrowser.close;
@@ -353,25 +337,5 @@ describe('getPlaywrightPage (mocked)', () => {
         } finally {
             vi.useRealTimers();
         }
-    });
-
-    it('marks proxy failed when navigation throws with multi-proxy', async () => {
-        resetMocks();
-        launch.mockResolvedValue(mockBrowser);
-        mockBrowser.close.mockResolvedValue(undefined);
-        mockPage.goto.mockRejectedValueOnce(new Error('fail'));
-
-        const currentProxy = {
-            uri: 'http://user:pass@proxy.local:8080',
-            urlHandler: new URL('http://user:pass@proxy.local:8080'),
-        };
-        proxyMock.multiProxy = {};
-        proxyMock.getCurrentProxy.mockReturnValue(currentProxy);
-
-        const getPlaywrightPage = await loadPlaywright();
-        await expect(getPlaywrightPage('https://example.com')).rejects.toThrow('fail');
-
-        expect(proxyMock.markProxyFailed).toHaveBeenCalledWith(currentProxy.uri);
-        expect(mockBrowser.close).toHaveBeenCalledTimes(1);
     });
 });

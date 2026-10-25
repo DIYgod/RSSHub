@@ -5,50 +5,17 @@ import { PacProxyAgent } from 'pac-proxy-agent';
 import { SocksProxyAgent } from 'socks-proxy-agent';
 import { ProxyAgent } from 'undici';
 
-import type { Config } from '@/config';
 import { config } from '@/config';
 import logger from '@/utils/logger';
 
-import type { MultiProxyResult, ProxyState } from './multi-proxy';
-import createMultiProxy from './multi-proxy';
 import pacProxy from './pac-proxy';
 import unifyProxy from './unify-proxy';
 
 const proxyIsPAC = config.pacUri || config.pacScript;
 
-interface ProxyExport {
-    agent: PacProxyAgent<string> | HttpsProxyAgent<string> | SocksProxyAgent | null;
-    dispatcher: ProxyAgent | null;
-    proxyUri?: string;
-    proxyObj: Config['proxy'];
-    proxyUrlHandler?: URL | null;
-    multiProxy?: MultiProxyResult;
-    getCurrentProxy: () => ProxyState | null;
-    markProxyFailed: (proxyUri: string) => void;
-    getAgentForProxy: (proxyState: ProxyState) => any;
-    getDispatcherForProxy: (proxyState: ProxyState, url: string, minVersion?: SecureVersion) => Promise<ProxyAgent | null>;
-}
+const { proxyUri, proxyObj, proxyUrlHandler } = proxyIsPAC ? pacProxy(config.pacUri, config.pacScript, config.proxy) : unifyProxy(config.proxyUri, config.proxy);
 
-let proxyUri: string | undefined;
-let proxyObj: Config['proxy'];
-let proxyUrlHandler: URL | null = null;
-let multiProxy: MultiProxyResult | undefined;
-
-const createAgentForProxy = (uri: string, proxyObj: Config['proxy']): any => {
-    if (uri.startsWith('http')) {
-        return new HttpsProxyAgent(uri, {
-            headers: {
-                'proxy-authorization': proxyObj?.auth ? `Basic ${proxyObj.auth}` : undefined,
-            },
-        });
-    }
-    if (uri.startsWith('socks')) {
-        return new SocksProxyAgent(uri);
-    }
-    return null;
-};
-
-const createDispatcherForProxy = (uri: string, proxyObj: Config['proxy'], minVersion?: SecureVersion): ProxyAgent | null => {
+const createDispatcher = (uri: string, minVersion?: SecureVersion): ProxyAgent | null => {
     if (uri.startsWith('http')) {
         return new ProxyAgent({
             uri,
@@ -73,76 +40,27 @@ const createDispatcherForProxy = (uri: string, proxyObj: Config['proxy'], minVer
     return null;
 };
 
-if (proxyIsPAC) {
-    const proxy = pacProxy(config.pacUri, config.pacScript, config.proxy);
-    proxyUri = proxy.proxyUri;
-    proxyObj = proxy.proxyObj;
-    proxyUrlHandler = proxy.proxyUrlHandler;
-} else if (config.proxyUris && config.proxyUris.length > 0) {
-    multiProxy = createMultiProxy(config.proxyUris, config.proxy);
-    proxyObj = multiProxy.proxyObj;
-    const currentProxy = multiProxy.getNextProxy();
-    if (currentProxy) {
-        proxyUri = currentProxy.uri;
-        proxyUrlHandler = currentProxy.urlHandler ?? null;
-    }
-    logger.info(`Multi-proxy initialized with ${config.proxyUris.length} proxies`);
-} else {
-    const proxy = unifyProxy(config.proxyUri, config.proxy);
-    proxyUri = proxy.proxyUri;
-    proxyObj = proxy.proxyObj;
-    proxyUrlHandler = proxy.proxyUrlHandler;
-}
-
 let agent: PacProxyAgent<string> | HttpsProxyAgent<string> | SocksProxyAgent | null = null;
 let dispatcher: ProxyAgent | null = null;
 
 if (proxyIsPAC && proxyUri) {
     agent = new PacProxyAgent(`pac+${proxyUri}`);
 } else if (proxyUri) {
-    agent = createAgentForProxy(proxyUri, proxyObj);
-    dispatcher = createDispatcherForProxy(proxyUri, proxyObj);
+    if (proxyUri.startsWith('http')) {
+        agent = new HttpsProxyAgent(proxyUri, {
+            headers: {
+                'proxy-authorization': proxyObj?.auth ? `Basic ${proxyObj.auth}` : undefined,
+            },
+        });
+    } else if (proxyUri.startsWith('socks')) {
+        agent = new SocksProxyAgent(proxyUri);
+    }
+    dispatcher = createDispatcher(proxyUri);
 }
 
-const getCurrentProxy = (): ProxyState | null => {
-    if (multiProxy) {
-        return multiProxy.getNextProxy();
-    }
-    if (proxyUri) {
-        return {
-            uri: proxyUri,
-            isActive: true,
-            failureCount: 0,
-            urlHandler: proxyUrlHandler,
-        };
-    }
-    return null;
-};
-
-const markProxyFailed = (failedProxyUri: string) => {
-    if (!multiProxy) {
-        return;
-    }
-    multiProxy.markProxyFailed(failedProxyUri);
-    const nextProxy = multiProxy.getNextProxy();
-    if (nextProxy) {
-        proxyUri = nextProxy.uri;
-        proxyUrlHandler = nextProxy.urlHandler || null;
-        agent = createAgentForProxy(nextProxy.uri, proxyObj);
-        dispatcher = createDispatcherForProxy(nextProxy.uri, proxyObj);
-        logger.info(`Switched to proxy: ${nextProxy.uri}`);
-    } else {
-        logger.warn('No available proxies remaining');
-        agent = null;
-        dispatcher = null;
-        proxyUri = undefined;
-    }
-};
-
-const getAgentForProxy = (proxyState: ProxyState) => createAgentForProxy(proxyState.uri, proxyObj);
-
-const resolvePacProxy = async (url: string): Promise<string | null> => {
-    const resolver = await (agent as PacProxyAgent<string>).getResolver();
+// Only the first PAC entry is used; undici has no per-connection fallback like pac-proxy-agent
+const resolvePacProxy = async (pacAgent: PacProxyAgent<string>, url: string): Promise<string | null> => {
+    const resolver = await pacAgent.getResolver();
     const result = (await resolver(new URL(url))) || 'DIRECT';
     const [type, target] = result
         .trim()
@@ -165,22 +83,19 @@ const resolvePacProxy = async (url: string): Promise<string | null> => {
     }
 };
 
-const getDispatcherForProxy = async (proxyState: ProxyState, url: string, minVersion?: SecureVersion) => {
-    const uri = proxyIsPAC ? await resolvePacProxy(url) : proxyState.uri;
-    return uri ? createDispatcherForProxy(uri, proxyObj, minVersion) : null;
+const getDispatcher = async (url: string, minVersion?: SecureVersion) => {
+    if (agent instanceof PacProxyAgent) {
+        const uri = await resolvePacProxy(agent, url);
+        return uri ? createDispatcher(uri, minVersion) : null;
+    }
+    return minVersion && proxyUri ? createDispatcher(proxyUri, minVersion) : dispatcher;
 };
 
-const proxyExport: ProxyExport = {
+export default {
     agent,
     dispatcher,
     proxyUri,
     proxyObj,
     proxyUrlHandler,
-    multiProxy,
-    getCurrentProxy,
-    markProxyFailed,
-    getAgentForProxy,
-    getDispatcherForProxy,
+    getDispatcher,
 };
-
-export default proxyExport;

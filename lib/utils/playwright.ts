@@ -8,7 +8,12 @@ import proxy from './proxy';
 
 type GotoOptions = Parameters<Page['goto']>[1];
 
-type ProxyState = NonNullable<ReturnType<typeof proxy.getCurrentProxy>>;
+interface ProxyState {
+    uri: string;
+    urlHandler: URL | null;
+}
+
+const configuredProxy: ProxyState | null = proxy.proxyUri ? { uri: proxy.proxyUri, urlHandler: proxy.proxyUrlHandler } : null;
 
 const proxyServerFromUrl = (proxyUrl: URL) => {
     const protocol = proxyUrl.protocol.replace('socks5h:', 'socks5:').replace('socks4a:', 'socks4:');
@@ -125,8 +130,7 @@ const scheduleClose = (browser: Browser, timeout = 30000) =>
  * @returns Playwright browser context (native `newPage()` shares state across calls)
  */
 export default async function outPlaywright() {
-    const currentProxy = proxy.getCurrentProxy();
-    const { browser, context } = await launchBrowser(currentProxy && proxy.proxyObj.url_regex === '.*' ? currentProxy : null);
+    const { browser, context } = await launchBrowser(proxy.proxyObj.url_regex === '.*' ? configuredProxy : null);
     scheduleClose(browser);
     return context;
 }
@@ -165,8 +169,7 @@ export const getPlaywrightPage = async (
         allowProxy = true;
     }
 
-    const currentProxy = proxy.getCurrentProxy();
-    const currentProxyState = currentProxy && allowProxy ? currentProxy : null;
+    const currentProxyState = allowProxy ? configuredProxy : null;
     const hasProxy = Boolean(getProxyOptions(currentProxyState).proxy);
     const { browser, context } = await launchBrowser(currentProxyState, instanceOptions.javaScriptEnabled);
     const closeTimer = scheduleClose(browser, instanceOptions.closeTimeout);
@@ -187,15 +190,7 @@ export const getPlaywrightPage = async (
         }
 
         if (!instanceOptions.noGoto) {
-            try {
-                await page.goto(url, instanceOptions.gotoConfig || { waitUntil: 'domcontentloaded' });
-            } catch (error) {
-                if (hasProxy && currentProxyState && proxy.multiProxy) {
-                    logger.warn(`Playwright navigation failed with proxy ${currentProxyState.uri}, marking as failed: ${error}`);
-                    proxy.markProxyFailed(currentProxyState.uri);
-                }
-                throw error;
-            }
+            await page.goto(url, instanceOptions.gotoConfig || { waitUntil: 'domcontentloaded' });
         }
 
         return {
