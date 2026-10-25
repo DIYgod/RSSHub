@@ -1,7 +1,7 @@
 import crypto from 'node:crypto';
-import https from 'node:https';
 
 import { load } from 'cheerio';
+import { Agent } from 'undici';
 
 import { config } from '@/config';
 import type { Route } from '@/types';
@@ -45,8 +45,10 @@ export const route: Route = {
 
 async function handler(ctx) {
     // fix unsafe legacy renegotiation disabled
-    const agent = new https.Agent({
-        secureOptions: crypto.constants.SSL_OP_LEGACY_SERVER_CONNECT,
+    const agent = new Agent({
+        connect: {
+            secureOptions: crypto.constants.SSL_OP_LEGACY_SERVER_CONNECT,
+        },
     });
 
     const response = await ofetch.raw('https://personalbank.cib.com.cn/pers/main/pubinfo/ifxQuotationQuery.do', { agent: { https: agent } });
