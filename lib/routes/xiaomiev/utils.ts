@@ -7,6 +7,8 @@ import ofetch from '@/utils/ofetch';
 import type { NewProductDetailItem, NewProductListItem } from './types';
 import { NewProductDetailResponseSchema, NewProductListResponseSchema } from './types';
 
+// NewProduct
+
 /**
  * Fetch the list of new products, extracting goods from every `car_product_list_new` floor.
  *
@@ -55,6 +57,8 @@ const getNewProductItem = async (item: NewProductListItem): Promise<NewProductDe
     });
     return response.data;
 };
+
+// Conversion
 
 /**
  * Convert xiaomiev NewProductListItem + NewProductDetailItem to NewProduct template props.

@@ -7,6 +7,8 @@ const DataResponseSchema = <Schema extends z.ZodType>(data: Schema) => z.object(
 
 // NewProduct
 
+// List
+
 const NewProductListGoodsSchema = z.object({
     img800s: z.string(),
     itemId: z.number(),
@@ -41,6 +43,8 @@ export const NewProductListResponseSchema = DataResponseSchema(
         ),
     })
 );
+
+// Detail
 
 const NewProductDetailGoodsSchema = z.object({
     imgUrl: z.string(),
