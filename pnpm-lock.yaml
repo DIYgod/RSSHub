@@ -434,8 +434,8 @@ importers:
         specifier: 1.10.3
         version: 1.10.3
       youtubei.js:
-        specifier: 18.2.0
-        version: 18.2.0
+        specifier: 18.3.0
+        version: 18.3.0
       zod:
         specifier: 4.6.7
         version: 4.6.7
@@ -6409,8 +6409,8 @@ packages:
     resolution: {integrity: sha512-Ba8YR6bxQyBdjY3QdXltltH+rgWyxscxlI2IY5aJeQwPttXHKW19dWFeo4s+uXv8nlnDLCFlvBwzMOfBjkr7gg==}
     engines: {node: '>=18.0.0'}
 
-  youtubei.js@18.2.0:
-    resolution: {integrity: sha512-4xvEEOk7ezu/MrYcQUABzWGKn4I2hRgjtrS8EYJmZsNXTirpF02y856tp4ART4F1tvb9XCitAYPnCFQSlz0XYA==}
+  youtubei.js@18.3.0:
+    resolution: {integrity: sha512-6Cwn/U8a+OjpZp5XgqOjwy7Lk0RrGavm3I5zO7qZWO+fes20vhWMZnlUs0h/97SwjS0AsxAZrZ5bJ85XBJVWTw==}
 
   yuku-ast@0.19.0:
     resolution: {integrity: sha512-PyCsiScaelhxBGzL8dyeJkLqvRZycoh78R31Vrt/WqYrm0hMFoKwIw/X7Dx5mBKLWAMlV9I9HEyBOHnj2gZVyw==}
@@ -11937,7 +11937,7 @@ snapshots:
       he: 1.2.0
       striptags: 3.2.0
 
-  youtubei.js@18.2.0:
+  youtubei.js@18.3.0:
     dependencies:
       '@bufbuild/protobuf': 2.16.0
       fflate: 0.8.3

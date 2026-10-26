@@ -144,7 +144,7 @@
         "x-client-transaction-id": "0.3.2",
         "xxhash-wasm": "1.1.0",
         "youtube-caption-extractor": "1.10.3",
-        "youtubei.js": "18.2.0",
+        "youtubei.js": "18.3.0",
         "zod": "4.6.7"
     },
     "devDependencies": {
