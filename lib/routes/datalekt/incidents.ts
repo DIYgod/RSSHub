@@ -13,7 +13,7 @@ export const route: Route = {
     path: '/incidents',
     categories: ['new-media'],
     example: '/datalekt/incidents',
-    name: 'Datelekt Incidents',
+    name: 'Incidents',
     maintainers: ['shoeper'],
     description: 'Latest cyber incidents listed by Datalekt',
     radar: [{ source: ['datalekt.nl/incidenten/'], target: '/incidents' }],
