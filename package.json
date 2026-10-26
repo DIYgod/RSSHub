@@ -201,7 +201,7 @@
         "remark-gfm": "4.0.1",
         "remark-pangu": "2.2.0",
         "remark-parse": "11.0.0",
-        "rolldown": "1.2.14",
+        "rolldown": "1.2.15",
         "tsdown": "0.23.1",
         "typescript": "npm:@typescript/typescript6@6.0.2",
         "typescript-7": "npm:typescript@7.0.2",
