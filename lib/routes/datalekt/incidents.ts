@@ -26,6 +26,9 @@ async function handler() {
     return {
         title: 'Datalekt Cyberincidenten',
         link: 'https://datalekt.nl/incidenten/',
+        image: 'https://datalekt.nl/wp-content/uploads/2026/05/cropped-datalekt-logo2-32x32.png',
+        icon: 'https://datalekt.nl/wp-content/uploads/2026/05/cropped-datalekt-logo2-32x32.png',
+        logo: 'https://datalekt.nl/wp-content/uploads/2026/05/cropped-datalekt-logo2-32x32.png',
         item: incidents.map((incident) => ({
             title: incident.title.rendered,
             link: incident.link,
