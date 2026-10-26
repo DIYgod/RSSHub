@@ -31,7 +31,7 @@ export const route: Route = {
         },
     ],
     name: '用户播放记录',
-    description: '未配置 LASTFM\\_API\\_KEY 时使用公开页面，公开页面的时间精度为分钟。',
+    description: String.raw`未配置 LASTFM\_API\_KEY 时使用公开页面，公开页面的时间精度为分钟。`,
     maintainers: ['hoilc'],
     handler,
 };
