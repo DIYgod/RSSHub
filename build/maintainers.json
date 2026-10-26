@@ -11489,6 +11489,18 @@
   "/line/today/:edition?/:tab?": [
     "nczitzk"
   ],
+  "/lingowhale/channel/:id": [
+    "TonyRL"
+  ],
+  "/lingowhale/hot/:type?": [
+    "TonyRL"
+  ],
+  "/lingowhale/search/:keyword/:type?": [
+    "TonyRL"
+  ],
+  "/lingowhale/topic/:id": [
+    "TonyRL"
+  ],
   "/linkedin/company/:company_id/posts": [
     "saifazmi"
   ],

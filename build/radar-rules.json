@@ -59156,6 +59156,43 @@
       }
     ]
   },
+  "lingowhale.com": {
+    "_name": "语鲸 LingoWhale",
+    ".": [
+      {
+        "title": "频道",
+        "docs": "https://docs.rsshub.app/routes/lingowhale",
+        "source": [
+          "/channels"
+        ],
+        "target": "/lingowhale/channel/:id"
+      },
+      {
+        "title": "热门",
+        "docs": "https://docs.rsshub.app/routes/lingowhale",
+        "source": [
+          "/topics"
+        ],
+        "target": "/lingowhale/hot/:type?"
+      },
+      {
+        "title": "搜索",
+        "docs": "https://docs.rsshub.app/routes/lingowhale",
+        "source": [
+          "/channels"
+        ],
+        "target": "/lingowhale/search/:keyword/:type?"
+      },
+      {
+        "title": "话题",
+        "docs": "https://docs.rsshub.app/routes/lingowhale",
+        "source": [
+          "/topics"
+        ],
+        "target": "/lingowhale/topic/:id"
+      }
+    ]
+  },
   "linkedin.com": {
     "_name": "LinkedIn",
     "www": [

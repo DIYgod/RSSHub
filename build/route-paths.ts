@@ -2122,6 +2122,10 @@ export type RoutePath =
   | `/line/today/:edition?/:tab?`
   | `/line/today/:edition/publisher/:id`
   | `/lineageos/changes`
+  | `/lingowhale/channel/:id`
+  | `/lingowhale/hot/:type?`
+  | `/lingowhale/search/:keyword/:type?`
+  | `/lingowhale/topic/:id`
   | `/link3/events`
   | `/link3/profile/:handle`
   | `/linkedin/company/:company_id/posts`
