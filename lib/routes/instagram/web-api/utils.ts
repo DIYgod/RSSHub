@@ -6,10 +6,12 @@ import ConfigNotFoundError from '@/errors/types/config-not-found';
 import NotFoundError from '@/errors/types/not-found';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/parse-date';
 
 export const baseUrl = 'https://www.instagram.com';
 
 const docIds = {
+    PolarisLoggedOutDesktopWWWProfilePostsTabContentQuery_connection: '28904005159232689',
     PolarisProfilePageContentQuery: '28036671149327607',
     PolarisProfilePostsQuery: '28570182382647478',
     PolarisProfileStoryHighlightsTrayContentQuery: '26970053832668570',
@@ -158,7 +160,7 @@ export const getPage = async (username: string, cookieJar: CookieJar) => {
 };
 
 export const getUserInfo = (username: string, cookieJar: CookieJar, page: () => ReturnType<typeof getPage>): Promise<User> =>
-    cache.tryGet(`instagram:userInfo:${username}`, async (): Promise<User> => {
+    cache.tryGet(`instagram:userInfo:${config.instagram.cookie ? 'user' : 'guest'}:${username}`, async (): Promise<User> => {
         const { html, tokens, profileId } = await page();
         if (!tokens.dtsg) {
             return getGuestUser(html);
@@ -183,9 +185,25 @@ export const getUserInfo = (username: string, cookieJar: CookieJar, page: () => 
 
 export const getUserFeed = (username: string, cookieJar: CookieJar, page: () => ReturnType<typeof getPage>) =>
     cache.tryGet(
-        `instagram:feed:${username}`,
+        `instagram:feed:${config.instagram.cookie ? 'user' : 'guest'}:${username}`,
         async () => {
-            const { tokens } = await page();
+            const { html, tokens } = await page();
+            if (!tokens.dtsg) {
+                const user = getGuestUser(html);
+                const timeline = await graphql('PolarisLoggedOutDesktopWWWProfilePostsTabContentQuery_connection', { first: 33, id: user.id, __relay_internal__pv__PolarisSEOIsCrawlerrelayprovider: false }, tokens, cookieJar);
+                return timeline.node.polaris_ordered_timeline_connection.edges
+                    .map((edge) => edge.node)
+                    .filter((node) => node.user.id === user.id)
+                    .map((node) => {
+                        const date = node.accessibility_caption?.match(/ on ([A-Z][a-z]+ \d{1,2}, \d{4})\./)?.[1];
+                        return {
+                            ...node,
+                            product_type: 'feed',
+                            image_versions2: { candidates: [{ url: node.display_uri }] },
+                            taken_at: date && parseDate(date, 'MMMM D, YYYY').getTime() / 1000,
+                        };
+                    });
+            }
             const posts = await graphql(
                 'PolarisProfilePostsQuery',
                 {
