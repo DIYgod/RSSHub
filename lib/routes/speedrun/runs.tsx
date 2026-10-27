@@ -26,7 +26,7 @@ export const route: Route = {
 async function handler(ctx) {
     const scope = ctx.req.param('scope');
     const name = ctx.req.param('name');
-    if ((scope && !['game', 'user'].includes(scope)) || (scope && !name)) {
+    if (scope && (!['game', 'user'].includes(scope) || !name)) {
         throw new InvalidParameterError('Use /runs, /runs/game/:abbreviation or /runs/user/:username.');
     }
     let subject;
