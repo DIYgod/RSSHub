@@ -38,7 +38,8 @@ async function handler(ctx) {
 
     const threadsData = extractThreadItems($);
 
-    if (!threadsData.length) {
+    // A search with no results still embeds the search response with empty edges, so only a page without it is a failure
+    if (!threadsData.length && !$('script[data-sjs]:contains("searchResults")').text().includes('"edges":[]')) {
         throw new Error('Failed to fetch thread data');
     }
 
@@ -59,5 +60,6 @@ async function handler(ctx) {
         title: `${keyword} - Search on Threads`,
         link,
         item: items,
+        allowEmpty: true,
     };
 }
