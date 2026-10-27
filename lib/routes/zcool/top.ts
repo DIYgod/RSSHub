@@ -46,7 +46,7 @@ async function handler(ctx) {
         author: item.member.name,
         category: [item.productCategoryStr, item.productSubCateStr, ...item.tags],
         link: item.pageUrl,
-        pubDate: item.rankingPublishTime !== undefined && item.rankingPublishTime !== null && item.rankingPublishTime !== '' ? parseDate(item.rankingPublishTime) : undefined,
+        pubDate: [undefined, null, ''].includes(item.rankingPublishTime) ? undefined : parseDate(item.rankingPublishTime),
     }));
     const items = await Promise.all(
         list.map(async (item) => {
@@ -55,7 +55,7 @@ async function handler(ctx) {
                 const $ = load(response);
                 const data = JSON.parse($('script#__NEXT_DATA__').text());
                 const publishTime = data.props.pageProps.data.publishTime;
-                const pubDate = publishTime !== undefined && publishTime !== null && publishTime !== '' ? parseDate(publishTime, 'x') : undefined;
+                const pubDate = [undefined, null, ''].includes(publishTime) ? undefined : parseDate(publishTime, 'x');
                 let description;
                 if (item.link.startsWith('https://www.zcool.com.cn/article/')) {
                     description = extractArticle(data);

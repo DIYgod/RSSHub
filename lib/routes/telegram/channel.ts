@@ -727,7 +727,7 @@ async function handler(ctx) {
                 let mediaTag = '';
                 if (showMediaTagInTitle) {
                     for (const type of msgTypes) {
-                        if ((type !== REPLY && type !== FORWARDED && type !== VIA_BOT) || (type === REPLY && showReplyTo) || (type === FORWARDED && showFwdFrom) || (type === VIA_BOT && showViaBot)) {
+                        if (![REPLY, FORWARDED, VIA_BOT].includes(type) || (type === REPLY && showReplyTo) || (type === FORWARDED && showFwdFrom) || (type === VIA_BOT && showViaBot)) {
                             mediaTag += showMediaTagAsEmoji ? mediaTagDict[type][1] : mediaTagDict[type][0];
                         }
                     }

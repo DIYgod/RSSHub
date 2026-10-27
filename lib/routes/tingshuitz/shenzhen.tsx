@@ -55,7 +55,7 @@ async function handler() {
                         {item.stopStartTime ? `,停水开始时间${item.stopStartTime}` : undefined}
                         {item.stopEndTime ? `,停水结束时间${item.stopEndTime}` : undefined}
                     </p>
-                    {item.mainLeadPath !== undefined && item.mainLeadPath !== null && item.mainLeadPath !== '' ? <p>停水主管径：{item.mainLeadPath}</p> : undefined}
+                    {[undefined, null, ''].includes(item.mainLeadPath) ? undefined : <p>停水主管径：{item.mainLeadPath}</p>}
                     {item.servicePhone ? (
                         <p>
                             服务热线：<a href={`tel:${item.servicePhone}`}>{item.servicePhone}</a>

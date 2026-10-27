@@ -120,7 +120,7 @@ const parseList = ($: CheerioAPI): ListCard[] =>
                 key_money_months: null,
                 fixtures_transfer_jpy: null,
                 condition: parseCondition(purpose, normalizedTitle),
-                prev_business: purpose !== null && purpose !== 'スケルトン' && purpose !== 'その他' ? purpose : null,
+                prev_business: [null, 'スケルトン', 'その他'].includes(purpose) ? null : purpose,
                 heavy_food_ok: parseHeavyFood(normalizedTitle),
                 business_limit: notes.length > 0 ? notes.join(' / ') : null,
                 listed_at: null,
