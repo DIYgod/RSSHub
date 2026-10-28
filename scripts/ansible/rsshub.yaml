@@ -15,7 +15,7 @@
             url: '{{ item.url }}'
             dest: '/etc/apt/keyrings/{{ item.name }}.asc'
         loop:
-            - { name: nodesource, url: https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key }
+            - { name: mise, url: https://mise.jdx.dev/gpg-key.pub }
             - { name: docker, url: https://download.docker.com/linux/ubuntu/gpg }
             - { name: caddy, url: https://dl.cloudsmith.io/public/caddy/stable/gpg.key }
       - name: Install repos
@@ -24,13 +24,13 @@
             state: present
             update_cache: yes
         loop:
-            - deb [signed-by=/etc/apt/keyrings/nodesource.asc] https://deb.nodesource.com/node_24.x nodistro main
+            - deb [signed-by=/etc/apt/keyrings/mise.asc] https://mise.jdx.dev/deb stable main
             - deb [signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu resolute stable
             - deb [signed-by=/etc/apt/keyrings/caddy.asc] https://dl.cloudsmith.io/public/caddy/stable/deb/debian any-version main
       - name: Install prerequisites
         apt:
             name:
-                - nodejs
+                - mise
                 - build-essential
                 - redis-server
                 - docker-ce
@@ -38,10 +38,6 @@
                 - caddy
             state: present
             update_cache: yes
-      - name: Install pnpm
-        command: npm install -g corepack@latest
-      - name: Enable pnpm
-        command: corepack enable pnpm
       - name: Pull docker image for browserless
         docker_image:
             name: ghcr.io/browserless/chromium
@@ -77,21 +73,27 @@
             name: rsshub
             create_home: true
             shell: /bin/bash
+      - name: Install node and pnpm
+        command: mise use -g node@26 pnpm@12
+        become_user: rsshub
       - name: Clone the repo
         git:
             repo: https://github.com/DIYgod/RSSHub.git
             dest: /home/rsshub/app
             update: yes
+        become_user: rsshub
       - name: Install repo dependencies
-        command: pnpm install --frozen-lockfile
+        command: mise exec -- pnpm install --frozen-lockfile
         args:
             chdir: /home/rsshub/app
+        become_user: rsshub
         environment:
             PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: true
       - name: Build the app
-        command: pnpm build
+        command: mise exec -- pnpm build
         args:
             chdir: /home/rsshub/app
+        become_user: rsshub
       - name: Copy configuration
         copy:
             src: rsshub.env

@@ -1,4 +1,4 @@
-FROM node:24-trixie AS dep-builder
+FROM node:26-trixie AS dep-builder
 # Here we use the non-slim image to provide build-time deps (compilers and python), thus no need to install later.
 # This effectively speeds up qemu-based cross-build.
 
@@ -8,11 +8,11 @@ WORKDIR /app
 ARG USE_CHINA_NPM_REGISTRY=0
 RUN \
     set -ex && \
+    npm install -g corepack@latest && \
     corepack enable pnpm && \
     if [ "$USE_CHINA_NPM_REGISTRY" = 1 ]; then \
         echo 'use npm mirror' && \
         npm config set registry https://registry.npmmirror.com && \
-        yarn config set registry https://registry.npmmirror.com && \
         pnpm config set registry https://registry.npmmirror.com ; \
     fi;
 
@@ -35,7 +35,7 @@ FROM debian:trixie-slim AS dep-version-parser
 # This stage is necessary to limit the cache miss scope.
 # With this stage, any modification to package.json won't break the build cache of the next two stages as long as the
 # version unchanged.
-# node:24-trixie-slim is based on debian:trixie-slim so this stage would not cause any additional download.
+# node:26-trixie-slim is based on debian:trixie-slim so this stage would not cause any additional download.
 
 WORKDIR /ver
 COPY ./package.json /app/
@@ -47,7 +47,7 @@ RUN \
 
 # ---------------------------------------------------------------------------------------------------------------------
 
-FROM node:24-trixie-slim AS docker-minifier
+FROM node:26-trixie-slim AS docker-minifier
 # The stage is used to further reduce the image size by removing unused files.
 
 WORKDIR /minifier
@@ -56,13 +56,12 @@ COPY --from=dep-version-parser /ver/* /minifier/
 ARG USE_CHINA_NPM_REGISTRY=0
 RUN \
     set -ex && \
-    if [ "$USE_CHINA_NPM_REGISTRY" = 1 ]; then \
-        npm config set registry https://registry.npmmirror.com && \
-        yarn config set registry https://registry.npmmirror.com && \
-        pnpm config set registry https://registry.npmmirror.com ; \
-    fi; \
     npm install -g corepack@latest && \
     corepack enable pnpm && \
+    if [ "$USE_CHINA_NPM_REGISTRY" = 1 ]; then \
+        npm config set registry https://registry.npmmirror.com && \
+        pnpm config set registry https://registry.npmmirror.com ; \
+    fi; \
     pnpm add @vercel/nft@$(cat .nft_version) fs-extra@$(cat .fs_extra_version) --save-prod
 
 COPY . /app
@@ -84,7 +83,7 @@ RUN \
 
 # ---------------------------------------------------------------------------------------------------------------------
 
-FROM node:24-trixie-slim AS chromium-downloader
+FROM node:26-trixie-slim AS chromium-downloader
 # This stage is necessary to improve build concurrency and minimize the image size.
 # Yeah, downloading Chromium never needs those dependencies below.
 
@@ -98,15 +97,15 @@ ARG PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1
 RUN \
     set -ex ; \
     if [ "$PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD" = 0 ] && [ "$TARGETPLATFORM" = 'linux/amd64' ]; then \
+        npm install -g corepack@latest && \
+        corepack enable pnpm && \
         if [ "$USE_CHINA_NPM_REGISTRY" = 1 ]; then \
             npm config set registry https://registry.npmmirror.com && \
-            yarn config set registry https://registry.npmmirror.com && \
             pnpm config set registry https://registry.npmmirror.com ; \
         fi; \
         echo 'Downloading Chromium...' && \
         unset PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD && \
         export PLAYWRIGHT_BROWSERS_PATH=/app/node_modules/.cache/ms-playwright && \
-        corepack enable pnpm && \
         pnpm --allow-build=patchright --allow-build=patchright-core add patchright@$(cat /app/.patchright_version) --save-prod && \
         pnpm rb && \
         pnpm exec patchright install chromium ; \
@@ -116,7 +115,7 @@ RUN \
 
 # ---------------------------------------------------------------------------------------------------------------------
 
-FROM node:24-trixie-slim AS app
+FROM node:26-trixie-slim AS app
 
 LABEL org.opencontainers.image.authors="https://github.com/DIYgod/RSSHub"
 
