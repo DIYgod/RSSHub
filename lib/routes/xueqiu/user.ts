@@ -43,6 +43,9 @@ interface Status {
     created_at: number;
     mark?: number;
     legal_user_visible?: boolean;
+    text?: string;
+    description?: string;
+    truncated?: boolean;
     user?: { screen_name?: string; profile_image_url?: string; photo_domain?: string };
 }
 
@@ -50,12 +53,14 @@ interface ApiError {
     error_code?: number | string;
 }
 
+const hasText = (value: unknown): value is string => typeof value === 'string' && value.trim().length > 0;
+
 const stripHtml = (html: string): string => sanitizeHtml(html, { allowedTags: [], allowedAttributes: {} });
 
 // Build a feed item from the timeline list data alone (no detail request).
 const buildListItem = (item: any) => ({
-    title: item.title || stripHtml(item.description || ''),
-    description: item.description || '',
+    title: item.title || stripHtml(hasText(item.text) ? item.text : item.description || ''),
+    description: buildDescription(item),
     pubDate: parseDate(item.created_at),
     link: rootUrl + item.target,
 });
@@ -68,15 +73,15 @@ const buildTitle = (item: any, detail: any): string => {
 };
 
 const buildDescription = (detail: any): string => {
-    let text = detail.text ?? detail.description;
-    const images = detail.image_info_list ?? [];
+    let text = hasText(detail.text) ? detail.text : hasText(detail.description) ? detail.description : '';
+    const images = Array.isArray(detail.image_info_list) ? detail.image_info_list : [];
     for (const img of images) {
         if (img?.filename) {
             text += `<br><img src="https://xqimg.imedao.com/${img.filename}">`;
         }
     }
     if (detail.retweeted_status) {
-        text += `<blockquote>${detail.retweeted_status.user.screen_name}:&nbsp;${detail.retweeted_status.text}</blockquote>`;
+        text += `<blockquote>${detail.retweeted_status.user?.screen_name || ''}:&nbsp;${detail.retweeted_status.text || detail.retweeted_status.description || ''}</blockquote>`;
     }
     return text;
 };
@@ -134,7 +139,7 @@ async function handler(ctx) {
         data,
         async (item) => {
             // Complete list entries already contain the current content.
-            if (item.legal_user_visible) {
+            if ((item.legal_user_visible && (hasText(item.text) || hasText(item.description))) || (hasText(item.text) && item.truncated !== true)) {
                 return buildListItem(item);
             }
 
