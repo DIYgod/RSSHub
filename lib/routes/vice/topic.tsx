@@ -2,30 +2,44 @@ import { load } from 'cheerio';
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 
+import NotFoundError from '@/errors/types/not-found';
 import type { Route } from '@/types';
-import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
-const render = (data) =>
-    renderToString(
+interface WordPressTerm {
+    id: number;
+    name: string;
+    taxonomy: string;
+}
+
+interface WordPressPost {
+    link: string;
+    title: { rendered: string };
+    content: { rendered: string };
+    date_gmt?: string;
+    modified_gmt?: string;
+    parsely?: { meta?: { author?: Array<{ name?: string }> } };
+    _embedded?: {
+        'wp:term'?: WordPressTerm[][];
+        'wp:featuredmedia'?: Array<{ source_url?: string; alt_text?: string; caption?: { rendered?: string } }>;
+    };
+}
+
+function renderPost(post: WordPressPost) {
+    const image = post._embedded?.['wp:featuredmedia']?.[0];
+    return renderToString(
         <>
-            {data.image ? (
+            {image?.source_url ? (
                 <figure>
-                    <img src={data.image.url} alt={data.image.alt} />
-                    <figcaption>{data.image.caption || data.image.credit || data.image.alt}</figcaption>
+                    <img src={image.source_url} alt={image.alt_text} />
+                    {image.caption?.rendered ? <figcaption>{raw(image.caption.rendered)}</figcaption> : null}
                 </figure>
             ) : null}
-            {data.body ? <p>{raw(data.body.html)}</p> : null}
-            {data.heading2 ? (
-                <>
-                    <hr />
-                    <h2>{raw(data.heading2.html)}</h2>
-                </>
-            ) : null}
-            {data.oembed ? raw(data.oembed.html) : null}
+            {raw(post.content.rendered)}
         </>
     );
+}
 
 export const route: Route = {
     path: '/topic/:topic/:language?',
@@ -37,7 +51,7 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['www.vice.com/:language/topic/:topic'],
+            source: ['www.vice.com/:language/topic/:topic', 'www.vice.com/:language/tag/:topic'],
             target: '/topic/:topic/:language',
         },
     ],
@@ -49,72 +63,40 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { language = 'en', topic } = ctx.req.param();
-    const response = await ofetch(`https://www.vice.com/${language}/topic/${topic}`);
+    const pageUrl = `https://www.vice.com/${language}/topic/${topic}`;
+    const response = await ofetch<string>(pageUrl);
     const $ = load(response);
-    const nextData = JSON.parse($('script#__NEXT_DATA__').text());
-
-    const list = nextData.props.pageProps.listPageData.articles.map((item) => ({
-        title: item.title,
-        link: `https://vice.com${item.url}`,
-        pubDate: parseDate(item.publish_date, 'x'),
-        author: item.contributions.map((c) => c.contributor.full_name).join(', '),
-        description: item.dek,
-        category: [...new Set([item.primary_topic.name, ...item.topics.map((t) => t.name)])],
-    }));
-
-    const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link, async () => {
-                const response = await ofetch(item.link);
-                const $ = load(response);
-                const articleNextData = JSON.parse($('script#__NEXT_DATA__').text()).props.pageProps.data.articles[0];
-                const bodyComponent = JSON.parse(articleNextData.body_components_json);
-
-                item.description =
-                    render({
-                        image: {
-                            url: articleNextData.thumbnail_url,
-                            alt: articleNextData.caption,
-                            caption: articleNextData.caption,
-                            credit: articleNextData.credit,
-                        },
-                    }) +
-                    bodyComponent
-                        .map((component) => {
-                            switch (component.role) {
-                                case 'body':
-                                    return render({ body: { html: component.html } });
-                                case 'heading2':
-                                    return render({ heading2: { html: component.html } });
-                                case 'image':
-                                    return render({
-                                        image: {
-                                            url: component.URL,
-                                            alt: component.alt,
-                                            caption: component.caption,
-                                        },
-                                    });
-                                case 'oembed':
-                                case 'tweet':
-                                case 'youtube':
-                                    return render({ oembed: { html: component.oembed.html } });
-                                default:
-                                    return '';
-                            }
-                        })
-                        .join('');
-
-                return item;
-            })
-        )
-    );
-
+    const apiUrl = $('link[rel="https://api.w.org/"]').attr('href');
+    const tagUrl = $('link[rel="alternate"][type="application/json"]').attr('href');
+    if (!apiUrl || !tagUrl) {
+        throw new NotFoundError(`No public topic API found for ${language}/${topic}`);
+    }
+    const [tag, languages] = await Promise.all([ofetch<WordPressTerm>(tagUrl), ofetch<WordPressTerm[]>(new URL('wp/v2/platform-languages', apiUrl).href, { query: { slug: language } })]);
+    const languageId = languages[0]?.id;
+    if (!tag.id || !languageId) {
+        throw new NotFoundError(`No public topic or language found for ${language}/${topic}`);
+    }
+    const posts = await ofetch<WordPressPost[]>(new URL('wp/v2/posts', apiUrl).href, {
+        query: { tags: tag.id, 'platform-languages': languageId, per_page: 12, _embed: 1 },
+    });
     return {
-        // channel title
         title: `VICE | ${topic} articles`,
-        // channel link
-        link: `https://vice.com/${language}/topic/${topic}`,
-        // each feed item
-        item: items,
+        link: $('link[rel="canonical"]').attr('href') ?? pageUrl,
+        item: posts.map((post) => ({
+            title: load(post.title.rendered).text(),
+            link: post.link,
+            pubDate: post.date_gmt ? parseDate(`${post.date_gmt}Z`) : undefined,
+            updated: post.modified_gmt ? parseDate(`${post.modified_gmt}Z`) : undefined,
+            author:
+                post.parsely?.meta?.author
+                    ?.map((author) => author.name)
+                    .filter(Boolean)
+                    .join(', ') || undefined,
+            category: post._embedded?.['wp:term']
+                ?.flat()
+                .filter((term) => term.taxonomy === 'category' || term.taxonomy === 'post_tag')
+                .map((term) => term.name),
+            description: renderPost(post),
+        })),
     };
 }

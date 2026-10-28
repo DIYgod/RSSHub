@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
@@ -20,7 +21,28 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['storm.mg/:category/:id'],
+            source: ['storm.mg/articles'],
+            target: '/articles',
+        },
+        {
+            source: ['storm.mg/localarticles'],
+            target: '/localarticles',
+        },
+        {
+            source: ['storm.mg/history'],
+            target: '/history',
+        },
+        {
+            source: ['storm.mg/all-comment'],
+            target: '/all-comment',
+        },
+        {
+            source: ['storm.mg/category/:id'],
+            target: '/category/:id',
+        },
+        {
+            source: ['storm.mg/localarticle-category/:id'],
+            target: '/localarticle-category/:id',
         },
     ],
     name: '分类',
@@ -51,37 +73,44 @@ async function handler(ctx) {
 
     const $ = load(response.data);
 
-    const list = $('.link_title')
-        .toArray()
-        .map((item): DataItem => {
-            const $item = $(item);
+    const legacy = $('.link_title');
+    const anchors = legacy.length ? legacy : $('[data-test-comp="SectionPageSectionWrapper"] a[href^="/article/"]');
+    const seen = new Set<string>();
+    const list: Array<DataItem & { link: string }> = anchors.toArray().flatMap((element) => {
+        const anchor = $(element);
+        const href = anchor.attr('href');
+        if (!href || !anchor.text() || anchor.closest('[data-test-comp="SectionRankingList"]').length) {
+            return [];
+        }
+        const link = new URL(href, rootUrl).href;
+        if (seen.has(link)) {
+            return [];
+        }
+        seen.add(link);
+        return { title: anchor.text(), link };
+    });
 
-            return {
-                title: $item.text(),
-                link: $item.attr('href'),
-            };
-        });
-
-    const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link!, async () => {
-                const detailResponse = await got({
-                    method: 'get',
-                    url: item.link,
-                });
-
-                const content = load(detailResponse.data);
-
-                content('.notify_wordings').remove();
-                content('#premium_block').remove();
-
-                item.description = content('#CMS_wrapper').html();
-                item.author = content('meta[property="dable:author"]').attr('content');
-                item.pubDate = parseDate(content('meta[itemprop="datePublished"]').attr('content')!);
-
-                return item;
-            })
-        )
+    const items = await pMap(
+        list,
+        async (item) => {
+            const detail = await cache.tryGet(`storm:article:v2:${item.link}`, async () => {
+                const { data: response } = await got(item.link);
+                const content = load(response);
+                content('.notify_wordings, #premium_block').remove();
+                const body = content('[data-test-comp="ArticleContent"]');
+                const description = body.length ? (content('[data-test-comp="ArticleCover"]').first().html() ?? '') + (body.html() ?? '') : content('#CMS_wrapper').html();
+                const published = content('meta[property="article:published_time"]').attr('content') || content('meta[itemprop="datePublished"]').attr('content');
+                return {
+                    description,
+                    author: content('meta[property="author"]').attr('content') || content('meta[property="dable:author"]').attr('content'),
+                    pubDate: published ? parseDate(published) : undefined,
+                    category: content('meta[name="keywords"]').attr('content')?.split(','),
+                    image: content('meta[property="og:image"]').attr('content'),
+                };
+            });
+            return { ...item, ...detail };
+        },
+        { concurrency: 3 }
     );
 
     return {

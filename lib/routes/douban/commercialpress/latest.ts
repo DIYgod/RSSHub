@@ -43,7 +43,7 @@ async function handler() {
         },
     });
 
-    // 这个有个重定向，需要获取到真实地址后添加排序参数后再请求一次
+    // Add the sort parameters to the redirected collection URL.
     const realUrl = `${newBookLandingPage.request.options.url.href}?sort=time&sub_type=`;
     const newBookPage = await got({
         method: 'get',

@@ -6,6 +6,7 @@ import cache from '@/utils/cache';
 import logger from '@/utils/logger';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 import parser from '@/utils/rss-parser';
 
 export const route: Route = {
@@ -23,7 +24,7 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['blockworks.co/'],
+            source: ['blockworks.co/', 'blockworks.com/'],
             target: '/',
         },
     ],
@@ -36,7 +37,7 @@ export const route: Route = {
 async function handler(ctx): Promise<Data> {
     const rssUrl = 'https://blockworks.co/feed';
     const feed = await parser.parseURL(rssUrl);
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 20;
+    const limit = getRouteLimit(ctx, 20);
     // Limit to 20 items
     const limitedItems = feed.items.slice(0, limit);
 
@@ -103,7 +104,7 @@ async function extractFullText(slug: string, buildId: string): Promise<{ descrip
         return {
             description: $.html(),
             imageUrl: article.imageUrl,
-            category: [...new Set([...article.categories, ...article.tags])],
+            category: [...new Set([...article.categories, ...article.tags.map((tag) => (typeof tag === 'string' ? tag : tag.name))])],
         };
     } catch (error) {
         logger.error('Error extracting full text from Blockworks:', error);

@@ -5,6 +5,7 @@ import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 import timezone from '@/utils/timezone';
 
 export const route: Route = {
@@ -22,6 +23,7 @@ export const route: Route = {
 
 async function handler(ctx: Context) {
     const { time = 'shishidashiku' } = ctx.req.param();
+    const limit = getRouteLimit(ctx, 10);
 
     const rootUrl = 'http://www.banyuetan.org';
     const currentUrl = `${rootUrl}/byt/${time}/index.html`;
@@ -30,7 +32,7 @@ async function handler(ctx: Context) {
     const $ = load(response);
 
     const list = $('.byt_mian_image_list_con ul li a')
-        .slice(0, 10)
+        .slice(0, limit)
         .toArray()
         .map((item) => {
             const $item = $(item);

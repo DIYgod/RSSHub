@@ -5,6 +5,7 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import { parseDate } from '@/utils/parse-date';
 import { getPlaywrightPage } from '@/utils/playwright';
+import timezone from '@/utils/timezone';
 
 const sites = {
     cn: { host: 'www.savills.com.cn', region: 'China', language: 'zh-CN', name: '中国' },
@@ -31,6 +32,8 @@ export const route: Route = {
 
 async function handler(ctx) {
     const site = ctx.req.param('site') ?? 'cn';
+    const requestedLimit = Number(ctx.req.query('limit'));
+    const limit = Number.isFinite(requestedLimit) && requestedLimit >= 1 ? Math.floor(requestedLimit) : 10;
     if (!Object.hasOwn(sites, site)) {
         throw new InvalidParameterError('Choose cn, hk or hk-tc.');
     }
@@ -38,6 +41,7 @@ async function handler(ctx) {
     const baseUrl = `https://${config.host}`;
     const link = `${baseUrl}/insight-and-opinion/research.aspx?rc=${config.region}&p=&t=&f=date&q=&page=1`;
     const { page, destroy } = await getPlaywrightPage(link, {
+        closeTimeout: 0,
         onBeforeLoad: async (page) => {
             await page.route('**/*', (route) => (route.request().resourceType() === 'document' ? route.continue() : route.abort()));
         },
@@ -52,7 +56,7 @@ async function handler(ctx) {
     const $ = load(response);
     const item = $('#ListingContainer article')
         .toArray()
-        .slice(0, Number(ctx.req.query('limit')) || 10)
+        .slice(0, limit)
         .map((element) => {
             const card = $(element);
             const title = card.find('h3 a').first();
@@ -62,7 +66,7 @@ async function handler(ctx) {
             return {
                 title: title.text(),
                 link: new URL(title.attr('href')!, baseUrl).href,
-                pubDate: date ? parseDate(date) : undefined,
+                pubDate: date ? (/^\d{4}-\d{2}-\d{2}$/.test(date) ? timezone(parseDate(date, 'YYYY-MM-DD'), 8) : parseDate(date)) : undefined,
                 category: card
                     .find('.sv-card-meta__data, .sv-tag')
                     .toArray()

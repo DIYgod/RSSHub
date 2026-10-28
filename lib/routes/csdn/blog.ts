@@ -36,9 +36,10 @@ async function handler(ctx) {
     const rssUrl = blogUrl + '/rss/map';
 
     const feed = await rssParser.parseURL(rssUrl);
+    const selected = feed.items;
 
     const items = await Promise.all(
-        feed.items.map((item) =>
+        selected.map((item) =>
             cache.tryGet(item.link!, async () => {
                 try {
                     const response = await got({

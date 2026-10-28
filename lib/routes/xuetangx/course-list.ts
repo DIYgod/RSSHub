@@ -58,6 +58,14 @@ export const route: Route = {
     handler,
 };
 
+function parseSourceDate(value?: string) {
+    if (!value) {
+        return;
+    }
+    const date = parseDate(value);
+    return Number.isNaN(date.getTime()) ? undefined : date;
+}
+
 async function handler(ctx: Context) {
     const { classify, status, sellingType } = ctx.req.param();
     const baseUrl = 'https://www.xuetangx.com';
@@ -76,15 +84,22 @@ async function handler(ctx: Context) {
         },
     });
 
-    const item = response.data.product_list.map((product) => ({
-        title: product.name,
-        link: `${baseUrl}/course/${product.sign}`,
-        description: `${product.short_intro}<br>
-        ${product.org.name} / ${product.teacher.map((teacher) => teacher.name).join('、')}<br>
-        ${product.sell_type_name} / ${product.classify_name.join('、')} / 报名人数: ${product.count}<br>
+    const item = response.data.product_list.map((product) => {
+        const authors: Array<{ name: string }> = (product.teacher ?? []).filter((teacher) => teacher.name).map((teacher) => ({ name: teacher.name }));
+        const categories = [...new Set<string>([...(product.classify_name ?? []), ...(product.tag_titles ?? [])].filter(Boolean))];
+        return {
+            title: product.name,
+            link: `${baseUrl}/course/${product.sign}`,
+            description: `${product.short_intro}<br>
+        ${product.org.name}<br>
+        ${product.sell_type_name} / 报名人数: ${product.count}<br>
         <img src="${product.cover}">`,
-        pubDate: parseDate(product._ut || product.created),
-    }));
+            author: authors.length ? authors : undefined,
+            category: categories.length ? categories : undefined,
+            pubDate: parseSourceDate(product.created),
+            updated: parseSourceDate(product.modified),
+        };
+    });
 
     return {
         title: '学堂在线 - 课程列表',

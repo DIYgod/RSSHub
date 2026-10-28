@@ -9,12 +9,6 @@ export const route: Route = {
     parameters: { id: '南方周末频道 id, 可在该频道的 URL 中找到（即 https://www.infzm.com/contents?term_id=:id)' },
     categories: ['traditional-media'],
     example: '/infzm/1',
-    radar: [
-        {
-            source: ['infzm.com/contents'],
-            target: (_, url) => (url ? `/infzm/${url.match(/contents\?term_id=(\d*)/)?.[1]}` : ''),
-        },
-    ],
     name: '频道',
     maintainers: ['KarasuShin', 'ranpox', 'xyqfer'],
     handler,

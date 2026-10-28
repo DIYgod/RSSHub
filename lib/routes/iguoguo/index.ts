@@ -6,8 +6,12 @@ import type { Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
 const rootUrl = 'https://www.iguoguo.net';
+
+const imageMimeTypes = { jpg: 'image/jpeg', jpeg: 'image/jpeg', png: 'image/png', gif: 'image/gif', webp: 'image/webp', avif: 'image/avif', svg: 'image/svg+xml' } satisfies Record<string, string>;
+const isImageExtension = (key: string): key is keyof typeof imageMimeTypes => Object.hasOwn(imageMimeTypes, key);
 
 const getCategoryIdFromSlug = (slug) =>
     cache.tryGet(`iguoguo:category:${slug}`, async () => {
@@ -16,12 +20,15 @@ const getCategoryIdFromSlug = (slug) =>
                 slug,
             },
         });
+        if (!Array.isArray(response) || !response[0]?.id) {
+            throw new Error('The source did not return the H5 category. Check whether the original WordPress API is still available.');
+        }
         return response[0].id;
     });
 
 const getPostsByCategory = (categoryId, limit) =>
     cache.tryGet(
-        `iguoguo:posts:${categoryId}`,
+        `iguoguo:posts:${categoryId}:${limit}`,
         async () => {
             const response = await ofetch(`${rootUrl}/wp-json/wp/v2/posts`, {
                 query: {
@@ -53,23 +60,29 @@ export const route: Route = {
     handler,
 };
 
+function getGmtDate(value: string | undefined) {
+    const date = value ? parseDate(`${value.replace(/Z$/, '')}Z`) : undefined;
+    return date && !Number.isNaN(date.getTime()) ? date : undefined;
+}
+
 async function handler(ctx: Context) {
-    const limit = Number.parseInt(ctx.req.query('limit') ?? '10');
+    const limit = Math.min(getRouteLimit(ctx, 10), 100);
     const currentUrl = `${rootUrl}/html5`;
     const categorySlug = 'h5';
 
     const categoryId = await getCategoryIdFromSlug(categorySlug);
     const posts = await getPostsByCategory(categoryId, limit);
 
-    const mime = {
-        jpg: 'jpeg',
-        png: 'png',
-    };
-
     const items = posts.map((item) => {
         const $ = load(item.content.rendered);
         const cover = $('p > img').first().attr('src');
-        $('p > img').first().remove();
+        const mediaContent: Record<string, string> | undefined = cover ? { url: new URL(cover, rootUrl).href } : undefined;
+        const extension = cover ? new URL(cover, rootUrl).pathname.split('.').pop()?.toLowerCase() : undefined;
+        const imageMimeType = mediaContent && extension && isImageExtension(extension) ? imageMimeTypes[extension] : undefined;
+        if (imageMimeType && mediaContent) {
+            mediaContent.type = imageMimeType;
+        }
+
         $('h4').each((_, el) => {
             if ($(el).text().includes('扫码欣赏')) {
                 $(el).remove();
@@ -79,14 +92,8 @@ async function handler(ctx: Context) {
             title: item.title.rendered,
             description: $.html(),
             link: item.link,
-            cover,
-            pubDate: parseDate(item.date_gmt),
-            media: cover && {
-                content: {
-                    url: cover,
-                    type: `image/${mime[cover.split('.').pop()!]}`,
-                },
-            },
+            pubDate: getGmtDate(item.date_gmt),
+            media: mediaContent ? { content: mediaContent } : undefined,
         };
     });
     return {

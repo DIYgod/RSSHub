@@ -5,6 +5,7 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
+import { parseDate } from '@/utils/parse-date';
 
 type NewsCategory = {
     title: string;
@@ -28,6 +29,30 @@ const NEWS_TYPES = {
 } satisfies Record<string, NewsCategory>;
 
 const isNewsType = (category: string): category is keyof typeof NEWS_TYPES => Object.hasOwn(NEWS_TYPES, category);
+
+const fetchDataItem = (item: { title: string; date: string; link: string }) =>
+    cache.tryGet(item.link, async (): Promise<DataItem> => {
+        const CONTENT_SELECTOR = '#p_content';
+        const { data: contentResponse } = await got(item.link);
+        const contentPage = load(contentResponse);
+        const contentElement = contentPage(CONTENT_SELECTOR);
+        const content = contentElement.html() || '';
+        return {
+            title: item.title,
+            pubDate: item.date ? parseDate(item.date) : undefined,
+            link: item.link,
+            description: content,
+            category: ['study'],
+            guid: item.link,
+            id: item.link,
+            image: 'https://www.gov.cn/images/gtrs_logo_lt.png',
+            content: {
+                html: content,
+                text: contentElement.text(),
+            },
+            language: 'zh-CN',
+        };
+    });
 
 const handler: Route['handler'] = async (ctx) => {
     const category = ctx.req.param('category');
@@ -60,30 +85,6 @@ const handler: Route['handler'] = async (ctx) => {
         .toSorted((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
         .slice(0, 10);
 
-    const fetchDataItem = (item: { title: string; date: string; link: string }) =>
-        cache.tryGet(item.link, async (): Promise<DataItem> => {
-            const CONTENT_SELECTOR = '#p_content';
-            const { data: contentResponse } = await got(item.link);
-            const contentPage = load(contentResponse);
-            const content = contentPage(CONTENT_SELECTOR).html() || '';
-            return {
-                title: item.title,
-                pubDate: item.date,
-                link: item.link,
-                description: content,
-                category: ['study'],
-                guid: item.link,
-                id: item.link,
-                image: 'https://www.gov.cn/images/gtrs_logo_lt.png',
-                content: {
-                    html: content,
-                    text: content,
-                },
-                updated: item.date,
-                language: 'zh-CN',
-            };
-        });
-
     const dataItems: DataItem[] = await pMap(contentLinkList, fetchDataItem, { concurrency: 1 });
 
     return {
@@ -92,7 +93,6 @@ const handler: Route['handler'] = async (ctx) => {
         link: BASE_URL,
         image: 'https://www.gov.cn/images/gtrs_logo_lt.png',
         item: dataItems,
-        allowEmpty: true,
         language: 'zh-CN',
         feedLink: `https://rsshub.app/cpta/${category}`,
         id: `https://rsshub.app/cpta/${category}`,
@@ -101,7 +101,7 @@ const handler: Route['handler'] = async (ctx) => {
 
 export const route: Route = {
     path: '/:category',
-    name: '中国人事考试网发布',
+    name: '发布',
     maintainers: ['PrinOrange'],
     parameters: {
         category: '栏目参数，可见下表描述。',

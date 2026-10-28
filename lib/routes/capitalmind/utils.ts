@@ -4,6 +4,7 @@ import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
 import logger from '@/utils/logger';
 import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/parse-date';
 
 export const baseUrl = 'https://www.capitalmind.in';
 
@@ -13,7 +14,7 @@ interface PodcastData {
     image?: string;
 }
 
-export async function fetchArticles(path) {
+export async function fetchArticles(path: string) {
     const url = `${baseUrl}/${path}/page/1`;
     const response = await ofetch(url);
     const $ = load(response);
@@ -24,14 +25,11 @@ export async function fetchArticles(path) {
             const $element = $(element);
             const link = baseUrl + $element.attr('href');
             return await cache.tryGet(link, async (): Promise<DataItem> => {
-                const title = $element.find('h3').text().trim();
-                const author = $element
-                    .find(String.raw`div.text-[16px]`)
-                    .text()
-                    .trim();
+                const title = $element.find('h3, p.font-bold').first().text();
+                const author = $element.find('div[class~="text-[16px]"]').text().trim();
                 const image = $element.find('img').attr('src');
                 const imageUrl = image?.startsWith('/_next/image') ? image.split('url=', 2)[1].split('&', 1)[0] : image;
-                const decodedImageUrl = imageUrl ? decodeURIComponent(imageUrl) : '';
+                const decodedImageUrl = imageUrl ? new URL(decodeURIComponent(imageUrl), baseUrl).href : '';
 
                 // Fetch full article content
                 const articleResponse = await ofetch(link);
@@ -119,7 +117,7 @@ export async function fetchArticles(path) {
                     guid: link,
                     itunes_item_image: podcastData?.image || decodedImageUrl,
                     category: tags,
-                    pubDate,
+                    pubDate: pubDate ? parseDate(pubDate) : undefined,
                     enclosure_url: podcastData?.mediaUrl,
                     itunes_duration: podcastData?.itunes_duration,
                     enclosure_type: podcastData?.mediaUrl ? 'audio/mpeg' : undefined,

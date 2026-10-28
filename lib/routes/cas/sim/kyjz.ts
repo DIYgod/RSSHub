@@ -4,6 +4,7 @@ import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 const host = 'http://www.sim.cas.cn/';
 
@@ -58,10 +59,10 @@ async function handler() {
                 const author = $('.qtinfo.hidden-lg.hidden-md.hidden-sm').text();
                 const reg = /文章来源：(.*?)\|/;
 
-                item.title = $('p.wztitle').text().trim();
+                item.title = $('p.wztitle').text();
                 item.author = reg.exec(author)![1].trim();
-                item.description = $('.TRS_Editor').html();
-                item.pubDate = parseDate(item.pubDate!);
+                item.description = $('.TRS_Editor, .TRS_UEDITOR').first().html();
+                item.pubDate = timezone(parseDate(item.pubDate!), 8);
                 return item;
             })
         )

@@ -31,6 +31,9 @@ async function handler(ctx: Context) {
     const rootUrl = `${baseUrl}/gonglve/ziyouxing/list/list_page?mddid=${code}&page=1`;
 
     const response = await wafFetch<{ html: string }>(rootUrl);
+    if (typeof response?.html !== 'string') {
+        throw new TypeError('Mafengwo did not return the guide list. The source may require browser verification.');
+    }
     const $ = load(response.html);
 
     const items = $('div.item')
@@ -51,12 +54,13 @@ async function handler(ctx: Context) {
             };
         });
 
-    const titleResponse = await wafFetch<string>(`${baseUrl}/gonglve/ziyouxing/mdd_${code}/`);
+    const pageUrl = `${baseUrl}/gonglve/ziyouxing/mdd_${code}/`;
+    const titleResponse = await wafFetch<string>(pageUrl);
     const title = load(titleResponse);
 
     return {
         title: title('title').text(),
-        link: rootUrl,
+        link: pageUrl,
         item: items,
     };
 }

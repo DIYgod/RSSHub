@@ -1,10 +1,15 @@
+import { load } from 'cheerio';
 import type { Context } from 'hono';
+import MarkdownIt from 'markdown-it';
 
 import type { Data, DataItem, Route } from '@/types';
 import { ViewType } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 import timezone from '@/utils/timezone';
+
+const markdown = new MarkdownIt({ html: true, linkify: true });
 
 type Racer = {
     mainId?: string;
@@ -18,7 +23,10 @@ type MainIdsResult = {
     racer3: string | undefined;
 };
 
-const findMainIds = (data: readonly Racer[], searchKey: string): MainIdsResult => {
+const findMainIds = (data: readonly Racer[], searchKey?: string): MainIdsResult => {
+    if (!searchKey) {
+        return { name: undefined, racer2: undefined, racer3: undefined };
+    }
     const recurse = (currentList: readonly Racer[], parentMainId: string | undefined = undefined, grandParentMainId: string | undefined = undefined): MainIdsResult => {
         for (const item of currentList) {
             const isMatch = item.mainId === searchKey || item.name === searchKey;
@@ -42,9 +50,11 @@ const findMainIds = (data: readonly Racer[], searchKey: string): MainIdsResult =
 
             const nextList = item.nextList;
 
-            if (Array.isArray(nextList) && nextList.length > 0) {
-                const result = recurse(nextList, item.mainId, parentMainId);
-
+            if (!Array.isArray(nextList) || nextList.length === 0) {
+                continue;
+            }
+            const result = recurse(nextList, item.mainId, parentMainId);
+            if (result.racer2 !== undefined || result.racer3 !== undefined) {
                 return result;
             }
         }
@@ -61,7 +71,7 @@ const findMainIds = (data: readonly Racer[], searchKey: string): MainIdsResult =
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { type = '2', key } = ctx.req.param();
-    const limit = Number(ctx.req.query('limit') ?? '30');
+    const limit = getRouteLimit(ctx, 30);
 
     const baseUrl = 'https://www.jl1mall.com';
     const targetUrl: string = new URL('forum', baseUrl).href;
@@ -86,7 +96,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
     const items: DataItem[] = response.data.records.slice(0, limit).map((item): DataItem => {
         const title: string = item.postTitle;
-        const description: string | undefined = item.contentMarkdown;
+        const description = item.contentMarkdown ? markdown.render(item.contentMarkdown) : undefined;
         const pubDate: number | string = item.dateTime;
         const linkUrl: string | undefined = new URL(`forum/PostDetail?postId=${item.postId}`, baseUrl).href;
         const categories: string[] = [...new Set([...(item.customTagArray ?? []), ...(item.topic?.split(/,/) ?? []), item.address, item.fromSource, item.typeName].filter(Boolean))];
@@ -101,7 +111,6 @@ export const handler = async (ctx: Context): Promise<Data> => {
             : undefined;
         const guid = `jl1mall-${item.postId}`;
         const image: string | undefined = item.pictureLink;
-        const updated: number | string = pubDate;
 
         const processedItem: DataItem = {
             title,
@@ -114,11 +123,10 @@ export const handler = async (ctx: Context): Promise<Data> => {
             id: guid,
             content: {
                 html: description,
-                text: description,
+                text: description ? load(description).text() : undefined,
             },
             image,
             banner: image,
-            updated: updated ? timezone(parseDate(updated), 8) : undefined,
             language,
         };
 
@@ -132,7 +140,6 @@ export const handler = async (ctx: Context): Promise<Data> => {
         description: name,
         link: targetUrl,
         item: items,
-        allowEmpty: true,
         language,
         id: targetUrl,
     };

@@ -41,13 +41,13 @@ async function handler(ctx) {
     const id = ctx.req.param('id');
     const mpName = ctx.req.param('mpName') ?? '';
     let searchQueryType = ctx.req.param('searchQueryType') ?? '0';
-    if (searchQueryType !== '0' && searchQueryType !== '1' && searchQueryType !== '2') {
+    if (!['0', '1', '2'].includes(searchQueryType)) {
         searchQueryType = '0';
     }
     searchQueryType = +searchQueryType; // 将字符串转换为数字
 
     const channelUrl = `https://t.me/s/${id}`;
-    const searchQuery = mpName && searchQueryType ? (searchQueryType === 2 ? `?q=%23${mpName}` : `?q=${mpName}`) : '';
+    const searchQuery = mpName && searchQueryType ? `?q=${encodeURIComponent(searchQueryType === 2 ? `#${mpName}` : mpName)}` : '';
     const { data } = await got.get(`${channelUrl}${searchQuery}`);
     const $ = load(data);
     const list = $('.tgme_widget_message_wrap').slice(-20);

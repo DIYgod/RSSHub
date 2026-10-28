@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
@@ -32,8 +33,9 @@ async function handler(): Promise<Data> {
             };
         });
 
-    const items = await Promise.all(
-        list.map((item) =>
+    const items = await pMap(
+        list,
+        (item) =>
             cache.tryGet(item.link!, async () => {
                 const result = await ofetch(item.link!);
                 const $ = load(result);
@@ -46,8 +48,8 @@ async function handler(): Promise<Data> {
                 item.author = meta.match(/作者：(\S+)/)?.[1];
 
                 return item;
-            })
-        )
+            }),
+        { concurrency: 3 }
     );
 
     return {

@@ -5,6 +5,7 @@ import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 import timezone from '@/utils/timezone';
 
 const titles = {
@@ -56,7 +57,8 @@ async function handler(ctx) {
     const category = ctx.req.param('category') ?? '03';
 
     const rootUrl = 'http://www.cahkms.org';
-    const currentUrl = `${rootUrl}/HKMAC/indexMac/getRightList?dm=${category}&page=1&countPage=${ctx.req.query('limit') ?? 10}`;
+    const webpageUrl = `${rootUrl}/HKMAC/webView/mc/AboutUs_1.html`;
+    const currentUrl = `${rootUrl}/HKMAC/indexMac/getRightList?dm=${category}&page=1&countPage=${getRouteLimit(ctx, 10)}`;
 
     const response = await got({
         method: 'get',
@@ -66,6 +68,7 @@ async function handler(ctx) {
     let items = response.data
         .filter((item) => item.ID)
         .map((item) => ({
+            id: item.ID,
             title: item.TITLE,
             description: `<p>${item.GJZ}</p>`,
             pubDate: timezone(parseDate(item.JDRQ), 8),
@@ -82,13 +85,14 @@ async function handler(ctx) {
 
                 item.author = detailResponse.data.WZLY;
                 const video = detailResponse.data.VIDEO.indexOf('.mp4') > 0 ? detailResponse.data.VIDEO : null;
+                const imageUrl = detailResponse.data.URL ? new URL(detailResponse.data.URL, `${rootUrl}/`).href : undefined;
                 item.description = renderToString(
                     <>
-                        {detailResponse.data.URL ? <img src={`${rootUrl}${detailResponse.data.URL}`} /> : null}
+                        {imageUrl && !video ? <img src={imageUrl} /> : null}
                         {detailResponse.data.CONTENT ? raw(detailResponse.data.CONTENT) : null}
                         {video ? (
-                            <video controls>
-                                <source src={`${rootUrl}${video}`} type="video/mp4" />
+                            <video controls poster={imageUrl}>
+                                <source src={new URL(video, `${rootUrl}/`).href} type="video/mp4" />
                             </video>
                         ) : null}
                         {detailResponse.data.fjlist?.length ? (
@@ -98,7 +102,7 @@ async function handler(ctx) {
                                 <br />
                                 {detailResponse.data.fjlist.map((file) => (
                                     <>
-                                        <a href={`${rootUrl}${file.URL}`}>{file.FJMC}</a>
+                                        <a href={new URL(file.URL, `${rootUrl}/`).href}>{file.FJMC}</a>
                                         <br />
                                     </>
                                 ))}
@@ -106,16 +110,17 @@ async function handler(ctx) {
                         ) : null}
                     </>
                 );
-                item.link = `${rootUrl}/HKMAC/webView/mc/AboutUs_1.html?${category}&${titles[category]}`;
+                const { id, ...article } = item;
+                article.link = `${webpageUrl}?${category === '05' ? 'zthz05' : category}&${titles[category]}&${id}`;
 
-                return item;
+                return article;
             })
         )
     );
 
     return {
         title: `${titles[category]} - 全国港澳研究会`,
-        link: currentUrl,
+        link: `${webpageUrl}?${category}&${titles[category]}`,
         item: items,
     };
 }

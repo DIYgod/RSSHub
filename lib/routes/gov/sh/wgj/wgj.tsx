@@ -1,16 +1,26 @@
-import { load } from 'cheerio';
-import { renderToString } from 'hono/jsx/dom/server';
+import { type Cheerio, load } from 'cheerio';
+import { type AnyNode, cloneNode, Document } from 'domhandler';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
+
+function copyElements<T extends AnyNode>(selection: Cheerio<T>): Cheerio<T> {
+    const copy = selection.map((_, element) => cloneNode(element, true));
+    const root = new Document(copy.toArray());
+    copy.each((_, element) => {
+        element.parent = root;
+    });
+    return copy;
+}
 
 export const route: Route = {
     path: '/wgj/:page?',
     categories: ['government'],
     example: '/gov/sh/wgj',
-    parameters: { page: '页数，默认第 1 页' },
+    parameters: { page: '历史兼容参数，所有值均返回第 1 页，不翻页' },
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -24,6 +34,10 @@ export const route: Route = {
             source: ['wsbs.wgj.sh.gov.cn/'],
             target: '/wgj',
         },
+        {
+            source: ['wsbs.wgj.sh.gov.cn/shwgj_ywtb/core/web/welcome/index!toResultNotice.action'],
+            target: '/wgj',
+        },
     ],
     name: '文旅局审批公告',
     maintainers: ['gideonsenku'],
@@ -31,13 +45,12 @@ export const route: Route = {
     url: 'wsbs.wgj.sh.gov.cn/',
 };
 
-async function handler(ctx) {
+async function handler() {
     const baseUrl = 'http://wsbs.wgj.sh.gov.cn';
     const currentUrl = `${baseUrl}/shwgj_ywtb/core/web/welcome/index!toResultNotice.action`;
-    const page = ctx.req.param('page') ?? 1;
     const searchParams = {
         flag: 1,
-        'pageDoc.pageNo': page,
+        'pageDoc.pageNo': 1,
     };
     const response = await got({
         method: 'post',
@@ -63,37 +76,20 @@ async function handler(ctx) {
                     url: baseUrl + item.link,
                 });
                 const $ = load(detailResponse.data);
-                const dateElement = $('div[align="right"][style*="padding: 10px"]').last();
+                const dateElement = $('.content').children('[align="right"], p[style*="right"]').last();
                 const dateText = dateElement.text().trim();
-                const hostingUnit = $('td:contains("举办单位：")').next().text().trim();
-                const licenseNumber = $('td:contains("许可证号：")').next().text().trim();
-                const performanceName = $('td:contains("演出名称:")').next().text().trim();
-                const performanceDate = $('td:contains("演出日期：")').next().text().trim();
-                const performanceVenue = $('td:contains("演出场所：")').next().text().trim();
-                const mainActors = $('td:contains("主要演员：")').next().text().trim();
-                const actorCount = $('td:contains("演员人数：")').next().text().trim();
-                const showCount = $('td:contains("场次：")').next().text().trim();
-
-                item.description = renderToString(
-                    <>
-                        <text>举办单位：{hostingUnit} </text>
-                        <br />
-                        <text>许可证号：{licenseNumber} </text>
-                        <br />
-                        <text>演出名称：{performanceName} </text>
-                        <br />
-                        <text>演出日期：{performanceDate} </text>
-                        <br />
-                        <text>演出场所：{performanceVenue} </text>
-                        <br />
-                        <text>主要演员：{mainActors} </text>
-                        <br />
-                        <text>演员人数：{actorCount} </text>
-                        <br />
-                        <text>场次：{showCount} </text>
-                    </>
-                );
-                item.pubDate = parseDate(dateText);
+                const article = copyElements($('.content').first());
+                if (!article.length) {
+                    throw new Error(`Approval document content was not found: ${item.link}`);
+                }
+                article.children('h1, h2').remove();
+                article
+                    .children()
+                    .filter((_, element) => $(element).attr('align') === 'right' || /text-align\s*:\s*right/.test($(element).attr('style') ?? ''))
+                    .remove();
+                item.description = article.html();
+                const pubDate = dateText ? timezone(parseDate(dateText, 'YYYY-MM-DD', true), 8) : undefined;
+                item.pubDate = pubDate && Number.isFinite(pubDate.getTime()) ? pubDate : undefined;
 
                 return item;
             })

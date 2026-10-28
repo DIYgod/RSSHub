@@ -25,7 +25,6 @@ async function handler(ctx: Context) {
         url: link,
         title: ($) => $('#book_left > #h1').text().trim() + ' - 单品活动信息 - 缺书网',
         description: ($) => $('#detail_intro .detail_body').text().trim(),
-        allowEmpty: true,
         item: {
             item: '.stacked.right_state > a',
             title: ($) => $('.right_item .bodycol_258').text(),

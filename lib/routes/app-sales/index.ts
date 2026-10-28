@@ -6,6 +6,7 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Data, DataItem, Language, Route } from '@/types';
 import { ViewType } from '@/types';
 import ofetch from '@/utils/ofetch';
+import { getRouteLimit } from '@/utils/route-limit';
 import { isValidHost } from '@/utils/valid-host';
 
 import { baseUrl, fetchItems } from './util';
@@ -16,7 +17,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
         throw new InvalidParameterError('Invalid category');
     }
 
-    const limit = Number(ctx.req.query('limit') ?? '100');
+    const limit = getRouteLimit(ctx, 100);
 
     const targetUrl: string = new URL(category.endsWith('/') ? category : `${category}/`, baseUrl).href;
 
@@ -29,7 +30,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
     const language = ($('html').attr('lang') ?? 'en') as Language;
     const selector = 'div.card-panel';
 
-    const items: DataItem[] = await fetchItems($, selector, targetUrl, country, limit);
+    const items: DataItem[] = fetchItems($, selector, limit);
 
     const title: string = $('title').text();
     const logoUrl: string | undefined = $('a.brand-logo img').attr('src');

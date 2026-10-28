@@ -4,6 +4,7 @@ import type { Route } from '@/types';
 import md5 from '@/utils/md5';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
 export const route: Route = {
     path: '/user/:uid',
@@ -40,7 +41,7 @@ function sign(urlType: string, params: Record<string, string>) {
 
 async function handler(ctx: Context) {
     const { uid } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Math.trunc(Number(ctx.req.query('limit'))) : 20;
+    const limit = getRouteLimit(ctx, 20);
 
     const urlType = 'medias/user_timeline.json';
     const now = String(Date.now());
@@ -83,12 +84,12 @@ async function handler(ctx: Context) {
     });
 
     const item = response.map((media) => {
-        const caption = (media.caption ?? '').replaceAll(/#([^#]+)#/g, '').trim();
+        const caption = (media.caption ?? '').replaceAll(/#([^#]+)#/g, '');
         return {
-            title: caption || media.cover_title || media.recommend_caption,
-            description: `${caption}<br>${media.video ? `<video controls preload="metadata" poster="${media.cover_pic}"><source src="${media.video.replace('http:', 'https:')}" type="video/mp4"></video>` : `<img src="${media.cover_pic}">`}`,
+            title: caption.trim() ? caption : media.cover_title || media.recommend_caption,
+            description: media.video ? `<video controls preload="metadata" poster="${media.cover_pic}"><source src="${media.video.replace('http:', 'https:')}" type="video/mp4"></video>` : `<img src="${media.cover_pic}">`,
             link: `https://www.meipai.com/media/${media.id}`,
-            pubDate: parseDate(media.created_at, 'X'),
+            pubDate: media.created_at !== undefined && media.created_at !== null ? parseDate(media.created_at, 'X') : undefined,
             author: media.user.screen_name,
             category: (media.caption ?? '')
                 .matchAll(/#([^#]+)#/g)

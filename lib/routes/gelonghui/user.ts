@@ -1,7 +1,9 @@
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import { ViewType } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
 import { parseItem } from './utils';
 
@@ -31,12 +33,15 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { id: userId } = ctx.req.param();
+    if (!userId || !/^[1-9]\d*$/.test(userId)) {
+        throw new InvalidParameterError('id must be a positive integer.');
+    }
     const currentUrl = 'https://www.gelonghui.com/api/community/dynamic/my-dynamics/v2';
     const { data } = await got(currentUrl, {
         searchParams: {
             article: true,
             userId,
-            count: ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 15,
+            count: getRouteLimit(ctx, 15),
         },
     });
 

@@ -56,7 +56,7 @@ export const search = async (opts: {
     url.searchParams.append('posterType', '');
     url.searchParams.append('maxPrice', opts.maxPrice?.toString() || '');
     url.searchParams.append('minPrice', opts.minPrice?.toString() || '');
-    url.searchParams.append('buyNowEnabled', opts.minPrice ? 'true' : 'false');
+    url.searchParams.append('buyNowEnabled', opts.buyNowEnabled ? 'true' : 'false');
     url.searchParams.append('shippingCarrier', opts.shippingCarrier || '');
     url.searchParams.append('shipping', '');
 
@@ -71,6 +71,7 @@ export const search = async (opts: {
         // channel link
         link: url.href,
         language: 'de',
+        sortItems: false,
         // each feed item
         item: items,
     };

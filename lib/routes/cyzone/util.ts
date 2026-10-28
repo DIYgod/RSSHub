@@ -56,6 +56,10 @@ const processItems = async (apiUrl, limit, ...params) => {
         searchParams,
     });
 
+    return processItemList(response, limit);
+};
+
+const processItemList = async (response, limit) => {
     let items = (response.data?.article ?? response.data?.data ?? response.data).slice(0, limit).map((item) => {
         item = item.item ?? item;
 
@@ -94,7 +98,7 @@ const processItems = async (apiUrl, limit, ...params) => {
                 });
 
                 item.title = data.title;
-                // api 返回的 link_url 数据可能是空, 所有最好自己通过 id 拼接 url
+                // The API link_url can be empty, so use the native article path.
                 item.link = `${rootUrl}/article/${item.guid}.html`;
                 item.description = content.html();
                 item.author = data.author_name ?? data.author;
@@ -111,4 +115,4 @@ const processItems = async (apiUrl, limit, ...params) => {
     return items;
 };
 
-export { apiRootUrl, getInfo, processItems, rootUrl };
+export { apiRootUrl, getInfo, processItemList, processItems, rootUrl };

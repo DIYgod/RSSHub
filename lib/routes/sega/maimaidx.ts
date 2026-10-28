@@ -1,6 +1,7 @@
 import type { Cheerio } from 'cheerio';
 import { load } from 'cheerio';
 import type { Element } from 'domhandler';
+import pMap from 'p-map';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
@@ -22,40 +23,42 @@ export const route: Route = {
     url: 'info-maimai.sega.jp/',
 };
 
+const parseContent = (htmlString: string, image: Cheerio<Element>) => {
+    const $ = load(htmlString);
+    const content = $('.maiMd');
+    content.prepend(image);
+    content.find('.hrLine').replaceWith('<hr/>');
+    return content.html();
+};
+
 async function handler() {
     const baseUrl = 'https://info-maimai.sega.jp/';
-
-    const parseContent = (htmlString: string, image: Cheerio<Element>) => {
-        const $ = load(htmlString);
-        const content = $('.maiMd');
-        content.prepend(image);
-        content.find('.hrLine').replaceWith('<hr/>');
-        return content.html();
-    };
 
     const response = await got(baseUrl);
     const $ = load(response.data);
     const list = $('.maiPager-content .newsBox');
 
-    const item = await Promise.all(
-        list.map(async (_, items) => {
+    const item = await pMap(
+        list.toArray(),
+        async (items) => {
             const i = $(items);
             const title = i.find('.newsLink').text();
             const pubDateStr = i.find('.newsDate').text().slice(0, 10);
-            const pubDate = parseDate(pubDateStr, 'YYYY.MM.DD');
+            const pubDate = pubDateStr ? parseDate(`${pubDateStr.replaceAll('.', '-')}T00:00:00Z`) : undefined;
             const image = i.find('.newsImg');
             const link = i.find('a').attr('href')!;
-            return await cache.tryGet(link, async () => {
+            const detailHtml = await cache.tryGet(`${link}:html`, async () => {
                 const response = await got(link);
-                const description = parseContent(response.body, image);
-                return {
-                    title,
-                    link,
-                    description,
-                    pubDate,
-                };
+                return response.body;
             });
-        })
+            return {
+                title,
+                link,
+                description: parseContent(detailHtml, image),
+                pubDate,
+            };
+        },
+        { concurrency: 3 }
     );
 
     return {

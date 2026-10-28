@@ -1,8 +1,11 @@
 import type { Context } from 'hono';
+import pMap from 'p-map';
 
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Data, DataItem, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 import { isValidHost } from '@/utils/valid-host';
 
 import type { PostListResponse, UserInfoResponse } from './types';
@@ -54,8 +57,17 @@ async function handler(ctx: Context): Promise<Data> {
     }
 
     const postListResponse = await ofetch<PostListResponse>(`https://api.fanbox.cc/post.listCreator?creatorId=${creator}&limit=20&withPinned=true`, { headers: getHeaders() });
-
-    const items: DataItem[] = await Promise.all(postListResponse.body.posts.map((i) => parseItem(i)));
+    let posts = postListResponse.body.posts.map((post) => ({ ...post, publishedTime: post.publishedDatetime ? parseDate(post.publishedDatetime).getTime() : NaN }));
+    const hasDates = posts.every((post) => Number.isFinite(post.publishedTime));
+    const sorted = ctx.req.query('sorted') !== 'false';
+    if (sorted && hasDates) {
+        posts = posts.toSorted((a, b) => b.publishedTime - a.publishedTime);
+    }
+    const detailLimit = getRouteLimit(ctx);
+    if (detailLimit !== undefined && (!sorted || hasDates)) {
+        posts = posts.slice(0, detailLimit);
+    }
+    const items: DataItem[] = await pMap(posts, (post) => parseItem(post), { concurrency: 3 });
 
     return {
         title,

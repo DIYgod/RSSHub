@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { ListingExtra } from '@/routes/temposmart/utils';
 import { clean, normalizeFloor, parseArea, parseCondition, parseHeavyFood, parseJpy, parseMonths, parseWalkMin, parseWard, summarize, tsuboUnit } from '@/routes/temposmart/utils';
@@ -7,7 +8,6 @@ import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 
 const HOST = 'https://www.temponw.com';
-const PAGES = 2; // 10 cards per page
 
 /** Tokyo 23 wards as the site's `cities[]` codes (101 千代田区 … 123 江戸川区). */
 const TOKYO_WARDS = Array.from({ length: 23 }, (_, i) => String(101 + i));
@@ -45,8 +45,8 @@ const parseList = (html: string): ListCard[] => {
             const $el = $(el);
             const source = $el.find('input[name="source_system_code"]').attr('value');
             const itemNo = $el.find('input[name="item_no"]').attr('value');
-            const title = clean($el.find('.result-content-title span').text());
-            if (!source || !itemNo || !title) {
+            const title = $el.find('.result-content-title span').text();
+            if (!source || !itemNo || !title.trim()) {
                 return null;
             }
             const row = (label: string) =>
@@ -155,8 +155,8 @@ const mergeDetail = (base: ListingExtra, d: DetailFields): ListingExtra => {
 };
 
 const enrich = async (card: ListCard): Promise<ListingExtra> => {
-    const html = await ofetch(card.link);
-    return mergeDetail(card.extra, parseDetail(html));
+    const detail = await cache.tryGet(`temponw:detail-fields:v1:${card.link}`, async () => parseDetail(await ofetch(card.link)));
+    return mergeDetail(card.extra, detail);
 };
 
 const listUrlFor = (area: string | undefined, page: number): string => {
@@ -178,24 +178,24 @@ export const handler = async (ctx): Promise<Data> => {
     if (area !== undefined && area !== 'tokyo') {
         throw new Error(`Unknown area "${area}", expected "tokyo" or none`);
     }
-    const pages = await Promise.all(Array.from({ length: PAGES }, (_, i) => ofetch(listUrlFor(area, i + 1))));
-    const cards = pages.flatMap((html) => parseList(html));
+    const html = await ofetch(listUrlFor(area, 1));
+    const cards = parseList(html);
 
-    const items = await Promise.all(
-        cards.map((card) =>
-            cache.tryGet(card.link, async (): Promise<DataItem> => {
-                const extra = await enrich(card);
-                return {
-                    title: card.title,
-                    link: card.link,
-                    guid: card.link,
-                    // The site does not publish listing dates; no pubDate is fabricated.
-                    description: [extra.raw.comment, summarize(extra)].filter(Boolean).join(' / '),
-                    image: card.image,
-                    _extra: extra,
-                };
-            })
-        )
+    const items = await pMap(
+        cards,
+        async (card): Promise<DataItem> => {
+            const extra = await enrich(card);
+            return {
+                title: card.title,
+                link: card.link,
+                guid: card.link,
+                // The site does not publish listing dates; no pubDate is fabricated.
+                description: [extra.raw.comment, summarize(extra)].filter(Boolean).join(' / '),
+                image: card.image,
+                _extra: extra,
+            };
+        },
+        { concurrency: 3 }
     );
 
     return {
@@ -219,7 +219,7 @@ export const route: Route = {
             options: [{ value: 'tokyo', label: '東京23区' }],
         },
     },
-    description: `Listings on 店舗ネットワーク sorted by 新着順 (first two pages, 20 listings). Each item's \`_extra\` carries the structured listing fields (賃料，坪，階，最寄駅，保証金，礼金，造作譲渡料，不可業態，…) parsed from the list and detail pages; unknown values are \`null\`. The site does not publish listing dates, so items have no \`pubDate\`; the same unit may be listed by several agencies under different ids.`,
+    description: `Listings on 店舗ネットワーク sorted by 新着順 (first page, 10 listings). Each item's \`_extra\` carries the structured listing fields (賃料，坪，階，最寄駅，保証金，礼金，造作譲渡料，不可業態，…) parsed from the list and detail pages; unknown values are \`null\`. The site does not publish listing dates, so items have no \`pubDate\`; the same unit may be listed by several agencies under different ids.`,
     categories: ['other'],
     features: {
         requireConfig: false,

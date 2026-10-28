@@ -1,6 +1,7 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
-import type { DataItem, Route } from '@/types';
+import type { Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
@@ -35,30 +36,50 @@ export const route: Route = {
 async function handler() {
     const rssUrl = `${host}/feed/`;
     const feed = await parser.parseURL(rssUrl);
-    const items = await Promise.all(
-        feed.items.map((item) => {
+    const items = await pMap(
+        feed.items,
+        async (item) => {
             const link = item.link!;
             const title = item.title;
             if (!title) {
                 return null;
             }
 
-            return cache.tryGet(link, async (): Promise<DataItem> => {
+            const body = await cache.tryGet<{ description: string; author?: string }>(`magnumphotos:article-body:v2:${link}`, async () => {
                 const data = await ofetch(link);
                 const $ = load(data);
                 const description = $('#content');
-                description.find('ul.share').remove();
-                description.find('h1').remove();
-
-                return {
-                    title,
-                    pubDate: item.pubDate,
-                    link,
-                    category: item.categories,
-                    description: description.html(),
-                };
+                if (!description.length) {
+                    throw new Error(`Magnum Photos article content was not found at ${link}. The source layout may have changed.`);
+                }
+                const writer = description
+                    .find('.story__footer__line.author')
+                    .text()
+                    .match(/Written by (.*?) ·/)?.[1];
+                const photographers = description
+                    .find('.story__header__photographer a')
+                    .toArray()
+                    .map((element) => $(element).text())
+                    .join(', ');
+                const footerPhotographers = description
+                    .find('.story__footer a.photographer .name')
+                    .toArray()
+                    .map((element) => $(element).text().trim())
+                    .join(', ');
+                const author = writer || photographers || footerPhotographers || undefined;
+                description.find('ul.share, .socials, h1, .story__header__type, .story__header__photographer, .story__footer, .teasers').remove();
+                return { description: description.html() ?? '', author };
             });
-        })
+            return {
+                title,
+                pubDate: item.pubDate,
+                link,
+                category: item.categories,
+                author: body.author,
+                description: body.description,
+            };
+        },
+        { concurrency: 3 }
     );
 
     return {

@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
@@ -7,7 +8,20 @@ import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
 const cic_base_url = 'http://cic.tju.edu.cn/';
-const repo_url = 'https://github.com/DIYgod/RSSHub/issues';
+
+const getArticle = async (link: string) => {
+    try {
+        const response = await got(link);
+        const $ = load(response.data);
+        const dateText = $('.news_info > span').first().text();
+        const pubDate = dateText ? timezone(parseDate(dateText, 'YYYY年MM月DD日 HH:mm'), 8) : undefined;
+        $('.news_tit, .news_info').remove();
+        return { pubDate, description: $('.con_news_body > div').html() ?? undefined };
+    } catch {
+        // Keep the source listing when an article detail is unavailable.
+        return {};
+    }
+};
 
 const pageType = (href) => {
     if (!href.startsWith('http')) {
@@ -59,28 +73,7 @@ async function handler(ctx) {
             subtitle = '学部新闻';
             path = 'xwzx/xyxw.htm';
     }
-    let response: any = null;
-    try {
-        response = await got(cic_base_url + path);
-    } catch {
-        // ignore error handler
-        // console.log(e);
-    }
-
-    if (response === null) {
-        return {
-            title: '天津大学智能与计算学部 - ' + subtitle,
-            link: cic_base_url + path,
-            description: '链接失效' + cic_base_url + path,
-            item: [
-                {
-                    title: '提示信息',
-                    link: repo_url,
-                    description: `<h2>请到<a href=${repo_url}>此处</a>提交Issue</h2>`,
-                },
-            ],
-        };
-    }
+    const response = await got(cic_base_url + path);
     const $ = load(response.data);
     const list = $('.wenzi_list_ul > li')
         .toArray()
@@ -94,28 +87,18 @@ async function handler(ctx) {
             };
         });
 
-    const items = await Promise.all(
-        list.map((item) => {
+    const items = await pMap(
+        list,
+        async (item) => {
             switch (item.type) {
                 case 'tju-cic':
                 case 'in-site':
-                    return cache.tryGet(item.link!, async () => {
-                        try {
-                            const detailResponse = await got(item.link);
-                            const content = load(detailResponse.data);
-                            item.pubDate = timezone(parseDate(content('.news_info > span').first().text(), 'YYYY年MM月DD日 HH:mm'), 8);
-                            content('.news_tit').remove();
-                            content('.news_info').remove();
-                            item.description = content('.con_news_body > div').html();
-                        } catch {
-                            // ignore error handler
-                        }
-                        return item;
-                    });
+                    return { ...item, ...(await cache.tryGet(`tju:cic:article:${item.link}`, () => getArticle(item.link!))) };
                 default:
                     return item;
             }
-        })
+        },
+        { concurrency: 3 }
     );
 
     return {

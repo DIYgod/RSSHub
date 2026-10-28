@@ -16,14 +16,23 @@ export const route: Route = {
             target: '/collection/:username',
         },
     ],
-    name: 'User Collection',
+    name: 'User favorites',
     maintainers: ['hoilc'],
     handler,
 };
 
+function parsePubDate(value?: string) {
+    if (!value) {
+        return;
+    }
+    const date = parseDate(value);
+    return Number.isFinite(date.getTime()) ? date : undefined;
+}
+
 async function handler(ctx: Context) {
     const { username } = ctx.req.param();
-    const limit = Number(ctx.req.query('limit') ?? '10');
+    const requestedLimit = Number(ctx.req.query('limit'));
+    const limit = Number.isFinite(requestedLimit) && requestedLimit >= 1 ? Math.floor(requestedLimit) : 10;
 
     const headers = {
         'trakt-api-key': '201dc70c5ec6af530f12f079ea1922733f6e1085ad7b02f36d8e011b75bcea7d',
@@ -56,7 +65,7 @@ async function handler(ctx: Context) {
                 author: username,
                 category: [entry.type, ...media.genres, ...media.subgenres],
                 description: `${poster ? `<img src="https://${poster}" style="max-width: 100%;"><br>` : ''}${media.overview ?? ''}`,
-                pubDate: parseDate(entry.listed_at),
+                pubDate: parsePubDate(entry.listed_at),
             };
         }),
     };

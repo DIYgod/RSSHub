@@ -1,8 +1,9 @@
 import dayjs from 'dayjs';
+import { escapeText } from 'entities';
 
 import type { Route } from '@/types';
 
-import { constructTopicEntry } from './utils';
+import { constructTopicEntry, parseCreatedAt } from './utils';
 
 export const route: Route = {
     path: '/topic/text/:id',
@@ -44,11 +45,11 @@ async function handler(ctx) {
 
     const result = data.result;
     result.item = data.posts.map((item) => {
-        const date = dayjs(item.createdAt);
+        const pubDate = parseCreatedAt(item.createdAt);
         return {
-            title: `${data.topic.content} ${date.format('MM月DD日')}`,
-            description: item.content.replaceAll('\n', '<br>'),
-            pubDate: date.toDate(),
+            title: pubDate ? `${data.topic.content} ${dayjs(pubDate).format('MM月DD日')}` : data.topic.content,
+            description: escapeText(item.content).replaceAll('\n', '<br>'),
+            pubDate,
             link: `https://m.okjike.com/originalPosts/${item.id}`,
         };
     });

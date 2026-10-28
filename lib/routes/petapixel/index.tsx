@@ -84,7 +84,8 @@ export const route: Route = {
 
 async function handler(ctx) {
     const categorySlug = ctx.req.param('category');
-    const limit = Number(ctx.req.query('limit')) || 20;
+    const requestedLimit = Number(ctx.req.query('limit'));
+    const limit = Number.isSafeInteger(requestedLimit) && requestedLimit > 0 ? Math.min(requestedLimit, 100) : 20;
 
     const category = categorySlug
         ? await cache.tryGet(`petapixel:category:${categorySlug}`, async () => {
@@ -137,6 +138,7 @@ async function handler(ctx) {
         title: category ? `PetaPixel - ${category.name}` : 'PetaPixel',
         link: category?.link ?? baseUrl,
         description: 'Photography and camera news, reviews and inspiration.',
+        language: 'en' as const,
         item: items,
     };
 }

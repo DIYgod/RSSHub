@@ -49,7 +49,6 @@ async function handler(ctx) {
             returnType: 'ajax',
         },
     });
-
     const articles = response.data.result?.items || [];
 
     const list = articles.map((article) => {

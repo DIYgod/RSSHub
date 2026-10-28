@@ -5,6 +5,7 @@ import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
 export const route: Route = {
     path: '/engineering',
@@ -27,17 +28,18 @@ async function handler(ctx) {
     const link = `${baseUrl}/engineering`;
     const response = await ofetch(link);
     const $ = load(response);
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 20;
+    const limit = getRouteLimit(ctx, 20);
 
-    const list: DataItem[] = $('a[class$="cardLink"]')
+    const list: DataItem[] = $('article[class^="AssetItem-module-scss-module__"]')
         .toArray()
         .map((element) => {
             const $e = $(element);
-            const href = $e.attr('href') ?? '';
+            const $link = $e.find('a[class$="__metaTitleLink"]');
+            const href = $link.attr('href') ?? '';
             const fullLink = href.startsWith('http') ? href : `${baseUrl}${href}`;
-            const dateText = $e.find('div[class$="date"]').text();
+            const dateText = $e.find('time').text();
             return {
-                title: $e.find('h2, h3').text(),
+                title: $link.text().trim(),
                 link: fullLink,
                 pubDate: dateText ? parseDate(dateText, 'MMM D, YYYY') : undefined,
             };

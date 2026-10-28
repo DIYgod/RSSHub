@@ -6,8 +6,16 @@ import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 import timezone from '@/utils/timezone';
 
+const parsePublicationDate = (value: string | number | undefined) => {
+    if (typeof value !== 'number' && !value) {
+        return;
+    }
+    const date = timezone(parseDate(value), 8);
+    return Number.isFinite(date.getTime()) ? date : undefined;
+};
 export const route: Route = {
     path: '/research/:variety?/:type?',
     categories: ['finance'],
@@ -24,7 +32,6 @@ export const route: Route = {
     handler,
     url: 'www.wkjyqh.com/main/research_center/yjbg/index.shtml',
 };
-
 async function handler(ctx) {
     const variety = ctx.req.param('variety');
     const type = ctx.req.param('type');
@@ -33,7 +40,6 @@ async function handler(ctx) {
     }
     const baseUrl = 'https://www.wkjyqh.com';
     const link = `${baseUrl}/main/research_center/yjbg/index.shtml`;
-
     const apiResponse =
         variety || type
             ? await ofetch(`${baseUrl}/servlet/json`, {
@@ -59,31 +65,29 @@ async function handler(ctx) {
                   }),
                   responseType: 'json',
               });
-
-    const limit = Number(ctx.req.query('limit')) || apiResponse.results[0].data.length;
+    const limit = getRouteLimit(ctx, apiResponse.results[0].data.length);
     const list: DataItem[] = apiResponse.results[0].data.slice(0, limit).map((item) => ({
         title: item.title,
         link: new URL(item.url, baseUrl).href,
-        pubDate: timezone(parseDate(item.publish_date || item.create_date), 8),
+        pubDate: parsePublicationDate(item.publish_date) ?? parsePublicationDate(item.create_date),
     }));
-
-    const items = await pMap(
-        list,
-        (item) =>
-            cache.tryGet(item.link!, async () => {
-                const response = await ofetch(item.link!, { allowH2: false });
-                const $ = load(response);
-
-                const content = $('.article_detail');
-                item.pubDate = timezone(parseDate(content.find('b#time').text()), 8);
-                content.find('h2, .tips').remove();
-                item.description = content.html()?.trim();
-
-                return item;
-            }),
-        { concurrency: 3 }
+    const items = await unwrapFirstFailure(
+        pMap(
+            list,
+            async (item) => {
+                const detail = await cache.tryGet(`wkjyqh:detail:v3:${item.link}`, async () => {
+                    const response = await ofetch(item.link!, { allowH2: false });
+                    const $ = load(response);
+                    const content = $('.article_detail');
+                    const pubDate = parsePublicationDate(content.find('b#time').text());
+                    content.find('h2, .tips').remove();
+                    return { pubDate, description: content.html()?.trim() };
+                });
+                return { ...item, pubDate: detail.pubDate ?? item.pubDate, description: detail.description };
+            },
+            { concurrency: 3, stopOnError: false }
+        )
     );
-
     return {
         title: '五矿期货 - 研究报告',
         link,
@@ -91,4 +95,11 @@ async function handler(ctx) {
         image: `${baseUrl}/favicon.ico`,
         item: items,
     };
+}
+async function unwrapFirstFailure<T>(promise: Promise<T>): Promise<T> {
+    try {
+        return await promise;
+    } catch (error) {
+        throw error instanceof AggregateError ? error.errors[0] : error;
+    }
 }

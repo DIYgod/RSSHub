@@ -1,5 +1,9 @@
+import { html } from 'hono/html';
+
 import type { Route } from '@/types';
 import got from '@/utils/got';
+import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/channel/:id/:nav?',
@@ -67,18 +71,18 @@ async function handler(ctx) {
         item: data
             .map((item) => {
                 if (item.external_payload.items === undefined) {
-                    const description = `作者：${item.author.name} | ${item.create_time} <br><br> ${item.abstract}">`;
+                    const description = String(html`<p>${item.abstract}</p>`);
 
                     return {
                         title: item.title,
                         description,
-                        pubDate: new Date(item.create_time),
+                        author: item.author?.name,
+                        pubDate: item.create_time ? timezone(parseDate(item.create_time), 8) : undefined,
                         link: item.url,
                     };
                 }
                 return null;
             })
             .filter(Boolean),
-        allowEmpty: true,
     };
 }

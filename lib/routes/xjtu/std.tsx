@@ -1,6 +1,6 @@
-import { load } from 'cheerio';
-import { raw } from 'hono/html';
-import { renderToString } from 'hono/jsx/dom/server';
+import { type Cheerio, type CheerioAPI, load } from 'cheerio';
+import { type AnyNode, cloneNode, Document } from 'domhandler';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
@@ -28,59 +28,70 @@ export const route: Route = {
 | -------- | -------- | -------- | -------- | -------- |
 |          | zytz     | xmsb     | cgsb     | xxkx     |`,
 };
-
 async function handler(ctx) {
     const category = ctx.req.param('category') ?? '';
-
     const rootUrl = 'http://std.xjtu.edu.cn';
     const currentUrl = `${rootUrl}/tzgg${category ? `/${category}` : ''}.htm`;
-
     const response = await got({
         method: 'get',
         url: currentUrl,
     });
-
     const $ = load(response.data);
-
-    let items = $('.c1017')
+    let items = $('li[data-aos="fade-up"] a.flex[href]')
         .toArray()
         .map((item): DataItem => {
             const $item = $(item);
-
             return {
-                title: $item.text(),
-                link: `${rootUrl}/${$item.attr('href')}`,
+                title: $item.find('h2').text(),
+                link: new URL($item.attr('href')!, currentUrl).href,
             };
         });
-
-    items = await Promise.all(
-        items.map((item) =>
-            cache.tryGet(item.link!, async () => {
-                const detailResponse = await got({
-                    method: 'get',
-                    url: item.link,
-                });
-
-                const content = load(detailResponse.data);
-
-                item.description = renderToString(<XjtuStdDescription description={content('#vsb_newscontent').html() ?? undefined} attachments={content('#vsb_newscontent').parent().next().next().next().html() ?? undefined} />);
-                item.pubDate = timezone(parseDate(content('#vsb_newscontent').parent().prev().prev().text().split('&nbsp', 1)[0], 'YYYY年MM月DD日 HH:mm'), 8);
-
-                return item;
-            })
-        )
+    items = await pMap(
+        items,
+        (item) =>
+            mapResolvedValue(
+                cache.tryGet(`xjtu:std:content:v2:${item.link}`, async () => {
+                    const detailResponse = await got({
+                        method: 'get',
+                        url: item.link,
+                    });
+                    const content = load(detailResponse.data);
+                    const body = content('[name="_newscontent_fromname"] .v_news_content').first();
+                    content('[name="_newscontent_fromname"] a[href*="download.jsp"]')
+                        .filter((_, attachment) => !content(attachment).closest('.v_news_content').length)
+                        .each((_, attachment) => {
+                            const attachmentWrapper1 = content('<p/>');
+                            attachmentWrapper1.append(copyContent(content(attachment), content));
+                            body.append(attachmentWrapper1);
+                        });
+                    const date = content('.conttime span')
+                        .first()
+                        .text()
+                        .match(/\d{4}-\d{2}-\d{2}/)?.[0];
+                    return {
+                        description: body.html() ?? undefined,
+                        pubDate: date ? timezone(parseDate(date, 'YYYY-MM-DD'), 8) : undefined,
+                    };
+                }),
+                (detail) => ({ ...item, ...detail })
+            ),
+        { concurrency: 3, stopOnError: false }
     );
-
     return {
         title: $('title').text(),
         link: currentUrl,
         item: items,
     };
 }
-
-const XjtuStdDescription = ({ description, attachments }: { description?: string; attachments?: string }) => (
-    <>
-        {description ? raw(description) : null}
-        {attachments ? raw(attachments) : null}
-    </>
-);
+async function mapResolvedValue<T, U>(promise: Promise<T>, mapper: (value: T) => U | Promise<U>): Promise<U> {
+    const value = await promise;
+    return mapper(value);
+}
+function copyContent<T extends AnyNode>(selection: Cheerio<T>, $: CheerioAPI): Cheerio<T> {
+    const nodes = selection.toArray().map((node) => cloneNode(node, true));
+    const root = new Document(nodes);
+    for (const node of nodes) {
+        node.parent = root;
+    }
+    return $(nodes);
+}

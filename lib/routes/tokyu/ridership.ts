@@ -130,8 +130,12 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['www.tokyu.co.jp/railway/company/business/passengers/:year', 'www.tokyu.co.jp/railway/company/business/passengers/'],
+            source: ['www.tokyu.co.jp/railway/company/business/passengers/:year'],
             target: '/ridership/:year',
+        },
+        {
+            source: ['www.tokyu.co.jp/railway/company/business/passengers/'],
+            target: '/ridership',
         },
     ],
 };

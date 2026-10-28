@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import { escapeText } from 'entities';
 
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
@@ -31,16 +32,24 @@ interface Package {
     authors: string[];
     license: string;
     description: string;
-    keywords: string[];
-    updatedAt: number;
+    keywords?: string[];
+    updatedAt?: number;
     releasedAt: number;
     hasRepo: boolean;
-    categories: string[];
+    categories?: string[];
     template: string | undefined;
 }
 
 interface SearchResults {
     packages: Package[];
+}
+
+function getPublicationDate(value: number | undefined): Date | undefined {
+    if (typeof value !== 'number' || !Number.isFinite(value) || value <= 0) {
+        return;
+    }
+    const date = parseDate(value, 'X');
+    return Number.isFinite(date.getTime()) ? date : undefined;
 }
 
 export const route: Route = {
@@ -64,9 +73,9 @@ export const route: Route = {
         const pkgs = searchResults.packages.map((item) => ({
             title: `${item.name} (${item.version}) | ${item.description}`,
             link: `https://typst.app/universe/package/${item.name}`,
-            description: item.description,
-            pubDate: parseDate(item.updatedAt, 'X'),
-            category: item.keywords,
+            description: escapeText(item.description),
+            pubDate: getPublicationDate(item.updatedAt),
+            category: [...new Set([...(item.keywords ?? []), ...(item.categories ?? [])])],
             author: item.authors.join(', '),
         }));
 

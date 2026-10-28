@@ -1,5 +1,7 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
+import { config } from '@/config';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
@@ -22,7 +24,7 @@ export const route: Route = {
     radar: [
         {
             source: ['i.jandan.net'],
-            target: '/jandan',
+            target: '/',
         },
     ],
     handler,
@@ -34,14 +36,15 @@ async function handler(): Promise<{
     item: DataItem[];
 }> {
     const rootUrl = 'https://i.jandan.net';
-    const feed = await parser.parseURL(`${rootUrl}/feed/`);
-    const items = await Promise.all(
-        feed.items.map((item) => {
+    const feed = await parser.parseString(await ofetch<string, 'text'>(`${rootUrl}/feed/`, { responseType: 'text', headers: { 'User-Agent': config.ua } }));
+    const items = await pMap(
+        feed.items,
+        async (item): Promise<DataItem | undefined> => {
             const link = item.link;
             if (!link) {
                 return;
             }
-            return cache.tryGet(link, async () => {
+            const description = await cache.tryGet(`jandan:rss-article:${link}`, async () => {
                 const response = await ofetch(link);
                 const $ = load(response);
                 $('.wechat-hide').prev().nextAll().remove();
@@ -51,17 +54,18 @@ async function handler(): Promise<{
                     const newSrc = src?.replace(/https?:\/\/(\w+)\.moyu\.im/, 'https://$1.sinaimg.cn');
                     return `<img src="${newSrc}" alt="${alt}">`;
                 });
-                const single: DataItem = {
-                    title: item.title || '',
-                    description: $('.entry').html(),
-                    pubDate: item.pubDate,
-                    link: item.link,
-                    author: item['dc:creator'],
-                    category: item.categories,
-                };
-                return single;
+                return $('.entry').html();
             });
-        })
+            return {
+                title: item.title || '',
+                description,
+                pubDate: item.pubDate,
+                link: item.link,
+                author: item['dc:creator'],
+                category: item.categories,
+            };
+        },
+        { concurrency: 3 }
     );
 
     return {

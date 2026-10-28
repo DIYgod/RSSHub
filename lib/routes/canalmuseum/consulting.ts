@@ -5,6 +5,7 @@ import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 import { namespace } from './namespace';
 
@@ -67,7 +68,7 @@ export const route: Route = {
                 const $a = $el.find('a');
                 const title = $a.find('.t1').text();
                 const dateText = $a.find('.date1').text();
-                const pubDate = parseDate(dateText);
+                const pubDate = dateText ? timezone(parseDate(dateText, 'YYYY.MM.DD'), 8) : undefined;
                 const href = $a.attr('href') ?? '';
                 const link = new URL(href, baseUrl).href;
 

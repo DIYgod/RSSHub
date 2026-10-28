@@ -3,6 +3,7 @@ import type { Context } from 'hono';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
+import { getRouteLimit } from '@/utils/route-limit';
 
 import { baseUrl, fetchStories, storiesToItems } from './utils';
 
@@ -36,7 +37,7 @@ export const route: Route = {
 
 async function handler(ctx: Context) {
     const { id } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 21;
+    const limit = getRouteLimit(ctx, 21);
     const pageId = /^\d+$/.test(id)
         ? id
         : ((await cache.tryGet(`facebook:page:${id}`, async () => {
@@ -64,12 +65,12 @@ async function handler(ctx: Context) {
         limit
     );
 
-    const actor = stories[0].comet_sections.content.story.actors[0];
+    const actor = stories[0]?.comet_sections.content.story.actors[0];
 
     return {
-        title: actor.name,
-        link: actor.url,
-        image: actor.profile_picture.uri,
+        title: actor?.name ?? `Facebook Page ${id}`,
+        link: actor?.url ?? `${baseUrl}/${id}`,
+        image: actor?.profile_picture.uri,
         item: storiesToItems(stories),
     };
 }

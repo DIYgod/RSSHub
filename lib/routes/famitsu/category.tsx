@@ -1,6 +1,7 @@
 import { load } from 'cheerio';
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
+import pMap from 'p-map';
 
 import { config } from '@/config';
 import type { DataItem, Route } from '@/types';
@@ -126,20 +127,21 @@ async function handler(ctx) {
 
     const list = data.pageProps.categoryArticleDataForPc
         .filter((item) => !item.advertiserName)
-        .map((item): DataItem & { link: string; publicationDate: string | undefined; articleId: string } => {
+        .map((item): DataItem & { link: string; pubDate?: Date; publicationDate: string | undefined; articleId: string } => {
             const publicationDate = item.publishedAt?.slice(0, 7).replace('-', '');
             return {
                 title: item.title,
                 link: `https://www.famitsu.com/article/${publicationDate}/${item.id}`,
-                pubDate: parseDate(item.publishedAt!),
+                pubDate: item.publishedAt ? parseDate(item.publishedAt) : undefined,
                 category: [...new Set([item.mainCategory.nameJa, ...(item.subCategories?.map((c) => c.nameJa) ?? [])])],
                 publicationDate,
                 articleId: item.id,
             };
         });
 
-    const items = await Promise.all(
-        list.map((item) =>
+    const items = await pMap(
+        list,
+        (item) =>
             cache.tryGet(item.link, async () => {
                 const data = await ofetch<ArticlePageData>(`https://www.famitsu.com/_next/data/${buildId}/article/${item.publicationDate}/${item.articleId}.json`, {
                     query: {
@@ -149,6 +151,7 @@ async function handler(ctx) {
                 });
 
                 const articleDetail = data.pageProps.articleDetailData;
+                item.updated = articleDetail.updatedAt ? parseDate(articleDetail.updatedAt) : undefined;
                 item.author = articleDetail.authors?.map((a) => a.name_ja).join(', ') ?? articleDetail.user.name_ja;
                 item.description = render({
                     bannerImage: articleDetail.ogpImageUrl ?? articleDetail.thumbnailUrl,
@@ -156,8 +159,8 @@ async function handler(ctx) {
                 });
 
                 return item;
-            })
-        )
+            }),
+        { concurrency: 3 }
     );
 
     return {

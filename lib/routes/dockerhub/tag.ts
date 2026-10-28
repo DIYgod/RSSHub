@@ -1,6 +1,7 @@
 import type { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
 import { hash } from './utils';
 
@@ -31,7 +32,8 @@ async function handler(ctx) {
     const namespace = `${owner}/${image}`;
     const link = `https://hub.docker.com/r/${namespace}`;
 
-    const pageSize = Number.isNaN(Number.parseInt(limits)) ? 10 : Number.parseInt(limits);
+    const defaultPageSize = Number.isNaN(Number.parseInt(limits)) ? 10 : Number.parseInt(limits);
+    const pageSize = getRouteLimit(ctx, defaultPageSize);
 
     const data = await got.get(`https://hub.docker.com/v2/repositories/${namespace}/tags/?page_size=${pageSize}`);
     const metadata = await got.get(`https://hub.docker.com/v2/repositories/${namespace}/`);

@@ -24,11 +24,13 @@ async function handler() {
         .toArray()
         .map((item) => {
             const $item = $(item);
+            const title = $item.find('h2').text();
+            const dateText = $item.find('p').text().replace('Release date - ', '');
             return {
-                link: rootUrl,
-                title: $item.find('h2').text(),
+                link: `${rootUrl}#:~:text=${encodeURIComponent(title).replaceAll('-', '%2D')}`,
+                title,
                 description: $item.next().html(),
-                pubDate: parseDate($item.find('p').text().replace('Release date - ', '')),
+                pubDate: dateText ? parseDate(`${dateText} GMT`) : undefined,
             };
         });
 

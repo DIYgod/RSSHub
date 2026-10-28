@@ -9,6 +9,7 @@ import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
 const getResolution = (text: string): number => {
     const resolutions = text
@@ -43,7 +44,7 @@ const getBestMagnet = ($: CheerioAPI): Cheerio<Element> => {
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { category = 'dy' } = ctx.req.param();
-    const limit = Number(ctx.req.query('limit') ?? '25');
+    const limit = getRouteLimit(ctx, 25);
 
     const encoding = 'gb2312';
 

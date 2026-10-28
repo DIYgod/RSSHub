@@ -22,7 +22,7 @@ export const route: Route = {
     radar: [
         {
             source: ['bgm.tv/subject/:id'],
-            target: '/tv/subject/:id',
+            target: '/subject/:id',
         },
     ],
     name: '条目的通用路由格式',

@@ -1,3 +1,5 @@
+import pMap from 'p-map';
+
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 
@@ -53,9 +55,9 @@ async function handler(ctx) {
     // console.log('Is response an array?', Array.isArray(response.stream_items));
     const list = parseList(region, response.stream_items);
 
-    const items = await Promise.all(list.map((item) => parseItem(item)));
+    const items = await pMap(list, parseItem, { concurrency: 3 });
 
-    const author = items[0].author;
+    const author = items[0]?.author;
     const atIndex = author?.indexOf('@'); // fing '@'
     const source = atIndex === -1 ? author : author?.slice(atIndex + 1).trim();
     // console.log(source);

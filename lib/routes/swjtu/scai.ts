@@ -1,9 +1,12 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
-import type { Route } from '@/types';
+import InvalidParameterError from '@/errors/types/invalid-parameter';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 const rootURL = 'https://scai.swjtu.edu.cn';
 
@@ -22,7 +25,19 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['scai.swjtu.edu.cn/'],
+            title: '计算机与人工智能学院 - 本科生教育',
+            source: ['scai.swjtu.edu.cn/', 'scai.swjtu.edu.cn/web/page-module.html'],
+            target: '/scai/bks',
+        },
+        {
+            title: '计算机与人工智能学院 - 研究生教育',
+            source: ['scai.swjtu.edu.cn/', 'scai.swjtu.edu.cn/web/page-module.html'],
+            target: '/scai/yjs',
+        },
+        {
+            title: '计算机与人工智能学院 - 学生工作',
+            source: ['scai.swjtu.edu.cn/', 'scai.swjtu.edu.cn/web/page-module.html'],
+            target: '/scai/xsgz',
         },
     ],
     name: '计算机与人工智能学院',
@@ -50,67 +65,59 @@ const partition = {
     },
 };
 
-const getItem = (item, cache) => {
+const getCalendarDate = (parts: string[] | undefined): Date | undefined => {
+    const date = parts ? parseDate(`${parts[0]}-${parts[1].padStart(2, '0')}-${parts[2].padStart(2, '0')}`, 'YYYY-MM-DD', true) : undefined;
+    return date && !Number.isNaN(date.getTime()) ? timezone(date, 8) : undefined;
+};
+
+async function getArticle(link: string): Promise<Partial<DataItem>> {
+    const res = await ofetch(link);
+    const $ = load(res);
+    const dateText = $('div.news-info span:nth-of-type(2)').text() || $('div.news-top-bar span:nth-of-type(1)').text();
+    const item: Partial<DataItem> = { description: $('div.content-main').html() };
+    const pubDate = getCalendarDate(dateText.match(/(\d{4})[-/.年](\d{1,2})[-/.月](\d{1,2})/)?.slice(1));
+    if (pubDate) {
+        item.pubDate = pubDate;
+    }
+    return item;
+}
+
+const getItem = async (item) => {
     const title = item.find('a').text();
     const link = `${rootURL}${item.find('a').attr('href').slice(2)}`;
-    // console.log(link);
-
-    return cache.tryGet(link, async () => {
-        const res = await ofetch(link);
-        const $ = load(res);
-        let pubDate: Date;
-        let dateText = $('div.news-info span:nth-of-type(2)').text();
-        // 转教务通知时的时间获取方法
-        if (!dateText) {
-            dateText = $('div.news-top-bar span:nth-of-type(1)').text();
-        }
-        // 'date' may be undefined. and 'parseDate' will return current time.
-        // 转其他院的通知，获取不到具体时间，先从列表页获取具体信息
-        if (dateText) {
-            const dateMatch = dateText.match(/\d{4}(.)\d{1,2}\1\d{1,2}/);
-            if (!dateMatch || !dateMatch[0]) {
-                return null;
-            }
-            pubDate = parseDate(dateMatch[0]);
-        } else {
-            const dateItem = item.find('.calendar'); // 注意 .calendar 是 class
-            const day = dateItem.find('.day').text(); // "31"
-            const ymd = dateItem.find('.date').text(); // "2025/03"
-            const [year, month] = ymd.split('/', 2); // ["2025", "03"]
-            const dateText = `${year}-${month}-${day.padStart(2, '0')}`;
-            pubDate = new Date(dateText);
-        }
-        const description = $('div.content-main').html();
-        // 确实无法获取时间就以当前时间为准
-        pubDate ||= new Date('2025-04-12'); // 使用当前时间作为默认值
-        return {
-            title,
-            pubDate,
-            link,
-            description,
-        };
-    });
+    const calendar = item.find('.calendar');
+    const yearMonth = calendar
+        .find('.date')
+        .text()
+        .match(/(\d{4})\/(\d{1,2})/);
+    const day = calendar.find('.day').text().trim();
+    const pubDate = getCalendarDate(yearMonth && /^\d{1,2}$/.test(day) ? [yearMonth[1], yearMonth[2], day] : undefined);
+    return { title, link, pubDate, ...(await cache.tryGet(`swjtu:scai:article:${link}`, () => getArticle(link))) };
 };
 
 async function handler(ctx) {
     const { type } = ctx.req.param();
+    if (!Object.hasOwn(partition, type)) {
+        throw new InvalidParameterError('Unsupported notice type. Use bks, yjs, or xsgz.');
+    }
     const url = partition[type].url;
     const res = await ofetch(url);
 
     const $ = load(res);
     const $list = $('div.list-top-item, div.item-wrapper');
 
-    const items = await Promise.all(
-        $list.toArray().map((i) => {
+    const items = await pMap(
+        $list.toArray(),
+        (i) => {
             const $item = $(i);
-            return getItem($item, cache);
-        })
+            return getItem($item);
+        },
+        { concurrency: 3 }
     );
 
     return {
         title: `西南交大计院-${partition[type].title}`,
         link: url,
         item: items,
-        allowEmpty: true,
     };
 }

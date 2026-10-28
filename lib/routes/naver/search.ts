@@ -3,6 +3,8 @@ import { decodeHTML } from 'entities';
 
 import type { DataItem, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/search/:category/:keyword',
@@ -104,11 +106,11 @@ function extractVideoItem(segment: string) {
     const authorMatch = segment.match(/"authorHtml":"((?:[^"\\]|\\.)*)"/);
     const author = authorMatch ? cleanText(authorMatch[1]) : '';
     const hrefMatches = segment.matchAll(/"href":"((?:[^"\\]|\\.)*)"/g).toArray();
-    const links = hrefMatches.map((m) => m[1]);
+    const links = hrefMatches.map((m) => parseEmbeddedString(m[1]));
     const mediaDomains = /^(?:https?:\/\/)?(?:m\.youtube\.com|youtu\.be|www\.youtube\.com|www\.tiktok\.com|tv\.naver\.com|m\.blog\.naver\.com|m\.cafe\.naver\.com)\//;
     const link = links.find((l) => mediaDomains.test(l)) || links[0] || '';
     const dateMatch = segment.match(/"createdAt":"((?:[^"\\]|\\.)*)"/);
-    const timeText = dateMatch?.[1] || '';
+    const timeText = dateMatch ? parseEmbeddedString(dateMatch[1]) : '';
     const viewMatch = segment.match(/"viewCount":"((?:[^"\\]|\\.)*)"/);
     const viewCount = viewMatch ? cleanText(viewMatch[1]) : '';
     const durationMatch = segment.match(/"playDuration":(\d+)/);
@@ -147,14 +149,14 @@ function buildVideoDescription(viewCount: string, duration: string): string {
 function extractLink(segment: string, templateId: string): string {
     if (templateId === 'webItem') {
         const hrefMatch = segment.match(/"href":"((?:[^"\\]|\\.)*)"/);
-        return hrefMatch?.[1] || '';
+        return hrefMatch ? parseEmbeddedString(hrefMatch[1]) : '';
     }
     const hrefMatches = segment.matchAll(/"titleHref":"((?:[^"\\]|\\.)*)"/g).toArray();
     if (hrefMatches.length > 0) {
-        return hrefMatches.at(-1)![1];
+        return parseEmbeddedString(hrefMatches.at(-1)![1]);
     }
     const hrefMatch = segment.match(/"href":"((?:[^"\\]|\\.)*)"/);
-    return hrefMatch?.[1] || '';
+    return hrefMatch ? parseEmbeddedString(hrefMatch[1]) : '';
 }
 
 function extractGenericItem(segment: string, templateId: string) {
@@ -180,19 +182,17 @@ function extractGenericItem(segment: string, templateId: string) {
 function buildItemFromTemplate(segment: string, templateId: string, title: string, link: string, bodyText: string, sourceName: string) {
     if (templateId === 'ugcItem') {
         const dateMatch = segment.match(/"createdDate":"([^"]*)"/);
-        if (dateMatch?.[1]) {
-            return { title, link, description: bodyText, author: sourceName || undefined, pubDate: new Date(dateMatch[1]) };
-        }
-        return null;
+        const pubDate = parseKoreanRelativeTime(dateMatch ? parseEmbeddedString(dateMatch[1]) : '');
+        return { title, link, description: bodyText, author: sourceName || undefined, ...(pubDate && { pubDate }) };
     }
 
     let timeText = '';
     if (templateId === 'webItem') {
         const timeMatch = segment.match(/\[\{"text":"([^"]*)"\}/);
-        timeText = timeMatch?.[1] || '';
+        timeText = timeMatch ? parseEmbeddedString(timeMatch[1]) : '';
     } else {
         const textMatch = segment.match(/"text":"([^"]*)"/);
-        timeText = textMatch?.[1] || '';
+        timeText = textMatch ? parseEmbeddedString(textMatch[1]) : '';
     }
 
     const pubDate = parseKoreanRelativeTime(timeText);
@@ -207,7 +207,7 @@ function extractCafeItems(html: string) {
         .map((el): DataItem | null => {
             const $el = $(el);
             const titleEl = $el.find('.title_link');
-            const title = titleEl.text().trim();
+            const title = titleEl.text();
             const link = titleEl.attr('href') || '';
             const author = $el.find('.name').text().trim();
             const timeText = $el.find('.sub').text().trim();
@@ -230,41 +230,53 @@ function extractCafeItems(html: string) {
         .filter((item): item is DataItem => item !== null);
 }
 
+function parseEmbeddedString(text: string): string {
+    return JSON.parse(`"${text}"`);
+}
+
 function cleanText(text: string): string {
-    return decodeHTML(text).replaceAll('<mark>', '').replaceAll('</mark>', '');
+    return decodeHTML(parseEmbeddedString(text)).replaceAll('<mark>', '').replaceAll('</mark>', '');
 }
 
 function parseKoreanRelativeTime(timeText: string): Date | undefined {
-    const now = new Date();
     if (!timeText) {
         return;
     }
 
+    if (/^\d{4}[.-]\d{2}[.-]\d{2}\.?$/.test(timeText)) {
+        return timezone(parseDate(timeText, ['YYYY.MM.DD.', 'YYYY.MM.DD', 'YYYY-MM-DD']), 9);
+    }
+
     // Try absolute date formats first (e.g. "2025.12.01.", "2026-05-13T23:15:00+09:00")
-    const absDate = new Date(timeText);
+    const absDate = parseDate(timeText);
     if (!Number.isNaN(absDate.getTime())) {
         return absDate;
     }
 
-    const match = timeText.match(/(\d+)\s*(시간|[분일주]) 전|(\d+)분 이내|(\d+)시간 이내|방금/);
-    if (!match || match[0] === '방금') {
+    if (timeText === '방금') {
+        return parseDate(Date.now());
+    }
+
+    const match = timeText.match(/(\d+)\s*(시간|[분일주])\s*(?:전|이내)/);
+    if (!match) {
         return;
     }
 
-    const num = Number(match[1] || match[3] || match[4] || '0');
-    const unit = match[2] || '';
+    const now = Date.now();
+    const num = Number(match[1]);
+    const unit = match[2];
 
     if (unit.includes('분')) {
-        return new Date(now.getTime() - num * 60 * 1000);
+        return parseDate(now - num * 60 * 1000);
     }
     if (unit.includes('시간')) {
-        return new Date(now.getTime() - num * 60 * 60 * 1000);
+        return parseDate(now - num * 60 * 60 * 1000);
     }
     if (unit.includes('일')) {
-        return new Date(now.getTime() - num * 24 * 60 * 60 * 1000);
+        return parseDate(now - num * 24 * 60 * 60 * 1000);
     }
     if (unit.includes('주')) {
-        return new Date(now.getTime() - num * 7 * 24 * 60 * 60 * 1000);
+        return parseDate(now - num * 7 * 24 * 60 * 60 * 1000);
     }
 
     return;

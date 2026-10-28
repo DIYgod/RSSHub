@@ -101,7 +101,7 @@ const linkFormatter: any = {
 };
 
 async function handler(ctx?: Context) {
-    const url = ctx?.req.query('mcmanifest') ?? 'https://piston-meta.mojang.com/mc/game/version_manifest_v2.json';
+    const url = 'https://piston-meta.mojang.com/mc/game/version_manifest_v2.json';
 
     const response: any = await got({
         method: 'get',

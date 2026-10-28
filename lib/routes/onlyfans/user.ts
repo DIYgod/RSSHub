@@ -8,6 +8,7 @@ import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
 export const route: Route = {
     path: '/:username',
@@ -70,7 +71,7 @@ const renderMedia = (media) =>
 
 async function handler(ctx: Context) {
     const { username } = ctx.req.param();
-    const limit = ctx.req.query('limit') ?? '20';
+    const limit = getRouteLimit(ctx, 20);
 
     const user = await cache.tryGet(`onlyfans:user:${username}`, () => get(`/api2/v2/users/${username}`));
     const posts = await get(`/api2/v2/users/${user.id}/posts?limit=${limit}&order=publish_date_desc&skip_users=all&format=infinite&pinned=0`);

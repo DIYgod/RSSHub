@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
@@ -12,7 +13,7 @@ export const route: Route = {
     path: '/news/:typeId',
     categories: ['government'],
     example: '/samd/news/440',
-    parameters: { type: '文章类型ID，见下表' },
+    parameters: { typeId: '文章类型ID，见下表' },
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -48,8 +49,9 @@ export const route: Route = {
             image: row.img_url ? baseURL + row.img_url : null,
         }));
 
-        const items = await Promise.all(
-            list.map((item) =>
+        const items = await pMap(
+            list,
+            (item) =>
                 cache.tryGet(item.link!, async () => {
                     const html = await ofetch(item.link!);
                     const $ = load(html);
@@ -63,8 +65,8 @@ export const route: Route = {
                     item.description = content.html()!;
 
                     return item;
-                })
-            )
+                }),
+            { concurrency: 3 }
         );
 
         return {

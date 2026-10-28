@@ -1,65 +1,34 @@
 import { load } from 'cheerio';
-import day from 'dayjs';
 
 import type { Route } from '@/types';
-import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
 const handler: Route['handler'] = async () => {
-    const data = await ofetch('https://notion.so/releases', {
+    const link = 'https://www.notion.com/releases';
+    const data = await ofetch(link, {
         headers: {
-            'Accept-Language': 'en-US', // TODO accept param
+            'Accept-Language': 'en-US',
         },
     });
-
     const $ = load(data);
-
-    // the first post, do not cache
-    const title = $('h2').first().text();
-    const pubDate = parseDate($('time').first().text());
-    const description = $('article.release article').first().html();
-    const link = `https://notion.so/releases/${day(pubDate).format('YYYY-MM-DD')}`;
-
-    // archive
-    const item = await Promise.all(
-        $('div[class^="releasePreviewsSection"] h3 a[href^="/releases/"]')
-            .slice(0, 5)
-            .toArray()
-            .map((item) => {
-                const link = `https://notion.so${item.attribs.href}`;
-
-                return cache.tryGet(`notion:release:${link}`, async () => {
-                    const data = await ofetch(link, {
-                        headers: {
-                            'Accept-Language': 'en-US', // Notion will adjust returned content based on this header
-                        },
-                    });
-
-                    const $ = load(data);
-
-                    return {
-                        title: $('h2').first().text(),
-                        pubDate: parseDate($('time').first().text()),
-                        description: $('article.release article').first().html(),
-                        link,
-                    };
-                });
-            })
-    );
-
+    const item = $('article')
+        .filter((_, element) => $(element).find('a[href^="/releases/"] h2').length > 0)
+        .slice(0, 6)
+        .toArray()
+        .map((element) => {
+            const release = $(element);
+            return {
+                title: release.find('h2').first().text(),
+                pubDate: parseDate(release.find('time').first().text()),
+                description: release.find('article').first().html(),
+                link: new URL(release.find('a[href^="/releases/"]').first().attr('href')!, link).href,
+            };
+        });
     return {
         title: 'Notion Releases',
-        link: 'https://notion.so/releases',
-        item: [
-            {
-                title,
-                description,
-                pubDate,
-                link,
-            },
-            ...item,
-        ],
+        link,
+        item,
     };
 };
 

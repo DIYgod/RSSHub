@@ -111,7 +111,8 @@ async function handler(ctx) {
     }
     const children = await fetchBlocks(baseUrl, root.content, spaceId);
     const pages = root.content.map((id) => children[id]).filter((block) => block?.type === 'page');
-    const limit = Number(ctx.req.query('limit')) || 20;
+    const requestedLimit = Number(ctx.req.query('limit'));
+    const limit = Number.isFinite(requestedLimit) && requestedLimit >= 1 ? Math.floor(requestedLimit) : 20;
     const items = await pMap(
         pages.slice(0, limit),
         (child) =>

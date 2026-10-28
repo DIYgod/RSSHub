@@ -1,6 +1,7 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
@@ -40,13 +41,16 @@ async function handler(ctx) {
             .text()
             .match(/window\.__PRELOADED_STATE__ = (.*);/)?.[1] ?? '{}'
     );
-    const list = preloadedState.transformed.bundle.containers[0].items;
-    const items = await Promise.all(
-        list.map((item) => {
+    const list: Array<{ url: string; dangerousHed: string; pubDate?: DataItem['pubDate'] }> = preloadedState.transformed.bundle.containers[0].items;
+    const items = await pMap(
+        list,
+        async (item) => {
             const url = `${host}${item.url}`;
-            return cache.tryGet(url, async () => {
+            const details = await cache.tryGet(`${url}:article-body:authors`, async () => {
                 const data = await ofetch(url);
                 const $ = load(data);
+                const metadata: { author?: Array<{ name?: string; sameAs?: string }> } = JSON.parse($('script[type="application/ld+json"]').first().text() || '{}');
+                const author = metadata.author?.flatMap((author) => (author.name ? [{ name: author.name, url: author.sameAs || undefined }] : []));
                 const description = $('#main-content');
                 description.find('h1').remove();
                 description.find('.article-body__footer').remove();
@@ -54,13 +58,13 @@ async function handler(ctx) {
                 description.find('div[class^="ActionBarWrapperContent-"]').remove();
                 description.find('div[class^="ContentHeaderByline-"]').remove();
                 return {
-                    title: item.dangerousHed,
-                    pubDate: item.pubDate,
-                    link: url,
                     description: description.html(),
+                    author: author?.length ? author : undefined,
                 };
             });
-        })
+            return { title: item.dangerousHed, pubDate: item.pubDate, link: url, ...details };
+        },
+        { concurrency: 3 }
     );
 
     return {

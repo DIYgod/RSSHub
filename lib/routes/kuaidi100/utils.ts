@@ -2,24 +2,47 @@ import cache from '@/utils/cache';
 import got from '@/utils/got';
 import ofetch from '@/utils/ofetch';
 
-const wwwid_key = 'kuaidi100-wwwid';
-const csrf_key = 'kuaidi100-csrf';
-const globacsrftoken_key = 'kuaidi100-globacsrftoken';
-const dasddocTitl_key = 'kuaidi100-dasddocTitl';
-const dasddocReferrer_key = 'kuaidi100-dasddocReferrer';
-const dasddocHref_key = 'kuaidi100-dasddocHref';
-const query_count = 'kuaidi100-cookie-count';
-const max_query_count = 30;
+async function settleQueueRequest(request: Promise<unknown>): Promise<void> {
+    try {
+        await request;
+    } catch {
+        // The original request retains its rejection; only the serial queue is released.
+        return;
+    }
+}
 
-async function getCookie() {
+async function loadQueuedCookie() {
+    await cookieQueue;
+    return loadCookie();
+}
+
+const wwwidKey = 'kuaidi100-wwwid';
+const csrfKey = 'kuaidi100-csrf';
+const globalCsrfTokenKey = 'kuaidi100-globacsrftoken';
+const dasddocTitleKey = 'kuaidi100-dasddocTitl';
+const dasddocReferrerKey = 'kuaidi100-dasddocReferrer';
+const dasddocHrefKey = 'kuaidi100-dasddocHref';
+const queryCountKey = 'kuaidi100-cookie-count';
+const maxQueryCount = 30;
+
+let cookieQueue: Promise<unknown> = Promise.resolve();
+
+function getCookie() {
+    const request = loadQueuedCookie();
+    // A failed bootstrap must not prevent later requests from trying again.
+    cookieQueue = settleQueueRequest(request);
+    return request;
+}
+
+async function loadCookie() {
     // Check if this key should be replace? every 30 times should be fine.
-    shouldUpdateCookie();
-    let wwwid = await cache.get(wwwid_key);
-    let csrf = await cache.get(csrf_key);
-    let globacsrftoken = await cache.get(globacsrftoken_key);
-    let dasddocTitl = await cache.get(dasddocTitl_key);
-    let dasddocReferrer = await cache.get(dasddocReferrer_key);
-    let dasddocHref = await cache.get(dasddocHref_key);
+    await shouldUpdateCookie();
+    let wwwid = await cache.get(wwwidKey);
+    let csrf = await cache.get(csrfKey);
+    let globacsrftoken = await cache.get(globalCsrfTokenKey);
+    let dasddocTitl = await cache.get(dasddocTitleKey);
+    let dasddocReferrer = await cache.get(dasddocReferrerKey);
+    let dasddocHref = await cache.get(dasddocHrefKey);
     if (!wwwid || !csrf || !dasddocTitl || !dasddocReferrer || !dasddocHref) {
         const indexResponse = await ofetch.raw('https://www.kuaidi100.com/?from=appstore', {
             headers: {
@@ -55,15 +78,15 @@ async function getCookie() {
             }
         }
 
-        cache.set(wwwid_key, wwwid ?? '', 600);
-        cache.set(csrf_key, csrf ?? '', 600);
-        cache.set(globacsrftoken_key, globacsrftoken ?? '', 600);
-        cache.set(dasddocTitl_key, dasddocTitl ?? '', 600);
-        cache.set(dasddocReferrer_key, dasddocReferrer ?? '', 600);
-        cache.set(dasddocHref_key, dasddocHref ?? '', 600);
+        await cache.set(wwwidKey, wwwid ?? '', 600);
+        await cache.set(csrfKey, csrf ?? '', 600);
+        await cache.set(globalCsrfTokenKey, globacsrftoken ?? '', 600);
+        await cache.set(dasddocTitleKey, dasddocTitl ?? '', 600);
+        await cache.set(dasddocReferrerKey, dasddocReferrer ?? '', 600);
+        await cache.set(dasddocHrefKey, dasddocHref ?? '', 600);
         // We have acquired new cookie. It may due to cache timeout.
-        // Force update counter and don't wait it finished.
-        shouldUpdateCookie(true);
+        // Reset the counter after storing the refreshed cookies.
+        await shouldUpdateCookie(true);
     }
 
     return {
@@ -76,25 +99,6 @@ async function getCookie() {
     };
 }
 
-/*
-    Example Company
-    {
-        "available": false,  <- 这个不知道是什么的可用性，反正不是可查询的
-        "canOrder": false,
-        "comTypeName": "国内运输商",
-        "contactTel": "626-818-2750",
-        "createTime": 1486202888000,
-        "hasNetwork": false,
-        "id": 7172420,
-        "name": "金岸物流",
-        "number": "jinan",
-        "shortName": "金岸物流",
-        "shortNumber": "jinan",
-        "siteUrl": "http://www.gpl-express.com/",
-        "type": 0,
-        "version": 776
-    }
-*/
 function getCompanyList() {
     // Using date as cache key and it will automatically expired by 1d
     const key = `kuaidi100-company-name-${new Date().toISOString().split('T', 1)[0]}`;
@@ -123,27 +127,22 @@ function getCompanyList() {
     });
 }
 
-function shouldUpdateCookie(forcedUpdate = false) {
+async function shouldUpdateCookie(forcedUpdate = false) {
     if (forcedUpdate) {
-        cache.set(query_count, '');
+        await cache.set(queryCountKey, '1');
+        return;
+    }
+    const count = Number(await cache.get(queryCountKey)) || 0;
+    if (count >= maxQueryCount) {
+        await cache.set(queryCountKey, '');
+        await clearCookie();
     } else {
-        const count = cache.get(query_count) as string | null;
-        if (count) {
-            if (Number(count) > max_query_count) {
-                cache.set(query_count, '');
-                clearCookie();
-            } else {
-                cache.set(query_count, count + 1);
-            }
-        } else {
-            cache.set(query_count, '1');
-        }
+        await cache.set(queryCountKey, String(count + 1));
     }
 }
 
-function clearCookie() {
-    cache.set(wwwid_key, '');
-    cache.set(csrf_key, '');
+async function clearCookie() {
+    await Promise.all([cache.set(wwwidKey, ''), cache.set(csrfKey, '')]);
 }
 
 export default {
@@ -152,7 +151,7 @@ export default {
         const list = await getCompanyList();
         const company = list.find((c) => c.number === number);
         if (company) {
-            if (number.includes('shunfeng') && !Number.isNaN(phone) && String(phone).length !== 4) {
+            if (number.includes('shunfeng') && !/^\d{4}$/.test(phone ?? '')) {
                 return {
                     status: false,
                     message: '顺丰查询需要手机号后四位！',
@@ -160,9 +159,11 @@ export default {
                 };
             }
             if (company.checkReg) {
+                const valid = new RegExp(company.checkReg).test(id);
                 return {
-                    status: true,
-                    regex: new RegExp(company.checkReg).test(id),
+                    status: valid,
+                    message: valid ? undefined : '运单号不符合该快递公司的格式，请核对后重试。',
+                    regex: valid,
                     company,
                 };
             }
@@ -181,43 +182,13 @@ export default {
         };
     },
 
-    /*
-      Example Query
-      {
-          "message": "ok",
-          "nu": "73123917441103",
-          "ischeck": "1",
-          "condition": "F00",
-          "com": "zhongtong",
-          "status": "200",
-          "state": "3",
-          "data": [{
-                      "time": "2019-12-12 12:41:15",
-                      "ftime": "2019-12-12 12:41:15",
-                      "context": "【温州市】 快件已由【菜鸟的温州燎原华庭7栋103号店】代签收, 如有问题请电联（18581563547 / 4001787878）, 感谢您使用中通快递, 期待再次为您服务!",
-                      "location": ""
-                  }
-                ...]
-        Example failed Query
-        {
-            "message": "快递公司参数异常：验证码错误",
-            "nu": "",
-            "ischeck": "0",
-            "condition": "",
-            "com": "",
-            "status": "408",
-            "state": "0",
-            "data": []
-        }
-    */
-
     getQuery: async (number, id, phone) => {
-        const query_key = `kuaidi100-query-${number}-${id}`;
-        let query: any = await cache.get(query_key);
-        // 组装日期与单号 日期为提前两个月
+        const queryKey = `kuaidi100-query-${JSON.stringify([number, id, phone ?? ''])}`;
+        let query: any = await cache.get(queryKey);
+        // Include the ticket number and a date two months before the query.
         const timestamp = Number.parseInt(String(Date.now() / 1000));
-        const lastTowMonth = Date.now() - 60 * 60 * 24 * 60 * 1000;
-        const dateString = new Date(lastTowMonth).toLocaleDateString('ZH').split('/').join('');
+        const twoMonthsAgo = Date.now() - 60 * 60 * 24 * 60 * 1000;
+        const dateString = new Date(twoMonthsAgo).toLocaleDateString('ZH').split('/').join('');
         const queryMeta = encodeURIComponent(
             JSON.stringify({
                 date: dateString,
@@ -229,36 +200,37 @@ export default {
             query = JSON.parse(query);
         } else {
             const cookie = await getCookie();
+            const queryUrl = new URL('https://www.kuaidi100.com/query');
+            queryUrl.search = new URLSearchParams({ type: number, postid: id, temp: String(Math.random()), phone: phone ?? '' }).toString();
             const queryResponse = await got({
                 method: 'get',
-                url: `https://www.kuaidi100.com/query?type=${number}&postid=${id}&temp=${Math.random()}&phone=${phone ?? ''}`,
+                url: queryUrl.href,
                 headers: {
                     Referer: 'https://www.kuaidi100.com/',
                     'Accept-Language': 'zh-CN,zh;q=0.9,en;q=0.8,ja;q=0.7',
                     Cookie: `${cookie.globacsrftoken}; ${cookie.csrf}; ${cookie.wwwid}; ${cookie.dasddocHref}; ${cookie.dasddocReferrer}; ${
                         cookie.dasddocTitl
-                    }; addcom=${number}; addnu=${id}; snt_query_meta=${queryMeta}; sortStatus=0; Hm_lpvt_22ea01af58ba2be0fec7c11b25e88e6c=${timestamp}; Hm_lvt_22ea01af58ba2be0fec7c11b25e88e6c=${timestamp - 1642}`,
+                    }; addcom=${encodeURIComponent(number)}; addnu=${encodeURIComponent(id)}; snt_query_meta=${queryMeta}; sortStatus=0; Hm_lpvt_22ea01af58ba2be0fec7c11b25e88e6c=${timestamp}; Hm_lvt_22ea01af58ba2be0fec7c11b25e88e6c=${timestamp - 1642}`,
                 },
             });
 
             query = queryResponse.data;
             if (query.status === '200') {
-                if (query.data && query.data[0].context === '查无结果') {
-                    // 查无结果 appears when cookie is invaild, force update cookie.
-                    clearCookie();
+                if (query.data?.[0]?.context === '查无结果') {
+                    // An invalid cookie can produce this empty-result marker; refresh it for the next query.
+                    await clearCookie();
                     throw new Error('暂时无法获取快递信息，请稍后重试...');
                 }
-                if (query.ischeck === '0') {
-                    // Not yet complete, don't cache for now.
-                    // To avoid frquent link test when add source, add 180s cache
-                    cache.set(query_key, query ?? '', 180);
-                } else {
-                    cache.set(query_key, query ?? ''); // Finished, cache id
-                }
+                // Use a short cache duration until the parcel is complete.
+                await (query.ischeck === '0' ? cache.set(queryKey, query ?? '', 180) : cache.set(queryKey, query ?? ''));
             } else {
-                cache.set(query_key, query ?? ''); // Error, cache as well
+                await cache.set(queryKey, query ?? ''); // Error, cache as well
                 throw new Error(`[${query.status}]信息有误，请重新检查后订阅：${query.message}`);
             }
+        }
+
+        if (query.status !== '200') {
+            throw new Error(`[${query.status}]信息有误，请重新检查后订阅：${query.message}`);
         }
 
         return query;

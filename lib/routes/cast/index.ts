@@ -4,25 +4,29 @@ import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 import timezone from '@/utils/timezone';
 
 const baseUrl = 'https://www.cast.org.cn';
 
 async function parsePage(html: string) {
+    const $ = load(html);
     return await Promise.all(
-        load(html)('li')
+        $('li')
             .toArray()
             .map((el) => {
-                const title = load(el)('a');
-                let articleUrl = title.attr('href');
+                const a = $(el).find('a');
+                const heading = a.find('[title]').first();
+                const title = heading.attr('title') || a.attr('title') || a.text();
+                let articleUrl = a.attr('href');
 
                 if (articleUrl?.startsWith('http')) {
                     return {
-                        title: title.text(),
-                        link: title.attr('href'),
+                        title,
+                        link: a.attr('href'),
                     };
                 }
-                articleUrl = `${baseUrl}${title.attr('href')}`;
+                articleUrl = `${baseUrl}${a.attr('href')}`;
 
                 return cache.tryGet(articleUrl, async () => {
                     const res = await got.get(articleUrl!);
@@ -30,9 +34,9 @@ async function parsePage(html: string) {
                     const pubDate = timezone(parseDate(article('meta[name=PubDate]').attr('content')!, 'YYYY-MM-DD HH:mm'), 8);
 
                     return {
-                        title: title.text(),
+                        title,
                         pubDate,
-                        description: article('#zoom').html(),
+                        description: article('#zoom, .fybjq.fyxqbjq').first().html(),
                         link: articleUrl,
                     };
                 });
@@ -79,7 +83,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { column, subColumn, category } = ctx.req.param();
-    const { limit = 10 } = ctx.req.query();
+    const limit = getRouteLimit(ctx, 10);
     let link = `${baseUrl}/${column}/${subColumn}`;
     if (category) {
         link += `/${category}/index.html`;
@@ -90,7 +94,7 @@ async function handler(ctx) {
 
     let items: DataItem[];
 
-    // 新闻-视频首页特殊处理
+    // The video homepage contains static lists instead of a build-unit API.
     if (column === 'xw' && subColumn === 'SP' && !category) {
         items = await parsePage(indexData);
     } else {

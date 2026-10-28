@@ -1,10 +1,12 @@
+import pMap from 'p-map';
+
 import type { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
 import { renderDescription } from '../templates/description';
-import { parseArticle } from './utils';
+import { type ArticleSource, parseArticle } from './utils';
 
 export const route: Route = {
     path: '/nfapp/reporter/:reporter',
@@ -27,27 +29,29 @@ export const route: Route = {
 
 async function handler(ctx) {
     const reporterId = ctx.req.param('reporter');
-    const currentUrl = `https://api.nfapp.southcn.com/nanfang_if/reporter/list?reporterUuid=${reporterId}&pageSize=20&pageNo=1&origin=0`;
+    const currentUrl = `https://api.nfnews.com/nanfang_if/reporter/list?reporterUuid=${reporterId}&pageSize=20&pageNo=1&origin=0`;
 
     const { data: response } = await got(currentUrl);
 
-    const list = response.data.reportInfo.articleInfo.map((item) => ({
-        title: '【' + item.releaseColName + '】' + item.title,
-        description: renderDescription({
-            thumb: item.picMiddle,
-            description: item.attAbstract,
-        }),
-        pubDate: timezone(parseDate(item.publishtime), 8),
-        link: `http://pc.nfapp.southcn.com/${item.colID}/${item.fileId}.html`,
+    const list: ArticleSource[] = response.data.reportInfo.articleInfo.map((item) => ({
+        item: {
+            title: item.title,
+            category: item.releaseColName ? [item.releaseColName] : undefined,
+            description: renderDescription({
+                thumb: item.picMiddle,
+                description: item.attAbstract,
+            }),
+            pubDate: item.publishtime ? timezone(parseDate(item.publishtime), 8) : undefined,
+            link: item.shareUrl,
+        },
         articleId: item.fileId,
-        shareUrl: item.shareUrl,
     }));
 
-    const items = await Promise.all(list.map((item) => parseArticle(item)));
+    const items = await pMap(list, ({ item, articleId }) => parseArticle(item, articleId), { concurrency: 3 });
 
     return {
         title: `南方+ - ${response.data.reportInfo.reporterName}`,
-        link: `https://static.nfapp.southcn.com/apptpl/reporterWorksList/index.html?reporterUuid=${reporterId}`,
+        link: `https://static.nfnews.com/apptpl/reporterWorksList/index.html?reporterUuid=${reporterId}`,
         item: items,
     };
 }

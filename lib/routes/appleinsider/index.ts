@@ -4,6 +4,8 @@ import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
+import parser from '@/utils/rss-parser';
 
 export const route: Route = {
     path: '/:category?',
@@ -37,6 +39,27 @@ async function handler(ctx) {
 
     const rootUrl = 'https://appleinsider.com';
     const currentUrl = `${rootUrl}${category ? `/${category}` : ''}`;
+    const limit = getRouteLimit(ctx, 30);
+
+    if (!category) {
+        const response = await got(`${rootUrl}/rss/news/`);
+        const feed = await parser.parseString(response.data);
+        return {
+            title: feed.title ?? 'AppleInsider News',
+            link: currentUrl,
+            item: feed.items.slice(0, limit).map((item) => {
+                const link = new URL(item.link!);
+                link.searchParams.delete('utm_source');
+                return {
+                    title: item.title ?? '',
+                    link: link.href,
+                    description: item.content,
+                    author: item.creator ?? item.author,
+                    pubDate: item.isoDate ? parseDate(item.isoDate) : undefined,
+                };
+            }),
+        };
+    }
 
     const response = await got({
         method: 'get',
@@ -46,7 +69,7 @@ async function handler(ctx) {
     const $ = load(response.data);
 
     let items = $(`${category === '' ? '#news-river ' : ''}.river`)
-        .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 30)
+        .slice(0, limit)
         .toArray()
         .map((item): DataItem => {
             const $item = $(item).find('a').first();

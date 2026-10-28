@@ -1,10 +1,10 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
 import { fetchArticle } from '@/utils/wechat-mp';
 
 export const route: Route = {
@@ -24,6 +24,18 @@ export const route: Route = {
         {
             source: ['gs.sjtu.edu.cn/announcement/:type'],
             target: '/gs/:type',
+        },
+        {
+            source: ['www.gs.sjtu.edu.cn/announcement/:type'],
+            target: '/gs/:type',
+        },
+        {
+            source: ['gs.sjtu.edu.cn/announcement/:type/:num'],
+            target: '/gs/:type/:num',
+        },
+        {
+            source: ['www.gs.sjtu.edu.cn/announcement/:type/:num'],
+            target: '/gs/:type/:num',
         },
     ],
     name: '研究生通知公告',
@@ -68,30 +80,27 @@ async function handler(ctx) {
             const year = $item.find('.month').text().trim();
 
             return {
-                title: $item.find('.title').text().trim(),
+                title: $item.find('.title').text(),
                 link: `${$item.attr('href')!.startsWith('http') ? '' : rootUrl}${$item.attr('href')}`,
-                pubDate: timezone(parseDate(`${year}-${day}`, 'YYYY-MM-DD'), 8),
+                pubDate: year && day ? parseDate(`${year}-${day} +0000`, 'YYYY-MM-DD ZZ') : undefined,
             };
         });
 
-    const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link, async () => {
+    const items = await pMap(
+        list,
+        async (item) => {
+            const details = await cache.tryGet<Pick<DataItem, 'description' | 'pubDate'>>(`sjtu:gs:details:v4:${item.link}`, async () => {
                 if (new URL(item.link).hostname === 'mp.weixin.qq.com') {
-                    item.description = (await fetchArticle(item.link)).description;
-                } else {
-                    const detailResponse = await got({
-                        method: 'get',
-                        url: item.link,
-                    });
-                    const content = load(detailResponse.data);
-
-                    item.description = content('.page-content').html();
+                    const article = await fetchArticle(item.link);
+                    return { description: article.description, pubDate: article.pubDate };
                 }
-
-                return item;
-            })
-        )
+                const detailResponse = await got({ method: 'get', url: item.link });
+                const content = load(detailResponse.data);
+                return { description: content('.page-content').html() };
+            });
+            return { ...item, ...details, pubDate: details.pubDate ?? item.pubDate };
+        },
+        { concurrency: 3 }
     );
 
     return {

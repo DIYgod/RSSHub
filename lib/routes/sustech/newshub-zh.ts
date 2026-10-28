@@ -1,8 +1,10 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
+import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
 
 export const route: Route = {
     path: '/newshub-zh',
@@ -40,26 +42,44 @@ async function handler() {
 
     const $ = load(data);
 
-    const list = $('.m-newslist ul li');
+    const list: Array<DataItem & { link: string }> = $('.m-newslist ul li')
+        .toArray()
+        .flatMap((item) => {
+            const $item = $(item);
+            const href = $item.find('a').attr('href');
+            const title = $item.find('.f-clamp').text();
+            const itemPubdate = $item.find('.mobi').text();
+            return href && title ? { title, link: new URL(href, baseUrl).href, pubDate: itemPubdate ? parseDateInTimezone(itemPubdate, 8) : undefined } : [];
+        });
+    const items = await pMap(
+        list,
+        async (item) => {
+            const detail = await cache.tryGet(item.link, async () => {
+                const response = await got(item.link);
+                const content = load(response.data);
+                const body = content('.m-details-con .u-content');
+                if (!body.length) {
+                    throw new Error(`The news page has no public article content: ${item.link}`);
+                }
+                const credits: string[] = [];
+                for (const element of body.children().toArray().toReversed()) {
+                    const text = content(element).text().trim();
+                    if (!text) {
+                        continue;
+                    }
+                    if (/^(?:供稿(?:单位)?|通讯员|主图|编辑|摄影|采写)[:：]/.test(text)) {
+                        credits.unshift(text);
+                        content(element).remove();
+                    } else {
+                        break;
+                    }
+                }
+                return { description: body.html() ?? undefined, author: credits.length ? credits.join(' ') : undefined };
+            });
+            return { ...item, ...detail };
+        },
+        { concurrency: 3 }
+    );
 
-    return {
-        title: '南方科技大学新闻网-中文',
-        link,
-        item:
-            list &&
-            list.toArray().map((item) => {
-                const $item = $(item);
-                const itemPicUrl = $item
-                    .find('.u-pic div')
-                    .attr('style')!
-                    .match(/url\('(.+?)'\)/)![1];
-                const itemPubdate = $item.find('.mobi').text();
-                return {
-                    pubDate: parseDate(itemPubdate, 'YYYY-MM-DD'),
-                    title: $item.find('.f-clamp').text(),
-                    description: `<img src="${baseUrl}${itemPicUrl}"><br>${$item.find('.f-clamp4').text()}`,
-                    link: `${baseUrl}${$item.find('a').attr('href')}`,
-                };
-            }),
-    };
+    return { title: '南方科技大学新闻网-中文', link, item: items };
 }

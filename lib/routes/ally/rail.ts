@@ -4,6 +4,7 @@ import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 import timezone from '@/utils/timezone';
 
 export const route: Route = {
@@ -87,7 +88,7 @@ async function handler(ctx) {
             uniqueItems.push(item!);
         }
     }
-    items = uniqueItems.toSorted((a, b) => Number(b.pubDate) - Number(a.pubDate)).slice(0, ctx.req.query('limit') || 20);
+    items = uniqueItems.toSorted((a, b) => Number(b.pubDate) - Number(a.pubDate)).slice(0, getRouteLimit(ctx, 20));
 
     items = await Promise.all(
         items.map((item) =>

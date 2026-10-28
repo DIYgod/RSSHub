@@ -1,10 +1,14 @@
 import type { Context } from 'hono';
+import { FetchError } from 'ofetch';
 import queryString from 'query-string';
 
+import ConfigNotFoundError from '@/errors/types/config-not-found';
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import { ViewType } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
 import { getAPIKeys, renderDesc } from './utils';
 
@@ -65,14 +69,16 @@ e.g.: \`/gelbooru/post?limit=20&\``,
 async function handler(ctx: Context) {
     const { tags: _tags = '', quality = 'sample' }: { tags?: string; quality?: 'sample' | 'orig' } = ctx.req.param();
 
-    const tags = decodeURIComponent(_tags).trim();
+    if (quality !== 'sample' && quality !== 'orig') {
+        throw new InvalidParameterError('quality must be sample or orig.');
+    }
+    const tags = _tags.trim();
 
-    const { limit = 40 }: { limit?: number } = ctx.req.query();
+    const limit = getRouteLimit(ctx, 40);
     const { apiKey, userId } = getAPIKeys();
 
-    const response = await got({
-        url: 'https://gelbooru.com/index.php',
-        searchParams: queryString.stringify({
+    const response = await fetchPosts(
+        queryString.stringify({
             page: 'dapi',
             s: 'post',
             q: 'index',
@@ -82,13 +88,14 @@ async function handler(ctx: Context) {
             limit: limit <= 0 || limit > 100 ? 40 : limit,
             json: 1,
         }),
-    });
+        Boolean(apiKey && userId)
+    );
 
     const posts = response.data.post;
 
     return {
         title: tags ? `${tags} - gelbooru.com` : 'gelbooru.com post list',
-        link: `https://gelbooru.com/index.php?page=post&s=list&tags=${tags}`,
+        link: `https://gelbooru.com/index.php?${new URLSearchParams({ page: 'post', s: 'list', tags })}`,
         icon: 'https://gelbooru.com/favicon.png',
         logo: 'https://gelbooru.com/favicon.png',
         description: 'Gelbooru post list',
@@ -112,4 +119,15 @@ async function handler(ctx: Context) {
             category: post.tags.split(/\s+/g),
         })),
     };
+}
+
+async function fetchPosts(searchParams: string, hasCredentials: boolean) {
+    try {
+        return await got({ url: 'https://gelbooru.com/index.php', searchParams });
+    } catch (error) {
+        if (error instanceof FetchError && error.statusCode === 401 && !hasCredentials) {
+            throw new ConfigNotFoundError('Gelbooru API requires authentication. Configure GELBOORU_API_KEY and GELBOORU_USER_ID.');
+        }
+        throw error;
+    }
 }

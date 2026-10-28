@@ -26,7 +26,6 @@ async function handler() {
             const $item = $(item);
             return {
                 title: $item.find('li a').text(),
-                description: $item.find('li a').text(),
                 link: $item.find('li a').attr('href'),
                 pubDate: timezone(parseDate($item.find('em').text()), 8),
             };

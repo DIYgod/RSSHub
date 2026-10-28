@@ -1,113 +1,100 @@
-import { load } from 'cheerio';
+import { type CheerioAPI, load } from 'cheerio';
 
 import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
 import type { Data, Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 import parser from '@/utils/rss-parser';
 
-import { apiSlug, bakeFilterSearchParams, bakeFiltersWithPair, bakeUrl, fetchData, getFilterParamsForUrl, parseFilterStr } from './util';
+import { apiSlug, bakeFeedUrl, bakeFilterSearchParams, bakeFiltersWithPair, bakePageUrl, bakeUrl, fetchData, parseFilterStr } from './util';
 
+const parseGmtDate = (value: string | undefined) => {
+    if (!value) {
+        return;
+    }
+    const date = parseDate(/(?:Z|[+-]\d{2}:?\d{2})$/i.test(value) ? value : `${value}Z`);
+    return Number.isFinite(date.getTime()) ? date : undefined;
+};
+const parseRssDate = (value: string | undefined) => {
+    if (!value) {
+        return;
+    }
+    const date = parseDate(value);
+    return Number.isFinite(date.getTime()) ? date : undefined;
+};
+const rewriteImageUrls = ($: CheerioAPI, link: string, cdn: string | undefined) => {
+    $('img').each((_, el) => {
+        const image = $(el);
+        const src = image.attr('src');
+        if (src?.startsWith('/')) {
+            image.attr('src', `${cdn ?? ''}${new URL(src, link).href}`);
+        } else if (src?.startsWith('http:')) {
+            image.attr('src', `${cdn ?? ''}${src}`);
+        }
+    });
+};
 async function handler(ctx) {
     const { url = 'https://wordpress.org/news', filter } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 50;
-
+    const limit = Math.min(getRouteLimit(ctx, 50), 100);
     if (!/^https?:\/\/[^\s#$./?].\S*$/i.test(url)) {
         throw new Error('Invalid URL');
     }
-
     if (!config.feature.allow_user_supply_unsafe_domain && !config.wordpress.allowedDomains.includes(new URL(url).hostname.toLowerCase())) {
         throw new ConfigNotFoundError('Set WORDPRESS_ALLOWED_DOMAINS to a comma-separated list of permitted hostnames, or set ALLOW_USER_SUPPLY_UNSAFE_DOMAIN=true.');
     }
-
     const cdn = config.wordpress.cdnUrl;
-    const rootUrl = url;
-
+    const rootUrl = url.replace(/\/+$/, '');
     const filters = parseFilterStr(filter);
     const filtersWithPair = await bakeFiltersWithPair(filters, rootUrl);
-
-    const searchParams = bakeFilterSearchParams(filters, 'name', false);
     const apiSearchParams = bakeFilterSearchParams(filtersWithPair, 'id', true);
-
     apiSearchParams.append('_embed', 'true');
     apiSearchParams.append('per_page', String(limit));
-
     const apiUrl = bakeUrl(`${apiSlug}/posts`, rootUrl, apiSearchParams);
-    const currentUrl = bakeUrl(getFilterParamsForUrl(filtersWithPair) ?? '', rootUrl, searchParams);
-
+    const currentUrl = bakePageUrl(rootUrl, filtersWithPair);
     try {
         const { data: response } = await got(apiUrl);
-
         const items = (Array.isArray(response) ? response : JSON.parse(response.match(/(\[.*\])$/)[1])).slice(0, limit).map((item) => {
-            const terminologies = item._embedded['wp:term'];
+            const terminologies = item._embedded?.['wp:term'] ?? [];
             const guid = item.guid?.rendered ?? item.guid;
-
             const $$ = load(item.content?.rendered ?? item.content);
-
-            $$('img').each((_, el) => {
-                const $el = $$(el);
-
-                const src = $el.prop('src');
-
-                if (src!.startsWith('/')) {
-                    $el.prop('src', `${cdn}${item.link}${src}`);
-                } else if (src!.startsWith('http:')) {
-                    $el.prop('src', `${cdn}${src}`);
-                }
-            });
-
+            rewriteImageUrls($$, item.link || rootUrl, cdn);
             const description = $$.html();
-
             return {
                 title: item.title?.rendered ?? item.title,
                 description,
-                pubDate: parseDate(item.date_gmt),
+                pubDate: parseGmtDate(item.date_gmt),
                 link: item.link,
                 category: [...new Set(terminologies.flat().map((c) => c.name))],
-                author: item._embedded.author.map((a) => a.name).join('/'),
+                author: item._embedded?.author?.map((a) => a.name).join('/'),
                 guid,
                 id: guid,
                 content: {
                     html: description,
                     text: $$.text(),
                 },
-                updated: parseDate(item.modified_gmt),
+                updated: parseGmtDate(item.modified_gmt),
             };
         });
-
         const data = await fetchData(currentUrl, rootUrl);
-
         return {
+            title: 'WordPress',
+            link: currentUrl,
             ...data,
             item: items,
         } as Data;
     } catch {
-        const feed = await parser.parseURL(`${rootUrl}/feed/`);
-
+        const feed = await parser.parseURL(bakeFeedUrl(rootUrl, filtersWithPair));
         const items = feed.items.map((item) => {
             const guid = item.guid;
-
             const $$ = load(item['content:encoded']);
-
-            $$('img').each((_, el) => {
-                const $el = $$(el);
-
-                const src = $el.prop('src');
-
-                if (src!.startsWith('/')) {
-                    $el.prop('src', `${cdn}${item.link}${src}`);
-                } else if (src!.startsWith('http:')) {
-                    $el.prop('src', `${cdn}${src}`);
-                }
-            });
-
+            rewriteImageUrls($$, item.link || rootUrl, cdn);
             const description = $$.html();
-
             return {
                 title: item.title!,
                 description,
-                pubDate: parseDate(item.pubDate ?? ''),
+                pubDate: parseRssDate(item.pubDate),
                 link: item.link,
                 category: item.categories,
                 author: item.creator,
@@ -119,19 +106,16 @@ async function handler(ctx) {
                 },
             };
         });
-
         return {
             title: feed.title!,
             description: feed.description,
             link: feed.link,
             item: items,
-            allowEmpty: true,
             image: feed.image?.url,
             language: feed.language,
         } satisfies Data;
     }
 }
-
 export const route: Route = {
     path: '/:url?/:filter{.+}?',
     name: 'WordPress',
@@ -152,7 +136,6 @@ Categories and tags can be combined as well. \`/category/Releases/tag/tagging\` 
 You can also search for keywords. \`/search/Blog\` to search for the keyword "Blog". In this case, the route would be [\`/wordpress/https%3A%2F%2Fwordpress.org%2Fnews/search/Blog\`](https://rsshub.app/wordpress/https%3A%2F%2Fwordpress.org%2Fnews/search/Blog).
 :::`,
     categories: ['blog'],
-
     features: {
         requireConfig: [
             {

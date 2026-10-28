@@ -2,14 +2,17 @@ import type { CheerioAPI } from 'cheerio';
 import { load } from 'cheerio';
 import type { Context } from 'hono';
 
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Data, DataItem, Language, Route } from '@/types';
 import { ViewType } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { category } = ctx.req.param();
-    const limit = Number(ctx.req.query('limit') ?? '100');
+    const requestedLimit = getRouteLimit(ctx, 100);
+    const limit = Math.min(Math.max(requestedLimit, 1), 100);
 
     const apiSlug = 'wp-json/wp/v2';
     const baseUrl = 'https://60s.aa1.cn';
@@ -24,6 +27,9 @@ export const handler = async (ctx: Context): Promise<Data> => {
     });
 
     const categoryObj = searchResponse.find((c) => c.slug === category || c.name === category);
+    if (category && !categoryObj) {
+        throw new InvalidParameterError(`Category "${category}" was not found.`);
+    }
     const categoryId: number | undefined = categoryObj?.id ?? undefined;
     const categorySlug: string | undefined = categoryObj?.slug ?? undefined;
 
@@ -63,7 +69,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
         const processedItem: DataItem = {
             title,
             description,
-            pubDate: pubDate ? parseDate(pubDate) : undefined,
+            pubDate: pubDate ? parseDate(`${pubDate}Z`) : undefined,
             link: linkUrl ?? guid,
             category: categories,
             author: authors,
@@ -75,7 +81,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
             },
             image,
             banner: image,
-            updated: updated ? parseDate(updated) : undefined,
+            updated: updated ? parseDate(`${updated}Z`) : undefined,
             language,
         };
 

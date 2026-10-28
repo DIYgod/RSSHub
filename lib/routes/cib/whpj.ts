@@ -1,7 +1,7 @@
 import crypto from 'node:crypto';
-import https from 'node:https';
 
 import { load } from 'cheerio';
+import { Agent } from 'undici';
 
 import { config } from '@/config';
 import type { Route } from '@/types';
@@ -9,6 +9,7 @@ import cache from '@/utils/cache';
 import got from '@/utils/got';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/whpj/:format?',
@@ -28,6 +29,10 @@ export const route: Route = {
             source: ['cib.com.cn/'],
             target: '/whpj',
         },
+        {
+            source: ['personalbank.cib.com.cn/pers/main/pubinfo/ifxQuotationQuery.do'],
+            target: '/whpj',
+        },
     ],
     name: '外汇牌价',
     maintainers: ['Qixingchen'],
@@ -40,8 +45,10 @@ export const route: Route = {
 
 async function handler(ctx) {
     // fix unsafe legacy renegotiation disabled
-    const agent = new https.Agent({
-        secureOptions: crypto.constants.SSL_OP_LEGACY_SERVER_CONNECT,
+    const agent = new Agent({
+        connect: {
+            secureOptions: crypto.constants.SSL_OP_LEGACY_SERVER_CONNECT,
+        },
     });
 
     const response = await ofetch.raw('https://personalbank.cib.com.cn/pers/main/pubinfo/ifxQuotationQuery.do', { agent: { https: agent } });
@@ -91,7 +98,8 @@ async function handler(ctx) {
 
             return {
                 title: formatTitle(name, xhmr, xcmr, xhmc, xcmc, content, format),
-                pubDate: parseDate(date, 'YYYY年MM月DD日 HH:mm:ss'),
+                link: `https://personalbank.cib.com.cn/pers/main/pubinfo/ifxQuotationQuery.do#${item.id}`,
+                pubDate: timezone(parseDate(date, 'YYYY年MM月DD日 HH:mm:ss'), 8),
                 description: content.replaceAll(/\s/g, '<br>'),
                 guid: `${item.cell[0]} ${item.cell[1]} ${date}`,
             };

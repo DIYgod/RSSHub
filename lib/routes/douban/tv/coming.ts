@@ -7,6 +7,7 @@ import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 const apiUrl = 'https://frodo.douban.com/api/v2/tv/coming_soon';
 const apiKey = '0dad551ec0f84ed02907ff5c42e8ec70';
@@ -75,7 +76,11 @@ const getPubDate = (pubdate?: string[]): Date | undefined => {
     }
 
     const datePart = pubDateText.split('(', 1)[0];
-    return parseDate(datePart);
+    if (!/^\d{4}-\d{1,2}-\d{1,2}$/.test(datePart)) {
+        return undefined;
+    }
+    const date = timezone(parseDate(datePart, ['YYYY-MM-DD', 'YYYY-M-D', 'YYYY-MM-D', 'YYYY-M-DD'], true), 0);
+    return Number.isNaN(date.getTime()) ? undefined : date;
 };
 
 const getSortTimestamp = (pubdate?: string[]): number => {
@@ -213,13 +218,14 @@ async function handler(ctx) {
         return 0;
     });
     return {
+        sortItems: false,
         title: '豆瓣剧集-即将播出',
         link: 'https://movie.douban.com/tv/',
         description: `即将播出的剧集，请求参数: count=${subscriptionCount}, total=${total}, sortBy=${sortBy}, requestCount=${requestCount}`,
         item: sortedSubjects.map((subject) => {
             const link = subject.url || subject.sharing_url || `https://movie.douban.com/subject/${subject.id}/`;
             const category = subject.card_subtitle ? [subject.card_subtitle] : (subject.genres ?? []);
-            const pubDate = sortBy === 'time' ? getPubDate(subject.pubdate) : undefined;
+            const pubDate = getPubDate(subject.pubdate);
             return {
                 title: subject.title,
                 category: category.length > 0 ? category : undefined,

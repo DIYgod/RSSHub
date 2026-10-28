@@ -2,6 +2,8 @@ import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
+import { getShortMsgDescription } from './utils';
+
 export const route: Route = {
     path: '/dynamic/:id',
     categories: ['programming'],
@@ -34,74 +36,75 @@ async function handler(ctx) {
             cursor: 0,
         },
     });
-    const list = response.data.list;
+    const list = response.data?.list;
+    if (!Array.isArray(list) || !list.length) {
+        throw new Error(`No activities were returned for Juejin user ${id}; check the user profile and source API availability.`);
+    }
 
     const user = list[0].user;
     const username = user.user_name;
 
-    const items = list.map((e) => {
-        const { target_type, target_data, action, time } = e; // action: 0.发布文章；1.点赞文章；2.发布沸点；3.点赞沸点；4.关注用户；5.关注标签
-        let title: string | undefined;
+    const items = list.map((entry) => {
+        const { target_type: targetType, target_data: targetData, action, time } = entry; // Actions: 0 publish article, 1 like article, 2 publish pin, 3 like pin, 4 follow user, 5 follow tag.
+        let title: string;
         let description: string | undefined;
         let pubDate: Date | undefined;
         let author: string | undefined;
         let link: string | undefined;
         let category: string[] | undefined;
-        switch (target_type) {
+        switch (targetType) {
             case 'short_msg': {
-                // 沸点/点赞等
-                const { msg_Info, author_user_info, msg_id, topic } = target_data;
-                const { content, pic_list, ctime } = msg_Info;
+                // Published and liked pins.
+                const { msg_Info: msgInfo, author_user_info: authorInfo, msg_id: msgId, topic } = targetData;
+                const { content, ctime } = msgInfo;
                 title = content;
-                const imgs = pic_list.map((img) => `<img src="${img}"><br>`).join('');
-                description = `${content.replaceAll('\n', '<br>')}<br>${imgs}`;
+                description = getShortMsgDescription(msgInfo);
                 pubDate = parseDate(Number(ctime) * 1000);
-                author = author_user_info.user_name;
-                link = `https://juejin.cn/pin/${msg_id}`;
-                category = topic.title;
+                author = authorInfo.user_name;
+                link = `https://juejin.cn/pin/${msgId}`;
+                category = topic?.title ? [topic.title] : undefined;
                 if (action === 3) {
                     title = `${username} 赞了这篇沸点//@${author}：${title}`;
-                    description = `${username} 赞了这篇沸点//@${author}：${description}`;
                 }
                 break;
             }
             case 'article': {
-                // 文章
-                const { article_id, article_info, author_user_info, tags } = target_data;
-                const { ctime, brief_content } = article_info;
-                title = article_info.title;
-                description = brief_content;
+                // Published and liked articles.
+                const { article_id: articleId, article_info: articleInfo, author_user_info: authorInfo, tags } = targetData;
+                const { ctime, brief_content: briefContent } = articleInfo;
+                title = articleInfo.title;
+                description = briefContent;
                 pubDate = parseDate(Number(ctime) * 1000);
-                author = author_user_info.user_name;
-                link = `https://juejin.cn/post/${article_id}`;
-                category = [...new Set([target_data.category.category_name, ...tags.map((t) => t.tag_name)])];
+                author = authorInfo.user_name;
+                link = `https://juejin.cn/post/${articleId}`;
+                category = [...new Set([targetData.category.category_name, ...tags.map((tag) => tag.tag_name)])];
                 if (action === 1) {
                     title = `${username} 赞了这篇文章//@${author}：${title}`;
                 }
                 break;
             }
             case 'user': {
-                // 关注用户
-                const { user_name, user_id } = target_data;
-                title = `${username} 关注了 ${user_name}`;
-                description = `${user_name}<br>简介：${target_data.description}`;
-                author = user_name;
-                link = `https://juejin.cn/user/${user_id}`;
+                // Followed users.
+                const { user_name: targetUsername, user_id: userId } = targetData;
+                title = `${username} 关注了 ${targetUsername}`;
+                description = `${targetUsername}<br>简介：${targetData.description}`;
+                author = targetUsername;
+                link = `https://juejin.cn/user/${userId}`;
                 pubDate = parseDate(time * 1000);
                 break;
             }
             case 'tag': {
-                // 关注标签
-                const { tag_name } = target_data;
-                title = `${username} 关注了标签 ${tag_name}`;
-                description = tag_name;
-                category = [tag_name];
-                link = `https://juejin.cn/tag/${encodeURIComponent(tag_name)}`;
+                // Followed tags.
+                const { tag_name: tagName } = targetData;
+                title = `${username} 关注了标签 ${tagName}`;
+                description = tagName;
+                category = [tagName];
+                link = `https://juejin.cn/tag/${encodeURIComponent(tagName)}`;
                 pubDate = parseDate(time * 1000);
                 break;
             }
             default:
-                break;
+                throw new Error(`Unsupported Juejin activity target type: ${targetType}; the source API may have changed.`);
         }
         return {
             title,
@@ -110,7 +113,7 @@ async function handler(ctx) {
             author,
             link,
             category,
-            guid: link,
+            guid: `juejin:dynamic:${id}:${action}:${time}:${link}`,
         };
     });
     return {

@@ -3,6 +3,13 @@ import { renderToString } from 'hono/jsx/dom/server';
 
 type HeaderRenderOptions = {
     featuredImage?: {
+        caption?: {
+            html?: string;
+            plaintext?: string;
+        };
+        credit?: {
+            plaintext?: string;
+        };
         image?: {
             originalUrl?: string;
             title?: string;
@@ -12,6 +19,13 @@ type HeaderRenderOptions = {
     ledeMediaData?: {
         __typename?: string;
         embedHtml?: string;
+        caption?: {
+            html?: string;
+            plaintext?: string;
+        };
+        credit?: {
+            plaintext?: string;
+        };
         image?: {
             thumbnails?: {
                 horizontal?: {
@@ -35,7 +49,10 @@ export const renderHeader = ({ featuredImage, ledeMediaData }: HeaderRenderOptio
             {featuredImage?.image?.originalUrl ? (
                 <figure>
                     <img src={featuredImage.image.originalUrl.split('?', 1)[0]} alt={featuredImage.image.alt ?? undefined} />
-                    <figcaption>{featuredImage.image.title}</figcaption>
+                    <figcaption>
+                        {featuredImage.caption?.html ? raw(featuredImage.caption.html) : featuredImage.caption?.plaintext}
+                        {featuredImage.credit?.plaintext ? <> {featuredImage.credit.plaintext}</> : null}
+                    </figcaption>
                 </figure>
             ) : null}
 
@@ -45,7 +62,10 @@ export const renderHeader = ({ featuredImage, ledeMediaData }: HeaderRenderOptio
                 ) : ledeMediaData.__typename === 'LedeMediaImageType' && !featuredImage ? (
                     <figure>
                         <img src={ledeMediaData.image?.thumbnails?.horizontal?.url?.split('?', 1)[0]} alt={ledeMediaData.image?.title ?? undefined} />
-                        <figcaption>{ledeMediaData.image?.credit?.plaintext || ledeMediaData.image?.title}</figcaption>
+                        <figcaption>
+                            {ledeMediaData.caption?.html ? raw(ledeMediaData.caption.html) : ledeMediaData.caption?.plaintext}
+                            {ledeMediaData.credit?.plaintext || ledeMediaData.image?.credit?.plaintext ? <> {ledeMediaData.credit?.plaintext || ledeMediaData.image?.credit?.plaintext}</> : null}
+                        </figcaption>
                     </figure>
                 ) : ledeMediaData.__typename === 'LedeMediaVideoType' ? (
                     <iframe src={`https://volume.vox-cdn.com/embed/${ledeMediaData.video?.volumeUuid}`} allowfullscreen></iframe>

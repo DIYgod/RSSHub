@@ -1,16 +1,18 @@
 import querystring from 'node:querystring';
 
 import { config } from '@/config';
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
+import md5 from '@/utils/md5';
 import { parseDate } from '@/utils/parse-date';
 import { fallback, queryToBoolean } from '@/utils/readable-social';
 import timezone from '@/utils/timezone';
 
 import weiboUtils from './utils';
 
+const getPostTime = (pubDate: DataItem['pubDate']) => (typeof pubDate !== 'number' && !pubDate ? NaN : new Date(pubDate).getTime());
 export const route: Route = {
     path: '/user/:uid/:routeParams?',
     categories: ['social-media'],
@@ -52,7 +54,6 @@ export const route: Route = {
 部分博主仅登录可见，未提供 Cookie 的情况下不支持订阅，可以通过打开 \`https://m.weibo.cn/u/:uid\` 验证
 :::`,
 };
-
 async function handler(ctx) {
     const uid = ctx.req.param('uid');
     let displayVideo = '1';
@@ -61,21 +62,20 @@ async function handler(ctx) {
     let showRetweeted = '1';
     let showBloggerIcons = '0';
     if (ctx.req.param('routeParams')) {
-        if (ctx.req.param('routeParams') === '1' || ctx.req.param('routeParams') === '0') {
+        if (isOneOf(ctx.req.param('routeParams'), ['1', '0'])) {
             displayVideo = ctx.req.param('routeParams');
         } else {
             const routeParams = querystring.parse(ctx.req.param('routeParams'));
             displayVideo = fallback(undefined, queryToBoolean(routeParams.displayVideo), true) ? '1' : '0';
             displayArticle = fallback(undefined, queryToBoolean(routeParams.displayArticle), false) ? '1' : '0';
             displayComments = fallback(undefined, queryToBoolean(routeParams.displayComments), false) ? '1' : '0';
-            showRetweeted = fallback(undefined, queryToBoolean(routeParams.showRetweeted), false) ? '1' : '0';
+            showRetweeted = fallback(undefined, queryToBoolean(routeParams.showRetweeted), true) ? '1' : '0';
             showBloggerIcons = fallback(undefined, queryToBoolean(routeParams.showBloggerIcons), false) ? '1' : '0';
         }
     }
-
     const containerData = await weiboUtils.tryWithCookies((cookies, verifier) =>
         cache.tryGet(
-            `weibo:user:index:${uid}`,
+            `weibo:user:index:${uid}:${md5(cookies)}`,
             async () => {
                 const _r = await got({
                     method: 'get',
@@ -93,15 +93,13 @@ async function handler(ctx) {
             false
         )
     );
-
     const name = containerData.data.userInfo.screen_name;
     const description = containerData.data.userInfo.description;
     const profileImageUrl = containerData.data.userInfo.profile_image_url;
     const containerId = containerData.data.tabsInfo.tabs.find((item) => item.tab_type === 'weibo').containerid;
-
     const cards = await weiboUtils.tryWithCookies((cookies, verifier) =>
         cache.tryGet(
-            `weibo:user:cards:${uid}:${containerId}`,
+            `weibo:user:cards:${uid}:${containerId}:${md5(cookies)}`,
             async () => {
                 const _r = await got({
                     method: 'get',
@@ -119,7 +117,6 @@ async function handler(ctx) {
             false
         )
     );
-
     let resultItems = await Promise.all(
         cards
             .filter((item) => {
@@ -143,7 +140,6 @@ async function handler(ctx) {
                 }
                 const key = `weibo:user:complete:${bid}`;
                 const data = await cache.tryGet(key, () => weiboUtils.getShowData(uid, bid));
-
                 if (data && data.text) {
                     item.mblog.text = data.text;
                     item.mblog.created_at = parseDate(data.created_at);
@@ -159,7 +155,6 @@ async function handler(ctx) {
                 } else {
                     item.mblog.created_at = timezone(created_at, 8);
                 }
-
                 // 转发的长微博处理
                 const retweet = retweeted_status;
                 if (retweet && retweet.isLongText) {
@@ -169,27 +164,22 @@ async function handler(ctx) {
                         retweeted_status.text = retweetData.text;
                     }
                 }
-
                 const formatExtended = weiboUtils.formatExtended(ctx, item.mblog, uid);
                 let description = formatExtended.description;
-
                 // 视频的处理
                 if (displayVideo === '1') {
                     // 含被转发微博时需要从被转发微博中获取视频
                     description = retweeted_status ? weiboUtils.formatVideo(description, retweeted_status) : weiboUtils.formatVideo(description, item.mblog);
                 }
-
                 // 评论的处理
                 if (displayComments === '1') {
                     description = await weiboUtils.formatComments(ctx, description, item.mblog, showBloggerIcons);
                 }
-
                 // 文章的处理
                 if (displayArticle === '1') {
                     // 含被转发微博时需要从被转发微博中获取文章
                     description = await (retweeted_status ? weiboUtils.formatArticle(ctx, description, retweeted_status) : weiboUtils.formatArticle(ctx, description, item.mblog));
                 }
-
                 return {
                     ...formatExtended,
                     description,
@@ -197,27 +187,30 @@ async function handler(ctx) {
                 };
             })
     );
-
     // remove pinned weibo if they are posted before the earliest **ordinary** weibo
     // there may be multiple pinned weibo at the same time, only remove the ones that meet the above condition
     const pinnedItems = resultItems.filter((item) => item.isPinned);
     const ordinaryItems = resultItems.filter((item) => !item.isPinned);
     if (pinnedItems.length > 0 && ordinaryItems.length > 0) {
-        const earliestOrdinaryPostTime = Math.min(...ordinaryItems.map((i) => i.pubDate).filter(Boolean));
-        resultItems = ordinaryItems;
-        for (const item of pinnedItems) {
-            if (item.pubDate > earliestOrdinaryPostTime) {
-                resultItems.unshift(item);
-            }
+        const earliestOrdinaryPostTime = Math.min(...ordinaryItems.map((item) => getPostTime(item.pubDate)).filter(Number.isFinite));
+        if (Number.isFinite(earliestOrdinaryPostTime)) {
+            resultItems = resultItems.filter((item) => {
+                const postTime = getPostTime(item.pubDate);
+                return !item.isPinned || !Number.isFinite(postTime) || postTime >= earliestOrdinaryPostTime;
+            });
         }
     }
-
     return weiboUtils.sinaimgTvax({
         title: `${name}的微博`,
         link: `https://weibo.com/${uid}/`,
         description,
         image: profileImageUrl,
         item: resultItems,
-        allowEmpty: true,
+        allowEmpty: resultItems.length === 0 && cards.some((item) => item.mblog),
     });
+}
+
+function isOneOf<const T>(value: unknown, values: readonly T[]): value is T {
+    const candidates: readonly unknown[] = values;
+    return candidates.includes(value);
 }

@@ -1,5 +1,7 @@
 import type { Route } from '@/types';
-import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/parse-date';
+
+import { getComments } from './utils';
 
 export const route: Route = {
     path: '/journal-comments/:id',
@@ -29,34 +31,18 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { id } = ctx.req.param();
-    const urlJournal = `https://faexport.spangle.org.uk/journal/${id}.json`;
-    const urlComments = `https://faexport.spangle.org.uk/journal/${id}/comments.json`;
-
-    const dataJournal = await ofetch(urlJournal, {
-        method: 'GET',
-        headers: {
-            Referer: 'https://faexport.spangle.org.uk/',
-        },
-    });
-
-    const dataComments = await ofetch(urlComments, {
-        method: 'GET',
-        headers: {
-            Referer: 'https://faexport.spangle.org.uk/',
-        },
-    });
+    const { comments: dataComments, ...dataJournal } = await getComments('journal', id);
 
     const items = dataComments.map((item) => ({
         title: item.text,
-        link: `https://www.furaffinity.net/journal/${id}`,
+        link: `https://www.furaffinity.net/journal/${id}/#cid:${item.id}`,
         guid: item.id,
-        description: `<img src="${item.avatar}"> <br> ${item.name}: ${item.text}`,
-        pubDate: new Date(item.posted_at).toUTCString(),
-        author: item.name,
+        description: item.text,
+        pubDate: item.posted_at ? parseDate(item.posted_at) : undefined,
+        author: [{ name: item.name, ...(item.avatar && { avatar: new URL(item.avatar, 'https://www.furaffinity.net').href }) }],
     }));
 
     return {
-        allowEmpty: true,
         title: `${dataJournal.title} - ${dataJournal.name} | Journal Comments`,
         link: `https://www.furaffinity.net/journal/${id}`,
         description: `Fur Affinity | ${dataJournal.title} by ${dataJournal.name} - Journal Comments`,

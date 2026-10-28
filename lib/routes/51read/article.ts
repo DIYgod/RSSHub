@@ -3,6 +3,8 @@ import { load } from 'cheerio';
 import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/article/:id',
@@ -38,50 +40,45 @@ async function handler(ctx) {
     const link = `https://m.51read.org/xiaoshuo/${id}`;
     const bookHtml = await ofetch(link);
     const $book = load(bookHtml);
-
-    const chapter = `https://m.51read.org/zhangjiemulu/${id}`;
-    const chapterHtml = await ofetch(chapter);
-    const $chapter = load(chapterHtml);
-
-    const pageLength = $chapter('.ml-page select')
-        .find('option')
-        .toArray()
-        .map((option) => option.attribs.value).length;
-
-    const item = await createItem(chapter, pageLength);
+    const item = await Promise.all(
+        $book('.wr-chapter-grid a')
+            .toArray()
+            .map((chapter) => buildItem(new URL(chapter.attribs.href, link).href, link))
+    );
+    const cover = $book('.wr-book-hero img').attr('src');
+    const latestChapter = $book('meta[property="og:novel:latest_chapter_url"]').attr('content');
+    const updateTime = $book('meta[property="og:novel:update_time"]').attr('content');
+    if (updateTime) {
+        const latestItem = item.find((chapter) => chapter.link === latestChapter);
+        if (latestItem) {
+            latestItem.pubDate = timezone(parseDate(updateTime, 'YYYY-MM-DD HH:mm'), 8);
+        }
+    }
 
     return {
         title: $book('h1').text(),
-        description: $book('.bi-cot p').text(),
+        description: $book('.wr-intro p').text(),
         link,
         item,
-        image: $book('.bi-img img').attr('src'),
-        author: $book('.bi-wt a').text(),
+        image: cover ? new URL(cover, link).href : undefined,
+        author: $book('meta[property="og:novel:author"]').attr('content'),
         language: 'zh-CN' as const satisfies Language,
     };
 }
 
-const createItem = async (baseUrl: string, page: number) => {
-    const url = `${baseUrl}/${page}`;
-    const html = await ofetch(url);
-    const $latest = load(html);
-    const item = await Promise.all(
-        $latest('.kb-jp li>a')
-            .toArray()
-            .map((chapter) => buildItem(chapter.attribs.href))
-            .toReversed()
-    );
-    return item;
-};
-
-const buildItem = (url: string) =>
+const buildItem = (url: string, bookUrl: string) =>
     cache.tryGet(url, async (): Promise<DataItem> => {
-        const html = await ofetch(url);
+        const html = await ofetch(url, {
+            headers: {
+                referer: bookUrl,
+            },
+        });
         const $ = load(html);
+        $('.wr-source-content div, .wr-source-content script, .js_chapter_more_text, .wr-source-content p[style*="text-align:center"]').remove();
 
         return {
             title: $('h1').text(),
-            description: $('.kb-cot').html(),
+            description: $('.wr-source-content').html(),
             link: url,
         };
     });

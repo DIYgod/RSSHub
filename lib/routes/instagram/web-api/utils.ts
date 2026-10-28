@@ -6,10 +6,12 @@ import ConfigNotFoundError from '@/errors/types/config-not-found';
 import NotFoundError from '@/errors/types/not-found';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/parse-date';
 
 export const baseUrl = 'https://www.instagram.com';
 
 const docIds = {
+    PolarisLoggedOutDesktopWWWProfilePostsTabContentQuery_connection: '28904005159232689',
     PolarisProfilePageContentQuery: '28036671149327607',
     PolarisProfilePostsQuery: '28570182382647478',
     PolarisProfileStoryHighlightsTrayContentQuery: '26970053832668570',
@@ -34,7 +36,10 @@ const getHeaders = async (cookieJar: CookieJar) => {
     };
 };
 
-export const checkLogin = async (cookieJar: CookieJar) => {
+export const checkLogin = async (cookieJar: CookieJar, bootstrapPage?: () => Promise<{ html: string }>) => {
+    if (!(await getCSRFTokenFromJar(cookieJar))) {
+        await bootstrapPage?.();
+    }
     const response = await ofetch(`${baseUrl}/api/v1/web/fxcal/ig_sso_users/`, {
         headers: {
             'content-type': 'application/x-www-form-urlencoded',
@@ -67,7 +72,7 @@ type JsonObject = { [key: string]: JsonValue };
 const isJsonContainer = (value: JsonValue): value is JsonValue[] | JsonObject => value !== null && typeof value === 'object';
 
 const graphql = async (friendlyName: keyof typeof docIds, variables: JsonObject, tokens: { lsd?: string; dtsg?: string }, cookieJar: CookieJar) => {
-    const text = await ofetch(`${baseUrl}/graphql/query`, {
+    const text = await ofetch(`${baseUrl}/api/graphql`, {
         method: 'POST',
         headers: {
             cookie: await cookieJar.getCookieString(baseUrl),
@@ -116,19 +121,30 @@ const getGuestUser = (html: string) => {
         .find((user) => user?.full_name !== undefined);
 };
 
-export const getPage = async (username: string, cookieJar: CookieJar) => {
-    const page = await ofetch.raw(`${baseUrl}/${username}/`, {
+export const getSessionPage = async (link: string, cookieJar: CookieJar) => {
+    const page = await ofetch.raw(link, {
         headers: {
             cookie: await cookieJar.getCookieString(baseUrl),
         },
     });
+    await Promise.all(page.headers.getSetCookie().map((c) => cookieJar.setCookie(c, baseUrl)));
+    const html: string = page._data;
+    const csrfToken = html.match(/"csrf_token":"([A-Za-z0-9]+)"/)?.[1];
+    if (csrfToken && !(await getCSRFTokenFromJar(cookieJar))) {
+        await cookieJar.setCookie(`csrftoken=${csrfToken}; Path=/; Secure`, baseUrl);
+    }
+    return { html, url: page.url };
+};
+
+export const getPage = async (username: string, cookieJar: CookieJar) => {
+    const page = await getSessionPage(`${baseUrl}/${username}/`, cookieJar);
     if (page.url.includes('/accounts/login/')) {
         throw new ConfigNotFoundError(page.url.includes('is_from_rle') ? 'Please set `INSTAGRAM_COOKIE`' : 'Invalid cookie');
     }
-
-    await Promise.all(page.headers.getSetCookie().map((c) => cookieJar.setCookie(c, baseUrl)));
-
-    const html: string = page._data;
+    if (page.url.includes('/accounts/suspended/')) {
+        throw new ConfigNotFoundError('Instagram account suspended');
+    }
+    const { html } = page;
     const profileId = html.match(/"profile_id":"(\d+)"/)?.[1];
     if (!profileId) {
         throw new NotFoundError(`Instagram user @${username} not found`);
@@ -144,7 +160,7 @@ export const getPage = async (username: string, cookieJar: CookieJar) => {
 };
 
 export const getUserInfo = (username: string, cookieJar: CookieJar, page: () => ReturnType<typeof getPage>): Promise<User> =>
-    cache.tryGet(`instagram:userInfo:${username}`, async (): Promise<User> => {
+    cache.tryGet(`instagram:userInfo:${config.instagram.cookie ? 'user' : 'guest'}:${username}`, async (): Promise<User> => {
         const { html, tokens, profileId } = await page();
         if (!tokens.dtsg) {
             return getGuestUser(html);
@@ -169,9 +185,25 @@ export const getUserInfo = (username: string, cookieJar: CookieJar, page: () => 
 
 export const getUserFeed = (username: string, cookieJar: CookieJar, page: () => ReturnType<typeof getPage>) =>
     cache.tryGet(
-        `instagram:feed:${username}`,
+        `instagram:feed:${config.instagram.cookie ? 'user' : 'guest'}:${username}`,
         async () => {
-            const { tokens } = await page();
+            const { html, tokens } = await page();
+            if (!tokens.dtsg) {
+                const user = getGuestUser(html);
+                const timeline = await graphql('PolarisLoggedOutDesktopWWWProfilePostsTabContentQuery_connection', { first: 33, id: user.id, __relay_internal__pv__PolarisSEOIsCrawlerrelayprovider: false }, tokens, cookieJar);
+                return timeline.node.polaris_ordered_timeline_connection.edges
+                    .map((edge) => edge.node)
+                    .filter((node) => node.user.id === user.id)
+                    .map((node) => {
+                        const date = node.accessibility_caption?.match(/ on ([A-Z][a-z]+ \d{1,2}, \d{4})\./)?.[1];
+                        return {
+                            ...node,
+                            product_type: 'feed',
+                            image_versions2: { candidates: [{ url: node.display_uri }] },
+                            taken_at: date && parseDate(date, 'MMMM D, YYYY').getTime() / 1000,
+                        };
+                    });
+            }
             const posts = await graphql(
                 'PolarisProfilePostsQuery',
                 {
@@ -219,7 +251,7 @@ export const getHighlightIds = (userId: string, cookieJar: CookieJar, page: () =
         async () => {
             const { tokens } = await page();
             const tray = await graphql('PolarisProfileStoryHighlightsTrayContentQuery', { user_id: userId, first: 12 }, tokens, cookieJar);
-            return tray.highlights.edges.map((edge) => edge.node.id);
+            return tray.highlights.edges.slice(0, 20).map((edge) => edge.node.id);
         },
         config.cache.routeExpire,
         false

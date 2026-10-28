@@ -1,5 +1,4 @@
 /* eslint-disable no-await-in-loop */
-/* oxlint-disable no-await-in-loop */
 import type { Context } from 'hono';
 import { Api } from 'teleproto';
 import { HTMLParser } from 'teleproto/extensions/html.js';
@@ -16,7 +15,7 @@ export function getGeoLink(geo: Api.GeoPoint) {
     return `<a href="https://www.google.com/maps/search/?api=1&query=${geo.lat}%2C${geo.long}" target="_blank">Geo LatLon: ${geo.lat}, ${geo.long}</a>`;
 }
 
-export async function getPollResults(client, message, m: Api.MessageMediaPoll) {
+async function getPollResults(client, message, m: Api.MessageMediaPoll) {
     const resultsUpdateResponse = await client.invoke(new Api.messages.GetPollResults({ peer: message.peerId, msgId: message.id }));
     let results: Api.PollResults;
     if (resultsUpdateResponse?.updates[0] instanceof Api.UpdateMessagePoll) {
@@ -38,7 +37,7 @@ export async function getPollResults(client, message, m: Api.MessageMediaPoll) {
     return txt;
 }
 
-export function withSearchParams(src: string, params: Record<string, string>) {
+function withSearchParams(src: string, params: Record<string, string>) {
     const url = new URL(src);
     for (const [key, value] of Object.entries(params)) {
         url.searchParams.set(key, value);
@@ -46,7 +45,7 @@ export function withSearchParams(src: string, params: Record<string, string>) {
     return url.href;
 }
 
-export function getMessageMediaUrl(requestUrl: string, username: string, messageId: number, forwardedPrefix?: string) {
+function getMessageMediaUrl(requestUrl: string, username: string, messageId: number, forwardedPrefix?: string) {
     const request = new URL(requestUrl);
     const channelPathIndex = request.pathname.lastIndexOf('/telegram/channel/');
     const prefix = forwardedPrefix ?? (channelPathIndex === -1 ? '' : request.pathname.slice(0, channelPathIndex));
@@ -112,7 +111,7 @@ function humanFileSize(size: number) {
     return (size / Math.pow(1024, i)).toFixed(2) + ' ' + ['B', 'kB', 'MB', 'GB', 'TB'][i];
 }
 
-export function getAudioTitle(x: Api.TypeMessageMedia) {
+function getAudioTitle(x: Api.TypeMessageMedia) {
     if (x instanceof Api.MessageMediaDocument && x.document instanceof Api.Document) {
         const attr = x.document.attributes.find((x) => x instanceof Api.DocumentAttributeAudio);
         if (attr) {
@@ -122,7 +121,7 @@ export function getAudioTitle(x: Api.TypeMessageMedia) {
     return getFilename(x);
 }
 
-export function humanDuration(seconds: number) {
+function humanDuration(seconds: number) {
     const hours = Math.floor(seconds / 3600);
     const minutes = Math.floor((seconds % 3600) / 60);
     const remainingSeconds = seconds % 60;
@@ -141,71 +140,44 @@ export function humanDuration(seconds: number) {
     return `0:${paddedSeconds}`; // Show only seconds
 }
 
-function groupMessages(messages: Api.Message[]): Api.Message[][] {
-    const groups: Api.Message[][] = [];
-    const groupMap = new Map<string, Api.Message[]>();
+export default async function handler(ctx: Context) {
+    const client = await getClient();
+    const username = ctx.req.param('username');
 
-    for (const message of messages) {
-        const gid = message.groupedId ? String(message.groupedId) : null;
-        if (gid) {
-            const existing = groupMap.get(gid);
-            if (existing) {
-                existing.push(message);
-                continue;
-            }
-            const g = [message];
-            groupMap.set(gid, g);
-            groups.push(g);
-        } else {
-            groups.push([message]);
+    let peerCache = await cache.get(`telegram:inputEntity:${username}`);
+    if (!peerCache) {
+        const p = await client.getInputEntity(username!);
+        peerCache = JSON.stringify(p.toJSON());
+        // The channel ID and access hash do not change, and contacts.ResolveUsername is heavily rate limited
+        await cache.set(`telegram:inputEntity:${username}`, peerCache, 30 * 24 * 60 * 60);
+    }
+    const peerData = JSON.parse(peerCache, (k, v) => (k === 'channelId' || k === 'accessHash' ? returnBigInt(v) : v));
+    const peer = new Api.InputPeerChannel(peerData);
+
+    const entity = await client.getEntity(peer);
+
+    let attachments: string[] = [];
+    const messages = await client.getMessages(peer, { limit: 50 });
+
+    const item: DataItem[] = [];
+    for (const [index, message] of messages.entries()) {
+        if (message.fwdFrom && attachments.length === 0) {
+            const fwdFrom = message.forward?.chat ?? message.forward?.sender;
+            attachments.push(`<p>Forwarded From: ${fwdFrom ? getDisplayName(fwdFrom) : message.fwdFrom.fromName}</p>`);
         }
-    }
-    return groups;
-}
-
-async function getForwardPrefix(client: any, msgs: Api.Message[]) {
-    const fwdMsg = msgs.find((m) => m.fwdFrom);
-    if (!fwdMsg?.fwdFrom) {
-        return '';
-    }
-    let fwdName = fwdMsg.fwdFrom.fromName;
-    if (fwdMsg.fwdFrom.fromId) {
-        try {
-            const fwdFrom = await client.getEntity(fwdMsg.fwdFrom.fromId);
-            fwdName = getDisplayName(fwdFrom);
-        } catch {
-            fwdName ||= 'Private Channel';
-        }
-    }
-    return fwdName ? `<p>Forwarded From <b>${fwdName}</b></p>` : '';
-}
-
-async function getStoryPrefix(client: any, msgs: Api.Message[]) {
-    const storyMsg = msgs.find((m) => m.media instanceof Api.MessageMediaStory);
-    if (!storyMsg || !(storyMsg.media instanceof Api.MessageMediaStory)) {
-        return '';
-    }
-    let storyName = 'Private Peer';
-    try {
-        const storyFrom = await client.getEntity(storyMsg.media.peer);
-        storyName = getDisplayName(storyFrom);
-    } catch {
-        // Inaccessible story peer
-    }
-    return `<p>Story From <b>${storyName}</b></p>`;
-}
-
-async function getMessageAttachments(client: any, ctx: Context, username: string, msgs: Api.Message[]) {
-    const attachments: string[] = [];
-    for (const message of msgs) {
         const media = await unwrapMedia(message.media, message.peerId);
+        if (message.media instanceof Api.MessageMediaStory && media) {
+            // if successfully loaded the story
+            const storyFrom = await client.getEntity(message.media.peer);
+            attachments.push(`<p>Story From: ${getDisplayName(storyFrom)}</p>`);
+        }
         if (media) {
             if (media instanceof Api.MessageMediaPoll) {
                 attachments.push(await getPollResults(client, message, media));
-                continue;
+            } else {
+                const src = getMessageMediaUrl(ctx.req.url, username!, message.id, ctx.req.header('x-forwarded-prefix'));
+                attachments.push(getMediaLink(src, media));
             }
-            const src = getMessageMediaUrl(ctx.req.url, username, message.id, ctx.req.header('x-forwarded-prefix'));
-            attachments.push(getMediaLink(src, media));
         }
         if (message.replyMarkup instanceof Api.ReplyInlineMarkup) {
             for (const buttonRow of message.replyMarkup.rows) {
@@ -216,61 +188,24 @@ async function getMessageAttachments(client: any, ctx: Context, username: string
                 }
             }
         }
-    }
-    return attachments;
-}
-
-export default async function handler(ctx: Context) {
-    const client = await getClient();
-    const username = ctx.req.param('username');
-
-    let peerCache = await cache.get(`telegram:inputEntity:${username}`);
-    if (!peerCache) {
-        const p = await client.getInputEntity(username!);
-        peerCache = JSON.stringify(p.toJSON());
-        await cache.set(`telegram:inputEntity:${username}`, peerCache);
-    }
-    const peerData = JSON.parse(peerCache, (k, v) => (k === 'channelId' || k === 'accessHash' ? returnBigInt(v) : v));
-    const peer = new Api.InputPeerChannel(peerData);
-
-    const entity = await client.getEntity(peer);
-
-    const messages = await client.getMessages(peer, { limit: 50 });
-    const groups = groupMessages(messages);
-
-    const item: DataItem[] = [];
-    for (const msgs of groups) {
-        // Sort album messages by ID ascending to preserve original media order
-        msgs.sort((a, b) => a.id - b.id);
-        const primaryMsg = msgs[0];
-        const textMsg = msgs.find((m) => m.text) || primaryMsg;
-
-        const fwdPrefix = await getForwardPrefix(client, msgs);
-        const storyPrefix = await getStoryPrefix(client, msgs);
-        const attachments = await getMessageAttachments(client, ctx, username!, msgs);
-
+        if (message.groupedId && messages[index + 1]?.groupedId?.eq(message.groupedId)) {
+            continue;
+        }
         let description = attachments.join('<br/>\n');
-        if (fwdPrefix) {
-            description += fwdPrefix;
-        }
-        if (storyPrefix) {
-            description += storyPrefix;
-        }
-        if (textMsg.text) {
-            description += `<p>${HTMLParser.unparse(textMsg.message, textMsg.entities).replaceAll('\n', '<br/>')}</p>`;
+        attachments = []; // emitting these, buffer other ones
+
+        if (message.message) {
+            description += `<p>${HTMLParser.unparse(message.message, message.entities).replaceAll('\n', '<br/>')}</p>`;
         }
 
-        const pubDate = parseDate(primaryMsg.date * 1000);
-        const title = textMsg.text || pubDate.toUTCString();
-        const postLink = `https://t.me/${username}/${primaryMsg.id}`;
-
+        const pubDate = message.date === undefined ? undefined : parseDate(message.date * 1000);
+        const title = message.text.split('\n', 1)[0] || pubDate?.toUTCString() || '';
         item.push({
             title,
             description,
             pubDate,
-            link: postLink,
-            guid: postLink,
-            author: getDisplayName(textMsg.sender ?? entity),
+            link: `https://t.me/s/${username}/${message.id}`,
+            author: getDisplayName(message.sender ?? entity),
         });
     }
 

@@ -1,8 +1,30 @@
 import { load } from 'cheerio';
+import { FetchError } from 'ofetch';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
+import { parseDate } from '@/utils/parse-date';
+import { getPlaywrightPage, type Page } from '@/utils/playwright';
+
+const sourceOrigins = new Set(['https://www.dx2025.com', 'https://www.dx2035.cn']);
+
+function isExpiredCertificate(error: unknown): error is Error {
+    return error instanceof Error && (('code' in error && error.code === 'CERT_HAS_EXPIRED') || isExpiredCertificate(error.cause));
+}
+
+async function fetchHtml(url: string, page?: Page): Promise<string> {
+    if (!page) {
+        const { data } = await got(url);
+        return data;
+    }
+    const response = await page.goto(url, { waitUntil: 'domcontentloaded' });
+    if (!response?.ok() || !sourceOrigins.has(new URL(page.url()).origin)) {
+        throw new Error(`DX2025 did not provide its public page: ${url}`);
+    }
+    return await response.text();
+}
 
 export const route: Route = {
     path: '/:type?/:category?',
@@ -11,7 +33,7 @@ export const route: Route = {
     parameters: { type: '内容类别，见下表，默认为空', category: '行业分类，见下表，默认为空' },
     features: {
         requireConfig: false,
-        requirePuppeteer: false,
+        requirePuppeteer: true,
         antiCrawler: false,
         supportBT: false,
         supportPodcast: false,
@@ -45,17 +67,31 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
+    try {
+        return await fetchFeed(ctx);
+    } catch (error) {
+        if (!(error instanceof FetchError) || !isExpiredCertificate(error)) {
+            throw error;
+        }
+    }
+    const { page, destroy } = await getPlaywrightPage('https://www.dx2025.com', { noGoto: true, closeTimeout: 0, javaScriptEnabled: false });
+    try {
+        await page.route('**/*', (route) => (route.request().resourceType() === 'document' ? route.continue() : route.abort()));
+        return await fetchFeed(ctx, page);
+    } finally {
+        await destroy();
+    }
+}
+
+async function fetchFeed(ctx, page?: Page) {
     const type = ctx.req.param('type') || '';
     const category = ctx.req.param('category') || '';
 
     const rootUrl = 'https://www.dx2025.com';
     const currentUrl = `${rootUrl}${type === '' ? '' : `/archives/${type === 'tag' ? `tag${category === '' ? '' : `/${category}`}` : `category/${type}${category === '' ? '' : `/${category}`}`}`}`;
-    const response = await got({
-        method: 'get',
-        url: currentUrl,
-    });
+    const response = await fetchHtml(currentUrl, page);
 
-    const $ = load(response.data);
+    const $ = load(response);
 
     const list = $('.entry-title a')
         .slice(0, 10)
@@ -68,22 +104,21 @@ async function handler(ctx) {
             };
         });
 
-    const items = await Promise.all(
-        list.map((item) =>
+    const items = await pMap(
+        list,
+        (item) =>
             cache.tryGet(item.link!, async () => {
-                const detailResponse = await got({
-                    method: 'get',
-                    url: item.link,
-                });
-                const content = load(detailResponse.data);
+                const detailResponse = await fetchHtml(item.link!, page);
+                const content = load(detailResponse);
 
                 item.author = content('.entry-author-name').text();
                 item.description = content('.bpp-post-content, .entry-content').html();
-                item.pubDate = new Date(content('.entry-date').attr('datetime')!).toUTCString();
+                const pubDate = content('.entry-date').attr('datetime');
+                item.pubDate = pubDate ? parseDate(pubDate) : undefined;
 
                 return item;
-            })
-        )
+            }),
+        { concurrency: page ? 1 : 10 }
     );
 
     return {

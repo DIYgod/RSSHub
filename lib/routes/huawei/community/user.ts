@@ -6,9 +6,18 @@ import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
 const baseUrl = 'https://cn.club.vmall.com';
 const apiUrl = 'https://sgw-cn.c.huawei.com/forward/club/content_h5';
+
+function getPublicationDate(value?: string | number) {
+    if (!value) {
+        return;
+    }
+    const date = parseDate(value, 'x');
+    return Number.isNaN(date.getTime()) ? undefined : date;
+}
 
 export const route: Route = {
     path: '/community/user/:uid?',
@@ -18,11 +27,11 @@ export const route: Route = {
     maintainers: ['DIYgod'],
     parameters: { uid: 'User ID from the public profile URL. Defaults to the official Mate/P software maintenance account (1000014645695).' },
     description: 'Includes public posts and their complete update notes. The default official account publishes device models, software versions, and release details.',
-    radar: [{ source: ['cn.club.vmall.com/mhw/consumer/cn/community/mhwnews/bluevstore/id_:uid'], target: '/community/user/:uid' }],
+    radar: [{ source: ['cn.club.vmall.com/mhw/consumer/cn/community/mhwnews/bluevstore/id_1000014645695'], target: '/community/user/1000014645695' }],
     handler,
 };
 
-async function requestApi(path: string, body: object, appId: string) {
+async function requestApi(path: string, body: { threadId: string; pageIndex: number; pageSize: number; orderBy: number } | { site: string; userId: string; pageSize: number; curPage: number }, appId: string) {
     const response = await ofetch(`${apiUrl}/${path}`, {
         method: 'POST',
         headers: { 'SGW-APP-ID': appId, Origin: baseUrl, Referer: `${baseUrl}/` },
@@ -34,9 +43,9 @@ async function requestApi(path: string, body: object, appId: string) {
     return response.data;
 }
 
-function getItem(post) {
+async function getItem(post) {
     const link = post.threadShareUrl;
-    return cache.tryGet(link, async () => {
+    const detail = await cache.tryGet(`${link}:detail`, async () => {
         // Use the exact string ID from the share URL, since numeric thread IDs exceed Number.MAX_SAFE_INTEGER.
         const threadId = new URL(link).pathname.match(/id_(\d+)/)?.[1];
         if (!threadId) {
@@ -66,14 +75,20 @@ function getItem(post) {
             }
         }
         return {
-            title: detail.subject || post.title,
-            link,
-            author: detail.authorInfo?.name || post.author,
-            pubDate: detail.publishTime || post.dateline ? parseDate(detail.publishTime || post.dateline, 'x') : undefined,
-            category: post.businessTypeName ? [post.businessTypeName] : undefined,
+            title: detail.subject,
+            author: detail.authorInfo?.name,
+            pubDate: getPublicationDate(detail.publishTime),
             description: `<div style="white-space: pre-wrap">${$.html()}</div>`,
         };
     });
+    return {
+        title: detail.title || post.title,
+        link,
+        author: detail.author || post.author,
+        pubDate: detail.pubDate || getPublicationDate(post.dateline),
+        category: post.businessTypeName ? [post.businessTypeName] : undefined,
+        description: detail.description,
+    };
 }
 
 async function handler(ctx) {
@@ -83,7 +98,9 @@ async function handler(ctx) {
     }
     const link = `${baseUrl}/mhw/consumer/cn/community/mhwnews/bluevstore/id_${uid}/`;
     const response = await requestApi('newsListByUserId/1', { site: 'zh_CN', userId: uid, pageSize: 20, curPage: 1 }, '9CE75DB648ADD4E0C1556B805C80D2CA');
-    const posts = response.threads.slice(0, Number(ctx.req.query('limit')) || 20);
+    const limit = getRouteLimit(ctx, 20);
+    const candidateLimit = ctx.req.query('sorted') === 'false' ? limit : Math.max(20, limit);
+    const posts = response.threads.slice(0, candidateLimit);
     const item = await pMap(posts, getItem, { concurrency: 3 });
     return { title: `${posts[0]?.author || uid} - 花粉俱乐部`, link, language: 'zh-CN' as const, item };
 }

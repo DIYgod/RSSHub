@@ -1,6 +1,7 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
-import type { DataItem, Route } from '@/types';
+import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -37,6 +38,26 @@ const languages = {
     chinese: 'http://sputniknews.cn',
     portuguese: 'https://br.sputniknews.com',
 };
+
+const languageCodes = {
+    english: 'en',
+    spanish: 'es',
+    german: 'de',
+    french: 'fr',
+    greek: 'el',
+    italian: 'it',
+    czech: 'cs',
+    polish: 'pl',
+    serbian: 'sr',
+    moldavian: 'ro-mo',
+    belarusian: 'be',
+    turkish: 'tr',
+    vietnamese: 'vi',
+    japanese: 'ja',
+    chinese: 'zh-CN',
+    portuguese: 'pt-br',
+} satisfies Record<string, Language>;
+const isLanguageCodeKey = (key: string): key is keyof typeof languageCodes => Object.hasOwn(languageCodes, key);
 
 export const route: Route = {
     path: '/:category?/:language?',
@@ -127,9 +148,10 @@ async function handler(ctx) {
             };
         });
 
-    items = await Promise.all(
-        items.map((item) =>
-            cache.tryGet(item.link!, async () => {
+    items = await pMap(
+        items,
+        async (item) => {
+            const details = await cache.tryGet(`sputniknews:detail:v4:${item.link}`, async () => {
                 const detailResponse = await got({
                     method: 'get',
                     url: item.link,
@@ -137,25 +159,33 @@ async function handler(ctx) {
 
                 const content = load(detailResponse.data);
 
-                item.pubDate = parseDate(Number(content('a[data-unixtime]').attr('data-unixtime')) * 1000);
+                const pubDate = parseDate(Number(content('a[data-unixtime]').attr('data-unixtime')) * 1000);
 
-                item.category = content('.tag__text')
+                const category = content('.tag__text')
                     .toArray()
                     .map((tag) => content(tag).text());
 
                 content('.article__meta, .article__title, .article__info, .article__quote-bg, .article__google-news, .article__footer, .m-buy, .photoview__ext-link').remove();
-                content('div[data-type="article"]').remove();
+                content('div.article__article-info[data-type="article"]').remove();
 
-                item.description = content('.article').html();
+                content('img[data-srcset]').each((_, image) => {
+                    const srcset = content(image).attr('data-srcset');
+                    if (srcset) {
+                        content(image).attr('srcset', srcset);
+                    }
+                });
 
-                return item;
-            })
-        )
+                return { pubDate, category, description: content('.article').html() };
+            });
+            return { ...item, ...details };
+        },
+        { concurrency: 3 }
     );
 
     return {
         title: `${category} - Sputnik News`,
         link: `${rootUrl}/${category}`,
+        language: isLanguageCodeKey(language) ? languageCodes[language] : ('other' as const),
         item: items,
     };
 }

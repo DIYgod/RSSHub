@@ -43,7 +43,7 @@ async function handler(ctx) {
         .map((item) => {
             const $item = $(item);
             return {
-                title: $item.find('title').text().trim(),
+                title: $item.find('title').text(),
                 link: $item.find('link').text().trim(),
                 author: $item
                     .find(String.raw`dc\:creator`)

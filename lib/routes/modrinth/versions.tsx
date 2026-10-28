@@ -24,9 +24,6 @@ const renderVersion = (version: Version & { changelog?: string }) =>
     renderToString(
         <>
             <p>
-                {version.name} - {version.version_number}
-            </p>
-            <p>
                 <b>Loaders: </b>
                 {version.loaders?.map((loader) => `${loader} `)}
             </p>
@@ -108,6 +105,7 @@ async function handler(ctx: Context) {
             query: {
                 loaders: parsedQuery.has('loaders') ? JSON.stringify(parsedQuery.getAll('loaders')) : '',
                 game_versions: parsedQuery.has('game_versions') ? JSON.stringify(parsedQuery.getAll('game_versions')) : '',
+                featured: parsedQuery.get('featured') ?? undefined,
             },
         });
         const authorIds = [...new Set(versions.map((it) => it.author_id))];
@@ -138,7 +136,7 @@ async function handler(ctx: Context) {
             })),
         };
     } catch (error: any) {
-        if (error?.response?.statusCode === 404) {
+        if (error?.response?.status === 404) {
             throw new Error(`${error.message}: Project ${id} not found`, { cause: error });
         }
         throw error;

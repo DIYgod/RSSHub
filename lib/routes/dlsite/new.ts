@@ -5,6 +5,9 @@ import type { Route } from '@/types';
 import { ViewType } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
+
+import { getComicFeed } from './comipo';
 
 const host = 'https://www.dlsite.com';
 const infos = {
@@ -88,6 +91,10 @@ async function handler(ctx) {
         throw new InvalidParameterError('不支持指定类型！');
     }
 
+    if (info.type === 'comic') {
+        return getComicFeed(ctx);
+    }
+
     const link = info.url.slice(1);
 
     const response = await got(new URL(link, host), {
@@ -95,6 +102,13 @@ async function handler(ctx) {
     });
     const data = response.data;
     const $ = load(data);
+    $('img').each((_, element) => {
+        const image = $(element);
+        const src = image.attr(':src')?.match(/^is_show\s*\?\s*'((?:https?:)?\/\/[^']+)'/)?.[1];
+        if (src) {
+            image.attr('src', new URL(src, host).href);
+        }
+    });
 
     const title = $('title').text();
     const description = $('meta[name="description"]').attr('content');
@@ -103,20 +117,20 @@ async function handler(ctx) {
         .text()
         .trim()
         .replaceAll(/（.*）/g, '');
-    const pubDate = parseDate(dateText, 'YYYY年M月D日');
+    const pubDate = timezone(parseDate(dateText, 'YYYY年M月D日'), 9);
     const item = list.toArray().map((element) => {
-        const title = $('.work_name', element).text();
+        const title = $('.work_name > a', element).text();
         const link = $('.work_name > a', element).attr('href');
-        // 使链接
         $('a', element).each((_index, element) => {
             $(element).attr('target', '_blank');
         });
-        const description = $(element).html();
-        const arr = $('.search_tag', element);
-        const category = $('a', arr)
+        const category = $('.search_tag a, .work_category a, .work_genre span[title]', element)
             .toArray()
-            .map((a) => $(a).text());
+            .map((tag) => $(tag).text());
         const author = $('.maker_name', element).text();
+        const content = $(element);
+        content.find('.work_name, .maker_name, .search_tag, .work_category, .work_genre').remove();
+        const description = content.html();
 
         const signle = {
             title,
@@ -131,7 +145,7 @@ async function handler(ctx) {
 
     return {
         title,
-        link,
+        link: new URL(link, host).href,
         description,
         language: 'ja' as const,
         item,

@@ -1,8 +1,10 @@
 import { load } from 'cheerio';
 
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
+import { getRouteLimit } from '@/utils/route-limit';
 
 const sorts = {
     featured: '精选',
@@ -32,13 +34,16 @@ export const route: Route = {
 
 async function handler(ctx) {
     const sort = ctx.req.param('sort') ?? 'featured';
+    if (!Object.hasOwn(sorts, sort)) {
+        throw new InvalidParameterError(`Invalid sort: ${sort}. Supported sorts: ${Object.keys(sorts).join(', ')}.`);
+    }
     const id = ctx.req.param('id') ?? '';
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 20;
+    const limit = getRouteLimit(ctx, 20);
 
     const rootUrl = 'https://hellogithub.com';
     const apiRootUrl = 'https://api.hellogithub.com';
-    const currentUrl = `${rootUrl}/?sort_by=${sort}${id ? `&tid=${id}` : ''}`;
-    const apiUrl = `${apiRootUrl}/v1/?sort_by=${sort}${id ? `&tid=${id}` : ''}&page=1`;
+    const currentUrl = `${rootUrl}/?sort_by=${sort}${id ? `&tid=${encodeURIComponent(id)}` : ''}`;
+    const apiUrl = `${apiRootUrl}/v1/?sort_by=${sort}${id ? `&tid=${encodeURIComponent(id)}` : ''}&page=1`;
 
     const response = await got({
         method: 'get',
@@ -47,7 +52,7 @@ async function handler(ctx) {
 
     let tag;
     if (id) {
-        const tagUrl = `${rootUrl}/tags/${id}`;
+        const tagUrl = `${rootUrl}/tags/${encodeURIComponent(id)}`;
 
         const tagResponse = await got({
             method: 'get',
@@ -64,10 +69,9 @@ async function handler(ctx) {
         title: `${item.name}: ${item.title}`,
         author: item.author,
         link: `${rootUrl}/repository/${item.item_id}`,
-        pubDate: parseDateInTimezone(item.updated_at, 8),
-        name: `${item.author}/${item.name}`,
+        updated: item.updated_at ? parseDateInTimezone(item.updated_at, 8) : undefined,
         description: item.summary,
-        language: item.primary_lang,
+        category: item.primary_lang ? [item.primary_lang] : undefined,
     }));
 
     return {

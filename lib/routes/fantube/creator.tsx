@@ -4,6 +4,7 @@ import { renderToString } from 'hono/jsx/dom/server';
 
 import type { Data, Route } from '@/types';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
 import { baseUrl, getCreatorFragment, getCreatorPostReelList } from './utils';
 
@@ -13,6 +14,7 @@ export const route: Route = {
     example: '/fantube/r18/creator/miyuu',
     parameters: { identifier: 'User handle' },
     features: {
+        nsfw: true,
         requireConfig: false,
         requirePuppeteer: false,
         antiCrawler: false,
@@ -64,13 +66,13 @@ const renderDescription = ({ description, thumbnailUrl, sampleVideoId, imageUrls
 
 async function handler(ctx: Context): Promise<Data> {
     const { identifier } = ctx.req.param();
-    const limit = Number(ctx.req.query('limit') || 18);
+    const limit = Math.max(getRouteLimit(ctx, 18), 18);
 
     const creatorInfo = await getCreatorFragment(identifier);
     const posts = await getCreatorPostReelList(identifier, limit);
 
     const items = posts.map((p) => ({
-        title: p.title.replaceAll('\n', ' ').trim(),
+        title: p.title,
         description: renderDescription({
             description: p.description,
             thumbnailUrl: p.thumbnailUrl,

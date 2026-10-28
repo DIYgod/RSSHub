@@ -8,7 +8,7 @@ import { parseDate } from '@/utils/parse-date';
 export const route: Route = {
     path: '/:path{.+}?',
     categories: ['new-media'],
-    example: '/gisreportsonline/gis/c/security-challenges/',
+    example: '/gisreportsonline/c/security-challenges/',
     parameters: { path: '包含"Reports"页面下的路径' },
     name: '报告',
     maintainers: ['dzx-dzx'],
@@ -43,11 +43,12 @@ async function handler(ctx) {
 
                 item.pubDate = parseDate(ldjson.datePublished);
                 item.updated = parseDate(ldjson.dateModified);
-                item.author = [ldjson.author];
+                item.author = [{ name: ldjson.author.name }];
                 item.category = ldjson.keywords.split(',');
                 item.language = ldjson.inLanguage;
 
-                item.description = content('header.entry-header ~ :not(#pos-conclusion ~ *)')
+                item.description = content('.entry-content.single-content')
+                    .children(':not(#pos-conclusion ~ *)')
                     .toArray()
                     .map((e) => content(e).prop('outerHTML'))
                     .join('');

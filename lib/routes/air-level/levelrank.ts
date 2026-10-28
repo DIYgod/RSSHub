@@ -1,14 +1,16 @@
-import { load } from 'cheerio'; // 类似 jQuery 的 API HTML 解析器
+import { load } from 'cheerio';
 
 import type { Route } from '@/types';
-import ofetch from '@/utils/ofetch'; // 统一使用的请求库
+import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/rank/:status?',
     radar: [
         {
-            source: ['m.air-level.com/rank/:status', 'm.air-level.com/rank'],
-            target: '/rank/:status',
+            source: ['m.air-level.com/rank/:status', 'm.air-level.com/rank', 'www.air-level.com/rank/:status', 'www.air-level.com/rank'],
+            target: '/rank/:status?',
         },
     ],
     parameters: {
@@ -22,37 +24,46 @@ export const route: Route = {
 
 async function handler(ctx) {
     const status = ctx.req.param('status');
-    const currentUrl = 'https://m.air-level.com/rank';
+    const currentUrl = 'https://www.air-level.com/rank/';
     const response = await ofetch(currentUrl);
     const $ = load(response);
     let table = '';
     let title = '';
 
-    const titleBest = $('body > div.container > div.row.page > div:nth-child(1) > div:nth-child(5) > h3').text().replaceAll('[]', '');
-    const tableBest = $('body > div.container > div.row.page > div:nth-child(1) > div:nth-child(5) > table').html();
-    const titleWorst = $('body > div.container > div.row.page > div:nth-child(1) > div:nth-child(3) > h3').text().replaceAll('[]', '');
-    const tableWorst = $('body > div.container > div.row.page > div:nth-child(1) > div:nth-child(3) > table').html();
+    const cards = $('main .card').filter((_, element) => $(element).find('table').length > 0);
+    const best = cards.filter((_, element) => $(element).find('.card-header').text().includes('最佳'));
+    const worst = cards.filter((_, element) => $(element).find('.card-header').text().includes('最差'));
+    const titleBest = best.find('.card-header').text().trim();
+    const titleWorst = worst.find('.card-header').text().trim();
+    const pubTime = $('main p')
+        .first()
+        .text()
+        .match(/数据更新时间：\s*(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2})/)?.[1];
 
-    if (status) {
-        if (status === 'best') {
-            title = titleBest;
-            table = `<table border="1 solid black">${tableBest}</table>`;
-        } else if (status === 'worsest') {
-            title = titleWorst;
-            table = `<table border="1 solid black">${tableWorst}</table>`;
-        }
-    } else {
-        title = $('body > div.container > div.row.page > div:nth-child(1) > h2').text().replaceAll('[]', '');
-        table = `${titleBest}<br/><table border="1 solid black">${tableBest}</table><br/><table border="1 solid black">${titleWorst}<br/>${tableWorst}</table>`;
+    if (!pubTime || !best.find('tbody tr').length || !worst.find('tbody tr').length) {
+        throw new Error('Unable to find current air quality rankings on the source page.');
     }
 
-    const pubtime = $('body > div.container > div.row.page > div:nth-child(1) > h4').text();
+    if (status === 'best') {
+        title = titleBest;
+        table = best.find('table').prop('outerHTML')!;
+    } else if (status === 'worsest') {
+        title = titleWorst;
+        table = worst.find('table').prop('outerHTML')!;
+    } else if (status) {
+        throw new Error('Invalid ranking status. Use best or worsest, or omit the status for both rankings.');
+    } else {
+        title = $('main h1').text();
+        table = `<h3>${titleBest}</h3>${best.find('table').prop('outerHTML')}<h3>${titleWorst}</h3>${worst.find('table').prop('outerHTML')}`;
+    }
+
     const items = [
         {
             title,
             link: currentUrl,
             description: table,
-            guid: pubtime,
+            guid: pubTime,
+            pubDate: timezone(parseDate(pubTime, 'YYYY-MM-DD HH:mm:ss'), 8),
         },
     ];
     return {

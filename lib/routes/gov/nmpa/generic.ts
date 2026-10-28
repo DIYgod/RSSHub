@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import { config } from '@/config';
 import type { DataItem, Route } from '@/types';
@@ -11,13 +12,13 @@ import { finishArticleItem } from '@/utils/wechat-mp';
 const baseUrl = 'https://www.nmpa.gov.cn';
 
 export const route: Route = {
-    path: '/:path{.+}',
+    path: '/:path{.+}?',
     name: '通用',
     example: '/gov/nmpa/xxgk/ggtg',
     parameters: { path: '路径，默认为公告通告' },
     radar: [
         {
-            source: ['www.nmpa.gov.cn/*path/index.html', 'www.nmpa.gov.cn/*path'],
+            source: ['www.nmpa.gov.cn/*path/index.html'],
             target: '/:path',
         },
     ],
@@ -33,7 +34,7 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const path = ctx.req.param('path');
+    const path = ctx.req.param('path') ?? 'xxgk/ggtg';
     const url = `${baseUrl}/${path.endsWith('/') ? path.slice(0, -1) : path}/index.html`;
     const data = await cache.tryGet(
         url,
@@ -48,10 +49,11 @@ async function handler(ctx) {
                     .toArray()
                     .map((item): DataItem & { link: string } => {
                         const $item = $(item);
+                        const dateText = $item.find('span').text();
                         return {
-                            title: $item.find('a').text().trim(),
-                            link: new URL($item.find('a').attr('href')!, baseUrl).href,
-                            pubDate: parseDate($item.find('span').text(), 'YYYY-MM-DD'),
+                            title: $item.find('a').text(),
+                            link: new URL($item.find('a').attr('href')!, url).href,
+                            pubDate: dateText ? timezone(parseDate(dateText, 'YYYY-MM-DD'), 8) : undefined,
                         };
                     }),
             };
@@ -60,14 +62,18 @@ async function handler(ctx) {
         false
     );
 
-    const items = await Promise.all(
-        data.items.map((item) => {
+    const items = await pMap(
+        data.items,
+        (item: DataItem & { link: string }) => {
             if (item.link.startsWith('https://www.nmpa.gov.cn/')) {
                 return cache.tryGet(item.link, async () => {
                     const { data: html } = await got(item.link);
                     const $ = load(html);
                     item.description = $('.text').html();
-                    item.pubDate = timezone(parseDate($('meta[name="PubDate"]').attr('content')!), 8);
+                    const pubDate = $('meta[name="PubDate"]').attr('content');
+                    if (pubDate) {
+                        item.pubDate = timezone(parseDate(pubDate), 8);
+                    }
                     return item;
                 });
             }
@@ -75,7 +81,8 @@ async function handler(ctx) {
                 return finishArticleItem(item);
             }
             return item;
-        })
+        },
+        { concurrency: 3 }
     );
 
     return {

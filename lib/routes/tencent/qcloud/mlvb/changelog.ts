@@ -2,13 +2,13 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
 
 export const route: Route = {
     path: '/qcloud/mlvb/changelog',
     categories: ['program-update'],
     example: '/tencent/qcloud/mlvb/changelog',
-    name: '腾讯云移动直播 SDK 更新日志',
+    name: '移动直播 SDK 更新日志',
     maintainers: ['EkkoG'],
     handler,
 };
@@ -39,7 +39,7 @@ async function handler() {
                     .map((el) => $.html(el))
                     .join(''),
                 link: `${url}#${$item.attr('id')}`,
-                pubDate: date ? parseDate(date[1].replaceAll('.', '-')) : undefined,
+                pubDate: date ? parseDateInTimezone(date[1].replaceAll('.', '-'), 8) : undefined,
                 guid: $item.text(),
             };
         });

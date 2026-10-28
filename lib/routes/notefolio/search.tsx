@@ -7,6 +7,7 @@ import { ViewType } from '@/types';
 // 导入所需模组
 import got from '@/utils/got'; // 自订的 got
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
 // 分类
 const categoryMap = [
@@ -63,13 +64,15 @@ const categoryMap = [
 const renderContentItem = (item) =>
     renderToString(
         <>
-            {item.type === 'Image' ? (
+            {['Image', 'Grid'].includes(item.type) ? (
                 item.files?.map((file) => (
                     <>
                         <img src={file.url} alt="" style="max-width: 100%; height: auto;" />
                         <br />
                     </>
                 ))
+            ) : item.type === 'Video' && item.url ? (
+                <iframe src={item.url} title="Video" allowFullScreen />
             ) : item.type === 'Text' ? (
                 <>
                     {raw(item.content ?? '')}
@@ -171,47 +174,48 @@ async function handler(ctx) {
     // 分类、排序、时间范围、搜索词
     const { category = 'all', order = 'pick', time = 'all', query = '' } = ctx.req.param();
     //  分页
-    const { limit } = ctx.req.query();
+    const limit = getRouteLimit(ctx, 20);
 
     // 请求链接
-    let searchUrl = `https://api.stunning.kr/api/v1/dantats/portfolio?state=Public&limit=${limit ? Number(limit) : 20}&search=${query}&orderBy=${order}`;
+    const searchParams = new URLSearchParams({ state: 'Public', limit: String(limit), search: query, orderBy: order });
     // 分类
     const index = (Number(category) || 0) - 1;
     const matchedCategory = categoryMap[index];
     if (index >= 0 && matchedCategory) {
-        searchUrl += `&category=${matchedCategory.category}`;
+        searchParams.set('category', matchedCategory.category);
     }
     // 时间范围
     if (time !== 'all' && ['one-day', 'week', 'month', 'three-month'].includes(time)) {
         let startTime: string;
-        const endTime = dayjs().endOf('d').format('YYYY-MM-DDTHH:mm:ss.SSS');
+        const endTime = dayjs().endOf('d').toISOString();
 
         // 过去24小时-day 最近一周-week 最近一个月-month 最近三个月three-month
         switch (time) {
             case 'one-day':
-                startTime = dayjs().subtract(1, 'd').format('YYYY-MM-DDTHH:mm:ss.SSS');
+                startTime = dayjs().subtract(1, 'd').toISOString();
                 break;
 
             case 'week':
-                startTime = dayjs().subtract(7, 'd').startOf('d').format('YYYY-MM-DDTHH:mm:ss.SSS');
+                startTime = dayjs().subtract(7, 'd').startOf('d').toISOString();
                 break;
 
             case 'month':
-                startTime = dayjs().subtract(30, 'd').startOf('d').format('YYYY-MM-DDTHH:mm:ss.SSS');
+                startTime = dayjs().subtract(30, 'd').startOf('d').toISOString();
                 break;
 
             case 'three-month':
-                startTime = dayjs().subtract(90, 'd').startOf('d').format('YYYY-MM-DDTHH:mm:ss.SSS');
+                startTime = dayjs().subtract(90, 'd').startOf('d').toISOString();
                 break;
 
             default:
                 throw new Error(`Unknown time: ${time}`);
         }
-        searchUrl += `&publishedAt=${startTime}Z&publishedAt=${endTime}Z`;
+        searchParams.append('publishedAt', startTime);
+        searchParams.append('publishedAt', endTime);
     }
 
     // 发送 HTTP GET 请求到 API 并解构返回的数据对象
-    const { data } = await got(searchUrl, {
+    const { data } = await got(`https://api.stunning.kr/api/v1/dantats/portfolio?${searchParams}`, {
         headers: {
             Origin: 'https://notefolio.net',
         },
@@ -220,7 +224,7 @@ async function handler(ctx) {
     // 从 API 响应中提取相关数据
     const items =
         data?.resultData.map((item) => {
-            const { id, title, user, createdAt, categories = [], contents = [] } = item;
+            const { id, title, user, publishedAt, categories = [], contents = [] } = item;
 
             const description = contents.map((item) => renderContentItem(item)).join(' ');
 
@@ -232,11 +236,11 @@ async function handler(ctx) {
                 // 文章正文
                 description,
                 // 文章发布日期
-                pubDate: parseDate(createdAt),
+                pubDate: publishedAt ? parseDate(publishedAt) : undefined,
                 // 如果有的话，文章作者
                 author: user.nick,
                 // 如果有的话，文章分类
-                category: categories.map((label) => label.replace('portfolio.category.', '')),
+                category: [...new Set([...categories.flatMap((label) => categoryMap.filter((category) => category.category === label).map((category) => category.keywords)), ...(item.notefolioInfo?.tags ?? [])])],
             };
         }) || [];
 
@@ -244,7 +248,7 @@ async function handler(ctx) {
         // 源标题
         title: `${category}/${order}/${time}/${query} search`,
         // 源链接
-        // link: '',
+        link: 'https://notefolio.net/search',
         // 源文章
         item: items,
     };

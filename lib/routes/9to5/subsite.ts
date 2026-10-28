@@ -1,6 +1,7 @@
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
+import { getRouteLimit } from '@/utils/route-limit';
 import parser from '@/utils/rss-parser';
 
 import utils from './utils';
@@ -52,15 +53,15 @@ async function handler(ctx) {
     }
 
     if (ctx.req.param('tag')) {
-        link += `/guides/${ctx.req.param('tag')}/feed/`;
+        link += `/guides/${ctx.req.param('tag')}/`;
         title = `${ctx.req.param('tag')} | ${title}`;
     } else {
-        link += '/feed/';
+        link += '/';
     }
 
-    const feed = await parser.parseURL(link);
+    const feed = await parser.parseURL(new URL('feed/', link).href);
 
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 10;
+    const limit = getRouteLimit(ctx, 10);
 
     const items = await Promise.all(
         feed.items.slice(0, limit).map((item) =>

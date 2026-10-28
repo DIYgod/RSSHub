@@ -25,11 +25,10 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: [
-        {
-            source: ['2bt0.com/tlist/'],
-        },
-    ],
+    radar: Object.keys(categoryDict).map((sc) => ({
+        source: [`2bt0.com/tlist/${sc}_1.html`],
+        target: `/tlist/${sc}`,
+    })),
     name: '最新资源列表',
     maintainers: ['miemieYaho'],
     handler,

@@ -4,6 +4,7 @@ import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/fdy/:path{.+}?',
@@ -34,7 +35,7 @@ async function handler(ctx) {
             return {
                 title: a.attr('title')!,
                 link: new URL(a.attr('href')!, link).href,
-                pubDate: parseDate($item.find('.news-dates').text()),
+                pubDate: timezone(parseDate($item.find('.news-dates').text()), 8),
             };
         });
 

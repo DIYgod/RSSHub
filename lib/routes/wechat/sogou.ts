@@ -53,7 +53,7 @@ async function fetchAndParsePage(wechatId: string): Promise<SogouItemInternal[]>
         response = { data: responseHtml };
     } catch (error) {
         logger.error(`Failed to fetch Sogou search for ${wechatId}: ${error instanceof Error ? error.message : String(error)}`);
-        return [];
+        throw error;
     }
 
     const $ = load(response.data);

@@ -227,18 +227,7 @@ const MymusicSheetDescription = ({
     };
 }) => (
     <div class="item-description">
-        {youtubeId ? (
-            <iframe
-                id="ytplayer"
-                type="text/html"
-                width="640"
-                height="360"
-                src={`https://www.youtube-nocookie.com/embed/${youtubeId}?autoplay=0`}
-                frameborder="0"
-                allowfullscreen
-                referrerpolicy="strict-origin-when-cross-origin"
-            ></iframe>
-        ) : null}
+        {youtubeId ? <iframe id="ytplayer" type="text/html" width="640" height="360" src={`https://www.youtube-nocookie.com/embed/${youtubeId}?autoplay=0`} frameborder="0" allowfullscreen></iframe> : null}
         {content.musicName ? <p>Music Name: {content.musicName}</p> : null}
         {content.musicMemo ? <p>Music Memo: {content.musicMemo}</p> : null}
         {content.musicianName ? <p>Musician Name: {content.musicianName}</p> : null}

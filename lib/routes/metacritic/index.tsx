@@ -1,10 +1,11 @@
 import { load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
 
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Language, Route } from '@/types';
 import { getSubPath } from '@/utils/common-utils';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
 
 import { sorts, types } from './util';
 
@@ -70,7 +71,11 @@ The URL of [Action Games to Play on PS5](https://www.metacritic.com/browse/game/
 export async function handler(ctx) {
     const type = getSubPath(ctx).split('/', 2)[1];
     const { sort = 'new', filter } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 50;
+    if (!Object.hasOwn(sorts, sort)) {
+        throw new InvalidParameterError('Unknown sort; use metascore, userscore, popular, or new.');
+    }
+    const requestedLimit = Number(ctx.req.query('limit'));
+    const limit = Number.isSafeInteger(requestedLimit) && requestedLimit > 0 ? requestedLimit : 50;
 
     const rootUrl = 'https://www.metacritic.com';
     const rootApiUrl = 'https://backend.metacritic.com';
@@ -168,7 +173,7 @@ export async function handler(ctx) {
         ),
         category: item.genres?.map((c) => c.name),
         guid: `metacritic-${item.id}`,
-        pubDate: parseDate(item.releaseDate),
+        pubDate: item.releaseDate ? parseDateInTimezone(item.releaseDate, 0) : undefined,
         upvotes: item.criticScoreSummary?.positiveCount ? Number(item.criticScoreSummary?.positiveCount) : 0,
         downvotes: item.criticScoreSummary?.negativeCount ? Number(item.criticScoreSummary?.negativeCount) : 0,
         comments: item.criticScoreSummary?.reviewCount ? Number(item.criticScoreSummary?.reviewCount) : 0,
@@ -189,6 +194,5 @@ export async function handler(ctx) {
         logo: icon,
         subtitle: $('meta[name="msapplication-tooltip"]').prop('content'),
         author: $('meta[name="twitter:site"]').prop('content'),
-        allowEmpty: true,
     };
 }

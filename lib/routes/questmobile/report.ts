@@ -1,9 +1,10 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
 
 import { renderDescription } from './templates/description';
 
@@ -158,7 +159,8 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { industry, label } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 50;
+    const requestedLimit = Number(ctx.req.query('limit'));
+    const limit = Number.isSafeInteger(requestedLimit) && requestedLimit > 0 ? requestedLimit : 50;
 
     const rootUrl = 'https://www.questmobile.com.cn';
     const apiUrl = new URL('api/v2/report/article-list', rootUrl).href;
@@ -190,7 +192,7 @@ async function handler(ctx) {
         },
     });
 
-    let items = response.data.slice(0, limit).map((item) => ({
+    let items: Array<DataItem & { link: string }> = response.data.slice(0, limit).map((item) => ({
         title: item.title,
         link: new URL(`research/report/${item.id}`, rootUrl).href,
         description: renderDescription({
@@ -203,11 +205,12 @@ async function handler(ctx) {
         }),
         category: [...(item.industryList ?? []), ...(item.labelList ?? [])],
         guid: `questmobile-report#${item.id}`,
-        pubDate: parseDate(item.publishTime),
+        pubDate: item.publishTime ? parseDateInTimezone(item.publishTime, 8) : undefined,
     }));
 
-    items = await Promise.all(
-        items.map((item) =>
+    items = await pMap(
+        items,
+        (item) =>
             cache.tryGet(item.link, async () => {
                 const { data: detailResponse } = await got(item.link);
 
@@ -226,11 +229,14 @@ async function handler(ctx) {
                     .find('span')
                     .toArray()
                     .map((c) => content(c).text());
-                item.pubDate = parseDate(content('div.data span').prop('datetime'));
+                const date = content('div.data span').attr('datetime') || content('div.data span').text();
+                if (date) {
+                    item.pubDate = parseDateInTimezone(date, 8);
+                }
 
                 return item;
-            })
-        )
+            }),
+        { concurrency: 3 }
     );
 
     const { data: currentResponse } = await got(currentUrl);
@@ -253,6 +259,5 @@ async function handler(ctx) {
         logo: icon,
         subtitle: $('meta[name="keywords"]').prop('content'),
         author,
-        allowEmpty: true,
     };
 }

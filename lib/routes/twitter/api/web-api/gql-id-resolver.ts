@@ -17,7 +17,7 @@ export const fallbackIds = {
     SearchTimeline: 'BGd0T_j7oVwlW5U79tO_0A',
     ListLatestTweetsTimeline: 'jW040BLUjh8X6Tw2ODQufA',
     TweetDetail: '559hs_YZNV4IgA3Z6zIIuw',
-    AudioSpaceById: '',
+    AudioSpaceById: 'ipEqgz4P_bZCGY3fBnfsxQ',
 };
 
 const operationNames = Object.keys(fallbackIds);
@@ -41,13 +41,13 @@ async function fetchAndExtractIds(): Promise<Record<string, string>> {
 
 let resolvePromise: Promise<Record<string, string>> | null = null;
 
-export async function resolveQueryIds(requiredOperations: string[] = []): Promise<Record<string, string>> {
+export async function resolveQueryIds(): Promise<Record<string, string>> {
     // Check cache first
     const cached = await cache.get(CACHE_KEY);
     if (cached) {
         try {
             const parsed: Record<string, string> = JSON.parse(cached);
-            if (Object.keys(parsed).length > 0 && requiredOperations.every((operation) => parsed[operation])) {
+            if (Object.keys(parsed).length > 0) {
                 logger.debug('twitter gql-id-resolver: using cached query IDs');
                 return { ...fallbackIds, ...parsed };
             }
@@ -90,9 +90,6 @@ export function buildGqlMap(queryIds: Record<string, string>) {
     const map: Record<string, string> = {};
     for (const name of operationNames) {
         const id = queryIds[name] || fallbackIds[name];
-        if (!id) {
-            continue;
-        }
         map[name] = `/graphql/${id}/${name}`;
     }
     return map;

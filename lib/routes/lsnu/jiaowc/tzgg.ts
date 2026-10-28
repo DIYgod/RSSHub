@@ -1,8 +1,10 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
+import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
 
 export const route: Route = {
     path: '/jiaowc/tzgg/:category?',
@@ -46,14 +48,15 @@ async function handler(ctx) {
     const $ = load(data);
     const list = $('tr[id^="line_u5_"]').toArray();
 
-    const out = await Promise.all(
-        list.map(async (item) => {
-            const $ = load(item);
-            const title = $('a').attr('title');
-            const link = `https://jiaowc.lsnu.edu.cn/${$('a').attr('href')}`;
-            const date = $('td[width="80"]').text();
+    const out = await pMap(
+        list,
+        async (item) => {
+            const $item = $(item);
+            const title = $item.find('a').attr('title');
+            const link = new URL($item.find('a').attr('href')!, url).href;
+            const date = $item.find('td[width="80"]').text().trim();
 
-            const single = await cache.tryGet(link, async () => {
+            const description = await cache.tryGet('lsnu:article:' + link, async () => {
                 const response = await got({
                     method: 'get',
                     url: link,
@@ -61,18 +64,17 @@ async function handler(ctx) {
 
                 const articleData = response.data;
                 const article$ = load(articleData);
-                const description = article$('.v_news_content').html();
-
-                return {
-                    title: title!,
-                    link,
-                    description,
-                    pubDate: new Date(date).toUTCString(),
-                };
+                return article$('.v_news_content').html();
             });
 
-            return single;
-        })
+            return {
+                title: title!,
+                link,
+                description,
+                pubDate: date ? parseDateInTimezone(date, 8) : undefined,
+            };
+        },
+        { concurrency: 3 }
     );
 
     return {

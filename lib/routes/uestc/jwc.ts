@@ -1,5 +1,6 @@
 import { load } from 'cheerio';
 import type { Context } from 'hono';
+import pMap from 'p-map';
 
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Data, DataItem, Route } from '@/types';
@@ -12,6 +13,8 @@ const baseUrl = 'https://www.jwc.uestc.edu.cn/';
 const detailUrl = 'https://www.jwc.uestc.edu.cn/info/';
 
 const dateTimeRegex = /(\d{4}-\d{2}-\d{2} \d{2}:\d{2})/;
+
+class CampusAccessError extends Error {}
 
 const typeUrlMap = {
     important: 'hard/?page=1',
@@ -70,30 +73,45 @@ async function handler(ctx: Context): Promise<Data> {
     const $ = load(indexContent);
     const entries = $('div.textAreo.clearfix').toArray();
 
-    const items = entries.map(async (entry) => {
-        const element = $(entry);
-        const newsTitle = element.find('a').attr('title') ?? '';
-        const newsLink = detailUrl + element.find('a').attr('newsid');
+    const out = await pMap(
+        entries,
+        async (entry) => {
+            const element = $(entry);
+            const newsTitle = element.find('a').attr('title') ?? '';
+            const newsLink = detailUrl + element.find('a').attr('newsid');
+            const listingDate = parseDate(element.find('i').text().trim(), 'YYYY/MM/DD', true);
 
-        const newsDetail = await cache.tryGet(newsLink, async (): Promise<DataItem> => {
-            const newsContent = await ofetch(newsLink);
-            const content = load(newsContent);
+            try {
+                const detail = await cache.tryGet(`uestc:jwc:v4:${newsLink}`, async (): Promise<Pick<DataItem, 'description' | 'pubDate'>> => {
+                    const newsContent = await ofetch(newsLink);
+                    const content = load(newsContent);
+                    if (content('.failtip2').text().includes('您的IP地址非电子科技大学的IP地址')) {
+                        throw new CampusAccessError('This article is only available from the UESTC campus network.');
+                    }
 
-            const basicInfo = content('div.detail_header').find('div.item').text();
-            const match = dateTimeRegex.exec(basicInfo);
+                    const basicInfo = content('div.detail_header').find('div.item').text();
+                    const match = dateTimeRegex.exec(basicInfo);
+                    const pubDate = match ? parseDate(match[1], 'YYYY-MM-DD HH:mm', true) : undefined;
 
-            return {
-                title: newsTitle,
-                link: newsLink,
-                pubDate: match ? timezone(parseDate(match[1]), 8) : null,
-                description: content('div.NewText').html(),
-            };
-        });
-
-        return newsDetail;
-    });
-
-    const out = await Promise.all(items);
+                    return {
+                        pubDate: pubDate && !Number.isNaN(pubDate.getTime()) ? timezone(pubDate, 8) : undefined,
+                        description: content('div.NewText').html(),
+                    };
+                });
+                return { title: newsTitle, link: newsLink, ...detail };
+            } catch (error) {
+                if (!(error instanceof CampusAccessError)) {
+                    throw error;
+                }
+                return {
+                    title: newsTitle,
+                    link: newsLink,
+                    pubDate: Number.isNaN(listingDate.getTime()) ? undefined : timezone(listingDate, 8),
+                };
+            }
+        },
+        { concurrency: 3 }
+    );
 
     return {
         title: `教务处通知（${typeName}）`,

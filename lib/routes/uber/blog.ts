@@ -1,11 +1,13 @@
 import { load } from 'cheerio';
 import type { Context } from 'hono';
+import pMap from 'p-map';
 
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
 const baseUrl = 'https://www.uber.com';
 const engineeringUrl = `${baseUrl}/us/en/blog/engineering`;
@@ -67,7 +69,7 @@ export const route: Route = {
 
 async function handler(ctx: Context): Promise<Data> {
     const category = resolveCategory(ctx.req.param('category'));
-    const limit = Number(ctx.req.query('limit') || 20);
+    const limit = getRouteLimit(ctx, 20);
     const link = category ? `${engineeringUrl}/${category}/` : `${engineeringUrl}/`;
 
     const response = await ofetch(link);
@@ -93,7 +95,7 @@ async function handler(ctx: Context): Promise<Data> {
         .filter((item) => item !== undefined)
         .slice(0, limit);
 
-    const items = await Promise.all(list.map((item) => getArticle(item)));
+    const items = await pMap(list, (item) => getArticle(item), { concurrency: 3 });
 
     return {
         title: category ? `Uber Engineering Blog - ${categoryLabels[category]}` : 'Uber Engineering Blog',

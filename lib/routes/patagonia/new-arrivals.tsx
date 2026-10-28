@@ -1,6 +1,7 @@
 import { load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
 
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import got from '@/utils/got';
 
@@ -40,6 +41,9 @@ export const route: Route = {
 
 async function handler(ctx) {
     const category = ctx.req.param('category');
+    if (!Object.hasOwn(categoryMap, category)) {
+        throw new InvalidParameterError('Category must be mens, womens, kids, or luggage.');
+    }
     const url = `${host}/on/demandware.store/Sites-patagonia-us-Site/en_US/Search-LazyGrid`;
     const response = await got({
         method: 'get',
@@ -55,21 +59,21 @@ async function handler(ctx) {
     const list = $('.product')
         .toArray()
         .map((element) => {
-            const tealiumRaw = $(element).find('.product-tile').attr('data-tealium');
-            if (!tealiumRaw) {
+            const title = $(element).find('.product-tile__name').first().text();
+            if (!title) {
                 return null;
             }
-            const tealium: { product_name: string[] } = JSON.parse(tealiumRaw);
+            const pricing = $(element).find('product-tile-pricing').first();
             const data = {
-                title: tealium.product_name[0],
+                title,
                 link: host + '/' + $(element).find('[itemprop="url"]').attr('href'),
                 description: '',
-                category: $(element).find('[itemprop="category"]').attr('content'),
+                category: pricing.attr('primary-category'),
             };
             let imgUrl: string | URL = new URL($(element).find('[itemprop="image"]').attr('content')!);
             imgUrl = extractSfrmUrl(imgUrl);
 
-            const price = $(element).find('[itemprop="price"]').eq(0).text();
+            const price = pricing.attr('sale-price-formatted') ?? '';
             data.description =
                 price +
                 renderToString(
@@ -81,6 +85,7 @@ async function handler(ctx) {
         })
         .filter((item) => item !== null);
     return {
+        language: 'en' as const,
         title: `Patagonia - New Arrivals - ${category.toUpperCase()}`,
         link: `${host}/shop/${categoryMap[category][1]}`,
         description: `Patagonia - New Arrivals - ${category.toUpperCase()}`,

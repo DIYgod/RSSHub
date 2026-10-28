@@ -26,17 +26,23 @@ async function handler() {
             const name = $(item).find('h2 span');
             const link = $(item).attr('href');
             const description = $(item).find('div p.break-words');
-            const pubDate = $(item).find('span:contains("Updated")').first();
+            const date = $(item)
+                .find('span:contains("Updated")')
+                .first()
+                .text()
+                .trim()
+                .replace(/^Updated\s*/i, '');
 
             return {
                 title: name.text(),
                 link,
                 description: description.text(),
-                pubDate: parseRelativeDate(pubDate.text()),
+                pubDate: date ? parseRelativeDate(date) : undefined,
             };
         });
     return {
         title: 'ollama library',
+        language: 'en' as const,
         link: 'https://ollama.com/library',
         item: items,
     };

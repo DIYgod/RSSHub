@@ -21,12 +21,7 @@ export const route: Route = {
         },
     },
     features: {
-        requireConfig: [
-            {
-                name: 'XSIJISHE_COOKIE',
-                description: '',
-            },
-        ],
+        requireConfig: false,
         requirePuppeteer: false,
         antiCrawler: true,
         supportBT: false,
@@ -67,7 +62,7 @@ async function handler(ctx) {
         .toArray()
         .map((item) => {
             const $item = $(item);
-            const title = $item.find('h5').text().trim();
+            const title = $item.find('h5').text();
             const link = $item.find('a').attr('href');
             const description = $item.find('img').prop('outerHTML') ?? '';
 

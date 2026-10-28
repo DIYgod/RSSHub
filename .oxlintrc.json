@@ -447,7 +447,7 @@
         "unicorn/prefer-single-call": "error",
         "unicorn-js/prefer-single-object-destructuring": "error",
         "unicorn-js/prefer-single-replace": "error",
-        "unicorn-js/prefer-smaller-scope": "error",
+        // "unicorn-js/prefer-smaller-scope": "error",
         "unicorn-js/prefer-split-limit": "error",
         // "unicorn/prefer-spread": "error",
         "unicorn-js/prefer-string-match-all": "error",
@@ -605,10 +605,6 @@
             {
                 "selector": "CallExpression[callee.property.name='clone'][arguments.length=0]:not([callee.object.name=/^(request|response|req|res)$/])",
                 "message": "Usage of .clone() in cheerio is not allowed."
-            },
-            {
-                "selector": "CallExpression[callee.property.name='empty'][arguments.length=0]",
-                "message": "Usage of .empty() in cheerio is not allowed."
             },
             {
                 "selector": "CallExpression[callee.property.name='toArray'] MemberExpression[object.callee.property.name='map']",
@@ -781,6 +777,7 @@
         "unicorn/prefer-module": "off",
 
         "unicorn/prefer-number-properties": ["error", { "checkInfinity": false, "checkNaN": false }],
+        "unicorn-js/prefer-smaller-scope": "off", // TODO: use ["error", { "checkTypeAliases": false }] in > v79
 
         "unicorn/prefer-spread": "warn",
         "unicorn/prefer-string-slice": "warn",

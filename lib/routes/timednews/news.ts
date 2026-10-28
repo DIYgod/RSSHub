@@ -1,4 +1,5 @@
 import { type CheerioOptions, load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
@@ -77,6 +78,21 @@ export const route: Route = {
 | all  | currentAffairs | finance | technology | social | sports | international | usa  | cn   | europe | comments |`,
 };
 
+async function getArticleDetails(link: string): Promise<Pick<DataItem, 'author' | 'pubDate' | 'description'>> {
+    const details = await cache.tryGet(link, async () => {
+        const response = await got(link);
+        const $ = load(response.data, { decodeEntities: false } as CheerioOptions);
+        $('.event .twitter').remove();
+        const publishedDate = $('.datetime #publishdate').text();
+        return {
+            pubDate: publishedDate ? parseDate(`${publishedDate} +0000`, 'YYYY-MM-DD ZZ') : undefined,
+            author: $('.datetime #author').text(),
+            description: $('.event').html(),
+        };
+    });
+    return { pubDate: details.pubDate, author: details.author, description: details.description };
+}
+
 async function handler(ctx) {
     const type = ctx.req.param('type') ?? 'all';
     const url = `${BASE}/${PATH_LIST[type].path}`;
@@ -90,31 +106,14 @@ async function handler(ctx) {
     const list = $('#content li')
         .toArray()
         .map((e): DataItem => {
-            const c = load(e);
+            const c = $(e);
             return {
-                title: c('a').text().trim(),
-                link: c('a').attr('href'),
+                title: c.find('a').text(),
+                link: c.find('a').attr('href'),
             };
         });
 
-    const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link!, async () => {
-                const detailResponse = await got({
-                    method: 'get',
-                    url: item.link,
-                });
-
-                const c = load(detailResponse.data, { decodeEntities: false } as CheerioOptions);
-                c('.event .twitter').remove();
-                item.pubDate = parseDate(c('.datetime #publishdate').text(), 'YYYY-MM-DD');
-                item.author = c('.datetime #author').text();
-                item.description = c('.event').html();
-
-                return item;
-            })
-        )
-    );
+    const items = await pMap(list, async (item) => ({ ...item, ...(await getArticleDetails(item.link!)) }), { concurrency: 3 });
 
     const ret = {
         title: '时刻新闻',

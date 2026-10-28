@@ -1,10 +1,19 @@
 import { load } from 'cheerio';
 import type { Context } from 'hono';
 
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
+
+const newsTypes = {
+    gyyw: { title: '赣医要闻', url: '/index/gyyw.htm' },
+    ybdt: { title: '院部动态', url: '/index/ybdt.htm' },
+    mtgy: { title: '媒体赣医', url: '/index/mtgy.htm' },
+    xsjz: { title: '学术讲座', url: '/index/xsjz.htm' },
+};
 
 export const route: Route = {
     path: '/news/:type?',
@@ -32,36 +41,34 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['gmu.cn/xwzx/gyyw.htm', 'gmu.cn/'],
+            source: ['gmu.cn/index/gyyw.htm', 'gmu.cn/'],
             target: '/news/gyyw',
         },
         {
-            source: ['gmu.cn/xwzx/ybdt.htm'],
+            source: ['gmu.cn/index/ybdt.htm'],
             target: '/news/ybdt',
         },
         {
-            source: ['gmu.cn/xwzx/mtgy.htm'],
+            source: ['gmu.cn/index/mtgy.htm'],
             target: '/news/mtgy',
         },
         {
-            source: ['gmu.cn/xwzx/xsjz.htm'],
+            source: ['gmu.cn/index/xsjz.htm'],
             target: '/news/xsjz',
         },
     ],
     name: '新闻中心',
     maintainers: ['FrankFahey'],
-    url: 'gmu.cn/xwzx/gyyw.htm',
+    url: 'gmu.cn/index/gyyw.htm',
     handler,
 };
 
 export async function handler(ctx: Context) {
     const type = ctx.req.param?.('type') || 'gyyw';
-    const newsType = {
-        gyyw: { title: '赣医要闻', url: '/xwzx/gyyw.htm' },
-        ybdt: { title: '院部动态', url: '/xwzx/ybdt.htm' },
-        mtgy: { title: '媒体赣医', url: '/xwzx/mtgy.htm' },
-        xsjz: { title: '学术讲座', url: '/xwzx/xsjz.htm' },
-    }[type] || { title: '赣医要闻', url: '/xwzx/gyyw.htm' };
+    if (!Object.hasOwn(newsTypes, type)) {
+        throw new InvalidParameterError(`Unknown news type "${type}". Available types: ${Object.keys(newsTypes).join(', ')}.`);
+    }
+    const newsType = newsTypes[type];
 
     const baseUrl = 'https://gmu.cn';
     const link = `${baseUrl}${newsType.url}`;
@@ -69,56 +76,41 @@ export async function handler(ctx: Context) {
     const response = await got(link);
 
     const $ = load(response.data);
-    const list = $('.list ul li');
+    const list = $('.list_ttlb li, .list_wzlb li');
 
     const items = await Promise.all(
         list.toArray().map(async (item) => {
             const element = $(item);
             const a = element.find('a');
-            const dateText = element.find('i').text();
+            const dateText = element.find('.sj .p2').length ? `${element.find('.sj .p2').text()}-${element.find('.sj .p1').text()}` : element.find('.sj').text();
             const href = a.attr('href');
-            const title = a.text().trim();
+            const title = a.attr('title') || a.find('.bt, .p_bt').text();
 
             if (!href || !title) {
                 return null;
             }
 
-            const pubDate = parseDate(dateText);
-            if (!pubDate) {
-                return null;
-            }
+            const publicationDate = dateText ? parseDate(dateText) : undefined;
+            const pubDate = publicationDate && !Number.isNaN(publicationDate.getTime()) ? timezone(publicationDate, 8) : undefined;
 
             const fullLink = new URL(href, link).href;
 
-            // Use cache.tryGet to cache the article content
-            return await cache.tryGet(`gmu:news:${fullLink}`, async () => {
-                try {
-                    const contentResponse = await got(fullLink);
-                    const content = load(contentResponse.data);
-
-                    // 获取新闻内容
-                    const articleContent = content('.v_news_content').html() || '暂无详细内容';
-
-                    return {
-                        title,
-                        link: fullLink,
-                        pubDate,
-                        description: articleContent,
-                    };
-                } catch {
-                    // 如果获取文章内容失败，返回基本信息
-                    return {
-                        title,
-                        link: fullLink,
-                        pubDate,
-                        description: '暂无详细内容',
-                    };
-                }
+            const detail = await cache.tryGet(`gmu:news:${fullLink}:content`, async () => {
+                const contentResponse = await got(fullLink);
+                const content = load(contentResponse.data);
+                return { description: content('.v_news_content').html() ?? undefined };
             });
+
+            return {
+                title,
+                link: fullLink,
+                pubDate,
+                ...detail,
+            };
         })
     );
 
-    const result = items.filter((item): item is { title: string; link: string; pubDate: Date; description: string } => item !== null);
+    const result = items.filter((item): item is { title: string; link: string; pubDate: Date | undefined; description: string | undefined } => item !== null);
 
     return {
         title: `赣南医科大学 - ${newsType.title}`,

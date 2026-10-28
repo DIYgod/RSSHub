@@ -1,6 +1,7 @@
 import { load } from 'cheerio';
 import type { Context } from 'hono';
 
+import NotFoundError from '@/errors/types/not-found';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
@@ -21,6 +22,12 @@ export const route: Route = {
 
 async function handler(ctx: Context) {
     const { type = 'read', time = 'all' } = ctx.req.param();
+    if (!['read', 'share'].includes(type)) {
+        throw new NotFoundError('Invalid type. Supported types: read, share.');
+    }
+    if (!['all', 'day', 'week', 'month', 'year'].includes(time)) {
+        throw new NotFoundError('Invalid time range. Supported ranges: all, day, week, month, year.');
+    }
 
     const rootUrl = `https://www.cgtn.com/most-${type}`;
     const response = await ofetch(rootUrl);
@@ -28,7 +35,7 @@ async function handler(ctx: Context) {
     const $ = load(response);
     const list = $(`#${time}Items div.most-read-item-box div.cg-title`)
         .toArray()
-        .map((item): DataItem => {
+        .map((item): DataItem & { pubDate: Date } => {
             const a = $(item).find('a');
             return {
                 title: a.text(),

@@ -29,7 +29,6 @@ const CATEGORY_SLUG_TO_ID = {
     'basic-grammar': 4,
     company: 8,
     confidence: 9,
-    french: 24,
     humor: 15,
     medellin: 23,
     motivation: 6,
@@ -96,7 +95,7 @@ async function handler(ctx: Context): Promise<Data> {
         title: post.title?.rendered,
         description: post.content?.rendered ?? post.excerpt?.rendered ?? '',
         link: post.link,
-        pubDate: parseDate(post.date_gmt ?? post.date),
+        pubDate: parseDate(post.date_gmt ? `${post.date_gmt}Z` : post.date),
         author: post._embedded?.author?.[0]?.name,
         category: Array.isArray(post._embedded?.['wp:term'])
             ? post._embedded['wp:term']

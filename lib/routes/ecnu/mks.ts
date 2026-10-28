@@ -1,5 +1,6 @@
 import { load } from 'cheerio';
 
+import { fetchItems } from '@/routes/ecnu/utils';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
@@ -12,7 +13,7 @@ export const route: Route = {
     example: '/ecnu/mks',
     radar: [
         {
-            source: ['mks.ecnu.edu.cn'],
+            source: ['mks.ecnu.edu.cn', 'mks.ecnu.edu.cn/cyxz/list.htm'],
             target: '/mks',
         },
     ],
@@ -30,16 +31,14 @@ export const route: Route = {
                 link: new URL($(el).find('a').attr('href')!, baseUrl).href,
                 title: $(el).find('.news_title').text(),
             }));
-        const items = await Promise.all(
-            links.map((item) =>
-                cache.tryGet(item.link, async () => {
-                    const { data } = await got(item.link);
-                    const $ = load(data);
-                    const $read = $('div.wp_articlecontent');
-                    item.description = $read.html();
-                    return item;
-                })
-            )
+        const items = await fetchItems(links, (item) =>
+            cache.tryGet(item.link, async () => {
+                const { data } = await got(item.link);
+                const $ = load(data);
+                const $read = $('div.wp_articlecontent');
+                item.description = $read.html();
+                return item;
+            })
         );
 
         return {

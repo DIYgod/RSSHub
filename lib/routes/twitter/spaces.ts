@@ -1,7 +1,5 @@
 import type { Context } from 'hono';
 
-import { config } from '@/config';
-import ConfigNotFoundError from '@/errors/types/config-not-found';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Data, Route } from '@/types';
 import cache from '@/utils/cache';
@@ -11,28 +9,22 @@ import { baseUrl, gqlFeatures } from './api/web-api/constants';
 import { buildGqlMap, resolveQueryIds } from './api/web-api/gql-id-resolver';
 import { twitterGot } from './api/web-api/utils';
 
-interface ApiErrors {
-    errors?: Array<{ code?: number }>;
-}
-
-export interface SpaceProfile {
+interface SpaceProfile {
     rest_id: string;
-    core?: { name?: string; screen_name?: string };
-    legacy?: { name?: string; screen_name?: string };
+    core: { name: string; screen_name: string };
 }
 
 interface SpaceParticipant {
-    twitter_screen_name?: string;
-    user_results?: { rest_id?: string; result?: { rest_id?: string } };
+    user_results: { rest_id: string };
 }
 
-export interface AudioSpace {
-    metadata: { rest_id: string; state: string; title?: string; started_at?: number };
+interface AudioSpace {
+    metadata: { rest_id: string; state: string; title?: string; started_at: number };
     participants: { admins: SpaceParticipant[]; speakers: SpaceParticipant[] };
 }
 
-interface PresenceResponse extends ApiErrors {
-    users: Record<string, { spaces?: { live_content?: { audiospace?: { id?: string; state?: string } } } }>;
+interface PresenceResponse {
+    users: Record<string, { spaces?: { live_content?: { audiospace?: { id: string } } } }>;
 }
 
 const audioSpaceFeatures = {
@@ -71,53 +63,29 @@ export const route: Route = {
     example: '/twitter/spaces/_RSSHub',
     parameters: { username: 'The X username, without @.' },
     features: {
-        requireConfig: [{ name: 'TWITTER_AUTH_TOKEN', description: 'An authorized login session for the X web API. Developer API keys and third-party timeline providers are not used by this route.' }],
+        requireConfig: [{ name: 'TWITTER_AUTH_TOKEN', description: 'Please see above for details.' }],
     },
     maintainers: ['DIYgod'],
     description:
-        'Reports a user speaking in a live Space, including Spaces hosted by other users. Hosts and co-hosts are also included; listeners are excluded. Each user/Space pair has a stable entry ID and uses the actual Space start time. When the user is not speaking in a live Space, a status entry has a fixed ID and no publication date. This does not join or listen to a Space. Requires your own authorized TWITTER\\_AUTH\\_TOKEN on a self-hosted instance.',
+        'Reports a user speaking in a live Space, including Spaces hosted by other users. Hosts and co-hosts are also included; listeners are excluded. Each user/Space pair has a stable entry ID and uses the actual Space start time. When the user is not in a live Space, or is in one without speaking, a status entry says so with a fixed ID and no publication date. This does not join or listen to a Space.',
     radar: [{ source: ['x.com/:username'], target: '/spaces/:username' }],
     handler,
 };
 
-function checkErrors(response: ApiErrors, operation: string) {
-    if (response.errors !== undefined && (!Array.isArray(response.errors) || response.errors.length)) {
-        throw new Error(`X ${operation} failed. Check the TWITTER_AUTH_TOKEN authorization and X API access.`);
-    }
-}
-
 function participantMatches(participant: SpaceParticipant, user: SpaceProfile) {
-    const restId = participant.user_results?.rest_id ?? participant.user_results?.result?.rest_id;
-    if (restId !== undefined) {
-        return restId === user.rest_id;
-    }
-    const username = user.core?.screen_name ?? user.legacy?.screen_name;
-    return !!(username && participant.twitter_screen_name?.toLowerCase() === username.toLowerCase());
+    return participant.user_results.rest_id === user.rest_id;
 }
 
-export function buildSpaceFeed(user: SpaceProfile, space?: AudioSpace): Data {
-    const username = user.core?.screen_name ?? user.legacy?.screen_name;
-    if (!username || typeof user.rest_id !== 'string' || !/^\d+$/.test(user.rest_id)) {
-        throw new Error('X returned incomplete user metadata.');
-    }
-    const name = user.core?.name ?? user.legacy?.name ?? username;
+function buildSpaceFeed(user: SpaceProfile, space?: AudioSpace): Data {
+    const { name, screen_name: username } = user.core;
     const link = `https://x.com/${username}`;
     const data: Data = {
         title: `${username} - Space speaking status`,
         link,
-        item: [{ title: `${name} is not speaking in a live Space`, link, author: name, guid: `${user.rest_id}:spaces:inactive` }],
+        item: [{ title: `${name} is not ${space ? 'speaking ' : ''}in a live Space`, link, author: name, guid: `${user.rest_id}:spaces:inactive` }],
     };
-    if (!space) {
+    if (space?.metadata.state !== 'Running') {
         return data;
-    }
-    if (typeof space.metadata?.state !== 'string') {
-        throw new TypeError('X returned incomplete Space status metadata.');
-    }
-    if (space.metadata.state !== 'Running') {
-        return data;
-    }
-    if (!Array.isArray(space.participants?.admins) || !Array.isArray(space.participants?.speakers)) {
-        throw new TypeError('X did not provide the Space speaker list.');
     }
     const host = space.participants.admins.some((participant) => participantMatches(participant, user));
     const speaker = space.participants.speakers.some((participant) => participantMatches(participant, user));
@@ -125,9 +93,6 @@ export function buildSpaceFeed(user: SpaceProfile, space?: AudioSpace): Data {
         return data;
     }
     const metadata = space.metadata;
-    if (!/^[a-z0-9]+$/i.test(metadata.rest_id) || typeof metadata.started_at !== 'number' || !Number.isSafeInteger(metadata.started_at) || metadata.started_at <= 0) {
-        throw new Error('X did not provide a valid Space ID and actual start time.');
-    }
     data.item = [
         {
             title: `${name} is ${host ? 'hosting' : 'speaking in'} ${metadata.title || 'a live Space'}`,
@@ -146,49 +111,30 @@ async function handler(ctx: Context): Promise<Data> {
     if (!/^\w{1,15}$/.test(username)) {
         throw new InvalidParameterError('Use a valid X username without @.');
     }
-    if (!config.twitter.authToken?.length) {
-        throw new ConfigNotFoundError('Configure your own authorized TWITTER_AUTH_TOKEN to monitor Space speakers.');
-    }
     const operations = buildGqlMap(await resolveQueryIds());
     const user = await cache.tryGet<SpaceProfile>(`twitter:spaces:profile:${username}`, async () => {
         const response = (await twitterGot(`${baseUrl}${operations.UserByScreenName}`, {
             variables: JSON.stringify({ screen_name: username, withSafetyModeUserFields: true }),
             features: JSON.stringify(gqlFeatures.UserByScreenName),
             fieldToggles: JSON.stringify({ withAuxiliaryUserLabels: false }),
-        })) as ApiErrors & { data?: { user?: { result?: SpaceProfile } } };
-        checkErrors(response, 'user lookup');
+        })) as { data?: { user?: { result?: SpaceProfile } } };
         const result = response.data?.user?.result;
-        if (typeof result?.rest_id !== 'string' || !/^\d+$/.test(result.rest_id)) {
+        if (!result) {
             throw new Error('X did not return this user. Check the username and authorized session.');
         }
         return result;
     });
     const presence = (await twitterGot(`${baseUrl}/fleets/v1/avatar_content`, { user_ids: user.rest_id })) as PresenceResponse;
-    checkErrors(presence, 'Space presence lookup');
-    if (!presence.users || typeof presence.users !== 'object' || Array.isArray(presence.users)) {
-        throw new Error('X returned an unexpected Space presence response.');
-    }
     const currentSpace = presence.users[user.rest_id]?.spaces?.live_content?.audiospace;
-    if (currentSpace && typeof currentSpace.state !== 'string') {
-        throw new TypeError('X returned incomplete Space presence metadata.');
-    }
-    if (!currentSpace || currentSpace.state !== 'RUNNING') {
+    if (!currentSpace) {
         return buildSpaceFeed(user);
     }
-    if (!currentSpace.id || !/^[a-z0-9]+$/i.test(currentSpace.id)) {
-        throw new Error('X returned an invalid current Space ID.');
-    }
-    const spaceOperation = buildGqlMap(await resolveQueryIds(['AudioSpaceById'])).AudioSpaceById;
-    if (!spaceOperation) {
-        throw new Error('The current X AudioSpaceById query ID could not be resolved. Try again after the source API metadata is updated.');
-    }
-    const response = (await twitterGot(`${baseUrl}${spaceOperation}`, {
+    const response = (await twitterGot(`${baseUrl}${operations.AudioSpaceById}`, {
         variables: JSON.stringify({ id: currentSpace.id, isMetatagsQuery: false, withReplays: true, withListeners: false }),
         features: JSON.stringify(audioSpaceFeatures),
-    })) as ApiErrors & { data?: { audioSpace?: AudioSpace } };
-    checkErrors(response, 'Space speaker lookup');
+    })) as { data?: { audioSpace?: AudioSpace } };
     const space = response.data?.audioSpace;
-    if (!space || space.metadata?.rest_id !== currentSpace.id) {
+    if (!space) {
         throw new Error('X did not return metadata for the current Space.');
     }
     return buildSpaceFeed(user, space);

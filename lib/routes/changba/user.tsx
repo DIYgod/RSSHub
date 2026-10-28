@@ -1,3 +1,5 @@
+import { createDecipheriv, createHash } from 'node:crypto';
+
 import { load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
 
@@ -47,46 +49,9 @@ async function handler(ctx) {
 
     const items: Array<DataItem | null> = await Promise.all(
         list.map((item) => {
-            const $ = load(item);
-            const link = $('a').attr('href');
-            return cache.tryGet<any>(link!, async () => {
-                const result = await got({
-                    method: 'get',
-                    url: link,
-                    headerGeneratorOptions: PRESETS.MODERN_IOS,
-                });
-
-                const re = /workid: '\d+'/;
-                let workid;
-                try {
-                    workid = result.data.match(re)[0];
-                } catch {
-                    // 没有找到该作品
-                    // 这可能是由下列原因造成的：
-                    // 该作品已经被原作者删除了
-                    // 该作品包含了视频，目前正在审核中，在审核没有通过前无法被播放
-                    // 目前服务器压力太大，刚刚上传成功的作品可能需要半个小时后才能被播放
-                    return null;
-                }
-
-                workid = workid.split("'", 2)[1];
-
-                if (!workid) {
-                    return null;
-                }
-                const mp3 = `https://upscuw.changba.com/${workid}.mp3`;
-                const description = renderToString(<ChangbaWorkDescription desc={$('div.des').text()} mp3url={mp3} />);
-                const itunes_item_image = $('div.work-cover').attr('style')!.replace(')', '').split('url(', 2)[1];
-                return {
-                    title: $('.work-title').text(),
-                    description,
-                    link,
-                    author,
-                    itunes_item_image,
-                    enclosure_url: mp3,
-                    enclosure_type: 'audio/mpeg',
-                };
-            });
+            const href = $(item).attr('href') ?? $(item).find('a').attr('href');
+            const link = new URL(href!, url).href;
+            return cache.tryGet<DataItem | null>(link, () => getWork(link, author));
         })
     );
 
@@ -98,6 +63,68 @@ async function handler(ctx) {
         image: authorimg,
         itunes_author: author,
         itunes_category: '唱吧',
+    };
+}
+
+interface ChangbaWork {
+    enc_workpath?: string;
+    enc_duetpath?: string;
+    song?: { name: string };
+    title?: string;
+    headcontent?: string;
+}
+
+interface ChangbaResponse {
+    code: number;
+    message: string;
+    data_type: string;
+    data?: {
+        userwork?: ChangbaWork;
+        newuserwork?: ChangbaWork;
+        enc_workpath?: string;
+        enc_duetpath?: string;
+        isduet?: boolean;
+        workCover?: string;
+        jsSecret: string;
+    };
+}
+
+function decodeMedia(value: string, secret: string): string {
+    const digest = createHash('md5').update(secret).digest('hex');
+    const decipher = createDecipheriv('aes-128-cbc', Buffer.from(digest.slice(16)), Buffer.from(digest.slice(0, 16)));
+    return decipher.update(value, 'base64', 'utf8') + decipher.final('utf8');
+}
+
+async function getWork(link: string, author: string): Promise<DataItem | null> {
+    const workUrl = new URL(link);
+    const encodedId = workUrl.pathname.match(/^\/s\/([^/]+)$/)?.[1];
+    const workId = workUrl.pathname.match(/^\/s(\d+)$/)?.[1];
+    const result = await got('https://changba.com/redirect_song_main.php', {
+        searchParams: { ...Object.fromEntries(workUrl.searchParams), ...(encodedId ? { enc_workid: encodedId } : { workid: workId }), is_mobile: 1 },
+        headerGeneratorOptions: PRESETS.MODERN_IOS,
+    });
+    const response = result.data as ChangbaResponse;
+    if (response.data_type === 'redirect') {
+        throw new Error(`Changba redirected the work request: ${response.message}`);
+    }
+    const data = response.data;
+    const work = data?.userwork;
+    if (response.code !== 0 || !data || !work) {
+        return null;
+    }
+    const encryptedMedia = data.isduet ? (data.enc_duetpath ?? work.enc_duetpath) : (data.enc_workpath ?? work.enc_workpath);
+    if (!encryptedMedia) {
+        return null;
+    }
+    const mp3 = decodeMedia(encryptedMedia, data.jsSecret);
+    return {
+        title: work.song?.name || data.newuserwork?.song?.name || work.title || link,
+        description: renderToString(<ChangbaWorkDescription desc={`${work.headcontent ? `「${work.headcontent}」` : ''}${work.title ?? ''}`} mp3url={mp3} />),
+        link,
+        author,
+        itunes_item_image: data.workCover,
+        enclosure_url: mp3,
+        enclosure_type: 'audio/mpeg',
     };
 }
 

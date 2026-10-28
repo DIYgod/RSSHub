@@ -6,7 +6,7 @@ import got from '@/utils/got';
 import logger from '@/utils/logger';
 import md5 from '@/utils/md5';
 
-export function parseIpLocations(html: string): string[] {
+function parseIpLocations(html: string): string[] {
     const $ = load(html);
     const categories = new Set<string>();
     const authorIp = $('.topic-meta .ip-location').first().text();

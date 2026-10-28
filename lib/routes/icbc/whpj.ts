@@ -1,5 +1,6 @@
 import type { Route } from '@/types';
 import got from '@/utils/got';
+import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/whpj/:format?',
@@ -53,34 +54,35 @@ async function handler(ctx) {
 
             const content = `${xhmr} ${xcmr} ${xhmc} ${xcmc} ${zs}`;
 
-            const formatTitle = () => {
-                switch (format) {
-                    case 'short':
-                        return name;
-                    case 'xh':
-                        return `${name} ${xhmr} ${xhmc}`;
-                    case 'xc':
-                        return `${name} ${xcmr} ${xcmc}`;
-                    case 'zs':
-                        return `${name} ${zs}`;
-                    case 'xhmr':
-                        return `${name} ${xhmr}`;
-                    case 'xhmc':
-                        return `${name} ${xhmc}`;
-                    case 'xcmr':
-                        return `${name} ${xcmr}`;
-                    case 'xcmc':
-                        return `${name} ${xcmc}`;
-                    default:
-                        return `${name} ${content}`;
-                }
-            };
             return {
-                title: formatTitle(),
-                pubDate: new Date(`${item.publishDate} ${item.publishTime}`),
+                title: formatTitle(format, { name, xhmr, xcmr, xhmc, xcmc, zs, content }),
+                pubDate: item.publishDate && item.publishTime ? parseDate(`${item.publishDate}T${item.publishTime}+08:00`) : undefined,
                 description: content.replaceAll(/\s/g, '<br>'),
                 guid: `${name} ${item.publishDate} ${item.publishTime}`,
             };
         }),
     };
+}
+
+function formatTitle(format: string | undefined, { name, xhmr, xcmr, xhmc, xcmc, zs, content }: Record<string, string>) {
+    switch (format) {
+        case 'short':
+            return name;
+        case 'xh':
+            return `${name} ${xhmr} ${xhmc}`;
+        case 'xc':
+            return `${name} ${xcmr} ${xcmc}`;
+        case 'zs':
+            return `${name} ${zs}`;
+        case 'xhmr':
+            return `${name} ${xhmr}`;
+        case 'xhmc':
+            return `${name} ${xhmc}`;
+        case 'xcmr':
+            return `${name} ${xcmr}`;
+        case 'xcmc':
+            return `${name} ${xcmc}`;
+        default:
+            return `${name} ${content}`;
+    }
 }

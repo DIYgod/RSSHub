@@ -4,9 +4,11 @@ import type { Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
+import timezone from '@/utils/timezone';
 
 export const handler = async (ctx) => {
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 10;
+    const limit = getRouteLimit(ctx, 10);
 
     const rootUrl = 'http://chinacustoms.gmcmonline.com';
     const magRootUrl = 'http://manager.gmcmonline.com';
@@ -26,11 +28,12 @@ export const handler = async (ctx) => {
 
             const title = $item.find('p.txt').text();
             const image = new URL($item.find('img').prop('src')!, rootUrl).href;
+            const publicationDate = title ? parseDate(title, 'YYYY年MM期') : undefined;
 
             return {
                 title,
                 link: new URL($item.prop('href')!, rootUrl).href,
-                pubDate: parseDate(title, 'YYYY年MM期'),
+                pubDate: publicationDate && !Number.isNaN(publicationDate.getTime()) ? timezone(publicationDate, 8) : undefined,
                 author,
                 image,
                 banner: image,
@@ -48,7 +51,9 @@ export const handler = async (ctx) => {
                 $$('ol.breadcrumb li a').first().remove();
 
                 const current = $$('ol.breadcrumb li a').first().text();
-                const pubDate = parseDate($$('div.title').text(), 'YYYY年MM月DD日');
+                const publicationDateText = $$('div.title').text();
+                const publicationDate = publicationDateText ? parseDate(publicationDateText, 'YYYY年MM月DD日') : undefined;
+                const pubDate = publicationDate && !Number.isNaN(publicationDate.getTime()) ? timezone(publicationDate, 8) : item.pubDate;
                 const image = new URL($$('div.coverline img').prop('src')!, rootUrl).href;
 
                 return $$('a.txt')
@@ -101,7 +106,6 @@ export const handler = async (ctx) => {
         description: title,
         link: rootUrl,
         item: items.flat(),
-        allowEmpty: true,
         image,
         author: title,
         language,

@@ -32,8 +32,8 @@ async function handler(ctx) {
         title: $('head title').text(),
         description: $('.authorTxt').text(),
         link: `${baseUrl}/author/${ctx.req.param('channel')}`,
-        image: $('.authorPhoto img').attr('src') || `${baseUrl}/assets_new/img/fbshare.jpg'`,
-        language: $('meta[property="og:locale"]').attr('content') as Language,
+        image: $('.authorPhoto img').attr('src') || `${baseUrl}/assets_new/img/fbshare.jpg`,
+        language: $('meta[property="og:locale"]').attr('content')?.replaceAll('_', '-') as Language,
         item: items,
     };
 }

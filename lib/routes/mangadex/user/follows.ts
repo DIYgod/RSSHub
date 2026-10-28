@@ -1,3 +1,5 @@
+import pMap from 'p-map';
+
 import { config } from '@/config';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
@@ -130,7 +132,7 @@ async function handler(ctx) {
 
     const mangaMetaMap = await getMangaMetaByIds(mangaIds);
 
-    const mangaChapters = await Promise.all(mangaIds.map((id) => getMangaChapters(id, undefined, 10)));
+    const mangaChapters = await pMap(mangaIds, (id) => getMangaChapters(id, undefined, 10), { concurrency: 3 });
 
     const mangas = mangaChapters.flatMap((chapters, index) => {
         const mangaMeta = mangaMetaMap.get(mangaIds[index]);

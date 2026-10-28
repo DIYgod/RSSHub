@@ -1,7 +1,7 @@
-import dayjs from 'dayjs';
-
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import got from '@/utils/got';
+import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/exchangesys/:type',
@@ -31,6 +31,9 @@ async function handler(ctx) {
         proj: ['http://elite.nju.edu.cn/exchangesystem/index/moreXmList', 'http://elite.nju.edu.cn/exchangesystem/index/more?type=xm', '交换生项目'],
     };
 
+    if (!Object.hasOwn(type_dict, type)) {
+        throw new InvalidParameterError('Unsupported type. Use news or proj.');
+    }
     const url = type_dict[type][0] + '?page=1&limit=20&.me=c3lzLmluZGV4';
     const { data } = await got({
         url,
@@ -49,8 +52,7 @@ async function handler(ctx) {
                 if (type === 'proj') {
                     return {
                         title: item.mc,
-                        description: item.mc,
-                        pubDate: dayjs(item.cjsj),
+                        pubDate: [undefined, null, ''].includes(item.cjsj) ? undefined : parseDate(item.cjsj),
                         link: item.sqyq,
                     };
                 }
@@ -59,7 +61,7 @@ async function handler(ctx) {
                         title: item.bt,
                         author: item.createBy,
                         description: item.nr,
-                        pubDate: dayjs(item.createDate),
+                        pubDate: [undefined, null, ''].includes(item.createDate) ? undefined : parseDate(item.createDate),
                         link: `http://elite.nju.edu.cn/exchangesystem/index/detail?pid=${item.pid}`,
                     };
                 }

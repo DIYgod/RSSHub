@@ -7,6 +7,7 @@ import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import logger from '@/utils/logger';
 import ofetch from '@/utils/ofetch';
+import { getRouteLimit } from '@/utils/route-limit';
 
 const HOST = 'https://www.sonomama.net';
 const DETAIL_CONCURRENCY = 2;
@@ -32,6 +33,7 @@ interface ListCard {
     title: string;
     link: string;
     image?: string;
+    category: string[];
     extra: ListingExtra;
 }
 
@@ -59,8 +61,8 @@ const parseList = (html: string): ListCard[] => {
             const $el = $(el);
             const a = $el.find('.result4 .title a').last();
             const id = a.attr('href')?.match(/pid=(\d+)/)?.[1];
-            const title = clean(a.text());
-            if (!id || isBlank(title)) {
+            const title = a.text();
+            if (!id || isBlank(clean(title))) {
                 return null;
             }
             // '飲食店<br>レストラン' | 'スケルトン<br>重飲食可' → [大分類, 中分類]
@@ -89,7 +91,8 @@ const parseList = (html: string): ListCard[] => {
             const image = $el.find('img.list_image').attr('src');
 
             return {
-                title: title!,
+                title,
+                category: categoryParts,
                 link: `${HOST}/app/?action=public_property_detail&pid=${id}`,
                 image: image ? new URL(image, HOST).href : undefined,
                 extra: {
@@ -162,10 +165,11 @@ const mergeDetail = (base: ListingExtra, d: DetailFields): ListingExtra => {
     };
 };
 
-/** A failed detail page keeps the list fields instead of breaking the feed. */
+/** A failed detail page keeps fresh list fields and remains eligible for retry. */
 const enrich = async (card: ListCard): Promise<ListingExtra> => {
     try {
-        return mergeDetail(card.extra, parseDetail(await ofetch(card.link)));
+        const detail = await cache.tryGet(`${card.link}:detail-v3`, async () => parseDetail(await ofetch(card.link)));
+        return mergeDetail(card.extra, detail);
     } catch (error) {
         logger.warn(`sonomama: detail fetch failed for ${card.link}: ${String(error)}`);
         return { ...card.extra, raw: { ...card.extra.raw, detail_error: String(error) } };
@@ -178,7 +182,7 @@ export const handler = async (ctx): Promise<Data> => {
     if (prefCode !== undefined && !/^(?:[1-9]|[1-3]\d|4[0-7])$/.test(prefCode)) {
         throw new Error(`Unknown prefecture "${pref}", expected a slug (${PREFECTURES.keys().toArray().join(', ')}) or a JIS X 0401 code`);
     }
-    const limit = Math.min(ctx.req.query('limit') ? Number(ctx.req.query('limit')) : PAGE_SIZE, PAGE_SIZE);
+    const limit = Math.min(getRouteLimit(ctx, PAGE_SIZE), PAGE_SIZE);
     // The prefecture filter is only honoured together with the submit-button parameters.
     const listUrl =
         prefCode === undefined
@@ -195,19 +199,19 @@ export const handler = async (ctx): Promise<Data> => {
     const cards = parseList(html).slice(0, limit);
     const items = await pMap(
         cards,
-        (card) =>
-            cache.tryGet(card.link, async (): Promise<DataItem> => {
-                const extra = await enrich(card);
-                return {
-                    title: card.title,
-                    link: card.link,
-                    guid: card.link,
-                    // The site does not publish listing dates; no pubDate is fabricated.
-                    description: [extra.raw.description, summarize(extra)].filter(Boolean).join(' / '),
-                    image: card.image,
-                    _extra: extra,
-                };
-            }),
+        async (card): Promise<DataItem> => {
+            const extra = await enrich(card);
+            return {
+                title: card.title,
+                link: card.link,
+                guid: card.link,
+                // The site does not publish listing dates; no pubDate is fabricated.
+                description: [extra.raw.description, summarize(extra)].filter(Boolean).join(' / '),
+                image: card.image,
+                category: card.category,
+                _extra: extra,
+            };
+        },
         { concurrency: DETAIL_CONCURRENCY }
     );
 

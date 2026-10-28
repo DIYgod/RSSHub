@@ -1,67 +1,93 @@
+import { load } from 'cheerio';
+import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
+import pMap from 'p-map';
 
+import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
 const rootUrl = 'https://hk01.com';
 const apiRootUrl = 'https://web-data.api.hk01.com';
+
+const renderToken = (token) => {
+    if (token.type === 'text') {
+        return token.content;
+    }
+    if (token.type === 'link') {
+        return <a href={token.link}>{token.content}</a>;
+    }
+    if (token.type === 'boldText') {
+        return <b>{token.content}</b>;
+    }
+    if (token.type === 'boldLink') {
+        return (
+            <a href={token.link}>
+                <b>{token.content}</b>
+            </a>
+        );
+    }
+    return null;
+};
+
+const renderText = (lines) =>
+    lines?.map((tokens) => {
+        if (tokens.length === 1 && tokens[0].type === 'h2') {
+            return <h2>{tokens[0].content}</h2>;
+        }
+        if (tokens.length === 1 && tokens[0].type === 'h3') {
+            return <h3>{tokens[0].content}</h3>;
+        }
+        return <p>{tokens.map(renderToken)}</p>;
+    });
 
 const renderDescription = ({ image, teasers, blocks }) =>
     renderToString(
         <>
             {image ? <img src={image} /> : null}
             {teasers?.length ? (
-                <backquote>
+                <blockquote>
                     {teasers.map((teaser) => (
                         <p>{teaser}</p>
                     ))}
-                </backquote>
+                </blockquote>
             ) : null}
             {blocks?.length
                 ? blocks.map((block) => {
                       if (block.blockType === 'summary') {
                           return (
-                              <backquote>
+                              <blockquote>
                                   {block.summary?.map((summary) => (
                                       <p>{summary}</p>
                                   ))}
-                              </backquote>
+                              </blockquote>
                           );
                       }
 
                       if (block.blockType === 'text') {
-                          return block.htmlTokens?.map((tokens) =>
-                              tokens.map((token) => {
-                                  if (token.type === 'text') {
-                                      return <p>{token.content}</p>;
-                                  }
+                          return renderText(block.htmlTokens);
+                      }
 
-                                  if (token.type === 'link') {
-                                      return <a href={token.link}>{token.content}</a>;
-                                  }
+                      if (block.blockType === 'table' || block.blockType === 'code') {
+                          return raw(block.htmlString ?? '');
+                      }
 
-                                  if (token.type === 'boldText') {
-                                      return <b>{token.content}</b>;
-                                  }
-
-                                  if (token.type === 'boldLink') {
-                                      return (
-                                          <a href={token.link}>
-                                              <b>{token.content}</b>
-                                          </a>
-                                      );
-                                  }
-
-                                  return null;
-                              })
-                          );
+                      if (block.blockType === 'faq') {
+                          return block.questionsAndAnswers?.map(({ question, answer }) => (
+                              <section>
+                                  {renderText(question?.htmlTokens)}
+                                  {renderText(answer?.htmlTokens)}
+                              </section>
+                          ));
                       }
 
                       if (block.blockType === 'quote') {
                           return (
                               <q>
-                                  {block.message} —— {block.author}
+                                  {block.message}
+                                  {block.author ? ` —— ${block.author}` : ''}
                               </q>
                           );
                       }
@@ -71,7 +97,7 @@ const renderDescription = ({ image, teasers, blocks }) =>
 
                           return blockImage ? (
                               <figure>
-                                  <figurecaption>{blockImage.caption}</figurecaption>
+                                  <figcaption>{blockImage.caption}</figcaption>
                                   <img src={blockImage.cdnUrl} alt={blockImage.caption} height={blockImage.originalHeight} width={blockImage.originalWidth} />
                               </figure>
                           ) : null;
@@ -80,7 +106,7 @@ const renderDescription = ({ image, teasers, blocks }) =>
                       if (block.blockType === 'gallery') {
                           return block.images?.map((blockImage) => (
                               <figure>
-                                  <figurecaption>{blockImage.caption}</figurecaption>
+                                  <figcaption>{blockImage.caption}</figcaption>
                                   <img src={blockImage.cdnUrl} alt={blockImage.caption} height={blockImage.originalHeight} width={blockImage.originalWidth} />
                               </figure>
                           ));
@@ -92,36 +118,48 @@ const renderDescription = ({ image, teasers, blocks }) =>
         </>
     );
 
-const ProcessItems = (items, limit) =>
-    Promise.all(
+const ProcessItems = (items, ctx) => {
+    const limit = getRouteLimit(ctx, 50);
+    const candidateLimit = ctx.req.query('sorted') === 'false' ? limit : Math.max(50, limit);
+    return pMap<DataItem & { link: string }, DataItem>(
         items
             .filter((item) => item.type !== 2)
-            .slice(0, limit ? Number.parseInt(limit) : 50)
+            .slice(0, candidateLimit)
             .map((item) => ({
                 title: item.data.title,
                 link: `${rootUrl}/sns/article/${item.data.articleId}`,
                 pubDate: parseDate(item.data.publishTime * 1000),
                 category: item.data.tags.map((t) => t.tagName),
                 author: item.data.authors.map((a) => a.publishName).join(', '),
-            }))
-            .map((item) =>
-                cache.tryGet(item.link, async () => {
-                    const detailResponse = await got({
-                        method: 'get',
-                        url: item.link,
-                    });
+            })),
+        async (item) => ({
+            ...item,
+            description: await cache.tryGet(`hk01:article-body:${item.link}`, async () => {
+                const detailResponse = await got({
+                    method: 'get',
+                    url: item.link,
+                });
 
-                    const content = JSON.parse(detailResponse.data.match(/"__NEXT_DATA__" type="application\/json">(\{"props":.*\})<\/script>/)[1]);
+                const $ = load(detailResponse.data);
+                const payload = $('script#__NEXT_DATA__').text();
+                if (!payload) {
+                    throw new Error(`The Hong Kong 01 article is missing its source data: ${item.link}`);
+                }
+                const content = JSON.parse(payload);
+                const article = content.props?.initialProps?.pageProps?.article;
+                if (!article) {
+                    throw new Error(`The Hong Kong 01 source data is missing the article: ${item.link}`);
+                }
 
-                    item.description = renderDescription({
-                        image: content.props.initialProps.pageProps.article.originalImage.cdnUrl,
-                        teasers: content.props.initialProps.pageProps.article.teaser,
-                        blocks: content.props.initialProps.pageProps.article.blocks,
-                    });
-
-                    return item;
-                })
-            )
+                return renderDescription({
+                    image: article.originalImage?.cdnUrl,
+                    teasers: article.teaser,
+                    blocks: article.blocks,
+                });
+            }),
+        }),
+        { concurrency: 3 }
     );
+};
 
 export { apiRootUrl, ProcessItems, rootUrl };

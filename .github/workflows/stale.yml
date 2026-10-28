@@ -2,10 +2,11 @@ name: 'Close stale issues and PRs'
 
 on:
     schedule:
-        - cron: '31 23 * * *'
+        - cron: '31 * * * *'
     workflow_dispatch:
 
 permissions:
+    discussions: write
     issues: write
     pull-requests: write
 
@@ -45,5 +46,6 @@ jobs:
             - uses: dessant/lock-threads@89ae32b08ed1a541efecbab17912962a5e38981c # v6.0.2
               with:
                   github-token: ${{ github.token }}
-                  process-only: 'prs'
+                  issue-inactive-days: '30'
                   pr-inactive-days: '30'
+                  log-output: true

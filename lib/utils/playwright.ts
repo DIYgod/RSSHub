@@ -4,21 +4,33 @@ import { chromium } from 'patchright';
 import { config } from '@/config';
 
 import logger from './logger';
-import type { PlaywrightService } from './playwright-remote.worker';
 import proxy from './proxy';
 
 type GotoOptions = Parameters<Page['goto']>[1];
 
-type ProxyState = NonNullable<ReturnType<typeof proxy.getCurrentProxy>>;
+interface ProxyState {
+    uri: string;
+    urlHandler: URL | null;
+}
 
+const configuredProxy: ProxyState | null = proxy.proxyUri ? { uri: proxy.proxyUri, urlHandler: proxy.proxyUrlHandler } : null;
 const proxyServerFromUrl = (proxyUrl: URL) => {
     const protocol = proxyUrl.protocol.replace('socks5h:', 'socks5:').replace('socks4a:', 'socks4:');
     return `${protocol}//${proxyUrl.host}`;
 };
 
-const getProxyOptions = (currentProxy: ProxyState | null | undefined) => {
+interface ProxyOptions {
+    args: string[];
+    proxy?: LaunchOptions['proxy'];
+}
+
+const getProxyOptions = (currentProxy: ProxyState | null | undefined): ProxyOptions => {
     if (!currentProxy) {
-        return {};
+        return { args: [] };
+    }
+
+    if (proxy.proxyIsPAC) {
+        return { args: [`--proxy-pac-url=${currentProxy.uri}`] };
     }
 
     const username = currentProxy.urlHandler?.username;
@@ -26,59 +38,59 @@ const getProxyOptions = (currentProxy: ProxyState | null | undefined) => {
     if (username || password) {
         if (currentProxy.urlHandler!.protocol !== 'http:') {
             logger.warn('SOCKS/HTTPS proxy with authentication is not supported by playwright, continue without proxy');
-            return {};
+            return { args: [] };
         }
 
         return {
+            args: [],
             proxy: {
                 password: decodeURIComponent(password ?? ''),
                 server: proxyServerFromUrl(currentProxy.urlHandler!),
                 username: decodeURIComponent(username ?? ''),
             },
-        } satisfies Pick<LaunchOptions, 'proxy'>;
+        };
     }
 
     return {
+        args: [],
         proxy: {
             server: currentProxy.uri.replace('socks5h://', 'socks5://').replace('socks4a://', 'socks4://').replace(/\/$/, ''),
         },
-    } satisfies Pick<LaunchOptions, 'proxy'>;
+    };
 };
 
 // Patchright already patches playwright's default args (e.g. injects --disable-blink-features=AutomationControlled and strips --enable-automation)
 const COMMON_LAUNCH_ARGS = ['--no-sandbox', '--disable-setuid-sandbox', '--window-position=0,0', '--ignore-certificate-errors', '--ignore-certificate-errors-spki-list'];
 
-const getLaunchOptions = (currentProxy?: ProxyState | null): LaunchOptions => ({
-    args: COMMON_LAUNCH_ARGS,
+const getLaunchOptions = (proxyOptions: ProxyOptions): LaunchOptions => ({
+    args: [...COMMON_LAUNCH_ARGS, ...proxyOptions.args],
+    channel: proxy.proxyIsPAC ? 'chromium' : undefined,
     executablePath: config.chromiumExecutablePath || undefined,
     headless: true,
-    ...getProxyOptions(currentProxy),
+    proxy: proxyOptions.proxy,
 });
 
 type BrowserlessLaunchOptions = Pick<LaunchOptions, 'args' | 'headless' | 'proxy'>;
 type BrowserlessCdpLaunchOptions = Omit<BrowserlessLaunchOptions, 'proxy'> & { stealth?: boolean };
 
-const toBrowserlessLaunchOptions = (currentProxy?: ProxyState | null): BrowserlessLaunchOptions => ({
-    args: COMMON_LAUNCH_ARGS,
+const toBrowserlessLaunchOptions = (proxyOptions: ProxyOptions): BrowserlessLaunchOptions => ({
+    args: [...COMMON_LAUNCH_ARGS, ...proxyOptions.args],
     headless: true,
-    ...getProxyOptions(currentProxy),
+    proxy: proxyOptions.proxy,
 });
 
 // CDP accepts `stealth` but NOT a `proxy` object.
-const toBrowserlessCDPLaunchOptions = (currentProxy?: ProxyState | null): BrowserlessCdpLaunchOptions => {
-    let proxyServerArgs: string[] = [];
+const toBrowserlessCDPLaunchOptions = (proxyOptions: ProxyOptions): BrowserlessCdpLaunchOptions => {
+    const args = [...COMMON_LAUNCH_ARGS, ...proxyOptions.args];
 
-    if (currentProxy) {
-        if (currentProxy.urlHandler?.username || currentProxy.urlHandler?.password) {
-            logger.warn('Proxy authentication is not supported over CDP (--proxy-server), continue without proxy');
-        } else {
-            const server = currentProxy.uri.replace('socks5h://', 'socks5://').replace('socks4a://', 'socks4://').replace(/\/$/, '');
-            proxyServerArgs = [`--proxy-server=${server}`];
-        }
+    if (proxyOptions.proxy?.username || proxyOptions.proxy?.password) {
+        logger.warn('Proxy authentication is not supported over CDP (--proxy-server), continue without proxy');
+    } else if (proxyOptions.proxy) {
+        args.push(`--proxy-server=${proxyOptions.proxy.server}`);
     }
 
     return {
-        args: [...COMMON_LAUNCH_ARGS, ...proxyServerArgs],
+        args,
         headless: true,
         stealth: true,
     };
@@ -91,14 +103,14 @@ const getContextOptions = (javaScriptEnabled?: boolean): BrowserContextOptions =
 });
 
 // CDP > WS > local
-const launchBrowser = async (currentProxy?: ProxyState | null, javaScriptEnabled?: boolean) => {
+const launchBrowser = async (proxyOptions: ProxyOptions, javaScriptEnabled?: boolean) => {
     let browser: Browser;
     if (config.playwrightCDPEndpoint) {
-        browser = await chromium.connectOverCDP(getBrowserlessEndpoint(config.playwrightCDPEndpoint, toBrowserlessCDPLaunchOptions(currentProxy)));
+        browser = await chromium.connectOverCDP(getBrowserlessEndpoint(config.playwrightCDPEndpoint, toBrowserlessCDPLaunchOptions(proxyOptions)));
     } else if (config.playwrightWSEndpoint) {
-        browser = await chromium.connect(getBrowserlessEndpoint(config.playwrightWSEndpoint, toBrowserlessLaunchOptions(currentProxy)));
+        browser = await chromium.connect(getBrowserlessEndpoint(config.playwrightWSEndpoint, toBrowserlessLaunchOptions(proxyOptions)));
     } else {
-        browser = await chromium.launch(getLaunchOptions(currentProxy));
+        browser = await chromium.launch(getLaunchOptions(proxyOptions));
     }
     try {
         const context = await browser.newContext(getContextOptions(javaScriptEnabled));
@@ -126,15 +138,13 @@ const scheduleClose = (browser: Browser, timeout = 30000) =>
  * @returns Playwright browser context (native `newPage()` shares state across calls)
  */
 export default async function outPlaywright() {
-    const currentProxy = proxy.getCurrentProxy();
-    const { browser, context } = await launchBrowser(currentProxy && proxy.proxyObj.url_regex === '.*' ? currentProxy : null);
+    const { browser, context } = await launchBrowser(getProxyOptions(proxy.proxyObj.url_regex === '.*' ? configuredProxy : null));
     scheduleClose(browser);
     return context;
 }
 
 // No-op in Node.js environment (used by Worker build via alias)
 export const setBrowserBinding = (_binding: any) => {};
-export const setPlaywrightServiceBinding = (_binding?: PlaywrightService, _origin?: string) => {};
 
 /**
  * @returns Playwright page
@@ -167,10 +177,10 @@ export const getPlaywrightPage = async (
         allowProxy = true;
     }
 
-    const currentProxy = proxy.getCurrentProxy();
-    const currentProxyState = currentProxy && allowProxy ? currentProxy : null;
-    const hasProxy = Boolean(getProxyOptions(currentProxyState).proxy);
-    const { browser, context } = await launchBrowser(currentProxyState, instanceOptions.javaScriptEnabled);
+    const currentProxyState = allowProxy ? configuredProxy : null;
+    const proxyOptions = getProxyOptions(currentProxyState);
+    const hasProxy = Boolean(proxyOptions.proxy || proxyOptions.args.length);
+    const { browser, context } = await launchBrowser(proxyOptions, instanceOptions.javaScriptEnabled);
     const closeTimer = scheduleClose(browser, instanceOptions.closeTimeout);
     const destroy = async () => {
         clearTimeout(closeTimer);
@@ -180,8 +190,8 @@ export const getPlaywrightPage = async (
     try {
         const page = await context.newPage();
 
-        if (hasProxy && currentProxyState) {
-            logger.debug(`Proxying request in playwright via ${currentProxyState.uri}: ${url}`);
+        if (hasProxy) {
+            logger.debug(`Proxying request in playwright: ${url}`);
         }
 
         if (instanceOptions.onBeforeLoad) {
@@ -189,15 +199,7 @@ export const getPlaywrightPage = async (
         }
 
         if (!instanceOptions.noGoto) {
-            try {
-                await page.goto(url, instanceOptions.gotoConfig || { waitUntil: 'domcontentloaded' });
-            } catch (error) {
-                if (hasProxy && currentProxyState && proxy.multiProxy) {
-                    logger.warn(`Playwright navigation failed with proxy ${currentProxyState.uri}, marking as failed: ${error}`);
-                    proxy.markProxyFailed(currentProxyState.uri);
-                }
-                throw error;
-            }
+            await page.goto(url, instanceOptions.gotoConfig || { waitUntil: 'domcontentloaded' });
         }
 
         return {

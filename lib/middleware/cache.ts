@@ -5,6 +5,7 @@ import { config } from '@/config';
 import RequestInProgressError from '@/errors/types/request-in-progress';
 import type { Data } from '@/types';
 import cacheModule from '@/utils/cache/index';
+import { hasItemFilters } from '@/utils/route-limit';
 
 const bypassList = new Set(['/', '/robots.txt', '/logo.png', '/favicon.ico']);
 
@@ -21,8 +22,13 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
     const requestPath = ctx.req.path;
     const format = `:${ctx.req.query('format') || config.format}`;
     const limit = ctx.req.query('limit') ? `:${ctx.req.query('limit')}` : '';
-    const key = 'rsshub:koa-redis-cache:' + h64ToString(requestPath + format + limit);
-    const controlKey = 'rsshub:path-requested:' + h64ToString(requestPath + format + limit);
+    // Routes may select entries before fetching details according to this option.
+    const sortedQuery = ctx.req.query('sorted');
+    const sorted = sortedQuery === undefined ? '' : sortedQuery === 'false' ? ':sorted=false' : ':sorted=true';
+    const filtered = hasItemFilters(ctx) ? ':filtered' : '';
+    const requestKey = h64ToString(requestPath + format + limit + sorted + filtered);
+    const key = 'rsshub:koa-redis-cache:' + requestKey;
+    const controlKey = 'rsshub:path-requested:' + requestKey;
 
     let value = await cacheModule.globalCache.get(key);
 

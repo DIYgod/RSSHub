@@ -1,7 +1,8 @@
 import { cookie as HttpCookieAgentCookie, CookieAgent } from 'http-cookie-agent/undici';
 import queryString from 'query-string';
 import { Cookie, CookieJar } from 'tough-cookie';
-import undici, { ProxyAgent } from 'undici';
+import type { ProxyAgent } from 'undici';
+import undici from 'undici';
 
 import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
@@ -26,11 +27,7 @@ const token2Cookie = async (token) => {
     const jar = new CookieJar();
     await jar.setCookie(`auth_token=${token}`, 'https://x.com');
     try {
-        const agent = proxy.proxyUri
-            ? new ProxyAgent({
-                  uri: proxy.proxyUri,
-              }).compose(HttpCookieAgentCookie({ jar }))
-            : new CookieAgent({ cookies: { jar } });
+        const agent = proxy.dispatcher ? proxy.dispatcher.compose(HttpCookieAgentCookie({ jar })) : new CookieAgent({ cookies: { jar } });
         if (token) {
             await ofetch('https://x.com', {
                 dispatcher: agent,
@@ -63,11 +60,11 @@ const getAuth = async (retry: number) => {
     const token = config.twitter.authToken[index];
     const lock = await cache.get(`${lockPrefix}${token}`, false);
     if (lock) {
-        logger.debug(`twitter debug: twitter cookie for token ${token} is locked, retry: ${retry}`);
+        logger.debug(`twitter debug: twitter cookie is locked, retry: ${retry}`);
         await new Promise((resolve) => setTimeout(resolve, Math.random() * 500 + 500));
         return await getAuth(retry - 1);
     }
-    logger.debug(`twitter debug: lock twitter cookie for token ${token}`);
+    logger.debug('twitter debug: lock twitter cookie');
     await cache.set(`${lockPrefix}${token}`, '1', 20);
     return {
         token,
@@ -107,14 +104,10 @@ export const twitterGot = async (
           }
         | undefined;
     if (cookie) {
-        logger.debug(`twitter debug: got twitter cookie for token ${auth?.token}`);
+        logger.debug('twitter debug: got twitter cookie');
         const jar = CookieJar.deserializeSync(JSON.parse(cookie));
-        const agent = proxy.proxyUri
-            ? new ProxyAgent({
-                  uri: proxy.proxyUri,
-              }).compose(HttpCookieAgentCookie({ jar }))
-            : new CookieAgent({ cookies: { jar } });
-        if (proxy.proxyUri) {
+        const agent = proxy.dispatcher ? proxy.dispatcher.compose(HttpCookieAgentCookie({ jar })) : new CookieAgent({ cookies: { jar } });
+        if (proxy.dispatcher) {
             logger.debug(`twitter debug: Proxying request: ${requestUrl}`);
         }
         dispatchers = {
@@ -122,7 +115,7 @@ export const twitterGot = async (
             agent,
         };
     } else if (auth) {
-        throw new ConfigNotFoundError(`Twitter cookie for token ${auth?.token?.replace(/(\w{8})(\w+)/, (_, v1, v2) => v1 + '*'.repeat(v2.length))} is not valid`);
+        throw new ConfigNotFoundError('Twitter authentication cookie is not valid. Check TWITTER_AUTH_TOKEN.');
     }
     const jsonCookie = dispatchers
         ? Object.fromEntries(
@@ -189,17 +182,15 @@ export const twitterGot = async (
     const remaining = response.headers.get('x-rate-limit-remaining');
     const remainingInt = Number.parseInt(remaining || '0');
     const reset = response.headers.get('x-rate-limit-reset');
-    logger.debug(
-        `twitter debug: twitter rate limit remaining for token ${auth?.token} is ${remaining} and reset at ${reset}, auth: ${JSON.stringify(auth)}, status: ${response.status}, data: ${JSON.stringify(responseData?.data)}, cookie: ${JSON.stringify(dispatchers?.jar.serializeSync())}`
-    );
+    logger.debug(`twitter debug: twitter rate limit remaining is ${remaining} and reset at ${reset}, status: ${response.status}`);
     if (auth) {
         if (remaining && remainingInt < 2 && reset) {
             const resetTime = new Date(Number.parseInt(reset) * 1000);
             const delay = (resetTime.getTime() - Date.now()) / 1000;
-            logger.debug(`twitter debug: twitter rate limit exceeded for token ${auth.token} with status ${response.status}, will unlock after ${delay}s`);
+            logger.debug(`twitter debug: twitter rate limit exceeded with status ${response.status}, will unlock after ${delay}s`);
             await cache.set(`${lockPrefix}${auth.token}`, '1', Math.ceil(delay) * 2);
         } else if (response.status === 429 || JSON.stringify(responseData?.data) === '{"user":{}}') {
-            logger.debug(`twitter debug: twitter rate limit exceeded for token ${auth.token} with status ${response.status}`);
+            logger.debug(`twitter debug: twitter rate limit exceeded with status ${response.status}`);
             await cache.set(`${lockPrefix}${auth.token}`, '1', 2000);
         } else if (response.status === 403 || response.status === 401) {
             // const newCookie = await login({
@@ -208,7 +199,7 @@ export const twitterGot = async (
             //     authenticationSecret: auth.authenticationSecret,
             // });
             // if (newCookie) {
-            //     logger.debug(`twitter debug: reset twitter cookie for token ${auth.token}, ${newCookie}`);
+            //     logger.debug('twitter debug: reset twitter cookie');
             //     await cache.set(`twitter:cookie:${auth.token}`, newCookie, config.cache.contentExpire);
             //     await cache.set(`${lockPrefix}${auth.token}`, '', 1);
             // } else {
@@ -219,11 +210,11 @@ export const twitterGot = async (
             // if (auth.password) {
             //     config.twitter.password = config.twitter.password?.filter((password) => password !== auth.password);
             // }
-            logger.debug(`twitter debug: delete twitter cookie for token ${auth.token} with status ${response.status}, remaining tokens: ${config.twitter.authToken?.length}`);
+            logger.debug(`twitter debug: delete twitter cookie with status ${response.status}, remaining tokens: ${config.twitter.authToken?.length}`);
             await cache.set(`${lockPrefix}${auth.token}`, '1', 3600);
             // }
         } else {
-            logger.debug(`twitter debug: unlock twitter cookie with success for token ${auth.token}`);
+            logger.debug('twitter debug: unlock twitter cookie with success');
             await cache.set(`${lockPrefix}${auth.token}`, '', 1);
         }
     }
@@ -233,7 +224,7 @@ export const twitterGot = async (
     }
 
     if (auth?.token) {
-        logger.debug(`twitter debug: update twitter cookie for token ${auth.token}`);
+        logger.debug('twitter debug: update twitter cookie');
         await cache.set(`twitter:cookie:${auth.token}`, JSON.stringify(dispatchers?.jar.serializeSync()), config.cache.contentExpire);
     }
 

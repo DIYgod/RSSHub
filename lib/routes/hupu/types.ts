@@ -1,7 +1,7 @@
-// 虎扑 API 响应数据类型定义
+// Hupu API response types
 
 /**
- * 徽章信息
+ * Badge metadata
  */
 interface Badge {
     name: string;
@@ -17,7 +17,7 @@ interface Badge {
 }
 
 /**
- * 首页帖子数据项（res 数组中的项）
+ * Home page post (an entry in the res array)
  */
 interface HomePostItem {
     tid: string;
@@ -33,7 +33,7 @@ interface HomePostItem {
 }
 
 /**
- * 新闻/分类页面数据项（newsData 数组中的项）
+ * News or category entry in the newsData array
  */
 interface NewsDataItem {
     nid: string;
@@ -49,7 +49,7 @@ interface NewsDataItem {
 }
 
 /**
- * 推荐比赛 Toast 信息
+ * Recommended match toast metadata
  */
 interface RecommendMatchToast {
     date: string;
@@ -62,7 +62,7 @@ interface RecommendMatchToast {
 }
 
 /**
- * 推荐比赛信息
+ * Recommended match metadata
  */
 interface RecommendMatch {
     projectId: string | null;
@@ -79,7 +79,7 @@ interface RecommendMatch {
 }
 
 /**
- * 首页页面属性
+ * Home page properties
  */
 interface HomePageProps {
     res: HomePostItem[];
@@ -88,7 +88,7 @@ interface HomePageProps {
 }
 
 /**
- * 篮球分类页面属性 (NBA/CBA)
+ * Basketball category properties (NBA/CBA)
  */
 interface BasketballPageProps {
     leagueType: string;
@@ -98,7 +98,7 @@ interface BasketballPageProps {
 }
 
 /**
- * 足球分类页面属性
+ * Soccer category properties
  */
 interface SoccerPageProps {
     schedules: any[];
@@ -107,12 +107,12 @@ interface SoccerPageProps {
 }
 
 /**
- * 所有分类页面属性的联合类型
+ * Union of category page properties
  */
 type CategoryPageProps = BasketballPageProps | SoccerPageProps;
 
 /**
- * API 响应的 props 结构
+ * API response props
  */
 interface ApiResponseProps {
     pageProps: HomePageProps | CategoryPageProps;
@@ -120,7 +120,7 @@ interface ApiResponseProps {
 }
 
 /**
- * 完整的 API 响应结构
+ * Complete API response
  */
 export interface HupuApiResponse {
     props: ApiResponseProps;
@@ -134,30 +134,11 @@ export interface HupuApiResponse {
 }
 
 /**
- * 用于区分不同页面类型的类型守卫
- */
-export function isHomePageProps(pageProps: HomePageProps | CategoryPageProps): pageProps is HomePageProps {
-    return 'res' in pageProps;
-}
-
-export function isBasketballPageProps(pageProps: CategoryPageProps): pageProps is BasketballPageProps {
-    return 'newsData' in pageProps && 'leagueType' in pageProps;
-}
-
-export function isSoccerPageProps(pageProps: CategoryPageProps): pageProps is SoccerPageProps {
-    return 'news' in pageProps && 'schedules' in pageProps;
-}
-
-/**
- * 用于区分不同数据项类型的类型守卫
+ * Type guards for item variants
  */
 export function isHomePostItem(item: HomePostItem | NewsDataItem): item is HomePostItem {
     return 'url' in item && 'isNews' in item;
 }
 
-export function isNewsDataItem(item: HomePostItem | NewsDataItem): item is NewsDataItem {
-    return 'nid' in item && 'link' in item && 'publishTime' in item;
-}
-
-// 导出具体类型以供外部使用
-export type { ApiResponseProps, Badge, BasketballPageProps, CategoryPageProps, HomePageProps, HomePostItem, NewsDataItem, RecommendMatch, SoccerPageProps };
+// Export concrete types for other modules
+export type { HomePostItem, NewsDataItem };

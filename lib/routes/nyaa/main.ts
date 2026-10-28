@@ -1,11 +1,14 @@
 import { load } from 'cheerio';
 import MarkdownIt from 'markdown-it';
+import pMap from 'p-map';
 import Parser from 'rss-parser';
 
 import { config } from '@/config';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
 const md = MarkdownIt({
     breaks: true,
@@ -40,6 +43,22 @@ type NyaaItem = {
     enclosure_type?: string;
 };
 
+const toDataItems = (item: Parser.Item & NyaaItem): DataItem[] => {
+    if (!item.title || !item.guid) {
+        return [];
+    }
+    return [
+        {
+            title: item.title,
+            link: item.guid,
+            guid: item.guid,
+            pubDate: item.pubDate ? parseDate(item.pubDate) : undefined,
+            description: item.description,
+            ...(item.link && { enclosure_url: item.link, enclosure_type: 'application/x-bittorrent' }),
+        },
+    ];
+};
+
 async function handler(ctx) {
     const parser = new Parser<object, NyaaItem>({
         customFields: {
@@ -57,55 +76,40 @@ async function handler(ctx) {
     let currentRSSURL = `${rootURL}/?page=rss`;
     let currentLink = `${rootURL}/`;
     if (username !== undefined) {
-        currentRSSURL += `&u=${encodeURI(username)}`;
-        currentLink += `user/${encodeURI(username)}`;
+        currentRSSURL += `&u=${encodeURIComponent(username)}`;
+        currentLink += `user/${encodeURIComponent(username)}`;
     }
     if (query !== undefined) {
-        currentRSSURL += `&q=${encodeURI(query)}`;
-        currentLink += `?q=${encodeURI(query)}`;
+        currentRSSURL += `&q=${encodeURIComponent(query)}`;
+        currentLink += `?q=${encodeURIComponent(query)}`;
     }
 
     const feed = await parser.parseURL(currentRSSURL);
 
-    /**
-     * Shares the same `mode=fulltext` trigger condition with
-     * DIYgod/RSSHub/lib/middleware/parameter.ts
-     *
-     * @caution
-     * Due to semantic differences in Nyaa (where `link` = torrent file, `guid` = web page),
-     * the middleware may trigger unnecessary requests to torrent files, and when a 429 error occurs,
-     * you can observe request errors for the torrent file in the console.
-     *
-     * @impact
-     * Does NOT affect the final RSS output. The actual fulltext is correctly fetched from `item.guid`.
-     */
     if (ctx.req.query('mode')?.toLowerCase() === 'fulltext') {
-        const limit = Number.parseInt(ctx.req.query('limit')) || 6; // prevent 429 rate limiting
-        const items = await Promise.all(
-            feed.items.slice(0, limit).map((item) =>
-                cache.tryGet(item.guid!, async () => {
+        const limit = getRouteLimit(ctx, 6); // Preserve the first-page full-text default.
+        const items = await pMap(
+            feed.items.slice(0, limit),
+            async (item) => ({
+                ...item,
+                description: await cache.tryGet(item.guid + ':body', async () => {
                     const response = await ofetch(item.guid!);
                     const $ = load(response);
-
-                    item.description = md.render($('div#torrent-description.panel-body[markdown-text]').text());
-                    item.enclosure_url = `magnet:?xt=urn:btih:${item.infoHash}`;
-                    item.enclosure_type = 'application/x-bittorrent';
-                    return item;
-                })
-            )
+                    return md.render($('div#torrent-description.panel-body[markdown-text]').text());
+                }),
+            }),
+            { concurrency: 3 }
         );
 
         return {
             title: feed.title!,
             link: currentLink,
             description: feed.description,
-            item: items as DataItem[],
+            item: items.flatMap(toDataItems),
         };
     }
     feed.items.map((item) => {
         item.description = item.content;
-        item.enclosure_url = `magnet:?xt=urn:btih:${item.infoHash}`;
-        item.enclosure_type = 'application/x-bittorrent';
         return item;
     });
 
@@ -113,6 +117,6 @@ async function handler(ctx) {
         title: feed.title!,
         link: currentLink,
         description: feed.description,
-        item: feed.items as DataItem[],
+        item: feed.items.flatMap(toDataItems),
     };
 }

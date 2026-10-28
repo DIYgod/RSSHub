@@ -122,10 +122,10 @@ async function handler(ctx) {
     const items = [
         {
             title,
-            pubDate: parseDate(liveRoom.startTime, 'X'),
+            pubDate: liveRoom.startTime ? parseDate(liveRoom.startTime, 'X') : undefined,
             author: userInfo.nickname,
             link,
-            guid: `${userInfo.roomId}:${liveRoom.streamId}:${liveRoom.status}`,
+            guid: `${userInfo.roomId || userInfo.uniqueId}:${liveRoom.streamId || liveRoom.startTime || ''}:${liveRoom.status}`,
         },
     ];
 

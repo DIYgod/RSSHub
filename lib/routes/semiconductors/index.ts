@@ -2,18 +2,20 @@ import type { Cheerio, CheerioAPI } from 'cheerio';
 import { load } from 'cheerio';
 import type { Element } from 'domhandler';
 import type { Context } from 'hono';
+import pMap from 'p-map';
 
 import type { Data, DataItem, Language, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
 import { renderDescription } from './templates/description';
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { category = 'news-events/latest-news' } = ctx.req.param();
-    const limit = Number(ctx.req.query('limit') ?? '12');
+    const limit = getRouteLimit(ctx, 12);
 
     const baseUrl = 'https://www.semiconductors.org';
     const targetUrl = `${baseUrl}/${category.endsWith('/') ? category : `${category}/`}`;
@@ -50,39 +52,47 @@ export const handler = async (ctx: Context): Promise<Data> => {
             const linkUrl: string | undefined = $aEl.attr('href');
             const categoryEls: Element[] = $el.find('div.resource-item-category span.ric').toArray();
             const categories: string[] = [...new Set(categoryEls.map((el) => $(el).text()).filter(Boolean))];
-            const upDatedStr: string | undefined = pubDateStr;
 
             const processedItem: DataItem = {
                 title,
                 description,
-                pubDate: pubDateStr ? parseDate(pubDateStr, 'DD/MM/YY') : undefined,
+                pubDate: pubDateStr ? parseDate(`${pubDateStr} +0000`, 'MM/DD/YY ZZ') : undefined,
                 link: linkUrl ? new URL(linkUrl, baseUrl).href : undefined,
                 category: categories,
                 content: {
                     html: description,
-                    text: description,
+                    text: $aEl.next().text(),
                 },
                 image,
                 banner: image,
-                updated: upDatedStr ? parseDate(upDatedStr, 'DD/MM/YY') : undefined,
                 language,
             };
 
             return processedItem;
         });
 
-    items = await Promise.all(
-        items.map((item) => {
+    items = await pMap(
+        items,
+        async (item) => {
             if (!item.link) {
                 return item;
             }
 
-            return cache.tryGet(item.link, async (): Promise<DataItem> => {
+            const detail = await cache.tryGet(`${item.link}:details`, async (): Promise<DataItem> => {
                 const detailResponse = await ofetch(item.link!);
                 const $$: CheerioAPI = load(detailResponse);
 
-                const title: string = $$('h1').text();
+                const title: string = $$('main#main h1').last().text();
+                const author = $$('main#main > p')
+                    .first()
+                    .text()
+                    .match(/^\s*by\s+(.+)/i)?.[1]
+                    .trim();
 
+                $$('main#main')
+                    .contents()
+                    .filter((_, node) => node.type === 'text' && /^\s*(?:Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday),\s+[A-Z]{3}\s+\d{1,2},\s+\d{4},\s+\d{1,2}:\d{2}(?:am|pm)\s*$/i.test(node.data))
+                    .remove();
                 $$('h1').remove();
                 $$('main#main').contents().first().remove();
                 $$('main#main p').first().remove();
@@ -118,24 +128,27 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 const processedItem: DataItem = {
                     title,
                     description,
-                    pubDate: pubDateStr ? parseDate(pubDateStr) : item.pubDate,
-                    author: authors,
+                    pubDate: pubDateStr ? parseDate(pubDateStr) : undefined,
+                    author: author || (authors.length ? authors : undefined),
                     content: {
                         html: description,
-                        text: description,
+                        text: $$('main#main').text(),
                     },
                     image,
                     banner: image,
-                    updated: upDatedStr ? parseDate(upDatedStr) : item.updated,
+                    updated: upDatedStr ? parseDate(upDatedStr) : undefined,
                     language,
                 };
 
-                return {
-                    ...item,
-                    ...processedItem,
-                };
+                return processedItem;
             });
-        })
+            return {
+                ...item,
+                ...detail,
+                pubDate: detail.pubDate ?? item.pubDate,
+            };
+        },
+        { concurrency: 3 }
     );
 
     return {
@@ -143,7 +156,6 @@ export const handler = async (ctx: Context): Promise<Data> => {
         description: $('meta[property="og:description"]').attr('content'),
         link: targetUrl,
         item: items,
-        allowEmpty: true,
         image: $('meta[property="og:image"]').attr('content'),
         author: $('meta[property="og:site_name"]').attr('content'),
         language,
@@ -177,6 +189,10 @@ To subscribe to [Latest News](https://www.semiconductors.org/news-events/latest-
         supportScihub: false,
     },
     radar: [
+        {
+            source: ['www.semiconductors.org/news-events/:category'],
+            target: '/news-events/:category',
+        },
         {
             source: ['www.semiconductors.org/:category'],
             target: '/:category',

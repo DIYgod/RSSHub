@@ -1,9 +1,11 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 const rootUrl = 'http://sec.hrbeu.edu.cn';
 
@@ -47,19 +49,17 @@ async function handler(ctx) {
     const list = $('li.list_item')
         .toArray()
         .map((item): DataItem => {
-            let link = $(item).find('a').attr('href');
-            if (link && link.includes('page.htm')) {
-                link = `${rootUrl}${link}`;
-            }
+            const link = new URL($(item).find('a').attr('href')!, `${rootUrl}/${id}/list.htm`).href;
             return {
                 title: $(item).find('a').attr('title')!,
-                pubDate: parseDate($(item).find('span.Article_PublishDate').text()),
+                pubDate: $(item).find('span.Article_PublishDate').text() ? timezone(parseDate($(item).find('span.Article_PublishDate').text()), 8) : undefined,
                 link,
             };
         });
 
-    const items = await Promise.all(
-        list.map((item) =>
+    const items = await pMap(
+        list,
+        (item) =>
             cache.tryGet(item.link!, async () => {
                 if (item.link!.includes('page.htm')) {
                     const detailResponse = await got(item.link);
@@ -69,8 +69,8 @@ async function handler(ctx) {
                     item.description = '本文需跳转，请点击标题后阅读';
                 }
                 return item;
-            })
-        )
+            }),
+        { concurrency: 3 }
     );
 
     return {

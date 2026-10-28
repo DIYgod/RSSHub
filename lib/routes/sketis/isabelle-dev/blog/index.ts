@@ -4,13 +4,7 @@ import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
-const source = [
-    'isabelle-dev.sketis.net/phame/',
-    'isabelle-dev.sketis.net/phame/blog/',
-    'isabelle-dev.sketis.net/phame/blog/view/:blog/',
-    'isabelle-dev.sketis.net/phame/post/',
-    'isabelle-dev.sketis.net/phame/post/view/:post_id/:post_title/',
-];
+const source = ['isabelle-dev.sketis.net/phame/', 'isabelle-dev.sketis.net/phame/blog/'];
 
 export const route: Route = {
     path: '/isabelle-dev/blog/:blog',
@@ -35,6 +29,10 @@ export const route: Route = {
         {
             source,
             target: '/isabelle-dev/blog/2',
+        },
+        {
+            source: ['isabelle-dev.sketis.net/phame/blog/view/:blog/'],
+            target: '/isabelle-dev/blog/:blog',
         },
     ],
     name: 'Isabelle Development Blogs',

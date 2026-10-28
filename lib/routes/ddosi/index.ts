@@ -1,9 +1,6 @@
-import { load } from 'cheerio';
-
 import type { Route } from '@/types';
-import got from '@/utils/got';
-import { PRESETS } from '@/utils/header-generator';
-import { parseDate } from '@/utils/parse-date';
+
+import { getFirstPage } from './utils';
 
 export const route: Route = {
     path: '/',
@@ -22,29 +19,7 @@ export const route: Route = {
 
 async function handler() {
     const url = 'https://www.ddosi.org/';
-    const response = await got({
-        method: 'get',
-        url,
-        headerGeneratorOptions: PRESETS.MODERN_IOS,
-    });
-    const $ = load(response.data);
-    const list = $('main>article').toArray();
-
-    const items = list.map((i) => {
-        const item = $(i);
-
-        const href = item.find('a:first-child').attr('href');
-        const title = item.find('.entry-title a').text();
-        const description = item.find('.entry-content p').text();
-        const date = parseDate(item.find('.meta-date a time').attr('datetime')!);
-
-        return {
-            title,
-            description,
-            pubDate: date,
-            link: href,
-        };
-    });
+    const items = await getFirstPage(url);
 
     return {
         title: '雨苁',

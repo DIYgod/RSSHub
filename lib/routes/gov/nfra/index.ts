@@ -1,14 +1,21 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
-import type { Language, Route } from '@/types';
+import InvalidParameterError from '@/errors/types/invalid-parameter';
+import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 import timezone from '@/utils/timezone';
 
 export const handler = async (ctx) => {
     const { id = '915' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 18;
+    if (!/^[1-9]\d*$/.test(id)) {
+        throw new InvalidParameterError('Category id must be a positive integer from the NFRA category page URL.');
+    }
+    const limit = getRouteLimit(ctx, 18);
+    const candidateLimit = ctx.req.query('sorted') === 'false' ? limit : Math.max(18, limit);
 
     const rootUrl = 'https://www.nfra.gov.cn';
     const apiUrl = new URL(`cn/static/data/DocInfo/SelectDocByItemIdAndChild/data_itemId=${id},pageIndex=1,pageSize=18.json`, rootUrl).href;
@@ -22,7 +29,7 @@ export const handler = async (ctx) => {
 
     const response = await ofetch(apiUrl);
 
-    let items = response.data.rows.slice(0, limit).map((item) => {
+    let items: DataItem[] = response.data.rows.slice(0, candidateLimit).map((item) => {
         const title = item.docTitle;
         const description = item.docSubtitle;
         const guid = item.docId;
@@ -30,7 +37,7 @@ export const handler = async (ctx) => {
         return {
             title,
             description,
-            pubDate: timezone(parseDate(item.publishDate), 8),
+            pubDate: item.publishDate ? timezone(parseDate(item.publishDate), 8) : undefined,
             link: new URL(`cn/view/pages/ItemDetail.html?docId=${guid}`, rootUrl).href,
             guid,
             id: guid,
@@ -38,15 +45,18 @@ export const handler = async (ctx) => {
                 html: description,
                 text: description,
             },
-            enclosure_url: new URL(item.pdfFileUrl, rootUrl).href,
-            enclosure_type: 'application/pdf',
-            enclosure_title: title,
+            ...(item.pdfFileUrl && {
+                enclosure_url: new URL(item.pdfFileUrl, rootUrl).href,
+                enclosure_type: 'application/pdf',
+                enclosure_title: title,
+            }),
         };
     });
 
-    items = await Promise.all(
-        items.map((item) =>
-            cache.tryGet(item.link, async () => {
+    items = await pMap(
+        items,
+        (item) =>
+            cache.tryGet(item.link!, async () => {
                 const apiDocUrl = new URL(`cn/static/data/DocInfo/SelectByDocId/data_docId=${item.guid}.json`, rootUrl).href;
 
                 const detailResponse = await ofetch(apiDocUrl);
@@ -58,10 +68,10 @@ export const handler = async (ctx) => {
                 const title = data.docTitle;
                 const description = $$('div.Section0').html();
 
-                item.title = title;
+                item.title = title || item.title;
                 item.description = description;
-                item.pubDate = timezone(parseDate(data.publishDate), 8);
-                item.category = data.listTwoItem?.[0]?.ItemLvs.map((c) => c.itemName);
+                item.pubDate = data.publishDate ? timezone(parseDate(data.publishDate), 8) : item.pubDate;
+                item.category = data.listTwoItem?.[0]?.ItemLvs?.map((c) => c.itemName);
                 item.author = data.docSource;
                 item.guid = `cbirc-${item.guid}`;
                 item.id = item.guid;
@@ -69,12 +79,12 @@ export const handler = async (ctx) => {
                     html: description,
                     text: $$('div.Section0').text(),
                 };
-                item.updated = parseDate(data.docEditdate);
-                item.language = $$('html').prop('lang') || '';
+                item.updated = data.docEditdate ? parseDate(data.docEditdate) : undefined;
+                item.language = ($$('html').prop('lang') || undefined) as Language | undefined;
 
                 return item;
-            })
-        )
+            }),
+        { concurrency: 3 }
     );
 
     const currentResponse = await ofetch(currentUrl);
@@ -86,14 +96,13 @@ export const handler = async (ctx) => {
     const language = $('html').prop('lang') as Language;
 
     const imageSrc = $('div.header-left img').prop('src');
-    const image = imageSrc ? new URL(imageSrc, rootUrl).href : '';
+    const image = imageSrc ? new URL(imageSrc, rootUrl).href : undefined;
 
     return {
         title: `${$('title').text()} - ${item.itemName}`,
         description: item.desc,
         link: currentUrl,
         item: items,
-        allowEmpty: true,
         image,
         author: item.type,
         language,
@@ -184,179 +193,9 @@ export const route: Route = {
     },
     radar: [
         {
-            title: '首页 - 弹出公告',
-            source: ['www.nfra.gov.cn/cn/view/pages/ItemList.html'],
-            target: '/972',
-        },
-        {
-            title: '首页 - 法律声明',
-            source: ['www.nfra.gov.cn/cn/view/pages/ItemList.html'],
-            target: '/4128',
-        },
-        {
-            title: '机构概况 - 主要职责',
-            source: ['www.nfra.gov.cn/cn/view/pages/ItemList.html'],
-            target: '/901',
-        },
-        {
-            title: '机构概况 - 总局领导',
-            source: ['www.nfra.gov.cn/cn/view/pages/ItemList.html'],
-            target: '/902',
-        },
-        {
-            title: '机构概况 - 内设机构',
-            source: ['www.nfra.gov.cn/cn/view/pages/ItemList.html'],
-            target: '/911',
-        },
-        {
-            title: '机构概况 - 直属行政机构',
-            source: ['www.nfra.gov.cn/cn/view/pages/ItemList.html'],
-            target: '/4243',
-        },
-        {
-            title: '机构概况 - 派出机构',
-            source: ['www.nfra.gov.cn/cn/view/pages/ItemList.html'],
-            target: '/912',
-        },
-        {
-            title: '机构概况 - 联系方式',
-            source: ['www.nfra.gov.cn/cn/view/pages/ItemList.html'],
-            target: '/913',
-        },
-        {
-            title: '新闻资讯 - 监管动态',
-            source: ['www.nfra.gov.cn/cn/view/pages/ItemList.html'],
-            target: '/915',
-        },
-        {
-            title: '新闻资讯 - 政策解读',
-            source: ['www.nfra.gov.cn/cn/view/pages/ItemList.html'],
-            target: '/916',
-        },
-        {
-            title: '新闻资讯 - 领导活动及讲话',
-            source: ['www.nfra.gov.cn/cn/view/pages/ItemList.html'],
-            target: '/919',
-        },
-        {
-            title: '新闻资讯 - 新闻发布会及访谈',
-            source: ['www.nfra.gov.cn/cn/view/pages/ItemList.html'],
-            target: '/920',
-        },
-        {
-            title: '新闻资讯 - 新闻发言人',
-            source: ['www.nfra.gov.cn/cn/view/pages/ItemList.html'],
-            target: '/921',
-        },
-        {
             title: '政务信息 - 政府信息公开',
             source: ['www.nfra.gov.cn/cn/view/pages/zhengwuxinxi/zhengfuxinxi.html'],
             target: '/924',
-        },
-        {
-            title: '政务信息 - 公告通知',
-            source: ['www.nfra.gov.cn/cn/view/pages/ItemList.html'],
-            target: '/925',
-        },
-        {
-            title: '政务信息 - 政策法规',
-            source: ['www.nfra.gov.cn/cn/view/pages/ItemList.html'],
-            target: '/926',
-        },
-        {
-            title: '政务信息 - 行政许可',
-            source: ['www.nfra.gov.cn/cn/view/pages/ItemList.html'],
-            target: '/930',
-        },
-        {
-            title: '政务信息 - 行政处罚',
-            source: ['www.nfra.gov.cn/cn/view/pages/ItemList.html'],
-            target: '/931',
-        },
-        {
-            title: '政务信息 - 行政监管措施',
-            source: ['www.nfra.gov.cn/cn/view/pages/ItemList.html'],
-            target: '/932',
-        },
-        {
-            title: '政务信息 - 人事信息',
-            source: ['www.nfra.gov.cn/cn/view/pages/ItemList.html'],
-            target: '/933',
-        },
-        {
-            title: '在线服务 - 行政许可办事服务指南',
-            source: ['www.nfra.gov.cn/cn/view/pages/ItemList.html'],
-            target: '/938',
-        },
-        {
-            title: '在线服务 - 查询服务',
-            source: ['www.nfra.gov.cn/cn/view/pages/ItemList.html'],
-            target: '/939',
-        },
-        {
-            title: '互动交流 - 政务咨询',
-            source: ['www.nfra.gov.cn/cn/view/pages/ItemList.html'],
-            target: '/946',
-        },
-        {
-            title: '互动交流 - 征集调查',
-            source: ['www.nfra.gov.cn/cn/view/pages/ItemList.html'],
-            target: '/950',
-        },
-        {
-            title: '互动交流 - 国务院办公厅开通"国家政务服务投诉与建议"小程序',
-            source: ['www.nfra.gov.cn/cn/view/pages/ItemList.html'],
-            target: '/952',
-        },
-        {
-            title: '统计数据 - 统计信息',
-            source: ['www.nfra.gov.cn/cn/view/pages/ItemList.html'],
-            target: '/954',
-        },
-        {
-            title: '统计数据 - 数据图表',
-            source: ['www.nfra.gov.cn/cn/view/pages/ItemList.html'],
-            target: '/955',
-        },
-        {
-            title: '专题专栏 - 推进普惠金融高质量发展',
-            source: ['www.nfra.gov.cn/cn/view/pages/ItemList.html'],
-            target: '/4234',
-        },
-        {
-            title: '专题专栏 - 防范和处置非法集资',
-            source: ['www.nfra.gov.cn/cn/view/pages/ItemList.html'],
-            target: '/963',
-        },
-        {
-            title: '专题专栏 - 消费者保护',
-            source: ['www.nfra.gov.cn/cn/view/pages/ItemList.html'],
-            target: '/4097',
-        },
-        {
-            title: '专题专栏 - 法治宣传',
-            source: ['www.nfra.gov.cn/cn/view/pages/ItemList.html'],
-            target: '/4106',
-        },
-        {
-            title: '专题专栏 - 政府网站年度报表',
-            source: ['www.nfra.gov.cn/cn/view/pages/ItemList.html'],
-            target: '/970',
-        },
-        {
-            title: '专题专栏 - 服务民营企业',
-            source: ['www.nfra.gov.cn/cn/view/pages/ItemList.html'],
-            target: '/4171',
-        },
-        {
-            title: '专题专栏 - 服务制造业发展',
-            source: ['www.nfra.gov.cn/cn/view/pages/ItemList.html'],
-            target: '/4217',
-        },
-        {
-            title: '专题专栏 - 学习贯彻习近平新时代中国特色社会主义思想主题教育',
-            source: ['www.nfra.gov.cn/cn/view/pages/ItemList.html'],
-            target: '/4229',
         },
     ],
 };

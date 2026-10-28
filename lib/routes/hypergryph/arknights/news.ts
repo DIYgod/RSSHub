@@ -45,13 +45,18 @@ type InitialData = {
     };
 };
 
+const parsePublicationDate = (value: number) => {
+    const date = Number.isFinite(value) && value > 0 ? parseDate(value, 'X') : undefined;
+    return date && Number.isFinite(date.getTime()) ? date : undefined;
+};
+
 const parseList = (list: NewsItem[]) =>
     list.map((item) => ({
         title: item.title,
         author: item.author,
         description: item.brief.trim().replaceAll('\n', '<br>'),
         link: `https://ak.hypergryph.com/news/${item.cid}`,
-        pubDate: parseDate(item.displayTime, 'X'),
+        pubDate: parsePublicationDate(item.displayTime),
     }));
 
 export const route: Route = {
@@ -93,7 +98,15 @@ async function handler(ctx) {
         false
     );
 
-    const list = group === 'ALL' ? Object.values(initialData).flatMap(({ list }) => parseList(list)) : parseList(initialData[group].list);
+    const candidates = group === 'ALL' ? Object.values(initialData).flatMap(({ list }) => parseList(list)) : parseList(initialData[group].list);
+    const seenLinks = new Set<string>();
+    const list = candidates.filter((item) => {
+        if (seenLinks.has(item.link)) {
+            return false;
+        }
+        seenLinks.add(item.link);
+        return true;
+    });
 
     const items = await Promise.all(
         list.map((item) =>

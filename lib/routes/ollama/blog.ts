@@ -34,6 +34,7 @@ async function handler() {
         }));
     return {
         title: 'ollama blog',
+        language: 'en' as const,
         link: 'https://ollama.com/blog',
         item: items,
     };

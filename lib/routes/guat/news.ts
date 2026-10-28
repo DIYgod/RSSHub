@@ -7,9 +7,11 @@
  */
 import { load } from 'cheerio';
 import type { Context } from 'hono';
+import pMap from 'p-map';
 
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { DataItem, Route } from '@/types';
+import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
@@ -38,10 +40,10 @@ const urls = {
 
 async function handler(ctx: Context) {
     const { type = 'ghyw' } = ctx.req.param();
-    const url = urls[type];
-    if (!url) {
-        throw new InvalidParameterError('参数不在可选范围之内');
+    if (!Object.hasOwn(urls, type)) {
+        throw new InvalidParameterError('Invalid news type. Use ghyw, zxdt, tzgg, or xxgk.');
     }
+    const url = urls[type];
     const response = await ofetch(url);
     const $ = load(response);
 
@@ -58,9 +60,25 @@ async function handler(ctx: Context) {
             };
         });
 
+    const items = await pMap(
+        list,
+        async (item) => {
+            if (!item.link?.startsWith(`${host}/`)) {
+                return item;
+            }
+            const description = await cache.tryGet(`guat:article:${item.link}`, async () => {
+                const article = await ofetch<string>(item.link!);
+                const $ = load(article);
+                return $('.v_news_content').html() ?? undefined;
+            });
+            return { ...item, summary: item.description ?? undefined, description };
+        },
+        { concurrency: 3 }
+    );
+
     return {
         title: `桂林航天工业学院 - ${$('.ej_main h2').text().trim()}`,
         link: url,
-        item: list,
+        item: items,
     };
 }

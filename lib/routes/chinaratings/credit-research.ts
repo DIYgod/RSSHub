@@ -8,10 +8,12 @@ import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
+import timezone from '@/utils/timezone';
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { category = 'Industry/Comment' } = ctx.req.param();
-    const limit = Number(ctx.req.query('limit') ?? '15');
+    const limit = getRouteLimit(ctx, 15);
 
     const baseUrl = 'https://www.chinaratings.com.cn';
     const targetUrl: string = new URL(`CreditResearch/${category.endsWith('/') ? category : `${category}/`}`, baseUrl).href;
@@ -34,9 +36,9 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
             const processedItem: DataItem = {
                 title,
-                pubDate: pubDateStr ? parseDate(pubDateStr) : undefined,
+                pubDate: pubDateStr ? timezone(parseDate(pubDateStr, 'YYYY-MM-DD'), 8) : undefined,
                 link: linkUrl ? new URL(linkUrl, targetUrl).href : undefined,
-                updated: upDatedStr ? parseDate(upDatedStr) : undefined,
+                updated: upDatedStr ? timezone(parseDate(upDatedStr, 'YYYY-MM-DD'), 8) : undefined,
                 language,
             };
 
@@ -65,13 +67,13 @@ export const handler = async (ctx: Context): Promise<Data> => {
                     let processedItem: DataItem = {
                         title,
                         description,
-                        pubDate: pubDateStr ? parseDate(pubDateStr) : item.pubDate,
+                        pubDate: pubDateStr ? timezone(parseDate(pubDateStr, 'YYYY-MM-DD'), 8) : item.pubDate,
                         author: authors,
                         content: {
                             html: description,
-                            text: description,
+                            text: $$('div.news div.content').text(),
                         },
-                        updated: upDatedStr ? parseDate(upDatedStr) : item.updated,
+                        updated: upDatedStr ? timezone(parseDate(upDatedStr, 'YYYY-MM-DD'), 8) : item.updated,
                         language,
                     };
 
@@ -97,14 +99,12 @@ export const handler = async (ctx: Context): Promise<Data> => {
     ).filter((_): _ is DataItem => true);
 
     const title: string = $('title').text();
-    const logoHref = $('a.logo_c').attr('href');
 
     return {
         title,
         link: targetUrl,
         item: items,
-        allowEmpty: true,
-        image: logoHref ? new URL(logoHref, targetUrl).href : undefined,
+        image: new URL('img/logo.png', baseUrl).href,
         author: title.split(/-/).pop(),
         language,
         id: targetUrl,
@@ -136,12 +136,16 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['www.chinaratings.com.cn/CreditResearch/:category'],
-            target: (params) => {
-                const category: string = params.category;
-
-                return `/chinaratings/CreditResearch${category ? `/${category}` : ''}`;
-            },
+            source: ['www.chinaratings.com.cn/CreditResearch/:category', 'www.chinaratings.com.cn/CreditResearch/:category/index.html'],
+            target: '/CreditResearch/:category',
+        },
+        {
+            source: ['www.chinaratings.com.cn/CreditResearch/Industry/:category', 'www.chinaratings.com.cn/CreditResearch/Industry/:category/index.html'],
+            target: '/CreditResearch/Industry/:category',
+        },
+        {
+            source: ['www.chinaratings.com.cn/CreditResearch/StructuredFinancial/:category', 'www.chinaratings.com.cn/CreditResearch/StructuredFinancial/:category/index.html'],
+            target: '/CreditResearch/StructuredFinancial/:category',
         },
     ],
     view: ViewType.Articles,

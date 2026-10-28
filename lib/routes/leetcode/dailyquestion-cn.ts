@@ -1,5 +1,6 @@
 import type { Route } from '@/types';
 import got from '@/utils/got';
+import { parseDate } from '@/utils/parse-date';
 
 import { renderQuestionDescription } from './templates/question-description';
 
@@ -28,7 +29,6 @@ async function handler() {
         content: '',
         frontedId: '',
         difficulty: '',
-        tags: '',
     };
     const url = host + '/graphql';
     const dailyQuestionPayload = {
@@ -104,14 +104,6 @@ async function handler() {
     question.frontedId = details.questionFrontendId;
     question.difficulty = emoji[details.difficulty];
 
-    let topicTags = details.topicTags;
-    topicTags = topicTags.map((item) => {
-        let slug = '#' + item.slug;
-        slug = slug.replaceAll('-', '_');
-        return slug;
-    });
-    question.tags = topicTags.join(' ');
-
     const rssData = {
         title: question.frontedId + '.' + question.titleSlug,
         description: renderQuestionDescription({
@@ -129,6 +121,8 @@ async function handler() {
                 title: rssData.title,
                 description: rssData.description + question.content,
                 link: rssData.link,
+                category: details.topicTags.map((item) => item.translatedName || item.name),
+                pubDate: question.date ? parseDate(`${question.date}T00:00:00Z`) : undefined,
             },
         ],
     };

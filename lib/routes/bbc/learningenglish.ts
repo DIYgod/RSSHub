@@ -6,6 +6,8 @@ import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
+import { limitBbcItems } from './utils';
+
 const channelMap = {
     'take-away-english': '随身英语',
     'authentic-real-english': '地道英语',
@@ -42,14 +44,14 @@ async function handler(ctx: Context) {
     const rootURL = 'https://www.bbc.co.uk';
     const targerURL = `${rootURL}/learningenglish/chinese/features/${channel}`;
 
-    const response = await ofetch(targerURL, { parseResponse: (txt) => txt });
+    const response = await ofetch(targerURL, { allowH2: false, parseResponse: (txt) => txt });
     const $ = load(response);
 
     // get top article links
     const firstItem: DataItem = {
         title: $('[data-widget-index=4]').find('h2').text(),
         link: `${rootURL}${$('[data-widget-index=4]').find('h2 a').attr('href')}`,
-        pubDate: parseDate($('[data-widget-index=4]').find('.details h3').text()),
+        pubDate: parseDate($('[data-widget-index=4]').find('.details h3').text().split('/').pop()!.trim(), 'DD MMM YYYY'),
     };
 
     // get rest ul article links
@@ -62,19 +64,19 @@ async function handler(ctx: Context) {
             return {
                 title: $article('h2').text(),
                 link: `${rootURL}${$article('h2 a').attr('href')}`,
-                pubDate: parseDate($article('.details h3').text()),
+                pubDate: parseDate($article('.details h3').text().split('/').pop()!.trim(), 'DD MMM YYYY'),
             };
         });
 
     // try get article content detail
     const items: DataItem[] = await Promise.all(
-        [firstItem, ...restItems].map((item) => {
+        limitBbcItems([firstItem, ...restItems], ctx).map((item) => {
             if (!item.link) {
                 return item;
             }
 
             return cache.tryGet(item.link, async (): Promise<DataItem> => {
-                const detailResponse = await ofetch(item.link!, { parseResponse: (txt) => txt });
+                const detailResponse = await ofetch(item.link!, { allowH2: false, parseResponse: (txt) => txt });
 
                 const $content = load(detailResponse);
 

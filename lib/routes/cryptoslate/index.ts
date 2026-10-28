@@ -3,6 +3,7 @@ import { load } from 'cheerio';
 import type { Data, DataItem, Route } from '@/types';
 import logger from '@/utils/logger';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 import parser from '@/utils/rss-parser';
 
 export const route: Route = {
@@ -31,7 +32,7 @@ export const route: Route = {
 };
 
 async function handler(ctx): Promise<Data> {
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 20;
+    const limit = getRouteLimit(ctx, 20);
     const rssUrl = 'https://cryptoslate.com/feed/';
 
     const feed = await parser.parseURL(rssUrl);

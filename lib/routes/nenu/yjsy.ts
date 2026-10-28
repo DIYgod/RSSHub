@@ -1,9 +1,11 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
+import { getRouteLimit } from '@/utils/route-limit';
 
 export const route: Route = {
     path: '/yjsy/:path{.+}?',
@@ -21,7 +23,7 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 10;
+    const limit = getRouteLimit(ctx, 10);
 
     const path = ctx.req.param('path') ?? 'tzgg';
 
@@ -49,8 +51,9 @@ async function handler(ctx) {
             };
         });
 
-    items = await Promise.all(
-        items.map((item) =>
+    items = await pMap(
+        items,
+        (item) =>
             cache.tryGet(item.link!, async () => {
                 if (/yjsy\.nenu\.edu\.cn/.test(item.link!)) {
                     const detailResponse = await got({
@@ -62,16 +65,15 @@ async function handler(ctx) {
 
                     item.title = content('h2').text();
                     item.description = content('.v_news_content').html();
-                    item.pubDate = parseDate(
-                        content('h3')
-                            .text()
-                            .match(/(\d{4}-\d{2}-\d{2})/)![1]
-                    );
+                    const date = content('h3')
+                        .text()
+                        .match(/(\d{4}-\d{2}-\d{2})/)?.[1];
+                    item.pubDate = date ? parseDateInTimezone(date, 8) : undefined;
                 }
 
                 return item;
-            })
-        )
+            }),
+        { concurrency: 6 }
     );
 
     return {

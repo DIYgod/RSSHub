@@ -280,6 +280,25 @@ describe('filter', () => {
 });
 
 describe('limit', () => {
+    it.each([undefined, '', 'invalid', '-2', 'NaN', 'Infinity'])('preserves entries for an invalid or absent limit: %s', async (limit) => {
+        const items = Array.from({ length: 5 }, (_, index) => ({ title: `Entry ${index}`, link: `https://rsshub.example/${index}` }));
+        const result = await runMiddleware({ title: 'Limit validation', item: items }, { limit });
+        expect(result.item.map((item) => item.title)).toEqual(items.map((item) => item.title));
+        expect(result.item.map((item) => item.link)).toEqual(items.map((item) => item.link));
+    });
+
+    it.each([
+        { limit: '0', count: 0 },
+        { limit: '1', count: 1 },
+        { limit: '3', count: 3 },
+        { limit: '2.5', count: 2 },
+        { limit: '20', count: 5 },
+    ])('retains the existing nonnegative limit $limit', async ({ limit, count }) => {
+        const items = Array.from({ length: 5 }, (_, index) => ({ title: `Entry ${index}`, link: `https://rsshub.example/${index}` }));
+        const result = await runMiddleware({ title: 'Limit validation', item: items }, { limit });
+        expect(result.item.map((item) => item.title)).toEqual(items.slice(0, count).map((item) => item.title));
+    });
+
     it('limit', async () => {
         const response = await app.request('/test/1?limit=3');
         const parsed = await parser.parseString(await response.text());
@@ -291,6 +310,45 @@ describe('limit', () => {
 });
 
 describe('sorted', () => {
+    it.each([
+        { preference: undefined, sorted: undefined, order: ['Recent', 'Ranked'] },
+        { preference: false, sorted: undefined, order: ['Ranked', 'Recent'] },
+        { preference: false, sorted: 'true', order: ['Recent', 'Ranked'] },
+        { preference: false, sorted: 'yes', order: ['Recent', 'Ranked'] },
+        { preference: true, sorted: 'false', order: ['Ranked', 'Recent'] },
+    ])('respects route preference $preference with common sorted=$sorted', async ({ preference, sorted, order }) => {
+        const result = await runMiddleware(
+            {
+                title: 'Ranking',
+                sortItems: preference,
+                item: [
+                    { title: 'Ranked', pubDate: '2026-10-07T12:00:00Z' },
+                    { title: 'Recent', pubDate: '2026-10-09T12:00:00Z' },
+                ],
+            },
+            { sorted }
+        );
+        expect(result.item.map((item) => item.title)).toEqual(order);
+        expect(result.item.every((item) => !Number.isNaN(Date.parse(item.pubDate)))).toBe(true);
+    });
+
+    it('filters publication times while preserving a source ranking', async () => {
+        const now = Date.now();
+        const result = await runMiddleware(
+            {
+                title: 'Ranking',
+                sortItems: false,
+                item: [
+                    { title: 'Ranked', pubDate: new Date(now - 20000) },
+                    { title: 'Expired', pubDate: new Date(now - 120000) },
+                    { title: 'Recent', pubDate: new Date(now - 10000) },
+                ],
+            },
+            { filter_time: '60' }
+        );
+        expect(result.item.map((item) => item.title)).toEqual(['Ranked', 'Recent']);
+    });
+
     it('sorted', async () => {
         const response = await app.request('/test/sort?sorted=false');
         expect(response.status).toBe(200);
@@ -705,6 +763,45 @@ describe('show_image', () => {
         const data = await runMiddleware(makeImageData(), {});
         expect(data.item[0].description).toContain('<img');
         expect(data.item[0].image).toBe('https://example.com/a.png');
+    });
+});
+
+describe('image enclosure type', () => {
+    it.each([
+        ['https://example.com/image.jpg', 'image/jpeg'],
+        ['https://example.com/image.jpeg', 'image/jpeg'],
+        ['https://example.com/image.png', 'image/png'],
+        ['https://example.com/image.webp', 'image/webp'],
+        ['https://example.com/image.gif', 'image/gif'],
+        ['https://example.com/image.svg', 'image/svg+xml'],
+        ['https://example.com/image.PNG?size=300#preview', 'image/png'],
+        ['//example.com/image.gif', 'image/gif'],
+    ])('infers %s as %s', async (image, mimeType) => {
+        const data = await runMiddleware({ item: [{ title: 'Image', image }] }, {});
+        expect(data.item[0].enclosure_type).toBe(mimeType);
+        expect(data.item[0].enclosure_url).toBeUndefined();
+    });
+
+    it.each(['https://example.com/image', 'https://example.com/image?filename=image.jpg', 'https://example.com/image.unknown', 'https://example.com/page.html', 'https://example.com/video.mp4', 'https://['])(
+        'does not invent a MIME type for %s',
+        async (image) => {
+            const data = await runMiddleware({ item: [{ title: 'Image', image }] }, {});
+            expect(data.item[0].enclosure_type).toBeUndefined();
+        }
+    );
+
+    it('leaves explicit enclosures and attachments alone', async () => {
+        const data = await runMiddleware(
+            {
+                item: [
+                    { title: 'Media', image: 'https://example.com/thumbnail.jpg', enclosure_url: 'https://example.com/audio.mp3', enclosure_type: 'audio/mpeg' },
+                    { title: 'Attachment', image: 'https://example.com/cover.png', attachments: [{ url: 'https://example.com/audio.mp3', mime_type: 'audio/mpeg' }] },
+                ],
+            },
+            {}
+        );
+        expect(data.item[0].enclosure_type).toBe('audio/mpeg');
+        expect(data.item[1].enclosure_type).toBeUndefined();
     });
 });
 

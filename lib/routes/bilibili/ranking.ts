@@ -149,6 +149,9 @@ export const route: Route = {
     categories: ['social-media'],
     view: ViewType.Videos,
     example: '/bilibili/ranking/all',
+    features: {
+        requirePuppeteer: true,
+    },
     parameters: {
         rid: {
             description: '排行榜分区代号或 rid，可在 URL 中找到',

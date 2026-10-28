@@ -8,13 +8,14 @@ import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 import timezone from '@/utils/timezone';
 
 import { renderDescription } from './templates/description';
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { category = 'thelatest' } = ctx.req.param();
-    const limit = Number(ctx.req.query('limit') ?? '30');
+    const limit = getRouteLimit(ctx, 30);
 
     const baseUrl = 'https://language.chinadaily.com.cn';
     const targetUrl = `${baseUrl}/${category}`;
@@ -74,7 +75,10 @@ export const handler = async (ctx: Context): Promise<Data> => {
                     const $$: CheerioAPI = load(detailResponse);
 
                     const title: string = $$('meta[ property="og:title"]').attr('content')!;
-                    const pubDateStr: string | undefined = $$('p.main_title3').text().split(/\s/).pop();
+                    const pubDateStr: string | undefined =
+                        $$('p.main_title3')
+                            .text()
+                            .match(/\d{4}-\d{2}-\d{2}\s+\d{2}:\d{2}(?::\d{2})?/)?.[0] ?? $$('meta[name="publishdate"]').attr('content');
                     const categories: string[] | undefined = $$('meta[name="keywords"]').attr('content')?.split(/,/);
                     const authorEls: Element[] = $$('meta[name="source"], meta[name="author"], meta[name="editor"]').toArray();
                     const authorNames: string[] = [
@@ -106,12 +110,18 @@ export const handler = async (ctx: Context): Promise<Data> => {
                     };
 
                     const $enclosureEl: Cheerio<Element> = $$('iframe#playerFrame, audio');
-                    const enclosureUrl: string | undefined = $enclosureEl.attr('src');
+                    const mediaSrc = $enclosureEl.attr('src');
+                    const playerUrl = mediaSrc ? new URL(mediaSrc, item.link) : undefined;
+                    const enclosureUrl = playerUrl && $enclosureEl.is('iframe') ? playerUrl.searchParams.get('src') : playerUrl?.href;
+                    const mediaUrl = enclosureUrl ? new URL(enclosureUrl, item.link) : undefined;
+                    const mediaTypes = { '.m3u8': 'application/vnd.apple.mpegurl', '.mp3': 'audio/mpeg', '.mp4': 'video/mp4' };
+                    const enclosureType = mediaUrl ? mediaTypes[mediaUrl.pathname.match(/\.[^.]+$/)?.[0] ?? ''] : undefined;
 
-                    if (enclosureUrl) {
+                    if (mediaUrl && enclosureType) {
                         processedItem = {
                             ...processedItem,
-                            enclosure_url: enclosureUrl?.startsWith('//') ? `https:${enclosureUrl}` : enclosureUrl,
+                            enclosure_url: mediaUrl.href,
+                            enclosure_type: enclosureType,
                             enclosure_title: title,
                             enclosure_length: undefined,
                             itunes_duration: undefined,
@@ -243,7 +253,7 @@ export const route: Route = {
 | [图片新闻](https://language.chinadaily.com.cn/news_photo)                    | [news\\_photo](https://rsshub.app/chinadaily/language/news_photo)                                          |
 | [视频精选](https://language.chinadaily.com.cn/video_links)                   | [video\\_links](https://rsshub.app/chinadaily/language/video_links)                                        |
 | [新闻播报](https://language.chinadaily.com.cn/audio_cd)                      | [audio\\_cd](https://rsshub.app/chinadaily/language/audio_cd)                                              |
-| [专栏作家](https://language.chinadaily.com.cn/columnist)                     | [audio\\_cd](https://rsshub.app/chinadaily/language/columnist)                                             |
+| [专栏作家](https://language.chinadaily.com.cn/columnist)                     | [columnist](https://rsshub.app/chinadaily/language/columnist)                                             |
 | [权威发布](https://language.chinadaily.com.cn/5af95d44a3103f6866ee845c)      | [5af95d44a3103f6866ee845c](https://rsshub.app/chinadaily/language/5af95d44a3103f6866ee845c)               |
 
 </details>`,
@@ -258,14 +268,6 @@ export const route: Route = {
         supportScihub: false,
     },
     radar: [
-        {
-            source: ['language.chinadaily.com.cn/:category'],
-            target: (params) => {
-                const category: string = params.category;
-
-                return `/chinadaily/language${category ? `/${category}` : ''}`;
-            },
-        },
         {
             title: '精彩推荐',
             source: ['language.chinadaily.com.cn/thelatest'],

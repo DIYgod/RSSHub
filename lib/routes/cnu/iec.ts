@@ -3,6 +3,7 @@ import { load } from 'cheerio';
 import type { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/iec',
@@ -12,7 +13,7 @@ export const route: Route = {
     radar: [
         {
             source: ['iec.cnu.edu.cn/ggml/tzgg1/index.htm'],
-            target: '/cnu/iec',
+            target: '/iec',
         },
     ],
     name: '信息工程学院通知公告',
@@ -42,15 +43,15 @@ async function handler() {
             const span = item.find('span');
             const a = item.find('a');
 
-            // 提取日期 [YYYY-MM-DD]
+            // Extract the date in [YYYY-MM-DD] format.
             const dateText = span.text();
             const dateMatch = dateText.match(/\[(\d{4}-\d{2}-\d{2})\]/);
-            const pubDate = dateMatch ? parseDate(dateMatch[1], 'YYYY-MM-DD') : undefined;
+            const pubDate = dateMatch ? timezone(parseDate(dateMatch[1], 'YYYY-MM-DD'), 8) : undefined;
 
-            // 提取标题
+            // Extract the title.
             const title = a.text().trim();
 
-            // 提取链接
+            // Extract the link.
             const href = a.attr('href');
             const linkUrl = href?.startsWith('http') ? href : `${baseUrl}/ggml/tzgg1/${href}`;
 
@@ -61,7 +62,7 @@ async function handler() {
                 description: '',
             };
         })
-        .filter((item) => item.title && item.link); // 过滤掉无效项
+        .filter((item) => item.title && item.link); // Exclude entries without a title or link.
 
     return {
         title: '首都师范大学信息工程学院 - 通知公告',

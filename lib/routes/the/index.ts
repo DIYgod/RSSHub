@@ -1,10 +1,13 @@
 import type { Cheerio, CheerioAPI } from 'cheerio';
 import { load } from 'cheerio';
 import type { Element } from 'domhandler';
+import pMap from 'p-map';
 
 import type { Data, DataItem, Route } from '@/types';
+import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
 import { renderDescription } from './templates/description';
 
@@ -12,7 +15,7 @@ const baseUrl = 'https://river.to/occasus';
 
 export const handler = async (ctx): Promise<Data> => {
     const { filter } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 40;
+    const limit = getRouteLimit(ctx, 40);
 
     // Reason: filter supports category/slug or just a slug directly for backward compatibility
     const slug = parseSlug(filter);
@@ -24,18 +27,40 @@ export const handler = async (ctx): Promise<Data> => {
 
     const title = $('title').text() || '江河日下';
 
-    const items = [...extractFromMaterialBlocks($, targetUrl), ...extractFromPostPreviews($, targetUrl)];
+    const list = [...extractFromMaterialBlocks($, targetUrl), ...extractFromPostPreviews($, targetUrl)];
+    const items = await pMap(list.slice(0, limit), (item) => fetchArticleBody(item, targetUrl), { concurrency: 3, stopOnError: false });
 
     return {
         title: `${title} - 江河日下`,
         description: $('meta[property="og:description"]').attr('content') || $('meta[name="description"]').attr('content'),
         link: targetUrl,
-        allowEmpty: true,
         image: $('meta[property="og:image"]').attr('content') || '',
         language: 'zh-CN',
-        item: items.slice(0, limit),
+        item: items,
     };
 };
+
+async function fetchArticleBody(item: DataItem, pageUrl: string): Promise<DataItem> {
+    const link = item.link;
+    if (!link || link === pageUrl) {
+        return item;
+    }
+
+    const detail = await cache.tryGet(`the:article:${link}`, async () => {
+        const { data: response } = await got(link);
+        const $ = load(response);
+        const body = $('.postArticle--full > .postArticle-content > .section--body > .section-content').first();
+        if (!body.length) {
+            return {};
+        }
+        body.find('style, script, .uiScale, .streamItem--postPreview .postArticle--short > .u-flex, img.graf-image__placeholder').remove();
+        body.find('h1.graf--title').first().remove();
+        body.find('img').removeAttr('onload onerror');
+        return { description: body.html() || undefined };
+    });
+
+    return { ...item, description: detail.description || item.description };
+}
 
 /**
  * Parse filter string to get the target slug.
@@ -93,6 +118,12 @@ function findArticleLink($: CheerioAPI, block: Cheerio<Element>): string | undef
     return link;
 }
 
+function findArticleImage(block: Cheerio<Element>): { src: string; alt?: string } | undefined {
+    const image = block.find('img.graf-image__main').not('.avatar-image img').first();
+    const src = image.attr('src') || block.find('img.graf-image--src').not('.avatar-image img').attr('data-srcset');
+    return src ? { src, alt: image.attr('alt') } : undefined;
+}
+
 /**
  * Extract articles from material5* blocks (featured cards on category/publication pages).
  * Reason: on category pages, article links are often #Unauthorized (subscriber-only).
@@ -104,13 +135,13 @@ function extractFromMaterialBlocks($: CheerioAPI, pageUrl: string): DataItem[] {
         .map((el): DataItem => {
             const block = $(el);
 
-            const title = block.find('h3').text().trim();
+            const title = block.find('h3').text();
 
             const summary = block.find('.ui-summary, h4.ui-summary, p.ui-summary').text().trim();
             const dateStr = block.find('time').attr('datetime');
             const tag = block.find('.TagName').attr('title');
             const author = block.find('.postMetaInline--author').text().trim();
-            const image = block.find('img.graf-image--src').attr('data-srcset');
+            const image = findArticleImage(block);
 
             // Reason: try to find a real article link; fall back to page URL for subscriber-only content
             const articleLink = findArticleLink($, block);
@@ -118,7 +149,7 @@ function extractFromMaterialBlocks($: CheerioAPI, pageUrl: string): DataItem[] {
             const guid = articleLink || `${pageUrl}#${encodeURIComponent(title)}`;
 
             const description = renderDescription({
-                images: image ? [{ src: image }] : undefined,
+                images: image ? [image] : undefined,
                 intro: summary || undefined,
             });
 
@@ -130,6 +161,7 @@ function extractFromMaterialBlocks($: CheerioAPI, pageUrl: string): DataItem[] {
                 category: tag ? [tag] : [],
                 author,
                 guid,
+                image: image?.src,
             };
         });
 }
@@ -145,13 +177,13 @@ function extractFromPostPreviews($: CheerioAPI, pageUrl: string): DataItem[] {
         .map((el): DataItem => {
             const block = $(el);
 
-            const title = block.find('h3.graf--title').text().trim();
+            const title = block.find('h3.graf--title').text();
 
             const summary = block.find('h4.ui-summary, .graf--subtitle').text().trim();
             const dateStr = block.find('time').attr('datetime');
             const author = block.find('.postMetaInline--author').text().trim();
             const tag = block.find('.TagName').attr('title');
-            const image = block.find('img.graf-image--src').not('.avatar-image img').attr('data-srcset');
+            const image = findArticleImage(block);
 
             // Reason: these blocks typically have #Unauthorized links; use page URL as fallback
             const articleLink = findArticleLink($, block);
@@ -159,7 +191,7 @@ function extractFromPostPreviews($: CheerioAPI, pageUrl: string): DataItem[] {
             const guid = articleLink || `${pageUrl}#${encodeURIComponent(title)}`;
 
             const description = renderDescription({
-                images: image ? [{ src: image }] : undefined,
+                images: image ? [image] : undefined,
                 intro: summary || undefined,
             });
 
@@ -171,6 +203,7 @@ function extractFromPostPreviews($: CheerioAPI, pageUrl: string): DataItem[] {
                 category: tag ? [tag] : [],
                 author,
                 guid,
+                image: image?.src,
             };
         });
 }
@@ -218,66 +251,62 @@ export const route: Route = {
     radar: [
         {
             source: ['river.to/occasus/:category?'],
-            target: (params) => {
-                const category = params.category;
-
-                return `/the${category ? `/category/${category}` : ''}`;
-            },
+            target: '/:category?',
         },
         {
             title: '时局',
             source: ['river.to/occasus/rawj7o4ypewv94'],
-            target: '/the/category/rawj7o4ypewv94',
+            target: '/category/rawj7o4ypewv94',
         },
         {
             title: '剩余价值',
             source: ['river.to/occasus/rawmw7dsta2jew'],
-            target: '/the/category/rawmw7dsta2jew',
+            target: '/category/rawmw7dsta2jew',
         },
         {
             title: 'Beijing',
             source: ['river.to/occasus/rawbcvxkktdkq8'],
-            target: '/the/category/rawbcvxkktdkq8',
+            target: '/category/rawbcvxkktdkq8',
         },
         {
             title: '稳中向好',
             source: ['river.to/occasus/raw4krvx85dh27'],
-            target: '/the/category/raw4krvx85dh27',
+            target: '/category/raw4krvx85dh27',
         },
         {
             title: '水深火热',
             source: ['river.to/occasus/rawtn8jpsc6uvv'],
-            target: '/the/category/rawtn8jpsc6uvv',
+            target: '/category/rawtn8jpsc6uvv',
         },
         {
             title: '东升西降',
             source: ['river.to/occasus/rawai5kd4z15il'],
-            target: '/the/category/rawai5kd4z15il',
+            target: '/category/rawai5kd4z15il',
         },
         {
             title: '大局',
             source: ['river.to/occasus/raw2efkzejrsx8'],
-            target: '/the/category/raw2efkzejrsx8',
+            target: '/category/raw2efkzejrsx8',
         },
         {
             title: '境外势力',
             source: ['river.to/occasus/rawmpalhnlphuc'],
-            target: '/the/category/rawmpalhnlphuc',
+            target: '/category/rawmpalhnlphuc',
         },
         {
             title: '副刊',
             source: ['river.to/occasus/rawxght2jr2u5z'],
-            target: '/the/category/rawxght2jr2u5z',
+            target: '/category/rawxght2jr2u5z',
         },
         {
             title: '天高地厚',
             source: ['river.to/occasus/rawrsnh9zakqdx'],
-            target: '/the/category/rawrsnh9zakqdx',
+            target: '/category/rawrsnh9zakqdx',
         },
         {
             title: 'Oyster',
             source: ['river.to/occasus/rawdhl9hugdfn9'],
-            target: '/the/category/rawdhl9hugdfn9',
+            target: '/category/rawdhl9hugdfn9',
         },
     ],
 };

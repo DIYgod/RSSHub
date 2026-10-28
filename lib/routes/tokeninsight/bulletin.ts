@@ -1,6 +1,7 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -8,11 +9,18 @@ import { parseDate } from '@/utils/parse-date';
 const baseURL = 'https://www.tokeninsight.com/';
 const title = 'TokenInsight';
 const link = 'https://www.tokeninsight.com/';
-const get_articles = async () => {
+const getArticles = async () => {
     const url = `${baseURL}api/bulletin/selectBulletinList`;
     const { data } = (await got.get(url)).data;
     return data;
 };
+
+const getArticle = (url: string) =>
+    cache.tryGet(`tokeninsight:article:${url}`, async () => {
+        const response = await got(url);
+        const $ = load(response.data);
+        return { description: $('.detail_html_box').html() ?? '' };
+    });
 
 export const route: Route = {
     path: '/bulletin/:lang?',
@@ -41,28 +49,20 @@ export const route: Route = {
 async function handler(ctx) {
     const lang = ctx.req.param('lang') ?? 'zh';
 
-    const get_article_info = async (article) => {
+    const getArticleInfo = async (article): Promise<DataItem> => {
         const { updateDate, titleEn, id, title } = article;
         const articleUrl = `${baseURL}${lang}/latest/${id}`;
-        const description = await cache.tryGet(articleUrl, async () => {
-            const res = await got(articleUrl);
-            const $ = load(res.data);
-            return $('.detail_html_box').html() ?? '';
-        });
+        const { description } = await getArticle(articleUrl);
         return {
-            // 文章标题
             title: lang === 'zh' ? title : titleEn,
-            // 文章正文
             description,
-            // 文章发布时间
-            pubDate: parseDate(updateDate),
-            // 文章链接
+            pubDate: updateDate ? parseDate(updateDate) : undefined,
             link: articleUrl,
         };
     };
 
-    const articles = await get_articles();
-    const list = await Promise.all(articles.map((element) => get_article_info(element)));
+    const articles = await getArticles();
+    const list = await pMap(articles, (element) => getArticleInfo(element), { concurrency: 3 });
     return {
         title: `${lang === 'zh' ? '快讯' : 'Latest'} | ${title}`,
         link: `${link}${lang}/latest`,

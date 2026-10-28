@@ -1,3 +1,5 @@
+import { html } from 'hono/html';
+
 import { config } from '@/config';
 import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
@@ -20,8 +22,9 @@ const getAccessToken: () => Promise<string | null> = async () => {
     }
     return accessToken;
 };
-
-const generateAuthHeaders: () => Promise<{ Authorization?: string }> = async () => {
+const generateAuthHeaders: () => Promise<{
+    Authorization?: string;
+}> = async () => {
     const accessToken = await getAccessToken();
     if (!accessToken) {
         return {};
@@ -30,56 +33,81 @@ const generateAuthHeaders: () => Promise<{ Authorization?: string }> = async () 
         Authorization: `Bearer ${accessToken}`,
     };
 };
-
 const generateAuthParams: () => string = () => config.tumblr.clientId!;
-
+type PhotoSize = {
+    width?: number;
+    url?: string;
+};
+type LegacyPhoto = {
+    caption?: string;
+    original_size?: PhotoSize;
+    alt_sizes?: PhotoSize[];
+};
 const processPost: (post: any) => DataItem = (post) => {
     let description = '';
-
     switch (post.type) {
         case 'text':
             description = post.body;
             break;
         case 'answer':
-            description += post.asking_url === null ? `<p>${post.asking_name} asks:</p>` : `<p><a href="${post.asking_url}">${post.asking_name}</a> asks:</p>`;
-            description += post.question;
-            description += '<hr>';
-            description += `<p><a href="${post.blog.url}">${post.blog_name}</a> answers:</p>`;
-            description += post.answer;
+            description =
+                html(
+                    Object.assign(['<blockquote>\n                        <p>', ' asks:</p>\n                        <p>', '</p>\n                    </blockquote>\n                    <hr />'], {
+                        raw: ['<blockquote>\n                        <p>', ' asks:</p>\n                        <p>', '</p>\n                    </blockquote>\n                    <hr />'],
+                    }),
+                    post.asking_url ? html`<a href="${post.asking_url}">${post.asking_name}</a>` : post.asking_name,
+                    post.question || ''
+                ).toString() + (post.answer || '');
             break;
         case 'photo': {
-            const photos = post.photos ?? [];
+            const photos: LegacyPhoto[] = post.photos ?? [];
             for (const photo of photos) {
-                description += `<img src="${photo.original_size.url}"/><br/>`;
+                const image = photo.original_size?.url ? photo.original_size : photo.alt_sizes?.reduce<PhotoSize | undefined>((largest, size) => (!largest || (size.width ?? 0) > (largest.width ?? 0) ? size : largest), undefined);
+                if (image?.url) {
+                    description += html`<figure><img src="${image.url}" />${photo.caption ? html`<figcaption>${photo.caption}</figcaption>` : ''}</figure>`;
+                }
             }
+            description += post.caption || '';
             break;
         }
         case 'link':
-            description = post.url;
+            description = (post.url ? html`<p><a href="${post.url}">${post.url}</a></p>`.toString() : '') + (post.description || '');
             break;
         case 'audio':
-            description = post.embed;
+            description = (post.embed || post.player || '') + (post.caption || '');
             break;
+        case 'quote':
+            description = html`<blockquote>${post.text || ''}</blockquote>`.toString() + (post.source || '');
+            break;
+        case 'chat':
+            description = html`<pre>${post.body || ''}</pre>`.toString();
+            break;
+        case 'video': {
+            const players: Array<{
+                width?: number;
+                embed_code?: string;
+            }> = post.player || [];
+            const player = players.reduce<(typeof players)[number] | undefined>((largest, current) => (!largest || (current.width ?? 0) > (largest.width ?? 0) ? current : largest), undefined);
+            description = (player?.embed_code || '') + (post.caption || '');
+            break;
+        }
         default:
             break;
     }
-
     return {
         author: post.blog_name,
         id: post.id_string,
-        title: post.summary ?? `New post from ${post.blog_name}`,
+        title: post.title ?? post.summary ?? `New post from ${post.blog_name}`,
         link: post.post_url,
-        pubDate: parseDate(post.timestamp * 1000),
+        pubDate: typeof post.timestamp === 'number' && Number.isFinite(post.timestamp) ? parseDate(post.timestamp * 1000) : undefined,
         category: post.tags,
         description,
     };
 };
-
 let tokenRefresher: () => Promise<string | null> = () => Promise.resolve(null);
 if (config.tumblr && config.tumblr.clientId && config.tumblr.clientSecret && config.tumblr.refreshToken) {
     tokenRefresher = async (): Promise<string | null> => {
         let refreshToken = config.tumblr.refreshToken;
-
         // Restore already refreshed tokens
         const previousRefreshTokenSerialized = await cache.get('tumblr:refreshToken', false);
         if (previousRefreshTokenSerialized) {
@@ -102,7 +130,6 @@ if (config.tumblr && config.tumblr.clientId && config.tumblr.clientSecret && con
         const accessToken = response.data.access_token;
         const newRefreshToken = response.data.refresh_token;
         const expiresIn = response.data.expires_in;
-
         // Access tokens expire after 42 minutes, remove 30 seconds to renew the token before it expires (to avoid making a request right when it ends).
         await cache.set('tumblr:accessToken', accessToken, (expiresIn ?? 2520) - 30);
         // Store the new refresh token associated with the one that was provided first.
@@ -110,9 +137,7 @@ if (config.tumblr && config.tumblr.clientId && config.tumblr.clientSecret && con
         // Keep it for a year (not clear how long the refresh token lasts).
         const cacheEntry = { startToken: config.tumblr.refreshToken, currentToken: newRefreshToken };
         await cache.set('tumblr:refreshToken', JSON.stringify(cacheEntry), 31_536_000);
-
         return accessToken;
     };
 }
-
 export default { processPost, generateAuthParams, generateAuthHeaders };

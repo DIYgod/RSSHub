@@ -46,7 +46,7 @@ async function handler(ctx) {
         const coverImg = $item.find('.pcmgidtr-left-section-door-photo img').attr('src') ?? null;
         const description = renderToString(
             <>
-                <h3>{`Rank: ${rankNumber} / ${title}`}</h3>
+                <h3>{`Rank: ${rankNumber}`}</h3>
                 <p>{desTagsArray.join(' ')}</p>
                 {coverImg ? <img src={coverImg} /> : null}
             </>

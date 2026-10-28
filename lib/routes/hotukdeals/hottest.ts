@@ -51,7 +51,7 @@ async function handler() {
         link: 'https://www.hotukdeals.com/',
         item: threads.map((item) => ({
             title: item.title,
-            description: `<img src="https://images.hotukdeals.com/${item.mainImage.path}/${item.mainImage.name}/re/768x768/qt/60/${item.mainImage.name}.jpg"><br>${item.temperature}° ${item.title}<br>${item.displayPrice}`,
+            description: `<img src="https://images.hotukdeals.com/${item.mainImage.path}/${item.mainImage.name}/re/768x768/qt/60/${item.mainImage.name}.jpg"><br>${item.temperature}°<br>${item.displayPrice}`,
             link: item.url,
         })),
     };

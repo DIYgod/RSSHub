@@ -5,10 +5,12 @@ import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate, parseRelativeDate } from '@/utils/parse-date';
 
+export const rootUrl = 'https://community.aijishu.com';
+
 const parseArticle = (item) => {
-    const articleUrl = `https://aijishu.com${item.url || item.object.url}`;
+    const articleUrl = new URL(item.url || item.object.url, rootUrl).href;
     return cache.tryGet(articleUrl, async () => {
-        const d1 = parseDate(item.createdDate, ['YYYY-MM-DD', 'M-DD']);
+        const d1 = parseDate(item.createdDate, ['YYYY-MM-DD', 'M-DD', 'YYYY年M月D日', 'M月D日']);
         const d2 = parseRelativeDate(item.createdDate);
 
         let resp, desc;

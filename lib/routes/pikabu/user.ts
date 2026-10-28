@@ -47,6 +47,7 @@ async function handler(ctx) {
             const $story = $(story);
 
             const a = $story.find('.story__title a');
+            const date = $story.find('time').attr('datetime');
             fixImage($story);
             $story.find('.player').each((_, elem) => {
                 const $elem = $(elem);
@@ -55,9 +56,14 @@ async function handler(ctx) {
             return {
                 title: a.text(),
                 link: a.attr('href'),
-                pubDate: parseDate($story.find('time').attr('datetime')!),
+                pubDate: date ? parseDate(date) : undefined,
                 description: $story.find('.story__content-inner').html(),
                 author: $story.find('.user__nick').text(),
+                category: $story
+                    .find('.tags__tag[data-tag]')
+                    .toArray()
+                    .map((tag) => $(tag).attr('data-tag'))
+                    .filter((tag): tag is string => Boolean(tag)),
             };
         });
 

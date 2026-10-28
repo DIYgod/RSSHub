@@ -1,104 +1,75 @@
 import { load } from 'cheerio';
 
 import type { DataItem } from '@/types';
+import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 export const rootUrl = 'https://css-tricks.com';
-type Card = {
-    id: string;
-    title: string;
-    link: string;
-    thumbnail: string;
-};
+
+type Card = DataItem & { link: string };
 
 export async function extractMiniCards(cardselector: string, titleSelector: string = '', descSelector: string = '') {
     const response = await ofetch(rootUrl);
     const $ = load(response);
-    const cards = $(cardselector).toArray();
-    const title = titleSelector ? $(titleSelector).text().trim() : '';
-    const description = descSelector ? $(descSelector).text().trim() : '';
     return {
-        title,
-        description,
-        cards,
+        title: titleSelector ? $(titleSelector).text().trim() : '',
+        description: descSelector ? $(descSelector).text().trim() : '',
+        cards: $(cardselector).toArray(),
     };
 }
 
-function extractCardsInfo(cards) {
+function extractCardsInfo(cards, mini: boolean): Card[] {
     return cards.map((card): Card => {
         const $ = load(card);
-        const id = $(card).attr('id');
-        const thumbnail = $(card).find('div.article-thumbnail-wrap > a >img').attr('src');
-        const article = $('div.article-article');
-        const title = article.find('h2 > a').text();
-        const link = article.find('h2 > a').attr('href');
+        const articleLink = mini ? $('h3.mini-card-title a:not(.aal_anchor)').first() : $('div.article-article h2 a, div.article-article h1 a').first();
+        const publishedAt = $('time').first().attr('datetime');
         return {
-            id: id!,
-            title,
-            link: link!,
-            thumbnail: thumbnail!,
+            title: articleLink.text(),
+            link: new URL(articleLink.attr('href')!, rootUrl).href,
+            image: $('div.article-thumbnail-wrap img').first().attr('src'),
+            pubDate: publishedAt ? timezone(parseDate(publishedAt), 0) : undefined,
         };
     });
 }
 
-function extractMiniCardsInfo(cards) {
-    return cards.map((card): Card => {
-        const $ = load(card);
-        const id = $(card).attr('id')?.replace('mini-', '');
-        const thumbnail = '';
-        const title = $('h3.mini-card-title').find('a:not(.aal_anchor)').text();
-        const link = $('h3.mini-card-title').find('a:not(.aal_anchor)').attr('href');
-        return {
-            id: id!,
-            title,
-            link: link!,
-            thumbnail,
-        };
-    });
-}
-
-export async function processWithWp(cards, mini: boolean = false, type: string = 'posts') {
-    const cardsWithInfo = mini ? extractMiniCardsInfo(cards) : extractCardsInfo(cards);
-    const ids = cardsWithInfo.map((card: Card) => card.id.replace('post-', ''));
-    const allPosts = await ofetch(`${rootUrl}/wp-json/wp/v2/${type}?include=${ids.join(',')}&_embed&per_page=${ids.length}`);
-    // To maintain the ID/post Order
-    const idMappedPost = Object.fromEntries(allPosts.map((post) => [post.id, post]));
-    return ids.map((id) => extractPostDetails(idMappedPost[id]));
-}
-
-function extractPostDetails(data): DataItem {
-    const title = data.title.rendered;
-    const link = data.link;
-    const content = data.content.rendered;
-    const summary = data.excerpt.rendered;
-    const date = data.date_gmt;
-    const updateDate = data.modified_gmt;
-    const author = data._embedded?.author;
-    const authorName = author?.[0]?.name;
-    const authorUrl = author?.[0]?.link;
-    const authorAvatar = author?.[0]?.avatar_urls['48'];
-    const thumbnail = data._embedded?.['wp:featuredmedia']?.[0]?.source_url;
-    const tags = data._embedded?.['wp:term']?.[1]?.map((tag) => tag.name);
-    return {
-        title,
-        link,
-        description: content,
-        banner: thumbnail,
-        image: thumbnail,
-        pubDate: parseDate(date),
-        updated: parseDate(updateDate),
-        author: [
-            {
-                name: authorName || '',
-                url: authorUrl || '',
-                avatar: authorAvatar || '',
-            },
-        ],
-        content: {
-            html: content,
-            text: summary,
-        },
-        category: tags,
-    };
+export function processWithWp(cards, mini: boolean = false, _type: string = 'posts') {
+    return Promise.all(
+        extractCardsInfo(cards, mini).map((card) =>
+            cache.tryGet(card.link, async () => {
+                const response = await ofetch(card.link);
+                const $ = load(response);
+                const article = $('.article-content').first();
+                if (!article.length) {
+                    throw new Error(`CSS-Tricks article content was not found at ${card.link}.`);
+                }
+                article.find('.in-article-cards').remove();
+                const description = article.html();
+                const publishedAt = $('meta[property="article:published_time"]').attr('content');
+                const modifiedAt = $('meta[property="article:modified_time"]').attr('content');
+                const author = $('.author-name').first();
+                const image = $('meta[property="og:image"]').attr('content') || card.image;
+                return {
+                    ...card,
+                    title: $('main h1').first().text() || card.title,
+                    link: $('link[rel="canonical"]').attr('href') || card.link,
+                    description,
+                    summary: $('meta[name="description"]').attr('content'),
+                    image,
+                    pubDate: publishedAt ? parseDate(publishedAt) : card.pubDate,
+                    updated: modifiedAt ? parseDate(modifiedAt) : undefined,
+                    author: author.length ? [{ name: author.text().trim(), url: author.attr('href') }] : undefined,
+                    category: $('meta[property="article:tag"], meta[property="article:section"]')
+                        .toArray()
+                        .map((tag) => $(tag).attr('content')!)
+                        .filter(Boolean),
+                    content: {
+                        html: description,
+                        text: article.text(),
+                    },
+                } satisfies DataItem;
+            })
+        )
+    );
 }

@@ -2,6 +2,7 @@ import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 
 import { config } from '@/config';
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
@@ -30,6 +31,16 @@ interface FeedPost extends SharedPost {
 export interface FeedEdge {
     node: FeedPost;
 }
+
+export const getDateSort = (value?: string): boolean => {
+    if (value === undefined || value === 'true') {
+        return true;
+    }
+    if (value === 'false') {
+        return false;
+    }
+    throw new InvalidParameterError('Invalid dateSort: use "true" or "false".');
+};
 
 export const baseUrl = 'https://app.daily.dev';
 const gqlUrl = 'https://api.daily.dev/graphql';
@@ -70,7 +81,7 @@ const render = ({ image, content }: { image?: string; content?: string }) =>
         </>
     );
 
-export const getList = (edges: FeedEdge[], dateSort: boolean): DataItem[] =>
+export const getList = (edges: FeedEdge[]): DataItem[] =>
     edges.map(({ node }) => {
         const post = node.type === 'share' ? node.sharedPost : node;
 
@@ -81,11 +92,11 @@ export const getList = (edges: FeedEdge[], dateSort: boolean): DataItem[] =>
             guid: node.permalink,
             description: render({
                 image: post.image?.includes('/public/Placeholder') ? undefined : post.image,
-                content: node.contentHtml?.replaceAll('\n', '<br>') ?? post.summary,
+                content: node.contentHtml ?? post.summary,
             }),
             author: node.author?.name,
             itunes_item_image: post.image,
-            pubDate: dateSort ? parseDate(node.createdAt) : '',
+            pubDate: node.createdAt ? parseDate(node.createdAt) : undefined,
             upvotes: node.numUpvotes,
             comments: node.numComments,
             category: node.tags,

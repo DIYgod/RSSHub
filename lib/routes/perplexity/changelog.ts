@@ -1,5 +1,7 @@
 import { load } from 'cheerio';
 import type { Context } from 'hono';
+import pMap from 'p-map';
+import type { BrowserContext } from 'patchright';
 
 import type { Data, DataItem, Language, Route } from '@/types';
 import { ViewType } from '@/types';
@@ -8,8 +10,22 @@ import logger from '@/utils/logger';
 import { parseDate } from '@/utils/parse-date';
 import { getPlaywrightPage } from '@/utils/playwright';
 
+const readContentPage = async (context: BrowserContext, url: string): Promise<string> => {
+    const page = await context.newPage();
+    try {
+        await page.route('**/*', (route) => {
+            route.request().resourceType() === 'document' ? route.continue() : route.abort();
+        });
+        await page.goto(url, { waitUntil: 'domcontentloaded' });
+        return await page.evaluate(() => document.documentElement.getHTML());
+    } finally {
+        await page.close();
+    }
+};
+
 export const handler = async (ctx: Context): Promise<Data> => {
-    const limit = Number(ctx.req.query('limit') ?? '20');
+    const requestedLimit = Number(ctx.req.query('limit'));
+    const limit = Number.isSafeInteger(requestedLimit) && requestedLimit > 0 ? requestedLimit : 20;
 
     const baseUrl = 'https://www.perplexity.ai';
     const targetUrl = `${baseUrl}/changelog`;
@@ -17,6 +33,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
     logger.http(`Fetching Perplexity changelog from ${targetUrl}`);
 
     const { page, destroy, context } = await getPlaywrightPage(targetUrl, {
+        closeTimeout: 0,
         onBeforeLoad: async (page) => {
             await page.route('**/*', (route) => {
                 const request = route.request();
@@ -25,123 +42,114 @@ export const handler = async (ctx: Context): Promise<Data> => {
         },
     });
 
-    const html = await page.evaluate(() => document.documentElement.getHTML());
-    const $ = load(html);
-    const language = ($('html').attr('lang') ?? 'en') as Language;
+    try {
+        const html = await page.evaluate(() => document.documentElement.getHTML());
+        const $ = load(html);
+        const language = ($('html').attr('lang') ?? 'en') as Language;
 
-    const seenLinks = new Set<string>();
+        const seenLinks = new Set<string>();
 
-    const items = $('a[href^="./changelog/"]')
-        .toArray()
-        .map((elem): DataItem | null => {
-            const $link = $(elem);
-            const href = $link.attr('href');
+        const items = $('a[href^="./changelog/"]')
+            .toArray()
+            .map((elem): DataItem | null => {
+                const $link = $(elem);
+                const href = $link.attr('href');
 
-            if (!href || !href.startsWith('./changelog/')) {
-                return null;
-            }
+                if (!href || !href.startsWith('./changelog/')) {
+                    return null;
+                }
 
-            const fullLink = href.startsWith('http') ? href : `${baseUrl}${href.replace('./', '/')}`;
+                const fullLink = href.startsWith('http') ? href : `${baseUrl}${href.replace('./', '/')}`;
 
-            if (seenLinks.has(fullLink)) {
-                return null;
-            }
+                if (seenLinks.has(fullLink)) {
+                    return null;
+                }
 
-            const $title = $link.find('[data-framer-name="Title"]').first();
-            // Fallback: extract title from URL slug
-            const title = $title.text().trim() || href.replace('./changelog/', '').replaceAll('-', ' ');
+                const $title = $link.find('[data-framer-name="Title"]').first();
+                // Fallback: extract title from URL slug
+                const sourceTitle = $title.text();
+                const title = sourceTitle.trim() ? sourceTitle : href.replace('./changelog/', '').replaceAll('-', ' ');
 
-            const $category = $link.find('[data-framer-name="Category"] p').first();
-            const dateText = $category.text().trim();
+                const $category = $link.find('[data-framer-name="Category"] p').first();
+                const dateText = $category.text().trim();
 
-            let $summary = $link.find('[data-framer-name="Description"] p, [data-framer-name="Summary"] p').first();
-            if (!$summary.length) {
-                $summary = $link.find('p.framer-text').not($title).not($category).first();
-            }
-            const summary = $summary.text().trim();
+                let $summary = $link.find('[data-framer-name="Description"] p, [data-framer-name="Summary"] p').first();
+                if (!$summary.length) {
+                    $summary = $link.find('p.framer-text').not($title).not($category).first();
+                }
+                const summary = $summary.text().trim();
 
-            seenLinks.add(fullLink);
+                seenLinks.add(fullLink);
 
-            let pubDate: Date | undefined;
-            if (dateText) {
-                // Format: MM.DD.YY or MM.DD.YYYY (e.g., 12.12.24 = December 12, 2024)
-                const dateMatch = dateText.match(/(\d{2})\.(\d{2})\.(\d{2,4})/);
-                if (dateMatch) {
-                    const [, month, day, year] = dateMatch;
-                    const fullYear = year.length === 2 ? `20${year}` : year;
-                    pubDate = parseDate(`${fullYear}-${month}-${day}`);
+                let pubDate: Date | undefined;
+                if (dateText) {
+                    // Format: MM.DD.YY or MM.DD.YYYY (e.g., 12.12.24 = December 12, 2024)
+                    const dateMatch = dateText.match(/(\d{2})\.(\d{2})\.(\d{2,4})/);
+                    if (dateMatch) {
+                        const [, month, day, year] = dateMatch;
+                        const fullYear = year.length === 2 ? `20${year}` : year;
+                        pubDate = parseDate(`${fullYear}-${month}-${day}`);
+                    } else {
+                        pubDate = parseDate(dateText);
+                    }
                 } else {
-                    pubDate = parseDate(dateText);
+                    const dateMatch = title.match(/(January|February|March|April|May|June|July|August|September|October|November|December)\s+\d{1,2}(?:st|nd|rd|th)?,\s*\d{4}/);
+                    if (dateMatch) {
+                        pubDate = parseDate(dateMatch[0]);
+                    }
                 }
-            } else {
-                const dateMatch = title.match(/(January|February|March|April|May|June|July|August|September|October|November|December)\s+\d{1,2}(?:st|nd|rd|th)?,\s*\d{4}/);
-                if (dateMatch) {
-                    pubDate = parseDate(dateMatch[0]);
-                }
-            }
-
-            return {
-                title,
-                description: summary,
-                link: fullLink,
-                pubDate,
-                guid: `perplexity-changelog-${fullLink}`,
-                id: `perplexity-changelog-${fullLink}`,
-            };
-        })
-        .filter((item): item is DataItem => item !== null);
-
-    // Fetch full content for each item using the same browser session
-    const resultItems = await Promise.all(
-        items.slice(0, limit).map(async (item) => {
-            if (!item.link) {
-                return item;
-            }
-            return await cache.tryGet(item.link, async () => {
-                logger.http(`Fetching full content for ${item.link!}`);
-
-                // Create a new page in the same browser session
-                const contentPage = await context.newPage();
-
-                // Set request interception for this page
-                await contentPage.route('**/*', (route) => {
-                    const request = route.request();
-                    request.resourceType() === 'document' ? route.continue() : route.abort();
-                });
-
-                // Navigate to the item link
-                await contentPage.goto(item.link!, { waitUntil: 'domcontentloaded' });
-
-                const contentHtml = await contentPage.evaluate(() => document.documentElement.getHTML());
-                await contentPage.close();
-
-                const $content = load(contentHtml);
-
-                // Find the main article content - RichTextContainer with substantial text
-                // Look for elements with framer-text class containing actual content
-                const contentContainer = $content('div#main > div > div > div[data-framer-component-type="RichTextContainer"]').first();
-                const fullContent = contentContainer.html()?.trim() || '';
 
                 return {
-                    ...item,
-                    description: fullContent || item.description,
+                    title,
+                    description: summary,
+                    link: fullLink,
+                    pubDate,
+                    guid: `perplexity-changelog-${fullLink}`,
+                    id: `perplexity-changelog-${fullLink}`,
                 };
-            });
-        })
-    );
+            })
+            .filter((item): item is DataItem => item !== null);
 
-    // Close the browser session after all requests are done
-    await destroy();
+        // Fetch full content for each item using the same browser session
+        const resultItems = await pMap(
+            items.slice(0, limit),
+            async (item) => {
+                if (!item.link) {
+                    return item;
+                }
+                return await cache.tryGet(item.link, async () => {
+                    logger.http(`Fetching full content for ${item.link!}`);
 
-    return {
-        title: $('title').text() || 'Perplexity Changelog',
-        description: $('meta[name="description"], meta[property="og:description"]').first().attr('content') || 'Latest updates and changes from Perplexity',
-        link: targetUrl,
-        item: resultItems,
-        allowEmpty: true,
-        image: $('meta[property="og:image"]').attr('content'),
-        language,
-    };
+                    // Create a new page in the same browser session
+                    const contentHtml = await readContentPage(context, item.link!);
+
+                    const $content = load(contentHtml);
+
+                    // Find the main article content - RichTextContainer with substantial text
+                    // Look for elements with framer-text class containing actual content
+                    const contentContainer = $content('div#main > div > div > div[data-framer-component-type="RichTextContainer"]').first();
+                    const fullContent = contentContainer.html()?.trim() || '';
+
+                    return {
+                        ...item,
+                        description: fullContent || item.description,
+                    };
+                });
+            },
+            { concurrency: 3 }
+        );
+
+        return {
+            title: $('title').text() || 'Perplexity Changelog',
+            description: $('meta[name="description"], meta[property="og:description"]').first().attr('content') || 'Latest updates and changes from Perplexity',
+            link: targetUrl,
+            item: resultItems,
+            image: $('meta[property="og:image"]').attr('content'),
+            language,
+        };
+    } finally {
+        await destroy();
+    }
 };
 
 export const route: Route = {

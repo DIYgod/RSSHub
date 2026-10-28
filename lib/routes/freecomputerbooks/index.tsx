@@ -1,6 +1,7 @@
 import { load } from 'cheerio';
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
+import pMap from 'p-map';
 
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
@@ -56,6 +57,7 @@ async function handler(ctx) {
     // class, thus to simplify the processing the text is directly extracted.
     // Needing more robust processing if some day more such elements show up.
     const categoryTitle = $('.maintitlebar').text();
+    const list = $('ul[id^=newBooks] > li').toArray();
 
     return {
         title: 'Free Computer Books - ' + categoryTitle,
@@ -64,17 +66,11 @@ async function handler(ctx) {
 
         // For a "Selected New Books" page, the <ul> element's id. is
         // `newBooksG`; for an ordinary category page, it's `newBooksL`.
-        item: await Promise.all(
-            $('ul[id^=newBooks] > li')
-                .toArray()
-                .map((elem) => buildPostItem($(elem), categoryTitle, cache))
-        ),
+        item: await pMap(list, (elem) => buildPostItem($(elem), categoryTitle, $, cache), { concurrency: 3 }),
     };
 }
 
-function buildPostItem(listItem, categoryTitle, cache) {
-    const $ = load(''); // the only use below doesn't care about the content
-
+function buildPostItem(listItem, categoryTitle, $, cache) {
     const postLink = listItem.find('a:first');
     const postInfo = listItem.find('p:contains("Post under")');
     const postItem = {

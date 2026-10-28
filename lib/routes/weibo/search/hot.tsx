@@ -10,10 +10,6 @@ import got from '@/utils/got';
 
 import weiboUtils from '../utils';
 
-// Default hide all picture
-let wpic = 'false';
-let fullpic = 'false';
-
 export const route: Route = {
     path: '/search/hot/:fulltext?',
     categories: ['social-media'],
@@ -54,8 +50,8 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    wpic = ctx.req.query('pic') ?? 'false';
-    fullpic = ctx.req.query('fullpic') ?? 'false';
+    const wpic = ctx.req.query('pic') ?? 'false';
+    const fullpic = ctx.req.query('fullpic') ?? 'false';
     const {
         data: { data },
     } = await weiboUtils.tryWithCookies(async (cookies, verifier) => {
@@ -89,8 +85,8 @@ async function handler(ctx) {
 
         resultItems = await Promise.all(
             tlist.map((i) =>
-                cache.tryGet(i.plink, async () => {
-                    const pInfo = await fetchContent(i.plink);
+                cache.tryGet(`weibo:hot:${i.plink}:pic=${wpic === 'true'}:fullpic=${fullpic !== 'false'}`, async () => {
+                    const pInfo = await fetchContent(i.plink, wpic, fullpic);
                     i.description = pInfo.content;
                     return i;
                 })
@@ -117,7 +113,7 @@ async function handler(ctx) {
     };
 }
 
-async function fetchContent(url) {
+async function fetchContent(url, wpic: string, fullpic: string) {
     // Fetch the subpageinof
     const cookieString = config.weibo.cookies ?? '';
     const subres = await got(url, {
@@ -130,7 +126,7 @@ async function fetchContent(url) {
         const rdata = subres.data;
         const cards = rdata.data.cards;
         // Need to find one cards with 'type ==9'
-        demostr = seekContent(cards) ?? '';
+        demostr = seekContent(cards, wpic, fullpic) ?? '';
     } catch {
         // console.log(e);
         // console.log(url);
@@ -141,7 +137,7 @@ async function fetchContent(url) {
     };
 }
 
-function seekContent(clist) {
+function seekContent(clist, wpic: string, fullpic: string) {
     const $ = load('<div id="wbcontent"></div>');
     const stub = $('#wbcontent');
 
@@ -206,7 +202,7 @@ function seekContent(clist) {
             });
             stub.append(section);
         } else if (curitem.card_type === 11) {
-            stub.append(seekContent(curitem.card_group) ?? '');
+            stub.append(seekContent(curitem.card_group, wpic, fullpic) ?? '');
         }
     }
     return stub.html();

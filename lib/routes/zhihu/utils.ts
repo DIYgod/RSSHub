@@ -16,8 +16,6 @@ export const header = {
     'x-api-version': '3.0.91',
 };
 
-const fixImageUrl = (url: string) => url.split('?', 1)[0].replace('_b.jpg', '.jpg').replace('_r.jpg', '.jpg').replace('_720w.jpg', '.jpg');
-
 export const processImage = (content: string) => {
     const $ = load(content, null, false);
 
@@ -41,21 +39,21 @@ export const processImage = (content: string) => {
     $('img.content_image, img.origin_image, img.content-image, img.data-actualsrc, figure>img').each((i, e) => {
         if (e.attribs['data-actualsrc']) {
             $(e).attr({
-                src: fixImageUrl(e.attribs['data-actualsrc']),
+                src: e.attribs['data-actualsrc'],
                 width: null,
                 height: null,
             });
             $(e).removeAttr('data-actualsrc');
         } else if (e.attribs['data-original']) {
             $(e).attr({
-                src: fixImageUrl(e.attribs['data-original']),
+                src: e.attribs['data-original'],
                 width: null,
                 height: null,
             });
             $(e).removeAttr('data-original');
         } else {
             $(e).attr({
-                src: fixImageUrl(e.attribs.src),
+                src: e.attribs.src,
                 width: null,
                 height: null,
             });
@@ -71,8 +69,6 @@ const getCookieValueFrom = (cookieStr: string | undefined, key: string) =>
         .map((e) => e.trim())
         .find((e) => e.startsWith(key + '='))
         ?.slice(key.length + 1) || '';
-
-export const getCookieValueByKey = (key: string) => getCookieValueFrom(config.zhihu.cookies, key);
 
 export type ZhihuClient = {
     get<T = any>(apiPath: string): Promise<T>;

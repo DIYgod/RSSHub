@@ -1,3 +1,5 @@
+import pMap from 'p-map';
+
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
@@ -27,20 +29,29 @@ export const route: Route = {
     url: 'sspai.com/matrix',
 };
 
+interface SourceArticle {
+    id: number;
+    title: string;
+    tags?: Array<{ title: string }>;
+    released_at: number;
+    author: { nickname: string };
+}
+
 async function handler() {
     const api_url = 'https://sspai.com/api/v1/articles?offset=0&limit=20&is_matrix=1&sort=matrix_at&include_total=false';
     const resp = await got({
         method: 'get',
         url: api_url,
     });
-    const data = resp.data.list;
-    const items = await Promise.all(
-        data.map((item) => {
+    const data: SourceArticle[] = resp.data.list;
+    const items = await pMap(
+        data,
+        async (item) => {
             const link = `https://sspai.com/api/v1/article/info/get?id=${item.id}&view=second&support_webp=true`;
             let description = '';
 
-            const key = `sspai: ${item.id}`;
-            return cache.tryGet(key, async () => {
+            const key = `sspai:matrix:body:v2:${item.id}`;
+            const resolvedValue1 = await cache.tryGet(key, async () => {
                 const response = await got(link);
                 // description = response.data.data.body;
                 const articleData = response.data.data;
@@ -50,15 +61,21 @@ async function handler() {
                 }
                 description += articleData.body;
 
+                return { description };
+            });
+            {
+                const details = resolvedValue1;
                 return {
-                    title: item.title.trim(),
-                    description,
+                    title: item.title,
                     link: `https://sspai.com/post/${item.id}`,
                     pubDate: parseDate(item.released_at * 1000),
                     author: item.author.nickname,
+                    category: item.tags?.map((tag) => tag.title),
+                    ...details,
                 };
-            });
-        })
+            }
+        },
+        { concurrency: 3 }
     );
 
     return {

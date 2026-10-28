@@ -39,7 +39,7 @@ const config = {
 async function handler(ctx: Context) {
     const { caty } = ctx.req.param();
     const cfg = config[caty];
-    if (!cfg) {
+    if (!Object.hasOwn(config, caty)) {
         throw new InvalidParameterError('Bad category. See docs');
     }
 
@@ -54,6 +54,7 @@ async function handler(ctx: Context) {
             return {
                 title: a.text(),
                 link: a.attr('href'),
+                pubDate: getPublicationDate($(item).find('span.time').text()),
             };
         });
 
@@ -66,7 +67,8 @@ async function handler(ctx: Context) {
                 const detailResponse = await ofetch(item.link!);
                 const content = load(detailResponse);
                 item.description = content('div.article').html();
-                item.pubDate = timezone(parseDate(content('span.time').text()), 8);
+                item.author = content('meta[name="ContentSource"]').attr('content');
+                item.pubDate = getPublicationDate(content('span.time').text()) ?? getPublicationDate(content('meta[name="PubDate"]').attr('content')) ?? item.pubDate;
                 return item;
             })
         )
@@ -77,4 +79,9 @@ async function handler(ctx: Context) {
         link: currentUrl,
         item: items,
     };
+}
+
+function getPublicationDate(dateText: string | undefined) {
+    const date = dateText ? parseDate(dateText) : undefined;
+    return date && !Number.isNaN(date.getTime()) ? timezone(date, 8) : undefined;
 }

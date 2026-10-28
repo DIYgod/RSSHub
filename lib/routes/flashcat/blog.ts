@@ -23,7 +23,7 @@ export const route: Route = {
             target: '/blog',
         },
     ],
-    name: '快猫星云博客',
+    name: '博客',
     maintainers: ['chesha1'],
     handler: handlerRoute,
 };
@@ -47,7 +47,7 @@ async function handlerRoute(): Promise<Data> {
                 title: $item.find('.fc-content-card-title').text(),
                 description: $item.find('.fc-content-card-summary').text().trim(),
                 link: new URL($item.find('.fc-content-card-link').attr('href')!, baseUrl).href,
-                pubDate: date ? parseDate(date, 'YYYY-MM-DD') : undefined,
+                pubDate: date ? parseDate(`${date}T00:00:00Z`) : undefined,
                 author,
             };
         });

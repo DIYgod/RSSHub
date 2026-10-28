@@ -4,6 +4,7 @@ import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 import timezone from '@/utils/timezone';
 
 export const route: Route = {
@@ -144,7 +145,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const id = ctx.req.param('id');
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 40;
+    const limit = getRouteLimit(ctx, 40);
 
     const rootUrl = 'http://www.chinawriter.com.cn';
     const currentUrl = `${new URL(id ?? '', rootUrl).href}/`;
@@ -152,12 +153,12 @@ async function handler(ctx) {
     const { data: response } = await got(currentUrl);
 
     const $ = load(response);
+    const seenLinks = new Set<string>();
 
     let items = ($('main div.inner').find('a').length === 0 ? $('body') : $('main div.inner'))
         .find('a')
         .toArray()
         .filter((item) => /(?:\/\d{4}){2}\/\w+-\w+\.html/.test($(item).prop('href')!))
-        .slice(0, limit)
         .map((item): DataItem => {
             const $item = $(item);
 
@@ -167,7 +168,16 @@ async function handler(ctx) {
                 title: $item.text(),
                 link: link!.startsWith('http') ? link : new URL($item.prop('href')!, rootUrl).href,
             };
-        });
+        })
+        .filter((item) => {
+            const link = item.link!.replace(/^https?:/, '');
+            if (seenLinks.has(link)) {
+                return false;
+            }
+            seenLinks.add(link);
+            return true;
+        })
+        .slice(0, limit);
 
     items = await Promise.all(
         items.map((item) =>
@@ -222,6 +232,5 @@ async function handler(ctx) {
         icon,
         logo: icon,
         subtitle: $('meta[name="keywords"]').prop('content'),
-        allowEmpty: true,
     };
 }

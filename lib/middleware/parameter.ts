@@ -10,7 +10,7 @@ import sanitizeHtml from 'sanitize-html';
 
 import { config } from '@/config';
 import type { Data, DataItem } from '@/types';
-import { extractAttachments } from '@/utils/attachments';
+import { extractAttachments, getImageMimeType } from '@/utils/attachments';
 import cache from '@/utils/cache';
 import { isWorker } from '@/utils/is-worker';
 import ofetch from '@/utils/ofetch';
@@ -83,7 +83,8 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
         data.description &&= decodeHTMLStrict(data.description + '');
 
         // sort items
-        if (ctx.req.query('sorted') !== 'false') {
+        const sorted = ctx.req.query('sorted');
+        if (sorted === undefined ? data.sortItems !== false : sorted !== 'false') {
             data.item = data.item.toSorted((a: DataItem, b: DataItem) => +new Date(b.pubDate || 0) - +new Date(a.pubDate || 0));
         }
 
@@ -94,23 +95,6 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
         }
 
         const handleItem = (item: DataItem) => {
-            if (hideImages) {
-                delete item.image;
-                delete item.banner;
-                delete item.itunes_item_image;
-                if (item.enclosure_type?.startsWith('image/')) {
-                    delete item.enclosure_url;
-                    delete item.enclosure_type;
-                    delete item.enclosure_length;
-                }
-                if (item.media) {
-                    delete item.media.thumbnail;
-                    if (item.media.content?.type?.startsWith('image/')) {
-                        delete item.media.content;
-                    }
-                }
-                item.attachments = item.attachments?.filter((attachment) => !attachment.mime_type?.startsWith('image/'));
-            }
             // oxlint-disable-next-line @typescript-eslint/no-unnecessary-type-conversion -- routes may return non-string values at runtime
             item.title &&= decodeHTMLStrict(item.title + '');
             item.description ||= item.content?.html;
@@ -209,6 +193,28 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
                 // convert single string to array, and filter only string type category
                 Array.isArray(item.category) || (item.category = [item.category]);
                 item.category = item.category.filter((e: unknown): e is string => typeof e === 'string');
+            }
+
+            // handle enclosure and image
+            if (hideImages) {
+                delete item.image;
+                delete item.banner;
+                delete item.itunes_item_image;
+                if (item.enclosure_type?.startsWith('image/')) {
+                    delete item.enclosure_url;
+                    delete item.enclosure_type;
+                    delete item.enclosure_length;
+                }
+                if (item.media) {
+                    delete item.media.thumbnail;
+                    if (item.media.content?.type?.startsWith('image/')) {
+                        delete item.media.content;
+                    }
+                }
+                item.attachments = item.attachments?.filter((attachment) => !attachment.mime_type?.startsWith('image/'));
+            }
+            if (item.image && !item.enclosure_url && !item.attachments?.length) {
+                item.enclosure_type = getImageMimeType(item.image);
             }
             return item;
         };
@@ -320,8 +326,9 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
         }
 
         // limit
-        if (ctx.req.query('limit')) {
-            data.item = data.item.slice(0, Number.parseInt(ctx.req.query('limit')!));
+        const limit = Number.parseInt(ctx.req.query('limit') ?? '');
+        if (limit >= 0) {
+            data.item = data.item.slice(0, limit);
         }
 
         // telegram instant view

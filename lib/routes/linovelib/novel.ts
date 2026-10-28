@@ -38,7 +38,6 @@ async function handler(ctx) {
         .map((item) => ({
             title: $(item).text(),
             author,
-            description: $(item).text(),
             link: `https://www.linovelib.com${$(item).attr('href')}`,
         }))
         .toReversed();

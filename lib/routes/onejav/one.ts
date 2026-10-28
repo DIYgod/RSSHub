@@ -3,6 +3,8 @@ import type { Context } from 'hono';
 
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/:type/:key?',
@@ -16,16 +18,27 @@ export const route: Route = {
     },
     radar: [
         {
-            title: '页面种子',
-            source: ['onejav.com/:type', 'onejav.com/:type/:key', 'onejav.com/:type/:key/:morekey'],
-            target: (params) => {
-                const itype = params.morekey === undefined ? params.type : params.type === 'tag' ? 'tag' : 'day';
-                const ikey = `${itype === 'day' ? params.type : ''}${params.key || ''}${itype === 'tag' && params.morekey !== undefined ? '%2F' : ''}${params.morekey || ''}`;
-                return `/onejav/${itype}/${ikey}`;
-            },
+            source: ['onejav.com/'],
+            target: '/new',
+        },
+        {
+            source: ['onejav.com/popular/:key?'],
+            target: '/popular/:key?',
+        },
+        {
+            source: ['onejav.com/random/:key?'],
+            target: '/random/:key?',
+        },
+        {
+            source: ['onejav.com/actress/:key'],
+            target: '/actress/:key',
+        },
+        {
+            source: ['onejav.com/tag/:key'],
+            target: '/tag/:key',
         },
     ],
-    name: 'OneJAV BT',
+    name: 'BT',
     maintainers: ['monsterxcn'],
     handler,
     description: `**类型**
@@ -83,17 +96,24 @@ async function handler(ctx: Context) {
             .map((item) => {
                 const $item = $(item);
                 const $title = $item.find('div.card-content.is-flex > h5 > a');
+                const datePath = $item
+                    .find('p.subtitle.is-6 > a')
+                    .attr('href')
+                    ?.match(/^\/(\d{4}\/\d{2}\/\d{2})\/?$/)?.[1];
+                const pubDate = datePath ? timezone(parseDate(datePath, 'YYYY/MM/DD', 'en', true), 0) : undefined;
+                const torrentHref = $item.find('p.control.is-expanded > a').attr('href');
 
                 return {
                     title: `【${$title.text()}】${$item.find('div.card-content.is-flex > h5 > span').text()}`,
-                    description: `<img src="${$item.find('img').attr('src')}"/><br/>Time: ${$item.find('p.subtitle.is-6 > a').text()}<br/>Desc: ${$item.find('p.level.has-text-grey-dark').text()}`,
+                    description: `<img src="${$item.find('img').attr('src')}"/><br/>Desc: ${$item.find('p.level.has-text-grey-dark').text()}`,
+                    pubDate: pubDate && !Number.isNaN(pubDate.getTime()) ? pubDate : undefined,
                     link: $title.attr('href'),
                     category: $item
                         .find('.tag')
                         .toArray()
                         .map((tag) => $(tag).text().trim()),
-                    enclosure_url: `${rootUrl}${$item.find('p.control.is-expanded > a').attr('href')}`,
-                    enclosure_type: 'application/x-bittorrent',
+                    enclosure_url: torrentHref ? new URL(torrentHref, rootUrl).href : undefined,
+                    enclosure_type: torrentHref ? 'application/x-bittorrent' : undefined,
                 };
             }),
     };

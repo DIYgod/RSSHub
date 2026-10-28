@@ -45,6 +45,10 @@ export const route: Route = {
             source: ['www.landiannews.com/:slug'],
             target: '/category/:slug',
         },
+        {
+            source: ['www.landian.news/:slug'],
+            target: '/category/:slug',
+        },
     ],
     view: ViewType.Articles,
 };

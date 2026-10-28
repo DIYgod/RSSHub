@@ -1,13 +1,14 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
-const baseUrl = 'http://tj.ustb.edu.cn';
+const baseUrl = 'https://tj.ustb.edu.cn';
 const maps = {
-    xyxw: '/Class/xyxw/index.htm',
+    xyxw: '/news/xyxw.htm',
     xshhd: '/Class/xshhd/index.htm',
     csjsxy: '/Class/csjsxy/index.htm',
     xxgcxy: '/Class/xxgcxy/index.htm',
@@ -20,9 +21,23 @@ const maps = {
     wyx: '/Class/wyx/index.htm',
     ysx: '/Class/ysx/index.htm',
 };
-
-function getNews(data) {
+function getNews(data, listingUrl: string) {
     const $ = load(data);
+    const modernList = $('.zy_left li[id^="line_u6_"]');
+    if (modernList.length) {
+        return modernList.toArray().map((element) => {
+            const anchor = $(element).find('a').first();
+            const published = anchor.find('.time > span').first().text().trim();
+            const image = anchor.find('.pic img').attr('src');
+            return {
+                title: anchor.find('h1').text(),
+                link: new URL(anchor.attr('href')!, listingUrl).href,
+                pubDate: published ? timezone(parseDate(published, 'YYYY.MM.DD'), 8) : undefined,
+                description: anchor.find('p').prop('outerHTML') ?? undefined,
+                image: image ? new URL(image, listingUrl).href : undefined,
+            };
+        });
+    }
     return $('div[class="classnews"] ul li a')
         .toArray()
         .map((elem) => {
@@ -34,11 +49,10 @@ function getNews(data) {
             };
         });
 }
-
 export const route: Route = {
     path: '/tj/news/:type?',
     categories: ['university'],
-    example: '/ustb/tj/news/all',
+    example: '/ustb/tj/news/xyxw',
     parameters: { type: '默认为 `all`' },
     features: {
         requireConfig: false,
@@ -55,29 +69,27 @@ export const route: Route = {
 | ---- | -------- | -------- | ------------ | ------------ | -------- | -------- | ------ | ---------- | ------ | ------ | ------ | ------ |
 | all  | xyxw     | xshhd    | csjsxy       | xxgcxy       | jjx      | glxy     | clx    | jxgcx      | hlx    | flx    | wyx    | ysx    |`,
 };
-
 async function handler(ctx) {
     let type = ctx.req.param('type') || 'all';
     if (!Object.keys(maps).includes(type)) {
         type = 'all';
     }
-
     let item;
-
     if (type === 'all') {
-        const all = await Promise.all(
-            Object.values(maps).map(async (link) => {
+        const all = await pMap(
+            Object.values(maps),
+            async (link) => {
                 const response = await got(baseUrl + link);
-                const news = getNews(response.data);
+                const news = getNews(response.data, baseUrl + link);
                 return news;
-            })
+            },
+            { concurrency: 3 }
         );
         item = all.flat();
     } else {
         const response = await got(baseUrl + maps[type]);
-        item = getNews(response.data);
+        item = getNews(response.data, baseUrl + maps[type]);
     }
-
     return {
         title: '北京科技大学天津学院新闻动态',
         link: baseUrl,

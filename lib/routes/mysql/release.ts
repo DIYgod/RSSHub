@@ -1,9 +1,11 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import { config } from '@/config';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
+import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
 
 export const route: Route = {
     path: '/release/:version?',
@@ -46,15 +48,19 @@ async function handler(ctx) {
         .toArray()
         .map((item): DataItem => {
             const $item = $(item);
+            const title = $item.text();
+            const pubDate = title.match(/\((\d{4}-\d{2}-\d{2})(?:,|\))/)?.[1];
 
             return {
-                title: $item.text(),
+                title,
+                pubDate: pubDate ? parseDateInTimezone(pubDate, 0) : undefined,
                 link: `${currentUrl}${$item.attr('href')}`,
             };
         });
 
-    items = await Promise.all(
-        items.map((item) =>
+    items = await pMap(
+        items,
+        (item) =>
             cache.tryGet(item.link!, async () => {
                 const detailResponse = await got({
                     method: 'get',
@@ -73,8 +79,8 @@ async function handler(ctx) {
                 item.description = content('#docs-body .section').html();
 
                 return item;
-            })
-        )
+            }),
+        { concurrency: 6 }
     );
 
     return {

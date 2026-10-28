@@ -7,6 +7,8 @@ import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
+const articleHosts = new Set(['gcxy.cug.edu.cn', 'wenming.cug.edu.cn']);
+
 export const route: Route = {
     path: '/gcxy/:type?',
     categories: ['university'],
@@ -44,39 +46,40 @@ async function handler(ctx: Context) {
         const response = await ofetch(host + url);
         const $ = load(response);
         const name = $('a.selected').text();
-        const items = await Promise.all(
-            $('ul.col-news-list li.list_item')
-                .toArray()
-                .map((item) => {
-                    const $item = $(item);
-                    const a = $item.find('a.news-title');
-                    const linkUrl = new URL(a.attr('href')!, host + url);
-                    const link = linkUrl.href;
-                    return cache.tryGet(link, async () => {
-                        const entry: DataItem = {
-                            title: a.attr('title')!,
-                            link,
-                            pubDate: timezone(parseDate($item.find('span.news-date').text()), 8),
-                        };
-                        if (linkUrl.hostname !== 'gcxy.cug.edu.cn') {
-                            return entry;
-                        }
-                        const res = await ofetch(link);
-                        entry.description = load(res)('.v_news_content').html();
-                        return entry;
-                    });
-                })
-        );
+        const items = $('ul.col-news-list li.list_item')
+            .toArray()
+            .map((item): DataItem => {
+                const $item = $(item);
+                const a = $item.find('a.news-title');
+                return {
+                    title: a.attr('title')!,
+                    link: new URL(a.attr('href')!, host + url).href,
+                    pubDate: timezone(parseDate($item.find('span.news-date').text()), 8),
+                };
+            });
         return { name, items };
     };
 
     const outList = await Promise.all(selected.map((url) => getItems(url)));
     const name = type ? outList[0].name : '所有';
+    const list = outList.flatMap((o) => o.items);
+    const articles = list;
+    const items = await Promise.all(
+        articles.map((item) =>
+            cache.tryGet(item.link!, async () => {
+                if (articleHosts.has(new URL(item.link!).hostname)) {
+                    const response = await ofetch(item.link!);
+                    item.description = load(response)('.v_news_content').html();
+                }
+                return item;
+            })
+        )
+    );
 
     return {
         title: `[${name}]CUG-工程学院`,
         link: host + (type ? typeUrl[type] : ''),
         description: '中国地质大学(武汉)工程学院-' + name,
-        item: outList.flatMap((o) => o.items),
+        item: items,
     };
 }

@@ -1,10 +1,11 @@
 import { load } from 'cheerio';
 import type { Context } from 'hono';
+import pMap from 'p-map';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
+import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
 
 export const route: Route = {
     path: '/:province/:city/:district?',
@@ -35,19 +36,42 @@ async function handler(ctx: Context) {
     const response = await ofetch(url);
     const $ = load(response);
 
-    const items = $('.news-blocks ul li')
+    const list = $('.news-blocks ul li')
         .toArray()
-        .map((item) => {
+        .map((item): DataItem => {
             const $item = $(item);
             const $aTag = $item.find('a');
 
             return {
-                title: $aTag.text(),
+                title: $aTag.find('.news-title').text(),
                 description: '停电通知',
                 link: `${HOME_PAGE}${$aTag.attr('href')}`,
-                pubDate: timezone(parseDate($item.find('span').text()), 8),
             };
         });
+
+    const items = await pMap(
+        list,
+        async (item) => {
+            const detail = await cache.tryGet(`sttcq:notice:v3:${item.link}`, async () => {
+                const detailResponse = await ofetch(item.link!);
+                const content = load(detailResponse);
+                const description = content('.content').html();
+                if (!description) {
+                    throw new Error(`Outage notice content was not found: ${item.link}`);
+                }
+                const publishedAt = content('.article-info .time')
+                    .text()
+                    .match(/\d{4}-\d{2}-\d{2} \d{2}:\d{2}/)?.[0];
+                const editor = content('.article-info .form')
+                    .toArray()
+                    .map((element) => content(element).text())
+                    .find((text) => text.startsWith('编辑：'));
+                return { description, pubDate: publishedAt ? parseDateInTimezone(publishedAt, 8) : undefined, author: editor?.slice(3) };
+            });
+            return { ...item, ...detail };
+        },
+        { concurrency: 3 }
+    );
 
     return {
         title: $('.main-nav2.clearfix').text(),

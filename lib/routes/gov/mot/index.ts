@@ -2,16 +2,20 @@ import type { Cheerio, CheerioAPI } from 'cheerio';
 import { load } from 'cheerio';
 import type { Element } from 'domhandler';
 import type { Context } from 'hono';
+import pMap from 'p-map';
 
 import type { Data, DataItem, Language, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
+import timezone from '@/utils/timezone';
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { category = 'xinwen/jiaotongyaowen' } = ctx.req.param();
-    const limit = Number(ctx.req.query('limit') ?? '30');
+    const limit = getRouteLimit(ctx, 30);
+    const candidateLimit = ctx.req.query('sorted') === 'false' ? limit : Math.max(30, limit);
 
     const baseUrl = 'https://www.mot.gov.cn';
     const image = `${baseUrl}/images/logo.png`;
@@ -22,7 +26,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
     const language = ($('html').attr('lang') ?? 'zh') as Language;
 
     let items: DataItem[] = $('li.news-item a.news-link')
-        .slice(0, limit)
+        .slice(0, candidateLimit)
         .toArray()
         .map((el) => {
             const $el: Cheerio<Element> = $(el);
@@ -30,21 +34,20 @@ export const handler = async (ctx: Context): Promise<Data> => {
             const title: string = $el.find('.news-title').text().trim();
             const pubDateStr: string | undefined = $el.find('.news-date').text();
             const linkUrl: string | undefined = $el.attr('href');
-            const upDatedStr: string | undefined = pubDateStr;
 
             const processedItem: DataItem = {
                 title,
-                pubDate: pubDateStr ? parseDate(pubDateStr) : undefined,
+                pubDate: pubDateStr ? timezone(parseDate(pubDateStr), 8) : undefined,
                 link: linkUrl ? (linkUrl.startsWith('http') ? linkUrl : new URL(linkUrl, targetUrl).href) : undefined,
-                updated: upDatedStr ? parseDate(upDatedStr) : undefined,
                 language,
             };
 
             return processedItem;
         });
 
-    items = await Promise.all(
-        items.map((item) => {
+    items = await pMap(
+        items,
+        (item) => {
             if (!item.link || !/mot\.gov\.cn/.test(item.link) || !item.link.endsWith('.html')) {
                 return item;
             }
@@ -54,7 +57,8 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 const $$: CheerioAPI = load(detailResponse);
 
                 const title: string = $$('h1').first().text();
-                const description = $$('div.TRS_UEDITOR').html();
+                const article = $$('div.TRS_UEDITOR');
+                const description = article.html();
                 const pubDateStr: string | undefined = $$('meta[name="PubDate"]').attr('content');
                 const categories: string[] = [
                     ...new Set(
@@ -71,21 +75,19 @@ export const handler = async (ctx: Context): Promise<Data> => {
                     url: undefined,
                     avatar: undefined,
                 }));
-                const upDatedStr: string | undefined = pubDateStr;
 
                 const processedItem: DataItem = {
                     title,
                     description,
-                    pubDate: pubDateStr ? parseDate(pubDateStr) : item.pubDate,
+                    pubDate: pubDateStr ? timezone(parseDate(pubDateStr), 8) : item.pubDate,
                     category: categories,
                     author: authors,
                     content: {
                         html: description,
-                        text: description,
+                        text: article.text(),
                     },
                     image,
                     banner: image,
-                    updated: upDatedStr ? parseDate(upDatedStr) : item.updated,
                     language,
                 };
 
@@ -94,7 +96,8 @@ export const handler = async (ctx: Context): Promise<Data> => {
                     ...processedItem,
                 };
             });
-        })
+        },
+        { concurrency: 3 }
     );
 
     return {
@@ -102,7 +105,6 @@ export const handler = async (ctx: Context): Promise<Data> => {
         description: $('meta[name="ColumnDescription"]').attr('content'),
         link: targetUrl,
         item: items,
-        allowEmpty: true,
         image,
         author: $('meta[name="SiteName"]').attr('content'),
         language,

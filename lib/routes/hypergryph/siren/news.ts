@@ -17,6 +17,11 @@ export const route: Route = {
     url: 'monster-siren.hypergryph.com/info',
 };
 
+const parsePublicationDate = (value: string) => {
+    const date = typeof value === 'string' ? parseDate(value, 'YYYY-MM-DD', true) : undefined;
+    return date && Number.isFinite(date.getTime()) ? new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate())) : undefined;
+};
+
 async function handler() {
     const response = await ofetch('https://monster-siren.hypergryph.com/api/news', {
         headers: {
@@ -32,7 +37,7 @@ async function handler() {
         description: '塞壬唱片新闻',
         item: data.map((item) => ({
             title: item.title,
-            pubDate: parseDate(item.date),
+            pubDate: parsePublicationDate(item.date),
             link: `https://monster-siren.hypergryph.com/info/${item.cid}`,
         })),
     };

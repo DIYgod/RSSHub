@@ -6,6 +6,7 @@ import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 import timezone from '@/utils/timezone';
 
 const HOST = 'https://canaeru.usen.com';
@@ -218,7 +219,7 @@ export const handler = async (ctx): Promise<Data> => {
     }
     // 市区町村 codes are the prefecture's two digits plus three more (新宿区 = 13104), written with an `A`
     // prefix in the path. A code from another prefecture would quietly widen the search, so the pair is checked.
-    const city: string | undefined = ctx.req.param('city');
+    const city: string | undefined = ctx.req.param('city')?.replace(/^A/, '');
     if (city !== undefined) {
         if (!/^\d{5}$/.test(city)) {
             throw new Error(`Invalid city "${city}", expected a 5-digit JIS X 0402 市区町村 code such as 13104`);
@@ -227,7 +228,7 @@ export const handler = async (ctx): Promise<Data> => {
             throw new Error(`City "${city}" does not belong to ${prefecture.label} (${prefecture.code})`);
         }
     }
-    const limit = Math.min(ctx.req.query('limit') ? Number(ctx.req.query('limit')) : DEFAULT_LIMIT, PAGE_SIZE);
+    const limit = Math.min(getRouteLimit(ctx, DEFAULT_LIMIT), PAGE_SIZE);
     const listUrl = `${HOST}/${prefecture.base}/${prefecture.slug}/search/${city === undefined ? '' : `A${city}/`}`;
 
     const cards = parseList(await ofetch(listUrl)).slice(0, limit);
@@ -270,7 +271,7 @@ export const route: Route = {
             options: PREFECTURES.map((p) => ({ value: p.slug, label: p.label })),
         },
         city: {
-            description: 'Optional 市区町村, as a 5-digit JIS X 0402 code (新宿区 `13104`, 港区 `13103`, 横浜市中区 `14104`). Must belong to `pref`; omit for the whole prefecture.',
+            description: 'Optional 市区町村, as a 5-digit JIS X 0402 code (新宿区 `13104`, 港区 `13103`, 横浜市中区 `14104`). The native URL prefix `A` is also accepted. Must belong to `pref`; omit for the whole prefecture.',
         },
     },
     description: `Listings on canaeru（USEN）for one prefecture — or one 市区町村 when \`city\` is given (\`/canaeru/tokyo/13104\` is 新宿区). Each item's \`_extra\` carries the shared listing fields (賃料，坪，坪単価，階，最寄駅，保証金，礼金，造作価格，現況，…) from the list and detail pages; unknown values are \`null\`, and the site's 「ー」 placeholder is treated as unknown rather than kept as text.
@@ -295,7 +296,11 @@ One caveat on 造作価格: the publisher occasionally appends 万円 to a figur
     },
     radar: [
         {
-            source: ['canaeru.usen.com/bukken/:pref/search/:city', 'canaeru.usen.com/bukken/:pref/search'],
+            source: ['canaeru.usen.com/bukken/:pref/search/:city', 'canaeru.usen.com/bukken_h/:pref/search/:city', 'canaeru.usen.com/bukken_tokai/:pref/search/:city'],
+            target: '/:pref/:city',
+        },
+        {
+            source: ['canaeru.usen.com/bukken/:pref/search', 'canaeru.usen.com/bukken_h/:pref/search', 'canaeru.usen.com/bukken_tokai/:pref/search'],
             target: '/:pref',
         },
     ],

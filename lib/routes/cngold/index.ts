@@ -5,15 +5,18 @@ import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
+import timezone from '@/utils/timezone';
 import { isValidHost } from '@/utils/valid-host';
 
 export const handler = async (ctx) => {
-    const { category = 'news-325' } = ctx.req.param();
+    const { category: rawCategory = 'news-325' } = ctx.req.param();
+    const category = rawCategory.endsWith('.html') ? rawCategory.slice(0, -5) : rawCategory;
     if (!isValidHost(category)) {
         throw new InvalidParameterError('Invalid category');
     }
 
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 12;
+    const limit = getRouteLimit(ctx, 12);
 
     const rootUrl = 'https://www.cngold.org.cn';
     const currentUrl = new URL(`${category}.html`, rootUrl).href;
@@ -25,18 +28,22 @@ export const handler = async (ctx) => {
     const language = $('html').prop('lang') as Language;
 
     let items = $('ul.newsList li')
-        .slice(0, limit)
         .toArray()
-        .map((item): DataItem & { link: string } => {
+        .map((item): DataItem & { link: string; pubDate: Date } => {
             const $item = $(item);
 
             return {
                 title: $item.find('t1').text(),
-                pubDate: parseDate($item.find('div.min, div.day').text(), ['YYYY-MM-DD', 'MM-DD']),
+                pubDate: timezone(parseDate($item.find('div.min, div.day').text(), ['YYYY-MM-DD', 'MM-DD']), 8),
                 link: new URL($item.find('a').prop('href')!, rootUrl).href,
                 language,
             };
         });
+
+    if (ctx.req.query('sorted') !== 'false') {
+        items = items.toSorted((a, b) => b.pubDate.getTime() - a.pubDate.getTime());
+    }
+    items = items.slice(0, limit);
 
     items = await Promise.all(
         items.map((item) =>
@@ -50,7 +57,7 @@ export const handler = async (ctx) => {
 
                 item.title = title;
                 item.description = description;
-                item.pubDate = parseDate($$('div.details_top div.min span').first().text());
+                item.pubDate = timezone(parseDate($$('div.details_top div.min span').first().text()), 8);
                 item.author = $$('div.details_top div.min span').last().text().split(/：/).pop();
                 item.content = {
                     html: description,
@@ -84,7 +91,7 @@ export const route: Route = {
     maintainers: ['nczitzk'],
     handler,
     example: '/cngold/news-325',
-    parameters: { category: '分类，默认为 `news-325`，即行业资讯，可在对应分类页 URL 中找到, Category, `news-325`，即行业资讯by default' },
+    parameters: { category: '分类，默认为 `news-325`，即行业资讯，可在对应分类页 URL 中找到, Category, `news-325`，即行业资讯by default；也支持官网文件名，例如 `news-325.html`' },
     description: `::: tip
 若订阅 [行业资讯](https://www.cngold.org.cn/news-325.html)，网址为 \`https://www.cngold.org.cn/news-325.html\`。截取 \`https://www.cngold.org.cn/\` 到末尾 \`.html\` 的部分 \`news-325\` 作为参数填入，此时路由为 [\`/cngold/news-325\`](https://rsshub.app/cngold/news-325)。
 :::
@@ -134,12 +141,8 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['www.cngold.org.cn/:category?'],
-            target: (params) => {
-                const category = params.category;
-
-                return category ? `/${category}` : '';
-            },
+            source: ['www.cngold.org.cn/:category'],
+            target: '/:category?',
         },
         {
             title: '政策法规 - 法律法规',

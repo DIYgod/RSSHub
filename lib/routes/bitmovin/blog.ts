@@ -1,6 +1,8 @@
 import type { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
+import timezone from '@/utils/timezone';
 
 const baseUrl = 'https://bitmovin.com';
 
@@ -32,7 +34,7 @@ async function handler(ctx) {
     const apiUrl = `${baseUrl}/wp-json/wp/v2`;
     const { data } = await got(`${apiUrl}/posts`, {
         searchParams: {
-            per_page: ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 100,
+            per_page: getRouteLimit(ctx, 100),
         },
     });
 
@@ -40,7 +42,7 @@ async function handler(ctx) {
         title: item.title.rendered,
         author: item.authors.map((a) => a.display_name).join(', '),
         description: item.content.rendered,
-        pubDate: parseDate(item.date_gmt),
+        pubDate: item.date_gmt ? timezone(parseDate(item.date_gmt), 0) : undefined,
         link: item.link,
     }));
 

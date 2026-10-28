@@ -1,8 +1,10 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
-import type { DataItem, Route } from '@/types';
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/parse-date';
 import parser from '@/utils/rss-parser';
 
 export const route: Route = {
@@ -20,12 +22,24 @@ export const route: Route = {
     url: 'www.engadget.com',
 };
 
+function getPublicationDate(date?: string) {
+    if (!date) {
+        return;
+    }
+    const parsedDate = parseDate(date);
+    return Number.isFinite(parsedDate.getTime()) ? parsedDate : undefined;
+}
+
 async function handler() {
     const feed = await parser.parseURL('https://www.engadget.com/rss.xml');
+    const sourceItems = feed.items.map((item) => ({ ...item, pubDate: getPublicationDate(item.pubDate) }));
+    const selectedItems = sourceItems;
 
-    const items = await Promise.all(
-        feed.items.map((item) =>
-            cache.tryGet<DataItem>(item.link!, async () => {
+    const items = await pMap(
+        selectedItems,
+        async (item) => ({
+            title: item.title!,
+            description: await cache.tryGet(`engadget:article:${item.link}`, async () => {
                 const response = await ofetch(item.link!);
                 const $ = load(response);
                 const article = $('article');
@@ -34,15 +48,14 @@ async function handler() {
                     $(el).attr('src', $(el).attr('data-lazy-src'));
                 });
 
-                return {
-                    title: item.title!,
-                    description: article.html(),
-                    pubDate: item.pubDate,
-                    link: item.link,
-                    author: item.author,
-                };
-            })
-        )
+                return article.html() ?? undefined;
+            }),
+            pubDate: item.pubDate,
+            link: item.link,
+            author: item.author,
+            category: item.categories,
+        }),
+        { concurrency: 3 }
     );
 
     return {

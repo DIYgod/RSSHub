@@ -1,5 +1,6 @@
 import type { Context } from 'hono';
 
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { DataItem, Route } from '@/types';
 import got from '@/utils/got';
 
@@ -101,6 +102,12 @@ async function handler(ctx: Context) {
 
     const arch = ctx.req.param('arch') ?? 'all';
     const javaType = ctx.req.param('javaType') ?? 'all';
+    if (arch !== 'all' && !Object.hasOwn(data, arch)) {
+        throw new InvalidParameterError('Unknown architecture; use an architecture listed in the runtime manifest.');
+    }
+    if (javaType !== 'all' && Object.values<Record<string, RuntimeInManifest[]>>(data).every((runtimes) => !Object.hasOwn(runtimes, javaType))) {
+        throw new InvalidParameterError('Unknown Java runtime type; use a type listed in the runtime manifest.');
+    }
 
     const items: DataItem[] = [];
 

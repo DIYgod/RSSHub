@@ -1,30 +1,35 @@
 import ofetch from '@/utils/ofetch';
 
 export interface TraderData {
+    rank: number;
     address: string;
-    account_value: number;
-    main_position: {
-        coin: string;
-        value: number;
-        side: 'LONG' | 'SHORT';
-    };
-    direction_bias: number;
-    perp_day_pnl: number;
-    perp_week_pnl: number;
-    perp_month_pnl: number;
-    perp_alltime_pnl: number;
+    accountValue: number;
+    netPnl: number;
+    grossPnl: number;
+    fundingPnl: number;
+    totalFees: number;
+    volume: number;
+    tradeCount: number;
+    winningTrades: number;
+    losingTrades: number;
 }
 
 export async function fetchTopTraders(): Promise<TraderData[]> {
-    const apiUrl = 'https://hyperdash.info/api/hyperdash/top-traders-cached';
-
-    const traders: TraderData[] = await ofetch(apiUrl, {
-        headers: {
-            'x-api-key': 'hyperdash_public_7vN3mK8pQ4wX2cL9hF5tR1bY6gS0jD',
+    const response = await ofetch<{ data?: { pnlLeaderboard: { data: TraderData[] } }; errors?: Array<{ message: string }> }>('https://api.hyperdash.com/graphql', {
+        method: 'POST',
+        body: {
+            query: `query PnlLeaderboard($category: PnlLeaderboardCategory!, $window: PnlLeaderboardWindow!, $pageSize: Int!) {
+                pnlLeaderboard(category: $category, window: $window, page: 1, pageSize: $pageSize) {
+                    data { rank address accountValue netPnl grossPnl fundingPnl totalFees volume tradeCount winningTrades losingTrades }
+                }
+            }`,
+            variables: { category: 'all', window: 'd30', pageSize: 28 },
         },
     });
-
-    return traders;
+    if (response.errors?.length || !Array.isArray(response.data?.pnlLeaderboard?.data)) {
+        throw new Error(`Hyperdash leaderboard API failed: ${response.errors?.map((error) => error.message).join('; ') || 'missing leaderboard data'}`);
+    }
+    return response.data.pnlLeaderboard.data;
 }
 
 export function formatCurrency(value: number | null): string {

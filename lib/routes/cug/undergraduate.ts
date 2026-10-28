@@ -10,7 +10,7 @@ export const route: Route = {
     path: '/undergraduate',
     categories: ['university'],
     example: '/cug/undergraduate',
-    name: '中国地质大学通知公告',
+    name: '通知公告',
     maintainers: ['chunibyo-wly'],
     handler,
 };
