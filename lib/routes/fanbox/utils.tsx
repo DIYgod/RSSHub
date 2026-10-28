@@ -15,7 +15,7 @@ export function getHeaders() {
     };
 }
 
-export function getCookieString() {
+function getCookieString() {
     const sessionid = config.fanbox.session;
     return sessionid ? `FANBOXSESSID=${sessionid}` : '';
 }
@@ -23,7 +23,17 @@ export function getCookieString() {
 function embedUrlMap(urlEmbed: ArticlePost['body']['urlEmbedMap'][string]) {
     switch (urlEmbed.type) {
         case 'html':
+        case 'html.card':
             return urlEmbed.html;
+        case 'default':
+            return renderToString(<a href={urlEmbed.url}>{urlEmbed.url}</a>);
+        case 'fanbox.creator':
+            return renderToString(
+                <a href={`https://${urlEmbed.profile.creatorId}.fanbox.cc`}>
+                    <img src={urlEmbed.profile.user.iconUrl} alt={urlEmbed.profile.user.name} />
+                    {urlEmbed.profile.user.name}
+                </a>
+            );
         case 'fanbox.post':
             return renderToString(
                 <a href={`https://${urlEmbed.postInfo.creatorId}.fanbox.cc/posts/${urlEmbed.postInfo.id}`}>
@@ -91,7 +101,7 @@ async function parseVideo(body: VideoPost['body']) {
             ret += await getSoundCloudEmbedUrl(body.video.videoId);
             break;
         case 'youtube':
-            ret += `<iframe src="https://www.youtube-nocookie.com/embed/${body.video.videoId}" frameborder="0" referrerpolicy="strict-origin-when-cross-origin"></iframe>`;
+            ret += `<iframe src="https://www.youtube-nocookie.com/embed/${body.video.videoId}" frameborder="0"></iframe>`;
             break;
         case 'vimeo':
             ret += `<iframe src="https://player.vimeo.com/video/${body.video.videoId}" frameborder="0"></iframe>`;
@@ -177,7 +187,9 @@ export function parseItem(item: PostItem) {
         return {
             title: item.title || 'No title',
             description: await parseDetail(postDetail.body.post),
-            pubDate: parseDate(item.updatedDatetime),
+            pubDate: parseDate(item.publishedDatetime),
+            updated: parseDate(item.updatedDatetime),
+            author: item.user.name,
             link: `https://${item.creatorId}.fanbox.cc/posts/${item.id}`,
             category: item.tags,
         };

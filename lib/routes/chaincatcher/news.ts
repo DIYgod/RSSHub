@@ -1,9 +1,6 @@
-import { load } from 'cheerio';
-
 import type { Route } from '@/types';
-import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
 
 const rootUrl = 'https://www.chaincatcher.com';
 
@@ -32,29 +29,24 @@ export const route: Route = {
 };
 
 async function handler() {
-    const { data } = await got.post(`${rootUrl}/index/content/lists`, {
-        form: {
-            page: 1,
-            categoryid: 3,
-        },
+    const response = await ofetch<{
+        result: number;
+        message: string;
+        data: { items: Array<{ title: string; url: string; content: string; releaseTimeStamp: number; keywords?: string }> };
+    }>('https://api.chaincatcher.com/v1/open-api/news-flash', {
+        responseType: 'json',
+        query: { type: 'flash', page: 1, size: 20, lang: 'zh-CN' },
     });
-
-    const $ = load(data.data, null, false);
-
-    $('.share').remove();
-    const items = $('.block')
-        .toArray()
-        .map((item) => {
-            const $item = $(item);
-            $item.find('.tips').remove();
-            const act = !!$item.find('.act-title').text();
-            return {
-                title: `${act ? '[重] ' : ''}${$item.find('.title').text()}`,
-                description: $item.find('.summary').text(),
-                link: `${rootUrl}${$item.find('a').first().attr('href')}`,
-                pubDate: timezone(parseDate($item.find('.time').text(), 'YYYY-MM-DD HH:mm:ss'), 8),
-            };
-        });
+    if (!response.result) {
+        throw new Error(`ChainCatcher API: ${response.message}`);
+    }
+    const items = response.data.items.map((item) => ({
+        title: item.title,
+        link: item.url,
+        description: item.content,
+        pubDate: parseDate(item.releaseTimeStamp),
+        category: item.keywords?.split(',').filter(Boolean),
+    }));
 
     return {
         title: '最新资讯-ChainCatcher',

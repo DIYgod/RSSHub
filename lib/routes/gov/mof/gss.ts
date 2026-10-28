@@ -79,7 +79,7 @@ export const route: Route = {
 | zhengcefabu | zhengcejiedu |`,
     radar: [
         {
-            source: ['gss.mof.gov.cn/gzdt/:category/'],
+            source: ['gss.mof.gov.cn/gzdt/:category/', 'gss.mof.gov.cn/gzdt/:category/index.htm'],
             target: '/gss/:category',
         },
     ],

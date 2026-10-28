@@ -34,7 +34,7 @@ async function handler() {
                 title: version,
                 author: 'Cent Browser',
                 description: $update.html(),
-                link: `${url}#${date}`,
+                link: `${url}#${encodeURIComponent(version)}`,
                 pubDate: parseDate(date),
             };
         });

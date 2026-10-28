@@ -1,5 +1,7 @@
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
-import ofetch from '@/utils/ofetch';
+
+import { getArtwork } from './utils';
 
 export const route: Route = {
     path: '/art/:folder/:username/:mode?',
@@ -25,15 +27,15 @@ export const route: Route = {
     radar: [
         {
             source: ['furaffinity.net/gallery/:username'],
-            target: '/gallery/:username',
+            target: '/art/gallery/:username',
         },
         {
             source: ['furaffinity.net/scraps/:username'],
-            target: '/scraps/:username',
+            target: '/art/scraps/:username',
         },
         {
             source: ['furaffinity.net/favorites/:username'],
-            target: '/favorites/:username',
+            target: '/art/favorites/:username',
         },
     ],
     handler,
@@ -41,16 +43,14 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { username, folder = 'gallery', mode = 'sfw' } = ctx.req.param();
+    if (!['gallery', 'scraps', 'favorites'].includes(folder) || !['sfw', 'nsfw'].includes(mode)) {
+        throw new InvalidParameterError('folder must be gallery, scraps, or favorites; mode must be sfw or nsfw.');
+    }
     let url = `https://faexport.spangle.org.uk/user/${username}/${folder}.json?sfw=1&full=1`;
     if (mode === 'nsfw') {
         url = `https://faexport.spangle.org.uk/user/${username}/${folder}.json?full=1`;
     }
-    const data = await ofetch(url, {
-        method: 'GET',
-        headers: {
-            Referer: 'https://faexport.spangle.org.uk/',
-        },
-    });
+    const data = await getArtwork(url, `https://www.furaffinity.net/${folder}/${username}/`, mode);
 
     let folderName;
 
@@ -77,7 +77,6 @@ async function handler(ctx) {
     }));
 
     return {
-        allowEmpty: true,
         title: `Fur Affinity | ${folderName} of ${username}`,
         link: `https://www.furaffinity.net/${folder}/${username}`,
         description: `Fur Affinity ${folderName} of ${username}`,

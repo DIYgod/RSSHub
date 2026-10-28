@@ -29,35 +29,30 @@ export const route: Route = {
     url: 'dafls.nju.edu.cn/13167/list.html',
 };
 
+const url = 'https://dafls.nju.edu.cn/13167/list.htm';
+
 async function handler() {
-    const category_dict = {
-        tzgg: '通知公告',
-    };
-
-    const items = await Promise.all(
-        Object.keys(category_dict).map(async (c) => {
-            const response = await got('https://dafls.nju.edu.cn/13167/list.htm');
-
-            const data = response.data;
-            const $ = load(data);
-            const list = $('#article97');
-
-            // only read first page
-            return list.map((index, item) => {
-                const $item = $(item);
-                return {
-                    title: $item.find('a').last().text(),
-                    link: 'https://dafls.nju.edu.cn' + $item.find('a').attr('href'),
-                    pubDate: timezone(parseDate($item.find('span').last().text(), 'YYYY-MM-DD'), 8),
-                    category: c,
-                };
-            });
-        })
-    );
+    const response = await got(url);
+    const $ = load(response.data);
+    const items = $('.news_list li.news')
+        .toArray()
+        .flatMap((element) => {
+            const $item = $(element);
+            const href = $item.find('a').attr('href');
+            if (!href) {
+                return [];
+            }
+            return {
+                title: $item.find('.news_title').text(),
+                link: new URL(href, url).href,
+                pubDate: timezone(parseDate($item.find('.news_meta').text(), 'YYYY-MM-DD'), 8),
+                category: 'tzgg',
+            };
+        });
 
     return {
         title: '大外部-通知公告',
-        link: 'https://dafls.nju.edu.cn/13167/list.htm',
-        item: [...items[0]],
+        link: url,
+        item: items,
     };
 }

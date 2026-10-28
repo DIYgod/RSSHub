@@ -1,5 +1,8 @@
+import Parser from 'rss-parser';
+
 import type { Route } from '@/types';
-import buildData from '@/utils/common-config';
+import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/parse-date';
 
 const baseUrl = 'https://oct0pu5.cn/';
 
@@ -27,18 +30,25 @@ export const route: Route = {
 };
 
 async function handler() {
-    const link = baseUrl;
-    return await buildData({
-        link,
-        url: link,
-        title: '博客',
-        description: 'Oct0pu5的博客',
-        item: {
-            item: '.recent-posts > .recent-post-item',
-            title: ($) => $('.recent-post-info > a').text(),
-            link: ($) => $('.recent-post-info > a').attr('href'),
-            description: ($) => $('.recent-post-info > .content').text(),
-            pubDate: ($) => Date.parse($('div.recent-post-info > div.article-meta-wrap > span.post-meta-date > time').text().trim()),
-        },
-    });
+    const response = await ofetch<string>(new URL('rss.xml', baseUrl).href);
+    const feed = await new Parser().parseString(response);
+
+    return {
+        title: feed.title || 'Oct0pu5的博客',
+        link: baseUrl,
+        description: feed.description,
+        item: feed.items.flatMap((item) => {
+            if (!item.title || !item.link) {
+                return [];
+            }
+            return {
+                title: item.title,
+                link: item.link,
+                guid: item.guid,
+                description: item['content:encoded'] || item.content,
+                pubDate: item.pubDate ? parseDate(item.pubDate) : undefined,
+                category: item.categories,
+            };
+        }),
+    };
 }

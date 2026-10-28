@@ -1,5 +1,7 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
+import NotFoundError from '@/errors/types/not-found';
 import type { DataItem, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
@@ -15,9 +17,9 @@ export const route: Route = {
     handler,
     example: '/ce/district',
     parameters: { category: '栏目标识，默认为 roll（即时新闻）' },
-    description: `| 即时新闻 | 经济动态 | 独家视角 | 专题 | 数说地方 | 地方播报 | 专稿 | 港澳台 |
-| -------- | -------- | -------- | ---- | -------- | -------- | ---- | ------ |
-| roll     | jjdt     | poll     | ch   | ssdf     | dfbb     | zg   | gat    |`,
+    description: `| 即时新闻 | 经济动态 | 独家视角 | 专题 | 数说地方 | 地方播报 |
+| -------- | -------- | -------- | ---- | -------- | -------- |
+| roll     | jjdt     | poll     | ch   | ssdf     | dfbb     |`,
     categories: ['traditional-media'],
     features: {
         requireConfig: false,
@@ -48,41 +50,41 @@ export const route: Route = {
 async function handler(ctx) {
     const rootUrl = 'http://district.ce.cn/';
     const { category = 'roll' } = ctx.req.param();
+    if (category === 'zg' || category === 'gat') {
+        throw new NotFoundError('This district category has been retired. Choose roll, jjdt, poll, ch, ssdf or dfbb.');
+    }
     const url = `${rootUrl}newarea/${category}/index.shtml`;
-    const GB2312Response = await ofetch(url, { responseType: 'arrayBuffer' });
-
-    // originally site use gb2312 encoding
-    const response = new TextDecoder('gb2312').decode(new Uint8Array(GB2312Response));
+    const response = await fetchHtml(url);
     const $ = load(response);
 
-    const bigTitle = $('div.channl a').eq(1).attr('title');
+    const bigTitle = $('div.channl a').eq(1).attr('title') || $('title').text().split('_', 1)[0];
 
-    const list = $('div.sec_left li')
-        .toArray()
-        .map((e): DataItem => {
-            const element = $(e);
-            const title = element.find('a').text().trim();
-            const link = new URL(element.find('a').attr('href')!, url).href;
-            return {
-                title,
-                link,
-            };
-        });
+    const entries = $('.news_items li').length ? $('.news_items li') : $('div.sec_left li');
+    const list = entries.toArray().map((e): DataItem => {
+        const element = $(e);
+        const anchor = element.find('h3 a[href]').length ? element.find('h3 a[href]') : element.find('a[href]').first();
+        const title = anchor.attr('title') || anchor.text();
+        const link = new URL(anchor.attr('href')!, url).href;
+        return {
+            title,
+            link,
+        };
+    });
 
-    const items = await Promise.all(
-        list.map((item) =>
+    const items = await pMap(
+        list,
+        (item) =>
             cache.tryGet(item.link!, async () => {
-                const GB2312Response = await ofetch(item.link!, { responseType: 'arrayBuffer' });
-                const response = new TextDecoder('gb2312').decode(new Uint8Array(GB2312Response));
+                const response = await fetchHtml(item.link!);
                 const $ = load(response);
 
                 const pubDateText = $('span#articleTime').text().trim();
-                item.pubDate = timezone(parseDate(pubDateText, 'YYYY年MM月DD日 HH:mm'), 8);
+                item.pubDate = pubDateText ? timezone(parseDate(pubDateText, 'YYYY年MM月DD日 HH:mm'), 8) : undefined;
 
-                item.description = $('div.TRS_Editor').html();
+                item.description = $('div.TRS_Editor').html() || $('#articleText .TRS_UEDITOR').html();
                 return item;
-            })
-        )
+            }),
+        { concurrency: 5 }
     );
 
     return {
@@ -90,4 +92,12 @@ async function handler(ctx) {
         link: url,
         item: items,
     };
+}
+
+async function fetchHtml(url: string) {
+    const response = await ofetch(url, { responseType: 'arrayBuffer' });
+    const bytes = new Uint8Array(response);
+    const head = new TextDecoder().decode(bytes.subarray(0, 4096));
+    const encoding = head.match(/charset\s*=\s*["']?([\w-]+)/i)?.[1] || 'gb2312';
+    return new TextDecoder(encoding).decode(bytes);
 }

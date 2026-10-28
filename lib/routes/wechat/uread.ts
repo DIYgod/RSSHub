@@ -31,37 +31,21 @@ async function handler(ctx) {
     });
     const data = response.data;
 
-    const ProcessFeed = (data) => {
-        const $ = load(data);
-        return $('.rich_media_content').html();
-    };
-
     const items = await Promise.all(
-        data.data.map(async (item) => {
-            const link = item.url;
-
-            const cacheIn = await cache.get(link);
-            if (cacheIn) {
-                return JSON.parse(cacheIn);
-            }
-
-            const response = await got({
-                method: 'get',
-                url: link,
-            });
-
-            const description = ProcessFeed(response.data);
-
-            const single = {
-                title: item.title,
-                description,
-                link,
-                author: item.official_account,
-                pubDate: item.publish_time,
-            };
-            cache.set(link, JSON.stringify(single));
-            return single;
-        })
+        data.data.map(async (item) => ({
+            title: item.title,
+            description: await cache.tryGet(`wechat:uread:description:${item.url}`, async () => {
+                const response = await got({
+                    method: 'get',
+                    url: item.url,
+                });
+                const $ = load(response.data);
+                return $('.rich_media_content').html();
+            }),
+            link: item.url,
+            author: item.official_account,
+            pubDate: item.publish_time,
+        }))
     );
 
     return {

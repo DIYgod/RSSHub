@@ -1,7 +1,6 @@
-import type { Cheerio, CheerioAPI } from 'cheerio';
 import { load } from 'cheerio';
-import type { Element } from 'domhandler';
 import type { Context } from 'hono';
+import pMap from 'p-map';
 
 import type { Data, DataItem, Language, Route } from '@/types';
 import { ViewType } from '@/types';
@@ -10,164 +9,69 @@ import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
-import { renderDescription } from './templates/description';
+import { getLimit, getNews } from './utils';
+
+interface NewsResponse {
+    code: number;
+    message: string;
+    result: {
+        id: number;
+        title: string;
+        detail: string;
+        pubTime: string;
+        lastUpdate: string | null;
+        tags: string | null;
+        coverUrl: string;
+        userVo: { name: string; spaceUrl: string; portraitUrl: string };
+    };
+}
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { id } = ctx.req.param();
-    const limit = Number(ctx.req.query('limit') ?? '10');
-
+    const limit = getLimit(ctx.req.query('limit'), 10);
     const baseUrl = 'https://www.oschina.net';
-    const userHostRegex: string = String.raw`https://my\.oschina\.net`;
-    const targetUrl: string = new URL(`news/column?columnId=${id}`, baseUrl).href;
-
+    const targetUrl = new URL(`news/column?columnId=${id}`, baseUrl).href;
     const response = await ofetch(targetUrl);
-    const $: CheerioAPI = load(response);
+    const $ = load(response);
     const language = ($('html').attr('lang') ?? 'zh-CN') as Language;
-
-    let items: DataItem[] = $('div.news-item')
+    const list = $('div.news-item')
         .slice(0, limit)
         .toArray()
-        .map((el) => {
-            const $el: Cheerio<Element> = $(el);
-
-            const title: string = $el.find('div.title').text();
-            const description: string = renderDescription({
-                intro: $el.find('div.description p.line-clamp').text(),
-            });
-            const pubDateStr: string | undefined = $el.find('inddiv.item').contents().last().text().trim();
-            const linkUrl: string | undefined = $el.attr('data-url');
-            const authorEls: Element[] = $el.find('inddiv.item a').toArray();
-            const authors: DataItem['author'] = authorEls.map((authorEl) => {
-                const $authorEl: Cheerio<Element> = $(authorEl);
-
+        .flatMap((element) => {
+            const link = $(element).attr('data-url');
+            return link ? { link: new URL(link, baseUrl).href } : [];
+        });
+    const items: DataItem[] = await pMap(
+        list,
+        async (item) => {
+            const newsId = new URL(item.link).pathname.split('/', 3)[2];
+            const details = await cache.tryGet(`oschina:column:news:${newsId}`, async () => {
+                const response: NewsResponse = await getNews(Number(newsId));
+                if (response.code !== 200) {
+                    throw new Error(`Unable to fetch OSCHINA news ${newsId}: ${response.message}`);
+                }
+                const news = response.result;
                 return {
-                    name: $authorEl.text(),
-                    url: $authorEl.attr('href'),
+                    title: news.title,
+                    description: news.detail,
+                    pubDate: timezone(parseDate(news.pubTime), 8),
+                    updated: news.lastUpdate ? parseDate(news.lastUpdate) : undefined,
+                    category: news.tags ? news.tags.split(',') : undefined,
+                    author: [{ name: news.userVo.name, url: news.userVo.spaceUrl, avatar: news.userVo.portraitUrl }],
+                    image: news.coverUrl,
+                    guid: `oschina:news:${news.id}`,
                 };
             });
-            const image: string | undefined = $el.find('img').attr('src');
-            const upDatedStr: string | undefined = pubDateStr;
-
-            const processedItem: DataItem = {
-                title,
-                description,
-                pubDate: pubDateStr ? timezone(parseDate(pubDateStr), 8) : undefined,
-                link: linkUrl,
-                author: authors,
-                content: {
-                    html: description,
-                    text: description,
-                },
-                image,
-                banner: image,
-                updated: upDatedStr ? timezone(parseDate(upDatedStr), 8) : undefined,
-                language,
-            };
-
-            return processedItem;
-        });
-
-    items = (
-        await Promise.all(
-            items.map((item) => {
-                if (!item.link) {
-                    return item;
-                }
-
-                return cache.tryGet(item.link, async (): Promise<DataItem> => {
-                    const detailResponse = await ofetch(item.link!);
-                    const $$: CheerioAPI = load(detailResponse);
-
-                    $$('.ad-wrap').remove();
-
-                    const title: string = $$('h1.article-box__title').text();
-                    const description: string = renderDescription({
-                        description: $$('div.content').html() ?? undefined,
-                    });
-                    const pubDateEl: Element | undefined = $$('div.article-box__meta div.item-list div.item')
-                        .toArray()
-                        .find((i) => /\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}:\d{2}/.test($$(i).text()));
-                    const pubDateStr: string | undefined = pubDateEl ? $$(pubDateEl).text() : undefined;
-                    const linkUrl: string | undefined = $$('val[data-name="shareUrl"]').attr('data-value');
-                    const categoryEls: Element[] = [...$$('div.breadcrumb-box a.item').toArray().slice(0, -1), ...$$('div.article-box__meta div.item-list div.item span.label').toArray(), ...$$('div.tags-box a.tag-item').toArray()];
-                    const categories: string[] = [...new Set(categoryEls.map((el) => $$(el).text()).filter(Boolean))];
-                    const authorEls: Element[] = $$('div.article-box__meta div.item-list div.item a')
-                        .toArray()
-                        .filter((i) => {
-                            const href: string | undefined = $$(i).attr('href');
-
-                            return href ? new RegExp(String.raw`^${userHostRegex}/u/\d+$`).test(href) : false;
-                        });
-                    const authors: DataItem['author'] = authorEls.map((authorEl) => {
-                        const $authorEl: Cheerio<Element> = $$(authorEl);
-
-                        return {
-                            name: $authorEl.text(),
-                            url: $authorEl.attr('href'),
-                        };
-                    });
-                    const guid = `oschina-${$$('val[data-name="objId"]').attr('data-value')}`;
-                    const image: string | undefined = $$('val[data-name="sharePic"]').attr('data-value');
-                    const upDatedStr: string | undefined = $$('meta[property="bytedance:updated_time"]').attr('content') || pubDateStr;
-
-                    let processedItem: DataItem = {
-                        title,
-                        description,
-                        pubDate: pubDateStr ? timezone(parseDate(pubDateStr), 8) : item.pubDate,
-                        link: linkUrl ? new URL(linkUrl, baseUrl).href : item.link,
-                        category: categories,
-                        author: authors,
-                        guid,
-                        id: guid,
-                        content: {
-                            html: description,
-                            text: description,
-                        },
-                        image,
-                        banner: image,
-                        updated: upDatedStr ? parseDate(upDatedStr) : item.updated,
-                        language,
-                    };
-
-                    const extraLinkEls: Element[] = $$('div.related-links-box ul.link-list li a').toArray();
-                    const extraLinks = extraLinkEls
-                        .map((extraLinkEl) => {
-                            const $$extraLinkEl: Cheerio<Element> = $$(extraLinkEl);
-
-                            return {
-                                url: $$extraLinkEl.attr('href'),
-                                type: 'related',
-                                content_html: $$extraLinkEl.parent().html(),
-                            };
-                        })
-                        .filter((_): _ is { url: string; type: string; content_html: string } => true);
-
-                    if (extraLinks) {
-                        processedItem = {
-                            ...processedItem,
-                            _extra: {
-                                links: extraLinks,
-                            },
-                        };
-                    }
-
-                    return {
-                        ...item,
-                        ...processedItem,
-                    };
-                });
-            })
-        )
-    ).filter((_): _ is DataItem => true);
-
-    const author: string | undefined = $('a.logo').attr('title');
-
+            return { ...details, link: item.link, language };
+        },
+        { concurrency: 3 }
+    );
+    const author = $('a.logo').attr('title');
     return {
         title: `${author} - ${$('div#tabDropdownListOpen a.selected').text()}`,
         description: $('meta[name="description"]').attr('content'),
         link: targetUrl,
         item: items,
-        allowEmpty: true,
         image: $('a.logo img').attr('src'),
         author,
         language,
@@ -224,21 +128,10 @@ export const route: Route = {
         requireConfig: false,
         requirePuppeteer: false,
         antiCrawler: false,
-        supportRadar: true,
+        supportRadar: false,
         supportBT: false,
         supportPodcast: false,
         supportScihub: false,
     },
-    radar: [
-        {
-            source: ['www.oschina.net'],
-            target: (_, url) => {
-                const urlObj: URL = new URL(url);
-                const id: string | undefined = urlObj.searchParams.get('id') ?? undefined;
-
-                return `/oschina/column/${id}`;
-            },
-        },
-    ],
     view: ViewType.Articles,
 };

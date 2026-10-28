@@ -4,6 +4,7 @@ import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 import timezone from '@/utils/timezone';
 
 export const route: Route = {
@@ -30,7 +31,8 @@ export const route: Route = {
     url: 'www.iee.cas.cn/xwzx/kydt',
 };
 
-async function handler() {
+async function handler(ctx) {
+    const limit = getRouteLimit(ctx, 15);
     const rootUrl = 'http://www.iee.cas.cn/xwzx/kydt/';
     const response = await got({
         method: 'get',
@@ -39,7 +41,7 @@ async function handler() {
 
     const $ = load(response.data);
     const list = $('li.entry .entry-content-title')
-        .slice(0, 15)
+        .slice(0, limit)
         .toArray()
         .map((item): DataItem => {
             const $item = $(item);

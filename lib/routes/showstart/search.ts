@@ -99,7 +99,6 @@ async function handler(ctx: Context): Promise<Data> {
             return {
                 title: `${TITLE} - 搜演出 - ${type || '全部'}`,
                 link: HOST,
-                allowEmpty: true,
                 item: await fetchActivityList({ keyword: type }),
             };
     }

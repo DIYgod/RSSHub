@@ -1,3 +1,4 @@
+import { load } from 'cheerio';
 import type { Context } from 'hono';
 
 import type { Data, DataItem, Route } from '@/types';
@@ -26,7 +27,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
         const link = `https://kpopping.com/community/${item.slug}`;
         const dateStr = item.publishedAt ?? item.createdAt;
         const pubDate = dateStr ? parseDate(dateStr) : undefined;
-        const category = item.category;
+        const category = [item.category, ...(item.tags ?? [])].filter(Boolean);
         const author = item.authorName;
 
         return {
@@ -38,7 +39,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
             author,
             content: {
                 html: description,
-                text: description,
+                text: load(description).text(),
             },
             image: item.coverImage,
             banner: item.coverImage,

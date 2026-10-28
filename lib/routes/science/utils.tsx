@@ -1,17 +1,20 @@
 import { load } from 'cheerio';
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
+import pMap from 'p-map';
 
+import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
 import { parseDate } from '@/utils/parse-date';
+import type { Page } from '@/utils/playwright';
 
 const baseUrl = 'https://www.science.org';
 
-const fetchDesc = (list, context) =>
-    Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link, async () => {
-                const page = await context.newPage();
+const fetchDesc = (list: Array<DataItem & { link: string }>, page: Page) =>
+    pMap(
+        list,
+        async (item) => {
+            const description = await cache.tryGet<string>(`science:body:v2:${item.link}`, async () => {
                 await page.route('**/*', (route) => {
                     const request = route.request();
                     request.resourceType() === 'document' || request.resourceType() === 'script' ? route.continue() : route.abort();
@@ -22,7 +25,6 @@ const fetchDesc = (list, context) =>
                 });
                 await page.waitForSelector('section#bodymatter, .news-article-content, .news-article-content--featured');
                 const res = await page.evaluate(() => document.documentElement.getHTML());
-                await page.close();
 
                 const $ = load(res);
                 const abstract = $('div#abstracts').html();
@@ -34,11 +36,11 @@ const fetchDesc = (list, context) =>
                         ? ''
                         : $('section#bodymatter').html();
 
-                item.description = renderDescription(abstract, content);
-
-                return item;
-            })
-        )
+                return renderDescription(abstract, content);
+            });
+            return { ...item, description };
+        },
+        { concurrency: 1 }
     );
 
 const getItem = (item, $) => {

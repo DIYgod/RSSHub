@@ -5,7 +5,7 @@ import { sm2, sm3, sm4 } from 'sm-crypto-v2';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 
-export const baseUrl = 'https://www.95598.cn';
+const baseUrl = 'https://www.95598.cn';
 export const link = `${baseUrl}/osgweb/blackoutNotice`;
 
 const appKey = '7e5b5e84ddad4994b0ebc68dedca4962';
@@ -61,6 +61,9 @@ const request = async (path: string, payload: JsonObject, uuid: string, publicKe
             timestamp: String(timestamp),
         },
     });
+    if (typeof response.encryptData !== 'string' || !response.encryptData) {
+        throw new Error(`The State Grid API returned no encrypted response for ${path} (code: ${response.code ?? 'unknown'}, message: ${response.message ?? 'unavailable'}). Check the official outage notice page and retry later.`);
+    }
     return sm4Decrypt(response.encryptData, uuid);
 };
 

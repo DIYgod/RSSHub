@@ -1,9 +1,11 @@
 import { load } from 'cheerio';
+import type { Context } from 'hono';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
 export const route: Route = {
     path: '/opinions',
@@ -14,7 +16,7 @@ export const route: Route = {
     handler,
 };
 
-async function handler() {
+async function handler(ctx: Context) {
     const rootUrl = 'https://www.cgtn.com/opinions';
     const response = await ofetch(rootUrl);
 
@@ -25,7 +27,7 @@ async function handler() {
     const list = $('.cg-title h3')
         .slice(0, 15)
         .toArray()
-        .map((item): DataItem => {
+        .map((item): DataItem & { pubDate: Date } => {
             const a = $(item).find('a');
             return {
                 title: a.text(),
@@ -34,8 +36,12 @@ async function handler() {
             };
         });
 
+    const candidates = ctx.req.query('sorted') === 'false' ? list : list.toSorted((a, b) => b.pubDate.getTime() - a.pubDate.getTime());
+    const limit = getRouteLimit(ctx);
+    const selected = candidates.slice(0, limit);
+
     const items = await Promise.all(
-        list.map((item) =>
+        selected.map((item) =>
             cache.tryGet(item.link!, async () => {
                 const detailResponse = await ofetch(item.link!);
                 const content = load(detailResponse);

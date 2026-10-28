@@ -1,9 +1,11 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 export const rootUrl = 'https://www.joshwcomeau.com';
 
@@ -28,41 +30,49 @@ export async function getRelativeUrlList(url: string, selector: string) {
 }
 
 export async function processList(list: PostLink[]): Promise<DataItem[]> {
-    const listPromise = await Promise.allSettled(list.map(async (item) => await cache.tryGet(`joshwcomeau:${item.url}`, async () => await getPostContent(item))));
-    return listPromise.map((item, index) => (item.status === 'fulfilled' ? item.value : { title: 'Error Reading Item', link: `${rootUrl}${list[index]?.url}` }));
+    return await pMap(list, (item) => cache.tryGet(`joshwcomeau:${item.url}`, () => getPostContent(item)), { concurrency: 3 });
 }
 
-export async function getPostContent({ url, cardTitle }: PostLink): Promise<DataItem> {
-    if (url.startsWith('https')) {
+async function getPostContent({ url, cardTitle }: PostLink): Promise<DataItem> {
+    const articleUrl = new URL(url, rootUrl);
+    if (articleUrl.origin !== new URL(rootUrl).origin) {
         return {
             title: cardTitle ?? 'External Content',
             description: 'Read it on external Site',
-            link: url,
+            link: articleUrl.href,
         };
     }
-    const response = await ofetch<string>(`${rootUrl}${url}`);
+    const response = await ofetch<string>(articleUrl.href);
     const $ = load(response);
     const title = $('meta[property="og:title"]').attr('content')?.replace('• Josh W. Comeau', '');
-    const summary = $('meta[property="og:description"]').attr('content');
     const author = $('meta[name="author"]').attr('content');
     const dateDiv = $('div[data-parent-layout]');
     const tag = dateDiv.find('dl:first-child > dd > a').text();
     const pubDate = dateDiv.find('dl:first-child > dd:has(span):not(:last-child)').text();
-    const updateDate = dateDiv.find('dl:last-child > dd:has(span):not(:last-child)').text();
-    const description = $('main > article').html();
+    const updateDate = dateDiv
+        .find('dl')
+        .filter((_, element) => $(element).find('dt').first().text() === 'Last updated')
+        .find('dd:has(span):not(:last-child)')
+        .text();
+    const article = $('main > article');
+    const description = article.html();
     return {
         title: title ?? cardTitle,
         description,
         author,
         pubDate: processDate(pubDate),
         updated: processDate(updateDate),
-        link: `${rootUrl}${url}`,
-        content: { html: description, text: summary },
+        link: articleUrl.href,
+        content: { html: description, text: article.text() },
         category: [tag],
     };
 }
 
 function processDate(date: string) {
     const dateWithSlash = date.trim().replaceAll(' ', '/').replace(',', '');
-    return parseDate(dateWithSlash, 'MMMM/Do/YYYY', 'en');
+    if (!dateWithSlash) {
+        return;
+    }
+    const parsed = timezone(parseDate(dateWithSlash, 'MMMM/Do/YYYY', 'en'), 0);
+    return Number.isNaN(parsed.getTime()) ? undefined : parsed;
 }

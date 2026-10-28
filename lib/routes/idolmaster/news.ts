@@ -2,11 +2,13 @@ import querystring from 'node:querystring';
 
 import { load } from 'cheerio';
 import type { Context } from 'hono';
+import pMap from 'p-map';
 
 import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 import timezone from '@/utils/timezone';
 
 export const route: Route = {
@@ -71,32 +73,29 @@ async function handler(ctx: Context): Promise<Data> {
         options.brand = toUpperCase(queries.brand);
     }
 
-    const limitParam = ctx.req.query('limit');
-    let limit = limitParam ? Number.parseInt(limitParam) : 12;
-    if (limit > 30) {
-        limit = 30;
-    }
+    const limit = Math.min(getRouteLimit(ctx, 12), 30);
     const listUrl = `${apiUrl}/sitern/api/idolmaster/Article/list?site=jp&ip=idolmaster&token=${token}&sort=desc&data=${JSON.stringify(options)}&limit=${limit}&start=0`;
     const listnRsp = await got(listUrl);
     const articleList = listnRsp.data.data.article_list;
 
-    let items = articleList.map((article): DataItem => ({
+    let items: DataItem[] = articleList.map((article): DataItem => ({
         title: article.title,
         link: article.url,
         pubDate: timezone(parseDate(article.dspdate), 9),
         category: article.categories.subcategory.map((cat) => cat.name),
     }));
 
-    items = await Promise.all(
-        items.map((item: DataItem) =>
+    items = await pMap(
+        items,
+        (item: DataItem) =>
             cache.tryGet(item.link!, async () => {
                 const rsp = await got(item.link);
                 const content = load(rsp.data);
                 const nextData = JSON.parse(content('script#__NEXT_DATA__').text());
                 item.description = `<div lang="ja">${nextData.props.pageProps.data.content?.replaceAll('<img src="', () => `<img src="${apiUrl}/sitern/api/idolmaster/Image/get?path=`)}</div>`;
                 return item;
-            })
-        )
+            }),
+        { concurrency: 3 }
     );
 
     return {

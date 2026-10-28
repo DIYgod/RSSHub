@@ -3,7 +3,7 @@ import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 
 import InvalidParameterError from '@/errors/types/invalid-parameter';
-import type { Route } from '@/types';
+import type { Data, Route } from '@/types';
 import got from '@/utils/got';
 import { isValidHost } from '@/utils/valid-host';
 
@@ -26,19 +26,15 @@ export const route: Route = {
     description: '`https://afkmaster.gumroad.com/l/Eve10` -> `/gumroad/afkmaster/Eve10`',
 };
 
-const renderDescription = (img, productsName, price, desc, stack) =>
+const renderDescription = (covers: Array<{ type: string; url: string; thumbnail?: string }>, description: string) =>
     renderToString(
         <>
-            <img src={img} />
-            <h1>{productsName}</h1>
-            <p style="color: red;">{price}</p>
-            {desc ? <>{raw(desc)}</> : null}
-            <hr />
-            {stack ? <>{raw(stack)}</> : null}
+            {covers.map((cover) => (cover.type === 'image' ? <img src={cover.url} /> : cover.type === 'video' ? <video controls src={cover.url} poster={cover.thumbnail} /> : <a href={cover.url}>View cover</a>))}
+            {raw(description)}
         </>
     );
 
-async function handler(ctx) {
+async function handler(ctx): Promise<Data> {
     const username = ctx.req.param('username');
     const products = ctx.req.param('products');
     if (!isValidHost(username)) {
@@ -48,25 +44,28 @@ async function handler(ctx) {
 
     const response = await got(url);
     const $ = load(response.data);
-    const title = $('section.product-content.product-content__row > header > h1').text();
-    const userFullName = $('section.product-content.product-content__row > section.details > a').text();
-
+    const pageData = $('[data-page]').attr('data-page');
+    if (!pageData) {
+        throw new Error('Gumroad product data was not found on the public product page');
+    }
+    const { product } = JSON.parse(pageData).props;
+    if (!product) {
+        throw new Error('Gumroad did not return a product on the public product page');
+    }
+    const title = product.name;
+    const userFullName = product.seller.name;
     const item = [
         {
             title,
             link: url,
-            description: renderDescription(
-                response.data.match(/data-preview-url="(.*?)"/)[1],
-                title,
-                $('div.price').text(),
-                $('section.product-content.product-content__row > section:nth-child(3) > div').html(),
-                $('div.product-info').find('ul.stack').html()
-            ),
+            author: userFullName,
+            description: renderDescription(product.covers, product.description_html),
         },
     ];
 
     return {
         link: url,
+        language: 'en',
         title: `Gumroad - ${userFullName}/${title}`,
         item,
     };

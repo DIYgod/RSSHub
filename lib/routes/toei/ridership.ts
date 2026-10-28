@@ -1,3 +1,5 @@
+import pMap from 'p-map';
+
 import type { RidershipExtra } from '@/routes/tokyometro/utils';
 import { ridershipItem } from '@/routes/tokyometro/utils';
 import type { Data, Route } from '@/types';
@@ -13,7 +15,7 @@ const CATALOG_PAGE = `https://catalog.data.metro.tokyo.lg.jp/dataset/${DATASET}`
 interface Resource {
     url: string;
     description: string;
-    last_modified: string | null;
+    last_modified?: string | null;
 }
 
 /** '《都営地下鉄》 - [地下鉄関連情報 各駅乗降人員一覧] 浅草線\n\n2024年4月～2025年3月' → line + fiscal year. */
@@ -69,16 +71,17 @@ export const handler = async (): Promise<Data> => {
     });
 
     const items = (
-        await Promise.all(
-            pkg.map((r) =>
-                cache.tryGet(`${r.url}#${r.last_modified ?? ''}`, async () => {
+        await pMap(
+            pkg,
+            (r) =>
+                cache.tryGet(`toei:ridership:v2:${r.url}#${r.last_modified ?? ''}`, async () => {
                     const buf: ArrayBuffer = await ofetch(r.url, { responseType: 'arrayBuffer' });
                     return parseCsv(buf, r.meta.line, r.meta.fiscalYear, CATALOG_PAGE).map((item) => ({
                         ...item,
-                        pubDate: r.last_modified === null ? undefined : parseDate(r.last_modified),
+                        pubDate: r.last_modified ? parseDate(r.last_modified) : undefined,
                     }));
-                })
-            )
+                }),
+            { concurrency: 3 }
         )
     ).flat();
     const fiscalYear = pkg[0]?.meta.fiscalYear;

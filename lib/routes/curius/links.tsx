@@ -60,7 +60,6 @@ async function handler(ctx) {
         title: `${name} - Curius`,
         link: `https://curius.app/${username}`,
         description: `${name} - Curius`,
-        allowEmpty: true,
         item: items,
     };
 }

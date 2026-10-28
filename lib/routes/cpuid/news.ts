@@ -48,7 +48,7 @@ async function handler() {
 
     return {
         title: $('head title').text(),
-        description: $('head description').attr('content'),
+        description: $('meta[name="description"]').attr('content'),
         link: newsUrl,
         image: $('link[rel=apple-touch-icon-precomposed]').attr('href'),
         item: items,

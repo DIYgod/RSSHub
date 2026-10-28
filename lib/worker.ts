@@ -7,3 +7,4 @@ import '@/utils/request-rewriter';
 // Import and re-export the main app
 // Worker-specific module replacements are handled by tsdown aliases
 export { default } from './app.worker';
+export { BrowserSession } from './utils/browser-session.worker';

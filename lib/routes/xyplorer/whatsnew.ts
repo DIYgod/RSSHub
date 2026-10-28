@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
-import { parseRelativeDate } from '@/utils/parse-date';
+import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/whatsnew',
@@ -22,13 +22,18 @@ async function handler() {
 
     const items = $('.waznu')
         .toArray()
+        .filter((item) => $(item).prev().is('p.date') && $(item).prev().prev().is('h3'))
         .map((item) => {
             const $item = $(item);
+            const title = $item.prev().prev().text();
+            const date = $item.prev().text().replace('released ', '');
+            const pubDate = date ? parseDate(date, 'DD-MMM-YYYY', 'en', true) : undefined;
             return {
+                guid: `${currentUrl}#${encodeURIComponent(title)}`,
                 link: currentUrl,
                 description: `<ul>${$item.html()}</ul>`,
-                title: $item.prev().prev().text(),
-                pubDate: parseRelativeDate($item.prev().text().replace('released ', '')),
+                title,
+                pubDate: pubDate && Number.isFinite(pubDate.getTime()) ? pubDate : undefined,
             };
         });
 

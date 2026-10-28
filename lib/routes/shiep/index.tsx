@@ -1,13 +1,15 @@
 import { load } from 'cheerio';
-import dayjs from 'dayjs';
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
+import { FetchError } from 'ofetch';
+import pMap from 'p-map';
 
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 import { config } from './config';
 import { radar } from './radar';
@@ -83,28 +85,24 @@ async function handler(ctx) {
             return {
                 title: $item.find('a').attr('title') || $item.find('h3').text() || $item.find('a').text(),
                 link: new URL($item.find('a').attr('href')!, host).href,
-                pubDate: match ? parseDate(match[0], 'YYYY-MM-DD') : null,
+                pubDate: match ? timezone(parseDate(match[0], 'YYYY-MM-DD'), 8) : undefined,
             };
-        })
-        .filter((item) => {
-            const date = dayjs(item.pubDate);
-            return date.isValid();
         });
 
-    const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link, async () => {
-                try {
+    const items = await pMap(
+        list,
+        async (item) => ({
+            ...item,
+            ...(await recoverArticle(
+                cache.tryGet(`shiep:article-v4:${item.link}`, async () => {
                     const response = await got(item.link);
                     const $ = load(response.data);
-
-                    item.description = $(descriptionSelector).length > 0 ? renderToString(<>{$(descriptionSelector).html() ? raw($(descriptionSelector).html()) : null}</>) : '请进行统一身份认证后查看内容';
-                } catch {
-                    item.description = '请在校内或通过校园VPN查看内容';
-                }
-                return item;
-            })
-        )
+                    const content = $(descriptionSelector).html();
+                    return { description: content ? renderToString(<>{raw(content)}</>) : undefined };
+                })
+            )),
+        }),
+        { concurrency: 3 }
     );
 
     return {
@@ -112,4 +110,15 @@ async function handler(ctx) {
         link,
         item: items,
     };
+}
+
+async function recoverArticle<T>(promise: Promise<T>) {
+    try {
+        return await promise;
+    } catch (error) {
+        if (error instanceof FetchError) {
+            return {};
+        }
+        throw error;
+    }
 }

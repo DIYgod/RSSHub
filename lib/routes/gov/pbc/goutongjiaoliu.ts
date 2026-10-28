@@ -1,9 +1,10 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import { parseDate } from '@/utils/parse-date';
-import playwright from '@/utils/playwright';
+import { getPlaywrightPage } from '@/utils/playwright';
 import timezone from '@/utils/timezone';
 
 export const route: Route = {
@@ -32,55 +33,43 @@ export const route: Route = {
 
 async function handler() {
     const link = 'http://www.pbc.gov.cn/goutongjiaoliu/113456/113469/index.html';
-
-    const context = await playwright();
-    const page = await context.newPage();
-    await page.route('**/*', (route) => {
-        const request = route.request();
-        request.resourceType() === 'document' || request.resourceType() === 'script' ? route.continue() : route.abort();
-    });
-    await page.goto(link, {
-        waitUntil: 'domcontentloaded',
-    });
-    const html = await page.evaluate(() => document.documentElement.getHTML());
-
-    const $ = load(html);
-    const list = $('font.newslist_style')
-        .toArray()
-        .map((item): DataItem => {
-            const $item = $(item);
-            const a = $item.find('a[title]');
-            return {
-                title: a.attr('title')!,
-                link: new URL(a.attr('href')!, 'http://www.pbc.gov.cn').href,
-            };
-        });
-
-    const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link!, async () => {
-                const detailPage = await context.newPage();
-                await detailPage.route('**/*', (route) => {
-                    const request = route.request();
-                    request.resourceType() === 'document' || request.resourceType() === 'script' ? route.continue() : route.abort();
-                });
-                await detailPage.goto(item.link!, {
-                    waitUntil: 'domcontentloaded',
-                });
-                const detailHtml = await detailPage.evaluate(() => document.documentElement.getHTML());
-                const content = load(detailHtml);
-                item.description = content('#zoom').html();
-                item.pubDate = timezone(parseDate(content('.hui12').eq(5).text()), 8);
-                return item;
-            })
-        )
-    );
-
-    await context.close();
-
-    return {
-        title: '中国人民银行 - 沟通交流',
-        link,
-        item: items,
-    };
+    const { page, destroy } = await getPlaywrightPage(link, { noGoto: true, closeTimeout: 0 });
+    try {
+        await page.route('**/*', (route) => (['document', 'script'].includes(route.request().resourceType()) ? route.continue() : route.abort()));
+        await page.goto(link, { waitUntil: 'domcontentloaded' });
+        await page.waitForSelector('font.newslist_style');
+        const pageContent = await page.content();
+        const $ = load(pageContent);
+        const list = $('font.newslist_style')
+            .toArray()
+            .map((item): DataItem => {
+                const a = $(item).find('a[title]');
+                return {
+                    title: a.attr('title')!,
+                    link: new URL(a.attr('href')!, 'http://www.pbc.gov.cn').href,
+                };
+            });
+        const items = await pMap(
+            list,
+            (item) =>
+                cache.tryGet(item.link!, async () => {
+                    await page.goto(item.link!, { waitUntil: 'domcontentloaded' });
+                    await page.waitForSelector('#zoom');
+                    const detailContent = await page.content();
+                    const content = load(detailContent);
+                    item.description = content('#zoom').html();
+                    const dateText = content('.hui12').eq(5).text().trim();
+                    item.pubDate = dateText ? timezone(parseDate(dateText), 8) : undefined;
+                    return item;
+                }),
+            { concurrency: 1 }
+        );
+        return {
+            title: '中国人民银行 - 沟通交流',
+            link,
+            item: items,
+        };
+    } finally {
+        await destroy();
+    }
 }

@@ -7,6 +7,7 @@ import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 import parser from '@/utils/rss-parser';
 
 const baseUrl = 'https://www.apple.com.cn';
@@ -54,7 +55,7 @@ const fetchArticle = (item: Item & { link: string; author?: string }) =>
     });
 
 async function handler(ctx): Promise<Data> {
-    const limit = Number(ctx.req.query('limit')) || defaultLimit;
+    const limit = getRouteLimit(ctx, defaultLimit);
     const feedResponse = await ofetch(feedUrl, {
         parseResponse: (text) => text,
     });

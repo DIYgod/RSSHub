@@ -2,18 +2,20 @@ import type { Cheerio, CheerioAPI } from 'cheerio';
 import { load } from 'cheerio';
 import type { Element } from 'domhandler';
 import type { Context } from 'hono';
+import pMap from 'p-map';
 
 import type { Data, DataItem, Language, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
 import { renderDescription } from './templates/description';
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { category = 'produce/fresh-fruits/apples' } = ctx.req.param();
-    const limit = Number(ctx.req.query('limit') ?? '10');
+    const limit = getRouteLimit(ctx, 10);
 
     const baseUrl = 'https://www.producereport.com';
     const targetUrl = `${baseUrl}/${category}`;
@@ -49,7 +51,6 @@ export const handler = async (ctx: Context): Promise<Data> => {
             });
             const pubDateStr: string | undefined = $el.find('td.views-field-created').contents().first().text()?.trim();
             const linkUrl: string | undefined = $aEl.attr('href');
-            const upDatedStr: string | undefined = pubDateStr;
 
             const processedItem: DataItem = {
                 title,
@@ -58,41 +59,31 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 link: linkUrl ? new URL(linkUrl, baseUrl).href : undefined,
                 content: {
                     html: description,
-                    text: description,
+                    text: description ? load(description).text() : undefined,
                 },
                 image,
                 banner: image,
-                updated: upDatedStr ? parseDate(upDatedStr) : undefined,
                 language,
             };
 
             return processedItem;
         });
 
-    items = await Promise.all(
-        items.map((item) => {
+    items = await pMap(
+        items,
+        async (item) => {
             if (!item.link) {
                 return item;
             }
 
-            return cache.tryGet(item.link, async (): Promise<DataItem> => {
+            const detail = await cache.tryGet(`producereport:article:v2:${item.link}`, async () => {
                 const detailResponse = await ofetch(item.link!);
                 const $$: CheerioAPI = load(detailResponse);
 
-                const title: string = $$('meta[property="og:title"]').attr('content') ?? item.title;
+                const title = $$('meta[property="og:title"]').attr('content');
                 const image: string | undefined = $$('meta[property="og:image"]').attr('content');
 
-                const description: string | undefined = renderDescription({
-                    images: image
-                        ? [
-                              {
-                                  src: image,
-                                  alt: title,
-                              },
-                          ]
-                        : undefined,
-                    description: $$('div[property="content:encoded"]').html() ?? undefined,
-                });
+                const description = $$('div[property="content:encoded"]').html() ?? undefined;
                 const pubDateStr: string | undefined = $$('div.pane-node-created').text()?.trim();
                 const categoryEls: Element[] = $$('div.pane-node-field-topics a').toArray();
                 const categories: string[] = [...new Set(categoryEls.map((el) => $$(el).text()).filter(Boolean))];
@@ -107,30 +98,33 @@ export const handler = async (ctx: Context): Promise<Data> => {
                         avatar: undefined,
                     };
                 });
-                const upDatedStr: string | undefined = pubDateStr;
-
-                const processedItem: DataItem = {
-                    title,
-                    description,
-                    pubDate: pubDateStr ? parseDate(pubDateStr) : item.pubDate,
-                    category: categories,
-                    author: authors,
-                    content: {
-                        html: description,
-                        text: description,
-                    },
-                    image,
-                    banner: image,
-                    updated: upDatedStr ? parseDate(upDatedStr) : item.updated,
-                    language,
-                };
 
                 return {
-                    ...item,
-                    ...processedItem,
+                    title,
+                    description,
+                    pubDate: pubDateStr ? parseDate(pubDateStr) : undefined,
+                    category: categories,
+                    author: authors,
+                    image,
                 };
             });
-        })
+            const title = detail.title ?? item.title;
+            const description = renderDescription({
+                images: detail.image ? [{ src: detail.image, alt: title }] : undefined,
+                description: detail.description,
+            });
+            return {
+                ...item,
+                ...detail,
+                title,
+                description,
+                pubDate: detail.pubDate ?? item.pubDate,
+                content: { html: description, text: load(description).text() },
+                banner: detail.image,
+                language,
+            };
+        },
+        { concurrency: 3 }
     );
 
     return {
@@ -138,7 +132,6 @@ export const handler = async (ctx: Context): Promise<Data> => {
         description: $('meta[property="og:title"]').attr('content'),
         link: targetUrl,
         item: items,
-        allowEmpty: true,
         image: $('meta[property="og:image"]').attr('content'),
         author: $('meta[property="og:site_name"]').attr('content'),
         language,
@@ -173,7 +166,7 @@ To subscribe to [Apples](https://www.producereport.com/produce/fresh-fruits/appl
     },
     radar: [
         {
-            source: ['www.producereport.com/:category'],
+            source: ['www.producereport.com/*category'],
             target: '/:category',
         },
     ],

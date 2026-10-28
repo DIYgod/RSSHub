@@ -1,10 +1,10 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
 
 const host = 'https://www.cs.sjtu.edu.cn';
 const ajaxUrl = `${host}/active/ajax_type_list.html`;
@@ -40,20 +40,20 @@ function parseListing(json: { content: string }): ListItem[] {
             const $el = $(el);
             const $a = $el.find('> a');
             const link = absolutize($a.attr('href'));
-            const title = $a.find('.tit').text().trim();
+            const title = $a.find('.tit').text();
             const day = $a.find('.time p').text().trim();
             const yearMonth = $a.find('.time span').text().trim();
             return {
                 title,
                 link,
-                date: `${yearMonth}-${day}`,
+                date: yearMonth && day ? `${yearMonth}-${day}` : '',
             };
         })
         .filter((it) => it.link && it.title);
 }
 
-function enrichItem(item: ListItem): Promise<DataItem> {
-    return cache.tryGet(item.link, async () => {
+async function enrichItem(item: ListItem): Promise<DataItem> {
+    const details = await cache.tryGet(`sjtu:cs:notice:v3:${item.link}`, async () => {
         const html = await ofetch<string>(item.link);
         const $ = load(html);
         const $body = $('div.xw-cont');
@@ -64,16 +64,25 @@ function enrichItem(item: ListItem): Promise<DataItem> {
         let pubDate: Date | undefined;
         if (publishedMatch) {
             const [, y, m, d] = publishedMatch;
-            pubDate = timezone(parseDate(`${y}-${m.padStart(2, '0')}-${d.padStart(2, '0')}`, 'YYYY-MM-DD'), 8);
+            pubDate = parseDate(`${y}-${m.padStart(2, '0')}-${d.padStart(2, '0')} +0000`, 'YYYY-MM-DD ZZ');
         }
 
-        return {
-            title: item.title,
-            link: item.link,
-            description: $txt.html(),
-            pubDate: pubDate ?? timezone(parseDate(item.date, 'YYYY-MM-DD'), 8),
-        };
+        return { description: $txt.html(), pubDate };
     });
+    return {
+        title: item.title,
+        link: item.link,
+        description: details.description,
+        pubDate: details.pubDate ?? (item.date ? parseDate(`${item.date} +0000`, 'YYYY-MM-DD ZZ') : undefined),
+    };
+}
+
+async function enrichItemSafely(item: ListItem): Promise<DataItem> {
+    try {
+        return await enrichItem(item);
+    } catch {
+        return { title: item.title, link: item.link, pubDate: item.date ? parseDate(`${item.date} +0000`, 'YYYY-MM-DD ZZ') : undefined };
+    }
 }
 
 export const route: Route = {
@@ -127,23 +136,13 @@ async function handler(ctx): Promise<Data> {
     });
 
     const items = parseListing(json);
-    const enriched = await Promise.allSettled(items.map((it) => enrichItem(it)));
-    const dataItems: DataItem[] = enriched.map((result, index) =>
-        result.status === 'fulfilled'
-            ? result.value
-            : {
-                  title: items[index].title,
-                  link: items[index].link,
-                  pubDate: timezone(parseDate(items[index].date, 'YYYY-MM-DD'), 8),
-              }
-    );
+    const dataItems = await pMap(items, enrichItemSafely, { concurrency: 3 });
 
     return {
         title: `上海交通大学计算机学院 - 通知公告 - ${cat.name}`,
         link: listLink,
         description: `上海交通大学计算机学院（网络空间安全学院、密码学院）通知公告 - ${cat.name}`,
         language: 'zh-CN',
-        allowEmpty: true,
         item: dataItems,
     };
 }

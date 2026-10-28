@@ -3,6 +3,7 @@ import { load } from 'cheerio';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import got from '@/utils/got';
+import { getRouteLimit } from '@/utils/route-limit';
 import { isValidHost } from '@/utils/valid-host';
 
 export const route: Route = {
@@ -31,7 +32,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const region = ctx.req.param('region') ?? 'ukraine';
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 50;
+    const limit = getRouteLimit(ctx, 50);
     if (!isValidHost(region)) {
         throw new InvalidParameterError('Invalid region');
     }
@@ -51,7 +52,6 @@ async function handler(ctx) {
             const $item = $(item);
             return {
                 title: $item.find('div.title').text(),
-                description: $item.find('div.title').text(),
                 link: $item.attr('data-link'),
             };
         });

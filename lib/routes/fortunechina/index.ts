@@ -29,7 +29,7 @@ export const route: Route = {
     handler,
     description: `| 商业    | 领导力    | 科技 | 研究   |
 | ------- | --------- | ---- | ------ |
-| shangye | lindgaoli | keji | report |`,
+| shangye | lingdaoli | keji | report |`,
 };
 
 async function handler(ctx) {
@@ -44,6 +44,7 @@ async function handler(ctx) {
 
     let items = $('.main')
         .find(category === '' ? 'a:has(h2)' : 'h2 a')
+        .filter((_, item) => ($(item).attr('href')?.length ?? 0) > 0 && /\S/.test($(item).text()))
         .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 15)
         .toArray()
         .map((item): DataItem => {
@@ -53,7 +54,7 @@ async function handler(ctx) {
 
             return {
                 title: $item.text(),
-                link: link!.startsWith('http') ? link : `${currentUrl}/${$item.attr('href')}`,
+                link: new URL(link!, `${currentUrl}/`).href,
             };
         });
 

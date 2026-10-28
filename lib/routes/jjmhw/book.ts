@@ -5,6 +5,7 @@ import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import { PRESETS } from '@/utils/header-generator';
 import ofetch from '@/utils/ofetch';
+import { getRouteLimit } from '@/utils/route-limit';
 
 export const route: Route = {
     path: '/book/:id',
@@ -33,7 +34,7 @@ async function handler(ctx: Context) {
     const list = $('#detail-list-select > li > a')
         .toArray()
         .toReversed()
-        .slice(0, ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 10)
+        .slice(0, getRouteLimit(ctx, 10))
         .map((item): DataItem & { link: string } => {
             const $item = $(item);
             return {
@@ -43,17 +44,17 @@ async function handler(ctx: Context) {
         });
 
     const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link, async () => {
+        list.map(async (item) => {
+            const description = await cache.tryGet(`${item.link}:description`, async () => {
                 const response = await ofetch(item.link, { headerGeneratorOptions: PRESETS.MODERN_ANDROID });
                 const $ = load(response);
-                item.description = $('.comicpage img')
+                return $('#cp_img img, .comicpage img')
                     .toArray()
                     .map((ele) => `<img src="${$(ele).attr('data-original')}">`)
                     .join('');
-                return item;
-            })
-        )
+            });
+            return { ...item, description };
+        })
     );
 
     return {

@@ -20,6 +20,11 @@ export const route: Route = {
     radar: [
         {
             source: ['wsjkw.sh.gov.cn/'],
+            target: '/wsjkw/yqtb',
+        },
+        {
+            source: ['wsjkw.sh.gov.cn/yqtb/index.html'],
+            target: '/wsjkw/yqtb',
         },
     ],
     name: '卫健委 疫情通报',

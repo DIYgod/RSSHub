@@ -3,6 +3,7 @@ import { load } from 'cheerio';
 import type { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/whats-new',
@@ -48,14 +49,14 @@ async function handler() {
 
             let description = '';
             $item.nextUntil('h4').each((_, el) => {
-                description += $(el).html();
+                description += $.html(el);
             });
             if (description === '') {
                 $item
                     .parent()
                     .nextUntil('h4')
                     .each((_, el) => {
-                        description += $(el).html();
+                        description += $.html(el);
                     });
             }
 
@@ -63,7 +64,7 @@ async function handler() {
                 title,
                 link: currentUrl,
                 description,
-                pubDate: parseDate(title.match(/\((.*)\)/)![1], ['D MMMM YYYY', 'D MMM YYYY']),
+                pubDate: timezone(parseDate(title.match(/\((.*)\)/)![1], ['D MMMM YYYY', 'D MMM YYYY']), 0),
                 guid: title,
             };
         });

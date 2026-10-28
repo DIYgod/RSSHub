@@ -68,7 +68,7 @@ async function handler(ctx) {
         title: `${category}${subCategory}${tag}中指报告`,
         description: $('meta[name="description"]').attr('content'),
         image: `${baseUrl}/favicon.ico`,
-        lang: 'zh-CN',
+        language: 'zh-CN' as const,
         link: currentUrl,
         item: items,
     };

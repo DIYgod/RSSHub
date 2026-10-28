@@ -1,4 +1,5 @@
 import type { Context } from 'hono';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
@@ -50,25 +51,27 @@ async function handler(ctx: Context) {
         query: { tag_id: tagId, page: 1 },
     });
 
-    const items = await Promise.all(
-        response.data.list.map((item) => {
+    const list: Array<{ id: number; title: string; publish_time?: number; tags: Array<{ name: string }>; covers: Array<{ path_url: string }> }> = response.data.list;
+    const items = await pMap(
+        list,
+        async (item) => {
             const link = `https://news.romielf.com/news.html?id=${item.id}`;
-            return cache.tryGet(link, async () => {
-                const { data } = await ofetch(`${apiUrl}/index/detail`, {
-                    query: { id: item.id },
-                });
-                const { temotime }: { temotime: string } = data.details; // relative time
-                return {
-                    title: item.title,
-                    link,
-                    description: data.details.content,
-                    author: data.details.user_name,
-                    pubDate: item.publish_time ? parseDate(item.publish_time * 1000) : temotime.endsWith('前') ? parseRelativeDate(temotime) : timezone(parseRelativeDate(temotime), 8),
-                    category: item.tags.map((tag) => tag.name),
-                    image: item.covers[0]?.path_url,
-                } as DataItem;
+            const details = await cache.tryGet(`romielf:article:v1:${link}`, async () => {
+                const { data } = await ofetch(`${apiUrl}/index/detail`, { query: { id: item.id } });
+                return { description: data.details.content, author: data.details.user_name, temotime: data.details.temotime };
             });
-        })
+            const { temotime } = details;
+            return {
+                title: item.title,
+                link,
+                description: details.description,
+                author: details.author,
+                pubDate: item.publish_time ? parseDate(item.publish_time * 1000) : temotime ? (temotime.endsWith('前') ? parseRelativeDate(temotime) : timezone(parseRelativeDate(temotime), 8)) : undefined,
+                category: item.tags.map((tag) => tag.name),
+                image: item.covers[0]?.path_url,
+            } as DataItem;
+        },
+        { concurrency: 3 }
     );
 
     return {

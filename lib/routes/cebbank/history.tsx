@@ -1,6 +1,7 @@
 import { load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
 
+import NotFoundError from '@/errors/types/not-found';
 import type { Route } from '@/types';
 import got from '@/utils/got';
 
@@ -35,6 +36,9 @@ export const route: Route = {
 
 async function handler(ctx) {
     const type = ctx.req.param('type');
+    if (!Object.hasOwn(TYPE, type)) {
+        throw new NotFoundError(`Invalid currency. Supported currencies: ${Object.keys(TYPE).join(', ')}.`);
+    }
     const url = `https://www.cebbank.com/eportal/ui?struts.portlet.action=/portlet/whpjFront!toView.action&moduleId=12094&pageId=477260&currcode=${TYPE[type].id}&currentPagebak=1&currentPage=1`;
     const res = await got({
         method: 'get',

@@ -2,11 +2,12 @@ import type { SecureVersion } from 'node:tls';
 
 import type { HeaderGeneratorOptions } from 'header-generator';
 import { RateLimiterMemory, RateLimiterQueue } from 'rate-limiter-flexible';
-import type { Agent, Dispatcher, RequestInfo, RequestInit, Response } from 'undici';
+import type { Agent, Dispatcher, RequestInfo, RequestInit } from 'undici';
 import undici, { Request } from 'undici';
 
 import { config } from '@/config';
 import { generatedHeaders as HEADER_LIST, generateHeaders } from '@/utils/header-generator';
+import { waitForHostRateLimit } from '@/utils/host-rate-limit';
 import logger from '@/utils/logger';
 import proxy from '@/utils/proxy';
 
@@ -22,7 +23,7 @@ const limiterQueue = new RateLimiterQueue(limiter, {
 
 undici.setGlobalDispatcher(
     new undici.Agent({
-        connect: { preferH2: true },
+        connect: { preferH2: true, autoSelectFamily: config.requestAutoSelectFamily },
     })
 );
 
@@ -32,7 +33,7 @@ const tlsAgents = new Map<SecureVersion, Agent>();
 const getTlsAgent = (minVersion: SecureVersion) => {
     let agent = tlsAgents.get(minVersion);
     if (!agent) {
-        agent = new undici.Agent({ connect: { preferH2: true, minVersion } });
+        agent = new undici.Agent({ connect: { preferH2: true, minVersion, autoSelectFamily: config.requestAutoSelectFamily } });
         tlsAgents.set(minVersion, agent);
     }
     return agent;
@@ -106,13 +107,10 @@ const wrappedFetch: typeof undici.fetch = async (input: RequestInfo, init?: Requ
         }
 
         if (proxyRegex.test(request.url) && request.url.startsWith('http') && !(urlHandler && urlHandler.host === proxy.proxyUrlHandler?.host)) {
-            const currentProxy = proxy.getCurrentProxy();
-            if (currentProxy) {
-                const dispatcher = proxy.getDispatcherForProxy(currentProxy, init?.minVersion);
-                if (dispatcher) {
-                    options.dispatcher = dispatcher;
-                    logger.debug(`Proxying request via ${currentProxy.uri}: ${request.url}`);
-                }
+            const dispatcher = await proxy.getDispatcher(request.url, init?.minVersion);
+            if (dispatcher) {
+                options.dispatcher = dispatcher;
+                logger.debug(`Proxying request: ${request.url}`);
             }
         }
     }
@@ -122,44 +120,15 @@ const wrappedFetch: typeof undici.fetch = async (input: RequestInfo, init?: Requ
     }
 
     await limiterQueue.removeTokens(1);
+    await waitForHostRateLimit(request.url, config.requestRateLimits, request.signal);
 
-    const maxRetries = proxy.multiProxy?.allProxies.length || 1;
-
-    const attemptRequest = async (attempt: number): Promise<Response> => {
-        try {
-            if (init?.allowH2 === false) {
-                return await undici.fetch(request, {
-                    ...options,
-                    dispatcher: (options.dispatcher ?? init.dispatcher ?? undici.getGlobalDispatcher()).compose(http1Only),
-                });
-            }
-            return await undici.fetch(request, options);
-        } catch (error) {
-            if (options.dispatcher && proxy.multiProxy && attempt < maxRetries - 1) {
-                const currentProxy = proxy.getCurrentProxy();
-                if (currentProxy) {
-                    logger.warn(`Request failed with proxy ${currentProxy.uri}, trying next proxy: ${error}`);
-                    proxy.markProxyFailed(currentProxy.uri);
-
-                    const nextProxy = proxy.getCurrentProxy();
-                    if (nextProxy && nextProxy.uri !== currentProxy.uri) {
-                        const nextDispatcher = proxy.getDispatcherForProxy(nextProxy, init?.minVersion);
-                        if (nextDispatcher) {
-                            options.dispatcher = nextDispatcher;
-                        }
-                        logger.debug(`Retrying request with proxy ${nextProxy.uri}: ${request.url}`);
-                        return attemptRequest(attempt + 1);
-                    }
-                    logger.warn('No more proxies available, trying without proxy');
-                    options.dispatcher = init?.minVersion ? getTlsAgent(init.minVersion) : undefined;
-                    return attemptRequest(attempt + 1);
-                }
-            }
-            throw error;
-        }
-    };
-
-    return attemptRequest(0);
+    if (init?.allowH2 === false) {
+        return undici.fetch(request, {
+            ...options,
+            dispatcher: (options.dispatcher ?? init.dispatcher ?? undici.getGlobalDispatcher()).compose(http1Only),
+        });
+    }
+    return undici.fetch(request, options);
 };
 
 export default wrappedFetch;

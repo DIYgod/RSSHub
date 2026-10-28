@@ -1,9 +1,10 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
-import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
+import ofetch from '@/utils/ofetch';
+import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
 
 export const route: Route = {
     path: '/newlist',
@@ -20,80 +21,61 @@ export const route: Route = {
     url: 'ncpssd.cn/',
 };
 
+interface ArticleResponse {
+    data?: {
+        showwriter?: string | null;
+        remarkc?: string | null;
+        publishDateTime?: string | null;
+    };
+}
+
 async function handler() {
     const baseUrl = 'https://www.ncpssd.cn';
-    const argument = '/newlist?type=0';
+    const link = `${baseUrl}/newlist?type=0`;
+    const listingContent = await ofetch(link);
+    const $ = load(listingContent);
+    const list = $('.news-list > li')
+        .toArray()
+        .flatMap((element) => {
+            const $article = $(element).find('a');
+            const href = $article.attr('onclick')?.match(/\('(.*?)'\)/)?.[1];
+            if (!href) {
+                return [];
+            }
+            return { title: $article.text(), link: new URL(href, baseUrl).href };
+        });
 
-    const response = await got({
-        method: 'get',
-        url: baseUrl + argument,
-    });
-
-    const data = response.data;
-    const $ = load(data);
-    const items = $('.news-list > li');
-
-    const list = items.toArray().map((p) => {
-        const title = $(p)
-            .find('a')
-            .text()
-            .replaceAll(/(\r\n|\n|\r)/g, '')
-            .trim();
-        const articleUrl =
-            baseUrl +
-            $(p)
-                .find('a')
-                .attr('onclick')
-                ?.match(/\('(.*?)'\)/)?.[1];
-        const parseUrl = new URL(articleUrl);
-
-        return {
-            title,
-            link: articleUrl,
-            lngid: parseUrl.searchParams.get('id'),
-            type: parseUrl.searchParams.get('typename'),
-            pageType: parseUrl.searchParams.get('nav'),
-        };
-    });
-
-    const paper = await Promise.all(
-        list.map((item) =>
+    const items = await pMap(
+        list,
+        (item) =>
             cache.tryGet(item.link, async () => {
-                const url = 'https://www.ncpssd.cn/articleinfoHandler/getjournalarticletable'; // Adjust the URL accordingly
-                const headers = {
-                    Accept: 'application/json, text/javascript, */*; q=0.01',
-                    'Content-Type': 'application/json; charset=UTF-8',
-                };
-
-                const requestBody = {
-                    lngid: item.lngid,
-                    type: item.type,
-                    pageType: item.pageType,
-                };
-
-                const response = await got.post(url, {
-                    headers,
-                    json: requestBody,
-                    responseType: 'json', // Set the expected response type
+                const articleContent = await ofetch(item.link);
+                const $detail = load(articleContent);
+                const lngid = $detail('#ftl_urlId').attr('value');
+                const type = $detail('#ftl_urlTypename').attr('value');
+                if (!lngid || !type) {
+                    throw new Error('The NCpssd article page did not provide the identifiers required by its detail API.');
+                }
+                const response = await ofetch<ArticleResponse>(`${baseUrl}/articleinfoHandler/getjournalarticletable`, {
+                    method: 'POST',
+                    body: { lngid, type, pageType: $detail('#ftl_urlPagetype').attr('value') ? 2 : 1 },
                 });
-
+                if (!response.data) {
+                    throw new Error('The NCpssd detail API did not return article data. The source may require access verification.');
+                }
                 return {
-                    title: item.title,
-                    link: item.link,
-                    author: response.data.data.showwriter,
-                    description: response.data.data.remarkc,
-                    pubDate: parseDate(response.data.data.publishDateTime),
+                    ...item,
+                    author: response.data.showwriter ?? undefined,
+                    description: response.data.remarkc ?? undefined,
+                    pubDate: response.data.publishDateTime ? parseDateInTimezone(response.data.publishDateTime, 8) : undefined,
                 };
-            })
-        )
+            }),
+        { concurrency: 6 }
     );
 
     return {
-        // 源标题
         title: '国家哲学社会科学文献中心',
-        // 源链接
-        link: baseUrl + argument,
-        // 源文章
-        item: paper,
+        link,
+        item: items,
     };
 }

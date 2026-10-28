@@ -1,4 +1,5 @@
 import type { Context } from 'hono';
+import pMap from 'p-map';
 
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
@@ -22,13 +23,14 @@ async function handler(ctx: Context) {
     const { tid } = ctx.req.param();
     const tagIds = tid.split('/');
 
-    const responses = await Promise.all(
-        tagIds.map((tagIdEcpt) =>
-            ofetch(`${apiRoot}${tagPostPath}`, {
+    const responses = await pMap(
+        tagIds,
+        (tagIdEcpt) =>
+            ofetch<{ data?: { tagName?: string; posts?: Array<Parameters<typeof parsePost>[0]> } }>(`${apiRoot}${tagPostPath}`, {
                 query: { tagIdEcpt },
                 headers: signedHeaders(tagPostPath, { tagIdEcpt }),
-            })
-        )
+            }),
+        { concurrency: 3 }
     );
 
     const tagNames = responses.map((response) => response.data?.tagName).filter(Boolean);

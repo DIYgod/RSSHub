@@ -29,7 +29,7 @@ export const route: Route = {
     path: '/search/:query?',
     categories: ['anime'],
     example: '/melonbooks/search/name=けいおん',
-    parameters: { category: '链接参数，对应网址问号后的内容，不携带问号' },
+    parameters: { query: '链接参数，对应网址问号后的内容，不携带问号' },
     features: {
         requireConfig: false,
         requirePuppeteer: false,

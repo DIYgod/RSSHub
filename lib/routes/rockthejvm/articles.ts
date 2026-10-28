@@ -2,17 +2,19 @@ import type { Cheerio, CheerioAPI } from 'cheerio';
 import { load } from 'cheerio';
 import type { Element } from 'domhandler';
 import type { Context } from 'hono';
+import pMap from 'p-map';
 
 import type { Data, DataItem, Language, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
 import { renderDescription } from './templates/description';
 
 export const handler = async (ctx: Context): Promise<Data> => {
-    const limit = Number(ctx.req.query('limit') ?? '30');
+    const limit = getRouteLimit(ctx, 30);
 
     const baseUrl = 'https://rockthejvm.com';
     const targetUrl: string = new URL('articles/1', baseUrl).href;
@@ -59,10 +61,6 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 link: linkUrl ? new URL(linkUrl, baseUrl).href : undefined,
                 category: categories,
                 author: authors,
-                content: {
-                    html: description,
-                    text: description,
-                },
                 updated: upDatedStr ? parseDate(upDatedStr) : undefined,
                 language,
             };
@@ -70,8 +68,9 @@ export const handler = async (ctx: Context): Promise<Data> => {
             return processedItem;
         });
 
-    items = await Promise.all(
-        items.map((item) => {
+    items = await pMap(
+        items,
+        (item) => {
             if (!item.link) {
                 return item;
             }
@@ -84,7 +83,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 const description: string | undefined =
                     item.description +
                     renderDescription({
-                        description: $$('div.prose').html() ?? undefined,
+                        description: $$('article .prose.my-4').html() ?? undefined,
                     });
                 const pubDateStr: string | undefined = $$('meta[property="article:published_time"]').attr('content');
                 const categoryEls: Element[] = $$('meta[property="article:tag"]').toArray();
@@ -100,7 +99,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                     };
                 });
                 const image: string | undefined = $$('meta[property="og:image"]').attr('content');
-                const upDatedStr: string | undefined = pubDateStr;
+                const upDatedStr: string | undefined = $$('meta[property="article:modified_time"]').attr('content');
 
                 const processedItem: DataItem = {
                     title,
@@ -108,10 +107,6 @@ export const handler = async (ctx: Context): Promise<Data> => {
                     pubDate: pubDateStr ? parseDate(pubDateStr) : item.pubDate,
                     category: categories,
                     author: authors,
-                    content: {
-                        html: description,
-                        text: description,
-                    },
                     image,
                     banner: image,
                     updated: upDatedStr ? parseDate(upDatedStr) : item.updated,
@@ -123,7 +118,8 @@ export const handler = async (ctx: Context): Promise<Data> => {
                     ...processedItem,
                 };
             });
-        })
+        },
+        { concurrency: 3 }
     );
 
     return {
@@ -131,7 +127,6 @@ export const handler = async (ctx: Context): Promise<Data> => {
         description: $('meta[property="og:description"]').attr('content'),
         link: targetUrl,
         item: items,
-        allowEmpty: true,
         image: $('meta[property="og:image"]').attr('content'),
         author: $('meta[property="og:site_name"]').attr('content'),
         language,

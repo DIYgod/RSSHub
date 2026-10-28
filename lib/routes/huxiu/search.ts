@@ -1,5 +1,6 @@
 import type { Route } from '@/types';
 import got from '@/utils/got';
+import { getRouteLimit } from '@/utils/route-limit';
 
 import { apiSearchRootUrl, buildFeedMetadata, buildHuxiuRouteTitlePrefix, generateSignature, processItems, rootUrl, siteTitle } from './util';
 
@@ -29,7 +30,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const keyword = ctx.req.param('keyword');
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 20;
+    const limit = getRouteLimit(ctx, 20);
     const baseTitle = siteTitle;
 
     const apiUrl = new URL('api/article', apiSearchRootUrl).href;

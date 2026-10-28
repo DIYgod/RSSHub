@@ -7,17 +7,19 @@ import type { Data, DataItem, Language, Route } from '@/types';
 import { ViewType } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 import timezone from '@/utils/timezone';
 
 import { renderDescription } from './templates/description';
 
 export const handler = async (ctx: Context): Promise<Data> => {
-    const { id = 'hourly-temperature/html' } = ctx.req.param();
-    const limit = Number(ctx.req.query('limit') ?? '50');
+    const { id = 'observations/hourly-temperature/html' } = ctx.req.param();
+    const productId = id.replace(/\.(html|htm)$/, '/$1');
+    const limit = getRouteLimit(ctx, 50);
 
     const baseUrl = 'https://www.nmc.cn';
-    const pathSegment: string = id.split(/\//).pop() === 'htm' ? 'htm' : 'html';
-    const targetUrl: string = new URL(`publish/${id.replace(new RegExp(String.raw`\/${pathSegment}$`), '')}.${pathSegment}`, baseUrl).href;
+    const pathSegment: string = productId.split(/\//).pop() === 'htm' ? 'htm' : 'html';
+    const targetUrl: string = new URL(`publish/${productId.replace(new RegExp(String.raw`\/${pathSegment}$`), '')}.${pathSegment}`, baseUrl).href;
 
     const response = await ofetch(targetUrl);
     const $: CheerioAPI = load(response);
@@ -37,7 +39,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                           .map((el) => $(el).text());
                       const pubDateStr: string | undefined = `${timeStrArray.pop()}:00 ${timeStrArray.join('/')}`;
 
-                      const title = `${pubDateStr} - ${$el.find('div.title').text().replaceAll(/\s/g, '')}`;
+                      const title = `${pubDateStr} - ${$el.find('div.title').text()}`;
                       const description: string | undefined = renderDescription({
                           description: $el.find('div.writing').html() ?? undefined,
                       });
@@ -68,7 +70,6 @@ export const handler = async (ctx: Context): Promise<Data> => {
                           id: guid,
                           content: {
                               html: description,
-                              text: description,
                           },
                           updated: timezone(parseDate(upDatedStr, 'HH:mm YYYY/MM/DD'), 8),
                           language,
@@ -84,7 +85,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
 
                       const image: string | undefined = $el.attr('data-img');
 
-                      const title = `${$el.find('div').text().trim()} - ${$('div.nav1 a.actived, div#menuNavBar button.dropdown-toggle')
+                      const title = `${$el.find('div').text()} - ${$('div.nav1 a.actived, div#menuNavBar button.dropdown-toggle')
                           .toArray()
                           .map((el) => $(el).text())
                           .join(' - ')}`;
@@ -113,7 +114,6 @@ export const handler = async (ctx: Context): Promise<Data> => {
                           id: guid,
                           content: {
                               html: description,
-                              text: description,
                           },
                           image,
                           banner: image,
@@ -146,7 +146,7 @@ export const route: Route = {
     example: '/nmc/publish/observations/hourly-temperature/html',
     parameters: {
         id: {
-            description: '分类，默认为 `hourly-temperature` 即全国逐时气温，可在对应分类页 URL 中找到',
+            description: '分类，默认为 `observations/hourly-temperature/html` 即全国逐时气温，可在对应分类页 URL 中找到',
             options: [
                 {
                     label: '首页 - 卫星云图',
@@ -573,14 +573,8 @@ export const route: Route = {
     },
     radar: [
         {
-            source: [String.raw`www.nmc.cn/publish/$:path(.*)\.(:ext(html|htm))`],
-            target: (params) => {
-                const path: string | undefined = params.path;
-                const ext: string | undefined = params.ext;
-                const id: string | undefined = path && ext ? `${path}/${ext}` : undefined;
-
-                return `/nmc/publish${id ? `/${id}` : ''}`;
-            },
+            source: ['www.nmc.cn/publish/*id'],
+            target: '/publish/:id',
         },
         {
             title: '首页 - 卫星云图',

@@ -3,6 +3,7 @@ import { load } from 'cheerio';
 import type { DataItem, Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/news',
@@ -19,7 +20,7 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['www.coolpc.com.tw/'],
+            source: ['www.coolpc.com.tw/', 'www.coolpc.com.tw/tw/'],
         },
     ],
     name: '促銷&開箱',
@@ -42,7 +43,7 @@ async function handler() {
             title: $(item).find('h3 a').text(),
             description: $(item).find('.ultimate-layouts-excerpt').text(),
             link: $(item).find('h3 a').attr('href'),
-            pubDate: parseDate($(item).find('.ultimate-layouts-metas-wrap span').eq(1).text(), 'YYYY/MM/DD'),
+            pubDate: timezone(parseDate($(item).find('.ultimate-layouts-metas-wrap span').eq(1).text(), 'YYYY/MM/DD'), 8),
         }))
         .filter((item, index, self) => index === self.findIndex((i) => i.title === item.title));
 

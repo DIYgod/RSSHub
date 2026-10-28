@@ -1,10 +1,20 @@
 import type { CheerioAPI } from 'cheerio';
 import dayjs from 'dayjs';
+import { escapeAttribute, escapeText } from 'entities';
 
+import { parseDate } from '@/utils/parse-date';
 import { queryToBoolean } from '@/utils/readable-social';
 
 export const profileUrl = (user: string) => `https://www.threads.com/@${user}`;
 export const threadUrl = (code: string) => `https://www.threads.com/t/${code}`;
+
+export const getPubDate = (takenAt?: number | string): Date | undefined => {
+    if ((typeof takenAt !== 'number' && typeof takenAt !== 'string') || (typeof takenAt === 'string' && !takenAt.trim()) || !Number.isFinite(Number(takenAt))) {
+        return undefined;
+    }
+    const date = parseDate(takenAt, 'X');
+    return Number.isFinite(date.getTime()) ? date : undefined;
+};
 
 export interface ThreadItem {
     post: {
@@ -12,7 +22,7 @@ export interface ThreadItem {
             username: string;
             profile_pic_url: string;
         };
-        taken_at: number;
+        taken_at?: number;
         code: string;
         caption?: {
             text: string;
@@ -53,25 +63,17 @@ export const parseRouteOptions = (params: URLSearchParams) => ({
 
 const hasMedia = (post) => post.image_versions2 || post.carousel_media || post.video_versions;
 
-const buildMedia = (post) => {
-    let html = '';
-
-    if (post.carousel_media) {
-        for (const media of post.carousel_media) {
-            const firstImage = media.image_versions2?.candidates[0];
-            const firstVideo = media.video_versions?.[0];
-            html += firstVideo ? `<video controls autoplay loop poster="${firstImage.url}"><source src="${firstVideo.url}"/></video>` : `<img src="${firstImage.url}"/>`;
-        }
-    } else {
-        const mainImage = post.image_versions2?.candidates?.[0];
-        const mainVideo = post.video_versions?.[0];
-        if (mainImage) {
-            html += mainVideo ? `<video controls autoplay loop poster="${mainImage.url}"><source src="${mainVideo.url}"/></video>` : `<img src="${mainImage.url}"/>`;
-        }
+const buildMediaItem = (media) => {
+    const image = media.image_versions2?.candidates?.[0];
+    const video = media.video_versions?.[0];
+    if (video?.url) {
+        const poster = image?.url ? ` poster="${escapeAttribute(image.url)}"` : '';
+        return `<video controls autoplay loop${poster}><source src="${escapeAttribute(video.url)}"/></video>`;
     }
-
-    return html;
+    return image?.url ? `<img src="${escapeAttribute(image.url)}"/>` : '';
 };
+
+const buildMedia = (post) => (post.carousel_media ?? [post]).map(buildMediaItem).join('');
 
 export const buildContent = (item, options) => {
     let title = '';
@@ -88,9 +90,9 @@ export const buildContent = (item, options) => {
     if (options.showAuthorInDesc) {
         description += '<p>';
         if (options.showAuthorAvatarInDesc) {
-            description += `<img src="${item.post.user?.profile_pic_url}" width="48px" height="48px"> `;
+            description += `<img src="${escapeAttribute(item.post.user?.profile_pic_url ?? '')}" width="48px" height="48px"> `;
         }
-        description += `<strong>@${item.post.user?.username}</strong>`;
+        description += `<strong>@${escapeText(item.post.user?.username ?? '')}</strong>`;
         if (embededPost) {
             description += options.showEmojiForQuotesAndReply ? ' 🔁' : ' quoted';
         } else if (isReply) {
@@ -101,7 +103,7 @@ export const buildContent = (item, options) => {
 
     if (item.post.caption?.text) {
         title += item.post.caption?.text;
-        description += `<p>${item.post.caption?.text}</p>`;
+        description += `<p>${escapeText(item.post.caption.text)}</p>`;
     }
 
     if (hasMedia(item.post)) {
@@ -115,16 +117,19 @@ export const buildContent = (item, options) => {
             title += `"${embededPost.caption?.text}"`;
         }
         description += '<blockquote>';
-        description += `<p>${embededPost.caption?.text}</p>`;
+        description += `<p>${escapeText(embededPost.caption?.text ?? '')}</p>`;
         if (hasMedia(embededPost)) {
             description += `<p>${buildMedia(embededPost)}</p>`;
         }
         description += '— ';
         if (options.showQuotedAuthorAvatarInDesc) {
-            description += `<img src="${embededPost.user?.profile_pic_url}" width="24px" height="24px"> `;
+            description += `<img src="${escapeAttribute(embededPost.user?.profile_pic_url ?? '')}" width="24px" height="24px"> `;
         }
-        description += `@${embededPost.user?.username} — `;
-        description += `<a href="${threadUrl(embededPost.code)}">${dayjs(embededPost.taken_at, 'X').toString()}</a>`;
+        description += `@${escapeText(embededPost.user?.username ?? '')}`;
+        const quotedDate = getPubDate(embededPost.taken_at);
+        if (quotedDate) {
+            description += ` — <a href="${escapeAttribute(threadUrl(embededPost.code))}">${escapeText(dayjs(quotedDate).toString())}</a>`;
+        }
         description += '</blockquote>';
     }
     return { title, description };

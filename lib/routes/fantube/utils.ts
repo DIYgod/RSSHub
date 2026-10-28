@@ -1,5 +1,3 @@
-import { load } from 'cheerio';
-
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 
@@ -8,27 +6,31 @@ import type { CreatorFragment, PostReelNode } from './types';
 export const baseUrl = 'https://www.fantube.tokyo';
 
 export const getCreatorFragment = (username: string) =>
-    cache.tryGet(`fantube:creator:${username}`, async (): Promise<CreatorFragment> => {
-        const response = await ofetch(`${baseUrl}/r18/creator/${username}`, {
-            headers: {
-                cookie: 'fantube-ageVerified=1;',
+    cache.tryGet(`fantube:creator-profile:${username}`, async (): Promise<Pick<CreatorFragment, 'displayName' | 'description' | 'avatarImageUrl'>> => {
+        const response = await ofetch<{ data?: { posts: { nodes: Array<{ creator: Pick<CreatorFragment, 'displayName' | 'description' | 'avatarImageUrl'> }> } } }>('https://api.prd.fantube.tokyo/graphql', {
+            method: 'POST',
+            headers: { Referer: baseUrl },
+            body: {
+                query: /* GraphQL */ `
+                    query CreatorProfile($identifier: String!) {
+                        posts(where: { status: { equals: PUBLISHED }, creator: { is: { identifier: { equals: $identifier } } } }, first: 1) {
+                            nodes {
+                                creator {
+                                    displayName
+                                    description
+                                    avatarImageUrl
+                                }
+                            }
+                        }
+                    }
+                `,
+                variables: { identifier: username },
             },
         });
-        const $ = load(response);
-
-        const selfPushString = JSON.parse(
-            $('script:contains("creatorFragment")')
-                .text()
-                .match(/^self\.__next_f\.push\((.+?)\)$/)?.[1] || '{}'
-        );
-        const selfPushData = JSON.parse(selfPushString[1].slice(2));
-        // const creatorFragment = selfPushData[3].children.find((c) => c[1] === 'div')[3].children[3].creatorFragment;
-        const creatorFragment = selfPushData
-            .find((d) => d?.hasOwnProperty('children'))
-            .children.find((child) => Object.values(child).includes('div'))
-            .find((c) => c?.hasOwnProperty('children'))
-            .children.find((c) => c?.hasOwnProperty('creatorFragment')).creatorFragment;
-
+        const creatorFragment = response.data?.posts.nodes[0]?.creator;
+        if (!creatorFragment) {
+            throw new Error(`FANTUBE did not return public creator metadata for ${username}.`);
+        }
         return creatorFragment;
     });
 

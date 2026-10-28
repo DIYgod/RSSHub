@@ -1,10 +1,12 @@
 import { load } from 'cheerio';
 import type { Context } from 'hono';
+import pMap from 'p-map';
 
 import type { Data, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
 import type { NextDataEpisode } from './types';
 
@@ -32,7 +34,7 @@ export const route: Route = {
 async function handler(ctx: Context): Promise<Data> {
     const id = ctx.req.param('id');
     const url = `https://kakuyomu.jp/works/${id}`;
-    const limit = Number.parseInt(ctx.req.query('limit') || '10');
+    const limit = getRouteLimit(ctx, 10);
     const html = await ofetch(url);
     const $ = load(html);
 
@@ -41,37 +43,38 @@ async function handler(ctx: Context): Promise<Data> {
     const {
         props: { pageProps },
     } = nextData;
-    const { __APOLLO_STATE__ } = pageProps;
+    const { __APOLLO_STATE__: apolloState } = pageProps;
 
-    const { title, catchphrase } = __APOLLO_STATE__[`Work:${id}`];
+    const { title, catchphrase } = apolloState[`Work:${id}`];
 
-    const values = Object.values<{ __typename: string }>(__APOLLO_STATE__);
+    const values = Object.values<{ __typename: string }>(apolloState);
     const episodes = values.filter((value): value is NextDataEpisode => value.__typename === 'Episode');
-    const items = await Promise.all(
-        episodes
-            .toSorted((a, b) => b.publishedAt.localeCompare(a.publishedAt))
-            .slice(0, limit)
-            .map((item) => {
-                const episodeUrl = `https://kakuyomu.jp/works/${id}/episodes/${item.id}`;
-                return cache.tryGet(episodeUrl, async () => {
-                    const html = await ofetch(episodeUrl);
-                    const $ = load(html);
-                    const description = $('.widget-episodeBody').html();
-                    return {
-                        title: item.title,
-                        link: episodeUrl,
-                        description,
-                        pubDate: parseDate(item.publishedAt),
-                        guid: item.id,
-                    };
-                });
-            })
+    const items = await pMap(
+        (ctx.req.query('sorted') === 'false' ? episodes : episodes.toSorted((a, b) => (b.publishedAt ?? '').localeCompare(a.publishedAt ?? ''))).slice(0, limit),
+        async (item) => {
+            const episodeUrl = `https://kakuyomu.jp/works/${id}/episodes/${item.id}`;
+            const description = await cache.tryGet(`kakuyomu:body:${episodeUrl}`, async () => {
+                const html = await ofetch(episodeUrl);
+                const $ = load(html);
+                const description = $('.widget-episodeBody').html();
+                return description;
+            });
+            return {
+                title: item.title,
+                link: episodeUrl,
+                description,
+                pubDate: item.publishedAt ? parseDate(item.publishedAt) : undefined,
+                guid: item.id,
+            };
+        },
+        { concurrency: 3 }
     );
 
     return {
         title,
         link: url,
         description: catchphrase,
+        language: 'ja',
         item: items,
     };
 }

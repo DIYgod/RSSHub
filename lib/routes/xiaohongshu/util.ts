@@ -1,5 +1,6 @@
 import type { CheerioAPI } from 'cheerio';
 import { load } from 'cheerio';
+import { escapeText } from 'entities';
 
 import { config } from '@/config';
 import CaptchaError from '@/errors/types/captcha';
@@ -81,9 +82,6 @@ const getUser = (url, cache) =>
             try {
                 let collect = '';
                 logger.http(`Requesting ${url}`);
-                await page.goto(url, {
-                    waitUntil: 'domcontentloaded',
-                });
                 try {
                     await page.waitForSelector('div.reds-tab-item:nth-child(2), .fe-verify-box', { timeout: 3000 });
                 } catch {
@@ -99,14 +97,16 @@ const getUser = (url, cache) =>
 
                 if (!(await page.$('.lock-icon'))) {
                     try {
-                        await page.click('div.reds-tab-item:nth-child(2)', { timeout: 3000 });
-                        const response = await page.waitForResponse(
-                            (res) => {
-                                const req = res.request();
-                                return req.url().includes('/api/sns/web/v2/note/collect/page') && req.method() === 'GET' && req.resourceType() === 'xhr';
-                            },
-                            { timeout: 5000 }
-                        );
+                        const [response] = await Promise.all([
+                            page.waitForResponse(
+                                (res) => {
+                                    const req = res.request();
+                                    return req.url().includes('/api/sns/web/v2/note/collect/page') && req.method() === 'GET' && req.resourceType() === 'xhr';
+                                },
+                                { timeout: 5000 }
+                            ),
+                            page.click('div.reds-tab-item:nth-child(2)', { timeout: 3000 }),
+                        ]);
                         collect = await response.json();
                     } catch {
                         //
@@ -164,22 +164,6 @@ const getBoard = (url, cache) =>
         false
     );
 
-const formatText = (text) => text.replaceAll(/(\r\n|\r|\n)/g, '<br>').replaceAll('\t', '&emsp;');
-
-// tag_list.id has nothing to do with its url
-const formatTagList = (tagList) => tagList.map((item) => `#${item.name} `).join('');
-
-const formatImageList = (imageList) => imageList.map((item) => `<img src="${item.url}"><br>`).join('');
-
-const formatNote = (url, note) => ({
-    title: note.title,
-    link: url + '/' + note.noteId,
-    description: formatText(note.desc) + '<br><br>' + formatTagList(note.tagList) + '<br><br>' + formatImageList(note.imageList),
-    author: note.user.nickname,
-    pubDate: parseDate(note.time, 'x'),
-    updated: parseDate(note.lastUpdateTime, 'x'),
-});
-
 async function renderNotesFulltext(notes, urlPrex, displayLivePhoto) {
     const data: Array<{
         title: string;
@@ -211,17 +195,14 @@ async function renderNotesFulltext(notes, urlPrex, displayLivePhoto) {
 }
 
 async function getFullNote(link, displayLivePhoto) {
-    const data = await cache.tryGet(link, async () => {
+    const data = await cache.tryGet(`xiaohongshu:note:${link}:live-photo=${Boolean(displayLivePhoto)}`, async () => {
         const res = await fetchWithProxy(link, config.xiaohongshu.cookie);
         const $ = load(res);
         const script = extractInitialState($);
         const state = JSON.parse(script);
         const note = state.note.noteDetailMap[state.note.firstNoteId].note;
         const title = note.title;
-        let desc = note.desc;
-        desc = desc.replaceAll(/\[.*?\]/g, '');
-        desc = desc.replaceAll(/#(.*?)#/g, '#$1');
-        desc = desc.replaceAll('\n', '<br>');
+        const desc = escapeText(note.desc).replaceAll('\n', '<br>');
         const pubDate = parseDate(note.time, 'x');
         const updated = parseDate(note.lastUpdateTime, 'x');
 
@@ -329,13 +310,17 @@ async function getUserWithCookie(url: string) {
     return state.user;
 }
 
+// Preserve JSON string contents while normalizing unsupported state values.
+const normalizeState = (script: string, allowEmptyMap = true) =>
+    script.replaceAll(/"(?:\\.|[^"\\])*"|(?<![\w$])undefined(?![\w$])|new Map\(\s*\[\s*\]\s*\)/g, (value) => (value.startsWith('"') || (!allowEmptyMap && value.startsWith('new Map')) ? value : 'null'));
+
 // Add helper function to extract initial state
 function extractInitialState($: CheerioAPI) {
     let script = $('script:contains("window.__INITIAL_STATE__=")').text();
 
     script = script.slice(script.indexOf('window.__INITIAL_STATE__=') + 'window.__INITIAL_STATE__='.length);
 
-    script = script.replaceAll('undefined', 'null').replaceAll(/new Map\(\s*\[\s*\]\s*\)/g, 'null');
+    script = normalizeState(script);
 
     return script;
 }
@@ -345,17 +330,20 @@ function extractInitialSsrState($: CheerioAPI) {
     const script = $('script:contains("window.__INITIAL_SSR_STATE__=")').text();
     const match = script.match(/window\.__INITIAL_SSR_STATE__\s*=\s*(\{[\s\S]*?\})\s*(?:;|$)/);
     if (match) {
-        return match[1].replaceAll('undefined', 'null');
+        return normalizeState(match[1], false);
     }
     throw new Error('Cannot extract __INITIAL_SSR_STATE__');
 }
 
 async function checkCookie() {
     const cookie = config.xiaohongshu.cookie;
+    if (!cookie) {
+        return false;
+    }
     const res = await ofetch('https://edith.xiaohongshu.com/api/sns/web/v2/user/me', {
         headers: getHeaders(cookie),
     });
-    return res.code === 0 && !!res.data.user_id;
+    return res?.code === 0 && !!res.data?.user_id;
 }
 
-export { checkCookie, formatNote, formatText, getBoard, getFullNote, getUser, getUserWithCookie, renderNotesFulltext };
+export { checkCookie, getBoard, getUser, getUserWithCookie, renderNotesFulltext };

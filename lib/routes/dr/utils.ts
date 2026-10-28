@@ -1,5 +1,7 @@
+import type { CheerioAPI } from 'cheerio';
 import { load } from 'cheerio';
 import { escapeUTF8 } from 'entities';
+import pMap from 'p-map';
 
 import type { Data, DataItem } from '@/types';
 import cache from '@/utils/cache';
@@ -108,11 +110,67 @@ const renderBody = (components: any[] = []): string =>
         .filter(Boolean)
         .join('\n');
 
-export const extractDRArticle = (html: string) => {
+interface ArticleResource {
+    urlPathId: string;
+    body: Parameters<typeof renderBody>[0];
+    title?: string;
+    startDate?: string;
+    site?: { title?: string };
+    teaserImage?: { default?: { url?: string; managedUrl?: string } };
+    contributions?: Array<{ agent?: { name?: string } }>;
+}
+
+const findArticleResource = (value: any, pathname: string): ArticleResource | undefined => {
+    if (!value || typeof value !== 'object') {
+        return;
+    }
+    if (value.urlPathId === pathname && Array.isArray(value.body)) {
+        return value;
+    }
+    for (const child of Object.values(value)) {
+        const resource = findArticleResource(child, pathname);
+        if (resource) {
+            return resource;
+        }
+    }
+};
+
+const extractFlightArticle = ($: CheerioAPI, link: string) => {
+    const pathname = new URL(link, rootUrl).pathname;
+    for (const script of $('script').toArray()) {
+        const payload = $(script)
+            .text()
+            .match(/self\.__next_f\.push\((\[.*\])\)/s)?.[1];
+        if (!payload) {
+            continue;
+        }
+        const chunk = JSON.parse(payload);
+        if (chunk[0] !== 1 || typeof chunk[1] !== 'string') {
+            continue;
+        }
+        const records = chunk[1].split('\n');
+        for (const record of records) {
+            const json = record.slice(record.indexOf(':') + 1);
+            if (!json.startsWith('{') && !json.startsWith('[')) {
+                continue;
+            }
+            try {
+                const resource = findArticleResource(JSON.parse(json), pathname);
+                if (resource) {
+                    return resource;
+                }
+            } catch {
+                // Ignore non-JSON React Flight records and retain the official RSS fallback.
+            }
+        }
+    }
+};
+
+const extractDRArticle = (html: string, link?: string) => {
     const $ = load(html);
     const nextData = JSON.parse($('script#__NEXT_DATA__').text() || '{}');
     const viewProps = nextData.props?.pageProps?.viewProps;
-    const resource = viewProps?.resource ?? viewProps?.article;
+    const resource = viewProps?.resource ?? viewProps?.article ?? extractFlightArticle($, link ?? $('link[rel="canonical"]').attr('href') ?? rootUrl);
     if (!resource) {
         return null;
     }
@@ -149,7 +207,7 @@ const fetchDRArticle = async (item: FeedItem) => {
     try {
         return await cache.tryGet(`dr:article:${item.link}`, async () => {
             const html = await ofetch(item.link!);
-            const article = extractDRArticle(html);
+            const article = extractDRArticle(html, item.link);
             if (!article) {
                 throw new Error(`Unable to extract the full article from ${item.link}`);
             }
@@ -175,7 +233,8 @@ const fetchDRArticle = async (item: FeedItem) => {
 export const getNews = async (slug: string): Promise<Data> => {
     const feed = await parser.parseURL(feedUrl(slug));
 
-    const items = await Promise.all(feed.items.map((item) => fetchDRArticle(item)));
+    const list = feed.items;
+    const items = await pMap(list, (item) => fetchDRArticle(item), { concurrency: 4 });
 
     return {
         title: feed.title ?? '',

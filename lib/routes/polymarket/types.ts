@@ -55,6 +55,7 @@ export interface PublicProfile {
 }
 
 export interface Position {
+    asset: string;
     conditionId: string;
     size: number;
     avgPrice: number;
@@ -72,6 +73,7 @@ export interface Position {
 }
 
 export interface Activity {
+    asset?: string;
     timestamp: number;
     type: 'TRADE' | 'SPLIT' | 'MERGE' | 'REDEEM' | 'REWARD' | 'CONVERSION' | 'MAKER_REBATE';
     size?: number;

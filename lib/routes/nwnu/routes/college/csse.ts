@@ -102,7 +102,6 @@ const handler: Route['handler'] = async (ctx) => {
                 })
             )
         ),
-        allowEmpty: true,
         language: 'zh-CN',
         feedLink: `https://rsshub.app/nwnu/college/csse/${columnParam}`,
         id: `https://rsshub.app/nwnu/college/csse/${columnParam}`,
@@ -126,7 +125,7 @@ export const route: Route = {
     example: '/nwnu/college/csse/2435',
     radar: [
         {
-            source: ['jsj.nwnu.edu.cn/:column/list'],
+            source: ['jsj.nwnu.edu.cn/:column/list.htm'],
             target: '/college/csse/:column',
         },
     ],

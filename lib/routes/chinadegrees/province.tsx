@@ -5,7 +5,7 @@ import { config } from '@/config';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import { parseDate } from '@/utils/parse-date';
-import playwright from '@/utils/playwright';
+import { getPlaywrightPage } from '@/utils/playwright';
 
 const baseUrl = 'http://www.chinadegrees.com.cn';
 
@@ -82,19 +82,24 @@ async function handler(ctx) {
     const data = await cache.tryGet(
         url,
         async () => {
-            const context = await playwright();
-            const page = await context.newPage();
-            await page.route('**/*', (route) => {
-                const request = route.request();
-                request.resourceType() === 'document' || request.resourceType() === 'script' ? route.continue() : route.abort();
+            const { page, destroy } = await getPlaywrightPage(url, {
+                closeTimeout: 0,
+                gotoConfig: { waitUntil: 'domcontentloaded', timeout: 20000 },
+                onBeforeLoad: async (page) => {
+                    await page.route('**/*', (route) => {
+                        const request = route.request();
+                        request.resourceType() === 'document' || request.resourceType() === 'script' ? route.continue() : route.abort();
+                    });
+                },
             });
-            await page.goto(url, {
-                waitUntil: 'domcontentloaded',
-            });
-            await page.waitForSelector('.datalist');
+            let html: string;
+            try {
+                await page.waitForSelector('.datalist', { timeout: 20000 });
 
-            const html = await page.evaluate(() => document.documentElement.getHTML());
-            await context.close();
+                html = await page.evaluate(() => document.documentElement.getHTML());
+            } finally {
+                await destroy();
+            }
 
             const $ = load(html);
             return {

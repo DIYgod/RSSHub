@@ -5,7 +5,7 @@ export const route: Route = {
     path: '/mcr/product/*',
     categories: ['program-update'],
     example: '/microsoft/mcr/product/dotnet/framework/runtime',
-    parameters: { product: 'repository path in mcr.microsoft.com' },
+    description: 'Append the repository path after `/mcr/product/`, including nested repository segments.',
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -16,7 +16,8 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['https://mcr.microsoft.com/en-us/product/:product/tags'],
+            source: ['mcr.microsoft.com/en-us/product/*product/tags'],
+            target: '/mcr/product/:product',
         },
     ],
     name: 'Product tags in mcr.microsoft.com',

@@ -4,6 +4,7 @@ import { renderToString } from 'hono/jsx/dom/server';
 import type { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 import timezone from '@/utils/timezone';
 
 export const route: Route = {
@@ -35,7 +36,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { category = '' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 30;
+    const limit = getRouteLimit(ctx, 30);
 
     const rootUrl = 'https://www.caac.gov.cn';
     const apiUrl = new URL(`caacgov/jsonp/messageBoard/visit/get${category ? 'CJWT' : ''}List`, rootUrl).href;
@@ -49,17 +50,17 @@ async function handler(ctx) {
         },
     });
 
-    const items = JSON.parse(response.match(/jsonp_messageBoard_getList\((.*?)\)$/)[1])
-        .returnData.root.slice(0, limit)
+    const items = parseMessageList(response)
+        .slice(0, limit)
         .map((item) => ({
             title: item.infoMess.replaceAll(/<\/?em>/g, ''),
             link: new URL(`index_180.html?info=${item.id}&type=id`, rootUrl).href,
             description: renderDescription(item),
-            author: `${item.gname}/${item.feedbackName}`,
-            category: [item.messageType],
+            author: [item.gname, item.feedbackName].filter(Boolean).join('/') || undefined,
+            category: [item.messageType].filter(Boolean),
             guid: `caac-cjwt#${item.id}`,
-            pubDate: timezone(parseDate(item.createDate), 8),
-            updated: timezone(parseDate(item.feedbackDate), 8),
+            pubDate: item.createDate ? timezone(parseDate(item.createDate), 8) : undefined,
+            updated: item.feedbackDate ? timezone(parseDate(item.feedbackDate), 8) : undefined,
         }));
 
     const author = '中国民用航空局';
@@ -78,31 +79,15 @@ async function handler(ctx) {
         logo: icon,
         subtitle,
         author,
-        allowEmpty: true,
     };
 }
 
-const renderDescription = (item): string =>
-    renderToString(
-        <div>
-            <dl>
-                <dt>
-                    <label>【{item.messageType}】</label>
-                    <span>{item.workUnit}</span>
-                    <span>{item.gname}</span>
-                    <span>{item.createDate}</span>
-                </dt>
-                <dd style="margin-top:10px; color:#EF7321;">
-                    <p style="text-indent:1em;">{item.infoMess ? raw(item.infoMess) : null}</p>
-                </dd>
-                <dt width="140px">
-                    <label>【回复】</label>
-                    <span>{item.feedbackName}</span>
-                    <span>{item.feedbackDate}</span>
-                </dt>
-                <dd>
-                    <p style="text-indent:1em;">{item.feedback ? raw(item.feedback) : null}</p>
-                </dd>
-            </dl>
-        </div>
-    );
+const renderDescription = (item): string => renderToString(<div>{item.feedback ? raw(item.feedback) : null}</div>);
+
+function parseMessageList(response: string | { returnData?: { root?: unknown[] }; message?: string; returnMsg?: string }) {
+    const result = typeof response === 'string' ? JSON.parse(response.match(/^jsonp_messageBoard_getList\((.*)\);?$/s)?.[1] ?? response) : response;
+    if (!Array.isArray(result.returnData?.root)) {
+        throw new TypeError(`CAAC message board is unavailable: ${result.message || result.returnMsg || 'the source did not return a message list'}`);
+    }
+    return result.returnData.root;
+}

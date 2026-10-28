@@ -1,6 +1,7 @@
 import type { Context } from 'hono';
 
 import type { Route } from '@/types';
+import { getRouteLimit } from '@/utils/route-limit';
 
 import { fetchList } from './utils';
 
@@ -37,7 +38,7 @@ export const route: Route = {
 
 async function handler(ctx: Context) {
     const { type } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 10;
+    const limit = getRouteLimit(ctx, 10);
     const link = `https://www.yzu.edu.cn/dtxx/${type}.htm`;
 
     const items = await fetchList(link, limit);

@@ -1,5 +1,6 @@
 import { renderToString } from 'hono/jsx/dom/server';
 
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import got from '@/utils/got';
 
@@ -26,6 +27,9 @@ export const route: Route = {
 
 async function handler(ctx) {
     const id = ctx.req.param('id');
+    if (!/^\d+$/.test(id)) {
+        throw new InvalidParameterError('The product ID must be the number in its item.jd.com/<id>.html URL.');
+    }
 
     const rootUrl = 'https://item.jd.com';
     const currentUrl = `${rootUrl}/${id}.html`;
@@ -36,14 +40,20 @@ async function handler(ctx) {
         url: apiUrl,
     });
 
-    const data = apiResponse.data[0];
+    const data = apiResponse.data?.[0];
+    if (data?.p === undefined || data.p === null || data.p === '') {
+        throw new Error('The price source did not return product pricing. Check that the product exists and is available on JD.');
+    }
 
     const response = await got({
         method: 'get',
         url: currentUrl,
     });
 
-    const title = response.data.match(/name: '(.*?)'/)[1];
+    const title = response.data.match(/name: '(.*?)'/)?.[1];
+    if (!title) {
+        throw new Error('The product page did not provide its name. The source may be unavailable or its layout may have changed.');
+    }
 
     return {
         title: `京东商品价格 - ${title}`,

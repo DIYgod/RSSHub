@@ -1,9 +1,11 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/cookbook',
@@ -92,35 +94,37 @@ async function handler() {
         .filter((item) => !item.archived)
         .toSorted((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 
-    const items = await Promise.all(
-        articles.slice(0, 30).map((item) =>
-            cache.tryGet(`${rootUrl}/cookbook/${item.internal_path}`, async () => {
-                const link = `${rootUrl}/cookbook/${item.internal_path}`;
-                const dataItem: DataItem = {
-                    title: item.title,
-                    link,
-                    pubDate: parseDate(item.date),
-                    category: item.tags ?? [],
-                    description: item.description,
-                };
+    const items = await pMap(
+        articles.slice(0, 30),
+        async (item) => {
+            const link = `${rootUrl}/cookbook/${item.internal_path}`;
+            const dataItem: DataItem = {
+                title: item.title,
+                link,
+                pubDate: item.date ? (/^\d{4}-\d{2}-\d{2}$/.test(item.date) ? timezone(parseDate(item.date, 'YYYY-MM-DD'), 0) : parseDate(item.date)) : undefined,
+                category: item.tags ?? [],
+                description: item.description,
+            };
 
-                if (item.authorAffiliations?.length) {
-                    dataItem.author = item.authorAffiliations.join(', ');
-                } else if (item.authors?.length) {
-                    dataItem.author = item.authors
-                        .map((a) => a.name)
-                        .filter(Boolean)
-                        .join(', ');
-                }
+            if (item.authorAffiliations?.length) {
+                dataItem.author = item.authorAffiliations.join(', ');
+            } else if (item.authors?.length) {
+                dataItem.author = item.authors
+                    .map((a) => a.name)
+                    .filter(Boolean)
+                    .join(', ');
+            }
 
+            const content = await cache.tryGet(`openai:cookbook:detail:v2:${link}`, async () => {
                 const detailResponse = await ofetch(link);
                 const $detail = load(detailResponse);
-                const content = $detail('article').html();
-                dataItem.description = content ?? dataItem.description;
+                return { description: $detail('article').html() };
+            });
+            dataItem.description = content.description ?? dataItem.description;
 
-                return dataItem;
-            })
-        )
+            return dataItem;
+        },
+        { concurrency: 3 }
     );
 
     return {

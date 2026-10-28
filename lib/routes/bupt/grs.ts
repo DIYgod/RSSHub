@@ -3,7 +3,7 @@ import { load } from 'cheerio';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import { parseDate } from '@/utils/parse-date';
-import playwright from '@/utils/playwright';
+import { getPlaywrightPage } from '@/utils/playwright';
 import timezone from '@/utils/timezone';
 
 export const route: Route = {
@@ -28,56 +28,59 @@ export const route: Route = {
 const baseUrl = 'https://grs.bupt.edu.cn/tzgg.htm';
 
 async function handler() {
-    const context = await playwright();
-    const page = await context.newPage();
-    await page.route('**/*', (route) => {
-        const request = route.request();
-        request.resourceType() === 'document' || request.resourceType() === 'script' ? route.continue() : route.abort();
-    });
-    await page.goto(baseUrl, {
-        waitUntil: 'networkidle',
-    });
-    const content = await page.content();
+    const { context, page, destroy } = await getPlaywrightPage(baseUrl, { noGoto: true, closeTimeout: 0 });
+    try {
+        await page.route('**/*', (route) => {
+            const request = route.request();
+            request.resourceType() === 'document' || request.resourceType() === 'script' ? route.continue() : route.abort();
+        });
+        await page.goto(baseUrl, {
+            waitUntil: 'networkidle',
+            timeout: 12000,
+        });
+        const content = await page.content();
 
-    const $ = load(content);
+        const $ = load(content);
 
-    const list = $('.n_list_pic li a')
-        .toArray()
-        .map((item) => {
-            const $item = $(item);
-            const title = $item.attr('title');
-            if (title === undefined) {
-                return null;
-            }
-            return {
-                title,
-                link: new URL($item.attr('href')!, baseUrl).href,
-                pubDate: timezone(parseDate($item.find('i').text()), 8),
-            };
-        })
-        .filter((item) => item !== null);
-
-    const out = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link!, async () => {
-                const response = await context.request.get(item.link!);
-                const detail = await response.text();
-                const $ = load(detail);
-                $('.v_news_content style').remove();
+        const list = $('.n_list_pic li a')
+            .toArray()
+            .map((item) => {
+                const $item = $(item);
+                const title = $item.attr('title');
+                if (title === undefined) {
+                    return null;
+                }
                 return {
-                    ...item,
-                    description: $('.v_news_content').html(),
-                    author: $('.bbt span:contains("作者：")').text().replace('作者：', ''),
+                    title,
+                    link: new URL($item.attr('href')!, baseUrl).href,
+                    pubDate: timezone(parseDate($item.find('i').text()), 8),
                 };
             })
-        )
-    );
+            .filter((item) => item !== null);
+        const orderedList = list;
+        const entries = orderedList;
+        const out = await Promise.all(
+            entries.map((item) =>
+                cache.tryGet(item.link!, async () => {
+                    const response = await context.request.get(item.link!, { timeout: 12000 });
+                    const detail = await response.text();
+                    const $ = load(detail);
+                    $('.v_news_content style').remove();
+                    return {
+                        ...item,
+                        description: $('.v_news_content').html(),
+                        author: $('.bbt span:contains("作者：")').text().replace('作者：', ''),
+                    };
+                })
+            )
+        );
 
-    await context.close();
-
-    return {
-        title: '北京邮电大学研究生院 - 通知公告',
-        link: baseUrl,
-        item: out,
-    };
+        return {
+            title: '北京邮电大学研究生院 - 通知公告',
+            link: baseUrl,
+            item: out,
+        };
+    } finally {
+        await destroy();
+    }
 }

@@ -1,6 +1,7 @@
 import { load } from 'cheerio';
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
@@ -27,8 +28,11 @@ async function handler() {
     const baseUrl = 'https://www.gameapps.hk';
     const feed = await parser.parseURL(`${baseUrl}/rss`);
 
-    const items = await Promise.all(
-        feed.items.map((item) =>
+    const list = feed.items;
+
+    const items = await pMap(
+        list,
+        (item) =>
             cache.tryGet(item.link!, async () => {
                 const response = await ofetch(item.link!);
                 const $ = load(response);
@@ -58,8 +62,8 @@ async function handler() {
                 item.enclosure_type = 'image/jpeg';
 
                 return { ...item, pubDate: parseDate(item.pubDate!) };
-            })
-        )
+            }),
+        { concurrency: 3 }
     );
 
     return {

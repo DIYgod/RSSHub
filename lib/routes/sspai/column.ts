@@ -1,3 +1,5 @@
+import pMap from 'p-map';
+
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
@@ -26,6 +28,14 @@ export const route: Route = {
     handler,
 };
 
+interface SourceArticle {
+    id: number;
+    title: string;
+    tags?: Array<{ title: string }>;
+    released_at: number;
+    author: { nickname: string };
+}
+
 async function handler(ctx) {
     const id = ctx.req.param('id');
     const link = `https://sspai.com/column/${id}`;
@@ -52,30 +62,36 @@ async function handler(ctx) {
         },
     });
 
-    const list = response.data.list;
+    const list: SourceArticle[] = response.data.list;
 
-    const out = await Promise.all(
-        list.map((item) => {
+    const out = await pMap(
+        list,
+        async (item) => {
             const title = item.title;
-            const date = item.created_at;
+            const date = item.released_at;
             const link = `https://sspai.com/api/v1/article/info/get?id=${item.id}&view=second&support_webp=true`;
             const itemUrl = `https://sspai.com/post/${item.id}`;
             const author = item.author.nickname;
 
-            return cache.tryGet(`sspai: ${item.id}`, async () => {
+            const resolvedValue1 = await cache.tryGet(`sspai:column:body:v2:${item.id}`, async () => {
                 const response = await got(link);
                 const description = response.data.data.body;
 
-                const single = {
+                return { description };
+            });
+            {
+                const details = resolvedValue1;
+                return {
                     title,
                     link: itemUrl,
                     author,
-                    description,
-                    pubDate: parseDate(date * 1000),
+                    category: item.tags?.map((tag) => tag.title),
+                    pubDate: date ? parseDate(date * 1000) : undefined,
+                    ...details,
                 };
-                return single;
-            });
-        })
+            }
+        },
+        { concurrency: 3 }
     );
 
     return {

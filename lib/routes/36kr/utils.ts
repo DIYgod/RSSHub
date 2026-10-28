@@ -7,6 +7,25 @@ import ofetch from '@/utils/ofetch';
 
 export const rootUrl = 'https://www.36kr.com';
 
+export const getInitialState = (html: string) => {
+    const stateMatch = html.match(/window\.initialState=(\{.*\})/);
+    if (!stateMatch) {
+        throw new Error('36kr page does not contain initial state. The source may be serving an anti-bot challenge.');
+    }
+
+    const state = JSON.parse(stateMatch[1]);
+    if (!state.isEncrypt) {
+        return state;
+    }
+
+    return JSON.parse(
+        CryptoJS.AES.decrypt(state.state, CryptoJS.enc.Utf8.parse('efabccee-b754-4c'), {
+            mode: CryptoJS.mode.ECB,
+            padding: CryptoJS.pad.Pkcs7,
+        }).toString(CryptoJS.enc.Utf8)
+    );
+};
+
 export const ProcessItem = (item) =>
     cache.tryGet(item.link, async () => {
         const detailResponse = await ofetch(item.link);

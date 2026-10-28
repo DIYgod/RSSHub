@@ -4,8 +4,16 @@ import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import logger from '@/utils/logger';
 import { parseDate } from '@/utils/parse-date';
-import playwright from '@/utils/playwright';
+import type { Page } from '@/utils/playwright';
+import { getPlaywrightPage } from '@/utils/playwright';
 import { getCookies, setCookies } from '@/utils/playwright-utils';
+
+const configurePage = async (page: Page) => {
+    await page.route('**/*', async (route) => {
+        const request = route.request();
+        await (request.resourceType() === 'document' ? route.continue() : route.abort());
+    });
+};
 
 export const route: Route = {
     path: '/journals/current/:journal',
@@ -14,7 +22,7 @@ export const route: Route = {
     parameters: { journal: 'Journal id, can be found in URL. [Browse journals by title](https://www.journals.uchicago.edu/action/showPublications)' },
     features: {
         requireConfig: false,
-        requirePuppeteer: false,
+        requirePuppeteer: true,
         antiCrawler: true,
         supportBT: false,
         supportPodcast: false,
@@ -35,79 +43,75 @@ async function handler(ctx) {
     const baseUrl = 'https://www.journals.uchicago.edu';
     const link = `${baseUrl}/toc/${journal}/current`;
 
-    const context = await playwright();
-    const page = await context.newPage();
-    await page.route('**/*', (route) => {
-        const request = route.request();
-        request.resourceType() === 'document' ? route.continue() : route.abort();
-    });
     logger.http(`Requesting ${link}`);
-    await page.goto(link, {
-        waitUntil: 'domcontentloaded',
+    const { context, page, destroy } = await getPlaywrightPage(link, {
+        closeTimeout: 0,
+        gotoConfig: { waitUntil: 'domcontentloaded' },
+        onBeforeLoad: configurePage,
     });
-    const response = await page.evaluate(() => document.documentElement.getHTML());
-    const cookies = await getCookies(page);
-    await page.close();
-    const $ = load(response);
+    let tasks: Array<Promise<DataItem>> = [];
+    try {
+        const response = await page.evaluate(() => document.documentElement.getHTML());
+        const cookies = await getCookies(page);
+        await page.close();
+        const $ = load(response);
 
-    const list = $('.issue-item__title')
-        .toArray()
-        .map((item): DataItem & { link: string } => ({
-            link: `${baseUrl}${$(item).find('a').attr('href')}`,
-            title: '',
-        }));
+        const list = $('.issue-item__title')
+            .toArray()
+            .map((item): DataItem & { link: string } => ({
+                link: `${baseUrl}${$(item).find('a').attr('href')}`,
+                title: '',
+            }));
 
-    const items = await Promise.all(
-        list.map((item) =>
+        tasks = list.map((item) =>
             cache.tryGet(item.link, async () => {
                 const page = await context.newPage();
-                await setCookies(page, cookies, 'journals.uchicago.edu');
-                await page.route('**/*', (route) => {
-                    const request = route.request();
-                    request.resourceType() === 'document' ? route.continue() : route.abort();
-                });
-                logger.http(`Requesting ${item.link}`);
-                await page.goto(item.link, {
-                    waitUntil: 'domcontentloaded',
-                    referer: link,
-                });
-                const response = await page.evaluate(() => document.documentElement.getHTML());
-                await page.close();
+                try {
+                    await setCookies(page, cookies, 'journals.uchicago.edu');
+                    await configurePage(page);
+                    logger.http(`Requesting ${item.link}`);
+                    await page.goto(item.link, {
+                        waitUntil: 'domcontentloaded',
+                        referer: link,
+                    });
+                    const response = await page.evaluate(() => document.documentElement.getHTML());
+                    const $ = load(response);
 
-                const $ = load(response);
+                    item.title = $('head title').text();
+                    item.pubDate = parseDate($('head meta[name="dc.Date"]').attr('content')!);
+                    item.doi = $('head meta[scheme="doi"]').attr('content');
+                    item.author = $('.author-name span')
+                        .toArray()
+                        .map((author) => $(author).text())
+                        .join(', ');
 
-                item.title = $('head title').text();
-                item.pubDate = parseDate($('head meta[name="dc.Date"]').attr('content')!);
-                item.doi = $('head meta[scheme="doi"]').attr('content');
-                item.author = $('.author-name span')
-                    .toArray()
-                    .map((author) => $(author).text())
-                    .join(', ');
+                    $('.figure__image').each((_, elem) => {
+                        if (!elem.attribs['data-lg-src']) {
+                            return;
+                        }
 
-                $('.figure__image').each((_, elem) => {
-                    if (!elem.attribs['data-lg-src']) {
-                        return;
-                    }
+                        $(elem).attr('src', `${baseUrl}${elem.attribs['data-lg-src']}`);
+                        delete elem.attribs['data-lg-src'];
+                    });
 
-                    $(elem).attr('src', `${baseUrl}${elem.attribs['data-lg-src']}`);
-                    delete elem.attribs['data-lg-src'];
-                });
-
-                item.description = $('.article__body').html();
-
-                return item;
+                    item.description = $('.article__body').html();
+                    return item;
+                } finally {
+                    await page.close();
+                }
             })
-        )
-    );
-
-    await context.close();
-
-    return {
-        title: $('head title').text(),
-        description: $('.jumbotron-journal-info').text(),
-        link,
-        image: $('head meta[property="og:image"]').attr('content'),
-        item: items,
-        language: $('html').attr('lang') as Language,
-    };
+        );
+        const items = await Promise.all(tasks);
+        return {
+            title: $('head title').text(),
+            description: $('.jumbotron-journal-info').text(),
+            link,
+            image: $('head meta[property="og:image"]').attr('content'),
+            item: items,
+            language: $('html').attr('lang') as Language,
+        };
+    } finally {
+        await Promise.allSettled(tasks);
+        await destroy();
+    }
 }

@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
@@ -62,7 +63,7 @@ async function handler(ctx) {
             const item = $(el); // 使用Cheerio包装每个<li>元素
             const a = item.find('a');
             const rawLink = a.attr('href'); // 获取链接
-            const title = a.text().trim(); // 获取标题
+            const title = a.text();
             const pubDate = item.find('i').text().trim(); // 获取日期
 
             return {
@@ -73,16 +74,17 @@ async function handler(ctx) {
             };
         });
 
-    const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link, async () => {
+    const items = await pMap(
+        list,
+        async (item) => {
+            const details = await cache.tryGet(`shu:xxgk:v2:${item.link}`, async () => {
                 const url = new URL(item.link); // 创建 URL 对象以验证链接
                 // 确保链接是以正确的域名开头，并且不为空
                 if (url.hostname === 'gs1.shu.edu.cn') {
                     // 需校内访问
                     // Skip or handle differently for URLs with gs1.shu.edu.cn domain
                     item.description = 'gs1.shu.edu.cn, 无法直接获取';
-                    return item;
+                    return { description: item.description };
                 }
 
                 const detailResponse = await got({
@@ -93,9 +95,11 @@ async function handler(ctx) {
 
                 item.description = content('.v_news_content').html() || item.description;
 
-                return item; // 返回完整的item
-            })
-        )
+                return { description: item.description }; // 返回完整的item
+            });
+            return { ...item, ...details };
+        },
+        { concurrency: 3 }
     );
 
     return {

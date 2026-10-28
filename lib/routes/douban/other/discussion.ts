@@ -1,15 +1,11 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
-/*
- * @Author: nightmare-mio wanglongwei2009@qq.com
- * @Date: 2023-11-20 23:36:12
- * @LastEditTime: 2023-11-22 20:11:24
- * @Description:
- */
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/:id/discussion',
@@ -26,10 +22,11 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['book.douban.com/:id/discussion'],
+            source: ['book.douban.com/subject/:id/discussion'],
+            target: '/:id/discussion',
         },
     ],
-    name: '豆瓣读书论坛',
+    name: '读书论坛',
     maintainers: ['nightmare-mio'],
     handler,
 };
@@ -39,28 +36,30 @@ async function handler(ctx) {
     const link = 'https://book.douban.com/subject';
     const { data: response } = await got(`${link}/${id}/discussion/`);
     const $ = load(response);
-    // 列表
+    // First-page discussions.
     const list = $('#posts-table>tbody>tr')
         .slice(1)
         .toArray()
         .map((item): DataItem => {
             const $item = $(item);
             const a = $item.find('a');
+            const date = $item.find('.time').text();
             return {
                 title: a.attr('title')!,
                 link: a.attr('href'),
-                pubDate: parseDate($item.find('.time').text()),
+                pubDate: date ? timezone(parseDate(date), 8) : undefined,
                 author: $item.find('a').eq(1).text(),
             };
         });
     const title = $('#content>h1').text();
 
-    const items = await Promise.all(
-        list.map((item) =>
+    const items = await pMap(
+        list,
+        (item) =>
             cache.tryGet(item.link!, async () => {
                 const { data: response } = await got(item.link);
                 const $ = load(response);
-                // 评论
+                // Replies.
                 const list = $('#comments>.comment-item').toArray();
                 const replyContent = list
                     .map((item, index) => {
@@ -72,8 +71,8 @@ async function handler(ctx) {
                     .join('');
                 item.description = `${$('#link-report>div').eq(1).html()}<div>${replyContent}</div>`;
                 return item;
-            })
-        )
+            }),
+        { concurrency: 3 }
     );
 
     return {

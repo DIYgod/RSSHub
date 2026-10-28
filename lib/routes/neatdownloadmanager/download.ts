@@ -1,5 +1,6 @@
 import { load } from 'cheerio';
 
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import got from '@/utils/got';
 
@@ -29,6 +30,9 @@ export const route: Route = {
 
 async function handler(ctx) {
     const os = (ctx.req.param('os') ?? '').toLowerCase();
+    if (!['', 'windows', 'macos'].includes(os)) {
+        throw new InvalidParameterError('Invalid operating system. Use windows or macos, or omit the parameter for both.');
+    }
 
     const rootUrl = 'https://www.neatdownloadmanager.com';
     const currentUrl = `${rootUrl}/index.php`;

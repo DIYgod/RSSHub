@@ -88,6 +88,8 @@ export type Data = {
     link?: string;
     item?: DataItem[];
     allowEmpty?: boolean;
+    /** Default publication-date sorting preference; the common sorted parameter takes precedence. */
+    sortItems?: boolean;
     image?: string;
     author?: string;
     language?: Language;
@@ -174,6 +176,7 @@ export type Language =
     | 'hi'
     | 'hr'
     | 'hu'
+    | 'id'
     | 'in'
     | 'is'
     | 'it'
@@ -182,6 +185,7 @@ export type Language =
     | 'ja'
     | 'ko'
     | 'mk'
+    | 'mul'
     | 'ne'
     | 'nl'
     | 'nl-be'
@@ -204,8 +208,10 @@ export type Language =
     | 'sv'
     | 'sv-fi'
     | 'sv-se'
+    | 'th'
     | 'tr'
     | 'uk'
+    | 'vi'
     | 'zh'
     | 'zh-CN'
     | 'zh-HK'
@@ -399,7 +405,8 @@ export type RadarItem = {
      * Will use RouteItem.path if not specified
      * @see https://docs.rsshub.app/joinus/new-radar#target
      *
-     * Using `target` as a function is deprecated in RSSHub-Radar 2.0.19
+     * Using `target` as a function is deprecated in RSSHub-Radar 2.0.19,
+     * and the generated radar rules ignore it and use RouteItem.path instead
      * @see https://github.com/DIYgod/RSSHub-Radar/commit/5a97647f900bb2bca792787a322b2b1ca512e40b#diff-f84e3c1e16af314bc4ed7c706d7189844663cde9b5142463dc5c0db34c2e8d54L10
      * @see https://github.com/DIYgod/RSSHub-Radar/issues/692
      */

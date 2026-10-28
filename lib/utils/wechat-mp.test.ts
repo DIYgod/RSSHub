@@ -468,7 +468,7 @@ describe('wechat-mp', () => {
         const responseShort = await app.request('/test/wechat-mp/rsshub_test');
         const parsedShort = await parser.parseString(await responseShort.text());
         const expectedItemShort = {
-            author: expectedItem.author,
+            creator: expectedItem.author,
             title: expectedItem.title,
             link: 'https://mp.weixin.qq.com/s/rsshub_test',
         };

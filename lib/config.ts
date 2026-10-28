@@ -2,16 +2,21 @@ import 'dotenv/config';
 
 import { ofetch } from 'ofetch';
 
+import type { HostRateLimits } from '@/utils/host-rate-limit';
+import { parseHostRateLimits } from '@/utils/host-rate-limit';
+
 type ConfigEnvKeys =
     // App config
     | 'DISALLOW_ROBOT'
     | 'ENABLE_CLUSTER'
     | 'IS_PACKAGE'
+    | 'USER_ROUTES_PATH'
     | 'NODE_NAME'
     | 'PLAYWRIGHT_WS_ENDPOINT'
     | 'PUPPETEER_WS_ENDPOINT'
     | 'PLAYWRIGHT_CDP_ENDPOINT'
     | 'CHROMIUM_EXECUTABLE_PATH'
+    | 'CI_EN_COOKIE'
     // Network
     | 'PORT'
     | 'SOCKET'
@@ -19,6 +24,9 @@ type ConfigEnvKeys =
     | 'DISABLE_IPV6'
     | 'REQUEST_RETRY'
     | 'REQUEST_TIMEOUT'
+    | 'REQUEST_AUTO_SELECT_FAMILY'
+    | 'REQUEST_RATE_LIMITS'
+    | 'WORDPRESS_ALLOWED_DOMAINS'
     | 'UA'
     | 'NO_RANDOM_UA'
     | 'ALLOW_ORIGIN'
@@ -33,15 +41,12 @@ type ConfigEnvKeys =
     | 'CACHE_HTTP_TOKEN'
     // Proxy
     | 'PROXY_URI'
-    | 'PROXY_URIS'
     | 'PROXY_PROTOCOL'
     | 'PROXY_HOST'
     | 'PROXY_PORT'
     | 'PROXY_AUTH'
     | 'PROXY_URL_REGEX'
     | 'PROXY_STRATEGY'
-    | 'PROXY_FAILOVER_TIMEOUT'
-    | 'PROXY_HEALTH_CHECK_INTERVAL'
     | 'PAC_URI'
     | 'PAC_SCRIPT'
     // Access control
@@ -97,6 +102,7 @@ type ConfigEnvKeys =
     | 'BUKENAVI_EMAIL'
     | 'BUKENAVI_PASSWORD'
     | 'CAIXIN_COOKIE'
+    | 'CARA_COOKIE'
     | 'CIVITAI_COOKIE'
     | 'COOMER_ASSETS_URL'
     | 'COOMER_ROOT_URL'
@@ -108,6 +114,7 @@ type ConfigEnvKeys =
     | `DISCUZ_COOKIE_${string}`
     | 'DISQUS_API_KEY'
     | 'DOUBAN_COOKIE'
+    | 'DOUYIN_COOKIE'
     | 'EH_IPB_MEMBER_ID'
     | 'EH_IPB_PASS_HASH'
     | 'EH_SK'
@@ -151,6 +158,7 @@ type ConfigEnvKeys =
     | 'LORIENTLEJOUR_TOKEN'
     | 'LORIENTLEJOUR_USERNAME'
     | 'LORIENTLEJOUR_PASSWORD'
+    | 'LOWENDTALK_COOKIE'
     | 'MALAYSIAKINI_EMAIL'
     | 'MALAYSIAKINI_PASSWORD'
     | 'MALAYSIAKINI_REFRESHTOKEN'
@@ -191,6 +199,7 @@ type ConfigEnvKeys =
     | 'PKUBBS_COOKIE'
     | 'QINGTING_ID'
     | 'READWISE_ACCESS_TOKEN'
+    | 'REUTERS_AUTH_TOKEN'
     | 'SARABA1ST_COOKIE'
     | 'SARABA1ST_HOST'
     | 'SEHUATANG_COOKIE'
@@ -208,6 +217,7 @@ type ConfigEnvKeys =
     | 'SPOTIFY_CLIENT_SECRET'
     | 'SPOTIFY_REFRESHTOKEN'
     | 'SSPAI_BEARERTOKEN'
+    | 'TAOGUBA_COOKIE'
     | 'TELEGRAM_TOKEN'
     | 'TELEGRAM_SESSION'
     | 'TELEGRAM_API_ID'
@@ -266,6 +276,7 @@ export type ConfigEnv = Partial<Record<ConfigEnvKeys, string | undefined>>;
 let envs: ConfigEnv = process.env;
 
 export type Config = {
+    userRoutesPath?: string;
     // app config
     disallowRobot: boolean;
     enableCluster?: string;
@@ -283,6 +294,8 @@ export type Config = {
     disableIPv6: boolean;
     requestRetry: number;
     requestTimeout: number;
+    requestAutoSelectFamily?: boolean;
+    requestRateLimits: HostRateLimits;
     ua: string;
     isDefaultUA: boolean;
     trueUA: string;
@@ -306,7 +319,6 @@ export type Config = {
     };
     // proxy
     proxyUri?: string;
-    proxyUris?: string[];
     proxy: {
         protocol?: string;
         host?: string;
@@ -314,8 +326,6 @@ export type Config = {
         auth?: string;
         url_regex: string;
         strategy: 'on_retry' | 'all';
-        failoverTimeout?: number;
-        healthCheckInterval?: number;
     };
     pacUri?: string;
     pacScript?: string;
@@ -398,7 +408,13 @@ export type Config = {
     caixin: {
         cookie?: string;
     };
+    cara: {
+        cookie?: string;
+    };
     civitai: {
+        cookie?: string;
+    };
+    ciEn: {
         cookie?: string;
     };
     coomer: {
@@ -425,6 +441,9 @@ export type Config = {
         api_key?: string;
     };
     douban: {
+        cookie?: string;
+    };
+    douyin: {
         cookie?: string;
     };
     ehentai: {
@@ -528,6 +547,9 @@ export type Config = {
         username?: string;
         password?: string;
     };
+    lowendtalk: {
+        cookie?: string;
+    };
     malaysiakini: {
         email?: string;
         password?: string;
@@ -614,6 +636,9 @@ export type Config = {
     readwise: {
         accessToken?: string;
     };
+    reuters: {
+        authToken?: string;
+    };
     saraba1st: {
         cookie?: string;
         host?: string;
@@ -651,6 +676,9 @@ export type Config = {
     };
     sspai: {
         bearertoken?: string;
+    };
+    taoguba: {
+        cookie?: string;
     };
     telegram: {
         token?: string;
@@ -701,6 +729,7 @@ export type Config = {
         cookie?: string;
     };
     wordpress: {
+        allowedDomains: string[];
         cdnUrl?: string;
     };
     xiaoyuzhou: {
@@ -802,6 +831,7 @@ const calculateValue = () => {
         disallowRobot: toBoolean(envs.DISALLOW_ROBOT, false),
         enableCluster: toBoolean(envs.ENABLE_CLUSTER, false),
         isPackage: !!envs.IS_PACKAGE,
+        userRoutesPath: envs.USER_ROUTES_PATH,
         nodeName: envs.NODE_NAME,
         playwrightWSEndpoint: envs.PLAYWRIGHT_WS_ENDPOINT ?? envs.PUPPETEER_WS_ENDPOINT,
         playwrightCDPEndpoint: envs.PLAYWRIGHT_CDP_ENDPOINT,
@@ -815,6 +845,8 @@ const calculateValue = () => {
         disableIPv6: toBoolean(envs.DISABLE_IPV6, false),
         requestRetry: toInt(envs.REQUEST_RETRY, 2), // 请求失败重试次数
         requestTimeout: toInt(envs.REQUEST_TIMEOUT, 30000), // Milliseconds to wait for the server to end the response before aborting the request
+        requestAutoSelectFamily: envs.REQUEST_AUTO_SELECT_FAMILY === undefined ? undefined : toBoolean(envs.REQUEST_AUTO_SELECT_FAMILY, false),
+        requestRateLimits: parseHostRateLimits(envs.REQUEST_RATE_LIMITS),
         ua: envs.UA || (toBoolean(envs.NO_RANDOM_UA, false) ? TRUE_UA : 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36'),
         isDefaultUA: !envs.UA && !toBoolean(envs.NO_RANDOM_UA, false),
         trueUA: TRUE_UA,
@@ -839,11 +871,6 @@ const calculateValue = () => {
         },
         // proxy
         proxyUri: envs.PROXY_URI,
-        proxyUris: envs.PROXY_URIS
-            ? envs.PROXY_URIS.split(',')
-                  .map((uri) => uri.trim())
-                  .filter(Boolean)
-            : undefined,
         proxy: {
             protocol: envs.PROXY_PROTOCOL,
             host: envs.PROXY_HOST,
@@ -851,8 +878,6 @@ const calculateValue = () => {
             auth: envs.PROXY_AUTH,
             url_regex: envs.PROXY_URL_REGEX || '.*',
             strategy: envs.PROXY_STRATEGY || 'all', // all / on_retry
-            failoverTimeout: toInt(envs.PROXY_FAILOVER_TIMEOUT, 5000),
-            healthCheckInterval: toInt(envs.PROXY_HEALTH_CHECK_INTERVAL, 60000),
         },
         pacUri: envs.PAC_URI,
         pacScript: envs.PAC_SCRIPT,
@@ -936,8 +961,14 @@ const calculateValue = () => {
         caixin: {
             cookie: envs.CAIXIN_COOKIE,
         },
+        cara: {
+            cookie: envs.CARA_COOKIE,
+        },
         civitai: {
             cookie: envs.CIVITAI_COOKIE,
+        },
+        ciEn: {
+            cookie: envs.CI_EN_COOKIE,
         },
         coomer: {
             assetsUrl: getAssetsUrl(envs.COOMER_ROOT_URL || 'https://coomer.st', envs.COOMER_ASSETS_URL),
@@ -964,6 +995,9 @@ const calculateValue = () => {
         },
         douban: {
             cookie: envs.DOUBAN_COOKIE,
+        },
+        douyin: {
+            cookie: envs.DOUYIN_COOKIE,
         },
         ehentai: {
             ipb_member_id: envs.EH_IPB_MEMBER_ID,
@@ -1066,6 +1100,9 @@ const calculateValue = () => {
             username: envs.LORIENTLEJOUR_USERNAME,
             password: envs.LORIENTLEJOUR_PASSWORD,
         },
+        lowendtalk: {
+            cookie: envs.LOWENDTALK_COOKIE,
+        },
         malaysiakini: {
             email: envs.MALAYSIAKINI_EMAIL,
             password: envs.MALAYSIAKINI_PASSWORD,
@@ -1152,6 +1189,9 @@ const calculateValue = () => {
         readwise: {
             accessToken: envs.READWISE_ACCESS_TOKEN,
         },
+        reuters: {
+            authToken: envs.REUTERS_AUTH_TOKEN,
+        },
         saraba1st: {
             cookie: envs.SARABA1ST_COOKIE,
             host: envs.SARABA1ST_HOST || 'https://stage1st.com',
@@ -1189,6 +1229,9 @@ const calculateValue = () => {
         },
         sspai: {
             bearertoken: envs.SSPAI_BEARERTOKEN,
+        },
+        taoguba: {
+            cookie: envs.TAOGUBA_COOKIE,
         },
         telegram: {
             token: envs.TELEGRAM_TOKEN,
@@ -1239,6 +1282,10 @@ const calculateValue = () => {
             cookie: envs.WENKU8_COOKIE,
         },
         wordpress: {
+            allowedDomains:
+                envs.WORDPRESS_ALLOWED_DOMAINS?.split(',')
+                    .map((domain) => domain.trim().toLowerCase())
+                    .filter(Boolean) ?? [],
             cdnUrl: envs.WORDPRESS_CDN,
         },
         xiaoyuzhou: {

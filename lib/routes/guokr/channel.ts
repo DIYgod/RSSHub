@@ -18,10 +18,11 @@ export const route: Route = {
     parameters: { channel: '专栏类别' },
     radar: [
         {
-            source: ['guokr.com/:channel'],
+            source: ['guokr.com/scientific/channel/:channel'],
+            target: '/column/:channel',
         },
     ],
-    name: '果壳网专栏',
+    name: '专栏',
     maintainers: ['DHPO', 'hoilc'],
     handler,
     url: 'guokr.com/',

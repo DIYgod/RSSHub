@@ -1,3 +1,4 @@
+import pMap from 'p-map';
 import sanitizeHtml from 'sanitize-html';
 
 import { config } from '@/config';
@@ -10,12 +11,10 @@ import type { Album, MobileTrack, RichIntro, TrackInfoResponse } from './types';
 import { decryptUrl, getRandom16, getXmSign } from './utils';
 
 const baseUrl = 'https://www.ximalaya.com';
-
 type TrackPayInfo = {
     playPathAacv224?: string;
     desc?: string;
 };
-
 // Find category from: https://help.apple.com/itc/podcasts_connect/?lang=en#/itc9267a2f12
 const categoryDict = {
     人文: 'Society & Culture',
@@ -25,10 +24,13 @@ const categoryDict = {
     音乐: 'Music',
     IT科技: 'Technology',
 };
-
 function getAlbumData(albumId) {
     return cache.tryGet(`ximalaya:albumInfo:${albumId}`, async () => {
-        const response = await ofetch<{ data: { albumPageMainInfo: Album } }>(`${baseUrl}/revision/album/v1/simple`, {
+        const response = await ofetch<{
+            data: {
+                albumPageMainInfo: Album;
+            };
+        }>(`${baseUrl}/revision/album/v1/simple`, {
             query: {
                 albumId,
             },
@@ -37,13 +39,12 @@ function getAlbumData(albumId) {
         return response.data.albumPageMainInfo;
     });
 }
-
 function judgeTrue(str, ...validStrings) {
     if (!str) {
         return false;
     }
     str = str.toLowerCase();
-    if (str === 'true' || str === '1') {
+    if (isOneOf(str, ['true', '1'])) {
         return true;
     }
     for (const _s of validStrings) {
@@ -53,7 +54,6 @@ function judgeTrue(str, ...validStrings) {
     }
     return false;
 }
-
 export const route: Route = {
     path: '/:type/:id/:all?/:shownote?',
     categories: ['multimedia'],
@@ -61,14 +61,15 @@ export const route: Route = {
     parameters: {
         type: '专辑类型, 通常可以使用 `album`，可在对应专辑页面的 URL 中找到',
         id: '专辑 id, 可在对应专辑页面的 URL 中找到',
-        all: '是否需要获取全部节目，填入 `1`、`true`、`all` 视为获取所有节目，填入其他则不获取。',
+        all: '是否获取首屏最多 200 个节目，填入 `1`、`true`、`all` 视为开启，填入其他则获取首屏最多 30 个节目。',
         shownote: '是否需要获取节目的 ShowNote，填入 `1`、`true`,`shownote` 视为获取，填入其他则不获取。',
     },
     features: {
         requireConfig: [
             {
                 name: 'XIMALAYA_TOKEN',
-                description: '',
+                optional: true,
+                description: '仅获取已购买的付费内容时需要配置。',
             },
         ],
         requirePuppeteer: false,
@@ -88,79 +89,53 @@ export const route: Route = {
 **付费内容需要配置好已购买账户的 token 才能收听，详情见部署页面的配置模块**
 :::`,
 };
-
 async function handler(ctx) {
-    const type = ctx.req.param('type'); // 专辑分类
-    const id = ctx.req.param('id'); // 专辑id
+    const type = ctx.req.param('type'); // Album category
+    const id = ctx.req.param('id'); // Album ID
     const shouldAll = judgeTrue(ctx.req.param('all'), 'all');
     const shouldShowNote = judgeTrue(ctx.req.param('shownote'), 'shownote');
     const pageSize = shouldAll ? 200 : 30;
-
     const albumData = await getAlbumData(id);
-
     const isPaid = albumData.isPaid;
-
     const author = albumData.anchorName;
-
-    const albumTitle = albumData.albumTitle; // 专辑标题
+    const albumTitle = albumData.albumTitle; // Album title
     const albumCover = 'https:' + albumData.cover;
-    const albumIntro = sanitizeHtml(albumData.detailRichIntro, { allowedTags: [], allowedAttributes: {} }); // 专辑介绍
-
-    const albumCategory = albumData.categoryTitle; // 专辑分类名字
-
-    // sort 为 1 时是降序
+    const albumIntro = sanitizeHtml(albumData.detailRichIntro, { allowedTags: [], allowedAttributes: {} }); // Album introduction
+    const albumCategory = albumData.categoryTitle; // Album category name
+    // A sort value of 1 means descending order
     // const isAsc = albumData.store.AlbumDetailTrackList.sort === 0;
-    // 喜马拉雅的 API 的 query 参数 isAsc=0 时才是升序，不写就是降序。
+    // The API uses isAsc=0 for ascending order and defaults to descending order.
     const trackInfoApi = `https://mobile.ximalaya.com/mobile/v1/album/track/?albumId=${id}&pageSize=${pageSize}&pageId=`;
     const trackInfoResponse = await ofetch<TrackInfoResponse>(trackInfoApi + '1', {
         parseResponse: JSON.parse,
     });
-    const maxPageId = trackInfoResponse.data.maxPageId; // 最大页数
-
-    let playList = trackInfoResponse.data.list;
-
-    if (shouldAll) {
-        const promises: Array<Promise<TrackInfoResponse>> = [];
-        for (let i = 2; i <= maxPageId; i++) {
-            // string + number -> string
-            promises.push(
-                ofetch<TrackInfoResponse>(trackInfoApi + i, {
-                    parseResponse: JSON.parse,
-                })
-            );
-        }
-        const responses = await Promise.all(promises);
-        playList = [...playList, ...responses.flatMap((j) => j.data.list)];
-    }
-
-    await Promise.all(
-        playList.map(async (item) => {
-            item.desc = await cache.tryGet(`ximalaya:trackRichInfo:${item.trackId}:${shouldShowNote.toString()}`, async () => {
-                let _desc = '';
-                if (shouldShowNote) {
+    const playList = trackInfoResponse.data.list;
+    await pMap(
+        playList,
+        async (item) => {
+            item.desc = item.intro;
+            if (shouldShowNote) {
+                const detail = await cache.tryGet(`ximalaya:trackRichInfo:v2:${item.trackId}`, async () => {
                     const trackRichInfoApi = `https://mobile.ximalaya.com/mobile-track/richIntro?trackId=${item.trackId}`;
                     const trackRichInfoResponse = await ofetch<RichIntro>(trackRichInfoApi);
-                    _desc = trackRichInfoResponse.richIntro;
-                }
-                if (!_desc) {
-                    _desc = item.intro;
-                }
-                return _desc;
-            });
-
+                    return { richIntro: trackRichInfoResponse.richIntro };
+                });
+                item.desc = detail.richIntro || item.intro;
+            }
             const playPath = await cache.tryGet(`ximalaya:track:${item.trackId}`, async () => {
                 const track = await ofetch<MobileTrack>(`https://m.ximalaya.com/tracks/${item.trackId}.json`);
                 return { url: track.play_path_64 ?? track.play_path_32 ?? track.play_path ?? '' };
             });
             item.playPathAacv224 = playPath.url;
-        })
+        },
+        { concurrency: 3, stopOnError: false }
     );
-
     const token = config.ximalaya.token;
     if (isPaid && token) {
         const randomToken = getRandom16(8) + '-' + getRandom16(4) + '-' + getRandom16(4) + '-' + getRandom16(4) + '-' + getRandom16(12);
-        await Promise.all(
-            playList.map(async (item) => {
+        await pMap(
+            playList,
+            async (item) => {
                 const timestamp = Math.floor(Date.now());
                 const trackPayInfoApi = `https://www.ximalaya.com/mobile-playpage/track/v3/baseInfo/${timestamp}?device=www2&trackQualityLevel=2&trackId=${item.trackId}`;
                 const data = await cache.tryGet('ximalaya:trackPayInfo' + trackPayInfoApi, async () => {
@@ -179,34 +154,31 @@ async function handler(ctx) {
                     _item.playPathAacv224 = decryptUrl(trackInfo.playUrlList[0].url);
                     return _item;
                 });
-
                 if (data.playPathAacv224) {
                     item.playPathAacv224 = data.playPathAacv224;
                 }
                 if (data.desc) {
                     item.desc = data.desc;
                 }
-            })
+            },
+            { concurrency: 3, stopOnError: false }
         );
     }
-
     const resultItems = playList.map((item) => {
         const title = item.title;
         const trackId = item.trackId;
         const itunesItemImage = item.coverLarge.split('!', 1)[0];
         const link = `${baseUrl}/sound/${trackId}`;
-        const pubDate = parseDate(item.createdAt, 'x');
-        const duration = item.duration; // 时间长度：单位（秒）
+        const pubDate = !isNullish(item.createdAt) && getClockText(item.createdAt) && isFiniteClock(item.createdAt) ? parseDate(item.createdAt, 'x') : undefined;
+        const duration = item.duration; // Duration in seconds
         const enclosureUrl = item.playPathAacv224 || item.playPathAacv164;
-
         let resultItem: DataItem = {
             title,
             link,
             description: item.desc || '',
-            pubDate,
+            pubDate: pubDate && Number.isFinite(pubDate.getTime()) ? pubDate : undefined,
             itunes_item_image: itunesItemImage,
         };
-
         if (enclosureUrl) {
             if (isPaid) {
                 resultItem.description = '[该内容需付费] ' + resultItem.description;
@@ -217,13 +189,11 @@ async function handler(ctx) {
                 itunes_duration: duration,
                 enclosure_type: 'audio/x-m4a',
             };
-        } else {
+        } else if (isPaid) {
             resultItem.description = '[该内容需付费] ' + resultItem.description;
         }
-
         return resultItem;
     });
-
     return {
         title: albumTitle,
         link: `${baseUrl}/${type}/${id}`,
@@ -233,4 +203,18 @@ async function handler(ctx) {
         itunes_category: categoryDict[albumCategory] || albumCategory,
         item: resultItems,
     };
+}
+function isNullish(value: unknown): value is null | undefined {
+    return isOneOf(value, [null, undefined]);
+}
+function isOneOf<const T>(value: unknown, values: readonly T[]): value is T {
+    const candidates: readonly unknown[] = values;
+    return candidates.includes(value);
+}
+function getClockText(value: string | number): string {
+    return String(value).trim();
+}
+
+function isFiniteClock(value: string | number): boolean {
+    return Number.isFinite(Number(value));
 }

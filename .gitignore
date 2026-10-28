@@ -26,9 +26,12 @@ memory-bank/
 node_modules
 tmp
 dist
+dist-container
 dist-lib
 dist-worker
+.vitest
 .wrangler
+.cloudflare
 
 Session.vim
 combined.log
@@ -39,5 +42,3 @@ package-lock.json
 # pnpm-lock.yaml
 yarn.lock
 yarn-error.log
-
-dist-container

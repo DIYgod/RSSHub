@@ -3,6 +3,7 @@ import { load } from 'cheerio';
 import type { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 import timezone from '@/utils/timezone';
 
 import { parseDyArticle } from './utils';
@@ -29,7 +30,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const id = ctx.req.param('id');
-    const limit = ctx.req.query('limit') ?? 30;
+    const limit = getRouteLimit(ctx, 30);
     const url = `https://www.163.com/dy/media/${id}.html`;
     const res = await got(url);
     const $ = load(res.data);

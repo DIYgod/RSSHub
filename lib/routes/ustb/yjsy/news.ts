@@ -4,6 +4,7 @@ import iconv from 'iconv-lite';
 import type { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 // import logger from '@/utils/logger';
 
 export const route: Route = {
@@ -21,7 +22,8 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['gs.ustb.edu.cn/:type'],
+            source: ['gs.ustb.edu.cn/', 'gs.ustb.edu.cn/index.php/cms/item-list-category-1049'],
+            target: '/yjsy/news/all',
         },
     ],
     name: '研究生院',
@@ -411,24 +413,20 @@ async function handler(ctx) {
         },
     };
 
-    // 请求
     const url = struct[type].url;
     const response = await got({
         method: 'get',
-        responseType: 'buffer', // 转码
+        responseType: 'buffer',
         url,
     });
 
-    // 获取response
     const data = type === 'iet' ? iconv.decode(response.data, 'gb2312') : response.data;
     const $ = load(data);
     // logger.info("data:" + data);
 
-    // 获取响应中有用的部分
     const list = $(struct[type].selector.list);
     // logger.info("list:" + list);
 
-    // 处理返回
     return {
         title: struct[type].name,
         link: struct[type].link,
@@ -444,7 +442,7 @@ async function handler(ctx) {
                 if (time.includes('[')) {
                     time = time.slice(1, 11);
                 }
-                date = parseDate(time);
+                date = timezone(parseDate(time), 8);
             }
             // logger.info("date:" + date);
 
@@ -471,12 +469,10 @@ async function handler(ctx) {
             return date === undefined
                 ? {
                       title,
-                      description: title,
                       link,
                   }
                 : {
                       title,
-                      description: title,
                       link,
                       pubDate: date,
                   };

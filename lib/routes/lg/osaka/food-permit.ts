@@ -3,6 +3,7 @@ import { load } from 'cheerio';
 import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
+import { getRouteLimit } from '@/utils/route-limit';
 
 import { csvRecords, decodeText, isoDate, type PermitExtra, type Row } from '../utils';
 
@@ -65,7 +66,7 @@ const toItem = (raw: Row): DataItem & { _extra: PermitExtra } => {
         guid: `lg/osaka/food-permit:${permitNo}`,
         link: PAGE,
         description: [ward, address, businessType, `指令番号 ${permitNo}`, raw['許可満了日'] ? `許可満了日 ${raw['許可満了日']}` : null].filter(Boolean).join(' / '),
-        // 大阪市 publishes neither 町字 nor 初回許可日 nor 廃業日 — the snapshot only lists permits that are still valid.
+        // Osaka publishes neither 町字 nor 初回許可日 nor 廃業日 — the snapshot only lists permits that are still valid.
         _extra: {
             source: 'osaka',
             ward,
@@ -98,7 +99,7 @@ const fetchItems = async (limit: number): Promise<Array<DataItem & { _extra: Per
 };
 
 export const handler = async (ctx): Promise<Data> => {
-    const limit = Math.min(ctx.req.query('limit') ? Number(ctx.req.query('limit')) : DEFAULT_LIMIT, MAX_LIMIT);
+    const limit = Math.min(getRouteLimit(ctx, DEFAULT_LIMIT), MAX_LIMIT);
     const items = await cache.tryGet(`lg/osaka/food-permit:${limit}`, () => fetchItems(limit));
     return {
         title: '大阪市 食品営業許可 新規',

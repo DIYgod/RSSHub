@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { Data, Route } from '@/types';
 import cache from '@/utils/cache';
@@ -20,29 +21,33 @@ async function handler(): Promise<Data> {
     const response = await ofetch(link);
     const $ = load(response);
 
-    const items = await Promise.all(
+    const items = await pMap(
         $('div .center_article_list')
             .find('td a')
             .toArray()
-            .map((item) => new URL($(item).attr('href')!, link).href)
-            .map((itemUrl) =>
-                cache.tryGet(itemUrl, async () => {
-                    const response = await ofetch(itemUrl);
-                    const $ = load(response);
+            .map((item) => new URL($(item).attr('href')!, link).href),
+        (itemUrl) =>
+            cache.tryGet(itemUrl, async () => {
+                const response = await ofetch(itemUrl);
+                const $ = load(response);
 
-                    $('img, div, span, p, table, td, tr').removeAttr('style');
-                    $('style, script').remove();
+                $('img, div, span, p, table, td, tr').removeAttr('style');
+                $('style, script').remove();
+                const date = $('#articleInfo')
+                    .text()
+                    .match(/\d{4}-\d{2}-\d{2}(?:\s+\d{2}:\d{2}(?::\d{2})?)?/)?.[0];
+                const pubDate = date ? timezone(parseDate(date), 8) : undefined;
 
-                    return {
-                        title: $('h2').text(),
-                        author: '广州航海学院教务处',
-                        link: itemUrl,
-                        pubDate: timezone(parseDate($('div[id=articleInfo]').text().slice(5, 15)), 8),
-                        description: $('div .body').html(),
-                        guid: itemUrl,
-                    };
-                })
-            )
+                return {
+                    title: $('h2').text(),
+                    author: '广州航海学院教务处',
+                    link: itemUrl,
+                    pubDate: pubDate && !Number.isNaN(pubDate.getTime()) ? pubDate : undefined,
+                    description: $('div .body').html(),
+                    guid: itemUrl,
+                };
+            }),
+        { concurrency: 3 }
     );
 
     return {

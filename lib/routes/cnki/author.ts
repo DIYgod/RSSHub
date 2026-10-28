@@ -139,9 +139,8 @@ async function handler(ctx) {
     const items = await Promise.all(list.map((item) => cache.tryGet<DataItem>(item.link, () => ProcessItem(item))));
 
     const processedItems = items.map((item) => ({
+        ...item,
         title: item.title || '',
-        link: item.link,
-        pubDate: item.pubDate,
     }));
 
     return {

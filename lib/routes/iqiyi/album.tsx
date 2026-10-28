@@ -1,4 +1,4 @@
-import { load } from 'cheerio';
+import { type CheerioAPI, load } from 'cheerio';
 import { renderToString } from 'hono/jsx/dom/server';
 
 import InvalidParameterError from '@/errors/types/invalid-parameter';
@@ -27,12 +27,50 @@ export const route: Route = {
 :::`,
 };
 
+function parseIssueTime(value: string | number | null | undefined) {
+    if (!value && value !== 0) {
+        return;
+    }
+    const date = parseDate(value);
+    return Number.isNaN(date.getTime()) ? undefined : date;
+}
+
+function getUploadDates($: CheerioAPI) {
+    const dates = new Map<string, Date>();
+    $('script[type="application/ld+json"]').each((_, script) => {
+        let data;
+        try {
+            data = JSON.parse($(script).text());
+        } catch {
+            return;
+        }
+        const entries = Array.isArray(data) ? data : Array.isArray(data?.['@graph']) ? data['@graph'] : [data];
+        for (const entry of entries) {
+            if (entry?.['@type'] !== 'VideoObject' || typeof entry.uploadDate !== 'string' || !/(?:Z|[+-]\d{2}:?\d{2})$/i.test(entry.uploadDate) || typeof entry.embedUrl !== 'string') {
+                continue;
+            }
+            try {
+                const url = new URL(entry.embedUrl);
+                const id = url.searchParams.get('id');
+                const date = parseIssueTime(entry.uploadDate);
+                if (['http:', 'https:'].includes(url.protocol) && id && date) {
+                    dates.set(id, date);
+                }
+            } catch {
+                // Keep the episode API clock when source metadata is malformed.
+            }
+        }
+    });
+    return dates;
+}
+
 async function handler(ctx) {
     const id = ctx.req.param('id');
 
     const { data: response } = await got(`https://www.iq.com/album/${id}`);
 
     const $ = load(response);
+    const uploadDates = getUploadDates($);
     const nextData = JSON.parse($('#__NEXT_DATA__').text());
     const { album } = nextData.props.initialState;
 
@@ -44,32 +82,23 @@ async function handler(ctx) {
         throw new InvalidParameterError(`${baseInfo.name} is not available in this server region.`);
     }
 
-    let pos = 1;
-    let hasMore: boolean;
-    const epgs: any[] = [];
-    do {
-        const {
-            data: { data },
-            // eslint-disable-next-line no-await-in-loop
-        } = await got(`https://pcw-api.iq.com/api/v2/episodeListSource/${album.videoAlbumInfo.albumId}`, {
-            searchParams: {
-                platformId: 3,
-                modeCode: 'intl',
-                langCode: 'zh_cn',
-                endOrder: album.videoAlbumInfo.maxOrder,
-                startOrder: pos,
-            },
-        });
-        epgs.push(...data.epg);
-        pos = data.pos;
-        hasMore = data.hasMore;
-    } while (hasMore);
+    const {
+        data: { data },
+    } = await got(`https://pcw-api.iq.com/api/v2/episodeListSource/${album.videoAlbumInfo.albumId}`, {
+        searchParams: {
+            platformId: 3,
+            modeCode: 'intl',
+            langCode: 'zh_cn',
+            endOrder: album.videoAlbumInfo.maxOrder,
+            startOrder: 1,
+        },
+    });
 
-    const items = epgs.map((item) => ({
+    const items = data.epg.map((item) => ({
         title: item.name,
-        description: renderToString(<img src={`https:${item.pic.replace('http:', 'https:')}`} />),
+        description: item.pic ? renderToString(<img src={new URL(item.pic, 'https://www.iq.com').href} />) : undefined,
         link: `https://www.iq.com/play/${item.playLocSuffix}`,
-        pubDate: parseDate(item.initIssueTime),
+        pubDate: uploadDates.get(item.qipuIdStr) ?? parseIssueTime(item.initIssueTime),
     }));
 
     return {

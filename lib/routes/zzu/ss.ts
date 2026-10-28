@@ -2,6 +2,8 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
+import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
 export const route: Route = {
     path: '/ss/:type',
@@ -21,13 +23,29 @@ export const route: Route = {
             source: ['www5.zzu.edu.cn/ss/'],
         },
     ],
-    name: '郑大社科院',
+    name: '社科院',
     maintainers: ['amandus1990'],
     handler,
     description: `| 新闻资讯 | 通知公告 |
 | -------- | -------- |
 | xwzx     | tzgg     |`,
 };
+
+function parsePublishedDate(value?: string) {
+    if (!value) {
+        return;
+    }
+    const match = value.match(/^\s*(\d{4})[-/](\d{1,2})[-/](\d{1,2})(?:\s|T|$)/);
+    if (!match) {
+        return;
+    }
+    const calendarDate = `${match[1]}-${match[2].padStart(2, '0')}-${match[3].padStart(2, '0')}`;
+    if (!Number.isFinite(parseDate(calendarDate, 'YYYY-MM-DD', true).getTime())) {
+        return;
+    }
+    const date = parseDate(Date.parse(value));
+    return Number.isFinite(date.getTime()) ? date : undefined;
+}
 
 async function handler(ctx) {
     const type = ctx.req.param('type');
@@ -42,32 +60,21 @@ async function handler(ctx) {
 
     // 解析页面内容并提取文章信息
     const list = $('.list_notice > a')
-        .slice(0, 10)
+        .slice(0, Math.max(10, getRouteLimit(ctx, 10)))
         .toArray()
         .map((element) => {
             const $element = $(element);
             const link = new URL($element.attr('href')!, typeDict[type][1]).href;
-            const title = $element.find('h3').text().trim();
+            const title = $element.find('h3').text();
 
-            // 获取发布时间
-            // xwzx: 格式为 MM-DD，需要补全年份
-            // tzgg: 格式为 yyyy-mm-dd，直接使用
-            const pubDateText = $element.find('time').text();
-            let pubDate: string | null = null;
-
-            if (pubDateText) {
-                if (type === 'xwzx') {
-                    const currentYear = new Date().getFullYear();
-                    pubDate = `${currentYear}-${pubDateText}`;
-                } else {
-                    pubDate = pubDateText;
-                }
-            }
+            const time = $element.find('time');
+            const pubDateText = time.attr('datetime') || time.attr('title') || time.text();
+            // A month/day label does not identify its publication year.
 
             return {
                 title,
                 link,
-                pubDate,
+                pubDate: parsePublishedDate(pubDateText),
             };
         });
 

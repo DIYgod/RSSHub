@@ -98,10 +98,10 @@ const parseDetail = (html: string, id: string): DataItem | null => {
 
     const link = `${HOST}/t${id}`;
     return {
-        title: clean(title.split('の物件情報', 1)[0]) ?? title,
+        title,
         link,
         guid: link,
-        pubDate: extra.listed_at === null ? undefined : timezone(parseDate(extra.listed_at, 'YYYY-MM-DD'), 9),
+        updated: extra.listed_at === null ? undefined : timezone(parseDate(extra.listed_at, 'YYYY-MM-DD'), 9),
         description: summarize(extra),
         _extra: extra,
     };
@@ -147,7 +147,7 @@ export const route: Route = {
 
 Its one advantage over the ward routes is the address. The page's own 所在地 field stops at the 町 exactly as the list does (\`東京都新宿区高田馬場 詳細はログイン後に表示\`), but the document title carries the 丁目 — \`新宿区高田馬場2丁目/高田馬場駅徒歩2分/…\` — so \`address_hint\` reaches the 丁目 here and only here.
 
-\`_extra\` follows the shared listing shape. 敷金 and 礼金 are shown only to signed-in users, here as on the list page, so they stay \`null\`. The site publishes 更新日 but no 掲載日，so \`listed_at\` and \`pubDate\` are a last-modified date rather than a first-listed one — do not read them as a publication date.`,
+\`_extra\` follows the shared listing shape. 敷金 and 礼金 are shown only to signed-in users, here as on the list page, so they stay \`null\`. The site publishes 更新日 but no 掲載日，so \`updated\` is a last-modified date and \`pubDate\` is omitted. The legacy \`listed_at\` field retains the same source date for compatibility — do not read them as a publication date.`,
     categories: ['other'],
     features: {
         requireConfig: false,
@@ -157,8 +157,8 @@ Its one advantage over the ward routes is the address. The page's own 所在地 
     },
     radar: [
         {
-            source: ['www.i-tenpo.com/t:id'],
-            target: '/detail/:id',
+            source: ['www.i-tenpo.com/t99523'],
+            target: '/detail/99523',
         },
     ],
 };

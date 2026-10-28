@@ -1,6 +1,7 @@
 import { config } from '@/config';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
+import md5 from '@/utils/md5';
 import ofetch from '@/utils/ofetch';
 
 import { getConfig } from './utils';
@@ -34,6 +35,7 @@ If you opt to enable \`fulltext\` feature, consider adding \`limit\` parameter t
 async function handler(ctx) {
     const discourseConfig: unknown = getConfig(ctx);
     const { link, key } = discourseConfig as { link: string; key: string };
+    const sessionKey = md5(key);
 
     const response = await ofetch(`${link}/notifications.json`, { headers: { 'User-Api-Key': key } });
     let items = response.notifications.slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 10).map((e) => ({
@@ -47,20 +49,21 @@ async function handler(ctx) {
 
     if (ctx.req.param('fulltext') === '1') {
         items = await Promise.all(
-            items.map((e) => {
+            items.map(async (e) => {
                 if (e.original_post_id) {
-                    const post_link = `${link}/posts/${e.original_post_id}.json`;
-                    return cache.tryGet(post_link, async () => {
-                        const { cooked } = await ofetch(post_link, { headers: { 'User-Api-Key': key } });
-                        return { ...e, description: cooked };
+                    const postLink = `${link}/posts/${e.original_post_id}.json`;
+                    const cooked = await cache.tryGet(`discourse:post:${sessionKey}:${postLink}`, async () => {
+                        const { cooked } = await ofetch(postLink, { headers: { 'User-Api-Key': key } });
+                        return cooked;
                     });
+                    return { ...e, description: cooked };
                 }
                 return e;
             })
         );
     }
 
-    const { about } = await cache.tryGet(link, async () => await ofetch(`${link}/about.json`, { headers: { 'User-Api-Key': key } }), config.cache.routeExpire, false);
+    const { about } = await cache.tryGet(`discourse:about:${sessionKey}:${link}`, async () => await ofetch(`${link}/about.json`, { headers: { 'User-Api-Key': key } }), config.cache.routeExpire, false);
     return {
         title: `${about.title} - Notifications`,
         description: about.description,

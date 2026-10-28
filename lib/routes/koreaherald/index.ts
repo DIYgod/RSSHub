@@ -1,10 +1,10 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/:category{.+}?',
@@ -45,8 +45,9 @@ async function handler(ctx) {
     const list = $('article.recent_news > ul.news_list > li')
         .toArray()
         .map((item) => new URL($(item).find('a').attr('href')!, baseUrl).href);
-    const items = await Promise.all(
-        list.map((url) =>
+    const items = await pMap(
+        list,
+        (url) =>
             cache.tryGet(url, async () => {
                 const response = await got(url);
                 const $ = load(response.data);
@@ -54,12 +55,13 @@ async function handler(ctx) {
                 return {
                     title: metadata.headline,
                     link: url,
-                    pubDate: timezone(parseDate(metadata.datePublished), 9),
+                    pubDate: metadata.datePublished ? parseDate(metadata.datePublished) : undefined,
+                    updated: metadata.dateModified ? parseDate(metadata.dateModified) : undefined,
                     author: metadata.author.name,
                     description: $('article.article-body').html(),
                 };
-            })
-        )
+            }),
+        { concurrency: 3 }
     );
     return {
         title: `The Korea Herald - ${title}`,

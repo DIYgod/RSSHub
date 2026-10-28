@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
@@ -34,17 +35,18 @@ async function handler() {
             };
         });
 
-    const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link, async () => {
+    const items = await pMap(
+        list,
+        async (item) => {
+            const detail = await cache.tryGet(item.link, async () => {
                 const response = await ofetch(item.link);
                 const $ = load(response);
 
-                item.description = $('#event_desc_page').html();
-
-                return item;
-            })
-        )
+                return { description: $('#event_desc_page').html() };
+            });
+            return { ...item, description: detail.description };
+        },
+        { concurrency: 3 }
     );
 
     return {

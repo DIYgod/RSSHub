@@ -2,9 +2,10 @@ import type { Config } from '@/config';
 import logger from '@/utils/logger';
 
 const defaultProtocol = 'http';
-const possibleProtocol = ['http', 'https', 'socks', 'socks4', 'socks4a', 'socks5', 'socks5h'];
+// SOCKS4 is left out because the undici dispatcher behind fetch only speaks SOCKS5
+const possibleProtocol = ['http', 'https', 'socks', 'socks5', 'socks5h'];
 
-const unifyProxy = (proxyUri: Config['proxyUri'] | string, proxyObj: Config['proxy']) => {
+const unifyProxy = (proxyUri: Config['proxyUri'], proxyObj: Config['proxy']) => {
     const [oriProxyUri, oriProxyObj] = [proxyUri, proxyObj];
     proxyObj = { ...proxyObj };
 
@@ -108,7 +109,5 @@ const unifyProxy = (proxyUri: Config['proxyUri'] | string, proxyObj: Config['pro
 
     return { proxyUri, proxyObj, proxyUrlHandler };
 };
-
-export const unifyProxies = (proxyUris: string[], proxyObj: Config['proxy']) => proxyUris.map((uri) => unifyProxy(uri, proxyObj)).filter((result) => result.proxyUri);
 
 export default unifyProxy;

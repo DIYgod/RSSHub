@@ -1,4 +1,6 @@
-import type { Route } from '@/types';
+import pMap from 'p-map';
+
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -38,21 +40,21 @@ async function handler(ctx) {
     const articles = data.articles;
     const label = data.label;
 
-    const list = articles.map((item) => ({
+    const list: Array<DataItem & { link: string; pubDate: Date }> = articles.map((item) => ({
         title: item.title,
         link: `https://www.dongqiudi.com/articles/${item.id}.html`,
         category: [item.category, ...(item.secondary_category ?? [])],
         pubDate: parseDate(item.show_time, 'X'),
     }));
-
-    const out = await Promise.all(
-        list.map((item) =>
+    const out = await pMap(
+        list,
+        (item) =>
             cache.tryGet(item.link, async () => {
                 const { data: response } = await got(item.link);
                 await processFeedType2(item, response);
                 return item;
-            })
-        )
+            }),
+        { concurrency: 4 }
     );
 
     return {

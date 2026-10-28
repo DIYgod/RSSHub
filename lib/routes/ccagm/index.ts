@@ -8,11 +8,12 @@ import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 import timezone from '@/utils/timezone';
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { category = 'association-news' } = ctx.req.param();
-    const limit = Number(ctx.req.query('limit') ?? '10');
+    const limit = getRouteLimit(ctx, 10);
 
     const baseUrl = 'http://www.ccagm.org.cn';
     const targetUrl = `${baseUrl}/${category}`;
@@ -64,7 +65,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                     pubDate: pubDateStr ? timezone(parseDate(pubDateStr), 8) : item.pubDate,
                     content: {
                         html: description,
-                        text: description,
+                        text: $$('div.newsview').text(),
                     },
                     updated: upDatedStr ? timezone(parseDate(upDatedStr), 8) : item.updated,
                     language,
@@ -83,7 +84,6 @@ export const handler = async (ctx: Context): Promise<Data> => {
         description: $('meta[name="description"]').attr('content'),
         link: targetUrl,
         item: items,
-        allowEmpty: true,
         image: $('a.logo img').attr('src'),
         author: $('meta[name="keywords"]').attr('content'),
         language,
@@ -178,57 +178,57 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['www.ccagm.org.cn/category?'],
-            target: '/:category',
+            source: ['www.ccagm.org.cn/'],
+            target: '/association-news',
         },
         {
             title: '协会动态',
-            source: ['www.ccagm.org.cn/association-news.html'],
+            source: ['www.ccagm.org.cn/association-news', 'www.ccagm.org.cn/association-news.html'],
             target: '/association-news',
         },
         {
             title: '会议活动',
-            source: ['www.ccagm.org.cn/xh-activity/activities-huiyi.html'],
+            source: ['www.ccagm.org.cn/xh-activity/activities-huiyi', 'www.ccagm.org.cn/xh-activity/activities-huiyi.html'],
             target: '/xh-activity/activities-huiyi',
         },
         {
             title: '调研与报告',
-            source: ['www.ccagm.org.cn/xh-activity/bg-yj.html'],
+            source: ['www.ccagm.org.cn/xh-activity/bg-yj', 'www.ccagm.org.cn/xh-activity/bg-yj.html'],
             target: '/xh-activity/bg-yj',
         },
         {
             title: '协会党建',
-            source: ['www.ccagm.org.cn/xie-hui-dang-jian.html'],
+            source: ['www.ccagm.org.cn/xie-hui-dang-jian', 'www.ccagm.org.cn/xie-hui-dang-jian.html'],
             target: '/xie-hui-dang-jian',
         },
         {
             title: '行业新闻',
-            source: ['www.ccagm.org.cn/members-info.html'],
+            source: ['www.ccagm.org.cn/members-info', 'www.ccagm.org.cn/members-info.html'],
             target: '/members-info',
         },
         {
             title: '行业研究',
-            source: ['www.ccagm.org.cn/bg-yj.html'],
+            source: ['www.ccagm.org.cn/bg-yj', 'www.ccagm.org.cn/bg-yj.html'],
             target: '/bg-yj',
         },
         {
             title: '行业标准',
-            source: ['www.ccagm.org.cn/industry-policy/industry-standard.html'],
+            source: ['www.ccagm.org.cn/industry-policy/industry-standard', 'www.ccagm.org.cn/industry-policy/industry-standard.html'],
             target: '/industry-policy/industry-standard',
         },
         {
             title: '法律法规',
-            source: ['www.ccagm.org.cn/industry-policy/policies-regulations.html'],
+            source: ['www.ccagm.org.cn/industry-policy/policies-regulations', 'www.ccagm.org.cn/industry-policy/policies-regulations.html'],
             target: '/industry-policy/policies-regulations',
         },
         {
             title: '资料下载',
-            source: ['www.ccagm.org.cn/download.html'],
+            source: ['www.ccagm.org.cn/download', 'www.ccagm.org.cn/download.html'],
             target: '/download',
         },
         {
             title: '工作总结与计划',
-            source: ['www.ccagm.org.cn/about-association/gong-zuo-zong-jie-yu-ji-hua.html'],
+            source: ['www.ccagm.org.cn/about-association/gong-zuo-zong-jie-yu-ji-hua', 'www.ccagm.org.cn/about-association/gong-zuo-zong-jie-yu-ji-hua.html'],
             target: '/about-association/gong-zuo-zong-jie-yu-ji-hua',
         },
     ],

@@ -1,8 +1,23 @@
-import type { Route } from '@/types';
-import got from '@/utils/got';
+import type { DataItem, Route } from '@/types';
+import { getRouteLimit } from '@/utils/route-limit';
 
-import { ProcessItems, rootUrl } from './utils';
+import { getChannel, processItems, rootUrl } from './utils';
 
+function getUniqueArticles(
+    items: Array<
+        DataItem & {
+            link: string;
+        }
+    >
+): DataItem[] {
+    const articles = new Map<string, DataItem>();
+    for (const item of items) {
+        if (!articles.has(item.link)) {
+            articles.set(item.link, item);
+        }
+    }
+    return articles.values().toArray();
+}
 export const route: Route = {
     path: '/video/:id?',
     categories: ['traditional-media'],
@@ -19,7 +34,7 @@ export const route: Route = {
     radar: [
         {
             source: ['yicai.com/video/:id', 'yicai.com/video'],
-            target: '/video/:id',
+            target: '/video/:id?',
         },
     ],
     name: '视听',
@@ -63,41 +78,16 @@ export const route: Route = {
 | yuandongli           | 中国源动力                   |
 | pioneerzone          | 直击引领区                   |`,
 };
-
 async function handler(ctx) {
     const id = ctx.req.param('id') ?? '';
-
-    let channel;
-    if (id) {
-        const navUrl = `${rootUrl}/api/ajax/getnavs`;
-
-        const response = await got({
-            method: 'get',
-            url: navUrl,
-        });
-
-        for (const c of response.data.header.video) {
-            if (!(c.EnglishName === id || c.ChannelID === id)) {
-                continue;
-            }
-
-            channel = {
-                id: c.ChannelID,
-                name: c.ChannelName,
-                slug: c.EnglishName,
-            };
-            break;
-        }
-    }
-
-    const currentUrl = `${rootUrl}/video${id ? `/${channel.slug}` : ''}`;
-    const apiUrl = `${rootUrl}/api/ajax/${id ? `getlistbycid?cid=${channel.id}` : 'getjuhelist?action=video'}&page=1&pagesize=${ctx.req.query('limit') ?? 30}`;
-
-    const items = await ProcessItems(apiUrl);
-
+    const limit = getRouteLimit(ctx, 30);
+    const channel = id ? await getChannel('video', id, limit) : undefined;
+    const currentUrl = `${rootUrl}/video${id ? `/${channel!.slug}` : ''}`;
+    const apiUrl = `${rootUrl}/api/ajax/${id ? `getlistbycid?cid=${channel!.id}` : 'getjuhelist?action=video'}&page=1&pagesize=${limit}`;
+    const items = await processItems(apiUrl, channel?.items);
     return {
         title: `第一财经 - ${channel?.name ?? '视听'}`,
         link: currentUrl,
-        item: items,
+        item: getUniqueArticles(items),
     };
 }

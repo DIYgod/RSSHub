@@ -27,9 +27,11 @@ export const route: Route = {
 };
 
 async function handler() {
-    const {
-        data: { data: categories },
-    } = await got('https://shortcuts.sspai.com/api/v1/user/workflow/all/get');
+    const response = await got('https://shortcuts.sspai.com/api/v1/user/workflow/all/get');
+    const categories = response.data?.data;
+    if (!Array.isArray(categories)) {
+        throw new TypeError('Shortcuts Gallery returned no workflow categories. Verify that its public workflow API is still available.');
+    }
 
     const items = categories.flatMap((category) =>
         (category.data || []).map((shortcut) => ({

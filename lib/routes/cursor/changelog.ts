@@ -8,6 +8,7 @@ import type { Data, DataItem, Language, Route } from '@/types';
 import { ViewType } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 import { isValidHost } from '@/utils/valid-host';
 
 export const handler = async (ctx: Context): Promise<Data> => {
@@ -16,7 +17,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
         throw new InvalidParameterError('Invalid locale');
     }
 
-    const limit = Number(ctx.req.query('limit') ?? '100');
+    const limit = getRouteLimit(ctx, 100);
 
     const baseUrl = 'https://cursor.com';
     const localeSegment = locale ? `/${locale}` : '';
@@ -48,7 +49,8 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 guid = `cursor-changelog-${versionLabel}`;
             }
 
-            const description = $el.find('.prose').html();
+            const article = $el.find('.prose');
+            const description = article.html();
 
             const processedItem: DataItem = {
                 title,
@@ -59,7 +61,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 id: guid,
                 content: {
                     html: description,
-                    text: description,
+                    text: article.text(),
                 },
                 language,
             };
@@ -72,7 +74,6 @@ export const handler = async (ctx: Context): Promise<Data> => {
         description: $('meta[name="description"]').attr('content') || $('meta[property="og:description"]').attr('content'),
         link: targetUrl,
         item: items,
-        allowEmpty: true,
         image: $('meta[property="og:image"]').attr('content'),
         language,
     };

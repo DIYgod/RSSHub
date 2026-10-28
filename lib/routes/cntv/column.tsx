@@ -1,8 +1,11 @@
 import { renderToString } from 'hono/jsx/dom/server';
 
+import NotFoundError from '@/errors/types/not-found';
 import type { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
+import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/:column',
@@ -40,13 +43,16 @@ export const route: Route = {
 
 async function handler(ctx) {
     const id = ctx.req.param('column');
-    const limit = Number.isNaN(Number.parseInt(ctx.req.query('limit'))) ? 25 : Number.parseInt(ctx.req.query('limit'));
+    const limit = getRouteLimit(ctx, 25);
 
     const response = await got({
         method: 'get',
         url: `https://api.cntv.cn/NewVideo/getVideoListByColumn?id=${id}&n=${limit}&sort=desc&p=1&mode=0&serviceId=tvcctv`,
     });
-    const data = response.data.data.list;
+    const data = response.data.data?.list;
+    if (!data?.length) {
+        throw new NotFoundError('No videos found for this CNTV column. Check the column ID on a programme episode page.');
+    }
     const name = data[0].title.match(/《(.*?)》/)[1];
 
     return {
@@ -66,7 +72,7 @@ async function handler(ctx) {
                     </p>
                 </>
             ),
-            pubDate: parseDate(item.time),
+            pubDate: timezone(parseDate(item.time, 'YYYY-MM-DD HH:mm:ss'), 8),
             link: item.url,
         })),
     };

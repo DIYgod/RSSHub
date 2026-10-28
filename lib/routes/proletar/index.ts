@@ -1,5 +1,6 @@
 import { load } from 'cheerio';
 import type { Context } from 'hono';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
@@ -39,19 +40,30 @@ async function handler(ctx: Context) {
             };
         });
 
-    const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link!, async () => {
+    const items = await pMap(
+        list,
+        async (item) => ({
+            ...item,
+            ...(await cache.tryGet(`proletar:article:v2:${item.link}`, async () => {
                 const detailResponse = await ofetch(item.link!);
                 const content = load(detailResponse);
 
-                item.author = content('.post-author').text();
-                item.description = content('#content').html()!;
-                item.pubDate = parseDate(detailResponse.match(/"datePublished":"(.*)","dateModified"/)[1]);
-
-                return item;
-            })
-        )
+                const metadata = content('script[type="application/ld+json"]')
+                    .toArray()
+                    .flatMap((script) => {
+                        const data = JSON.parse(content(script).text());
+                        return Array.isArray(data) ? data : (data['@graph'] ?? [data]);
+                    })
+                    .find((entry) => entry['@type'] === 'BlogPosting');
+                return {
+                    author: content('.post-author').text(),
+                    description: content('#content').html()!,
+                    pubDate: parseSourceDate(metadata?.datePublished),
+                    updated: parseSourceDate(metadata?.dateModified),
+                };
+            })),
+        }),
+        { concurrency: 3 }
     );
 
     return {
@@ -59,4 +71,12 @@ async function handler(ctx: Context) {
         link: currentUrl,
         item: items,
     };
+}
+
+function parseSourceDate(value?: string): Date | undefined {
+    if (typeof value !== 'string' || !value) {
+        return;
+    }
+    const date = parseDate(value);
+    return Number.isNaN(date.getTime()) ? undefined : date;
 }

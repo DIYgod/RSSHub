@@ -48,7 +48,8 @@ async function handler(ctx: Context) {
     if (!cfg) {
         throw new InvalidParameterError(`Bad type: ${type}`);
     }
-    const limit = Math.trunc(Number(ctx.req.query('limit') ?? '10'));
+    const requestedLimit = Number(ctx.req.query('limit'));
+    const limit = Number.isSafeInteger(requestedLimit) && requestedLimit > 0 ? requestedLimit : 10;
 
     const response = await ofetch(`https://act-api-takumi-static.mihoyo.com/content_v2_user/app/b9d5f96cd69047eb/getContentList?iPageSize=${limit}&iPage=1&sLangKey=zh-cn&iChanId=${cfg.id}&isPreview=0`);
 

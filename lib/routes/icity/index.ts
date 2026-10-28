@@ -25,11 +25,12 @@ async function handler(ctx: Context) {
         .toArray()
         .map((item) => {
             const $item = $(item);
+            const published = $item.find('time.hours').attr('datetime');
             return {
-                link: `https://icity.ly${$item.find('a.timeago').attr('href')}`,
-                title: $item.prev('li.day-cut').text(),
+                link: new URL($item.find('a.timeago').attr('href')!, 'https://icity.ly').href,
+                title: $item.prevAll('li.day-cut').first().text(),
                 description: $item.find('div.line').html(),
-                pubDate: parseDate($item.find('time.hours').attr('datetime')!),
+                pubDate: published ? parseDate(published) : undefined,
             };
         });
 

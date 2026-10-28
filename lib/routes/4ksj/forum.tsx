@@ -8,6 +8,7 @@ import cache from '@/utils/cache';
 import md5 from '@/utils/md5';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 import timezone from '@/utils/timezone';
 import { isValidHost } from '@/utils/valid-host';
 
@@ -85,7 +86,7 @@ async function handler(ctx) {
         throw new InvalidParameterError('Invalid id');
     }
 
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 25;
+    const limit = getRouteLimit(ctx, 25);
 
     const rootUrl = 'https://www.4ksj.com';
     const currentUrl = new URL(`${id}.html`, rootUrl).href;

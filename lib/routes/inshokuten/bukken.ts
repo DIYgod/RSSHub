@@ -80,13 +80,13 @@ const parseList = (html: string): DataItem[] => {
             const tags = [$el.find('.bukkenItem__newIcon').length > 0 ? 'NEW' : null, notOpenable ? '飲食店不可' : null].filter((t): t is string => t !== null);
 
             const rentJpy = parseJpy(clean(rentText));
-            const { tsubo, area_m2 } = parseArea(clean(areaText));
+            const { tsubo, area_m2: areaM2 } = parseArea(clean(areaText));
             const extra: ListingExtra = {
                 source: 'inshokuten',
                 listing_id: id,
                 rent_jpy: rentJpy,
                 tsubo,
-                area_m2,
+                area_m2: areaM2,
                 tsubo_unit_jpy: parseJpy(clean(tsuboUnitText)) ?? tsuboUnit(rentJpy, tsubo),
                 floor: normalizeFloor(clean(floorText)?.replaceAll('地下', 'B').replaceAll('地上', '') ?? null),
                 station: walkIndex > 1 ? stationParts.slice(1, walkIndex).join(' ') : null,
@@ -182,10 +182,8 @@ export const route: Route = {
         antiCrawler: false,
         supportRadar: true,
     },
-    radar: [
-        {
-            source: ['www.inshokuten.com/bukken/:region/bukkens/list', 'www.inshokuten.com/bukken/:region/bukkens/list/local-:area'],
-            target: (params) => `/bukken/${params.area ?? params.region}`,
-        },
-    ],
+    radar: AREAS.map((area) => ({
+        source: [`www.inshokuten.com/bukken/${area.path}`],
+        target: `/bukken/${area.slug}`,
+    })),
 };

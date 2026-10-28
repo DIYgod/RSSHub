@@ -1,5 +1,6 @@
 import { load } from 'cheerio';
 import type { Context } from 'hono';
+import pMap from 'p-map';
 
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Data, DataItem, Route } from '@/types';
@@ -63,8 +64,9 @@ async function handler(ctx: Context): Promise<Data> {
 
     const list: DataItem[] = lists.flat().toSorted((a, b) => b.pubDate.getTime() - a.pubDate.getTime());
 
-    const items = await Promise.all(
-        list.map((item) =>
+    const items = await pMap(
+        list,
+        (item) =>
             cache.tryGet(item.link!, async () => {
                 if (!item.link!.startsWith(host)) {
                     return item;
@@ -83,8 +85,8 @@ async function handler(ctx: Context): Promise<Data> {
                 }
 
                 return item;
-            })
-        )
+            }),
+        { concurrency: 3 }
     );
 
     return {

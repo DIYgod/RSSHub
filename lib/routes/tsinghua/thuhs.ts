@@ -1,5 +1,6 @@
 import { load } from 'cheerio';
 import type { Context } from 'hono';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
@@ -18,6 +19,16 @@ const categoryMap = new Map([
     ['xwdt', '新闻动态'],
 ]);
 
+async function fetchArticleDetails(link: string): Promise<Pick<DataItem, 'description'>> {
+    if (new URL(link).hostname !== 'www.qhfz.edu.cn') {
+        return {};
+    }
+    const response = await ofetch(link);
+    const $ = load(response);
+
+    return { description: $('.v_news_content').html() || '' };
+}
+
 export const route: Route = {
     path: '/thuhs/:category?',
     categories: ['university'],
@@ -33,7 +44,20 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['www.qhfz.edu.cn/:category.htm'],
+            source: ['www.qhfz.edu.cn/tzgg.htm'],
+            target: '/thuhs/tzgg',
+        },
+        {
+            source: ['www.qhfz.edu.cn/xstd.htm'],
+            target: '/thuhs/xstd',
+        },
+        {
+            source: ['www.qhfz.edu.cn/jsfc.htm'],
+            target: '/thuhs/jsfc',
+        },
+        {
+            source: ['www.qhfz.edu.cn/xwdt.htm'],
+            target: '/thuhs/xwdt',
         },
     ],
     name: '附属中学',
@@ -67,7 +91,7 @@ async function handler(ctx: Context) {
             const link = $a.attr('href');
 
             return {
-                title: title.trim(),
+                title,
                 link: link ? new URL(link, targetUrl).href : '',
                 pubDate: time ? timezone(parseDate(time, 'YYYY-MM-DD'), 8) : undefined,
             };
@@ -77,19 +101,13 @@ async function handler(ctx: Context) {
     const feedTitle = categoryMap.get(category) || '通知公告';
 
     /* Fetch full article content using the RSSHub cache mechanism */
-    const out = await Promise.all(
-        items.map((item) =>
-            cache.tryGet(item.link, async () => {
-                const hostname = new URL(item.link).hostname;
-                if (hostname !== 'www.qhfz.edu.cn') {
-                    return item;
-                }
-                const response = await ofetch(item.link);
-                const $ = load(response);
-                item.description = $('.v_news_content').html() || '';
-                return item;
-            })
-        )
+    const out = await pMap(
+        items,
+        async (item) => {
+            const details = await cache.tryGet(item.link, () => fetchArticleDetails(item.link));
+            return { ...item, description: details.description };
+        },
+        { concurrency: 3, stopOnError: false }
     );
 
     const icon = new URL('images/logo.png', host).href;

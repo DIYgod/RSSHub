@@ -3,6 +3,7 @@ import { load } from 'cheerio';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
 const baseUrl = 'https://www.cw.com.tw';
 
@@ -31,7 +32,7 @@ const parsePage = async (path, ctx) => {
     const response = await ofetch(pageUrl);
     const $ = load(response);
 
-    const list = parseList($, ctx.req.query('limit') ? Number(ctx.req.query('limit')) : pathMap[path].limit);
+    const list = parseList($, getRouteLimit(ctx, pathMap[path].limit));
     const items = await parseItems(list);
 
     return { $, items };
@@ -72,11 +73,11 @@ const parseItems = (list) =>
                 item.category = $('meta[name=keywords]').attr('content')!.split(',');
                 item.pubDate = parseDate(meta.datePublished);
                 item.author = Array.isArray(meta.author) ? meta.author : meta.author.name;
-                item.description = $('.article__head .container').html()! + $('.article__content').html()!;
+                item.description = [$('.article__head .preface').html(), $('.article__head .article__img').html(), $('.article__content').html()].filter(Boolean).join('');
 
                 return item;
             })
         )
     );
 
-export { baseUrl, parseItems, parseList, parsePage, pathMap };
+export { baseUrl, parsePage };

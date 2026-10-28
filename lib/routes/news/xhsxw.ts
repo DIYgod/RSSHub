@@ -1,9 +1,11 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
-import type { Language, Route } from '@/types';
+import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 import timezone from '@/utils/timezone';
 
 import { renderDescription } from './templates/description';
@@ -26,14 +28,25 @@ export const route: Route = {
             source: ['news.cn/xhsxw.htm'],
         },
     ],
-    name: '新华社新闻',
+    name: '新闻',
     maintainers: ['nczitzk'],
     handler,
     url: 'news.cn/xhsxw.htm',
 };
 
+type NewsItem = DataItem & { link: string; description: string };
+type Detail = { description?: string };
+
+function parsePublishedTime(value: string | number | null | undefined) {
+    if ([undefined, null, ''].includes(value as string | null | undefined)) {
+        return;
+    }
+    const date = parseDate(value!);
+    return Number.isNaN(date.getTime()) ? undefined : timezone(date, 8);
+}
+
 async function handler(ctx) {
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 100;
+    const limit = getRouteLimit(ctx, 100);
 
     const rootUrl = 'http://www.news.cn';
     const currentUrl = new URL('xhsxw.htm', rootUrl).href;
@@ -52,7 +65,7 @@ async function handler(ctx) {
         data: { datasource: response },
     } = await got(apiUrl);
 
-    let items = response.slice(0, limit).map((item) => ({
+    let items: NewsItem[] = response.slice(0, limit).map((item) => ({
         title: item.title,
         link: new URL(item.publishUrl, rootUrl).href,
         description: renderDescription({
@@ -66,27 +79,25 @@ async function handler(ctx) {
         author: item.author,
         category: item.keywords.split(/-|,/),
         guid: `news-${item.contentId}`,
-        pubDate: timezone(parseDate(item.publishTime), 8),
+        pubDate: parsePublishedTime(item.publishTime),
     }));
 
-    items = await Promise.all(
-        items.map((item) =>
-            cache.tryGet(item.link, async () => {
-                try {
+    items = await pMap(
+        items,
+        async (item) => {
+            let detail: Detail = {};
+            try {
+                detail = await cache.tryGet<Detail>(`news:detail:${item.link}`, async () => {
                     const { data: detailResponse } = await got(item.link);
-
                     const content = load(detailResponse);
-
-                    item.description += renderDescription({
-                        description: content('#detailContent').html() ?? undefined,
-                    });
-                } catch {
-                    // no-empty
-                }
-
-                return item;
-            })
-        )
+                    return { description: content('#detailContent').html() ?? undefined };
+                });
+            } catch {
+                // Preserve the source summary when the public detail is unavailable.
+            }
+            return { ...item, description: item.description + renderDescription(detail) };
+        },
+        { concurrency: 3 }
     );
 
     const title = $('title').text();

@@ -37,13 +37,8 @@ async function handler(ctx) {
                 author: $(item).find('div.usr-pic a').text(),
             };
             return info;
-        });
-
-    for (let i = list.length - 1; i >= 0; i--) {
-        if (list[i].author === '[已注销]') {
-            list.splice(i, 1);
-        }
-    }
+        })
+        .filter((info) => info.author !== '[已注销]');
 
     const out = await Promise.all(
         list.map(async (info) => {

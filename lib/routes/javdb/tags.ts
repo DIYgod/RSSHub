@@ -6,7 +6,7 @@ export const route: Route = {
     path: '/tags/:query?/:category?',
     categories: ['multimedia'],
     example: '/javdb/tags/c2=5&c10=1',
-    parameters: { query: '筛选，默认为 `c10=1`', category: '分类，见下表，默认为 `有碼`' },
+    parameters: { query: '筛选，默认为空', category: '分类，见下表，默认为 `有碼`' },
     features: {
         requireConfig: [
             {

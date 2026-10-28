@@ -1,5 +1,8 @@
+import pMap from 'p-map';
+
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
+import { getRouteLimit } from '@/utils/route-limit';
 
 import { apiRootUrl, parseArticle, parseResult, rootUrl } from './utils';
 
@@ -18,8 +21,12 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['utgd.net/category/s/:category', 'utgd.net/'],
+            source: ['utgd.net/category/s/:category'],
             target: '/category/:category',
+        },
+        {
+            source: ['utgd.net/'],
+            target: '/category',
         },
     ],
     name: '分类',
@@ -32,7 +39,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const category = ctx.req.param('category') ?? 'method';
-    const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 9;
+    const limit = getRouteLimit(ctx, 9);
 
     const apiUrl = `${apiRootUrl}/api/v2/categories`;
     const currentUrl = `${rootUrl}/category/s/${category}`;
@@ -49,7 +56,7 @@ async function handler(ctx) {
 
     const list = parseResult(response.results, limit);
 
-    const items = await Promise.all(list.map((item) => parseArticle(item)));
+    const items = await pMap(list, parseArticle, { concurrency: 3 });
 
     return {
         title: `UNTAG - ${categoryData.category_name}`,

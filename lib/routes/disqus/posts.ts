@@ -49,9 +49,10 @@ async function handler(ctx: Context) {
 
             return {
                 title: `${item.author.name}: ${item.raw_message}`,
-                description: `${item.author.name} 在《${thread.clean_title}》中发表评论: ${item.message}`,
-                pubDate: parseDate(item.createdAt),
-                link: `${thread.link}/#comment-${item.id}`,
+                description: item.message,
+                author: item.author.name,
+                pubDate: parseDate(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?$/.test(item.createdAt) ? `${item.createdAt}Z` : item.createdAt),
+                link: new URL(`#comment-${item.id}`, thread.link).href,
             };
         }),
     };

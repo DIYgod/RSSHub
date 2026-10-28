@@ -17,7 +17,7 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['ruancan.com/cat/:category', 'ruancan.com/'],
+            source: ['ruancan.com/p/category/:category', 'ruancan.com/cat/:category'],
             target: '/category/:category',
         },
     ],
@@ -29,7 +29,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const category = ctx.req.param('category');
-    const currentUrl = `/cat/${category}`;
+    const currentUrl = category ? `/p/category/${encodeURIComponent(category)}` : '';
 
     return await fetchFeed(ctx, currentUrl);
 }

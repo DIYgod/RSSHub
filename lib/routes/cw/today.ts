@@ -34,7 +34,7 @@ async function handler(ctx) {
         description: $('meta[name=description]').attr('content'),
         link: `${baseUrl}/today`,
         image: `${baseUrl}/assets_new/img/fbshare.jpg`,
-        language: $('meta[property="og:locale"]').attr('content') as Language,
+        language: $('meta[property="og:locale"]').attr('content')?.replaceAll('_', '-') as Language,
         item: items,
     };
 }

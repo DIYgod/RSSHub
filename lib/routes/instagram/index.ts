@@ -8,7 +8,7 @@ import type { Route } from '@/types';
 import cache from '@/utils/cache';
 
 import { renderItems } from './templates/render';
-import { baseUrl, checkLogin, getHighlightIds, getPage, getReelsMedia, getTagsFeed, getUserFeed, getUserInfo } from './web-api/utils';
+import { baseUrl, checkLogin, getHighlightIds, getPage, getReelsMedia, getSessionPage, getTagsFeed, getUserFeed, getUserInfo } from './web-api/utils';
 
 export const route: Route = {
     path: '/:category/:key',
@@ -64,14 +64,15 @@ async function handler(ctx) {
         cookieJar = CookieJar.fromJSON(cookieJar);
     }
 
-    if (cookie && !(await checkLogin(cookieJar))) {
+    let pagePromise: ReturnType<typeof getPage> | undefined;
+    const page = () => (pagePromise ??= getPage(key, cookieJar));
+    const bootstrapPage = category === 'tags' ? () => getSessionPage(`${baseUrl}/explore/search/keyword/?q=${encodeURIComponent(`#${key}`)}`, cookieJar) : page;
+    if (cookie && !(await checkLogin(cookieJar, bootstrapPage))) {
         throw new ConfigNotFoundError('Invalid cookie');
     }
 
     let feedTitle, feedLink, feedDescription, feedLogo;
     let items;
-    let pagePromise: ReturnType<typeof getPage> | undefined;
-    const page = () => (pagePromise ??= getPage(key, cookieJar));
     const getUser = async () => {
         const user = await getUserInfo(key, cookieJar, page);
         if (user.is_private && !user.friendship_status?.following) {
@@ -157,6 +158,5 @@ async function handler(ctx) {
         item: items,
         logo: feedLogo,
         image: feedLogo,
-        allowEmpty: true,
     };
 }

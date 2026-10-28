@@ -1,6 +1,7 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -43,16 +44,17 @@ async function handler() {
         },
     });
 
-    let items = response.data.value.map((item) => ({
+    let items: Array<DataItem & { link: string }> = response.data.value.map((item) => ({
         title: item.title,
-        author: item.authorName,
+        author: item.authorList?.map((author) => ({ name: author.name })) ?? item.authorName,
         link: `${rootUrl}${item.urlLink}`,
         category: [item.catagoryCode, item.hashTag1, item.hashTag2],
-        pubDate: parseDate(item.publicationDtsStr.replace(/On /, ''), 'MMMM D, YYYY'),
+        pubDate: item.publicationDtsStr ? parseDate(`${item.publicationDtsStr.replace(/On /, '')} GMT`) : undefined,
     }));
 
-    items = await Promise.all(
-        items.map((item) =>
+    items = await pMap(
+        items,
+        (item) =>
             cache.tryGet(item.link, async () => {
                 const detailResponse = await got({
                     method: 'get',
@@ -64,8 +66,8 @@ async function handler() {
                 item.description = content('.news-con').html();
 
                 return item;
-            })
-        )
+            }),
+        { concurrency: 3 }
     );
 
     return {

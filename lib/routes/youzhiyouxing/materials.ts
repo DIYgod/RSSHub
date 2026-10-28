@@ -1,10 +1,12 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 const columns: Array<{ value: string; label: string }> = [
     { value: '0', label: '全部' },
@@ -29,6 +31,32 @@ const columns: Array<{ value: string; label: string }> = [
 ];
 
 const columnNames: Record<string, string> = Object.fromEntries(columns.map(({ value, label }) => [value, label]));
+
+function resolveLink(href: string | undefined, baseUrl: string) {
+    if (!href) {
+        return;
+    }
+
+    try {
+        const url = new URL(href, baseUrl);
+        if (url.protocol === 'http:' || url.protocol === 'https:') {
+            return url.href;
+        }
+    } catch {
+        return;
+    }
+}
+
+function parsePublicationDate(value: string | undefined) {
+    if (!value?.trim()) {
+        return;
+    }
+
+    const date = parseDate(value.trim(), ['YYYY-MM-DD', 'YYYY年M月D日'], true);
+    if (Number.isFinite(date.getTime())) {
+        return timezone(date, 8);
+    }
+}
 
 export const route: Route = {
     path: '/materials/:id?',
@@ -76,22 +104,28 @@ async function handler(ctx) {
 
     const $ = load(response.data);
 
-    let items = $('a.article-card[id^="material-"]')
+    let items = $('.article-card[id^="material-"]')
         .toArray()
         .map((item): DataItem => {
             const $item = $(item);
 
             return {
                 title: $item.find('h3').text(),
-                link: `${rootUrl}${$item.attr('href')}`,
-                author: $item.find('.article-column').text(),
-                pubDate: parseDate($item.find('.article-meta time').text(), ['YYYY年M月D日', 'M月D日']),
+                link: resolveLink($item.find('a.article-link').attr('href') ?? $item.attr('href'), currentUrl),
+                category: $item
+                    .find('.article-column')
+                    .toArray()
+                    .map((column) => $(column).text().trim())
+                    .filter(Boolean),
+                pubDate: parsePublicationDate($item.find('.article-meta time').text()),
             };
-        });
+        })
+        .filter((item) => item.link);
 
-    items = await Promise.all(
-        items.map((item) =>
-            cache.tryGet(item.link!, async () => {
+    items = await pMap(
+        items,
+        async (item) => {
+            const detail = await cache.tryGet(`youzhiyouxing:article:${item.link}`, async () => {
                 const detailResponse = await got({
                     method: 'get',
                     url: item.link,
@@ -99,14 +133,21 @@ async function handler(ctx) {
 
                 const content = load(detailResponse.data);
 
-                item.description = content('#zx-material-marker-root')
-                    .html()!
-                    .replaceAll(/(<img.*?) src(=.*?>)/g, '$1 data$2')
-                    .replaceAll(/(<img.*?) data-src(=.*?>)/g, '$1 src$2');
+                content('#zx-material-marker-root img[data-src]').each((_, image) => {
+                    const $image = content(image);
+                    $image.attr('src', $image.attr('data-src')!).removeAttr('data-src');
+                });
 
-                return item;
-            })
-        )
+                return {
+                    description: content('#zx-material-marker-root').html()!,
+                    author: content('meta[property="article:author"]').attr('content') || undefined,
+                    pubDate: parsePublicationDate(content('meta[property="article:published_time"]').attr('content')),
+                };
+            });
+
+            return { ...item, ...detail, pubDate: detail.pubDate ?? item.pubDate };
+        },
+        { concurrency: 3, stopOnError: false }
     );
 
     const columnId = id === '' ? '0' : id;

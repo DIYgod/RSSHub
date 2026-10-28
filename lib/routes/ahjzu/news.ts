@@ -21,13 +21,13 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['news.ahjzu.edu.cn/20/list.htm'],
+            source: ['www.ahjzu.edu.cn/20/list.htm'],
         },
     ],
     name: '通知公告',
     maintainers: ['Yuk-0v0'],
     handler,
-    url: 'news.ahjzu.edu.cn/20/list.htm',
+    url: 'www.ahjzu.edu.cn/20/list.htm',
 };
 
 async function handler() {
@@ -41,19 +41,15 @@ async function handler() {
 
     const $ = load(response.data);
 
-    const list = $('#wp_news_w9')
-        .find('li')
+    const list = $('.news_list li')
         .toArray()
         .map((item): DataItem => {
             const $item = $(item);
-            const date = $item.find('.column-news-date').text();
-
-            // 置顶链接自带http前缀，其他不带，需要手动判断
-            const a = $item.find('a').attr('href');
-            const link = a!.startsWith('http') ? a : rootUrl + a;
+            const date = $item.find('.news_metat').text();
+            const a = $item.find('.news_title a');
             return {
-                title: $item.find('a').attr('title')!,
-                link,
+                title: a.attr('title') ?? a.text(),
+                link: new URL(a.attr('href')!, rootUrl).href,
                 pubDate: timezone(parseDate(date), 8),
             };
         });

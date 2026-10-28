@@ -38,12 +38,14 @@ async function handler(ctx) {
         .toArray()
         .map((element) => ({
             url: $(element).find('a').attr('href'),
-            title: $(element).find('.archive-module-text').first().text(),
+            title: $(element).find('.archive-module-text').not('.full').first().text(),
+            category: $(element).find('.module-label').first().text().trim() || undefined,
         }));
 
     const out = await utils.parseList(itemArray, ctx, utils.parseArticle);
 
     return {
+        language: 'en' as const,
         title: 'Penguin Random House Articles',
         link,
         description: 'In-depth interviews, author essays, fascinating essays. Go deeper into the books you love.',

@@ -120,9 +120,10 @@ const visitorId = () => {
         sum += Number.parseInt(ch, 16) % 10;
     }
     const head = String(sum).slice(0, 3).padStart(3, '0');
-    const parts = uuid.split('-');
-    parts.splice(1, 0, head + randomString(8 - head.length));
-    return parts.join('-');
+    return uuid
+        .split('-')
+        .toSpliced(1, 0, head + randomString(8 - head.length))
+        .join('-');
 };
 
 const isString = (value: unknown): value is string => typeof value === 'string';

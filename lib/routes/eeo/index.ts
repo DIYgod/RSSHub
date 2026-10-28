@@ -1,10 +1,12 @@
 import { load } from 'cheerio';
 import type { Context } from 'hono';
+import pMap from 'p-map';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 import timezone from '@/utils/timezone';
 
 export const route: Route = {
@@ -105,15 +107,18 @@ async function handler(ctx: Context) {
 
     const $ = load(response);
 
+    const limit = getRouteLimit(ctx, 15);
+    const detailLimit = ctx.req.query('sorted') === 'false' ? limit : Math.max(15, limit);
     const list = $('#lyp_article li div span a')
-        .slice(0, 15)
+        .slice(0, detailLimit)
         .toArray()
         .map((item) => ({
             link: $(item).attr('href')!,
         }));
 
-    const items = await Promise.all(
-        list.map((item) =>
+    const items = await pMap(
+        list,
+        (item) =>
             cache.tryGet(item.link, async () => {
                 const detailResponse = await ofetch(item.link, { responseType: 'text' });
                 const content = load(detailResponse);
@@ -122,12 +127,12 @@ async function handler(ctx: Context) {
 
                 return {
                     ...item,
-                    title: content('h1').text(),
+                    title: content('h1').first().text(),
                     description: content('.xd-nr').html(),
                     pubDate: timezone(parseDate(content('.thiszihao-box-add').nextUntil('.cls').find('span').eq(0).text()), 8),
                 };
-            })
-        )
+            }),
+        { concurrency: 3 }
     );
 
     return {

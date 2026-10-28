@@ -58,15 +58,15 @@ async function handler(ctx) {
             const title = $(item).find('a.cjcx_biaob').text();
             const href = $(item).find('a').attr('href');
 
-            let absolute_path;
+            let absolutePath;
             if (href!.search(String.raw`\./`) === 0) {
-                absolute_path = `${url}${href!.slice(2)}`;
+                absolutePath = `${url}${href!.slice(2)}`;
             } else if (href!.search(String.raw`\./`) === 1) {
-                absolute_path = `${baseUrl}${href!.slice(3)}`;
+                absolutePath = `${baseUrl}${href!.slice(3)}`;
             } else {
-                absolute_path = href;
+                absolutePath = href;
             }
-            const link = absolute_path;
+            const link = absolutePath;
             return {
                 title,
                 link,
@@ -79,19 +79,20 @@ async function handler(ctx) {
                 const detailResponse = await got(item.link);
                 const content = load(detailResponse.data);
                 try {
-                    item.pubDate = timezone(parseDate(content('meta[name=PubDate]').attr('content')!), 8);
-                    // 视频新闻规则不一样
+                    const pubDate = content('meta[name=PubDate]').attr('content');
+                    item.pubDate = pubDate ? timezone(parseDate(pubDate), 8) : undefined;
+                    // Video news uses a separate article layout.
                     if (cate === 'spxw') {
                         item.title = content('meta[name=ArticleTitle]').attr('content')!;
-                        // 取消视频自动播放
-                        const video_control = content('.neiright_JPZ_GK_CP video');
-                        video_control.removeAttr('autoplay');
-                        // 视频路径转绝对路径
-                        const video_source = content('.neiright_JPZ_GK_CP source');
-                        const video_href = video_source.attr('src');
-                        const _title_href = item.link.split('/').at(-1);
-                        const _video_src = item.link.replace(_title_href!, () => video_href!.slice(2));
-                        video_source.attr('src', _video_src);
+                        // Disable automatic video playback.
+                        const videoControl = content('.neiright_JPZ_GK_CP video');
+                        videoControl.removeAttr('autoplay');
+                        // Resolve the native video source URL.
+                        const videoSource = content('.neiright_JPZ_GK_CP source');
+                        const videoHref = videoSource.attr('src');
+                        if (videoHref) {
+                            videoSource.attr('src', new URL(videoHref, item.link).href);
+                        }
                     }
                     item.description = content('.neiright_JPZ_GK_CP').html();
                 } catch {

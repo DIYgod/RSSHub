@@ -1,7 +1,7 @@
 import type { Route } from '@/types';
-import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { getRouteLimit } from '@/utils/route-limit';
 
 import { rootUrl } from './utils';
 
@@ -20,7 +20,8 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['0daily.com/search/:keyword'],
+            source: ['www.odaily.news/:locale/search/:keyword', 'www.odaily.news/search/:keyword'],
+            target: '/search/news/:keyword',
         },
     ],
     name: '搜索快讯',
@@ -28,24 +29,29 @@ export const route: Route = {
     handler,
 };
 
+type Newsflash = {
+    id: number;
+    title: string;
+    description: string;
+    publishTimestamp: number;
+    tags: Array<{ name: string }>;
+};
+
 async function handler(ctx) {
-    const currentUrl = `${rootUrl}/api/pp/api/search/entity-search?per_page=${ctx.req.query('limit') ?? 25}&keyword=${ctx.req.param('keyword')}&entity_type=newsflash`;
-
-    const response = await got({
-        method: 'get',
-        url: currentUrl,
-    });
-
-    const items = response.data.data.items.map((item) => ({
+    const keywords = ctx.req.param('keyword');
+    const query = new URLSearchParams({ page: '1', size: String(getRouteLimit(ctx, 25)), keywords });
+    const response = await ofetch<{ data: { list: Newsflash[] } }>(`https://web-api.odaily.news/search/searchNewsflash?${query}`);
+    const items = response.data.list.map((item) => ({
         title: item.title,
-        link: item.news_url,
-        pubDate: timezone(parseDate(item.published_at), 8),
-        description: `<p>${item.description}</p>`,
+        link: `${rootUrl}/newsflash/${item.id}`,
+        pubDate: parseDate(item.publishTimestamp),
+        description: item.description,
+        category: item.tags.map((tag) => tag.name),
     }));
 
     return {
         title: '快讯 - Odaily星球日报',
-        link: `${rootUrl}/search/${ctx.req.param('keyword')}`,
+        link: `${rootUrl}/search?keywords=${encodeURIComponent(keywords)}`,
         item: items,
     };
 }

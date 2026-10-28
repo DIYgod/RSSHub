@@ -1,6 +1,7 @@
 import { load } from 'cheerio';
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
+import pMap from 'p-map';
 
 import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
@@ -12,6 +13,13 @@ const defaultMode = '1';
 const defaultGenre = 'amjq';
 const defaultMaker = 'arlq';
 const defaultLanguage = 'ja';
+const parseSourceDate = (value: string) => {
+    if (!value.trim()) {
+        return;
+    }
+    const date = parseDate(value);
+    return Number.isNaN(date.getTime()) ? undefined : date;
+};
 const renderDescription = ({ cover, info, comment, videos, thumbs }) =>
     renderToString(
         <>
@@ -34,7 +42,7 @@ const renderDescription = ({ cover, info, comment, videos, thumbs }) =>
             {thumbs?.length ? thumbs.map((thumb) => <img src={thumb} />) : null}
         </>
     );
-const ProcessItems = async (language, currentUrl) => {
+const processItems = async (language, currentUrl) => {
     const response = await got({
         method: 'get',
         url: currentUrl,
@@ -60,13 +68,14 @@ const ProcessItems = async (language, currentUrl) => {
 
                 title: $item.text(),
                 description: table.find('textarea').text(),
-                pubDate: parseDate(table.find('.date').text()),
+                pubDate: parseSourceDate(table.find('.date').text()),
             };
         });
 
-    items = await Promise.all(
-        items.map((item) =>
-            cache.tryGet(item.url!, async () => {
+    items = await pMap(
+        items,
+        async (item) => {
+            const detail = await cache.tryGet(`javlibrary:details:${item.url}`, async () => {
                 const detailResponse = await got({
                     method: 'get',
                     url: item.url,
@@ -81,39 +90,46 @@ const ProcessItems = async (language, currentUrl) => {
                     }
                 });
 
-                item.author = content('.star')
-                    .toArray()
-                    .map((star) => content(star).text())
-                    .filter((star) => star !== '')
-                    .join(',');
-                item.category = content('a[rel]')
-                    .toArray()
-                    .map((tag) => content(tag).text())
-                    .filter((tag) => tag !== '');
-                item.description = renderDescription({
+                return {
+                    author: content('.star')
+                        .toArray()
+                        .map((star) => content(star).text())
+                        .filter((star) => star !== '')
+                        .join(','),
+                    category: content('a[rel]')
+                        .toArray()
+                        .map((tag) => content(tag).text())
+                        .filter((tag) => tag !== ''),
                     cover: content('#video_jacket_img').attr('src'),
                     info: content('#video_info').html()!.replaceAll('span><span', 'span>,&nbsp;<span'),
-                    comment: item.description?.replaceAll('[img]', '<img src="')?.replaceAll('[/img]', '"/>'),
                     thumbs: content('.previewthumbs img')
                         .toArray()
                         .map((img) => content(img).attr('src')!.replaceAll('-', 'jp-')),
                     videos: [...new Set(detailResponse.data.match(/(http[^"[\]]+\.mp4)/g))],
-                });
-                item.pubDate = item.pubDate!.toString() === 'Invalid Date' ? parseDate(content('#video_date').find('.text').text()) : item.pubDate;
-
-                delete item.url;
-
-                return item;
-            })
-        )
+                    pubDate: parseSourceDate(content('#video_date').find('.text').text()),
+                };
+            });
+            const listItem: Omit<typeof item, 'url'> & { url?: string } = { ...item };
+            delete listItem.url;
+            return {
+                ...listItem,
+                author: detail.author,
+                category: detail.category,
+                description: renderDescription({
+                    ...detail,
+                    comment: item.description?.replaceAll('[img]', '<img src="')?.replaceAll('[/img]', '"/>'),
+                }),
+                pubDate: item.pubDate ?? detail.pubDate,
+            };
+        },
+        { concurrency: 3 }
     );
 
     return {
         title: $('title').text(),
         link: currentUrl,
         item: items,
-        allowEmpty: true,
     };
 };
 
-export { defaultGenre, defaultLanguage, defaultMaker, defaultMode, ProcessItems, rootUrl };
+export { defaultGenre, defaultLanguage, defaultMaker, defaultMode, processItems as ProcessItems, rootUrl };

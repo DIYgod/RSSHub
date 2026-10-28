@@ -6,6 +6,7 @@ import { Agent, buildConnector } from 'undici';
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 import { namespace } from './namespace';
 
@@ -81,7 +82,7 @@ export const route: Route = {
                         .trim()
                         .replaceAll(/[年月/.]/g, '-')
                         .replace('日', '');
-                    let endStr = times[1]
+                    let endStr = (times[1] ?? '')
                         .replaceAll(/（.*?）/g, '')
                         .trim()
                         .replaceAll(/[年月/.]/g, '-')
@@ -91,11 +92,13 @@ export const route: Route = {
                         endStr = `${startStr.split('-', 1)[0]}-${endStr}`;
                     }
 
-                    startDate = dayjs(startStr).format('YYYY-MM-DD');
-                    endDate = dayjs(endStr).format('YYYY-MM-DD');
+                    const start = dayjs(startStr);
+                    const end = dayjs(endStr);
+                    startDate = start.isValid() ? start.format('YYYY-MM-DD') : undefined;
+                    endDate = end.isValid() ? end.format('YYYY-MM-DD') : undefined;
                 }
 
-                const pubDate = startDate ? parseDate(startDate) : undefined;
+                const pubDate = startDate ? timezone(parseDate(startDate), 8) : undefined;
 
                 const description = renderToString(
                     <div>

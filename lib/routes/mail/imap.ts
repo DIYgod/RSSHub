@@ -1,8 +1,11 @@
+import type { FetchMessageObject } from 'imapflow';
 import { ImapFlow } from 'imapflow';
-import PostalMime from 'postal-mime';
+import type { Address, Email } from 'postal-mime';
+import PostalMime, { addressParser } from 'postal-mime';
 
 import { config } from '@/config';
 import ConfigNotFoundError from '@/errors/types/config-not-found';
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import logger from '@/utils/logger';
@@ -15,12 +18,24 @@ interface MailConfig {
     host?: string;
 }
 
+const deliveryHeaders = ['delivered-to', 'x-original-to', 'envelope-to'];
+
+function getAddresses(addresses: Address[]): string[] {
+    return addresses.flatMap((address) => (address.group ? getAddresses(address.group) : [address.address.toLowerCase()]));
+}
+
+function hasRecipient(parsed: Email, recipient: string): boolean {
+    const delivered = parsed.headers.filter((header) => deliveryHeaders.includes(header.key)).flatMap((header) => addressParser(header.value));
+    return getAddresses([...(parsed.to || []), ...(parsed.cc || []), ...(parsed.bcc || []), ...delivered]).includes(recipient);
+}
+
 export const route: Route = {
-    path: '/imap/:email/:folder{.+}?',
+    path: ['/imap/:email/subaddress/:subaddress/:folder{.+}?', '/imap/:email/:folder{.+}?'],
     categories: ['other'],
     example: '/mail/imap/rss@rsshub.app',
     parameters: {
         email: 'Email account',
+        subaddress: 'Optional plus-address tag. For user@example.com and newsletter, select mail addressed to user+newsletter@example.com.',
         folder: 'Inbox name, `INBOX` by default',
     },
     description: 'Only support IMAP protocol, email password and other settings refer to [Route-specific Configurations](https://docs.rsshub.app/deploy/config#route-specific-configurations)',
@@ -30,8 +45,13 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const { email, folder = 'INBOX' } = ctx.req.param();
-    const { limit = 10 } = ctx.req.query();
+    const { email, subaddress, folder = 'INBOX' } = ctx.req.param();
+    const limit = Number(ctx.req.query('limit')) || 10;
+    if (subaddress && !/^[\w.-]+$/.test(subaddress)) {
+        throw new InvalidParameterError('Subaddress must contain only letters, numbers, dots, underscores and hyphens.');
+    }
+    const at = email.lastIndexOf('@');
+    const recipient = subaddress ? `${email.slice(0, at)}+${subaddress}${email.slice(at)}`.toLowerCase() : undefined;
     const mailConfig: MailConfig = {
         username: email,
         port: 993,
@@ -65,63 +85,60 @@ async function handler(ctx) {
         throw new Error((error as { responseText: string }).responseText, { cause: error });
     }
 
-    /**
-    [
-        {
-          // https://imapflow.com/global.html#FetchMessageObject
-          seq: Number,
-          uid: Number,
-          envelope: {
-            // https://imapflow.com/global.html#MessageEnvelopeObject
-          },
-          id: 'md5-like-hash-string',
-          source: Buffer,
-        }
-      ]
-    */
-    const mails: any[] = [];
-    const lock = await client.getMailboxLock(folder);
+    const mails: FetchMessageObject[] = [];
+    let items;
     try {
-        const mailbox = client.mailbox;
-        if (!mailbox) {
-            throw new Error(`Failed to open mailbox ${folder}`);
-        }
-        const messages = client.fetch(`${Math.max(mailbox.exists - limit + 1, 1)}:*`, { envelope: true, source: true, uid: true });
-        for await (const message of messages) {
-            mails.push(message);
-        }
-    } finally {
-        lock.release();
-    }
-
-    const items = await Promise.all(
-        mails.map((item) =>
-            cache.tryGet(`mail:${email}:${item.envelope.messageId}`, async () => {
-                const parsed = await PostalMime.parse(item.source);
-
-                let description = parsed.html || parsed.text?.replaceAll('\n', '<br>');
-                if (parsed.attachments.length) {
-                    description += `<h3>Attachments (${parsed.attachments.length})</h3>`;
-                    for (const attachment of parsed.attachments) {
-                        description += `<p>${attachment.filename}</p>`;
+        const lock = await client.getMailboxLock(folder);
+        try {
+            const mailbox = client.mailbox;
+            if (!mailbox) {
+                throw new Error(`Failed to open mailbox ${folder}`);
+            }
+            if (mailbox.exists) {
+                const matching = recipient
+                    ? await client.search({ or: [{ to: recipient }, { cc: recipient }, { bcc: recipient }, ...deliveryHeaders.map((header) => ({ header: { [header]: recipient } }))] }, { uid: true })
+                    : undefined;
+                const range = recipient ? (matching || []).slice(-limit).join(',') : `${Math.max(mailbox.exists - limit + 1, 1)}:*`;
+                if (range) {
+                    const messages = client.fetch(range, { envelope: true, source: true, uid: true }, { uid: Boolean(recipient) });
+                    for await (const message of messages) {
+                        mails.push(message);
                     }
                 }
+            }
+        } finally {
+            lock.release();
+        }
 
-                return {
-                    title: item.envelope.subject,
-                    description,
-                    pubDate: parseDate(item.envelope.date),
-                    author: parsed.from!.name || parsed.from!.address,
-                    guid: `mail:${email}:${item.envelope.messageId}`,
-                };
-            })
-        )
-    );
-
-    await client.logout();
+        const parsedMails = await Promise.all(mails.map(async (item) => ({ item, parsed: await PostalMime.parse(item.source!) })));
+        items = await Promise.all(
+            parsedMails
+                .filter(({ parsed }) => !recipient || hasRecipient(parsed, recipient))
+                .map(({ item, parsed }) =>
+                    cache.tryGet(`mail:${email}:${folder}:${item.envelope?.messageId || item.uid}`, () => {
+                        let description = parsed.html || parsed.text?.replaceAll('\n', '<br>') || '';
+                        if (parsed.attachments.length) {
+                            description += `<h3>Attachments (${parsed.attachments.length})</h3>`;
+                            for (const attachment of parsed.attachments) {
+                                description += `<p>${attachment.filename}</p>`;
+                            }
+                        }
+                        return Promise.resolve({
+                            title: item.envelope?.subject,
+                            description,
+                            pubDate: item.envelope?.date ? parseDate(item.envelope.date) : undefined,
+                            author: parsed.from?.name || getAddresses(parsed.from ? [parsed.from] : [])[0],
+                            guid: `mail:${email}:${folder}:${item.envelope?.messageId || item.uid}`,
+                        });
+                    })
+                )
+        );
+    } finally {
+        await client.logout();
+    }
 
     return {
-        title: `${email}'s Inbox${folder === 'INBOX' ? '' : ` - ${folder}`}`,
+        title: `${recipient || email}'s Inbox${folder === 'INBOX' ? '' : ` - ${folder}`}`,
         link: `https://${email.split('@', 2)[1]}`,
         item: items,
         allowEmpty: true,

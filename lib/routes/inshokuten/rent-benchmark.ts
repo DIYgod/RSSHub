@@ -116,7 +116,7 @@ const toItem = (target: Target, kind: RentBenchmarkExtra['area_kind'], pref: str
         async (): Promise<DataItem> => {
             const extra = parseDetail(await ofetch(target.url), { area_kind: kind, area_name: target.name, pref });
             return {
-                title: `${extra.area_name} 賃料相場 ${extra.period ?? ''}`.trim(),
+                title: `${extra.area_name} 賃料相場 ${extra.period ?? ''}`,
                 link: `${target.url}#rate-total`,
                 guid: target.url,
                 description: describe(extra),

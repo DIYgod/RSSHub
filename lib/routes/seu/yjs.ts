@@ -1,8 +1,10 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
+import { parseDate } from '@/utils/parse-date';
 
 const url = 'https://seugs.seu.edu.cn/26671/list.htm';
 
@@ -35,25 +37,26 @@ async function handler() {
     const $ = load(response.data);
     const list = $('.news')
         .toArray()
-        .map((element): DataItem & { date: string } => {
+        .map((element): DataItem => {
             const info = {
                 title: $(element).find('span.news_title > a').attr('title')!,
                 link: `https://seugs.seu.edu.cn${$(element).find('span.news_title > a').attr('href')}`,
-                date: $(element).find('span.news_meta').text(),
+                pubDate: $(element).find('span.news_meta').text() ? parseDate(`${$(element).find('span.news_meta').text()}T00:00:00+08:00`) : undefined,
             };
             return info;
         });
 
-    const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link!, async () => {
+    const items = await pMap(
+        list,
+        async (item) => ({
+            ...item,
+            ...(await cache.tryGet(item.link!, async () => {
                 const response = await got(item.link);
                 const $ = load(response.data);
-                item.description = $('.wp_articlecontent').html();
-                item.pubDate = new Date(item.date).toUTCString();
-                return item;
-            })
-        )
+                return { description: $('.wp_articlecontent').html() };
+            })),
+        }),
+        { concurrency: 3 }
     );
 
     return {

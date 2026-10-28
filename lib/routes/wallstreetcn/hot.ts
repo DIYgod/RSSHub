@@ -1,4 +1,6 @@
-import type { Route } from '@/types';
+import pMap from 'p-map';
+
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -13,7 +15,7 @@ export const route: Route = {
         requirePuppeteer: false,
         antiCrawler: false,
         supportBT: false,
-        supportPodcast: false,
+        supportPodcast: true,
         supportScihub: false,
     },
     radar: [
@@ -26,6 +28,18 @@ export const route: Route = {
     handler,
     url: 'wallstreetcn.com/',
 };
+
+function parseSourceTime(value?: string | number | null) {
+    if ((typeof value !== 'number' && typeof value !== 'string') || (typeof value === 'string' && !value.trim())) {
+        return;
+    }
+    const seconds = Number(value);
+    if (!Number.isFinite(seconds)) {
+        return;
+    }
+    const date = parseDate(seconds * 1000);
+    return Number.isFinite(date.getTime()) ? date : undefined;
+}
 
 async function handler(ctx) {
     const period = ctx.req.param('period') ?? 'day';
@@ -42,34 +56,42 @@ async function handler(ctx) {
     let items = response.data.data[`${period}_items`].map((item) => ({
         guid: item.id,
         link: item.uri,
-        pubDate: parseDate(item.display_time * 1000),
+        pubDate: parseSourceTime(item.display_time),
     }));
 
-    items = await Promise.all(
-        items.map((item) =>
-            cache.tryGet(item.link, async () => {
-                const detailResponse = await got({
-                    method: 'get',
-                    url: `${apiRootUrl}/apiv1/content/articles/${item.guid}?extract=0`,
-                });
+    items = await pMap<DataItem, DataItem>(
+        items,
+        async (item) => {
+            const details = await cache.tryGet<Pick<DataItem, 'title' | 'author' | 'description' | 'category' | 'enclosure_type' | 'enclosure_url' | 'itunes_item_image' | 'itunes_duration'>>(
+                `wallstreetcn:hot:detail-with-author:${item.link}`,
+                async () => {
+                    const detailResponse = await got({
+                        method: 'get',
+                        url: `${apiRootUrl}/apiv1/content/articles/${item.guid}?extract=0`,
+                    });
 
-                const data = detailResponse.data.data;
+                    const data = detailResponse.data.data;
 
-                item.title = data.title || data.content_text;
-                item.author = data.source_name ?? data.author.display_name;
-                item.description = data.content + (data.content_more ?? '');
-                item.category = data.asset_tags?.map((t) => t.name) ?? [];
+                    const details: Pick<DataItem, 'title' | 'author' | 'description' | 'category' | 'enclosure_type' | 'enclosure_url' | 'itunes_item_image' | 'itunes_duration'> = {
+                        title: data.title || data.content_text,
+                        author: data.source_name || data.author?.display_name,
+                        description: data.content + (data.content_more ?? ''),
+                        category: data.asset_tags?.map((tag) => tag.name) ?? [],
+                    };
 
-                if (data.audio_uri) {
-                    item.enclosure_type = 'audio/mpeg';
-                    item.enclosure_url = data.audio_uri;
-                    item.itunes_item_image = data.image?.uri ?? '';
-                    item.itunes_duration = data.audio_info?.duration ?? '';
+                    if (data.audio_uri) {
+                        details.enclosure_type = 'audio/mpeg';
+                        details.enclosure_url = data.audio_uri;
+                        details.itunes_item_image = data.image?.uri ?? '';
+                        details.itunes_duration = data.audio_info?.duration ?? '';
+                    }
+
+                    return details;
                 }
-
-                return item;
-            })
-        )
+            );
+            return { ...item, ...details };
+        },
+        { concurrency: 3 }
     );
 
     return {

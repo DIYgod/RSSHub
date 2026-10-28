@@ -2,6 +2,7 @@ import type { Route } from '@/types';
 import { ViewType } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
 const platformIds = {
     osx: 'macOS',
@@ -79,7 +80,7 @@ async function handler(ctx) {
     }
     platform = undefined;
 
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 100;
+    const limit = getRouteLimit(ctx, 100);
 
     const rootUrl = 'https://apps.apple.com';
     const currentUrl = new URL(`${country}/app/${id}`, rootUrl).href;
@@ -142,19 +143,22 @@ async function handler(ctx) {
         }
     }
 
-    items = items.slice(0, limit).map((item) => {
-        const pid = item.platformId ?? platformId;
-        const p = platform ?? (Object.hasOwn(platformIds, pid) ? platformIds[pid] : pid);
+    items = items
+        .toSorted((a, b) => Number(parseDate(b.releaseTimestamp)) - Number(parseDate(a.releaseTimestamp)))
+        .slice(0, limit)
+        .map((item) => {
+            const pid = item.platformId ?? platformId;
+            const p = platform ?? (Object.hasOwn(platformIds, pid) ? platformIds[pid] : pid);
 
-        return {
-            title: `${appName} ${item.versionDisplay} for ${p}`,
-            link: currentUrl,
-            description: item.releaseNotes?.replaceAll('\n', '<br>'),
-            category: [p],
-            guid: `apple/apps/${country}/${id}/${pid}#${item.versionDisplay}`,
-            pubDate: parseDate(item.releaseTimestamp),
-        };
-    });
+            return {
+                title: `${appName} ${item.versionDisplay} for ${p}`,
+                link: currentUrl,
+                description: item.releaseNotes?.replaceAll('\n', '<br>'),
+                category: [p],
+                guid: `apple/apps/${country}/${id}/${pid}#${item.versionDisplay}`,
+                pubDate: parseDate(item.releaseTimestamp),
+            };
+        });
 
     return {
         item: items,

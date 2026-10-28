@@ -41,7 +41,7 @@ const handler = async (ctx) => {
         description: item.contentEncoded,
         link: item.url,
         author: item.artistName,
-        pubDate: parseDate(item.publishDate),
+        pubDate: item.publishDate ? parseDate(item.publishDate) : undefined,
         itunes_item_image: item.cover,
         enclosure_url: item.audioUrl,
         enclosure_type: item.audioType,

@@ -146,6 +146,7 @@ async function handler() {
 
             return {
                 title,
+                guid: row.id,
                 description, // the article content
                 pubDate: dateAdded, // Data publish date
                 link: source, // Laid off source link

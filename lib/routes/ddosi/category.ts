@@ -1,15 +1,13 @@
-import { load } from 'cheerio';
-
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
-import got from '@/utils/got';
-import { PRESETS } from '@/utils/header-generator';
-import { parseDate } from '@/utils/parse-date';
+
+import { getFirstPage } from './utils';
 
 export const route: Route = {
     path: '/category/:category?',
     categories: ['blog'],
     example: '/ddosi/category/黑客工具',
-    parameters: { category: 'N' },
+    parameters: { category: '分类名称，可在分类页面 URL 中找到，例如黑客工具' },
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -33,32 +31,10 @@ export const route: Route = {
 async function handler(ctx) {
     const url = 'https://www.ddosi.org/category';
     const category = ctx.req.param('category');
-    const response = await got({
-        method: 'get',
-        url: `${url}/${category}/`,
-        headers: {
-            Referer: url,
-        },
-        headerGeneratorOptions: PRESETS.MODERN_IOS,
-    });
-    const $ = load(response.data);
-    const list = $('main>article').toArray();
-
-    const items = list.map((i) => {
-        const item = $(i);
-
-        const href = item.find('a:first-child').attr('href');
-        const title = item.find('.entry-title a').text();
-        const description = item.find('.entry-content p').text();
-        const date = parseDate(item.find('.meta-date a time').attr('datetime')!);
-
-        return {
-            title,
-            description,
-            pubDate: date,
-            link: href,
-        };
-    });
+    if (!category) {
+        throw new InvalidParameterError('Specify a category name, for example /ddosi/category/黑客工具.');
+    }
+    const items = await getFirstPage(`${url}/${category}/`);
 
     return {
         title: `雨苁-${category}`,

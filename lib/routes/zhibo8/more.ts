@@ -1,6 +1,7 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -12,7 +13,6 @@ const categories = {
     dianjing: '电竞',
     other: '综合',
 };
-
 export const route: Route = {
     path: '/more/:category?',
     categories: ['bbs'],
@@ -39,30 +39,29 @@ export const route: Route = {
     maintainers: ['nczitzk'],
     handler,
 };
-
 async function handler(ctx) {
     const category = ctx.req.param('category') ?? 'nba';
-
+    const requestedLimit = ctx.req.query('limit');
+    const parsedLimit = requestedLimit && /^\d+$/.test(requestedLimit) ? Number(requestedLimit) : NaN;
+    const limit = Number.isSafeInteger(parsedLimit) && parsedLimit > 0 ? parsedLimit : 100;
     const rootUrl = 'https://news.zhibo8.cc';
-
-    let list;
+    let list: Array<
+        DataItem & {
+            link: string;
+        }
+    >;
     let currentUrl: string;
     let response;
-
-    if (category === 'nba' || category === 'zuqiu') {
+    if (isOneOf(category, ['nba', 'zuqiu'])) {
         currentUrl = `${rootUrl}/${category}/more.htm`;
-
         response = await got(currentUrl);
-
         const $ = load(response.data);
-
         list = $('ul.articleList li')
-            .slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 100)
+            .slice(0, limit)
             .toArray()
             .map((item) => {
                 const $item = $(item);
                 const a = $item.find('a');
-
                 return {
                     title: a.text(),
                     link: `https:${a.attr('href')}`,
@@ -73,31 +72,33 @@ async function handler(ctx) {
     } else {
         currentUrl = `${rootUrl}/${category}`;
         const apiUrl = `https://api.qiumibao.com/application/app/index.php?_url=/news/${category}List`;
-
         response = await got(apiUrl);
-
         list = response.data.data.list.map((item) => ({
             title: item.title,
             link: `https:${item.url}`,
             pubDate: timezone(parseDate(item.createtime), 8),
         }));
     }
-
-    const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link, async () => {
+    const items = await pMap(
+        list,
+        async (item) => {
+            const detail = await cache.tryGet(`${item.link}:description`, async () => {
                 const res = await got(item.link);
                 const content = load(res.data);
-
-                item.description = content('div.content').html();
-                return item;
-            })
-        )
+                return { description: content('div.content').html() ?? undefined };
+            });
+            return { ...item, ...detail };
+        },
+        { concurrency: 3 }
     );
-
     return {
         title: `${categories[category]} - 直播吧`,
         link: currentUrl,
         item: items,
     };
+}
+
+function isOneOf<const T>(value: unknown, values: readonly T[]): value is T {
+    const candidates: readonly unknown[] = values;
+    return candidates.includes(value);
 }

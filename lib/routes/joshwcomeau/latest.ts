@@ -33,8 +33,28 @@ export const route: Route = {
             target: '/latest',
         },
         {
-            source: ['joshwcomeau.com/:category'],
-            target: '/latest/:category',
+            source: ['joshwcomeau.com/css'],
+            target: '/latest/css',
+        },
+        {
+            source: ['joshwcomeau.com/react'],
+            target: '/latest/react',
+        },
+        {
+            source: ['joshwcomeau.com/animation'],
+            target: '/latest/animation',
+        },
+        {
+            source: ['joshwcomeau.com/javascript'],
+            target: '/latest/javascript',
+        },
+        {
+            source: ['joshwcomeau.com/career'],
+            target: '/latest/career',
+        },
+        {
+            source: ['joshwcomeau.com/blog'],
+            target: '/latest/blog',
         },
     ],
     name: 'Articles and Tutorials',

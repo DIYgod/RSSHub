@@ -5,6 +5,7 @@ import type { Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 import { isValidHost } from '@/utils/valid-host';
 
 import { renderDescription } from './templates/description';
@@ -30,13 +31,18 @@ export const route: Route = {
 | portraits    | characters |`,
 };
 
+const parseYear = (value: string) => {
+    const date = /^\d{4}$/.test(value) ? parseDate(`${value}-01-01`, 'YYYY-MM-DD', true) : undefined;
+    return date && Number.isFinite(date.getTime()) ? new Date(Date.UTC(date.getFullYear(), 0, 1)) : undefined;
+};
+
 async function handler(ctx) {
     const { category = 'portraits' } = ctx.req.param();
     if (!isValidHost(category)) {
         throw new InvalidParameterError('Invalid category');
     }
 
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 30;
+    const limit = getRouteLimit(ctx, 30);
 
     const author = 'Ian Spriggs';
     const rootUrl = 'https://ianspriggs.com';
@@ -68,7 +74,7 @@ async function handler(ctx) {
                         : undefined,
                 }),
                 author,
-                pubDate: parseDate($item.find('div.work-info p').text(), 'YYYY'),
+                pubDate: parseYear($item.find('div.work-info p').text()),
                 enclosure_url: image.prop('src'),
                 enclosure_type: image.prop('src') ? 'image/jpeg' : undefined,
             };
@@ -97,7 +103,7 @@ async function handler(ctx) {
                     images,
                     description: content('div.nectar-fancy-ul').html() ?? undefined,
                 });
-                item.pubDate = parseDate(content('span.subheader').text(), 'YYYY');
+                item.pubDate = parseYear(content('span.subheader').text());
 
                 return item;
             })

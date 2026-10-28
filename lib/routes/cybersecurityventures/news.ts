@@ -6,6 +6,7 @@ import type { Data, DataItem, Route } from '@/types';
 import { ViewType } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
 import type { RawRecord } from './types';
 
@@ -81,7 +82,7 @@ async function handler(ctx: Context): Promise<Data> {
     const rootUrl = 'https://cybersecurityventures.com/';
     const apiUrl = 'https://us-east-1-renderer-read.knack.com/v1';
     const category = ctx.req.param('category') ?? 'today';
-    const limit = ctx.req.query('limit') ?? 20;
+    const limit = getRouteLimit(ctx, 20);
 
     if (!isCategory(category)) {
         throw new InvalidParameterError('Invalid category');
@@ -100,7 +101,7 @@ async function handler(ctx: Context): Promise<Data> {
 
     return {
         title: `${label} - Cybercrime Magazine`,
-        link: `${rootUrl}/${category}`,
+        link: new URL(category, rootUrl).href,
         item: data.records.map((item): DataItem => {
             const $ = load(item.field_3, null, false);
             const link = $('a').attr('href');

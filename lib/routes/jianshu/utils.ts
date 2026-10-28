@@ -1,15 +1,25 @@
 import { load } from 'cheerio';
+import type { AnyNode } from 'domhandler';
+import pMap from 'p-map';
 
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+
+const parseArticleDate = (value: string | undefined) => {
+    if (!value) {
+        return;
+    }
+    const date = parseDate(/(?:Z|[+-]\d{2}:?\d{2})$/i.test(value) ? value : `${value}+08:00`);
+    return Number.isNaN(date.getTime()) ? undefined : date;
+};
 
 // 加载文章页
 const loadContent = async (link) => {
     const response = await got.get(link);
     const $ = load(response.data);
-    // 解析日期
-    const pubDate = timezone(parseDate($('time').attr('datetime')!), 8);
+    // The visible time is the modification date, not the publication date.
+    const pubDate = parseArticleDate($('meta[property="bytedance:published_time"]').attr('content'));
+    const updated = parseArticleDate($('meta[property="bytedance:updated_time"]').attr('content'));
     // 去除样式
     $('.image-container, .image-container-fill').removeAttr('style');
     // 处理视频
@@ -26,32 +36,30 @@ const loadContent = async (link) => {
     // 提取内容
     const description = $('article').html();
 
-    return { description, pubDate };
+    return { description, pubDate, updated };
 };
 
-const ProcessFeed = (list, caches) => {
+const processFeed = (list: AnyNode[], caches) => {
     const host = 'https://www.jianshu.com';
 
-    return Promise.all(
-        list.map((item) => {
+    return pMap(
+        list,
+        async (item) => {
             const $ = load(item);
             const $title = $('.title');
             // 还原相对链接为绝对链接
             const itemUrl = new URL($title.attr('href')!, host).href;
-            // 使用tryGet方法从缓存获取内容。
-            // 当缓存中无法获取到链接内容的时候，则使用load方法加载文章内容
-            return caches.tryGet(itemUrl, async () => {
-                const other = await loadContent(itemUrl);
-                // 合并解析后的结果集作为该篇文章最终的输出结果
-                return {
-                    title: $title.text(),
-                    link: itemUrl,
-                    author: $('.nickname').text(),
-                    ...other,
-                };
-            });
-        })
+            // Cache article content separately from the current list metadata.
+            const other = await caches.tryGet(itemUrl, () => loadContent(itemUrl));
+            return {
+                ...other,
+                title: $title.text(),
+                link: itemUrl,
+                author: $('.nickname').text(),
+            };
+        },
+        { concurrency: 3 }
     );
 };
 
-export default { ProcessFeed };
+export default { ProcessFeed: processFeed };

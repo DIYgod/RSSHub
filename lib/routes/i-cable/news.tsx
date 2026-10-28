@@ -7,6 +7,7 @@ import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
+import { getRouteLimit } from '@/utils/route-limit';
 
 export const route: Route = {
     path: '/news/:category?',
@@ -42,7 +43,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const category = ctx.req.param('category') ?? '新聞資訊';
-    const limit = ctx.req.query('limit') ?? 20;
+    const limit = getRouteLimit(ctx, 20);
     const root = 'https://www.i-cable.com/wp-json/wp/v2';
 
     const response = await cache.tryGet(`${root}/categories?slug=${category}`, async () => await got(`${root}/categories?slug=${category}`), config.cache.routeExpire, false);

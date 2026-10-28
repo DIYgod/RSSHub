@@ -1,10 +1,22 @@
 import { load } from 'cheerio';
+import { getMimeType } from 'hono/utils/mime';
+import pMap from 'p-map';
 
 import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 import timezone from '@/utils/timezone';
+
+const documentMimeTypes = {
+    doc: 'application/msword',
+    docx: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+    xls: 'application/vnd.ms-excel',
+    xlsx: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+    ppt: 'application/vnd.ms-powerpoint',
+    pptx: 'application/vnd.openxmlformats-officedocument.presentationml.presentation',
+};
 
 export const route: Route = {
     path: '/:path{.+}?',
@@ -30,7 +42,8 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { path = 'bshff/ylqxbzhgl/qxggtzh' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 30;
+    const limit = getRouteLimit(ctx, 30);
+    const candidateLimit = ctx.req.query('sorted') === 'false' ? limit : Math.max(30, limit);
 
     const rootUrl = 'https://www.nifdc.org.cn';
     const currentUrl = new URL(`nifdc/${path}/`, rootUrl).href;
@@ -40,53 +53,54 @@ async function handler(ctx) {
     const $ = load(response);
 
     let items = $('div.list ul li')
-        .slice(0, limit)
+        .slice(0, candidateLimit)
         .toArray()
         .map((item): DataItem => {
             const $item = $(item);
 
             const a = $item.find('a');
             const link = a.prop('href');
+            const publishedDate = $item.find('span').text().replaceAll(/\(|\)/g, '');
 
             return {
                 title: a.prop('title') || a.text(),
                 link: link!.startsWith('http') ? link : new URL(link!, currentUrl).href,
-                pubDate: parseDate($item.find('span').text().replaceAll(/\(|\)/g, '')),
+                pubDate: publishedDate ? timezone(parseDate(publishedDate), 8) : undefined,
             };
         });
 
-    items = await Promise.all(
-        items.map((item) =>
+    items = await pMap(
+        items,
+        (item) =>
             cache.tryGet(item.link!, async () => {
-                try {
-                    const { data: detailResponse } = await got(item.link);
+                const { data: detailResponse } = await got(item.link);
 
-                    const content = load(detailResponse);
+                const content = load(detailResponse);
 
-                    item.title = content('.title').text();
-                    item.description = content('div.text').append(content('div.fujian')).html();
-                    item.author = content('meta[name="ContentSource"]').prop('content');
-                    item.category = [
-                        ...new Set([content('meta[name="ColumnName"]').prop('content'), content('meta[name="ColumnType"]').prop('content'), ...(content('meta[name="ColumnKeywords"]').prop('content').split(/,|;/) ?? [])]),
-                    ].filter(Boolean);
-                    item.pubDate = timezone(parseDate(content('meta[name="PubDate"]').prop('content')), 8);
-                    item.enclosure_url = content('a.fujianClass').first().prop('href');
+                item.title = content('.title').text() || item.title;
+                item.description = content('div.text').append(content('div.fujian')).html();
+                item.author = content('meta[name="ContentSource"]').prop('content');
+                item.category = [
+                    ...new Set([content('meta[name="ColumnName"]').prop('content'), content('meta[name="ColumnType"]').prop('content'), ...(content('meta[name="ColumnKeywords"]').prop('content')?.split(/,|;/) ?? [])]),
+                ].filter(Boolean);
+                const publishedDate = content('meta[name="PubDate"]').prop('content');
+                item.pubDate = publishedDate ? timezone(parseDate(publishedDate), 8) : item.pubDate;
+                item.enclosure_url = content('a.fujianClass').first().prop('href');
 
-                    if (item.enclosure_url) {
-                        item.enclosure_url = new URL(item.enclosure_url, rootUrl).href;
-                        item.enclosure_type = `application/${item.enclosure_url.split(/\./).pop()}`;
-                    }
-                } catch {
-                    // no-empty
+                if (item.enclosure_url) {
+                    const attachmentUrl = new URL(item.enclosure_url, item.link);
+                    item.enclosure_url = attachmentUrl.href;
+                    item.enclosure_type = (getMimeType(attachmentUrl.pathname) ?? getMimeType(attachmentUrl.pathname, documentMimeTypes))?.split(';', 1)[0];
                 }
-
                 return item;
-            })
-        )
+            }),
+        { concurrency: 3 }
     );
 
-    const image = new URL($('div.logo img').prop('src')!, currentUrl).href;
-    const icon = new URL($('link[rel="shortcut icon"]').prop('href')!, currentUrl).href;
+    const imageSrc = $('div.logo img').prop('src');
+    const iconHref = $('link[rel="shortcut icon"]').prop('href');
+    const image = imageSrc ? new URL(imageSrc, currentUrl).href : undefined;
+    const icon = iconHref ? new URL(iconHref, currentUrl).href : undefined;
 
     return {
         item: items,

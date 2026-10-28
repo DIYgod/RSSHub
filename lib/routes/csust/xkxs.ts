@@ -27,7 +27,8 @@ async function handler(): Promise<Data> {
             };
         });
 
-    const enrichedItems = await Promise.all(items.map((item) => cache.tryGet(item.link, () => getNoticeContent(item))));
+    const articles = items;
+    const enrichedItems = await Promise.all(articles.map((item) => cache.tryGet(item.link, () => getNoticeContent(item))));
 
     return {
         title: '长沙理工大学 - 学科学术',

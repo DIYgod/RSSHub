@@ -45,7 +45,7 @@ async function handler() {
             }
 
             // Get date from time element
-            const $time = $article.find('time[itemprop="datePublished"]');
+            const $time = $article.find('time[itemprop="datePublished"], time.js-localdate').first();
             const dateText = $time.attr('datetime') || '';
 
             // Extract author from the time element text
@@ -71,6 +71,5 @@ async function handler() {
         link: url,
         description: 'Latest weather news and articles from meteoblue',
         item: articles,
-        allowEmpty: true,
     };
 }

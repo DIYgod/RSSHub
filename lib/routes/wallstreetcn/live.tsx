@@ -42,6 +42,23 @@ export const route: Route = {
 | global | a-stock | us-stock | hk-stock | forex | commodity | financing |`,
 };
 
+function parseSourceTime(value?: string | number | null) {
+    if ((typeof value !== 'number' && typeof value !== 'string') || (typeof value === 'string' && !value.trim())) {
+        return;
+    }
+    const seconds = Number(value);
+    if (!Number.isFinite(seconds)) {
+        return;
+    }
+    const date = parseDate(seconds * 1000);
+    return Number.isFinite(date.getTime()) ? date : undefined;
+}
+
+function parseLimit(value: string | undefined, defaultLimit: number) {
+    const limit = Number(value);
+    return Number.isFinite(limit) && limit >= 1 ? Math.floor(limit) : defaultLimit;
+}
+
 async function handler(ctx) {
     const category = ctx.req.param('category') ?? 'global';
     const score = ctx.req.param('score') ?? 1;
@@ -49,7 +66,7 @@ async function handler(ctx) {
     const rootUrl = 'https://wallstreetcn.com';
     const apiRootUrl = 'https://api-one.wallstcn.com';
     const currentUrl = `${rootUrl}/live/${category}`;
-    const apiUrl = `${apiRootUrl}/apiv1/content/lives?channel=${category}-channel&limit=${ctx.req.query('limit') ?? 100}`;
+    const apiUrl = `${apiRootUrl}/apiv1/content/lives?channel=${category}-channel&limit=${parseLimit(ctx.req.query('limit'), 100)}`;
 
     const response = await got({
         method: 'get',
@@ -61,7 +78,7 @@ async function handler(ctx) {
         .map((item) => ({
             link: item.uri,
             title: item.title || item.content_text,
-            pubDate: parseDate(item.display_time * 1000),
+            pubDate: parseSourceTime(item.display_time),
             author: item.author?.display_name ?? '',
             description: renderToString(
                 <>

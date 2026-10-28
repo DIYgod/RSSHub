@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
@@ -69,7 +70,8 @@ export const route: Route = {
             .map((el) => {
                 const $el = $(el);
                 const $a = $el.find('.listTxt h5 a');
-                const link = $a.attr('href') ?? '';
+                const href = $a.attr('href');
+                const link = href ? new URL(href, listUrl).href : undefined;
                 const title = $a.attr('title') || $a.text();
 
                 const pubDateRaw = $el.find('.listTxt .prompt > i').text().trim();
@@ -90,8 +92,9 @@ export const route: Route = {
             })
             .filter((item) => item.title && item.link);
 
-        const items = await Promise.all(
-            list.map((item) =>
+        const items = await pMap(
+            list,
+            (item) =>
                 cache.tryGet(item.link!, async () => {
                     const detail = await ofetch(item.link!);
                     const $d = load(detail);
@@ -104,8 +107,8 @@ export const route: Route = {
                     }
 
                     return item;
-                })
-            )
+                }),
+            { concurrency: 3 }
         );
 
         return {

@@ -9,6 +9,7 @@ import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 import { isValidHost } from '@/utils/valid-host';
 
 import { renderDescription } from './templates/description';
@@ -19,7 +20,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
         throw new InvalidParameterError('Invalid category');
     }
 
-    const limit = Number(ctx.req.query('limit') ?? '7');
+    const limit = getRouteLimit(ctx, 7);
 
     const baseUrl = 'http://www.ccg.org.cn';
     const targetUrl: string = new URL(category, baseUrl).href;

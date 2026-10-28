@@ -1,5 +1,6 @@
 import { load } from 'cheerio';
 
+import { fetchItems } from '@/routes/ecnu/utils';
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
@@ -30,24 +31,22 @@ export const route: Route = {
                 link: new URL($(el).find('a').attr('href')!, baseUrl).href,
                 title: $(el).find('a').text(),
             }));
-        const items = await Promise.all(
-            links.map((item) =>
-                cache.tryGet(item.link, async () => {
-                    const { data } = await got(item.link);
-                    const $ = load(data);
-                    const $read = $('div.wp_articlecontent');
-                    $read.find('img[src], a[href]').each((i, el) => {
-                        const $el = $(el);
-                        const attr = el.tagName === 'img' ? 'src' : 'href';
-                        const val = $el.attr(attr);
-                        if (val) {
-                            $el.attr(attr, new URL(val, baseUrl).href);
-                        }
-                    });
-                    item.description = $read.html()?.trim();
-                    return item;
-                })
-            )
+        const items = await fetchItems(links, (item) =>
+            cache.tryGet(item.link, async () => {
+                const { data } = await got(item.link);
+                const $ = load(data);
+                const $read = $('div.wp_articlecontent');
+                $read.find('img[src], a[href]').each((i, el) => {
+                    const $el = $(el);
+                    const attr = el.tagName === 'img' ? 'src' : 'href';
+                    const val = $el.attr(attr);
+                    if (val) {
+                        $el.attr(attr, new URL(val, baseUrl).href);
+                    }
+                });
+                item.description = $read.html()?.trim();
+                return item;
+            })
         );
 
         return {

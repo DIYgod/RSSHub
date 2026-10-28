@@ -30,7 +30,7 @@ async function handler(ctx) {
 
     const items = item.map((i) => ({
         title: i.title!,
-        pubDate: parseDate(i.isoDate!),
+        pubDate: i.isoDate ? parseDate(i.isoDate) : undefined,
         link: i.link,
         description: i['content:encoded'] || i.content,
     }));
@@ -39,7 +39,7 @@ async function handler(ctx) {
         title: title!,
         link,
         description,
-        image: image!.url,
+        image: image?.url,
         item: items,
     };
 }

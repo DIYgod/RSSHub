@@ -1,5 +1,6 @@
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
+import pMap from 'p-map';
 
 import type { Route } from '@/types';
 import { ViewType } from '@/types';
@@ -62,47 +63,60 @@ export const route: Route = {
     handler,
 };
 
+type NewsOutline = {
+    id: string;
+    title: string;
+    description: string;
+    page_url: string;
+    public_at: string;
+    updated_at: string;
+    categories: { name: string };
+};
+
 async function handler(ctx) {
     const { lang = 'en' } = ctx.req.param();
-    const data = await ofetch(`${apiUrl}/nwapi/rdnewsweb/v7b/${lang}/outline/list.json`);
+    const data = await ofetch<{ data: NewsOutline[] }>(`${apiUrl}/nwapi/rdnewsweb/v7b/${lang}/outline/list.json`);
     const meta = await ofetch(`${baseUrl}/nhkworld/common/assets/news/config/${lang}.json`);
 
-    let items = data.data.map((item) => ({
+    const list = data.data.map((item) => ({
         title: item.title,
         description: item.description,
         link: `${baseUrl}${item.page_url}`,
-        pubDate: parseDate(item.public_at, 'x'),
-        updated: parseDate(item.updated_at, 'x'),
+        pubDate: item.public_at ? parseDate(item.public_at, 'x') : undefined,
+        updated: item.updated_at ? parseDate(item.updated_at, 'x') : undefined,
         category: item.categories.name,
         id: item.id,
     }));
 
-    items = await Promise.all(
-        items.map((item) =>
-            cache.tryGet(item.link, async () => {
-                const { data } = await ofetch(`${apiUrl}/nwapi/rdnewsweb/v6b/${lang}/detail/${item.id}.json`);
+    const items = await pMap(
+        list,
+        async ({ id, ...item }) => ({
+            ...item,
+            ...(await cache.tryGet(`nhk:news:details:v3:${item.link}`, async () => {
+                const { data } = await ofetch(`${apiUrl}/nwapi/rdnewsweb/v6b/${lang}/detail/${id}.json`);
                 const img = data.thumbnails;
                 const imageSrc = img?.large || img?.middle || img?.small || img?.min;
                 const description = data.detail.replaceAll('\n', '<br>');
-                item.description = renderToString(
-                    <>
-                        {imageSrc ? (
-                            <>
-                                <img src={imageSrc} alt={img?.alt} />
-                                <br />
-                            </>
-                        ) : null}
-                        {description ? raw(description) : null}
-                    </>
-                );
-                delete item.id;
-                return item;
-            })
-        )
+                return {
+                    description: renderToString(
+                        <>
+                            {imageSrc ? (
+                                <>
+                                    <img src={new URL(imageSrc, baseUrl).href} alt={img?.alt} />
+                                    <br />
+                                </>
+                            ) : null}
+                            {description ? raw(description) : null}
+                        </>
+                    ),
+                };
+            })),
+        }),
+        { concurrency: 3 }
     );
 
     return {
-        title: `${Object.values<any>(meta.config.navigation.header).find((h) => h.keyname === 'topstories')?.name} | NHK WORLD-JAPAN News`,
+        title: `${Object.values<any>(meta.config.navigation.header).find((h) => h.keyname === 'topstories' || h.keyname === 'top')?.name ?? 'Top Stories'} | NHK WORLD-JAPAN News`,
         link: `${baseUrl}/nhkworld/${lang}/news/list/`,
         item: items,
     };

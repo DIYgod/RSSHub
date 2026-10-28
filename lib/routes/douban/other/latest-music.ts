@@ -2,6 +2,8 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
+import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/music/latest/:area?',
@@ -76,12 +78,15 @@ async function handler(ctx) {
             item: res.data.subject_collection_items.map((item) => {
                 const title = `${item.title}-${item.info}`;
                 const link = `https://music.douban.com/subject/${item.id}/`;
+                const rating = item.rating ? `<strong>评分:</strong> ${item.rating.value.toFixed(1)}` : item.null_rating_reason || '';
                 const description = `
                     <img src="${item.cover.url}" /><br>
-                    ${item.recommend_comment}<br>
-                    <strong>评分:</strong> ${item.rating.value.toFixed(1)}
+                    ${item.recommend_comment || item.description || ''}<br>
+                    ${rating}
                 `;
-                const pubDate = new Date(item.pubdate[0]).toUTCString();
+                const date = item.pubdate?.find((date: string) => /^\d{4}-\d{1,2}-\d{1,2}$/.test(date));
+                const parsedDate = date ? timezone(parseDate(date, ['YYYY-MM-DD', 'YYYY-M-D', 'YYYY-MM-D', 'YYYY-M-DD'], true), 0) : undefined;
+                const pubDate = parsedDate && !Number.isNaN(parsedDate.getTime()) ? parsedDate : undefined;
 
                 return {
                     title,

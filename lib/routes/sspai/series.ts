@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
@@ -34,13 +35,14 @@ async function handler() {
         parseResponse: JSON.parse,
     });
 
-    const products = response.data.flatMap((category) =>
+    const categories: Array<{ children: Array<{ id: number; price: number; title: string; sell_status: boolean; author: { nickname: string } }> }> = response.data;
+    const products = categories.flatMap((category) =>
         category.children
             .filter((item) => item.sell_status)
             .map((item) => {
                 const price = item.price / 100;
                 return {
-                    id: item.id,
+                    id: String(item.id),
                     title: `￥${price} - ${item.title}`,
                     link: `https://sspai.com/series/${item.id}`,
                     author: item.author.nickname,
@@ -48,19 +50,21 @@ async function handler() {
             })
     );
 
-    const item = await Promise.all(
-        products.map((item) =>
-            cache.tryGet(item.link, async () => {
+    const item = await pMap(
+        products,
+        async (item) => {
+            const details = await cache.tryGet(`sspai:series:body:v2:${item.id}`, async () => {
                 const res = await ofetch(`https://sspai.com/api/v1/series/info/get?id=${item.id}&view=second`);
                 const data = res.data;
                 const banner = `<img src="https://cdn.sspai.com/${data.banner_web}" />`;
                 const description = banner + data.intro;
                 const $ = load(description);
                 $('img').css('max-width', '100%');
-                item.description = $.html();
-                return item;
-            })
-        )
+                return { description: $.html() };
+            });
+            return { ...item, ...details };
+        },
+        { concurrency: 3 }
     );
 
     return {

@@ -14,7 +14,7 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    name: '知乎书店 - 新书',
+    name: '书店 - 新书',
     maintainers: ['xyqfer'],
     handler,
 };
@@ -36,10 +36,9 @@ async function handler() {
             return {
                 title: item.title,
                 link: item.url,
+                author: authors,
                 description: `
-          <img src="${item.cover.replaceAll(/_.+\.jpg/g, '.jpg')}"><br>
-          <strong>${item.title}</strong><br>
-          作者: ${authors}<br><br>
+          <img src="${item.cover}"><br>
           ${item.description}<br><br>
           价格: ${item.promotion.price / 100}元
         `,

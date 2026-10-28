@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import { escapeText } from 'entities';
 import type { Context } from 'hono';
 
 import InvalidParameterError from '@/errors/types/invalid-parameter';
@@ -22,18 +23,20 @@ async function handler(ctx: Context): Promise<Data> {
     }
     const link = `https://${INSTANCES.get(site)}/show_bug.cgi?id=${bugId}`;
     const xml = await ofetch(`${link}&ctype=xml`);
-    const $ = load(xml);
-    const items = $('long_desc').map((index, rawItem) => {
-        const $ = load(rawItem, null, false);
-        return {
-            title: `comment #${$('commentid').text()}`,
-            link: `${link}#c${index}`,
-            description: $('thetext').text(),
-            pubDate: parseDate($('bug_when').text()),
-            author: $('who').attr('name'),
-        };
-    });
-    return { title: $('short_desc').text(), link, item: items.toArray() };
+    const $ = load(xml, { xmlMode: true });
+    const items = $('long_desc')
+        .toArray()
+        .map((rawItem, index) => {
+            const $item = $(rawItem);
+            return {
+                title: `comment #${$item.find('commentid').text()}`,
+                link: `${link}#c${index}`,
+                description: `<pre>${escapeText($item.find('thetext').text())}</pre>`,
+                pubDate: parseDate($item.find('bug_when').text()),
+                author: $item.find('who').attr('name'),
+            };
+        });
+    return { title: $('short_desc').text(), link, item: items };
 }
 
 function markdownFrom(separator: string = ', '): string {

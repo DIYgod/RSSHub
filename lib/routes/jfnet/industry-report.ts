@@ -7,9 +7,9 @@ import { parseDate } from '@/utils/parse-date';
 
 const HOST = 'https://www.jfnet.or.jp';
 const INDEX = `${HOST}/industry_report/?c=29&y=0`; // c=29 → 月次レポート only
-const MEDIA_API = `${HOST}/wp-json/wp/v2/media?search=getujidata&per_page=100&_fields=date,source_url`;
+const MEDIA_API = `${HOST}/wp-json/wp/v2/media?search=getujidata&per_page=100&_fields=date,date_gmt,source_url`;
 
-export interface MarketReportExtra {
+interface MarketReportExtra {
     source: 'jfnet';
     survey: '外食産業市場動向調査';
     month: string; // 'YYYY-MM' (survey month, 〜月度)
@@ -57,21 +57,22 @@ export const handler = async (): Promise<Data> => {
             return parseIndex(html);
         }),
         cache.tryGet(MEDIA_API, async () => {
-            const list: Array<{ date: string; source_url: string }> = await ofetch(MEDIA_API);
-            return Object.fromEntries(list.map((m) => [m.source_url, m.date]));
+            const list: Array<{ date: string; date_gmt?: string; source_url: string }> = await ofetch(MEDIA_API);
+            return Object.fromEntries(list.map((m) => [m.source_url, { date: m.date, dateGmt: m.date_gmt }]));
         }),
     ]);
 
     const items: DataItem[] = entries.map((e) => {
-        const releasedAt = media[e.pdf] ?? null;
+        const releasedAt = media[e.pdf]?.date ?? null;
+        const dateGmt = media[e.pdf]?.dateGmt;
         const [year, month] = e.month.split('-', 2);
         const label = `${year}年${Number(month)}月度`;
         return {
             title: `${e.survey} ${label}`,
             link: e.pdf,
             guid: e.pdf,
-            pubDate: releasedAt === null ? undefined : parseDate(releasedAt),
-            description: `${e.survey}（月次レポート） ${label} — <a href="${e.pdf}">PDF</a>${e.xls ? ` / <a href="${e.xls}">Excel</a>` : ''}`,
+            pubDate: dateGmt ? parseDate(`${dateGmt}Z`) : undefined,
+            description: `<a href="${e.pdf}">PDF</a>${e.xls ? ` / <a href="${e.xls}">Excel</a>` : ''}`,
             _extra: { source: e.source, survey: e.survey, month: e.month, pdf: e.pdf, xls: e.xls, released_at: releasedAt } satisfies MarketReportExtra,
         };
     });

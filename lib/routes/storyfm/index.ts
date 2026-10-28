@@ -2,6 +2,7 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import got from '@/utils/got';
+import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/index',
@@ -13,7 +14,7 @@ export const route: Route = {
         requirePuppeteer: false,
         antiCrawler: false,
         supportBT: false,
-        supportPodcast: false,
+        supportPodcast: true,
         supportScihub: false,
     },
     radar: [
@@ -31,39 +32,25 @@ async function handler() {
     const url = 'http://storyfm.cn';
     const response = await got(url);
     const $ = load(response.data);
-    const cnMonth = ['一', '二', '三', '四', '五', '六', '七', '八', '九', '十', '十一', '十二'];
-    const items = $('.isotope > .isotope-item')
+    const items = $('.e-ep')
         .toArray()
-        .map((ele) => {
-            const $item = load(ele);
-            const img = $item('.isotope-img-container img').attr('src');
-            const infoNode = $item('.isotope-index-text').first();
-            const title = infoNode.find('.soundbyte-podcast-progression-title').text();
-            const link = infoNode.find('a.soundbyte-podcast-play-progression').attr('href');
-            const time = infoNode.find('.fa-clock-o').text();
-            const date = infoNode.find('.soundbyte-podcast-date-progression').text();
-            const [month, day, year] = date
-                .replace(',', '')
-                .split(' ')
-                .map((value) => {
-                    if (value.includes('月')) {
-                        const enMongth = cnMonth.findIndex((cnMonthStr) => value.includes(cnMonthStr));
-                        value = String(enMongth + 1);
-                    }
-                    return value;
-                });
-
-            const pubDate = new Date(`${year}-${month}-${day} ${time}`).toUTCString();
+        .map((element) => {
+            const $item = $(element);
+            const anchor = $item.find('h2.e-ep__title a');
+            const source = $item.find('audio source');
+            const date = $item.find('.whitespace-nowrap').text();
             return {
-                title,
-                description: [`<img src="${img}"/>`, title].join('<br/>'),
-                link,
-                pubDate,
+                title: anchor.text(),
+                link: anchor.attr('href'),
+                description: [$item.find('.zoom-image-container-progression img').first().toString(), $item.find('.e-ep__description').toString(), $item.find('audio').first().toString()].join(''),
+                pubDate: date ? parseDate(`${date}T00:00:00Z`) : undefined,
+                enclosure_url: source.attr('src'),
+                enclosure_type: source.attr('type'),
             };
         });
     return {
-        title: '故事说FM',
-        description: '故事说FM',
+        title: '故事FM',
+        description: '故事FM',
         link: url,
         item: items,
     };

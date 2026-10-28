@@ -1,9 +1,10 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { Data, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
-import { parseDate } from '@/utils/parse-date';
+import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
 
 const baseUrl = 'https://jwc.ncu.edu.cn';
 
@@ -44,7 +45,8 @@ async function handler(): Promise<Data> {
             const el = $(item);
             const linkEl = el.find('a');
 
-            const title = linkEl.find('span.text-gray-700').text().trim() || linkEl.text().trim();
+            const titleText = linkEl.find('span.text-gray-700').text();
+            const title = titleText.trim() ? titleText : linkEl.text();
             const rawLink = linkEl.attr('href');
             const link = rawLink ? new URL(rawLink, baseUrl).href : '';
 
@@ -53,13 +55,14 @@ async function handler(): Promise<Data> {
             return {
                 title,
                 link,
-                pubDate: dateText ? parseDate(dateText, 'YYYY-MM-DD') : undefined,
+                pubDate: dateText ? parseDateInTimezone(dateText, 8) : undefined,
             };
         })
         .filter((item) => item.title && item.link);
 
-    const items = await Promise.all(
-        list.map((item) =>
+    const items = await pMap(
+        list,
+        (item) =>
             cache.tryGet(item.link, async () => {
                 const detailResponse = await ofetch(item.link);
                 const $detail = load(detailResponse);
@@ -84,8 +87,8 @@ async function handler(): Promise<Data> {
                 }
 
                 return { ...item, description };
-            })
-        )
+            }),
+        { concurrency: 6 }
     );
 
     return {

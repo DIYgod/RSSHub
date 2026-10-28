@@ -1,12 +1,23 @@
 import { load } from 'cheerio';
 import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
+import { getMimeType } from 'hono/utils/mime';
 
 import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 import timezone from '@/utils/timezone';
+
+const documentMimeTypes = {
+    docx: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+    xlsx: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+};
+const getEnclosureType = (link: string) => {
+    const pathname = new URL(link).pathname;
+    return (getMimeType(pathname) ?? getMimeType(pathname, documentMimeTypes))?.split(';', 1)[0];
+};
 
 const renderDescription = ({ images, description }) =>
     renderToString(
@@ -25,7 +36,7 @@ const renderDescription = ({ images, description }) =>
     );
 export const handler = async (ctx) => {
     const { category = 'fgw_zxxxgk' } = ctx.req.param();
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 20;
+    const limit = getRouteLimit(ctx, 20);
 
     const rootUrl = 'https://fgw.sh.gov.cn';
     const currentUrl = `${rootUrl}/${category}/index.html`;
@@ -37,14 +48,16 @@ export const handler = async (ctx) => {
     const language = $('html').prop('lang') as Language;
 
     let items = $('ul.nowrapli li')
-        .slice(0, limit)
+        .slice(0, ctx.req.query('sorted') === 'false' ? limit : Math.max(20, limit))
         .toArray()
         .map((item): DataItem => {
             const $item = $(item);
+            const date = $item.find('span.time').text().trim();
+            const pubDate = date ? timezone(parseDate(date, 'YYYY-MM-DD', true), 8) : undefined;
 
             return {
                 title: $item.find('a').prop('title')!,
-                pubDate: parseDate($item.find('span.time').text()),
+                pubDate: pubDate && Number.isFinite(pubDate.getTime()) ? pubDate : undefined,
                 link: new URL($item.find('a').prop('href')!, rootUrl).href,
                 language,
             };
@@ -55,7 +68,7 @@ export const handler = async (ctx) => {
             cache.tryGet(item.link!, async () => {
                 if (!item.link!.endsWith('.html')) {
                     item.enclosure_url = item.link;
-                    item.enclosure_type = item.link ? `application/${item.link.split(/\./).pop()}` : undefined;
+                    item.enclosure_type = getEnclosureType(item.link!);
                     item.enclosure_title = item.title;
 
                     return item;
@@ -66,7 +79,8 @@ export const handler = async (ctx) => {
                 const $$ = load(detailResponse);
 
                 const title = $$('meta[name="ArticleTitle"]').prop('content');
-                const image = $$('div.pdf-content img').prop('src');
+                const imageUrl = $$('div.pdf-content img').prop('src');
+                const image = imageUrl ? new URL(imageUrl, item.link).href : undefined;
                 const description = renderDescription({
                     images: image
                         ? [
@@ -81,7 +95,9 @@ export const handler = async (ctx) => {
 
                 item.title = title;
                 item.description = description;
-                item.pubDate = timezone(parseDate($$('meta[name="PubDate"]').prop('content')), 8);
+                const date = $$('meta[name="PubDate"]').prop('content')?.replaceAll('∶', ':');
+                const pubDate = date ? timezone(parseDate(date, ['YYYY-MM-DD HH:mm:ss', 'YYYY-MM-DD HH:mm'], true), 8) : undefined;
+                item.pubDate = pubDate && Number.isFinite(pubDate.getTime()) ? pubDate : item.pubDate;
                 item.category = [...new Set([$$('meta[name="ColumnName"]').prop('content'), $$('meta[name="ColumnKeywords"]').prop('content')])].filter(Boolean);
                 item.author = $$('meta[name="ContentSource"]').prop('content');
                 item.content = {
@@ -94,8 +110,8 @@ export const handler = async (ctx) => {
 
                 const enclosureUrl = $$('div.pdf-content a, div.xgfj a').prop('href');
 
-                item.enclosure_url = enclosureUrl ? new URL(enclosureUrl, rootUrl).href : undefined;
-                item.enclosure_type = enclosureUrl ? `application/${enclosureUrl.split(/\./).pop()}` : undefined;
+                item.enclosure_url = enclosureUrl ? new URL(enclosureUrl, item.link).href : undefined;
+                item.enclosure_type = item.enclosure_url ? getEnclosureType(item.enclosure_url) : undefined;
                 item.enclosure_title = title;
 
                 return item;
@@ -103,15 +119,20 @@ export const handler = async (ctx) => {
         )
     );
 
+    if (ctx.req.query('sorted') !== 'false' && items.every((item) => item.pubDate instanceof Date && Number.isFinite(item.pubDate.getTime()))) {
+        items.sort((a, b) => (b.pubDate as Date).getTime() - (a.pubDate as Date).getTime());
+        items = items.slice(0, limit);
+    }
+
     const author = $('meta[name="SiteName"]').prop('content');
-    const image = $('span.logo-icon img').prop('src');
+    const imageUrl = $('span.logo-icon img').prop('src');
+    const image = imageUrl ? new URL(imageUrl, currentUrl).href : undefined;
 
     return {
         title: `${author} - ${$('meta[name="ColumnName"]').prop('content')}`,
         description: $('meta[name="ColumnDescription"]').prop('content'),
         link: currentUrl,
         item: items,
-        allowEmpty: true,
         image,
         author,
         language,
@@ -146,22 +167,28 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['fgw.sh.gov.cn/:category'],
-            target: (params) => {
-                const category = params.category.replace(/\/index\.html/, '');
-
-                return `/gov/sh/fgw${category ? `/${category}` : ''}`;
-            },
+            source: ['fgw.sh.gov.cn/'],
+            target: '/fgw',
         },
         {
-            title: '最新信息公开',
             source: ['fgw.sh.gov.cn/fgw_zxxxgk/index.html'],
             target: '/fgw/fgw_zxxxgk',
         },
         {
-            title: '要闻动态',
             source: ['fgw.sh.gov.cn/fgw_fzggdt/index.html'],
             target: '/fgw/fgw_fzggdt',
+        },
+        {
+            source: ['fgw.sh.gov.cn/fgw_jggl/index.html'],
+            target: '/fgw/fgw_jggl',
+        },
+        {
+            source: ['fgw.sh.gov.cn/fgw_ny/index.html'],
+            target: '/fgw/fgw_ny',
+        },
+        {
+            source: ['fgw.sh.gov.cn/fgw_fzgh/index.html'],
+            target: '/fgw/fgw_fzgh',
         },
     ],
 };

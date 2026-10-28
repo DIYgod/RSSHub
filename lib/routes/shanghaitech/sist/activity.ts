@@ -1,7 +1,9 @@
 import { load } from 'cheerio';
 import type { Context } from 'hono';
+import { FetchError } from 'ofetch';
+import pMap from 'p-map';
 
-import type { Route } from '@/types';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
@@ -18,14 +20,15 @@ export const route: Route = {
             source: ['sist.shanghaitech.edu.cn/xyhd/list.htm'],
         },
     ],
-    name: '信息科技与技术学院活动',
+    name: '信息科学与技术学院活动',
     maintainers: ['HenryQW'],
     handler,
     url: 'sist.shanghaitech.edu.cn/xyhd/list.htm',
 };
 
 async function handler(ctx: Context) {
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 20;
+    const requestedLimit = Number(ctx.req.query('limit'));
+    const limit = Number.isSafeInteger(Math.floor(requestedLimit)) && requestedLimit >= 1 ? Math.floor(requestedLimit) : 20;
 
     const response = await ofetch(`${baseUrl}/_wp3services/generalQuery?queryObj=articles`, {
         method: 'POST',
@@ -48,7 +51,7 @@ async function handler(ctx: Context) {
         parseResponse: JSON.parse,
     });
 
-    const list = response.data.map((item) => ({
+    const list: Array<DataItem & { link: string }> = response.data.slice(0, limit).map((item) => ({
         title: item.title,
         link: item.url.replace(/^http:\/\//, 'https://'),
         author: item.publisher,
@@ -56,22 +59,45 @@ async function handler(ctx: Context) {
         description: item.summary,
     }));
 
-    const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link, async () => {
-                if (new URL(item.link).hostname !== 'sist.shanghaitech.edu.cn') {
+    const items = await pMap(
+        list,
+        async (item) => {
+            const host = new URL(item.link).hostname;
+            if (host !== 'sist.shanghaitech.edu.cn' && host !== 'mp.weixin.qq.com') {
+                return item;
+            }
+            try {
+                const detail = await cache.tryGet(item.link, async () => {
+                    const detailResponse = await ofetch(item.link);
+                    const $ = load(detailResponse);
+                    if (host === 'mp.weixin.qq.com') {
+                        const content = $('#js_content');
+                        content.find('img[data-src]').each((_, image) => {
+                            $(image).attr('src', $(image).attr('data-src')).removeAttr('data-src');
+                        });
+                        const timestamp = /\bcreate_timestamp:\s*['"](\d+)['"]\s*\*\s*1/.exec(detailResponse)?.[1];
+                        return content.length
+                            ? {
+                                  description: content.html(),
+                                  ...(timestamp && { pubDate: parseDate(Number(timestamp) * 1000) }),
+                              }
+                            : {};
+                    }
+                    return { description: $('.wp_articlecontent').html() };
+                });
+                return { ...item, ...detail };
+            } catch (error) {
+                if (host === 'mp.weixin.qq.com' && error instanceof FetchError) {
                     return item;
                 }
-                const detailResponse = await ofetch(item.link);
-                const $ = load(detailResponse);
-                item.description = $('.wp_articlecontent').html();
-                return item;
-            })
-        )
+                throw error;
+            }
+        },
+        { concurrency: 3 }
     );
 
     return {
-        title: '上海科技大学信息科技与技术学院 -- 活动',
+        title: '上海科技大学信息科学与技术学院 -- 活动',
         link: `${baseUrl}/xyhd/list.htm`,
         item: items,
     };

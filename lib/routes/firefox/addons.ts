@@ -1,7 +1,24 @@
-import { load } from 'cheerio';
-
 import type { Route } from '@/types';
-import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/parse-date';
+
+type LocalizedText = string | Record<string, string> | null;
+
+const getLocalizedText = (value?: LocalizedText) => (typeof value === 'string' ? value : (value?.['zh-CN'] ?? value?.['en-US'] ?? (value ? Object.values(value)[0] : undefined)));
+
+interface Addon {
+    name: LocalizedText;
+    summary: LocalizedText;
+    description: LocalizedText;
+    authors: Array<{ name: string }>;
+    categories: string[];
+}
+
+interface AddonVersion {
+    version: string;
+    release_notes: LocalizedText;
+    file: { created: string };
+}
 
 export const route: Route = {
     path: '/addons/:id',
@@ -29,32 +46,25 @@ export const route: Route = {
 async function handler(ctx) {
     const id = ctx.req.param('id');
 
-    const response = await got({
-        method: 'get',
-        url: `https://addons.mozilla.org/zh-CN/firefox/addon/${id}/versions/`,
-    });
-    const data = JSON.parse(load(response.data)('#redux-store-state').text());
-    const info = data.addons.byID[data.addons.bySlug[id]];
-    const versionIds = data.versions.bySlug[id].versionIds;
+    const apiUrl = `https://addons.mozilla.org/api/v5/addons/addon/${encodeURIComponent(id)}`;
+    const [info, versions] = await Promise.all([ofetch<Addon>(`${apiUrl}/`, { query: { lang: 'zh-CN' } }), ofetch<{ results: AddonVersion[] }>(`${apiUrl}/versions/`, { query: { lang: 'zh-CN' } })]);
+    const link = `https://addons.mozilla.org/zh-CN/firefox/addon/${encodeURIComponent(id)}/versions/`;
 
     return {
-        title: `${info.name} - Firefox Add-on`,
-        description: info.summary || info.description,
-        link: `https://addons.mozilla.org/zh-CN/firefox/addon/${id}/versions/`,
-        item:
-            versionIds &&
-            versionIds.map((versionId) => {
-                const versionInfo = data.versions.byId[versionId];
-                const version = 'v' + versionInfo.version;
-                return {
-                    title: version,
-                    description: versionInfo.releaseNotes || '',
-                    link: `https://addons.mozilla.org/zh-CN/firefox/addon/${id}/versions/`,
-                    pubDate: new Date(versionInfo.file.created),
-                    guid: version,
-                    author: info.authors.map((author) => author.name).join(', '),
-                    category: info.categories,
-                };
-            }),
+        title: `${getLocalizedText(info.name)} - Firefox Add-on`,
+        description: getLocalizedText(info.summary) || getLocalizedText(info.description),
+        link,
+        item: versions.results.map((versionInfo) => {
+            const version = 'v' + versionInfo.version;
+            return {
+                title: version,
+                description: getLocalizedText(versionInfo.release_notes),
+                link,
+                pubDate: versionInfo.file.created ? parseDate(versionInfo.file.created) : undefined,
+                guid: version,
+                author: info.authors.map((author) => author.name).join(', '),
+                category: info.categories,
+            };
+        }),
     };
 }

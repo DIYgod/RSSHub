@@ -1,4 +1,6 @@
-import { load } from 'cheerio';
+import { type Cheerio, load } from 'cheerio';
+import { type AnyNode, cloneNode, Document } from 'domhandler';
+import pMap from 'p-map';
 
 import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
@@ -36,6 +38,36 @@ export const route: Route = {
 | 代码 | zytzgg       | bmtzgg       | bzhd     |`,
 };
 
+async function getArticle(link: string): Promise<Pick<DataItem, 'author' | 'description'>> {
+    const details: Pick<DataItem, 'author' | 'description'> = {};
+    const resp = await got.get(link);
+    const $ = load(resp.data);
+    const content = $('.v_news_content');
+    if (!content.length) {
+        return details;
+    }
+    content
+        .closest('form')
+        .find('a[href*="DownloadAttachUrl"]')
+        .filter((_, elem) => !$(elem).closest('.v_news_content').length)
+        .each((_, elem) => {
+            const attachment = copyNodes($(elem));
+            content.append($('<p>').append(attachment));
+        });
+    details.description = content.html();
+    const author = content
+        .closest('form')
+        .find('h1 + div')
+        .text()
+        .match(/作者：([\s\S]*?)审核：/)?.[1]
+        .trim();
+    if (author) {
+        details.author = author;
+    }
+
+    return details;
+}
+
 async function handler(ctx): Promise<Data> {
     const url = `https://www.swpu.edu.cn/bgw/${ctx.req.param('code')}.htm`;
 
@@ -45,38 +77,22 @@ async function handler(ctx): Promise<Data> {
     const title = $('.title').text();
 
     // 获取标题、时间及链接
-    const items: DataItem[] = $('.notice > ul > li > a')
+    const items: Array<DataItem & { link: string }> = $('.notice > ul > li > a')
         .toArray()
         .map((elem) => ({
             title: $(elem.children[0]).text(),
-            pubDate: timezone(parseDate($(elem.children[1]).text()), 8),
+            pubDate: $(elem.children[1]).text().trim() ? timezone(parseDate($(elem.children[1]).text()), 8) : undefined,
             link: joinUrl('https://www.swpu.edu.cn', $(elem).attr('href')), // 实际获得连接 "../info/1312/17891.htm"
         }));
 
     // 请求全文
-    const out = await Promise.all(
-        items.map((item) =>
-            cache.tryGet(item.link!, async () => {
-                const resp = await got.get(item.link);
-                const $ = load(resp.data);
-                if ($('title').text().startsWith('系统提示')) {
-                    item.author = '系统';
-                    item.description = '无权访问';
-                } else {
-                    item.author = '办公网';
-                    item.description = $('.v_news_content').html()!;
-                    for (const elem of $('.v_news_content p')) {
-                        if ($(elem).css('text-align') !== 'right') {
-                            continue;
-                        }
-
-                        item.author = $(elem).text();
-                        break;
-                    }
-                }
-                return item;
-            })
-        )
+    const out = await pMap(
+        items,
+        async (item) => ({
+            ...item,
+            ...(await cache.tryGet(`swpu:bgw:article:v4:${item.link}`, () => getArticle(item.link))),
+        }),
+        { concurrency: 3 }
     );
 
     return {
@@ -86,4 +102,13 @@ async function handler(ctx): Promise<Data> {
         language: 'zh-CN',
         item: out,
     };
+}
+
+function copyNodes<T extends AnyNode>(selection: Cheerio<T>): Cheerio<T> {
+    const copy = selection.map((_, node) => cloneNode(node, true));
+    const root = new Document(copy.toArray());
+    for (const node of copy) {
+        node.parent = root;
+    }
+    return copy;
 }

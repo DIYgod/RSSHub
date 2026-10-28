@@ -1,9 +1,9 @@
 import type { Namespace } from '@/types';
 
 export const namespace: Namespace = {
-    name: 'Koyso',
-    url: 'koyso.to',
+    name: 'PlayZip (Koyso)',
+    url: 'playzip.com',
     categories: ['game'],
     description: '',
-    lang: 'zh-CN',
+    lang: 'en',
 };

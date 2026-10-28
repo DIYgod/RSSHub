@@ -1,4 +1,22 @@
-import type { Data } from '@/types';
+import type { Data, DataItem } from '@/types';
+
+const toDurationInSeconds = (duration: DataItem['itunes_duration']) => {
+    if (typeof duration === 'number') {
+        return Number.isFinite(duration) && duration >= 0 ? duration : undefined;
+    }
+    if (typeof duration !== 'string') {
+        return;
+    }
+    if (/^\d+(?:\.\d+)?$/.test(duration)) {
+        const seconds = Number(duration);
+        return Number.isFinite(seconds) ? seconds : undefined;
+    }
+    if (!/^\d+:(?:[0-5]?\d:)?[0-5]?\d(?:\.\d+)?$/.test(duration)) {
+        return;
+    }
+    const seconds = duration.split(':').reduce((total, part) => total * 60 + Number(part), 0);
+    return Number.isFinite(seconds) ? seconds : undefined;
+};
 
 /**
  * This function should be used by RSSHub middleware only.
@@ -39,7 +57,7 @@ const json = (data: Data) => {
                               mime_type: item.enclosure_type,
                               title: item.enclosure_title,
                               size_in_bytes: item.enclosure_length,
-                              duration_in_seconds: item.itunes_duration,
+                              duration_in_seconds: toDurationInSeconds(item.itunes_duration),
                           },
                       ]
                     : undefined),

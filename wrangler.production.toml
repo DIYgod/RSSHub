@@ -1,4 +1,7 @@
 # Cloudflare Workers Builds must use: wrangler deploy --config wrangler.production.toml
+# The cf equivalent is `cf deploy --mode production`, which reads cloudflare.config.ts.
+# Keep this file in sync with the production mode of cloudflare.config.ts,
+# and delete it once Workers Builds deploys with cf.
 name = "rsshub"
 main = "dist-worker/worker.mjs"
 compatibility_date = "2026-09-01"
@@ -25,6 +28,15 @@ enabled = true
 # Requires Workers Paid plan
 [browser]
 binding = "BROWSER"
+
+# Share Browser Run sessions across requests and Worker isolates.
+[[durable_objects.bindings]]
+name = "BROWSER_SESSIONS"
+class_name = "BrowserSession"
+
+[[migrations]]
+tag = "browser-session-v1"
+new_sqlite_classes = ["BrowserSession"]
 
 # KV namespace for caching (auto-provisioned on first deploy)
 [[kv_namespaces]]

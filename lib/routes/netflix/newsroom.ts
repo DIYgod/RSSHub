@@ -1,3 +1,6 @@
+import { escapeUTF8 } from 'entities/escape';
+import pMap from 'p-map';
+
 import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
@@ -84,9 +87,10 @@ const categories = {
     },
 };
 
-const renderImage = ({ url, alt, caption }: { url: string; alt?: string; caption?: string }) => `<figure><img src="${url}" alt="${alt || ''}">${caption ? `<figcaption>${caption}</figcaption>` : ''}</figure>`;
+const renderImage = ({ url, alt, caption }: { url: string; alt?: string; caption?: string }) =>
+    `<figure><img src="${escapeUTF8(url)}" alt="${escapeUTF8(alt || '')}">${caption ? `<figcaption>${escapeUTF8(caption)}</figcaption>` : ''}</figure>`;
 const renderVideo = ({ url, poster, contentType }: { url: string; poster?: string; contentType: string }) =>
-    `<video controls preload="metadata"${poster ? ` poster="${poster}"` : ''}><source src="${url}" type="${contentType}"></video>`;
+    `<video controls preload="metadata"${poster ? ` poster="${escapeUTF8(poster)}"` : ''}><source src="${escapeUTF8(url)}" type="${escapeUTF8(contentType)}"></video>`;
 const renderYoutube = (youtubeId) =>
     `<iframe id="ytplayer" type="text/html" width="640" height="360" src="https://www.youtube-nocookie.com/embed/${youtubeId}" frameborder="0" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>`;
 
@@ -101,6 +105,10 @@ const render = (node) => {
             const innerHTML = node.content?.map((c) => render(c)).join('') || '';
             return `<p>${innerHTML}</p>`;
         }
+        case 'heading-1': {
+            const innerHTML = node.content?.map((c) => render(c)).join('') || '';
+            return `<h1>${innerHTML}</h1>`;
+        }
         case 'heading-2': {
             const innerHTML = node.content?.map((c) => render(c)).join('') || '';
             return `<h2>${innerHTML}</h2>`;
@@ -113,6 +121,10 @@ const render = (node) => {
             const innerHTML = node.content?.map((c) => render(c)).join('') || '';
             return `<h4>${innerHTML}</h4>`;
         }
+        case 'heading-5': {
+            const innerHTML = node.content?.map((c) => render(c)).join('') || '';
+            return `<h5>${innerHTML}</h5>`;
+        }
         case 'heading-6': {
             const innerHTML = node.content?.map((c) => render(c)).join('') || '';
             return `<h6>${innerHTML}</h6>`;
@@ -120,7 +132,7 @@ const render = (node) => {
         case 'hr':
             return '<hr>';
         case 'text': {
-            let text = node.value || '';
+            let text = escapeUTF8(node.value || '');
             if (!node.marks || node.marks.length === 0) {
                 return text;
             }
@@ -147,7 +159,7 @@ const render = (node) => {
         case 'hyperlink': {
             const href = node.data?.uri || '#';
             const innerHTML = node.content?.map((c) => render(c)).join('') || '';
-            return `<a href="${href}" target="_blank" rel="noopener noreferrer">${innerHTML}</a>`;
+            return `<a href="${escapeUTF8(href)}" target="_blank" rel="noopener noreferrer">${innerHTML}</a>`;
         }
 
         case 'embedded-asset-block': {
@@ -158,9 +170,9 @@ const render = (node) => {
 
             const url = file.url.startsWith('//') ? 'https:' + file.url : file.url;
             const contentType = file.contentType || '';
-            const title = Object.values(node.data?.title)[0] || '';
+            const title = Object.values<string>(node.data?.title)[0] || '';
             if (contentType.startsWith('image/')) {
-                return `<img src="${url}" alt="${title}">`;
+                return `<img src="${escapeUTF8(url)}" alt="${escapeUTF8(title)}">`;
             }
             if (contentType.startsWith('video/')) {
                 return renderVideo({ url, contentType });
@@ -189,7 +201,7 @@ const render = (node) => {
                 const youtubeId = node.data.embedLink.split('youtube.com/watch?v=', 2)[1]?.split('&', 1)[0] || node.data.embedLink.split('youtu.be/', 2)[1]?.split('?', 1)[0];
                 return renderYoutube(youtubeId);
             }
-            return `<a href="${embedLink}" target="_blank" rel="noopener noreferrer">${node.data.title ?? embedLink}</a>`;
+            return `<a href="${escapeUTF8(embedLink)}" target="_blank" rel="noopener noreferrer">${escapeUTF8(node.data.title ?? embedLink)}</a>`;
         }
 
         case 'list-item': {
@@ -222,7 +234,7 @@ async function handler(ctx) {
         },
     });
 
-    const list = [...response.entities.region.regionArticles, ...response.entities.global.globalArticles].map((i): DataItem & { slug: string } => ({
+    const list: Array<DataItem & { slug: string; link: string }> = [...response.entities.region.regionArticles, ...response.entities.global.globalArticles].map((i) => ({
         title: i.title,
         link: `${baseUrl}/${region}/news/${i.slug}`,
         pubDate: parseDate(i.rawPublishedDate),
@@ -231,9 +243,10 @@ async function handler(ctx) {
         slug: i.slug,
     }));
 
-    const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link!, async () => {
+    const items = await pMap(
+        list,
+        async (item) => {
+            const details = await cache.tryGet(`${item.link}:article-body:escaped`, async () => {
                 const response = await ofetch('https://about.netflix.com/api/data/entity', {
                     query: {
                         language: region,
@@ -243,35 +256,39 @@ async function handler(ctx) {
                 });
 
                 const slug = response.entity.slug;
-                item.description = '';
+                let description = '';
                 if (slug.heroVideoUrl && !slug.heroVideoUrl.startsWith('https://www.youtube.com/')) {
-                    item.description += renderVideo({
+                    description += renderVideo({
                         url: slug.heroVideoUrl,
                         poster: slug.heroImage?.url ? `https:${slug.heroImage.url.replace('?w=2560', '')}` : '',
                         contentType: 'video/mp4',
                     });
                 } else if (slug.youtubeHero) {
-                    item.description += renderYoutube(slug.youtubeHero.videoLink.split('youtube.com/watch?v=', 2)[1]);
+                    description += renderYoutube(slug.youtubeHero.videoLink.split('youtube.com/watch?v=', 2)[1]);
                 } else if (slug.heroGallery?.length) {
                     for (const image of slug.heroGallery) {
-                        item.description += renderImage({
+                        description += renderImage({
                             url: `https:${image.url}`,
                             alt: image.alt,
                             caption: image.description || image.alt,
                         });
                     }
                 } else {
-                    item.description += renderImage({
+                    description += renderImage({
                         url: `https:${slug.heroImage.url.replace('?w=2560', '')}`,
                         alt: slug.heroImage.alt,
                         caption: slug.heroImage.description || slug.heroImage.alt,
                     });
                 }
-                item.description += render(slug.body);
+                description += render(slug.body);
 
-                return item;
-            })
-        )
+                return { description };
+            });
+            const metadata = { ...item };
+            Reflect.deleteProperty(metadata, 'slug');
+            return { ...metadata, ...details };
+        },
+        { concurrency: 3 }
     );
 
     return {

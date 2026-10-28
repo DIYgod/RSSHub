@@ -1,10 +1,10 @@
-import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { Route } from '@/types';
 import cache from '@/utils/cache';
-import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
-import timezone from '@/utils/timezone';
+import { getRouteLimit } from '@/utils/route-limit';
 
 import { rootUrl } from './utils';
 
@@ -23,7 +23,8 @@ export const route: Route = {
     },
     radar: [
         {
-            source: ['0daily.com/user/:id', '0daily.com/'],
+            source: ['www.odaily.news/:locale/author/:id', 'www.odaily.news/author/:id'],
+            target: '/user/:id',
         },
     ],
     name: '用户文章',
@@ -31,55 +32,24 @@ export const route: Route = {
     handler,
 };
 
+type AuthorPost = { id: number; title: string; publishTimestamp: number; tags: Array<{ name: string }> };
+type AuthorPostDetail = { content: string; author?: { nickname: string } };
+
 async function handler(ctx) {
     const id = ctx.req.param('id');
-
-    const currentUrl = `${rootUrl}/service/feed_stream/user/${id}?b_id=10&per_page=${ctx.req.query('limit') ?? 25}`;
-
-    let author = '';
-
-    const response = await got({
-        method: 'get',
-        url: currentUrl,
-    });
-
-    let items = response.data.data.items.data.map((item) => ({
-        title: item.title,
-        summary: item.summary,
-        link: `${rootUrl}/post/${item.entity_id}`,
-        pubDate: timezone(parseDate(item.published_at), 8),
-    }));
-
-    items = await Promise.all(
-        items.map((item) =>
-            cache.tryGet(item.link, async () => {
-                const detailResponse = await got({
-                    method: 'get',
-                    url: item.link,
-                });
-
-                const content = load(detailResponse.data.match(/"content":"(.*)","extraction_tags":/)[1]);
-
-                content('img').each((_, el) => {
-                    content(el).attr(
-                        'src',
-                        content(el)
-                            .attr('src')!
-                            .replaceAll(String.raw`\"`, '')
-                    );
-                });
-
-                item.description = content.html();
-                item.author = author = detailResponse.data.match(/"name":"(.*)","role_id/)[1];
-
-                return item;
-            })
-        )
+    const query = new URLSearchParams({ page: '1', size: String(getRouteLimit(ctx, 25)), authorId: id });
+    const response = await ofetch<{ data: { list: AuthorPost[] } }>(`https://web-api.odaily.news/post/page?${query}`);
+    const items = await pMap(
+        response.data.list,
+        async (item) => {
+            const link = `${rootUrl}/post/${item.id}`;
+            const detail = await cache.tryGet(link + ':body', async () => {
+                const response = await ofetch<{ data: AuthorPostDetail }>(`https://web-api.odaily.news/post/detail/${item.id}`);
+                return { description: response.data.content, author: response.data.author?.nickname };
+            });
+            return { title: item.title, link, pubDate: parseDate(item.publishTimestamp), category: item.tags.map((tag) => tag.name), ...detail };
+        },
+        { concurrency: 3 }
     );
-
-    return {
-        title: `${author} - Odaily星球日报`,
-        link: `${rootUrl}/user/${id}`,
-        item: items,
-    };
+    return { title: `${items[0]?.author || id} - Odaily星球日报`, link: `${rootUrl}/zh-CN/author/${encodeURIComponent(id)}`, item: items };
 }

@@ -1,6 +1,7 @@
 import type { CheerioAPI } from 'cheerio';
 import { load } from 'cheerio';
 import type { Context } from 'hono';
+import pMap from 'p-map';
 
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Data, DataItem, Route } from '@/types';
@@ -8,6 +9,7 @@ import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 
 const BASE_URL = 'https://www.eurogamer.net';
 const ASSET_HOST = 'https://assetsio.gnwcdn.com/';
@@ -141,13 +143,14 @@ const handler = async (ctx: Context): Promise<Data> => {
     }
 
     const currentUrl = isLatest ? `${BASE_URL}/latest` : `${BASE_URL}/${category}`;
-    const limit = Number(ctx.req.query('limit') ?? 25);
+    const limit = getRouteLimit(ctx, 25);
+    const candidateLimit = ctx.req.query('sorted') === 'false' ? limit : Math.max(limit ?? 25, 25);
 
     const html = await ofetch(currentUrl);
     const $ = load(html);
 
-    const list = extractListItems($, isLatest ? '.blog__item .summary' : 'article.archive__item', isLatest ? 'p.title a' : 'h2.archive__title a').slice(0, limit);
-    const items = await Promise.all(list.map((item) => parseArticle(item)));
+    const list = extractListItems($, isLatest ? '.blog__item .summary' : 'article.archive__item', isLatest ? 'p.title a' : 'h2.archive__title a').slice(0, candidateLimit);
+    const items = await pMap(list, parseArticle, { concurrency: 3 });
 
     return {
         title: $('head title').text(),

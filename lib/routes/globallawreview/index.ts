@@ -2,6 +2,7 @@ import { load } from 'cheerio';
 
 import type { Language, Route } from '@/types';
 import got from '@/utils/got';
+import { getRouteLimit } from '@/utils/route-limit';
 
 export const route: Route = {
     path: '/',
@@ -20,7 +21,7 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 30;
+    const limit = getRouteLimit(ctx, 30);
 
     const rootUrl = 'http://www.globallawreview.org';
 
@@ -28,7 +29,11 @@ async function handler(ctx) {
 
     let $ = load(firstResponse);
 
-    const currentUrl = new URL($('p.tabBtn span a').prop('href')!, rootUrl).href;
+    const issueHref = $('p.tabBtn span a').prop('href');
+    if (!issueHref) {
+        throw new Error('Global Law Review did not provide a current issue link. The source may be returning an access review page; retry when anonymous access is available.');
+    }
+    const currentUrl = new URL(issueHref, rootUrl).href;
 
     const { data: response } = await got(currentUrl);
 

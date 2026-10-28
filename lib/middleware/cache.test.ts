@@ -2,7 +2,12 @@ import { Context } from 'hono';
 import Parser from 'rss-parser';
 import { afterAll, afterEach, beforeAll, beforeEach, describe, expect, it, vi } from 'vitest';
 
+import type CacheModule from '@/utils/cache';
+import type { getRouteLimit as RouteLimit } from '@/utils/route-limit';
 import wait from '@/utils/wait';
+
+import type CacheMiddleware from './cache';
+import type ParameterMiddleware from './parameter';
 
 process.env.CACHE_EXPIRE = '1';
 process.env.CACHE_CONTENT_EXPIRE = '2';
@@ -211,6 +216,51 @@ describe('cache middleware error handling', () => {
     });
 });
 
+describe('cache request variants', () => {
+    it('keeps source-order selections separate from date-order selections', async () => {
+        vi.stubEnv('CACHE_TYPE', 'memory');
+        vi.stubEnv('CACHE_EXPIRE', '300');
+        vi.resetModules();
+        const { default: middleware } = await import('./cache');
+        const { default: cacheModule } = await import('@/utils/cache/index');
+        cacheModule.clients.memoryCache?.clear();
+        const fetcher = vi.fn((ctx: Context) => {
+            if (!ctx.get('data')) {
+                const entry = ctx.req.query('sorted') === 'false' ? 'source-first' : 'date-first';
+                ctx.set('data', { title: 'Feed', item: [{ title: entry, link: `https://example.com/${entry}` }] });
+            }
+            return Promise.resolve();
+        });
+        const request = async (query = '') => {
+            const ctx = new Context(new Request(`https://rsshub.example/ordering?limit=1${query}`), { env: {}, path: '/ordering' });
+            await middleware(ctx, () => fetcher(ctx));
+            return ctx;
+        };
+
+        try {
+            const dateOrder = await request();
+            const sourceOrder = await request('&sorted=false');
+            const explicitDateOrder = await request('&sorted=true');
+            const defaultDateOrderHit = await request();
+            const dateOrderHit = await request('&sorted=true');
+            const sourceOrderHit = await request('&sorted=false');
+
+            expect(dateOrder.get('data').item[0].title).toBe('date-first');
+            expect(sourceOrder.get('data').item[0].title).toBe('source-first');
+            expect(explicitDateOrder.get('data').item[0].title).toBe('date-first');
+            expect(defaultDateOrderHit.res.headers.get('RSSHub-Cache-Status')).toBe('HIT');
+            expect(dateOrderHit.get('data').item[0].title).toBe('date-first');
+            expect(sourceOrderHit.get('data').item[0].title).toBe('source-first');
+            expect(dateOrderHit.res.headers.get('RSSHub-Cache-Status')).toBe('HIT');
+            expect(sourceOrderHit.res.headers.get('RSSHub-Cache-Status')).toBe('HIT');
+            expect(sourceOrder.res.headers.get('RSSHub-Cache-Status')).toBeNull();
+            expect(explicitDateOrder.res.headers.get('RSSHub-Cache-Status')).toBeNull();
+        } finally {
+            vi.unstubAllEnvs();
+        }
+    });
+});
+
 const coordinationContext = () => new Context(new Request('https://rsshub.example/test/cache'), { env: {}, path: '/test/cache' });
 const isControlKey = (key: string) => key.startsWith('rsshub:path-requested:');
 const loadCoordination = async () => {
@@ -392,5 +442,115 @@ describe('cache coordination capabilities', () => {
         expect(cache.claim).toHaveBeenCalledTimes(2);
         expect(cache.set).not.toHaveBeenCalled();
         expect(next).not.toHaveBeenCalled();
+    });
+});
+
+const candidateEntries = [
+    { title: 'skip', link: 'https://example.com/skip', pubDate: '2026-10-09T12:00:00Z' },
+    { title: 'match older', link: 'https://example.com/older', pubDate: '2026-10-08T12:00:00Z' },
+    { title: 'match newer', link: 'https://example.com/newer', pubDate: '2026-10-09T10:00:00Z' },
+    { title: 'match fourth', link: 'https://example.com/fourth', pubDate: '2026-10-09T09:00:00Z' },
+];
+
+describe('filtered candidate cache variants', () => {
+    let parameter: typeof ParameterMiddleware;
+    let cache: typeof CacheMiddleware;
+    let cacheModule: typeof CacheModule;
+    let getRouteLimit: typeof RouteLimit;
+
+    beforeEach(async () => {
+        vi.stubEnv('CACHE_TYPE', 'memory');
+        vi.stubEnv('CACHE_EXPIRE', '300');
+        vi.resetModules();
+        ({ default: parameter } = await import('./parameter'));
+        ({ default: cache } = await import('./cache'));
+        ({ default: cacheModule } = await import('@/utils/cache'));
+        ({ getRouteLimit } = await import('@/utils/route-limit'));
+        cacheModule.clients.memoryCache?.clear();
+    });
+    afterEach(() => vi.unstubAllEnvs());
+
+    it.each([false, true])('isolates filtered and unfiltered source pools with filteredFirst=%s', async (filteredFirst) => {
+        let fetches = 0;
+        const request = async (query: string) => {
+            const ctx = new Context(new Request(`https://rsshub.example/candidates?${query}`), { env: {}, path: '/candidates' });
+            await parameter(ctx, async () => {
+                await cache(ctx, () => {
+                    if (ctx.get('data')) {
+                        return Promise.resolve();
+                    }
+                    fetches++;
+                    const candidates = candidateEntries.slice(0, getRouteLimit(ctx, 3));
+                    ctx.set('data', { title: 'Feed', item: structuredClone(candidates) });
+                    return Promise.resolve();
+                });
+            });
+            return ctx;
+        };
+        const filteredQuery = 'limit=1&filter_title=match';
+        const limitedQuery = 'limit=1';
+        await request(filteredFirst ? filteredQuery : limitedQuery);
+        await request(filteredFirst ? limitedQuery : filteredQuery);
+        const limitedHit = await request(limitedQuery);
+        const filteredHit = await request(filteredQuery);
+        const differentFilterHit = await request('limit=1&filter_title=older');
+        const expanded = await request('limit=4&filter_title=match');
+        const sourceOrder = await request(`${filteredQuery}&sorted=false`);
+        const sourceOrderHit = await request(`${filteredQuery}&sorted=false`);
+
+        expect(limitedHit.get('data').item.map((item) => item.title)).toEqual(['skip']);
+        expect(filteredHit.get('data').item.map((item) => item.title)).toEqual(['match newer']);
+        expect(differentFilterHit.get('data').item.map((item) => item.title)).toEqual(['match older']);
+        expect(expanded.get('data').item).toHaveLength(3);
+        expect(sourceOrder.get('data').item.map((item) => item.title)).toEqual(['match older']);
+        expect(sourceOrderHit.get('data').item.map((item) => item.title)).toEqual(['match older']);
+        for (const ctx of [limitedHit, filteredHit, differentFilterHit, sourceOrderHit]) {
+            expect(ctx.res.headers.get('RSSHub-Cache-Status')).toBe('HIT');
+        }
+        expect(fetches).toBe(4);
+    });
+
+    it.each([false, true])('preserves ranked defaults and explicit date ordering with dateFirst=%s', async (dateFirst) => {
+        let fetches = 0;
+        const rankedEntries = [
+            { title: 'Top ranked', link: 'https://example.com/top', pubDate: '2026-10-07T12:00:00Z' },
+            { title: 'Second ranked', link: 'https://example.com/second', pubDate: '2026-10-08T12:00:00Z' },
+            { title: 'Newest', link: 'https://example.com/newest', pubDate: '2026-10-09T12:00:00Z' },
+        ];
+        const request = async (query = '') => {
+            const ctx = new Context(new Request(`https://rsshub.example/ranking?limit=1${query}`), { env: {}, path: '/ranking' });
+            await parameter(ctx, async () => {
+                await cache(ctx, () => {
+                    if (ctx.get('data')) {
+                        return Promise.resolve();
+                    }
+                    fetches++;
+                    const sorted = ctx.req.query('sorted');
+                    const candidates = sorted !== undefined && sorted !== 'false' ? rankedEntries : rankedEntries.slice(0, getRouteLimit(ctx, 3));
+                    ctx.set('data', { title: 'Ranking', sortItems: false, item: structuredClone(candidates) });
+                    return Promise.resolve();
+                });
+            });
+            return ctx;
+        };
+
+        await request(dateFirst ? '&sorted=true' : '');
+        await request(dateFirst ? '' : '&sorted=true');
+        const rankedHit = await request();
+        const datedHit = await request('&sorted=true');
+        const truthyHit = await request('&sorted=yes');
+        const explicitRank = await request('&sorted=false');
+        const explicitRankHit = await request('&sorted=false');
+
+        expect(rankedHit.get('data').item.map((item) => item.title)).toEqual(['Top ranked']);
+        expect(datedHit.get('data').item.map((item) => item.title)).toEqual(['Newest']);
+        expect(truthyHit.get('data').item.map((item) => item.title)).toEqual(['Newest']);
+        expect(explicitRank.get('data').item.map((item) => item.title)).toEqual(['Top ranked']);
+        for (const ctx of [rankedHit, datedHit, truthyHit, explicitRankHit]) {
+            expect(ctx.res.headers.get('RSSHub-Cache-Status')).toBe('HIT');
+            expect(ctx.get('data').sortItems).toBe(false);
+            expect(ctx.get('data').item[0].pubDate).toBeTruthy();
+        }
+        expect(fetches).toBe(3);
     });
 });

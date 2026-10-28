@@ -1,16 +1,19 @@
+import pMap from 'p-map';
+
 import type { Data, DataItem, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import { parseDate } from '@/utils/parse-date';
 
-import type { CrowdfundingDetailInfo, CrowdfundingItem } from './types';
+import { renderCrowdfunding } from './templates/crowdfunding';
+import type { CrowdfundingDetailItem, CrowdfundingListItem } from './types';
 import utils from './utils';
 
 export const route: Route = {
     path: '/crowdfunding',
     categories: ['shopping'],
     example: '/mi/crowdfunding',
-    name: '小米众筹',
+    name: '众筹',
     maintainers: ['DIYgod', 'nuomi1'],
     handler,
     features: {
@@ -31,22 +34,23 @@ export const route: Route = {
     view: ViewType.Notifications,
 };
 
-const getDataItems = (list: CrowdfundingItem[]): Promise<DataItem[]> =>
-    Promise.all(
-        list.map((listItem) =>
+const getDataItems = (list: CrowdfundingListItem[]): Promise<DataItem[]> =>
+    pMap(
+        list,
+        (listItem) =>
             cache.tryGet(`mi:crowdfunding:dataitem:${listItem.project_id}`, async () => {
-                const detail = await utils.getCrowdfundingItem(listItem);
-                return getDataItem(listItem, detail);
-            })
-        )
+                const detailItem = await utils.getCrowdfundingItem(listItem);
+                return getDataItem(listItem, detailItem);
+            }),
+        { concurrency: 6 }
     );
 
-const getDataItem = (listItem: CrowdfundingItem, detail: CrowdfundingDetailInfo): DataItem => ({
+const getDataItem = (listItem: CrowdfundingListItem, detailItem: CrowdfundingDetailItem): DataItem => ({
     title: listItem.product_name,
-    description: utils.renderCrowdfunding(listItem, detail),
+    description: renderCrowdfunding(utils.toCrowdfunding(listItem, detailItem)),
     link: `https://m.mi.com/crowdfunding/proddetail/${listItem.project_id}`,
     image: listItem.img_url,
-    pubDate: parseDate(detail.start_time, 'X'),
+    pubDate: parseDate(detailItem.start_time, 'X'),
     language: 'zh-CN',
 });
 

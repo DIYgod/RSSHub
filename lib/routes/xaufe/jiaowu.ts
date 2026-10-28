@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { DataItem, Language, Route } from '@/types';
 import cache from '@/utils/cache';
@@ -17,6 +18,15 @@ const categories = {
         url: 'index/tzgg.htm',
     },
 };
+
+async function fetchDetail(link: string): Promise<Pick<DataItem, 'author' | 'description'>> {
+    const response = await got({ method: 'get', url: link });
+    const $ = load(response.body);
+    return {
+        author: /作者：(\S*)\s{4}/.exec($('p', '.main_contit').text())?.[1] || undefined,
+        description: $('#vsb_content').html(),
+    };
+}
 
 export const route: Route = {
     path: '/jiaowu/:category?',
@@ -55,16 +65,15 @@ async function handler(ctx) {
     const data = $('.main_conRCb ul li')
         .slice(0, 16)
         .toArray()
-        .map((item): DataItem => {
+        .filter((item) => $(item).children('a').attr('href'))
+        .map((item): DataItem & { link: string } => {
             const $item = $(item);
-            const pubDate = $item.children('span').text();
+            const rawDate = $item.children('span').text();
+            const pubDate = rawDate ? parseDate(rawDate, 'YYYY-MM-DD', true) : undefined;
             const title = $item.find('a em').text();
-            const link = $item
-                .children('a')
-                .attr('href')!
-                .replaceAll('../', () => rootMeta.url);
+            const link = new URL($item.children('a').attr('href')!, rootMeta.url + category.url).href;
             return {
-                pubDate: parseDate(pubDate),
+                pubDate: pubDate && Number.isFinite(pubDate.getTime()) ? pubDate : undefined,
                 title,
                 link,
             };
@@ -75,19 +84,13 @@ async function handler(ctx) {
         link: rootMeta.url + category.url,
         description: `${category.title}-${rootMeta.title}`,
         language: 'zh-CN' as const satisfies Language,
-        item: await Promise.all(
-            data.map((item) =>
-                cache.tryGet(item.link!, async () => {
-                    const response = await got({
-                        method: 'get',
-                        url: item.link,
-                    });
-                    const $ = load(response.body);
-                    item.author = /作者：(\S*)\s{4}/.exec($('p', '.main_contit').text())![1];
-                    item.description = $('#vsb_content').html();
-                    return item;
-                })
-            )
+        item: await pMap(
+            data,
+            async (item) => {
+                const detail = await cache.tryGet(`xaufe:detail:v1:${item.link}`, () => fetchDetail(item.link));
+                return { ...item, author: detail.author, description: detail.description };
+            },
+            { concurrency: 3, stopOnError: false }
         ),
     };
 }

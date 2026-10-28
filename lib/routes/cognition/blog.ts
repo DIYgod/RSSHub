@@ -36,16 +36,25 @@ async function handler() {
     const html = await ofetch(targetUrl);
     const $ = load(html);
 
+    const posts = $('script[type="application/ld+json"]')
+        .toArray()
+        .map((script) => JSON.parse($(script).text()))
+        .find((data) => data['@type'] === 'Blog')?.blogPost;
+    const publishedDates = new Map<string, string>(posts?.map((post) => [post.url, post.datePublished]));
+
     const items = $('section li a')
         .toArray()
         .map((item) => {
             const $item = $(item);
 
+            const link = new URL($item.attr('href')!, baseUrl).href;
+            const publishedDate = publishedDates.get(link);
+
             return {
                 title: $item.find('h2').text(),
-                link: new URL($item.attr('href')!, baseUrl).href,
+                link,
                 description: $item.find('p').text(),
-                pubDate: parseDate($item.find('span').text(), 'MM.DD.YY'),
+                pubDate: publishedDate ? parseDate(publishedDate) : parseDate($item.find('span').text(), 'MM.DD.YY'),
             };
         });
 
@@ -53,7 +62,6 @@ async function handler() {
         title: $('title').text(),
         description: $('meta[name="description"]').attr('content'),
         link: targetUrl,
-        allowEmpty: true,
         item: items,
         image: $('meta[property="og:image"]').attr('content'),
     };

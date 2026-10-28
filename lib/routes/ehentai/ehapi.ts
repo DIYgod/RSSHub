@@ -1,27 +1,36 @@
 import path from 'node:path';
 
 import { load } from 'cheerio';
+import type { Context } from 'hono';
+import pMap from 'p-map';
 
 import { config } from '@/config';
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { DataItem } from '@/types';
 import got from '@/utils/got';
 import logger from '@/utils/logger';
+import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
 interface RequestHeaders {
     cookie?: string;
 }
 
+interface TorrentState {
+    token?: string;
+}
+
 const headers: RequestHeaders = {};
-const has_cookie = config.ehentai.ipb_member_id && config.ehentai.ipb_pass_hash && config.ehentai.sk;
-const from_ex = has_cookie && config.ehentai.igneous;
-if (has_cookie) {
-    if (from_ex) {
-        const { ipb_member_id, ipb_pass_hash, sk, igneous } = config.ehentai;
-        headers.cookie = `ipb_member_id=${ipb_member_id};ipb_pass_hash=${ipb_pass_hash};sk=${sk};igneous=${igneous}`;
+const hasCookie = config.ehentai.ipb_member_id && config.ehentai.ipb_pass_hash && config.ehentai.sk;
+const fromEx = hasCookie && config.ehentai.igneous;
+if (hasCookie) {
+    if (fromEx) {
+        const { ipb_member_id: memberId, ipb_pass_hash: passHash, sk, igneous } = config.ehentai;
+        headers.cookie = `ipb_member_id=${memberId};ipb_pass_hash=${passHash};sk=${sk};igneous=${igneous}`;
     } else {
-        const { ipb_member_id, ipb_pass_hash, sk } = config.ehentai;
-        headers.cookie = `ipb_member_id=${ipb_member_id};ipb_pass_hash=${ipb_pass_hash};sk=${sk}`;
+        const { ipb_member_id: memberId, ipb_pass_hash: passHash, sk } = config.ehentai;
+        headers.cookie = `ipb_member_id=${memberId};ipb_pass_hash=${passHash};sk=${sk}`;
     }
 }
 
@@ -30,24 +39,91 @@ if (config.ehentai.star) {
 }
 
 function ehgot(url) {
-    return from_ex ? got({ method: 'get', url: `https://exhentai.org/${url}`, headers }) : got({ method: 'get', url: `https://e-hentai.org/${url}`, headers });
+    return fromEx ? got({ method: 'get', url: `https://exhentai.org/${url}`, headers }) : got({ method: 'get', url: `https://e-hentai.org/${url}`, headers });
 }
 
-function ehgot_thumb(cache, thumb_url) {
-    return cache.tryGet(thumb_url, async () => {
+function getThumbnail(cache, thumbnailUrl) {
+    return cache.tryGet(`ehentai:thumbnail:${thumbnailUrl}`, async () => {
         try {
-            const buffer = await got({ method: 'get', responseType: 'buffer', url: thumb_url, headers });
-            const data = buffer.body.toString('base64');
-            const ext = path.extname(thumb_url).slice(1);
-            return `data:image/${ext};base64,${data}`;
+            const buffer = await ofetch.raw<ArrayBuffer, 'arrayBuffer'>(thumbnailUrl, { responseType: 'arrayBuffer', headers: headers.cookie ? { Cookie: headers.cookie } : undefined });
+            const data = Buffer.from(buffer._data!).toString('base64');
+            const ext = path.extname(new URL(thumbnailUrl).pathname).slice(1).toLowerCase();
+            const imageTypes = { jpg: 'image/jpeg', jpeg: 'image/jpeg', png: 'image/png', gif: 'image/gif', webp: 'image/webp', avif: 'image/avif', svg: 'image/svg+xml' };
+            const contentType = buffer.headers.get('content-type')?.split(';', 1)[0].toLowerCase();
+            if (contentType && !contentType.startsWith('image/')) {
+                return thumbnailUrl;
+            }
+            const mimeType = contentType === 'image/jpg' ? 'image/jpeg' : contentType?.startsWith('image/') ? contentType : imageTypes[ext];
+            if (!mimeType) {
+                return thumbnailUrl;
+            }
+            return `data:${mimeType};base64,${data}`;
         } catch (error) {
-            logger.warn('Cannot download thumbnail: ' + thumb_url, error);
-            return thumb_url;
+            logger.warn('Cannot download thumbnail: ' + thumbnailUrl, error);
+            return thumbnailUrl;
         }
     });
 }
 
-async function parsePage(cache, data, get_bittorrent: string | boolean = false, embed_thumb: string | boolean = false) {
+function parseElement($, element, layout: string, includeBittorrent: string | boolean) {
+    const el = $(element);
+    const title = el.find('.glink').html();
+    const rawDate = el.find('div[id^="posted_"]').text();
+    const pubDate = rawDate ? timezone(parseDate(rawDate), 0) : undefined;
+    let linkElement;
+    let imageElement;
+    // match layout
+    if ('mpl'.includes(layout)) {
+        // Minimal, Minimal+, Compact
+        linkElement = el.find('td[class^="gl3"] a');
+        imageElement = el.find('td[class^=gl2] div.glthumb div img');
+    } else if (layout === 'e') {
+        // Extended
+        linkElement = el.find('td[class^="gl1"] a');
+        imageElement = linkElement.find('img');
+    } else if (layout === 't') {
+        // Thumbnail
+        linkElement = el.find('div[class^="gl3t"] a');
+        imageElement = linkElement.find('img');
+    }
+    const link = linkElement.attr('href');
+    let thumbnail = imageElement.data('src') ?? imageElement.attr('src');
+    if (config.ehentai.img_proxy && thumbnail) {
+        const url = new URL(thumbnail);
+        thumbnail = config.ehentai.img_proxy + url.pathname + url.search;
+    }
+    const description = thumbnail ? `<img src='${thumbnail}' alt='thumbnail'>` : undefined;
+    if (!title || !link) {
+        return;
+    }
+
+    const item: DataItem & { bittorrentPageUrl?: string; thumbnail?: string } = {
+        thumbnail,
+        title,
+        description,
+        pubDate,
+        link,
+    };
+    if (includeBittorrent) {
+        const downloadElement = el.find('div.gldown');
+        const bittorrentPageUrl = downloadElement.find('a').attr('href');
+        if (bittorrentPageUrl) {
+            item.bittorrentPageUrl = bittorrentPageUrl;
+        }
+    }
+    if ('le'.includes(layout)) {
+        // artist tags will only show in Compact or Extended layout
+        // get artist names as author
+        item.author = $(el)
+            .find('div.gt[title^="artist:"]')
+            .toArray()
+            .map((tag) => $(tag).text())
+            .join(' / ');
+    }
+    return item;
+}
+
+async function parsePage(cache, data, includeBittorrent: string | boolean, embedThumbnail: string | boolean, ctx: Context, torrentState: TorrentState) {
     const $ = load(data);
     // "m" for Minimal
     // "p" for Minimal+
@@ -77,98 +153,41 @@ async function parsePage(cache, data, get_bittorrent: string | boolean = false, 
         return [];
     }
 
-    async function parseElement(cache, element) {
-        const el = $(element);
-        const title = el.find('.glink').html();
-        const rawDate = el.find('div[id^="posted_"]').text();
-        const pubDate = rawDate ? timezone(rawDate, 0) : rawDate;
-        let el_a;
-        let el_img;
-        // match layout
-        if ('mpl'.includes(layout)) {
-            // Minimal, Minimal+, Compact
-            el_a = el.find('td[class^="gl3"] a');
-            el_img = el.find('td[class^=gl2] div.glthumb div img');
-        } else if (layout === 'e') {
-            // Extended
-            el_a = el.find('td[class^="gl1"] a');
-            el_img = el_a.find('img');
-        } else if (layout === 't') {
-            // Thumbnail
-            el_a = el.find('div[class^="gl3t"] a');
-            el_img = el_a.find('img');
-        }
-        const link = el_a.attr('href');
-        let thumbnail = el_img.data('src') ?? el_img.attr('src');
-        if (config.ehentai.img_proxy && thumbnail) {
-            const url = new URL(thumbnail);
-            thumbnail = config.ehentai.img_proxy + url.pathname + url.search;
-        }
-        if (embed_thumb && thumbnail) {
-            thumbnail = await ehgot_thumb(cache, thumbnail);
-        }
-        const description = `<img src='${thumbnail}' alt='thumbnail'>`;
-        if (!title || !link) {
-            return;
-        }
-
-        const item: DataItem & { bittorrent_page_url?: string } = {
-            title,
-            description,
-            pubDate,
-            link,
-        };
-        if (get_bittorrent) {
-            const el_down = el.find('div.gldown');
-            const bittorrent_page_url = el_down.find('a').attr('href');
-            if (bittorrent_page_url) {
-                const bittorrent_url = await getBittorrent(cache, bittorrent_page_url);
-                if (bittorrent_url) {
-                    item.enclosure_url = bittorrent_url;
+    const items = galleries
+        .children()
+        .toArray()
+        .map((element) => parseElement($, element, layout, includeBittorrent))
+        .filter((item) => item !== undefined);
+    return await pMap(
+        items,
+        async (item) => {
+            if (embedThumbnail && item.thumbnail) {
+                const thumbnail = await getThumbnail(cache, item.thumbnail);
+                item.description = `<img src='${thumbnail}' alt='thumbnail'>`;
+            }
+            if (includeBittorrent && item.bittorrentPageUrl) {
+                const bittorrentUrl = await getBittorrent(cache, item.bittorrentPageUrl, torrentState);
+                if (bittorrentUrl) {
+                    item.enclosure_url = bittorrentUrl;
                     item.enclosure_type = 'application/x-bittorrent';
-                    item.bittorrent_page_url = bittorrent_page_url;
                 }
             }
-        }
-        if ('le'.includes(layout)) {
-            // artist tags will only show in Compact or Extended layout
-            // get artist names as author
-            item.author = $(el)
-                .find('div.gt[title^="artist:"]')
-                .toArray()
-                .map((tag) => $(tag).text())
-                .join(' / ');
-        }
-        return item;
-    }
-
-    const item_Promises: Array<Promise<any>> = [];
-    galleries.children().each((index, element) => {
-        item_Promises.push(parseElement(cache, element));
-    });
-    const items_with_null = await Promise.all(item_Promises);
-
-    const items: any[] = [];
-    for (const item of items_with_null) {
-        if (item) {
-            items.push(item);
-        }
-    }
-    return items;
+            return item;
+        },
+        { concurrency: 3 }
+    );
 }
 
-let p = '';
-
-function getBittorrent(cache, bittorrent_page_url) {
-    return cache.tryGet(bittorrent_page_url, async () => {
+function getBittorrent(cache, bittorrentPageUrl, torrentState: TorrentState) {
+    return cache.tryGet(bittorrentPageUrl, async () => {
         try {
-            const response = await got({ method: 'get', url: bittorrent_page_url, headers });
+            const response = await got({ method: 'get', url: bittorrentPageUrl, headers });
             const $ = load(response.data);
-            const el_forms = $('form').toArray();
-            let bittorrent_url;
-            for (const el_form of el_forms) {
-                const el_a = $(el_form).find('a');
-                const onclick = el_a.attr('onclick');
+            const forms = $('form').toArray();
+            let bittorrentUrl;
+            for (const formElement of forms) {
+                const linkElement = $(formElement).find('a');
+                const onclick = linkElement.attr('onclick');
                 if (!onclick) {
                     continue;
                 }
@@ -176,53 +195,69 @@ function getBittorrent(cache, bittorrent_page_url) {
                 if (!match) {
                     continue;
                 }
-                bittorrent_url = match[1];
-                const match_p = bittorrent_url.match(/torrent\?p=(.*)$/);
-                if (match_p) {
-                    p = match_p[1];
+                bittorrentUrl = match[1];
+                const tokenMatch = bittorrentUrl.match(/torrent\?p=(.*)$/);
+                if (tokenMatch) {
+                    torrentState.token = tokenMatch[1];
                 }
             }
-            return bittorrent_url;
+            return bittorrentUrl;
         } catch {
             return;
         }
     });
 }
 
-function updateBittorrent_url(cache, items) {
-    // 下种子文件需要动态密码，密码每几次请求就更新一次
-    for (const item of items) {
-        if (!item.enclosure_url) {
-            continue;
-        }
-
-        item.enclosure_url = item.enclosure_url.replace(/torrent\?p=.*$/, () => `torrent?p=${p}`);
-        cache.set(item.bittorrent_page_url, item.enclosure_url);
+async function updateBittorrentUrl(cache, items, torrentState: TorrentState) {
+    // Refresh cached torrent passwords only when this request obtained a new one.
+    if (torrentState.token) {
+        await Promise.all(
+            items.map((item) => {
+                if (!item.enclosure_url) {
+                    return;
+                }
+                item.enclosure_url = item.enclosure_url.replace(/torrent\?p=.*$/, () => `torrent?p=${torrentState.token}`);
+                return cache.set(item.bittorrentPageUrl, item.enclosure_url);
+            })
+        );
     }
     return items;
 }
 
-async function gatherItemsByPage(cache, url, get_bittorrent: string | boolean = false, embed_thumb: string | boolean = false) {
+async function gatherItemsByPage(cache, url, includeBittorrent: string | boolean, embedThumbnail: string | boolean, ctx: Context) {
     const response = await ehgot(url);
-    const items = await parsePage(cache, response.data, get_bittorrent, embed_thumb);
-    return updateBittorrent_url(cache, items);
+    const torrentState: TorrentState = {};
+    const items = await parsePage(cache, response.data, includeBittorrent, embedThumbnail, ctx, torrentState);
+    return (await updateBittorrentUrl(cache, items, torrentState)).map((item) => {
+        delete item.thumbnail;
+        delete item.bittorrentPageUrl;
+        return item;
+    });
 }
 
-async function getFavoritesItems(cache, favcat, inline_set, page, get_bittorrent: string | boolean = false, embed_thumb: string | boolean = false) {
-    if (page) {
-        return gatherItemsByPage(cache, `favorites.php?favcat=${favcat}&next=${page}`, get_bittorrent, embed_thumb);
+function checkFirstPage(page?: string) {
+    if (page !== undefined && page !== '0') {
+        throw new InvalidParameterError('Only the latest first page is supported. Omit the page parameter or use 0.');
     }
-    const response = await ehgot(`favorites.php?favcat=${favcat}&inline_set=${inline_set}`);
-    const items = await parsePage(cache, response.data, get_bittorrent, embed_thumb);
-    return updateBittorrent_url(cache, items);
 }
 
-function getSearchItems(cache, params, page, get_bittorrent: string | boolean = false, embed_thumb: string | boolean = false) {
-    return page ? gatherItemsByPage(cache, `?${params}&next=${page}`, get_bittorrent, embed_thumb) : gatherItemsByPage(cache, `?${params}`, get_bittorrent, embed_thumb);
+function getFavoritesItems(cache, favcat, inlineSet, page, getBittorrent: string | boolean = false, embedThumb: string | boolean = false, ctx: Context) {
+    checkFirstPage(page);
+    return gatherItemsByPage(cache, `favorites.php?favcat=${favcat}&inline_set=${inlineSet}`, getBittorrent, embedThumb, ctx);
 }
 
-function getTagItems(cache, tag, page, get_bittorrent: string | boolean = false, embed_thumb: string | boolean = false) {
-    return page ? gatherItemsByPage(cache, `tag/${tag}?next=${page}`, get_bittorrent, embed_thumb) : gatherItemsByPage(cache, `tag/${tag}`, get_bittorrent, embed_thumb);
+function getSearchItems(cache, params = '', page, getBittorrent: string | boolean = false, embedThumb: string | boolean = false, ctx: Context) {
+    checkFirstPage(page);
+    const query = new URLSearchParams(params);
+    for (const key of ['next', 'prev', 'page']) {
+        query.delete(key);
+    }
+    return gatherItemsByPage(cache, `?${query}`, getBittorrent, embedThumb, ctx);
 }
 
-export default { getFavoritesItems, getSearchItems, getTagItems, has_cookie, from_ex };
+function getTagItems(cache, tag, page, getBittorrent: string | boolean = false, embedThumb: string | boolean = false, ctx: Context) {
+    checkFirstPage(page);
+    return gatherItemsByPage(cache, `tag/${encodeURIComponent(tag)}`, getBittorrent, embedThumb, ctx);
+}
+
+export default { getFavoritesItems, getSearchItems, getTagItems, hasCookie, fromEx };

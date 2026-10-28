@@ -7,10 +7,12 @@ import type { Data, DataItem, Language, Route } from '@/types';
 import { ViewType } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
+import timezone from '@/utils/timezone';
 
 export const handler = async (ctx: Context): Promise<Data> => {
     const { year = new Date().getFullYear() } = ctx.req.param();
-    const limit = Number(ctx.req.query('limit') ?? '30');
+    const limit = getRouteLimit(ctx, 30);
 
     const baseUrl = 'https://id-info.jihs.go.jp';
     const targetUrl: string = new URL(`surveillance/idwr/idwr/${year}/`, baseUrl).href;
@@ -32,19 +34,19 @@ export const handler = async (ctx: Context): Promise<Data> => {
             const description = $pEl.html();
             const pubDateStr: string | undefined = $pEl.text().match(/〔(\d{4}年\d{1,2}月\d{1,2}日)発行〕/)?.[1];
             const linkUrl: string | undefined = $el.attr('href');
-            const upDatedStr: string | undefined = pubDateStr;
+            const pubDate = pubDateStr ? timezone(parseDate(pubDateStr, 'YYYY年M月D日'), 9) : undefined;
 
             let processedItem: DataItem = {
                 title,
                 description,
-                pubDate: pubDateStr ? parseDate(pubDateStr, 'YYYY年M月D日') : undefined,
+                pubDate,
                 link: linkUrl ? new URL(linkUrl, targetUrl).href : undefined,
                 author,
                 content: {
                     html: description,
-                    text: description,
+                    text: $(description ?? '').text(),
                 },
-                updated: upDatedStr ? parseDate(upDatedStr, 'YYYY年M月D日') : undefined,
+                updated: pubDate,
                 language,
             };
 
@@ -74,7 +76,6 @@ export const handler = async (ctx: Context): Promise<Data> => {
         description: $('meta[name="keywords"]').attr('content'),
         link: targetUrl,
         item: items,
-        allowEmpty: true,
         image: logoSrc ? new URL(logoSrc, baseUrl).href : undefined,
         author,
         language,
@@ -110,11 +111,7 @@ To subscribe to [感染症発生動向調査週報](https://id-info.jihs.go.jp/s
     radar: [
         {
             source: ['id-info.jihs.go.jp/surveillance/idwr/idwr/:year'],
-            target: (params) => {
-                const year: string = params.year;
-
-                return `/go/jihs/idwr${year ? `/${year}` : ''}`;
-            },
+            target: '/jihs/idwr/:year',
         },
     ],
     view: ViewType.Articles,

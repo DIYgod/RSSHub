@@ -23,7 +23,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
         });
         const link = `https://kpopping.com/kpics/${item.slug}`;
         const dateStr = item.photoDate ?? item.createdAt;
-        const pubDate = dateStr ? parseDate(dateStr) : undefined;
+        const pubDate = dateStr ? parseDate(/^\d{4}-\d{2}-\d{2}$/.test(dateStr) ? `${dateStr}T00:00:00Z` : dateStr) : undefined;
         const author = item.uploaderName || item.idolName;
         const category = item.category;
 
@@ -36,7 +36,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
             author,
             content: {
                 html: description,
-                text: description,
+                text: '',
             },
             image: item.src,
             banner: item.src,

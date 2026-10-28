@@ -65,7 +65,7 @@ async function handler(ctx) {
         throw new ConfigNotFoundError('Readwise access token is missing');
     }
 
-    let apiUrl = 'https://readwise.io/api/v3/list/?';
+    const apiUrl = new URL('https://readwise.io/api/v3/list/');
     let tag, tagStrategy;
 
     if (ctx.req.param('routeParams')) {
@@ -75,41 +75,30 @@ async function handler(ctx) {
         const category = urlSearchParams.get('category');
         const updatedAfter = urlSearchParams.get('updatedAfter');
 
-        tag = urlSearchParams.get('tag');
+        tag = urlSearchParams.getAll('tag');
         tagStrategy = urlSearchParams.get('tagStrategy') === TAG_STRATEGY_ANY || urlSearchParams.get('tagStrategy') === TAG_STRATEGY_ALL ? urlSearchParams.get('tagStrategy') : TAG_STRATEGY_ANY;
 
         if (location) {
-            apiUrl += `location=${location}&`;
+            apiUrl.searchParams.set('location', location);
         }
         if (category) {
-            apiUrl += `category=${category}&`;
+            apiUrl.searchParams.set('category', category);
         }
         if (updatedAfter) {
-            apiUrl += `updatedAfter=${updatedAfter}&`;
+            apiUrl.searchParams.set('updatedAfter', updatedAfter);
         }
     }
 
-    const fullData: any[] = [];
-
-    async function fetchNextPage(url) {
-        const response = await ofetch(url, {
-            headers: {
-                Authorization: `Token ${config.readwise.accessToken}`,
-            },
-        });
-
-        fullData.push(...response.results);
-
-        if (response.nextPageCursor) {
-            await fetchNextPage(apiUrl + `pageCursor=${response.nextPageCursor}`);
-        }
-    }
-
-    await fetchNextPage(apiUrl);
+    const response = await ofetch(apiUrl.href, {
+        headers: {
+            Authorization: `Token ${config.readwise.accessToken}`,
+        },
+    });
+    const fullData = response.results;
 
     const items = fullData
         .filter((item) => {
-            if (!tag) {
+            if (!tag?.length) {
                 return true; // No tag filter applied
             }
 
@@ -140,7 +129,7 @@ async function handler(ctx) {
             title: item.title,
             link: item.source_url,
             description: item.summary,
-            pubDate: parseDate(item.created_at),
+            pubDate: item.created_at ? parseDate(item.created_at) : undefined,
             author: item.author,
         }));
 

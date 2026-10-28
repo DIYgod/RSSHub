@@ -10,6 +10,7 @@
  * lib/routes/nua/utils
  * lib/routes/hrbeu
  * lib/routes/freewechat
+ * lib/routes/chinanzxh
  *
  * If your new route is not in the above folders, please add it to the list.
  *

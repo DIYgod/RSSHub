@@ -1,5 +1,6 @@
 import { load } from 'cheerio';
 import type { Context } from 'hono';
+import pMap from 'p-map';
 
 import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
@@ -39,18 +40,22 @@ async function handler(ctx: Context): Promise<Data> {
             };
         });
 
-    const items = await Promise.all(
-        list.map((item) =>
+    const items = await pMap(
+        list,
+        (item) =>
             cache.tryGet(item.link!, async () => {
                 const detailResponse = await ofetch(item.link!);
                 const content = load(detailResponse);
 
                 item.description = content('.v_news_content').html();
-                item.pubDate = timezone(parseDate(content('.timestyle2172').text()), 8);
+                const date = content('.timestyle2172')
+                    .text()
+                    .match(/\d{4}-\d{1,2}-\d{1,2}(?:\s+\d{1,2}:\d{2}(?::\d{2})?)?/)?.[0];
+                item.pubDate = date ? timezone(parseDate(date), 8) : undefined;
 
                 return item;
-            })
-        )
+            }),
+        { concurrency: 3 }
     );
 
     return {

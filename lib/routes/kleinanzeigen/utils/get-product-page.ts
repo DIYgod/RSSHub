@@ -4,6 +4,8 @@ import sanitize from 'sanitize-html';
 import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/parse-date';
+import timezone from '@/utils/timezone';
 
 /**
  * Parse item infos about a product page
@@ -69,8 +71,12 @@ export const getProductPage = (url: string): Promise<DataItem> =>
                 .trim(),
         ].join(' > ');
 
+        const sourceDate = product.find('#viewad-extra-info .icon-calendar-gray-simple + span').text().trim();
+        const date = sourceDate ? parseDate(sourceDate, 'DD.MM.YYYY', true) : undefined;
+
         return {
             title,
+            pubDate: date && Number.isFinite(date.getTime()) ? timezone(date, 0) : undefined,
             link: url,
             description: `${price}<br>${address}<br><br>${description}<br>${imagesHtml}<br>`,
             author: [

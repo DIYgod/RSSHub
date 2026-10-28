@@ -2,6 +2,7 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/release',
@@ -18,9 +19,10 @@ async function handler() {
 
     const notesResponse = await ofetch(`https://www.thunderbird.net/en-US/thunderbird/${version}/releasenotes/`);
     const $ = load(notesResponse);
-    $('main section').last().remove();
-    $('main svg').remove();
-    const content = $('main').html();
+    const releasedDate = $('main .release-text-container h4')
+        .text()
+        .match(/Released (.+)$/)?.[1];
+    const content = $('main .release-notes-container').html();
 
     return {
         title: 'Thunderbird release note',
@@ -29,6 +31,7 @@ async function handler() {
             {
                 title: `Thunderbird ${version} release`,
                 guid: version,
+                pubDate: releasedDate ? parseDate(`${releasedDate} +0000`, 'MMMM D, YYYY ZZ') : undefined,
                 link: `https://www.thunderbird.net/en-US/thunderbird/${version}/releasenotes`,
                 description: content,
             },

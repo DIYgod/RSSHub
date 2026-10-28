@@ -30,7 +30,7 @@ export const route: Route = {
             target: '/:language',
         },
     ],
-    name: 'Alto News',
+    name: 'News',
     maintainers: ['elibroftw'],
     handler: async (ctx: Context): Promise<Data> => {
         const { language = 'en' } = ctx.req.param();

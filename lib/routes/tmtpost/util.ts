@@ -1,5 +1,6 @@
 import type { CheerioAPI } from 'cheerio';
 import { load } from 'cheerio';
+import pMap from 'p-map';
 
 import type { Data, DataItem, Language } from '@/types';
 import cache from '@/utils/cache';
@@ -38,7 +39,7 @@ const processItems = async (limit: number, query: Record<string, string>, apiUrl
         const linkUrl: string | undefined = item.share_link;
         const guid: string = item.guid;
         const image: string | undefined = item.thumb_image?.original?.url;
-        const updated: number | string = item.updated ?? pubDate;
+        const updated: number | string = item.time_updated ?? pubDate;
 
         const processedItem: DataItem = {
             title,
@@ -49,7 +50,6 @@ const processItems = async (limit: number, query: Record<string, string>, apiUrl
             id: guid,
             content: {
                 html: description,
-                text: item.content ?? description,
             },
             image,
             banner: image,
@@ -61,14 +61,15 @@ const processItems = async (limit: number, query: Record<string, string>, apiUrl
     });
 
     items = (
-        await Promise.all(
-            items.map((item) => {
+        await pMap(
+            items,
+            async (item): Promise<DataItem> => {
                 const itemGuid = item.guid;
                 if (!item.link || !itemGuid) {
                     return item;
                 }
 
-                return cache.tryGet(item.link, async (): Promise<DataItem> => {
+                const article = await cache.tryGet(`tmtpost:article:${item.link}`, async (): Promise<Partial<DataItem>> => {
                     const detailApiUrl: string = new URL(itemGuid, postApiUrl).href;
 
                     const detailResponse = await ofetch(detailApiUrl, {
@@ -80,7 +81,7 @@ const processItems = async (limit: number, query: Record<string, string>, apiUrl
                     const data = detailResponse.data;
 
                     if (!data) {
-                        return item;
+                        return {};
                     }
 
                     const title: string = data.title;
@@ -117,7 +118,6 @@ const processItems = async (limit: number, query: Record<string, string>, apiUrl
                         id: guid,
                         content: {
                             html: description,
-                            text: description,
                         },
                         image,
                         banner: image,
@@ -171,12 +171,12 @@ const processItems = async (limit: number, query: Record<string, string>, apiUrl
                         media: medias,
                     };
 
-                    return {
-                        ...item,
-                        ...processedItem,
-                    };
+                    return processedItem;
                 });
-            })
+
+                return { ...item, ...article, title: item.title, pubDate: item.pubDate, updated: item.updated };
+            },
+            { concurrency: 3 }
         )
     ).filter((_): _ is DataItem => true);
 

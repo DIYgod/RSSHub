@@ -1,3 +1,4 @@
+import { raw } from 'hono/html';
 import { renderToString } from 'hono/jsx/dom/server';
 import { describe, expect, it } from 'vitest';
 
@@ -54,5 +55,41 @@ describe('Atom view', () => {
         expect(html).toContain('rsshub:upvotes');
         expect(html).toContain('rsshub:downvotes');
         expect(html).toContain('rsshub:comments');
+    });
+
+    it('renders multiple enclosure links with known sizes and deduplicates the legacy enclosure', () => {
+        const html = renderToString(
+            <Atom
+                data={{
+                    title: 'Attachments',
+                    item: [
+                        {
+                            title: 'Episode',
+                            link: 'https://example.com/episode',
+                            enclosure_url: 'https://example.com/audio.mp3',
+                            enclosure_type: 'audio/mpeg',
+                            attachments: [
+                                { url: 'https://example.com/audio.mp3', mime_type: 'audio/mpeg', size_in_bytes: 123, title: 'Audio & notes' },
+                                { url: 'https://example.com/cover.png', mime_type: 'image/png' },
+                            ],
+                        },
+                    ],
+                }}
+            />
+        );
+        expect(html.match(/rel="enclosure"/g)).toHaveLength(2);
+        expect(html).toContain('href="https://example.com/audio.mp3" type="audio/mpeg" length="123" title="Audio &amp; notes"');
+        expect(html).toContain('href="https://example.com/cover.png" type="image/png"');
+    });
+
+    it('does not let hono hoist feed titles and links as document metadata', () => {
+        const html = String(
+            <probe>
+                {raw('</head>')}
+                <Atom data={{ title: 'Feed', item: [{ title: 'Item', link: 'https://example.com/item' }] }} />
+            </probe>
+        );
+
+        expect(html).toMatch(/^<probe><\/head><feed/);
     });
 });

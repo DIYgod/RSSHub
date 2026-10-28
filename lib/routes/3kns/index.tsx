@@ -25,7 +25,7 @@ export const route: Route = {
     name: '3k-Switch游戏库',
     maintainers: ['xzzpig'],
     handler,
-    url: 'www.3kns.com/',
+    url: 'www.3kmin.com/',
     description: `游戏类型 (category)
 
 | 不限 | 角色扮演 | 动作冒险 | 策略游戏 | 模拟经营 | 即时战略 | 格斗类 | 射击游戏 | 休闲益智 | 体育运动 | 街机格斗 | 无双类 | 其他游戏 | 赛车竞速 |
@@ -67,7 +67,7 @@ async function handler(ctx: Context): Promise<Data> {
     const pubDate = filters.get('pubDate') ?? 'all';
     const collection = filters.get('collection') ?? 'all';
 
-    const baseUrl = 'https://www.3kns.com/';
+    const baseUrl = 'https://www.3kmin.com/';
     const currentUrl = new URL(`${baseUrl}forum.php?mod=forumdisplay&fid=2&filter=sortid&typeid=0&sortid=1&searchsort=1&orderbystr=0`);
     currentUrl.searchParams.set('dztgeshi', category);
     currentUrl.searchParams.set('dztfenlei', language);
@@ -89,6 +89,7 @@ async function handler(ctx: Context): Promise<Data> {
             const $item = $(item);
             const title = $item.find('.showname a').text().trim();
             const category = $item.find('.showtype').text().trim();
+            const cover = $item.find('.entry-media img').attr('src');
             const dateNode = $item.find('.showdate').contents()[0];
             if (dateNode?.nodeType !== 3) {
                 throw new Error(`3kns: no release date text found for "${title}"`);
@@ -96,17 +97,13 @@ async function handler(ctx: Context): Promise<Data> {
             const pubDate = dateNode.data.trim();
             return {
                 title,
-                link: baseUrl + $item.find('.entry-media a').attr('href')!,
+                link: new URL($item.find('.entry-media a').attr('href')!, baseUrl).href,
                 pubDate: parseDate(pubDate ?? ''),
                 category: [category],
                 description:
                     renderToString(
                         <ThreeKnsDescription
-                            cover={$item
-                                .find('.entry-media img')
-                                .attr('src')
-                                ?.trim()
-                                .replace('.', () => baseUrl)}
+                            cover={cover ? new URL(cover, baseUrl).href : undefined}
                             title={title}
                             tid={$item.find('.jb-chakan').text().trim()}
                             category={category}
@@ -123,7 +120,6 @@ async function handler(ctx: Context): Promise<Data> {
     return {
         title: $('title').text(),
         link: currentUrl.href,
-        allowEmpty: true,
         item: items,
     };
 }
