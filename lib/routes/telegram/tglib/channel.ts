@@ -1,5 +1,4 @@
 /* eslint-disable no-await-in-loop */
-/* oxlint-disable no-await-in-loop */
 import type { Context } from 'hono';
 import { Api } from 'teleproto';
 import { HTMLParser } from 'teleproto/extensions/html.js';
@@ -160,49 +159,25 @@ export default async function handler(ctx: Context) {
     let attachments: string[] = [];
     const messages = await client.getMessages(peer, { limit: 50 });
 
-    let i = 0;
     const item: DataItem[] = [];
-    for (const message of messages) {
-        let text = message.text; // must not be HTML
-
-        if (message.fwdFrom) {
-            let fwdName = message.fwdFrom.fromName;
-            if (message.fwdFrom.fromId) {
-                try {
-                    // oxlint-disable-next-line no-await-in-loop
-                    const fwdFrom = await client.getEntity(message.fwdFrom.fromId);
-                    fwdName = getDisplayName(fwdFrom);
-                } catch {
-                    // Private channel or chat that the session cannot access
-                    fwdName ||= 'Private Channel';
-                }
-            }
-            if (fwdName) {
-                text = `Forwarded From: ${fwdName}: ${text}`;
-            }
+    for (const [index, message] of messages.entries()) {
+        if (message.fwdFrom && attachments.length === 0) {
+            const fwdFrom = message.forward?.chat ?? message.forward?.sender;
+            attachments.push(`<p>Forwarded From: ${fwdFrom ? getDisplayName(fwdFrom) : message.fwdFrom.fromName}</p>`);
         }
         const media = await unwrapMedia(message.media, message.peerId);
         if (message.media instanceof Api.MessageMediaStory && media) {
             // if successfully loaded the story
-            let storyName = 'Private Peer';
-            try {
-                // oxlint-disable-next-line no-await-in-loop
-                const storyFrom = await client.getEntity(message.media.peer);
-                storyName = getDisplayName(storyFrom);
-            } catch {
-                // Story peer is private or inaccessible to the session
-            }
-            text = `Story From: ${storyName}: ${text}`;
+            const storyFrom = await client.getEntity(message.media.peer);
+            attachments.push(`<p>Story From: ${getDisplayName(storyFrom)}</p>`);
         }
         if (media) {
             if (media instanceof Api.MessageMediaPoll) {
                 attachments.push(await getPollResults(client, message, media));
-                continue;
+            } else {
+                const src = getMessageMediaUrl(ctx.req.url, username!, message.id, ctx.req.header('x-forwarded-prefix'));
+                attachments.push(getMediaLink(src, media));
             }
-            // messages that have no text are shown as if they're one post
-            // because in TG only 1 attachment per message is possible
-            const src = getMessageMediaUrl(ctx.req.url, username!, message.id, ctx.req.header('x-forwarded-prefix'));
-            attachments.push(getMediaLink(src, media));
         }
         if (message.replyMarkup instanceof Api.ReplyInlineMarkup) {
             for (const buttonRow of message.replyMarkup.rows) {
@@ -213,18 +188,18 @@ export default async function handler(ctx: Context) {
                 }
             }
         }
-        if (text === '' && ++i !== messages.length - 1) {
+        if (message.groupedId && messages[index + 1]?.groupedId?.eq(message.groupedId)) {
             continue;
         }
         let description = attachments.join('<br/>\n');
         attachments = []; // emitting these, buffer other ones
 
-        if (text) {
+        if (message.message) {
             description += `<p>${HTMLParser.unparse(message.message, message.entities).replaceAll('\n', '<br/>')}</p>`;
         }
 
         const pubDate = message.date === undefined ? undefined : parseDate(message.date * 1000);
-        const title = message.text || pubDate?.toUTCString() || '';
+        const title = message.text.split('\n', 1)[0] || pubDate?.toUTCString() || '';
         item.push({
             title,
             description,
