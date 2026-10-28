@@ -194,6 +194,9 @@
   "/cowlevel/element/:id": [
     "hoilc"
   ],
+  "/datalekt/incidents": [
+    "shoeper"
+  ],
   "/daum/potplayer/:lang?": [
     "nczitzk"
   ],

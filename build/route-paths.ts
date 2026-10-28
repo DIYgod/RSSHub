@@ -858,6 +858,7 @@ export type RoutePath =
   | `/dapenti/tugua`
   | `/darwinawards/`
   | `/dataguidance/news`
+  | `/datalekt/incidents`
   | `/daum/potplayer/:lang?`
   | `/daxiaamu/home`
   | `/dayanzai/:category/:fulltext?`

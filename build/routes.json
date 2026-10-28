@@ -2293,6 +2293,36 @@
     ],
     "lang": "zh-CN"
   },
+  "datalekt": {
+    "routes": {
+      "/incidents": {
+        "path": "/incidents",
+        "categories": [
+          "new-media"
+        ],
+        "example": "/datalekt/incidents",
+        "name": "Incidents",
+        "maintainers": [
+          "shoeper"
+        ],
+        "description": "Latest cyber incidents listed by Datalekt",
+        "radar": [
+          {
+            "source": [
+              "datalekt.nl/incidenten/"
+            ],
+            "target": "/incidents"
+          }
+        ],
+        "location": "incidents.ts",
+        "module": "() => import('@/routes/datalekt/incidents.ts')"
+      }
+    },
+    "apiRoutes": {},
+    "name": "Datalekt",
+    "url": "datalekt.nl",
+    "description": "Cyberincidenten in Nederland"
+  },
   "daum": {
     "name": "daum",
     "routes": {

@@ -557,6 +557,19 @@
       }
     ]
   },
+  "datalekt.nl": {
+    "_name": "Datalekt",
+    ".": [
+      {
+        "title": "Incidents",
+        "docs": "https://docs.rsshub.app/routes/datalekt",
+        "source": [
+          "/incidenten/"
+        ],
+        "target": "/datalekt/incidents"
+      }
+    ]
+  },
   "daum.net": {
     "_name": "daum",
     "potplayer": [
