@@ -235,6 +235,7 @@ export const storiesToItems = (stories: any[]) =>
             title: (own.text ?? shared?.text)?.split('\n', 1)[0] ?? node.actors[0].name,
             description: own.html + (shared?.html ?? ''),
             link: node.permalink_url,
+            guid: `facebook:${node.post_id}`,
             pubDate: parseDate(node.creation_time, 'X'),
             author: node.actors[0].name,
         };
