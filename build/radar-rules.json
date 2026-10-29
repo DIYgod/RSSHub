@@ -16738,6 +16738,19 @@
       }
     ]
   },
+  "cloudflare.com": {
+    "_name": "Cloudflare",
+    "blog": [
+      {
+        "title": "Blog",
+        "docs": "https://docs.rsshub.app/routes/cloudflare",
+        "source": [
+          "/"
+        ],
+        "target": "/cloudflare/blog"
+      }
+    ]
+  },
   "cls.cn": {
     "_name": "财联社",
     ".": [
