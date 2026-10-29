@@ -1240,12 +1240,6 @@
     "KTachibanaM",
     "AiraNadih"
   ],
-  "/facebook/group/:id": [
-    "TonyRL"
-  ],
-  "/facebook/page/:id": [
-    "TonyRL"
-  ],
   "/fediverse/timeline/:account": [
     "DIYgod",
     "pseudoyu"
@@ -1785,6 +1779,18 @@
   ],
   "/discord/search/:guildId/:routeParams": [
     "NekoAria"
+  ],
+  "/facebook/group/:id": [
+    "TonyRL"
+  ],
+  "/facebook/page/:id": [
+    "TonyRL"
+  ],
+  "/facebook/photos/:id": [
+    "TonyRL"
+  ],
+  "/facebook/reels/:id": [
+    "TonyRL"
   ],
   "/fanbox/:creator": [
     "KarasuShin",

@@ -3923,28 +3923,6 @@
       }
     ]
   },
-  "facebook.com": {
-    "_name": "Facebook",
-    "www": [
-      {
-        "title": "Group",
-        "docs": "https://docs.rsshub.app/routes/facebook",
-        "source": [
-          "/groups/:id"
-        ],
-        "target": "/facebook/group/:id"
-      },
-      {
-        "title": "Page / Profile",
-        "docs": "https://docs.rsshub.app/routes/facebook",
-        "source": [
-          "/:id",
-          "/people/:name/:id"
-        ],
-        "target": "/facebook/page/:id"
-      }
-    ]
-  },
   "fffdm.com": {
     "_name": "风之动漫",
     "www": [
@@ -5576,6 +5554,45 @@
           "/quest-home"
         ],
         "target": "/discord/quests"
+      }
+    ]
+  },
+  "facebook.com": {
+    "_name": "Facebook",
+    "www": [
+      {
+        "title": "Group",
+        "docs": "https://docs.rsshub.app/routes/facebook",
+        "source": [
+          "/groups/:id"
+        ],
+        "target": "/facebook/group/:id"
+      },
+      {
+        "title": "Page / Profile",
+        "docs": "https://docs.rsshub.app/routes/facebook",
+        "source": [
+          "/:id",
+          "/people/:name/:id"
+        ],
+        "target": "/facebook/page/:id"
+      },
+      {
+        "title": "Photos",
+        "docs": "https://docs.rsshub.app/routes/facebook",
+        "source": [
+          "/:id/photos",
+          "/:id/photos_by"
+        ],
+        "target": "/facebook/photos/:id"
+      },
+      {
+        "title": "Reels",
+        "docs": "https://docs.rsshub.app/routes/facebook",
+        "source": [
+          "/:id/reels"
+        ],
+        "target": "/facebook/reels/:id"
       }
     ]
   },
