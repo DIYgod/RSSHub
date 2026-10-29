@@ -21,6 +21,7 @@ jobs:
             github.event_name == 'workflow_dispatch' ||
               (github.event_name == 'issues' &&
               contains(fromJSON('["opened", "edited"]'), github.event.action) &&
+              !github.event.issue.locked &&
               github.event.sender.login != 'issuehunt-oss[bot]' &&
               !contains(fromJSON('["OWNER", "MEMBER", "COLLABORATOR"]'), github.event.issue.author_association))
         outputs:
@@ -81,6 +82,7 @@ jobs:
         if: |
             !cancelled() &&
             github.event_name == 'issues' &&
+            !github.event.issue.locked &&
             github.event.sender.login != 'issuehunt-oss[bot]' &&
             (needs.check-issue.result == 'success' || needs.check-issue.result == 'skipped') &&
             needs.check-issue.outputs.closed != 'true' &&
