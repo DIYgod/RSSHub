@@ -170,10 +170,7 @@ async function handler(ctx) {
                     .map((li) => {
                         const $li = $$(li);
 
-                        const key = $li
-                            .find('em')
-                            .text()
-                            .replaceAll(/：|\s/g, '');
+                        const key = $li.find('em').text().replaceAll(/：|\s/g, '');
                         const value = $li.find('span').length === 0 ? $li.contents().last().text().trim() : $li.find('span').text().trim();
 
                         return { [key]: value };

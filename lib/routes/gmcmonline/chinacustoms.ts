@@ -74,14 +74,7 @@ export const handler = async (ctx) => {
                             title,
                             pubDate,
                             link: new URL($i.prop('href')!, item.link).href,
-                            category: [
-                                current,
-                                $i
-                                    .closest('div.class-box')
-                                    .find('div.title-box span')
-                                    .text()
-                                    .replaceAll(/【|】/g, '') || undefined,
-                            ].filter((c): c is string => Boolean(c)),
+                            category: [current, $i.closest('div.class-box').find('div.title-box span').text().replaceAll(/【|】/g, '') || undefined].filter((c): c is string => Boolean(c)),
                             author,
                             guid,
                             id: guid,

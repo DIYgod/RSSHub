@@ -43,13 +43,7 @@ async function handler() {
             return {
                 title: $item.find('.li-img a p').text(),
                 link: a.attr('href')?.startsWith('http') ? a.attr('href') : `${baseUrl}${a.attr('href')}`,
-                pubDate: parseDateInTimezone(
-                    pubDate
-                        .text()
-                        .replaceAll(/年|月/g, '-')
-                        .replaceAll('日', ''),
-                    8
-                ),
+                pubDate: parseDateInTimezone(pubDate.text().replaceAll(/年|月/g, '-').replaceAll('日', ''), 8),
                 itunes_item_image: `${baseUrl}${$item.find('.li-img img').attr('src')}`,
             };
         });
