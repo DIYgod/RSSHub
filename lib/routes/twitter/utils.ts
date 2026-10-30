@@ -575,6 +575,9 @@ const keepOnlyMedia = function (tweets) {
     return excluded;
 };
 
+// Profiles rarely change, and every timeline fetch looks one up first
+export const TWITTER_USER_CACHE_EXPIRE = 24 * 60 * 60;
+
 export const getTwitterUserCacheKey = (id: string, operationName: string, params: Record<string, string | number | boolean | undefined> | undefined) => `twitter:${id}:${operationName}:${JSON.stringify(params)}`;
 
 export default {
