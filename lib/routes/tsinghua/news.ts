@@ -7,13 +7,13 @@ import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
-function parseNewsDate(sourceDate: string, format: string, sourceOffset?: number) {
+function parseNewsDate(sourceDate: string, format: string) {
     if (!sourceDate) {
         return;
     }
     const date = parseDate(sourceDate, format);
     if (Number.isFinite(date.valueOf())) {
-        return sourceOffset === undefined ? date : timezone(date, sourceOffset);
+        return timezone(date, 8);
     }
 }
 
@@ -46,7 +46,7 @@ async function fetchArticleDetails(link: string): Promise<Pick<DataItem, 'descri
 
     return {
         description: main.html() || undefined,
-        pubDate: parseNewsDate($('.sj p').text().trim(), 'YYYY年MM月DD日 HH:mm:ss', 8),
+        pubDate: parseNewsDate($('.sj p').text().trim(), 'YYYY年MM月DD日 HH:mm:ss'),
         author: reporter || contributor,
     };
 }
@@ -159,7 +159,7 @@ async function handler(ctx) {
                 return {
                     title: $item.find('.bt').text(),
                     link: new URL($item.attr('href')!, baseUrl).href?.replace('http://', 'https://'),
-                    pubDate: parseNewsDate(`${sj.find('span').text().trim()}.${sj.find('p').text().trim()}`, 'YYYY.MM.DD', 8),
+                    pubDate: parseNewsDate(`${sj.find('span').text().trim()}.${sj.find('p').text().trim()}`, 'YYYY.MM.DD'),
                 };
             }),
         ...(firstArticleLink
@@ -167,7 +167,7 @@ async function handler(ctx) {
                   {
                       title: $('.qhrw2_first .bt').text(),
                       link: new URL(firstArticleLink, link).href.replace('http://', 'https://'),
-                      pubDate: parseNewsDate(`${$('.qhrw2_first .sj span').text().trim()}.${$('.qhrw2_first .sj p').text().trim()}`, 'YYYY.MM.DD', 8),
+                      pubDate: parseNewsDate(`${$('.qhrw2_first .sj span').text().trim()}.${$('.qhrw2_first .sj p').text().trim()}`, 'YYYY.MM.DD'),
                   },
               ]
             : []),
