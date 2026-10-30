@@ -2,7 +2,7 @@ name: 'Close stale issues and PRs'
 
 on:
     schedule:
-        - cron: '31 * * * *'
+        - cron: '31 23 * * *'
     workflow_dispatch:
 
 permissions:
