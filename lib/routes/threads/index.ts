@@ -4,7 +4,7 @@ import type { Route } from '@/types';
 import { ViewType } from '@/types';
 import ofetch from '@/utils/ofetch';
 
-import { buildContent, extractThreadItems, getPubDate, parseRouteOptions, profileUrl, threadUrl } from './utils';
+import { buildContent, extractProfile, extractThreadItems, getPubDate, parseRouteOptions, profileUrl, threadUrl } from './utils';
 
 export const route: Route = {
     path: '/:user/:routeParams?',
@@ -47,6 +47,8 @@ async function handler(ctx) {
         throw new Error('Failed to fetch thread data');
     }
 
+    const profile = extractProfile($);
+
     ctx.set('json', threadsData);
 
     const items = threadsData
@@ -63,9 +65,10 @@ async function handler(ctx) {
         });
 
     return {
-        title: `${user} (@${user}) on Threads`,
+        title: `${profile?.full_name || user} (@${user}) on Threads`,
+        description: profile?.biography,
         link: profileUrl(user),
-        image: threadsData[0].post.user?.profile_pic_url,
+        image: profile?.profile_pic_url ?? threadsData[0].post.user?.profile_pic_url,
         item: items,
     };
 }

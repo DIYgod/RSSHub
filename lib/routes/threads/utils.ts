@@ -20,6 +20,7 @@ export interface ThreadItem {
     post: {
         user?: {
             username: string;
+            full_name: string;
             profile_pic_url: string;
         };
         taken_at?: number;
@@ -49,6 +50,37 @@ export const extractThreadItems = ($: CheerioAPI): ThreadItem[] => {
         return threadsData.length === 0;
     });
     return threadsData;
+};
+
+interface Profile {
+    username: string;
+    full_name: string;
+    biography: string;
+    profile_pic_url: string;
+}
+
+const findProfile = (node): Profile | undefined => {
+    if (!(node instanceof Object)) {
+        return;
+    }
+    if ('biography' in node) {
+        return node;
+    }
+    for (const value of Object.values(node)) {
+        const profile = findProfile(value);
+        if (profile) {
+            return profile;
+        }
+    }
+};
+
+export const extractProfile = ($: CheerioAPI): Profile | undefined => {
+    let profile: Profile | undefined;
+    $('script[data-sjs]:contains("biography")').each((_, script) => {
+        profile = findProfile(JSON.parse($(script).text()));
+        return !profile;
+    });
+    return profile;
 };
 
 export const parseRouteOptions = (params: URLSearchParams) => ({
