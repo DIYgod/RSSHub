@@ -50,10 +50,8 @@ async function handler() {
                 item.pubDate = date ? parseDate(date) : undefined;
                 $('h3:contains("Subscribe")').remove();
                 legacyDate.remove();
-                const content = $('d-article').length ? $('d-article') : $('#main-content > article');
-                content
-                    .find('[class$="__header"], [class$="__sidebar-container"], [class$="__controls"], [class$="__socialShare"], [class^="LandingPageSection-module-scss-module__"], [class^="SubjectNewsletter-module-scss-module__"]')
-                    .remove();
+                const content = $('d-article').length ? $('d-article') : $('#main-content > div > article');
+                content.find('[class$="_Header"], [class$="_ConstellationPanelSlot"]').remove();
                 content.find('img').each((_, e) => {
                     const $e = $(e);
                     $e.removeAttr('style srcset');
