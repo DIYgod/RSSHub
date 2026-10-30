@@ -214,7 +214,7 @@ export const handler = async (ctx: Context): Promise<Data> => {
     let items: DataItem[] = rows
         .slice(0, limit)
         .toArray()
-        .filter(isTag)
+        .filter((el) => isTag(el))
         .map((el) => {
             const $el: Cheerio<Element> = $(el);
             const $aEl: Cheerio<Element> = $el.find('h4 a');

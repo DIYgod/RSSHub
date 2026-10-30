@@ -73,7 +73,7 @@ const buildMediaItem = (media) => {
     return image?.url ? `<img src="${escapeAttribute(image.url)}"/>` : '';
 };
 
-const buildMedia = (post) => (post.carousel_media ?? [post]).map(buildMediaItem).join('');
+const buildMedia = (post) => (post.carousel_media ?? [post]).map((media) => buildMediaItem(media)).join('');
 
 export const buildContent = (item, options) => {
     let title = '';

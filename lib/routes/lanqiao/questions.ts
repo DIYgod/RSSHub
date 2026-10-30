@@ -48,7 +48,7 @@ async function handler(ctx) {
     // Render Markdown as HTML.
     const md = new MarkdownIt();
     const items = await pMap(
-        data.filter(isUnpinnedQuestion),
+        data.filter((item) => isUnpinnedQuestion(item)),
         (item: { id: number }) =>
             cache.tryGet(`https://www.lanqiao.cn/api/v2/questions/${item.id}/`, async () => {
                 const questionResponse = await got({

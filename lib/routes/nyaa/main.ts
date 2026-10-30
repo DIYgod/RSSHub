@@ -105,7 +105,7 @@ async function handler(ctx) {
             title: feed.title!,
             link: currentLink,
             description: feed.description,
-            item: items.flatMap(toDataItems),
+            item: items.flatMap((item) => toDataItems(item)),
         };
     }
     feed.items.map((item) => {
@@ -117,6 +117,6 @@ async function handler(ctx) {
         title: feed.title!,
         link: currentLink,
         description: feed.description,
-        item: feed.items.flatMap(toDataItems),
+        item: feed.items.flatMap((item) => toDataItems(item)),
     };
 }
