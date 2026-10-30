@@ -17,11 +17,18 @@
 <table>
 <tr>
 <td align="center" valign="top" width="50%">
+<a href="https://proxy-seller.com/?utm_source=rsshub"><img src="https://docs.rsshub.app/img/sponsors/proxy-seller.png" alt="Proxy-Seller" width="419"></a>
+<br>
+<a href="https://proxy-seller.com/?utm_source=rsshub">Proxy-Seller</a> is a global proxy provider offering residential, ISP, datacenter IPv4/IPv6, and mobile proxies across 220+ locations. Use promo code <code>RSSHUB</code> for 15% off ISP, IPv4, and residential proxies.
+</td>
+<td align="center" valign="top" width="50%">
 <a href="https://folo.is/"><img src="https://github.com/user-attachments/assets/68c66528-8c79-4a8a-8e43-ade7d936ab80" alt="Folo" width="419"></a>
 <br>
 RSSHub pairs especially well with <a href="https://folo.is/">Folo</a>, an AI RSS reader for feed discovery and modern reading workflows. The project is also open source on <a href="https://github.com/RSSNext/Folo">GitHub</a>.
 </td>
-<td align="center" valign="top" width="50%">
+</tr>
+<tr>
+<td align="center" valign="top" colspan="2">
 <a href="https://www.rapidproxy.io/?ref=rsshub"><img src="https://github.com/user-attachments/assets/23b68f68-959c-4176-aa6c-ff3b2e4ebfdf" alt="RapidProxy" width="419"></a>
 <br>
 <a href="https://www.rapidproxy.io/?ref=rsshub">RapidProxy</a> offers reliable residential proxies for scraping and global data access, with 90M+ IPs across 200+ countries. Traffic never expires, starting at just $0.55/GB. <a href="https://www.rapidproxy.io/?ref=rsshub">try free now</a>
