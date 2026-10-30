@@ -1,10 +1,5 @@
-import { load } from 'cheerio';
-
-import type { DataItem, Route } from '@/types';
+import type { Route } from '@/types';
 import { ViewType } from '@/types';
-import cache from '@/utils/cache';
-import got from '@/utils/got';
-import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/investigates',
@@ -25,39 +20,8 @@ export const route: Route = {
     handler,
 };
 
-async function handler() {
-    const rootUrl = 'https://www.reuters.com';
-    const currentUrl = `${rootUrl}/investigates/`;
-    const response = await got(currentUrl);
-
-    const $ = load(response.data);
-
-    const list = $('article.section-article-container.row')
-        .toArray()
-        .map((item): DataItem => ({
-            title: $(item).find('h2.subtitle').text(),
-            link: $(item).find('a.row.d-flex').prop('href'),
-        }));
-    const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link!, async () => {
-                const detailResponse = await got(item.link);
-                const content = load(detailResponse.data);
-
-                item.title = content('title').text();
-                item.description = content('article.special-report').html();
-                const pubDate = content('time[itemprop="datePublished"]').attr('datetime')?.trim();
-                item.pubDate = pubDate ? parseDate(pubDate) : undefined;
-                item.author = content('meta[property="og:article:publisher"]').attr('content');
-
-                return item;
-            })
-        )
-    );
-
-    return {
-        title: $('h1.series-subtitle').text(),
-        link: currentUrl,
-        item: items,
-    };
+// reuters.com/investigates/ moved to the regular /investigations/ section, which the category route already reads
+function handler(ctx) {
+    ctx.set('redirect', `/reuters/investigations${new URL(ctx.req.url).search}`);
+    return null;
 }
