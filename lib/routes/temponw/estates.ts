@@ -159,9 +159,9 @@ const enrich = async (card: ListCard): Promise<ListingExtra> => {
     return mergeDetail(card.extra, detail);
 };
 
-const listUrlFor = (area: string | undefined, page: number): string => {
+const listUrlFor = (area: string | undefined): string => {
     if (area === undefined) {
-        return `${HOST}/result?sort=new&page=${page}`;
+        return `${HOST}/result?sort=new&page=1`;
     }
     // The site requires `cities[]`; all 23 wards are passed at once for Tokyo.
     const query = new URLSearchParams({ prefectures_code: '13', name_j: '東京都' });
@@ -169,7 +169,7 @@ const listUrlFor = (area: string | undefined, page: number): string => {
         query.append('cities[]', code);
     }
     query.set('sort', 'new');
-    query.set('page', String(page));
+    query.set('page', '1');
     return `${HOST}/area_search/result?${query.toString()}`;
 };
 
@@ -178,7 +178,7 @@ export const handler = async (ctx): Promise<Data> => {
     if (area !== undefined && area !== 'tokyo') {
         throw new Error(`Unknown area "${area}", expected "tokyo" or none`);
     }
-    const html = await ofetch(listUrlFor(area, 1));
+    const html = await ofetch(listUrlFor(area));
     const cards = parseList(html);
 
     const items = await pMap(
@@ -200,7 +200,7 @@ export const handler = async (ctx): Promise<Data> => {
 
     return {
         title: `店舗ネットワーク 新着物件${area === 'tokyo' ? ' (東京23区)' : ''}`,
-        link: listUrlFor(area, 1),
+        link: listUrlFor(area),
         language: 'ja',
         item: items,
     };

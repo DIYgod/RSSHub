@@ -53,12 +53,12 @@ function findBlogCards(value: JsonValue): BlogCard[] {
         return [];
     }
     if (Array.isArray(value)) {
-        return value.flatMap(findBlogCards);
+        return value.flatMap((entry) => findBlogCards(entry));
     }
     if (Array.isArray(value.cards) && value.cards.every(isBlogCard)) {
         return value.cards;
     }
-    return Object.values(value).flatMap(findBlogCards);
+    return Object.values(value).flatMap((entry) => findBlogCards(entry));
 }
 
 function parsePublishedDate(value?: string) {

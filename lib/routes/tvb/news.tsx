@@ -126,8 +126,8 @@ async function handler(ctx) {
         category: [...item.category.map((c) => c.title), ...item.tags],
         description: renderToString(
             <>
-                {item.desc ? item.desc.split('\n').map(renderParagraph) : null}
-                {item.media.image?.map(renderImage) ?? null}
+                {item.desc ? item.desc.split('\n').map((text) => renderParagraph(text)) : null}
+                {item.media.image?.map((image) => renderImage(image)) ?? null}
             </>
         ),
     }));

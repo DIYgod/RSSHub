@@ -96,7 +96,7 @@ function getCategoryId(category: string) {
 }
 
 async function handler(ctx) {
-    const categoryId = (ctx.req.param('category') ?? '977-Lebanon').split('|').map(getCategoryId);
+    const categoryId = (ctx.req.param('category') ?? '977-Lebanon').split('|').map((category) => getCategoryId(category));
     const limit = getRouteLimit(ctx, 25);
 
     let token;
