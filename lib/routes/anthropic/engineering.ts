@@ -30,11 +30,11 @@ async function handler(ctx) {
     const $ = load(response);
     const limit = getRouteLimit(ctx, 20);
 
-    const list: DataItem[] = $('article[class^="AssetItem-module-scss-module__"]')
+    const list: DataItem[] = $('article[data-listing-row]')
         .toArray()
         .map((element) => {
             const $e = $(element);
-            const $link = $e.find('a[class$="__metaTitleLink"]');
+            const $link = $e.find('a[class$="_metaTitleLink"]');
             const href = $link.attr('href') ?? '';
             const fullLink = href.startsWith('http') ? href : `${baseUrl}${href}`;
             const dateText = $e.find('time').text();
@@ -54,7 +54,7 @@ async function handler(ctx) {
                 const response = await ofetch(item.link!);
                 const $ = load(response);
 
-                const content = $('article > div > div[class$="__body"]');
+                const content = $('article > div > div[class$="_body"]');
 
                 content.find('img').each((_, e) => {
                     const $e = $(e);
