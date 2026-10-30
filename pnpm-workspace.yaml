@@ -20,6 +20,8 @@ allowBuilds:
     wrangler: true
 
 overrides:
+    '@oxc-parser/binding-wasm32-wasip1>@emnapi/core': '2.0.0-beta.2'
+    '@oxc-parser/binding-wasm32-wasip1>@emnapi/runtime': '2.0.0-beta.2'
     'browserslist@4.28.9>caniuse-lite': '1.0.30001810'
     difflib: 'https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed'
     es-set-tostringtag: 'npm:@nolyfill/es-set-tostringtag@^1'
