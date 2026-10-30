@@ -157,7 +157,7 @@
         "@cloudflare/workers-types": "5.20261026.1",
         "@eslint/js": "10.0.1",
         "@j178/prek": "0.5.7",
-        "@mswjs/interceptors": "0.45.9",
+        "@mswjs/interceptors": "0.45.10",
         "@oxlint/plugins": "1.89.0",
         "@stylistic/eslint-plugin": "5.10.0",
         "@types/crypto-js": "4.2.2",
