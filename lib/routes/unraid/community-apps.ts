@@ -8,7 +8,7 @@ const defaultLimit = 20;
 type JsonValue = string | number | boolean | null | JsonValue[] | { [key: string]: JsonValue };
 
 function sortIdentityFields(_key: string, value: JsonValue) {
-    return value && typeof value === 'object' && !Array.isArray(value) ? Object.fromEntries(Object.entries(value).sort(([left], [right]) => left.localeCompare(right))) : value;
+    return value && typeof value === 'object' && !Array.isArray(value) ? Object.fromEntries(Object.entries(value).toSorted(([left], [right]) => left.localeCompare(right))) : value;
 }
 
 function getAppIdentity(app: { [key: string]: JsonValue }) {
