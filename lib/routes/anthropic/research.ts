@@ -29,12 +29,12 @@ async function handler(ctx) {
     const $ = load(response);
     const limit = getRouteLimit(ctx, 20);
 
-    const posts = $('article[class^="AssetItem-module-scss-module__"]')
+    const posts = $('article[data-listing-row]')
         .toArray()
         .slice(0, limit)
         .map((element): DataItem => {
             const $e = $(element);
-            const $link = $e.find('a[class$="__metaTitleLink"]');
+            const $link = $e.find('a[class$="_metaTitleLink"]');
             const href = $link.attr('href') ?? '';
             const dateText = $e.find('time').text();
             return {
@@ -52,7 +52,7 @@ async function handler(ctx) {
                 const $ = load(response);
 
                 const content = $('#main-content > div > article');
-                content.find('[class$="__Header"], [class$="__ConstellationPanelSlot"]').remove();
+                content.find('[class$="_Header"], [class$="_ConstellationPanelSlot"]').remove();
                 content.find('img').each((_, e) => {
                     const $e = $(e);
                     $e.removeAttr('style srcset');
