@@ -25,7 +25,7 @@ Specify options (in the format of query string) in parameter \`routeParams\` to 
 | \`showAuthorAvatarInDesc\`       | Show avatar of author in description (RSS body) (Not recommended if your RSS reader extracts images from description)        | \`0\`/\`1\`/\`true\`/\`false\` | \`false\`    |
 | \`showEmojiForQuotesAndReply\`   | Use "🔁" instead of "QT", "↩️" instead of "Re"                                                                               | \`0\`/\`1\`/\`true\`/\`false\` | \`true\`      |
 | \`showQuotedInTitle\`            | Show quoted tweet in title                                                                                                   | \`0\`/\`1\`/\`true\`/\`false\` | \`true\`      |
-| \`replies\`                      | Show replies                                                                                                                 | \`0\`/\`1\`/\`true\`/\`false\` | \`true\`      |`,
+| \`replies\`                      | Show replies                                                                                                                 | \`0\`/\`1\`/\`true\`/\`false\` | \`false\`     |`,
         },
     },
     name: 'User timeline',
@@ -38,7 +38,7 @@ async function handler(ctx) {
     const user = rawUser.startsWith('@') ? rawUser.slice(1) : rawUser;
     const options = parseRouteOptions(new URLSearchParams(routeParams));
 
-    const response = await ofetch(profileUrl(user));
+    const response = await ofetch(options.replies ? `${profileUrl(user)}/replies` : profileUrl(user));
     const $ = load(response);
 
     const threadsData = extractThreadItems($);
