@@ -59,7 +59,7 @@ The site sits behind AWS WAF, which starts answering a client with an empty chal
     features: {
         requireConfig: false,
         requirePuppeteer: false,
-        antiCrawler: false,
+        antiCrawler: true,
         supportRadar: true,
     },
     radar: [
