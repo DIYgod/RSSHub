@@ -1693,6 +1693,7 @@ export type RoutePath =
   | `/hnust/jwc`
   | `/home-assistant/hacs/repositories`
   | `/homes/chintai/:pref/:city`
+  | `/homes/mansion/chuko/:pref/:city`
   | `/hongkong/chp/:category?/:language?`
   | `/hongkong/dh/:language?`
   | `/hostmonit/cloudflareyes/:type?`

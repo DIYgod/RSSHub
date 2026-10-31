@@ -11121,6 +11121,9 @@
   "/homes/chintai/:pref/:city": [
     "pseudoyu"
   ],
+  "/homes/mansion/chuko/:pref/:city": [
+    "pseudoyu"
+  ],
   "/hpoi/bannerItem": [
     "DIYgod"
   ],

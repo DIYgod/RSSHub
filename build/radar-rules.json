@@ -58056,6 +58056,14 @@
           "/chintai/:pref/:city/list"
         ],
         "target": "/homes/chintai/:pref/:city"
+      },
+      {
+        "title": "中古マンション",
+        "docs": "https://docs.rsshub.app/routes/homes",
+        "source": [
+          "/mansion/chuko/:pref/:city/list"
+        ],
+        "target": "/homes/mansion/chuko/:pref/:city"
       }
     ]
   },
