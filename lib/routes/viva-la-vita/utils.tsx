@@ -1,4 +1,5 @@
-import { encodeXML } from 'entities';
+import { raw } from 'hono/html';
+import { renderToString } from 'hono/jsx/dom/server';
 import pMap, { pMapSkip } from 'p-map';
 
 import type { Data, DataItem } from '@/types';
@@ -57,7 +58,7 @@ interface Discussion {
 
 interface ApiResponse<T> {
     data: T;
-    included?: (Post | User | Tag)[];
+    included?: Array<Post | User | Tag>;
 }
 
 const feeds = {
@@ -73,7 +74,7 @@ function isVisibleComment(post: Post): boolean {
     return post.attributes.contentType === 'comment' && !post.attributes.hiddenAt && !post.attributes.isHidden && post.attributes.isApproved !== false && typeof post.attributes.contentHtml === 'string';
 }
 
-function userMap(included: (Post | User | Tag)[] = []): Map<string, User> {
+function userMap(included: Array<Post | User | Tag> = []): Map<string, User> {
     return new Map(included.filter((resource): resource is User => resource.type === 'users').map((user) => [user.id, user]));
 }
 
@@ -82,14 +83,33 @@ function authorName(reference: Reference | null | undefined, users: Map<string, 
     return user ? user.attributes.displayName || user.attributes.username : '已注销用户';
 }
 
-function renderComment(post: Post, discussionId: string, users: Map<string, User>): string {
-    const author = encodeXML(authorName(post.relationships?.user?.data, users));
-    const date = encodeXML(post.attributes.createdAt);
-    const link = `${baseUrl}/d/${discussionId}/${post.attributes.number}`;
-    return `<section><p><a href="${link}">#${post.attributes.number}</a> · ${author} · <time datetime="${date}">${date}</time></p>${post.attributes.contentHtml}</section>`;
+function DiscussionDescription({ firstPost, comments, discussionId, users }: { firstPost: Post; comments: Post[]; discussionId: string; users: Map<string, User> }) {
+    return (
+        <>
+            {raw(firstPost.attributes.contentHtml ?? '')}
+            <hr />
+            <h2>最新 {comments.length} 条评论</h2>
+            {comments.length ? (
+                comments.map((post) => (
+                    <section key={post.id}>
+                        <p>
+                            <a href={`${baseUrl}/d/${discussionId}/${post.attributes.number}`}>#{post.attributes.number}</a>
+                            {' · '}
+                            {authorName(post.relationships?.user?.data, users)}
+                            {' · '}
+                            <time datetime={post.attributes.createdAt}>{post.attributes.createdAt}</time>
+                        </p>
+                        {raw(post.attributes.contentHtml ?? '')}
+                    </section>
+                ))
+            ) : (
+                <p>暂无公开评论。</p>
+            )}
+        </>
+    );
 }
 
-async function discussionItem(discussion: Discussion, included: (Post | User | Tag)[]): Promise<DataItem | typeof pMapSkip> {
+async function discussionItem(discussion: Discussion, included: Array<Post | User | Tag>): Promise<DataItem | typeof pMapSkip> {
     const link = `${baseUrl}/d/${discussion.id}`;
     const firstPostId = discussion.relationships.firstPost.data?.id;
     const firstPost = included.find((resource): resource is Post => resource.type === 'posts' && resource.id === firstPostId);
@@ -116,10 +136,9 @@ async function discussionItem(discussion: Discussion, included: (Post | User | T
     );
     const comments = replies.data
         .filter((post) => post.id !== firstPostId && post.attributes.number !== 1 && isVisibleComment(post))
-        .sort((a, b) => b.attributes.number - a.attributes.number)
+        .toSorted((a, b) => b.attributes.number - a.attributes.number)
         .slice(0, commentLimit);
     const replyUsers = userMap(replies.included);
-    const commentHtml = comments.length ? comments.map((post) => renderComment(post, discussion.id, replyUsers)).join('') : '<p>暂无公开评论。</p>';
     const users = userMap(included);
     const tagIds = new Set(discussion.relationships.tags?.data.map((tag) => tag.id));
     const category = included.filter((resource): resource is Tag => resource.type === 'tags' && tagIds.has(resource.id)).map((tag) => tag.attributes.name);
@@ -133,20 +152,21 @@ async function discussionItem(discussion: Discussion, included: (Post | User | T
         // Keep Atom's entry timestamp stable as well: activity is not a new publication.
         updated: parseDate(discussion.attributes.createdAt),
         category,
-        description: `${firstPost.attributes.contentHtml}<hr><h2>最新 ${comments.length} 条评论</h2>${commentHtml}`,
+        description: renderToString(<DiscussionDescription firstPost={firstPost} comments={comments} discussionId={discussion.id} users={replyUsers} />),
     };
 }
 
 export async function getFeed(type: keyof typeof feeds): Promise<Data> {
     const feed = feeds[type];
-    const response = await ofetch<ApiResponse<Discussion[]>>(`${baseUrl}/api/discussions`, {
-        query: {
-            sort: feed.sort,
-            ...(type === 'featured' ? { 'filter[frontpage]': true } : {}),
-            'page[limit]': 20,
-            include: 'firstPost,firstPost.user,user,tags',
-        },
-    });
+    const query: { sort: string; 'page[limit]': number; include: string; 'filter[frontpage]'?: boolean } = {
+        sort: feed.sort,
+        'page[limit]': 20,
+        include: 'firstPost,firstPost.user,user,tags',
+    };
+    if (type === 'featured') {
+        query['filter[frontpage]'] = true;
+    }
+    const response = await ofetch<ApiResponse<Discussion[]>>(`${baseUrl}/api/discussions`, { query });
     const item = await pMap(response.data, (discussion) => discussionItem(discussion, response.included || []), { concurrency: 3 });
 
     return {
