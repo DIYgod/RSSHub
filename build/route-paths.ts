@@ -274,6 +274,7 @@ export type RoutePath =
   | `/atcoder/contest/:language?/:rated?/:category?/:keyword?`
   | `/atcoder/post/:language?/:keyword?`
   | `/athome/chintai/:pref/:city`
+  | `/athome/kodate/chuko/:pref/:city`
   | `/athome/mansion/chuko/:pref/:city`
   | `/athome/rent-store/:pref/:city`
   | `/atptour/news/:lang?`
@@ -513,6 +514,7 @@ export type RoutePath =
   | `/caixin/latest`
   | `/caixin/weekly`
   | `/caixinglobal/latest`
+  | `/calif/research`
   | `/camchina/:id?`
   | `/canada.ca/news/:lang/:department?`
   | `/canaeru/:pref?/:city?`

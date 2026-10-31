@@ -2950,6 +2950,9 @@
   "/caixinglobal/latest": [
     "TonyRL"
   ],
+  "/calif/research": [
+    "shoeper"
+  ],
   "/camchina/:id?": [
     "nczitzk"
   ],
@@ -9778,6 +9781,9 @@
     "pseudoyu"
   ],
   "/athome/chintai/:pref/:city": [
+    "pseudoyu"
+  ],
+  "/athome/kodate/chuko/:pref/:city": [
     "pseudoyu"
   ],
   "/athome/mansion/chuko/:pref/:city": [

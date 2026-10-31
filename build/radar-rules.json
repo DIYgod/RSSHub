@@ -14015,6 +14015,19 @@
       }
     ]
   },
+  "calif.io": {
+    "_name": "Calif",
+    ".": [
+      {
+        "title": "Research",
+        "docs": "https://docs.rsshub.app/routes/calif",
+        "source": [
+          "/research"
+        ],
+        "target": "/calif/research"
+      }
+    ]
+  },
   "camchina.org.cn": {
     "_name": "中国管理现代化研究会",
     "www": [
@@ -52563,6 +52576,14 @@
           "/chintai/:pref/:city/list"
         ],
         "target": "/athome/chintai/:pref/:city"
+      },
+      {
+        "title": "中古一戸建て",
+        "docs": "https://docs.rsshub.app/routes/athome",
+        "source": [
+          "/kodate/chuko/:pref/:city/list"
+        ],
+        "target": "/athome/kodate/chuko/:pref/:city"
       },
       {
         "title": "中古マンション",
