@@ -378,6 +378,11 @@ export const mergeRaw = (list: Record<string, string | null>, detail: Record<str
 
 /** Detail pages are fetched a few at a time: one feed should not burst a portal with its whole page at once. */
 const DETAIL_CONCURRENCY = 3;
+/**
+ * Detail fields are kept for a fixed six hours and not renewed when read: renewed, a listing that
+ * stays on the first page would keep its first 管理費 / 情報更新日 for as long as it stayed there.
+ */
+const DETAIL_MAX_AGE = 6 * 60 * 60;
 
 /**
  * Units → feed items. With `readDetail`, each unit's own page is fetched once and its label pairs
@@ -404,17 +409,22 @@ export const residentialItems = async (
             let detail: Record<string, string | null> = {};
             if (readDetail !== null) {
                 try {
-                    detail = await cache.tryGet(`${base.source}:detail:${unit.id}`, async () => {
-                        if (options.maxFetches !== undefined && fetches >= options.maxFetches) {
-                            throw new DetailDeferred();
-                        }
-                        fetches += 1;
-                        const pairs = readDetail(await fetchPage(unit.link));
-                        if (Object.keys(pairs).length === 0) {
-                            throw new Error('the page carried no labelled field');
-                        }
-                        return pairs;
-                    });
+                    detail = await cache.tryGet(
+                        `${base.source}:detail:${unit.id}`,
+                        async () => {
+                            if (options.maxFetches !== undefined && fetches >= options.maxFetches) {
+                                throw new DetailDeferred();
+                            }
+                            fetches += 1;
+                            const pairs = readDetail(await fetchPage(unit.link));
+                            if (Object.keys(pairs).length === 0) {
+                                throw new Error('the page carried no labelled field');
+                            }
+                            return pairs;
+                        },
+                        DETAIL_MAX_AGE,
+                        false
+                    );
                 } catch (error) {
                     if (error instanceof DetailDeferred) {
                         deferred += 1;
