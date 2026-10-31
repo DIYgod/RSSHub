@@ -2585,9 +2585,6 @@
   "/atcoder/post/:language?/:keyword?": [
     "nczitzk"
   ],
-  "/athome/rent-store/:pref/:city": [
-    "pseudoyu"
-  ],
   "/augmentcode/blog": [
     "nczitzk"
   ],
@@ -9777,6 +9774,12 @@
   "/asiantolick/tag/:id": [
     "nczitzk"
   ],
+  "/athome/rent-store/:pref/:city": [
+    "pseudoyu"
+  ],
+  "/athome/chintai/:pref/:city": [
+    "pseudoyu"
+  ],
   "/bandcamp/live": [
     "nczitzk"
   ],
@@ -11119,6 +11122,9 @@
     "nczitzk"
   ],
   "/homes/chintai/:pref/:city": [
+    "pseudoyu"
+  ],
+  "/homes/kodate/chuko/:pref/:city": [
     "pseudoyu"
   ],
   "/homes/mansion/chuko/:pref/:city": [

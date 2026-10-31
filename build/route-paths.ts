@@ -273,6 +273,7 @@ export type RoutePath =
   | `/asus/gpu-tweak`
   | `/atcoder/contest/:language?/:rated?/:category?/:keyword?`
   | `/atcoder/post/:language?/:keyword?`
+  | `/athome/chintai/:pref/:city`
   | `/athome/rent-store/:pref/:city`
   | `/atptour/news/:lang?`
   | `/augmentcode/blog`
@@ -1693,6 +1694,7 @@ export type RoutePath =
   | `/hnust/jwc`
   | `/home-assistant/hacs/repositories`
   | `/homes/chintai/:pref/:city`
+  | `/homes/kodate/chuko/:pref/:city`
   | `/homes/mansion/chuko/:pref/:city`
   | `/hongkong/chp/:category?/:language?`
   | `/hongkong/dh/:language?`

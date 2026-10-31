@@ -12094,19 +12094,6 @@
       }
     ]
   },
-  "athome.co.jp": {
-    "_name": "at home",
-    "www": [
-      {
-        "title": "貸店舗",
-        "docs": "https://docs.rsshub.app/routes/athome",
-        "source": [
-          "/rent_store/:pref/:city/list"
-        ],
-        "target": "/athome/rent-store/:pref/:city"
-      }
-    ]
-  },
   "augmentcode.com": {
     "_name": "Augment Code",
     ".": [
@@ -52558,6 +52545,27 @@
       }
     ]
   },
+  "athome.co.jp": {
+    "_name": "at home",
+    "www": [
+      {
+        "title": "貸店舗",
+        "docs": "https://docs.rsshub.app/routes/athome",
+        "source": [
+          "/rent_store/:pref/:city/list"
+        ],
+        "target": "/athome/rent-store/:pref/:city"
+      },
+      {
+        "title": "賃貸物件",
+        "docs": "https://docs.rsshub.app/routes/athome",
+        "source": [
+          "/chintai/:pref/:city/list"
+        ],
+        "target": "/athome/chintai/:pref/:city"
+      }
+    ]
+  },
   "bandcamp.com": {
     "_name": "Bandcamp",
     ".": [
@@ -58056,6 +58064,14 @@
           "/chintai/:pref/:city/list"
         ],
         "target": "/homes/chintai/:pref/:city"
+      },
+      {
+        "title": "中古一戸建て",
+        "docs": "https://docs.rsshub.app/routes/homes",
+        "source": [
+          "/kodate/chuko/:pref/:city/list"
+        ],
+        "target": "/homes/kodate/chuko/:pref/:city"
       },
       {
         "title": "中古マンション",
