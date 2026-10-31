@@ -17,7 +17,7 @@ export const handler = async (ctx): Promise<Data> => {
     const items = await residentialItems(units.slice(0, limit), { source: 'athome', deal_kind: 'rent' }, null);
 
     return {
-        title: `アットホーム 賃貸 (${city})`,
+        title: `アットホーム 賃貸 (${pref}/${city})`,
         link: listUrl,
         language: 'ja',
         item: items,
