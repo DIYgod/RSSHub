@@ -61,6 +61,13 @@ interface ApiResponse<T> {
     included?: Array<Post | User | Tag>;
 }
 
+interface DiscussionQuery {
+    sort: string;
+    'page[limit]': number;
+    include: string;
+    'filter[frontpage]'?: boolean;
+}
+
 const feeds = {
     latest: { title: '最新帖子', sort: '-createdAt', websiteSort: 'newest' },
     featured: { title: '精华帖子', sort: '-frontdate', websiteSort: 'front' },
@@ -158,7 +165,7 @@ async function discussionItem(discussion: Discussion, included: Array<Post | Use
 
 export async function getFeed(type: keyof typeof feeds): Promise<Data> {
     const feed = feeds[type];
-    const query: { sort: string; 'page[limit]': number; include: string; 'filter[frontpage]'?: boolean } = {
+    const query: DiscussionQuery = {
         sort: feed.sort,
         'page[limit]': 20,
         include: 'firstPost,firstPost.user,user,tags',
