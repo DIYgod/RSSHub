@@ -12094,19 +12094,6 @@
       }
     ]
   },
-  "athome.co.jp": {
-    "_name": "at home",
-    "www": [
-      {
-        "title": "貸店舗",
-        "docs": "https://docs.rsshub.app/routes/athome",
-        "source": [
-          "/rent_store/:pref/:city/list"
-        ],
-        "target": "/athome/rent-store/:pref/:city"
-      }
-    ]
-  },
   "augmentcode.com": {
     "_name": "Augment Code",
     ".": [
@@ -52555,6 +52542,43 @@
           "/tag-:id"
         ],
         "target": "/asiantolick/tag/:id"
+      }
+    ]
+  },
+  "athome.co.jp": {
+    "_name": "at home",
+    "www": [
+      {
+        "title": "貸店舗",
+        "docs": "https://docs.rsshub.app/routes/athome",
+        "source": [
+          "/rent_store/:pref/:city/list"
+        ],
+        "target": "/athome/rent-store/:pref/:city"
+      },
+      {
+        "title": "賃貸物件",
+        "docs": "https://docs.rsshub.app/routes/athome",
+        "source": [
+          "/chintai/:pref/:city/list"
+        ],
+        "target": "/athome/chintai/:pref/:city"
+      },
+      {
+        "title": "中古一戸建て",
+        "docs": "https://docs.rsshub.app/routes/athome",
+        "source": [
+          "/kodate/chuko/:pref/:city/list"
+        ],
+        "target": "/athome/kodate/chuko/:pref/:city"
+      },
+      {
+        "title": "中古マンション",
+        "docs": "https://docs.rsshub.app/routes/athome",
+        "source": [
+          "/mansion/chuko/:pref/:city/list"
+        ],
+        "target": "/athome/mansion/chuko/:pref/:city"
       }
     ]
   },
