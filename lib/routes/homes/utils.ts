@@ -3,7 +3,7 @@ import { load } from 'cheerio';
 import type { Element } from 'domhandler';
 
 import type { ListedUnit } from '@/routes/suumo/residential';
-import { collectPairs } from '@/routes/suumo/residential';
+import { collectPairs, photoUrl } from '@/routes/suumo/residential';
 import { clean } from '@/routes/temposmart/utils';
 import ofetch from '@/utils/ofetch';
 
@@ -121,7 +121,7 @@ export const parseHomesChintaiList = (html: string): ListedUnit[] => {
             building: clean(b.find('.bukkenName').first().text()),
             ...collectPairs($, b.find('.bukkenSpec')),
         };
-        const image = b.find('.bukkenPhoto img').attr('data-original');
+        const image = photoUrl(b.find('.bukkenPhoto img').attr('data-original'), HOST);
 
         for (const tr of b.find('tr.prg-roomInfo').toArray()) {
             const row = $(tr);
@@ -196,7 +196,7 @@ export const parseHomesBuyList = (html: string): ListedUnit[] => {
             ...collectPairs($, b.find('.bukkenSpec')),
         };
         const buildingTags = texts($, b.find('.relatedKeywordsDataBuiding li'));
-        const image = b.find('.bukkenPhoto img').attr('data-original');
+        const image = photoUrl(b.find('.bukkenPhoto img').attr('data-original'), HOST);
 
         for (const tr of b.find('tr.raSpecRow').toArray()) {
             const row = $(tr);
@@ -217,7 +217,7 @@ export const parseHomesBuyList = (html: string): ListedUnit[] => {
                     ...collectPairs($, row.find('td.info')),
                 },
                 tags: [...texts($, row.find('.relatedKeywordsData li')), ...buildingTags],
-                image: row.find('.displayPic img').attr('data-original') ?? image,
+                image: photoUrl(row.find('.displayPic img').attr('data-original'), HOST) ?? image,
             });
         }
     }
