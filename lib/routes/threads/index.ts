@@ -43,7 +43,8 @@ async function handler(ctx) {
 
     const threadsData = extractThreadItems($);
 
-    if (!threadsData.length) {
+    // A profile that has never posted still embeds its timeline with empty edges, so only a page without it is a failure
+    if (!threadsData.length && !$('script[data-sjs]:contains("mediaData")').text().includes('"mediaData":{"edges":[]')) {
         throw new Error('Failed to fetch thread data');
     }
 
@@ -68,7 +69,8 @@ async function handler(ctx) {
         title: `${profile?.full_name || user} (@${user}) on Threads`,
         description: profile?.biography,
         link: profileUrl(user),
-        image: profile?.profile_pic_url ?? threadsData[0].post.user?.profile_pic_url,
+        image: profile?.profile_pic_url ?? threadsData[0]?.post.user?.profile_pic_url,
         item: items,
+        allowEmpty: true,
     };
 }
