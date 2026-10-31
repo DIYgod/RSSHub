@@ -3,6 +3,7 @@ import pMap from 'p-map';
 
 import type { Data, DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
+import logger from '@/utils/logger';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
@@ -53,18 +54,21 @@ function parseListing(json: { content: string }): ListItem[] {
 }
 
 async function enrichItem(item: ListItem): Promise<DataItem> {
-    const details = await cache.tryGet(`sjtu:cs:notice:v3:${item.link}`, async () => {
+    const details = await cache.tryGet(`sjtu:cs:notice:v4:${item.link}`, async () => {
         const html = await ofetch<string>(item.link);
         const $ = load(html);
         const $body = $('div.xw-cont');
         const $txt = $body.find('.txt');
+        if (!$txt.length) {
+            throw new Error(`Notice content not found at ${item.link}`);
+        }
 
         const publishedText = $body.find('.jj p').first().text();
         const publishedMatch = publishedText.match(/(\d{4})-(\d{1,2})-(\d{1,2})/);
         let pubDate: Date | undefined;
         if (publishedMatch) {
             const [, y, m, d] = publishedMatch;
-            pubDate = parseDate(`${y}-${m.padStart(2, '0')}-${d.padStart(2, '0')} +0000`, 'YYYY-MM-DD ZZ');
+            pubDate = parseDate(`${y}-${m.padStart(2, '0')}-${d.padStart(2, '0')} +0800`, 'YYYY-MM-DD ZZ');
         }
 
         return { description: $txt.html(), pubDate };
@@ -73,15 +77,16 @@ async function enrichItem(item: ListItem): Promise<DataItem> {
         title: item.title,
         link: item.link,
         description: details.description,
-        pubDate: details.pubDate ?? (item.date ? parseDate(`${item.date} +0000`, 'YYYY-MM-DD ZZ') : undefined),
+        pubDate: details.pubDate ?? (item.date ? parseDate(`${item.date} +0800`, 'YYYY-MM-DD ZZ') : undefined),
     };
 }
 
 async function enrichItemSafely(item: ListItem): Promise<DataItem> {
     try {
         return await enrichItem(item);
-    } catch {
-        return { title: item.title, link: item.link, pubDate: item.date ? parseDate(`${item.date} +0000`, 'YYYY-MM-DD ZZ') : undefined };
+    } catch (error) {
+        logger.warn(`Failed to fetch SJTU CS notice ${item.link}: ${error}`);
+        return { title: item.title, link: item.link, pubDate: item.date ? parseDate(`${item.date} +0800`, 'YYYY-MM-DD ZZ') : undefined };
     }
 }
 
@@ -106,7 +111,9 @@ export const route: Route = {
     maintainers: ['BeaCox'],
     handler,
     url: 'www.cs.sjtu.edu.cn/notice-xssw-bkspy.html',
-    description: `| 本科生培养 | 研究生培养 | 国际交流 | 党建德育 | 团学工作 | 职业发展 | 其他 |
+    description: `仅包含官网未登录时可见的公开通知。分类没有公开通知时无法生成订阅。
+
+| 本科生培养 | 研究生培养 | 国际交流 | 党建德育 | 团学工作 | 职业发展 | 其他 |
 | ---------- | ---------- | -------- | -------- | -------- | -------- | ---- |
 | bkspy      | yjspy      | gjjl     | djdy     | txgz     | zyfz     | qt   |`,
 };
@@ -132,10 +139,13 @@ async function handler(ctx): Promise<Data> {
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
         },
-        parseResponse: JSON.parse,
+        responseType: 'json',
     });
 
     const items = parseListing(json);
+    if (!items.length) {
+        throw new Error(`No public notices found for ${cat.name}. Check ${listLink} without logging in to confirm whether this category has public notices.`);
+    }
     const dataItems = await pMap(items, enrichItemSafely, { concurrency: 3 });
 
     return {
