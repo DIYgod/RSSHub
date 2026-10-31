@@ -169,3 +169,108 @@ export const parseAthomeChintai = (state: State): ListedUnit[] => {
     }
     return units;
 };
+
+interface SaleUnit {
+    seoRoma?: string;
+    bukkenNo?: string;
+    title?: string;
+    kakaku?: string;
+    madori?: string;
+    kaidateKai?: string;
+    areaInfo?: { area?: string };
+    tochiMs?: string;
+    bukkenInfo?: { chikunengetsu?: string; construction?: string };
+    location?: string;
+    syumokuNm?: string;
+    tsuboTanka?: string;
+    tochiKenriNm?: string;
+    rimawari?: string;
+    ownerChangeFlg?: boolean;
+    buildingToLandRatio?: string;
+    floorAreaRatio?: string;
+    bukkenAccess?: Array<{ name?: string } | null>;
+    images?: Array<{ originalImageUrl?: string } | null>;
+    isOption?: { isNewMark?: boolean };
+    osusumeComment?: { comment?: string } | null;
+}
+
+interface ResponseEnvelope {
+    body?: string;
+}
+
+/** The 売買 list keeps the SSR pass's whole HTTP response: the units are in its `body` (held as text), three layers down. */
+const saleListOf = (state: State): SaleUnit[] => {
+    const key = Object.keys(state).find((k) => k.includes('/sell-living/bukken/list/first-view'));
+    const body = key === undefined ? undefined : (state[key] as ResponseEnvelope).body;
+    const list = body === undefined ? undefined : (JSON.parse(body) as { data?: { bukkenData?: { bukkenList?: SaleUnit[] } } }).data?.bukkenData?.bukkenList;
+    if (!Array.isArray(list)) {
+        throw new TypeError('athome: the SSR state holds no 売買 listing data; the page structure may have changed');
+    }
+    return list;
+};
+
+/**
+ * 'サンハイム田町 317 ワンルーム' → building 'サンハイム田町', room '317': the title is name, room number (or
+ * a floor, 'マリンロードダイヤモンドパレス 10階 2LDK'), 間取り. A floor is dropped: it has its own field.
+ */
+const splitTitle = (title: string | null, layout: string | null): { building: string | null; room_no: string | null } => {
+    const rest = title !== null && layout !== null && title.endsWith(layout) ? title.slice(0, -layout.length).trim() : title;
+    const tokens = (rest?.split(/\s+/) ?? []).filter((t, i, all) => !(i > 0 && i === all.length - 1 && /^(?:地下)?\d+階$/.test(t.normalize('NFKC'))));
+    const last = tokens.at(-1);
+    return tokens.length > 1 && last !== undefined && /^\d{3,4}$/.test(last.normalize('NFKC')) ? { building: clean(tokens.slice(0, -1).join(' ')), room_no: last } : { building: clean(tokens.join(' ')), room_no: null };
+};
+
+/**
+ * 売買 list (中古マンション / 中古一戸建て). `property_type` is the list page's own classification: a
+ * unit's 種目 can read 「リフォーム・リノベーション」 instead, which is kept in `raw.syumoku` and as a tag.
+ * `tochiMs` is the plot: for a house that is the unit's own 土地面積, for a condominium the whole
+ * building's 敷地面積, so it only becomes `land_area` for houses.
+ */
+export const parseAthomeBuy = (state: State, propertyType: string): ListedUnit[] => {
+    const units: ListedUnit[] = [];
+    const seen = new Set<string>();
+    for (const b of saleListOf(state)) {
+        const id = clean(b.bukkenNo);
+        const kind = clean(b.seoRoma);
+        if (id === null || kind === null || seen.has(id)) {
+            continue;
+        }
+        seen.add(id);
+        const layout = clean(b.madori);
+        const isHouse = kind === 'kodate';
+        const syumoku = clean(b.syumokuNm);
+        units.push({
+            id,
+            link: `${HOST}/${kind}/${id}/`,
+            raw: {
+                property_type: propertyType,
+                syumoku,
+                ...splitTitle(clean(b.title), layout),
+                price: manYen(b.kakaku),
+                layout,
+                area: clean(b.areaInfo?.area),
+                land_area: isHouse ? clean(b.tochiMs) : null,
+                site_area: isHouse ? null : clean(b.tochiMs),
+                floor: clean(b.kaidateKai),
+                floors: clean(b.kaidateKai),
+                built: clean(b.bukkenInfo?.chikunengetsu),
+                structure: clean(b.bukkenInfo?.construction),
+                address: clean(b.location),
+                access:
+                    (b.bukkenAccess ?? [])
+                        .map((a) => clean(a?.name))
+                        .filter((a): a is string => a !== null)
+                        .join('\n') || null,
+                land_rights: clean(b.tochiKenriNm),
+                yield: clean(b.rimawari),
+                tsubo_unit_price: clean(b.tsuboTanka),
+                coverage_ratio: clean(b.buildingToLandRatio),
+                floor_area_ratio: clean(b.floorAreaRatio),
+                comment: clean(b.osusumeComment?.comment),
+            },
+            tags: [...(b.isOption?.isNewMark ? ['新着'] : []), ...(b.ownerChangeFlg ? ['オーナーチェンジ'] : []), ...(syumoku !== null && syumoku !== propertyType ? [syumoku] : [])],
+            image: image(b.images?.[0]?.originalImageUrl),
+        });
+    }
+    return units;
+};
