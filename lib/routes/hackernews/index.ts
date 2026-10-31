@@ -79,6 +79,7 @@ async function handler(ctx) {
                 pubDate: parseDate(thing.find('.age').attr('title') ?? thing.next().find('.age').attr('title')),
 
                 link: '',
+                commentsUrl: '',
                 origin: thing.find('.titleline').children('a').attr('href'),
                 onStory: thing.find('.onstory').text().slice(2),
 
@@ -90,6 +91,7 @@ async function handler(ctx) {
             };
 
             item.link = `${rootUrl}/item?id=${item.guid}`;
+            item.commentsUrl = item.link;
             item.guid = type === 'sources' ? item.guid : `${item.guid}${item.comments === 'discuss' ? '' : `-${item.comments}`}`;
             item.description = `<a href="${item.link}">Comments on Hacker News</a> | <a href="${item.origin}">Source</a>`;
 
@@ -140,6 +142,10 @@ async function handler(ctx) {
 
                 if (Number.isNaN(item.comments)) {
                     item.comments = 0;
+                }
+
+                if (item.upvotes) {
+                    item.description = `<p>Points: ${item.upvotes}</p>${item.description}`;
                 }
 
                 item.link = type === 'sources' ? item.origin : item.link;
