@@ -336,8 +336,12 @@ export const buildExtra = (base: { source: string; listing_id: string; deal_kind
     };
 };
 
-/** 'セレニティコート虎ノ門 1101 1K' — building, then the room number or floor, then the layout. */
-export const residentialTitle = (x: ResidentialExtra): string => [x.building_name ?? x.property_type ?? x.address, x.room_no ?? x.floor, x.layout].filter((p): p is string => p !== null).join(' ') || x.listing_id;
+/**
+ * 'セレニティコート虎ノ門 1101 1K' — building, then the room number or floor, then the layout. A unit
+ * with no building name (most houses) is named by its address: the 種目 is the same for every item
+ * of a feed and would not tell them apart.
+ */
+export const residentialTitle = (x: ResidentialExtra): string => [x.building_name ?? x.address ?? x.property_type, x.room_no ?? x.floor, x.layout].filter((p): p is string => p !== null).join(' ') || x.listing_id;
 
 const yen = (n: number): string => `${n.toLocaleString('ja-JP')}円`;
 
