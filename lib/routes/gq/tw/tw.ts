@@ -169,7 +169,7 @@ async function parseWebpage(url: string): Promise<PageParseResult> {
     const items: DataItem[] = nodes.map((node) => {
         const link = new URL(node.url, baseUrl).href;
 
-        const title = String(node.source?.hed ?? node.dangerousHed ?? '');
+        const title = node.source?.hed ?? node.dangerousHed ?? '';
         const pubDate = node.pubDate ? parseDate(node.pubDate) : undefined;
 
         const imgSources = node.image?.sources ?? undefined;
