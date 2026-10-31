@@ -337,6 +337,16 @@ export const buildExtra = (base: { source: string; listing_id: string; deal_kind
 };
 
 /**
+ * A list photo as an absolute URL, or undefined for none. A site draws a stand-in when a listing has
+ * no photo (HOME'S a relative '…/no-image_208x138.png', SUUMO an absolute '…Dummy_Photo_…jpg'), and
+ * the item should then carry no image rather than the stand-in.
+ */
+export const photoUrl = (src: string | undefined, host: string): string | undefined => {
+    const s = src?.trim();
+    return s === undefined || s === '' || /no[-_]?image|Dummy_Photo/i.test(s) ? undefined : new URL(s, host).href;
+};
+
+/**
  * 'セレニティコート虎ノ門 1101 1K' — building, then the room number or floor, then the layout. A unit
  * with no building name (most houses) is named by its address: the 種目 is the same for every item
  * of a feed and would not tell them apart.

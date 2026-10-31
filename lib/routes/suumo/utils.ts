@@ -3,7 +3,7 @@ import { load } from 'cheerio';
 import { clean } from '@/routes/temposmart/utils';
 
 import type { ListedUnit } from './residential';
-import { collectPairs } from './residential';
+import { collectPairs, photoUrl } from './residential';
 
 export const HOST = 'https://suumo.jp';
 /** 都道府県 / 市区町村 slugs as the site spells them in its area paths (tokyo, minato, yokohamashinaka). */
@@ -47,7 +47,7 @@ export const parseChintaiList = (html: string): ListedUnit[] => {
             age: col3.find((t) => t.startsWith('築')) ?? null,
             floors: col3.find((t) => t.includes('階建')) ?? null,
         };
-        const image = b.find('.cassetteitem_object-item img').attr('rel');
+        const image = photoUrl(b.find('.cassetteitem_object-item img').attr('rel'), HOST);
 
         for (const tr of b.find('tr.js-cassette_link').toArray()) {
             const row = $(tr);
@@ -105,7 +105,7 @@ export const parseBuyList = (html: string, propertyType: string): ListedUnit[] =
             link: new URL(href, HOST).href,
             raw: { ...collectPairs($, c), property_type: propertyType },
             tags: [],
-            image: c.find('.property_unit-object img').attr('rel'),
+            image: photoUrl(c.find('.property_unit-object img').attr('rel'), HOST),
         });
     }
     return units;
