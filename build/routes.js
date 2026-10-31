@@ -34858,6 +34858,55 @@ export default {
     "url": "atcoder.jp",
     "lang": "en"
   },
+  "athome": {
+    "routes": {
+      "/rent-store/:pref/:city": {
+        "path": "/rent-store/:pref/:city",
+        "name": "貸店舗",
+        "url": "www.athome.co.jp",
+        "maintainers": [
+          "pseudoyu"
+        ],
+        "example": "/athome/rent-store/tokyo/shinjuku-city",
+        "parameters": {
+          "pref": {
+            "description": "都道府県 slug, e.g. `tokyo`, `kanagawa`"
+          },
+          "city": {
+            "description": "市区町村 slug as the site spells it — `shinjuku-city`, `minato-city`, `yokohama_naka-city`. Note the underscore in 政令指定都市 slugs; a hyphen there 404s."
+          }
+        },
+        "description": "貸店舗 listings on アットホーム for one 市区町村，newest first.\n\nThis route needs a browser, and the browser is not a convenience. The page is Angular Universal SSR behind a JavaScript interstitial, and only the settled page carries the `#serverApp-state` payload the route reads. A plain HTTP client is served normally for about four requests and then gets the 「認証中」 interstitial on everything afterwards, and pacing the requests 3s apart does not lift it. A browser gets a far larger allowance — dozens of navigations — but **is not exempt**: push hard enough and it is refused too, so this is a matter of cadence rather than of using the right client. The interstitial reloads itself, which stops a `domcontentloaded` navigation from ever settling, so the page is opened with `commit` and every wait is bounded here, against a deadline measured from the start of the request rather than from the navigation.\n\nThe 「認証中」 page can be a normal temporary authentication step: its scripts resolve it and reload to the listing page. The route therefore waits for attached `#serverApp-state` within the existing 26s list-page deadline, and only checks for a remaining authentication page after that wait fails. A temporary title alone does not prove that the client was refused. The deadline is measured from the start of the request because the SSR state sits well into a large document. Images, fonts, stylesheets and media are not fetched; scripts remain available for the authentication step. Keep polling infrequent and the cache warm rather than retrying blocked requests. An unsettled page surfaces as an error rather than a silently empty feed.\n\n情報公開日，the coordinates and the fee detail exist only on each listing's own page, so the route visits them — reusing one browser tab rather than opening a browser per listing, and caching per listing so a repeated poll only pays for listings it has not seen before.\n\nEach of those visits is a full browser navigation, and on a modest VPS one can take several seconds, so at the default `limit` a cold cache can outrun RSSHub's own 30s request timeout. Enrichment therefore runs on a 20s budget: listings reached within it are enriched, the rest are returned with their list-page fields and a warning is logged. A cache hit needs no navigation and so never draws on the budget, which means a warm poll still returns everything fully enriched. A listing whose own page fails is logged and returned with list-page fields too — only the list page failing is fatal.\n\n**Everything the listing itself states — 所在地 down to the 丁目，階，面積，賃料 and the ward — is already on the list page.** If that is all you need, `detail=0` skips the per-listing visits entirely and makes this an ordinary fast route; `listed_at`，`pubDate`, the coordinates and the fee detail are then `null`.\n\n**The site's own ordering is not chronological**, so the feed is re-sorted by 情報公開日，newest first. Without that a newly published listing could sit well down the list and never reach a monitor watching the first page.\n\n`_extra` follows the shared listing shape: `listed_at` and `pubDate` from 情報公開日，`heavy_food_ok` and `business_limit` from the published notice flags (「飲食店不可」 etc.), `fixtures_transfer_jpy` from 造作譲渡，`tags` from the site's 特徴 list, and `condition` / `prev_business` from the 店舗プラス block (`isInuki` / `isSkeleton` / `lastTenanto`) rather than guessed from prose — though most listings leave those two unset. `deposit_months` prefers 保証金 and falls back to 敷金.\n\n`raw` additionally carries what the shared contract has no field for: `lat` / `lng`, the full 所在地 including its 都道府県，建物名 + 部屋番号，設備，築年月，敷引，償却，その他一時金 and the 定期借家 flag.\n\n| Query    | Description                                                               | Default |\n| -------- | ------------------------------------------------------------------------- | ------- |\n| `limit`  | Listings to return, max 30                                                | 10      |\n| `detail` | `0` skips the per-listing detail visits and returns list-page fields only | `1`     |",
+        "categories": [
+          "other"
+        ],
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": true,
+          "antiCrawler": true,
+          "supportRadar": true
+        },
+        "radar": [
+          {
+            "source": [
+              "www.athome.co.jp/rent_store/:pref/:city/list"
+            ],
+            "target": "/rent-store/:pref/:city"
+          }
+        ],
+        "location": "rent-store.ts",
+        "module": () => import('@/routes/athome/rent-store.ts')
+      }
+    },
+    "apiRoutes": {},
+    "name": "at home",
+    "url": "www.athome.co.jp",
+    "description": "アットホーム — 不動産情報サイト（貸店舗・事業用物件）",
+    "lang": "ja",
+    "ja": {
+      "name": "アットホーム"
+    }
+  },
   "augmentcode": {
     "routes": {
       "/blog": {
@@ -135607,92 +135656,6 @@ export default {
     "name": "Asian to lick",
     "url": "asiantolick.com",
     "lang": "zh-CN"
-  },
-  "athome": {
-    "routes": {
-      "/rent-store/:pref/:city": {
-        "path": "/rent-store/:pref/:city",
-        "name": "貸店舗",
-        "url": "www.athome.co.jp",
-        "maintainers": [
-          "pseudoyu"
-        ],
-        "example": "/athome/rent-store/tokyo/shinjuku-city",
-        "parameters": {
-          "pref": {
-            "description": "都道府県 slug, e.g. `tokyo`, `kanagawa`"
-          },
-          "city": {
-            "description": "市区町村 slug as the site spells it — `shinjuku-city`, `minato-city`, `yokohama_naka-city`. Note the underscore in 政令指定都市 slugs; a hyphen there 404s."
-          }
-        },
-        "description": "貸店舗 listings on アットホーム for one 市区町村，newest first.\n\nThis route needs a browser, and the browser is not a convenience. The page is Angular Universal SSR behind a JavaScript interstitial, and only the settled page carries the `#serverApp-state` payload the route reads. A plain HTTP client is served normally for about four requests and then gets the 「認証中」 interstitial on everything afterwards, and pacing the requests 3s apart does not lift it. A browser gets a far larger allowance — dozens of navigations — but **is not exempt**: push hard enough and it is refused too, so this is a matter of cadence rather than of using the right client. The interstitial reloads itself, which stops a `domcontentloaded` navigation from ever settling, so the page is opened with `commit` and every wait is bounded here, against a deadline measured from the start of the request rather than from the navigation.\n\nThe 「認証中」 page can be a normal temporary authentication step: its scripts resolve it and reload to the listing page. The route therefore waits for attached `#serverApp-state` within the existing 26s list-page deadline, and only checks for a remaining authentication page after that wait fails. A temporary title alone does not prove that the client was refused. The deadline is measured from the start of the request because the SSR state sits well into a large document. Images, fonts, stylesheets and media are not fetched; scripts remain available for the authentication step. Keep polling infrequent and the cache warm rather than retrying blocked requests. An unsettled page surfaces as an error rather than a silently empty feed.\n\n情報公開日，the coordinates and the fee detail exist only on each listing's own page, so the route visits them — reusing one browser tab rather than opening a browser per listing, and caching per listing so a repeated poll only pays for listings it has not seen before.\n\nEach of those visits is a full browser navigation, and on a modest VPS one can take several seconds, so at the default `limit` a cold cache can outrun RSSHub's own 30s request timeout. Enrichment therefore runs on a 20s budget: listings reached within it are enriched, the rest are returned with their list-page fields and a warning is logged. A cache hit needs no navigation and so never draws on the budget, which means a warm poll still returns everything fully enriched. A listing whose own page fails is logged and returned with list-page fields too — only the list page failing is fatal.\n\n**Everything the listing itself states — 所在地 down to the 丁目，階，面積，賃料 and the ward — is already on the list page.** If that is all you need, `detail=0` skips the per-listing visits entirely and makes this an ordinary fast route; `listed_at`，`pubDate`, the coordinates and the fee detail are then `null`.\n\n**The site's own ordering is not chronological**, so the feed is re-sorted by 情報公開日，newest first. Without that a newly published listing could sit well down the list and never reach a monitor watching the first page.\n\n`_extra` follows the shared listing shape: `listed_at` and `pubDate` from 情報公開日，`heavy_food_ok` and `business_limit` from the published notice flags (「飲食店不可」 etc.), `fixtures_transfer_jpy` from 造作譲渡，`tags` from the site's 特徴 list, and `condition` / `prev_business` from the 店舗プラス block (`isInuki` / `isSkeleton` / `lastTenanto`) rather than guessed from prose — though most listings leave those two unset. `deposit_months` prefers 保証金 and falls back to 敷金.\n\n`raw` additionally carries what the shared contract has no field for: `lat` / `lng`, the full 所在地 including its 都道府県，建物名 + 部屋番号，設備，築年月，敷引，償却，その他一時金 and the 定期借家 flag.\n\n| Query    | Description                                                               | Default |\n| -------- | ------------------------------------------------------------------------- | ------- |\n| `limit`  | Listings to return, max 30                                                | 10      |\n| `detail` | `0` skips the per-listing detail visits and returns list-page fields only | `1`     |",
-        "categories": [
-          "other"
-        ],
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": true,
-          "antiCrawler": true,
-          "supportRadar": true
-        },
-        "radar": [
-          {
-            "source": [
-              "www.athome.co.jp/rent_store/:pref/:city/list"
-            ],
-            "target": "/rent-store/:pref/:city"
-          }
-        ],
-        "location": "rent-store.ts",
-        "module": () => import('@/routes/athome/rent-store.ts')
-      },
-      "/chintai/:pref/:city": {
-        "path": "/chintai/:pref/:city",
-        "name": "賃貸物件",
-        "url": "www.athome.co.jp",
-        "maintainers": [
-          "pseudoyu"
-        ],
-        "example": "/athome/chintai/tokyo/minato-city",
-        "parameters": {
-          "pref": {
-            "description": "都道府県 slug, e.g. `tokyo`, `kanagawa`"
-          },
-          "city": {
-            "description": "市区町村 slug as the site spells it — `minato-city`, `yokohama_naka-city`. Note the underscore in 政令指定都市 slugs."
-          }
-        },
-        "description": "賃貸 rooms on アットホーム for one 市区町村，newest first (the page's own 新着順).\n\nEvery field comes from the list page's own SSR state, read in a browser like the 貸店舗 route (the page sits behind a self-clearing JavaScript interstitial, and a plain HTTP client is refused after a handful of requests). Each room is one item, with the building's 種目，name, 所在地，交通，階建 and 築年月 copied on and the room's 階，部屋番号 (where the site prints one), 賃料，管理費，敷金，礼金，間取り and 専有面積. The per-room pages are not visited: one browser navigation per room is what gets a client refused.\n\n`_extra` follows the shared residential shape. `address` is printed by the site from the 区 on, without the 都道府県. `raw.same_room_ids` is the site's own list of listings of the same room by other agents, useful for deduplication. `listed_at` stays `null`: the 情報公開日 is only on the room's own page.\n\n| Query   | Description                            | Default |\n| ------- | -------------------------------------- | ------- |\n| `limit` | Rooms to return, at most one list page | 20      |",
-        "categories": [
-          "other"
-        ],
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": true,
-          "antiCrawler": true,
-          "supportRadar": true
-        },
-        "radar": [
-          {
-            "source": [
-              "www.athome.co.jp/chintai/:pref/:city/list"
-            ],
-            "target": "/chintai/:pref/:city"
-          }
-        ],
-        "location": "chintai.ts",
-        "module": () => import('@/routes/athome/chintai.ts')
-      }
-    },
-    "apiRoutes": {},
-    "name": "at home",
-    "url": "www.athome.co.jp",
-    "description": "アットホーム — 不動産情報サイト（貸店舗・事業用物件）",
-    "lang": "ja",
-    "ja": {
-      "name": "アットホーム"
-    }
   },
   "bandcamp": {
     "routes": {

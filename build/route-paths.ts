@@ -273,7 +273,6 @@ export type RoutePath =
   | `/asus/gpu-tweak`
   | `/atcoder/contest/:language?/:rated?/:category?/:keyword?`
   | `/atcoder/post/:language?/:keyword?`
-  | `/athome/chintai/:pref/:city`
   | `/athome/rent-store/:pref/:city`
   | `/atptour/news/:lang?`
   | `/augmentcode/blog`
