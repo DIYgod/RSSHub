@@ -160,3 +160,48 @@ export const parseHomesDetail = (html: string, scope = 'body'): Record<string, s
     const provided = text.match(/最新情報提供日[：:]\s*(\d{4}\/\d{1,2}\/\d{1,2})/)?.[1] ?? null;
     return { ...raw, listed_at: raw.listed_at ?? listed, updated_at: raw.updated_at ?? provided };
 };
+
+/**
+ * 売買 list (中古マンション / 中古一戸建て): one `.mod-mergeBuilding--sale…` block per building, one
+ * `tr.raSpecRow` per unit. The block gives 交通 / 所在地, 構造 / 階数, 築年月 and 総戸数; the row gives
+ * the unit's 階, 価格, 間取り, 専有面積, 主要採光面 and a 価格更新 note when the price moved.
+ */
+export const parseHomesBuyList = (html: string): ListedUnit[] => {
+    const $ = load(html);
+    const units: ListedUnit[] = [];
+    const seen = new Set<string>();
+    for (const block of $('[class*="mod-mergeBuilding--sale"]').toArray()) {
+        const b = $(block);
+        const building = {
+            property_type: clean(b.find('.bType').first().text()),
+            building: clean(b.find('.bukkenName').first().text()),
+            ...collectPairs($, b.find('.bukkenSpec')),
+        };
+        const buildingTags = texts($, b.find('.relatedKeywordsDataBuiding li'));
+        const image = b.find('.bukkenPhoto img').attr('data-original');
+
+        for (const tr of b.find('tr.raSpecRow').toArray()) {
+            const row = $(tr);
+            const href = row.find('a[href*="/b-"]').attr('href');
+            const id = href?.match(/\/(b-\d+)\//)?.[1];
+            if (href === undefined || id === undefined || seen.has(id)) {
+                continue;
+            }
+            seen.add(id);
+            const floor = clean(row.find('.statusIcons > span').not('.itemPriceUpdated, .visitedIcon').first().text());
+            units.push({
+                id,
+                link: new URL(href, HOST).href,
+                raw: {
+                    ...building,
+                    floor: floor?.includes('階') ? floor : null,
+                    price_updated: clean(row.find('.itemPriceUpdated').text()),
+                    ...collectPairs($, row.find('td.info')),
+                },
+                tags: [...texts($, row.find('.relatedKeywordsData li')), ...buildingTags],
+                image: row.find('.displayPic img').attr('data-original') ?? image,
+            });
+        }
+    }
+    return units;
+};
