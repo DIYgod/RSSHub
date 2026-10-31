@@ -22,6 +22,13 @@ export const checkSlugs = (slugs: Record<string, string>) => {
 };
 
 /**
+ * The title SUUMO prints for a building whose agent gave no 物件名: its first station, height and age
+ * ('<線> <駅>駅 5階建 築43年'). It names no building, and two buildings by one station can share it,
+ * so it is kept as `site_title` and never read as the building name.
+ */
+const GENERATED_NAME = /^\S+\s+[^\s駅]+駅\s+(?:地上)?\d+階(?:地下\d+階)?建\s+(?:築\d+年|新築)$/;
+
+/**
  * 賃貸 list: one `.cassetteitem` per building, one `tr.js-cassette_link` per room. The building's
  * 種目, name, 所在地, 交通, 築年数 and 階建 are copied onto each room; the room's own 階, 賃料,
  * 管理費, 敷金, 礼金, 間取り and 専有面積 come from its row only.
@@ -39,9 +46,12 @@ export const parseChintaiList = (html: string): ListedUnit[] => {
     for (const block of $('.cassetteitem').toArray()) {
         const b = $(block);
         const col3 = texts(b.find('.cassetteitem_detail-col3 div'));
+        const title = clean(b.find('.cassetteitem_content-title').text());
+        const generated = title !== null && GENERATED_NAME.test(title.normalize('NFKC'));
         const building = {
             property_type: clean(b.find('.cassetteitem_content-label').text()),
-            building: clean(b.find('.cassetteitem_content-title').text()),
+            building: generated ? null : title,
+            ...(generated && { site_title: title }),
             address: clean(b.find('.cassetteitem_detail-col1').text()),
             access: texts(b.find('.cassetteitem_detail-col2 .cassetteitem_detail-text')).join('\n') || null,
             age: col3.find((t) => t.startsWith('築')) ?? null,
