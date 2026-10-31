@@ -172,9 +172,9 @@ async function parseWebpage(url: string): Promise<PageParseResult> {
         const title = node.source?.hed ?? node.dangerousHed ?? '';
         const pubDate = node.pubDate ? parseDate(node.pubDate) : undefined;
 
-        const imgSources = node.image?.sources ?? undefined;
-        const imgSrc = imgSources?.xxl?.url ?? imgSources?.lg?.url ?? imgSources?.sm?.url ?? undefined;
-        const textDescription = node.dangerousDek ?? undefined;
+        const imgSources = node.image?.sources;
+        const imgSrc = imgSources?.xxl?.url ?? imgSources?.lg?.url ?? imgSources?.sm?.url;
+        const textDescription = node.dangerousDek;
         const description = imgSrc || textDescription ? renderDescription({ src: imgSrc, alt: title, text: textDescription }) : undefined;
 
         return {
@@ -183,7 +183,7 @@ async function parseWebpage(url: string): Promise<PageParseResult> {
             pubDate,
             description,
             image: imgSrc,
-        } as DataItem;
+        };
     });
 
     logger.debug(`[gq/tw] parsed ${items.length} items from JSON state ${url}`);
