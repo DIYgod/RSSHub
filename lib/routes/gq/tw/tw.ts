@@ -162,7 +162,7 @@ async function parseWebpage(url: string): Promise<PageParseResult> {
         throw new Error(`Failed to extract preloaded state object from ${url}`);
     }
 
-    const headTitle = String(stateObj.transformed['head.title']);
+    const headTitle = stateObj.transformed['head.title'];
 
     const nodes = (stateObj.transformed.bundle?.containers ?? []).flatMap((container) => container.items ?? []).filter((node) => node?.url);
 
