@@ -223,10 +223,20 @@ export const labelKey = (label: string): string | null => {
     return LABELS.find(([re]) => re.test(s))?.[1] ?? null;
 };
 
-/** Cell text with each <br> kept as a line break and every line's whitespace collapsed. */
+/** Elements a page lays out on their own line; inline ones (span, sup, a) stay joined to their text. */
+const BLOCK = 'address, article, aside, blockquote, dd, div, dl, dt, figure, footer, h1, h2, h3, h4, h5, h6, header, hr, li, ol, p, section, table, tbody, td, th, thead, tr, ul';
+
+/**
+ * Cell text with each <br> and each block element on its own line and every line's whitespace
+ * collapsed. Without the block breaks, '<p>2026/9/5</p><p>3日前 公開</p>' reads as '2026/9/53日前',
+ * a 53rd of September.
+ */
 const cellText = ($: CheerioAPI, el: Element): string | null => {
-    const html = ($(el).html() ?? '').replaceAll(/<br\s*\/?>/gi, '\n');
-    const lines = load(html, null, false)
+    const fragment = load($(el).html() ?? '', null, false);
+    fragment('br').replaceWith('\n');
+    fragment(BLOCK).before('\n').after('\n');
+    const lines = fragment
+        .root()
         .text()
         .split('\n')
         .map((l) => clean(l))
