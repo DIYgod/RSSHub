@@ -167,7 +167,7 @@ async function parseWebpage(url: string): Promise<PageParseResult> {
     const nodes = (stateObj.transformed.bundle?.containers ?? []).flatMap((container) => container.items ?? []).filter((node) => node?.url);
 
     const items: DataItem[] = nodes.map((node) => {
-        const rawUrlPath = String(node.url);
+        const rawUrlPath = node.url;
         const urlPath = rawUrlPath.replaceAll(String.raw`\u002F`, '/');
         const link = new URL(urlPath, baseUrl).href;
 
