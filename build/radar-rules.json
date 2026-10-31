@@ -60807,14 +60807,6 @@
           "/chintai/:pref/:city"
         ],
         "target": "/suumo/chintai/:pref/:city"
-      },
-      {
-        "title": "中古マンション",
-        "docs": "https://docs.rsshub.app/routes/suumo",
-        "source": [
-          "/ms/chuko/:pref/:city"
-        ],
-        "target": "/suumo/ms/chuko/:pref/:city"
       }
     ]
   },
