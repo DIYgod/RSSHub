@@ -58046,6 +58046,19 @@
       }
     ]
   },
+  "homes.co.jp": {
+    "_name": "LIFULL HOME'S",
+    "www": [
+      {
+        "title": "賃貸物件",
+        "docs": "https://docs.rsshub.app/routes/homes",
+        "source": [
+          "/chintai/:pref/:city/list"
+        ],
+        "target": "/homes/chintai/:pref/:city"
+      }
+    ]
+  },
   "hpoi.net": {
     "_name": "Hpoi 手办维基",
     "www": [
@@ -60807,6 +60820,22 @@
           "/chintai/:pref/:city"
         ],
         "target": "/suumo/chintai/:pref/:city"
+      },
+      {
+        "title": "中古一戸建て",
+        "docs": "https://docs.rsshub.app/routes/suumo",
+        "source": [
+          "/chukoikkodate/:pref/:city"
+        ],
+        "target": "/suumo/chukoikkodate/:pref/:city"
+      },
+      {
+        "title": "中古マンション",
+        "docs": "https://docs.rsshub.app/routes/suumo",
+        "source": [
+          "/ms/chuko/:pref/:city"
+        ],
+        "target": "/suumo/ms/chuko/:pref/:city"
       }
     ]
   },

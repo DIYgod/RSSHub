@@ -1692,6 +1692,7 @@ export type RoutePath =
   | `/hnust/graduate/:type?`
   | `/hnust/jwc`
   | `/home-assistant/hacs/repositories`
+  | `/homes/chintai/:pref/:city`
   | `/hongkong/chp/:category?/:language?`
   | `/hongkong/dh/:language?`
   | `/hostmonit/cloudflareyes/:type?`
@@ -3278,6 +3279,8 @@ export type RoutePath =
   | `/sustech/newshub-zh`
   | `/sustech/yjs`
   | `/suumo/chintai/:pref/:city`
+  | `/suumo/chukoikkodate/:pref/:city`
+  | `/suumo/ms/chuko/:pref/:city`
   | `/swissinfo/:language?/:category?`
   | `/swjtu/gsee/yjs`
   | `/swjtu/jtys/yjs`
