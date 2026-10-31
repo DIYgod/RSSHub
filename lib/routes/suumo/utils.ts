@@ -82,3 +82,34 @@ export const parseChintaiList = (html: string): ListedUnit[] => {
 
 /** 賃貸 detail: the summary table and the 物件概要 table; everything else on the page is navigation or forms. */
 export const parseChintaiDetail = (html: string) => collectPairs(load(html), '.property_view_table, .table_gaiyou');
+
+/**
+ * 売買 list (中古マンション / 中古一戸建て): one `.property_unit` card per unit, its fields as dt/dd
+ * label pairs. The card heading is the agent's catch copy, not the building name, so it is not read.
+ * A card links to its unit several times (photos, heading), hence the dedupe on the nc_ id.
+ */
+export const parseBuyList = (html: string, propertyType: string): ListedUnit[] => {
+    const $ = load(html);
+    const units: ListedUnit[] = [];
+    const seen = new Set<string>();
+    for (const card of $('.property_unit').toArray()) {
+        const c = $(card);
+        const href = c.find('a[href*="/nc_"]').attr('href');
+        const id = href?.match(/nc_\d+/)?.[0];
+        if (href === undefined || id === undefined || seen.has(id)) {
+            continue;
+        }
+        seen.add(id);
+        units.push({
+            id,
+            link: new URL(href, HOST).href,
+            raw: { ...collectPairs($, c), property_type: propertyType },
+            tags: [],
+            image: c.find('.property_unit-object img').attr('rel'),
+        });
+    }
+    return units;
+};
+
+/** 売買 detail: the header block (情報提供日) and the 物件概要 tables; the inquiry form has no `bdGrayT`. */
+export const parseBuyDetail = (html: string) => collectPairs(load(html), '#topContents, table.bdGrayT');
