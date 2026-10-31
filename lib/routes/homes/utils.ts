@@ -48,6 +48,14 @@ class HomesChallenged extends Error {
 export const DETAIL_BUDGET = 5;
 
 /**
+ * Where a 売買 detail page keeps its 物件概要. A unit one agent lists has it in #about; a unit several
+ * agents list (「取扱う会社が N 社あります」) gets an older layout with the header block
+ * (.mod-detailTopSale: 価格, 管理費等, 修繕積立金, 情報公開日) and a spec table (.mod-bukkenSpecDetail).
+ * The recommended listings further down carry their own 住所 and 交通, so the page is never read whole.
+ */
+export const HOMES_SALE_DETAIL_SCOPE = '#about, .mod-detailTopSale, .mod-bukkenSpecDetail';
+
+/**
  * `fetchHomesPage` for one run: once the site has challenged it, every later request of the same run
  * fails at once instead of being sent, since each one sent while flagged only extends the flag.
  */
