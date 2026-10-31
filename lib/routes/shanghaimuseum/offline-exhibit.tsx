@@ -6,6 +6,7 @@ import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { parseDateRange } from '@/utils/parse-date-range';
 import timezone from '@/utils/timezone';
 
 import { namespace } from './namespace';
@@ -82,7 +83,7 @@ export const route: Route = {
                 const pubDate = timezone(parseDate(item.issueTime), 8);
 
                 const fullDuration = item.exhibitDateRange || '';
-                const [startDate, endDate] = fullDuration.includes(' - ') ? fullDuration.split(' - ') : [fullDuration, ''];
+                const { startDate, endDate } = parseDateRange(fullDuration);
 
                 const description = renderToString(
                     <div>

@@ -6,18 +6,10 @@ import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { parseDateRange } from '@/utils/parse-date-range';
 import timezone from '@/utils/timezone';
 
 import { namespace } from './namespace';
-
-const parseExhibitionDuration = (duration?: string) => {
-    const [startDate, endDate] = duration?.match(/\d{4}年\d{1,2}月\d{1,2}日/g)?.map((d) => d.replace(/(\d{4})年(\d{1,2})月(\d{1,2})日/, (_, y, m, d) => `${y}-${m.padStart(2, '0')}-${d.padStart(2, '0')}`)) ?? [];
-
-    return {
-        startDate,
-        endDate,
-    };
-};
 
 export const route: Route = {
     path: '/interim',
@@ -79,7 +71,7 @@ export const route: Route = {
 
                     return { location };
                 });
-                const { startDate, endDate } = parseExhibitionDuration(item.fullDuration);
+                const { startDate, endDate } = parseDateRange(item.fullDuration);
                 const pubDate = startDate ? timezone(parseDate(startDate), 8) : undefined;
 
                 const description = renderToString(
