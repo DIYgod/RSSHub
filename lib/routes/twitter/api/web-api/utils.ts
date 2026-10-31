@@ -79,6 +79,7 @@ export const twitterGot = async (
     params,
     options?: {
         allowNoAuth?: boolean;
+        refreshTransactionId?: boolean;
     }
 ) => {
     const auth = await getAuth(30);
@@ -142,7 +143,7 @@ export const twitterGot = async (
     // `onResponse` callback, the rate-limit and auth error handling that was
     // previously in `onResponse` is now inlined below.
     const pathname = new URL(url).pathname;
-    const clientTransactionId = /\/(?:UserTweetsAndReplies|SearchTimeline)$/.test(pathname) ? await getClientTransactionId('GET', pathname) : undefined;
+    const clientTransactionId = /\/(?:UserTweetsAndReplies|SearchTimeline)$/.test(pathname) ? await getClientTransactionId('GET', pathname, options?.refreshTransactionId) : undefined;
     const response = await undici.fetch(requestUrl, {
         headers: {
             authority: 'x.com',
@@ -217,6 +218,12 @@ export const twitterGot = async (
             logger.debug('twitter debug: unlock twitter cookie with success');
             await cache.set(`${lockPrefix}${auth.token}`, '', 1);
         }
+    }
+
+    // X answers 404 when the cached transaction keys are no longer accepted; refetch them and retry once.
+    if (response.status === 404 && clientTransactionId && !options?.refreshTransactionId) {
+        logger.debug('twitter debug: 404 with x-client-transaction-id, refreshing transaction keys and retrying');
+        return twitterGot(url, params, { ...options, refreshTransactionId: true });
     }
 
     if (response.status >= 400) {
