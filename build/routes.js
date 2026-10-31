@@ -135684,43 +135684,6 @@ export default {
         "location": "chintai.ts",
         "module": () => import('@/routes/athome/chintai.ts')
       },
-      "/kodate/chuko/:pref/:city": {
-        "path": "/kodate/chuko/:pref/:city",
-        "name": "中古一戸建て",
-        "url": "www.athome.co.jp",
-        "maintainers": [
-          "pseudoyu"
-        ],
-        "example": "/athome/kodate/chuko/tokyo/setagaya-city",
-        "parameters": {
-          "pref": {
-            "description": "都道府県 slug, e.g. `tokyo`, `kanagawa`"
-          },
-          "city": {
-            "description": "市区町村 slug as the site spells it — `setagaya-city`, `yokohama_naka-city`. Note the underscore in 政令指定都市 slugs."
-          }
-        },
-        "description": "中古一戸建て for sale on アットホーム for one 市区町村，newest first (the page's own 新着順).\n\nEvery field comes from the list page's own SSR state, read in a browser like the 貸店舗，賃貸 and 中古マンション routes; the per-house pages are not visited. Each house carries 価格，間取り，建物面積，土地面積，階建，築年月，構造，所在地，交通，土地権利，建ぺい率 and 容積率.\n\n`_extra` follows the shared residential shape with `deal_kind: 'sale'`: `area_m2` is the 建物面積 and `land_area_m2` the 土地面積. A house whose 種目 reads more precisely than the page (中古テラスハウス，リフォーム・リノベーション) keeps that label in `raw.syumoku` and as a tag. The 情報公開日 is only on the house's own page and stays `null`.\n\n| Query   | Description                             | Default |\n| ------- | --------------------------------------- | ------- |\n| `limit` | Houses to return, at most one list page | 20      |",
-        "categories": [
-          "other"
-        ],
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": true,
-          "antiCrawler": true,
-          "supportRadar": true
-        },
-        "radar": [
-          {
-            "source": [
-              "www.athome.co.jp/kodate/chuko/:pref/:city/list"
-            ],
-            "target": "/kodate/chuko/:pref/:city"
-          }
-        ],
-        "location": "kodate-chuko.ts",
-        "module": () => import('@/routes/athome/kodate-chuko.ts')
-      },
       "/mansion/chuko/:pref/:city": {
         "path": "/mansion/chuko/:pref/:city",
         "name": "中古マンション",
