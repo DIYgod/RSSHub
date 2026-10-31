@@ -1,0 +1,84 @@
+import { load } from 'cheerio';
+
+import { clean } from '@/routes/temposmart/utils';
+
+import type { ListedUnit } from './residential';
+import { collectPairs } from './residential';
+
+export const HOST = 'https://suumo.jp';
+/** 都道府県 / 市区町村 slugs as the site spells them in its area paths (tokyo, minato, yokohamashinaka). */
+export const SLUG = /^[a-z\d_-]+$/;
+export const DEFAULT_LIMIT = 20;
+
+/** The 市区町村 slug without the `sc_` the site prints in its paths, so a Radar-matched `sc_minato` works too. */
+export const areaSlug = (city: string): string => city.replace(/^sc_/, '');
+
+export const checkSlugs = (slugs: Record<string, string>) => {
+    for (const [name, value] of Object.entries(slugs)) {
+        if (!SLUG.test(value)) {
+            throw new Error(`Invalid ${name} "${value}", expected a lowercase SUUMO area slug such as tokyo / minato`);
+        }
+    }
+};
+
+/**
+ * 賃貸 list: one `.cassetteitem` per building, one `tr.js-cassette_link` per room. The building's
+ * 種目, name, 所在地, 交通, 築年数 and 階建 are copied onto each room; the room's own 階, 賃料,
+ * 管理費, 敷金, 礼金, 間取り and 専有面積 come from its row only.
+ */
+export const parseChintaiList = (html: string): ListedUnit[] => {
+    const $ = load(html);
+    const units: ListedUnit[] = [];
+    const seen = new Set<string>();
+    const texts = (els: ReturnType<typeof $>) =>
+        els
+            .toArray()
+            .map((el) => clean($(el).text()))
+            .filter((t): t is string => t !== null);
+
+    for (const block of $('.cassetteitem').toArray()) {
+        const b = $(block);
+        const col3 = texts(b.find('.cassetteitem_detail-col3 div'));
+        const building = {
+            property_type: clean(b.find('.cassetteitem_content-label').text()),
+            building: clean(b.find('.cassetteitem_content-title').text()),
+            address: clean(b.find('.cassetteitem_detail-col1').text()),
+            access: texts(b.find('.cassetteitem_detail-col2 .cassetteitem_detail-text')).join('\n') || null,
+            age: col3.find((t) => t.startsWith('築')) ?? null,
+            floors: col3.find((t) => t.includes('階建')) ?? null,
+        };
+        const image = b.find('.cassetteitem_object-item img').attr('rel');
+
+        for (const tr of b.find('tr.js-cassette_link').toArray()) {
+            const row = $(tr);
+            const id = row
+                .find('a.js-cassette_link_href')
+                .attr('href')
+                ?.match(/jnc_\d+/)?.[0];
+            if (id === undefined || seen.has(id)) {
+                continue;
+            }
+            seen.add(id);
+            units.push({
+                id,
+                link: `${HOST}/chintai/${id}/`,
+                raw: {
+                    ...building,
+                    floor: clean(row.children('td').eq(2).text()),
+                    price: clean(row.find('.cassetteitem_price--rent').text()),
+                    management_fee: clean(row.find('.cassetteitem_price--administration').text()),
+                    deposit: clean(row.find('.cassetteitem_price--deposit').text()),
+                    key_money: clean(row.find('.cassetteitem_price--gratuity').text()),
+                    layout: clean(row.find('.cassetteitem_madori').text()),
+                    area: clean(row.find('.cassetteitem_menseki').text()),
+                },
+                tags: texts(row.find('.cassetteitem-tag')),
+                image,
+            });
+        }
+    }
+    return units;
+};
+
+/** 賃貸 detail: the summary table and the 物件概要 table; everything else on the page is navigation or forms. */
+export const parseChintaiDetail = (html: string) => collectPairs(load(html), '.property_view_table, .table_gaiyou');
