@@ -162160,6 +162160,129 @@
     "url": "subhd.tv",
     "lang": "zh-CN"
   },
+  "suumo": {
+    "routes": {
+      "/chintai/:pref/:city": {
+        "path": "/chintai/:pref/:city",
+        "name": "賃貸物件",
+        "url": "suumo.jp",
+        "maintainers": [
+          "pseudoyu"
+        ],
+        "example": "/suumo/chintai/tokyo/minato",
+        "parameters": {
+          "pref": {
+            "description": "都道府県 slug, e.g. `tokyo`, `kanagawa`"
+          },
+          "city": {
+            "description": "市区町村 slug as SUUMO spells it after `sc_` in its area path — `minato` for `/chintai/tokyo/sc_minato/`"
+          }
+        },
+        "description": "賃貸 rooms on SUUMO for one 市区町村，newest first (the page's own 新着順).\n\nEach room row of the list page is one item; the building's 種目，name, 所在地，交通 and 階建 are copied onto it. Each room's own page is then read once for what the list does not show — 築年月，構造，契約期間，保証会社，損保，取引態様，情報更新日 — and cached per listing, while the list's own values (賃料 and the rest) are read fresh on every poll.\n\n`_extra` follows the shared residential shape: `price_jpy` is the monthly 賃料，`deposit_jpy` / `key_money_jpy` the 敷金 / 礼金 as SUUMO quotes them (in yen), and `listed_at` stays `null` because SUUMO publishes no 情報公開日 — `updated_at` carries its 情報更新日 instead.\n\n| Query    | Description                                                    | Default |\n| -------- | -------------------------------------------------------------- | ------- |\n| `limit`  | Rooms to return, at most one list page                         | 20      |\n| `detail` | `0` skips the per-room pages and returns list-page fields only | `1`     |",
+        "categories": [
+          "other"
+        ],
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportRadar": true
+        },
+        "radar": [
+          {
+            "source": [
+              "suumo.jp/chintai/:pref/:city"
+            ],
+            "target": "/chintai/:pref/:city"
+          }
+        ],
+        "location": "chintai.ts",
+        "module": "() => import('@/routes/suumo/chintai.ts')"
+      },
+      "/chukoikkodate/:pref/:city": {
+        "path": "/chukoikkodate/:pref/:city",
+        "name": "中古一戸建て",
+        "url": "suumo.jp",
+        "maintainers": [
+          "pseudoyu"
+        ],
+        "example": "/suumo/chukoikkodate/tokyo/setagaya",
+        "parameters": {
+          "pref": {
+            "description": "都道府県 slug, e.g. `tokyo`, `kanagawa`"
+          },
+          "city": {
+            "description": "市区町村 slug as SUUMO spells it after `sc_` in its area path — `setagaya` for `/chukoikkodate/tokyo/sc_setagaya/`"
+          }
+        },
+        "description": "中古一戸建て for sale on SUUMO for one 市区町村，newest first (the page's own 新着・更新順).\n\nEach property card of the list page is one item, carrying 物件名，販売価格，所在地，沿線・駅，土地面積，建物面積，間取り and 築年月. Each house's own page is then read once (cached per listing) for 構造・工法，土地の権利形態，私道負担・道路，建ぺい率・容積率，引渡可能時期 and the 情報提供日.\n\n`_extra` follows the shared residential shape with `deal_kind: 'sale'`: `area_m2` is the 建物面積 and `land_area_m2` the 土地面積. SUUMO publishes no 情報公開日，so `listed_at` stays `null` and `updated_at` carries the 情報提供日.\n\n| Query    | Description                                                     | Default |\n| -------- | --------------------------------------------------------------- | ------- |\n| `limit`  | Houses to return, at most one list page                         | 20      |\n| `detail` | `0` skips the per-house pages and returns list-page fields only | `1`     |",
+        "categories": [
+          "other"
+        ],
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportRadar": true
+        },
+        "radar": [
+          {
+            "source": [
+              "suumo.jp/chukoikkodate/:pref/:city"
+            ],
+            "target": "/chukoikkodate/:pref/:city"
+          }
+        ],
+        "location": "chukoikkodate.ts",
+        "module": "() => import('@/routes/suumo/chukoikkodate.ts')"
+      },
+      "/ms/chuko/:pref/:city": {
+        "path": "/ms/chuko/:pref/:city",
+        "name": "中古マンション",
+        "url": "suumo.jp",
+        "maintainers": [
+          "pseudoyu"
+        ],
+        "example": "/suumo/ms/chuko/tokyo/minato",
+        "parameters": {
+          "pref": {
+            "description": "都道府県 slug, e.g. `tokyo`, `kanagawa`"
+          },
+          "city": {
+            "description": "市区町村 slug as SUUMO spells it after `sc_` in its area path — `minato` for `/ms/chuko/tokyo/sc_minato/`"
+          }
+        },
+        "description": "中古マンション for sale on SUUMO for one 市区町村，newest first (the page's own 新着・更新順).\n\nEach property card of the list page is one item, carrying 物件名，販売価格，所在地，沿線・駅，専有面積，間取り，バルコニー and 築年月. Each unit's own page is then read once (cached per listing) for 管理費，修繕積立金，所在階，構造・階建，向き，総戸数，敷地の権利形態，用途地域，引渡可能時期 and the 情報提供日.\n\n`_extra` follows the shared residential shape with `deal_kind: 'sale'` and `price_jpy` the asking price in yen. SUUMO publishes no 情報公開日，so `listed_at` stays `null` and `updated_at` carries the 情報提供日.\n\n| Query    | Description                                                    | Default |\n| -------- | -------------------------------------------------------------- | ------- |\n| `limit`  | Units to return, at most one list page                         | 20      |\n| `detail` | `0` skips the per-unit pages and returns list-page fields only | `1`     |",
+        "categories": [
+          "other"
+        ],
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportRadar": true
+        },
+        "radar": [
+          {
+            "source": [
+              "suumo.jp/ms/chuko/:pref/:city"
+            ],
+            "target": "/ms/chuko/:pref/:city"
+          }
+        ],
+        "location": "ms-chuko.ts",
+        "module": "() => import('@/routes/suumo/ms-chuko.ts')"
+      }
+    },
+    "apiRoutes": {},
+    "name": "SUUMO",
+    "url": "suumo.jp",
+    "description": "SUUMO — リクルートの不動産・住宅情報サイト（賃貸・中古マンション・中古一戸建て）",
+    "lang": "ja",
+    "ja": {
+      "name": "SUUMO（スーモ）"
+    }
+  },
   "szftedu": {
     "routes": {
       "/dongtai": {

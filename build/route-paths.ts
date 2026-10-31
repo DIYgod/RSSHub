@@ -3277,6 +3277,9 @@ export type RoutePath =
   | `/sustech/bidding`
   | `/sustech/newshub-zh`
   | `/sustech/yjs`
+  | `/suumo/chintai/:pref/:city`
+  | `/suumo/chukoikkodate/:pref/:city`
+  | `/suumo/ms/chuko/:pref/:city`
   | `/swissinfo/:language?/:category?`
   | `/swjtu/gsee/yjs`
   | `/swjtu/jtys/yjs`

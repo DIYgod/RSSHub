@@ -60797,6 +60797,35 @@
       }
     ]
   },
+  "suumo.jp": {
+    "_name": "SUUMO",
+    ".": [
+      {
+        "title": "賃貸物件",
+        "docs": "https://docs.rsshub.app/routes/suumo",
+        "source": [
+          "/chintai/:pref/:city"
+        ],
+        "target": "/suumo/chintai/:pref/:city"
+      },
+      {
+        "title": "中古一戸建て",
+        "docs": "https://docs.rsshub.app/routes/suumo",
+        "source": [
+          "/chukoikkodate/:pref/:city"
+        ],
+        "target": "/suumo/chukoikkodate/:pref/:city"
+      },
+      {
+        "title": "中古マンション",
+        "docs": "https://docs.rsshub.app/routes/suumo",
+        "source": [
+          "/ms/chuko/:pref/:city"
+        ],
+        "target": "/suumo/ms/chuko/:pref/:city"
+      }
+    ]
+  },
   "tesla.cn": {
     "_name": "特斯拉中国",
     ".": [
