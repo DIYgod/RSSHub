@@ -162199,43 +162199,6 @@ export default {
         "location": "chintai.ts",
         "module": () => import('@/routes/suumo/chintai.ts')
       },
-      "/chukoikkodate/:pref/:city": {
-        "path": "/chukoikkodate/:pref/:city",
-        "name": "中古一戸建て",
-        "url": "suumo.jp",
-        "maintainers": [
-          "pseudoyu"
-        ],
-        "example": "/suumo/chukoikkodate/tokyo/setagaya",
-        "parameters": {
-          "pref": {
-            "description": "都道府県 slug, e.g. `tokyo`, `kanagawa`"
-          },
-          "city": {
-            "description": "市区町村 slug as SUUMO spells it after `sc_` in its area path — `setagaya` for `/chukoikkodate/tokyo/sc_setagaya/`"
-          }
-        },
-        "description": "中古一戸建て for sale on SUUMO for one 市区町村，newest first (the page's own 新着・更新順).\n\nEach property card of the list page is one item, carrying 物件名，販売価格，所在地，沿線・駅，土地面積，建物面積，間取り and 築年月. Each house's own page is then read once (cached per listing) for 構造・工法，土地の権利形態，私道負担・道路，建ぺい率・容積率，引渡可能時期 and the 情報提供日.\n\n`_extra` follows the shared residential shape with `deal_kind: 'sale'`: `area_m2` is the 建物面積 and `land_area_m2` the 土地面積. SUUMO publishes no 情報公開日，so `listed_at` stays `null` and `updated_at` carries the 情報提供日.\n\n| Query    | Description                                                     | Default |\n| -------- | --------------------------------------------------------------- | ------- |\n| `limit`  | Houses to return, at most one list page                         | 20      |\n| `detail` | `0` skips the per-house pages and returns list-page fields only | `1`     |",
-        "categories": [
-          "other"
-        ],
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportRadar": true
-        },
-        "radar": [
-          {
-            "source": [
-              "suumo.jp/chukoikkodate/:pref/:city"
-            ],
-            "target": "/chukoikkodate/:pref/:city"
-          }
-        ],
-        "location": "chukoikkodate.ts",
-        "module": () => import('@/routes/suumo/chukoikkodate.ts')
-      },
       "/ms/chuko/:pref/:city": {
         "path": "/ms/chuko/:pref/:city",
         "name": "中古マンション",

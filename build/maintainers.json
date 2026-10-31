@@ -12127,9 +12127,6 @@
   "/suumo/chintai/:pref/:city": [
     "pseudoyu"
   ],
-  "/suumo/chukoikkodate/:pref/:city": [
-    "pseudoyu"
-  ],
   "/suumo/ms/chuko/:pref/:city": [
     "pseudoyu"
   ],
