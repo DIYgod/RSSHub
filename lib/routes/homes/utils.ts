@@ -150,7 +150,8 @@ export const parseHomesChintaiList = (html: string): ListedUnit[] => {
 
 /**
  * Detail page label pairs within `scope`, plus the dates the sale page prints as running text
- * (「情報公開日：2026/09/24」) rather than as a labelled cell.
+ * (「情報公開日：2026/09/24」) rather than as a labelled cell. A date that is not found is left out
+ * rather than set to null, so a page with no field at all comes back empty and is never cached.
  */
 export const parseHomesDetail = (html: string, scope = 'body'): Record<string, string | null> => {
     const $ = load(html);
@@ -158,7 +159,9 @@ export const parseHomesDetail = (html: string, scope = 'body'): Record<string, s
     const text = $('body').text();
     const listed = text.match(/情報公開日[：:]\s*(\d{4}\/\d{1,2}\/\d{1,2})/)?.[1] ?? null;
     const provided = text.match(/最新情報提供日[：:]\s*(\d{4}\/\d{1,2}\/\d{1,2})/)?.[1] ?? null;
-    return { ...raw, listed_at: raw.listed_at ?? listed, updated_at: raw.updated_at ?? provided };
+    const listedAt = raw.listed_at ?? listed;
+    const updatedAt = raw.updated_at ?? provided;
+    return { ...raw, ...(listedAt !== null && { listed_at: listedAt }), ...(updatedAt !== null && { updated_at: updatedAt }) };
 };
 
 /**
