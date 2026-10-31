@@ -48,6 +48,13 @@ class HomesChallenged extends Error {
 export const DETAIL_BUDGET = 5;
 
 /**
+ * Where a 賃貸 detail page keeps its labelled fields. The page's own dialogs (初期費用 and the like)
+ * sit outside #main and carry labels of their own, so reading the whole page would let the first of
+ * them win if the site ever moved one above the spec.
+ */
+export const HOMES_RENT_DETAIL_SCOPE = '#main';
+
+/**
  * Where a 売買 detail page keeps its 物件概要. A unit one agent lists has it in #about; a unit several
  * agents list (「取扱う会社が N 社あります」) gets an older layout with the header block
  * (.mod-detailTopSale: 価格, 管理費等, 修繕積立金, 情報公開日) and a spec table (.mod-bukkenSpecDetail).
