@@ -3844,6 +3844,7 @@ export type RoutePath =
   | `/xyzrank/hot-episodes-new`
   | `/xyzrank/hot-podcasts`
   | `/xyzrank/new-podcasts`
+  | `/yahoo/auctions/search/:query`
   | `/yahoo/author/:author`
   | `/yahoo/finance/:topic?`
   | `/yahoo/finance/hk/:topic?`

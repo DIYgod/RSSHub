@@ -12429,6 +12429,9 @@
   "/xyzrank/new-podcasts": [
     "nczitzk"
   ],
+  "/yahoo/auctions/search/:query": [
+    "pseudoyu"
+  ],
   "/yahoo/author/:author": [
     "loganrockmore"
   ],

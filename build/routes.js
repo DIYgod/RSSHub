@@ -166114,6 +166114,32 @@ export default {
   },
   "yahoo": {
     "routes": {
+      "/auctions/search/:query": {
+        "path": "/auctions/search/:query",
+        "categories": [
+          "shopping"
+        ],
+        "example": "/yahoo/auctions/search/p=カメラ&aucmaxprice=10000",
+        "parameters": {
+          "query": "Search conditions, the query string of a search result URL on auctions.yahoo.co.jp, e.g. `p=カメラ&auccat=23632&aucmaxprice=10000`. Every condition the site supports works, including those set in 条件指定. Newest listings come first unless `s1` is set"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "name": "Yahoo! Auctions Search",
+        "maintainers": [
+          "pseudoyu"
+        ],
+        "url": "auctions.yahoo.co.jp",
+        "description": "Search conditions are passed to the site as is, so the easiest way to build a feed is to search on [Yahoo! Auctions](https://auctions.yahoo.co.jp), then copy everything after `?` in the result URL.\n\n::: warning\nYahoo! JAPAN services are not available from the EEA and the UK.\n:::",
+        "location": "auctions/search.tsx",
+        "module": () => import('@/routes/yahoo/auctions/search.tsx')
+      },
       "/author/:author": {
         "path": "/author/:author",
         "categories": [
