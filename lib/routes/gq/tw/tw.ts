@@ -5,8 +5,8 @@ import type { Context } from 'hono';
 import type { Data, DataItem, Route } from '@/types';
 import { ViewType } from '@/types';
 import logger from '@/utils/logger';
-import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import playwright from '@/utils/playwright';
 
 import { renderDescription } from './templates/description';
 
@@ -71,8 +71,8 @@ export const route: Route = {
     },
     features: {
         requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
+        requirePuppeteer: true,
+        antiCrawler: true,
         supportRadar: true,
         supportBT: false,
         supportPodcast: false,
@@ -152,8 +152,35 @@ type PreloadedState = {
     };
 };
 
+/**
+ * Fetch the page HTML with a real browser.
+ * gq.com.tw sits behind a Cloudflare managed challenge that rejects non-browser clients with 403,
+ * so the page has to be loaded in Chromium and the challenge allowed to clear first.
+ */
+async function fetchPageHtml(url: string): Promise<string> {
+    const context = await playwright();
+    const page = await context.newPage();
+    try {
+        // only allow the document request, abort everything else to avoid wasting resources
+        await page.route('**/*', (route) => {
+            if (route.request().resourceType() === 'document') {
+                void route.continue();
+            } else {
+                void route.abort();
+            }
+        });
+        await page.goto(url, { waitUntil: 'domcontentloaded' });
+        // the Cloudflare challenge page does not contain the preloaded state; wait until the real page is served
+        await page.waitForFunction(() => document.documentElement.getHTML().includes('__PRELOADED_STATE__'), null, { timeout: 30000 });
+        return await page.content();
+    } finally {
+        await page.close();
+        await context.close();
+    }
+}
+
 async function parseWebpage(url: string): Promise<PageParseResult> {
-    const html = await ofetch(url);
+    const html = await fetchPageHtml(url);
     const $ = load(html);
 
     const stateObj = extractPreloadedStateObject($);
