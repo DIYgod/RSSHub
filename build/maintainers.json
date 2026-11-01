@@ -9780,7 +9780,7 @@
   "/athome/rent-store/:pref/:city": [
     "pseudoyu"
   ],
-  "/athome/chintai/:pref/:city": [
+  "/athome/chintai/:pref/:city/:page?": [
     "pseudoyu"
   ],
   "/athome/kodate/chuko/:pref/:city": [
@@ -11130,7 +11130,7 @@
     "Fatpandac",
     "nczitzk"
   ],
-  "/homes/chintai/:pref/:city": [
+  "/homes/chintai/:pref/:city/:page?": [
     "pseudoyu"
   ],
   "/homes/kodate/chuko/:pref/:city": [
@@ -12145,7 +12145,7 @@
   "/subhd/zu/:category?": [
     "nczitzk"
   ],
-  "/suumo/chintai/:pref/:city": [
+  "/suumo/chintai/:pref/:city/:page?": [
     "pseudoyu"
   ],
   "/suumo/chukoikkodate/:pref/:city": [
