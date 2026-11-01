@@ -12777,9 +12777,6 @@
   "/google/album/:id": [
     "hoilc"
   ],
-  "/google/doodles/:language?": [
-    "xyqfer"
-  ],
   "/google/fonts/:sort?": [
     "Fatpandac"
   ],
@@ -12795,6 +12792,9 @@
   ],
   "/google/developers/:locale?": [
     "Loongphy"
+  ],
+  "/google/doodles/:language?": [
+    "xyqfer"
   ],
   "/google/chrome/extension/:id": [
     "DIYgod"

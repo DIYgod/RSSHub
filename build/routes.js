@@ -172917,31 +172917,6 @@ export default {
         "location": "album.ts",
         "module": () => import('@/routes/google/album.ts')
       },
-      "/doodles/:language?": {
-        "path": "/doodles/:language?",
-        "categories": [
-          "picture"
-        ],
-        "view": 2,
-        "example": "/google/doodles/zh-CN",
-        "parameters": {
-          "language": "Language, default to `zh-CN`, for other language values, you can get it from [Google Doodles official website](https://www.google.com/doodles)"
-        },
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "name": "Update",
-        "maintainers": [
-          "xyqfer"
-        ],
-        "location": "doodles.ts",
-        "module": () => import('@/routes/google/doodles.ts')
-      },
       "/fonts/:sort?": {
         "path": "/fonts/:sort?",
         "categories": [
@@ -173106,6 +173081,31 @@ export default {
         ],
         "location": "developers.ts",
         "module": () => import('@/routes/google/developers.ts')
+      },
+      "/doodles/:language?": {
+        "path": "/doodles/:language?",
+        "categories": [
+          "picture"
+        ],
+        "view": 2,
+        "example": "/google/doodles/zh-CN",
+        "parameters": {
+          "language": "No longer used, [Google Doodles](https://doodles.google/) is only served in English now. Kept so existing feed URLs keep working"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "name": "Update",
+        "maintainers": [
+          "xyqfer"
+        ],
+        "location": "doodles.ts",
+        "module": () => import('@/routes/google/doodles.ts')
       },
       "/chrome/extension/:id": {
         "path": "/chrome/extension/:id",
