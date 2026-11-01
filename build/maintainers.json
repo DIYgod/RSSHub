@@ -11133,10 +11133,10 @@
   "/homes/chintai/:pref/:city/:page?": [
     "pseudoyu"
   ],
-  "/homes/kodate/chuko/:pref/:city": [
+  "/homes/kodate/chuko/:pref/:city/:page?": [
     "pseudoyu"
   ],
-  "/homes/mansion/chuko/:pref/:city": [
+  "/homes/mansion/chuko/:pref/:city/:page?": [
     "pseudoyu"
   ],
   "/hpoi/bannerItem": [
