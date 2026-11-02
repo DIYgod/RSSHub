@@ -141,6 +141,9 @@ const getNewProductImage = (item: NewProductBatchListItem): string => (isVenueGo
 const getNewProductFirstReleaseTime = (item: NewProductBatchListItem): number | undefined => (isVenueGoodsBatchItem(item) ? item.value.goods.fist_release_time : undefined);
 
 const getVenueBatchResultList = async <Result>(pageId: string, sign: string, queryList: VenueQuery[]): Promise<Result[]> => {
+    if (queryList.length === 0) {
+        return [];
+    }
     const response = await ofetch<VenueBatchResponse<Result>>('https://m.xiaomiyoupin.com/mtop/navi/venue/batch', {
         body: {
             query_list: queryList,

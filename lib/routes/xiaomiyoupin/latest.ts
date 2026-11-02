@@ -64,6 +64,7 @@ async function handler(): Promise<Data> {
         title: '小米有品上新',
         link: jumpUrl,
         item: items,
+        allowEmpty: true,
         image: 'https://cnbj1.fds.api.xiaomi.com/mijia-m/trade_common/yp_logo.png',
         language: 'zh-CN',
     };
