@@ -7,6 +7,7 @@ import { getRouteLimit } from '@/utils/route-limit';
 import { baseUrl, fetchCollection, fetchGraphql, renderText, renderVideo } from './utils';
 
 const providerVariables = {
+    __relay_internal__pv__CometReels_enable_e2e_logging_gkrelayprovider: false,
     __relay_internal__pv__FBReels_deprecate_short_form_video_context_gkrelayprovider: false,
     __relay_internal__pv__FBReelsMediaFooter_comet_enable_reels_ads_gkrelayprovider: true,
     __relay_internal__pv__FBUnifiedVideoMediaContentContainer_comet_video_document_picture_in_picture_gkrelayprovider: false,
@@ -61,7 +62,7 @@ async function handler(ctx: Context) {
 
     const reels = await fetchGraphql(
         'ProfileCometAppCollectionReelsRendererPaginationQuery',
-        '39192928903688955',
+        '28864322409901433',
         {
             ...providerVariables,
             id: collection.id,
