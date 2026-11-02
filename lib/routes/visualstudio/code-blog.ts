@@ -40,11 +40,13 @@ async function fetchArticle(link: string): Promise<Pick<DataItem, 'description'>
     const data = await ofetch(link);
     const $ = load(data);
 
-    const article = $('main.docs-main-content.body');
+    // Release notes keep the body on <main>; blog posts moved it to <article>, with the title, byline and an "On this page" menu around the text
+    const article = $('.docs-main-content.body').first();
     if (!article.length) {
         throw new NotFoundError(`No VS Code article body was found at ${link}`);
     }
     article.children('h1').first().remove();
+    article.find('.blog-post-header, .blog-mobile-navigation').remove();
     article
         .children('p')
         .slice(0, 2)
