@@ -2,7 +2,7 @@ name: Linter
 
 # https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#pull_request
 # pull_request includes [opened, reopened, synchronize] events by default
-# 'edited' is required for title-lint
+# 'edited' is required for title-lint, which runs on pull_request_target; Lint does not rerun when a title or description is edited
 # Docs-only changes skip Lint; the pull_request_target jobs still run for every pull request
 on:
     push:
@@ -11,7 +11,6 @@ on:
             - 'LICENSE'
             - '.github/ISSUE_TEMPLATE/**'
     pull_request:
-        types: [opened, reopened, synchronize, edited]
         paths-ignore:
             - '**/*.md'
             - 'LICENSE'
