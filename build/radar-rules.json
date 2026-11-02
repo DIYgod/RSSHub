@@ -22963,22 +22963,6 @@
         "target": "/github/notifications"
       },
       {
-        "title": "Organization Event",
-        "docs": "https://docs.rsshub.app/routes/github",
-        "source": [
-          "/orgs/:org"
-        ],
-        "target": "/github/org_event/:org"
-      },
-      {
-        "title": "User's Feed",
-        "docs": "https://docs.rsshub.app/routes/github",
-        "source": [
-          "/:user"
-        ],
-        "target": "/github/feed/:user"
-      },
-      {
         "title": "Repo Pull Requests",
         "docs": "https://docs.rsshub.app/routes/github",
         "source": [
@@ -22987,14 +22971,6 @@
           "/:user/:repo"
         ],
         "target": "/github/pull/:user/:repo"
-      },
-      {
-        "title": "Repository Event",
-        "docs": "https://docs.rsshub.app/routes/github",
-        "source": [
-          "/:owner/:repo"
-        ],
-        "target": "/github/repo_event/:owner/:repo"
       },
       {
         "title": "User Repo",
@@ -23020,6 +22996,30 @@
           "/:user"
         ],
         "target": "/github/starred_repos/:user"
+      },
+      {
+        "title": "Organization Event",
+        "docs": "https://docs.rsshub.app/routes/github",
+        "source": [
+          "/orgs/:org"
+        ],
+        "target": "/github/org_event/:org"
+      },
+      {
+        "title": "User's Feed",
+        "docs": "https://docs.rsshub.app/routes/github",
+        "source": [
+          "/:user"
+        ],
+        "target": "/github/feed/:user"
+      },
+      {
+        "title": "Repository Event",
+        "docs": "https://docs.rsshub.app/routes/github",
+        "source": [
+          "/:owner/:repo"
+        ],
+        "target": "/github/repo_event/:owner/:repo"
       },
       {
         "title": "User Event",

@@ -62521,6 +62521,187 @@
         "location": "notifications.ts",
         "module": "() => import('@/routes/github/notifications.ts')"
       },
+      "/pull/:user/:repo/:state?/:labels?": {
+        "path": "/pull/:user/:repo/:state?/:labels?",
+        "categories": [
+          "programming"
+        ],
+        "example": "/github/pull/DIYgod/RSSHub",
+        "parameters": {
+          "user": "GitHub username",
+          "repo": "GitHub repo name",
+          "state": {
+            "description": "the state of pull requests.",
+            "default": "open",
+            "options": [
+              {
+                "label": "Open",
+                "value": "open"
+              },
+              {
+                "label": "Closed",
+                "value": "closed"
+              },
+              {
+                "label": "All",
+                "value": "all"
+              }
+            ]
+          },
+          "labels": "a list of comma separated label names"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "github.com/:user/:repo/pulls",
+              "github.com/:user/:repo/pulls/:id",
+              "github.com/:user/:repo"
+            ],
+            "target": "/pull/:user/:repo"
+          }
+        ],
+        "name": "Repo Pull Requests",
+        "maintainers": [
+          "hashman",
+          "TonyRL"
+        ],
+        "location": "pulls.ts",
+        "module": "() => import('@/routes/github/pulls.ts')"
+      },
+      "/repos/:user/:type?/:sort?": {
+        "path": "/repos/:user/:type?/:sort?",
+        "categories": [
+          "programming"
+        ],
+        "example": "/github/repos/DIYgod",
+        "parameters": {
+          "user": "GitHub username",
+          "type": "Type of repository, can be `all`, `owner`, `member`, `public`, `private`, `forks`, `sources`",
+          "sort": "Sort by `created`, `updated`, `pushed`, `full_name`"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "github.com/:user"
+            ]
+          }
+        ],
+        "name": "User Repo",
+        "maintainers": [
+          "DIYgod"
+        ],
+        "location": "repos.ts",
+        "module": "() => import('@/routes/github/repos.ts')"
+      },
+      "/search/:query/:sort?/:order?": {
+        "path": "/search/:query/:sort?/:order?",
+        "categories": [
+          "programming"
+        ],
+        "example": "/github/search/RSSHub/bestmatch/desc",
+        "parameters": {
+          "query": "search keyword",
+          "sort": "Sort options (default to bestmatch)",
+          "order": "Sort order, desc and asc (desc descending by default)"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "name": "Search Result",
+        "maintainers": [
+          "LogicJake"
+        ],
+        "description": "| Sort options     | sort      |\n| ---------------- | --------- |\n| Best match       | bestmatch |\n| Most stars       | stars     |\n| Most forks       | forks     |\n| Recently updated | updated   |",
+        "location": "search.ts",
+        "module": "() => import('@/routes/github/search.ts')"
+      },
+      "/stars/:user/:repo": {
+        "path": "/stars/:user/:repo",
+        "categories": [
+          "programming"
+        ],
+        "example": "/github/stars/DIYgod/RSSHub",
+        "view": 5,
+        "parameters": {
+          "user": "GitHub username",
+          "repo": "GitHub repo name"
+        },
+        "features": {
+          "requireConfig": [
+            {
+              "name": "GITHUB_ACCESS_TOKEN",
+              "description": "GitHub Access Token"
+            }
+          ]
+        },
+        "radar": [
+          {
+            "source": [
+              "github.com/:user/:repo/stargazers",
+              "github.com/:user/:repo"
+            ]
+          }
+        ],
+        "name": "Repo Stars",
+        "maintainers": [
+          "HenryQW"
+        ],
+        "location": "star.ts",
+        "module": "() => import('@/routes/github/star.ts')"
+      },
+      "/starred_repos/:user": {
+        "path": "/starred_repos/:user",
+        "categories": [
+          "programming"
+        ],
+        "example": "/github/starred_repos/DIYgod",
+        "parameters": {
+          "user": "User name"
+        },
+        "features": {
+          "requireConfig": [
+            {
+              "name": "GITHUB_ACCESS_TOKEN",
+              "optional": true,
+              "description": "To get more requests"
+            }
+          ]
+        },
+        "radar": [
+          {
+            "source": [
+              "github.com/:user"
+            ]
+          }
+        ],
+        "name": "User Starred Repositories",
+        "maintainers": [
+          "LanceZhu"
+        ],
+        "location": "starred-repos.ts",
+        "module": "() => import('@/routes/github/starred-repos.ts')"
+      },
       "/org_event/:org/:types?": {
         "path": "/org_event/:org/:types?",
         "categories": [
@@ -62727,61 +62908,6 @@
         "location": "private-feed.ts",
         "module": "() => import('@/routes/github/private-feed.ts')"
       },
-      "/pull/:user/:repo/:state?/:labels?": {
-        "path": "/pull/:user/:repo/:state?/:labels?",
-        "categories": [
-          "programming"
-        ],
-        "example": "/github/pull/DIYgod/RSSHub",
-        "parameters": {
-          "user": "GitHub username",
-          "repo": "GitHub repo name",
-          "state": {
-            "description": "the state of pull requests.",
-            "default": "open",
-            "options": [
-              {
-                "label": "Open",
-                "value": "open"
-              },
-              {
-                "label": "Closed",
-                "value": "closed"
-              },
-              {
-                "label": "All",
-                "value": "all"
-              }
-            ]
-          },
-          "labels": "a list of comma separated label names"
-        },
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "radar": [
-          {
-            "source": [
-              "github.com/:user/:repo/pulls",
-              "github.com/:user/:repo/pulls/:id",
-              "github.com/:user/:repo"
-            ],
-            "target": "/pull/:user/:repo"
-          }
-        ],
-        "name": "Repo Pull Requests",
-        "maintainers": [
-          "hashman",
-          "TonyRL"
-        ],
-        "location": "pulls.ts",
-        "module": "() => import('@/routes/github/pulls.ts')"
-      },
       "/repo_event/:owner/:repo/:types?": {
         "path": "/repo_event/:owner/:repo/:types?",
         "categories": [
@@ -62895,132 +63021,6 @@
         ],
         "location": "repo-event.ts",
         "module": "() => import('@/routes/github/repo-event.ts')"
-      },
-      "/repos/:user/:type?/:sort?": {
-        "path": "/repos/:user/:type?/:sort?",
-        "categories": [
-          "programming"
-        ],
-        "example": "/github/repos/DIYgod",
-        "parameters": {
-          "user": "GitHub username",
-          "type": "Type of repository, can be `all`, `owner`, `member`, `public`, `private`, `forks`, `sources`",
-          "sort": "Sort by `created`, `updated`, `pushed`, `full_name`"
-        },
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "radar": [
-          {
-            "source": [
-              "github.com/:user"
-            ]
-          }
-        ],
-        "name": "User Repo",
-        "maintainers": [
-          "DIYgod"
-        ],
-        "location": "repos.ts",
-        "module": "() => import('@/routes/github/repos.ts')"
-      },
-      "/search/:query/:sort?/:order?": {
-        "path": "/search/:query/:sort?/:order?",
-        "categories": [
-          "programming"
-        ],
-        "example": "/github/search/RSSHub/bestmatch/desc",
-        "parameters": {
-          "query": "search keyword",
-          "sort": "Sort options (default to bestmatch)",
-          "order": "Sort order, desc and asc (desc descending by default)"
-        },
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "name": "Search Result",
-        "maintainers": [
-          "LogicJake"
-        ],
-        "description": "| Sort options     | sort      |\n| ---------------- | --------- |\n| Best match       | bestmatch |\n| Most stars       | stars     |\n| Most forks       | forks     |\n| Recently updated | updated   |",
-        "location": "search.ts",
-        "module": "() => import('@/routes/github/search.ts')"
-      },
-      "/stars/:user/:repo": {
-        "path": "/stars/:user/:repo",
-        "categories": [
-          "programming"
-        ],
-        "example": "/github/stars/DIYgod/RSSHub",
-        "view": 5,
-        "parameters": {
-          "user": "GitHub username",
-          "repo": "GitHub repo name"
-        },
-        "features": {
-          "requireConfig": [
-            {
-              "name": "GITHUB_ACCESS_TOKEN",
-              "description": "GitHub Access Token"
-            }
-          ]
-        },
-        "radar": [
-          {
-            "source": [
-              "github.com/:user/:repo/stargazers",
-              "github.com/:user/:repo"
-            ]
-          }
-        ],
-        "name": "Repo Stars",
-        "maintainers": [
-          "HenryQW"
-        ],
-        "location": "star.ts",
-        "module": "() => import('@/routes/github/star.ts')"
-      },
-      "/starred_repos/:user": {
-        "path": "/starred_repos/:user",
-        "categories": [
-          "programming"
-        ],
-        "example": "/github/starred_repos/DIYgod",
-        "parameters": {
-          "user": "User name"
-        },
-        "features": {
-          "requireConfig": [
-            {
-              "name": "GITHUB_ACCESS_TOKEN",
-              "optional": true,
-              "description": "To get more requests"
-            }
-          ]
-        },
-        "radar": [
-          {
-            "source": [
-              "github.com/:user"
-            ]
-          }
-        ],
-        "name": "User Starred Repositories",
-        "maintainers": [
-          "LanceZhu"
-        ],
-        "location": "starred-repos.ts",
-        "module": "() => import('@/routes/github/starred-repos.ts')"
       },
       "/user_event/:username/:types?": {
         "path": "/user_event/:username/:types?",
@@ -161737,7 +161737,7 @@
           "BeaCox"
         ],
         "url": "www.cs.sjtu.edu.cn/notice-xssw-bkspy.html",
-        "description": "| 本科生培养 | 研究生培养 | 国际交流 | 党建德育 | 团学工作 | 职业发展 | 其他 |\n| ---------- | ---------- | -------- | -------- | -------- | -------- | ---- |\n| bkspy      | yjspy      | gjjl     | djdy     | txgz     | zyfz     | qt   |",
+        "description": "仅包含官网未登录时可见的公开通知。分类没有公开通知时无法生成订阅。\n\n| 本科生培养 | 研究生培养 | 国际交流 | 党建德育 | 团学工作 | 职业发展 | 其他 |\n| ---------- | ---------- | -------- | -------- | -------- | -------- | ---- |\n| bkspy      | yjspy      | gjjl     | djdy     | txgz     | zyfz     | qt   |",
         "location": "cs/tzgg.tsx",
         "module": "() => import('@/routes/sjtu/cs/tzgg.tsx')"
       },
