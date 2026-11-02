@@ -166,14 +166,21 @@ overrides:
   '@oxc-parser/binding-wasm32-wasip1>@emnapi/core': 2.0.0-beta.2
   '@oxc-parser/binding-wasm32-wasip1>@emnapi/runtime': 2.0.0-beta.2
   browserslist@4.28.9>caniuse-lite: 1.0.30001810
+  cheerio>domhandler: ^6.0.1
+  cheerio>domutils: ^4.0.2
+  cheerio>parse5: ^8.1.0
+  cheerio>parse5-htmlparser2-tree-adapter: ^8.0.1
+  cheerio>parse5-parser-stream: ^8.1.0
   difflib: https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed
+  dom-serializer: ^3.1.1
   es-set-tostringtag: npm:@nolyfill/es-set-tostringtag@^1
   google-play-scraper>got: ^14.6.4
   google-play-scraper>ramda: ^0.32.0
   google-play-scraper>tough-cookie: ^6.0.0
   hasown: npm:@nolyfill/hasown@^1
   header-generator>browserslist: 4.28.9
-  rss-parser@3.13.0>entities: ^8.1.0
+  htmlparser2: ^12.0.0
+  rss-parser@3.13.0>entities: ^9.0.0
   rss-parser@3.13.0>xml2js: ^0.6.2
   safe-buffer: npm:@nolyfill/safe-buffer@^1
   safer-buffer: npm:@nolyfill/safer-buffer@^1
@@ -271,8 +278,8 @@ importers:
         specifier: 18.0.9
         version: 18.0.9
       entities:
-        specifier: 8.1.0
-        version: 8.1.0
+        specifier: 9.0.0
+        version: 9.0.0
       etag:
         specifier: 1.8.1
         version: 1.8.1
@@ -3846,9 +3853,6 @@ packages:
   discord-api-types@0.38.57:
     resolution: {integrity: sha512-R1CTSSt4RshqCq23j2Xq2ZscvzB4LzG9OB1CYQdKUGdw8Ti/oF/72EEtK2mNpagG/Vj9NcBT7dw9lKLf+Dacfg==}
 
-  dom-serializer@2.0.0:
-    resolution: {integrity: sha512-wIkAryiqt/nV5EQKqQpo3SToSOV9J0DnbJqwK7Wv/Trc92zIAYZ4FlMu+JPFW1DfGFt81ZTCGgDEabffXeLyJg==}
-
   dom-serializer@3.1.1:
     resolution: {integrity: sha512-4MEa38/QexBob6gFNwu+EGdWvhJ1OKuNwdYY3Y3NyeWDQfnGeDYQUDfIRzWu5B5gsv03so2Uxd28YC6zrsx3Lw==}
     engines: {node: '>=20.19.0'}
@@ -3938,20 +3942,12 @@ packages:
     resolution: {integrity: sha512-9vhedylFonb2YGogzUKX6+Ja72gOJbN1QHAqdrvqLwhdl/QWbKopzoUC9EbQNVsAns/bx/4uyqalrQAoy1IByw==}
     engines: {node: '>=10.13.0'}
 
-  entities@4.5.0:
-    resolution: {integrity: sha512-V0hjH4dGPh9Ao5p0MoRY6BVqtwCjhz6vI5LT8AJ55H+4g9/4vbHx1I54fS0XuclLhDHArPQCiMjDxjaL8fPxhw==}
-    engines: {node: '>=0.12'}
-
-  entities@6.0.1:
-    resolution: {integrity: sha512-aN97NXWF6AWBTahfVOIrB/NShkzi5H7F9r1s9mD3cDj4Ko5f2qhhVoYMibXF7GlLveb/D2ioWay8lxI97Ven3g==}
-    engines: {node: '>=0.12'}
-
-  entities@7.0.1:
-    resolution: {integrity: sha512-TWrgLOFUQTH994YUyl1yT4uyavY5nNB5muff+RtWaqNVCAK408b5ZnnbNAUEWLTCpum9w6arT70i1XdQ4UeOPA==}
-    engines: {node: '>=0.12'}
-
   entities@8.1.0:
     resolution: {integrity: sha512-kxL7msIffSuh9aaFAMD7rxAIuTRMAHMeBtgHW2yUdWw732ZNh4MehkF2gdjvtdmikkaIP9bFDDJOPlsvm7avrA==}
+    engines: {node: '>=20.19.0'}
+
+  entities@9.0.0:
+    resolution: {integrity: sha512-oJFNDJg3kTPwAD1cNn2+WmUq4wFoo09npc3Ydf1D7ED4smRiWrsKnaLxykrTWgyGEcusc87P5dxlAleol9kpkg==}
     engines: {node: '>=20.19.0'}
 
   error-stack-parser-es@1.0.5:
@@ -4389,9 +4385,6 @@ packages:
   html-to-text@10.0.1:
     resolution: {integrity: sha512-GiVhRI1BatGARSCmlXWNCjDT0cWrwBWoeduLoV0WSKAgaV/wa+hUWy5LiQLUs4UwiUrE52ZCMfBGiKD87TDPrg==}
     engines: {node: '>=20.19.0'}
-
-  htmlparser2@10.1.0:
-    resolution: {integrity: sha512-VTZkM9GWRAtEpveh7MSF6SjjrpNVNNVJfFup7xTY3UpFtm67foy9HDVXneLtFVt4pMz5kZtgNcvCniNFb1hlEQ==}
 
   htmlparser2@12.0.0:
     resolution: {integrity: sha512-Tz7u1i95/g2x2jz81+x0FBVhBhY5aRTvD3tXXdFaljuNdzDLJ8UGNRrTcj2cgQvAg3iW/h77Fz15nLW0L0CrZw==}
@@ -5274,17 +5267,17 @@ packages:
   parse-srcset@1.0.2:
     resolution: {integrity: sha512-/2qh0lav6CmI15FzA3i/2Bzk2zCgQhGMkvhOhKNcBVQ1ldgpbfiNTVslmooUmWJcADi1f1kIeynbDRVzNlfR6Q==}
 
-  parse5-htmlparser2-tree-adapter@7.1.0:
-    resolution: {integrity: sha512-ruw5xyKs6lrpo9x9rCZqZZnIUntICjQAd0Wsmp396Ul9lN/h+ifgVV1x1gZHi8euej6wTfpqX8j+BFQxF0NS/g==}
+  parse5-htmlparser2-tree-adapter@8.0.1:
+    resolution: {integrity: sha512-aqkH+xQxX+QGZtP5GIMmqqp16Y0v9muEf2VVeypv35kFsD5bqP1UeBanSshdfjMY+RTh2vN4mmK6nEOVRMEvHg==}
 
-  parse5-parser-stream@7.1.2:
-    resolution: {integrity: sha512-JyeQc9iwFLn5TbvvqACIF/VXG6abODeB3Fwmv/TGdLk2LfbWkaySGY72at4+Ty7EkPZj854u4CrICqNk2qIbow==}
-
-  parse5@7.3.0:
-    resolution: {integrity: sha512-IInvU7fabl34qmi9gY8XOVxhYyMyuH2xUNpb2q8/Y+7552KlejkRvqvD19nMoUW/uQGGbqNpA6Tufu5FL5BZgw==}
+  parse5-parser-stream@8.1.0:
+    resolution: {integrity: sha512-58MPfNTA+DsIzro41rU94xghnu/h2N4yEPdPdGPlZVHM/QvA5jlVGYVo7IzlHbFLHYx3cZUnr9s9HBrA0tEYyw==}
 
   parse5@8.0.1:
     resolution: {integrity: sha512-z1e/HMG90obSGeidlli3hj7cbocou0/wa5HacvI3ASx34PecNjNQeaHNo5WIZpWofN9kgkqV1q5YvXe3F0FoPw==}
+
+  parse5@8.1.0:
+    resolution: {integrity: sha512-sq3qBFpee5jeocbFbO48VHlGr8sT7mbXS0vxlKN6sottBtJzrOG3998sr0llSZcQAGgfpdmEYAIZE0P9z0dE8w==}
 
   parseley@0.13.1:
     resolution: {integrity: sha512-uNBJZzmb60l6p6VWLTmevizNAGnE0xoSf1n0B4q3ntegDNzcS68NRCcBDZTcyXHxt2XhBChsCuqj4M+nChvE/A==}
@@ -8594,14 +8587,14 @@ snapshots:
   cheerio@1.2.0:
     dependencies:
       cheerio-select: 2.1.0
-      dom-serializer: 2.0.0
-      domhandler: 5.0.3
-      domutils: 3.2.2
+      dom-serializer: 3.1.1
+      domhandler: 6.0.1
+      domutils: 4.0.2
       encoding-sniffer: 0.2.1
-      htmlparser2: 10.1.0
-      parse5: 7.3.0
-      parse5-htmlparser2-tree-adapter: 7.1.0
-      parse5-parser-stream: 7.1.2
+      htmlparser2: 12.0.0
+      parse5: 8.1.0
+      parse5-htmlparser2-tree-adapter: 8.0.1
+      parse5-parser-stream: 8.1.0
       undici: 7.30.1
       whatwg-mimetype: 4.0.0
 
@@ -8824,12 +8817,6 @@ snapshots:
 
   discord-api-types@0.38.57: {}
 
-  dom-serializer@2.0.0:
-    dependencies:
-      domelementtype: 2.3.0
-      domhandler: 5.0.3
-      entities: 4.5.0
-
   dom-serializer@3.1.1:
     dependencies:
       domelementtype: 3.0.0
@@ -8850,7 +8837,7 @@ snapshots:
 
   domutils@3.2.2:
     dependencies:
-      dom-serializer: 2.0.0
+      dom-serializer: 3.1.1
       domelementtype: 2.3.0
       domhandler: 5.0.3
 
@@ -8914,13 +8901,9 @@ snapshots:
       graceful-fs: 4.2.11
       tapable: 2.3.3
 
-  entities@4.5.0: {}
-
-  entities@6.0.1: {}
-
-  entities@7.0.1: {}
-
   entities@8.1.0: {}
+
+  entities@9.0.0: {}
 
   error-stack-parser-es@1.0.5: {}
 
@@ -9504,16 +9487,9 @@ snapshots:
     dependencies:
       '@selderee/plugin-htmlparser2': 0.12.0(selderee@0.12.0)
       deepmerge-ts: 8.0.1
-      dom-serializer: 2.0.0
-      htmlparser2: 10.1.0
+      dom-serializer: 3.1.1
+      htmlparser2: 12.0.0
       selderee: 0.12.0
-
-  htmlparser2@10.1.0:
-    dependencies:
-      domelementtype: 2.3.0
-      domhandler: 5.0.3
-      domutils: 3.2.2
-      entities: 7.0.1
 
   htmlparser2@12.0.0:
     dependencies:
@@ -9864,7 +9840,7 @@ snapshots:
       css-select: 7.0.0
       cssom: 0.5.0
       html-escaper: 3.0.3
-      htmlparser2: 10.1.0
+      htmlparser2: 12.0.0
       uhyphen: 0.2.0
 
   linkify-it@6.1.0:
@@ -10629,22 +10605,22 @@ snapshots:
 
   parse-srcset@1.0.2: {}
 
-  parse5-htmlparser2-tree-adapter@7.1.0:
+  parse5-htmlparser2-tree-adapter@8.0.1:
     dependencies:
-      domhandler: 5.0.3
-      parse5: 7.3.0
+      domhandler: 6.0.1
+      parse5: 8.1.0
 
-  parse5-parser-stream@7.1.2:
+  parse5-parser-stream@8.1.0:
     dependencies:
-      parse5: 7.3.0
-
-  parse5@7.3.0:
-    dependencies:
-      entities: 6.0.1
+      parse5: 8.1.0
 
   parse5@8.0.1:
     dependencies:
       entities: 8.1.0
+
+  parse5@8.1.0:
+    dependencies:
+      entities: 9.0.0
 
   parseley@0.13.1:
     dependencies:
@@ -10964,7 +10940,7 @@ snapshots:
 
   rss-parser@3.13.0(patch_hash=afac79a31a3db94c953d49680bc5528468f051957d461e913d2e2dbf5cd22a8d):
     dependencies:
-      entities: 8.1.0
+      entities: 9.0.0
       xml2js: 0.6.2
 
   safe-stable-stringify@2.5.0: {}
