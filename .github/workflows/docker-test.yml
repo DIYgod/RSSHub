@@ -49,8 +49,9 @@ jobs:
                   tags: ${{ steps.meta.outputs.tags }}
                   labels: ${{ steps.meta.outputs.labels }}
                   platforms: linux/amd64 # explicit
+                  # Pull requests from forks get no repository variables; without the fallback the ref is '/rsshub:...' and is ignored
                   cache-from: |
-                      type=registry,ref=${{ vars.DOCKER_USERNAME }}/rsshub:chromium-bundled
+                      type=registry,ref=${{ vars.DOCKER_USERNAME || 'diygod' }}/rsshub:chromium-bundled
                       type=gha,scope=docker-release-linux-amd64
                   outputs: type=docker,compression=zstd,force-compression=true # load: true means docker output type
 
