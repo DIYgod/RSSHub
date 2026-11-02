@@ -161920,6 +161920,186 @@ export default {
         "description": "| 博士招生 | 硕士招生 | 港澳台招生 | 考点信息 | 院系动态 |\n| -------- | -------- | ---------- | -------- | -------- |\n| bszs     | sszs     | gatzs      | kdxx     | yxdt     |",
         "location": "yzb/zkxx.ts",
         "module": () => import('@/routes/sjtu/yzb/zkxx.ts')
+      },
+      "/cs/rcpy/:category": {
+        "path": "/cs/rcpy/:category",
+        "categories": [
+          "university"
+        ],
+        "example": "/sjtu/cs/rcpy/bsyjs_notice",
+        "parameters": {
+          "category": "栏目代码，见下表，与官网栏目网址中 .html 前的部分一致"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "title": "计算机学院 - 人才培养 - 本科生培养 - 国际交流",
+            "source": [
+              "www.cs.sjtu.edu.cn/bkspy_gjjl.html",
+              "cs.sjtu.edu.cn/bkspy_gjjl.html"
+            ],
+            "target": "/cs/rcpy/bkspy_gjjl"
+          },
+          {
+            "title": "计算机学院 - 人才培养 - 研究生培养 - 招生工作",
+            "source": [
+              "www.cs.sjtu.edu.cn/bsyjs_zsgz.html",
+              "cs.sjtu.edu.cn/bsyjs_zsgz.html"
+            ],
+            "target": "/cs/rcpy/bsyjs_zsgz"
+          },
+          {
+            "title": "计算机学院 - 人才培养 - 研究生培养 - 学籍管理",
+            "source": [
+              "www.cs.sjtu.edu.cn/bsyjs_xjgl.html",
+              "cs.sjtu.edu.cn/bsyjs_xjgl.html"
+            ],
+            "target": "/cs/rcpy/bsyjs_xjgl"
+          },
+          {
+            "title": "计算机学院 - 人才培养 - 研究生培养 - 培养管理",
+            "source": [
+              "www.cs.sjtu.edu.cn/bsyjs_pygl.html",
+              "cs.sjtu.edu.cn/bsyjs_pygl.html"
+            ],
+            "target": "/cs/rcpy/bsyjs_pygl"
+          },
+          {
+            "title": "计算机学院 - 人才培养 - 研究生培养 - 学位管理",
+            "source": [
+              "www.cs.sjtu.edu.cn/bsyjs_xwgl.html",
+              "cs.sjtu.edu.cn/bsyjs_xwgl.html"
+            ],
+            "target": "/cs/rcpy/bsyjs_xwgl"
+          },
+          {
+            "title": "计算机学院 - 人才培养 - 研究生培养 - 答辩公告",
+            "source": [
+              "www.cs.sjtu.edu.cn/bsyjs_dbgg.html",
+              "cs.sjtu.edu.cn/bsyjs_dbgg.html"
+            ],
+            "target": "/cs/rcpy/bsyjs_dbgg"
+          },
+          {
+            "title": "计算机学院 - 人才培养 - 研究生培养 - 国际交流",
+            "source": [
+              "www.cs.sjtu.edu.cn/bsyjs_gjjl.html",
+              "cs.sjtu.edu.cn/bsyjs_gjjl.html"
+            ],
+            "target": "/cs/rcpy/bsyjs_gjjl"
+          },
+          {
+            "title": "计算机学院 - 人才培养 - 研究生培养 - 教师事务",
+            "source": [
+              "www.cs.sjtu.edu.cn/bsyjs_jssw.html",
+              "cs.sjtu.edu.cn/bsyjs_jssw.html"
+            ],
+            "target": "/cs/rcpy/bsyjs_jssw"
+          },
+          {
+            "title": "计算机学院 - 人才培养 - 研究生培养 - 通知公告",
+            "source": [
+              "www.cs.sjtu.edu.cn/bsyjs_notice.html",
+              "cs.sjtu.edu.cn/bsyjs_notice.html"
+            ],
+            "target": "/cs/rcpy/bsyjs_notice"
+          },
+          {
+            "title": "计算机学院 - 人才培养 - 微专业培养",
+            "source": [
+              "www.cs.sjtu.edu.cn/wzypy.html",
+              "cs.sjtu.edu.cn/wzypy.html"
+            ],
+            "target": "/cs/rcpy/wzypy"
+          },
+          {
+            "title": "计算机学院 - 人才培养 - 教学实践 - 科创实践项目 - PRP 项目",
+            "source": [
+              "www.cs.sjtu.edu.cn/jxsj_kcsj_prp.html",
+              "cs.sjtu.edu.cn/jxsj_kcsj_prp.html"
+            ],
+            "target": "/cs/rcpy/jxsj_kcsj_prp"
+          },
+          {
+            "title": "计算机学院 - 人才培养 - 教学实践 - 科创实践项目 - 专业实习",
+            "source": [
+              "www.cs.sjtu.edu.cn/jxsj_kcsj_zysx.html",
+              "cs.sjtu.edu.cn/jxsj_kcsj_zysx.html"
+            ],
+            "target": "/cs/rcpy/jxsj_kcsj_zysx"
+          },
+          {
+            "title": "计算机学院 - 人才培养 - 教学实践 - 学生科创组织",
+            "source": [
+              "www.cs.sjtu.edu.cn/jxsj_xskczz.html",
+              "cs.sjtu.edu.cn/jxsj_xskczz.html"
+            ],
+            "target": "/cs/rcpy/jxsj_xskczz"
+          },
+          {
+            "title": "计算机学院 - 人才培养 - 学生工作 - 通知公告 - 党建德育",
+            "source": [
+              "www.cs.sjtu.edu.cn/xsgz-tzgg-djdy.html",
+              "cs.sjtu.edu.cn/xsgz-tzgg-djdy.html"
+            ],
+            "target": "/cs/rcpy/xsgz-tzgg-djdy"
+          },
+          {
+            "title": "计算机学院 - 人才培养 - 学生工作 - 通知公告 - 团学工作",
+            "source": [
+              "www.cs.sjtu.edu.cn/xsgz-tzgg-txgz.html",
+              "cs.sjtu.edu.cn/xsgz-tzgg-txgz.html"
+            ],
+            "target": "/cs/rcpy/xsgz-tzgg-txgz"
+          },
+          {
+            "title": "计算机学院 - 人才培养 - 学生工作 - 通知公告 - 学生事务",
+            "source": [
+              "www.cs.sjtu.edu.cn/xsgz-tzgg-xssw.html",
+              "cs.sjtu.edu.cn/xsgz-tzgg-xssw.html"
+            ],
+            "target": "/cs/rcpy/xsgz-tzgg-xssw"
+          },
+          {
+            "title": "计算机学院 - 人才培养 - 学生工作 - 通知公告 - 职业发展",
+            "source": [
+              "www.cs.sjtu.edu.cn/xsgz-tzgg-zyfz.html",
+              "cs.sjtu.edu.cn/xsgz-tzgg-zyfz.html"
+            ],
+            "target": "/cs/rcpy/xsgz-tzgg-zyfz"
+          },
+          {
+            "title": "计算机学院 - 人才培养 - 学生工作 - 规章制度 - 学生事务",
+            "source": [
+              "www.cs.sjtu.edu.cn/xsgz-gzzd-xssw.html",
+              "cs.sjtu.edu.cn/xsgz-gzzd-xssw.html"
+            ],
+            "target": "/cs/rcpy/xsgz-gzzd-xssw"
+          },
+          {
+            "title": "计算机学院 - 人才培养 - 学生工作 - 规章制度 - 职业发展",
+            "source": [
+              "www.cs.sjtu.edu.cn/xsgz-gzzd-zyfz.html",
+              "cs.sjtu.edu.cn/xsgz-gzzd-zyfz.html"
+            ],
+            "target": "/cs/rcpy/xsgz-gzzd-zyfz"
+          }
+        ],
+        "name": "计算机学院 - 人才培养",
+        "maintainers": [
+          "BeaCox"
+        ],
+        "url": "www.cs.sjtu.edu.cn/rcpy.html",
+        "description": "订阅「人才培养」下指定栏目的第一页文章。\n\n仅获取未登录时可见的列表和正文。需要 jAccount 登录或无法获取全文的文章保留公开标题、发布日期和原文链接。栏目没有公开条目时无法生成订阅。\n\n| 栏目 | category |\n| ---- | -------- |\n| 本科生培养 - 国际交流 | bkspy_gjjl |\n| 研究生培养 - 招生工作 | bsyjs_zsgz |\n| 研究生培养 - 学籍管理 | bsyjs_xjgl |\n| 研究生培养 - 培养管理 | bsyjs_pygl |\n| 研究生培养 - 学位管理 | bsyjs_xwgl |\n| 研究生培养 - 答辩公告 | bsyjs_dbgg |\n| 研究生培养 - 国际交流 | bsyjs_gjjl |\n| 研究生培养 - 教师事务 | bsyjs_jssw |\n| 研究生培养 - 通知公告 | bsyjs_notice |\n| 微专业培养 | wzypy |\n| 教学实践 - 科创实践项目 - PRP 项目 | jxsj_kcsj_prp |\n| 教学实践 - 科创实践项目 - 专业实习 | jxsj_kcsj_zysx |\n| 教学实践 - 学生科创组织 | jxsj_xskczz |\n| 学生工作 - 通知公告 - 党建德育 | xsgz-tzgg-djdy |\n| 学生工作 - 通知公告 - 团学工作 | xsgz-tzgg-txgz |\n| 学生工作 - 通知公告 - 学生事务 | xsgz-tzgg-xssw |\n| 学生工作 - 通知公告 - 职业发展 | xsgz-tzgg-zyfz |\n| 学生工作 - 规章制度 - 学生事务 | xsgz-gzzd-xssw |\n| 学生工作 - 规章制度 - 职业发展 | xsgz-gzzd-zyfz |\n\n「学生工作」下「规章制度」中的党建德育、团学工作，以及「管理服务」中的办事指南、日常管理目前没有公开条目，未纳入订阅。\n\n专业介绍、培养方案、课程信息、通知指南、快速链接、教学成果，以及教学实践中的其他介绍页属于静态介绍、课程目录或链接导航，未纳入订阅。",
+        "location": "cs/rcpy.ts",
+        "module": () => import('@/routes/sjtu/cs/rcpy.ts')
       }
     },
     "apiRoutes": {},

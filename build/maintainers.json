@@ -12093,6 +12093,9 @@
   "/sjtu/yzb/zkxx/:type": [
     "stdrc"
   ],
+  "/sjtu/cs/rcpy/:category": [
+    "BeaCox"
+  ],
   "/slowmist/:type?": [
     "AtlasQuan"
   ],
