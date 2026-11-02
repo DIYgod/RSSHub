@@ -416,6 +416,8 @@ export const fetchBbcContent = async (link: string, item) => {
             return {
                 description: item.content ?? item.description ?? '',
             };
+        // Video pages (/zhongwen/watch/) carry the same page data as articles, with a video block
+        case pathname.startsWith('/zhongwen/watch/'):
         case pathname.startsWith('/zhongwen/articles/'): {
             const nextData = JSON.parse($('script#__NEXT_DATA__').text());
             const pageData = nextData.props.pageProps.pageData;
