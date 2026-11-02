@@ -36405,15 +36405,7 @@
         "title": "政治外交",
         "docs": "https://docs.rsshub.app/routes/nippon",
         "source": [
-          "/cn/sci-tech"
-        ],
-        "target": "/nippon/Science,Technology"
-      },
-      {
-        "title": "政治外交",
-        "docs": "https://docs.rsshub.app/routes/nippon",
-        "source": [
-          "/cn/in-depth"
+          "/cn/insight"
         ],
         "target": "/nippon/In-depth"
       },
@@ -36421,15 +36413,7 @@
         "title": "政治外交",
         "docs": "https://docs.rsshub.app/routes/nippon",
         "source": [
-          "/cn/japan-topics"
-        ],
-        "target": "/nippon/japan-topics"
-      },
-      {
-        "title": "政治外交",
-        "docs": "https://docs.rsshub.app/routes/nippon",
-        "source": [
-          "/cn/japan-data"
+          "/cn/data"
         ],
         "target": "/nippon/japan-data"
       },

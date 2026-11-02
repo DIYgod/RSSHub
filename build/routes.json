@@ -91291,25 +91291,13 @@
           },
           {
             "source": [
-              "www.nippon.com/cn/sci-tech"
-            ],
-            "target": "/Science,Technology"
-          },
-          {
-            "source": [
-              "www.nippon.com/cn/in-depth"
+              "www.nippon.com/cn/insight"
             ],
             "target": "/In-depth"
           },
           {
             "source": [
-              "www.nippon.com/cn/japan-topics"
-            ],
-            "target": "/japan-topics"
-          },
-          {
-            "source": [
-              "www.nippon.com/cn/japan-data"
+              "www.nippon.com/cn/data"
             ],
             "target": "/japan-data"
           },
@@ -91333,7 +91321,7 @@
           }
         ],
         "name": "政治外交",
-        "description": "| 政治     | 经济    | 社会    | 展览预告 | 焦点专题           | 深度报道 | 话题         | 日本信息库 | 日本一蹩      | 人物访谈 | 编辑部通告    |\n| -------- | ------- | ------- | -------- | ------------------ | -------- | ------------ | ---------- | ------------- | -------- | ------------- |\n| Politics | Economy | Society | Culture  | Science,Technology | In-depth | japan-topics | japan-data | japan-glances | People   | Announcements |",
+        "description": "| 政治     | 财经    | 社会    | 日本文化 | 深度报道 | 日本信息库 | 日本一瞥      | 人物   | 编辑部通知    |\n| -------- | ------- | ------- | -------- | -------- | ---------- | ------------- | ------ | ------------- |\n| Politics | Economy | Society | Culture  | In-depth | japan-data | japan-glances | People | Announcements |",
         "maintainers": [
           "laampui"
         ],
