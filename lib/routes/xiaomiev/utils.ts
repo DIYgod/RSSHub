@@ -1,4 +1,5 @@
 import type { NewProduct } from '@/routes/mi/templates/newproduct';
+import { dedupeByKey } from '@/routes/mi/utils';
 import ofetch from '@/utils/ofetch';
 
 import type { NewProductDetailItem, NewProductDetailResponse, NewProductListItem, NewProductListResponse } from './types';
@@ -22,10 +23,7 @@ const getNewProductList = async (): Promise<NewProductListItem[]> => {
     const items = response.data.floors
         .filter((floor) => floor.moduleKey === 'car_product_list_new')
         .flatMap((floor) => (floor.dynamicData ?? []).flatMap((block) => block.list.filter((item) => item.type === 'goods').map((item) => ({ ...item.value.goods, startTime: item.value.goods.startTime || floor.startTime }))));
-    const list = Map.groupBy(items, (item) => item.itemId)
-        .values()
-        .toArray()
-        .map((group) => group[0]);
+    const list = dedupeByKey(items, (item) => item.itemId);
     return list;
 };
 

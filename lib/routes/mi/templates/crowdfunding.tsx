@@ -13,8 +13,10 @@ dayjs.extend(utc);
 export type Crowdfunding = {
     /** Project image */
     image: string;
+    /** Project sell point list */
+    sellPointList?: string[];
     /** Project sell point */
-    sellPoint: string;
+    sellPoint?: string;
     /** Crowdfunding price */
     price: string;
     /** Suggested retail price */
@@ -44,8 +46,22 @@ const CrowdfundingDescription = ({ crowdfunding }: { crowdfunding: Crowdfunding 
     <>
         <img src={crowdfunding.image} />
         <br />
-        {crowdfunding.sellPoint}
-        <br />
+        {crowdfunding.sellPointList && crowdfunding.sellPointList.length > 0 && (
+            <>
+                <ol>
+                    {crowdfunding.sellPointList.map((point) => (
+                        <li>{point}</li>
+                    ))}
+                </ol>
+                <br />
+            </>
+        )}
+        {crowdfunding.sellPoint && (
+            <>
+                {crowdfunding.sellPoint}
+                <br />
+            </>
+        )}
         众筹价：{crowdfunding.price} 元，建议零售价：{crowdfunding.marketPrice} 元
         <br />
         众筹开始：{formatDate(crowdfunding.startTime)}，众筹结束：{formatDate(crowdfunding.endTime)}
