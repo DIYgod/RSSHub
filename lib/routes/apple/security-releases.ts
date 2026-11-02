@@ -67,6 +67,8 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 },
                 updated: upDatedStr ? parseDate(upDatedStr, ['DD MMM YYYY', 'YYYY 年 M 月 D 日']) : undefined,
                 language,
+                // Releases without a detail page can share a name, such as two watchOS 27.0.1 rows on different days
+                guid: linkUrl ? undefined : `${title} ${pubDateStr.trim()}`,
             };
 
             return processedItem;
@@ -78,7 +80,6 @@ export const handler = async (ctx: Context): Promise<Data> => {
                 return {
                     ...item,
                     link: `${targetUrl}#:~:text=${encodeURIComponent(item.title)}`,
-                    guid: item.title,
                 };
             }
 
