@@ -37,11 +37,16 @@ async function handler(ctx) {
     return {
         title: '品葱 - 精选',
         link: `${baseUrl}/hot/${category === '0' ? '' : `category-${category}`}`,
-        item: list.toArray().map((item) => ({
-            title: $(item).find('h2 a').text(),
-            description: $(item).find('div.markitup-box').html(),
-            link: baseUrl + $(item).find('div.mod-head h2 a').attr('href'),
-            pubDate: parseDate($(item).find('div.mod-footer .aw-small-text').text()),
-        })),
+        item: list
+            .toArray()
+            .map((item) => ({
+                title: $(item).find('h2 a').text(),
+                description: $(item).find('div.markitup-box').html(),
+                link: baseUrl + $(item).find('div.mod-head h2 a').attr('href'),
+                // The footer can carry the discussion count after the date, such as `2026-06-07 22 条讨论`
+                pubDate: parseDate($(item).find('div.mod-footer .aw-small-text').text(), 'YYYY-MM-DD'),
+            }))
+            // The list can show the same question twice
+            .filter((item, index, items) => items.findIndex((candidate) => candidate.link === item.link) === index),
     };
 }
