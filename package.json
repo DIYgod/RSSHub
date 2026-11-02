@@ -76,7 +76,7 @@
         "@opentelemetry/resources": "3.0.0",
         "@opentelemetry/sdk-metrics": "3.0.0",
         "@opentelemetry/sdk-trace": "3.0.0",
-        "@opentelemetry/semantic-conventions": "1.43.0",
+        "@opentelemetry/semantic-conventions": "1.44.0",
         "@oxc-parser/binding-wasm32-wasip1": "0.156.0",
         "@rss3/sdk": "0.0.25",
         "@scalar/hono-api-reference": "0.12.17",
