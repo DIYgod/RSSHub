@@ -160,3 +160,10 @@ jobs:
                   lock-pr: false
                   max-changed-lines: 1000
                   max-description-length: 2000
+            - if: ${{ github.event.pull_request.head.repo.full_name != github.repository && !github.event.pull_request.maintainer_can_modify }}
+              run: |
+                  gh pr close ${{ github.event.pull_request.number }} --comment "Thanks for the contribution. This PR was automatically closed because it matched multiple low-quality/spam [signals](https://github.com/peakoss/anti-slop)."
+                  gh pr edit ${{ github.event.pull_request.number }} --add-label spam
+              env:
+                  GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                  GH_REPO: ${{ github.repository }}
