@@ -88,10 +88,9 @@ jobs:
             matrix:
                 node-version: [latest, lts/*]
                 # The bundled Chromium is covered by the vitest job, which installs it and runs these tests on the same Node versions
+                # Ubuntu's chromium-browser is not tested: on noble it only installs the Chromium snap, so the job failed whenever
+                # the snap store timed out, and the Chromium-bundled Docker image uses Debian's native package, not the snap
                 chromium:
-                    - name: Chromium from Ubuntu
-                      dependency: chromium-browser
-                      environment: '{ "PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD": "1" }'
                     - name: Chrome from Google
                       dependency: google-chrome-stable
                       environment: '{ "PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD": "1" }'
@@ -110,10 +109,6 @@ jobs:
               run: pnpm rb
             # No build step: these tests do not read build output, and the vitest job already builds on the same Node versions
             - name: Install Chromium
-              # 'chromium-browser' from Ubuntu APT repo is a dummy package. Its version (85.0.4183.83) means
-              # nothing since it calls Snap (disgusting!) to install Chromium, which should be up-to-date.
-              # That's not really a problem since the Chromium-bundled Docker image is based on Debian trixie,
-              # which provides up-to-date native packages.
               run: |
                   set -eux
                   curl -s "https://dl.google.com/linux/linux_signing_key.pub" | gpg --dearmor |

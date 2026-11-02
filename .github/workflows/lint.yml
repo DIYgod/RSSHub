@@ -6,6 +6,9 @@ name: Linter
 # Docs-only changes skip Lint; the pull_request_target jobs still run for every pull request
 on:
     push:
+        # A dependabot branch always has a pull request, whose pull_request run lints the same commit
+        branches-ignore:
+            - 'dependabot/**'
         paths-ignore:
             - '**/*.md'
             - 'LICENSE'
