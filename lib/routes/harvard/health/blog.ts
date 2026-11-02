@@ -49,7 +49,9 @@ async function handler() {
                 title: $item.text(),
                 link: $item.attr('href'),
             };
-        });
+        })
+        // The page shows some posts in more than one section
+        .filter((item, index, items) => items.findIndex((candidate) => candidate.link === item.link) === index);
 
     const items = await Promise.all(
         list.map(async (item) => ({
