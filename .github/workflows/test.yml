@@ -10,7 +10,13 @@ on:
             - 'pnpm-lock.yaml'
             - 'pnpm-workspace.yaml'
             - '.github/workflows/test.yml'
-    pull_request: {}
+    # Docs-only pull requests skip this workflow. No check is required on master; if one becomes required,
+    # skip inside the job instead, or a docs-only pull request waits for that check forever.
+    pull_request:
+        paths-ignore:
+            - '**/*.md'
+            - 'LICENSE'
+            - '.github/ISSUE_TEMPLATE/**'
 
 # A new push to a pull request cancels the run of the previous push.
 # Every other run gets its own group per branch and commit, so a push to master is never cancelled or replaced.

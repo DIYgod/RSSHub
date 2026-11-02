@@ -14,8 +14,14 @@ name: 'CodeQL'
 on:
     push:
         branches: ['master']
+    # Docs-only pull requests skip the scan. Pushes to master are not filtered, so every commit on master
+    # keeps an analysis for pull requests to compare against.
     pull_request:
         branches: ['master']
+        paths-ignore:
+            - '**/*.md'
+            - 'LICENSE'
+            - '.github/ISSUE_TEMPLATE/**'
     schedule:
         - cron: '15 9 * * 3'
 
