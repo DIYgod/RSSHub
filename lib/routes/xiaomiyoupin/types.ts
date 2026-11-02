@@ -21,8 +21,6 @@ const HomepageFloorEntrySchema = z.object({
     }),
 });
 
-// Floors reuse `data.items` for every module, so entries are validated one by one and the ones
-// without a title are dropped. The key is an array or missing depending on the module.
 const toHomepageFloorEntries = (items: unknown[] = []) => toSchemaItems(items, HomepageFloorEntrySchema);
 
 export const HomepageMainResponseSchema = DataResponseSchema(
@@ -70,7 +68,6 @@ const VenueGoodsBatchItemSchema = z.object({
     type: z.string(),
     value: z.object({
         goods: z.object({
-            // Some venue results omit the release time, the list falls back to the item identity only.
             fist_release_time: z.number().optional(),
             gid: z.number(),
             img_square: z.string(),
@@ -79,7 +76,6 @@ const VenueGoodsBatchItemSchema = z.object({
     }),
 });
 
-// Venue results also carry content cards and banners, only `goods` members hold a renderable goods.
 export const VenueGoodsTypeBatchItemSchema = VenueGoodsBatchItemSchema.extend({
     type: z.literal('goods'),
 });
@@ -103,18 +99,15 @@ const VenueReservationBatchItemSchema = z.object({
     }),
 });
 
-// Content cards share the flat result shape but expose no goods identity, so the route skips them.
 const VenueContentBatchItemSchema = z.object({
     goodsType: z.number(),
     id: z.string(),
 });
 
-// Goods results are batched in a `list`, reservation and content results stay flat.
 const CrowdfundingGoodsBatchSchema = z.object({
     list: z.array(VenueGoodsBatchItemSchema),
 });
 
-// Only members carrying a `goods` object are renderable, content cards are dropped.
 const CrowdfundingBatchListItemSchema = z.union([VenueGoodsTypeBatchItemSchema, VenueReservationBatchItemSchema]);
 
 export type CrowdfundingBatchListItem = z.infer<typeof CrowdfundingBatchListItemSchema>;
@@ -131,17 +124,14 @@ export const CrowdfundingBatchResultSchema = z.union([CrowdfundingGoodsBatchSche
 
 // NewProduct
 
-// Banner members carry no `type` and no nested goods, they only describe a new product picture.
 const VenueBannerBatchItemSchema = z.object({
     gid: z.number(),
     new_product_name: z.string(),
     picture_url: z.string(),
 });
 
-// Response members are validated loosely, so an unexpected member never breaks the whole batch.
 const NewProductBatchMemberSchema = z.union([VenueGoodsBatchItemSchema, VenueBannerBatchItemSchema]);
 
-// The rendered list only keeps `goods` members and banners.
 const NewProductBatchListItemSchema = z.union([VenueGoodsTypeBatchItemSchema, VenueBannerBatchItemSchema]);
 
 export type NewProductBatchListItem = z.infer<typeof NewProductBatchListItemSchema>;
@@ -154,7 +144,6 @@ export const NewProductBatchResultSchema = z.object({
 
 // GoodsDetail
 
-// Upstream reports variant prices as `null` instead of omitting the key.
 const GoodsDetailItemSchema = z.object({
     goodsInfo: z.object({
         firstSellPoint: z.string(),
@@ -199,12 +188,10 @@ const GoodsDetailItemSchema = z.object({
     ),
 });
 
-// The detail endpoint wraps the goods item in a `data` envelope, the same way the venue batch does.
 export const GoodsDetailResponseSchema = <Goods extends z.ZodType>(goods: Goods) => DataResponseSchema(z.object({ goods }));
 
 // Crowdfunding
 
-// Crowdfunding goods always run a funding round, and the one yuan group buy may be absent.
 export const CrowdfundingDetailItemSchema = GoodsDetailItemSchema.extend({
     crowdFunding: z.object({
         endTime: z.number(),
@@ -228,7 +215,6 @@ export type CrowdfundingDetailItem = z.infer<typeof CrowdfundingDetailItemSchema
 
 // NewProduct
 
-// New products have neither a funding round nor a one yuan group buy, they only need the shared goods fields.
 export const NewProductDetailItemSchema = GoodsDetailItemSchema;
 
 export type NewProductDetailItem = z.infer<typeof NewProductDetailItemSchema>;
