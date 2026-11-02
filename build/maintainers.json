@@ -84,9 +84,6 @@
   "/freebuf/articles/:type": [
     "trganda"
   ],
-  "/fuliba/latest": [
-    "shinemoon"
-  ],
   "/7gogo/user/:username": [
     "hoilc"
   ],
@@ -4401,6 +4398,9 @@
   ],
   "/fudan/cce": [
     "mrbruce516"
+  ],
+  "/fuliba/latest": [
+    "shinemoon"
   ],
   "/funresearch/grants": [
     "DIYgod"

@@ -976,44 +976,6 @@ export default {
     "url": "freebuf.com",
     "lang": "zh-CN"
   },
-  "fuliba": {
-    "routes": {
-      "/latest": {
-        "path": "/latest",
-        "categories": [
-          "new-media"
-        ],
-        "example": "/fuliba/latest",
-        "parameters": {},
-        "features": {
-          "requireConfig": false,
-          "requirePuppeteer": false,
-          "antiCrawler": false,
-          "supportBT": false,
-          "supportPodcast": false,
-          "supportScihub": false
-        },
-        "radar": [
-          {
-            "source": [
-              "fuliba2023.net/"
-            ]
-          }
-        ],
-        "name": "最新",
-        "maintainers": [
-          "shinemoon"
-        ],
-        "url": "fuliba2023.net/",
-        "location": "latest.ts",
-        "module": () => import('@/routes/fuliba/latest.ts')
-      }
-    },
-    "apiRoutes": {},
-    "name": "福利吧",
-    "url": "fuliba2023.net",
-    "lang": "zh-CN"
-  },
   "7gogo": {
     "routes": {
       "/user/:username": {
@@ -60560,6 +60522,44 @@ export default {
     "categories": [
       "university"
     ],
+    "lang": "zh-CN"
+  },
+  "fuliba": {
+    "routes": {
+      "/latest": {
+        "path": "/latest",
+        "categories": [
+          "new-media"
+        ],
+        "example": "/fuliba/latest",
+        "parameters": {},
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "fuliba2023.net/"
+            ]
+          }
+        ],
+        "name": "最新",
+        "maintainers": [
+          "shinemoon"
+        ],
+        "url": "fuliba2023.net/",
+        "location": "latest.ts",
+        "module": () => import('@/routes/fuliba/latest.ts')
+      }
+    },
+    "apiRoutes": {},
+    "name": "福利吧",
+    "url": "fuliba2023.net",
     "lang": "zh-CN"
   },
   "funresearch": {
