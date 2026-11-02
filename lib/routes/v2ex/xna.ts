@@ -52,7 +52,8 @@ async function handler(ctx) {
                 title: $(link).text(),
                 link: $(link).attr('href'),
                 author,
-                pubDate: dateText ? parseRelativeDate(dateText) : undefined,
+                // Entries older than a day show a month and day without a year, such as `10 月 31 日`
+                pubDate: dateText ? parseRelativeDate(dateText, 'M 月 D 日') : undefined,
             };
         });
 
