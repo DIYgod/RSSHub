@@ -19374,7 +19374,6 @@ export default {
           "shopping"
         ],
         "example": "/xiaomiyoupin/crowdfunding",
-        "parameters": {},
         "features": {
           "requireConfig": false,
           "requirePuppeteer": false,
@@ -19392,9 +19391,11 @@ export default {
         ],
         "name": "众筹",
         "maintainers": [
-          "bigfei"
+          "bigfei",
+          "nuomi1"
         ],
         "url": "xiaomiyoupin.com/",
+        "view": 5,
         "location": "crowdfunding.ts",
         "module": () => import('@/routes/xiaomiyoupin/crowdfunding.ts')
       },
@@ -19404,7 +19405,6 @@ export default {
           "shopping"
         ],
         "example": "/xiaomiyoupin/latest",
-        "parameters": {},
         "features": {
           "requireConfig": false,
           "requirePuppeteer": false,
@@ -19420,13 +19420,15 @@ export default {
             ]
           }
         ],
-        "name": "每日上新",
+        "name": "上新",
         "maintainers": [
           "xyqfer",
           "DIYgod",
-          "bigfei"
+          "bigfei",
+          "nuomi1"
         ],
         "url": "xiaomiyoupin.com/",
+        "view": 5,
         "location": "latest.ts",
         "module": () => import('@/routes/xiaomiyoupin/latest.ts')
       }

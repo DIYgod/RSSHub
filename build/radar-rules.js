@@ -2232,7 +2232,7 @@
         docs:"https://docs.rsshub.app/routes/xiaomiyoupin",
         source:[ "/" ],
         target:"/xiaomiyoupin/crowdfunding" },
-      { title:"每日上新",
+      { title:"上新",
         docs:"https://docs.rsshub.app/routes/xiaomiyoupin",
         source:[ "/" ],
         target:"/xiaomiyoupin/latest" } ] },
