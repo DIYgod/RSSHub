@@ -79,16 +79,19 @@ async function handler() {
             .match(/window\.__INITIAL_STATE__=(.*);\(function\(\)\{var/)![1]
     );
 
-    const list = Object.values<CourseModule>(initialState.courseindex.myModules).flatMap((mod) =>
-        mod.contents.map((item): DataItem & { courseUid: string; link: string } => ({
-            title: `${item.title} - ${item.subtitle}`,
-            author: item.authorName,
-            pubDate: parseDate(item.publishTime, 'x'),
-            link: `${url}/courses/${item.courseUid}/`,
-            courseUid: item.courseUid,
-            category: mod.name,
-        }))
-    );
+    const list = Object.values<CourseModule>(initialState.courseindex.myModules)
+        .flatMap((mod) =>
+            mod.contents.map((item): DataItem & { courseUid: string; link: string } => ({
+                title: `${item.title} - ${item.subtitle}`,
+                author: item.authorName,
+                pubDate: parseDate(item.publishTime, 'x'),
+                link: `${url}/courses/${item.courseUid}/`,
+                courseUid: item.courseUid,
+                category: mod.name,
+            }))
+        )
+        // A course can be listed in several modules, such as 今日推荐 and 商业财经
+        .filter((item, index, items) => items.findIndex((candidate) => candidate.link === item.link) === index);
 
     const items = await Promise.all(
         list.map((item) =>
