@@ -17,7 +17,8 @@ jobs:
     build:
         name: npm publish
         if: github.repository == 'DIYgod/RSSHub'
-        runs-on: ubuntu-slim
+        # Not ubuntu-slim: its single CPU takes about twice as long to install and build, and it counts toward the same concurrent job limit
+        runs-on: ubuntu-latest
         timeout-minutes: 10
         steps:
             - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
