@@ -22775,7 +22775,7 @@
         "categories": [
           "game"
         ],
-        "example": "/mihoyo/bbs/official/2/3/20/",
+        "example": "/mihoyo/bbs/official/2/3/20",
         "parameters": {
           "gids": "游戏id",
           "type": "公告类型，默认为 2(即 活动)",
@@ -48008,7 +48008,7 @@
         "categories": [
           "anime"
         ],
-        "example": "/collabo-cafe/",
+        "example": "/collabo-cafe",
         "features": {
           "requireConfig": false,
           "requirePuppeteer": false,
@@ -150965,7 +150965,7 @@
         "categories": [
           "government"
         ],
-        "example": "/gov/tianjin/tjrcgzw-notice/rczc/sjrczc/",
+        "example": "/gov/tianjin/tjrcgzw-notice/rczc/sjrczc",
         "parameters": {
           "cate": "栏目分类，可在源网站 URL 中找到，例如 rczc（人才政策）",
           "subCate": "子栏目分类，例如 sjrczc（市级人才政策）"
