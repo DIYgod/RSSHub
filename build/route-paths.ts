@@ -3141,7 +3141,7 @@ export type RoutePath =
   | `/sina/finance/rollnews/:lid?`
   | `/sina/finance/stock/usstock/:cids?`
   | `/sina/rollnews/:lid?`
-  | `/sina/sports/:type?`
+  | `/sina/sports/:type`
   | `/sinchew/`
   | `/sinchew/category/:category{.+}?`
   | `/sinchew/latest`

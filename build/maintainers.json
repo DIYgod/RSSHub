@@ -12041,7 +12041,7 @@
   "/showstart/site/:siteId": [
     "lchtao26"
   ],
-  "/sina/sports/:type?": [
+  "/sina/sports/:type": [
     "nczitzk"
   ],
   "/sina/csj": [
