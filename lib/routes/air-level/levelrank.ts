@@ -18,7 +18,7 @@ export const route: Route = {
     },
     name: '空气质量排行',
     maintainers: ['lifetraveler'],
-    example: '/air-level/rank/best,/air-level/rank',
+    example: '/air-level/rank',
     handler,
 };
 
