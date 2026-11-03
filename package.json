@@ -3,7 +3,10 @@
     "version": "1.0.0",
     "description": "Make RSS Great Again!",
     "keywords": [
-        "RSS"
+        "RSS",
+        "magpie-plugin",
+        "mcp",
+        "opencode-plugin"
     ],
     "homepage": "https://github.com/DIYgod/RSSHub#readme",
     "bugs": {
@@ -23,7 +26,8 @@
         ".": {
             "types": "./dist-lib/pkg.d.mts",
             "import": "./dist-lib/pkg.mjs"
-        }
+        },
+        "./server": "./dist-lib/magpie.mjs"
     },
     "scripts": {
         "build": "npm run build:routes && tsdown",
@@ -215,5 +219,23 @@
     "engines": {
         "node": "^24.15.0 || ^26.13.0"
     },
-    "packageManager": "pnpm@12.16.1+sha512.091d1dee7927575661b25dab3c2ae31cafc1c54d6b71ed6a6600cf0c1cb10434a447eae14015f1b23e2e6bedeed79df94a932e2164d2832280dce3fb32f656d1"
+    "packageManager": "pnpm@12.16.1+sha512.091d1dee7927575661b25dab3c2ae31cafc1c54d6b71ed6a6600cf0c1cb10434a447eae14015f1b23e2e6bedeed79df94a932e2164d2832280dce3fb32f656d1",
+    "magpie": {
+        "name": "RSSHub",
+        "icon": "data:image/svg+xml;base64,PHN2ZyByb2xlPSJpbWciIHZpZXdCb3g9IjAgMCAyNCAyNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48dGl0bGU+UlNTSHViPC90aXRsZT48cmVjdCB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIGZpbGw9IiNmZmQ2YTYiIHJ4PSI3LjYzNiIvPjxwYXRoIGZpbGw9IiNmZjg1NDkiIGQ9Ik0uMTQyIDYuMTZRLjAwMiA2Ljg3NSAwIDcuNjM1djguNzI4QTcuNjM2IDcuNjM2IDAgMCAwIDcuNjM2IDI0aDguNzI4YTcuNyA3LjcgMCAwIDAgMS40NzctLjE0MiAxMy4yNiAxMy4yNiAwIDAgMCAxLjI1LTUuNjRjMC03LjM1LTUuOTU5LTEzLjMwOS0xMy4zMS0xMy4zMDlhMTMuMjUgMTMuMjUgMCAwIDAtNS42NCAxLjI1Ii8+PGNpcmNsZSBjeD0iNS43MjciIGN5PSIxOC4yNzMiIHI9IjQuOTY0IiBmaWxsPSIjZmYyOTAwIi8+PC9zdmc+",
+        "page": {
+            "title": "RSSHub",
+            "file": "dist-lib/magpie/index.html",
+            "icon": "dist-lib/magpie/icon.svg",
+            "service": {
+                "port": 1200,
+                "option": "port"
+            }
+        },
+        "options": {
+            "port": 1200,
+            "publicUrl": "",
+            "env": {}
+        }
+    }
 }
