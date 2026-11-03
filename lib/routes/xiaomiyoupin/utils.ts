@@ -78,7 +78,8 @@ const getVenueBatchResultList = async <Result extends z.ZodType>(pageId: string,
     if (queryList.length === 0) {
         return [];
     }
-    const response = await ofetch<{ data: { result_list: Array<z.infer<Result>> } }>('https://m.xiaomiyoupin.com/mtop/navi/venue/batch', {
+    const schema = VenueBatchResponseSchema(resultSchema);
+    const response = await ofetch<z.infer<typeof schema>>('https://m.xiaomiyoupin.com/mtop/navi/venue/batch', {
         body: {
             query_list: queryList,
         },
@@ -88,7 +89,7 @@ const getVenueBatchResultList = async <Result extends z.ZodType>(pageId: string,
             pdl: 'jianyu',
             sign,
         },
-        schema: VenueBatchResponseSchema(resultSchema),
+        schema,
     });
     return response.data.result_list;
 };
