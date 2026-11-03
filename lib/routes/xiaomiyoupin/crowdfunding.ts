@@ -37,7 +37,7 @@ const getDataItems = (list: CrowdfundingBatchListItem[]): Promise<DataItem[]> =>
     pMap(
         list,
         (listItem) =>
-            cache.tryGet(`xiaomiyoupin:crowdfunding:dataitem:${utils.getCrowdfundingGid(listItem)}`, async () => {
+            cache.tryGet(`xiaomiyoupin:crowdfunding:dataitem:${utils.getCrowdfundingId(listItem)}`, async () => {
                 const detailItem = await utils.getCrowdfundingItem(listItem);
                 return getDataItem(listItem, detailItem);
             }),
@@ -45,10 +45,10 @@ const getDataItems = (list: CrowdfundingBatchListItem[]): Promise<DataItem[]> =>
     );
 
 const getDataItem = (listItem: CrowdfundingBatchListItem, detailItem: CrowdfundingDetailItem): DataItem => ({
-    title: utils.getCrowdfundingName(listItem),
+    title: utils.isVenueGoodsTypeBatchItem(listItem) ? listItem.value.goods.name : listItem.goodsInfo.name,
     description: renderCrowdfunding(utils.toCrowdfunding(listItem, detailItem)),
-    link: `https://m.xiaomiyoupin.com/detail?gid=${utils.getCrowdfundingGid(listItem)}`,
-    image: utils.getCrowdfundingImage(listItem),
+    link: `https://m.xiaomiyoupin.com/detail?gid=${utils.getCrowdfundingId(listItem)}`,
+    image: utils.isVenueGoodsTypeBatchItem(listItem) ? listItem.value.goods.img_square : listItem.goodsInfo.img_square,
     pubDate: parseDate(detailItem.crowdFunding.startTime, 'X'),
     language: 'zh-CN',
 });

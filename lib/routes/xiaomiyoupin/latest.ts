@@ -37,24 +37,21 @@ const getDataItems = (list: NewProductBatchListItem[]): Promise<DataItem[]> =>
     pMap(
         list,
         (listItem) =>
-            cache.tryGet(`xiaomiyoupin:product:dataitem:${utils.getNewProductGid(listItem)}`, async () => {
+            cache.tryGet(`xiaomiyoupin:product:dataitem:${utils.getNewProductId(listItem)}`, async () => {
                 const detailItem = await utils.getNewProductItem(listItem);
                 return getDataItem(listItem, detailItem);
             }),
         { concurrency: 6 }
     );
 
-const getDataItem = (listItem: NewProductBatchListItem, detailItem: NewProductDetailItem): DataItem => {
-    const pubDate = utils.getNewProductFirstReleaseTime(listItem);
-    return {
-        title: utils.getNewProductName(listItem),
-        description: renderNewProduct(utils.toNewProduct(listItem, detailItem)),
-        link: `https://m.xiaomiyoupin.com/detail?gid=${utils.getNewProductGid(listItem)}`,
-        image: utils.getNewProductImage(listItem),
-        pubDate: pubDate ? parseDate(pubDate, 'X') : undefined,
-        language: 'zh-CN',
-    };
-};
+const getDataItem = (listItem: NewProductBatchListItem, detailItem: NewProductDetailItem): DataItem => ({
+    title: utils.isVenueGoodsTypeBatchItem(listItem) ? listItem.value.goods.name : listItem.new_product_name,
+    description: renderNewProduct(utils.toNewProduct(listItem, detailItem)),
+    link: `https://m.xiaomiyoupin.com/detail?gid=${utils.getNewProductId(listItem)}`,
+    image: utils.isVenueGoodsTypeBatchItem(listItem) ? listItem.value.goods.img_square : listItem.picture_url,
+    pubDate: utils.isVenueGoodsTypeBatchItem(listItem) && listItem.value.goods.fist_release_time ? parseDate(listItem.value.goods.fist_release_time, 'X') : undefined,
+    language: 'zh-CN',
+});
 
 async function handler(): Promise<Data> {
     const { list, jumpUrl } = await utils.getNewProductList();

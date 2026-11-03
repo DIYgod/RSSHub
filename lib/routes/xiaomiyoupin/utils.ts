@@ -32,6 +32,30 @@ dayjs.extend(utc);
 
 const formatDate = (date: Date): string => dayjs(date).tz('Asia/Shanghai').locale('zh-cn').format('ll');
 
+/**
+ * Check whether a batch item is a venue goods entry, which nests the goods data under `value.goods`.
+ *
+ * @param {CrowdfundingBatchListItem | NewProductBatchListItem} item - Batch item.
+ * @returns {boolean} Whether the item is a venue goods entry.
+ */
+const isVenueGoodsTypeBatchItem = (item: CrowdfundingBatchListItem | NewProductBatchListItem): item is VenueGoodsTypeBatchItem => VenueGoodsTypeBatchItemSchema.safeParse(item).success;
+
+/**
+ * Read the goods id from a crowdfunding batch item, whether it is a nested venue goods entry or a flat entry.
+ *
+ * @param {CrowdfundingBatchListItem} item - Crowdfunding batch item.
+ * @returns {number} Goods id.
+ */
+const getCrowdfundingId = (item: CrowdfundingBatchListItem): number => (isVenueGoodsTypeBatchItem(item) ? item.value.goods.gid : item.gid);
+
+/**
+ * Read the goods id from a new product batch item.
+ *
+ * @param {NewProductBatchListItem} item - New product batch item.
+ * @returns {number} Goods id.
+ */
+const getNewProductId = (item: NewProductBatchListItem): number => (isVenueGoodsTypeBatchItem(item) ? item.value.goods.gid : item.gid);
+
 // Homepage
 
 const getVenueQueryContext = async (title: string): Promise<{ pageId: string; sign: string; jumpUrl: string }> => {
@@ -104,7 +128,7 @@ const getCrowdfundingList = async (): Promise<{ list: CrowdfundingBatchListItem[
     const queryList = await getVenuePageQueryList(pageId, sign, ['crowd-funding', 'reservation']);
     const resultList = await getVenueBatchResultList(pageId, sign, queryList, CrowdfundingBatchResultSchema);
     const batchList = resultList.flat();
-    const list = dedupeByKey(batchList, (item) => getCrowdfundingGid(item));
+    const list = dedupeByKey(batchList, (item) => getCrowdfundingId(item));
     return { list, jumpUrl };
 };
 
@@ -118,7 +142,7 @@ const getNewProductList = async (): Promise<{ list: NewProductBatchListItem[]; j
     const queryList = await getVenuePageQueryList(pageId, sign, ['leek-super', 'leek-selective']);
     const resultList = await getVenueBatchResultList(pageId, sign, queryList, NewProductBatchResultSchema);
     const batchList = resultList.flat();
-    const list = dedupeByKey(batchList, (item) => getNewProductGid(item));
+    const list = dedupeByKey(batchList, (item) => getNewProductId(item));
     return { list, jumpUrl };
 };
 
@@ -151,7 +175,7 @@ const getGoodsDetail = async <Goods extends z.ZodType>(gid: number, goodsSchema:
  * @param {CrowdfundingBatchListItem} item - Crowdfunding batch item.
  * @returns {Promise<CrowdfundingDetailItem>} Goods detail.
  */
-const getCrowdfundingItem = (item: CrowdfundingBatchListItem): Promise<CrowdfundingDetailItem> => getGoodsDetail(getCrowdfundingGid(item), CrowdfundingDetailItemSchema);
+const getCrowdfundingItem = (item: CrowdfundingBatchListItem): Promise<CrowdfundingDetailItem> => getGoodsDetail(getCrowdfundingId(item), CrowdfundingDetailItemSchema);
 
 /**
  * Fetch new product goods details by the goods id of a batch item.
@@ -159,69 +183,9 @@ const getCrowdfundingItem = (item: CrowdfundingBatchListItem): Promise<Crowdfund
  * @param {NewProductBatchListItem} item - New product batch item.
  * @returns {Promise<NewProductDetailItem>} Goods detail.
  */
-const getNewProductItem = (item: NewProductBatchListItem): Promise<NewProductDetailItem> => getGoodsDetail(getNewProductGid(item), NewProductDetailItemSchema);
+const getNewProductItem = (item: NewProductBatchListItem): Promise<NewProductDetailItem> => getGoodsDetail(getNewProductId(item), NewProductDetailItemSchema);
 
 // Conversion
-
-type VenueBatchItem = CrowdfundingBatchListItem | NewProductBatchListItem;
-
-const isVenueGoodsTypeBatchItem = (item: VenueBatchItem): item is VenueGoodsTypeBatchItem => VenueGoodsTypeBatchItemSchema.safeParse(item).success;
-
-/**
- * Read the goods id from a crowdfunding batch item, whether it is a nested venue goods entry or a flat entry.
- *
- * @param {CrowdfundingBatchListItem} item - Crowdfunding batch item.
- * @returns {number} Goods id.
- */
-const getCrowdfundingGid = (item: CrowdfundingBatchListItem): number => (isVenueGoodsTypeBatchItem(item) ? item.value.goods.gid : item.gid);
-
-/**
- * Read the goods name from a crowdfunding batch item.
- *
- * @param {CrowdfundingBatchListItem} item - Crowdfunding batch item.
- * @returns {string} Goods name.
- */
-const getCrowdfundingName = (item: CrowdfundingBatchListItem): string => (isVenueGoodsTypeBatchItem(item) ? item.value.goods.name : item.goodsInfo.name);
-
-/**
- * Read the square image URL from a crowdfunding batch item.
- *
- * @param {CrowdfundingBatchListItem} item - Crowdfunding batch item.
- * @returns {string} Square image URL.
- */
-const getCrowdfundingImage = (item: CrowdfundingBatchListItem): string => (isVenueGoodsTypeBatchItem(item) ? item.value.goods.img_square : item.goodsInfo.img_square);
-
-/**
- * Read the goods id from a new product batch item.
- *
- * @param {NewProductBatchListItem} item - New product batch item.
- * @returns {number} Goods id.
- */
-const getNewProductGid = (item: NewProductBatchListItem): number => (isVenueGoodsTypeBatchItem(item) ? item.value.goods.gid : item.gid);
-
-/**
- * Read the goods name from a new product batch item.
- *
- * @param {NewProductBatchListItem} item - New product batch item.
- * @returns {string} Goods name.
- */
-const getNewProductName = (item: NewProductBatchListItem): string => (isVenueGoodsTypeBatchItem(item) ? item.value.goods.name : item.new_product_name);
-
-/**
- * Read the square image URL from a new product batch item.
- *
- * @param {NewProductBatchListItem} item - New product batch item.
- * @returns {string} Square image URL.
- */
-const getNewProductImage = (item: NewProductBatchListItem): string => (isVenueGoodsTypeBatchItem(item) ? item.value.goods.img_square : item.picture_url);
-
-/**
- * Read the first release timestamp from a new product batch item.
- *
- * @param {NewProductBatchListItem} item - New product batch item.
- * @returns {number | undefined} First release timestamp, or `undefined` when the item does not provide one.
- */
-const getNewProductFirstReleaseTime = (item: NewProductBatchListItem): number | undefined => (isVenueGoodsTypeBatchItem(item) ? item.value.goods.fist_release_time : undefined);
 
 const toSellPointList = (goodsInfo: CrowdfundingDetailItem['goodsInfo']): string[] =>
     [goodsInfo.firstSellPoint, goodsInfo.secondSellPoint, goodsInfo.thirdSellPoint].map((point) => point.trim()).filter((point): point is string => Boolean(point));
@@ -292,16 +256,12 @@ const toNewProduct = (listItem: NewProductBatchListItem, detailItem: NewProductD
 
 export default {
     getCrowdfundingList,
-    getCrowdfundingGid,
-    getCrowdfundingName,
-    getCrowdfundingImage,
-    getNewProductList,
-    getNewProductGid,
-    getNewProductName,
-    getNewProductImage,
-    getNewProductFirstReleaseTime,
     getCrowdfundingItem,
+    getNewProductList,
     getNewProductItem,
+    isVenueGoodsTypeBatchItem,
+    getCrowdfundingId,
+    getNewProductId,
     toCrowdfunding,
     toNewProduct,
 };
