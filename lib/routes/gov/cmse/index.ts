@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import { FetchError } from 'ofetch';
 
 import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
@@ -43,28 +44,36 @@ export async function handler(ctx) {
         });
 
     items = await Promise.all(
-        items.map((item) =>
-            cache.tryGet(item.link!, async () => {
-                const detailResponse = await got({
-                    method: 'get',
-                    url: item.link,
+        items.map(async (item) => {
+            try {
+                return await cache.tryGet(item.link!, async () => {
+                    const detailResponse = await got({
+                        method: 'get',
+                        url: item.link,
+                    });
+
+                    const content = load(detailResponse.data);
+
+                    content('.share').remove();
+
+                    const detailPubTimeMatches = detailResponse.data.match(/__\$pubtime='(.*?)';var/);
+
+                    item.pubDate = detailPubTimeMatches?.[1] ? timezone(parseDate(detailPubTimeMatches[1]), 8) : item.pubDate;
+                    item.description = renderDescription({
+                        video: content('#con_video').html() ?? undefined,
+                        description: content('.TRS_Editor, #content').html() ?? undefined,
+                    });
+
+                    return item;
                 });
-
-                const content = load(detailResponse.data);
-
-                content('.share').remove();
-
-                const detailPubTimeMatches = detailResponse.data.match(/__\$pubtime='(.*?)';var/);
-
-                item.pubDate = detailPubTimeMatches?.[1] ? timezone(parseDate(detailPubTimeMatches[1]), 8) : item.pubDate;
-                item.description = renderDescription({
-                    video: content('#con_video').html() ?? undefined,
-                    description: content('.TRS_Editor, #content').html() ?? undefined,
-                });
-
-                return item;
-            })
-        )
+            } catch (error) {
+                // Some lists still link articles whose pages were removed and answer 404
+                if (error instanceof FetchError && error.statusCode === 404) {
+                    return item;
+                }
+                throw error;
+            }
+        })
     );
 
     return {
