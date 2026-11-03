@@ -306,6 +306,7 @@ export type RoutePath =
   | `/bakamh/manga/:name`
   | `/bandbbs/:watch_type?/:list_type?`
   | `/bandcamp/artist/:artist`
+  | `/bandcamp/daily`
   | `/bandcamp/live`
   | `/bandcamp/tag/:tag?`
   | `/bandcamp/weekly`

@@ -9800,6 +9800,9 @@
   "/bandcamp/artist/:artist": [
     "pseudoyu"
   ],
+  "/bandcamp/daily": [
+    "ashi-koki"
+  ],
   "/bandcamp/tag/:tag?": [
     "nczitzk"
   ],

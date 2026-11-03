@@ -135894,6 +135894,38 @@ export default {
         "location": "artist.tsx",
         "module": () => import('@/routes/bandcamp/artist.tsx')
       },
+      "/daily": {
+        "path": "/daily",
+        "categories": [
+          "new-media"
+        ],
+        "example": "/bandcamp/daily",
+        "parameters": {},
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "daily.bandcamp.com/latest"
+            ],
+            "target": "/daily"
+          }
+        ],
+        "name": "Daily",
+        "maintainers": [
+          "ashi-koki"
+        ],
+        "url": "daily.bandcamp.com/latest",
+        "description": "The latest Bandcamp Daily articles, with the full article text and images.",
+        "location": "daily.ts",
+        "module": () => import('@/routes/bandcamp/daily.ts')
+      },
       "/tag/:tag?": {
         "path": "/tag/:tag?",
         "categories": [

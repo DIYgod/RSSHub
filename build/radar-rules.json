@@ -52616,6 +52616,16 @@
         ],
         "target": "/bandcamp/tag"
       }
+    ],
+    "daily": [
+      {
+        "title": "Daily",
+        "docs": "https://docs.rsshub.app/routes/bandcamp",
+        "source": [
+          "/latest"
+        ],
+        "target": "/bandcamp/daily"
+      }
     ]
   },
   "bgm.tv": {
