@@ -117,7 +117,7 @@ const getNewProductList = async (): Promise<{ list: NewProductBatchListItem[]; j
     const { pageId, sign, jumpUrl } = await getVenueQueryContext('上新精选');
     const queryList = await getVenuePageQueryList(pageId, sign, ['leek-super', 'leek-selective']);
     const resultList = await getVenueBatchResultList(pageId, sign, queryList, NewProductBatchResultSchema);
-    const batchList = resultList.flatMap((result) => result.list);
+    const batchList = resultList.flat();
     const list = dedupeByKey(batchList, (item) => getNewProductGid(item));
     return { list, jumpUrl };
 };

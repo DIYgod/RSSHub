@@ -130,17 +130,23 @@ const VenueBannerBatchItemSchema = z.object({
     picture_url: z.string(),
 });
 
-const NewProductBatchMemberSchema = z.union([VenueGoodsBatchItemSchema, VenueBannerBatchItemSchema]);
-
-const NewProductBatchListItemSchema = z.union([VenueGoodsTypeBatchItemSchema, VenueBannerBatchItemSchema]);
+const NewProductBatchListItemSchema = z.union([
+    // leek-super
+    VenueBannerBatchItemSchema,
+    // leek-selective
+    VenueGoodsTypeBatchItemSchema,
+]);
 
 export type NewProductBatchListItem = z.infer<typeof NewProductBatchListItemSchema>;
 
-const toNewProductEntries = (items: unknown[]) => toSchemaItems(items, NewProductBatchListItemSchema);
-
-export const NewProductBatchResultSchema = z.object({
-    list: z.array(NewProductBatchMemberSchema).transform(toNewProductEntries),
-});
+export const NewProductBatchResultSchema = ListResultSchema(
+    z.union([
+        // leek-super
+        VenueBannerBatchItemSchema,
+        // leek-selective
+        VenueGoodsBatchItemSchema,
+    ])
+).transform((result) => toSchemaItems(result.list, NewProductBatchListItemSchema));
 
 // GoodsDetail
 
