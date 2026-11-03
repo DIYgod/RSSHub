@@ -1,3 +1,4 @@
+import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Data, Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { getRouteLimit } from '@/utils/route-limit';
@@ -9,10 +10,16 @@ export const handler = async (ctx): Promise<Data> => {
     const pref: string = ctx.req.param('pref');
     const city = areaSlug(ctx.req.param('city'));
     checkSlugs({ pref, city });
-    // `po=1&pj=2` is the page's own 新着・更新順.
-    const listUrl = `${HOST}/ms/chuko/${pref}/sc_${city}/?po=1&pj=2`;
+    // A path segment, not a query: the route cache keys on the path, so `?page=2` would be served page 1.
+    const page: string = ctx.req.param('page') ?? '1';
+    if (!/^[1-9]\d*$/.test(page)) {
+        throw new InvalidParameterError(`page must be a whole number from 1, not "${page}"`);
+    }
+    // `po=1&pj=2` is the page's own 新着・更新順; later pages keep it, so pages 1, 2, 3 follow on from each other.
+    const listUrl = `${HOST}/ms/chuko/${pref}/sc_${city}/?po=1&pj=2${page === '1' ? '' : `&page=${page}`}`;
     const units = parseBuyList(await ofetch<string>(listUrl), '中古マンション');
-    if (units.length === 0) {
+    // A page past the last is served as a page with no unit; only an empty first page means a wrong slug.
+    if (units.length === 0 && page === '1') {
         throw new Error(`suumo: no listing found on ${listUrl}; the area slug may be wrong or the page structure changed`);
     }
     const limit = Math.min(getRouteLimit(ctx, DEFAULT_LIMIT), units.length);
@@ -23,11 +30,13 @@ export const handler = async (ctx): Promise<Data> => {
         link: listUrl,
         language: 'ja',
         item: items,
+        // An empty page 1 has already failed above; only a page past the last gets here empty.
+        allowEmpty: true,
     };
 };
 
 export const route: Route = {
-    path: '/ms/chuko/:pref/:city',
+    path: '/ms/chuko/:pref/:city/:page?',
     name: '中古マンション',
     url: 'suumo.jp',
     maintainers: ['pseudoyu'],
@@ -39,6 +48,10 @@ export const route: Route = {
         },
         city: {
             description: '市区町村 slug as SUUMO spells it after `sc_` in its area path — `minato` for `/ms/chuko/tokyo/sc_minato/`',
+        },
+        page: {
+            description: 'List page to read, from 1, in the same 新着・更新順; a page past the last returns no item',
+            default: '1',
         },
     },
     description: `中古マンション for sale on SUUMO for one 市区町村，newest first (the page's own 新着・更新順).
