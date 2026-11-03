@@ -1,10 +1,10 @@
 import type { z } from 'zod';
 
+import type { Crowdfunding } from '@/routes/mi/templates/crowdfunding';
+import type { NewProduct } from '@/routes/mi/templates/newproduct';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
-import type { Crowdfunding } from './templates/crowdfunding';
-import type { NewProduct } from './templates/newproduct';
 import type { CrowdfundingDetailItem, CrowdfundingListItem, NewProductDetailItem, NewProductListItem } from './types';
 import { CrowdfundingDetailResponseSchema, CrowdfundingListResponseSchema, NewProductDetailResponseSchema, NewProductListResponseSchema } from './types';
 

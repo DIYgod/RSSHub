@@ -1,11 +1,11 @@
 import pMap from 'p-map';
 
+import { renderNewProduct } from '@/routes/mi/templates/newproduct';
 import type { Data, DataItem, Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import { parseDate } from '@/utils/parse-date';
 
-import { renderNewProduct } from './templates/newproduct';
 import type { NewProductDetailItem, NewProductListItem } from './types';
 import utils from './utils';
 
