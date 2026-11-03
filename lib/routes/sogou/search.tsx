@@ -58,8 +58,9 @@ async function handler(ctx) {
                     const link = element.find('h3 a').first().attr('href');
                     const title = element.find('h3').first().text();
                     const description = element.find('.text-layout').first().text() || element.find('.space-txt').first().text() || element.find('[class^="translate"]').first().text();
-                    const author = element.find('.citeurl span').first().text() || '';
-                    const pubDate = parseDate(element.find('.citeurl .cite-date').first().text().trim());
+                    const author = element.find('.citeLinkClass span').first().text() || '';
+                    const date = element.find('.citeLinkClass .cite-date').first().text().trim();
+                    const pubDate = date ? parseDate(date) : undefined;
                     return {
                         link,
                         title,
