@@ -1307,7 +1307,7 @@
   "/inspirehep/literature/:q": [
     "TonyRL"
   ],
-  "/inspirehep/:collection{jobs|seminars|conferences|institutions|experiments|journals}/:q?": [
+  "/inspirehep/:collection{(?:jobs|seminars|conferences|institutions|experiments|journals)}/:q?": [
     "DIYgod"
   ],
   "/inspirehep/authors/:id": [
@@ -2539,7 +2539,7 @@
   "/appstorrent/programs": [
     "xzzpig"
   ],
-  "/aqara/:region{cn|kr|eu|us|ru|en}/:type?": [
+  "/aqara/:region{(?:cn|kr|eu|us|ru|en)}/:type?": [
     "nczitzk"
   ],
   "/aqara/community/:id?/:keyword?": [

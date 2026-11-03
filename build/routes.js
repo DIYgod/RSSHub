@@ -15389,8 +15389,8 @@ export default {
         "location": "literature.ts",
         "module": () => import('@/routes/inspirehep/literature.ts')
       },
-      "/:collection{jobs|seminars|conferences|institutions|experiments|journals}/:q?": {
-        "path": "/:collection{jobs|seminars|conferences|institutions|experiments|journals}/:q?",
+      "/:collection{(?:jobs|seminars|conferences|institutions|experiments|journals)}/:q?": {
+        "path": "/:collection{(?:jobs|seminars|conferences|institutions|experiments|journals)}/:q?",
         "name": "Collection Search",
         "categories": [
           "journal"
@@ -33801,8 +33801,8 @@ export default {
   },
   "aqara": {
     "routes": {
-      "/:region{cn|kr|eu|us|ru|en}/:type?": {
-        "path": "/:region{cn|kr|eu|us|ru|en}/:type?",
+      "/:region{(?:cn|kr|eu|us|ru|en)}/:type?": {
+        "path": "/:region{(?:cn|kr|eu|us|ru|en)}/:type?",
         "categories": [
           "other"
         ],

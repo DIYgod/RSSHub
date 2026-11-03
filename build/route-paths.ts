@@ -244,7 +244,7 @@ export type RoutePath =
   | `/appstore/xianmian`
   | `/appstorrent/programs`
   | `/aqara/:path{.+}?`
-  | `/aqara/:region{cn|kr|eu|us|ru|en}/:type?`
+  | `/aqara/:region{(?:cn|kr|eu|us|ru|en)}/:type?`
   | `/aqara/cn/news`
   | `/aqara/community/:id?/:keyword?`
   | `/aqicn/:city/:pollution?`
@@ -1857,7 +1857,7 @@ export type RoutePath =
   | `/inoreader/rss/:user/:tag`
   | `/inshokuten/bukken/:area?/:region?`
   | `/inshokuten/rent-benchmark/:area?/:line?`
-  | `/inspirehep/:collection{jobs|seminars|conferences|institutions|experiments|journals}/:q?`
+  | `/inspirehep/:collection{(?:jobs|seminars|conferences|institutions|experiments|journals)}/:q?`
   | `/inspirehep/authors/:id`
   | `/inspirehep/literature/:q`
   | `/instagram/:category/:key`
