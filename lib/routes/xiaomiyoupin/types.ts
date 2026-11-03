@@ -5,6 +5,8 @@ import { z } from 'zod';
 
 const DataResponseSchema = <Schema extends z.ZodType>(data: Schema) => z.object({ data });
 
+const ListResultSchema = <Schema extends z.ZodType>(result: Schema) => z.object({ list: z.array(result) });
+
 // Entries are validated one by one, so an unexpected entry never breaks the whole list.
 const toSchemaItems = <Schema extends z.ZodType>(items: unknown[], schema: Schema): Array<z.infer<Schema>> =>
     items.flatMap((item) => {
@@ -97,28 +99,28 @@ const VenueReservationBatchItemSchema = z.object({
     }),
 });
 
-const VenueContentBatchItemSchema = z.object({
-    goodsType: z.number(),
-    id: z.string(),
-});
-
-const CrowdfundingGoodsBatchSchema = z.object({
-    list: z.array(VenueGoodsBatchItemSchema),
-});
-
-const CrowdfundingBatchListItemSchema = z.union([VenueGoodsTypeBatchItemSchema, VenueReservationBatchItemSchema]);
+const CrowdfundingBatchListItemSchema = z.union([
+    // crowd-funding
+    VenueGoodsTypeBatchItemSchema,
+    // reservation
+    VenueReservationBatchItemSchema,
+]);
 
 export type CrowdfundingBatchListItem = z.infer<typeof CrowdfundingBatchListItemSchema>;
 
-const toCrowdfundingEntries = (result: unknown): CrowdfundingBatchListItem[] => {
-    const goodsBatch = CrowdfundingGoodsBatchSchema.safeParse(result);
-    if (goodsBatch.success) {
-        return toSchemaItems(goodsBatch.data.list, VenueGoodsTypeBatchItemSchema);
-    }
-    return toSchemaItems([result], VenueReservationBatchItemSchema);
-};
-
-export const CrowdfundingBatchResultSchema = z.union([CrowdfundingGoodsBatchSchema, VenueReservationBatchItemSchema, VenueContentBatchItemSchema]).transform(toCrowdfundingEntries);
+export const CrowdfundingBatchResultSchema = z
+    .union([
+        // crowd-funding
+        ListResultSchema(VenueGoodsBatchItemSchema),
+        // reservation with goodsInfo
+        VenueReservationBatchItemSchema,
+        // reservation without goodsInfo, skipped
+        z.object({ goodsType: z.number(), id: z.string() }),
+    ])
+    .transform((result) => {
+        const goodsBatch = ListResultSchema(VenueGoodsBatchItemSchema).safeParse(result);
+        return goodsBatch.success ? toSchemaItems(goodsBatch.data.list, VenueGoodsTypeBatchItemSchema) : toSchemaItems([result], VenueReservationBatchItemSchema);
+    });
 
 // NewProduct
 
