@@ -119792,7 +119792,7 @@ export default {
           "AlanZeng423",
           "SuperPung"
         ],
-        "description": "| Focus on TJU | General News | Internal News | Media Report | Pictures of TJU |\n| :----------: | :----------: | :-----------: | :----------: | :-------------: |\n|     focus    |    general   |    internal   |     media    |     picture     |",
+        "description": "| Cover News | General News | Campus News | Media Report | Pictures of TJU |\n| :--------: | :----------: | :---------: | :----------: | :-------------: |\n|    focus   |    general   |   internal  |     media    |     picture     |",
         "location": "news/index.ts",
         "module": () => import('@/routes/tju/news/index.ts')
       },
