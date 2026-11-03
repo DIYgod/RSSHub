@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import { FetchError } from 'ofetch';
 import pMap from 'p-map';
 
 import type { DataItem, Route } from '@/types';
@@ -10,8 +11,8 @@ import { fetchArticle } from '@/utils/wechat-mp';
 export const route: Route = {
     path: '/gs/:type/:num?',
     categories: ['university'],
-    example: '/sjtu/gs/enroll/59',
-    parameters: { type: '类别', num: '细分类别, 仅对`type`为`enroll`或`exchange`有效' },
+    example: '/sjtu/gs/xsjy',
+    parameters: { type: '类别', num: '细分类别, 仅对`type`为`exchange`有效' },
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -41,15 +42,11 @@ export const route: Route = {
     name: '研究生通知公告',
     maintainers: ['dzx-dzx'],
     handler,
-    description: `| 工作信息 | 招生信息 | 培养信息 | 学位学科 | 国际交流 | 创新工程 |
-| -------- | -------- | -------- | -------- | -------- | -------- |
-| work     | enroll   | train    | degree   | exchange | xsjy     |
+    description: `| 工作信息 | 培养信息 | 学位学科 | 国际交流 | 创新工程 |
+| -------- | -------- | -------- | -------- | -------- |
+| work     | train    | degree   | exchange | xsjy     |
 
-当\`type\`为\`enroll\`, \`num\`可选字段:
-
-| 58       | 59       | 60         | 61       | 62       |
-| -------- | -------- | ---------- | -------- | -------- |
-| 博士招生 | 硕士招生 | 港澳台招生 | 考点信息 | 院系动态 |
+招生信息已移至研究生招生网，请使用「研究生招生网招考信息」路由 \`/sjtu/yzb/zkxx/:type\`。
 
 当\`type\`为\`exchange\`, \`num\`可选字段:
 
@@ -89,14 +86,26 @@ async function handler(ctx) {
     const items = await pMap(
         list,
         async (item) => {
-            const details = await cache.tryGet<Pick<DataItem, 'description' | 'pubDate'>>(`sjtu:gs:details:v4:${item.link}`, async () => {
+            const details = await cache.tryGet<Pick<DataItem, 'description' | 'pubDate'>>(`sjtu:gs:details:v5:${item.link}`, async () => {
                 if (new URL(item.link).hostname === 'mp.weixin.qq.com') {
                     const article = await fetchArticle(item.link);
                     return { description: article.description, pubDate: article.pubDate };
                 }
-                const detailResponse = await got({ method: 'get', url: item.link });
-                const content = load(detailResponse.data);
-                return { description: content('.page-content').html() };
+                // Other sites, such as csc.edu.cn or jwc.sjtu.edu.cn, use their own page layout
+                if (new URL(item.link).hostname !== 'www.gs.sjtu.edu.cn') {
+                    return {};
+                }
+                try {
+                    const detailResponse = await got({ method: 'get', url: item.link });
+                    const content = load(detailResponse.data);
+                    return { description: content('.mce-content-body').html() };
+                } catch (error) {
+                    // Some notices are for logged-in students only and redirect to the jAccount login
+                    if (error instanceof FetchError && error.response?.url.startsWith('https://jaccount.sjtu.edu.cn/')) {
+                        return {};
+                    }
+                    throw error;
+                }
             });
             return { ...item, ...details, pubDate: details.pubDate ?? item.pubDate };
         },
