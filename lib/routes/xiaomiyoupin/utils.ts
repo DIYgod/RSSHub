@@ -34,23 +34,7 @@ const formatDate = (date: Date): string => dayjs(date).tz('Asia/Shanghai').local
 
 // Homepage
 
-interface VenueQueryContext {
-    pageId: string;
-    sign: string;
-    jumpUrl: string;
-}
-
-const parsePageQuery = (jumpUrl?: string): VenueQueryContext => {
-    const searchParams = jumpUrl ? new URL(jumpUrl).searchParams : null;
-    const pageId = searchParams?.get('pageid');
-    const sign = searchParams?.get('sign');
-    if (!jumpUrl || !pageId || !sign) {
-        throw new NotFoundError('Failed to get pageid or sign from xiaomiyoupin homepage');
-    }
-    return { pageId, sign, jumpUrl };
-};
-
-const getVenueQueryContext = async (title: string): Promise<VenueQueryContext> => {
+const getVenueQueryContext = async (title: string): Promise<{ pageId: string; sign: string; jumpUrl: string }> => {
     const response = await ofetch<z.infer<typeof HomepageMainResponseSchema>>('https://m.xiaomiyoupin.com/homepage/main/v1005', {
         method: 'POST',
         query: {
@@ -61,7 +45,13 @@ const getVenueQueryContext = async (title: string): Promise<VenueQueryContext> =
     });
     const floor = response.data.homepage.floors.find((item) => item.module_key === 'kingkong_occupied');
     const jumpUrl = floor?.data.items.find((entry) => entry.item.title === title)?.item.jump_url;
-    return parsePageQuery(jumpUrl);
+    const searchParams = jumpUrl ? new URL(jumpUrl).searchParams : null;
+    const pageId = searchParams?.get('pageid');
+    const sign = searchParams?.get('sign');
+    if (!jumpUrl || !pageId || !sign) {
+        throw new NotFoundError('Failed to get pageid or sign from xiaomiyoupin homepage');
+    }
+    return { pageId, sign, jumpUrl };
 };
 
 // VenuePage
