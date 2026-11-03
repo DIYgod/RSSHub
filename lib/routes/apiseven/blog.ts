@@ -5,6 +5,7 @@ import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 import timezone from '@/utils/timezone';
 
 const md = MarkdownIt({
@@ -42,10 +43,10 @@ export const route: Route = {
     handler,
 };
 
-async function handler() {
+async function handler(ctx) {
     const articles = await getArticles();
     const items = await Promise.all(
-        articles.map((item) =>
+        articles.slice(0, getRouteLimit(ctx, 20)).map((item) =>
             cache.tryGet(item.link, async () => {
                 const { data: res } = await got(item.link);
                 const $ = load(res);
