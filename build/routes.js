@@ -31432,7 +31432,7 @@ export default {
         "maintainers": [
           "lifetraveler"
         ],
-        "example": "/air-level/rank/best,/air-level/rank",
+        "example": "/air-level/rank",
         "location": "levelrank.ts",
         "module": () => import('@/routes/air-level/levelrank.ts')
       }
