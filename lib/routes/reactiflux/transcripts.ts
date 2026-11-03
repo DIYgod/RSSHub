@@ -62,7 +62,7 @@ export async function handler(ctx) {
             cache.tryGet(`reactiflux:transcript:v3:${item.link}`, async () => {
                 const { data: detailResponse } = await got(item.link);
 
-                const data = JSON.parse(detailResponse.match(/__NEXT_DATA__" type="application\/json">(.*)<\/script>/)?.[1] ?? '{}');
+                const data = JSON.parse(detailResponse.match(/__NEXT_DATA__" type="application\/json">(.*?)<\/script>/)?.[1] ?? '{}');
 
                 const props = data.props?.pageProps;
                 if (!props?.title || typeof props.html !== 'string' || !props.html || typeof data.query?.slug !== 'string' || !data.query.slug) {
