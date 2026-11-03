@@ -50,7 +50,7 @@ async function handler(ctx) {
 
             return {
                 title: $item.find('h5').text(),
-                link: `${rootUrl}${$item.attr('href')}`,
+                link: new URL($item.attr('href')!, rootUrl).href,
                 pubDate: timezone(parseDate($item.find('small').text()), 8),
             };
         });
