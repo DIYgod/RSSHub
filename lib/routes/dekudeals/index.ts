@@ -30,16 +30,16 @@ async function handler(ctx: Context) {
 
     const title = $('#search-title').text();
 
-    const out = $('.search-main > .item-grid2 > div.cell')
+    const out = $('.search-main .browse-cards .col')
         .toArray()
         .map((item) => {
             const $item = $(item);
-            const img = $item.find('.main-link img').attr('src');
+            const img = $item.find('picture img').attr('src');
             const price = $item.find('strong').html();
             const oldprice = $item.find('s.text-muted').html();
 
             return {
-                title: $item.find('.name').text(),
+                title: $item.find('.main-link h6').text(),
                 link: new URL($item.find('.main-link').attr('href')!, host).href,
                 description: `<img src="${img}"><br><s>${oldprice}</s><br>${price}`,
             };
