@@ -37,7 +37,7 @@ export const route: Route = {
 
 async function handler(ctx) {
     const { language = 'ko' } = ctx.req.param();
-    const link = `${host}/${language}/index.php?MkBAMkAxQA==`;
+    const link = `${host}/${language}/index.php?MUBAMkAxQA==`;
     const { data: response } = await got(link);
 
     const $ = load(response);
@@ -59,8 +59,8 @@ async function handler(ctx) {
                 const { data: response } = await got(item.link);
                 const $ = load(response);
 
-                $('.news_Title, .NewsDetail, .News_Detail, #moveNews').remove();
-                item.description = $('.col-sm-8').html();
+                $('.TitleP, .WriterP').remove();
+                item.description = $('#ContDIV').html();
 
                 return item;
             })
