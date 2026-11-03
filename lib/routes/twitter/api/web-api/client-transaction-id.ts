@@ -17,7 +17,7 @@ const getClientTransactionKeys = async (refresh: boolean) => {
         return cache.tryGet(cacheKey, fetchClientTransactionKeys, config.cache.contentExpire, false);
     }
     const keys = await fetchClientTransactionKeys();
-    await cache.set(cacheKey, JSON.stringify(keys), config.cache.contentExpire);
+    await cache.set(cacheKey, JSON.stringify(keys));
     return keys;
 };
 
