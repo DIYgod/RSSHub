@@ -18,7 +18,8 @@ const getRecords = (response) => {
 const processItems: (items: any[], limit: number) => DataItem[] = (items: any[], limit: number) =>
     items.slice(0, limit).map((item): DataItem => {
         const title: string = item.title;
-        const description: string = item.content;
+        // The list API returns a summary only; the full story is split across pages on the site
+        const description: string | undefined = item.summary ?? undefined;
         const guid = `ifun-n-${item.id}`;
 
         const author: DataItem['author'] = item.author;
@@ -34,10 +35,13 @@ const processItems: (items: any[], limit: number) => DataItem[] = (items: any[],
             author,
             guid,
             id: guid,
-            content: {
-                html: description,
-                text: load(description).text(),
-            },
+            // Older stories have no summary
+            content: description
+                ? {
+                      html: description,
+                      text: load(description).text(),
+                  }
+                : undefined,
             language,
         };
     });
