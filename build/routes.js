@@ -122278,7 +122278,7 @@ export default {
           "mobyw"
         ],
         "url": "www.jwc.uestc.edu.cn/",
-        "description": "| 重要公告  | 学生事务公告 | 教师事务公告 | 教学新闻 | 办公室 |\n| --------- | ------------ | ------------ | -------- | ------ |\n| important | student      | teacher      | teaching | office |",
+        "description": "| 通知公告  | 学生事务公告 | 教师事务公告 | 教学新闻 | 办公室公告 |\n| --------- | ------------ | ------------ | -------- | ---------- |\n| important | student      | teacher      | teaching | office     |",
         "location": "jwc.ts",
         "module": () => import('@/routes/uestc/jwc.ts')
       },
