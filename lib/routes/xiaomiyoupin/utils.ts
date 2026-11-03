@@ -16,7 +16,7 @@ import {
     CrowdfundingBatchResultSchema,
     CrowdfundingDetailItemSchema,
     GoodsDetailResponseSchema,
-    HomepageMainResponseSchema,
+    HomepageResponseSchema,
     NewProductBatchResultSchema,
     NewProductDetailItemSchema,
     VenueBatchResponseSchema,
@@ -35,13 +35,13 @@ const formatDate = (date: Date): string => dayjs(date).tz('Asia/Shanghai').local
 // Homepage
 
 const getVenueQueryContext = async (title: string): Promise<{ pageId: string; sign: string; jumpUrl: string }> => {
-    const response = await ofetch<z.infer<typeof HomepageMainResponseSchema>>('https://m.xiaomiyoupin.com/homepage/main/v1005', {
+    const response = await ofetch<z.infer<typeof HomepageResponseSchema>>('https://m.xiaomiyoupin.com/homepage/main/v1005', {
         method: 'POST',
         query: {
             platform: 'm',
         },
         responseType: 'json',
-        schema: HomepageMainResponseSchema,
+        schema: HomepageResponseSchema,
     });
     const floor = response.data.homepage.floors.find((item) => item.module_key === 'kingkong_occupied');
     const jumpUrl = floor?.data.items.find((entry) => entry.item.title === title)?.item.jump_url;

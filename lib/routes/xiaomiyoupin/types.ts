@@ -21,9 +21,7 @@ const HomepageFloorEntrySchema = z.object({
     }),
 });
 
-const toHomepageFloorEntries = (items: unknown[] = []) => toSchemaItems(items, HomepageFloorEntrySchema);
-
-export const HomepageMainResponseSchema = DataResponseSchema(
+export const HomepageResponseSchema = DataResponseSchema(
     z.object({
         homepage: z.object({
             floors: z.array(
@@ -33,7 +31,7 @@ export const HomepageMainResponseSchema = DataResponseSchema(
                             items: z.array(z.unknown()).optional(),
                         })
                         .transform((data) => ({
-                            items: toHomepageFloorEntries(data.items),
+                            items: toSchemaItems(data.items ?? [], HomepageFloorEntrySchema),
                         })),
                     module_key: z.string(),
                 })
