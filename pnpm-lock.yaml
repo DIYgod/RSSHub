@@ -398,8 +398,8 @@ importers:
         specifier: 0.8.0
         version: 0.8.0
       teleproto:
-        specifier: 1.232.0
-        version: 1.232.0
+        specifier: 1.232.1
+        version: 1.232.1
       title:
         specifier: 4.0.1
         version: 4.0.1
@@ -731,47 +731,47 @@ packages:
   '@cacheable/utils@2.5.0':
     resolution: {integrity: sha512-buipgOVDkkPXNR5+xBpDw7Zk2n1EvU7qBJCNUcL7rhQ//kfpOXPAvQ511Os0vpLYJ1pZnvudNytkQt2hst3wqA==}
 
-  '@cifrante/darwin-arm64@0.6.0':
-    resolution: {integrity: sha512-h+lTeJ+tCtGmLvB4nylKemxcO2kfPzSyb3CdmSALvR3g22ziAExen1WFPhEPhpRmbuX2LwqDQFaDWflllX4hHg==}
+  '@cifrante/darwin-arm64@0.8.1':
+    resolution: {integrity: sha512-CSHC3rayWsjNWWa0FxQe5nCVKa5TKCurTPnj00EZxk7y6P+1ApFUdB8Qdsw1HcVR1trSO8arvYc31R2y6LZWRQ==}
     cpu: [arm64]
     os: [darwin]
 
-  '@cifrante/darwin-x64@0.6.0':
-    resolution: {integrity: sha512-fe9PyZqA0qNTyamRWH2cfRbIkwGP1xzYIcBpJKpdlSTZHCoYTib9MesJOJtzYzcIZ403c/zozU/seA+tl77a5Q==}
+  '@cifrante/darwin-x64@0.8.1':
+    resolution: {integrity: sha512-UROiCYX3a3xyQBy3LOMH4TnzkTWoCtmEjETCpWb1PPiIEeE/rAjFh9831XlR9ZfrUg0TUysPcV5sBju3EHrK7w==}
     cpu: [x64]
     os: [darwin]
 
-  '@cifrante/linux-arm64-gnu@0.6.0':
-    resolution: {integrity: sha512-0ctEFOxiteczeL2PZxHbw7PQ19aV+40+k3jdQJyQ3gW3w8Xr0irmgNf1DB65SIpWnjvc3s8ql9VMpUMDaM1TNg==}
+  '@cifrante/linux-arm64-gnu@0.8.1':
+    resolution: {integrity: sha512-6OvNHT6hrBupku8PBCF2yGC0133KdaKpaHDz7w2N18nwewjFqdRaX5DDBoUusqzO7f4bfX1a36oYWArNeMfVqQ==}
     cpu: [arm64]
     os: [linux]
     libc: [glibc]
 
-  '@cifrante/linux-arm64-musl@0.6.0':
-    resolution: {integrity: sha512-2BICmNVrqqVK39vn1ji17vSrw7xTCTkQleyk9bW9TgiwJhYs1vbIpg/G6fNXMHHULeVfXN/GAZIZ8wl/mjvErg==}
+  '@cifrante/linux-arm64-musl@0.8.1':
+    resolution: {integrity: sha512-o8rrO4olBigzSvCXssyByP+5JUSuniN//OIM3FVkMY9oYXkoZcTBTCmsC45ggZlhcUAxK/+HxMfWJ2n4QApE5Q==}
     cpu: [arm64]
     os: [linux]
     libc: [musl]
 
-  '@cifrante/linux-x64-gnu@0.6.0':
-    resolution: {integrity: sha512-vC4GR2K2UQwvIAigZs4YaMoX+M00uMRF9Yz6qsXSuphcuCZRHLPcjHHBWhq9ZQ9FcSigS0ihgBiyYzfXcKz2Nw==}
+  '@cifrante/linux-x64-gnu@0.8.1':
+    resolution: {integrity: sha512-qP7FBxZb25WUlXZcX4I6cT62H41YxEaGGkvoo/NzJNL2Wezk0ifJpylFUoiXnxsVmyyhtWZ7EcaFDwHthmo2Eg==}
     cpu: [x64]
     os: [linux]
     libc: [glibc]
 
-  '@cifrante/linux-x64-musl@0.6.0':
-    resolution: {integrity: sha512-LZa1KWLP4rxohT9vYC3UOqI9XS1JwBZR8L2yAQwC45fRgoN4EcKopaVxA7zvdq5v8EexdV+dgBcYdDljdqfv1g==}
+  '@cifrante/linux-x64-musl@0.8.1':
+    resolution: {integrity: sha512-p1A/uhcsB8nLb5b6yEBlMOFAR21GgBscHjp0BCie5iz8PGp/Ty5GvAuh+9nNeY4bube5Gy6iUDC7OXkpG4TdwA==}
     cpu: [x64]
     os: [linux]
     libc: [musl]
 
-  '@cifrante/win32-arm64@0.6.0':
-    resolution: {integrity: sha512-Phj7DKvudAtP+vDVBSvEjWC8gkiguQt8Clnn74RyvawYu9lR8PoNdM98/j0vPRyfWvwuRtg+zLN6Jdt9lLAmpA==}
+  '@cifrante/win32-arm64@0.8.1':
+    resolution: {integrity: sha512-VxkF/WJlDeeq5oY5T9fX632TzqN7yJ0KW6Xc4AA0PKSKi5EfFuBmVlpkShnQOBg5zkCJ7D02Yrm6xz1ByNm/8w==}
     cpu: [arm64]
     os: [win32]
 
-  '@cifrante/win32-x64@0.6.0':
-    resolution: {integrity: sha512-LD7A22rHyIrTml5uL49/s3Jz/Tw5zsyZa6Fzz3EH8q5TJWq2cNKOSD7rdUwHLNIAqPHHOYZiEbhMlB1Slyk5OA==}
+  '@cifrante/win32-x64@0.8.1':
+    resolution: {integrity: sha512-GGxGANoFAfe1VCkFcsAaHyFNCnP6DKFcKG6RJRabGDQRuoDT55Uy/bqn72r9azchcDCkcckz385+M9WTmBb72g==}
     cpu: [x64]
     os: [win32]
 
@@ -3351,6 +3351,9 @@ packages:
   buffer-equal-constant-time@1.0.1:
     resolution: {integrity: sha512-zRpUiDwd/xk6ADqPMATG8vc9VPrkck7T07OIx0gnjmJAnHnTVXNQG3vfvWNuiZIkwu9KrKdA1iJKfsfTVxE6NA==}
 
+  buffer@6.0.3:
+    resolution: {integrity: sha512-FTiCpNxtwiZZHEZbcbTIcZjERVICn9yq/pDFkTl95/AxzD1naBctN7YO68riM/gLSDY7sdrMby8hofADYuuqOA==}
+
   bufferutil@1.1.0:
     resolution: {integrity: sha512-bttEVtkre4VYrZH+ciatjApTuac7jLMQXVXzM/ymw82WFREdOrJO496C4Bkh0/FfYoBUSOFaAYF32a5Q8dyiLw==}
 
@@ -3439,8 +3442,8 @@ packages:
     resolution: {integrity: sha512-77PSwercCZU2Fc4sX94eF8k8Pxte6JAwL4/ICZLFjJLqegs7kCuAsqqj/70NQF6TvDpgFjkubQB2FW2ZZddvQg==}
     engines: {node: '>=8'}
 
-  cifrante@0.6.0:
-    resolution: {integrity: sha512-SeKW5whBnFx+pwZ+BfWcqOgDyuIH8gCRvlXQiLcm1wAldSRdeuyQxWXld23l4W/wsGURcdczd0dm/QBRBWurDw==}
+  cifrante@0.8.1:
+    resolution: {integrity: sha512-6IKK0R5Ur37hgktw1KyJO14jIMpjcj0q5H+gSt/Xev9aYNv7k7cOLNCXHFzNNOR3jbot2d+6ae/dqvS+7Ebtaw==}
     engines: {node: '>=18'}
 
   city-timezones@1.3.4:
@@ -4264,6 +4267,9 @@ packages:
     resolution: {integrity: sha512-SLX4H/vtcYlYnL7XqnuJKHU7Z8517TgsW9nmQiGOgMCjQ8V/deLYu6bEmbGoXe7WMMhc9+EUGyFFneHja8KabA==}
     engines: {node: '>=18'}
 
+  ieee754@1.2.1:
+    resolution: {integrity: sha512-dcyqhDvX1C46lXZcVqCpK+FtMRQVdIMN6/Df5js2zouUsqG7I6sFxitIC+7KYK29KdXOLHdu9zL4sFnoVQnqaA==}
+
   ignore@5.3.2:
     resolution: {integrity: sha512-hsBTNUqQTDwkWtcdYI2i06Y/nUBEsNEDJKjWdigLvegy8kDuJAS8uRlpkkcQpyEXL0Z/pjDy5HBmMjRCJ2gq+g==}
     engines: {node: '>= 4'}
@@ -4914,8 +4920,8 @@ packages:
     resolution: {integrity: sha512-LA4ZjwlnUblHVgq0oBF3Jl/6h/Nvs5fzBLwdEF4nuxnFdsfajde4WfxtJr3CaiH+F6ewcIB/q4jQ4UzPyid+CQ==}
     hasBin: true
 
-  node-localstorage@2.2.1:
-    resolution: {integrity: sha512-vv8fJuOUCCvSPjDjBLlMqYMHob4aGjkmrkaE42/mZr0VT+ZAU10jRF8oTnX9+pgU9/vYJ8P7YT3Vd6ajkmzSCw==}
+  node-localstorage@3.0.5:
+    resolution: {integrity: sha512-GCwtK33iwVXboZWYcqQHu3aRvXEBwmPkAMRBLeaX86ufhqslyUkLGsi4aW3INEfdQYpUB5M9qtYf3eHvAk2VBg==}
     engines: {node: '>=0.12'}
 
   node-network-devtools@1.0.30:
@@ -5433,9 +5439,6 @@ packages:
   simplecc-wasm@1.1.1:
     resolution: {integrity: sha512-NHBvSBlnOk7nqiNKvNpG/3DqD4XBkls3CqmTl4t3At4v7N9z1HO2t9g7vK//0o33zcgVOKE59vFcyCcgCuw6zQ==}
 
-  slide@1.1.6:
-    resolution: {integrity: sha512-NwrtjCg+lZoqhFU8fOwl4ay2ei8PaqCBOUV3/ektPY9trO1yQ1oXEfmHAhKArUVUr/hOHvy5f6AdP17dCM0zMw==}
-
   sm-crypto-v2@2.0.0:
     resolution: {integrity: sha512-Nb8TBi3hoGh8+Gu/wQxdN/ORBnNSP/P9Y+Mx1lwyo6T5fT0lo7w+cNYimoHsFupAPoVG5zDff6TLMOBzCLG4sw==}
 
@@ -5499,9 +5502,6 @@ packages:
 
   std-env@4.3.0:
     resolution: {integrity: sha512-OtU/EgQ1kIm5KwqQpBC6ZEMXrZRui11w8zgfTWp8cdO9B8OaPsbA8bTHO2P+HNo1VlUTGMVBwPhydu6poeXiag==}
-
-  store2@2.14.4:
-    resolution: {integrity: sha512-srTItn1GOvyvOycgxjAnPA63FZNwy0PTyUBFMHRM+hVFltAeoh0LmNBz9SZqUS9mMqGk8rfyWyXn3GH5ReJ8Zw==}
 
   stream-length@1.0.2:
     resolution: {integrity: sha512-aI+qKFiwoDV4rsXiS7WRoCt+v2RX1nUj17+KJC5r2gfh5xoSJIfP6Y3Do/HtvesFcTSWthIuJ3l1cvKQY/+nZg==}
@@ -5567,8 +5567,8 @@ packages:
     resolution: {integrity: sha512-MFO/QzvtAOmJbkhOaCTvbGcFN9L9b+JunIsDwaKljSOdcLMea3NJ1k9Usz/rjdfSXTq4dfzfeS7W4p4YOAAHeA==}
     engines: {node: '>=18'}
 
-  teleproto@1.232.0:
-    resolution: {integrity: sha512-dW6f8If1ezPOYUoOynAEXXAgvljKQgSQoLuconA/QSfgWNhHnU1UAEi3HQoQu4o5ttMvvx+QzI6Fpv0noBFltg==}
+  teleproto@1.232.1:
+    resolution: {integrity: sha512-39fQMS12G+yyGqRmcwRrAzPMGiyOKGDM8sU9eS2ubSzG6UD13X+qnebr/EPmToJ3TqkLlnJuxFJGG69k+jToFg==}
     engines: {node: '>=18'}
 
   text-hex@1.0.0:
@@ -6049,8 +6049,9 @@ packages:
     resolution: {integrity: sha512-42AtmgqjV+X1VpdOfyTGOYRi0/zsoLqtXQckTmqTeybT+BDIbM/Guxo7x3pE2vtpr1ok6xRqM9OpBe+Jyoqyww==}
     engines: {node: '>=18'}
 
-  write-file-atomic@1.3.4:
-    resolution: {integrity: sha512-SdrHoC/yVBPpV0Xq/mUZQIpW2sWXAShb/V4pomcJXh92RuaO+f3UTWItiR3Px+pLnV2PvC2/bfn5cwr5X6Vfxw==}
+  write-file-atomic@5.0.1:
+    resolution: {integrity: sha512-+QU2zd6OTD8XWIJCbffaiQeH9U73qIqafo1x6V1snCWYGJf6cVE0cDR4D8xRzcEnfI21IFrUPzPGtcPf8AC+Rw==}
+    engines: {node: ^14.17.0 || ^16.13.0 || >=18.0.0}
 
   ws@0.7.2:
     resolution: {integrity: sha512-8mJ1Ku743qD/PKmO9Dg+y7BXTwzUgKdXguecfIyOVHFmez4JMqMF+V+M684btmQXHlwzyrJqRl3NYDltGDf6CQ==}
@@ -6304,28 +6305,28 @@ snapshots:
       hashery: 1.5.1
       keyv: 5.6.0
 
-  '@cifrante/darwin-arm64@0.6.0':
+  '@cifrante/darwin-arm64@0.8.1':
     optional: true
 
-  '@cifrante/darwin-x64@0.6.0':
+  '@cifrante/darwin-x64@0.8.1':
     optional: true
 
-  '@cifrante/linux-arm64-gnu@0.6.0':
+  '@cifrante/linux-arm64-gnu@0.8.1':
     optional: true
 
-  '@cifrante/linux-arm64-musl@0.6.0':
+  '@cifrante/linux-arm64-musl@0.8.1':
     optional: true
 
-  '@cifrante/linux-x64-gnu@0.6.0':
+  '@cifrante/linux-x64-gnu@0.8.1':
     optional: true
 
-  '@cifrante/linux-x64-musl@0.6.0':
+  '@cifrante/linux-x64-musl@0.8.1':
     optional: true
 
-  '@cifrante/win32-arm64@0.6.0':
+  '@cifrante/win32-arm64@0.8.1':
     optional: true
 
-  '@cifrante/win32-x64@0.6.0':
+  '@cifrante/win32-x64@0.8.1':
     optional: true
 
   '@cloudflare/build-output-utils@0.9.6':
@@ -8245,6 +8246,11 @@ snapshots:
 
   buffer-equal-constant-time@1.0.1: {}
 
+  buffer@6.0.3:
+    dependencies:
+      base64-js: 1.5.1
+      ieee754: 1.2.1
+
   bufferutil@1.1.0:
     dependencies:
       bindings: 1.2.1
@@ -8347,16 +8353,16 @@ snapshots:
 
   ci-info@4.4.0: {}
 
-  cifrante@0.6.0:
+  cifrante@0.8.1:
     optionalDependencies:
-      '@cifrante/darwin-arm64': 0.6.0
-      '@cifrante/darwin-x64': 0.6.0
-      '@cifrante/linux-arm64-gnu': 0.6.0
-      '@cifrante/linux-arm64-musl': 0.6.0
-      '@cifrante/linux-x64-gnu': 0.6.0
-      '@cifrante/linux-x64-musl': 0.6.0
-      '@cifrante/win32-arm64': 0.6.0
-      '@cifrante/win32-x64': 0.6.0
+      '@cifrante/darwin-arm64': 0.8.1
+      '@cifrante/darwin-x64': 0.8.1
+      '@cifrante/linux-arm64-gnu': 0.8.1
+      '@cifrante/linux-arm64-musl': 0.8.1
+      '@cifrante/linux-x64-gnu': 0.8.1
+      '@cifrante/linux-x64-musl': 0.8.1
+      '@cifrante/win32-arm64': 0.8.1
+      '@cifrante/win32-x64': 0.8.1
 
   city-timezones@1.3.4: {}
 
@@ -9273,6 +9279,8 @@ snapshots:
     dependencies:
       reserved-identifiers: 1.2.0
 
+  ieee754@1.2.1: {}
+
   ignore@5.3.2: {}
 
   ignore@7.0.12: {}
@@ -10042,9 +10050,9 @@ snapshots:
 
   node-gyp-build@4.8.4: {}
 
-  node-localstorage@2.2.1:
+  node-localstorage@3.0.5:
     dependencies:
-      write-file-atomic: 1.3.4
+      write-file-atomic: 5.0.1
 
   node-network-devtools@1.0.30(undici@8.12.3)(utf-8-validate@5.0.10):
     dependencies:
@@ -10731,8 +10739,6 @@ snapshots:
 
   simplecc-wasm@1.1.1: {}
 
-  slide@1.1.6: {}
-
   sm-crypto-v2@2.0.0:
     dependencies:
       '@noble/ciphers': 1.3.0
@@ -10801,8 +10807,6 @@ snapshots:
 
   std-env@4.3.0: {}
 
-  store2@2.14.4: {}
-
   stream-length@1.0.2:
     dependencies:
       bluebird: 2.11.0
@@ -10864,14 +10868,14 @@ snapshots:
       minizlib: 3.1.0
       yallist: 5.0.0
 
-  teleproto@1.232.0:
+  teleproto@1.232.1:
     dependencies:
       big-integer: 1.6.52
-      cifrante: 0.6.0
+      buffer: 6.0.3
+      cifrante: 0.8.1
       mime: 3.0.0
-      node-localstorage: 2.2.1
+      node-localstorage: 3.0.5
       socks: 2.8.10
-      store2: 2.14.4
 
   text-hex@1.0.0: {}
 
@@ -11312,11 +11316,10 @@ snapshots:
       string-width: 7.2.0
       strip-ansi: 7.2.0
 
-  write-file-atomic@1.3.4:
+  write-file-atomic@5.0.1:
     dependencies:
-      graceful-fs: 4.2.11
       imurmurhash: 0.1.4
-      slide: 1.1.6
+      signal-exit: 4.1.0
 
   ws@0.7.2:
     dependencies:
