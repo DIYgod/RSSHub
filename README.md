@@ -31,7 +31,7 @@ RSSHub pairs especially well with <a href="https://folo.is/">Folo</a>, an AI RSS
 <td align="center" valign="top" width="50%">
 <a href="https://www.swiftproxy.net/?ref=diygod"><img src="https://docs.rsshub.app/img/sponsors/swiftproxy.png" alt="Swiftproxy" width="419"></a>
 <br>
-<a href="https://www.swiftproxy.net/?ref=diygod">Swiftproxy</a> provides 90M+ residential IPs across 220+ locations, helping users access geo-restricted websites and collect web data worldwide. Supports rotating and static residential proxies with HTTP(S)/SOCKS5. Get a free test and 10% off with code <code>PROXY90</code>.
+<a href="https://www.swiftproxy.net/?ref=diygod">Swiftproxy</a> provides 80M+ residential IPs across 220+ locations, helping users access geo-restricted websites and collect web data worldwide. Supports rotating and static residential proxies with HTTP(S)/SOCKS5. Get a free test and 10% off with code <code>PROXY90</code>.
 </td>
 <td align="center" valign="top" width="50%">
 <a href="https://www.rapidproxy.io/?ref=rsshub"><img src="https://github.com/user-attachments/assets/23b68f68-959c-4176-aa6c-ff3b2e4ebfdf" alt="RapidProxy" width="419"></a>
