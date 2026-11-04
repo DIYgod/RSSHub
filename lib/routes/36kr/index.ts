@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 
 import type { Route } from '@/types';
 import { getSubPath } from '@/utils/common-utils';
-import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
 
@@ -54,16 +54,15 @@ async function handler(ctx) {
         .replace(/^\/news(?!flashes)/, '/information')
         .replace(/^\/search\/article(?=\/|$)/, '/search/articles');
 
-    const currentUrl = `${rootUrl}${Object.hasOwn(shortcuts, path) ? shortcuts[path] : path}`;
+    const currentUrl = `${rootUrl}${Object.hasOwn(shortcuts, path) ? shortcuts[path] : path}`.replace(/\/?$/, '/');
 
-    const response = await got({
-        method: 'get',
-        url: currentUrl,
+    const response = await ofetch(currentUrl, {
+        responseType: 'text',
     });
 
-    const $ = load(response.data);
+    const $ = load(response);
 
-    const data = findItemList(getInitialState(response.data));
+    const data = findItemList(getInitialState(response));
     if (!data) {
         throw new Error('36kr page does not contain an article list. Please check the source page.');
     }
