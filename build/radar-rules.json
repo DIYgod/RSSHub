@@ -43640,16 +43640,6 @@
   },
   "shopback.com.tw": {
     "_name": "ShopBack",
-    "www": [
-      {
-        "title": "Merchant cashback rates",
-        "docs": "https://docs.rsshub.app/routes/shopback",
-        "source": [
-          "/:store"
-        ],
-        "target": "/shopback/cashback/:store/tw"
-      }
-    ],
     ".": [
       {
         "title": "Store",
@@ -43659,6 +43649,16 @@
           "/"
         ],
         "target": "/shopback/:store"
+      }
+    ],
+    "www": [
+      {
+        "title": "Merchant cashback rates",
+        "docs": "https://docs.rsshub.app/routes/shopback",
+        "source": [
+          "/:store"
+        ],
+        "target": "/shopback/cashback/:store/tw"
       }
     ]
   },

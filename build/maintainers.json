@@ -7730,11 +7730,11 @@
     "imbytecat",
     "simonsmh"
   ],
-  "/shopback/cashback/:store/:market?": [
-    "DIYgod"
-  ],
   "/shopback/:store": [
     "nczitzk"
+  ],
+  "/shopback/cashback/:store/:market?": [
+    "DIYgod"
   ],
   "/shopify/apps/:handle/reviews/:page?": [
     "PrintNow"

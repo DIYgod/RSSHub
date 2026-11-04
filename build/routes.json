@@ -109914,32 +109914,6 @@
   },
   "shopback": {
     "routes": {
-      "/cashback/:store/:market?": {
-        "path": "/cashback/:store/:market?",
-        "example": "/shopback/cashback/agoda/tw",
-        "name": "Merchant cashback rates",
-        "categories": [
-          "shopping"
-        ],
-        "maintainers": [
-          "DIYgod"
-        ],
-        "parameters": {
-          "store": "Merchant slug from its ShopBack URL.",
-          "market": "tw (default), my, sg, th, kr, au, id, or ph."
-        },
-        "description": "Includes the merchant’s current cashback rates. Each distinct product-and-rate combination has a separate GUID. A return to a previously seen rate reuses its earlier GUID. The former product/search and store/search endpoints are no longer available.",
-        "radar": [
-          {
-            "source": [
-              "www.shopback.com.tw/:store"
-            ],
-            "target": "/cashback/:store/tw"
-          }
-        ],
-        "location": "cashback.ts",
-        "module": "() => import('@/routes/shopback/cashback.ts')"
-      },
       "/:store": {
         "path": "/:store",
         "categories": [
@@ -109971,6 +109945,32 @@
         ],
         "location": "store.ts",
         "module": "() => import('@/routes/shopback/store.ts')"
+      },
+      "/cashback/:store/:market?": {
+        "path": "/cashback/:store/:market?",
+        "example": "/shopback/cashback/agoda/tw",
+        "name": "Merchant cashback rates",
+        "categories": [
+          "shopping"
+        ],
+        "maintainers": [
+          "DIYgod"
+        ],
+        "parameters": {
+          "store": "Merchant slug from its ShopBack URL.",
+          "market": "tw (default), my, sg, th, kr, au, id, or ph."
+        },
+        "description": "Includes the merchant’s current cashback rates. Each distinct product-and-rate combination has a separate GUID. A return to a previously seen rate reuses its earlier GUID. The former product/search and store/search endpoints are no longer available.",
+        "radar": [
+          {
+            "source": [
+              "www.shopback.com.tw/:store"
+            ],
+            "target": "/cashback/:store/tw"
+          }
+        ],
+        "location": "cashback.ts",
+        "module": "() => import('@/routes/shopback/cashback.ts')"
       }
     },
     "apiRoutes": {},
