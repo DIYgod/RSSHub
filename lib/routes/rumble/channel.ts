@@ -129,6 +129,7 @@ function getMedia(image: string | undefined): DataItem['media'] {
 async function buildItem(link: string, title: string, listImage: string, pubDate: Date, includeEmbed: boolean): Promise<DataItem> {
     const initialResponse = await ofetch.raw<string>(link, {
         ignoreResponseError: true,
+        redirect: 'manual',
     });
     const cookies = (initialResponse.headers.getSetCookie?.() || []).map((cookie) => cookie.split(';', 1)[0]).join('; ');
     if (!cookies) {
