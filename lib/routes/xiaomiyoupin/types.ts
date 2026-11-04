@@ -62,7 +62,7 @@ export const VenuePageResponseSchema = DataResponseSchema(
     })
 );
 
-// VenueBatch
+// List
 
 const BaseListItemSchema = z.object({
     type: z.string(),
@@ -148,7 +148,7 @@ export const NewProductListSchema = ListResultSchema(
     ])
 ).transform((result) => toSchemaItems(result.list, NewProductListItemSchema));
 
-// GoodsDetail
+// Detail
 
 const BaseDetailItemSchema = z.object({
     goodsInfo: z.object({

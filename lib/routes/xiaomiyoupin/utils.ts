@@ -80,7 +80,7 @@ const getVenueQueryContext = async (title: string): Promise<{ pageId: string; si
 
 // VenuePage
 
-const getVenuePageQueryList = async (pageId: string, sign: string, resolvers: string[]): Promise<VenueQuery[]> => {
+const getVenueQueryList = async (pageId: string, sign: string, resolvers: string[]): Promise<VenueQuery[]> => {
     const response = await ofetch<z.infer<typeof VenuePageResponseSchema>>('https://m.xiaomiyoupin.com/mtop/navi/venue/page', {
         headers: {
             Accept: '*/*',
@@ -96,7 +96,7 @@ const getVenuePageQueryList = async (pageId: string, sign: string, resolvers: st
     return queryList;
 };
 
-// VenueBatch
+// List
 
 const getListItems = async <List>(pageId: string, sign: string, queryList: VenueQuery[], listSchema: z.ZodType<List>): Promise<List[]> => {
     if (queryList.length === 0) {
@@ -125,7 +125,7 @@ const getListItems = async <List>(pageId: string, sign: string, queryList: Venue
  */
 const getCrowdfundingList = async (): Promise<{ list: CrowdfundingListItem[]; jumpUrl: string }> => {
     const { pageId, sign, jumpUrl } = await getVenueQueryContext('小米众筹');
-    const queryList = await getVenuePageQueryList(pageId, sign, ['crowd-funding', 'reservation']);
+    const queryList = await getVenueQueryList(pageId, sign, ['crowd-funding', 'reservation']);
     const resultList = await getListItems(pageId, sign, queryList, CrowdfundingListSchema);
     const batchList = resultList.flat();
     const list = dedupeByKey(batchList, (item) => getCrowdfundingId(item));
@@ -139,14 +139,14 @@ const getCrowdfundingList = async (): Promise<{ list: CrowdfundingListItem[]; ju
  */
 const getNewProductList = async (): Promise<{ list: NewProductListItem[]; jumpUrl: string }> => {
     const { pageId, sign, jumpUrl } = await getVenueQueryContext('上新精选');
-    const queryList = await getVenuePageQueryList(pageId, sign, ['leek-super', 'leek-selective']);
+    const queryList = await getVenueQueryList(pageId, sign, ['leek-super', 'leek-selective']);
     const resultList = await getListItems(pageId, sign, queryList, NewProductListSchema);
     const batchList = resultList.flat();
     const list = dedupeByKey(batchList, (item) => getNewProductId(item));
     return { list, jumpUrl };
 };
 
-// GoodsDetail
+// Detail
 
 const getDetailItem = async <DetailItem>(gid: number, detailItemSchema: z.ZodType<DetailItem>): Promise<DetailItem> => {
     const schema = GenericDetailResponseSchema(detailItemSchema);
