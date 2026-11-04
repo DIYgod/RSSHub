@@ -98,11 +98,11 @@ const getVenuePageQueryList = async (pageId: string, sign: string, resolvers: st
 
 // VenueBatch
 
-const getVenueBatchResultList = async <Result extends z.ZodType>(pageId: string, sign: string, queryList: VenueQuery[], resultSchema: Result): Promise<Array<z.infer<Result>>> => {
+const getListItems = async <List>(pageId: string, sign: string, queryList: VenueQuery[], listSchema: z.ZodType<List>): Promise<List[]> => {
     if (queryList.length === 0) {
         return [];
     }
-    const schema = GenericListResponseSchema(resultSchema);
+    const schema = GenericListResponseSchema(listSchema);
     const response = await ofetch<z.infer<typeof schema>>('https://m.xiaomiyoupin.com/mtop/navi/venue/batch', {
         body: {
             query_list: queryList,
@@ -126,7 +126,7 @@ const getVenueBatchResultList = async <Result extends z.ZodType>(pageId: string,
 const getCrowdfundingList = async (): Promise<{ list: CrowdfundingListItem[]; jumpUrl: string }> => {
     const { pageId, sign, jumpUrl } = await getVenueQueryContext('小米众筹');
     const queryList = await getVenuePageQueryList(pageId, sign, ['crowd-funding', 'reservation']);
-    const resultList = await getVenueBatchResultList(pageId, sign, queryList, CrowdfundingListSchema);
+    const resultList = await getListItems(pageId, sign, queryList, CrowdfundingListSchema);
     const batchList = resultList.flat();
     const list = dedupeByKey(batchList, (item) => getCrowdfundingId(item));
     return { list, jumpUrl };
@@ -140,7 +140,7 @@ const getCrowdfundingList = async (): Promise<{ list: CrowdfundingListItem[]; ju
 const getNewProductList = async (): Promise<{ list: NewProductListItem[]; jumpUrl: string }> => {
     const { pageId, sign, jumpUrl } = await getVenueQueryContext('上新精选');
     const queryList = await getVenuePageQueryList(pageId, sign, ['leek-super', 'leek-selective']);
-    const resultList = await getVenueBatchResultList(pageId, sign, queryList, NewProductListSchema);
+    const resultList = await getListItems(pageId, sign, queryList, NewProductListSchema);
     const batchList = resultList.flat();
     const list = dedupeByKey(batchList, (item) => getNewProductId(item));
     return { list, jumpUrl };
@@ -148,8 +148,8 @@ const getNewProductList = async (): Promise<{ list: NewProductListItem[]; jumpUr
 
 // GoodsDetail
 
-const getGoodsDetail = async <DetailItem>(gid: number, goodsSchema: z.ZodType<DetailItem>): Promise<DetailItem> => {
-    const schema = GenericDetailResponseSchema(goodsSchema);
+const getDetailItem = async <DetailItem>(gid: number, detailItemSchema: z.ZodType<DetailItem>): Promise<DetailItem> => {
+    const schema = GenericDetailResponseSchema(detailItemSchema);
     const response = await ofetch<z.infer<typeof schema>>('https://m.xiaomiyoupin.com/api/gateway/detail', {
         body: {
             channel: '',
@@ -176,7 +176,7 @@ const getGoodsDetail = async <DetailItem>(gid: number, goodsSchema: z.ZodType<De
  * @param {CrowdfundingListItem} item - Crowdfunding batch item.
  * @returns {Promise<CrowdfundingDetailItem>} Goods detail.
  */
-const getCrowdfundingItem = (item: CrowdfundingListItem): Promise<CrowdfundingDetailItem> => getGoodsDetail(getCrowdfundingId(item), CrowdfundingDetailItemSchema);
+const getCrowdfundingItem = (item: CrowdfundingListItem): Promise<CrowdfundingDetailItem> => getDetailItem(getCrowdfundingId(item), CrowdfundingDetailItemSchema);
 
 /**
  * Fetch new product goods details by the goods id of a batch item.
@@ -184,7 +184,7 @@ const getCrowdfundingItem = (item: CrowdfundingListItem): Promise<CrowdfundingDe
  * @param {NewProductListItem} item - New product batch item.
  * @returns {Promise<NewProductDetailItem>} Goods detail.
  */
-const getNewProductItem = (item: NewProductListItem): Promise<NewProductDetailItem> => getGoodsDetail(getNewProductId(item), NewProductDetailItemSchema);
+const getNewProductItem = (item: NewProductListItem): Promise<NewProductDetailItem> => getDetailItem(getNewProductId(item), NewProductDetailItemSchema);
 
 // Conversion
 
