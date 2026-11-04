@@ -118,8 +118,8 @@ export const CrowdfundingListSchema = z
         z.object({ goodsType: z.number(), id: z.string() }),
     ])
     .transform((result) => {
-        const goodsBatch = ListResultSchema(BaseListItemSchema).safeParse(result);
-        return goodsBatch.success ? toSchemaItems(goodsBatch.data.list, CommonListItemSchema) : toSchemaItems([result], VenueReservationListItemSchema);
+        const listResult = ListResultSchema(BaseListItemSchema).safeParse(result);
+        return listResult.success ? toSchemaItems(listResult.data.list, CommonListItemSchema) : toSchemaItems([result], VenueReservationListItemSchema);
     });
 
 // NewProduct
