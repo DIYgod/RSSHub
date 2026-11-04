@@ -34,29 +34,26 @@ async function handler() {
     const token = await parseToken('https://xueqiu.com');
     const res2 = await got({
         method: 'get',
-        url: 'https://xueqiu.com/statuses/hots.json',
+        url: 'https://api.xueqiu.com/statuses/hot/listV2.json',
         searchParams: queryString.stringify({
-            a: '1',
-            count: '10',
-            page: '1',
-            scope: 'day',
-            type: 'status',
-            meigu: '0',
+            since_id: '-1',
+            size: '10',
         }),
         headers: {
+            Referer: 'https://xueqiu.com',
             Cookie: token,
         },
     });
-    const data = res2.data;
+    const data = res2.data.items.map((item) => item.original_status);
 
     return {
         title: '热帖 - 雪球',
         link: 'https://xueqiu.com/',
         description: '雪球热门帖子',
         item: data.map((item) => {
-            const description = item.text;
+            const description = item.description;
             return {
-                title: item.title ?? sanitizeHtml(description, { allowedTags: [], allowedAttributes: {} }),
+                title: item.title || item.rawTitle || sanitizeHtml(description, { allowedTags: [], allowedAttributes: {} }),
                 description,
                 pubDate: parseDate(item.created_at),
                 link: `https://xueqiu.com${item.target}`,
