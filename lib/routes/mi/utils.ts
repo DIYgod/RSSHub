@@ -128,7 +128,7 @@ const toCrowdfunding = (listItem: CrowdfundingListItem, detailItem: Crowdfunding
 const toNewProduct = (listItem: NewProductListItem, detailItem: NewProductDetailItem): NewProduct => ({
     image: listItem.img,
     sellPointList: detailItem.product.sellPointList,
-    goodsList: [...(detailItem.goodsInfo.goodsList ?? []), ...(detailItem.relationBatchedInfo?.relationBatchedList.flatMap((relation) => relation.goodsInfo) ?? [])].map((goods) => ({
+    goodsList: [...detailItem.goodsInfo.goodsList, ...(detailItem.relationBatchedInfo?.relationBatchedList.flatMap((relation) => relation.goodsInfo) ?? [])].map((goods) => ({
         image: goods.imgUrl,
         name: goods.name,
         marketPrice: goods.marketPrice,
