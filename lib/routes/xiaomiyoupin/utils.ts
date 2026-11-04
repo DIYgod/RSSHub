@@ -33,25 +33,25 @@ dayjs.extend(utc);
 const formatDate = (date: Date): string => dayjs(date).tz('Asia/Shanghai').locale('zh-cn').format('ll');
 
 /**
- * Check whether a batch item is a venue goods entry, which nests the goods data under `value.goods`.
+ * Check whether a list item is a common list item, which nests the goods data under `value.goods`.
  *
- * @param {CrowdfundingListItem | NewProductListItem} item - Batch item.
- * @returns {boolean} Whether the item is a venue goods entry.
+ * @param {CrowdfundingListItem | NewProductListItem} item - Crowdfunding or new product list item.
+ * @returns {item is CommonListItem} Whether the item is a common list item.
  */
 const isCommonListItem = (item: CrowdfundingListItem | NewProductListItem): item is CommonListItem => CommonListItemSchema.safeParse(item).success;
 
 /**
- * Read the goods id from a crowdfunding batch item, whether it is a nested venue goods entry or a flat entry.
+ * Read the goods id from a crowdfunding list item, whether it is a common list item or a flat reservation one.
  *
- * @param {CrowdfundingListItem} item - Crowdfunding batch item.
+ * @param {CrowdfundingListItem} item - Crowdfunding list item.
  * @returns {number} Goods id.
  */
 const getCrowdfundingId = (item: CrowdfundingListItem): number => (isCommonListItem(item) ? item.value.goods.gid : item.gid);
 
 /**
- * Read the goods id from a new product batch item.
+ * Read the goods id from a new product list item, whether it is a common list item or a flat banner one.
  *
- * @param {NewProductListItem} item - New product batch item.
+ * @param {NewProductListItem} item - New product list item.
  * @returns {number} Goods id.
  */
 const getNewProductId = (item: NewProductListItem): number => (isCommonListItem(item) ? item.value.goods.gid : item.gid);
@@ -121,7 +121,7 @@ const getListItems = async <List>(pageId: string, sign: string, queryList: Venue
 /**
  * Fetch the crowdfunding list from the `kingkong_occupied` homepage floor named `小米众筹`.
  *
- * @returns {Promise<{ list: CrowdfundingListItem[]; jumpUrl: string }>} Deduplicated crowdfunding batch items and the venue page URL.
+ * @returns {Promise<{ list: CrowdfundingListItem[]; jumpUrl: string }>} Deduplicated crowdfunding list items and the venue page URL.
  */
 const getCrowdfundingList = async (): Promise<{ list: CrowdfundingListItem[]; jumpUrl: string }> => {
     const { pageId, sign, jumpUrl } = await getVenueQueryContext('小米众筹');
@@ -135,7 +135,7 @@ const getCrowdfundingList = async (): Promise<{ list: CrowdfundingListItem[]; ju
 /**
  * Fetch the new product list from the `kingkong_occupied` homepage floor named `上新精选`.
  *
- * @returns {Promise<{ list: NewProductListItem[]; jumpUrl: string }>} Deduplicated new product batch items and the venue page URL.
+ * @returns {Promise<{ list: NewProductListItem[]; jumpUrl: string }>} Deduplicated new product list items and the venue page URL.
  */
 const getNewProductList = async (): Promise<{ list: NewProductListItem[]; jumpUrl: string }> => {
     const { pageId, sign, jumpUrl } = await getVenueQueryContext('上新精选');
@@ -171,18 +171,18 @@ const getDetailItem = async <DetailItem>(gid: number, detailItemSchema: z.ZodTyp
 };
 
 /**
- * Fetch crowdfunding goods details by the goods id of a batch item.
+ * Fetch the crowdfunding goods detail by the goods id of a list item.
  *
- * @param {CrowdfundingListItem} item - Crowdfunding batch item.
- * @returns {Promise<CrowdfundingDetailItem>} Goods detail.
+ * @param {CrowdfundingListItem} item - Crowdfunding list item.
+ * @returns {Promise<CrowdfundingDetailItem>} Crowdfunding goods detail.
  */
 const getCrowdfundingItem = (item: CrowdfundingListItem): Promise<CrowdfundingDetailItem> => getDetailItem(getCrowdfundingId(item), CrowdfundingDetailItemSchema);
 
 /**
- * Fetch new product goods details by the goods id of a batch item.
+ * Fetch the new product goods detail by the goods id of a list item.
  *
- * @param {NewProductListItem} item - New product batch item.
- * @returns {Promise<NewProductDetailItem>} Goods detail.
+ * @param {NewProductListItem} item - New product list item.
+ * @returns {Promise<NewProductDetailItem>} New product goods detail.
  */
 const getNewProductItem = (item: NewProductListItem): Promise<NewProductDetailItem> => getDetailItem(getNewProductId(item), NewProductDetailItemSchema);
 
@@ -225,10 +225,10 @@ const toGoodsList = (detailItem: NewProductDetailItem): NewProduct['goodsList'] 
     });
 
 /**
- * Convert a crowdfunding batch item and its goods detail into Crowdfunding template props.
+ * Build Crowdfunding template props from a crowdfunding goods detail.
  *
- * @param {CrowdfundingListItem} listItem - Crowdfunding batch item.
- * @param {CrowdfundingDetailItem} detailItem - Goods detail.
+ * @param {CrowdfundingListItem} listItem - Crowdfunding list item, which the template props do not use.
+ * @param {CrowdfundingDetailItem} detailItem - Crowdfunding goods detail.
  * @returns {Crowdfunding} Crowdfunding template props.
  */
 const toCrowdfunding = (listItem: CrowdfundingListItem, detailItem: CrowdfundingDetailItem): Crowdfunding => ({
@@ -243,10 +243,10 @@ const toCrowdfunding = (listItem: CrowdfundingListItem, detailItem: Crowdfunding
 });
 
 /**
- * Convert a new product batch item and its goods detail into NewProduct template props.
+ * Build NewProduct template props from a new product goods detail.
  *
- * @param {NewProductListItem} listItem - New product batch item.
- * @param {NewProductDetailItem} detailItem - Goods detail.
+ * @param {NewProductListItem} listItem - New product list item, which the template props do not use.
+ * @param {NewProductDetailItem} detailItem - New product goods detail.
  * @returns {NewProduct} New product template props.
  */
 const toNewProduct = (listItem: NewProductListItem, detailItem: NewProductDetailItem): NewProduct => ({
