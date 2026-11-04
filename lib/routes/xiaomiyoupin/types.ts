@@ -64,7 +64,7 @@ export const VenuePageResponseSchema = DataResponseSchema(
 
 // VenueBatch
 
-const VenueGoodsBatchItemSchema = z.object({
+const BaseListItemSchema = z.object({
     type: z.string(),
     value: z.object({
         goods: z.object({
@@ -76,13 +76,13 @@ const VenueGoodsBatchItemSchema = z.object({
     }),
 });
 
-export const VenueGoodsTypeBatchItemSchema = VenueGoodsBatchItemSchema.extend({
+export const CommonListItemSchema = BaseListItemSchema.extend({
     type: z.literal('goods'),
 });
 
-export type VenueGoodsTypeBatchItem = z.infer<typeof VenueGoodsTypeBatchItemSchema>;
+export type CommonListItem = z.infer<typeof CommonListItemSchema>;
 
-export const VenueBatchResponseSchema = <Result extends z.ZodType>(result: Result) =>
+export const GenericListResponseSchema = <Result extends z.ZodType>(result: Result) =>
     DataResponseSchema(
         z.object({
             result_list: z.array(result),
@@ -91,7 +91,7 @@ export const VenueBatchResponseSchema = <Result extends z.ZodType>(result: Resul
 
 // Crowdfunding
 
-const VenueReservationBatchItemSchema = z.object({
+const VenueReservationListItemSchema = z.object({
     gid: z.number(),
     goodsInfo: z.object({
         img_square: z.string(),
@@ -99,58 +99,58 @@ const VenueReservationBatchItemSchema = z.object({
     }),
 });
 
-const CrowdfundingBatchListItemSchema = z.union([
+const CrowdfundingListItemSchema = z.union([
     // crowd-funding
-    VenueGoodsTypeBatchItemSchema,
+    CommonListItemSchema,
     // reservation
-    VenueReservationBatchItemSchema,
+    VenueReservationListItemSchema,
 ]);
 
-export type CrowdfundingBatchListItem = z.infer<typeof CrowdfundingBatchListItemSchema>;
+export type CrowdfundingListItem = z.infer<typeof CrowdfundingListItemSchema>;
 
-export const CrowdfundingBatchResultSchema = z
+export const CrowdfundingListSchema = z
     .union([
         // crowd-funding
-        ListResultSchema(VenueGoodsBatchItemSchema),
+        ListResultSchema(BaseListItemSchema),
         // reservation with goodsInfo
-        VenueReservationBatchItemSchema,
+        VenueReservationListItemSchema,
         // reservation without goodsInfo, skipped
         z.object({ goodsType: z.number(), id: z.string() }),
     ])
     .transform((result) => {
-        const goodsBatch = ListResultSchema(VenueGoodsBatchItemSchema).safeParse(result);
-        return goodsBatch.success ? toSchemaItems(goodsBatch.data.list, VenueGoodsTypeBatchItemSchema) : toSchemaItems([result], VenueReservationBatchItemSchema);
+        const goodsBatch = ListResultSchema(BaseListItemSchema).safeParse(result);
+        return goodsBatch.success ? toSchemaItems(goodsBatch.data.list, CommonListItemSchema) : toSchemaItems([result], VenueReservationListItemSchema);
     });
 
 // NewProduct
 
-const VenueBannerBatchItemSchema = z.object({
+const VenueBannerListItemSchema = z.object({
     gid: z.number(),
     new_product_name: z.string(),
     picture_url: z.string(),
 });
 
-const NewProductBatchListItemSchema = z.union([
+const NewProductListItemSchema = z.union([
     // leek-super
-    VenueBannerBatchItemSchema,
+    VenueBannerListItemSchema,
     // leek-selective
-    VenueGoodsTypeBatchItemSchema,
+    CommonListItemSchema,
 ]);
 
-export type NewProductBatchListItem = z.infer<typeof NewProductBatchListItemSchema>;
+export type NewProductListItem = z.infer<typeof NewProductListItemSchema>;
 
-export const NewProductBatchResultSchema = ListResultSchema(
+export const NewProductListSchema = ListResultSchema(
     z.union([
         // leek-super
-        VenueBannerBatchItemSchema,
+        VenueBannerListItemSchema,
         // leek-selective
-        VenueGoodsBatchItemSchema,
+        BaseListItemSchema,
     ])
-).transform((result) => toSchemaItems(result.list, NewProductBatchListItemSchema));
+).transform((result) => toSchemaItems(result.list, NewProductListItemSchema));
 
 // GoodsDetail
 
-const GoodsDetailItemSchema = z.object({
+const BaseDetailItemSchema = z.object({
     goodsInfo: z.object({
         firstSellPoint: z.string(),
         imgHorizon: z.string(),
@@ -194,11 +194,11 @@ const GoodsDetailItemSchema = z.object({
     ),
 });
 
-export const GoodsDetailResponseSchema = <Goods extends z.ZodType>(goods: Goods) => DataResponseSchema(z.object({ goods }));
+export const GenericDetailResponseSchema = <Goods extends z.ZodType>(goods: Goods) => DataResponseSchema(z.object({ goods }));
 
 // Crowdfunding
 
-export const CrowdfundingDetailItemSchema = GoodsDetailItemSchema.extend({
+export const CrowdfundingDetailItemSchema = BaseDetailItemSchema.extend({
     crowdFunding: z.object({
         endTime: z.number(),
         estimateSendtime: z.number(),
@@ -221,6 +221,6 @@ export type CrowdfundingDetailItem = z.infer<typeof CrowdfundingDetailItemSchema
 
 // NewProduct
 
-export const NewProductDetailItemSchema = GoodsDetailItemSchema;
+export const NewProductDetailItemSchema = BaseDetailItemSchema;
 
 export type NewProductDetailItem = z.infer<typeof NewProductDetailItemSchema>;

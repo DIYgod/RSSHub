@@ -6,7 +6,7 @@ import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import { parseDate } from '@/utils/parse-date';
 
-import type { CrowdfundingBatchListItem, CrowdfundingDetailItem } from './types';
+import type { CrowdfundingDetailItem, CrowdfundingListItem } from './types';
 import utils from './utils';
 
 export const route: Route = {
@@ -33,7 +33,7 @@ export const route: Route = {
     view: ViewType.Notifications,
 };
 
-const getDataItems = (list: CrowdfundingBatchListItem[]): Promise<DataItem[]> =>
+const getDataItems = (list: CrowdfundingListItem[]): Promise<DataItem[]> =>
     pMap(
         list,
         (listItem) =>
@@ -44,11 +44,11 @@ const getDataItems = (list: CrowdfundingBatchListItem[]): Promise<DataItem[]> =>
         { concurrency: 6 }
     );
 
-const getDataItem = (listItem: CrowdfundingBatchListItem, detailItem: CrowdfundingDetailItem): DataItem => ({
-    title: utils.isVenueGoodsTypeBatchItem(listItem) ? listItem.value.goods.name : listItem.goodsInfo.name,
+const getDataItem = (listItem: CrowdfundingListItem, detailItem: CrowdfundingDetailItem): DataItem => ({
+    title: utils.isCommonListItem(listItem) ? listItem.value.goods.name : listItem.goodsInfo.name,
     description: renderCrowdfunding(utils.toCrowdfunding(listItem, detailItem)),
     link: `https://m.xiaomiyoupin.com/detail?gid=${utils.getCrowdfundingId(listItem)}`,
-    image: utils.isVenueGoodsTypeBatchItem(listItem) ? listItem.value.goods.img_square : listItem.goodsInfo.img_square,
+    image: utils.isCommonListItem(listItem) ? listItem.value.goods.img_square : listItem.goodsInfo.img_square,
     pubDate: parseDate(detailItem.crowdFunding.startTime, 'X'),
     language: 'zh-CN',
 });

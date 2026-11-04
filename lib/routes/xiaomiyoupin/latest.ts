@@ -6,7 +6,7 @@ import { ViewType } from '@/types';
 import cache from '@/utils/cache';
 import { parseDate } from '@/utils/parse-date';
 
-import type { NewProductBatchListItem, NewProductDetailItem } from './types';
+import type { NewProductDetailItem, NewProductListItem } from './types';
 import utils from './utils';
 
 export const route: Route = {
@@ -33,7 +33,7 @@ export const route: Route = {
     view: ViewType.Notifications,
 };
 
-const getDataItems = (list: NewProductBatchListItem[]): Promise<DataItem[]> =>
+const getDataItems = (list: NewProductListItem[]): Promise<DataItem[]> =>
     pMap(
         list,
         (listItem) =>
@@ -44,12 +44,12 @@ const getDataItems = (list: NewProductBatchListItem[]): Promise<DataItem[]> =>
         { concurrency: 6 }
     );
 
-const getDataItem = (listItem: NewProductBatchListItem, detailItem: NewProductDetailItem): DataItem => ({
-    title: utils.isVenueGoodsTypeBatchItem(listItem) ? listItem.value.goods.name : listItem.new_product_name,
+const getDataItem = (listItem: NewProductListItem, detailItem: NewProductDetailItem): DataItem => ({
+    title: utils.isCommonListItem(listItem) ? listItem.value.goods.name : listItem.new_product_name,
     description: renderNewProduct(utils.toNewProduct(listItem, detailItem)),
     link: `https://m.xiaomiyoupin.com/detail?gid=${utils.getNewProductId(listItem)}`,
-    image: utils.isVenueGoodsTypeBatchItem(listItem) ? listItem.value.goods.img_square : listItem.picture_url,
-    pubDate: utils.isVenueGoodsTypeBatchItem(listItem) && listItem.value.goods.fist_release_time ? parseDate(listItem.value.goods.fist_release_time, 'X') : undefined,
+    image: utils.isCommonListItem(listItem) ? listItem.value.goods.img_square : listItem.picture_url,
+    pubDate: utils.isCommonListItem(listItem) && listItem.value.goods.fist_release_time ? parseDate(listItem.value.goods.fist_release_time, 'X') : undefined,
     language: 'zh-CN',
 });
 

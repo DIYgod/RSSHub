@@ -11,16 +11,16 @@ import { dedupeByKey } from '@/routes/mi/utils';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
-import type { CrowdfundingBatchListItem, CrowdfundingDetailItem, NewProductBatchListItem, NewProductDetailItem, VenueGoodsTypeBatchItem, VenueQuery } from './types';
+import type { CommonListItem, CrowdfundingDetailItem, CrowdfundingListItem, NewProductDetailItem, NewProductListItem, VenueQuery } from './types';
 import {
-    CrowdfundingBatchResultSchema,
+    CommonListItemSchema,
     CrowdfundingDetailItemSchema,
-    GoodsDetailResponseSchema,
+    CrowdfundingListSchema,
+    GenericDetailResponseSchema,
+    GenericListResponseSchema,
     HomepageResponseSchema,
-    NewProductBatchResultSchema,
     NewProductDetailItemSchema,
-    VenueBatchResponseSchema,
-    VenueGoodsTypeBatchItemSchema,
+    NewProductListSchema,
     VenuePageResponseSchema,
 } from './types';
 
@@ -35,26 +35,26 @@ const formatDate = (date: Date): string => dayjs(date).tz('Asia/Shanghai').local
 /**
  * Check whether a batch item is a venue goods entry, which nests the goods data under `value.goods`.
  *
- * @param {CrowdfundingBatchListItem | NewProductBatchListItem} item - Batch item.
+ * @param {CrowdfundingListItem | NewProductListItem} item - Batch item.
  * @returns {boolean} Whether the item is a venue goods entry.
  */
-const isVenueGoodsTypeBatchItem = (item: CrowdfundingBatchListItem | NewProductBatchListItem): item is VenueGoodsTypeBatchItem => VenueGoodsTypeBatchItemSchema.safeParse(item).success;
+const isCommonListItem = (item: CrowdfundingListItem | NewProductListItem): item is CommonListItem => CommonListItemSchema.safeParse(item).success;
 
 /**
  * Read the goods id from a crowdfunding batch item, whether it is a nested venue goods entry or a flat entry.
  *
- * @param {CrowdfundingBatchListItem} item - Crowdfunding batch item.
+ * @param {CrowdfundingListItem} item - Crowdfunding batch item.
  * @returns {number} Goods id.
  */
-const getCrowdfundingId = (item: CrowdfundingBatchListItem): number => (isVenueGoodsTypeBatchItem(item) ? item.value.goods.gid : item.gid);
+const getCrowdfundingId = (item: CrowdfundingListItem): number => (isCommonListItem(item) ? item.value.goods.gid : item.gid);
 
 /**
  * Read the goods id from a new product batch item.
  *
- * @param {NewProductBatchListItem} item - New product batch item.
+ * @param {NewProductListItem} item - New product batch item.
  * @returns {number} Goods id.
  */
-const getNewProductId = (item: NewProductBatchListItem): number => (isVenueGoodsTypeBatchItem(item) ? item.value.goods.gid : item.gid);
+const getNewProductId = (item: NewProductListItem): number => (isCommonListItem(item) ? item.value.goods.gid : item.gid);
 
 // Homepage
 
@@ -102,7 +102,7 @@ const getVenueBatchResultList = async <Result extends z.ZodType>(pageId: string,
     if (queryList.length === 0) {
         return [];
     }
-    const schema = VenueBatchResponseSchema(resultSchema);
+    const schema = GenericListResponseSchema(resultSchema);
     const response = await ofetch<z.infer<typeof schema>>('https://m.xiaomiyoupin.com/mtop/navi/venue/batch', {
         body: {
             query_list: queryList,
@@ -121,12 +121,12 @@ const getVenueBatchResultList = async <Result extends z.ZodType>(pageId: string,
 /**
  * Fetch the crowdfunding list from the `kingkong_occupied` homepage floor named `小米众筹`.
  *
- * @returns {Promise<{ list: CrowdfundingBatchListItem[]; jumpUrl: string }>} Deduplicated crowdfunding batch items and the venue page URL.
+ * @returns {Promise<{ list: CrowdfundingListItem[]; jumpUrl: string }>} Deduplicated crowdfunding batch items and the venue page URL.
  */
-const getCrowdfundingList = async (): Promise<{ list: CrowdfundingBatchListItem[]; jumpUrl: string }> => {
+const getCrowdfundingList = async (): Promise<{ list: CrowdfundingListItem[]; jumpUrl: string }> => {
     const { pageId, sign, jumpUrl } = await getVenueQueryContext('小米众筹');
     const queryList = await getVenuePageQueryList(pageId, sign, ['crowd-funding', 'reservation']);
-    const resultList = await getVenueBatchResultList(pageId, sign, queryList, CrowdfundingBatchResultSchema);
+    const resultList = await getVenueBatchResultList(pageId, sign, queryList, CrowdfundingListSchema);
     const batchList = resultList.flat();
     const list = dedupeByKey(batchList, (item) => getCrowdfundingId(item));
     return { list, jumpUrl };
@@ -135,12 +135,12 @@ const getCrowdfundingList = async (): Promise<{ list: CrowdfundingBatchListItem[
 /**
  * Fetch the new product list from the `kingkong_occupied` homepage floor named `上新精选`.
  *
- * @returns {Promise<{ list: NewProductBatchListItem[]; jumpUrl: string }>} Deduplicated new product batch items and the venue page URL.
+ * @returns {Promise<{ list: NewProductListItem[]; jumpUrl: string }>} Deduplicated new product batch items and the venue page URL.
  */
-const getNewProductList = async (): Promise<{ list: NewProductBatchListItem[]; jumpUrl: string }> => {
+const getNewProductList = async (): Promise<{ list: NewProductListItem[]; jumpUrl: string }> => {
     const { pageId, sign, jumpUrl } = await getVenueQueryContext('上新精选');
     const queryList = await getVenuePageQueryList(pageId, sign, ['leek-super', 'leek-selective']);
-    const resultList = await getVenueBatchResultList(pageId, sign, queryList, NewProductBatchResultSchema);
+    const resultList = await getVenueBatchResultList(pageId, sign, queryList, NewProductListSchema);
     const batchList = resultList.flat();
     const list = dedupeByKey(batchList, (item) => getNewProductId(item));
     return { list, jumpUrl };
@@ -148,8 +148,9 @@ const getNewProductList = async (): Promise<{ list: NewProductBatchListItem[]; j
 
 // GoodsDetail
 
-const getGoodsDetail = async <Goods extends z.ZodType>(gid: number, goodsSchema: Goods): Promise<z.infer<Goods>> => {
-    const response = await ofetch<{ data: { goods: z.infer<Goods> } }>('https://m.xiaomiyoupin.com/api/gateway/detail', {
+const getGoodsDetail = async <DetailItem>(gid: number, goodsSchema: z.ZodType<DetailItem>): Promise<DetailItem> => {
+    const schema = GenericDetailResponseSchema(goodsSchema);
+    const response = await ofetch<z.infer<typeof schema>>('https://m.xiaomiyoupin.com/api/gateway/detail', {
         body: {
             channel: '',
             debug: false,
@@ -164,7 +165,7 @@ const getGoodsDetail = async <Goods extends z.ZodType>(gid: number, goodsSchema:
             'X-User-Agent': 'channel/youpin platform/youpin.m',
         },
         method: 'POST',
-        schema: GoodsDetailResponseSchema(goodsSchema),
+        schema,
     });
     return response.data.goods;
 };
@@ -172,18 +173,18 @@ const getGoodsDetail = async <Goods extends z.ZodType>(gid: number, goodsSchema:
 /**
  * Fetch crowdfunding goods details by the goods id of a batch item.
  *
- * @param {CrowdfundingBatchListItem} item - Crowdfunding batch item.
+ * @param {CrowdfundingListItem} item - Crowdfunding batch item.
  * @returns {Promise<CrowdfundingDetailItem>} Goods detail.
  */
-const getCrowdfundingItem = (item: CrowdfundingBatchListItem): Promise<CrowdfundingDetailItem> => getGoodsDetail(getCrowdfundingId(item), CrowdfundingDetailItemSchema);
+const getCrowdfundingItem = (item: CrowdfundingListItem): Promise<CrowdfundingDetailItem> => getGoodsDetail(getCrowdfundingId(item), CrowdfundingDetailItemSchema);
 
 /**
  * Fetch new product goods details by the goods id of a batch item.
  *
- * @param {NewProductBatchListItem} item - New product batch item.
+ * @param {NewProductListItem} item - New product batch item.
  * @returns {Promise<NewProductDetailItem>} Goods detail.
  */
-const getNewProductItem = (item: NewProductBatchListItem): Promise<NewProductDetailItem> => getGoodsDetail(getNewProductId(item), NewProductDetailItemSchema);
+const getNewProductItem = (item: NewProductListItem): Promise<NewProductDetailItem> => getGoodsDetail(getNewProductId(item), NewProductDetailItemSchema);
 
 // Conversion
 
@@ -226,11 +227,11 @@ const toGoodsList = (detailItem: NewProductDetailItem): NewProduct['goodsList'] 
 /**
  * Convert a crowdfunding batch item and its goods detail into Crowdfunding template props.
  *
- * @param {CrowdfundingBatchListItem} listItem - Crowdfunding batch item.
+ * @param {CrowdfundingListItem} listItem - Crowdfunding batch item.
  * @param {CrowdfundingDetailItem} detailItem - Goods detail.
  * @returns {Crowdfunding} Crowdfunding template props.
  */
-const toCrowdfunding = (listItem: CrowdfundingBatchListItem, detailItem: CrowdfundingDetailItem): Crowdfunding => ({
+const toCrowdfunding = (listItem: CrowdfundingListItem, detailItem: CrowdfundingDetailItem): Crowdfunding => ({
     image: detailItem.goodsInfo.imgHorizon,
     sellPointList: toSellPointList(detailItem.goodsInfo),
     price: String((detailItem.priceInfo.priceInfo.onHandPrice?.price ?? detailItem.priceInfo.priceInfo.marketPrice) / 100),
@@ -244,11 +245,11 @@ const toCrowdfunding = (listItem: CrowdfundingBatchListItem, detailItem: Crowdfu
 /**
  * Convert a new product batch item and its goods detail into NewProduct template props.
  *
- * @param {NewProductBatchListItem} listItem - New product batch item.
+ * @param {NewProductListItem} listItem - New product batch item.
  * @param {NewProductDetailItem} detailItem - Goods detail.
  * @returns {NewProduct} New product template props.
  */
-const toNewProduct = (listItem: NewProductBatchListItem, detailItem: NewProductDetailItem): NewProduct => ({
+const toNewProduct = (listItem: NewProductListItem, detailItem: NewProductDetailItem): NewProduct => ({
     image: detailItem.goodsInfo.imgHorizon,
     sellPointList: toSellPointList(detailItem.goodsInfo),
     goodsList: toGoodsList(detailItem),
@@ -259,7 +260,7 @@ export default {
     getCrowdfundingItem,
     getNewProductList,
     getNewProductItem,
-    isVenueGoodsTypeBatchItem,
+    isCommonListItem,
     getCrowdfundingId,
     getNewProductId,
     toCrowdfunding,
