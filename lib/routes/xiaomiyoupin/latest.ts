@@ -49,7 +49,7 @@ const getDataItem = (listItem: NewProductListItem, detailItem: NewProductDetailI
     description: renderNewProduct(utils.toNewProduct(listItem, detailItem)),
     link: `https://m.xiaomiyoupin.com/detail?gid=${utils.getNewProductId(listItem)}`,
     image: utils.isCommonListItem(listItem) ? listItem.value.goods.img_square : listItem.picture_url,
-    pubDate: utils.isCommonListItem(listItem) && listItem.value.goods.fist_release_time ? parseDate(listItem.value.goods.fist_release_time, 'X') : undefined,
+    pubDate: utils.isCommonListItem(listItem) ? parseDate(listItem.value.goods.fist_release_time, 'X') : undefined,
     language: 'zh-CN',
 });
 

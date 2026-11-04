@@ -68,7 +68,7 @@ const BaseListItemSchema = z.object({
     type: z.string(),
     value: z.object({
         goods: z.object({
-            fist_release_time: z.number().optional(),
+            fist_release_time: z.number(),
             gid: z.number(),
             img_square: z.string(),
             name: z.string(),
