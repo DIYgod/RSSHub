@@ -7,13 +7,15 @@ import { PRESETS } from '@/utils/header-generator';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
-const getArticleDetails = async (items) => {
+const getArticleDetails = async (items, headers) => {
     const list = await Promise.all(
         items.map((item) =>
             cache.tryGet(item.link, async () => {
                 const url = item.link;
                 const html = await ofetch(url, {
                     headerGeneratorOptions: PRESETS.MODERN_ANDROID,
+                    minVersion: 'TLSv1.3',
+                    headers,
                 });
                 const $ = load(html);
                 let data = JSON.parse($('script#__NEXT_DATA__').text());
@@ -27,7 +29,7 @@ const getArticleDetails = async (items) => {
                 for (const channel of data.channels) {
                     item.category.push(channel.slug);
                 }
-                item.content = data.content.filter((item) => item.innerHtml !== undefined && item.innerHtml !== '');
+                item.content = data.content.filter((item) => item.innerHtml || item.url);
                 item.caption = data.dek;
 
                 if (data.leadArt) {
@@ -46,17 +48,26 @@ const getArticleDetails = async (items) => {
                                 <figcaption>{item.imgCaption}</figcaption>
                             </figure>
                         ) : null}
-                        {item.content.map((contentItem) => (
-                            <>
-                                {raw(contentItem.innerHtml)}
-                                {contentItem.tagName ? null : (
-                                    <>
-                                        <br />
-                                        <br />
-                                    </>
-                                )}
-                            </>
-                        ))}
+                        {item.content.map((contentItem) =>
+                            contentItem.url ? (
+                                <figure>
+                                    <img src={contentItem.url} alt={contentItem.altText ?? ''} />
+                                    <figcaption>
+                                        {raw(contentItem.captionText ?? '')} {contentItem.attributionText}
+                                    </figcaption>
+                                </figure>
+                            ) : (
+                                <>
+                                    {raw(contentItem.innerHtml)}
+                                    {contentItem.tagName ? null : (
+                                        <>
+                                            <br />
+                                            <br />
+                                        </>
+                                    )}
+                                </>
+                            )
+                        )}
                     </div>
                 );
                 return {

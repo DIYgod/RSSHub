@@ -85,6 +85,7 @@ async function handler(ctx) {
     const data = response.data;
 
     return {
+        allowEmpty: true,
         title: `${user}/${repo}${state ? ' ' + state.replace(/^\S/, (s) => s.toUpperCase()) : ''} Issues${labels ? ' - ' + labels : ''}`,
         link: host,
         item: data

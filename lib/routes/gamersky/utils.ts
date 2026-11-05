@@ -83,7 +83,7 @@ const getArticle = async (item: DataItem): Promise<DataItem> => {
         content.find('img').each((_, item) => {
             if (item.attribs.src === 'http://image.gamersky.com/webimg13/zhuanti/common/blank.png') {
                 item.attribs.src = item.attribs['data-origin'];
-            } else if (item.attribs.src.endsWith('_S.jpg')) {
+            } else if (item.attribs.src?.endsWith('_S.jpg')) {
                 item.attribs.src = item.attribs.src.replace('_S.jpg', '.jpg');
             }
         });

@@ -2,11 +2,22 @@ name: Linter
 
 # https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#pull_request
 # pull_request includes [opened, reopened, synchronize] events by default
-# 'edited' is required for title-lint
+# 'edited' is required for title-lint, which runs on pull_request_target; Lint does not rerun when a title or description is edited
+# Docs-only changes skip Lint; the pull_request_target jobs still run for every pull request
 on:
-    push: {}
+    push:
+        # A dependabot branch always has a pull request, whose pull_request run lints the same commit
+        branches-ignore:
+            - 'dependabot/**'
+        paths-ignore:
+            - '**/*.md'
+            - 'LICENSE'
+            - '.github/ISSUE_TEMPLATE/**'
     pull_request:
-        types: [opened, reopened, synchronize, edited]
+        paths-ignore:
+            - '**/*.md'
+            - 'LICENSE'
+            - '.github/ISSUE_TEMPLATE/**'
     pull_request_target:
         types: [opened, reopened, synchronize, edited]
 
@@ -15,6 +26,11 @@ jobs:
     eslint-warning:
         name: Lint
         if: ${{ github.event_name == 'push' || github.event_name == 'pull_request' }}
+        # Set on this job only: the pull_request_target jobs below run once when a pull request is opened and must not be cancelled.
+        # A new push to a pull request cancels the run of the previous push; every push gets its own group per branch and commit.
+        concurrency:
+            group: ${{ github.workflow }}-lint-${{ github.event_name }}-${{ github.event.pull_request.number || format('{0}-{1}', github.ref, github.sha) }}
+            cancel-in-progress: ${{ github.event_name == 'pull_request' }}
         runs-on: ubuntu-latest
         timeout-minutes: 15
         permissions:
@@ -144,3 +160,10 @@ jobs:
                   lock-pr: false
                   max-changed-lines: 1000
                   max-description-length: 2000
+            - if: ${{ github.event.pull_request.head.repo.full_name != github.repository && !github.event.pull_request.maintainer_can_modify }}
+              run: |
+                  gh pr close ${{ github.event.pull_request.number }} --comment "Thanks for the contribution. This PR was automatically closed because it matched multiple low-quality/spam [signals](https://github.com/peakoss/anti-slop)."
+                  gh pr edit ${{ github.event.pull_request.number }} --add-label spam
+              env:
+                  GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                  GH_REPO: ${{ github.repository }}

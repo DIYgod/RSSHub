@@ -90,7 +90,7 @@ function renderPurchase(details: TenderDetails) {
         return (
             String(html`<h3>${item.name}</h3>`) +
             fields
-                .filter(([, value]) => value !== undefined && value !== null && value !== '')
+                .filter(([, value]) => (value ?? '') !== '')
                 .map(([label, value]) => String(html`<p><strong>${label}：</strong>${value}</p>`))
                 .join('') +
             renderRequirements(item.tech)

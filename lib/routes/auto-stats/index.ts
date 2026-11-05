@@ -80,10 +80,7 @@ async function handler(ctx) {
         )
     );
 
-    const subtitle = $('title')
-        .text()
-        .split(/——/)
-        .pop();
+    const subtitle = $('title').text().split(/——/).pop();
     const image = new URL('images/logo.jpg', rootUrl).href;
 
     return {

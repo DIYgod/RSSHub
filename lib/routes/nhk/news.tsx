@@ -75,7 +75,8 @@ type NewsOutline = {
 
 async function handler(ctx) {
     const { lang = 'en' } = ctx.req.param();
-    const data = await ofetch<{ data: NewsOutline[] }>(`${apiUrl}/nwapi/rdnewsweb/v7b/${lang}/outline/list.json`);
+    // English moved to the news API, which the site's own API SDK now maps the outline and detail calls to; the English outline list stopped updating
+    const data = await ofetch<{ data: NewsOutline[] }>(lang === 'en' ? `${apiUrl}/nwapi/news/v1/en/articles?type=news&offset=0&limit=350` : `${apiUrl}/nwapi/rdnewsweb/v7b/${lang}/outline/list.json`);
     const meta = await ofetch(`${baseUrl}/nhkworld/common/assets/news/config/${lang}.json`);
 
     const list = data.data.map((item) => ({
@@ -93,7 +94,7 @@ async function handler(ctx) {
         async ({ id, ...item }) => ({
             ...item,
             ...(await cache.tryGet(`nhk:news:details:v3:${item.link}`, async () => {
-                const { data } = await ofetch(`${apiUrl}/nwapi/rdnewsweb/v6b/${lang}/detail/${id}.json`);
+                const { data } = await ofetch(lang === 'en' ? `${apiUrl}/nwapi/news/v1/en/articles/${id}` : `${apiUrl}/nwapi/rdnewsweb/v6b/${lang}/detail/${id}.json`);
                 const img = data.thumbnails;
                 const imageSrc = img?.large || img?.middle || img?.small || img?.min;
                 const description = data.detail.replaceAll('\n', '<br>');

@@ -124,7 +124,7 @@ interface RichNode {
 
 const renderRichContent = (node: RichNode): string => {
     const attrs = node.attrs ?? {};
-    const content = (node.content ?? []).map(renderRichContent).join('');
+    const content = (node.content ?? []).map((child) => renderRichContent(child)).join('');
     if (node.type === 'text') {
         return (node.marks ?? []).reduce(
             (text, mark) => {

@@ -123,7 +123,7 @@ const getPostContents = async (list, default_gid = '2') => {
 export const route: Route = {
     path: '/bbs/official/:gids/:type?/:page_size?/:last_id?',
     categories: ['game'],
-    example: '/mihoyo/bbs/official/2/3/20/',
+    example: '/mihoyo/bbs/official/2/3/20',
     parameters: { gids: '游戏id', type: '公告类型，默认为 2(即 活动)', page_size: '分页大小，默认为 20 ', last_id: '首屏游标，仅支持省略或 0' },
     features: {
         requireConfig: false,

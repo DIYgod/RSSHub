@@ -160,7 +160,7 @@ export const route: Route = {
     url: 'openalex.org',
     maintainers: ['emdoe'],
     handler,
-    example: '/openalex/s64187185/subfield/2604',
+    example: '/openalex/s64187185/subfield/1312',
     parameters: {
         journals: 'Pipe-separated journal source IDs (e.g., s64187185|s123456789)',
         type: 'Optional filter type: subfield, topic, field, or domain',
@@ -171,7 +171,7 @@ export const route: Route = {
 Examples:
 
 - /openalex/s64187185 - All works from a journal (no topic filter)
-- /openalex/s64187185/subfield/2604 - Filter by subfield
+- /openalex/s64187185/subfield/1312 - Filter by subfield
 - /openalex/s64187185|s123456/topic/T10001|T10002 - Filter by topic with multiple journals
 - /openalex/s64187185/field/19 - Filter by field
 - /openalex/s64187185/domain/1 - Filter by domain`,

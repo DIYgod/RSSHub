@@ -1,5 +1,5 @@
 import { escapeAttribute, escapeText } from 'entities';
-import { Innertube, YTNodes } from 'youtubei.js';
+import { type Helpers, Innertube, YTNodes } from 'youtubei.js';
 
 import { config } from '@/config';
 import type { Data, DataItem } from '@/types';
@@ -30,6 +30,8 @@ const getInnertube = () => {
     }
     return innertubePromise;
 };
+type VideoLockupView = YTNodes.LockupView & { content_id: string };
+const isVideoLockup = (video: Helpers.YTNode): video is VideoLockupView => video instanceof YTNodes.LockupView && video.content_id !== undefined;
 const getThumbnailBadges = (video: YTNodes.LockupView) => {
     const thumbnail = video.content_image?.is(YTNodes.ThumbnailView) ? video.content_image : undefined;
     return thumbnail?.overlays.filter((overlay) => overlay.is(YTNodes.ThumbnailBottomOverlayView)).flatMap((overlay) => overlay.badges ?? []) ?? [];
@@ -63,13 +65,11 @@ const getVideoInfo = (videoId: string) =>
         // The expiration is not renewed on a hit, so an edited description still shows up in a steadily polled feed
         false
     );
-const lockupViewToItem = (video: YTNodes.LockupView, embed: boolean, description = ''): DataItem => {
+const lockupViewToItem = (video: VideoLockupView, embed: boolean, description = ''): DataItem => {
     const videoId = video.content_id;
     const img = `https://i.ytimg.com/vi/${videoId}/maxresdefault.jpg`;
     const metadataRows = (video.metadata?.metadata?.metadata_rows ?? []).filter((row) => row.metadata_parts?.length);
     const publishedText = getMetadataTexts(video).findLast((text) => text?.endsWith('ago'));
-    // A duration is grouped for readability once it reaches a thousand hours, e.g. `20,772:51:34`
-    const durationText = getThumbnailBadges(video).find((badge) => /^[\d,]+(?::\d+)+$/.test(badge.text))?.text;
     return {
         title: video.metadata?.title?.text || `YouTube Video ${videoId}`,
         description: renderYoutube(embed, videoId, img, formatDescription(description)),
@@ -81,7 +81,7 @@ const lockupViewToItem = (video: YTNodes.LockupView, embed: boolean, description
             {
                 url: getVideoUrl(videoId),
                 mime_type: 'text/html',
-                duration_in_seconds: durationText ? durationText.split(':').reduce((acc, part) => acc * 60 + Number(part.replaceAll(',', '')), 0) : undefined,
+                duration_in_seconds: video.duration.seconds || undefined,
             },
         ],
     };
@@ -100,7 +100,7 @@ export const getDataByChannelId = async ({ channelId, embed, filterShorts, isJso
     const innertube = await getInnertube();
     const channel = await innertube.getChannel(channelId);
     const videos = filterShorts ? await channel.getVideos() : await innertube.getPlaylist(`UU${channelId.slice(2)}`);
-    const lockupVideos = videos.videos.filter((video) => video instanceof YTNodes.LockupView);
+    const lockupVideos = videos.videos.filter((video) => isVideoLockup(video));
     const videoSubtitles = isJsonFeed ? await getSrtAttachmentBatch(lockupVideos.map((video) => video.content_id)) : {};
     return {
         title: `${channel.metadata.title || channelId} - YouTube`,
@@ -118,7 +118,7 @@ export const getStreamsByChannelId = async ({ channelId, embed }: { channelId: s
     const innertube = await getInnertube();
     const channel = await innertube.getChannel(channelId);
     const streams = await channel.getLiveStreams();
-    const videos = streams.videos.filter((video) => video instanceof YTNodes.LockupView);
+    const videos = streams.videos.filter((video) => isVideoLockup(video));
     const infos = await Promise.all(videos.map((video) => getVideoInfo(video.content_id)));
     return {
         title: `${channel.metadata.title || channelId} - Live - YouTube`,
@@ -146,7 +146,7 @@ export const getDataByPlaylistId = async ({ playlistId, embed }: { playlistId: s
         link: `https://www.youtube.com/playlist?list=${playlistId}`,
         image: playlist.info.thumbnails?.[0].url,
         description: playlist.info.description || `${playlist.info.title} by ${playlist.info.author.name}`,
-        item: videos.filter((video) => video instanceof YTNodes.LockupView).map((video) => lockupViewToItem(video, embed)),
+        item: videos.filter((video) => isVideoLockup(video)).map((video) => lockupViewToItem(video, embed)),
     };
 };
 export const getShowsByChannelId = async (channelId: string): Promise<Data> => {

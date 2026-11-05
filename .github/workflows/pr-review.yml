@@ -37,7 +37,7 @@ jobs:
               run: |
                   gh api "repos/${PR_TARGET_REPO}/pulls" \
                     --method GET -f head="${PR_BRANCH}" -f state=open \
-                    --jq '.[0] | "number=\(.number)"' \
+                    --jq '.[0] // empty | "number=\(.number)"' \
                     >> "${GITHUB_OUTPUT}"
 
             - name: Check PR author
@@ -48,6 +48,11 @@ jobs:
                   PR_TARGET_REPO: ${{ github.repository }}
                   PR_NUMBER: ${{ steps.source-run-info.outputs.number }}
               run: |
+                  if [ -z "${PR_NUMBER}" ]; then
+                    echo "No open pull request for this branch, it was merged or closed before this run; skipping review"
+                    echo "skip=true" >> "${GITHUB_OUTPUT}"
+                    exit 0
+                  fi
                   AUTHOR=$(gh pr view --repo "${PR_TARGET_REPO}" "${PR_NUMBER}" --json author --jq '.author.login')
                   echo "author=${AUTHOR}" >> "${GITHUB_OUTPUT}"
                   if [[ "${AUTHOR}" == "dependabot[bot]" || "${AUTHOR}" == "app/dependabot" ]]; then

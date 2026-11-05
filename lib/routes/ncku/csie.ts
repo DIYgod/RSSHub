@@ -5,7 +5,7 @@ import type { Route } from '@/types';
 import ofetch from '@/utils/ofetch';
 import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
 
-const currentURL = (catagory: string, page: number) => (catagory === '_all' ? `https://www.csie.ncku.edu.tw/zh-hant/news?page=${page}` : `https://www.csie.ncku.edu.tw/zh-hant/news/${catagory}?page=${page}`);
+const currentURL = (catagory: string) => (catagory === '_all' ? 'https://www.csie.ncku.edu.tw/zh-hant/news?page=1' : `https://www.csie.ncku.edu.tw/zh-hant/news/${catagory}?page=1`);
 
 const catagories = {
     _all: '全部資訊',
@@ -21,10 +21,10 @@ const catagories = {
 export const route: Route = {
     'zh-TW': {
         name: '國立成功大學資訊系公告',
-        description: '可用分類：\\_all, normal, bachelorAdmission, masterAdmission, speeches, awards, scholarship, jobs',
+        description: String.raw`可用分類：\_all, normal, bachelorAdmission, masterAdmission, speeches, awards, scholarship, jobs`,
     },
     name: 'CSIE News',
-    description: 'Availible catagories：\\_all, normal, bachelorAdmission, masterAdmission, speeches, awards, scholarship, jobs',
+    description: String.raw`Availible catagories：\_all, normal, bachelorAdmission, masterAdmission, speeches, awards, scholarship, jobs`,
     path: '/csie/:catagory?',
     categories: ['university'],
     example: '/ncku/csie/normal',
@@ -53,7 +53,7 @@ export const route: Route = {
             catagory = 'normal';
         }
 
-        const $ = await ofetch<CheerioAPI>(currentURL(catagory, 1), {
+        const $ = await ofetch<CheerioAPI>(currentURL(catagory), {
             parseResponse: load,
         });
 
@@ -74,7 +74,7 @@ export const route: Route = {
 
         return {
             title: `成大資訊系公告 - ${catagories[catagory]}`,
-            link: currentURL(catagory, 1),
+            link: currentURL(catagory),
             item,
         };
     },

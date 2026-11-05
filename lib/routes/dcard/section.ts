@@ -31,7 +31,7 @@ async function handler(ctx) {
     let api = 'https://www.dcard.tw/service/api/v2';
     let title = 'Dcard - ';
 
-    if (section !== 'posts' && section !== 'popular' && section !== 'latest') {
+    if (!['posts', 'popular', 'latest'].includes(section)) {
         link += `/${section}`;
         api += `/forums/${section}`;
         title += `${section} - `;

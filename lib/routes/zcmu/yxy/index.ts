@@ -52,14 +52,14 @@ async function handler(ctx) {
     });
 
     const $ = load(res.data);
-    const items = $('.lm_list li')
+    const items = $('.sp-list li')
         .toArray()
         .map((item) => {
             const $item = $(item);
             return {
                 title: $item.find('a').text(),
-                link: `https://yxy.zcmu.edu.cn/${$item.find('a').attr('href')}`,
-                pubDate: parseDate($item.find('span').text()),
+                link: new URL($item.find('a').attr('href')!, host).href,
+                pubDate: parseDate($item.find('.sp-list-time').text()),
             };
         });
 

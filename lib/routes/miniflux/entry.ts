@@ -110,7 +110,7 @@ async function handler(ctx) {
                 Number.isNaN(Number.parseInt(option)) ? (item = '') : (item = `category_id=${option}`);
                 break;
             case 'order':
-                if (option !== 'id' && option !== 'category_title' && option !== 'published_at' && option !== 'status' && option !== 'category_id') {
+                if (!['id', 'category_title', 'published_at', 'status', 'category_id'].includes(option)) {
                     item = '';
                 }
                 break;

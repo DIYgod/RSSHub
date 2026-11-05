@@ -79,6 +79,9 @@ const getItemDetail = async (item, rootUrl): Promise<ArticleDetails> => {
     if (content('title').text() === '用户验证' && content('body').text().includes('验证码')) {
         throw new ArticleAccessError(`Article access verification required at ${item.link}`);
     }
+    if (content('title').text() === '系统提示' && content('.prompt p').text().trim() === '暂无权限，请咨询管理员。') {
+        throw new ArticleAccessError(`Article access permission required at ${item.link}`);
+    }
     if (content('div.v_news_content').length !== 1) {
         throw new Error(`Article body not found at ${item.link}`);
     }

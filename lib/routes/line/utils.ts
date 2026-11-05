@@ -45,7 +45,9 @@ const parseItems = (list: Array<DataItem & { link: string; hash: string }>) =>
                 const $ = load(data.data.content, null, false);
                 $('img').each((_, img) => {
                     delete img.attribs['data-hashid'];
-                    img.attribs.src = img.attribs.src.replace(/\/w\d+$/, '');
+                    if (img.attribs.src) {
+                        img.attribs.src = img.attribs.src.replace(/\/w\d+$/, '');
+                    }
                 });
 
                 return {

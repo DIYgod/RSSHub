@@ -11,7 +11,7 @@ const blogUrl = `${rootUrl}/blog`;
 
 // Extract article information from DOM
 function extractArticlesFromDOM($: CheerioAPI): DataItem[] {
-    return $('article.group')
+    return $('article')
         .toArray()
         .map((article) => {
             const element = $(article);
@@ -21,12 +21,12 @@ function extractArticlesFromDOM($: CheerioAPI): DataItem[] {
             const fullLink = link ? (link.startsWith('http') ? link : `${rootUrl}${link.startsWith('/') ? link : `/${link}`}`) : '';
 
             // Extract date and author with single regex
-            const metaText = element.find('.text-sm.text-slate-500').text();
+            const metaText = element.find('[class^="Editorial_meta"]').text();
             const metaMatch = metaText.match(/^([^•]+)•\s*([A-Z]+\s+\d{1,2},?\s+\d{4})/i);
             const author = metaMatch ? metaMatch[1].trim() : 'Cline Team';
             const pubDate = metaMatch ? timezone(parseDate(metaMatch[2]), 0) : undefined;
 
-            const summary = element.find('p.text-slate-600').text().trim();
+            const summary = element.find('[class^="Editorial_excerpt"]').text().trim();
             const imgSrc = element.find('img').attr('src') || '';
 
             return title && link

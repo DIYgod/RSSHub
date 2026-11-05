@@ -69,6 +69,10 @@ async function handler(ctx) {
         async (item) => ({
             ...item,
             ...(await cache.tryGet(`gzic-notice:article-v2:${item.link}`, async () => {
+                // Some notices link to another site, such as the city's e-bidding portal, which has no article body to read
+                if (!item.link!.startsWith(`${baseUrl}/`)) {
+                    return {};
+                }
                 try {
                     const response = await ofetch(item.link!);
                     const $ = load(response);

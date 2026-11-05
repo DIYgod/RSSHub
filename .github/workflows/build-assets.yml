@@ -11,7 +11,8 @@ on:
 
 jobs:
     build:
-        runs-on: ubuntu-slim
+        # Not ubuntu-slim: its single CPU takes about twice as long to install and build, and it counts toward the same concurrent job limit
+        runs-on: ubuntu-latest
         name: Build assets
         timeout-minutes: 10
         permissions:
@@ -43,6 +44,10 @@ jobs:
                   keep_files: true
 
             # docs
+            - name: Fetch history
+              # build-docs dates each route by the commit that added its file. Only this commit's history, as fetch-depth: 0
+              # would also download every other branch, gh-pages included.
+              run: git fetch --unshallow --no-tags origin "$GITHUB_SHA"
             - name: Build docs
               run: pnpm exec tsx scripts/workflow/build-docs.ts
             - id: check-docs-env

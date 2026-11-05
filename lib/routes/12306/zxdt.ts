@@ -45,7 +45,7 @@ async function handler(ctx) {
         .map((item): DataItem & { link: string } => ({
             title: $(item).find('a').text(),
             link: new URL($(item).find('a').attr('href')!, link).href,
-            pubDate: parseDate($(item).find('span').text().slice(1, -1)),
+            pubDate: parseDate($(item).find('span.zxdt_time_in').text().slice(1, -1)),
         }));
 
     const out = await Promise.all(

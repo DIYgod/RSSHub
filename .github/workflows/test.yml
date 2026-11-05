@@ -8,8 +8,21 @@ on:
             - 'lib/**'
             - 'package.json'
             - 'pnpm-lock.yaml'
+            - 'pnpm-workspace.yaml'
             - '.github/workflows/test.yml'
-    pull_request: {}
+    # Docs-only pull requests skip this workflow. No check is required on master; if one becomes required,
+    # skip inside the job instead, or a docs-only pull request waits for that check forever.
+    pull_request:
+        paths-ignore:
+            - '**/*.md'
+            - 'LICENSE'
+            - '.github/ISSUE_TEMPLATE/**'
+
+# A new push to a pull request cancels the run of the previous push.
+# Every other run gets its own group per branch and commit, so a push to master is never cancelled or replaced.
+concurrency:
+    group: ${{ github.workflow }}-${{ github.event_name }}-${{ github.event.pull_request.number || format('{0}-{1}', github.ref, github.sha) }}
+    cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 permissions:
     checks: write
@@ -74,13 +87,10 @@ jobs:
             fail-fast: false
             matrix:
                 node-version: [latest, lts/*]
+                # The bundled Chromium is covered by the vitest job, which installs it and runs these tests on the same Node versions
+                # Ubuntu's chromium-browser is not tested: on noble it only installs the Chromium snap, so the job failed whenever
+                # the snap store timed out, and the Chromium-bundled Docker image uses Debian's native package, not the snap
                 chromium:
-                    - name: bundled Chromium
-                      dependency: ''
-                      environment: '{ "PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD": "0" }'
-                    - name: Chromium from Ubuntu
-                      dependency: chromium-browser
-                      environment: '{ "PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD": "1" }'
                     - name: Chrome from Google
                       dependency: google-chrome-stable
                       environment: '{ "PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD": "1" }'
@@ -97,26 +107,16 @@ jobs:
               env: ${{ fromJSON(matrix.chromium.environment) }}
             - name: Run postinstall script for dependencies
               run: pnpm rb
-            - parallel:
-                  - name: Build routes
-                    run: pnpm build
-                  - name: Install bundled Chromium
-                    if: ${{ matrix.chromium.dependency == '' }}
-                    run: pnpm exec patchright install chromium
-                  - name: Install Chromium
-                    if: ${{ matrix.chromium.dependency != '' }}
-                    # 'chromium-browser' from Ubuntu APT repo is a dummy package. Its version (85.0.4183.83) means
-                    # nothing since it calls Snap (disgusting!) to install Chromium, which should be up-to-date.
-                    # That's not really a problem since the Chromium-bundled Docker image is based on Debian trixie,
-                    # which provides up-to-date native packages.
-                    run: |
-                        set -eux
-                        curl -s "https://dl.google.com/linux/linux_signing_key.pub" | gpg --dearmor |
-                          sudo tee /etc/apt/trusted.gpg.d/google-chrome.gpg > /dev/null
-                        echo "deb [arch=amd64] https://dl.google.com/linux/chrome/deb/ stable main" |
-                          sudo tee /etc/apt/sources.list.d/google-chrome.list > /dev/null
-                        sudo apt-get update
-                        sudo apt-get install -yq --no-install-recommends ${{ matrix.chromium.dependency }}
+            # No build step: these tests do not read build output, and the vitest job already builds on the same Node versions
+            - name: Install Chromium
+              run: |
+                  set -eux
+                  curl -s "https://dl.google.com/linux/linux_signing_key.pub" | gpg --dearmor |
+                    sudo tee /etc/apt/trusted.gpg.d/google-chrome.gpg > /dev/null
+                  echo "deb [arch=amd64] https://dl.google.com/linux/chrome/deb/ stable main" |
+                    sudo tee /etc/apt/sources.list.d/google-chrome.list > /dev/null
+                  sudo apt-get update
+                  sudo apt-get install -yq --no-install-recommends ${{ matrix.chromium.dependency }}
             - name: Test Playwright
               run: |
                   set -eux
@@ -133,7 +133,8 @@ jobs:
         strategy:
             fail-fast: false
             matrix:
-                node-version: [26, 24]
+                # Node latest is covered by the vitest job, which runs the same build
+                node-version: [26]
         name: Build radar and maintainer on Node ${{ matrix.node-version }}
         steps:
             - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1

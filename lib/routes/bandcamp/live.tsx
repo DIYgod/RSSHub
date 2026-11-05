@@ -36,6 +36,7 @@ async function handler() {
         method: 'post',
         url: `${rootUrl}/api/live_events_public_api/4/get_upcoming_live_events`,
         json: { page_size: Math.min(limit, 20) },
+        minVersion: 'TLSv1.3',
     });
 
     const items = response.data.items.map((item) => {

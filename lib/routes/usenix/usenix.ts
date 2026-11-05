@@ -91,7 +91,7 @@ async function handler() {
     const linkedPages = (await pMap(missingConferences, getAcceptedPaperUrls, { concurrency: 3 })).flat();
     const additionalUrls = [...new Set(linkedPages)].filter((link) => !urlList.includes(link));
     const additionalResponses = await pMap(additionalUrls, fetchAcceptedPapers, { concurrency: 3 });
-    const list = new Map([...historicalLists.flat(), ...additionalResponses.flatMap(parseAcceptedPapers)].map((item) => [item.link, item])).values().toArray();
+    const list = new Map([...historicalLists.flat(), ...additionalResponses.flatMap((response) => parseAcceptedPapers(response))].map((item) => [item.link, item])).values().toArray();
     const items = await pMap(
         list,
         (item) => {

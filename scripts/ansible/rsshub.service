@@ -4,7 +4,7 @@ Description=RSSHub is an open source, easy to use, and extensible RSS feed aggre
 [Service]
 User=rsshub
 WorkingDirectory=/home/rsshub/app
-ExecStart=yarn start
+ExecStart=/usr/bin/mise exec -- pnpm start
 EnvironmentFile=/home/rsshub/app/.env
 
 [Install]

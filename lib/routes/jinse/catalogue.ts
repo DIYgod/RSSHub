@@ -131,6 +131,6 @@ async function handler(ctx) {
 }
 
 function parseTimestamp(value?: number | string): Date | undefined {
-    const date = value !== undefined && value !== null && value !== '' ? parseDate(value, 'X') : undefined;
+    const date = value !== undefined && value !== '' ? parseDate(value, 'X') : undefined;
     return date && Number.isFinite(date.getTime()) ? date : undefined;
 }

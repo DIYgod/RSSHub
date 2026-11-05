@@ -192,7 +192,7 @@ async function handler(ctx) {
     const pinnedItems = resultItems.filter((item) => item.isPinned);
     const ordinaryItems = resultItems.filter((item) => !item.isPinned);
     if (pinnedItems.length > 0 && ordinaryItems.length > 0) {
-        const earliestOrdinaryPostTime = Math.min(...ordinaryItems.map((item) => getPostTime(item.pubDate)).filter(Number.isFinite));
+        const earliestOrdinaryPostTime = Math.min(...ordinaryItems.map((item) => getPostTime(item.pubDate)).filter((time) => Number.isFinite(time)));
         if (Number.isFinite(earliestOrdinaryPostTime)) {
             resultItems = resultItems.filter((item) => {
                 const postTime = getPostTime(item.pubDate);

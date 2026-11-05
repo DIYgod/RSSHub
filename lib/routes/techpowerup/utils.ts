@@ -1,15 +1,10 @@
 import { load } from 'cheerio';
 import pMap from 'p-map';
 
-import md5 from '@/utils/md5';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
 const baseUrl = 'https://www.techpowerup.com';
-
-const headers = {
-    cookie: `botcheck=${md5(Date.now().toString())}`,
-};
 
 const fixImages = ($) => {
     $('div.responsive-image-xx').each((_, d) => {
@@ -24,7 +19,9 @@ const fixImages = ($) => {
 };
 
 const hdImage = (img) => {
-    img.attribs.src = img.attribs.src.replace('_thm', '').replace('_small', '');
+    if (img.attribs.src) {
+        img.attribs.src = img.attribs.src.replace('_thm', '').replace('_small', '');
+    }
     if (!(img.parentNode.name === 'a' && img.parentNode.attribs['data-width'] && img.parentNode.attribs['data-height'])) {
         return;
     }
@@ -53,9 +50,7 @@ const parseReviews = async ($, item) => {
         const pages = await pMap(
             nextPages,
             async (url) => {
-                const response = await ofetch(url, {
-                    headers,
-                });
+                const response = await ofetch(url);
                 const $ = load(response);
                 $('.text div.responsive-image-xx').each((_, d) => {
                     removeResponsiveStyle(d);
@@ -79,4 +74,4 @@ const parseReviews = async ($, item) => {
     item.description = content.html();
 };
 
-export { baseUrl, fixImages, headers, parseReviews };
+export { baseUrl, fixImages, parseReviews };

@@ -48,7 +48,7 @@ async function handler() {
                 const data = JSON.parse($('script[type="application/ld+json"]').text());
                 $('.entry-content figure > picture > source, noscript').remove();
                 $('.entry-content img').each((_, img) => {
-                    if (img.attribs.src.startsWith('data:')) {
+                    if (img.attribs.src?.startsWith('data:')) {
                         img.attribs.src = img.attribs['data-lazy-src'];
                         delete img.attribs['data-lazy-src'];
                         delete img.attribs['data-lazy-srcset'];

@@ -5,6 +5,7 @@ import { renderToString } from 'hono/jsx/dom/server';
 import type { Route } from '@/types';
 import { ViewType } from '@/types';
 import cache from '@/utils/cache';
+import { PRESETS } from '@/utils/header-generator';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
@@ -196,6 +197,7 @@ async function handler(ctx) {
 
     const section_id = `/${category}/${topic ? `${topic}/` : ''}`;
 
+    // DataDome answers the default macOS Chrome header preset with a 401 captcha, but lets the iOS preset through
     const browserHeaders = {
         Accept: 'application/json, text/plain, */*',
         'Accept-Language': 'en-US,en;q=0.9',
@@ -215,11 +217,12 @@ async function handler(ctx) {
                         }),
                     },
                     headers: browserHeaders,
+                    headerGeneratorOptions: PRESETS.MODERN_IOS,
                 });
 
+                // The topic API no longer returns the topic itself, so name the feed after the topic in the URL
                 return {
-                    title: `${response.result.topics[0].name} | Reuters`,
-                    description: response.result.topics[0].entity_id,
+                    title: `${topic} | Reuters`,
                     rootUrl,
                     response,
                 };
@@ -240,6 +243,7 @@ async function handler(ctx) {
                     }),
                 },
                 headers: browserHeaders,
+                headerGeneratorOptions: PRESETS.MODERN_IOS,
             });
             return {
                 title: response.result.section.title,
@@ -268,6 +272,7 @@ async function handler(ctx) {
                     ? cache.tryGet(item.link, async () => {
                           const detailResponse = await ofetch.raw<string>(item.link, {
                               headers: browserHeaders,
+                              headerGeneratorOptions: PRESETS.MODERN_IOS,
                           });
                           const detailHtml = detailResponse._data ?? '';
                           const content = load(detailHtml);

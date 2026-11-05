@@ -120,7 +120,8 @@ async function handler(ctx) {
                     item.category = [...new Set([...(item.category ?? []), ...[metadata.articleSection].flat()])];
                 }
 
-                const content = $('[class*="ArticleLayout"][class*="__content"], article[class*="MooSanityContainer"], article article, div.prose').first();
+                // Some cards link to anthropic.com posts, whose body is the article's `<hash>_body` block since the 2026-10 class rename
+                const content = $('[class*="ArticleLayout"][class*="__content"], article[class*="MooSanityContainer"], article article, div.prose, article > div > div[class$="_body"]').first();
 
                 if (!content.length) {
                     throw new Error(`Article content was not found at ${item.link}`);

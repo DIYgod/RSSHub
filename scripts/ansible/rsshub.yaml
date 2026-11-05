@@ -8,51 +8,45 @@
   tasks:
       - name: Check OS
         fail:
-            msg: This playbook can only be run on Ubuntu 20.04 at this moment
-        when: ansible_distribution != 'Ubuntu' or ansible_distribution_version !='20.04'
+            msg: This playbook can only be run on Ubuntu 26.04 at this moment
+        when: ansible_distribution != 'Ubuntu' or ansible_distribution_version != '26.04'
       - name: Install GPG keys for repos
-        apt_key:
-            url: '{{ item }}'
-            state: present
-        with_items:
-            - https://deb.nodesource.com/gpgkey/nodesource.gpg.key
-            - https://download.docker.com/linux/ubuntu/gpg
-            - https://dl.cloudsmith.io/public/caddy/stable/cfg/gpg/gpg.155B6D79CA56EA34.key
+        get_url:
+            url: '{{ item.url }}'
+            dest: '/etc/apt/keyrings/{{ item.name }}.asc'
+        loop:
+            - { name: mise, url: https://mise.jdx.dev/gpg-key.pub }
+            - { name: docker, url: https://download.docker.com/linux/ubuntu/gpg }
+            - { name: caddy, url: https://dl.cloudsmith.io/public/caddy/stable/gpg.key }
       - name: Install repos
         apt_repository:
             repo: '{{ item }}'
             state: present
             update_cache: yes
-        with_items:
-            - deb https://deb.nodesource.com/node_12.x focal main
-            - deb https://download.docker.com/linux/ubuntu focal stable
-            - deb https://dl.cloudsmith.io/public/caddy/stable/deb/debian any-version main
+        loop:
+            - deb [signed-by=/etc/apt/keyrings/mise.asc] https://mise.jdx.dev/deb stable main
+            - deb [signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu resolute stable
+            - deb [signed-by=/etc/apt/keyrings/caddy.asc] https://dl.cloudsmith.io/public/caddy/stable/deb/debian any-version main
       - name: Install prerequisites
         apt:
             name:
-                - nodejs
+                - mise
                 - build-essential
-                - python-is-python2
                 - redis-server
                 - docker-ce
-                - python3-pip
-                - virtualenv
-                - python3-setuptools
+                - python3-docker
                 - caddy
             state: present
             update_cache: yes
-      - name: Install python module for docker
-        pip:
-            name: docker
       - name: Pull docker image for browserless
         docker_image:
-            name: browserless/chrome
+            name: ghcr.io/browserless/chromium
             source: pull
       - name: Start redis
         systemd:
             state: restarted
             enabled: yes
-            name: redis
+            name: redis-server
             daemon_reload: yes
       - name: Copy caddy configuration
         template:
@@ -67,9 +61,11 @@
       - name: Create and start browserless container
         docker_container:
             name: browserless
-            image: browserless/chrome
+            image: ghcr.io/browserless/chromium
             state: started
             restart_policy: always
+            env:
+                TOKEN: rsshub
             published_ports:
                 - '3000:3000'
       - name: Create the user
@@ -77,17 +73,27 @@
             name: rsshub
             create_home: true
             shell: /bin/bash
+      - name: Install node and pnpm
+        command: mise use -g node@26 pnpm@12
+        become_user: rsshub
       - name: Clone the repo
         git:
             repo: https://github.com/DIYgod/RSSHub.git
             dest: /home/rsshub/app
             update: yes
+        become_user: rsshub
       - name: Install repo dependencies
-        command: yarn install --production
+        command: mise exec -- pnpm install --frozen-lockfile
         args:
             chdir: /home/rsshub/app
+        become_user: rsshub
         environment:
             PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: true
+      - name: Build the app
+        command: mise exec -- pnpm build
+        args:
+            chdir: /home/rsshub/app
+        become_user: rsshub
       - name: Copy configuration
         copy:
             src: rsshub.env

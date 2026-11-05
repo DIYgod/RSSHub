@@ -1,3 +1,6 @@
+# cf dev, cf build, and cf deploy read cloudflare.config.ts and wrangler.config.ts instead of this file.
+# It is kept for lib/worker.test.ts, which runs the Worker with Wrangler's unstable_dev.
+# Keep it in sync with cloudflare.config.ts.
 name = "rsshub"
 main = "dist-worker/worker.mjs"
 compatibility_date = "2026-09-01"

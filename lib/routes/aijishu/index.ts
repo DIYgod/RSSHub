@@ -51,12 +51,7 @@ async function handler(ctx) {
                 return {
                     title: article.find('h3').text(),
                     url: article.attr('href'),
-                    createdDate: item
-                        .find('span.text-secondary')
-                        .first()
-                        .text()
-                        .replace(/^·\s*/, '')
-                        .trim(),
+                    createdDate: item.find('span.text-secondary').first().text().replace(/^·\s*/, '').trim(),
                 };
             });
     }

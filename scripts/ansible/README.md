@@ -6,7 +6,7 @@ Requires sudo permission
 
 ## Usage
 
-On `Ubuntu 20.04`, [install ansible](https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-ansible-on-ubuntu-20-04), then
+On `Ubuntu 26.04`, run `sudo apt install ansible`, then
 
 ```bash
 sudo ansible-playbook rsshub.yaml

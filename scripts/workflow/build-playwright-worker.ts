@@ -43,7 +43,7 @@ export function addBuiltinRequireMap(source: string) {
     if (helpers.length !== 1) {
         throw new Error('Playwright Worker build expected exactly one createRequire runtime helper');
     }
-    source = source.replace(helperPattern, () => `var ${helpers[0][1]} = (...args) => require(...args);`);
+    source = source.replaceAll(helperPattern, () => `var ${helpers[0][1]} = (...args) => require(...args);`);
     const usedBuiltins = [
         ...new Set(
             source

@@ -335,10 +335,10 @@ const ProcessFeed = (ctx, { data = [] }: { data?: any[] }, params: ProcessFeedPa
                 quoteInTitle += showEmojiForRetweetAndReply ? ' 💬 ' : showSymbolForRetweetAndReply ? ' RT ' : '';
                 quoteInTitle += `${author.name}: ${formatText(quoteData)}`;
 
-                if (readable) {
-                    quote += `<br><small>Link: <a href='https://x.com/${author.screen_name}/status/${quoteData.id_str || quoteData.conversation_id_str}' target='_blank' rel='noopener noreferrer'>https://x.com/${
+                if (author.screen_name && quoteData.id_str) {
+                    quote += `<br><small>Link: <a href='https://x.com/${author.screen_name}/status/${quoteData.id_str}' target='_blank' rel='noopener noreferrer'>https://x.com/${
                         author.screen_name
-                    }/status/${quoteData.id_str || quoteData.conversation_id_str}</a></small>`;
+                    }/status/${quoteData.id_str}</a></small>`;
                 }
                 const quoteDate = getPublicationDate(quoteData.created_at);
                 if (showTimestampInDescription && quoteDate) {
@@ -574,6 +574,9 @@ const keepOnlyMedia = function (tweets) {
     const excluded = tweets.filter((t) => t.extended_entities && t.extended_entities.media);
     return excluded;
 };
+
+// Profiles rarely change, and every timeline fetch looks one up first
+export const TWITTER_USER_CACHE_EXPIRE = 24 * 60 * 60;
 
 export const getTwitterUserCacheKey = (id: string, operationName: string, params: Record<string, string | number | boolean | undefined> | undefined) => `twitter:${id}:${operationName}:${JSON.stringify(params)}`;
 

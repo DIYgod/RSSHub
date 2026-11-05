@@ -76,7 +76,7 @@ export const route: Route = {
                         const articleData = await ofetch<{ body: string }>(articleDetailUrl);
                         return articleData.body;
                     });
-                    articleContentHtml = fetchedArticleContentHtml.replace(fetchedArticleContentHtmlImgRegex, '<img src="https://img-s-msn-com.akamaized.net/tenant/amp/entityid/$1.img">');
+                    articleContentHtml = fetchedArticleContentHtml.replaceAll(fetchedArticleContentHtmlImgRegex, '<img src="https://img-s-msn-com.akamaized.net/tenant/amp/entityid/$1.img">');
                 }
 
                 return {

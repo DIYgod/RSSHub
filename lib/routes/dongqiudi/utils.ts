@@ -61,7 +61,9 @@ const processImg = (content) => {
             delete img.attribs['orig-src'];
             delete img.attribs['data-src'];
         }
-        img.attribs.src = img.attribs.src.includes('?watermark') ? img.attribs.src.split('?watermark', 1)[0] : img.attribs.src;
+        if (img.attribs.src?.includes('?watermark')) {
+            img.attribs.src = img.attribs.src.split('?watermark', 1)[0];
+        }
     });
 };
 

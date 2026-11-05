@@ -91,7 +91,7 @@ async function handler(ctx) {
     const items = await Promise.all(
         list.map((item) => {
             const title = item.title;
-            const date = timezone(parseDate(item.date, 'DD MMMM YYYY - HH:mm'), 1); // Central European Time
+            const date = timezone(parseDate(item.date, 'D MMMM YYYY - HH:mm'), 1); // Central European Time
             const link = rootUrl + item.link;
             const category = item.category;
 

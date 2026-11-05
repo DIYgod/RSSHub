@@ -117,7 +117,7 @@ const parseTradeItem = (item) =>
             delete div.attribs.onclick;
         });
         $photo('.desktop_photo_selector img').each((_, img) => {
-            if (img.attribs.src.endsWith('_sqt.jpg')) {
+            if (img.attribs.src?.endsWith('_sqt.jpg')) {
                 img.attribs.src = img.attribs.src.replace('_sqt.jpg', '.jpg');
             }
         });

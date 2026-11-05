@@ -17,9 +17,21 @@
 <table>
 <tr>
 <td align="center" valign="top" width="50%">
+<a href="https://proxy-seller.com/?utm_source=rsshub"><img src="https://docs.rsshub.app/img/sponsors/proxy-seller.png" alt="Proxy-Seller" width="419"></a>
+<br>
+<a href="https://proxy-seller.com/?utm_source=rsshub">Proxy-Seller</a> is a global proxy provider offering residential, ISP, datacenter IPv4/IPv6, and mobile proxies across 220+ locations. Use promo code <code>RSSHUB</code> for 15% off ISP, IPv4, and residential proxies.
+</td>
+<td align="center" valign="top" width="50%">
 <a href="https://folo.is/"><img src="https://github.com/user-attachments/assets/68c66528-8c79-4a8a-8e43-ade7d936ab80" alt="Folo" width="419"></a>
 <br>
 RSSHub pairs especially well with <a href="https://folo.is/">Folo</a>, an AI RSS reader for feed discovery and modern reading workflows. The project is also open source on <a href="https://github.com/RSSNext/Folo">GitHub</a>.
+</td>
+</tr>
+<tr>
+<td align="center" valign="top" width="50%">
+<a href="https://www.swiftproxy.net/?ref=diygod"><img src="https://docs.rsshub.app/img/sponsors/swiftproxy.png" alt="Swiftproxy" width="419"></a>
+<br>
+<a href="https://www.swiftproxy.net/?ref=diygod">Swiftproxy</a> provides 80M+ residential IPs across 220+ locations, helping users access geo-restricted websites and collect web data worldwide. Supports rotating and static residential proxies with HTTP(S)/SOCKS5. Get a free test and 10% off with code <code>PROXY90</code>.
 </td>
 <td align="center" valign="top" width="50%">
 <a href="https://www.rapidproxy.io/?ref=rsshub"><img src="https://github.com/user-attachments/assets/23b68f68-959c-4176-aa6c-ff3b2e4ebfdf" alt="RapidProxy" width="419"></a>

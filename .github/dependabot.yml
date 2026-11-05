@@ -28,6 +28,7 @@ updates:
           cloudflare:
               patterns:
                   - '@cloudflare/*'
+                  - 'cf'
                   - 'wrangler'
           eslint:
               patterns:
