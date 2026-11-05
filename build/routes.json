@@ -94417,6 +94417,124 @@
     "description": "::: tip\n路由地址全部按照 **学校官网域名和栏目编号** 设计\n\n使用方法：\n\n以[南信大信息公告栏](https://bulletin.nuist.edu.cn)为例，点开任意一个栏目\n\n获得 URL 中的**分域名**和**栏目编号（可选）**：https\\://`bulletin`.nuist.edu.cn/`791`/list.htm\n\n将其替换到 RSS 路由地址中即可：\n\n[https://rsshub.app/**nuist**/`bulletin`](https://rsshub.app/nuist/bulletin) 或 [https://rsshub.app/**nuist**/`bulletin`/`791`](https://rsshub.app/nuist/bulletin)\n:::",
     "lang": "zh-CN"
   },
+  "nvidia": {
+    "routes": {
+      "/developer/:language?": {
+        "path": "/developer/:language?",
+        "name": "Technical Blog",
+        "url": "developer.nvidia.com/blog",
+        "example": "/nvidia/developer",
+        "categories": [
+          "programming"
+        ],
+        "maintainers": [
+          "ljh12138164"
+        ],
+        "parameters": {
+          "language": {
+            "description": "Blog language",
+            "default": "en",
+            "options": [
+              {
+                "value": "en",
+                "label": "English"
+              },
+              {
+                "value": "zh-CN",
+                "label": "Simplified Chinese"
+              }
+            ]
+          }
+        },
+        "description": "Full technical articles from the official WordPress API, including images, code blocks, and tables. The official feeds only contain excerpts.",
+        "zh": {
+          "name": "技术博客",
+          "parameters": {
+            "language": {
+              "description": "文章语言。中英文站分别维护，文章列表和发布时间可能不同",
+              "default": "en",
+              "options": [
+                {
+                  "value": "en",
+                  "label": "英语"
+                },
+                {
+                  "value": "zh-CN",
+                  "label": "简体中文"
+                }
+              ]
+            }
+          },
+          "description": "官方 Feed 只提供摘要。本路由通过官方 WordPress API 获取全文，保留图片、代码块和表格。使用 `/nvidia/developer/zh-CN` 订阅简体中文，或使用 `/nvidia/developer/en` 订阅英文。"
+        },
+        "radar": [
+          {
+            "source": [
+              "developer.nvidia.com/blog",
+              "developer.nvidia.com/blog/:slug"
+            ],
+            "target": "/developer/en"
+          },
+          {
+            "source": [
+              "developer.nvidia.cn/blog",
+              "developer.nvidia.cn/blog/:slug"
+            ],
+            "target": "/developer/zh-CN"
+          },
+          {
+            "source": [
+              "developer.nvidia.com/zh-cn/blog",
+              "developer.nvidia.com/zh-cn/blog/:slug"
+            ],
+            "target": "/developer/zh-CN"
+          }
+        ],
+        "features": {
+          "requirePuppeteer": false,
+          "supportRadar": true
+        },
+        "location": "developer.ts",
+        "module": "() => import('@/routes/nvidia/developer.ts')"
+      },
+      "/newsroom": {
+        "path": "/newsroom",
+        "name": "Newsroom",
+        "url": "nvidianews.nvidia.com",
+        "example": "/nvidia/newsroom",
+        "categories": [
+          "new-media"
+        ],
+        "maintainers": [
+          "ljh12138164"
+        ],
+        "description": "Full articles from the English newsroom feed, covering press releases and selected NVIDIA Blog posts. Expands blog excerpts into complete articles.",
+        "zh": {
+          "name": "新闻中心",
+          "description": "订阅英文新闻中心的新闻稿和部分企业博客文章，并补全其中只有摘要的正文。"
+        },
+        "radar": [
+          {
+            "source": [
+              "nvidianews.nvidia.com",
+              "nvidianews.nvidia.com/news/:slug"
+            ],
+            "target": "/newsroom"
+          }
+        ],
+        "features": {
+          "requirePuppeteer": false,
+          "supportRadar": true
+        },
+        "location": "newsroom.ts",
+        "module": "() => import('@/routes/nvidia/newsroom.ts')"
+      }
+    },
+    "apiRoutes": {},
+    "name": "NVIDIA",
+    "url": "nvidia.com",
+    "lang": "en"
+  },
   "nwafu": {
     "routes": {
       "/:type?": {
@@ -135105,6 +135223,162 @@
     "apiRoutes": {},
     "name": "Aljazeera",
     "url": "aljazeera.com",
+    "lang": "en"
+  },
+  "amd": {
+    "routes": {
+      "/newsroom/:category?/:language?": {
+        "path": "/newsroom/:category?/:language?",
+        "name": "Newsroom",
+        "url": "newsroom.amd.com",
+        "example": "/amd/newsroom",
+        "categories": [
+          "new-media"
+        ],
+        "maintainers": [
+          "ljh12138164"
+        ],
+        "parameters": {
+          "category": "Official category slug such as gaming, ai, or data-center. Omit or use all for all news. Chinese supports all only.",
+          "language": {
+            "description": "Article language. Chinese uses the latest news and blogs on the regional homepage.",
+            "default": "en",
+            "options": [
+              {
+                "value": "en",
+                "label": "English"
+              },
+              {
+                "value": "zh-CN",
+                "label": "Simplified Chinese"
+              }
+            ]
+          }
+        },
+        "description": "Use `/amd/newsroom/all/zh-CN` for the Chinese homepage news and blogs. Fetches complete articles and footnotes using the official RSS feed for discovery. For Radeon and gaming news, use `/amd/newsroom/gaming`.",
+        "zh": {
+          "name": "新闻中心",
+          "parameters": {
+            "category": "官网分类，如 gaming（游戏与显卡）、ai（人工智能）或 data-center（数据中心）。留空或填 all 订阅全部新闻；中文站仅支持 all",
+            "language": {
+              "description": "文章语言。中英文站的文章列表和发布时间可能不同",
+              "default": "en",
+              "options": [
+                {
+                  "value": "en",
+                  "label": "英语"
+                },
+                {
+                  "value": "zh-CN",
+                  "label": "简体中文"
+                }
+              ]
+            }
+          },
+          "description": "获取文章的完整正文和脚注。英文文章列表来自官方 RSS，使用 `/amd/newsroom/all/en` 订阅；Radeon 显卡和游戏资讯可使用 `/amd/newsroom/gaming`。中文内容来自地区官网首页的最新新闻和博客，使用 `/amd/newsroom/all/zh-CN` 订阅。中文站不支持按分类订阅。"
+        },
+        "radar": [
+          {
+            "source": [
+              "newsroom.amd.com",
+              "newsroom.amd.com/news/:slug"
+            ],
+            "target": "/newsroom"
+          },
+          {
+            "source": [
+              "newsroom.amd.com/category/:category"
+            ],
+            "target": "/newsroom/:category"
+          },
+          {
+            "source": [
+              "www.amd.com/zh-cn/newsroom.html"
+            ],
+            "target": "/newsroom/all/zh-CN"
+          }
+        ],
+        "features": {
+          "requirePuppeteer": false,
+          "supportRadar": true
+        },
+        "location": "newsroom.ts",
+        "module": "() => import('@/routes/amd/newsroom.ts')"
+      },
+      "/press-releases/:language?": {
+        "path": "/press-releases/:language?",
+        "name": "Press Releases",
+        "url": "ir.amd.com/news-events/press-releases",
+        "example": "/amd/press-releases",
+        "categories": [
+          "finance"
+        ],
+        "maintainers": [
+          "ljh12138164"
+        ],
+        "parameters": {
+          "language": {
+            "description": "Article language. English uses the investor relations feed; Chinese uses the regional newsroom homepage. Lists and publication dates differ.",
+            "default": "en",
+            "options": [
+              {
+                "value": "en",
+                "label": "English"
+              },
+              {
+                "value": "zh-CN",
+                "label": "Simplified Chinese"
+              }
+            ]
+          }
+        },
+        "description": "Use `/amd/press-releases/zh-CN` for Chinese press releases. Full press releases from the investor relations website. The official RSS feed provides titles and links without article bodies.",
+        "zh": {
+          "name": "新闻稿",
+          "parameters": {
+            "language": {
+              "description": "文章语言。中英文新闻稿的来源、文章列表和发布时间不同",
+              "default": "en",
+              "options": [
+                {
+                  "value": "en",
+                  "label": "英语"
+                },
+                {
+                  "value": "zh-CN",
+                  "label": "简体中文"
+                }
+              ]
+            }
+          },
+          "description": "英文新闻稿来自投资者关系网站，官方 RSS 只有标题和链接，本路由会补全正文。使用 `/amd/press-releases/en` 订阅英文，或使用 `/amd/press-releases/zh-CN` 订阅地区新闻中心首页的中文新闻稿。"
+        },
+        "radar": [
+          {
+            "source": [
+              "ir.amd.com/news-events/press-releases",
+              "ir.amd.com/news-events/press-releases/detail/:id/:slug"
+            ],
+            "target": "/press-releases/en"
+          },
+          {
+            "source": [
+              "www.amd.com/zh-cn/newsroom/press-releases/:slug"
+            ],
+            "target": "/press-releases/zh-CN"
+          }
+        ],
+        "features": {
+          "requirePuppeteer": false,
+          "supportRadar": true
+        },
+        "location": "press-releases.ts",
+        "module": "() => import('@/routes/amd/press-releases.ts')"
+      }
+    },
+    "apiRoutes": {},
+    "name": "AMD",
+    "url": "amd.com",
     "lang": "en"
   },
   "apnews": {

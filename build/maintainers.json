@@ -6544,6 +6544,12 @@
     "gylidian",
     "nczitzk"
   ],
+  "/nvidia/developer/:language?": [
+    "ljh12138164"
+  ],
+  "/nvidia/newsroom": [
+    "ljh12138164"
+  ],
   "/nwafu/:type?": [
     "karinido"
   ],
@@ -9721,6 +9727,12 @@
   ],
   "/aljazeera/:language?/tag/:id": [
     "nczitzk"
+  ],
+  "/amd/newsroom/:category?/:language?": [
+    "ljh12138164"
+  ],
+  "/amd/press-releases/:language?": [
+    "ljh12138164"
   ],
   "/apnews/sitemap/:route": [
     "zoenglinghou",

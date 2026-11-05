@@ -37641,6 +37641,54 @@
       }
     ]
   },
+  "nvidia.com": {
+    "_name": "NVIDIA",
+    "developer": [
+      {
+        "title": "Technical Blog",
+        "docs": "https://docs.rsshub.app/routes/nvidia",
+        "source": [
+          "/blog",
+          "/blog/:slug"
+        ],
+        "target": "/nvidia/developer/en"
+      },
+      {
+        "title": "Technical Blog",
+        "docs": "https://docs.rsshub.app/routes/nvidia",
+        "source": [
+          "/zh-cn/blog",
+          "/zh-cn/blog/:slug"
+        ],
+        "target": "/nvidia/developer/zh-CN"
+      }
+    ],
+    "nvidianews": [
+      {
+        "title": "Newsroom",
+        "docs": "https://docs.rsshub.app/routes/nvidia",
+        "source": [
+          "/",
+          "/news/:slug"
+        ],
+        "target": "/nvidia/newsroom"
+      }
+    ]
+  },
+  "nvidia.cn": {
+    "_name": "NVIDIA",
+    "developer": [
+      {
+        "title": "Technical Blog",
+        "docs": "https://docs.rsshub.app/routes/nvidia",
+        "source": [
+          "/blog",
+          "/blog/:slug"
+        ],
+        "target": "/nvidia/developer/zh-CN"
+      }
+    ]
+  },
   "nwnu.edu.cn": {
     "_name": "西北师范大学",
     "jsj": [
@@ -52385,6 +52433,57 @@
           "/"
         ],
         "target": "/aljazeera/chinese/tag/:id"
+      }
+    ]
+  },
+  "amd.com": {
+    "_name": "AMD",
+    "newsroom": [
+      {
+        "title": "Newsroom",
+        "docs": "https://docs.rsshub.app/routes/amd",
+        "source": [
+          "/",
+          "/news/:slug"
+        ],
+        "target": "/amd/newsroom"
+      },
+      {
+        "title": "Newsroom",
+        "docs": "https://docs.rsshub.app/routes/amd",
+        "source": [
+          "/category/:category"
+        ],
+        "target": "/amd/newsroom/:category"
+      }
+    ],
+    "www": [
+      {
+        "title": "Newsroom",
+        "docs": "https://docs.rsshub.app/routes/amd",
+        "source": [
+          "/zh-cn/newsroom.html"
+        ],
+        "target": "/amd/newsroom/all/zh-CN"
+      },
+      {
+        "title": "Press Releases",
+        "docs": "https://docs.rsshub.app/routes/amd",
+        "source": [
+          "/zh-cn/newsroom/press-releases/:slug"
+        ],
+        "target": "/amd/press-releases/zh-CN"
+      }
+    ],
+    "ir": [
+      {
+        "title": "Press Releases",
+        "docs": "https://docs.rsshub.app/routes/amd",
+        "source": [
+          "/news-events/press-releases",
+          "/news-events/press-releases/detail/:id/:slug"
+        ],
+        "target": "/amd/press-releases/en"
       }
     ]
   },

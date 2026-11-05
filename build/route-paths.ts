@@ -207,6 +207,8 @@ export type RoutePath =
   | `/amazfitwatchfaces/:device/:sort/:searchParams?`
   | `/amazon/awsblogs/:locale?`
   | `/amazon/kindle/software-updates`
+  | `/amd/newsroom/:category?/:language?`
+  | `/amd/press-releases/:language?`
   | `/amz123/kx`
   | `/android/pixel-update-bulletin`
   | `/android/platform-tools-releases`
@@ -2589,6 +2591,8 @@ export type RoutePath =
   | `/nuist/sese/:category?`
   | `/nuist/xgc`
   | `/nuist/yjs/:path{.+}?`
+  | `/nvidia/developer/:language?`
+  | `/nvidia/newsroom`
   | `/nwafu/:type?`
   | `/nwnu/college/csse/:column`
   | `/nwnu/department/academic-affairs/:column`
