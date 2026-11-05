@@ -4,6 +4,7 @@ import type { Cheerio, CheerioAPI } from 'cheerio';
 import { load } from 'cheerio';
 import type { AnyNode } from 'domhandler';
 
+import { config } from '@/config';
 import type { DataItem } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
@@ -20,7 +21,7 @@ const solveChallenge = (html: string) => {
     }
     const offset = Number.parseInt(challenge[0], 16);
     const [b0, b1] = [Number(target[1]), Number(target[2])];
-    for (let i = 0; ; i++) {
+    for (let i = 0; i < 100_000_000; i++) {
         const digest = createHash('sha1')
             .update(challenge + i)
             .digest();
@@ -28,12 +29,13 @@ const solveChallenge = (html: string) => {
             return `${cookieName}${challenge}${i}`;
         }
     }
+    throw new Error('cdndefend challenge has no solutions');
 };
 
 export const fetchPage = async (path: string) => {
     const cacheKey = 'keke:cdndefend';
     const url = `${baseUrl}${path}`;
-    const cookie = await cache.get(cacheKey);
+    const cookie = await cache.get(cacheKey, false);
     const first = await ofetch.raw<string>(url, { headers: cookie ? { cookie } : {}, ignoreResponseError: true });
     if (first.status === 200) {
         return first._data ?? '';
@@ -46,7 +48,7 @@ export const fetchPage = async (path: string) => {
     if (second.status !== 200) {
         throw new Error(`cdndefend challenge failed with ${second.status} for ${url}`);
     }
-    await cache.set(cacheKey, solved, 86400); // valid for 1 day
+    await cache.set(cacheKey, solved, config.cache.routeExpire);
     return second._data ?? '';
 };
 
@@ -77,6 +79,6 @@ export const fetchDetail = (item: { title?: string; link: string }) =>
             category: $('.detail-tags-item')
                 .toArray()
                 .flatMap((el) => $(el).text().split(' / ')),
-            description: `${poster ? `<img src="${new URL(poster, baseUrl).href}">` : ''}<p>${$('.detail-desc p').text()}</p>${rows}`,
+            description: `${poster ? `<img src="${new URL(poster, 'https://vres.cyscyy.com').href}">` : ''}<p>${$('.detail-desc p').text()}</p>${rows}`,
         } as DataItem;
     });
