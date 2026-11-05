@@ -130,9 +130,9 @@ const getArticleDetails = async (article: ArticleLink, pubDate?: Date): Promise<
 
         return {
             ...details,
-            title: details?.title || article.title || article.link,
+            title: details.title || article.title || article.link,
             link: article.link,
-            pubDate: details?.pubDate ?? pubDate,
+            pubDate,
             category: article.category,
         };
     } catch {
@@ -224,7 +224,7 @@ export const route: Route = {
             target: '/paper',
         },
         {
-            source: ['epaper.gmw.cn/gmrb/html/layout/:date/node_:page.html'],
+            source: ['epaper.gmw.cn/gmrb/html/layout/:yearMonth/:day/node_:page.html'],
             target: '/paper/:page',
         },
     ],
