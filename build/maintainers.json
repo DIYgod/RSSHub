@@ -1054,6 +1054,16 @@
   "/kuaishou/profile/:principalId": [
     "GuoChen-thlg"
   ],
+  "/mi/golden": [
+    "nczitzk"
+  ],
+  "/mi/crowdfunding": [
+    "DIYgod",
+    "nuomi1"
+  ],
+  "/mi/newproducts": [
+    "nuomi1"
+  ],
   "/mixcloud/:username/:type?": [
     "Misaka13514"
   ],
@@ -1421,16 +1431,6 @@
   "/mercari/search/:query": [
     "yana9i",
     "Tsuyumi25"
-  ],
-  "/mi/golden": [
-    "nczitzk"
-  ],
-  "/mi/crowdfunding": [
-    "DIYgod",
-    "nuomi1"
-  ],
-  "/mi/newproducts": [
-    "nuomi1"
   ],
   "/missevan/drama/:id": [
     "FlashWingShadow"
