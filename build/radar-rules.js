@@ -19477,7 +19477,7 @@
       { title:"在线读刊",
         docs:"https://docs.rsshub.app/routes/qstheory",
         source:[ "/:magazine/mulu.htm" ],
-        target:"/qstheory/magazine/:magazine" } ] },
+        target:"/qstheory/magazine/:magazine/:issue?" } ] },
   "quantamagazine.org":{ _name:"Quanta Magazine",
     ".":[ { title:"Archive",
         docs:"https://docs.rsshub.app/routes/quantamagazine",

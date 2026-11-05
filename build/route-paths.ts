@@ -2897,7 +2897,7 @@ export type RoutePath =
   | `/qqmusic/album/:mid`
   | `/qqorw/:category?`
   | `/qstheory/:category?`
-  | `/qstheory/magazine/:magazine`
+  | `/qstheory/magazine/:magazine/:issue?`
   | `/qttabbar/change-log`
   | `/quantamagazine/archive`
   | `/queshu/book/:bookid`

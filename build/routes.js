@@ -104183,14 +104183,15 @@ export default {
         "location": "index.ts",
         "module": () => import('@/routes/qstheory/index.ts')
       },
-      "/magazine/:magazine": {
-        "path": "/magazine/:magazine",
+      "/magazine/:magazine/:issue?": {
+        "path": "/magazine/:magazine/:issue?",
         "categories": [
           "traditional-media"
         ],
         "example": "/qstheory/magazine/qs",
         "parameters": {
-          "magazine": "刊物，`qs` 为求是，`hqwglist` 为红旗文稿"
+          "magazine": "刊物，`qs` 为求是，`hqwglist` 为红旗文稿",
+          "issue": "期数编号，如 `21` 或 `2026-21`；留空或 `latest` 获取最新一期"
         },
         "radar": [
           {
@@ -104202,7 +104203,8 @@ export default {
         "name": "在线读刊",
         "maintainers": [
           "TonyRL",
-          "cscnk52"
+          "cscnk52",
+          "zhangsan-xyz"
         ],
         "location": "magazine.ts",
         "module": () => import('@/routes/qstheory/magazine.ts')

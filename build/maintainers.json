@@ -7222,9 +7222,10 @@
   "/qstheory/:category?": [
     "nczitzk"
   ],
-  "/qstheory/magazine/:magazine": [
+  "/qstheory/magazine/:magazine/:issue?": [
     "TonyRL",
-    "cscnk52"
+    "cscnk52",
+    "zhangsan-xyz"
   ],
   "/qttabbar/change-log": [
     "nczitzk"

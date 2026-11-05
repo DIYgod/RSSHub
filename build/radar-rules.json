@@ -41861,7 +41861,7 @@
         "source": [
           "/:magazine/mulu.htm"
         ],
-        "target": "/qstheory/magazine/:magazine"
+        "target": "/qstheory/magazine/:magazine/:issue?"
       }
     ]
   },
