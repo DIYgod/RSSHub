@@ -1,3 +1,4 @@
+import { FetchError } from 'ofetch';
 import pMap from 'p-map';
 import sanitizeHtml from 'sanitize-html';
 
@@ -41,45 +42,70 @@ interface Status {
     id: number;
     target: string;
     created_at: number;
+    title?: string;
+    text?: string;
+    description?: string;
     mark?: number;
     legal_user_visible?: boolean;
     user?: { screen_name?: string; profile_image_url?: string; photo_domain?: string };
 }
 
-interface ApiError {
+interface StatusDetail {
+    text?: string;
+    description?: string;
     error_code?: number | string;
+    image_info_list?: Array<{ filename?: string }>;
+    retweeted_status?: {
+        user?: { screen_name?: string };
+        text?: string;
+    };
 }
+
+// 20210 is the only code observed for deleted posts. No other permanent codes are known, so all others are retried.
+const permanentErrorCodes = new Set(['20210']);
 
 const stripHtml = (html: string): string => sanitizeHtml(html, { allowedTags: [], allowedAttributes: {} });
 
 // Build a feed item from the timeline list data alone (no detail request).
-const buildListItem = (item: any) => ({
-    title: item.title || stripHtml(item.description || ''),
-    description: item.description || '',
-    pubDate: parseDate(item.created_at),
-    link: rootUrl + item.target,
-});
+const buildListItem = (item: Status) => {
+    const description = item.text || item.description || '';
+    return {
+        title: item.title || stripHtml(description),
+        description,
+        pubDate: parseDate(item.created_at),
+        link: rootUrl + item.target,
+    };
+};
 
-const buildTitle = (item: any, detail: any): string => {
+const buildTitle = (item: Status, detail: StatusDetail): string => {
     if (item.title) {
         return item.title;
     }
-    return stripHtml(item.text || item.description || detail.text || '');
+    return stripHtml(item.text || item.description || detail.text || detail.description || '');
 };
 
-const buildDescription = (detail: any): string => {
-    let text = detail.text ?? detail.description;
+const buildDescription = (detail: StatusDetail): string => {
+    let text = detail.text?.trim() ? detail.text : detail.description || '';
     const images = detail.image_info_list ?? [];
     for (const img of images) {
         if (img?.filename) {
             text += `<br><img src="https://xqimg.imedao.com/${img.filename}">`;
         }
     }
-    if (detail.retweeted_status) {
-        text += `<blockquote>${detail.retweeted_status.user.screen_name}:&nbsp;${detail.retweeted_status.text}</blockquote>`;
+    if (detail.retweeted_status?.text) {
+        text += `<blockquote>${detail.retweeted_status.user?.screen_name ?? ''}:&nbsp;${detail.retweeted_status.text}</blockquote>`;
     }
     return text;
 };
+
+const isPermanentError = (errorCode?: number | string): boolean => errorCode !== undefined && permanentErrorCodes.has(String(errorCode));
+
+const buildDetailItem = (item: Status, detail: StatusDetail) => ({
+    title: buildTitle(item, detail),
+    description: buildDescription(detail),
+    pubDate: parseDate(item.created_at),
+    link: rootUrl + item.target,
+});
 
 const extractProfileImage = (user: any): string | undefined => {
     if (!user?.profile_image_url || !user?.photo_domain) {
@@ -139,36 +165,37 @@ async function handler(ctx) {
             }
 
             try {
+                // Only the raw detail is cached; list fields are assembled outside the cache.
                 const cachedDetail = await cache.tryGet(`xueqiu:user:detail:${item.id}`, async () => {
+                    let detail: StatusDetail;
                     try {
-                        const detail = await ofetch(`${apiUrl}/statuses/show.json`, {
+                        detail = await ofetch(`${apiUrl}/statuses/show.json`, {
                             query: { id: item.id },
                             headers: { Cookie: cookie, Referer: link },
+                            retry: 0,
                         });
-
-                        return { detail };
-                    } catch (error: any) {
-                        // Cache permanent failures while assembling current list fields outside the cache.
-                        const data: ApiError | undefined = error.response?._data || error.data;
-                        if (data?.error_code) {
+                    } catch (error) {
+                        const errorCode = error instanceof FetchError ? error.data?.error_code : undefined;
+                        if (isPermanentError(errorCode)) {
                             return {};
                         }
-                        // Transient failures (rate limit / WAF): throw to skip caching, retry next request.
                         throw error;
                     }
+
+                    // Cache an empty result only for permanent errors; throw otherwise so nothing is cached.
+                    if (isPermanentError(detail.error_code)) {
+                        return {};
+                    }
+                    if (detail.error_code !== undefined) {
+                        throw new Error(`Xueqiu detail returned error code ${detail.error_code}`);
+                    }
+                    if (!buildDescription(detail).trim()) {
+                        throw new Error('Xueqiu detail response is empty');
+                    }
+                    return { detail };
                 });
 
-                if (!('detail' in cachedDetail)) {
-                    return buildListItem(item);
-                }
-
-                const detail = cachedDetail.detail;
-                return {
-                    title: buildTitle(item, detail),
-                    description: buildDescription(detail),
-                    pubDate: parseDate(item.created_at),
-                    link: rootUrl + item.target,
-                };
+                return cachedDetail.detail ? buildDetailItem(item, cachedDetail.detail) : buildListItem(item);
             } catch {
                 // Transient failure: provide a fallback item without caching, retry next request.
                 return buildListItem(item);
