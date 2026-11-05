@@ -1,4 +1,3 @@
-import { load } from 'cheerio';
 import pMap from 'p-map';
 import type { CookieJar } from 'tough-cookie';
 
@@ -115,13 +114,11 @@ const findKey = (obj: JsonValue, key: string): any => {
     }
 };
 
-const getGuestUser = (html: string) => {
-    const $ = load(html);
-    return $('script[type="application/json"][data-sjs]')
-        .toArray()
-        .map((script) => findKey(JSON.parse($(script).text()), 'xig_user_by_username'))
+const getGuestUser = (html: string) =>
+    html
+        .matchAll(/data-sjs>([^<]*"xig_user_by_username":[^<]*)<\/script>/g)
+        .map((m) => findKey(JSON.parse(m[1]), 'xig_user_by_username'))
         .find((user) => user?.full_name !== undefined);
-};
 
 const getGuestMedia = (pk: string, tokens: { lsd?: string; dtsg?: string }, cookieJar: CookieJar) =>
     cache.tryGet(`instagram:media:guest:${pk}`, async () => {
