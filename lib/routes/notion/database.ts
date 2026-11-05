@@ -1,3 +1,4 @@
+import type { PageObjectResponse } from '@notionhq/client';
 import { APIErrorCode, Client, isFullPage, isNotionClientError } from '@notionhq/client';
 import { load } from 'cheerio';
 import MarkdownIt from 'markdown-it';
@@ -95,7 +96,7 @@ async function handler(ctx) {
 
         // Query page content
         const n2m = new NotionToMarkdown({ notionClient: notion });
-        const pageList = results.filter(isFullPage).filter((item) => Object.values<any>(item.properties).find((property) => property.id === 'title')?.title[0]?.plain_text);
+        const pageList = results.filter((item): item is PageObjectResponse => isFullPage(item)).filter((item) => Object.values<any>(item.properties).find((property) => property.id === 'title')?.title[0]?.plain_text);
         const items = await Promise.all(
             pageList.map(async (page) => {
                 const titleProperty = Object.values<any>(page.properties).find((property) => property.id === 'title');

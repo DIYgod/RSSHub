@@ -6,7 +6,7 @@ import type { DataItem, Route } from '@/types';
 import { parseDate } from '@/utils/parse-date';
 import { getRouteLimit } from '@/utils/route-limit';
 
-import { baseUrl, getForumMeta, getThread, getThreads } from './utils';
+import { baseUrl, getForumMeta, getThread, getThreads, threadDeleted } from './utils';
 
 const renderImages = (images?: string[]) =>
     renderToString(
@@ -83,6 +83,9 @@ async function handler(ctx) {
         async (item) => {
             const { tid, ...post } = item;
             const thread = await getThread(tid, topicId);
+            if (thread.status.code === threadDeleted) {
+                return null;
+            }
             if (thread.status.code === 0) {
                 const img = renderImages(thread.data.thread.fengTalkImage.length ? thread.data.thread.fengTalkImage : undefined);
                 post.description = thread.data.thread.message + img;
@@ -98,6 +101,6 @@ async function handler(ctx) {
         title: `${topicMeta.topicName} - 社区 - 威锋 - 千万果粉大本营`,
         description: topicMeta.topicDescription,
         link: `${baseUrl}/forum/${topicId}`,
-        item: posts,
+        item: posts.filter((post) => post !== null),
     };
 }

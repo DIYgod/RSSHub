@@ -1,5 +1,4 @@
 import { load } from 'cheerio';
-import dayjs from 'dayjs';
 import { renderToString } from 'hono/jsx/dom/server';
 import pMap from 'p-map';
 
@@ -7,6 +6,7 @@ import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
+import { parseDateRange } from '@/utils/parse-date-range';
 import timezone from '@/utils/timezone';
 
 import { namespace } from './namespace';
@@ -15,37 +15,6 @@ const getExhibitionContent = async (link: string) => {
     const response = await ofetch(link);
     const $ = load(response);
     return { description: $('.exhUs_r').first().html() ?? '' };
-};
-
-// Convert YYYY年M月D日 to YYYY-MM-DD
-const formatDate = (dateString: string | undefined) => {
-    if (!dateString) {
-        return;
-    }
-
-    const date = dayjs(dateString, 'YYYY年M月D日');
-    return date.format('YYYY-MM-DD');
-};
-
-// used for 2026年7月1日-9月30日【在展】 or 2026年5月18日【在展】
-const parseExhibitionDuration = (duration: string) => {
-    if (!duration) {
-        return { startDate: undefined, endDate: undefined };
-    }
-
-    const cleanStr = duration.replaceAll(/【.*?】/g, '').replaceAll(/\s+/g, ''); // Remove【在展】
-    const parts = cleanStr.split('-');
-    const startDateRaw = parts[0];
-    let endDateRaw = parts[1];
-
-    if (endDateRaw && !endDateRaw.includes('年')) {
-        const yearMatch = startDateRaw.match(/^\d{4}年/);
-        if (yearMatch) {
-            endDateRaw = yearMatch[0] + endDateRaw;
-        }
-    }
-
-    return { startDate: formatDate(startDateRaw), endDate: formatDate(endDateRaw) };
 };
 
 export const route: Route = {
@@ -90,7 +59,7 @@ export const route: Route = {
                     .trim()
                     .replace(/^展期：/, '');
 
-                const { startDate, endDate } = parseExhibitionDuration(fullDuration);
+                const { startDate, endDate } = parseDateRange(fullDuration);
                 const pubDate = startDate ? timezone(parseDate(startDate), 8) : undefined;
 
                 const description = renderToString(

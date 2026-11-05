@@ -44,7 +44,8 @@ async function handler(ctx) {
                 link: $item.attr('href')!.startsWith('http') ? $item.attr('href') : `${baseUrl}${$item.attr('href')}`,
             };
         })
-        .filter((i) => !i.link!.includes('m.0818tuan.com/tb1111.php') && !i.link!.includes('www.0818tuan.com/pdd/zudui.php'));
+        // Pinned promotions link off the site (and rotate), while the detail parser only reads www.0818tuan.com pages
+        .filter((i) => new URL(i.link!).host === 'www.0818tuan.com' && !i.link!.includes('www.0818tuan.com/pdd/zudui.php'));
 
     const items = await Promise.all(
         list.map((item) =>

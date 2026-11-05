@@ -52,6 +52,7 @@ async function handler(ctx) {
             include_result_types: ['a', 's'],
             followed_bands: false,
         },
+        minVersion: 'TLSv1.3',
     });
 
     const list: Array<{ title: string; link: string; author: string }> = response.data.results.slice(0, limit).map((item) => {

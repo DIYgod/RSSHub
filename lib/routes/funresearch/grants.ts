@@ -43,10 +43,7 @@ async function handler(ctx: Context): Promise<Data> {
                         .eq(0)
                         .text()
                         .replaceAll(/^\[|\]$/g, ''),
-                    ...cells
-                        .eq(3)
-                        .text()
-                        .split(/[;；]/),
+                    ...cells.eq(3).text().split(/[;；]/),
                 ].filter(Boolean),
             };
         });

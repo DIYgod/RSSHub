@@ -38,7 +38,7 @@ const parsePostItem = (item) => {
     };
 };
 
-export const parseItem = (postsResponse) => postsResponse.map(parsePostItem);
+export const parseItem = (postsResponse) => postsResponse.map((item) => parsePostItem(item));
 
 export const parsePost = (limit, categoryId) =>
     cache.tryGet(`tfc-taiwan:posts:${categoryId ?? 'latest'}:${limit ?? 10}`, () =>

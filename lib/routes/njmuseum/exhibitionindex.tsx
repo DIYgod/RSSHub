@@ -3,34 +3,11 @@ import { renderToString } from 'hono/jsx/dom/server';
 import InvalidParameterError from '@/errors/types/invalid-parameter';
 import type { Route } from '@/types';
 import got from '@/utils/got';
-import { parseDateInTimezone } from '@/utils/parse-date-in-timezone';
+import { parseDate } from '@/utils/parse-date';
+import { parseDateRange } from '@/utils/parse-date-range';
+import timezone from '@/utils/timezone';
 
 import { namespace } from './namespace';
-
-const formatCalendarDate = (year: number, month: number, day: number) => {
-    const date = new Date(Date.UTC(year, month - 1, day));
-    if (date.getUTCFullYear() !== year || date.getUTCMonth() !== month - 1 || date.getUTCDate() !== day) {
-        return;
-    }
-    return `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
-};
-
-const extractDates = (duration: string) => {
-    const start = duration?.match(/(\d{4})[年./-]\s*(\d{1,2})[月./-]\s*(\d{1,2})日?/);
-    if (!start) {
-        return {};
-    }
-    const year = Number(start[1]);
-    const startDate = formatCalendarDate(year, Number(start[2]), Number(start[3]));
-    if (!startDate) {
-        return {};
-    }
-    const remainder = duration.slice((start.index ?? 0) + start[0].length);
-    const endText = remainder.match(/^\s*[-~～至—–]\s*(.+)/)?.[1];
-    const end = endText?.match(/^(?:(\d{4})[年./-])?(\d{1,2})[月./-]\s*(\d{1,2})日?/);
-    const endDate = end ? formatCalendarDate(end[1] ? Number(end[1]) : year, Number(end[2]), Number(end[3])) : undefined;
-    return { startDate, endDate };
-};
 
 interface ExhibitType {
     modular: string;
@@ -115,8 +92,8 @@ export const route: Route = {
             const imgUrl = imgPath ? new URL(imgPath, resourceUrl).href : undefined;
             const location = item.position;
             const fullDuration = item.timedesc;
-            const { startDate, endDate } = extractDates(fullDuration);
-            const pubDate = startDate ? parseDateInTimezone(startDate, 8) : undefined;
+            const { startDate, endDate } = parseDateRange(fullDuration);
+            const pubDate = startDate ? timezone(parseDate(startDate), 8) : undefined;
 
             const description = renderToString(
                 <div>

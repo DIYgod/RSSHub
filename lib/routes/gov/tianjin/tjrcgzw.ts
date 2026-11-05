@@ -8,7 +8,7 @@ import timezone from '@/utils/timezone';
 export const route: Route = {
     path: '/tjrcgzw-notice/:cate/:subCate',
     categories: ['government'],
-    example: '/gov/tianjin/tjrcgzw-notice/rczc/sjrczc/',
+    example: '/gov/tianjin/tjrcgzw-notice/rczc/sjrczc',
     parameters: {
         cate: '栏目分类，可在源网站 URL 中找到，例如 rczc（人才政策）',
         subCate: '子栏目分类，例如 sjrczc（市级人才政策）',

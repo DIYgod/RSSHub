@@ -21,7 +21,7 @@ export const handler = async (): Promise<Data | null> => {
 export const route: Route = {
     path: '/',
     categories: ['anime'],
-    example: '/collabo-cafe/',
+    example: '/collabo-cafe',
     parameters: undefined,
     features: {
         requireConfig: false,

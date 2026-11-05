@@ -1,24 +1,14 @@
 import { load } from 'cheerio';
-import dayjs from 'dayjs';
 import { renderToString } from 'hono/jsx/dom/server';
 
 import type { DataItem, Route } from '@/types';
 import { parseDate } from '@/utils/parse-date';
+import { parseDateRange } from '@/utils/parse-date-range';
 
 import { fetchPage } from './ct2-waap';
 import { namespace } from './namespace';
 
 const baseUrl = 'https://www.ahm.cn';
-
-const parseExhibitionDate = (dateStr?: string): string | undefined => (dateStr ? dayjs(dateStr).format('YYYY-MM-DD') : undefined);
-
-const parseExhibitionDuration = (durationText: string) => {
-    const [start, end] = durationText.split('-').map((s) => s.trim());
-    return {
-        startDate: parseExhibitionDate(start),
-        endDate: parseExhibitionDate(end),
-    };
-};
 
 export const route: Route = {
     path: '/exhibition/xztj',
@@ -81,7 +71,7 @@ export const route: Route = {
                 const location = locationText.replace('展出地点：', '');
                 const fullDuration = durationText.replace('展出时间：', '');
 
-                const { startDate, endDate } = parseExhibitionDuration(fullDuration);
+                const { startDate, endDate } = parseDateRange(fullDuration);
 
                 const pubDate = startDate ? parseDate(startDate) : undefined;
 

@@ -1,4 +1,5 @@
 import { load } from 'cheerio';
+import { FetchError } from 'ofetch';
 import pMap from 'p-map';
 
 import InvalidParameterError from '@/errors/types/invalid-parameter';
@@ -50,6 +51,26 @@ interface LodestoneNewsItem {
     image?: string;
 }
 
+const fetchArticle = async (url: string) => {
+    try {
+        return await cache.tryGet(url, async () => {
+            const response = await got(url);
+            const $ = load(response.data);
+            const content = $('.news__detail__wrapper');
+            if (!content.length) {
+                throw new Error('The Lodestone did not provide the article content.');
+            }
+            return content.html();
+        });
+    } catch (error) {
+        // lodestonenews.com keeps listing articles the Lodestone has taken down, which answer 404
+        if (error instanceof FetchError && error.statusCode === 404) {
+            return;
+        }
+        throw error;
+    }
+};
+
 async function handler(ctx) {
     const lang = ctx.req.param('lang');
     const type = ctx.req.param('type') ?? 'all';
@@ -81,17 +102,7 @@ async function handler(ctx) {
         async ({ id, url, title, pubDate, description, image }) => ({
             title,
             link: url,
-            description: description
-                ? renderDescription({ image, description })
-                : await cache.tryGet(url, async () => {
-                      const response = await got(url);
-                      const $ = load(response.data);
-                      const content = $('.news__detail__wrapper');
-                      if (!content.length) {
-                          throw new Error('The Lodestone did not provide the article content.');
-                      }
-                      return content.html();
-                  }),
+            description: description ? renderDescription({ image, description }) : await fetchArticle(url),
             pubDate,
             guid: id,
         }),

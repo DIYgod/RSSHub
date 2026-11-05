@@ -11,14 +11,20 @@ import { getRouteLimit, hasItemFilters } from '@/utils/route-limit';
 
 const allowDomain = new Set(['javdb.com', 'javdb571.com', 'javdb36.com', 'javdb007.com', 'javdb521.com']);
 
+const resolveItemLink = (rootUrl: URL, href = '') => {
+    const itemUrl = new URL(href, rootUrl);
+    // Always keep detail requests on the validated root domain, even if the listing returns an absolute or protocol-relative link.
+    return new URL(`${itemUrl.pathname}${itemUrl.search}${itemUrl.hash}`, rootUrl.origin).href;
+};
+
 const processItems = async (ctx, currentUrl, title) => {
     const domain = ctx.req.query('domain') ?? 'javdb.com';
-    const url = new URL(currentUrl, `https://${domain}`);
-    if (!config.feature.allow_user_supply_unsafe_domain && !allowDomain.has(url.hostname)) {
+    const rootUrl = new URL(`https://${domain}`);
+    const url = new URL(currentUrl, rootUrl);
+    // currentUrl can be an absolute URL supplied through a route parameter, so validate both the requested domain and the effective host.
+    if (!config.feature.allow_user_supply_unsafe_domain && (!allowDomain.has(rootUrl.hostname) || !allowDomain.has(url.hostname))) {
         throw new ConfigNotFoundError(`This RSS is disabled unless 'ALLOW_USER_SUPPLY_UNSAFE_DOMAIN' is set to 'true'.`);
     }
-
-    const rootUrl = `https://${domain}`;
 
     const headers = config.javdb.session ? { cookie: `_jdb_session=${config.javdb.session}` } : undefined;
     const response = await ofetch(url.href, { headers });
@@ -35,7 +41,7 @@ const processItems = async (ctx, currentUrl, title) => {
             const element = $(item);
             return {
                 title: element.find('.video-title').text(),
-                link: `${rootUrl}${element.find('.box').attr('href')}`,
+                link: resolveItemLink(rootUrl, element.find('.box').attr('href')),
                 pubDate: parseDate(element.find('.meta').text()),
             };
         });

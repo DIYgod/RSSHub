@@ -7,6 +7,8 @@ import got from '@/utils/got';
 import { parseDate, parseRelativeDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
+import { getFullText } from './utils';
+
 const config = {
     review: {
         title: '评论 & 研究',
@@ -152,10 +154,11 @@ async function handler(ctx) {
     const list = [...newsList, ...redianList, ...gundongList].filter((item, index, items) => items.findIndex((first) => first.link === item.link) === index);
     const items = await Promise.all(
         list.map(async (item) => {
-            const article = await cache.tryGet(`guancha:home:article:${item.link}`, async () => {
+            const article = await cache.tryGet(`guancha:home:full-article:${item.link}`, async () => {
+                let link = item.link;
                 let detailResponse = await got({
                     method: 'get',
-                    url: item.link,
+                    url: link,
                 });
 
                 // Some links to posts in 'fengwen' must be redirected in order to fetch content.
@@ -165,7 +168,7 @@ async function handler(ctx) {
                 const jumpMatch = detailResponse.data.match(/user.guancha.cn\/main\/content\?id=(.*)";/);
 
                 if (jumpMatch !== null) {
-                    const link = `https://user.guancha.cn/main/content?id=${jumpMatch[1]}&page=0`;
+                    link = `https://user.guancha.cn/main/content?id=${jumpMatch[1]}&page=0`;
                     detailResponse = await got({
                         method: 'get',
                         url: link,
@@ -183,9 +186,9 @@ async function handler(ctx) {
                             : undefined
                         : timezone(parseDate(dateMatch[1]), 8);
 
-                const description = content('.all-txt').html() || content('.article-txt-content').html();
+                const description = (await getFullText(content, link)) || content('.article-txt-content').html();
                 const author = content('.author-intro p a').text() || content('.article-content div div h4 a').text() || content('.editor-intro p a').text() || content('.left-main > div.time.fix > span').eq(2).text();
-                return { description, pubDate, author, link: jumpMatch ? `https://user.guancha.cn/main/content?id=${jumpMatch[1]}&page=0` : item.link };
+                return { description, pubDate, author, link };
             });
             return { ...item, ...article };
         })

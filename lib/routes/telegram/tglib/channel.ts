@@ -159,52 +159,49 @@ export default async function handler(ctx: Context) {
     let attachments: string[] = [];
     const messages = await client.getMessages(peer, { limit: 50 });
 
-    let i = 0;
     const item: DataItem[] = [];
-    for (const message of messages) {
-        let text = message.text; // must not be HTML
-
-        if (message.fwdFrom?.fromId) {
-            const fwdFrom = await client.getEntity(message.fwdFrom.fromId);
-            text = `Forwarded From: ${getDisplayName(fwdFrom)}: ${text}`;
-        }
+    for (const [index, message] of messages.entries()) {
+        const parts: string[] = [];
         const media = await unwrapMedia(message.media, message.peerId);
         if (message.media instanceof Api.MessageMediaStory && media) {
             // if successfully loaded the story
             const storyFrom = await client.getEntity(message.media.peer);
-            text = `Story From: ${getDisplayName(storyFrom)}: ${text}`;
+            parts.push(`<p>Story From: ${getDisplayName(storyFrom)}</p>`);
         }
         if (media) {
             if (media instanceof Api.MessageMediaPoll) {
-                attachments.push(await getPollResults(client, message, media));
-                continue;
+                parts.push(await getPollResults(client, message, media));
+            } else {
+                const src = getMessageMediaUrl(ctx.req.url, username!, message.id, ctx.req.header('x-forwarded-prefix'));
+                parts.push(getMediaLink(src, media));
             }
-            // messages that have no text are shown as if they're one post
-            // because in TG only 1 attachment per message is possible
-            const src = getMessageMediaUrl(ctx.req.url, username!, message.id, ctx.req.header('x-forwarded-prefix'));
-            attachments.push(getMediaLink(src, media));
         }
         if (message.replyMarkup instanceof Api.ReplyInlineMarkup) {
             for (const buttonRow of message.replyMarkup.rows) {
                 for (const button of buttonRow.buttons) {
                     if (button.type instanceof Api.InlineButtonTypeUrl) {
-                        attachments.push(`<div><a href="${button.type.url}" target="_blank">${button.text}</a></div>`);
+                        parts.push(`<div><a href="${button.type.url}" target="_blank">${button.text}</a></div>`);
                     }
                 }
             }
         }
-        if (text === '' && ++i !== messages.length - 1) {
+        attachments.unshift(...parts);
+        if (message.groupedId && messages[index + 1]?.groupedId?.eq(message.groupedId)) {
             continue;
+        }
+        if (message.fwdFrom) {
+            const fwdFrom = message.forward?.chat ?? message.forward?.sender;
+            attachments.unshift(`<p>Forwarded From: ${fwdFrom ? getDisplayName(fwdFrom) : message.fwdFrom.fromName}</p>`);
         }
         let description = attachments.join('<br/>\n');
         attachments = []; // emitting these, buffer other ones
 
-        if (text) {
+        if (message.message) {
             description += `<p>${HTMLParser.unparse(message.message, message.entities).replaceAll('\n', '<br/>')}</p>`;
         }
 
         const pubDate = message.date === undefined ? undefined : parseDate(message.date * 1000);
-        const title = message.text || pubDate?.toUTCString() || '';
+        const title = message.text.split('\n', 1)[0] || pubDate?.toUTCString() || '';
         item.push({
             title,
             description,

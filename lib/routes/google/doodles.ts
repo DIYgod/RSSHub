@@ -1,13 +1,16 @@
+import { load } from 'cheerio';
+
 import type { Route } from '@/types';
 import { ViewType } from '@/types';
-import got from '@/utils/got';
+import ofetch from '@/utils/ofetch';
+import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/doodles/:language?',
     categories: ['picture'],
     view: ViewType.Pictures,
     example: '/google/doodles/zh-CN',
-    parameters: { language: 'Language, default to `zh-CN`, for other language values, you can get it from [Google Doodles official website](https://www.google.com/doodles)' },
+    parameters: { language: 'No longer used, [Google Doodles](https://doodles.google/) is only served in English now. Kept so existing feed URLs keep working' },
     features: {
         requireConfig: false,
         requirePuppeteer: false,
@@ -21,35 +24,27 @@ export const route: Route = {
     handler,
 };
 
-async function handler(ctx) {
-    const { language = 'zh-CN' } = ctx.req.param();
-    const current = new Date();
-    const year = current.getFullYear();
-    const month = current.getMonth() + 1;
-    const link = `https://www.google.com/doodles?hl=${language}`;
-
-    const { data } = await got({
-        method: 'get',
-        url: `https://www.google.com/doodles/json/${year}/${month}?hl=${language}`,
-        headers: {
-            Referer: link,
-        },
-    });
+async function handler() {
+    // google.com/doodles and its monthly JSON moved to doodles.google, which has no JSON API and is English only, so read the latest doodles from its home page
+    const link = 'https://doodles.google/';
+    const response = await ofetch(link);
+    const $ = load(response);
 
     return {
         title: 'Google Doodles',
         link,
-        item:
-            data &&
-            data.map((item) => {
-                const date = `${item.run_date_array[0]}-${item.run_date_array[1]}-${item.run_date_array[2]}`;
+        item: $('.doodle-card')
+            .toArray()
+            .map((card) => {
+                const $card = $(card);
+                const image = $card.find('.doodle-card-img img').attr('src');
 
                 return {
-                    title: item.title,
-                    description: `<img src="https:${item.url}" /><br>${item.share_text}`,
-                    pubDate: new Date(date).toUTCString(),
-                    guid: item.url,
-                    link: `https://www.google.com/search?q=${encodeURIComponent(item.query)}`,
+                    title: $card.find('.doodle-card-content__event').text().trim(),
+                    description: image ? `<img src="https:${image}" />` : undefined,
+                    pubDate: parseDate($card.find('.doodle-card-content__date').text().trim(), 'MMM DD, YYYY'),
+                    guid: image,
+                    link: new URL($card.find('a').attr('href') ?? '', link).href,
                 };
             }),
     };

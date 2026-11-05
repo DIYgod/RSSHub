@@ -23,7 +23,7 @@ export async function extractMiniCards(cardselector: string, titleSelector: stri
 function extractCardsInfo(cards, mini: boolean): Card[] {
     return cards.map((card): Card => {
         const $ = load(card);
-        const articleLink = mini ? $('h3.mini-card-title a:not(.aal_anchor)').first() : $('div.article-article h2 a, div.article-article h1 a').first();
+        const articleLink = mini ? $('h3 a:not(.aal_anchor)').first() : $('div.article-article h2 a, div.article-article h1 a').first();
         const publishedAt = $('time').first().attr('datetime');
         return {
             title: articleLink.text(),

@@ -72,7 +72,7 @@ async function handler(ctx: Context) {
 
     const response = await ofetch(`${baseUrl}/ajax/${channel}/1`, { responseType: 'json' });
 
-    const list: DataItem[] = response.map((item) => ({
+    const list: DataItem[] = response.data.items.map((item) => ({
         title: item.title,
         link: item.url,
         pubDate: timezone(parseDate(item.createTime, 'YYYYMMDDHHmmss'), 8),

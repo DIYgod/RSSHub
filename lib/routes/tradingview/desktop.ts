@@ -40,7 +40,7 @@ async function handler(ctx) {
 
     const $ = load(response);
 
-    $('h4[data-identifyelement]').each((_, el) => {
+    $('h3').each((_, el) => {
         const $el = $(el);
 
         if ($el.text().trim() === '') {
@@ -48,14 +48,14 @@ async function handler(ctx) {
         }
     });
 
-    const items = $('h4[data-identifyelement]')
+    const items = $('h3')
         .toArray()
         .slice(0, limit)
         .map((item) => {
             const $item = $(item);
 
             const title = $item.text();
-            const content = $item.nextUntil('h4');
+            const content = $item.nextUntil('h3');
             const description = $.html(content);
 
             return {

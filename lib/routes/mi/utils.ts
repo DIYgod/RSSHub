@@ -6,6 +6,19 @@ import type { NewProduct } from './templates/newproduct';
 import type { CrowdfundingDetailItem, CrowdfundingDetailResponse, CrowdfundingListItem, CrowdfundingListResponse, NewProductDetailItem, NewProductDetailResponse, NewProductListItem, NewProductListResponse } from './types';
 
 /**
+ * Remove duplicate items by key, keeping the first occurrence of each key.
+ *
+ * @param {Item[]} items - Items to deduplicate.
+ * @param {Function} getKey - Key selector.
+ * @returns {Item[]} Deduplicated items.
+ */
+export const dedupeByKey = <Item, Key>(items: Item[], getKey: (item: Item) => Key): Item[] =>
+    Map.groupBy(items, (item) => getKey(item))
+        .values()
+        .toArray()
+        .map((group) => group[0]);
+
+/**
  * Fetch the list of crowdfunding projects, merging the current projects (primary) with the history projects (supplement).
  *
  * @returns {Promise<CrowdfundingListItem[]>} The merged crowdfunding project list.
@@ -19,10 +32,7 @@ const getCrowdfundingList = async (): Promise<CrowdfundingListItem[]> => {
         });
     const [response, historyResponse] = await Promise.all([fetch(), fetch({ status: 1 })]);
     const items = [...response.data.list, ...historyResponse.data.list].flatMap((group) => group.items);
-    const list = Map.groupBy(items, (item) => item.project_id)
-        .values()
-        .toArray()
-        .map((group) => group[0]);
+    const list = dedupeByKey(items, (item) => item.project_id);
     return list;
 };
 
@@ -52,10 +62,7 @@ const getNewProductList = async (): Promise<NewProductListItem[]> => {
         method: 'POST',
     });
     const items = [...response.data.date_list.flatMap((group) => group.product_list), ...response.data.history_date_list.flatMap((group) => group.product_list), ...response.data.new_list];
-    const list = Map.groupBy(items, (item) => item.product_id)
-        .values()
-        .toArray()
-        .map((group) => group[0]);
+    const list = dedupeByKey(items, (item) => item.product_id);
     return list;
 };
 

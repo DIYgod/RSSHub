@@ -46,7 +46,7 @@ function getArticleBody(content: string) {
     const ranges = $('.single-post-date')
         .toArray()
         .flatMap(({ startIndex, endIndex }) => (typeof startIndex === 'number' && typeof endIndex === 'number' ? [[startIndex, endIndex + 1]] : []))
-        .sort((a, b) => b[0] - a[0]);
+        .toSorted((a, b) => b[0] - a[0]);
     return ranges.reduce((body, [start, end]) => body.slice(0, start) + body.slice(end), content);
 }
 

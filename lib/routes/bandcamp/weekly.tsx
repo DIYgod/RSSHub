@@ -34,6 +34,7 @@ async function handler() {
     const response = await got({
         method: 'get',
         url: apiUrl,
+        minVersion: 'TLSv1.3',
     });
 
     const items = response.data.results.slice(0, 50).map((item) => ({

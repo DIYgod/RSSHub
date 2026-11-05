@@ -23,7 +23,9 @@ const fixImg = ($) => {
             delete img.attribs['data-medium-file'];
             delete img.attribs['data-large-file'];
         }
-        img.attribs.src = img.attribs.src.replace('i0.wp.com/', '').split('?', 1)[0];
+        if (img.attribs.src) {
+            img.attribs.src = img.attribs.src.replace('i0.wp.com/', '').split('?', 1)[0];
+        }
         delete img.attribs.srcset;
     });
 };

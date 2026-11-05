@@ -73,7 +73,7 @@ async function handler() {
                 const article$ = load(articleResponse.body);
                 const nextData = JSON.parse(article$('#__NEXT_DATA__').text() || '{}');
                 const articleContentBlocks = nextData.props.pageProps.context.articleContent.value.content.blocks ?? [];
-                return articleContentBlocks.map(renderBlock).join('');
+                return articleContentBlocks.map((block) => renderBlock(block)).join('');
             }),
         }),
         { concurrency: 3 }

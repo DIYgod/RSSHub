@@ -6,6 +6,7 @@ import cache from '@/utils/cache';
 import got from '@/utils/got';
 import logger from '@/utils/logger';
 import { parseDate } from '@/utils/parse-date';
+import { getRouteLimit } from '@/utils/route-limit';
 import parser from '@/utils/rss-parser';
 import timezone from '@/utils/timezone';
 
@@ -25,7 +26,7 @@ export const route: Route = {
     description: 'Enterprise Craftsmanship blog archives',
 };
 
-async function handler() {
+async function handler(ctx) {
     const rootUrl = 'https://enterprisecraftsmanship.com';
     const currentUrl = `${rootUrl}/archives`;
 
@@ -45,6 +46,7 @@ async function handler() {
     const dates = new Map(Object.entries(publishedDates));
 
     let items = $('.postIndexItem')
+        .slice(0, getRouteLimit(ctx, 20))
         .toArray()
         .map((item): DataItem => {
             const $item = $(item);

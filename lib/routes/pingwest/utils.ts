@@ -16,7 +16,7 @@ const statusListParser = ($) => {
             const $item = $(ele);
             const mainNode = $item.find('.news-detail');
             const imgsStr = mainNode
-                .find('img')
+                .find('img[src]')
                 .toArray()
                 .map((ele) => `<img src="${ele.attribs.src.split('?x-', 1)[0]}">`)
                 .join('<br>');
@@ -89,7 +89,7 @@ const getFullArticle = (link, cache) =>
         const { data } = await got(link);
         const $ = load(data);
         $('img').each((_, ele) => {
-            if (ele.attribs.src.includes('?x-')) {
+            if (ele.attribs.src?.includes('?x-')) {
                 ele.attribs.src = ele.attribs.src.split('?x-', 1)[0];
             }
         });

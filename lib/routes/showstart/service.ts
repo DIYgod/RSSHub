@@ -84,7 +84,7 @@ async function formatActivity(item: Activity) {
         title: item.title,
         link,
         category: detail.styles?.split(',').filter(Boolean),
-        description: [image(item.poster), time(item.showTime), address(item.cityName, item.siteName), performers(item.performers), price(item.price), detail.content, ...gallery.map(image)].join(''),
+        description: [image(item.poster), time(item.showTime), address(item.cityName, item.siteName), performers(item.performers), price(item.price), detail.content, ...gallery.map((src) => image(src))].join(''),
     };
 }
 

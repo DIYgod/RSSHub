@@ -35,7 +35,7 @@ async function handler(ctx) {
     }
     const limit = getRouteLimit(ctx, 10);
     const link = `https://${artist}.bandcamp.com/music`;
-    const response = await got(link);
+    const response = await got(link, { minVersion: 'TLSv1.3' });
     const $ = load(response.data);
 
     // The grid renders the first releases, and the page adds the rest from data-client-items

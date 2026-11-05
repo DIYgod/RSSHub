@@ -1,0 +1,39 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>RSSHub</title>
+        <style>
+            html,
+            body {
+                margin: 0;
+                height: 100%;
+            }
+            body {
+                display: grid;
+                place-items: center;
+                font: 13px/1.5 var(--magpie-font, system-ui, sans-serif);
+                background: var(--magpie-bg, Canvas);
+                color: var(--magpie-muted, GrayText);
+                text-align: center;
+            }
+            img {
+                width: 56px;
+                height: 56px;
+            }
+            button {
+                margin-top: 8px;
+                font: inherit;
+            }
+        </style>
+    </head>
+    <body>
+        <div>
+            <img src="icon.svg" alt="" />
+            <p id="status">Opening RSSHub…</p>
+        </div>
+        <script src="_magpie/bridge.js"></script>
+        <script src="boot.js"></script>
+    </body>
+</html>

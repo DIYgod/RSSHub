@@ -82,5 +82,6 @@ export const fetchData = async (url: string, isManga: boolean = false): Promise<
         return await ofetch<Tweet[]>(url);
     }
     const response = await ofetch<{ tweet: Tweet[] }>(url);
-    return response.tweet;
+    // The ranking API repeats a tweet once for each rank it held
+    return new Map(response.tweet.map((item) => [item.id, item])).values().toArray();
 };

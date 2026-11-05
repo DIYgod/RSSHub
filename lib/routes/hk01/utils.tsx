@@ -40,7 +40,7 @@ const renderText = (lines) =>
         if (tokens.length === 1 && tokens[0].type === 'h3') {
             return <h3>{tokens[0].content}</h3>;
         }
-        return <p>{tokens.map(renderToken)}</p>;
+        return <p>{tokens.map((token) => renderToken(token))}</p>;
     });
 
 const renderDescription = ({ image, teasers, blocks }) =>

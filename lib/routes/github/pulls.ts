@@ -88,6 +88,7 @@ async function handler(ctx) {
     const data = response.filter((item) => item.pull_request);
 
     return {
+        allowEmpty: true,
         title: `${user}/${repo} ${state.replace(/^\S/, (s) => s.toUpperCase())} Pull Requests${labels ? ' - ' + labels : ''}`,
         link: host,
         item: data.map((item) => ({

@@ -260,7 +260,10 @@ async function handler(ctx) {
                 }
                 // High-res images
                 images.each((_, img) => {
-                    img.attribs.src = img.attribs.src.replace(/_med$/, '');
+                    // Some pages carry a stray <img> without src (e.g. /review/ubuntu-2610-amd64v3-epyc/5)
+                    if (img.attribs.src) {
+                        img.attribs.src = img.attribs.src.replace(/_med$/, '');
+                    }
                 });
 
                 return {

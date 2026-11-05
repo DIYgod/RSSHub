@@ -96,7 +96,8 @@ async function handler(ctx) {
                         },
                     });
 
-                    return { enclosureUrl: detailResponse.data.RecordIndexInfoList.RecordIndexInfo.at(-1)?.RecordUrl };
+                    // A replay without recorded media gets a plain-text error such as InvalidEndTime.Mismatch instead of JSON
+                    return { enclosureUrl: detailResponse.data?.RecordIndexInfoList?.RecordIndexInfo.at(-1)?.RecordUrl };
                 });
             } catch (error) {
                 if (!(error instanceof FetchError) || error.statusCode !== 500) {

@@ -6,7 +6,7 @@ import cache from '@/utils/cache';
 import ofetch from '@/utils/ofetch';
 import { parseDate } from '@/utils/parse-date';
 
-import { baseUrl, fixImages, headers, parseReviews } from './utils';
+import { baseUrl, fixImages, parseReviews } from './utils';
 
 export const route: Route = {
     path: '/',
@@ -25,9 +25,7 @@ export const route: Route = {
 const language: Language = 'en';
 
 async function handler() {
-    const response = await ofetch(baseUrl, {
-        headers,
-    });
+    const response = await ofetch(baseUrl);
 
     const $ = load(response);
 
@@ -53,7 +51,7 @@ async function handler() {
         list,
         async (item) => {
             const detail = await cache.tryGet(`techpowerup:detail-fields:v1:${item.link}`, async (): Promise<Partial<DataItem>> => {
-                const response = await ofetch(item.link, { headers });
+                const response = await ofetch(item.link);
                 const $ = load(response);
                 fixImages($);
                 if (item.link.includes('/review/')) {

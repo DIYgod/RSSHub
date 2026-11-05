@@ -95,6 +95,10 @@ async function handler(ctx) {
                         if ($('.prompt').length || ($('title').text() === '用户验证' && $('body').text().includes('验证码'))) {
                             throw new ArticleAccessError(`Article access permission or verification required at ${item.link}`);
                         }
+                        // Campus-only articles either redirect to the CAS login or show a no-permission notice in place of the body
+                        if ($('script').text().includes('cas.whu.edu.cn/authserver/login') || $('[id^="vsb_content"]').text().includes('您无权限访问该条文章')) {
+                            throw new ArticleAccessError(`Article access authentication required at ${item.link}`);
+                        }
                         const content = $('.v_news_content');
                         if (content.length !== 1) {
                             throw new Error(`Article body not found at ${item.link}`);

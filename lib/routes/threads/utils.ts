@@ -20,6 +20,7 @@ export interface ThreadItem {
     post: {
         user?: {
             username: string;
+            full_name: string;
             profile_pic_url: string;
         };
         taken_at?: number;
@@ -51,6 +52,37 @@ export const extractThreadItems = ($: CheerioAPI): ThreadItem[] => {
     return threadsData;
 };
 
+interface Profile {
+    username: string;
+    full_name: string;
+    biography: string;
+    profile_pic_url: string;
+}
+
+const findProfile = (node): Profile | undefined => {
+    if (!(node instanceof Object)) {
+        return;
+    }
+    if ('biography' in node) {
+        return node;
+    }
+    for (const value of Object.values(node)) {
+        const profile = findProfile(value);
+        if (profile) {
+            return profile;
+        }
+    }
+};
+
+export const extractProfile = ($: CheerioAPI): Profile | undefined => {
+    let profile: Profile | undefined;
+    $('script[data-sjs]:contains("biography")').each((_, script) => {
+        profile = findProfile(JSON.parse($(script).text()));
+        return !profile;
+    });
+    return profile;
+};
+
 export const parseRouteOptions = (params: URLSearchParams) => ({
     showAuthorInTitle: queryToBoolean(params.get('showAuthorInTitle')) ?? true,
     showAuthorInDesc: queryToBoolean(params.get('showAuthorInDesc')) ?? true,
@@ -73,7 +105,7 @@ const buildMediaItem = (media) => {
     return image?.url ? `<img src="${escapeAttribute(image.url)}"/>` : '';
 };
 
-const buildMedia = (post) => (post.carousel_media ?? [post]).map(buildMediaItem).join('');
+const buildMedia = (post) => (post.carousel_media ?? [post]).map((media) => buildMediaItem(media)).join('');
 
 export const buildContent = (item, options) => {
     let title = '';

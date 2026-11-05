@@ -70,25 +70,25 @@ export const route: Route = {
     name: 'News',
     maintainers: ['AlanZeng423', 'SuperPung'],
     handler,
-    description: `| Focus on TJU | General News | Internal News | Media Report | Pictures of TJU |
-| :----------: | :----------: | :-----------: | :----------: | :-------------: |
-|     focus    |    general   |    internal   |     media    |     picture     |`,
+    description: `| Cover News | General News | Campus News | Media Report | Pictures of TJU |
+| :--------: | :----------: | :---------: | :----------: | :-------------: |
+|    focus   |    general   |   internal  |     media    |     picture     |`,
 };
 async function handler(ctx) {
     const type = ctx.req.param('type');
     let path, subtitle;
     switch (type) {
         case 'focus':
-            subtitle = '聚焦天大';
-            path = 'jjtd.htm';
+            subtitle = '封面新闻';
+            path = 'xw/fmxw.htm';
             break;
         case 'general':
             subtitle = '综合新闻';
             path = 'xw/zhxw.htm';
             break;
         case 'internal':
-            subtitle = '校内新闻';
-            path = 'xnxw1/qb.htm';
+            subtitle = '校园时讯';
+            path = 'xw/xysx.htm';
             break;
         case 'media':
             subtitle = '媒体报道';
@@ -99,8 +99,8 @@ async function handler(ctx) {
             path = 'yx/tstd.htm';
             break;
         default:
-            subtitle = '聚焦天大';
-            path = 'jjtd.htm';
+            subtitle = '封面新闻';
+            path = 'xw/fmxw.htm';
     }
     const listUrl = new URL(path, newsBaseUrl).href;
     const response = await got(listUrl, {

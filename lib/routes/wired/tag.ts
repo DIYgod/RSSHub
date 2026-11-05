@@ -8,11 +8,11 @@ import { parseDate } from '@/utils/parse-date';
 
 import type { Item } from './types';
 
-const parsePublicationDate = (value: string | number | undefined, format?: string) => {
+const parsePublicationDate = (value: string | number | undefined) => {
     if (typeof value !== 'number' && !value) {
         return;
     }
-    const date = parseDate(value, format);
+    const date = parseDate(value);
     return Number.isFinite(date.getTime()) ? date : undefined;
 };
 export const route: Route = {

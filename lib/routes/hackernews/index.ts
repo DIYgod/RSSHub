@@ -134,7 +134,8 @@ async function handler(ctx) {
                 pubDate: pubDate && !Number.isNaN(pubDate.getTime()) ? pubDate : undefined,
 
                 link: '',
-                origin: origin ? new URL(origin, rootUrl).href : undefined,
+                // A story link the URL parser rejects (e.g. an invalid IDN host) falls back to the discussion page instead of failing the feed
+                origin: origin ? URL.parse(origin, rootUrl)?.href : undefined,
                 onStory,
 
                 // Only a "N comments" link carries the count; other trailing links (e.g. an age like "22 days ago"
@@ -190,16 +191,21 @@ async function handler(ctx) {
                 item.description = item.currentComment;
             }
 
+            const upvotes = /^\d+$/.test(String(item.upvotes)) ? Number(item.upvotes) : undefined;
+
             return {
                 guid: item.guid,
                 title: item.title,
                 category: item.category,
                 author: item.author,
                 pubDate: item.pubDate,
-                description: item.description,
+                // Rows without a score (e.g. comments on /threads, job posts) get no points line
+                description: upvotes === undefined ? item.description : `<p>Points: ${upvotes}</p>${item.description}`,
                 link: type === 'sources' ? (item.origin ?? item.link) : item.link,
+                // The HN discussion page, which `sources` items no longer use as their link. Job posts take no comments
+                commentsUrl: item.comments === '' && !item.currentComment ? undefined : item.link,
                 comments: /^\d+$/.test(String(item.comments)) ? Number(item.comments) : item.comments === 'discuss' ? 0 : undefined,
-                upvotes: /^\d+$/.test(String(item.upvotes)) ? Number(item.upvotes) : undefined,
+                upvotes,
             };
         },
         { concurrency: 3 }

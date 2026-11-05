@@ -12,23 +12,10 @@ on:
     workflow_dispatch: {}
 
 jobs:
-    check-env:
-        permissions:
-            contents: none
-        runs-on: ubuntu-slim
-        timeout-minutes: 5
-        outputs:
-            check-docker: ${{ steps.check-docker.outputs.defined }}
-        steps:
-            - id: check-docker
-              env:
-                  DOCKER_USERNAME: ${{ vars.DOCKER_USERNAME }}
-              if: ${{ env.DOCKER_USERNAME != '' }}
-              run: echo "defined=true" >> $GITHUB_OUTPUT
     release:
         runs-on: ${{ matrix.runner }}
-        needs: check-env
-        if: needs.check-env.outputs.check-docker == 'true'
+        # Skip where Docker Hub is not set up, e.g. forks. Checked here rather than in a separate job, which had to wait for a runner of its own first.
+        if: vars.DOCKER_USERNAME != ''
         timeout-minutes: 30
         outputs:
             repo-name: ${{ steps.repo-name.outputs.repo-name }}
@@ -203,8 +190,8 @@ jobs:
 
     merge:
         runs-on: ubuntu-latest
-        needs: [check-env, release]
-        if: needs.check-env.outputs.check-docker == 'true'
+        needs: [release]
+        if: vars.DOCKER_USERNAME != ''
         timeout-minutes: 5
         permissions:
             packages: write
@@ -315,8 +302,8 @@ jobs:
 
     description:
         runs-on: ubuntu-slim
-        needs: [check-env, release]
-        if: needs.check-env.outputs.check-docker == 'true'
+        needs: [release]
+        if: vars.DOCKER_USERNAME != ''
         timeout-minutes: 5
         steps:
             - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1

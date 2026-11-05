@@ -113,7 +113,10 @@ export const route: Route = {
             (item) =>
                 cache.tryGet(item.link, async () => {
                     if (item.description === '') {
-                        const article = await ofetch(`${item.link}?xhr=1`, {
+                        // Recap links already carry a query string (?gameId=…), so append xhr=1 as a parameter
+                        const articleUrl = new URL(item.link);
+                        articleUrl.searchParams.set('xhr', '1');
+                        const article = await ofetch(articleUrl.href, {
                             headers: {
                                 accept: 'application/json',
                             },
