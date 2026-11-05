@@ -338,8 +338,8 @@ importers:
         specifier: 0.2.2
         version: 0.2.2
       narou:
-        specifier: 2.0.1
-        version: 2.0.1
+        specifier: 2.1.0
+        version: 2.1.0
       notion-to-md:
         specifier: 3.1.9
         version: 3.1.9
@@ -4915,9 +4915,9 @@ packages:
     engines: {node: ^18 || >=20}
     hasBin: true
 
-  narou@2.0.1:
-    resolution: {integrity: sha512-0r4oi944Q5G8zoGLsodpfZglz8l878jlb1jbe23z8d04j7ne83NK89L3D/KPbcGfJ5q/1X31g97KT9Z2racv4Q==}
-    engines: {node: '>=16.0.0', pnpm: '>=8'}
+  narou@2.1.0:
+    resolution: {integrity: sha512-Frx682lU9AneoHAzpxIxblGq6yqTfKb4CjUHEVVDnTh5Cb3JGKu065Llsx3zhyRH3mJs9KzxEp0t0Q9XWmtIdQ==}
+    engines: {node: '>=16.0.0'}
 
   natural-compare@1.4.0:
     resolution: {integrity: sha512-OWND8ei3VtNC9h7V60qff3SVobHr996CTwgxubgyQYEpg290h9J0buyECNNJexkFm5sOajh5G116RYA1c8ZMSw==}
@@ -10093,7 +10093,7 @@ snapshots:
 
   nanoid@5.1.16: {}
 
-  narou@2.0.1: {}
+  narou@2.1.0: {}
 
   natural-compare@1.4.0: {}
 
