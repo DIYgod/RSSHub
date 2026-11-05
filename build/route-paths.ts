@@ -587,6 +587,7 @@ export type RoutePath =
   | `/cdu/tzggcdunews`
   | `/cdzjryb/zw/projectList`
   | `/ce/district/:category?`
+  | `/ce/paper/:page?`
   | `/cebbank/quotation/all`
   | `/cebbank/quotation/history/:type`
   | `/cefco/research/news`

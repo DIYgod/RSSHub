@@ -43032,6 +43032,52 @@
         "view": 0,
         "location": "district.ts",
         "module": "() => import('@/routes/ce/district.ts')"
+      },
+      "/paper/:page?": {
+        "path": "/paper/:page?",
+        "categories": [
+          "traditional-media"
+        ],
+        "example": "/ce/paper",
+        "parameters": {
+          "page": "版面编号，如 `01`；使用 `all` 或留空获取全部版面"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "paper.ce.cn",
+              "paper.ce.cn/index.html",
+              "paper.ce.cn/pc/layout",
+              "paper.ce.cn/pc/layout/index.html",
+              "paper.ce.cn/pad/layout",
+              "paper.ce.cn/pad/layout/index.html"
+            ],
+            "target": "/paper"
+          },
+          {
+            "source": [
+              "paper.ce.cn/pc/layout/:yearMonth/:day/node_:page.html",
+              "paper.ce.cn/pad/layout/:yearMonth/:day/node_:page.html"
+            ],
+            "target": "/paper/:page"
+          }
+        ],
+        "name": "电子版",
+        "maintainers": [
+          "zhangsan-xyz"
+        ],
+        "url": "paper.ce.cn/pc/layout/index.html",
+        "description": "获取当日《经济日报》电子版的全部文章或指定版面文章。",
+        "location": "paper.ts",
+        "module": "() => import('@/routes/ce/paper.ts')"
       }
     },
     "apiRoutes": {},

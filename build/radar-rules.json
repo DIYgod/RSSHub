@@ -15356,6 +15356,30 @@
         ],
         "target": "/ce/district"
       }
+    ],
+    "paper": [
+      {
+        "title": "电子版",
+        "docs": "https://docs.rsshub.app/routes/ce",
+        "source": [
+          "/",
+          "/index.html",
+          "/pc/layout",
+          "/pc/layout/index.html",
+          "/pad/layout",
+          "/pad/layout/index.html"
+        ],
+        "target": "/ce/paper"
+      },
+      {
+        "title": "电子版",
+        "docs": "https://docs.rsshub.app/routes/ce",
+        "source": [
+          "/pc/layout/:yearMonth/:day/node_:page.html",
+          "/pad/layout/:yearMonth/:day/node_:page.html"
+        ],
+        "target": "/ce/paper/:page"
+      }
     ]
   },
   "cebbank.com": {

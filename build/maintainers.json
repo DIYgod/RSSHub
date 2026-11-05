@@ -3113,6 +3113,9 @@
   "/ce/district/:category?": [
     "cscnk52"
   ],
+  "/ce/paper/:page?": [
+    "zhangsan-xyz"
+  ],
   "/cebbank/quotation/all": [
     "linbuxiao"
   ],
