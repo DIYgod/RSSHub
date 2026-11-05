@@ -4637,6 +4637,9 @@
   "/gmcmonline/chinacustoms": [
     "nczitzk"
   ],
+  "/gmrb/paper/:page?": [
+    "zhangsan-xyz"
+  ],
   "/gmu/news/:type?": [
     "FrankFahey"
   ],

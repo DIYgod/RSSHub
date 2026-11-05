@@ -1383,6 +1383,7 @@ export type RoutePath =
   | `/glo/`
   | `/globallawreview/`
   | `/gmcmonline/chinacustoms`
+  | `/gmrb/paper/:page?`
   | `/gmu/news/:type?`
   | `/gmu/yjs/:type/:subtype`
   | `/go/jihs/idwr/:year?`
